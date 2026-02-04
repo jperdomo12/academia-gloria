@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geología: Los Minerales - Gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            position: relative;
+            border-left: 10px solid #fbbf24;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #f1f5f9;
+        }
+
+        .property-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+
+        .icon-box {
+            height: 80px;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-radius: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flip-card { perspective: 1000px; height: 180px; cursor: pointer; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .flip-card-front { background: white; border: 1px solid #f1f5f9; }
+        .flip-card-back { background: #f59e0b; color: white; transform: rotateY(180deg); }
+
+        .nav-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #fbbf24;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="pb-10">
+
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-100 mb-8">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-20">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">✨</span>
+                <span class="font-bold text-slate-800 text-xl tracking-tight">Gloria: Minerales</span>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn relative px-4 py-2 font-bold transition-all text-amber-600 active">Resumen</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Practicar</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6">
+        
+        <!-- PÁGINA 1: TEORÍA -->
+        <section id="teoria" class="tab-content active">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-extrabold text-[#1e293b]">Tema: Los Minerales</h1>
+                <div class="w-16 h-1 bg-amber-400 mx-auto mt-2 rounded-full"></div>
+                <p class="text-slate-400 italic mt-3 font-light">Guía de estudio para Gloria</p>
+            </div>
+
+            <div class="hero-card mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">💎</span>
+                    <h2 class="text-2xl font-bold text-slate-800">¿Qué es un mineral?</h2>
+                </div>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Son sustancias <span class="font-bold text-slate-900">naturales, sólidas e inorgánicas</span> (no vivas), compuestas por un <span class="font-bold text-amber-600 underline decoration-amber-200">solo elemento</span> o componente químico.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="bg-amber-100 p-2 rounded-lg">🔍</span> Propiedades Físicas
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="property-card p-6 flex gap-5">
+                    <div class="icon-box bg-blue-50 text-blue-500 shrink-0">🎨</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800">Color</h4>
+                        <p class="text-slate-500 text-sm">Es el color que vemos a simple vista en la superficie del mineral.</p>
+                    </div>
+                </div>
+
+                <div class="property-card p-6 flex gap-5">
+                    <div class="icon-box bg-yellow-50 text-yellow-500 shrink-0">✨</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800">Brillo</h4>
+                        <p class="text-slate-500 text-sm">La forma en que el mineral refleja la luz (metálico, vítreo o mate).</p>
+                    </div>
+                </div>
+
+                <div class="property-card p-6 flex gap-5">
+                    <div class="icon-box bg-red-50 text-red-500 shrink-0">⛏️</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800">Dureza</h4>
+                        <p class="text-slate-500 text-sm">La resistencia que ofrece el mineral a ser rayado por otro objeto.</p>
+                    </div>
+                </div>
+
+                <div class="property-card p-6 flex gap-5">
+                    <div class="icon-box bg-emerald-50 text-emerald-500 shrink-0">📐</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800">Forma</h4>
+                        <p class="text-slate-500 text-sm">La apariencia geométrica natural que adoptan al formarse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 2: FICHAS -->
+        <section id="fichas" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <span class="bg-slate-100 p-2 rounded-lg">🎴</span> Fichas de Repaso
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fichas-grid"></div>
+        </section>
+
+        <!-- PÁGINA 3: PRACTICAR -->
+        <section id="test" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-amber-700">Test de Minerales</h2>
+                <p class="text-slate-500">Gloria, ¡responde estas 10 preguntas para ser experta!</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-amber-100 max-w-3xl mx-auto border border-amber-50">
+                <div id="quiz-container"></div>
+                <div class="mt-10 text-center">
+                    <button id="finish-btn" onclick="checkResults()" class="bg-amber-500 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-amber-200 hover:scale-105 active:scale-95 transition-all">
+                        Ver mi Puntuación
+                    </button>
+                    <div id="final-result-box" class="hidden mt-6 p-6 rounded-2xl bg-amber-50">
+                        <p id="final-feedback" class="font-bold text-2xl text-amber-700 mb-2"></p>
+                        <p id="sub-feedback" class="text-amber-600"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const flashcards = [
+            { front: "¿Mineral o Roca?", back: "El mineral está compuesto por un solo elemento químico.", icon: "💎" },
+            { front: "Inorgánico", back: "Significa que no proviene de seres vivos.", icon: "🚫" },
+            { front: "Brillo Mate", back: "Cuando el mineral no refleja luz y se ve opaco.", icon: "🌑" },
+            { front: "Rallar un mineral", back: "Si un mineral raya a otro, significa que es más duro.", icon: "🔪" },
+            { front: "Sustancia Natural", back: "Que se encuentra en la naturaleza, no es fabricado.", icon: "🌿" },
+            { front: "Estado Sólido", back: "Los minerales no pueden ser líquidos ni gases.", icon: "🧊" }
+        ];
+
+        const questions = [
+            { q: "¿Cuántos elementos componen un mineral?", a: ["Dos o más", "Solo uno", "Ninguno"], correct: 1 },
+            { q: "Si un mineral no proviene de seres vivos, decimos que es:", a: ["Orgánico", "Inorgánico", "Artificial"], correct: 1 },
+            { q: "¿Qué propiedad mide la resistencia a ser rayado?", a: ["Brillo", "Color", "Dureza"], correct: 2 },
+            { q: "Un mineral que refleja la luz como un espejo tiene brillo:", a: ["Mate", "Vítreo", "Metálico"], correct: 2 },
+            { q: "¿En qué estado se encuentran siempre los minerales?", a: ["Líquido", "Sólido", "Gaseoso"], correct: 1 },
+            { q: "¿Qué propiedad se refiere a la apariencia geométrica?", a: ["Forma", "Textura", "Peso"], correct: 0 },
+            { q: "¿Los minerales son sustancias creadas por el hombre?", a: ["Sí, en fábricas", "No, son naturales", "A veces"], correct: 1 },
+            { q: "El color que vemos en la superficie de un mineral es la propiedad de:", a: ["Raya", "Brillo", "Color"], correct: 2 },
+            { q: "Un mineral es una sustancia...", a: ["Viva", "Inorgánica", "Líquida"], correct: 1 },
+            { q: "¿Cuál de estos NO es una propiedad física de los minerales?", a: ["Dureza", "Sabor", "Brillo"], correct: 1 }
+        ];
+
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('active', 'text-amber-600');
+                b.classList.add('text-slate-500');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.add('active', 'text-amber-600');
+            btn.classList.remove('text-slate-500');
+        }
+
+        function init() {
+            const grid = document.getElementById('fichas-grid');
+            flashcards.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "flip-card";
+                div.onclick = () => div.classList.toggle('flipped');
+                div.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl mb-4">${c.icon}</span>
+                            <span class="font-bold text-slate-700 text-lg">${c.front}</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium leading-relaxed">${c.back}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+
+            const quiz = document.getElementById('quiz-container');
+            questions.forEach((q, i) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "mb-10 pb-6 border-b border-slate-50 last:border-0";
+                qDiv.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-5 text-lg flex gap-3">
+                        <span class="bg-amber-100 text-amber-600 w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">${i+1}</span> 
+                        ${q.q}
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        ${q.a.map((ans, ai) => `
+                            <button onclick="select(${i}, ${ai}, this)" class="opt-btn text-left border-2 border-slate-100 px-5 py-3 rounded-2xl text-slate-600 font-medium hover:border-amber-200 hover:bg-amber-50/30 transition-all">${ans}</button>
+                        `).join('')}
+                    </div>
+                `;
+                quiz.appendChild(qDiv);
+            });
+        }
+
+        function select(qI, aI, btn) {
+            userAnswers[qI] = aI;
+            btn.parentElement.querySelectorAll('button').forEach(b => {
+                b.classList.remove('bg-amber-500', 'text-white', 'border-amber-500');
+                b.classList.add('border-slate-100', 'text-slate-600');
+            });
+            btn.classList.add('bg-amber-500', 'text-white', 'border-amber-500');
+        }
+
+        function checkResults() {
+            if(userAnswers.includes(null)) {
+                alert("Gloria, por favor responde todas las preguntas antes de finalizar.");
+                return;
+            }
+
+            let score = 0;
+            const allOptBtns = document.querySelectorAll('.opt-btn');
+            
+            questions.forEach((q, i) => {
+                const baseIndex = i * 3;
+                const correctBtn = allOptBtns[baseIndex + q.correct];
+                const selectedBtn = allOptBtns[baseIndex + userAnswers[i]];
+
+                correctBtn.style.backgroundColor = "#dcfce7";
+                correctBtn.style.borderColor = "#22c55e";
+                correctBtn.style.color = "#166534";
+
+                if(userAnswers[i] === q.correct) {
+                    score++;
+                } else {
+                    selectedBtn.style.backgroundColor = "#fee2e2";
+                    selectedBtn.style.borderColor = "#ef4444";
+                    selectedBtn.style.color = "#991b1b";
+                }
+            });
+
+            const feedback = document.getElementById('final-feedback');
+            const sub = document.getElementById('sub-feedback');
+            const box = document.getElementById('final-result-box');
+            box.classList.remove('hidden');
+            
+            feedback.innerHTML = score >= 7 ? "¡Excelente, Gloria! ✨" : "¡Sigue practicando! 💪";
+            sub.innerHTML = `Has acertado ${score} de ${questions.length} preguntas.`;
+            
+            document.getElementById('finish-btn').classList.add('hidden');
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        init();
+    </script>
+</body>
+</html>
