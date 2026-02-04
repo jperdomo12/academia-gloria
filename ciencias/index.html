@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia de Gloria - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f4f8; }
+        .subject-card { transition: all 0.3s ease; }
+        .subject-card:hover { transform: translateY(-10px); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-5xl w-full text-center">
+        <header class="mb-12">
+            <h1 class="text-5xl font-black text-slate-800 mb-4">Academia de Gloria</h1>
+            <p class="text-xl text-slate-600">¿Qué vamos a aprender hoy?</p>
+            <div class="w-24 h-2 bg-indigo-500 mx-auto mt-6 rounded-full"></div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <a href="rocas-minerales.html" class="subject-card bg-white p-10 rounded-[2.5rem] shadow-xl border-b-8 border-indigo-500 block group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🌋</div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-3">Ciencias de la Tierra</h2>
+                <p class="text-slate-500">Explora el mundo de las Rocas y los Minerales.</p>
+                <div class="mt-8 py-3 px-6 bg-indigo-50 text-indigo-600 font-bold rounded-2xl">Entrar al Laboratorio</div>
+            </a>
+
+            <a href="comidas-saludables.html" class="subject-card bg-white p-10 rounded-[2.5rem] shadow-xl border-b-8 border-emerald-500 block group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🍎</div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-3">Vida Saludable</h2>
+                <p class="text-slate-500">Aprende sobre nutrición y comidas sanas.</p>
+                <div class="mt-8 py-3 px-6 bg-emerald-50 text-emerald-600 font-bold rounded-2xl">Entrar a Nutrición</div>
+            </a>
+        </div>
+
+        <footer class="mt-16 text-slate-400 font-medium">
+            Preparado con ❤️ para el cumpleaños #11 de Gloria
+        </footer>
+    </div>
+</body>
+</html>
