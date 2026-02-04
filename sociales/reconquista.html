@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Reconquista - Gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        h1, h2, h3, .medieval-font {
+            font-family: 'Marcellus', serif;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            position: relative;
+            border-left: 10px solid #7c3aed;
+            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.1);
+        }
+
+        .kingdom-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #e2e8f0;
+        }
+
+        .kingdom-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.15);
+            border-color: #ddd6fe;
+        }
+
+        .icon-box {
+            height: 60px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .flip-card { perspective: 1000px; height: 180px; cursor: pointer; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .flip-card-front { background: white; border: 1px solid #e2e8f0; }
+        .flip-card-back { background: #7c3aed; color: white; transform: rotateY(180deg); }
+
+        .nav-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #7c3aed;
+            border-radius: 10px;
+        }
+
+        .art-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="pb-10">
+
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-purple-100 mb-8">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-20">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">⚔️</span>
+                <span class="font-bold text-slate-800 text-xl tracking-tight">Gloria: Historia</span>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn relative px-4 py-2 font-bold transition-all text-purple-600 active">Resumen</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Practicar</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6">
+        
+        <!-- SECCIÓN 1: TEORÍA -->
+        <section id="teoria" class="tab-content active">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-extrabold text-[#1e293b]">La Reconquista</h1>
+                <div class="w-16 h-1 bg-purple-400 mx-auto mt-2 rounded-full"></div>
+                <p class="text-slate-400 italic mt-3 font-light">Los reinos cristianos y la vida medieval</p>
+            </div>
+
+            <div class="hero-card mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">🏰</span>
+                    <h2 class="text-2xl font-bold text-slate-800">¿Qué fue la Reconquista?</h2>
+                </div>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Fue el periodo en el que los <span class="font-bold text-purple-600">cristianos lucharon contra los musulmanes</span> para recuperar los territorios de la Península Ibérica que habían sido invadidos.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="bg-purple-100 p-2 rounded-lg">🛡️</span> Los 4 Reinos Cristianos
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div class="kingdom-card p-6 border-l-4 border-yellow-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">1. Reino de Asturias</h4>
+                    <p class="text-slate-500 text-sm mb-3">Liderado por <span class="text-purple-600 font-bold">Don Pelayo</span>. En el año 722 vencieron en la famosa <strong>Batalla de Covadonga</strong>.</p>
+                </div>
+                <div class="kingdom-card p-6 border-l-4 border-red-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">2. Reino de Navarra</h4>
+                    <p class="text-slate-500 text-sm mb-3">Su rey más poderoso fue <span class="text-purple-600 font-bold">Sancho III</span> en el siglo XI.</p>
+                </div>
+                <div class="kingdom-card p-6 border-l-4 border-orange-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">3. Condados Aragoneses</h4>
+                    <p class="text-slate-500 text-sm mb-3">Situados en los Pirineos. En el siglo XI se convirtieron en reino independiente.</p>
+                </div>
+                <div class="kingdom-card p-6 border-l-4 border-blue-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">4. Condados Catalanes</h4>
+                    <p class="text-slate-500 text-sm mb-3">Se unieron con los aragoneses en 1137 formando la <strong>Corona de Aragón</strong>.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">👥</span> Sociedad Medieval</h3>
+                    <ul class="space-y-3 text-slate-600">
+                        <li class="flex items-start gap-2"><strong>1. Nobleza:</strong> Los caballeros y señores que luchaban.</li>
+                        <li class="flex items-start gap-2"><strong>2. Clero:</strong> Los monjes y sacerdotes que rezaban.</li>
+                        <li class="flex items-start gap-2"><strong>3. Campesinos:</strong> Los que trabajaban la tierra.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">⛪</span> El Arte Cristiano</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <span class="art-badge bg-amber-100 text-amber-700">Románico (X-XII)</span>
+                            <p class="text-sm text-slate-500">Paredes gruesas, pocas ventanas e iglesias oscuras.</p>
+                        </div>
+                        <div>
+                            <span class="art-badge bg-blue-100 text-blue-700">Gótico (XIII-XIV)</span>
+                            <p class="text-sm text-slate-500">Torres altas, puntiagudas y vidrieras muy luminosas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">🐚 El Camino de Santiago</h3>
+                    <p class="opacity-90 leading-relaxed">
+                        Iniciado en el año 813 tras descubrir el sepulcro del apóstol Santiago. Los viajeros son los <strong>peregrinos</strong> y su símbolo es la famosa concha.
+                    </p>
+                </div>
+                <span class="absolute -bottom-10 -right-10 text-[12rem] opacity-10">🐚</span>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: FICHAS -->
+        <section id="fichas" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <span class="bg-slate-100 p-2 rounded-lg">📜</span> Fichas de Repaso
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fichas-grid"></div>
+        </section>
+
+        <!-- SECCIÓN 3: TEST -->
+        <section id="test" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-purple-700">Desafío Medieval</h2>
+                <p class="text-slate-500">¿Serás una experta historiadora?</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-purple-100 max-w-3xl mx-auto border border-purple-50">
+                <div id="quiz-container"></div>
+                <div class="mt-10 text-center">
+                    <button id="finish-btn" onclick="checkResults()" class="bg-purple-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-purple-200 hover:scale-105 active:scale-95 transition-all">
+                        Terminar Desafío
+                    </button>
+                    <div id="final-result-box" class="hidden mt-6 p-6 rounded-2xl bg-purple-50 border-2 border-purple-100">
+                        <p id="final-feedback" class="font-bold text-2xl text-purple-700 mb-2"></p>
+                        <p id="sub-feedback" class="text-purple-600"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const flashcards = [
+            { front: "¿Quién fue Don Pelayo?", back: "Un noble visigodo, jefe del Reino de Asturias.", icon: "🤴" },
+            { front: "Batalla de Covadonga", back: "Ocurrió en el 722. Don Pelayo venció a los musulmanes.", icon: "⚔️" },
+            { front: "La Corona de Aragón", back: "Formada en 1137 por la unión de Aragón y los condados catalanes.", icon: "👑" },
+            { front: "Gremios", back: "Agrupaciones de artesanos del mismo oficio que vivían en la misma calle.", icon: "⚒️" },
+            { front: "Arte Románico", back: "Siglos X-XII. Paredes muy gruesas y pocas ventanas.", icon: "🏛️" },
+            { front: "Peregrinos", back: "Personas que recorren el Camino de Santiago. Su recuerdo es la concha.", icon: "🐚" }
+        ];
+
+        const questions = [
+            { q: "¿En qué año ocurrió la batalla de Covadonga?", a: ["813", "722", "1137"], correct: 1 },
+            { q: "¿Cuál era el grupo social encargado de trabajar la tierra?", a: ["Clero", "Nobleza", "Campesinos"], correct: 2 },
+            { q: "¿Qué estilo artístico tiene iglesias más altas y luminosas?", a: ["Gótico", "Románico", "Barroco"], correct: 0 },
+            { q: "El Rey Sancho III fue el más poderoso del:", a: ["Reino de Asturias", "Reino de Navarra", "Reino de Aragón"], correct: 1 },
+            { q: "¿Cómo se llaman los barrios de las ciudades cristianas?", a: ["Gremios", "Palacios", "Burgos"], correct: 2 },
+            { q: "¿Qué apóstol está enterrado en el Camino de Santiago?", a: ["Pedro", "Santiago", "Juan"], correct: 1 },
+            { q: "¿En qué año se descubrió el sepulcro de Santiago?", a: ["813", "722", "1000"], correct: 0 },
+            { q: "¿Qué característica define al Arte Románico?", a: ["Paredes finas", "Paredes muy gruesas", "Torres puntiagudas"], correct: 1 },
+            { q: "¿Cómo se llaman las agrupaciones de artesanos?", a: ["Gremios", "Clero", "Sindicatos"], correct: 0 },
+            { q: "¿A qué grupo pertenecían los monjes y sacerdotes?", a: ["Nobleza", "Artesanos", "Clero"], correct: 2 }
+        ];
+
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('active', 'text-purple-600');
+                b.classList.add('text-slate-500');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.add('active', 'text-purple-600');
+        }
+
+        function init() {
+            const grid = document.getElementById('fichas-grid');
+            flashcards.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "flip-card";
+                div.onclick = () => div.classList.toggle('flipped');
+                div.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl mb-4">${c.icon}</span>
+                            <span class="font-bold text-slate-700 text-lg">${c.front}</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium leading-relaxed">${c.back}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+
+            const quiz = document.getElementById('quiz-container');
+            questions.forEach((q, i) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "mb-10 pb-6 border-b border-slate-50 last:border-0";
+                qDiv.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-5 text-lg flex gap-3">
+                        <span class="bg-purple-100 text-purple-600 w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">${i+1}</span> 
+                        ${q.q}
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        ${q.a.map((ans, ai) => `
+                            <button onclick="select(${i}, ${ai}, this)" class="opt-btn text-left border-2 border-slate-100 px-5 py-3 rounded-2xl text-slate-600 font-medium hover:border-purple-200 hover:bg-purple-50 transition-all">${ans}</button>
+                        `).join('')}
+                    </div>
+                `;
+                quiz.appendChild(qDiv);
+            });
+        }
+
+        function select(qI, aI, btn) {
+            userAnswers[qI] = aI;
+            btn.parentElement.querySelectorAll('button').forEach(b => {
+                b.classList.remove('bg-purple-600', 'text-white', 'border-purple-600');
+                b.classList.add('border-slate-100', 'text-slate-600');
+            });
+            btn.classList.add('bg-purple-600', 'text-white', 'border-purple-600');
+        }
+
+        function checkResults() {
+            if(userAnswers.includes(null)) {
+                alert("¡Faltan preguntas! Debes responder todo el desafío medieval antes de terminar.");
+                return;
+            }
+
+            let score = 0;
+            const allOptBtns = document.querySelectorAll('.opt-btn');
+            
+            questions.forEach((q, i) => {
+                const baseIndex = i * 3;
+                const correctBtn = allOptBtns[baseIndex + q.correct];
+                const selectedBtn = allOptBtns[baseIndex + userAnswers[i]];
+
+                correctBtn.style.backgroundColor = "#f3e8ff";
+                correctBtn.style.borderColor = "#7c3aed";
+                correctBtn.style.color = "#5b21b6";
+
+                if(userAnswers[i] === q.correct) {
+                    score++;
+                } else {
+                    selectedBtn.style.backgroundColor = "#fee2e2";
+                    selectedBtn.style.borderColor = "#ef4444";
+                    selectedBtn.style.color = "#991b1b";
+                }
+            });
+
+            const feedback = document.getElementById('final-feedback');
+            const sub = document.getElementById('sub-feedback');
+            const box = document.getElementById('final-result-box');
+            box.classList.remove('hidden');
+            
+            feedback.innerHTML = score >= 8 ? "¡Eres una experta en la Edad Media! 🏛️" : "¡Sigue explorando la historia! ⚔️";
+            sub.innerHTML = `Has acertado ${score} de ${questions.length} preguntas correctamente.`;
+            
+            document.getElementById('finish-btn').classList.add('hidden');
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        init();
+    </script>
+</body>
+</html>
