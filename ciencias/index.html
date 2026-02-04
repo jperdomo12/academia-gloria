@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia de Ciencias - Gloria</title>
+    <title>Ciencias - Academia de Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
         
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #f0fdf4; /* Verde muy clarito */
+            background-color: #f0fdf4; 
             background-image: radial-gradient(#dcfce7 1px, transparent 1px);
             background-size: 24px 24px;
         }
@@ -27,28 +27,22 @@
             box-shadow: 0 25px 50px -12px rgba(22, 101, 52, 0.15);
             border-color: #10b981;
         }
-
-        .locked {
-            filter: grayscale(1);
-            opacity: 0.6;
-            cursor: not-allowed;
-            background-image: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #f8fafc 10px, #f8fafc 20px);
-        }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-12">
+<body class="min-h-screen p-6 md:p-12">
 
     <div class="max-w-6xl mx-auto">
         <nav class="mb-12">
-            <a href="../index.html" class="text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-2 font-medium">
-                <span class="text-xl">🏠</span> Volver al Portal Principal
+            <a href="../index.html" class="group text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-2 font-semibold">
+                <span class="text-2xl group-hover:-translate-x-1 transition-transform">🏠</span> 
+                Volver al Portal Principal
             </a>
         </nav>
 
         <header class="text-center mb-16">
-            <h1 class="text-6xl md:text-7xl medieval-font text-slate-900 mb-4">Ciencias</h1>
+            <h1 class="text-6xl md:text-7xl medieval-font text-slate-900 mb-4">Ciencias Naturales</h1>
             <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Gloria, explora los misterios del universo, desde las profundidades de la tierra hasta el funcionamiento de tu cuerpo.
+                Gloria, aquí exploramos los secretos de la materia, la energía y la vida. ¡Elige un tema para investigar!
             </p>
             <div class="mt-8 flex justify-center gap-2">
                 <div class="h-1.5 w-12 bg-emerald-500 rounded-full"></div>
@@ -59,53 +53,52 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <a href="comidas-saludables.html" class="card-science bg-white rounded-[2rem] p-8 flex flex-col group">
+            <a href="comidas-saludables.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
                 <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
                     🍎
                 </div>
                 <h2 class="medieval-font text-2xl text-slate-800 mb-3">Nutrición</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Aprende sobre los 5 grupos de alimentos y cómo armar tu plato perfecto para crecer fuerte.
+                    Descubre cómo los alimentos te dan energía y cómo crear tu "Plato Perfecto".
                 </p>
                 <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
-                    Ver Lección <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                    Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
             </a>
 
-            <a href="rocas.html" class="card-science bg-white rounded-[2rem] p-8 flex flex-col group">
-                <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
+            <a href="minerales.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:rotate-12 transition-all duration-300">
                     💎
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Rocas y Minerales</h2>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Minerales</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Viaja al centro de la Tierra para descubrir los tesoros geológicos y sus propiedades únicas.
+                    Aprende sobre el brillo, la dureza y los cristales más asombrosos de la naturaleza.
                 </p>
-                <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
-                    Ver Lección <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                <div class="mt-auto flex items-center text-blue-600 font-bold uppercase text-xs tracking-widest">
+                    Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
             </a>
 
-            <div class="locked rounded-[2rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
-                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
-                    🌿
+            <a href="rocas.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-orange-500 group-hover:rotate-12 transition-all duration-300">
+                    🪨
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">El Mundo Vegetal</h2>
-                <p class="text-slate-400 leading-relaxed mb-6">
-                    Próximamente exploraremos la fotosíntesis y el increíble reino de las plantas.
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Las Rocas</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Sedimentarias, metamórficas e ígneas. El ciclo eterno de la corteza terrestre.
                 </p>
-                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">
-                    Próximamente
+                <div class="mt-auto flex items-center text-orange-600 font-bold uppercase text-xs tracking-widest">
+                    Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
-            </div>
+            </a>
 
         </div>
 
         <footer class="mt-24 text-center text-slate-400 text-sm">
             <p class="mb-2">© 2026 Academia de Ciencias - Gloria</p>
-            <p class="italic text-xs">"En algún lugar, algo increíble está esperando a ser descubierto."</p>
+            <p class="italic text-xs">"Investigar es ver lo que todo el mundo ha visto, y pensar lo que nadie más ha pensado."</p>
         </footer>
     </div>
 
 </body>
 </html>
-
