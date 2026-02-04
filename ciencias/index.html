@@ -3,42 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia de Gloria - Home</title>
+    <title>Academia de Ciencias - Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
-        body { font-family: 'Outfit', sans-serif; background-color: #f0f4f8; }
-        .subject-card { transition: all 0.3s ease; }
-        .subject-card:hover { transform: translateY(-10px); }
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f0fdf4; /* Verde muy clarito */
+            background-image: radial-gradient(#dcfce7 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .medieval-font { font-family: 'Marcellus', serif; }
+
+        .card-science {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #dcfce7;
+        }
+
+        .card-science:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(22, 101, 52, 0.15);
+            border-color: #10b981;
+        }
+
+        .locked {
+            filter: grayscale(1);
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-image: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #f8fafc 10px, #f8fafc 20px);
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
-    <div class="max-w-5xl w-full text-center">
-        <header class="mb-12">
-            <h1 class="text-5xl font-black text-slate-800 mb-4">Academia de Gloria</h1>
-            <p class="text-xl text-slate-600">¿Qué vamos a aprender hoy?</p>
-            <div class="w-24 h-2 bg-indigo-500 mx-auto mt-6 rounded-full"></div>
+<body class="min-h-screen p-4 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <nav class="mb-12">
+            <a href="../index.html" class="text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-2 font-medium">
+                <span class="text-xl">🏠</span> Volver al Portal Principal
+            </a>
+        </nav>
+
+        <header class="text-center mb-16">
+            <h1 class="text-6xl md:text-7xl medieval-font text-slate-900 mb-4">Ciencias</h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Gloria, explora los misterios del universo, desde las profundidades de la tierra hasta el funcionamiento de tu cuerpo.
+            </p>
+            <div class="mt-8 flex justify-center gap-2">
+                <div class="h-1.5 w-12 bg-emerald-500 rounded-full"></div>
+                <div class="h-1.5 w-4 bg-emerald-300 rounded-full"></div>
+                <div class="h-1.5 w-4 bg-emerald-100 rounded-full"></div>
+            </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <a href="rocas-minerales.html" class="subject-card bg-white p-10 rounded-[2.5rem] shadow-xl border-b-8 border-indigo-500 block group">
-                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🌋</div>
-                <h2 class="text-3xl font-bold text-slate-800 mb-3">Ciencias de la Tierra</h2>
-                <p class="text-slate-500">Explora el mundo de las Rocas y los Minerales.</p>
-                <div class="mt-8 py-3 px-6 bg-indigo-50 text-indigo-600 font-bold rounded-2xl">Entrar al Laboratorio</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <a href="comidas-saludables.html" class="card-science bg-white rounded-[2rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
+                    🍎
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Nutrición</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Aprende sobre los 5 grupos de alimentos y cómo armar tu plato perfecto para crecer fuerte.
+                </p>
+                <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
+                    Ver Lección <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
             </a>
 
-            <a href="comidas-saludables.html" class="subject-card bg-white p-10 rounded-[2.5rem] shadow-xl border-b-8 border-emerald-500 block group">
-                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🍎</div>
-                <h2 class="text-3xl font-bold text-slate-800 mb-3">Vida Saludable</h2>
-                <p class="text-slate-500">Aprende sobre nutrición y comidas sanas.</p>
-                <div class="mt-8 py-3 px-6 bg-emerald-50 text-emerald-600 font-bold rounded-2xl">Entrar a Nutrición</div>
+            <a href="rocas.html" class="card-science bg-white rounded-[2rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
+                    💎
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Rocas y Minerales</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Viaja al centro de la Tierra para descubrir los tesoros geológicos y sus propiedades únicas.
+                </p>
+                <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
+                    Ver Lección <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
             </a>
+
+            <div class="locked rounded-[2rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
+                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
+                    🌿
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">El Mundo Vegetal</h2>
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    Próximamente exploraremos la fotosíntesis y el increíble reino de las plantas.
+                </p>
+                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">
+                    Próximamente
+                </div>
+            </div>
+
         </div>
 
-        <footer class="mt-16 text-slate-400 font-medium">
-            Preparado con ❤️ para el cumpleaños #11 de Gloria
+        <footer class="mt-24 text-center text-slate-400 text-sm">
+            <p class="mb-2">© 2026 Academia de Ciencias - Gloria</p>
+            <p class="italic text-xs">"En algún lugar, algo increíble está esperando a ser descubierto."</p>
         </footer>
     </div>
+
 </body>
 </html>
