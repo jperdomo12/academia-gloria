@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia de Sociales - Gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            /* Patrón de fondo sutil de puntos */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .medieval-font { font-family: 'Marcellus', serif; }
+
+        .card-history {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-history:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border-color: #7c3aed;
+        }
+
+        .locked {
+            filter: grayscale(1);
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-image: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #f8fafc 10px, #f8fafc 20px);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <nav class="mb-12">
+            <a href="https://sites.google.com/view/academia-de-gloria/inicio" class="text-slate-500 hover:text-purple-600 transition-colors flex items-center gap-2 font-medium">
+                <span class="text-xl">🏠</span> Volver a la Academia
+            </a>
+        </nav>
+
+        <header class="text-center mb-16">
+            <h1 class="text-6xl md:text-7xl medieval-font text-slate-900 mb-4">Sociales</h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Gloria, aquí tienes tu archivo histórico personal. Explora los sucesos que dieron forma a nuestra civilización.
+            </p>
+            <div class="mt-8 flex justify-center gap-2">
+                <div class="h-1.5 w-12 bg-purple-600 rounded-full"></div>
+                <div class="h-1.5 w-4 bg-purple-300 rounded-full"></div>
+                <div class="h-1.5 w-4 bg-purple-100 rounded-full"></div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <a href="reconquista.html" class="card-history bg-white rounded-[2rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-purple-600 group-hover:rotate-12 transition-all duration-300">
+                    ⚔️
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">La Reconquista</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Descubre cómo los reinos cristianos avanzaron por la península. Incluye fichas de estudio y un desafío final.
+                </p>
+                <div class="mt-auto flex items-center text-purple-600 font-bold uppercase text-xs tracking-widest">
+                    Iniciar Lección <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </a>
+
+            <div class="locked rounded-[2rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
+                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
+                    ⛵
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">Edad Moderna</h2>
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    Nuevos mundos y grandes inventos están siendo preparados en el archivo real.
+                </p>
+                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">
+                    Archivo Bloqueado
+                </div>
+            </div>
+
+            <div class="locked rounded-[2rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
+                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
+                    🏛️
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">Antigua Roma</h2>
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    El Imperio llegará pronto a la academia con legionarios y gladiadores.
+                </p>
+                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">
+                    Próximamente
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-24 text-center text-slate-400 text-sm">
+            <p class="mb-2">© 2026 Academia de Sociales - Gloria</p>
+            <p class="italic text-xs">"Quien no conoce su historia está condenado a repetir los exámenes."</p>
+        </footer>
+    </div>
+
+</body>
+</html>
