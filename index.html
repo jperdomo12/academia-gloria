@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia de Gloria - Portal Principal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: #f0f4f8; }
+        .medieval { font-family: 'Marcellus', serif; }
+        .card { transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-10px); shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="p-6 md:p-20">
+    <div class="max-w-6xl mx-auto text-center">
+        <header class="mb-16">
+            <h1 class="text-6xl medieval text-slate-900 mb-4">Academia de Gloria</h1>
+            <p class="text-xl text-slate-600 italic">"El conocimiento es la mayor aventura"</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <a href="sociales/index.html" class="card bg-white p-10 rounded-3xl border-b-8 border-amber-500 shadow-sm">
+                <div class="text-5xl mb-4">⚔️</div>
+                <h2 class="medieval text-3xl mb-2 text-slate-800">Sociales</h2>
+                <p class="text-slate-500">Explora la historia y la geografía del mundo.</p>
+            </a>
+
+            <a href="ciencias/comidas-saludables.html" class="card bg-white p-10 rounded-3xl border-b-8 border-emerald-500 shadow-sm">
+                <div class="text-5xl mb-4">🍎</div>
+                <h2 class="medieval text-3xl mb-2 text-slate-800">Ciencias</h2>
+                <p class="text-slate-500">Descubre los secretos de la naturaleza y el cuerpo humano.</p>
+            </a>
+
+            <div class="bg-slate-200 p-10 rounded-3xl border-b-8 border-slate-400 opacity-60 grayscale">
+                <div class="text-5xl mb-4">📐</div>
+                <h2 class="medieval text-3xl mb-2 text-slate-800">Matemáticas</h2>
+                <p class="text-slate-400">Próximamente: El mundo de los números.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
