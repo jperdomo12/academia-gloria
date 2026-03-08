@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materia - Academia de Gloria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style> body { font-family: 'Outfit', sans-serif; } </style>
+</head>
+<body class="bg-slate-50 p-6 min-h-screen">
+
+    <div class="max-w-2xl mx-auto">
+        <a href="../index.html" class="text-indigo-600 mb-8 inline-flex items-center hover:underline font-semibold">
+            <span class="mr-2">←</span> Volver al Hub Central
+        </a>
+        
+        <div class="bg-white rounded-3xl p-8 shadow-sm border-b-8 border-indigo-500 mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">Asignatura: [Nombre]</h1>
+            <p class="text-slate-500">Selecciona un tema para empezar el repaso.</p>
+        </div>
+
+        <div class="space-y-4">
+            
+            <div class="bg-slate-100 border-2 border-dashed border-slate-300 p-10 rounded-2xl text-center">
+                <div class="text-4xl mb-3">🛠️</div>
+                <h3 class="font-bold text-slate-400 text-lg">Preparando nuevas misiones...</h3>
+                <p class="text-slate-400 text-sm">Muy pronto aparecerán aquí los temas de esta asignatura.</p>
+            </div>
+
+            </div>
+    </div>
+
+    <footer class="mt-12 text-center text-slate-400 text-sm">
+        Academia de Gloria © 2026
+    </footer>
+
+</body>
+</html>
