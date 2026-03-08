@@ -20,8 +20,8 @@
         .resource-link:hover { transform: translateX(5px); background-color: #fff7ed; border-color: #f97316; }
 
         table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 1rem; overflow: hidden; }
-        th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-        td { padding: 12px; border-bottom: 1px solid #fef3c7; background-color: white; }
+        th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; }
+        td { padding: 12px; border-bottom: 1px solid #fef3c7; background-color: white; font-size: 0.9rem; }
     </style>
 </head>
 <body class="pb-12">
@@ -39,7 +39,7 @@
         </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto px-6">
+    <main class="max-w-4xl mx-auto px-6">
         
         <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-orange-600 font-bold hover:bg-orange-50 transition-all mb-8 border border-orange-100">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Lengua
@@ -47,9 +47,74 @@
 
         <section id="teoria" class="tab-content active space-y-8">
             
-            <div class="lang-card p-6 border-l-orange-500">
-                <h3 class="text-xl font-bold text-orange-800 mb-4 flex items-center gap-2 italic">
-                    <i data-lucide="layout"></i> Súper Resumen de Gramática
+            <div class="lang-card p-8">
+                <h2 class="text-2xl font-black text-orange-800 mb-6 flex items-center gap-2 italic">
+                    <i data-lucide="book-open"></i> El Libro de lo Importante: Gramática
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 shadow-sm">
+                        <h4 class="font-black text-blue-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
+                            <i data-lucide="tag" class="w-4 h-4"></i> Sustantivos
+                        </h4>
+                        <p class="text-sm leading-relaxed text-slate-700">
+                            Son palabras que sirven para <b>NOMBRAR</b> todo lo que existe.
+                        </p>
+                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Propios:</b> Nombres de personas o lugares (<i>Gloria, Madrid</i>).</li>
+                            <li>• <b>Comunes:</b> Objetos o seres (<i>casa, perro, mesa</i>).</li>
+                            <li>• <b>Abstractos:</b> Ideas o sentimientos (<i>amor, paz</i>).</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-green-50 rounded-2xl border-l-4 border-green-500 shadow-sm">
+                        <h4 class="font-black text-green-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
+                            <i data-lucide="palette" class="w-4 h-4"></i> Adjetivos
+                        </h4>
+                        <p class="text-sm leading-relaxed text-slate-700">
+                            Son palabras que dicen <b>CÓMO SON</b> o cómo están los sustantivos.
+                        </p>
+                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Cualidades:</b> (<i>grande, pequeño, inteligente</i>).</li>
+                            <li>• <b>Estados:</b> (<i>cansado, alegre, limpio</i>).</li>
+                            <li>• <b>Colores/Formas:</b> (<i>azul, redondo, cuadrado</i>).</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-yellow-50 rounded-2xl border-l-4 border-yellow-500 shadow-sm">
+                        <h4 class="font-black text-yellow-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
+                            <i data-lucide="zap" class="w-4 h-4"></i> Verbos
+                        </h4>
+                        <p class="text-sm leading-relaxed text-slate-700">
+                            Expresan <b>ACCIONES</b>, procesos o estados en el tiempo.
+                        </p>
+                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Infinitivo:</b> Terminan en <i>-ar, -er, -ir</i> (<i>saltar, leer</i>).</li>
+                            <li>• <b>Tiempos:</b> Pasado, Presente o Futuro.</li>
+                            <li>• <b>Persona:</b> Yo, tú, él, nosotros, vosotros, ellos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-500 shadow-sm">
+                        <h4 class="font-black text-orange-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
+                            <i data-lucide="hand-metal" class="w-4 h-4"></i> Determinantes
+                        </h4>
+                        <p class="text-sm leading-relaxed text-slate-700">
+                            Palabras que <b>ACOMPAÑAN</b> al nombre para concretarlo.
+                        </p>
+                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Artículos:</b> (<i>el, la, los, las, un, una</i>).</li>
+                            <li>• <b>Demostrativos:</b> Distancia (<i>este, ese, aquel</i>).</li>
+                            <li>• <b>Posesivos:</b> Pertenencia (<i>mi, tu, su, nuestra</i>).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-orange-100">
+                <h3 class="text-lg font-bold text-orange-700 mb-4 flex items-center gap-2">
+                    <i data-lucide="layout"></i> Cuadro Comparativo Rápido
                 </h3>
                 <table>
                     <thead>
@@ -86,19 +151,19 @@
 
             <div class="lang-card p-6 border-l-pink-500">
                 <h3 class="text-xl font-bold text-pink-800 mb-4 flex items-center gap-2">
-                    <i data-lucide="mouse-pointer-2"></i> Fichas Interactivas (Liveworksheets)
+                    <i data-lucide="mouse-pointer-2"></i> Fichas Interactivas
                 </h3>
                 <div class="grid gap-3">
                     <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">1. Comunicación y Lenguaje</span>
+                        <span class="font-bold text-slate-700 text-sm">Desafío 1: Comunicación y Lenguaje</span>
                         <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">2. Lengua Materna Español</span>
+                        <span class="font-bold text-slate-700 text-sm">Desafío 2: Lengua Materna Español</span>
                         <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">3. Lengua Castellana</span>
+                        <span class="font-bold text-slate-700 text-sm">Desafío 3: Lengua Castellana</span>
                         <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
                     </a>
                 </div>
@@ -174,7 +239,7 @@
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
             document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `Aciertos: ${score} de 10`;
+            document.getElementById('score-text').innerText = `¡Gloria, eres una experta! Aciertos: ${score} de 10`;
         }
 
         lucide.createIcons();
