@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mates: Múltiplos y Divisores - Gloria Valentina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f9ff; color: #0c4a6e; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .nav-btn.active { color: #0ea5e9; border-bottom: 4px solid #0ea5e9; }
+        .math-card { background: white; border-radius: 2rem; border-left: 10px solid #8b5cf6; box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.1); }
+        
+        .flip-card { perspective: 1000px; height: 160px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 1.5rem; border-radius: 1.5rem; text-align: center; }
+        .flip-card-front { background: white; border: 2px solid #ddd6fe; color: #5b21b6; font-weight: 700; }
+        .flip-card-back { background: #8b5cf6; color: white; transform: rotateY(180deg); font-weight: 600; }
+    </style>
+</head>
+<body class="pb-12">
+
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-purple-100 mb-8">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🔢</span>
+                <span class="font-extrabold text-purple-900 text-xl">Múltiplos y Divisores</span>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn active py-2 font-bold uppercase text-xs tracking-widest text-purple-600">Teoría</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Test</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-6">
+        
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-purple-600 font-bold hover:bg-purple-50 transition-all mb-8 border border-purple-100">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Mates
+        </a>
+
+        <section id="teoria" class="tab-content active space-y-6">
+            <div class="math-card p-8 border-purple-500">
+                <h2 class="text-2xl font-black text-purple-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="calculator"></i> Múltiplos: ¡Crecen!
+                </h2>
+                <p class="text-slate-600 mb-4">Los obtienes <b>multiplicando</b> un número por 1, 2, 3, 4...</p>
+                <div class="bg-purple-50 p-4 rounded-xl border-2 border-purple-100 font-bold text-center">
+                    Múltiplos de 5: 5, 10, 15, 20, 25... <span class="text-purple-400">(¡Son infinitos!)</span>
+                </div>
+            </div>
+
+            <div class="math-card p-8 border-blue-500" style="border-left-color: #3b82f6;">
+                <h2 class="text-2xl font-black text-blue-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="scissors"></i> Divisores: ¡Reparten!
+                </h2>
+                <p class="text-slate-600 mb-4">Números que dividen a otro de forma <b>exacta</b> (resto 0).</p>
+                <div class="bg-blue-50 p-4 rounded-xl border-2 border-blue-100 font-bold text-center text-blue-800">
+                    Divisores de 12: 1, 2, 3, 4, 6, 12.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-200">
+                    <h3 class="font-bold text-emerald-800 mb-2">💎 Números Primos</h3>
+                    <p class="text-sm">Solo tienen 2 divisores: el <b>1</b> y <b>ellos mismos</b>. (Ej: 2, 3, 5, 7, 11...)</p>
+                </div>
+                <div class="bg-orange-50 p-6 rounded-3xl border-2 border-orange-200">
+                    <h3 class="font-bold text-orange-800 mb-2">🧱 Números Compuestos</h3>
+                    <p class="text-sm">Tienen <b>más de 2</b> divisores. (Ej: 4, 6, 8, 9, 10, 12...)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fichas" class="tab-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="fichas-grid"></div>
+        </section>
+
+        <section id="test" class="tab-content">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl border border-purple-100" id="quiz-area">
+                <p id="q-progress" class="text-purple-400 font-bold text-xs uppercase mb-4"></p>
+                <h2 id="q-text" class="text-2xl font-black text-slate-800 mb-10 text-center"></h2>
+                <div id="options" class="grid gap-3"></div>
+            </div>
+            <div id="result-area" class="hidden bg-white rounded-[2.5rem] p-12 text-center shadow-xl">
+                <div class="text-6xl mb-4">🎯</div>
+                <h2 class="text-3xl font-black text-purple-900 mb-4">¡Práctica Terminada!</h2>
+                <p id="score-text" class="text-xl font-bold text-slate-500 mb-8"></p>
+                <button onclick="location.reload()" class="bg-purple-600 text-white px-8 py-4 rounded-2xl font-bold">REINTENTAR</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active', 'text-purple-600'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('btn-' + id).classList.add('active', 'text-purple-600');
+            if(id === 'test') startQuiz();
+            lucide.createIcons();
+        }
+
+        const cards = [
+            { f: "¿Cómo se hallan los múltiplos?", b: "Multiplicando por 1, 2, 3, 4...", i: "✖️" },
+            { f: "¿Qué es un número primo?", b: "El que solo se divide por 1 y por sí mismo", i: "⭐" },
+            { f: "¿Cuántos múltiplos tiene un número?", b: "¡Infinitos! No tienen fin", i: "♾️" },
+            { f: "¿Qué es un divisor?", b: "Un número que divide a otro con resto 0", i: "➗" }
+        ];
+
+        const grid = document.getElementById('fichas-grid');
+        cards.forEach(c => {
+            const d = document.createElement('div');
+            d.className = "flip-card";
+            d.onclick = () => d.classList.toggle('flipped');
+            d.innerHTML = `<div class="flip-card-inner">
+                <div class="flip-card-front"><span class="text-2xl mr-2">${c.i}</span> ${c.f}</div>
+                <div class="flip-card-back">${c.b}</div>
+            </div>`;
+            grid.appendChild(d);
+        });
+
+        const questions = [
+            { q: "¿Cuál es múltiplo de 3?", a: ["10", "15", "7"], c: 1 },
+            { q: "¿Cuál es divisor de 10?", a: ["3", "5", "4"], c: 1 },
+            { q: "¿El número 7 es primo o compuesto?", a: ["Primo", "Compuesto"], c: 0 },
+            { q: "¿Qué número es divisor de TODOS los números?", a: ["El 0", "El 1", "El 2"], c: 1 },
+            { q: "¿Cuántos divisores tiene un número?", a: ["Infinitos", "Son limitados", "Solo dos"], c: 1 }
+        ];
+
+        let currentQ = 0; let score = 0;
+        function startQuiz() {
+            currentQ = 0; score = 0;
+            document.getElementById('quiz-area').classList.remove('hidden');
+            document.getElementById('result-area').classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('q-progress').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+            document.getElementById('q-text').innerText = q.q;
+            const optDiv = document.getElementById('options');
+            optDiv.innerHTML = '';
+            q.a.forEach((opt, i) => {
+                const b = document.createElement('button');
+                b.className = "w-full p-5 bg-white border-2 border-purple-100 rounded-2xl font-bold text-slate-700 hover:border-purple-500 transition-all text-left";
+                b.innerText = opt;
+                b.onclick = () => {
+                    if(i === q.c) score++;
+                    currentQ++;
+                    if(currentQ < questions.length) loadQuestion();
+                    else showResults();
+                };
+                optDiv.appendChild(b);
+            });
+        }
+
+        function showResults() {
+            document.getElementById('quiz-area').classList.add('hidden');
+            document.getElementById('result-area').classList.remove('hidden');
+            document.getElementById('score-text').innerText = `¡Buen trabajo Gloria! Aciertos: ${score} de ${questions.length}`;
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
