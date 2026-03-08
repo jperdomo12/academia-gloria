@@ -59,28 +59,33 @@
                 </div>
                 <div class="bg-white p-6 rounded-[30px] border-t-8 border-blue-400 shadow-sm">
                     <h3 class="font-bold text-blue-700 mb-2 flex items-center gap-2"><i data-lucide="battery-charging" class="w-5 h-5"></i> Química</h3>
-                    <p class="text-sm text-slate-600">Guardada en sustancias. ¡Está en tu <b>comida</b> (pasta) y en las <b>pilas</b>!</p>
+                    <p class="text-sm text-slate-600">Guardada en sustancias. ¡Está en tu <b>comida</b> y en las <b>pilas</b>!</p>
                 </div>
                 <div class="bg-white p-6 rounded-[30px] border-t-8 border-indigo-400 shadow-sm">
                     <h3 class="font-bold text-indigo-700 mb-2 flex items-center gap-2"><i data-lucide="sun" class="w-5 h-5"></i> Lumínica</h3>
-                    <p class="text-sm text-slate-600">La que emiten los objetos con luz, como el <b>Sol</b> o una bombilla.</p>
+                    <p class="text-sm text-slate-600">La que emiten los objetos con luz, como el <b>Sol</b> o una linterna.</p>
                 </div>
             </div>
+            
+            
+
+[Image of forms of energy diagram]
+
 
             <div class="bg-green-600 text-white p-8 rounded-[35px] shadow-lg">
                 <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i data-lucide="recycle" class="w-8 h-8"></i> Las 3 Erres</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-green-700 p-4 rounded-2xl">
+                    <div class="bg-green-700 p-4 rounded-2xl text-center">
                         <span class="font-black text-xl">REDUCIR</span>
                         <p class="text-xs opacity-90 mt-1 text-green-100">Comprar productos con poco envoltorio.</p>
                     </div>
-                    <div class="bg-green-700 p-4 rounded-2xl">
+                    <div class="bg-green-700 p-4 rounded-2xl text-center">
                         <span class="font-black text-xl">REUTILIZAR</span>
-                        <p class="text-xs opacity-90 mt-1 text-green-100">Usar envases de vidrio o plástico otra vez.</p>
+                        <p class="text-xs opacity-90 mt-1 text-green-100">Usar envases otra vez.</p>
                     </div>
-                    <div class="bg-green-700 p-4 rounded-2xl">
+                    <div class="bg-green-700 p-4 rounded-2xl text-center">
                         <span class="font-black text-xl">RECICLAR</span>
-                        <p class="text-xs opacity-90 mt-1 text-green-100">Separar la basura en el contenedor correcto.</p>
+                        <p class="text-xs opacity-90 mt-1 text-green-100">Separar la basura en los cubos.</p>
                     </div>
                 </div>
             </div>
@@ -89,26 +94,26 @@
         <div id="fichas" class="tab-content grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Propiedad: Transferencia</div>
-                    <div class="flip-card-back">La energía pasa de un objeto a otro. (Ej: Del sol a las plantas).</div>
+                    <div class="flip-card-front text-xl italic">Transporte</div>
+                    <div class="flip-card-back">La energía se puede llevar de un sitio a otro (ej: por cables eléctricos).</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Energía Nuclear</div>
-                    <div class="flip-card-back">Se encuentra en el Uranio y se usa en centrales nucleares para dar calor.</div>
+                    <div class="flip-card-front text-xl italic">Almacenamiento</div>
+                    <div class="flip-card-back">La energía se puede guardar, como en las baterías o pilas.</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front text-xl italic">Fuentes Renovables</div>
-                    <div class="flip-card-back text-sm">Sol (Solar), Viento (Eólica), Agua (Hidráulica), Biomasa y Geotérmica. ¡No se agotan!</div>
+                    <div class="flip-card-back text-sm">Sol, Viento, Agua, Biomasa y Geotérmica. ¡Inagotables!</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Fuentes No Renovables</div>
-                    <div class="flip-card-back text-sm">Carbón, Petróleo, Gas Natural y Uranio. ¡Se pueden agotar y contaminan!</div>
+                    <div class="flip-card-front text-xl italic">Combustibles Fósiles</div>
+                    <div class="flip-card-back text-sm">Carbón, Petróleo y Gas Natural. ¡Se agotan y contaminan!</div>
                 </div>
             </div>
         </div>
@@ -116,6 +121,9 @@
         <div id="test" class="tab-content">
             <div class="bg-white p-8 rounded-[35px] shadow-sm">
                 <div id="quiz-container">
+                    <div class="flex justify-between items-center mb-6">
+                        <span id="progress" class="bg-green-100 text-green-700 px-4 py-1 rounded-full font-bold"></span>
+                    </div>
                     <div id="question" class="text-2xl font-bold text-slate-800 mb-6 text-center"></div>
                     <div id="options" class="grid grid-cols-1 gap-4"></div>
                     <div id="feedback" class="mt-6 text-center font-bold text-xl hidden"></div>
@@ -123,6 +131,7 @@
                 <div id="score-container" class="hidden text-center">
                     <h2 class="text-4xl font-bold text-green-600 mb-4">¡Prueba Terminada!</h2>
                     <p id="final-score" class="text-2xl text-slate-700"></p>
+                    <div id="medal" class="text-6xl my-4"></div>
                     <button onclick="resetQuiz()" class="mt-6 bg-green-500 text-white px-8 py-3 rounded-full font-bold">Intentar de nuevo</button>
                 </div>
             </div>
@@ -133,77 +142,4 @@
     <script>
         lucide.createIcons();
 
-        // Lógica de Pestañas
-        function openTab(tabName) {
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-button');
-            
-            contents.forEach(c => c.classList.remove('active'));
-            buttons.forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            document.getElementById('btn-' + tabName).classList.add('active');
-        }
-
-        // Lógica del Quiz
-        const questions = [
-            { q: "¿Cómo se llama la energía que produce el movimiento?", a: ["Mecánica", "Lumínica", "Nuclear"], c: 0 },
-            { q: "¿Cuál de estas fuentes es renovable?", a: ["Carbón", "Viento", "Petróleo"], c: 1 },
-            { q: "Separar la basura en el contenedor correcto es...", a: ["Reducir", "Reutilizar", "Reciclar"], c: 2 },
-            { q: "¿Qué energía guardan las pilas y la comida?", a: ["Química", "Térmica", "Eléctrica"], c: 0 }
-        ];
-
-        let currentQ = 0;
-        let score = 0;
-
-        function loadQuestion() {
-            const q = questions[currentQ];
-            document.getElementById('question').innerText = q.q;
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = '';
-            q.a.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.innerText = opt;
-                btn.className = "p-4 border-2 border-green-100 rounded-2xl hover:bg-green-50 font-bold transition-all text-lg";
-                btn.onclick = () => checkAnswer(i);
-                optionsDiv.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(i) {
-            const feedback = document.getElementById('feedback');
-            feedback.classList.remove('hidden');
-            if(i === questions[currentQ].c) {
-                feedback.innerText = "¡Correcto! ✨";
-                feedback.className = "mt-6 text-center font-bold text-xl text-green-500";
-                score++;
-            } else {
-                feedback.innerText = "¡Casi! Era " + questions[currentQ].a[questions[currentQ].c] + " 💡";
-                feedback.className = "mt-6 text-center font-bold text-xl text-red-500";
-            }
-            
-            setTimeout(() => {
-                feedback.classList.add('hidden');
-                currentQ++;
-                if(currentQ < questions.length) loadQuestion();
-                else showScore();
-            }, 1500);
-        }
-
-        function showScore() {
-            document.getElementById('quiz-container').classList.add('hidden');
-            document.getElementById('score-container').classList.remove('hidden');
-            document.getElementById('final-score').innerText = "Has acertado " + score + " de " + questions.length;
-        }
-
-        function resetQuiz() {
-            currentQ = 0; score = 0;
-            document.getElementById('quiz-container').classList.remove('hidden');
-            document.getElementById('score-container').classList.add('hidden');
-            loadQuestion();
-        }
-
-        loadQuestion();
-    </script>
-</body>
-</html>
+        function openTab(tab
