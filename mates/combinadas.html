@@ -4,198 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mates: Operaciones Combinadas - Gloria Valentina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f0f9ff; color: #0c4a6e; }
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .nav-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e0f2fe;
-        }
-
-        .tab-button.active {
-            color: #0ea5e9;
-            border-bottom: 4px solid #0ea5e9;
-        }
-
-        .math-bubble {
-            background: white;
-            border-radius: 2rem;
-            border-left: 8px solid #0ea5e9;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);
-        }
-
-        .flip-card { perspective: 1000px; height: 180px; cursor: pointer; }
+        .math-card { background: white; border-radius: 2rem; padding: 2rem; border-left: 10px solid #0ea5e9; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.1); }
+        .nav-btn.active { color: #0ea5e9; border-bottom: 3px solid #0ea5e9; }
+        .flip-card { perspective: 1000px; height: 160px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            display: flex; align-items: center; justify-content: center;
-            padding: 1.5rem; border-radius: 1.5rem; text-align: center; font-weight: 700;
-        }
-        .flip-card-front { background: white; border: 2px solid #e0f2fe; color: #0369a1; }
-        .flip-card-back { background: #0ea5e9; color: white; transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 1.5rem; border-radius: 1.5rem; text-align: center; }
+        .flip-card-front { background: white; border: 2px solid #e0f2fe; color: #0369a1; font-weight: 700; }
+        .flip-card-back { background: #0ea5e9; color: white; transform: rotateY(180deg); font-weight: 600; }
     </style>
 </head>
-<body class="pb-12">
-
-    <nav class="nav-card sticky top-0 z-50 mb-8">
-        <div class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center">
+<body class="pb-10">
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-sky-100 mb-8">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center h-20">
             <div class="flex items-center gap-2">
                 <span class="text-2xl">🔢</span>
-                <span class="font-bold text-sky-900">Mates: Combinadas</span>
+                <span class="font-bold text-sky-900 text-xl tracking-tight">Mates: Combinadas</span>
             </div>
             <div class="flex gap-4">
-                <button onclick="showTab('teoria')" id="btn-teoria" class="tab-button active px-2 py-1 font-bold">Reglas</button>
-                <button onclick="showTab('fichas')" id="btn-fichas" class="tab-button px-2 py-1 font-bold text-slate-400">Fichas</button>
-                <button onclick="showTab('test')" id="btn-test" class="tab-button px-2 py-1 font-bold text-slate-400">Test</button>
+                <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn active px-2 py-1 font-bold">Reglas</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn px-2 py-1 font-bold text-slate-400">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn px-2 py-1 font-bold text-slate-400">Test</button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto px-6">
-        
-        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-sky-600 font-bold hover:bg-sky-50 transition-all mb-8 border border-sky-100">
+    <main class="max-w-4xl mx-auto px-6">
+        <a href="../index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-sky-600 font-bold hover:bg-sky-50 transition-all mb-8 border border-sky-100">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver al Inicio
         </a>
 
-        <section id="teoria" class="tab-content active space-y-6">
-            <div class="text-center py-6">
-                <h1 class="text-3xl font-black text-slate-800">El Libro de lo Importante</h1>
-                <p class="text-sky-500 font-bold italic">Operaciones Combinadas</p>
+        <section id="teoria" class="tab-content active space-y-8">
+            <div class="math-card">
+                <h2 class="text-2xl font-bold text-sky-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="info" class="text-sky-500"></i> ¿Qué son?
+                </h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Son operaciones donde aparecen sumas, restas, multis y divisiones juntas. ¡Para resolverlas hay un <b>orden sagrado</b>!
+                </p>
             </div>
-
-            <div class="math-bubble p-6 bg-white">
-                <h2 class="text-xl font-bold text-sky-700 mb-2">¿Qué son?</h2>
-                <p class="text-slate-600">Son expresiones matemáticas donde aparecen varias operaciones juntas: <b>sumas, restas, multis y divisiones</b>.</p>
-            </div>
-
-            <h3 class="text-lg font-black uppercase tracking-widest text-slate-400 pt-4">La Jerarquía de Operaciones</h3>
 
             
 
-            <div class="space-y-4">
-                <div class="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border-l-8 border-yellow-400">
-                    <div class="bg-yellow-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-black">1º</div>
-                    <div>
-                        <p class="font-bold text-slate-800">Paréntesis ( )</p>
-                        <p class="text-sm text-slate-500 italic">¡Es OBLIGATORIO resolverlo primero!</p>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-yellow-50 p-6 rounded-3xl border-2 border-yellow-200">
+                    <span class="text-yellow-600 font-black text-xl">1º</span>
+                    <h3 class="font-bold text-slate-800">Paréntesis ( )</h3>
+                    <p class="text-sm text-slate-500">¡Es obligatorio hacerlo primero!</p>
                 </div>
-
-                <div class="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border-l-8 border-orange-400">
-                    <div class="bg-orange-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-black">2º</div>
-                    <div>
-                        <p class="font-bold text-slate-800">Multiplicación y División × :</p>
-                        <p class="text-sm text-slate-500">Si no hay paréntesis, ellas mandan.</p>
-                    </div>
+                <div class="bg-orange-50 p-6 rounded-3xl border-2 border-orange-200">
+                    <span class="text-orange-600 font-black text-xl">2º</span>
+                    <h3 class="font-bold text-slate-800">Multis y Divisiones</h3>
+                    <p class="text-sm text-slate-500">Si no hay paréntesis, ellas mandan.</p>
                 </div>
-
-                <div class="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border-l-8 border-emerald-400">
-                    <div class="bg-emerald-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-black">3º</div>
-                    <div>
-                        <p class="font-bold text-slate-800">Suma y Resta + -</p>
-                        <p class="text-sm text-slate-500">Al final, siempre de izquierda a derecha.</p>
-                    </div>
+                <div class="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-200">
+                    <span class="text-emerald-600 font-black text-xl">3º</span>
+                    <h3 class="font-bold text-slate-800">Sumas y Restas</h3>
+                    <p class="text-sm text-slate-500">Al final, de izquierda a derecha.</p>
                 </div>
             </div>
 
-            <div class="bg-sky-600 text-white p-8 rounded-[2.5rem] mt-8 relative overflow-hidden">
-                <h4 class="text-xl font-black mb-2 italic">¡Ojo, Gloria!</h4>
-                <p class="opacity-90">Solo la suma y la multiplicación tienen la <b>Propiedad Conmutativa</b> (el orden no cambia el resultado). En la resta y división, ¡el orden es sagrado!</p>
+            <div class="bg-sky-600 text-white p-8 rounded-[2.5rem] shadow-lg">
+                <h3 class="text-xl font-black mb-4 flex items-center gap-2 italic">
+                    <i data-lucide="alert-triangle"></i> ¡Importante, Gloria!
+                </h3>
+                <p class="opacity-90 leading-relaxed">
+                    Recuerda la <b>Propiedad Conmutativa</b>: solo la suma y la multiplicación permiten cambiar el orden. ¡En las combinadas, sigue siempre la jerarquía!
+                </p>
             </div>
         </section>
 
-        <section id="fichas" class="tab-content space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="fichas-grid">
-                </div>
+        <section id="fichas" class="tab-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="fichas-grid"></div>
         </section>
 
         <section id="test" class="tab-content">
-            <div class="bg-white rounded-[2rem] p-8 shadow-xl border border-sky-100">
-                <div id="quiz-area">
-                    <p id="q-text" class="text-2xl font-black text-center text-slate-800 mb-8"></p>
-                    <div id="options" class="grid gap-3"></div>
-                </div>
-                <div id="result-area" class="hidden text-center">
-                    <h2 class="text-4xl font-black text-sky-600 mb-4">¡GENIAL!</h2>
-                    <p id="score-text" class="text-xl font-bold text-slate-600"></p>
-                    <button onclick="location.reload()" class="mt-8 bg-sky-600 text-white px-8 py-3 rounded-full font-bold">Reiniciar Desafío</button>
-                </div>
+            <div class="bg-white rounded-[2rem] p-8 shadow-xl border border-sky-100" id="quiz-area">
+                <p id="q-text" class="text-2xl font-black text-center text-slate-800 mb-8"></p>
+                <div id="options" class="grid gap-3"></div>
             </div>
         </section>
-
     </main>
 
     <script>
-        const cards = [
-            { f: "¿Qué se resuelve primero?", b: "Los Paréntesis ( )", i: "🎯" },
-            { f: "¿Y si no hay paréntesis?", b: "Multiplicaciones y Divisiones", i: "✖️" },
-            { f: "Dirección final", b: "De Izquierda a Derecha", i: "➡️" },
-            { f: "Propiedad Conmutativa", b: "Solo en Suma y Multiplicación", i: "🔄" }
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+            lucide.createIcons();
+        }
+
+        const flashcards = [
+            { f: "¿Qué va primero?", b: "Los Paréntesis ( )", i: "🎯" },
+            { f: "¿Y después?", b: "Multiplicaciones y Divisiones", i: "✖️" },
+            { f: "Si hay sumas y restas...", b: "De izquierda a derecha", i: "➡️" },
+            { f: "3 + 2 × 4", b: "Primero 2×4=8. Luego 3+8=11", i: "🧮" }
         ];
 
-        const questions = [
-            { q: "5 + 6 : (7 - 4)", a: ["7", "11", "4"], c: 0 },
-            { q: "36 : 4 - 3 × 2 + 8", a: ["11", "20", "5"], c: 0 },
-            { q: "3 + 2 × (5 - 1)", a: ["20", "11", "14"], c: 1 },
-            { q: "¿Es igual 10 - 2 que 2 - 10?", a: ["Sí", "No", "A veces"], c: 1 }
-        ];
-
-        let currentQ = 0;
-        let score = 0;
-
-        function showTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active', 'text-sky-600'));
-            document.getElementById(tab).classList.add('active');
-            document.getElementById('btn-'+tab).classList.add('active', 'text-sky-600');
-            if(tab === 'test') loadQ();
-        }
-
-        function loadQ() {
-            const q = questions[currentQ];
-            document.getElementById('q-text').innerText = q.q;
-            const opt = document.getElementById('options');
-            opt.innerHTML = '';
-            q.a.forEach((o, i) => {
-                const b = document.createElement('button');
-                b.className = "p-4 border-2 border-sky-100 rounded-2xl font-bold hover:bg-sky-50 text-sky-800";
-                b.innerText = o;
-                b.onclick = () => check(i);
-                opt.appendChild(b);
-            });
-        }
-
-        function check(i) {
-            if(i === questions[currentQ].c) score++;
-            currentQ++;
-            if(currentQ < questions.length) loadQ();
-            else {
-                document.getElementById('quiz-area').classList.add('hidden');
-                document.getElementById('result-area').classList.remove('hidden');
-                document.getElementById('score-text').innerText = `Has acertado ${score} de ${questions.length}`;
-            }
-        }
-
-        // Cargar fichas
         const grid = document.getElementById('fichas-grid');
-        cards.forEach(c => {
-            const d = document.createElement('div');
-            d.className = "flip-card";
-            d.onclick = () => d.classList.toggle('flipped');
-            d.innerHTML = `
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"><span class="text-2xl mr-2">${c.i}</span> ${c.f}</div>
-                    <div class="flip-card-back">${c.b}</div>
-                </div>`;
-            grid.appendChild(d);
+        flashcards.forEach(c => {
+            const div = document.createElement('div');
+            div.className = "flip-card";
+            div.onclick = () => div.classList.toggle('flipped');
+            div.innerHTML = `<div class="flip-card-inner">
+                <div class="flip-card-front"><span class="text-2xl mr-2">${c.i}</span> ${c.f}</div>
+                <div class="flip-card-back">${c.b}</div>
+            </div>`;
+            grid.appendChild(div);
         });
 
         lucide.createIcons();
