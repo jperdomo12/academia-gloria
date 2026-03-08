@@ -9,62 +9,58 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f0fdf4; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .tab-button.active { background-color: #22c55e; color: white; transform: translateY(-4px); box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3); }
         
-        /* Estilos para las Fichas (Flip Cards) */
-        .flip-card { background-color: transparent; width: 100%; height: 200px; perspective: 1000px; cursor: pointer; }
+        /* Control de Pestañas */
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-button { transition: all 0.3s ease; border: 2px solid transparent; }
+        .tab-button.active { 
+            background-color: #22c55e; 
+            color: white; 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4);
+            border-color: #16a34a;
+        }
+        
+        /* Fichas Giratorias */
+        .flip-card { background-color: transparent; width: 100%; height: 220px; perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 25px; display: flex; align-items: center; justify-content: center; padding: 20px; font-weight: bold; }
-        .flip-card-front { background-color: white; color: #166534; border: 3px solid #bbf7d0; }
-        .flip-card-back { background-color: #22c55e; color: white; transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding: 25px; font-weight: bold; font-size: 1.2rem; }
+        .flip-card-front { background-color: white; color: #166534; border: 4px solid #bbf7d0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .flip-card-back { background-color: #22c55e; color: white; transform: rotateY(180deg); box-shadow: 0 10px 15px -3px rgba(34,197,94,0.3); }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <div class="max-w-4xl mx-auto">
-        <header class="flex flex-col items-center mb-8 text-center">
-            <a href="index.html" class="self-start mb-4 bg-white px-4 py-2 rounded-full shadow-sm text-green-600 font-bold hover:bg-green-50 transition-all flex items-center gap-2">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Science
-            </a>
-            <div class="bg-green-100 p-4 rounded-3xl mb-4 text-green-600">
-                <i data-lucide="zap" class="w-12 h-12"></i>
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-green-600 font-bold hover:bg-green-50 transition-all mb-8">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Temas
+        </a>
+
+        <header class="text-center mb-10">
+            <div class="inline-block bg-green-100 p-4 rounded-3xl mb-4 text-green-600">
+                <i data-lucide="zap" class="w-10 h-10"></i>
             </div>
-            <h1 class="text-4xl font-extrabold text-slate-800">La Energía ⚡</h1>
-            <p class="text-green-600 font-semibold mt-2">¡Eres pura energía, Gloria Valentina!</p>
+            <h1 class="text-4xl font-extrabold text-slate-800">Misión: La Energía ⚡</h1>
         </header>
 
-        <div class="flex gap-2 mb-8 bg-green-100 p-2 rounded-3xl justify-between">
-            <button onclick="openTab('resumen')" class="tab-button active flex-1 py-3 rounded-2xl font-bold transition-all" id="btn-resumen">Resumen</button>
-            <button onclick="openTab('fichas')" class="tab-button flex-1 py-3 rounded-2xl font-bold transition-all" id="btn-fichas">Fichas</button>
-            <button onclick="openTab('test')" class="tab-button flex-1 py-3 rounded-2xl font-bold transition-all" id="btn-test">Super Test</button>
+        <div class="flex gap-3 mb-10 bg-green-100/50 p-2 rounded-[2rem] sticky top-4 z-50 backdrop-blur-md border border-green-100">
+            <button onclick="openTab('resumen')" class="tab-button active flex-1 py-4 rounded-2xl font-extrabold text-sm uppercase tracking-wider" id="btn-resumen">Repaso</button>
+            <button onclick="openTab('fichas')" class="tab-button flex-1 py-4 rounded-2xl font-extrabold text-sm uppercase tracking-wider" id="btn-fichas">Fichas</button>
+            <button onclick="openTab('test')" class="tab-button flex-1 py-4 rounded-2xl font-extrabold text-sm uppercase tracking-wider" id="btn-test">Super Test</button>
         </div>
 
         <div id="resumen" class="tab-content active space-y-6">
-            <div class="bg-white p-8 rounded-[35px] shadow-sm border-l-8 border-green-500">
-                <h2 class="text-2xl font-bold text-green-700 mb-4">¿Qué es la energía?</h2>
-                <p class="text-slate-600 leading-relaxed text-lg">Es la capacidad que tiene un objeto para <b>moverse</b>, <b>calentarse</b> o <b>producir luz</b>.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-white p-6 rounded-[30px] border-t-8 border-yellow-400 shadow-sm">
-                    <h3 class="font-bold text-yellow-700 mb-2 flex items-center gap-2"><i data-lucide="move" class="w-5 h-5"></i> Mecánica</h3>
-                    <p class="text-sm text-slate-600">Es la del movimiento. <b>Cinética</b> (cuando algo se mueve) y <b>Potencial</b> (cuando lo levantas).</p>
-                </div>
-                <div class="bg-white p-6 rounded-[30px] border-t-8 border-orange-400 shadow-sm">
-                    <h3 class="font-bold text-orange-700 mb-2 flex items-center gap-2"><i data-lucide="flame" class="w-5 h-5"></i> Térmica</h3>
-                    <p class="text-sm text-slate-600">Energía en forma de <b>calor</b>. Se nota cuando algo aumenta su temperatura.</p>
-                </div>
-                <div class="bg-white p-6 rounded-[30px] border-t-8 border-blue-400 shadow-sm">
-                    <h3 class="font-bold text-blue-700 mb-2 flex items-center gap-2"><i data-lucide="battery-charging" class="w-5 h-5"></i> Química</h3>
-                    <p class="text-sm text-slate-600">Guardada en sustancias. ¡Está en tu <b>comida</b> y en las <b>pilas</b>!</p>
-                </div>
-                <div class="bg-white p-6 rounded-[30px] border-t-8 border-indigo-400 shadow-sm">
-                    <h3 class="font-bold text-indigo-700 mb-2 flex items-center gap-2"><i data-lucide="sun" class="w-5 h-5"></i> Lumínica</h3>
-                    <p class="text-sm text-slate-600">La que emiten los objetos con luz, como el <b>Sol</b> o una linterna.</p>
-                </div>
+            <div class="bg-white p-8 rounded-[35px] shadow-sm border-l-[12px] border-green-500">
+                <h2 class="text-2xl font-bold text-green-700 mb-4 italic italic">¿Qué es la energía?</h2>
+                <p class="text-slate-600 leading-relaxed text-xl">Es la capacidad que tiene un objeto para <b>moverse</b>, <b>calentarse</b> o <b>producir luz</b>. ¡Sin ella no pasaría nada en el mundo!</p>
             </div>
             
             
@@ -72,74 +68,157 @@
 [Image of forms of energy diagram]
 
 
-            <div class="bg-green-600 text-white p-8 rounded-[35px] shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i data-lucide="recycle" class="w-8 h-8"></i> Las 3 Erres</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-green-700 p-4 rounded-2xl text-center">
-                        <span class="font-black text-xl">REDUCIR</span>
-                        <p class="text-xs opacity-90 mt-1 text-green-100">Comprar productos con poco envoltorio.</p>
-                    </div>
-                    <div class="bg-green-700 p-4 rounded-2xl text-center">
-                        <span class="font-black text-xl">REUTILIZAR</span>
-                        <p class="text-xs opacity-90 mt-1 text-green-100">Usar envases otra vez.</p>
-                    </div>
-                    <div class="bg-green-700 p-4 rounded-2xl text-center">
-                        <span class="font-black text-xl">RECICLAR</span>
-                        <p class="text-xs opacity-90 mt-1 text-green-100">Separar la basura en los cubos.</p>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-[30px] border-t-8 border-yellow-400 shadow-sm">
+                    <h3 class="font-bold text-yellow-700 mb-2 flex items-center gap-2"><i data-lucide="move" class="w-5 h-5"></i> Mecánica</h3>
+                    <p class="text-sm text-slate-600">Es la del movimiento. <b>Cinética</b> (al moverte) y <b>Potencial</b> (cuando algo está en alto).</p>
+                </div>
+                <div class="bg-white p-6 rounded-[30px] border-t-8 border-orange-400 shadow-sm">
+                    <h3 class="font-bold text-orange-700 mb-2 flex items-center gap-2"><i data-lucide="flame" class="w-5 h-5"></i> Térmica</h3>
+                    <p class="text-sm text-slate-600">Es el <b>calor</b>. Cuanto más rápido se mueven las partículas, más calor hace.</p>
                 </div>
             </div>
         </div>
 
-        <div id="fichas" class="tab-content grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Transporte</div>
-                    <div class="flip-card-back">La energía se puede llevar de un sitio a otro (ej: por cables eléctricos).</div>
+        <div id="fichas" class="tab-content">
+            <p class="text-center text-green-600 font-bold mb-6 italic">¡Toca cada ficha para ver la respuesta!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Transporte</div>
+                        <div class="flip-card-back">La energía se mueve por cables o camiones (como la gasolina).</div>
+                    </div>
                 </div>
-            </div>
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Almacenamiento</div>
-                    <div class="flip-card-back">La energía se puede guardar, como en las baterías o pilas.</div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Combustibles Fósiles</div>
+                        <div class="flip-card-back">Carbón, Petróleo y Gas Natural. ¡Cuidado, se agotan!</div>
+                    </div>
                 </div>
-            </div>
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Fuentes Renovables</div>
-                    <div class="flip-card-back text-sm">Sol, Viento, Agua, Biomasa y Geotérmica. ¡Inagotables!</div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Uranio</div>
+                        <div class="flip-card-back">Metal radiactivo usado en centrales nucleares. ☢️</div>
+                    </div>
                 </div>
-            </div>
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front text-xl italic">Combustibles Fósiles</div>
-                    <div class="flip-card-back text-sm">Carbón, Petróleo y Gas Natural. ¡Se agotan y contaminan!</div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Dióxido de Carbono</div>
+                        <div class="flip-card-back text-sm">Gas que produce contaminación y calentamiento global. 🌍🔥</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="test" class="tab-content">
-            <div class="bg-white p-8 rounded-[35px] shadow-sm">
+            <div class="bg-white p-8 rounded-[40px] shadow-lg border-2 border-green-100">
                 <div id="quiz-container">
-                    <div class="flex justify-between items-center mb-6">
-                        <span id="progress" class="bg-green-100 text-green-700 px-4 py-1 rounded-full font-bold"></span>
+                    <div class="flex justify-between items-center mb-8">
+                        <span id="progress" class="bg-green-100 text-green-700 px-6 py-2 rounded-full font-black text-sm uppercase"></span>
                     </div>
-                    <div id="question" class="text-2xl font-bold text-slate-800 mb-6 text-center"></div>
+                    <div id="question" class="text-2xl font-extrabold text-slate-800 mb-8 text-center leading-tight"></div>
                     <div id="options" class="grid grid-cols-1 gap-4"></div>
-                    <div id="feedback" class="mt-6 text-center font-bold text-xl hidden"></div>
+                    <div id="feedback" class="mt-8 text-center font-bold text-2xl hidden animate-bounce"></div>
                 </div>
-                <div id="score-container" class="hidden text-center">
-                    <h2 class="text-4xl font-bold text-green-600 mb-4">¡Prueba Terminada!</h2>
-                    <p id="final-score" class="text-2xl text-slate-700"></p>
-                    <div id="medal" class="text-6xl my-4"></div>
-                    <button onclick="resetQuiz()" class="mt-6 bg-green-500 text-white px-8 py-3 rounded-full font-bold">Intentar de nuevo</button>
+                <div id="score-container" class="hidden text-center py-10">
+                    <h2 class="text-5xl font-black text-green-600 mb-4">¡TERMINADO!</h2>
+                    <p id="final-score" class="text-2xl text-slate-700 font-bold mb-6"></p>
+                    <div id="medal" class="text-7xl mb-10"></div>
+                    <button onclick="resetQuiz()" class="bg-green-500 hover:bg-green-600 text-white px-12 py-4 rounded-3xl font-black shadow-lg transition-all active:scale-95">REPETIR MISIÓN</button>
                 </div>
             </div>
         </div>
 
+        <footer class="mt-16 text-center text-slate-400 font-bold text-xs uppercase tracking-widest">
+            Academia de Gloria Valentina • Science 5º
+        </footer>
     </div>
 
     <script>
-        lucide.createIcons();
+        // ESTO ES EL CEREBRO: NO LO BORRES AL COPIAR
+        function openTab(tabName) {
+            // Ocultar todo
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            
+            // Mostrar lo seleccionado
+            document.getElementById(tabName).classList.add('active');
+            document.getElementById('btn-' + tabName).classList.add('active');
+            
+            // Si es el test, reiniciarlo al entrar para que esté fresco
+            if(tabName === 'test' && currentQ === 0) { loadQuestion(); }
+            
+            // Lucide Icons reload
+            lucide.createIcons();
+        }
 
-        function openTab(tab
+        const questions = [
+            { q: "¿Qué energía produce el movimiento?", a: ["Mecánica", "Térmica", "Nuclear"], c: 0 },
+            { q: "Fuente de energía inagotable:", a: ["Petróleo", "Viento", "Carbón"], c: 1 },
+            { q: "El Sol nos da energía Lumínica y...", a: ["Química", "Térmica", "Nuclear"], c: 1 },
+            { q: "La energía guardada en pilas es...", a: ["Eléctrica", "Química", "Mecánica"], c: 1 },
+            { q: "¿Qué gas causa el calentamiento global?", a: ["Oxígeno", "Dióxido de Carbono", "Helio"], c: 1 },
+            { q: "Separar la basura es...", a: ["Reducir", "Reutilizar", "Reciclar"], c: 2 },
+            { q: "¿Qué energía usa el agua (presas)?", a: ["Hidráulica", "Eólica", "Solar"], c: 0 },
+            { q: "El Uranio se usa en energía...", a: ["Química", "Nuclear", "Térmica"], c: 1 },
+            { q: "Llevar energía por cables es...", a: ["Almacenar", "Transportar", "Transformar"], c: 1 },
+            { q: "Comprar menos plástico es...", a: ["Reducir", "Reciclar", "Reutilizar"], c: 0 }
+        ];
+
+        let currentQ = 0; let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('progress').innerText = `DESAFÍO ${currentQ + 1} DE ${questions.length}`;
+            document.getElementById('question').innerText = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.className = "p-5 border-2 border-green-100 rounded-[2rem] hover:bg-green-50 hover:border-green-300 font-extrabold transition-all text-xl text-slate-700 shadow-sm text-center";
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(i) {
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('hidden');
+            if(i === questions[currentQ].c) {
+                feedback.innerText = "¡SÍ! ✨"; feedback.className = "mt-8 text-center font-black text-3xl text-green-500 animate-bounce";
+                score++;
+            } else {
+                feedback.innerText = "¡OH! 💡"; feedback.className = "mt-8 text-center font-black text-3xl text-orange-400";
+            }
+            
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+                currentQ++;
+                if(currentQ < questions.length) loadQuestion();
+                else showScore();
+            }, 1000);
+        }
+
+        function showScore() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('score-container').classList.remove('hidden');
+            document.getElementById('final-score').innerText = `¡Lograste ${score} de ${questions.length} puntos!`;
+            const medal = document.getElementById('medal');
+            if(score === 10) medal.innerText = "🏆¡PERFECTO!";
+            else if(score >= 7) medal.innerText = "🥈¡MUY BIEN!";
+            else medal.innerText = "💪¡TÚ PUEDES!";
+        }
+
+        function resetQuiz() {
+            currentQ = 0; score = 0;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('score-container').classList.add('hidden');
+            loadQuestion();
+        }
+
+        // Iniciar
+        lucide.createIcons();
+    </script>
+</body>
+</html>
