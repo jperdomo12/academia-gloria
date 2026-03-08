@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geología: Los Minerales - Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
         
@@ -111,7 +112,10 @@
 
     <main class="max-w-5xl mx-auto px-6">
         
-        <!-- PÁGINA 1: TEORÍA -->
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-amber-600 font-bold hover:bg-amber-50 transition-all mb-8 border border-amber-100">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Science
+        </a>
+
         <section id="teoria" class="tab-content active">
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-extrabold text-[#1e293b]">Tema: Los Minerales</h1>
@@ -168,7 +172,6 @@
             </div>
         </section>
 
-        <!-- PÁGINA 2: FICHAS -->
         <section id="fichas" class="tab-content">
             <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
                 <span class="bg-slate-100 p-2 rounded-lg">🎴</span> Fichas de Repaso
@@ -176,7 +179,6 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fichas-grid"></div>
         </section>
 
-        <!-- PÁGINA 3: PRACTICAR -->
         <section id="test" class="tab-content">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-amber-700">Test de Minerales</h2>
@@ -237,6 +239,9 @@
         }
 
         function init() {
+            // Inicializar iconos
+            lucide.createIcons();
+
             const grid = document.getElementById('fichas-grid');
             flashcards.forEach(c => {
                 const div = document.createElement('div');
