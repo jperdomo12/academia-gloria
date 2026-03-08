@@ -21,6 +21,9 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid #e0f2fe;
             background: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .card-math:hover {
@@ -37,16 +40,16 @@
             <span>←</span> Volver a todas las materias
         </a>
 
-        <header class="mb-16">
-            <h1 class="medieval-font text-5xl md:text-6xl text-sky-900 mb-4 text-center">Matemáticas</h1>
-            <p class="text-sky-600 text-center text-lg font-medium max-w-2xl mx-auto italic">
-                "El libro de lo importante" — El orden de los números es la clave del éxito.
+        <header class="mb-16 text-center">
+            <h1 class="medieval-font text-5xl md:text-6xl text-sky-900 mb-4">Matemáticas</h1>
+            <p class="text-sky-600 text-lg font-medium max-w-2xl mx-auto italic">
+                "El libro de lo importante" — Domina los números con Gloria Valentina.
             </p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <a href="combinadas.html" class="card-math rounded-[2.5rem] p-8 flex flex-col group">
+            <a href="combinadas.html" class="card-math rounded-[2.5rem] p-8 group">
                 <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-sky-500 group-hover:rotate-12 transition-all duration-300">
                     🔢
                 </div>
@@ -59,9 +62,22 @@
                 </div>
             </a>
 
+            <a href="multiplos_y_divisores.html" class="card-math rounded-[2.5rem] p-8 group border-purple-100">
+                <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-purple-500 group-hover:rotate-12 transition-all duration-300">
+                    ➗
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Múltiplos y Divisores</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Aprende a repartir con exactitud y a encontrar los números primos.
+                </p>
+                <div class="mt-auto flex items-center text-purple-600 font-bold uppercase text-xs tracking-widest">
+                    Entrar a la Misión <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </a>
+
             <div class="border-2 border-dashed border-sky-200 rounded-[2.5rem] p-8 flex flex-col items-center justify-center opacity-50">
                 <div class="text-4xl mb-4">📚</div>
-                <p class="font-bold text-sky-400 italic text-center">Próximos temas de Gloria...</p>
+                <p class="font-bold text-sky-400 italic text-center">Próximos temas...</p>
             </div>
 
         </div>
@@ -71,18 +87,5 @@
         </footer>
     </div>
 
-<a href="multiplos_y_divisores.html" class="card-math rounded-[2.5rem] p-8 flex flex-col group border-purple-100">
-    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-purple-500 group-hover:rotate-12 transition-all duration-300">
-        ➗
-    </div>
-    <h2 class="medieval-font text-2xl text-slate-800 mb-3">Múltiplos y Divisores</h2>
-    <p class="text-slate-500 leading-relaxed mb-6">
-        Aprende a repartir con exactitud y a encontrar los números primos.
-    </p>
-    <div class="mt-auto flex items-center text-purple-600 font-bold uppercase text-xs tracking-widest">
-        Entrar a la Misión <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
-    </div>
-</a>
-    
 </body>
 </html>
