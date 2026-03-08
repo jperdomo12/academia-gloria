@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia de Gloria - Portal Principal</title>
+    <title>Academia de Gloria - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
-        body { font-family: 'Outfit', sans-serif; background: #f0f4f8; }
-        .medieval { font-family: 'Marcellus', serif; }
-        .card { transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-10px); shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        body { font-family: 'Outfit', sans-serif; }
     </style>
 </head>
-<body class="p-6 md:p-20">
-    <div class="max-w-6xl mx-auto text-center">
-        <header class="mb-16">
-            <h1 class="text-6xl medieval text-slate-900 mb-4">Academia de Gloria</h1>
-            <p class="text-xl text-slate-600 italic">"El conocimiento es la mayor aventura"</p>
-        </header>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-6">
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <a href="sociales/index.html" class="card bg-white p-10 rounded-3xl border-b-8 border-amber-500 shadow-sm">
-                <div class="text-5xl mb-4">⚔️</div>
-                <h2 class="medieval text-3xl mb-2 text-slate-800">Sociales</h2>
-                <p class="text-slate-500">Explora la historia y la geografía del mundo.</p>
-            </a>
+    <header class="mb-10 text-center">
+        <h1 class="text-4xl font-bold text-indigo-900 mb-2">🚀 Academia de Gloria</h1>
+        <p class="text-slate-500">¿Qué misión vamos a cumplir hoy?</p>
+    </header>
 
-            <a href="ciencias/index.html" class="card bg-white p-10 rounded-3xl border-b-8 border-emerald-500 shadow-sm">
-                <div class="text-5xl mb-4">🍎</div>
-                <h2 class="medieval text-3xl mb-2 text-slate-800">Ciencias</h2>
-                <p class="text-slate-500">Descubre los secretos de la naturaleza y el cuerpo humano.</p>
-            </a>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl w-full">
+        
+        <a href="lengua/index.html" class="group bg-white p-6 rounded-3xl shadow-sm border-b-8 border-pink-500 hover:shadow-xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-5xl mb-4">✍️</div>
+            <span class="text-pink-700 font-bold text-lg">Lengua</span>
+        </a>
 
-            <div class="bg-slate-200 p-10 rounded-3xl border-b-8 border-slate-400 opacity-60 grayscale">
-                <div class="text-5xl mb-4">📐</div>
-                <h2 class="medieval text-3xl mb-2 text-slate-800">Matemáticas</h2>
-                <p class="text-slate-400">Próximamente: El mundo de los números.</p>
-            </div>
-        </div>
+        <a href="mates/index.html" class="group bg-white p-6 rounded-3xl shadow-sm border-b-8 border-sky-500 hover:shadow-xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-5xl mb-4">🔢</div>
+            <span class="text-sky-700 font-bold text-lg">Mates</span>
+        </a>
+
+        <a href="sociales/index.html" class="group bg-white p-6 rounded-3xl shadow-sm border-b-8 border-purple-500 hover:shadow-xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-5xl mb-4">🌍</div>
+            <span class="text-purple-700 font-bold text-lg">Sociales</span>
+        </a>
+
+        <a href="ciencias/index.html" class="group bg-white p-6 rounded-3xl shadow-sm border-b-8 border-green-500 hover:shadow-xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-5xl mb-4">🔬</div>
+            <span class="text-green-700 font-bold text-lg">Science</span>
+        </a>
+
+        <a href="ingles/index.html" class="group bg-white p-6 rounded-3xl shadow-sm border-b-8 border-orange-500 hover:shadow-xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-5xl mb-4">🇬🇧</div>
+            <span class="text-orange-700 font-bold text-lg">Inglés</span>
+        </a>
+
     </div>
-</body>
 
+    <footer class="mt-12">
+        <a href="calendario.html" class="text-indigo-600 font-semibold hover:underline">Ver Calendario de Exámenes →</a>
+    </footer>
+
+</body>
 </html>
