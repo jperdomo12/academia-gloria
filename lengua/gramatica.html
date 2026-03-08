@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lengua: Gramática - Gloria Valentina</title>
+    <title>Gramática - Academia de Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -17,7 +17,7 @@
         .lang-card { background: white; border-radius: 2rem; border-left: 10px solid #f59e0b; box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1); }
         
         .resource-link { transition: all 0.2s; border: 1px solid #fed7aa; }
-        .resource-link:hover { transform: translateX(5px); background-color: #fff7ed; border-color: #f97316; }
+        .resource-link:hover { transform: translateY(-3px); background-color: #fff7ed; border-color: #f97316; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1); }
 
         table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 1rem; overflow: hidden; }
         th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; }
@@ -34,7 +34,8 @@
             </div>
             <div class="flex gap-4">
                 <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn active py-2 font-bold uppercase text-xs tracking-widest text-orange-600">Teoría</button>
-                <button onclick="showTab('test')" id="btn-test" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Test (10 Q)</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Test</button>
             </div>
         </div>
     </nav>
@@ -46,125 +47,63 @@
         </a>
 
         <section id="teoria" class="tab-content active space-y-8">
-            
             <div class="lang-card p-8">
                 <h2 class="text-2xl font-black text-orange-800 mb-6 flex items-center gap-2 italic">
-                    <i data-lucide="book-open"></i> El Libro de lo Importante: Gramática
+                    <i data-lucide="book-open"></i> El Libro de lo Importante
                 </h2>
-                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 shadow-sm">
-                        <h4 class="font-black text-blue-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
-                            <i data-lucide="tag" class="w-4 h-4"></i> Sustantivos
-                        </h4>
-                        <p class="text-sm leading-relaxed text-slate-700">
-                            Son palabras que sirven para <b>NOMBRAR</b> todo lo que existe.
-                        </p>
-                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Propios:</b> Nombres de personas o lugares (<i>Gloria, Madrid</i>).</li>
-                            <li>• <b>Comunes:</b> Objetos o seres (<i>casa, perro, mesa</i>).</li>
-                            <li>• <b>Abstractos:</b> Ideas o sentimientos (<i>amor, paz</i>).</li>
-                        </ul>
+                        <h4 class="font-black text-blue-800 uppercase text-xs tracking-widest mb-2">Sustantivos</h4>
+                        <p class="text-xs text-slate-600"><b>NOMBRAN:</b> Personas (Gloria), Lugares (España), Cosas (Libro).</p>
                     </div>
-
                     <div class="p-5 bg-green-50 rounded-2xl border-l-4 border-green-500 shadow-sm">
-                        <h4 class="font-black text-green-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
-                            <i data-lucide="palette" class="w-4 h-4"></i> Adjetivos
-                        </h4>
-                        <p class="text-sm leading-relaxed text-slate-700">
-                            Son palabras que dicen <b>CÓMO SON</b> o cómo están los sustantivos.
-                        </p>
-                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Cualidades:</b> (<i>grande, pequeño, inteligente</i>).</li>
-                            <li>• <b>Estados:</b> (<i>cansado, alegre, limpio</i>).</li>
-                            <li>• <b>Colores/Formas:</b> (<i>azul, redondo, cuadrado</i>).</li>
-                        </ul>
+                        <h4 class="font-black text-green-800 uppercase text-xs tracking-widest mb-2">Adjetivos</h4>
+                        <p class="text-xs text-slate-600"><b>DESCRIBEN:</b> Dicen cómo son (Rápido, Azul, Alegre).</p>
                     </div>
-
                     <div class="p-5 bg-yellow-50 rounded-2xl border-l-4 border-yellow-500 shadow-sm">
-                        <h4 class="font-black text-yellow-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
-                            <i data-lucide="zap" class="w-4 h-4"></i> Verbos
-                        </h4>
-                        <p class="text-sm leading-relaxed text-slate-700">
-                            Expresan <b>ACCIONES</b>, procesos o estados en el tiempo.
-                        </p>
-                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Infinitivo:</b> Terminan en <i>-ar, -er, -ir</i> (<i>saltar, leer</i>).</li>
-                            <li>• <b>Tiempos:</b> Pasado, Presente o Futuro.</li>
-                            <li>• <b>Persona:</b> Yo, tú, él, nosotros, vosotros, ellos.</li>
-                        </ul>
+                        <h4 class="font-black text-yellow-800 uppercase text-xs tracking-widest mb-2">Verbos</h4>
+                        <p class="text-xs text-slate-600"><b>ACCIONES:</b> Lo que hacemos (Saltar, Leer, Estudiar).</p>
                     </div>
-
                     <div class="p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-500 shadow-sm">
-                        <h4 class="font-black text-orange-800 uppercase text-sm tracking-widest mb-2 flex items-center gap-2">
-                            <i data-lucide="hand-metal" class="w-4 h-4"></i> Determinantes
-                        </h4>
-                        <p class="text-sm leading-relaxed text-slate-700">
-                            Palabras que <b>ACOMPAÑAN</b> al nombre para concretarlo.
-                        </p>
-                        <ul class="text-[13px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Artículos:</b> (<i>el, la, los, las, un, una</i>).</li>
-                            <li>• <b>Demostrativos:</b> Distancia (<i>este, ese, aquel</i>).</li>
-                            <li>• <b>Posesivos:</b> Pertenencia (<i>mi, tu, su, nuestra</i>).</li>
-                        </ul>
+                        <h4 class="font-black text-orange-800 uppercase text-xs tracking-widest mb-2">Determinantes</h4>
+                        <p class="text-xs text-slate-600"><b>ACOMPAÑAN:</b> Presentan al nombre (El, Mi, Esta).</p>
                     </div>
                 </div>
             </div>
 
-            
             <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-orange-100">
-                <h3 class="text-lg font-bold text-orange-700 mb-4 flex items-center gap-2">
+                <h3 class="text-lg font-bold text-orange-700 mb-4 flex items-center gap-2 italic">
                     <i data-lucide="layout"></i> Cuadro Comparativo Rápido
                 </h3>
                 <table>
                     <thead>
-                        <tr>
-                            <th>Tipo de palabra</th>
-                            <th>Pregunta clave</th>
-                            <th>Idea corta</th>
-                        </tr>
+                        <tr><th>Tipo</th><th>Pregunta</th><th>Idea corta</th></tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="font-bold text-blue-600">🟦 Sustantivo</td>
-                            <td class="italic">¿Qué es?</td>
-                            <td>Nombra</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-green-600">🟩 Adjetivo</td>
-                            <td class="italic">¿Cómo es?</td>
-                            <td>Describe</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-yellow-600">🟨 Verbo</td>
-                            <td class="italic">¿Qué hace?</td>
-                            <td>Acción</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-orange-600">🟧 Determinante</td>
-                            <td class="italic">¿Cuál? ¿Cuántos?</td>
-                            <td>Acompaña</td>
-                        </tr>
+                        <tr><td class="font-bold text-blue-600">🟦 Sustantivo</td><td class="italic">¿Qué es?</td><td>Nombra</td></tr>
+                        <tr><td class="font-bold text-green-600">🟩 Adjetivo</td><td class="italic">¿Cómo es?</td><td>Describe</td></tr>
+                        <tr><td class="font-bold text-yellow-600">🟨 Verbo</td><td class="italic">¿Qué hace?</td><td>Acción</td></tr>
+                        <tr><td class="font-bold text-orange-600">🟧 Determinante</td><td class="italic">¿Cuál?</td><td>Acompaña</td></tr>
                     </tbody>
                 </table>
             </div>
+        </section>
 
-            <div class="lang-card p-6 border-l-pink-500">
-                <h3 class="text-xl font-bold text-pink-800 mb-4 flex items-center gap-2">
-                    <i data-lucide="mouse-pointer-2"></i> Fichas Interactivas
-                </h3>
-                <div class="grid gap-3">
-                    <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">Desafío 1: Comunicación y Lenguaje</span>
-                        <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
+        <section id="fichas" class="tab-content space-y-6">
+            <div class="bg-white p-8 rounded-[2.5rem] border-2 border-dashed border-orange-200">
+                <h3 class="text-2xl font-black text-orange-800 mb-6 text-center italic">Carpeta de Fichas Interactivas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="resource-link p-6 bg-white rounded-2xl text-center">
+                        <div class="text-3xl mb-3">📝</div>
+                        <p class="font-bold text-slate-700 text-sm italic">Comunicación y Lenguaje</p>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">Desafío 2: Lengua Materna Español</span>
-                        <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
+                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="resource-link p-6 bg-white rounded-2xl text-center">
+                        <div class="text-3xl mb-3">📑</div>
+                        <p class="font-bold text-slate-700 text-sm italic">Lengua Materna</p>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="resource-link p-4 bg-white rounded-xl flex items-center justify-between group">
-                        <span class="font-bold text-slate-700 text-sm">Desafío 3: Lengua Castellana</span>
-                        <i data-lucide="external-link" class="w-4 h-4 text-pink-400"></i>
+                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="resource-link p-6 bg-white rounded-2xl text-center">
+                        <div class="text-3xl mb-3">📔</div>
+                        <p class="font-bold text-slate-700 text-sm italic">Lengua Castellana</p>
                     </a>
                 </div>
             </div>
@@ -196,16 +135,16 @@
         }
 
         const questions = [
-            { q: "En 'El gato negro', ¿qué palabra es el SUSTANTIVO?", a: ["El", "Gato", "Negro"], c: 1 },
-            { q: "¿Cuál de estos es un ADJETIVO?", a: ["Cantar", "Valencia", "Hermosa"], c: 2 },
-            { q: "En 'Mi estuche', ¿qué es la palabra 'Mi'?", a: ["Sustantivo", "Determinante", "Verbo"], c: 1 },
-            { q: "¿Qué palabra indica una ACCIÓN?", a: ["Estudiar", "Libro", "Amarillo"], c: 0 },
-            { q: "Los nombres de personas y ciudades siempre van con...", a: ["Minúscula", "Mayúscula"], c: 1 },
-            { q: "En 'Gloria salta mucho', ¿cuál es el VERBO?", a: ["Gloria", "Salta", "Mucho"], c: 1 },
-            { q: "¿Qué palabra DESCRIBE al sustantivo?", a: ["Adjetivo", "Verbo", "Determinante"], c: 0 },
-            { q: "'Aquella niña' -> ¿Qué tipo de palabra es 'Aquella'?", a: ["Sustantivo", "Determinante", "Adjetivo"], c: 1 },
-            { q: "¿Cuál es un sustantivo común?", a: ["España", "Mesa", "Valentina"], c: 1 },
-            { q: "En 'Manzana roja', ¿cuál es el ADJETIVO?", a: ["Manzana", "Roja"], c: 1 }
+            { q: "En 'El gato negro', ¿cuál es el SUSTANTIVO?", a: ["El", "Gato", "Negro"], c: 1 },
+            { q: "¿Qué palabra es un ADJETIVO?", a: ["Correr", "Bonita", "Madrid"], c: 1 },
+            { q: "En 'Mi estuche', ¿qué es 'Mi'?", a: ["Sustantivo", "Determinante", "Verbo"], c: 1 },
+            { q: "¿Cuál es un VERBO?", a: ["Saltar", "Libro", "Amarillo"], c: 0 },
+            { q: "Los nombres propios siempre van con...", a: ["Minúscula", "Mayúscula"], c: 1 },
+            { q: "En 'Gloria canta', ¿cuál es el VERBO?", a: ["Gloria", "Canta"], c: 1 },
+            { q: "¿Qué hace el ADJETIVO?", a: ["Describe", "Nombra", "Actúa"], c: 0 },
+            { q: "'Aquel niño' -> ¿Qué es 'Aquel'?", a: ["Nombre", "Determinante", "Adjetivo"], c: 1 },
+            { q: "¿Cuál es un sustantivo común?", a: ["España", "Silla", "Valentina"], c: 1 },
+            { q: "En 'Manzana roja', ¿qué es 'roja'?", a: ["Sustantivo", "Adjetivo"], c: 1 }
         ];
 
         let currentQ = 0; let score = 0;
@@ -241,7 +180,6 @@
             document.getElementById('result-area').classList.remove('hidden');
             document.getElementById('score-text').innerText = `¡Gloria, eres una experta! Aciertos: ${score} de 10`;
         }
-
         lucide.createIcons();
     </script>
 </body>
