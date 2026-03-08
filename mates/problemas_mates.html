@@ -45,9 +45,15 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm text-indigo-600 font-bold hover:bg-indigo-50 transition-all border border-indigo-100">
+                <span>←</span> Volver al Menú Mates
+            </a>
+        </div>
+
         <header class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Matezonas de Gloria</h1>
-            <p class="text-slate-500">¡Resuelve los 15 retos! Los ejercicios se mezclan al recargar.</p>
+            <h1 class="text-4xl font-extrabold text-slate-800 mb-2">Matezonas de Gloria</h1>
+            <p class="text-slate-500 text-lg">¡Resuelve los 15 retos! Los ejercicios se mezclan al recargar.</p>
             <div class="mt-4 flex justify-center gap-6 text-sm font-medium">
                 <span class="flex items-center gap-2"><span class="w-3 h-3 bg-indigo-500 rounded-full"></span> Lógica Estándar</span>
                 <span class="flex items-center gap-2"><span class="w-3 h-3 bg-pink-500 rounded-full"></span> Retos de Gloria</span>
@@ -55,46 +61,29 @@
         </header>
 
         <div id="exercise-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cargado por JS -->
-        </div>
+            </div>
 
         <div id="stats" class="mt-12 p-6 bg-white rounded-2xl shadow-sm border border-slate-200 text-center">
-            <p class="text-slate-600 font-semibold">Progreso: <span id="solved-count">0</span> de 15 completados</p>
+            <p class="text-slate-600 font-semibold text-xl">Progreso: <span id="solved-count" class="text-indigo-600 font-bold">0</span> de 15 completados</p>
         </div>
     </div>
 
     <script>
         const exercises = [
-            // 1. (105 + 44) - 32 = 117
             { id: 1, type: 'original', ans: 117, text: 'En la biblioteca hay <span class="font-bold text-indigo-600">105 libros</span> de aventuras y <span class="font-bold text-indigo-600">44 de misterio</span>. Si se han prestado <span class="font-bold text-indigo-600">32</span>, ¿cuántos quedan?', placeholder: 'Libros' },
-            // 2. (4 * 30) / 6 = 20
             { id: 2, type: 'original', ans: 20, text: 'Una profesora compra <span class="font-bold text-indigo-600">4 bolsas</span> de caramelos de <span class="font-bold text-indigo-600">30 unidades</span>. Para repartirlos entre <span class="font-bold text-indigo-600">6 alumnos</span>, ¿cuántos recibe cada uno?', placeholder: 'Caramelos' },
-            // 3. 80 - (35 + 20) = 25
             { id: 3, type: 'original', ans: 25, text: 'Marta tiene <span class="font-bold text-indigo-600">35€</span> ahorrados. Su abuelo le regala <span class="font-bold text-indigo-600">20€</span>. Si quiere un juego de <span class="font-bold text-indigo-600">80€</span>, ¿cuánto le falta?', placeholder: '€' },
-            // 4. (6 * 15) - 12 = 78
             { id: 4, type: 'original', ans: 78, text: 'En el huerto hay <span class="font-bold text-indigo-600">6 filas</span> de lechugas con <span class="font-bold text-indigo-600">15</span> en cada una. Si se han estropeado <span class="font-bold text-indigo-600">12</span>, ¿cuántas quedan?', placeholder: 'Lechugas' },
-            // 5. 150 - (60 * 2) = 30
             { id: 5, type: 'original', ans: 30, text: 'Para una excursión hay <span class="font-bold text-indigo-600">150 alumnos</span>. Hay dos autobuses de <span class="font-bold text-indigo-600">60 plazas</span>. ¿Cuántos irán en el tercer autobús?', placeholder: 'Alumnos' },
-            // 6. (12 * 10) - 45 = 75
             { id: 6, type: 'original', ans: 75, text: 'Un frutero tiene <span class="font-bold text-indigo-600">12 cajas</span> con <span class="font-bold text-indigo-600">10 manzanas</span>. Si vende <span class="font-bold text-indigo-600">45 manzanas</span>, ¿cuántas le quedan?', placeholder: 'Manzanas' },
-            // 7. 180 - 25 + 15 = 170
             { id: 7, type: 'original', ans: 170, text: 'Juan tenía <span class="font-bold text-indigo-600">180 cromos</span>. Perdió <span class="font-bold text-indigo-600">25</span> y luego su amiga le regaló <span class="font-bold text-indigo-600">15</span>. ¿Cuántos tiene ahora?', placeholder: 'Cromos' },
-            // 8. (90 - 30) / 3 = 20
             { id: 8, type: 'original', ans: 20, text: 'Tres hermanos compran un regalo de <span class="font-bold text-indigo-600">90€</span>. Si sus padres les dan <span class="font-bold text-indigo-600">30€</span>, ¿cuánto pone cada hermano?', placeholder: '€' },
-            
-            // 9. (10 * 20) - 145 = 55
             { id: 9, type: 'new', ans: 55, text: 'Un cine tiene <span class="font-bold text-pink-600">10 filas</span> con <span class="font-bold text-pink-600">20 asientos</span>. Si hay <span class="font-bold text-pink-600">145 personas</span>, ¿cuántos asientos libres quedan?', placeholder: 'Asientos' },
-            // 10. 48 / 4 = 12
             { id: 10, type: 'new', ans: 12, text: 'Gloria ha horneado <span class="font-bold text-pink-600">48 galletas</span>. Quiere ponerlas en <span class="font-bold text-pink-600">4 cajas</span> iguales. ¿Cuántas galletas por caja?', placeholder: 'Galletas' },
-            // 11. 250 + 75 - 40 = 285
             { id: 11, type: 'new', ans: 285, text: 'Había <span class="font-bold text-pink-600">250 peces</span>. Nacieron <span class="font-bold text-pink-600">75</span> y se llevaron <span class="font-bold text-pink-600">40</span>. ¿Cuántos peces quedan en el estanque?', placeholder: 'Peces' },
-            // 12. 8 * 25 = 200
             { id: 12, type: 'new', ans: 200, text: 'Un camión lleva <span class="font-bold text-pink-600">8 estanterías</span>. Si cada una tiene capacidad para <span class="font-bold text-pink-600">25 libros</span>, ¿cuántos libros lleva?', placeholder: 'Libros' },
-            // 13. (100 - 10) / 9 = 10
             { id: 13, type: 'new', ans: 10, text: 'Tienes <span class="font-bold text-pink-600">100 caramelos</span>. Te quedas <span class="font-bold text-pink-600">10</span> y el resto para <span class="font-bold text-pink-600">9 amigos</span>. ¿Cuántos das a cada uno?', placeholder: 'Caramelos' },
-            // 14. 50 - (15 + 4) = 31
             { id: 14, type: 'new', ans: 31, text: 'Gloria compra un estuche de <span class="font-bold text-pink-600">15€</span> y un cuaderno de <span class="font-bold text-pink-600">4€</span>. Paga con <span class="font-bold text-pink-600">50€</span>, ¿devolución?', placeholder: '€' },
-            // 15. 22 - (10 + 5) = 7
             { id: 15, type: 'new', ans: 7, text: 'Gloria quiere un juguete de <span class="font-bold text-pink-600">22€</span>. Tiene <span class="font-bold text-pink-600">10€</span> y su madre le da <span class="font-bold text-pink-600">5€</span>. ¿Cuánto le falta?', placeholder: '€' }
         ];
 
@@ -137,7 +126,6 @@
             const card = btn.closest('div.card-shadow');
 
             if (userAns === correctAns) {
-                // Acierto
                 input.disabled = true;
                 btn.disabled = true;
                 btn.innerHTML = "✓";
@@ -147,7 +135,6 @@
                 solved++;
                 document.getElementById('solved-count').innerText = solved;
             } else {
-                // Error
                 card.classList.add('shake');
                 input.classList.add('border-red-500', 'bg-red-50', 'text-red-700');
                 setTimeout(() => {
