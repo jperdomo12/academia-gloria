@@ -3,37 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materia - Academia de Gloria</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <title>Matemáticas - Academia de Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style> body { font-family: 'Outfit', sans-serif; } </style>
-</head>
-<body class="bg-slate-50 p-6 min-h-screen">
-
-    <div class="max-w-2xl mx-auto">
-        <a href="../index.html" class="text-indigo-600 mb-8 inline-flex items-center hover:underline font-semibold">
-            <span class="mr-2">←</span> Volver al Hub Central
-        </a>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
         
-        <div class="bg-white rounded-3xl p-8 shadow-sm border-b-8 border-indigo-500 mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Asignatura: Mates </h1>
-            <p class="text-slate-500">Selecciona un tema para empezar el repaso.</p>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f0f9ff; 
+            background-image: radial-gradient(#e0f2fe 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .medieval-font { font-family: 'Marcellus', serif; }
+
+        .card-math {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #e0f2fe;
+            background: white;
+        }
+
+        .card-math:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(12, 74, 110, 0.1);
+            border-color: #7dd3fc;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <a href="../index.html" class="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm text-sky-600 font-bold hover:bg-sky-50 transition-all mb-12 border border-sky-100">
+            <span>←</span> Volver a todas las materias
+        </a>
+
+        <header class="mb-16">
+            <h1 class="medieval-font text-5xl md:text-6xl text-sky-900 mb-4 text-center">Matemáticas</h1>
+            <p class="text-sky-600 text-center text-lg font-medium max-w-2xl mx-auto italic">
+                "El libro de lo importante" — El orden de los números es la clave del éxito.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <a href="combinadas.html" class="card-math rounded-[2.5rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-sky-500 group-hover:rotate-12 transition-all duration-300">
+                    🔢
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Operaciones Combinadas</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Domina el "Orden Sagrado": Paréntesis, Multiplicaciones y Sumas.
+                </p>
+                <div class="mt-auto flex items-center text-sky-600 font-bold uppercase text-xs tracking-widest">
+                    Empezar Misión <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </a>
+
+            <div class="border-2 border-dashed border-sky-200 rounded-[2.5rem] p-8 flex flex-col items-center justify-center opacity-50">
+                <div class="text-4xl mb-4">📚</div>
+                <p class="font-bold text-sky-400 italic text-center">Próximos temas de Gloria...</p>
+            </div>
+
         </div>
 
-        <div class="space-y-4">
-            
-            <div class="bg-slate-100 border-2 border-dashed border-slate-300 p-10 rounded-2xl text-center">
-                <div class="text-4xl mb-3">🛠️</div>
-                <h3 class="font-bold text-slate-400 text-lg">Preparando nuevas misiones...</h3>
-                <p class="text-slate-400 text-sm">Muy pronto aparecerán aquí los temas de esta asignatura.</p>
-            </div>
-
-            </div>
+        <footer class="mt-24 text-center text-sky-400 text-sm">
+            <p>Academia Personal de Gloria Valentina &copy; 2024</p>
+        </footer>
     </div>
-
-    <footer class="mt-12 text-center text-slate-400 text-sm">
-        Academia de Gloria © 2026
-    </footer>
 
 </body>
 </html>
