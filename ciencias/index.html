@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ciencias - Academia de Gloria</title>
+    <title>Ciencias - Academia de Gloria Valentina</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
@@ -20,49 +20,39 @@
         .card-science {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid #dcfce7;
+            height: 100%;
         }
 
         .card-science:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(22, 101, 52, 0.15);
-            border-color: #10b981;
+            border-color: #86efac;
         }
     </style>
 </head>
-<body class="min-h-screen p-6 md:p-12">
+<body class="p-6 md:p-12">
 
     <div class="max-w-6xl mx-auto">
-        <nav class="mb-12">
-            <a href="../index.html" class="group text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-2 font-semibold">
-                <span class="text-2xl group-hover:-translate-x-1 transition-transform">🏠</span> 
-                Volver al Portal Principal
+        <header class="mb-16">
+            <a href="../index.html" class="inline-flex items-center text-green-600 font-bold mb-8 hover:gap-2 transition-all">
+                ← Volver al inicio
             </a>
-        </nav>
-
-        <header class="text-center mb-16">
-            <h1 class="text-6xl md:text-7xl medieval-font text-slate-900 mb-4">Ciencias Naturales</h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Gloria, aquí exploramos los secretos de la materia, la energía y la vida. ¡Elige un tema para investigar!
-            </p>
-            <div class="mt-8 flex justify-center gap-2">
-                <div class="h-1.5 w-12 bg-emerald-500 rounded-full"></div>
-                <div class="h-1.5 w-4 bg-emerald-300 rounded-full"></div>
-                <div class="h-1.5 w-4 bg-emerald-100 rounded-full"></div>
-            </div>
+            <h1 class="medieval-font text-5xl md:text-6xl text-slate-800 mb-4">Ciencias Naturales 🌿</h1>
+            <p class="text-xl text-slate-500 max-w-2xl">Descubre los secretos de la energía y la naturaleza, Gloria Valentina.</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <a href="comidas-saludables.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
-                <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
-                    🍎
+            <a href="energia.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow-500 group-hover:rotate-12 transition-all duration-300">
+                    ⚡
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Nutrición</h2>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">La Energía</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Descubre cómo los alimentos te dan energía y cómo crear tu "Plato Perfecto".
+                    Formas, fuentes renovables y cómo proteger nuestro planeta con las 3 Erres.
                 </p>
-                <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
-                    Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                <div class="mt-auto flex items-center text-yellow-600 font-bold uppercase text-xs tracking-widest">
+                    Empezar Misión <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
             </a>
 
@@ -70,9 +60,9 @@
                 <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:rotate-12 transition-all duration-300">
                     💎
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Minerales</h2>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Los Minerales</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Aprende sobre el brillo, la dureza y los cristales más asombrosos de la naturaleza.
+                    Dureza, brillo y color. Los tesoros ocultos bajo la tierra.
                 </p>
                 <div class="mt-auto flex items-center text-blue-600 font-bold uppercase text-xs tracking-widest">
                     Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
@@ -85,18 +75,23 @@
                 </div>
                 <h2 class="medieval-font text-2xl text-slate-800 mb-3">Las Rocas</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Sedimentarias, metamórficas e ígneas. El ciclo eterno de la corteza terrestre.
+                    Sedimentarias, metamórficas e ígneas. El ciclo eterno de la corteza.
                 </p>
                 <div class="mt-auto flex items-center text-orange-600 font-bold uppercase text-xs tracking-widest">
                     Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
             </a>
 
+            <div class="border-2 border-dashed border-green-200 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center opacity-60">
+                <div class="text-4xl mb-4 text-green-200">🔬</div>
+                <h3 class="medieval-font text-xl text-slate-400">Próxima Lección</h3>
+                <p class="text-slate-400 text-sm mt-2 font-medium italic">Preparando nuevos experimentos...</p>
+            </div>
+
         </div>
 
         <footer class="mt-24 text-center text-slate-400 text-sm">
-            <p class="mb-2">© 2026 Academia de Ciencias - Gloria</p>
-            <p class="italic text-xs">"Investigar es ver lo que todo el mundo ha visto, y pensar lo que nadie más ha pensado."</p>
+            <p>Academia de Gloria Valentina - Ciencias Naturales</p>
         </footer>
     </div>
 
