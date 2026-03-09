@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sociales: Relieve de Europa - Gloria Valentina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #eff6ff; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-button.active { background-color: #3b82f6; color: white; transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4); }
+        .flip-card { background-color: transparent; width: 100%; height: 200px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 24px; font-weight: 800; font-size: 1.2rem; }
+        .flip-card-front { background-color: white; color: #1e3a8a; border: 2px solid #bfdbfe; }
+        .flip-card-back { background-color: #3b82f6; color: white; transform: rotateY(180deg); font-size: 1rem; font-weight: 400; }
+        .btn-option { transition: all 0.2s; border: 2px solid #e2e8f0; }
+        .btn-option:hover { background-color: #f8fafc; border-color: #3b82f6; }
+        .btn-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .btn-incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+            <div>
+                <a href="../index.html" class="inline-flex items-center text-blue-600 font-bold mb-4 hover:gap-2 transition-all">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Volver al Menú
+                </a>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight">Relieve de <span class="text-blue-600">Europa</span></h1>
+                <p class="text-slate-500 text-lg mt-2 font-medium">Libro de lo Importante - 5º Primaria</p>
+            </div>
+            <div class="bg-white p-4 rounded-3xl shadow-sm border border-blue-50 flex items-center gap-4">
+                <div class="text-3xl">🌍</div>
+                <div>
+                    <p class="text-xs font-black uppercase tracking-tighter text-slate-400">Asignatura</p>
+                    <p class="font-bold text-slate-700">Sociales</p>
+                </div>
+            </div>
+        </header>
+
+        <nav class="flex flex-wrap gap-4 mb-10">
+            <button onclick="openTab('teoria')" class="tab-button active px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-teoria">
+                <i data-lucide="book-open" class="w-5 h-5"></i> Teoría
+            </button>
+            <button onclick="openTab('fichas')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-fichas">
+                <i data-lucide="layers" class="w-5 h-5"></i> Fichas
+            </button>
+            <button onclick="openTab('test')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-test">
+                <i data-lucide="check-square" class="w-5 h-5"></i> Test
+            </button>
+        </nav>
+
+        <section id="teoria" class="tab-content active space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-blue-100">
+                    <h3 class="text-2xl font-black text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="text-blue-500"></i> 1. Localización
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed text-lg">Europa está en el <strong>hemisferio norte</strong>. Sus límites son:</p>
+                    <ul class="mt-4 space-y-2 text-slate-600 italic">
+                        <li>🔵 <strong>Norte:</strong> Océano Glacial Ártico</li>
+                        <li>🔵 <strong>Sur:</strong> Mar Mediterráneo</li>
+                        <li>🔵 <strong>Oeste:</strong> Océano Atlántico</li>
+                        <li>🔵 <strong>Este:</strong> Montes Urales y Mar Caspio</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-blue-100">
+                    <h3 class="text-2xl font-black text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="mountain" class="text-blue-500"></i> 2. Las Montañas
+                    </h3>
+                    <p class="text-slate-600 mb-2"><strong>Norte (Bajas):</strong> Montes Escandinavos y Montes Urales.</p>
+                    <p class="text-slate-600"><strong>Sur (Altas):</strong> Pirineos, Alpes, Cárpatos, Balcanes y Cáucaso (donde está el Elbrus, el pico más alto).</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-blue-100">
+                <h3 class="text-2xl font-black text-blue-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="droplet" class="text-blue-500"></i> 3. Los Ríos de Europa
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-2xl">
+                        <p class="font-bold text-blue-700">Atlántica</p>
+                        <p class="text-sm">Caudalosos. <br>Ej: Rin, Elba, Vístula.</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-2xl">
+                        <p class="font-bold text-blue-700">Mediterránea</p>
+                        <p class="text-sm">Poco caudal (estiaje). <br>Ej: Ebro, Ródano, Po.</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-2xl">
+                        <p class="font-bold text-blue-700">Mar Negro / Caspio</p>
+                        <p class="text-sm">Muy largos. <br>Ej: Danubio y Volga (el más largo).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fichas" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Límite ESTE de Europa</div>
+                        <div class="flip-card-back">Montes Urales y Mar Caspio.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Río más largo de Europa</div>
+                        <div class="flip-card-back">El río Volga (desemboca en el Mar Caspio).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Pico más alto</div>
+                        <div class="flip-card-back">El monte Elbrus (5.642 m) en el Cáucaso.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Montañas del Norte</div>
+                        <div class="flip-card-back">Montes Escandinavos y Montes Urales (poca altura).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Gran Llanura Europea</div>
+                        <div class="flip-card-back">Ocupa el centro y este, desde el Atlántico a los Urales.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Vertiente Mediterránea</div>
+                        <div class="flip-card-back">Ríos poco caudalosos que sufren estiaje en verano.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="test" class="tab-content">
+            <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-blue-100 max-w-2xl mx-auto">
+                <div id="quiz-container">
+                    <div class="flex justify-between items-center mb-8">
+                        <span class="text-blue-600 font-black text-xl" id="q-number">Pregunta 1/10</span>
+                        <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold" id="score-display">Puntos: 0</span>
+                    </div>
+                    <h2 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando pregunta...</h2>
+                    <div id="options-grid" class="grid grid-cols-1 gap-4">
+                        </div>
+                </div>
+
+                <div id="score-container" class="hidden text-center">
+                    <div class="text-6xl mb-6">🏆</div>
+                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Test Finalizado!</h2>
+                    <p id="final-score" class="text-xl text-slate-600 mb-8 font-medium"></p>
+                    <button onclick="resetQuiz()" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg">Intentar de nuevo</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Lógica de Pestañas
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // Lógica del Test
+        const questions = [
+            { q: "¿En qué hemisferio está Europa?", a: ["Norte", "Sur", "Este"], c: 0 },
+            { q: "¿Qué montes separan Europa de Asia al Este?", a: ["Alpes", "Urales", "Pirineos"], c: 1 },
+            { q: "¿Cuál es el río más largo de Europa?", a: ["Danubio", "Rin", "Volga"], c: 2 },
+            { q: "¿Cuál es el pico más alto del continente?", a: ["Mont Blanc", "Elbrus", "Mulhacén"], c: 1 },
+            { q: "¿Qué océano baña a Europa por el Oeste?", a: ["Índico", "Ártico", "Atlántico"], c: 2 },
+            { q: "¿Qué montañas son más elevadas?", a: ["Las del Norte", "Las del Sur", "Son iguales"], c: 1 },
+            { q: "¿A qué vertiente pertenecen el Rin y el Vístula?", a: ["Mediterránea", "Atlántica", "Caspio"], c: 1 },
+            { q: "El Danubio desemboca en el Mar...", a: ["Negro", "Caspio", "Mediterráneo"], c: 0 },
+            { q: "¿Cómo se llama el fenómeno de poco caudal en verano?", a: ["Crecida", "Estiaje", "Relieve"], c: 1 },
+            { q: "¿Cuál es la isla más grande de Europa?", a: ["Islandia", "Sicilia", "Gran Bretaña"], c: 2 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('q-number').innerText = `Pregunta ${currentQ + 1}/10`;
+            document.getElementById('question-text').innerText = q.q;
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            
+            q.a.forEach((option, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option w-full p-5 rounded-2xl font-bold text-left';
+                btn.innerText = option;
+                btn.onclick = () => selectOption(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            const correct = questions[currentQ].c;
+            const buttons = document.querySelectorAll('.btn-option');
+            
+            buttons.forEach(b => b.onclick = null);
+
+            if(index === correct) {
+                buttons[index].classList.add('btn-correct');
+                score++;
+                document.getElementById('score-display').innerText = `Puntos: ${score}`;
+            } else {
+                buttons[index].classList.add('btn-incorrect');
+                buttons[correct].classList.add('btn-correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                if(currentQ < questions.length) loadQuestion();
+                else showResults();
+            }, 1500);
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('score-container').classList.remove('hidden');
+            document.getElementById('final-score').innerText = `Has acertado ${score} de 10 preguntas.`;
+        }
+
+        function resetQuiz() {
+            currentQ = 0; score = 0;
+            document.getElementById('score-display').innerText = `Puntos: 0`;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('score-container').classList.add('hidden');
+            loadQuestion();
+        }
+
+        loadQuestion();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
