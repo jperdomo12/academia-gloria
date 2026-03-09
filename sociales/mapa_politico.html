@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sociales: Mapa Político Europa - Gloria Valentina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f9ff; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-button.active { background-color: #0284c7; color: white; transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.4); }
+        .flip-card { background-color: transparent; width: 100%; height: 180px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 24px; font-weight: 800; }
+        .flip-card-front { background-color: white; color: #0369a1; border: 2px solid #bae6fd; }
+        .flip-card-back { background-color: #0ea5e9; color: white; transform: rotateY(180deg); font-weight: 400; }
+        .btn-option { transition: all 0.2s; border: 2px solid #e2e8f0; }
+        .btn-option:hover { background-color: #f0f9ff; border-color: #0ea5e9; }
+        .btn-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .btn-incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+            <div>
+                <a href="index.html" class="inline-flex items-center text-sky-600 font-bold mb-4 hover:gap-2 transition-all">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Volver a Sociales
+                </a>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight">Mapa <span class="text-sky-600">Político</span></h1>
+                <p class="text-slate-500 text-lg mt-2 font-medium">Países y Capitales de Europa</p>
+            </div>
+            <div class="bg-white p-4 rounded-3xl shadow-sm border border-sky-50 flex items-center gap-4">
+                <div class="text-3xl">🏛️</div>
+                <div>
+                    <p class="text-xs font-black uppercase tracking-tighter text-slate-400">Lección</p>
+                    <p class="font-bold text-slate-700">Europa Político</p>
+                </div>
+            </div>
+        </header>
+
+        <nav class="flex flex-wrap gap-4 mb-10">
+            <button onclick="openTab('teoria')" class="tab-button active px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-teoria">
+                <i data-lucide="list" class="w-5 h-5"></i> Lista
+            </button>
+            <button onclick="openTab('fichas')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-fichas">
+                <i data-lucide="layers" class="w-5 h-5"></i> Fichas
+            </button>
+            <button onclick="openTab('test')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-test">
+                <i data-lucide="check-square" class="w-5 h-5"></i> Test
+            </button>
+        </nav>
+
+        <section id="teoria" class="tab-content active">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-sky-100">
+                <h3 class="text-2xl font-black text-sky-800 mb-6 flex items-center gap-2">Principales Países y Capitales</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>España:</strong> Madrid</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Francia:</strong> París</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Portugal:</strong> Lisboa</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Italia:</strong> Roma</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Alemania:</strong> Berlín</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Reino Unido:</strong> Londres</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Grecia:</strong> Atenas</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Rusia:</strong> Moscú</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Ucrania:</strong> Kiev</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fichas" class="tab-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de ALEMANIA</div>
+                        <div class="flip-card-back">Berlín</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de FRANCIA</div>
+                        <div class="flip-card-back">París</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de ITALIA</div>
+                        <div class="flip-card-back">Roma</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de RUSIA</div>
+                        <div class="flip-card-back">Moscú</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="test" class="tab-content">
+            <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-sky-100 max-w-2xl mx-auto">
+                <div id="quiz-container">
+                    <h2 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8">Cargando...</h2>
+                    <div id="options-grid" class="grid gap-4"></div>
+                </div>
+                <div id="score-container" class="hidden text-center">
+                    <h2 class="text-3xl font-black mb-4">¡Buen trabajo!</h2>
+                    <p id="final-score" class="text-xl mb-8"></p>
+                    <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-3 rounded-xl font-bold">Reiniciar</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        const questions = [
+            { q: "¿Cuál es la capital de Portugal?", a: ["Lisboa", "Madrid", "Oporto"], c: 0 },
+            { q: "¿Cuál es la capital de Alemania?", a: ["Múnich", "Berlín", "Hamburgo"], c: 1 },
+            { q: "¿Qué país tiene como capital París?", a: ["España", "Bélgica", "Francia"], c: 2 },
+            { q: "¿Cuál es la capital de Italia?", a: ["Milán", "Roma", "Nápoles"], c: 1 },
+            { q: "¿La capital de Reino Unido es...?", a: ["Londres", "Dublín", "Liverpool"], c: 0 }
+        ];
+
+        let currentQ = 0; let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerText = q.q;
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            q.a.forEach((opt, i) => {
+                const b = document.createElement('button');
+                b.className = 'btn-option w-full p-4 rounded-xl font-bold text-left';
+                b.innerText = opt;
+                b.onclick = () => {
+                    if(i === q.c) { b.classList.add('btn-correct'); score++; }
+                    else { b.classList.add('btn-incorrect'); }
+                    setTimeout(() => {
+                        currentQ++;
+                        if(currentQ < questions.length) loadQuestion();
+                        else {
+                            document.getElementById('quiz-container').classList.add('hidden');
+                            document.getElementById('score-container').classList.remove('hidden');
+                            document.getElementById('final-score').innerText = `Puntuación: ${score}/${questions.length}`;
+                        }
+                    }, 1000);
+                };
+                grid.appendChild(b);
+            });
+        }
+        loadQuestion();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
