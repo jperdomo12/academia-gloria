@@ -20,8 +20,6 @@
         .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding: 25px; font-weight: bold; }
         .flip-card-front { background-color: white; color: #166534; border: 4px solid #bbf7d0; }
         .flip-card-back { background-color: #22c55e; color: white; transform: rotateY(180deg); }
-
-        /* Nuevos estilos para el feedback del test */
         .btn-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; }
         .btn-incorrect { background-color: #ef4444 !important; color: white !important; border-color: #b91c1c !important; }
     </style>
@@ -63,15 +61,23 @@
                     </div>
                     <div class="bg-orange-50 p-6 rounded-[30px] border-2 border-orange-100">
                         <span class="font-bold text-orange-700 text-lg">🍝 Química</span>
-                        <p class="text-sm text-orange-900/70 mt-2">Guardada en la comida (carbohidratos) y en las baterías de los móviles.</p>
+                        <p class="text-sm text-orange-900/70 mt-2">Guardada en la comida (carbohidratos) y baterías.</p>
                     </div>
                     <div class="bg-yellow-50 p-6 rounded-[30px] border-2 border-yellow-100">
                         <span class="font-bold text-yellow-700 text-lg">💡 Lumínica</span>
-                        <p class="text-sm text-yellow-900/70 mt-2">La que emiten los objetos con luz (el Sol o una bombilla).</p>
+                        <p class="text-sm text-yellow-900/70 mt-2">Emitida por el Sol, bombillas o linternas.</p>
                     </div>
                     <div class="bg-red-50 p-6 rounded-[30px] border-2 border-red-100">
                         <span class="font-bold text-red-700 text-lg">🔥 Térmica</span>
-                        <p class="text-sm text-red-900/70 mt-2">Energía en forma de calor. ¡Se nota en el cambio de temperatura!</p>
+                        <p class="text-sm text-red-900/70 mt-2">Energía en forma de calor (cocinar o calentar edificios).</p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-[30px] border-2 border-purple-100">
+                        <span class="font-bold text-purple-700 text-lg">⚡ Eléctrica</span>
+                        <p class="text-sm text-purple-900/70 mt-2">Viaja por cables para usar ordenadores o televisores.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-6 rounded-[30px] border-2 border-emerald-100">
+                        <span class="font-bold text-emerald-700 text-lg">⚛️ Nuclear</span>
+                        <p class="text-sm text-emerald-900/70 mt-2">Guardada en la estructura de la materia (como el Uranio).</p>
                     </div>
                 </div>
             </div>
@@ -81,7 +87,7 @@
                 <ul class="space-y-4">
                     <li class="flex items-start gap-3">
                         <i data-lucide="refresh-cw" class="text-green-400 mt-1"></i>
-                        <span><b>Se Transforma:</b> Cambia de una forma a otra (ej: la química de la comida se vuelve mecánica al correr).</span>
+                        <span><b>Se Transforma:</b> Cambia de una forma a otra (ej: pilas → luz).</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="battery-full" class="text-green-400 mt-1"></i>
@@ -89,7 +95,7 @@
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="truck" class="text-green-400 mt-1"></i>
-                        <span><b>Se Transporta:</b> Viaja por cables eléctricos o camiones.</span>
+                        <span><b>Se Transporta:</b> Viaja por cables o camiones.</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="move-right" class="text-green-400 mt-1"></i>
@@ -97,47 +103,68 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="bg-green-600 text-white p-8 rounded-[40px] shadow-xl">
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="leaf"></i> ¡Protejamos el Planeta!
+                </h3>
+                <p class="mb-6 opacity-90">Las fuentes no renovables contaminan y causan <b>calentamiento global</b>. ¡Usa las 3 Rs!</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white/20 p-4 rounded-2xl">
+                        <b class="block text-xl">REDUCIR</b>
+                        <span class="text-sm">Comprar productos con menos envoltorios.</span>
+                    </div>
+                    <div class="bg-white/20 p-4 rounded-2xl">
+                        <b class="block text-xl">REUTILIZAR</b>
+                        <span class="text-sm">Usar envases de vidrio o metal muchas veces.</span>
+                    </div>
+                    <div class="bg-white/20 p-4 rounded-2xl">
+                        <b class="block text-xl">RECICLAR</b>
+                        <span class="text-sm">Separar la basura en el contenedor correcto.</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="fichas" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="fichas-grid">
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Biomasa</div>
-            <div class="flip-card-back">Energía de restos de plantas y animales que se usan como combustible.</div>
-        </div>
-    </div>
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Energía Eólica</div>
-            <div class="flip-card-back">Es la energía que obtenemos del viento gracias a los aerogeneradores.</div>
-        </div>
-    </div>
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Combustibles Fósiles</div>
-            <div class="flip-card-back">Fuentes no renovables como el carbón, el petróleo y el gas natural.</div>
-        </div>
-    </div>
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Energía Hidráulica</div>
-            <div class="flip-card-back">Se produce aprovechando la fuerza del agua en movimiento (ríos o presas).</div>
-        </div>
-    </div>
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Energía Solar</div>
-            <div class="flip-card-back">Energía inagotable que recibimos del Sol en forma de luz y calor.</div>
-        </div>
-    </div>
-    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">Energía Geotérmica</div>
-            <div class="flip-card-back">Calor que proviene del interior de la Tierra (volcanes o géiseres).</div>
-        </div>
-    </div>
-</div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Petróleo</div>
+                        <div class="flip-card-back">Líquido negro bajo tierra. Se usa para gasolina y calefacción (No Renovable).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Carbón</div>
+                        <div class="flip-card-back">Roca negra compuesta de carbono. Se usa como combustible en industrias (No Renovable).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Uranio</div>
+                        <div class="flip-card-back">Metal radiactivo usado en centrales nucleares para crear calor (No Renovable).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Eólica</div>
+                        <div class="flip-card-back">Energía obtenida del movimiento del aire (Viento) (Renovable).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Hidráulica</div>
+                        <div class="flip-card-back">Energía del agua en movimiento. Se recoge en presas (Renovable).</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Solar</div>
+                        <div class="flip-card-back">Luz y calor del Sol. Los paneles solares la vuelven electricidad (Renovable).</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="test" class="tab-content">
@@ -170,16 +197,16 @@
         }
 
         const questions = [
-            { q: "¿Qué energía produce el movimiento?", a: ["Mecánica", "Térmica", "Nuclear"], c: 0 },
-            { q: "Fuente de energía inagotable:", a: ["Petróleo", "Viento", "Carbón"], c: 1 },
-            { q: "El Sol nos da energía Lumínica y...", a: ["Química", "Térmica", "Nuclear"], c: 1 },
-            { q: "La energía guardada en pilas es...", a: ["Eléctrica", "Química", "Mecánica"], c: 1 },
-            { q: "¿Qué gas causa el calentamiento global?", a: ["Oxígeno", "Dióxido de Carbono", "Helio"], c: 1 },
-            { q: "Separar la basura es...", a: ["Reducir", "Reutilizar", "Reciclar"], c: 2 },
-            { q: "¿Qué energía usa el agua (presas)?", a: ["Hidráulica", "Eólica", "Solar"], c: 0 },
-            { q: "El Uranio se usa en energía...", a: ["Química", "Nuclear", "Térmica"], c: 1 },
-            { q: "Llevar energía por cables es...", a: ["Almacenar", "Transportar", "Transformar"], c: 1 },
-            { q: "Comprar menos plástico es...", a: ["Reducir", "Reciclar", "Reutilizar"], c: 0 }
+            { q: "¿Qué energía usa el Uranio?", a: ["Química", "Nuclear", "Eólica"], c: 1 },
+            { q: "El Sol nos da energía Lumínica y...", a: ["Nuclear", "Térmica", "Química"], c: 1 },
+            { q: "Energía que viaja por cables:", a: ["Mecánica", "Nuclear", "Eléctrica"], c: 2 },
+            { q: "La energía de una pila es...", a: ["Química", "Cinética", "Térmica"], c: 0 },
+            { q: "Separar la basura es la R de...", a: ["Reducir", "Reutilizar", "Reciclar"], c: 2 },
+            { q: "¿Qué energía tiene un objeto al levantarlo?", a: ["Cinética", "Potencial", "Luz"], c: 1 },
+            { q: "El carbón y el petróleo son...", a: ["Renovables", "No renovables", "Limpios"], c: 1 },
+            { q: "¿Qué gas daña el medio ambiente?", a: ["Oxígeno", "Helio", "Dióxido de Carbono"], c: 2 },
+            { q: "Comprar menos envoltorios es...", a: ["Reducir", "Reciclar", "Reutilizar"], c: 0 },
+            { q: "La energía del viento se llama...", a: ["Hidráulica", "Eólica", "Solar"], c: 1 }
         ];
 
         let currentQ = 0; let score = 0;
@@ -202,8 +229,6 @@
         function checkAnswer(i, selectedBtn) {
             const correctIndex = questions[currentQ].c;
             const allBtns = document.querySelectorAll('#options button');
-            
-            // Bloquear clics extra
             allBtns.forEach(b => b.onclick = null);
 
             if(i === correctIndex) {
@@ -211,11 +236,9 @@
                 score++;
             } else {
                 selectedBtn.classList.add('btn-incorrect');
-                // Resaltar la correcta para que aprenda
                 allBtns[correctIndex].classList.add('btn-correct');
             }
 
-            // Pausa para que Gloria vea la respuesta correcta antes de seguir
             setTimeout(() => {
                 currentQ++;
                 if(currentQ < questions.length) loadQuestion();
