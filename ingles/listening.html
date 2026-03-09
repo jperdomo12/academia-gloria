@@ -11,116 +11,121 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
-        .audio-card { background: white; border-radius: 2.5rem; padding: 2rem; border: 1px solid #e2e8f0; transition: all 0.3s; }
-        .audio-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
-        .btn-play { background-color: #4f46e5; color: white; transition: all 0.2s; }
-        .btn-play:hover { background-color: #4338ca; transform: scale(1.05); }
-        .btn-play.playing { background-color: #ef4444; }
+        .audio-main-card { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 3rem; }
+        .practice-card { background: white; border-radius: 1.5rem; border: 1px solid #e2e8f0; transition: all 0.2s; }
+        .practice-card:hover { transform: translateY(-3px); border-color: #818cf8; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body class="p-6 md:p-12">
     <div class="max-w-4xl mx-auto">
-        <header class="mb-12">
-            <a href="index.html" class="inline-flex items-center text-indigo-600 font-bold hover:gap-2 transition-all mb-4">
-                <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Volver a Inglés
+        <nav class="mb-8">
+            <a href="index.html" class="inline-flex items-center text-indigo-600 font-bold hover:gap-2 transition-all">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Back to English
             </a>
-            <h1 class="text-4xl font-extrabold text-slate-800">Listening <span class="text-indigo-600">Zone</span> 🎧</h1>
-            <p class="text-slate-500 mt-2 text-lg">Escucha y practica los audios de la Unidad 5.</p>
+        </nav>
+
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 italic">Listening <span class="text-indigo-600">Zone</span></h1>
+            <p class="text-slate-500 text-lg mt-2 font-medium">Escucha los audios de la Unidad 5 y practica.</p>
         </header>
 
-        <section class="bg-indigo-600 rounded-[3rem] p-8 md:p-12 text-white mb-12 shadow-xl shadow-indigo-100">
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                    <i data-lucide="music" class="w-12 h-12 text-white"></i>
+        <section class="audio-main-card p-8 md:p-12 text-white shadow-2xl shadow-indigo-200 mb-16 relative overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
+                    <i data-lucide="headphones" class="w-10 h-10"></i>
                 </div>
                 <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-3xl font-black mb-2">Main Listening: Unit 5</h2>
-                    <p class="text-indigo-100 text-lg mb-6">Adventure Time - Track 01</p>
+                    <h2 class="text-3xl font-black mb-1">Unit 5: Adventure!</h2>
+                    <p class="text-indigo-100 font-medium mb-6">Main Track - Audio Lesson</p>
                     
-                    <button onclick="toggleMainAudio()" id="main-play-btn" class="bg-white text-indigo-600 px-10 py-4 rounded-2xl font-black text-xl flex items-center gap-4 hover:bg-indigo-50 transition-all mx-auto md:mx-0">
-                        <i data-lucide="play" id="main-icon"></i>
-                        <span id="main-text">PLAY AUDIO</span>
+                    <button onclick="toggleAudio()" id="play-btn" class="bg-white text-indigo-600 px-12 py-5 rounded-2xl font-black text-xl shadow-lg hover:bg-indigo-50 active:scale-95 transition-all flex items-center gap-4 mx-auto md:mx-0">
+                        <i data-lucide="play" id="play-icon" class="fill-current"></i>
+                        <span id="play-text">PLAY AUDIO</span>
                     </button>
                 </div>
             </div>
-            <div class="mt-8 bg-white/20 h-2 rounded-full overflow-hidden">
-                <div id="main-progress" class="bg-white h-full w-0 transition-all duration-300"></div>
+            <div class="mt-10 bg-white/20 h-2 rounded-full overflow-hidden">
+                <div id="progress" class="bg-white h-full w-0 transition-all duration-300"></div>
             </div>
-            <audio id="main-audio" src="audio/listening_unit5.mp3"></audio>
+            <audio id="audio-player" src="audio/listening_unit5.mp3"></audio>
         </section>
 
-        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-            <i data-lucide="list-music" class="text-indigo-600"></i> Otros Ejercicios de Listening
-        </h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="audio-card flex items-center gap-4">
-                <div class="bg-purple-100 p-4 rounded-2xl text-purple-600">
-                    <i data-lucide="headphones"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-bold text-slate-800">Listening Practice A</h4>
-                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1359367" target="_blank" class="text-sm text-indigo-600 font-bold hover:underline">Abrir Ficha Interactiva →</a>
-                </div>
-            </div>
-
-            <div class="audio-card flex items-center gap-4">
-                <div class="bg-purple-100 p-4 rounded-2xl text-purple-600">
-                    <i data-lucide="headphones"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-bold text-slate-800">Listening Practice B</h4>
-                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/670372" target="_blank" class="text-sm text-indigo-600 font-bold hover:underline">Abrir Ficha Interactiva →</a>
-                </div>
-            </div>
+        <div class="mb-6">
+            <h3 class="text-2xl font-black text-slate-800 flex items-center gap-3">
+                <i data-lucide="layers" class="text-indigo-600"></i> Additional Practices
+            </h3>
         </div>
 
-        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
-            Academia de Gloria Valentina
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1359367" target="_blank" class="practice-card p-6 flex flex-col items-center text-center group">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <i data-lucide="headphones" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-slate-700">Practice A</span>
+                <span class="text-xs text-slate-400 mt-2 font-black uppercase tracking-widest italic">LiveWorksheet</span>
+            </a>
+
+            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/670372" target="_blank" class="practice-card p-6 flex flex-col items-center text-center group">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <i data-lucide="headphones" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-slate-700">Practice B</span>
+                <span class="text-xs text-slate-400 mt-2 font-black uppercase tracking-widest italic">LiveWorksheet</span>
+            </a>
+
+            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/46710" target="_blank" class="practice-card p-6 flex flex-col items-center text-center group">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <i data-lucide="headphones" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-slate-700">Practice C</span>
+                <span class="text-xs text-slate-400 mt-2 font-black uppercase tracking-widest italic">LiveWorksheet</span>
+            </a>
+        </div>
+
+        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+            Academia Gloria Valentina • Education Portal
         </footer>
     </div>
 
     <script>
-        const mainAudio = document.getElementById('main-audio');
-        const mainBtn = document.getElementById('main-play-btn');
-        const mainText = document.getElementById('main-text');
-        const mainProgress = document.getElementById('main-progress');
+        const audio = document.getElementById('audio-player');
+        const btn = document.getElementById('play-btn');
+        const btnText = document.getElementById('play-text');
+        const progress = document.getElementById('progress');
 
-        function toggleMainAudio() {
-            if (mainAudio.paused) {
-                mainAudio.play().then(() => {
-                    mainBtn.classList.add('playing');
-                    mainText.innerText = "PAUSE";
-                    updateMainIcon('pause');
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btnText.innerText = "PAUSE";
+                    updateIcon('pause');
                 }).catch(e => {
-                    alert("No se encuentra el audio en: audio/listening_unit5.mp3");
+                    alert("No se encontró el archivo: audio/listening_unit5.mp3");
                 });
             } else {
-                mainAudio.pause();
-                resetMainBtn();
+                audio.pause();
+                resetUI();
             }
         }
 
-        function resetMainBtn() {
-            mainBtn.classList.remove('playing');
-            mainText.innerText = "PLAY AUDIO";
-            updateMainIcon('play');
+        function resetUI() {
+            btnText.innerText = "PLAY AUDIO";
+            updateIcon('play');
         }
 
-        function updateMainIcon(name) {
-            const icon = document.getElementById('main-icon');
+        function updateIcon(name) {
+            const icon = document.getElementById('play-icon');
             icon.setAttribute('data-lucide', name);
             lucide.createIcons();
         }
 
-        mainAudio.ontimeupdate = () => {
-            const pct = (mainAudio.currentTime / mainAudio.duration) * 100;
-            mainProgress.style.width = pct + "%";
+        audio.ontimeupdate = () => {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            progress.style.width = pct + "%";
         };
 
-        mainAudio.onended = () => {
-            resetMainBtn();
-            mainProgress.style.width = "0%";
+        audio.onended = () => {
+            resetUI();
+            progress.style.width = "0%";
         };
 
         lucide.createIcons();
