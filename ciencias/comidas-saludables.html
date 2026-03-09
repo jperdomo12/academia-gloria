@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vida Saludable - Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
         
@@ -31,27 +32,20 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
-        .group-card {
+        .food-card {
             background: white;
             border-radius: 1.5rem;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             transition: all 0.3s ease;
             height: 100%;
             border: 1px solid #e2e8f0;
         }
 
-        .group-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
-
-        .icon-box {
-            height: 60px;
-            width: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
+        .food-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.1);
+            border-color: #34d399;
         }
 
         .flip-card { perspective: 1000px; height: 180px; cursor: pointer; }
@@ -75,7 +69,6 @@
             padding: 1.5rem;
             border-radius: 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .flip-card-front { background: white; border: 1px solid #e2e8f0; }
         .flip-card-back { background: #10b981; color: white; transform: rotateY(180deg); }
@@ -99,96 +92,92 @@
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-20">
             <div class="flex items-center gap-2">
                 <span class="text-2xl">🍎</span>
-                <span class="font-bold text-slate-800 text-xl tracking-tight">Gloria: Alimentación</span>
+                <span class="font-bold text-slate-800 text-xl tracking-tight">Gloria: Salud</span>
             </div>
             <div class="flex gap-4">
                 <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn relative px-4 py-2 font-bold transition-all text-emerald-600 active">Resumen</button>
                 <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Fichas</button>
-                <button onclick="showTab('test')" id="btn-test" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Practicar</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Test</button>
             </div>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-6">
+
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm text-emerald-600 font-bold hover:bg-emerald-50 hover:shadow-md transition-all border border-emerald-100 group">
+                <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i> 
+                Volver a Science
+            </a>
+        </div>
         
-        <!-- SECCIÓN 1: TEORÍA -->
         <section id="teoria" class="tab-content active">
             <div class="text-center mb-10">
-                <h1 class="text-4xl font-extrabold text-[#1e293b]">Comidas Saludables</h1>
+                <h1 class="text-4xl font-extrabold text-slate-800">Vida Saludable</h1>
                 <div class="w-16 h-1 bg-emerald-400 mx-auto mt-2 rounded-full"></div>
-                <p class="text-slate-400 italic mt-3 font-light">Aprendiendo a comer bien con Gloria</p>
+                <p class="text-slate-400 italic mt-3 font-light">Comer bien es el secreto de la energía</p>
             </div>
 
             <div class="hero-card mb-12">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="text-3xl">⏰</span>
-                    <h2 class="text-2xl font-bold text-slate-800">La Regla de Oro</h2>
+                    <span class="text-3xl">🥗</span>
+                    <h2 class="text-2xl font-bold text-slate-800">¿Por qué es importante?</h2>
                 </div>
                 <p class="text-lg text-slate-600 leading-relaxed">
-                    Debemos comer <span class="font-bold text-emerald-600">5 veces al día</span>: repartidas en 3 comidas principales y 2 meriendas. ¡Esto mantiene nuestra energía al máximo!
+                    Una alimentación saludable nos da los <span class="font-bold text-emerald-600">nutrientes</span> necesarios para crecer, tener fuerza y que nuestro cerebro funcione súper bien.
                 </p>
             </div>
 
             <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <span class="bg-emerald-100 p-2 rounded-lg">🥗</span> Los 5 Grupos de Alimentos
+                <span class="bg-emerald-100 p-2 rounded-lg">🥦</span> Los 5 Grupos de Alimentos
             </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Grupo 1 -->
-                <div class="group-card p-6">
-                    <div class="icon-box bg-orange-50 text-orange-500">🥦</div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Frutas y Verduras</h4>
-                    <p class="text-slate-500 text-sm mb-3">Vienen de plantas y árboles. Aportan fibra, vitaminas y minerales.</p>
-                    <p class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded inline-block">Ej: Naranjas, Brócoli</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="food-card p-6 border-l-4 border-green-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">1. Frutas y Verduras</h4>
+                    <p class="text-slate-500 text-sm italic">Vitaminas y Fibra</p>
                 </div>
-
-                <!-- Grupo 2 -->
-                <div class="group-card p-6">
-                    <div class="icon-box bg-yellow-50 text-yellow-600">🍝</div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Hidratos de Carbono</h4>
-                    <p class="text-slate-500 text-sm mb-3">Nuestra principal fuente de energía y fibra para el día.</p>
-                    <p class="text-xs font-bold text-yellow-700 bg-yellow-50 px-2 py-1 rounded inline-block">Ej: Pasta, Pan, Cereales</p>
+                <div class="food-card p-6 border-l-4 border-yellow-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">2. Hidratos de Carbono</h4>
+                    <p class="text-slate-500 text-sm italic">Pan, pasta, patatas (Energía)</p>
                 </div>
-
-                <!-- Grupo 3 -->
-                <div class="group-card p-6">
-                    <div class="icon-box bg-red-50 text-red-500">🍗</div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Proteínas</h4>
-                    <p class="text-slate-500 text-sm mb-3">Son los "ladrillos" del cuerpo: ayudan a reparar las células.</p>
-                    <p class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded inline-block">Ej: Huevos, Pescado, Legumbres</p>
+                <div class="food-card p-6 border-l-4 border-red-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">3. Proteínas</h4>
+                    <p class="text-slate-500 text-sm italic">Carne, pescado, huevos, legumbres</p>
                 </div>
-
-                <!-- Grupo 4 -->
-                <div class="group-card p-6">
-                    <div class="icon-box bg-blue-50 text-blue-500">🥛</div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Lácteos</h4>
-                    <p class="text-slate-500 text-sm mb-3">Ricos en calcio y potasio para dientes y huesos fuertes.</p>
-                    <p class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded inline-block">Ej: Queso, Yogur</p>
+                <div class="food-card p-6 border-l-4 border-blue-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">4. Lácteos</h4>
+                    <p class="text-slate-500 text-sm italic">Leche, queso y yogur (Calcio)</p>
                 </div>
+                <div class="food-card p-6 border-l-4 border-orange-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">5. Grasas Saludables</h4>
+                    <p class="text-slate-500 text-sm italic">Aceite de oliva, frutos secos</p>
+                </div>
+            </div>
 
-                <!-- Grupo 5 -->
-                <div class="group-card p-6">
-                    <div class="icon-box bg-emerald-50 text-emerald-600">🥑</div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Grasas</h4>
-                    <p class="text-slate-500 text-sm mb-3">Aportan energía. Hay <span class="text-emerald-600 font-bold">Saludables</span> y <span class="text-red-400 font-bold">No Saludables</span>.</p>
-                    <p class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded inline-block">Ej: Aceite Oliva, Salmón</p>
+            <div class="bg-emerald-50 p-8 rounded-[2.5rem] border border-emerald-100 shadow-sm mb-12">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span class="text-2xl">⏰</span> La Regla de las 5 Comidas</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 text-center">
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">1</p><p class="text-sm font-medium">Desayuno</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">2</p><p class="text-sm font-medium">Media Mañana</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">3</p><p class="text-sm font-medium">Comida</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">4</p><p class="text-sm font-medium">Merienda</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">5</p><p class="text-sm font-medium">Cena</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN 2: FICHAS -->
         <section id="fichas" class="tab-content">
             <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
-                <span class="bg-slate-100 p-2 rounded-lg">🎴</span> Fichas de Repaso
+                <span class="bg-slate-100 p-2 rounded-lg">🃏</span> Fichas de Salud
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fichas-grid"></div>
         </section>
 
-        <!-- SECCIÓN 3: TEST -->
         <section id="test" class="tab-content">
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-emerald-700">Test Saludable</h2>
-                <p class="text-slate-500">¡Demuestra lo que sabes sobre nutrición!</p>
+                <h2 class="text-2xl font-bold text-emerald-700">Misión: Chef Saludable</h2>
+                <p class="text-slate-500">Demuestra lo que sabes sobre nutrición</p>
             </div>
             <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-emerald-100 max-w-3xl mx-auto border border-emerald-50">
                 <div id="quiz-container"></div>
@@ -207,26 +196,28 @@
     </main>
 
     <script>
+        lucide.createIcons();
+
         const flashcards = [
-            { front: "¿Cuántas veces comer?", back: "5 veces al día: 3 comidas principales y 2 meriendas.", icon: "🍴" },
-            { front: "Función de Proteínas", back: "Ayudan a reparar las células de nuestro cuerpo.", icon: "💪" },
-            { front: "Beneficio de Lácteos", back: "Aportan calcio para fortalecer dientes y huesos.", icon: "🦴" },
-            { front: "Hidratos de Carbono", back: "Son nuestra gasolina: nos dan energía y fibra.", icon: "⚡" },
-            { front: "Grasas No Saludables", back: "Debemos limitar su consumo (como hamburguesas o pizza).", icon: "⚠️" },
-            { front: "Frutas y Verduras", back: "Contienen vitaminas, minerales y mucha fibra.", icon: "🍓" }
+            { front: "¿Qué nos dan las frutas?", back: "Vitaminas, minerales y fibra.", icon: "🍎" },
+            { front: "¿Para qué sirven las proteínas?", back: "Ayudan a formar y reparar nuestros músculos.", icon: "🍗" },
+            { front: "¿Cuántas veces hay que comer?", back: "Lo ideal es hacer 5 comidas al día.", icon: "⏰" },
+            { front: "¿Qué nutriente tiene la leche?", back: "Calcio, que es vital para nuestros huesos.", icon: "🥛" },
+            { front: "¿Qué nos da el pan y la pasta?", back: "Hidratos de carbono para tener mucha energía.", icon: "🍝" },
+            { front: "¿Cuál es la grasa más sana?", back: "El aceite de oliva virgen extra.", icon: "🫒" }
         ];
 
         const questions = [
-            { q: "¿Cuántas veces al día es recomendable comer?", a: ["3 veces", "5 veces", "1 vez"], correct: 1 },
-            { q: "¿Qué nutriente ayuda a reparar las células del cuerpo?", a: ["Grasas", "Proteínas", "Azúcar"], correct: 1 },
-            { q: "El pan y la pasta pertenecen al grupo de:", a: ["Lácteos", "Frutas", "Hidratos de Carbono"], correct: 2 },
-            { q: "¿Cuál es un ejemplo de grasa saludable?", a: ["Aceite de oliva", "Patatas fritas", "Pizza"], correct: 0 },
-            { q: "¿Para qué sirven los lácteos principalmente?", a: ["Dar color", "Dientes y huesos fuertes", "Dormir mejor"], correct: 1 },
-            { q: "Las naranjas y el brócoli nos aportan:", a: ["Solo grasas", "Vitaminas y minerales", "Mucha sal"], correct: 1 },
-            { q: "¿Qué grupo es nuestra principal fuente de energía?", a: ["Hidratos de Carbono", "Grasas saturadas", "Agua"], correct: 0 },
-            { q: "¿Qué debemos hacer con la comida rápida (pizza, McDonalds)?", a: ["Comerla a diario", "Limitar su consumo", "No comer nunca"], correct: 1 },
-            { q: "El salmón es un ejemplo de:", a: ["Grasa saludable", "Lácteo", "Fruta"], correct: 0 },
-            { q: "¿Cuál de estos alimentos es una proteína?", a: ["Manzana", "Huevo", "Arroz"], correct: 1 }
+            { q: "¿Cuántas piezas de fruta/verdura se recomiendan al día?", a: ["1 pieza", "3 piezas", "5 piezas"], correct: 2 },
+            { q: "¿Qué alimento es una proteína?", a: ["Manzana", "Pescado", "Arroz"], correct: 1 },
+            { q: "La función de los hidratos de carbono es:", a: ["Darnos energía", "Fortalecer huesos", "Darnos vitaminas"], correct: 0 },
+            { q: "¿Cuál es la comida más importante del día?", a: ["Cena", "Merienda", "Desayuno"], correct: 2 },
+            { q: "¿Qué grupo aporta Calcio?", a: ["Lácteos", "Grasas", "Frutas"], correct: 0 },
+            { q: "Legumbres como las lentejas son:", a: ["Grasas", "Proteínas", "Lácteos"], correct: 1 },
+            { q: "¿Qué debemos beber principalmente?", a: ["Refrescos", "Zumos con azúcar", "Agua"], correct: 2 },
+            { q: "¿Cuál es una grasa saludable?", a: ["Mantequilla", "Frutos secos", "Bollería"], correct: 1 },
+            { q: "Comer despacio y masticar bien es...", a: ["Malo", "Saludable", "No importa"], correct: 1 },
+            { q: "La pasta y el cereal nos dan...", a: ["Calcio", "Energía", "Vitaminas"], correct: 1 }
         ];
 
         let userAnswers = new Array(questions.length).fill(null);
@@ -293,7 +284,7 @@
 
         function checkResults() {
             if(userAnswers.includes(null)) {
-                alert("¡Casi terminas! Responde todas las preguntas antes de ver los resultados.");
+                alert("¡Gloria, te faltan preguntas por responder!");
                 return;
             }
 
