@@ -25,34 +25,56 @@
 
         .card-science:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(22, 101, 52, 0.15);
-            border-color: #86efac;
+            box-shadow: 0 25px 50px -12px rgba(22, 163, 74, 0.15);
+            border-color: #4ade80;
         }
     </style>
 </head>
 <body class="p-6 md:p-12">
 
     <div class="max-w-6xl mx-auto">
-        <header class="mb-16">
-            <a href="../index.html" class="inline-flex items-center text-green-600 font-bold mb-8 hover:gap-2 transition-all">
-                ← Volver al inicio
-            </a>
-            <h1 class="medieval-font text-5xl md:text-6xl text-slate-800 mb-4">Ciencias Naturales 🌿</h1>
-            <p class="text-xl text-slate-500 max-w-2xl">Descubre los secretos de la energía y la naturaleza, Gloria Valentina.</p>
+        <header class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+                <a href="../index.html" class="inline-flex items-center text-green-600 font-bold mb-6 hover:gap-3 transition-all">
+                    ← Volver al Menú Principal
+                </a>
+                <h1 class="medieval-font text-5xl md:text-7xl text-slate-800">Laboratorio de <span class="text-green-600">Ciencias</span></h1>
+                <p class="text-slate-500 text-xl mt-4 max-w-2xl">Explora el mundo, descubre la energía y aprende a cuidar tu cuerpo, Gloria.</p>
+            </div>
+            <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-green-100 flex items-center gap-4">
+                <div class="text-4xl">🧬</div>
+                <div>
+                    <p class="text-xs font-black uppercase tracking-widest text-slate-400">Nivel Actual</p>
+                    <p class="font-bold text-slate-700">Exploradora Junior</p>
+                </div>
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             <a href="energia.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
-                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow-500 group-hover:rotate-12 transition-all duration-300">
+                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow-400 group-hover:rotate-12 transition-all duration-300">
                     ⚡
                 </div>
                 <h2 class="medieval-font text-2xl text-slate-800 mb-3">La Energía</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Formas, fuentes renovables y cómo proteger nuestro planeta con las 3 Erres.
+                    Formas de energía, fuentes renovables y el reto de las 3 Erres para salvar el planeta.
                 </p>
-                <div class="mt-auto flex items-center text-yellow-600 font-bold uppercase text-xs tracking-widest">
-                    Empezar Misión <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                <div class="mt-auto flex items-center text-green-600 font-bold uppercase text-xs tracking-widest">
+                    Entrar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </a>
+
+            <a href="comidas-saludables.html" class="card-science bg-white rounded-[2.5rem] p-8 flex flex-col group">
+                <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:rotate-12 transition-all duration-300">
+                    🍎
+                </div>
+                <h2 class="medieval-font text-2xl text-slate-800 mb-3">Comida Saludable</h2>
+                <p class="text-slate-500 leading-relaxed mb-6">
+                    Aprende sobre los grupos de alimentos y cómo tener una vida llena de energía y salud.
+                </p>
+                <div class="mt-auto flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest">
+                    Nutrirse <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
                 </div>
             </a>
 
@@ -62,7 +84,7 @@
                 </div>
                 <h2 class="medieval-font text-2xl text-slate-800 mb-3">Los Minerales</h2>
                 <p class="text-slate-500 leading-relaxed mb-6">
-                    Dureza, brillo y color. Los tesoros ocultos bajo la tierra.
+                    Dureza, brillo y color. Descubre las propiedades de los tesoros de la tierra.
                 </p>
                 <div class="mt-auto flex items-center text-blue-600 font-bold uppercase text-xs tracking-widest">
                     Explorar <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
@@ -85,14 +107,10 @@
             <div class="border-2 border-dashed border-green-200 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center opacity-60">
                 <div class="text-4xl mb-4 text-green-200">🔬</div>
                 <h3 class="medieval-font text-xl text-slate-400">Próxima Lección</h3>
-                <p class="text-slate-400 text-sm mt-2 font-medium italic">Preparando nuevos experimentos...</p>
+                <p class="text-slate-400 text-sm mt-2 font-medium">¡Muy pronto más aventuras científicas!</p>
             </div>
 
         </div>
-
-        <footer class="mt-24 text-center text-slate-400 text-sm">
-            <p>Academia de Gloria Valentina - Ciencias Naturales</p>
-        </footer>
     </div>
 
 </body>
