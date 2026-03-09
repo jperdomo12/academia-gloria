@@ -19,7 +19,6 @@
         .mm-card { background: white; border-radius: 2rem; padding: 1.5rem; border: 2px solid #e2e8f0; }
         .badge { padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; display: inline-block; }
         
-        /* Flashcards */
         .flip-card { background-color: transparent; width: 100%; height: 200px; perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
@@ -31,6 +30,10 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-4xl mx-auto">
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-6 py-2 rounded-full shadow-sm text-green-600 font-bold hover:bg-green-50 transition-all mb-8 border border-green-100">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Science
+        </a>
+
         <header class="text-center mb-8">
             <h1 class="text-4xl font-black text-slate-800">Science: <span class="text-green-600">La Energía</span></h1>
         </header>
@@ -42,21 +45,16 @@
         </div>
 
         <div id="resumen" class="tab-content active space-y-6">
-            <div class="bg-green-600 text-white p-6 rounded-[2.5rem] text-center shadow-lg">
-                <h2 class="text-2xl font-black italic uppercase">Mapa Conceptual de Energía</h2>
-                <p class="text-sm font-bold opacity-90">Todo el contenido del PDF</p>
-            </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="mm-card shadow-sm border-blue-100">
                     <h3 class="font-black text-blue-600 mb-4 flex items-center gap-2"><i data-lucide="zap"></i> FORMAS DE ENERGÍA</h3>
                     <div class="space-y-3 text-xs">
-                        <p><span class="badge bg-blue-100 text-blue-700">Mecánica</span> <b>Cinética</b> (movimiento) y <b>Potencial</b> (altura/reposo).</p>
-                        <p><span class="badge bg-blue-100 text-blue-700">Química</span> Almacenada en comida y baterías.</p>
-                        <p><span class="badge bg-blue-100 text-blue-700">Térmica</span> Energía que produce calor.</p>
-                        <p><span class="badge bg-blue-100 text-blue-700">Lumínica</span> Emitida por fuentes de luz.</p>
-                        <p><span class="badge bg-blue-100 text-blue-700">Eléctrica</span> Fluye por cables eléctricos.</p>
-                        <p><span class="badge bg-blue-100 text-blue-700">Nuclear</span> Estructura interna de la materia.</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Mecánica</span> <b>Cinética</b> (movimiento) y <b>Potencial</b> (altura).</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Química</span> En comida, carbohidratos y pilas.</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Térmica</span> Energía que se manifiesta como calor.</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Lumínica</span> Emitida por el Sol o bombillas.</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Eléctrica</span> Se transporta por cables de metal.</p>
+                        <p><span class="badge bg-blue-100 text-blue-700">Nuclear</span> Encontrada en el interior de la materia.</p>
                     </div>
                 </div>
 
@@ -64,34 +62,28 @@
                     <h3 class="font-black text-orange-600 mb-4 flex items-center gap-2"><i data-lucide="sun"></i> FUENTES DE ENERGÍA</h3>
                     <div class="space-y-4">
                         <div class="bg-green-50 p-3 rounded-xl border border-green-100">
-                            <b class="text-green-700 block text-xs mb-1">RENOVABLES (Ilimitadas)</b>
-                            <p class="text-[11px]">Solar, Eólica e Hidráulica.</p>
+                            <b class="text-green-700 block text-xs mb-1 uppercase">Renovables</b>
+                            <p class="text-[11px]">Viento (Eólica), Sol (Solar), Agua (Hidráulica).</p>
                         </div>
                         <div class="bg-red-50 p-3 rounded-xl border border-red-100">
-                            <b class="text-red-700 block text-xs mb-1">NO RENOVABLES (Se agotan)</b>
+                            <b class="text-red-700 block text-xs mb-1 uppercase">No Renovables</b>
                             <p class="text-[11px]">Petróleo, Carbón, Gas Natural y Uranio.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mm-card border-green-500 border-2 bg-green-50/30">
-                <h3 class="font-black text-green-700 mb-4 flex items-center gap-2"><i data-lucide="leaf"></i> PROTECCIÓN DEL PLANETA (LAS 3 RS)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="text-xs space-y-2">
-                        <p><b>Peligro:</b> El uso de energías no renovables produce <span class="text-red-600 font-bold">CO2</span> y otros gases dañinos.</p>
-                        <p><b>Efectos:</b> Calentamiento global y lluvia ácida.</p>
+            <div class="mm-card border-green-500 border-2 bg-green-50/50">
+                <h3 class="font-black text-green-700 mb-4 flex items-center gap-2 uppercase tracking-tighter"><i data-lucide="leaf"></i> Protección del Planeta (Las 3 Rs)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="text-[11px] space-y-2">
+                        <p>⚠️ <b>Problema:</b> Las fuentes no renovables contaminan y producen <b>Dióxido de Carbono (CO2)</b>.</p>
+                        <p>🌧️ <b>Efecto:</b> Esto causa <b>Calentamiento Global</b> y <b>Lluvia Ácida</b>.</p>
                     </div>
-                    <div class="grid grid-cols-1 gap-2">
-                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">
-                            <i data-lucide="minus-circle" class="w-4 h-4"></i> REDUCIR: Comprar menos envoltorios.
-                        </div>
-                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">
-                            <i data-lucide="rotate-cw" class="w-4 h-4"></i> REUTILIZAR: Usar envases varias veces.
-                        </div>
-                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">
-                            <i data-lucide="recycle" class="w-4 h-4"></i> RECICLAR: Separar la basura.
-                        </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">REDUCIR: Menos envoltorios.</div>
+                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">REUTILIZAR: Usar envases otra vez.</div>
+                        <div class="flex items-center gap-2 bg-green-600 text-white p-2 rounded-xl text-[10px] font-bold">RECICLAR: Separar la basura.</div>
                     </div>
                 </div>
             </div>
@@ -100,40 +92,22 @@
         <div id="fichas" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">¿Qué es la Energía?</div>
-                        <div class="flip-card-back">Es la capacidad de un objeto para moverse, calentarse o producir luz.</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front">E. Térmica</div><div class="flip-card-back">Es la energía en forma de calor (como el fuego).</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front text-blue-600">E. Química</div>
-                        <div class="flip-card-back">Energía guardada en sustancias como la comida o baterías.</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front">E. Lumínica</div><div class="flip-card-back">Es la que emiten los cuerpos que dan luz (Sol, bombillas).</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front text-orange-600">No Renovables</div>
-                        <div class="flip-card-back">Fuentes que son limitadas y se agotan (Petróleo, Carbón, Gas, Uranio).</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front text-orange-600">Gas Natural</div><div class="flip-card-back">Fuente No Renovable usada para calefacción y cocina.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front text-orange-600">E. Hidráulica</div>
-                        <div class="flip-card-back">Energía del agua en movimiento. Se recoge en presas.</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front text-blue-600">Cinética</div><div class="flip-card-back">Energía en forma de movimiento.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front text-red-600">Gases Dañinos</div>
-                        <div class="flip-card-back">El Dióxido de Azufre y Óxido de Nitrógeno causan lluvia ácida.</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front text-green-600">E. Hidráulica</div><div class="flip-card-back">Fuente Renovable que usa el agua en movimiento de los ríos.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front text-green-600">Reciclar</div>
-                        <div class="flip-card-back">Separar la basura y ponerla en el contenedor correcto.</div>
-                    </div>
+                    <div class="flip-card-inner"><div class="flip-card-front">La Energía</div><div class="flip-card-back">Capacidad de los objetos para moverse, calentarse o brillar.</div></div>
                 </div>
             </div>
         </div>
@@ -146,10 +120,10 @@
                     <div id="options" class="grid gap-3"></div>
                 </div>
                 <div id="result-area" class="hidden text-center">
-                    <div class="text-6xl mb-4">🏆</div>
-                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Test Completado!</h2>
+                    <div class="text-6xl mb-4">🎖️</div>
+                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Misión Cumplida!</h2>
                     <p id="score-text" class="text-xl font-bold text-green-600 mb-8"></p>
-                    <button onclick="restartTest()" class="bg-green-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg hover:bg-green-700 transition-all">Repetir Desafío</button>
+                    <button onclick="restartTest()" class="bg-green-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg">Reiniciar Test</button>
                 </div>
             </div>
         </div>
@@ -166,29 +140,33 @@
         }
 
         const questions = [
-            { q: "¿Qué energía usa una bombilla para dar luz?", a: ["Química", "Eléctrica", "Nuclear"], c: 1 },
-            { q: "La energía de los músculos al pedalear es...", a: ["Potencial", "Térmica", "Cinética"], c: 2 },
-            { q: "¿Cuál es una fuente de energía renovable?", a: ["Viento (Eólica)", "Carbón", "Gas Natural"], c: 0 },
-            { q: "El metal radiactivo de las centrales nucleares es:", a: ["Hierro", "Uranio", "Oro"], c: 1 },
-            { q: "¿Qué técnica ayuda a usar menos envoltorios?", a: ["Reciclar", "Reutilizar", "Reducir"], c: 2 },
-            { q: "Efecto causado por el óxido de nitrógeno:", a: ["Lluvia Ácida", "Más Sol", "Menos viento"], c: 0 }
+            { q: "¿Qué energía está en la comida?", a: ["Nuclear", "Química", "Térmica"], c: 1 },
+            { q: "La energía del movimiento se llama...", a: ["Potencial", "Térmica", "Cinética"], c: 2 },
+            { q: "¿Cuál es No Renovable?", a: ["Agua", "Petróleo", "Viento"], c: 1 },
+            { q: "¿Qué gas causa calentamiento global?", a: ["Oxígeno", "CO2", "Helio"], c: 1 },
+            { q: "Comprar productos con poco envoltorio es:", a: ["Reciclar", "Reducir", "Reutilizar"], c: 1 },
+            { q: "Energía que viaja por cables:", a: ["Eléctrica", "Luz", "Mecánica"], c: 0 },
+            { q: "La energía del Sol es fuente...", a: ["No renovable", "Química", "Renovable"], c: 2 },
+            { q: "¿Qué fuente usa el Uranio?", a: ["Solar", "Nuclear", "Eólica"], c: 1 },
+            { q: "Separar la basura en cubos es:", a: ["Reciclar", "Reducir", "Reutilizar"], c: 0 },
+            { q: "¿Qué energía produce el fuego?", a: ["Química", "Térmica", "Eléctrica"], c: 1 }
         ];
 
         let qIdx = 0; let score = 0;
 
         function loadQuestion() {
             const q = questions[qIdx];
-            document.getElementById('progress').innerText = `Pregunta ${qIdx + 1} de ${questions.length}`;
+            document.getElementById('progress').innerText = `DESAFÍO ${qIdx + 1} DE 10`;
             document.getElementById('question').innerText = q.q;
             const optDiv = document.getElementById('options');
             optDiv.innerHTML = '';
             q.a.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.innerText = opt;
-                btn.className = "p-5 border-2 border-slate-100 rounded-2xl font-bold text-lg hover:bg-green-50 hover:border-green-300 transition-all text-slate-700";
+                btn.className = "p-4 border-2 border-slate-100 rounded-2xl font-bold hover:bg-green-50 transition-all text-slate-700";
                 btn.onclick = () => {
-                    if(i === q.c) { btn.style.backgroundColor = "#dcfce7"; btn.style.borderColor = "#22c55e"; score++; }
-                    else { btn.style.backgroundColor = "#fee2e2"; btn.style.borderColor = "#ef4444"; }
+                    if(i === q.c) { btn.style.backgroundColor = "#dcfce7"; score++; }
+                    else { btn.style.backgroundColor = "#fee2e2"; }
                     setTimeout(() => {
                         qIdx++;
                         if(qIdx < questions.length) loadQuestion();
@@ -202,7 +180,7 @@
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
             document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `Has acertado ${score} de ${questions.length} preguntas`;
+            document.getElementById('score-text').innerText = `Gloria, lograste ${score} puntos de 10`;
         }
 
         function restartTest() {
