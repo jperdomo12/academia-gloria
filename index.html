@@ -6,6 +6,7 @@
     <title>Academia de Gloria Valentina</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Outfit', sans-serif; }
         .materia-card:hover .icon-bounce { transform: scale(1.2) rotate(5deg); }
@@ -16,42 +17,58 @@
 </head>
 <body class="bg-[#f0f4f8] min-h-screen flex flex-col items-center p-8">
 
-    <header class="text-center mb-12">
-        <h1 class="text-5xl font-extrabold text-indigo-950 mb-4 tracking-tight">
-            🌟 Academia de <span class="text-indigo-600">Gloria Valentina</span>
-        </h1>
-        <div class="bg-indigo-100 text-indigo-800 px-6 py-2 rounded-full inline-block font-semibold shadow-sm">
-            ✨ "¡Cree en ti y todo será posible!" ✨
-        </div>
+    <header class="text-center mb-10">
+        <h1 class="text-5xl font-extrabold text-indigo-950 mb-3 tracking-tight">Academia de <span class="text-indigo-600">Gloria Valentina</span></h1>
+        <p class="text-slate-500 text-xl font-medium">¡Tu aventura de aprendizaje comienza aquí!</p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
-        
-        <a href="lengua/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-pink-500 transition-all hover:-translate-y-2 flex items-center gap-8">
-            <div class="icon-bounce text-7xl">🎨</div>
-            <div class="text-left">
-                <span class="block text-pink-600 font-extrabold text-3xl">Lengua</span>
-                <p class="text-slate-500 text-lg font-medium">Lectura y Escritura</p>
+    <div class="w-full max-w-4xl mb-12">
+        <a href="https://sites.google.com/gaudem.es/quinto/inicio" target="_blank" class="group block">
+            <div class="bg-white/80 backdrop-blur-sm border-2 border-indigo-100 rounded-3xl p-4 flex items-center justify-between hover:bg-indigo-50 transition-all shadow-sm">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gradient-to-br from-indigo-500 to-purple-500 p-3 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
+                        <i data-lucide="graduation-cap" class="text-white w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-indigo-900 font-bold text-lg">Gaudem - Área Oficial 5º Primaria</p>
+                        <p class="text-indigo-400 text-sm font-medium">Curso 25/26 • Acceso al portal del cole</p>
+                    </div>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-indigo-400 font-bold text-sm px-4">
+                    <span>Visitar</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </div>
             </div>
         </a>
+    </div>
 
-        <a href="mates/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-sky-500 transition-all hover:-translate-y-2 flex items-center gap-8">
-            <div class="icon-bounce text-7xl">🧪</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+        
+        <a href="mates/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-sky-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
+            <div class="icon-bounce text-7xl">🔢</div>
             <div class="text-left">
                 <span class="block text-sky-600 font-extrabold text-3xl">Mates</span>
-                <p class="text-slate-500 text-lg font-medium">Números y Retos</p>
+                <p class="text-slate-500 text-lg font-medium">Reino Numérico</p>
             </div>
         </a>
 
-        <a href="sociales/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-purple-500 transition-all hover:-translate-y-2 flex items-center gap-8">
+        <a href="lengua/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-rose-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
+            <div class="icon-bounce text-7xl">✍️</div>
+            <div class="text-left">
+                <span class="block text-rose-600 font-extrabold text-3xl">Lengua</span>
+                <p class="text-slate-500 text-lg font-medium">Letras y Magia</p>
+            </div>
+        </a>
+
+        <a href="sociales/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-amber-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
             <div class="icon-bounce text-7xl">🏰</div>
             <div class="text-left">
-                <span class="block text-purple-600 font-extrabold text-3xl">Sociales</span>
-                <p class="text-slate-500 text-lg font-medium">Viaje en el Tiempo</p>
+                <span class="block text-amber-600 font-extrabold text-3xl">Sociales</span>
+                <p class="text-slate-500 text-lg font-medium">Crónicas del Tiempo</p>
             </div>
         </a>
 
-        <a href="ciencias/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-green-500 transition-all hover:-translate-y-2 flex items-center gap-8">
+        <a href="ciencias/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-green-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
             <div class="icon-bounce text-7xl">🌿</div>
             <div class="text-left">
                 <span class="block text-green-600 font-extrabold text-3xl">Science</span>
@@ -72,17 +89,17 @@
         <a href="calendario.html" class="block bg-indigo-900 text-white p-8 rounded-[40px] shadow-2xl hover:bg-indigo-800 transition-all text-center">
             <div class="flex items-center justify-center gap-4">
                 <span class="text-4xl">📅</span>
-                <span class="text-3xl font-bold italic tracking-wide">Próximos Exámenes</span>
-                <span class="text-2xl opacity-50 ml-4">→</span>
+                <span class="text-2xl font-bold">Calendario de Exámenes</span>
             </div>
         </a>
     </div>
 
-    <footer class="mt-16 text-slate-400 font-medium">
-        ¡A por todas, Gloria Valentina! ✨
+    <footer class="mt-20 text-slate-400 font-bold uppercase tracking-widest text-xs">
+        Academia de Gloria Valentina • 2024
     </footer>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
-
-
