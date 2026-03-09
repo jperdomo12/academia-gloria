@@ -36,7 +36,7 @@
                 <p class="text-slate-500 text-lg mt-2 font-medium">Países y Capitales de Europa</p>
             </div>
             <div class="bg-white p-4 rounded-3xl shadow-sm border border-sky-50 flex items-center gap-4">
-                <div class="text-3xl">🏛️</div>
+                <div class="text-3xl">🎓</div>
                 <div>
                     <p class="text-xs font-black uppercase tracking-tighter text-slate-400">Lección</p>
                     <p class="font-bold text-slate-700">Europa Político</p>
@@ -46,17 +46,23 @@
 
         <nav class="flex flex-wrap gap-4 mb-10">
             <button onclick="openTab('teoria')" class="tab-button active px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-teoria">
-                <i data-lucide="list" class="w-5 h-5"></i> Lista
+                <i data-lucide="map" class="w-5 h-5"></i> Mapa y Lista
             </button>
             <button onclick="openTab('fichas')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-fichas">
                 <i data-lucide="layers" class="w-5 h-5"></i> Fichas
             </button>
             <button onclick="openTab('test')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-test">
-                <i data-lucide="check-square" class="w-5 h-5"></i> Test
+                <i data-lucide="check-square" class="w-5 h-5"></i> Test (12)
             </button>
         </nav>
 
-        <section id="teoria" class="tab-content active">
+        <section id="teoria" class="tab-content active space-y-8">
+            <div class="bg-white p-4 rounded-[3rem] shadow-xl border border-sky-100 overflow-hidden text-center">
+                <h3 class="text-xl font-bold text-sky-700 mb-4">¡Explora el Mapa de Europa! 🌍</h3>
+                <img src="http://googleusercontent.com/image_generation_content/0" alt="Mapa Político de Europa para niños" class="w-full h-auto rounded-2xl mx-auto max-w-3xl border border-slate-100">
+                <p class="mt-4 text-slate-400 text-sm italic">Fíjate en los colores y los iconos para recordar cada país.</p>
+            </div>
+
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-sky-100">
                 <h3 class="text-2xl font-black text-sky-800 mb-6 flex items-center gap-2">Principales Países y Capitales</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -69,6 +75,9 @@
                     <div class="p-4 bg-sky-50 rounded-2xl"><strong>Grecia:</strong> Atenas</div>
                     <div class="p-4 bg-sky-50 rounded-2xl"><strong>Rusia:</strong> Moscú</div>
                     <div class="p-4 bg-sky-50 rounded-2xl"><strong>Ucrania:</strong> Kiev</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Bélgica:</strong> Bruselas</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Noruega:</strong> Oslo</div>
+                    <div class="p-4 bg-sky-50 rounded-2xl"><strong>Polonia:</strong> Varsovia</div>
                 </div>
             </div>
         </section>
@@ -99,19 +108,36 @@
                         <div class="flip-card-back">Moscú</div>
                     </div>
                 </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de GRECIA</div>
+                        <div class="flip-card-back">Atenas</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital de UCRANIA</div>
+                        <div class="flip-card-back">Kiev</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="test" class="tab-content">
             <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-sky-100 max-w-2xl mx-auto">
                 <div id="quiz-container">
-                    <h2 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8">Cargando...</h2>
+                    <div class="flex justify-between items-center mb-6">
+                        <span id="q-counter" class="text-sky-600 font-bold">Pregunta 1 de 12</span>
+                        <span id="score-live" class="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-xs font-black">Puntos: 0</span>
+                    </div>
+                    <h2 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h2>
                     <div id="options-grid" class="grid gap-4"></div>
                 </div>
                 <div id="score-container" class="hidden text-center">
-                    <h2 class="text-3xl font-black mb-4">¡Buen trabajo!</h2>
-                    <p id="final-score" class="text-xl mb-8"></p>
-                    <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-3 rounded-xl font-bold">Reiniciar</button>
+                    <div class="text-6xl mb-4">⭐</div>
+                    <h2 class="text-3xl font-black mb-4">¡Reto Completado!</h2>
+                    <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+                    <button onclick="resetQuiz()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">Intentar de nuevo</button>
                 </div>
             </div>
         </section>
@@ -130,36 +156,64 @@
             { q: "¿Cuál es la capital de Alemania?", a: ["Múnich", "Berlín", "Hamburgo"], c: 1 },
             { q: "¿Qué país tiene como capital París?", a: ["España", "Bélgica", "Francia"], c: 2 },
             { q: "¿Cuál es la capital de Italia?", a: ["Milán", "Roma", "Nápoles"], c: 1 },
-            { q: "¿La capital de Reino Unido es...?", a: ["Londres", "Dublín", "Liverpool"], c: 0 }
+            { q: "¿La capital de Reino Unido es...?", a: ["Londres", "Dublín", "Liverpool"], c: 0 },
+            { q: "¿Cuál es la capital de Grecia?", a: ["Atenas", "Sofía", "Roma"], c: 0 },
+            { q: "¿Kiev es la capital de...?", a: ["Rusia", "Ucrania", "Polonia"], c: 1 },
+            { q: "¿Cuál es la capital de Rusia?", a: ["San Petersburgo", "Moscú", "Varsovia"], c: 1 },
+            { q: "¿Cuál es la capital de España?", a: ["Barcelona", "Valencia", "Madrid"], c: 2 },
+            { q: "¿Noruega tiene como capital...?", a: ["Oslo", "Estocolmo", "Helsinki"], c: 0 },
+            { q: "La capital de Bélgica es...", a: ["Luxemburgo", "Ámsterdam", "Bruselas"], c: 2 },
+            { q: "¿Cuál es la capital de Polonia?", a: ["Varsovia", "Praga", "Minsk"], c: 0 }
         ];
 
         let currentQ = 0; let score = 0;
 
         function loadQuestion() {
             const q = questions[currentQ];
+            document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de 12`;
             document.getElementById('question-text').innerText = q.q;
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
+            
             q.a.forEach((opt, i) => {
                 const b = document.createElement('button');
-                b.className = 'btn-option w-full p-4 rounded-xl font-bold text-left';
+                b.className = 'btn-option w-full p-5 rounded-2xl font-bold text-left';
                 b.innerText = opt;
                 b.onclick = () => {
-                    if(i === q.c) { b.classList.add('btn-correct'); score++; }
-                    else { b.classList.add('btn-incorrect'); }
+                    const allBtns = grid.querySelectorAll('button');
+                    allBtns.forEach(btn => btn.onclick = null); 
+
+                    if(i === q.c) {
+                        b.classList.add('btn-correct');
+                        score++;
+                        document.getElementById('score-live').innerText = `Puntos: ${score}`;
+                    } else {
+                        b.classList.add('btn-incorrect');
+                        allBtns[q.c].classList.add('btn-correct');
+                    }
+
                     setTimeout(() => {
                         currentQ++;
                         if(currentQ < questions.length) loadQuestion();
                         else {
                             document.getElementById('quiz-container').classList.add('hidden');
                             document.getElementById('score-container').classList.remove('hidden');
-                            document.getElementById('final-score').innerText = `Puntuación: ${score}/${questions.length}`;
+                            document.getElementById('final-score').innerText = `Has conseguido ${score} de 12 puntos posibles.`;
                         }
-                    }, 1000);
+                    }, 1500);
                 };
                 grid.appendChild(b);
             });
         }
+
+        function resetQuiz() {
+            currentQ = 0; score = 0;
+            document.getElementById('score-live').innerText = `Puntos: 0`;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('score-container').classList.add('hidden');
+            loadQuestion();
+        }
+
         loadQuestion();
         lucide.createIcons();
     </script>
