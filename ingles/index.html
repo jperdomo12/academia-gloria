@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,156 +8,75 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #f0f4f8; }
-        .resource-card {
-            background: white;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #e2e8f0;
+        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
+        .category-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
         }
-        .resource-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        .category-card:hover {
+            transform: translateY(-5px);
             border-color: #6366f1;
-        }
-        .icon-container {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-            margin-bottom: 15px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 <body class="p-6 md:p-12">
-
-    <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
-            <div>
-                <a href="../index.html" class="inline-flex items-center text-indigo-600 font-bold mb-4 hover:gap-2 transition-all">
-                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Back to Menu
-                </a>
-                <h1 class="text-5xl md:text-6xl font-extrabold text-slate-800 tracking-tight">English <span class="text-indigo-600">Academy</span></h1>
-                <p class="text-slate-500 text-xl mt-2 font-medium">Fichas oficiales enviadas por Marta Díaz Sada 👩‍🏫</p>
-            </div>
-            <div class="flex items-center gap-4 bg-white p-4 rounded-3xl shadow-sm border border-indigo-50">
-                <div class="text-3xl">🇬🇧</div>
-                <div>
-                    <p class="text-xs font-black uppercase tracking-tighter text-slate-400 text-left">Teacher's Tasks</p>
-                    <p class="font-bold text-slate-700">Exam Practice</p>
-                </div>
-            </div>
+    <div class="max-w-5xl mx-auto">
+        <header class="mb-12">
+            <a href="../index.html" class="text-indigo-600 font-bold flex items-center gap-2 mb-4">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Main Menu
+            </a>
+            <h1 class="text-5xl font-black text-slate-800">English <span class="text-indigo-600">Training Center</span></h1>
+            <p class="text-slate-500 text-xl mt-2">Choose your mission, Gloria!</p>
         </header>
 
-        <div class="mb-12">
-            <a href="https://sites.google.com/gaudem.es/quinto/%C3%A1reas/ingl%C3%A9s" target="_blank" class="block group">
-                <div class="bg-gradient-to-r from-indigo-600 to-blue-500 p-6 rounded-[2.5rem] shadow-lg shadow-indigo-200 flex items-center justify-between hover:scale-[1.01] transition-all border-4 border-white">
-                    <div class="flex items-center gap-6">
-                        <div class="bg-white/20 p-4 rounded-2xl">
-                            <i data-lucide="graduation-cap" class="text-white w-8 h-8"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-black text-2xl text-left">Gaudem - Área Inglés</h3>
-                            <p class="text-indigo-50 opacity-90 font-medium text-left">Official School Portal</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl mr-4 group-hover:bg-white group-hover:text-indigo-600 transition-all">
-                        <span class="text-white font-bold group-hover:text-indigo-600">Open Site</span>
-                        <i data-lucide="external-link" class="w-5 h-5"></i>
-                    </div>
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+                <i data-lucide="graduation-cap" class="text-indigo-500"></i> Marta's Corner (Official Tasks)
+            </h2>
+            <div class="bg-indigo-50 rounded-[2.5rem] p-8 border-2 border-indigo-100">
+                <p class="text-indigo-700 font-medium mb-6">Fichas enviadas por la profesora Marta Díaz Sada:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/768935" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
+                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                        <span class="font-bold">Math: Time & Money I</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/65040" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
+                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                        <span class="font-bold">Math: Time & Money II</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1003283" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
+                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                        <span class="font-bold">English ESL</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/1365210" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
+                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                        <span class="font-bold">Math Skills I</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/617506" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
+                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                        <span class="font-bold">Math Skills II</span>
+                    </a>
                 </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <a href="reading.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mb-6">📖</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-3">Reading Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Comprehension texts: My Name is Lucy and more adventures.</p>
+                <span class="mt-auto px-8 py-3 bg-emerald-500 text-white font-bold rounded-2xl">Start Reading</span>
+            </a>
+
+            <a href="listening.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center text-4xl mb-6">🎧</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-3">Listening Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Train your ears! Listen to short stories and answer questions.</p>
+                <span class="mt-auto px-8 py-3 bg-rose-500 text-white font-bold rounded-2xl">Start Listening</span>
             </a>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <div class="resource-card p-8">
-                <div>
-                    <div class="icon-container bg-blue-100 text-blue-600">
-                        <i data-lucide="file-text"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-left text-balance">Math: Time & Money (I)</h3>
-                    <p class="text-slate-500 mb-6 text-left">Practice telling the time and counting money in English.</p>
-                </div>
-                <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/768935" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl transition-all shadow-md active:scale-95">
-                    Open Worksheet
-                </a>
-            </div>
-
-            <div class="resource-card p-8">
-                <div>
-                    <div class="icon-container bg-purple-100 text-purple-600">
-                        <i data-lucide="clock"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-left text-balance">Math: Time & Money (II)</h3>
-                    <p class="text-slate-500 mb-6 text-left">Advanced exercises on schedules and currency.</p>
-                </div>
-                <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/65040" target="_blank" class="block text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-2xl transition-all shadow-md active:scale-95">
-                    Open Worksheet
-                </a>
-            </div>
-
-            <div class="resource-card p-8">
-                <div>
-                    <div class="icon-container bg-emerald-100 text-emerald-600">
-                        <i data-lucide="languages"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-left text-balance">English ESL</h3>
-                    <p class="text-slate-500 mb-6 text-left">Grammar and vocabulary reinforcement (Second Language).</p>
-                </div>
-                <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1003283" target="_blank" class="block text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition-all shadow-md active:scale-95">
-                    Open Worksheet
-                </a>
-            </div>
-
-            <div class="resource-card p-8 border-rose-100">
-                <div>
-                    <div class="icon-container bg-rose-100 text-rose-600">
-                        <i data-lucide="calculator"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-left text-balance">Math Skills (I)</h3>
-                    <p class="text-slate-500 mb-6 text-left">General mathematics practice worksheet.</p>
-                </div>
-                <a href="https://www.liveworksheets.com/worksheet/en/math/1365210" target="_blank" class="block text-center bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-2xl transition-all shadow-md active:scale-95">
-                    Open Worksheet
-                </a>
-            </div>
-
-            <div class="resource-card p-8 border-amber-100">
-                <div>
-                    <div class="icon-container bg-amber-100 text-amber-600">
-                        <i data-lucide="zap"></i>
-                    </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 text-left text-balance">Math Skills (II)</h3>
-                    <p class="text-slate-500 mb-6 text-left">Final reinforcement worksheet before the exam.</p>
-                </div>
-                <a href="https://www.liveworksheets.com/worksheet/en/math/617506" target="_blank" class="block text-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-2xl transition-all shadow-md active:scale-95">
-                    Open Worksheet
-                </a>
-            </div>
-
-            <div class="resource-card p-8 bg-orange-50 border-4 border-dashed border-orange-200 flex flex-col items-center justify-center text-center">
-                <div class="text-orange-400 mb-4 animate-bounce">
-                    <i data-lucide="sparkles" class="w-12 h-12"></i>
-                </div>
-                <h4 class="text-orange-700 font-extrabold text-xl mb-2 italic">Good luck, Gloria!</h4>
-                <p class="text-orange-500 font-medium leading-tight text-sm">Completa estas 5 fichas y estarás lista para el examen del martes.</p>
-            </div>
-
-        </div>
-
-        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
-            Academia de Gloria Valentina • 2024
-        </footer>
     </div>
-
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
