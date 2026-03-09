@@ -18,6 +18,21 @@
             border-color: #6366f1;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
+        .anais-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #f3e8ff;
+            transition: all 0.2s;
+        }
+        .anais-card:hover {
+            background: #faf5ff;
+            border-color: #d8b4fe;
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body class="p-6 md:p-12">
@@ -27,55 +42,116 @@
                 <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Main Menu
             </a>
             <h1 class="text-5xl font-black text-slate-800">English <span class="text-indigo-600">Training Center</span></h1>
-            <p class="text-slate-500 text-xl mt-2">Choose your mission, Gloria!</p>
+            <p class="text-slate-500 text-xl mt-2 font-medium">¡A por todas, Gloria! 🚀</p>
         </header>
 
         <section class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
-                <i data-lucide="graduation-cap" class="text-indigo-500"></i> Marta's Corner (Official Tasks)
+            <h2 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-3">
+                <div class="bg-indigo-100 p-2 rounded-lg"><i data-lucide="graduation-cap" class="text-indigo-600 w-5 h-5"></i></div>
+                Marta's Corner (Official Tasks)
             </h2>
-            <div class="bg-indigo-50 rounded-[2.5rem] p-8 border-2 border-indigo-100">
-                <p class="text-indigo-700 font-medium mb-6">Fichas enviadas por la profesora Marta Díaz Sada:</p>
+            <div class="bg-indigo-50 rounded-[2.5rem] p-8 border-2 border-indigo-100 shadow-inner">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/768935" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
-                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
-                        <span class="font-bold">Math: Time & Money I</span>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/768935" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Time & Money I</span>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/65040" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
-                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
-                        <span class="font-bold">Math: Time & Money II</span>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/65040" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Time & Money II</span>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1003283" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
-                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1003283" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
                         <span class="font-bold">English ESL</span>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/en/math/1365210" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
-                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/1365210" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
                         <span class="font-bold">Math Skills I</span>
                     </a>
-                    <a href="https://www.liveworksheets.com/worksheet/en/math/617506" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all group">
-                        <i data-lucide="link" class="w-5 h-5 opacity-50"></i>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/617506" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
                         <span class="font-bold">Math Skills II</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <a href="reading.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
-                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mb-6">📖</div>
-                <h3 class="text-3xl font-black text-slate-800 mb-3">Reading Zone</h3>
-                <p class="text-slate-500 font-medium mb-6">Comprehension texts: My Name is Lucy and more adventures.</p>
-                <span class="mt-auto px-8 py-3 bg-emerald-500 text-white font-bold rounded-2xl">Start Reading</span>
+                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-sm">📖</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-2">Reading Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Textos y preguntas de comprensión.</p>
+                <span class="mt-auto px-8 py-3 bg-emerald-500 text-white font-bold rounded-2xl">Entrar ahora</span>
             </a>
 
             <a href="listening.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
-                <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center text-4xl mb-6">🎧</div>
-                <h3 class="text-3xl font-black text-slate-800 mb-3">Listening Zone</h3>
-                <p class="text-slate-500 font-medium mb-6">Train your ears! Listen to short stories and answer questions.</p>
-                <span class="mt-auto px-8 py-3 bg-rose-500 text-white font-bold rounded-2xl">Start Listening</span>
+                <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-sm">🎧</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-2">Listening Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Escucha audios y resuelve retos.</p>
+                <span class="mt-auto px-8 py-3 bg-rose-500 text-white font-bold rounded-2xl">Entrar ahora</span>
             </a>
         </div>
+
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-slate-700 flex items-center gap-3">
+                    <div class="bg-purple-100 p-2 rounded-lg"><i data-lucide="heart" class="text-purple-600 w-5 h-5 fill-purple-600"></i></div>
+                    Family Training Zone (Refuerzo de Anais)
+                </h2>
+                <span class="bg-purple-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest">Extra Missions</span>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+                    <div>
+                        <h4 class="text-purple-100 font-black uppercase text-xs tracking-widest mb-4 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-4 h-4"></i> Extra Reading
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/2022780" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="play" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Reading Comprehension 107300</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-purple-100 font-black uppercase text-xs tracking-widest mb-4 flex items-center gap-2">
+                            <i data-lucide="headphones" class="w-4 h-4"></i> Extra Listening
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/119216" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice A</span>
+                            </a>
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/670372" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice B</span>
+                            </a>
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/46710" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice C</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+            Academia de Gloria Valentina • 2024
+        </footer>
     </div>
     <script>lucide.createIcons();</script>
 </body>
