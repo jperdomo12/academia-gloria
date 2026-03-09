@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/6213/6213731.png">
+
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #fffaf5; color: #451a03; }
         .tab-content { display: none; }
@@ -16,6 +19,7 @@
         .nav-btn.active { color: #f59e0b; border-bottom: 4px solid #f59e0b; }
         .lang-card { background: white; border-radius: 2rem; border-left: 10px solid #f59e0b; box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1); }
         
+        /* Estilo de tarjetas de fichas (como en Mates) */
         .resource-card { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: white; border: 1px solid #fed7aa; }
         .resource-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px -10px rgba(245, 158, 11, 0.2); border-color: #f59e0b; }
 
@@ -52,24 +56,37 @@
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 shadow-sm">
-                        <h4 class="font-black text-blue-800 uppercase text-xs tracking-widest mb-2">Sustantivos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700"><b>NOMBRAN:</b> Seres (<i>niña</i>), lugares (<i>Valencia</i>) o cosas (<i>mochila</i>).</p>
-                        <p class="text-[11px] mt-2 text-blue-600 italic">Recuerda: ¡Los nombres propios van en Mayúscula!</p>
+                        <h4 class="font-black text-blue-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> Sustantivos</h4>
+                        <p class="text-[13px] leading-relaxed text-slate-700">Son palabras que sirven para <b>NOMBRAR</b> todo lo que existe (seres, cosas, lugares o ideas).</p>
+                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Propios:</b> Nombres únicos. ¡En <b>Mayúscula</b>! (<i>Gloria, España</i>).</li>
+                            <li>• <b>Comunes:</b> Objetos de la misma clase (<i>niña, país, mesa</i>).</li>
+                            <li>• <b>Individuales / Colectivos:</b> Uno (<i>oveja</i>) o conjunto (<i>rebaño</i>).</li>
+                        </ul>
                     </div>
                     <div class="p-5 bg-green-50 rounded-2xl border-l-4 border-green-500 shadow-sm">
-                        <h4 class="font-black text-green-800 uppercase text-xs tracking-widest mb-2">Adjetivos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700"><b>DESCRIBEN:</b> Cómo son o están las cosas. (<i>alto, roja, feliz, cansada</i>).</p>
-                        <p class="text-[11px] mt-2 text-green-600 italic">Deben tener el mismo género que el nombre.</p>
+                        <h4 class="font-black text-green-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="palette" class="w-4 h-4"></i> Adjetivos</h4>
+                        <p class="text-[13px] leading-relaxed text-slate-700">Palabras que dicen <b>CÓMO SON</b> o cómo están los sustantivos. Siempre concuerdan en género y número.</p>
+                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Cualidades:</b> (<i>pelo rubio, examen difícil, niña alta</i>).</li>
+                            <li>• <b>Estados:</b> (<i>está alegre, está limpia, puerta abierta</i>).</li>
+                        </ul>
                     </div>
                     <div class="p-5 bg-yellow-50 rounded-2xl border-l-4 border-yellow-500 shadow-sm">
-                        <h4 class="font-black text-yellow-800 uppercase text-xs tracking-widest mb-2">Verbos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700"><b>ACCIONES:</b> Lo que ocurre. (<i>saltar, reír, Gloria estudia mucho</i>).</p>
-                        <p class="text-[11px] mt-2 text-yellow-600 italic">Pasado, Presente o Futuro: ¡tú eliges!</p>
+                        <h4 class="font-black text-yellow-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4"></i> Verbos</h4>
+                        <p class="text-[13px] leading-relaxed text-slate-700">Expresan <b>ACCIONES</b> o estados situados en el tiempo (Pasado, Presente, Futuro).</p>
+                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Conjugaciones:</b> 1ª (<i>-ar</i>), 2ª (<i>-er</i>), 3ª (<i>-ir</i>).</li>
+                            <li>• <b>Formas:</b> Personales (<i>yo como</i>) y No Personales (<i>comer</i>).</li>
+                        </ul>
                     </div>
                     <div class="p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-500 shadow-sm">
-                        <h4 class="font-black text-orange-800 uppercase text-xs tracking-widest mb-2">Determinantes</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700"><b>ACOMPAÑAN:</b> Presentan al sustantivo (<i>el, un, mi, tres, aquella</i>).</p>
-                        <p class="text-[11px] mt-2 text-orange-600 italic">Siempre van delante del nombre.</p>
+                        <h4 class="font-black text-orange-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="hand-metal" class="w-4 h-4"></i> Determinantes</h4>
+                        <p class="text-[13px] leading-relaxed text-slate-700">Son palabras que van <b>DELANTE</b> del nombre para presentarlo e indicar distancia o posesión.</p>
+                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
+                            <li>• <b>Artículos:</b> Determinados (<i>el, la</i>) o Indeterminados (<i>un, una</i>).</li>
+                            <li>• <b>Demostrativos:</b> Distancia (<i>este, ese, aquel</i>).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -80,7 +97,7 @@
                 </h3>
                 <table>
                     <thead>
-                        <tr><th>Tipo</th><th>Pregunta</th><th>Idea corta</th></tr>
+                        <tr><th>Tipo de palabra</th><th>Pregunta clave</th><th>Idea corta</th></tr>
                     </thead>
                     <tbody>
                         <tr><td class="font-bold text-blue-600">🟦 Sustantivo</td><td class="italic">¿Qué es?</td><td>Nombra</td></tr>
@@ -92,31 +109,27 @@
             </div>
         </section>
 
-        <section id="fichas" class="tab-content space-y-6">
-            <div class="bg-orange-50 p-8 rounded-[2.5rem] border-2 border-dashed border-orange-200">
-                <div class="flex items-center justify-center gap-3 mb-8">
-                    <div class="bg-orange-200 p-3 rounded-2xl"><i data-lucide="folder-open" class="text-orange-600"></i></div>
+        <section id="fichas" class="tab-content">
+            <div class="bg-orange-50 p-8 rounded-[3rem] border-2 border-dashed border-orange-200">
+                <div class="flex items-center gap-3 mb-8 justify-center">
+                    <i data-lucide="folder-search" class="text-orange-600 w-8 h-8"></i>
                     <h3 class="text-2xl font-black text-orange-900 italic">Misión: Fichas Interactivas</h3>
                 </div>
-                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4 text-blue-600">✍️</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Comunicación</h4>
-                        <p class="text-xs text-slate-500 mb-4">Practica los conceptos básicos.</p>
-                        <div class="text-blue-600 font-bold text-xs uppercase tracking-tighter">Entrar →</div>
+                        <div class="text-4xl mb-4">📝</div>
+                        <h4 class="font-bold text-slate-800">Comunicación</h4>
+                        <p class="text-xs text-slate-500 mt-2">Nivel 1</p>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mb-4 text-green-600">📖</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Lengua Materna</h4>
-                        <p class="text-xs text-slate-500 mb-4">Ejercicios de gramática real.</p>
-                        <div class="text-green-600 font-bold text-xs uppercase tracking-tighter">Entrar →</div>
+                        <div class="text-4xl mb-4">📖</div>
+                        <h4 class="font-bold text-slate-800">Lengua Materna</h4>
+                        <p class="text-xs text-slate-500 mt-2">Nivel 2</p>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-4 text-purple-600">📔</div>
-                        <h4 class="font-bold text-slate-800 mb-2">Castellana</h4>
-                        <p class="text-xs text-slate-500 mb-4">Desafío final de palabras.</p>
-                        <div class="text-purple-600 font-bold text-xs uppercase tracking-tighter">Entrar →</div>
+                        <div class="text-4xl mb-4">📔</div>
+                        <h4 class="font-bold text-slate-800">Castellana</h4>
+                        <p class="text-xs text-slate-500 mt-2">Nivel 3</p>
                     </a>
                 </div>
             </div>
@@ -125,14 +138,14 @@
         <section id="test" class="tab-content">
             <div class="bg-white rounded-[2.5rem] p-10 shadow-2xl border border-orange-100" id="quiz-area">
                 <p id="q-progress" class="text-orange-400 font-bold text-xs uppercase mb-4"></p>
-                <h2 id="q-text" class="text-3xl font-black text-slate-800 mb-10 text-center leading-tight"></h2>
-                <div id="options" class="grid gap-4"></div>
+                <h2 id="q-text" class="text-2xl font-black text-slate-800 mb-10 text-center leading-tight"></h2>
+                <div id="options" class="grid gap-3"></div>
             </div>
             <div id="result-area" class="hidden bg-white rounded-[2.5rem] p-12 text-center shadow-xl">
-                <div class="text-7xl mb-6">🏆</div>
-                <h2 class="text-4xl font-black text-orange-900 mb-4 italic">¡Súper Gloria!</h2>
-                <p id="score-text" class="text-2xl font-bold text-slate-500 mb-8"></p>
-                <button onclick="location.reload()" class="bg-orange-600 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-orange-700 shadow-lg transition-all">VOLVER A INTENTAR</button>
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-3xl font-black text-orange-900 mb-4 italic text-center">¡Maestra de Lengua!</h2>
+                <p id="score-text" class="text-xl font-bold text-slate-500 mb-8"></p>
+                <button onclick="location.reload()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold">REPETIR MISIÓN</button>
             </div>
         </section>
     </main>
@@ -170,7 +183,7 @@
             optDiv.innerHTML = '';
             q.a.forEach((opt, i) => {
                 const b = document.createElement('button');
-                b.className = "w-full p-6 bg-white border-2 border-orange-100 rounded-3xl font-bold text-slate-700 hover:border-orange-500 hover:bg-orange-50 transition-all text-left text-lg shadow-sm";
+                b.className = "w-full p-5 bg-white border-2 border-orange-100 rounded-2xl font-bold text-slate-700 hover:border-orange-500 transition-all text-left";
                 b.innerText = opt;
                 b.onclick = () => {
                     if(i === q.c) score++;
