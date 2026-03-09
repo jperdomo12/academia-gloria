@@ -6,51 +6,182 @@
     <title>Reading Challenge - Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .quiz-option:hover { background-color: #f1f5f9; cursor: pointer; }
-        .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+        body { font-family: 'Outfit', sans-serif; }
+        .quiz-option {
+            transition: all 0.2s;
+            border: 2px solid #e2e8f0;
+            text-align: left;
+            padding: 1rem;
+            border-radius: 1rem;
+            font-weight: 600;
+        }
+        .quiz-option:hover { background-color: #f1f5f9; border-color: #cbd5e1; }
+        .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
     </style>
 </head>
-<body class="bg-emerald-50 p-6 md:p-12 font-sans">
+<body class="bg-emerald-50 p-6 md:p-12">
     <div class="max-w-4xl mx-auto">
-        <a href="index.html" class="text-emerald-700 font-bold mb-8 inline-block">← Back to Menu</a>
+        <a href="index.html" class="text-emerald-700 font-bold mb-8 inline-block hover:underline">← Back to Menu</a>
         
-        <h1 class="text-4xl font-black text-slate-800 mb-12">📖 Reading Challenges</h1>
+        <h1 class="text-5xl font-black text-slate-800 mb-4 text-center">📖 Reading Zone</h1>
+        <p class="text-center text-slate-600 mb-12 text-xl font-medium">Read the stories and answer the 8 questions!</p>
 
-        <article class="bg-white p-10 rounded-[3rem] shadow-lg mb-12 border-b-8 border-emerald-200">
-            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Text 1: My Name is Lucy</h2>
-            <div class="bg-emerald-50/50 p-6 rounded-2xl italic text-slate-700 text-lg leading-relaxed mb-8">
-                "Hello! My name is Lucy. I am eight years old. I live in a small town with my family. I have one brother and one sister. My favourite colour is blue. Every day, I go to school in the morning. I like English and Art, but I don't like Maths. After school, I play with my friends or read a book."
+        <article class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-16 border-b-[12px] border-emerald-200">
+            <div class="flex items-center gap-4 mb-6">
+                <span class="bg-emerald-100 text-emerald-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Text 1</span>
+                <h2 class="text-3xl font-black text-slate-800">My Name is Lucy</h2>
             </div>
             
-            <div class="space-y-6">
-                <p class="font-bold text-slate-800">1. How old is Lucy?</p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">Seven</button>
-                    <button onclick="check(this, true)" class="quiz-option p-4 border-2 rounded-xl font-bold">Eight</button>
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">Nine</button>
+            <div class="bg-emerald-50/50 p-8 rounded-3xl text-slate-700 text-xl leading-relaxed mb-10 border border-emerald-100">
+                "Hello! My name is Lucy. I am eight years old. I live in a small town with my family. I have one brother and one sister. My favourite colour is blue. <br><br>
+                Every day, I go to school in the morning. I like English and Art, but I don't like Maths. After school, I play with my friends or read a book. In the evening, I have dinner with my family and watch TV. I go to bed at nine o'clock."
+            </div>
+            
+            <div class="space-y-10">
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">1. What is the girl's name?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Anna</button>
+                        <button onclick="check(this, true)" class="quiz-option">Lucy</button>
+                        <button onclick="check(this, false)" class="quiz-option">Mary</button>
+                    </div>
                 </div>
-                
-                <p class="font-bold text-slate-800">2. What is her favorite color?</p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">Green</button>
-                    <button onclick="check(this, true)" class="quiz-option p-4 border-2 rounded-xl font-bold">Blue</button>
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">Red</button>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">2. How old is she?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Seven</button>
+                        <button onclick="check(this, true)" class="quiz-option">Eight</button>
+                        <button onclick="check(this, false)" class="quiz-option">Nine</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">3. Where does Lucy live?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">In a big city</button>
+                        <button onclick="check(this, true)" class="quiz-option">In a small town</button>
+                        <button onclick="check(this, false)" class="quiz-option">In the country</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">4. What is her favourite colour?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Red</button>
+                        <button onclick="check(this, false)" class="quiz-option">Green</button>
+                        <button onclick="check(this, true)" class="quiz-option">Blue</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">5. What subjects does she like?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, true)" class="quiz-option">English and Art</button>
+                        <button onclick="check(this, false)" class="quiz-option">English and Maths</button>
+                        <button onclick="check(this, false)" class="quiz-option">Art and Maths</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">6. What does she do after school?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">She watches TV</button>
+                        <button onclick="check(this, false)" class="quiz-option">She has dinner</button>
+                        <button onclick="check(this, true)" class="quiz-option">She plays or reads</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">7. When does she have dinner?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">In the morning</button>
+                        <button onclick="check(this, true)" class="quiz-option">In the evening</button>
+                        <button onclick="check(this, false)" class="quiz-option">At school</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">8. What time does she go to bed?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Eight o'clock</button>
+                        <button onclick="check(this, true)" class="quiz-option">Nine o'clock</button>
+                        <button onclick="check(this, false)" class="quiz-option">Ten o'clock</button>
+                    </div>
                 </div>
             </div>
         </article>
 
-        <article class="bg-white p-10 rounded-[3rem] shadow-lg mb-12 border-b-8 border-emerald-200">
-            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Text 2: Sam and the Farm</h2>
-            <div class="bg-emerald-50/50 p-6 rounded-2xl italic text-slate-700 text-lg leading-relaxed mb-8">
-                "Sam is at the farm today. It is a sunny day. He sees five white sheep and a big brown horse. The horse's name is Barnaby. Sam gives an apple to the horse. Sam is very happy."
+        <article class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-emerald-200">
+            <div class="flex items-center gap-4 mb-6">
+                <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Text 2</span>
+                <h2 class="text-3xl font-black text-slate-800">Sam and the Farm</h2>
             </div>
             
-            <div class="space-y-6">
-                <p class="font-bold text-slate-800">1. What color is the horse?</p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">White</button>
-                    <button onclick="check(this, true)" class="quiz-option p-4 border-2 rounded-xl font-bold">Brown</button>
-                    <button onclick="check(this, false)" class="quiz-option p-4 border-2 rounded-xl font-bold">Black</button>
+            <div class="bg-blue-50/50 p-8 rounded-3xl text-slate-700 text-xl leading-relaxed mb-10 border border-blue-100">
+                "Sam is ten years old. Today, he is visiting his grandparents at the farm. It is a very hot and sunny day. Sam is wearing a yellow t-shirt and his favourite red cap. He is very excited to see the animals. <br><br>
+                In the barn, he sees five white sheep and a big brown horse called Barnaby. Sam gives a big red apple to the horse. Barnaby is very hungry! Later, Sam helps his grandfather to find some eggs in the garden."
+            </div>
+            
+            <div class="space-y-10">
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">1. How old is Sam?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, true)" class="quiz-option">Ten</button>
+                        <button onclick="check(this, false)" class="quiz-option">Eight</button>
+                        <button onclick="check(this, false)" class="quiz-option">Five</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">2. Where is Sam today?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">At school</button>
+                        <button onclick="check(this, true)" class="quiz-option">At the farm</button>
+                        <button onclick="check(this, false)" class="quiz-option">In a big city</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">3. What is the weather like?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Cold and rainy</button>
+                        <button onclick="check(this, true)" class="quiz-option">Hot and sunny</button>
+                        <button onclick="check(this, false)" class="quiz-option">Cloudy</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">4. What is Sam wearing on his head?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">A yellow hat</button>
+                        <button onclick="check(this, true)" class="quiz-option">A red cap</button>
+                        <button onclick="check(this, false)" class="quiz-option">A blue t-shirt</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">5. How many sheep are there?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Three</button>
+                        <button onclick="check(this, true)" class="quiz-option">Five</button>
+                        <button onclick="check(this, false)" class="quiz-option">Two</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">6. What is the horse's name?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, true)" class="quiz-option">Barnaby</button>
+                        <button onclick="check(this, false)" class="quiz-option">Lucy</button>
+                        <button onclick="check(this, false)" class="quiz-option">Sam</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">7. What does Sam give to the horse?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">A banana</button>
+                        <button onclick="check(this, true)" class="quiz-option">An apple</button>
+                        <button onclick="check(this, false)" class="quiz-option">An egg</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-lg mb-4">8. What does he find in the garden?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option">Flowers</button>
+                        <button onclick="check(this, true)" class="quiz-option">Eggs</button>
+                        <button onclick="check(this, false)" class="quiz-option">Apples</button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -58,12 +189,18 @@
 
     <script>
         function check(btn, isCorrect) {
+            // Limpiar otros botones de la misma pregunta
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.classList.remove('correct', 'incorrect');
+                b.disabled = false;
+            });
+
             if(isCorrect) {
                 btn.classList.add('correct');
-                btn.innerText = "✅ Correct!";
             } else {
-                btn.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-600');
-                btn.innerText = "❌ Try again";
+                btn.classList.add('incorrect');
             }
         }
     </script>
