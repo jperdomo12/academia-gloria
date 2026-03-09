@@ -34,12 +34,10 @@
                 <span class="bg-rose-100 text-rose-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 1</span>
                 <h2 class="text-3xl font-black text-slate-800">The Magic Backpack</h2>
             </div>
-
             <button onclick="speak('In my backpack, I have a big red pencil, a yellow notebook and a green apple. I am ready for school!')" 
                     class="bg-rose-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio (Slow Voice)
+                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
             </button>
-            
             <div class="space-y-10 max-w-2xl mx-auto">
                 <div>
                     <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. What color is the notebook?</p>
@@ -49,27 +47,18 @@
                         <button onclick="check(this, false)" class="quiz-option text-center">Green</button>
                     </div>
                 </div>
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. Is the pencil small or big?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, false)" class="quiz-option text-center">Small</button>
-                        <button onclick="check(this, true)" class="quiz-option text-center">Big</button>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-rose-200">
+        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-orange-200">
             <div class="flex items-center gap-4 mb-8">
                 <span class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 2</span>
                 <h2 class="text-3xl font-black text-slate-800">The Pet Shop</h2>
             </div>
-
             <button onclick="speak('Look at that dog! He is brown and very small. He has a blue ball. He is a happy dog!')" 
                     class="bg-orange-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio (Slow Voice)
+                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
             </button>
-            
             <div class="space-y-10 max-w-2xl mx-auto">
                 <div>
                     <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. What color is the dog?</p>
@@ -78,11 +67,59 @@
                         <button onclick="check(this, false)" class="quiz-option text-center">Black</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-blue-200">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 3</span>
+                <h2 class="text-3xl font-black text-slate-800">The Weather</h2>
+            </div>
+            <button onclick="speak('Today is a very rainy and cold day. Don’t forget your umbrella and your big blue jacket!')" 
+                    class="bg-blue-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
+                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
+            </button>
+            <div class="space-y-10 max-w-2xl mx-auto">
                 <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. What toy does the dog have?</p>
+                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. How is the weather today?</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, false)" class="quiz-option text-center">A red bone</button>
-                        <button onclick="check(this, true)" class="quiz-option text-center">A blue ball</button>
+                        <button onclick="check(this, false)" class="quiz-option text-center">Hot and sunny</button>
+                        <button onclick="check(this, true)" class="quiz-option text-center">Rainy and cold</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. What color is the jacket?</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="check(this, true)" class="quiz-option text-center">Blue</button>
+                        <button onclick="check(this, false)" class="quiz-option text-center">Red</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-emerald-200">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="bg-emerald-100 text-emerald-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 4</span>
+                <h2 class="text-3xl font-black text-slate-800">Math Challenge</h2>
+            </div>
+            <button onclick="speak('Let’s do some maths! I have five apples and my friend gives me four more apples. How many apples do I have now?')" 
+                    class="bg-emerald-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
+                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
+            </button>
+            <div class="space-y-10 max-w-2xl mx-auto">
+                <div>
+                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. How many apples did I have at the beginning?</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="check(this, true)" class="quiz-option text-center">Five</button>
+                        <button onclick="check(this, false)" class="quiz-option text-center">Six</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. What is the final total of apples?</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="quiz-option text-center">Seven</button>
+                        <button onclick="check(this, false)" class="quiz-option text-center">Eight</button>
+                        <button onclick="check(this, true)" class="quiz-option text-center">Nine</button>
                     </div>
                 </div>
             </div>
@@ -91,31 +128,20 @@
 
     <script>
         lucide.createIcons();
-
         function speak(text) {
-            // Cancelar cualquier audio en curso
             window.speechSynthesis.cancel();
-            
             const msg = new SpeechSynthesisUtterance();
             msg.text = text;
-            msg.lang = 'en-GB'; // Inglés británico para que sea claro
-            msg.rate = 0.7;      // VELOCIDAD LENTA (1.0 es normal)
-            msg.pitch = 1.1;     // Tono ligeramente más agudo para que sea amigable
-            
+            msg.lang = 'en-GB';
+            msg.rate = 0.7; // VELOCIDAD LENTA
             window.speechSynthesis.speak(msg);
         }
-
         function check(btn, isCorrect) {
-            // Limpiar otros botones del mismo grupo
             const parent = btn.parentElement;
             const buttons = parent.querySelectorAll('button');
             buttons.forEach(b => b.classList.remove('correct', 'incorrect'));
-
-            if(isCorrect) {
-                btn.classList.add('correct');
-            } else {
-                btn.classList.add('incorrect');
-            }
+            if(isCorrect) { btn.classList.add('correct'); } 
+            else { btn.classList.add('incorrect'); }
         }
     </script>
 </body>
