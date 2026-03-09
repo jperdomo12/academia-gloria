@@ -19,11 +19,32 @@
         .nav-btn.active { color: #f59e0b; border-bottom: 4px solid #f59e0b; }
         .lang-card { background: white; border-radius: 2rem; border-left: 10px solid #f59e0b; box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1); }
         
-        /* Estilos para Fichas Giratorias */
+        /* --- ESTILOS CORREGIDOS PARA FLASHCARDS --- */
         .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2rem;
+            padding: 1.5rem;
+        }
+        .flashcard-back { transform: rotateY(180deg); }
+        /* ----------------------------------------- */
 
         table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 1rem; overflow: hidden; }
         th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; }
@@ -102,18 +123,18 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="group bg-white p-5 rounded-2xl shadow-sm border border-pink-200 hover:border-pink-500 transition-all text-center">
-                        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">📝</div>
-                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase">Biografía</h4>
+                        <div class="text-3xl mb-2">📝</div>
+                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase leading-tight">Biografía</h4>
                         <p class="text-[9px] text-slate-400 font-bold uppercase">Ver Ficha</p>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="group bg-white p-5 rounded-2xl shadow-sm border border-pink-200 hover:border-pink-500 transition-all text-center">
-                        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">✍️</div>
-                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase">Biografía y Autobiografía</h4>
+                        <div class="text-3xl mb-2">✍️</div>
+                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase leading-tight">Biografía y Autobiografía</h4>
                         <p class="text-[9px] text-slate-400 font-bold uppercase">Ver Ficha</p>
                     </a>
                     <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="group bg-white p-5 rounded-2xl shadow-sm border border-pink-200 hover:border-pink-500 transition-all text-center">
-                        <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🎓</div>
-                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase">Biografía: Individual</h4>
+                        <div class="text-3xl mb-2">🎓</div>
+                        <h4 class="font-bold text-pink-700 text-[11px] mb-1 uppercase leading-tight">Biografía: Individual</h4>
                         <p class="text-[9px] text-slate-400 font-bold uppercase">Ver Ficha</p>
                     </a>
                 </div>
@@ -123,59 +144,85 @@
 
         <section id="fichas" class="tab-content space-y-8">
             <div class="text-center py-4">
-                <h3 class="text-2xl font-black text-blue-900 italic uppercase">Misión: Fichas de Repaso</h3>
-                <p class="text-blue-600 font-bold text-sm">Toca las fichas para ver la respuesta secreta</p>
+                <h3 class="text-2xl font-black text-blue-900 italic uppercase">Entrenamiento Mental</h3>
+                <p class="text-blue-600 font-bold text-sm">Toca las fichas para darles la vuelta</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div onclick="this.classList.toggle('flipped')" class="group perspective-1000 h-48 cursor-pointer">
-                    <div class="relative w-full h-full transition-transform duration-500 transform-style-3d shadow-xl rounded-[2rem] bg-white border-2 border-blue-100 flex items-center justify-center p-8 text-center group-[.flipped]:rotate-y-180">
-                        <div class="absolute backface-hidden flex flex-col items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-blue-100 shadow-lg">
                             <span class="text-4xl mb-2">🍎</span>
-                            <p class="font-bold text-slate-700 uppercase">¿Qué es "manzana"?</p>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "manzana"?</p>
                         </div>
-                        <div class="absolute backface-hidden rotate-y-180 flex flex-col items-center text-blue-600">
-                            <p class="text-2xl font-black uppercase">Sustantivo Común</p>
-                            <small class="text-slate-400 mt-2 italic">(Nombra un objeto)</small>
+                        <div class="flashcard-back bg-blue-600 text-white shadow-xl">
+                            <p class="text-xl font-black uppercase">Sustantivo Común</p>
+                            <small class="mt-2 opacity-80 italic">(Objeto general)</small>
                         </div>
                     </div>
                 </div>
 
-                <div onclick="this.classList.toggle('flipped')" class="group perspective-1000 h-48 cursor-pointer">
-                    <div class="relative w-full h-full transition-transform duration-500 transform-style-3d shadow-xl rounded-[2rem] bg-white border-2 border-green-100 flex items-center justify-center p-8 text-center group-[.flipped]:rotate-y-180">
-                        <div class="absolute backface-hidden flex flex-col items-center">
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-green-100 shadow-lg">
                             <span class="text-4xl mb-2">⚡</span>
-                            <p class="font-bold text-slate-700 uppercase">¿Qué es "rápido"?</p>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "rápido"?</p>
                         </div>
-                        <div class="absolute backface-hidden rotate-y-180 flex flex-col items-center text-green-600">
-                            <p class="text-2xl font-black uppercase">Adjetivo</p>
-                            <small class="text-slate-400 mt-2 italic">(Describe cualidades)</small>
+                        <div class="flashcard-back bg-green-600 text-white shadow-xl">
+                            <p class="text-xl font-black uppercase">Adjetivo</p>
+                            <small class="mt-2 opacity-80 italic">(Cualidad)</small>
                         </div>
                     </div>
                 </div>
 
-                <div onclick="this.classList.toggle('flipped')" class="group perspective-1000 h-48 cursor-pointer">
-                    <div class="relative w-full h-full transition-transform duration-500 transform-style-3d shadow-xl rounded-[2rem] bg-white border-2 border-yellow-100 flex items-center justify-center p-8 text-center group-[.flipped]:rotate-y-180">
-                        <div class="absolute backface-hidden flex flex-col items-center">
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-yellow-100 shadow-lg">
                             <span class="text-4xl mb-2">🏃‍♀️</span>
-                            <p class="font-bold text-slate-700 uppercase">¿Qué es "correr"?</p>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "correr"?</p>
                         </div>
-                        <div class="absolute backface-hidden rotate-y-180 flex flex-col items-center text-yellow-600">
-                            <p class="text-2xl font-black uppercase">Verbo</p>
-                            <small class="text-slate-400 mt-2 italic">(Indica una acción)</small>
+                        <div class="flashcard-back bg-yellow-500 text-white shadow-xl">
+                            <p class="text-xl font-black uppercase">Verbo</p>
+                            <small class="mt-2 opacity-80 italic">(Acción)</small>
                         </div>
                     </div>
                 </div>
 
-                <div onclick="this.classList.toggle('flipped')" class="group perspective-1000 h-48 cursor-pointer">
-                    <div class="relative w-full h-full transition-transform duration-500 transform-style-3d shadow-xl rounded-[2rem] bg-white border-2 border-orange-100 flex items-center justify-center p-8 text-center group-[.flipped]:rotate-y-180">
-                        <div class="absolute backface-hidden flex flex-col items-center">
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-orange-100 shadow-lg">
                             <span class="text-4xl mb-2">👉</span>
-                            <p class="font-bold text-slate-700 uppercase">¿Qué es "aquella"?</p>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "aquella"?</p>
                         </div>
-                        <div class="absolute backface-hidden rotate-y-180 flex flex-col items-center text-orange-600">
+                        <div class="flashcard-back bg-orange-600 text-white shadow-xl">
                             <p class="text-xl font-black uppercase">Determinante</p>
-                            <small class="text-slate-400 mt-2 italic">(Acompaña al nombre)</small>
+                            <small class="mt-2 opacity-80 italic">(Acompaña)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-blue-200 shadow-lg">
+                            <span class="text-4xl mb-2">📍</span>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "Valencia"?</p>
+                        </div>
+                        <div class="flashcard-back bg-blue-800 text-white shadow-xl">
+                            <p class="text-xl font-black uppercase leading-tight">Sustantivo Propio</p>
+                            <small class="mt-2 opacity-80 italic">(¡Va en Mayúscula!)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div onclick="this.classList.toggle('flipped')" class="perspective-1000 h-56 cursor-pointer">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front bg-white border-2 border-yellow-200 shadow-lg">
+                            <span class="text-4xl mb-2">📚</span>
+                            <p class="font-bold text-slate-700 uppercase text-sm">¿Qué es "estudiar"?</p>
+                        </div>
+                        <div class="flashcard-back bg-yellow-700 text-white shadow-xl">
+                            <p class="text-xl font-black uppercase">Verbo Infinitivo</p>
+                            <small class="mt-2 opacity-80 italic">(Termina en -ar)</small>
                         </div>
                     </div>
                 </div>
@@ -192,7 +239,7 @@
                 <div class="text-7xl mb-6">🏆</div>
                 <h2 class="text-4xl font-black text-orange-900 mb-4 italic">¡Maestra de Lengua!</h2>
                 <p id="score-text" class="text-2xl font-bold text-slate-500 mb-8"></p>
-                <button onclick="location.reload()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold uppercase tracking-widest">Repetir Misión</button>
+                <button onclick="location.reload()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold uppercase tracking-widest hover:scale-105 transition-transform">Repetir Misión</button>
             </div>
         </section>
     </main>
