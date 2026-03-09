@@ -3,146 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listening Challenge - Gloria</title>
+    <title>English Academy - Gloria Valentina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
-        body { font-family: 'Outfit', sans-serif; }
-        .quiz-option {
-            transition: all 0.2s;
-            border: 2px solid #e2e8f0;
-            text-align: left;
-            padding: 1rem;
-            border-radius: 1rem;
-            font-weight: 600;
-            width: 100%;
+        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
+        .category-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
         }
-        .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
-        .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #6366f1;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .anais-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #f3e8ff;
+            transition: all 0.2s;
+        }
+        .anais-card:hover {
+            background: #faf5ff;
+            border-color: #d8b4fe;
+            transform: scale(1.02);
+        }
     </style>
 </head>
-<body class="bg-rose-50 p-6 md:p-12">
-    <div class="max-w-4xl mx-auto">
-        <a href="index.html" class="text-rose-700 font-bold mb-8 inline-block hover:underline">← Back to Menu</a>
-        
-        <h1 class="text-5xl font-black text-slate-800 mb-4 text-center">🎧 Listening Zone</h1>
-        <p class="text-center text-slate-600 mb-12 text-xl font-medium">Listen carefully and answer the questions!</p>
+<body class="p-6 md:p-12">
+    <div class="max-w-5xl mx-auto">
+        <header class="mb-12">
+            <a href="../index.html" class="text-indigo-600 font-bold flex items-center gap-2 mb-4">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Main Menu
+            </a>
+            <h1 class="text-5xl font-black text-slate-800">English <span class="text-indigo-600">Training Center</span></h1>
+            <p class="text-slate-500 text-xl mt-2 font-medium">¡A por todas, Gloria! 🚀</p>
+        </header>
 
-        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-rose-200">
-            <div class="flex items-center gap-4 mb-8">
-                <span class="bg-rose-100 text-rose-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 1</span>
-                <h2 class="text-3xl font-black text-slate-800">The Magic Backpack</h2>
-            </div>
-            <button onclick="speak('In my backpack, I have a big red pencil, a yellow notebook and a green apple. I am ready for school!')" 
-                    class="bg-rose-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
-            </button>
-            <div class="space-y-10 max-w-2xl mx-auto">
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. What color is the notebook?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button onclick="check(this, false)" class="quiz-option text-center">Red</button>
-                        <button onclick="check(this, true)" class="quiz-option text-center">Yellow</button>
-                        <button onclick="check(this, false)" class="quiz-option text-center">Green</button>
-                    </div>
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-3">
+                <div class="bg-indigo-100 p-2 rounded-lg"><i data-lucide="graduation-cap" class="text-indigo-600 w-5 h-5"></i></div>
+                Marta's Corner (Official Tasks)
+            </h2>
+            <div class="bg-indigo-50 rounded-[2.5rem] p-8 border-2 border-indigo-100 shadow-inner">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/768935" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Time & Money I</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math-time-and-money/65040" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Time & Money II</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1003283" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">English ESL</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/1365210" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Math Skills I</span>
+                    </a>
+                    <a href="https://www.liveworksheets.com/worksheet/en/math/617506" target="_blank" class="bg-white p-4 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-indigo-600 hover:text-white transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4 opacity-40"></i>
+                        <span class="font-bold">Math Skills II</span>
+                    </a>
                 </div>
             </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <a href="reading.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-sm">📖</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-2">Reading Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Textos y preguntas de comprensión.</p>
+                <span class="mt-auto px-8 py-3 bg-emerald-500 text-white font-bold rounded-2xl">Entrar ahora</span>
+            </a>
+
+            <a href="listening.html" class="category-card bg-white p-8 rounded-[3rem] shadow-xl flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-sm">🎧</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-2">Listening Zone</h3>
+                <p class="text-slate-500 font-medium mb-6">Escucha audios y resuelve retos.</p>
+                <span class="mt-auto px-8 py-3 bg-rose-500 text-white font-bold rounded-2xl">Entrar ahora</span>
+            </a>
         </div>
 
-        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-orange-200">
-            <div class="flex items-center gap-4 mb-8">
-                <span class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 2</span>
-                <h2 class="text-3xl font-black text-slate-800">The Pet Shop</h2>
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-slate-700 flex items-center gap-3">
+                    <div class="bg-purple-100 p-2 rounded-lg"><i data-lucide="heart" class="text-purple-600 w-5 h-5 fill-purple-600"></i></div>
+                    Family Training Zone (Refuerzo de Anais)
+                </h2>
+                <span class="bg-purple-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest">Extra Missions</span>
             </div>
-            <button onclick="speak('Look at that dog! He is brown and very small. He has a blue ball. He is a happy dog!')" 
-                    class="bg-orange-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
-            </button>
-            <div class="space-y-10 max-w-2xl mx-auto">
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. What color is the dog?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, true)" class="quiz-option text-center">Brown</button>
-                        <button onclick="check(this, false)" class="quiz-option text-center">Black</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-blue-200">
-            <div class="flex items-center gap-4 mb-8">
-                <span class="bg-blue-100 text-blue-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 3</span>
-                <h2 class="text-3xl font-black text-slate-800">The Weather</h2>
-            </div>
-            <button onclick="speak('Today is a very rainy and cold day. Don’t forget your umbrella and your big blue jacket!')" 
-                    class="bg-blue-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
-            </button>
-            <div class="space-y-10 max-w-2xl mx-auto">
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. How is the weather today?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, false)" class="quiz-option text-center">Hot and sunny</button>
-                        <button onclick="check(this, true)" class="quiz-option text-center">Rainy and cold</button>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. What color is the jacket?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, true)" class="quiz-option text-center">Blue</button>
-                        <button onclick="check(this, false)" class="quiz-option text-center">Red</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <div class="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl"></div>
 
-        <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl mb-12 border-b-[12px] border-emerald-200">
-            <div class="flex items-center gap-4 mb-8">
-                <span class="bg-emerald-100 text-emerald-600 px-4 py-1 rounded-full font-bold uppercase text-sm tracking-widest">Audio 4</span>
-                <h2 class="text-3xl font-black text-slate-800">Math Challenge</h2>
-            </div>
-            <button onclick="speak('Let’s do some maths! I have five apples and my friend gives me four more apples. How many apples do I have now?')" 
-                    class="bg-emerald-500 text-white px-10 py-6 rounded-3xl font-black flex items-center gap-4 mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg mb-10">
-                <i data-lucide="play-circle" class="w-8 h-8"></i> Play Audio
-            </button>
-            <div class="space-y-10 max-w-2xl mx-auto">
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">1. How many apples did I have at the beginning?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="check(this, true)" class="quiz-option text-center">Five</button>
-                        <button onclick="check(this, false)" class="quiz-option text-center">Six</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+                    <div>
+                        <h4 class="text-purple-100 font-black uppercase text-xs tracking-widest mb-4 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-4 h-4"></i> Extra Reading
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/2022780" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="play" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Reading Comprehension 107300</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-purple-100 font-black uppercase text-xs tracking-widest mb-4 flex items-center gap-2">
+                            <i data-lucide="headphones" class="w-4 h-4"></i> Extra Listening
+                        </h4>
+                        <div class="space-y-3">
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/119216" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice A</span>
+                            </a>
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/670372" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice B</span>
+                            </a>
+                            <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/46710" target="_blank" class="anais-card group">
+                                <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Listening Practice C</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <p class="font-bold text-slate-800 text-xl mb-4 text-center">2. What is the final total of apples?</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button onclick="check(this, false)" class="quiz-option text-center">Seven</button>
-                        <button onclick="check(this, false)" class="quiz-option text-center">Eight</button>
-                        <button onclick="check(this, true)" class="quiz-option text-center">Nine</button>
-                    </div>
-                </div>
             </div>
-        </div>
+        </section>
+
+        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+            Academia de Gloria Valentina • 2024
+        </footer>
     </div>
-
-    <script>
-        lucide.createIcons();
-        function speak(text) {
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'en-GB';
-            msg.rate = 0.7; // VELOCIDAD LENTA
-            window.speechSynthesis.speak(msg);
-        }
-        function check(btn, isCorrect) {
-            const parent = btn.parentElement;
-            const buttons = parent.querySelectorAll('button');
-            buttons.forEach(b => b.classList.remove('correct', 'incorrect'));
-            if(isCorrect) { btn.classList.add('correct'); } 
-            else { btn.classList.add('incorrect'); }
-        }
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
