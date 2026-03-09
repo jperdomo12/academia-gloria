@@ -19,12 +19,11 @@
         .nav-btn.active { color: #f59e0b; border-bottom: 4px solid #f59e0b; }
         .lang-card { background: white; border-radius: 2rem; border-left: 10px solid #f59e0b; box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1); }
         
-        /* Estilo de tarjetas de fichas (como en Mates) */
-        .resource-card { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: white; border: 1px solid #fed7aa; }
-        .resource-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px -10px rgba(245, 158, 11, 0.2); border-color: #f59e0b; }
+        .ficha-reto { background: white; border-radius: 1.5rem; border: 2px solid #fed7aa; transition: all 0.2s; }
+        .ficha-reto:hover { border-color: #f59e0b; transform: scale(1.01); }
 
         table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 1rem; overflow: hidden; }
-        th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+        th { background-color: #f59e0b; color: white; padding: 12px; text-transform: uppercase; font-size: 0.8rem; }
         td { padding: 12px; border-bottom: 1px solid #fef3c7; background-color: white; font-size: 0.9rem; }
     </style>
 </head>
@@ -34,118 +33,110 @@
         <div class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <span class="text-2xl">✍️</span>
-                <span class="font-extrabold text-orange-900 text-xl text-center">Lengua con Gloria</span>
+                <span class="font-extrabold text-orange-900 text-xl uppercase tracking-tighter">Gramática</span>
             </div>
             <div class="flex gap-4">
                 <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn active py-2 font-bold uppercase text-xs tracking-widest text-orange-600">Teoría</button>
                 <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Fichas</button>
-                <button onclick="showTab('test')" id="btn-test" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Test (10 Q)</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn py-2 font-bold uppercase text-xs tracking-widest text-slate-400">Test</button>
             </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6">
-        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-orange-600 font-bold hover:bg-orange-50 transition-all mb-8 border border-orange-100">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Lengua
-        </a>
-
+        
         <section id="teoria" class="tab-content active space-y-8">
             <div class="lang-card p-8">
-                <h2 class="text-2xl font-black text-orange-800 mb-6 flex items-center gap-2 italic">
-                    <i data-lucide="book-open"></i> El Libro de lo Importante
-                </h2>
+                <h2 class="text-2xl font-black text-orange-800 mb-6 italic">El Libro de lo Importante</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 shadow-sm">
-                        <h4 class="font-black text-blue-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> Sustantivos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700">Son palabras que sirven para <b>NOMBRAR</b> todo lo que existe (seres, cosas, lugares o ideas).</p>
-                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Propios:</b> Nombres únicos. ¡En <b>Mayúscula</b>! (<i>Gloria, España</i>).</li>
-                            <li>• <b>Comunes:</b> Objetos de la misma clase (<i>niña, país, mesa</i>).</li>
-                            <li>• <b>Individuales / Colectivos:</b> Uno (<i>oveja</i>) o conjunto (<i>rebaño</i>).</li>
-                        </ul>
+                    <div class="p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500">
+                        <h4 class="font-black text-blue-800 text-xs uppercase mb-2">Sustantivos</h4>
+                        <p class="text-[13px] text-slate-700">Sirven para <b>NOMBRAR</b>. (Personas, animales, objetos o ideas).</p>
                     </div>
-                    <div class="p-5 bg-green-50 rounded-2xl border-l-4 border-green-500 shadow-sm">
-                        <h4 class="font-black text-green-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="palette" class="w-4 h-4"></i> Adjetivos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700">Palabras que dicen <b>CÓMO SON</b> o cómo están los sustantivos. Siempre concuerdan en género y número.</p>
-                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Cualidades:</b> (<i>pelo rubio, examen difícil, niña alta</i>).</li>
-                            <li>• <b>Estados:</b> (<i>está alegre, está limpia, puerta abierta</i>).</li>
-                        </ul>
+                    <div class="p-5 bg-green-50 rounded-2xl border-l-4 border-green-500">
+                        <h4 class="font-black text-green-800 text-xs uppercase mb-2">Adjetivos</h4>
+                        <p class="text-[13px] text-slate-700">Dicen <b>CÓMO SON</b>. (Grande, azul, inteligente, amable).</p>
                     </div>
-                    <div class="p-5 bg-yellow-50 rounded-2xl border-l-4 border-yellow-500 shadow-sm">
-                        <h4 class="font-black text-yellow-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4"></i> Verbos</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700">Expresan <b>ACCIONES</b> o estados situados en el tiempo (Pasado, Presente, Futuro).</p>
-                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Conjugaciones:</b> 1ª (<i>-ar</i>), 2ª (<i>-er</i>), 3ª (<i>-ir</i>).</li>
-                            <li>• <b>Formas:</b> Personales (<i>yo como</i>) y No Personales (<i>comer</i>).</li>
-                        </ul>
+                    <div class="p-5 bg-yellow-50 rounded-2xl border-l-4 border-yellow-500">
+                        <h4 class="font-black text-yellow-800 text-xs uppercase mb-2">Verbos</h4>
+                        <p class="text-[13px] text-slate-700">Indican <b>ACCIONES</b>. (Saltar, comer, vivir, estudiar).</p>
                     </div>
-                    <div class="p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-500 shadow-sm">
-                        <h4 class="font-black text-orange-800 uppercase text-xs tracking-widest mb-2 flex items-center gap-2"><i data-lucide="hand-metal" class="w-4 h-4"></i> Determinantes</h4>
-                        <p class="text-[13px] leading-relaxed text-slate-700">Son palabras que van <b>DELANTE</b> del nombre para presentarlo e indicar distancia o posesión.</p>
-                        <ul class="text-[11px] mt-2 space-y-1 text-slate-600">
-                            <li>• <b>Artículos:</b> Determinados (<i>el, la</i>) o Indeterminados (<i>un, una</i>).</li>
-                            <li>• <b>Demostrativos:</b> Distancia (<i>este, ese, aquel</i>).</li>
-                        </ul>
+                    <div class="p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-500">
+                        <h4 class="font-black text-orange-800 text-xs uppercase mb-2">Determinantes</h4>
+                        <p class="text-[13px] text-slate-700"><b>ACOMPAÑAN</b> al nombre. (El, la, mi, este, tres).</p>
                     </div>
                 </div>
             </div>
 
             <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-orange-100">
-                <h3 class="text-lg font-bold text-orange-700 mb-4 flex items-center gap-2 italic">
-                    <i data-lucide="layout"></i> Cuadro Comparativo Rápido
-                </h3>
                 <table>
                     <thead>
-                        <tr><th>Tipo de palabra</th><th>Pregunta clave</th><th>Idea corta</th></tr>
+                        <tr><th>Tipo</th><th>Pregunta</th><th>Idea corta</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="font-bold text-blue-600">🟦 Sustantivo</td><td class="italic">¿Qué es?</td><td>Nombra</td></tr>
-                        <tr><td class="font-bold text-green-600">🟩 Adjetivo</td><td class="italic">¿Cómo es?</td><td>Describe</td></tr>
-                        <tr><td class="font-bold text-yellow-600">🟨 Verbo</td><td class="italic">¿Qué hace?</td><td>Acción</td></tr>
-                        <tr><td class="font-bold text-orange-600">🟧 Determinante</td><td class="italic">¿Cuál?</td><td>Acompaña</td></tr>
+                        <tr><td class="font-bold text-blue-600">Sustantivo</td><td class="italic">¿Qué es?</td><td>Nombra</td></tr>
+                        <tr><td class="font-bold text-green-600">Adjetivo</td><td class="italic">¿Cómo es?</td><td>Describe</td></tr>
+                        <tr><td class="font-bold text-yellow-600">Verbo</td><td class="italic">¿Qué hace?</td><td>Acción</td></tr>
+                        <tr><td class="font-bold text-orange-600">Determinante</td><td class="italic">¿Cuál?</td><td>Acompaña</td></tr>
                     </tbody>
                 </table>
             </div>
+
+            <div class="bg-pink-50 p-6 rounded-[2rem] border-2 border-pink-100">
+                <h3 class="font-bold text-pink-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="external-link" class="w-4 h-4"></i> Material de la Maestra
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="bg-white p-3 rounded-xl text-center text-xs font-bold text-slate-600 shadow-sm hover:text-pink-600 transition-colors">Ficha 1</a>
+                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="bg-white p-3 rounded-xl text-center text-xs font-bold text-slate-600 shadow-sm hover:text-pink-600 transition-colors">Ficha 2</a>
+                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="bg-white p-3 rounded-xl text-center text-xs font-bold text-slate-600 shadow-sm hover:text-pink-600 transition-colors">Ficha 3</a>
+                </div>
+            </div>
         </section>
 
-        <section id="fichas" class="tab-content">
-            <div class="bg-orange-50 p-8 rounded-[3rem] border-2 border-dashed border-orange-200">
-                <div class="flex items-center gap-3 mb-8 justify-center">
-                    <i data-lucide="folder-search" class="text-orange-600 w-8 h-8"></i>
-                    <h3 class="text-2xl font-black text-orange-900 italic">Misión: Fichas Interactivas</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <a href="https://www.liveworksheets.com/es/worksheet/es/comunicacion-y-lenguaje/1609073" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">📝</div>
-                        <h4 class="font-bold text-slate-800">Comunicación</h4>
-                        <p class="text-xs text-slate-500 mt-2">Nivel 1</p>
-                    </a>
-                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-materna-espanol/446920" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">📖</div>
-                        <h4 class="font-bold text-slate-800">Lengua Materna</h4>
-                        <p class="text-xs text-slate-500 mt-2">Nivel 2</p>
-                    </a>
-                    <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1671467" target="_blank" class="resource-card p-8 rounded-[2rem] flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">📔</div>
-                        <h4 class="font-bold text-slate-800">Castellana</h4>
-                        <p class="text-xs text-slate-500 mt-2">Nivel 3</p>
-                    </a>
+        <section id="fichas" class="tab-content space-y-6">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-orange-100">
+                <h3 class="text-2xl font-black text-orange-800 mb-8 text-center italic">Misión: Detective de Palabras</h3>
+                
+                <div class="space-y-6">
+                    <div class="ficha-reto p-6">
+                        <p class="font-bold text-slate-700 mb-4">1. Clasifica: ¿Qué es "Valentina"?</p>
+                        <div class="flex gap-2">
+                            <button onclick="checkFicha(this, 'c')" class="px-4 py-2 rounded-lg bg-slate-100 text-sm font-bold">Común</button>
+                            <button onclick="checkFicha(this, 'ok')" class="px-4 py-2 rounded-lg bg-slate-100 text-sm font-bold">Propio</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha-reto p-6">
+                        <p class="font-bold text-slate-700 mb-4">2. Escribe el ADJETIVO de esta frase: "El sol brillante"</p>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Escribe aquí..." class="border-2 border-orange-100 rounded-lg px-4 py-2 w-full outline-none focus:border-orange-500">
+                            <button onclick="validateInput(this, 'brillante')" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-bold">OK</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha-reto p-6">
+                        <p class="font-bold text-slate-700 mb-4">3. ¿Cuál es el VERBO en "Gloria salta"?</p>
+                        <div class="flex gap-2">
+                            <button onclick="checkFicha(this, 'ok')" class="px-4 py-2 rounded-lg bg-slate-100 text-sm font-bold">Salta</button>
+                            <button onclick="checkFicha(this, 'c')" class="px-4 py-2 rounded-lg bg-slate-100 text-sm font-bold">Gloria</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="test" class="tab-content">
             <div class="bg-white rounded-[2.5rem] p-10 shadow-2xl border border-orange-100" id="quiz-area">
-                <p id="q-progress" class="text-orange-400 font-bold text-xs uppercase mb-4"></p>
-                <h2 id="q-text" class="text-2xl font-black text-slate-800 mb-10 text-center leading-tight"></h2>
-                <div id="options" class="grid gap-3"></div>
+                <p id="q-progress" class="text-orange-400 font-bold text-xs mb-4 uppercase tracking-widest"></p>
+                <h2 id="q-text" class="text-3xl font-black text-slate-800 mb-10 text-center"></h2>
+                <div id="options" class="grid gap-4"></div>
             </div>
-            <div id="result-area" class="hidden bg-white rounded-[2.5rem] p-12 text-center shadow-xl">
-                <div class="text-6xl mb-4">🏆</div>
-                <h2 class="text-3xl font-black text-orange-900 mb-4 italic text-center">¡Maestra de Lengua!</h2>
-                <p id="score-text" class="text-xl font-bold text-slate-500 mb-8"></p>
-                <button onclick="location.reload()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold">REPETIR MISIÓN</button>
+            <div id="result-area" class="hidden text-center p-12 bg-white rounded-[2.5rem] shadow-xl">
+                <div class="text-7xl mb-6">🏆</div>
+                <h2 class="text-4xl font-black text-orange-900 mb-4 italic">¡Súper Gloria!</h2>
+                <p id="score-text" class="text-2xl font-bold text-slate-500 mb-8"></p>
+                <button onclick="location.reload()" class="bg-orange-600 text-white px-10 py-5 rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg">REPETIR MISIÓN</button>
             </div>
         </section>
     </main>
@@ -160,17 +151,40 @@
             lucide.createIcons();
         }
 
+        // Lógica de Fichas Interactiva Simple
+        function checkFicha(btn, status) {
+            if(status === 'ok') {
+                btn.classList.add('bg-green-500', 'text-white');
+                btn.innerHTML = "¡Correcto! ✓";
+            } else {
+                btn.classList.add('bg-red-200');
+                setTimeout(() => btn.classList.remove('bg-red-200'), 500);
+            }
+        }
+
+        function validateInput(btn, correct) {
+            const input = btn.previousElementSibling;
+            if(input.value.toLowerCase().trim() === correct) {
+                input.className = "border-2 border-green-500 bg-green-50 rounded-lg px-4 py-2 w-full font-bold text-green-700";
+                btn.style.display = 'none';
+            } else {
+                input.classList.add('border-red-500');
+                setTimeout(() => input.classList.remove('border-red-500'), 500);
+            }
+        }
+
+        // Test de 10 Preguntas
         const questions = [
-            { q: "En 'El gato negro', ¿cuál es el SUSTANTIVO?", a: ["El", "Gato", "Negro"], c: 1 },
-            { q: "¿Qué palabra es un ADJETIVO?", a: ["Correr", "Bonita", "Madrid"], c: 1 },
-            { q: "En 'Mi estuche', ¿qué es 'Mi'?", a: ["Sustantivo", "Determinante", "Verbo"], c: 1 },
-            { q: "¿Cuál de estos es un VERBO?", a: ["Saltar", "Libro", "Amarillo"], c: 0 },
-            { q: "Los nombres propios siempre van con...", a: ["Minúscula", "Mayúscula"], c: 1 },
-            { q: "En 'Gloria canta', ¿cuál es el VERBO?", a: ["Gloria", "Canta"], c: 1 },
-            { q: "¿Qué hace el ADJETIVO?", a: ["Describe", "Nombra", "Actúa"], c: 0 },
-            { q: "'Aquel niño' -> ¿Qué es 'Aquel'?", a: ["Nombre", "Determinante", "Adjetivo"], c: 1 },
-            { q: "¿Cuál es un sustantivo común?", a: ["España", "Silla", "Valentina"], c: 1 },
-            { q: "En 'Manzana roja', ¿qué es 'roja'?", a: ["Sustantivo", "Adjetivo"], c: 1 }
+            { q: "¿Qué palabra nombra una persona o cosa?", a: ["Adjetivo", "Sustantivo", "Verbo"], c: 1 },
+            { q: "En 'Perro grande', ¿cuál es el adjetivo?", a: ["Perro", "Grande"], c: 1 },
+            { q: "¿Cuál es un verbo?", a: ["Cantar", "Canción", "Cantante"], c: 0 },
+            { q: "En 'La mochila', ¿qué es 'La'?", a: ["Sustantivo", "Determinante"], c: 1 },
+            { q: "¿Qué palabra indica acción?", a: ["Verbo", "Nombre", "Cualidad"], c: 0 },
+            { q: "Nombre propio de ciudad:", a: ["ciudad", "Madrid", "calle"], c: 1 },
+            { q: "En 'Gloria corre', ¿cuál es el verbo?", a: ["Gloria", "Corre"], c: 1 },
+            { q: "Adjetivo para 'limonada':", a: ["ácida", "beber", "vaso"], c: 0 },
+            { q: "Determinante de cantidad:", a: ["Ese", "Tres", "Un"], c: 1 },
+            { q: "¿Cómo se escriben los nombres propios?", a: ["Minúscula", "Mayúscula"], c: 1 }
         ];
 
         let currentQ = 0; let score = 0;
@@ -183,7 +197,7 @@
             optDiv.innerHTML = '';
             q.a.forEach((opt, i) => {
                 const b = document.createElement('button');
-                b.className = "w-full p-5 bg-white border-2 border-orange-100 rounded-2xl font-bold text-slate-700 hover:border-orange-500 transition-all text-left";
+                b.className = "w-full p-6 bg-white border-2 border-orange-100 rounded-3xl font-bold text-slate-700 hover:border-orange-500 hover:bg-orange-50 transition-all text-left text-lg shadow-sm";
                 b.innerText = opt;
                 b.onclick = () => {
                     if(i === q.c) score++;
@@ -197,7 +211,7 @@
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
             document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `Aciertos: ${score} de 10`;
+            document.getElementById('score-text').innerText = `¡Gloria, has logrado ${score} de 10!`;
         }
         lucide.createIcons();
     </script>
