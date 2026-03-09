@@ -11,89 +11,116 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
-        .audio-card {
-            background: white;
-            border-radius: 3rem;
-            padding: 3rem;
-            border: 2px solid #e0e7ff;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-        }
+        .audio-card { background: white; border-radius: 2.5rem; padding: 2rem; border: 1px solid #e2e8f0; transition: all 0.3s; }
+        .audio-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
+        .btn-play { background-color: #4f46e5; color: white; transition: all 0.2s; }
+        .btn-play:hover { background-color: #4338ca; transform: scale(1.05); }
+        .btn-play.playing { background-color: #ef4444; }
     </style>
 </head>
 <body class="p-6 md:p-12">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         <header class="mb-12">
-            <a href="index.html" class="inline-flex items-center text-indigo-600 font-bold hover:gap-2 transition-all">
+            <a href="index.html" class="inline-flex items-center text-indigo-600 font-bold hover:gap-2 transition-all mb-4">
                 <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Volver a Inglés
             </a>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 mt-4">Listening <span class="text-indigo-600">Zone</span></h1>
-            <p class="text-slate-500 text-lg mt-2">Practice your listening skills for Unit 5</p>
+            <h1 class="text-4xl font-extrabold text-slate-800">Listening <span class="text-indigo-600">Zone</span> 🎧</h1>
+            <p class="text-slate-500 mt-2 text-lg">Escucha y practica los audios de la Unidad 5.</p>
         </header>
 
-        <main class="audio-card text-center">
-            <div class="w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                <i data-lucide="headphones" class="w-12 h-12"></i>
+        <section class="bg-indigo-600 rounded-[3rem] p-8 md:p-12 text-white mb-12 shadow-xl shadow-indigo-100">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <i data-lucide="music" class="w-12 h-12 text-white"></i>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-3xl font-black mb-2">Main Listening: Unit 5</h2>
+                    <p class="text-indigo-100 text-lg mb-6">Adventure Time - Track 01</p>
+                    
+                    <button onclick="toggleMainAudio()" id="main-play-btn" class="bg-white text-indigo-600 px-10 py-4 rounded-2xl font-black text-xl flex items-center gap-4 hover:bg-indigo-50 transition-all mx-auto md:mx-0">
+                        <i data-lucide="play" id="main-icon"></i>
+                        <span id="main-text">PLAY AUDIO</span>
+                    </button>
+                </div>
             </div>
-            
-            <h2 class="text-2xl font-extrabold text-slate-800 mb-2">Unit 5: Adventure Time</h2>
-            <p class="text-slate-400 mb-10 italic">Track 01 - Main Listening</p>
-
-            <button onclick="toggleAudio()" id="play-btn" class="w-full max-w-sm bg-indigo-600 text-white py-6 rounded-3xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 hover:scale-105 transition-all flex items-center justify-center gap-4 mx-auto">
-                <i data-lucide="play-circle" id="play-icon" class="w-8 h-8"></i>
-                <span id="play-text">PLAY AUDIO</span>
-            </button>
-
-            <div class="mt-10 w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div id="progress-bar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
+            <div class="mt-8 bg-white/20 h-2 rounded-full overflow-hidden">
+                <div id="main-progress" class="bg-white h-full w-0 transition-all duration-300"></div>
             </div>
-        </main>
+            <audio id="main-audio" src="audio/listening_unit5.mp3"></audio>
+        </section>
 
-        <audio id="audio-player" src="audio/listening_unit5.mp3"></audio>
+        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <i data-lucide="list-music" class="text-indigo-600"></i> Otros Ejercicios de Listening
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="audio-card flex items-center gap-4">
+                <div class="bg-purple-100 p-4 rounded-2xl text-purple-600">
+                    <i data-lucide="headphones"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-slate-800">Listening Practice A</h4>
+                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1359367" target="_blank" class="text-sm text-indigo-600 font-bold hover:underline">Abrir Ficha Interactiva →</a>
+                </div>
+            </div>
 
-        <footer class="mt-12 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+            <div class="audio-card flex items-center gap-4">
+                <div class="bg-purple-100 p-4 rounded-2xl text-purple-600">
+                    <i data-lucide="headphones"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-slate-800">Listening Practice B</h4>
+                    <a href="https://www.liveworksheets.com/worksheet/en/english-second-language-esl/670372" target="_blank" class="text-sm text-indigo-600 font-bold hover:underline">Abrir Ficha Interactiva →</a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
             Academia de Gloria Valentina
         </footer>
     </div>
 
     <script>
-        const audio = document.getElementById('audio-player');
-        const btn = document.getElementById('play-btn');
-        const btnText = document.getElementById('play-text');
-        const icon = document.getElementById('play-icon');
-        const progress = document.getElementById('progress-bar');
+        const mainAudio = document.getElementById('main-audio');
+        const mainBtn = document.getElementById('main-play-btn');
+        const mainText = document.getElementById('main-text');
+        const mainProgress = document.getElementById('main-progress');
 
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btn.classList.replace('bg-indigo-600', 'bg-red-500');
-                    btnText.innerText = "PAUSE AUDIO";
-                    icon.setAttribute('data-lucide', 'pause-circle');
-                    lucide.createIcons();
-                }).catch(error => {
-                    alert("Error: No se encuentra el archivo 'audio/listening_unit5.mp3'. Por favor, verifica que el archivo esté en la carpeta 'audio' dentro de 'ingles'.");
+        function toggleMainAudio() {
+            if (mainAudio.paused) {
+                mainAudio.play().then(() => {
+                    mainBtn.classList.add('playing');
+                    mainText.innerText = "PAUSE";
+                    updateMainIcon('pause');
+                }).catch(e => {
+                    alert("No se encuentra el audio en: audio/listening_unit5.mp3");
                 });
             } else {
-                audio.pause();
-                resetButton();
+                mainAudio.pause();
+                resetMainBtn();
             }
         }
 
-        function resetButton() {
-            btn.classList.replace('bg-red-500', 'bg-indigo-600');
-            btnText.innerText = "PLAY AUDIO";
-            icon.setAttribute('data-lucide', 'play-circle');
+        function resetMainBtn() {
+            mainBtn.classList.remove('playing');
+            mainText.innerText = "PLAY AUDIO";
+            updateMainIcon('play');
+        }
+
+        function updateMainIcon(name) {
+            const icon = document.getElementById('main-icon');
+            icon.setAttribute('data-lucide', name);
             lucide.createIcons();
         }
 
-        // Actualizar barra de progreso
-        audio.ontimeupdate = function() {
-            const percentage = (audio.currentTime / audio.duration) * 100;
-            progress.style.width = percentage + "%";
+        mainAudio.ontimeupdate = () => {
+            const pct = (mainAudio.currentTime / mainAudio.duration) * 100;
+            mainProgress.style.width = pct + "%";
         };
 
-        audio.onended = function() {
-            resetButton();
-            progress.style.width = "0%";
+        mainAudio.onended = () => {
+            resetMainBtn();
+            mainProgress.style.width = "0%";
         };
 
         lucide.createIcons();
