@@ -20,6 +20,10 @@
         .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding: 25px; font-weight: bold; }
         .flip-card-front { background-color: white; color: #166534; border: 4px solid #bbf7d0; }
         .flip-card-back { background-color: #22c55e; color: white; transform: rotateY(180deg); }
+
+        /* Nuevos estilos para el feedback del test */
+        .btn-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .btn-incorrect { background-color: #ef4444 !important; color: white !important; border-color: #b91c1c !important; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -43,7 +47,6 @@
         </div>
 
         <div id="resumen" class="tab-content active space-y-8">
-            
             <div class="bg-white p-8 rounded-[35px] shadow-sm border-l-[12px] border-green-500">
                 <h2 class="text-2xl font-bold text-green-700 mb-2 italic text-3xl">¿Qué es?</h2>
                 <p class="text-slate-600 text-xl leading-relaxed">Es la capacidad de los objetos para <b>moverse</b>, <b>calentarse</b> o <b>producir luz</b>.</p>
@@ -94,69 +97,17 @@
                     </li>
                 </ul>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-green-100 p-8 rounded-[35px]">
-                    <h4 class="font-black text-green-800 mb-4 text-xl flex items-center gap-2"><i data-lucide="leaf"></i> Renovables</h4>
-                    <p class="text-sm text-green-700 mb-4">No se agotan nunca:</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-green-600">Sol</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-green-600">Viento</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-green-600">Agua</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-green-600">Biomasa</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-green-600">Geotérmica</span>
-                    </div>
-                </div>
-                <div class="bg-red-100 p-8 rounded-[35px]">
-                    <h4 class="font-black text-red-800 mb-4 text-xl flex items-center gap-2"><i data-lucide="alert-triangle"></i> No Renovables</h4>
-                    <p class="text-sm text-red-700 mb-4">Se agotan y contaminan:</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-red-600">Carbón</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-red-600">Petróleo</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-red-600">Gas Natural</span>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-red-600">Uranio</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-green-600 text-white p-8 rounded-[40px]">
-                <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i data-lucide="globe"></i> ¡Salva el Planeta!</h3>
-                <p class="mb-6 opacity-90">Las energías no renovables producen <b>Dióxido de Carbono (CO2)</b>, lluvia ácida y calentamiento global. ¡Usa las 3 ERRES!</p>
-                <div class="grid grid-cols-3 gap-2 text-center text-xs font-black">
-                    <div class="bg-white/20 p-3 rounded-2xl">REDUCIR</div>
-                    <div class="bg-white/20 p-3 rounded-2xl">REUTILIZAR</div>
-                    <div class="bg-white/20 p-3 rounded-2xl">RECICLAR</div>
-                </div>
-            </div>
         </div>
 
         <div id="fichas" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="fichas-grid">
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">Biomasa</div>
                         <div class="flip-card-back">Energía de restos de plantas y animales que se usan como combustible.</div>
                     </div>
                 </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Energía Eléctrica</div>
-                        <div class="flip-card-back">Producida por el movimiento de cargas eléctricas (electrones).</div>
-                    </div>
                 </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Energía Nuclear</div>
-                        <div class="flip-card-back">Producida por reacciones en el Uranio para generar calor.</div>
-                    </div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Lluvia Ácida</div>
-                        <div class="flip-card-back text-sm">Causada por gases como el dióxido de azufre de los combustibles fósiles.</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div id="test" class="tab-content">
@@ -167,7 +118,6 @@
                     </div>
                     <div id="question" class="text-2xl font-extrabold text-slate-800 mb-8 text-center leading-tight"></div>
                     <div id="options" class="grid grid-cols-1 gap-4"></div>
-                    <div id="feedback" class="mt-8 text-center font-bold text-2xl hidden animate-bounce"></div>
                 </div>
                 <div id="score-container" class="hidden text-center py-10">
                     <h2 class="text-5xl font-black text-green-600 mb-4">¡TERMINADO!</h2>
@@ -214,26 +164,33 @@
                 const btn = document.createElement('button');
                 btn.innerText = opt;
                 btn.className = "p-5 border-2 border-green-100 rounded-[2rem] hover:bg-green-50 font-extrabold transition-all text-xl text-slate-700 shadow-sm";
-                btn.onclick = () => checkAnswer(i);
+                btn.onclick = () => checkAnswer(i, btn);
                 optionsDiv.appendChild(btn);
             });
         }
 
-        function checkAnswer(i) {
-            const feedback = document.getElementById('feedback');
-            feedback.classList.remove('hidden');
-            if(i === questions[currentQ].c) {
-                feedback.innerText = "¡SÍ! ✨"; feedback.className = "mt-8 text-center font-black text-3xl text-green-500 animate-bounce";
+        function checkAnswer(i, selectedBtn) {
+            const correctIndex = questions[currentQ].c;
+            const allBtns = document.querySelectorAll('#options button');
+            
+            // Bloquear clics extra
+            allBtns.forEach(b => b.onclick = null);
+
+            if(i === correctIndex) {
+                selectedBtn.classList.add('btn-correct');
                 score++;
             } else {
-                feedback.innerText = "¡OH! 💡"; feedback.className = "mt-8 text-center font-black text-3xl text-orange-400";
+                selectedBtn.classList.add('btn-incorrect');
+                // Resaltar la correcta para que aprenda
+                allBtns[correctIndex].classList.add('btn-correct');
             }
+
+            // Pausa para que Gloria vea la respuesta correcta antes de seguir
             setTimeout(() => {
-                feedback.classList.add('hidden');
                 currentQ++;
                 if(currentQ < questions.length) loadQuestion();
                 else showScore();
-            }, 1000);
+            }, 1500);
         }
 
         function showScore() {
