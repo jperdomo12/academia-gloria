@@ -149,14 +149,25 @@
             { q: "La energía del Sol es fuente...", a: ["No renovable", "Química", "Renovable"], c: 2 },
             { q: "¿Qué fuente usa el Uranio?", a: ["Solar", "Nuclear", "Eólica"], c: 1 },
             { q: "Separar la basura en cubos es:", a: ["Reciclar", "Reducir", "Reutilizar"], c: 0 },
-            { q: "¿Qué energía produce el fuego?", a: ["Química", "Térmica", "Eléctrica"], c: 1 }
+            { q: "¿Qué energía produce el fuego?", a: ["Química", "Térmica", "Eléctrica"], c: 1 },
+            // 10 PREGUNTAS ADICIONALES
+            { q: "¿Qué forma de energía usa una tostadora?", a: ["Nuclear", "Térmica", "Potencial"], c: 1 },
+            { q: "¿Cómo se llama la energía guardada en un objeto alto?", a: ["Cinética", "Potencial", "Luz"], c: 1 },
+            { q: "¿Qué fuente de energía viene de las plantas del pasado (fósil)?", a: ["Eólica", "Solar", "Carbón"], c: 2 },
+            { q: "¿Qué gas provoca la lluvia ácida junto con el nitrógeno?", a: ["Oxígeno", "Dióxido de Azufre", "Hidrógeno"], c: 1 },
+            { q: "Usar un frasco de vidrio para guardar lápices es...", a: ["Reducir", "Reutilizar", "Reciclar"], c: 1 },
+            { q: "La energía que sale de una bombilla encendida es:", a: ["Lumínica", "Nuclear", "Potencial"], c: 0 },
+            { q: "¿De dónde obtenemos la energía Hidráulica?", a: ["Del viento", "Del Sol", "Del agua de los ríos"], c: 2 },
+            { q: "¿Qué energía usa el cuerpo para correr?", a: ["Química de la comida", "Eléctrica", "Nuclear"], c: 0 },
+            { q: "¿Qué sucede con la energía?", a: ["Se destruye", "Se transforma", "Se acaba"], c: 1 },
+            { q: "¿Cómo llamamos a las fuentes que nunca se acaban?", a: ["Renovables", "No Renovables", "Limitadas"], c: 0 }
         ];
 
         let qIdx = 0; let score = 0;
 
         function loadQuestion() {
             const q = questions[qIdx];
-            document.getElementById('progress').innerText = `DESAFÍO ${qIdx + 1} DE 10`;
+            document.getElementById('progress').innerText = `DESAFÍO ${qIdx + 1} DE ${questions.length}`;
             document.getElementById('question').innerText = q.q;
             const optDiv = document.getElementById('options');
             optDiv.innerHTML = '';
@@ -165,13 +176,24 @@
                 btn.innerText = opt;
                 btn.className = "p-4 border-2 border-slate-100 rounded-2xl font-bold hover:bg-green-50 transition-all text-slate-700";
                 btn.onclick = () => {
-                    if(i === q.c) { btn.style.backgroundColor = "#dcfce7"; score++; }
-                    else { btn.style.backgroundColor = "#fee2e2"; }
+                    const allBtns = optDiv.querySelectorAll('button');
+                    allBtns.forEach(b => b.disabled = true); // Bloquear botones tras elegir
+                    
+                    if(i === q.c) { 
+                        btn.style.backgroundColor = "#dcfce7"; 
+                        btn.style.borderColor = "#22c55e";
+                        score++; 
+                    } else { 
+                        btn.style.backgroundColor = "#fee2e2"; 
+                        btn.style.borderColor = "#ef4444";
+                        allBtns[q.c].style.backgroundColor = "#dcfce7"; // Mostrar la correcta
+                    }
+                    
                     setTimeout(() => {
                         qIdx++;
                         if(qIdx < questions.length) loadQuestion();
                         else showResults();
-                    }, 800);
+                    }, 1000);
                 };
                 optDiv.appendChild(btn);
             });
@@ -180,7 +202,7 @@
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
             document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `Gloria, lograste ${score} puntos de 10`;
+            document.getElementById('score-text').innerText = `Gloria, lograste ${score} puntos de ${questions.length}`;
         }
 
         function restartTest() {
