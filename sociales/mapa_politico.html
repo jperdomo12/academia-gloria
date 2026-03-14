@@ -23,6 +23,12 @@
         .btn-option:hover { background-color: #f0f9ff; border-color: #0ea5e9; }
         .btn-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
         .btn-incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+
+        /* Estilos específicos para el juego de ubicar países */
+        #europe-map path { fill: #e2e8f0; stroke: #ffffff; stroke-width: 0.5; transition: all 0.3s ease; cursor: pointer; }
+        #europe-map path:hover { fill: #bae6fd; transform: scale(1.01); }
+        .correct { fill: #22c55e !important; }
+        .wrong { fill: #ef4444 !important; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -48,6 +54,9 @@
             <button onclick="openTab('teoria')" class="tab-button active px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-teoria">
                 <i data-lucide="map" class="w-5 h-5"></i> Mapa y Lista
             </button>
+            <button onclick="openTab('juego_ubicar')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-juego_ubicar">
+                <i data-lucide="target" class="w-5 h-5"></i> ¡A Jugar!
+            </button>
             <button onclick="openTab('fichas')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-fichas">
                 <i data-lucide="layers" class="w-5 h-5"></i> Fichas
             </button>
@@ -56,31 +65,13 @@
             </button>
         </nav>
 
-<section id="teoria" class="tab-content active space-y-8">
-            
+        <section id="teoria" class="tab-content active space-y-8">
             <div class="bg-white p-6 rounded-[3rem] shadow-xl border border-sky-100 text-center">
                 <h3 class="text-2xl font-black text-sky-700 mb-4 italic">¡Mapa Interactivo de Europa! 🌍</h3>
-                
                 <div class="relative w-full rounded-2xl overflow-hidden border-2 border-sky-100 shadow-inner" style="height: 600px;">
-                    <iframe src="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" 
-                            class="w-full h-full" 
-                            frameborder="0" 
-                            allowfullscreen>
-                    </iframe>
-                </div>
-
-                <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-4 bg-sky-50 p-4 rounded-2xl">
-                    <p class="text-slate-600 font-medium">
-                        ¿No carga el mapa? Haz clic aquí:
-                    </p>
-                    <a href="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" 
-                       target="_blank" 
-                       class="bg-sky-600 text-white px-6 py-2 rounded-full font-bold hover:bg-sky-700 transition-all flex items-center gap-2">
-                        Abrir Mapa en ventana nueva <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
+                    <iframe src="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
-
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-sky-100">
                 <h3 class="text-2xl font-black text-sky-800 mb-6 flex items-center gap-2">
                     <i data-lucide="list-checks" class="text-sky-500"></i> Lista de Capitales para memorizar
@@ -100,8 +91,40 @@
                     <div class="p-4 bg-sky-50 rounded-2xl border-l-4 border-sky-400"><strong>Polonia:</strong> Varsovia</div>
                 </div>
             </div>
-        </section> 
-        
+        </section>
+
+        <section id="juego_ubicar" class="tab-content">
+            <div class="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl border-2 border-sky-100 text-center">
+                <div id="game-ui">
+                    <div class="mb-6">
+                        <span id="game-score" class="bg-sky-100 text-sky-700 px-4 py-2 rounded-full font-black">Puntos: 0</span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-800 mb-2">Gloria, encuentra a:</div>
+                    <div id="target-country" class="text-4xl font-black text-sky-600 mb-8 p-4 bg-sky-50 rounded-2xl border-2 border-dashed border-sky-200 uppercase tracking-widest">---</div>
+                    
+                    <div class="max-w-2xl mx-auto mb-8 bg-sky-50 rounded-3xl p-2 border border-sky-100">
+                        <svg id="europe-map" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+                            <path id="ES" data-name="España" d="M210,580 L230,560 L280,560 L320,590 L330,650 L280,700 L200,680 Z" />
+                            <path id="FR" data-name="Francia" d="M300,450 L380,440 L430,480 L440,550 L380,590 L320,580 L290,520 Z" />
+                            <path id="IT" data-name="Italia" d="M440,550 L480,550 L530,620 L580,730 L540,750 L480,650 L450,580 Z" />
+                            <path id="DE" data-name="Alemania" d="M430,350 L500,340 L530,420 L510,480 L430,480 L400,430 Z" />
+                            <path id="PT" data-name="Portugal" d="M180,600 L210,580 L200,680 L170,670 Z" />
+                            <path id="UK" data-name="Reino Unido" d="M280,300 L330,280 L350,350 L310,400 L260,380 Z" />
+                            <path id="NO" data-name="Noruega" d="M450,100 L500,80 L530,150 L480,300 L440,280 Z" />
+                            <path id="SE" data-name="Suecia" d="M500,80 L550,70 L580,250 L530,300 L500,100 Z" />
+                            <path id="GR" data-name="Grecia" d="M600,650 L650,650 L680,720 L620,750 Z" />
+                            <path id="IE" data-name="Irlanda" d="M200,320 L240,310 L250,370 L210,380 Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div id="victory-screen" class="hidden">
+                    <div class="text-8xl mb-4">🌍</div>
+                    <h2 class="text-4xl font-black text-sky-600 mb-2">¡ERES UNA EXPLORADORA!</h2>
+                    <button onclick="startUbicarGame()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg">Jugar otra vez</button>
+                </div>
+            </div>
+        </section>
+
         <section id="fichas" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -122,25 +145,7 @@
                         <div class="flip-card-back">Roma</div>
                     </div>
                 </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Capital de RUSIA</div>
-                        <div class="flip-card-back">Moscú</div>
-                    </div>
                 </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Capital de GRECIA</div>
-                        <div class="flip-card-back">Atenas</div>
-                    </div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">Capital de UCRANIA</div>
-                        <div class="flip-card-back">Kiev</div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <section id="test" class="tab-content">
@@ -169,8 +174,10 @@
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.getElementById('btn-' + tabId).classList.add('active');
+            if(tabId === 'juego_ubicar') startUbicarGame();
         }
 
+        // Lógica del Test de Capitales Original
         const questions = [
             { q: "¿Cuál es la capital de Portugal?", a: ["Lisboa", "Madrid", "Oporto"], c: 0 },
             { q: "¿Cuál es la capital de Alemania?", a: ["Múnich", "Berlín", "Hamburgo"], c: 1 },
@@ -186,7 +193,7 @@
             { q: "¿Cuál es la capital de Polonia?", a: ["Varsovia", "Praga", "Minsk"], c: 0 }
         ];
 
-        let currentQ = 0; let score = 0;
+        let currentQ = 0; let testScore = 0;
 
         function loadQuestion() {
             const q = questions[currentQ];
@@ -194,31 +201,20 @@
             document.getElementById('question-text').innerText = q.q;
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
-            
             q.a.forEach((opt, i) => {
                 const b = document.createElement('button');
                 b.className = 'btn-option w-full p-5 rounded-2xl font-bold text-left';
                 b.innerText = opt;
                 b.onclick = () => {
-                    const allBtns = grid.querySelectorAll('button');
-                    allBtns.forEach(btn => btn.onclick = null); 
-
-                    if(i === q.c) {
-                        b.classList.add('btn-correct');
-                        score++;
-                        document.getElementById('score-live').innerText = `Puntos: ${score}`;
-                    } else {
-                        b.classList.add('btn-incorrect');
-                        allBtns[q.c].classList.add('btn-correct');
-                    }
-
+                    if(i === q.c) { b.classList.add('btn-correct'); testScore++; }
+                    else { b.classList.add('btn-incorrect'); grid.querySelectorAll('button')[q.c].classList.add('btn-correct'); }
                     setTimeout(() => {
                         currentQ++;
                         if(currentQ < questions.length) loadQuestion();
                         else {
                             document.getElementById('quiz-container').classList.add('hidden');
                             document.getElementById('score-container').classList.remove('hidden');
-                            document.getElementById('final-score').innerText = `Has conseguido ${score} de 12 puntos posibles.`;
+                            document.getElementById('final-score').innerText = `Has conseguido ${testScore} de 12 puntos.`;
                         }
                     }, 1500);
                 };
@@ -226,13 +222,45 @@
             });
         }
 
-        function resetQuiz() {
-            currentQ = 0; score = 0;
-            document.getElementById('score-live').innerText = `Puntos: 0`;
-            document.getElementById('quiz-container').classList.remove('hidden');
-            document.getElementById('score-container').classList.add('hidden');
-            loadQuestion();
+        // Lógica del Juego de Ubicar Países
+        const gameCountries = [
+            { id: 'ES', name: 'España' }, { id: 'FR', name: 'Francia' }, { id: 'IT', name: 'Italia' },
+            { id: 'DE', name: 'Alemania' }, { id: 'PT', name: 'Portugal' }, { id: 'UK', name: 'Reino Unido' },
+            { id: 'NO', name: 'Noruega' }, { id: 'SE', name: 'Suecia' }, { id: 'GR', name: 'Grecia' }, { id: 'IE', name: 'Irlanda' }
+        ];
+        let ubicarScore = 0; let remainingCountries = []; let currentTarget = null;
+
+        function startUbicarGame() {
+            ubicarScore = 0; remainingCountries = [...gameCountries];
+            document.getElementById('game-score').innerText = `Puntos: 0`;
+            document.getElementById('game-ui').classList.remove('hidden');
+            document.getElementById('victory-screen').classList.add('hidden');
+            document.querySelectorAll('#europe-map path').forEach(p => p.classList.remove('correct', 'wrong'));
+            nextUbicarQuestion();
         }
+
+        function nextUbicarQuestion() {
+            if (remainingCountries.length === 0) {
+                document.getElementById('game-ui').classList.add('hidden');
+                document.getElementById('victory-screen').classList.remove('hidden');
+                return;
+            }
+            currentTarget = remainingCountries[Math.floor(Math.random() * remainingCountries.length)];
+            document.getElementById('target-country').innerText = currentTarget.name;
+        }
+
+        document.querySelectorAll('#europe-map path').forEach(path => {
+            path.addEventListener('click', function() {
+                if (this.id === currentTarget.id) {
+                    this.classList.add('correct'); ubicarScore += 10;
+                    document.getElementById('game-score').innerText = `Puntos: ${ubicarScore}`;
+                    remainingCountries = remainingCountries.filter(c => c.id !== this.id);
+                    setTimeout(nextUbicarQuestion, 500);
+                } else {
+                    this.classList.add('wrong'); setTimeout(() => this.classList.remove('wrong'), 500);
+                }
+            });
+        });
 
         loadQuestion();
         lucide.createIcons();
