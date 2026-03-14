@@ -54,26 +54,32 @@
             <button onclick="openTab('test')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-test">
                 <i data-lucide="check-square" class="w-5 h-5"></i> Test (12)
             </button>
+            <button onclick="openTab('juegos')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-juegos">
+                <i data-lucide="gamepad-2" class="w-5 h-5"></i> Juegos
+            </button>
         </nav>
 
 <section id="teoria" class="tab-content active space-y-8">
             
             <div class="bg-white p-6 rounded-[3rem] shadow-xl border border-sky-100 text-center">
-                <h3 class="text-2xl font-black text-sky-700 mb-4 italic">¡Mapa político de Europa! 🌍</h3>
-                <p class="text-slate-500 font-medium mb-6">Observa el mapa, lee los nombres y ubica cada país con calma.</p>
+                <h3 class="text-2xl font-black text-sky-700 mb-4 italic">¡Mapa Interactivo de Europa! 🌍</h3>
                 
-                <div class="relative w-full rounded-2xl overflow-hidden border-2 border-sky-100 shadow-inner bg-sky-50">
-                    <img src="mapa-europa-visual.png" alt="Mapa político de Europa" class="w-full h-auto block">
+                <div class="relative w-full rounded-2xl overflow-hidden border-2 border-sky-100 shadow-inner" style="height: 600px;">
+                    <iframe src="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" 
+                            class="w-full h-full" 
+                            frameborder="0" 
+                            allowfullscreen>
+                    </iframe>
                 </div>
 
                 <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-4 bg-sky-50 p-4 rounded-2xl">
                     <p class="text-slate-600 font-medium">
-                        ¿Quieres practicar en modo juego?
+                        ¿No carga el mapa? Haz clic aquí:
                     </p>
-                    <a href="juego-europa-gloria.html" 
+                    <a href="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" 
                        target="_blank" 
                        class="bg-sky-600 text-white px-6 py-2 rounded-full font-bold hover:bg-sky-700 transition-all flex items-center gap-2">
-                        Abrir juego interactivo <i data-lucide="external-link" class="w-4 h-4"></i>
+                        Abrir Mapa en ventana nueva <i data-lucide="external-link" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
@@ -155,6 +161,31 @@
                     <h2 class="text-3xl font-black mb-4">¡Reto Completado!</h2>
                     <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
                     <button onclick="resetQuiz()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">Intentar de nuevo</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="juegos" class="tab-content">
+            <div class="space-y-8">
+                <div class="bg-white p-6 md:p-10 rounded-[3rem] shadow-xl border border-sky-100 text-center">
+                    <h2 class="text-3xl font-black text-sky-700 mb-4">🎮 Juegos para aprender Europa</h2>
+                    <p class="text-slate-500 mb-6 font-medium">Practica con el juego de Gloria o abre el recurso externo en una ventana nueva.</p>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border-2 border-sky-100 shadow-inner" style="height: 760px;">
+                        <iframe src="juego-europa-gloria.html" class="w-full h-full bg-sky-50" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-sky-100">
+                    <h3 class="text-2xl font-black text-sky-800 mb-4 flex items-center gap-2 justify-center">
+                        <i data-lucide="external-link" class="text-sky-500"></i> Juego externo recomendado
+                    </h3>
+                    <p class="text-slate-600 font-medium text-center mb-6">También puedes practicar con este mapa interactivo online.</p>
+                    <div class="flex justify-center">
+                        <a href="https://www.educaenvivo.com/juegos-educativos-online/mapa-interactivo-paises-europa/" target="_blank" rel="noopener noreferrer" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg inline-flex items-center gap-2">
+                            Abrir mapa interactivo externo <i data-lucide="external-link" class="w-5 h-5"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
