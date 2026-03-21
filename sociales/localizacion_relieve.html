@@ -16,23 +16,21 @@
         .tab-button { transition: all 0.3s ease; }
         .tab-button.active { background-color: #0ea5e9; color: white; transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4); }
 
-        /* Guía Visual Estilizada */
-        .guia-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
-        .guia-item { background: white; border-radius: 1.5rem; padding: 1.5rem; border: 2px solid #f1f5f9; transition: all 0.3s; position: relative; overflow: hidden; }
-        .guia-item:hover { border-color: #0ea5e9; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .guia-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        /* Guía Visual Super Pro */
+        .guia-card { background: white; border-radius: 2rem; padding: 2rem; border: 2px solid #f1f5f9; transition: all 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .guia-card:hover { border-color: #0ea5e9; transform: scale(1.02); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .mountain-icon { width: 60px; height: 60px; background: #f0f9ff; border-radius: 1.2rem; display: flex; align-items: center; justify-content: center; color: #0ea5e9; font-size: 2rem; }
 
-        /* Fichas */
-        .flip-card { background-color: transparent; width: 100%; height: 200px; perspective: 1000px; cursor: pointer; }
+        /* Fichas Giratorias */
+        .flip-card { background-color: transparent; width: 100%; height: 180px; perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 2rem; display: flex; align-items: center; justify-content: center; padding: 20px; font-weight: 800; border: 3px solid #bae6fd; }
         .flip-card-front { background: white; color: #0369a1; }
-        .flip-card-back { background: #0ea5e9; color: white; transform: rotateY(180deg); font-size: 0.9rem; }
+        .flip-card-back { background: #0ea5e9; color: white; transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; }
 
-        /* Juego */
-        #game-map-container { background: #e0f2fe; border-radius: 2.5rem; border: 4px solid #bae6fd; position: relative; }
-        .map-layer { transition: all 0.3s; cursor: pointer; fill: #94a3b8; stroke: #fff; stroke-width: 1; }
+        /* Mapa Juego */
+        .map-layer { transition: all 0.3s; cursor: pointer; fill: #cbd5e1; stroke: #fff; stroke-width: 1.5; }
         .map-layer:hover { fill: #38bdf8; }
         .correct { fill: #22c55e !important; }
         .wrong { fill: #ef4444 !important; }
@@ -52,62 +50,79 @@
             <button onclick="openTab('test')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-test">🏆 Test (20)</button>
         </nav>
 
-        <div id="resumen" class="tab-content active space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-[2rem] border-2 border-blue-50">
-                    <h3 class="font-black text-blue-600 mb-4 flex items-center gap-2"><i data-lucide="waves"></i> COSTA DE EUROPA</h3>
+        <div id="resumen" class="tab-content active space-y-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-[2.5rem] border-2 border-blue-50 shadow-sm">
+                    <h3 class="font-black text-blue-600 mb-6 flex items-center gap-2 uppercase text-sm"><i data-lucide="droplet"></i> Vertientes de Europa</h3>
                     <div class="space-y-4">
-                        <div>
-                            <p class="text-xs font-black text-slate-400 uppercase mb-1">1. Océanos</p>
-                            <p class="font-bold text-slate-700">Atlántico y Glacial Ártico</p>
+                        <div class="p-4 bg-blue-50 rounded-2xl border-l-4 border-blue-500">
+                            <b class="text-blue-700 block text-xs mb-1">ÁRTICA</b>
+                            <p class="text-sm">Ríos que van al <b>Océano Glacial Ártico</b>.</p>
                         </div>
-                        <div>
-                            <p class="text-xs font-black text-slate-400 uppercase mb-1">2. Mares</p>
-                            <p class="text-sm text-slate-700 leading-relaxed">Mediterráneo, Cantábrico, del Norte, Báltico, Tirreno, Adriático, Jónico, Egeo, Caspio y Negro.</p>
+                        <div class="p-4 bg-slate-50 rounded-2xl border-l-4 border-slate-700">
+                            <b class="text-slate-700 block text-xs mb-2">INTERIOR (Separadas por el Cáucaso)</b>
+                            <ul class="text-sm space-y-2">
+                                <li>💧 <b>Mar Caspio:</b> Desemboca el río Volga.</li>
+                                <li>💧 <b>Mar Negro:</b> Desemboca el río Danubio.</li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-1 p-3 bg-sky-50 rounded-xl text-center"><b class="block text-[10px]">ATLÁNTICA</b><span class="text-xs">Ríos largos</span></div>
+                            <div class="flex-1 p-3 bg-cyan-50 rounded-xl text-center"><b class="block text-[10px]">MEDITERRÁNEA</b><span class="text-xs">Ríos cortos</span></div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-[2rem] border-2 border-emerald-50">
-                    <h3 class="font-black text-emerald-600 mb-4 flex items-center gap-2"><i data-lucide="map"></i> PENÍNSULAS</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-emerald-50 p-3 rounded-xl">
-                            <b class="text-[10px] uppercase text-emerald-700 block">Norte</b>
-                            <span class="text-sm font-bold">Escandinava, Jutlandia, Kola</span>
+
+                <div class="bg-white p-8 rounded-[2.5rem] border-2 border-emerald-50 shadow-sm">
+                    <h3 class="font-black text-emerald-600 mb-6 flex items-center gap-2 uppercase text-sm"><i data-lucide="waves"></i> Costa y Penínsulas</h3>
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <b class="text-[10px] text-slate-400 block mb-1">1. OCÉANOS</b>
+                                <p class="text-sm font-bold">Atlántico y Glacial Ártico</p>
+                            </div>
+                            <div>
+                                <b class="text-[10px] text-slate-400 block mb-1">2. MARES</b>
+                                <p class="text-sm font-bold">Mediterráneo, Cantábrico, del Norte, Báltico, Caspio y Negro.</p>
+                            </div>
                         </div>
-                        <div class="bg-emerald-50 p-3 rounded-xl">
-                            <b class="text-[10px] uppercase text-emerald-700 block">Sur</b>
-                            <span class="text-sm font-bold">Ibérica, Itálica, Balcánica</span>
+                        <hr>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-emerald-50 p-4 rounded-2xl">
+                                <b class="text-[10px] text-emerald-700 block mb-1 uppercase">Penínsulas Norte</b>
+                                <p class="text-xs font-bold">Escandinava, Jutlandia, Kola</p>
+                            </div>
+                            <div class="bg-emerald-50 p-4 rounded-2xl">
+                                <b class="text-[10px] text-emerald-700 block mb-1 uppercase">Penínsulas Sur</b>
+                                <p class="text-xs font-bold">Ibérica, Itálica, Balcánica</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-slate-900 p-8 md:p-12 rounded-[3rem] text-white">
-                <h2 class="text-2xl font-black mb-8 text-center text-sky-400">⛰️ GUÍA VISUAL: Montañas Maestras</h2>
-                <div class="guia-grid">
-                    <div class="guia-item group">
-                        <span class="guia-icon">🏔️</span>
-                        <h4 class="font-black text-slate-800">Los Alpes</h4>
-                        <p class="text-xs text-slate-500 mt-2">Centro de Europa. Aquí está el famoso Mont Blanc.</p>
-                        <span class="absolute top-2 right-4 text-[40px] opacity-5 font-black">01</span>
+            <div class="space-y-6">
+                <h3 class="text-2xl font-black text-slate-800 text-center">⛰️ Guía Visual: Montañas Maestras</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="guia-card">
+                        <div class="mountain-icon">🏔️</div>
+                        <h4>Los Alpes</h4>
+                        <p class="text-xs text-slate-500 mt-2">Centro de Europa. Cumbres muy altas como el Mont Blanc.</p>
                     </div>
-                    <div class="guia-item">
-                        <span class="guia-icon">🦅</span>
-                        <h4 class="font-black text-slate-800">Cáucaso</h4>
-                        <p class="text-xs text-slate-500 mt-2">Pico <b>Elbrus</b> (el más alto). Separa el Mar Negro del Caspio.</p>
-                        <span class="absolute top-2 right-4 text-[40px] opacity-5 font-black">02</span>
+                    <div class="guia-card">
+                        <div class="mountain-icon">🦅</div>
+                        <h4>Cáucaso</h4>
+                        <p class="text-xs text-slate-500 mt-2">Separa el Mar Negro del Caspio. Está el pico <b>Elbrus</b>.</p>
                     </div>
-                    <div class="guia-item">
-                        <span class="guia-icon">🧱</span>
-                        <h4 class="font-black text-slate-800">Montes Urales</h4>
-                        <p class="text-xs text-slate-500 mt-2">La frontera natural gigante entre Europa y Asia.</p>
-                        <span class="absolute top-2 right-4 text-[40px] opacity-5 font-black">03</span>
+                    <div class="guia-card">
+                        <div class="mountain-icon">🧱</div>
+                        <h4>Urales</h4>
+                        <p class="text-xs text-slate-500 mt-2">La frontera natural que separa Europa de Asia.</p>
                     </div>
-                    <div class="guia-item">
-                        <span class="guia-icon">🐂</span>
-                        <h4 class="font-black text-slate-800">Pirineos</h4>
-                        <p class="text-xs text-slate-500 mt-2">Muro natural entre España y el resto de Europa.</p>
-                        <span class="absolute top-2 right-4 text-[40px] opacity-5 font-black">04</span>
+                    <div class="guia-card">
+                        <div class="mountain-icon">🐂</div>
+                        <h4>Pirineos</h4>
+                        <p class="text-xs text-slate-500 mt-2">La frontera natural entre España y Francia.</p>
                     </div>
                 </div>
             </div>
@@ -116,11 +131,10 @@
         <div id="juego" class="tab-content">
             <div class="bg-white p-8 rounded-[3rem] shadow-xl border-2 border-sky-100 text-center">
                 <div class="mb-6">
-                    <span class="bg-sky-100 text-sky-700 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">Misión Gloria</span>
-                    <h2 id="target-title" class="text-3xl font-black text-slate-800 mt-2">Buscando...</h2>
+                    <span class="bg-sky-100 text-sky-700 px-4 py-1 rounded-full text-xs font-black uppercase">Práctica de Localización</span>
+                    <h2 id="target-title" class="text-3xl font-black text-slate-800 mt-2">...</h2>
                 </div>
-                
-                <div id="game-map-container" class="max-w-2xl mx-auto aspect-video mb-6">
+                <div class="max-w-2xl mx-auto bg-sky-50 rounded-[2.5rem] p-6 border-4 border-white shadow-inner">
                     <svg viewBox="0 0 400 300" class="w-full h-full">
                         <path id="P_IBERICA" class="map-layer" d="M40,220 L100,220 L100,280 L40,280 Z" />
                         <path id="P_ITALICA" class="map-layer" d="M160,200 L180,200 L210,270 L190,270 Z" />
@@ -131,7 +145,7 @@
                         <circle id="C_NORTE" class="map-layer" cx="200" cy="20" r="10" />
                     </svg>
                 </div>
-                <div id="game-feedback" class="h-8 font-bold text-sky-600"></div>
+                <div id="game-feedback" class="mt-4 h-8 font-bold text-sky-600"></div>
             </div>
         </div>
 
@@ -141,44 +155,44 @@
                     <div class="flip-card-inner"><div class="flip-card-front">Sistemas Montañosos</div><div class="flip-card-back">Pirineos, Alpes, Cárpatos, Balcanes, Cáucaso y Urales.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Gran Llanura Europea</div><div class="flip-card-back">Se extiende por el centro y este, desde Bélgica hasta Rusia.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Gran Llanura Europea</div><div class="flip-card-back">Desde Bélgica hasta Rusia. Terreno muy fértil y plano.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">El Cáucaso</div><div class="flip-card-back">Cordillera donde está el Elbrus, el pico más alto (5.642 m).</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Pico Elbrus</div><div class="flip-card-back">Pico más alto de Europa (5.642 m), en el Cáucaso.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Los Urales</div><div class="flip-card-back">Montañas bajas que separan Europa de Asia.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Montes Urales</div><div class="flip-card-back">Montañas que marcan el límite entre Europa y Asia.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Mar Mediterráneo</div><div class="flip-card-back">Baña el sur de Europa y la separa de África.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Mar Mediterráneo</div><div class="flip-card-back">Separa Europa de África. Muy importante para el clima.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Penínsulas del Sur</div><div class="flip-card-back">Ibérica, Itálica y Balcánica.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Penínsulas del Sur</div><div class="flip-card-back">Son tres: Ibérica, Itálica y Balcánica.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Vertiente Ártica</div><div class="flip-card-back">Ríos que desembocan en el Océano Glacial Ártico.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Vertiente Ártica</div><div class="flip-card-back">Sus ríos desembocan en el Océano Glacial Ártico.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Estrecho de Gibraltar</div><div class="flip-card-back">Une el Océano Atlántico con el Mar Mediterráneo.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Estrecho de Gibraltar</div><div class="flip-card-back">Conecta el Océano Atlántico con el Mar Mediterráneo.</div></div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner"><div class="flip-card-front">Golfo de Vizcaya</div><div class="flip-card-back">Gran entrada del Atlántico en el norte de España.</div></div>
+                    <div class="flip-card-inner"><div class="flip-card-front">Golfo de Vizcaya</div><div class="flip-card-back">Gran entrada de mar situada al norte de España.</div></div>
                 </div>
             </div>
         </div>
 
         <div id="test" class="tab-content">
-            <div class="bg-white p-10 rounded-[3rem] shadow-xl border-2 border-sky-100 max-w-2xl mx-auto">
+            <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border-2 border-sky-100 max-w-2xl mx-auto">
                 <div id="quiz-area">
-                    <div id="progress" class="text-xs font-black text-sky-500 uppercase mb-4"></div>
-                    <div id="question" class="text-2xl font-black text-slate-800 mb-8 text-center leading-tight"></div>
+                    <div id="progress" class="text-xs font-black text-sky-500 uppercase mb-4 tracking-tighter"></div>
+                    <div id="question" class="text-2xl font-black text-slate-800 mb-8 text-center"></div>
                     <div id="options" class="grid gap-3"></div>
                 </div>
                 <div id="result-area" class="hidden text-center">
-                    <div class="text-6xl mb-4">🏆</div>
-                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Misión Cumplida!</h2>
+                    <div class="text-6xl mb-4">✨</div>
+                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Terminado!</h2>
                     <p id="score-text" class="text-xl font-bold text-sky-600 mb-8"></p>
-                    <button onclick="restartTest()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg">Reiniciar Test</button>
+                    <button onclick="restartTest()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg">Repetir Test</button>
                 </div>
             </div>
         </div>
@@ -214,8 +228,8 @@
             el.onclick = () => {
                 if(el.id === currentTarget.id) {
                     el.classList.add('correct');
-                    document.getElementById('game-feedback').innerText = "¡Excelente, Gloria! ✨";
-                    setTimeout(initGame, 1200);
+                    document.getElementById('game-feedback').innerText = "¡Muy bien! ✨";
+                    setTimeout(initGame, 1000);
                 } else {
                     el.classList.add('wrong');
                     setTimeout(() => el.classList.remove('wrong'), 500);
@@ -225,32 +239,32 @@
 
         // LÓGICA DEL TEST (20 PREGUNTAS)
         const questions = [
-            { q: "¿Cuál es el pico más alto de Europa?", a: ["Mont Blanc", "Mulhacén", "Elbrus"], c: 2 },
-            { q: "¿Qué cordillera separa Europa de Asia?", a: ["Pirineos", "Urales", "Alpes"], c: 1 },
-            { q: "El Mediterráneo es un...", a: ["Mar", "Océano", "Lago"], c: 0 },
+            { q: "¿Cuál es el pico más alto de Europa?", a: ["Mont Blanc", "Elbrus", "Teide"], c: 1 },
+            { q: "¿Qué cordillera separa Europa de Asia?", a: ["Urales", "Pirineos", "Alpes"], c: 0 },
+            { q: "¿En qué vertiente desemboca el río Danubio?", a: ["Mar Caspio", "Mar Negro", "Océano Ártico"], c: 1 },
+            { q: "Península situada al Norte de Europa:", a: ["Ibérica", "Itálica", "Escandinava"], c: 2 },
+            { q: "¿Qué océano baña el Norte de Europa?", a: ["Atlántico", "Glacial Ártico", "Índico"], c: 1 },
+            { q: "El Estrecho de Gibraltar une el Atlántico con...", a: ["Mar Rojo", "Mar Mediterráneo", "Mar Negro"], c: 1 },
             { q: "La Península Ibérica está en el...", a: ["Norte", "Sur", "Este"], c: 1 },
-            { q: "El Estrecho de Gibraltar une el Atlántico con...", a: ["Mar Negro", "Mar Mediterráneo", "Mar Rojo"], c: 1 },
-            { q: "Península situada al Norte:", a: ["Balcánica", "Itálica", "Escandinava"], c: 2 },
-            { q: "Río que va a la vertiente Atlántica:", a: ["Tajo", "Ebro", "Danubio"], c: 0 },
-            { q: "Mares de la vertiente interior:", a: ["Caspio y Negro", "Norte y Báltico", "Cantábrico"], c: 0 },
-            { q: "¿Qué es la Gran Llanura?", a: ["Una montaña", "Una llanura", "Un cabo"], c: 1 },
-            { q: "Cabo situado al Norte de Europa:", a: ["San Vicente", "Cabo Norte", "Matapán"], c: 1 },
-            { q: "¿Cuál de estos es un Golfo?", a: ["Vizcaya", "Pirineos", "Alpes"], c: 0 },
-            { q: "La Península Itálica tiene forma de:", a: ["Bota", "Círculo", "Mano"], c: 0 },
-            { q: "Océano al oeste de Europa:", a: ["Índico", "Atlántico", "Pacífico"], c: 1 },
-            { q: "El estrecho del este (Turquía) es:", a: ["Bósforo", "Gibraltar", "Mancha"], c: 0 },
-            { q: "Península de Dinamarca:", a: ["Ibérica", "Jutlandia", "Kola"], c: 1 },
-            { q: "¿Qué separa el Caspio del Negro?", a: ["El Cáucaso", "Los Alpes", "Los Pirineos"], c: 0 },
-            { q: "El Golfo de Botnia está en el Mar:", a: ["Báltico", "Rojo", "Negro"], c: 0 },
-            { q: "Océano al Norte de Europa:", a: ["Glacial Ártico", "Antártico", "Índico"], c: 0 },
-            { q: "Ríos cortos y poco caudalosos:", a: ["Mediterráneos", "Atlánticos", "Interiores"], c: 0 },
-            { q: "Europa y Asia forman juntos:", a: ["Eurasia", "Euroáfrica", "Euroamérica"], c: 0 }
+            { q: "El Mar Mediterráneo está en la vertiente...", a: ["Interior", "Mediterránea", "Atlántica"], c: 1 },
+            { q: "¿Qué cordillera separa el Mar Caspio del Mar Negro?", a: ["Cáucaso", "Urales", "Pirineos"], c: 0 },
+            { q: "El río Volga desemboca en el Mar...", a: ["Negro", "Caspio", "Báltico"], c: 1 },
+            { q: "¿Cuál es una península del SUR?", a: ["Jutlandia", "Kola", "Balcánica"], c: 2 },
+            { q: "Los Pirineos separan España de...", a: ["Italia", "Francia", "África"], c: 1 },
+            { q: "¿Qué forma de relieve es la Gran Llanura?", a: ["Montaña", "Meseta", "Llanura"], c: 2 },
+            { q: "Cabo situado al norte de Europa:", a: ["Cabo Norte", "San Vicente", "Matapán"], c: 0 },
+            { q: "El Golfo de Vizcaya está al norte de...", a: ["Francia", "España", "Italia"], c: 1 },
+            { q: "Los Alpes están situados en...", a: ["Sur de España", "Centro de Europa", "Norte de Rusia"], c: 1 },
+            { q: "La vertiente Ártica tiene ríos que van al...", a: ["Océano Pacífico", "Océano Glacial Ártico", "Mar Caspio"], c: 1 },
+            { q: "¿Cuál es un Mar de Europa?", a: ["Mar Muerto", "Mar Cantábrico", "Mar Caribe"], c: 1 },
+            { q: "Península donde está Dinamarca:", a: ["Itálica", "Jutlandia", "Escandinava"], c: 1 },
+            { q: "¿Cómo se llama la unión de Europa y Asia?", a: ["Eurasia", "Euroáfrica", "Euralia"], c: 0 }
         ];
 
         let qIdx = 0; let score = 0;
         function loadQuestion() {
             const q = questions[qIdx];
-            document.getElementById('progress').innerText = `PREGUNTA ${qIdx + 1} DE 20`;
+            document.getElementById('progress').innerText = `PROGRESO: ${qIdx + 1} / 20`;
             document.getElementById('question').innerText = q.q;
             const optDiv = document.getElementById('options');
             optDiv.innerHTML = '';
@@ -273,7 +287,7 @@
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
             document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `¡Gloria, lograste ${score} de 20 puntos!`;
+            document.getElementById('score-text').innerText = `Gloria, has conseguido ${score} de 20 puntos`;
         }
         function restartTest() {
             qIdx = 0; score = 0;
