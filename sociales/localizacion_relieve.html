@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<!DOCTYPE html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Academia de Gloria | Localización y Relieve de Europa</title>
@@ -12,32 +12,156 @@
     .tab-content { display: none; animation: fadeIn .35s ease; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity:0; transform: translateY(8px);} to {opacity:1; transform: translateY(0);} }
-    .tab-button.active { background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; transform: translateY(-3px); box-shadow: 0 10px 18px rgba(2,132,199,.28); }
-    .topic-card { background: white; border: 2px solid #dbeafe; border-radius: 28px; overflow: hidden; box-shadow: 0 10px 25px rgba(14, 165, 233, 0.08); }
-    .topic-head { width: 100%; text-align: left; padding: 20px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%); }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 18px rgba(2,132,199,.28);
+    }
+
+    .topic-card {
+      background: white;
+      border: 2px solid #dbeafe;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(14, 165, 233, 0.08);
+    }
+
+    .topic-head {
+      width: 100%;
+      text-align: left;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+
     .topic-head:hover { background: #f0f9ff; }
     .topic-body { display: none; padding: 0 22px 22px 22px; }
     .topic-card.open .topic-body { display: block; }
     .topic-card.open .chev { transform: rotate(180deg); }
     .chev { transition: transform .2s ease; }
-    .mini-card { background: #f8fbff; border: 2px solid #dbeafe; border-radius: 22px; padding: 16px; }
-    .tag { display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 2px solid #dbeafe; border-radius: 999px; padding: 8px 12px; font-size: 14px; font-weight: 700; color: #0369a1; }
-    .memory-box { background: linear-gradient(135deg, #fefce8, #fff7ed); border: 2px solid #fde68a; border-radius: 24px; padding: 18px; }
-    .flip-card { background-color: transparent; width: 100%; height: 190px; perspective: 1000px; cursor: pointer; }
-    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+
+    .mini-card {
+      background: #f8fbff;
+      border: 2px solid #dbeafe;
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 2px solid #dbeafe;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .memory-box {
+      background: linear-gradient(135deg, #fefce8, #fff7ed);
+      border: 2px solid #fde68a;
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 190px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
     .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-    .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 24px; }
-    .flip-card-front { background: white; border: 2px solid #dbeafe; color: #0f172a; font-weight: 800; font-size: 24px; }
-    .flip-card-back { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; transform: rotateY(180deg); font-weight: 700; font-size: 18px; line-height: 1.4; }
-    .btn-option { transition: all .2s ease; border: 2px solid #e2e8f0; background: white; }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      border-radius: 24px;
+    }
+    .flip-card-front {
+      background: white;
+      border: 2px solid #dbeafe;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    .flip-card-back {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: white;
+      transform: rotateY(180deg);
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .btn-option {
+      transition: all .2s ease;
+      border: 2px solid #e2e8f0;
+      background: white;
+    }
     .btn-option:hover { border-color: #38bdf8; background: #f0f9ff; }
     .btn-correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
     .btn-incorrect { background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+
     .progress-bar { height: 14px; border-radius: 999px; overflow: hidden; background: #e2e8f0; }
     .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #38bdf8, #22c55e); transition: width .25s ease; }
-    .map-zone { background: linear-gradient(180deg, #f8fbff, #ffffff); border: 2px solid #dbeafe; border-radius: 30px; padding: 18px; }
-    .svg-label { font-size: 14px; font-weight: 800; fill: #1e293b; text-anchor: middle; }
+
+    .map-zone {
+      background: linear-gradient(180deg, #f8fbff, #ffffff);
+      border: 2px solid #dbeafe;
+      border-radius: 30px;
+      padding: 18px;
+    }
+
+    .svg-label {
+      font-size: 14px;
+      font-weight: 800;
+      fill: #1e293b;
+      text-anchor: middle;
+    }
+
     .soft-list li { margin-bottom: 8px; }
+
+    .celebrate-stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 50;
+    }
+    .star-pop {
+      position: absolute;
+      font-size: 28px;
+      animation: floatUp 1.4s ease forwards;
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(20px) scale(.7); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+    }
+
     @media (max-width: 768px) {
       .flip-card { height: 170px; }
       .flip-card-front { font-size: 20px; }
@@ -46,6 +170,8 @@
   </style>
 </head>
 <body class="p-4 md:p-8">
+  <div id="celebrate-stars" class="celebrate-stars"></div>
+
   <div class="max-w-6xl mx-auto">
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
       <div>
@@ -80,7 +206,7 @@
         <i data-lucide="layers" class="w-5 h-5"></i> Fichas
       </button>
       <button onclick="openTab('test')" class="tab-button px-8 py-4 rounded-2xl font-bold flex items-center gap-2 bg-white text-slate-600 shadow-sm" id="btn-test">
-        <i data-lucide="check-square" class="w-5 h-5"></i> Mini test
+        <i data-lucide="check-square" class="w-5 h-5"></i> Mini test PRO
       </button>
     </nav>
 
@@ -375,7 +501,7 @@
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🏔️ Montañas del sur</div><div class="flip-card-back">Son más elevadas. Destacan Pirineos, Alpes, Cárpatos, Balcanes y Cáucaso. Elbrús: 5.642 m.</div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🟩 Las llanuras</div><div class="flip-card-back">Se extienden por el centro y este. Destacan la Gran Llanura Europea y la Llanura de Europa Oriental.</div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🌊 Costas y mares</div><div class="flip-card-back">Océanos: Glacial Ártico y Atlántico. Mares: del Norte, Báltico, Barents, Mediterráneo, Negro y Caspio.</div></div></div>
-        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🏝️ Penínsulas e islas</div><div class="flip-card-back">Penínsulas: Kola, Escandinava, Jutlandia, Ibérica, Itálica, Balcánica y Crimea. Islas: Islandia, Irlanda, Gran Bretaña, Baleares, Sicilia, Creta, Malta y Chipre.</div></div></div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🏝️ Penínsulas e islas</div><div class="flip-card-back">Penínsulas: Kola, Escandinava, Jutlandia, Ibérica, Itálica, Balcánica y Crimea. Islas: Islandia, Irlanda, Gran Bretaña, Baleares, Córcega, Cerdeña, Sicilia, Creta, Malta y Chipre.</div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🌍 Accidentes costeros</div><div class="flip-card-back">Golfos, cabos, rías, fiordos y estrechos. Ejemplo: estrecho de Gibraltar.</div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🚰 Vertientes de los ríos</div><div class="flip-card-back">Atlántica, ártica, mediterránea, del mar Negro y del mar Caspio.</div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front">🏆 Río más largo</div><div class="flip-card-back">El río más largo del continente europeo es el Volga. Desemboca en el mar Caspio.</div></div></div>
@@ -386,9 +512,19 @@
       <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-sky-100 max-w-3xl mx-auto">
         <div id="quiz-container">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <span id="q-counter" class="text-sky-600 font-bold">Pregunta 1 de 10</span>
+            <span id="q-counter" class="text-sky-600 font-bold">Pregunta 1 de 25</span>
             <span id="score-live" class="bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span>
           </div>
+
+          <div class="flex gap-3 flex-wrap mt-4 mb-5">
+            <span id="streak-box" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full font-bold">
+              🔥 Racha: 0
+            </span>
+            <button onclick="activateRepeatMode()" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full font-bold">
+              🔁 Practicar errores
+            </button>
+          </div>
+
           <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
           <h2 id="question-text" class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h2>
           <div id="options-grid" class="grid gap-4"></div>
@@ -417,6 +553,44 @@
       button.parentElement.classList.toggle('open');
     }
 
+    function playTone(type) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const ctx = new AudioContextClass();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      if (type === 'correct') {
+        osc.frequency.value = 660;
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+      } else {
+        osc.frequency.value = 220;
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+      }
+      osc.start();
+      osc.stop(ctx.currentTime + 0.26);
+    }
+
+    function burstStars() {
+      const container = document.getElementById('celebrate-stars');
+      const stars = ['⭐', '🌟', '✨'];
+      for (let i = 0; i < 8; i++) {
+        const el = document.createElement('div');
+        el.className = 'star-pop';
+        el.textContent = stars[i % stars.length];
+        el.style.left = `${10 + Math.random() * 80}%`;
+        el.style.top = `${65 + Math.random() * 20}%`;
+        el.style.animationDelay = `${Math.random() * 0.15}s`;
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 1500);
+      }
+    }
+
     const questions = [
       { q: '¿En qué hemisferio está Europa?', a: ['Hemisferio sur', 'Hemisferio norte', 'Hemisferio oriental'], c: 1 },
       { q: '¿Qué limita Europa por el este?', a: ['Océano Atlántico', 'Mar Mediterráneo', 'Montes Urales y mar Caspio'], c: 2 },
@@ -427,46 +601,46 @@
       { q: '¿Cuál es una península del sur de Europa?', a: ['Jutlandia', 'Ibérica', 'Kola'], c: 1 },
       { q: '¿Dónde se encuentran los fiordos?', a: ['Península escandinava', 'Península ibérica', 'Italia'], c: 0 },
       { q: '¿Qué río desemboca en el mar Caspio y es el más largo de Europa?', a: ['Danubio', 'Volga', 'Rin'], c: 1 },
-      { q: '¿Cómo son los ríos de la vertiente mediterránea?', a: ['Muy regulares y helados', 'Poco caudalosos e irregulares', 'Los más largos de Europa'], c: 1 }
-      { q: "¿Qué océano está al oeste de Europa?", a: ["Atlántico", "Ártico", "Índico"], c: 0 },
-
-{ q: "¿Qué mar está al sur de Europa?", a: ["Mar Negro", "Mar Mediterráneo", "Mar Báltico"], c: 1 },
-
-{ q: "¿Cómo se llaman las montañas que separan Europa de Asia?", a: ["Alpes", "Urales", "Pirineos"], c: 1 },
-
-{ q: "¿Dónde están las montañas más altas de Europa?", a: ["En el norte", "En el sur", "En el centro"], c: 1 },
-
-{ q: "¿Qué cordillera está entre España y Francia?", a: ["Alpes", "Pirineos", "Cárpatos"], c: 1 },
-
-{ q: "¿Qué tipo de relieve predomina en el centro de Europa?", a: ["Montañas altas", "Llanuras", "Volcanes"], c: 1 },
-
-{ q: "¿Cómo son los macizos?", a: ["Montañas muy altas", "Montañas bajas", "Ríos"], c: 1 },
-
-{ q: "¿Cuál es un ejemplo de macizo?", a: ["Alpes", "Selva Negra", "Pirineos"], c: 1 },
-
-{ q: "¿Qué mar está al norte de Europa?", a: ["Mar Mediterráneo", "Mar del Norte", "Mar Rojo"], c: 1 },
-
-{ q: "¿Qué es una península?", a: ["Tierra rodeada de agua", "Tierra rodeada de agua casi por completo", "Montaña"], c: 1 },
-
-{ q: "¿Cuál es una isla del norte de Europa?", a: ["Sicilia", "Islandia", "Malta"], c: 1 },
-
-{ q: "¿Dónde se encuentran las rías?", a: ["Italia", "Norte de España", "Alemania"], c: 1 },
-
-{ q: "¿Qué es un fiordo?", a: ["Un río", "Una ría en zona fría", "Una montaña"], c: 1 },
-
-{ q: "¿Qué caracteriza a los ríos atlánticos?", a: ["Poco caudal", "Mucho caudal", "Están secos"], c: 1 },
-
-{ q: "¿Qué ocurre con los ríos árticos en invierno?", a: ["Se secan", "Se congelan", "Desaparecen"], c: 1 },
+      { q: '¿Cómo son los ríos de la vertiente mediterránea?', a: ['Muy regulares y helados', 'Poco caudalosos e irregulares', 'Los más largos de Europa'], c: 1 },
+      { q: '¿Qué océano está al oeste de Europa?', a: ['Atlántico', 'Ártico', 'Índico'], c: 0 },
+      { q: '¿Qué mar está al sur de Europa?', a: ['Mar Negro', 'Mar Mediterráneo', 'Mar Báltico'], c: 1 },
+      { q: '¿Cómo se llaman las montañas que separan Europa de Asia?', a: ['Alpes', 'Urales', 'Pirineos'], c: 1 },
+      { q: '¿Dónde están las montañas más altas de Europa?', a: ['En el norte', 'En el sur', 'En el centro'], c: 1 },
+      { q: '¿Qué cordillera está entre España y Francia?', a: ['Alpes', 'Pirineos', 'Cárpatos'], c: 1 },
+      { q: '¿Qué tipo de relieve predomina en el centro de Europa?', a: ['Montañas altas', 'Llanuras', 'Volcanes'], c: 1 },
+      { q: '¿Cómo son los macizos?', a: ['Montañas muy altas', 'Montañas bajas', 'Ríos'], c: 1 },
+      { q: '¿Cuál es un ejemplo de macizo?', a: ['Alpes', 'Selva Negra', 'Pirineos'], c: 1 },
+      { q: '¿Qué mar está al norte de Europa?', a: ['Mar Mediterráneo', 'Mar del Norte', 'Mar Rojo'], c: 1 },
+      { q: '¿Qué es una península?', a: ['Tierra rodeada de agua', 'Tierra rodeada de agua casi por completo', 'Montaña'], c: 1 },
+      { q: '¿Cuál es una isla del norte de Europa?', a: ['Sicilia', 'Islandia', 'Malta'], c: 1 },
+      { q: '¿Dónde se encuentran las rías?', a: ['Italia', 'Norte de España', 'Alemania'], c: 1 },
+      { q: '¿Qué es un fiordo?', a: ['Un río', 'Una ría en zona fría', 'Una montaña'], c: 1 },
+      { q: '¿Qué caracteriza a los ríos atlánticos?', a: ['Poco caudal', 'Mucho caudal', 'Están secos'], c: 1 },
+      { q: '¿Qué ocurre con los ríos árticos en invierno?', a: ['Se secan', 'Se congelan', 'Desaparecen'], c: 1 }
     ];
 
     let currentQ = 0;
     let score = 0;
+    let streak = 0;
+    let errors = [];
+    let repeatMode = false;
+
+    function updateHeaderCounts() {
+      const list = repeatMode ? errors : questions;
+      document.getElementById('q-counter').innerText = `Pregunta ${Math.min(currentQ + 1, list.length)} de ${list.length}`;
+      document.getElementById('quiz-progress').style.width = `${(currentQ / Math.max(list.length, 1)) * 100}%`;
+    }
 
     function loadQuestion() {
-      const q = questions[currentQ];
-      document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+      const list = repeatMode ? errors : questions;
+      if (!list.length) {
+        alert('No hay preguntas para practicar.');
+        return;
+      }
+
+      updateHeaderCounts();
+      const q = list[currentQ];
       document.getElementById('question-text').innerText = q.q;
-      document.getElementById('quiz-progress').style.width = `${(currentQ / questions.length) * 100}%`;
       const grid = document.getElementById('options-grid');
       grid.innerHTML = '';
 
@@ -481,21 +655,49 @@
           if (i === q.c) {
             b.classList.add('btn-correct');
             score++;
+            streak++;
             document.getElementById('score-live').innerText = `Puntos: ${score}`;
+            document.getElementById('streak-box').innerText = `🔥 Racha: ${streak}`;
+            playTone('correct');
+            burstStars();
           } else {
             b.classList.add('btn-incorrect');
             allBtns[q.c].classList.add('btn-correct');
+            streak = 0;
+            document.getElementById('streak-box').innerText = '🔥 Racha: 0';
+            if (!repeatMode && !errors.some(err => err.q === q.q)) errors.push(q);
+            playTone('wrong');
           }
 
           setTimeout(() => {
             currentQ++;
-            if (currentQ < questions.length) {
+            if (currentQ < list.length) {
               loadQuestion();
             } else {
               document.getElementById('quiz-progress').style.width = '100%';
               document.getElementById('quiz-container').classList.add('hidden');
               document.getElementById('score-container').classList.remove('hidden');
-              document.getElementById('final-score').innerText = `Has conseguido ${score} de ${questions.length} puntos posibles.`;
+
+              let message = repeatMode
+                ? `Has conseguido ${score} de ${list.length} puntos en el modo de errores.`
+                : `Has conseguido ${score} de ${questions.length} puntos.`;
+
+              const totalQuestions = repeatMode ? list.length : questions.length;
+              if (score >= totalQuestions * 0.9) {
+                message += ' 🏆 ¡EXCELENTE!';
+              } else if (score >= totalQuestions * 0.7) {
+                message += ' 🌟 ¡MUY BIEN!';
+              } else if (score >= totalQuestions * 0.5) {
+                message += ' 👍 ¡BIEN!';
+              } else {
+                message += ' 💪 ¡Sigue practicando!';
+              }
+
+              if (!repeatMode && errors.length > 0) {
+                message += ` Te quedan ${errors.length} preguntas para practicar en el modo errores.`;
+              }
+
+              document.getElementById('final-score').innerText = message;
             }
           }, 1200);
         };
@@ -503,12 +705,37 @@
       });
     }
 
+    function activateRepeatMode() {
+      if (errors.length === 0) {
+        alert('¡No hay errores! 😎');
+        return;
+      }
+
+      repeatMode = true;
+      currentQ = 0;
+      score = 0;
+      streak = 0;
+
+      document.getElementById('score-live').innerText = 'Puntos: 0';
+      document.getElementById('streak-box').innerText = '🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+
+      loadQuestion();
+    }
+
     function resetQuiz() {
       currentQ = 0;
       score = 0;
+      streak = 0;
+      errors = [];
+      repeatMode = false;
+
       document.getElementById('score-live').innerText = 'Puntos: 0';
+      document.getElementById('streak-box').innerText = '🔥 Racha: 0';
       document.getElementById('quiz-container').classList.remove('hidden');
       document.getElementById('score-container').classList.add('hidden');
+
       loadQuestion();
     }
 
