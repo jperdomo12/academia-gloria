@@ -534,7 +534,16 @@
           <div class="text-6xl mb-4">⭐</div>
           <h2 class="text-3xl font-black mb-4 text-slate-800">¡Reto completado!</h2>
           <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
-          <button onclick="resetQuiz()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">Intentar de nuevo</button>
+
+          <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700">
+              🔁 Repetir todo
+            </button>
+
+            <button onclick="repeatErrorsFromEnd()" id="btn-repeat-errors" class="bg-purple-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-purple-700">
+              🎯 Solo errores
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -635,6 +644,9 @@
       const list = repeatMode ? errors : questions;
       if (!list.length) {
         alert('No hay preguntas para practicar.');
+        repeatMode = false;
+        currentQ = 0;
+        loadQuestion();
         return;
       }
 
@@ -678,6 +690,13 @@
               document.getElementById('quiz-container').classList.add('hidden');
               document.getElementById('score-container').classList.remove('hidden');
 
+              const btnErrors = document.getElementById('btn-repeat-errors');
+              if (errors.length === 0) {
+                btnErrors.style.display = 'none';
+              } else {
+                btnErrors.style.display = 'inline-block';
+              }
+
               let message = repeatMode
                 ? `Has conseguido ${score} de ${list.length} puntos en el modo de errores.`
                 : `Has conseguido ${score} de ${questions.length} puntos.`;
@@ -708,6 +727,25 @@
     function activateRepeatMode() {
       if (errors.length === 0) {
         alert('¡No hay errores! 😎');
+        return;
+      }
+
+      repeatMode = true;
+      currentQ = 0;
+      score = 0;
+      streak = 0;
+
+      document.getElementById('score-live').innerText = 'Puntos: 0';
+      document.getElementById('streak-box').innerText = '🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+
+      loadQuestion();
+    }
+
+    function repeatErrorsFromEnd() {
+      if (errors.length === 0) {
+        alert('¡No tienes errores! 😎');
         return;
       }
 
