@@ -3,159 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Edad Media - Academia de Gloria</title>
+    <title>Sociales: La Edad Media - Gloria Valentina</title>
+    
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #fcfaf7; color: #1e293b; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        body { font-family: 'Outfit', sans-serif; background-color: #fffaf5; color: #1e293b; }
+        
+        /* Navegación por Pestañas */
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .tab-button.active { background-color: #b45309; color: white; transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(180, 83, 9, 0.3); }
 
-        .medieval-card { background: white; border-radius: 1.5rem; border: 1px solid #fde68a; padding: 1.5rem; height: 100%; transition: all 0.3s; }
+        /* Tarjetas de Contenido (Modelo 'Cards') */
+        .medieval-card { background: white; border-radius: 2rem; border: 1px solid #fde68a; padding: 2rem; height: 100%; transition: all 0.3s; }
         .medieval-card:hover { border-color: #f59e0b; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-        .medieval-card h3 { color: #b45309; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .medieval-card h3 { color: #b45309; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         
-        .timeline-item { border-left: 4px solid #f59e0b; padding-left: 1.5rem; position: relative; margin-bottom: 1.5rem; }
-        .timeline-item::before { content: ''; position: absolute; left: -10px; top: 0; width: 16px; height: 16px; background: #f59e0b; border-radius: 50%; border: 3px solid white; }
+        /* Fichas Giratorias */
+        .flip-card { height: 200px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 2rem; display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-weight: 800; border: 3px solid #fcd34d; }
+        .flip-card-front { background: white; color: #b45309; }
+        .flip-card-back { background: #f59e0b; color: white; transform: rotateY(180deg); font-size: 0.85rem; line-height: 1.4; }
+
+        /* Test */
+        .btn-option { transition: all 0.2s; border: 2px solid #e2e8f0; }
+        .btn-option:hover { background-color: #fff9f0; border-color: #f59e0b; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl font-black text-slate-800">La <span class="text-amber-700">Edad Media</span></h1>
-            <p class="text-slate-500 font-bold mt-2">Historia de la Península Ibérica</p>
+        
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-6 py-2 rounded-full shadow-sm text-amber-700 hover:text-amber-900 transition-all mb-8 border border-amber-100 font-bold text-sm">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Sociales
+        </a>
+
+        <header class="text-center mb-10 bg-white p-8 rounded-[2.5rem] shadow-sm border border-amber-50 relative overflow-hidden">
+            <div class="relative z-10">
+                <span class="inline-block bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-2">Lección Interactiva</span>
+                <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight">La <span class="text-amber-700">Edad Media</span></h1>
+                <p class="text-slate-500 font-medium mt-2 max-w-lg mx-auto">Explora la historia de la Península Ibérica: desde las invasiones germanas hasta la sociedad feudal.</p>
+            </div>
+            <i data-lucide="castle" class="absolute -bottom-5 -right-5 w-32 h-32 text-amber-50"></i>
         </header>
 
         <nav class="flex flex-wrap gap-2 mb-8 bg-white/80 backdrop-blur-sm p-2 rounded-3xl border border-amber-100 sticky top-4 z-50 shadow-sm">
-            <button onclick="openTab('parte1')" class="tab-button active flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-parte1">🛡️ 1ª Parte: Invasiones</button>
-            <button onclick="openTab('parte2')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-parte2">🏰 2ª Parte: Reinos</button>
-            <button onclick="openTab('test')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-test">🏆 Test de Repaso</button>
+            <button onclick="openTab('parte1')" class="tab-button active flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-parte1">⚔️ 1ª Parte: Invasiones</button>
+            <button onclick="openTab('parte2')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-parte2">👑 2ª Parte: Sociedad</button>
+            <button onclick="openTab('fichas')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-fichas">🗂️ Fichas de Repaso</button>
+            <button onclick="openTab('test')" class="tab-button flex-1 py-3 rounded-2xl font-black text-xs uppercase" id="btn-test">🏆 Test Final</button>
         </nav>
 
         <div id="parte1" class="tab-content active space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="medieval-card">
-                    <h3><i data-lucide="shield-alert"></i> 1. Fin del Imperio Romano</h3>
-                    <p class="text-sm text-slate-600">A partir del siglo III, los pueblos germanos atacaron Roma. En el <b>476</b> el imperio se dividió en pueblos independientes.</p>
+                    <h3><i data-lucide="calendar-days"></i> 1. Marco Temporal</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        La Edad Media es el periodo histórico que abarca desde la <b>caída del Imperio Romano</b> (año 476) hasta el <b>Descubrimiento de América</b> (año 1492).
+                    </p>
                 </div>
                 <div class="medieval-card">
-                    <h3><i data-lucide="map-pin"></i> 2. Suevos, Alanos y Vándalos</h3>
-                    <p class="text-sm text-slate-600">En el <b>411</b> invadieron la Península: Suevos (noroeste), Alanos (centro) y Vándalos (sur).</p>
+                    <h3><i data-lucide="shield-alert"></i> 2. Invasiones Germánicas (s. III-V)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        En el s. III, pueblos germanos atacaron Roma. En el <b>411</b>, invadieron la Península: <b>Suevos</b> (Gallaecia), <b>Alanos</b> (Lusitania y Cartaginense) y <b>Vándalos</b> (Bética).
+                    </p>
                 </div>
                 <div class="medieval-card">
-                    <h3><i data-lucide="crown"></i> 3. Los Visigodos</h3>
-                    <p class="text-sm text-slate-600">Llegaron en el 415 para ayudar a los romanos. Expulsaron a vándalos y alanos. Fundaron un reino con capital en <b>Toledo</b>.</p>
+                    <h3><i data-lucide="crown"></i> 3. El Reino Visigodo (Toledo)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Pueblo aliado de Roma que unificó la Península. Mantuvieron el latín y la religión cristiana, fijando su capital en <b>Toledo</b>.
+                    </p>
                 </div>
                 <div class="medieval-card">
-                    <h3><i data-lucide="sun"></i> 4. Al-Ándalus (711)</h3>
-                    <p class="text-sm text-slate-600">Los musulmanes derrotaron a los visigodos en la <b>Batalla de Guadalete</b>. Casi toda la península pasó a llamarse Al-Ándalus.</p>
+                    <h3><i data-lucide="moon"></i> 4. Al-Ándalus (711)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Los musulmanes derrotaron a los visigodos en la <b>Batalla de Guadalete (711)</b>. Casi toda la Península pasó a llamarse Al-Ándalus, con capital en Córdoba.
+                    </p>
                 </div>
+            </div>
+            <div class="bg-amber-900 text-amber-50 p-6 rounded-3xl text-center shadow-lg">
+                <h4 class="font-black text-amber-200">Resumen de la 1ª Parte</h4>
+                <p class="text-sm mt-1 italic">La Península pasó de ser romana a ser un reino germánico unificado (visigodos) y, finalmente, a estar bajo control musulmán (Al-Ándalus) en solo 300 años.</p>
             </div>
         </div>
 
         <div id="parte2" class="tab-content space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="medieval-card">
-                    <h3><i data-lucide="swords"></i> La Reconquista</h3>
-                    <p class="text-sm text-slate-600">Los nobles visigodos se refugiaron en el norte y formaron el <b>Reino de Asturias</b> con Don Pelayo. La Reconquista duró <b>800 años</b>.</p>
+                    <h3><i data-lucide="swords"></i> 1. Formación de Reinos</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Noble visigodos se refugiaron en el norte y formaron el <b>Reino de Asturias</b> con <b>Don Pelayo</b>. Este fue el inicio de la <b>Reconquista</b>, que duró 800 años.
+                    </p>
+                </div>
+                <div class="medieval-card lg:col-span-2">
+                    <h3><i data-lucide="users"></i> 2. La Sociedad Feudal (Estamentos)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-600">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <b>Nobles y Clero (Privilegiados):</b>
+                            <p>Dueños de tierras, vivían en castillos (Nobles) o monasterios (Clero).</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <b>Campesinos (No Privilegiados):</b>
+                            <p>Trabajaban la tierra sin derechos, pagaban impuestos al Rey, Nobleza y Clero.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="medieval-card">
-                    <h3><i data-lucide="users"></i> Sociedad Estamental</h3>
-                    <ul class="text-sm text-slate-600 space-y-1">
-                        <li><b>1. Rey:</b> Máxima autoridad.</li>
-                        <li><b>2. Nobles:</b> Dueños de tierras, viven en castillos.</li>
-                        <li><b>3. Clero:</b> Rezan y conservan la cultura.</li>
-                        <li><b>4. Campesinos:</b> Sin derechos, trabajan la tierra.</li>
-                    </ul>
+                    <h3><i data-lucide="building-2"></i> 3. Vida en la Ciudad</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Rodeadas de <b>murallas</b>, con mercados y plazas. Los artesanos se agrupaban en <b>gremios</b> por oficio (panaderos, zapateros, etc.).
+                    </p>
                 </div>
-                <div class="medieval-card">
-                    <h3><i data-lucide="gem"></i> Arte Medieval</h3>
-                    <p class="text-sm text-slate-600"><b>Románico:</b> Muros gruesos, pocas ventanas, iglesias bajas. <br><b>Gótico:</b> Iglesias altas, vidrieras de colores y mucha luz.</p>
+                <div class="medieval-card col-span-1 lg:col-span-2">
+                    <h3><i data-lucide="brush"></i> 4. El Arte Medieval</h3>
+                    <div class="flex flex-col sm:flex-row gap-4 text-xs font-medium">
+                        <div class="flex-1 bg-amber-50 p-3 rounded-lg text-amber-900 border border-amber-100">
+                            <b>Arte Románico (s. XI-XII):</b> Iglesias bajas, muros gruesos, pocas ventanas.
+                        </div>
+                        <div class="flex-1 bg-sky-50 p-3 rounded-lg text-sky-900 border border-sky-100">
+                            <b>Arte Gótico (s. XIII-XV):</b> Catedrales altas, vidrieras de colores y mucha luz.
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="bg-amber-50 p-6 rounded-3xl border border-amber-200">
-                <h4 class="font-black text-amber-800 mb-2 italic">¿Cómo era la ciudad cristiana?</h4>
-                <p class="text-sm text-amber-900">Estaban rodeadas de <b>murallas</b>, tenían plazas con mercado y los artesanos se agrupaban en <b>gremios</b> según su oficio.</p>
+        </div>
+
+        <div id="fichas" class="tab-content">
+            <h2 class="text-2xl font-black text-slate-800 mb-6 text-center">¡Toca una ficha para ver la respuesta!</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Capital Reino Visigodo</div>
+                        <div class="flip-card-back">Toledo</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Batalla de Guadalete (711)</div>
+                        <div class="flip-card-back">Vencieron los musulmanes, dando inicio a Al-Ándalus.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Don Pelayo</div>
+                        <div class="flip-card-back">Primer Rey del Reino de Asturias. Venció en Covadonga.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Reconquista</div>
+                        <div class="flip-card-back">Periodo de 800 años donde los reinos cristianos avanzaron hacia el sur.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Gremios</div>
+                        <div class="flip-card-back">Asociaciones de artesanos de un mismo oficio en las ciudades.</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Vidrieras y Luz</div>
+                        <div class="flip-card-back">Arte Gótico</div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="test" class="tab-content">
             <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border-2 border-amber-100 max-w-2xl mx-auto">
                 <div id="quiz-area">
-                    <div id="question" class="text-2xl font-black text-slate-800 mb-8 text-center"></div>
-                    <div id="options" class="grid gap-3"></div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span id="quiz-progress" class="text-xs font-black text-amber-600 uppercase">Pregunta 1 de 10</span>
+                        <span id="quiz-score" class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-black">Aciertos: 0</span>
+                    </div>
+                    <h2 id="quiz-question" class="text-2xl font-black text-slate-800 mb-8 text-center leading-tight"></h2>
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </div>
-                <div id="result-area" class="hidden text-center">
-                    <div class="text-6xl mb-4">🏰</div>
-                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Misión Cumplida!</h2>
-                    <p id="score-text" class="text-xl font-bold text-amber-600 mb-8"></p>
-                    <button onclick="restartTest()" class="bg-amber-700 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg">Repetir Test</button>
+                <div id="quiz-results" class="hidden text-center">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <h2 class="text-3xl font-black text-slate-800 mb-2">¡Completado!</h2>
+                    <p id="quiz-final-score" class="text-xl font-bold text-amber-700 mb-8"></p>
+                    <button onclick="restartTest()" class="bg-amber-600 text-white px-10 py-4 rounded-2xl font-black uppercase shadow-lg hover:bg-amber-700 transition-all">Repetir Test</button>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        function openTab(tabId) {
+        // Navegación
+        function openTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.getElementById('btn-' + tabId).classList.add('active');
-            if(tabId === 'test') restartTest();
+            document.getElementById(tabName).classList.add('active');
+            document.getElementById('btn-' + tabName).classList.add('active');
+            if(tabName === 'test') restartTest();
         }
 
-        const questions = [
-            { q: "¿En qué año cayó el Imperio Romano?", a: ["711", "411", "476"], c: 2 },
-            { q: "¿Cuál era la capital del reino Visigodo?", a: ["Córdoba", "Toledo", "Sevilla"], c: 1 },
-            { q: "¿Qué batalla perdieron los visigodos en el 711?", a: ["Navas de Tolosa", "Guadalete", "Covadonga"], c: 1 },
-            { q: "¿Quién venció en Covadonga y creó el Reino de Asturias?", a: ["Don Pelayo", "Los Suevos", "Los Vándalos"], c: 0 },
-            { q: "¿Qué grupo social vivía en monasterios y rezaba?", a: ["Nobles", "Burgueses", "Clero"], c: 2 },
-            { q: "¿Cómo se llamaban las asociaciones de artesanos?", a: ["Estamentos", "Gremios", "Ferias"], c: 1 },
-            { q: "¿Qué estilo de arte tiene grandes vidrieras y mucha luz?", a: ["Románico", "Gótico", "Musulmán"], c: 1 },
-            { q: "¿Cómo se llamaba el territorio musulmán en la península?", a: ["Hispania", "Al-Ándalus", "Lusitania"], c: 1 }
+        // Datos del Test (Basados estrictamente en los PDFs)
+        const quizData = [
+            { q: "¿En qué año cayó el Imperio Romano?", a: ["476", "711", "411"], c: 0 },
+            { q: "¿Qué batalla perdieron los visigodos en el 711?", a: ["Covadonga", "Navas de Tolosa", "Guadalete"], c: 2 },
+            { q: "¿Cuál era la capital del Reino Visigodo?", a: ["Córdoba", "Sevilla", "Toledo"], c: 2 },
+            { q: "¿Qué noble venció en Covadonga y creó el Reino de Asturias?", a: ["Don Pelayo", "Recaredo", "Vándalos"], c: 0 },
+            { q: "¿Cuánto duró la Reconquista?", a: ["100 años", "800 años", "500 años"], c: 1 },
+            { q: "¿Qué estamento de la sociedad feudal NO era privilegiado?", a: ["Nobleza", "Clero", "Campesinos"], c: 2 },
+            { q: "¿Cómo se llamaba el territorio musulmán en la península?", a: ["Hispania", "Al-Ándalus", "Reino Visigodo"], c: 1 },
+            { q: "¿Cómo se llamaban las asociaciones de artesanos en las ciudades?", a: ["Gremios", "Estamentos", "Vidrieras"], c: 0 },
+            { q: "¿Qué estilo de arte tiene muros gruesos y pocas ventanas?", a: ["Románico", "Gótico", "Musulmán"], c: 0 },
+            { q: "¿Cuál fue el punto máximo al sur en el s. XIII?", a: ["Duero", "Tajo", "Guadalquivir"], c: 2 }
         ];
 
-        let qIdx = 0; let score = 0;
+        let currentQuestion = 0;
+        let score = 0;
+
+        // Cargar pregunta
         function loadQuestion() {
-            const q = questions[qIdx];
-            document.getElementById('question').innerText = q.q;
-            const optDiv = document.getElementById('options');
-            optDiv.innerHTML = '';
+            const q = quizData[currentQuestion];
+            document.getElementById('quiz-question').innerText = q.q;
+            document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuestion + 1} de ${quizData.length}`;
+            
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = '';
+            
             q.a.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.innerText = opt;
-                btn.className = "p-4 border-2 border-slate-100 rounded-2xl font-bold hover:bg-amber-50 transition-all text-slate-700";
-                btn.onclick = () => {
-                    if(i === q.c) { btn.style.backgroundColor = "#dcfce7"; score++; }
-                    else { btn.style.backgroundColor = "#fee2e2"; }
-                    setTimeout(() => {
-                        qIdx++;
-                        if(qIdx < questions.length) loadQuestion();
-                        else showResults();
-                    }, 600);
-                };
-                optDiv.appendChild(btn);
+                btn.className = "btn-option p-5 rounded-2xl font-bold text-slate-700 bg-white";
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
             });
         }
 
-        function showResults() {
-            document.getElementById('quiz-area').classList.add('hidden');
-            document.getElementById('result-area').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `Gloria, has acertado ${score} de ${questions.length}`;
+        // Comprobar respuesta
+        function checkAnswer(selectedIdx) {
+            const q = quizData[currentQuestion];
+            const options = document.querySelectorAll('.btn-option');
+            
+            if (selectedIdx === q.c) {
+                options[selectedIdx].style.backgroundColor = "#dcfce7"; // Verde
+                options[selectedIdx].style.borderColor = "#22c55e";
+                score++;
+                document.getElementById('quiz-score').innerText = `Aciertos: ${score}`;
+            } else {
+                options[selectedIdx].style.backgroundColor = "#fee2e2"; // Rojo
+                options[selectedIdx].style.borderColor = "#ef4444";
+                options[q.c].style.backgroundColor = "#dcfce7"; // Correcta en verde
+                options[q.c].style.borderColor = "#22c55e";
+            }
+            
+            currentQuestion++;
+            setTimeout(() => {
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1000);
         }
 
+        // Mostrar resultados
+        function showResults() {
+            document.getElementById('quiz-area').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            document.getElementById('quiz-final-score').innerText = `Has acertado ${score} de ${quizData.length} preguntas.`;
+        }
+
+        // Reiniciar
         function restartTest() {
-            qIdx = 0; score = 0;
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-score').innerText = `Aciertos: ${score}`;
+            document.getElementById('quiz-results').classList.add('hidden');
             document.getElementById('quiz-area').classList.remove('hidden');
-            document.getElementById('result-area').classList.add('hidden');
             loadQuestion();
         }
 
