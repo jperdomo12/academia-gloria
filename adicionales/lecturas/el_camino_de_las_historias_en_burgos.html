@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | El Camino de las Historias en Burgos</title>
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,.16), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(250,204,21,.18), transparent 28%),
+        linear-gradient(180deg,#f8fbff 0%,#fffdf7 45%,#f8fafc 100%);
+    }
+    .glass-card{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border:2px solid rgba(191,219,254,.9);
+      box-shadow:0 20px 45px rgba(37,99,235,.08);
+    }
+    .gradient-title{
+      background:linear-gradient(90deg,#0ea5e9,#2563eb,#f59e0b);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .page-card{ display:none; animation:fadeIn .35s ease; }
+    .page-card.active{ display:block; }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+    .story-illustration{
+      min-height:420px;
+      background:linear-gradient(180deg,#ffffff,#f8fbff);
+    }
+    .chapter-dot{
+      width:14px;height:14px;border-radius:999px;background:#dbeafe;display:inline-block;
+      transition:all .2s ease;
+    }
+    .chapter-dot.active{ background:#2563eb; transform:scale(1.2); }
+    .star{
+      position:fixed; pointer-events:none; font-size:24px; z-index:60;
+      animation:floatUp 1.4s ease forwards; opacity:0;
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(20px) scale(.7) rotate(0deg);opacity:0}
+      18%{opacity:1}
+      100%{transform:translateY(-90px) scale(1.2) rotate(16deg);opacity:0}
+    }
+  </style>
+</head>
+<body class="text-slate-800">
+  <div id="stars-layer"></div>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <a href="index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Lecturas
+          </a>
+
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-sky-100 px-4 py-2 text-sm font-bold text-sky-700">
+              <i data-lucide="map" class="w-4 h-4"></i> Viaje especial
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-amber-100 px-4 py-2 text-sm font-bold text-amber-700">
+              <i data-lucide="calendar-days" class="w-4 h-4"></i> Semana Santa 2026
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700">
+              <i data-lucide="trees" class="w-4 h-4"></i> Naturaleza y familia
+            </span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4">
+            El Camino de las <span class="gradient-title">Historias en Burgos</span> 🏰✨
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Un cuento interactivo sobre un viaje de Semana Santa lleno de calma, descubrimientos, lectura y momentos bonitos en familia.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="El Camino de las Historias en Burgos_compressed.pdf" target="_blank" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
+              <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
+            </a>
+            <a href="#cuento" class="inline-flex items-center gap-2 bg-white text-amber-700 px-6 py-4 rounded-2xl font-bold border-2 border-amber-100 hover:border-amber-300 transition-all">
+              <i data-lucide="book-open" class="w-5 h-5"></i> Empezar lectura
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-blue-500 to-amber-500 text-white flex items-center justify-center text-3xl shadow-lg">🌍</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-700">Idea central</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">La felicidad simple</h2>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">Viajar juntos</p>
+              <p class="text-slate-600 font-medium">El viaje es corto, pero está lleno de significado.</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+              <p class="font-black text-emerald-700 mb-1">Disfrutar la naturaleza</p>
+              <p class="text-slate-600 font-medium">Los árboles, el río y el parque se convierten en parte del cuento.</p>
+            </div>
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+              <p class="font-black text-amber-700 mb-1">Compartir tiempo</p>
+              <p class="text-slate-600 font-medium">Lo más valioso no son los lujos, sino los momentos con mamá y papá.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid md:grid-cols-3 gap-4 mb-8">
+      <div class="glass-card rounded-[2rem] p-5">
+        <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">🚌</div>
+        <h2 class="text-xl font-extrabold mb-2">Aventura</h2>
+        <p class="text-slate-600 font-medium">El viaje empieza con ilusión, mochila y ganas de descubrir lugares nuevos.</p>
+      </div>
+      <div class="glass-card rounded-[2rem] p-5">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mb-3">🌳</div>
+        <h2 class="text-xl font-extrabold mb-2">Calma</h2>
+        <p class="text-slate-600 font-medium">El parque, la lectura y el río crean un ambiente tranquilo y especial.</p>
+      </div>
+      <div class="glass-card rounded-[2rem] p-5">
+        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">💛</div>
+        <h2 class="text-xl font-extrabold mb-2">Familia</h2>
+        <p class="text-slate-600 font-medium">Cada escena recuerda lo bonito que es compartir tiempo de verdad.</p>
+      </div>
+    </section>
+
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-amber-500 text-white flex items-center justify-center text-2xl shadow-lg">📖</div>
+          <div>
+            <h2 class="text-2xl md:text-3xl font-extrabold" id="cuento">Leer el cuento</h2>
+            <p class="text-slate-600 font-medium">Pasa las páginas y acompaña a Gloria en su viaje.</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2" id="dots"></div>
+      </div>
+
+      <div id="pages-container">
+        <article class="page-card active"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-sky-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🚌📚</div><h3 class="text-3xl font-extrabold mb-3 text-sky-700">Capítulo 1</h3><p class="text-slate-600 font-medium text-lg">Las vacaciones comienzan y Gloria prepara su mochila con emoción.</p></div></div><div class="rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">¡Por fin han llegado las vacaciones de Semana Santa de 2026! En su habitación, Gloria Valentina guardaba con cuidado su libro favorito en su mochila. Sus ojos negros brillaban de emoción; sabía que este viaje de dos días a Burgos sería especial. No necesitaban coche para vivir una gran aventura, solo sus ganas de explorar y descubrir nuevos paisajes.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-indigo-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🚌👨‍👧</div><h3 class="text-3xl font-extrabold mb-3 text-indigo-700">Capítulo 2</h3><p class="text-slate-600 font-medium text-lg">En la estación comienza el trayecto hacia el norte.</p></div></div><div class="rounded-[2rem] bg-indigo-50 border-2 border-indigo-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">La familia llegó temprano a la estación. El autobús grande y reluciente los esperaba para llevarlos hacia el norte. Juan ayudó a Gloria a subir su mochila mientras ella miraba por la ventana con curiosidad. El viaje por carretera era el momento perfecto para ver cómo el paisaje cambiaba de color, preparándose para el descanso que tanto buscaban.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-amber-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🏰👩‍👧</div><h3 class="text-3xl font-extrabold mb-3 text-amber-700">Capítulo 3</h3><p class="text-slate-600 font-medium text-lg">Burgos los recibe con historia, piedra antigua y calma.</p></div></div><div class="rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Al llegar a Burgos, el aire fresco los recibió con un aroma a historia y piedra antigua. Caminaron bajo la sombra de la majestuosa Catedral, cuyas agujas parecían tocar el cielo. Anais tomó la mano de su hija, disfrutando del ritmo pausado de la ciudad, lejos de las prisas cotidianas, sintiendo que cada paso era un regalo compartido.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-emerald-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🌳🧘</div><h3 class="text-3xl font-extrabold mb-3 text-emerald-700">Capítulo 4</h3><p class="text-slate-600 font-medium text-lg">En Fuentes Blancas aparece un rincón de paz.</p></div></div><div class="rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Para conectar con la naturaleza, se dirigieron al parque de Fuentes Blancas. Gloria encontró un rincón tranquilo junto a los árboles, donde el verde de las hojas parecía brillar bajo el sol de abril. Se sentó en la hierba, sintiendo la paz del bosque y escuchando el suave trino de los pájaros que daban la bienvenida a la primavera.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-cyan-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">📚👨‍👧</div><h3 class="text-3xl font-extrabold mb-3 text-cyan-700">Capítulo 5</h3><p class="text-slate-600 font-medium text-lg">La lectura en voz alta llena el parque de magia.</p></div></div><div class="rounded-[2rem] bg-cyan-50 border-2 border-cyan-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Juan se sentó junto a ella en un banco de madera y sacó el libro de leyendas que habían traído. Con su voz pausada y cálida, comenzó a leer en voz alta, dando vida a caballeros y bosques mágicos. Gloria escuchaba con los ojos cerrados, dejando que su imaginación volara más alto que las copas de los pinos.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-violet-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">📗👩‍👧</div><h3 class="text-3xl font-extrabold mb-3 text-violet-700">Capítulo 6</h3><p class="text-slate-600 font-medium text-lg">Ahora es Gloria quien comparte su lectura.</p></div></div><div class="rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Después, fue el turno de Gloria de compartir su lectura. Con voz clara y firme, leyó una historia sobre la importancia de cuidar los ríos y los bosques. Anais la escuchaba con orgullo, asintiendo ante cada palabra y disfrutando del sonido de la voz de su hija mezclándose con el murmullo del viento entre las hojas.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-rose-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🧺🍎</div><h3 class="text-3xl font-extrabold mb-3 text-rose-700">Capítulo 7</h3><p class="text-slate-600 font-medium text-lg">Una merienda sencilla se convierte en un tesoro.</p></div></div><div class="rounded-[2rem] bg-rose-50 border-2 border-rose-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Al mediodía, el hambre empezó a asomar. Juan y Anais buscaron un lugar nivelado en la pradera para organizar su pequeña merienda. Mientras preparaban las frutas y el pan, hablaban sobre lo importante que era tener estos momentos para simplemente estar juntos, sin teléfonos ni distracciones, disfrutando de la presencia del otro.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-blue-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🌊🪨</div><h3 class="text-3xl font-extrabold mb-3 text-blue-700">Capítulo 8</h3><p class="text-slate-600 font-medium text-lg">Junto al río Arlanzón aparecen la risa y la curiosidad.</p></div></div><div class="rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Antes de que terminara el primer día, dieron un paseo por la orilla del río Arlanzón. Juan le enseñó a Gloria cómo observar el movimiento del agua y a identificar los diferentes tipos de piedras que el río arrastraba. Fue un momento de enseñanza y risas, donde el tiempo parecía haberse detenido solo para ellos.</p></div></div></article>
+
+        <article class="page-card"><div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-center"><div class="story-illustration rounded-[2rem] border-2 border-amber-100 flex items-center justify-center text-center p-6"><div><div class="text-7xl mb-4">🌅📘</div><h3 class="text-3xl font-extrabold mb-3 text-amber-700">Capítulo 9</h3><p class="text-slate-600 font-medium text-lg">La despedida deja una enseñanza para siempre.</p></div></div><div class="rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-6 md:p-8"><p class="text-xl leading-relaxed font-medium text-slate-700">Al día siguiente, antes de tomar el autobús de regreso, Gloria Valentina miró una última vez el paisaje de Burgos. Había sido un viaje corto, pero lleno de significados. En esta Semana Santa de 2026, aprendió que no se necesitan grandes lujos para ser feliz: basta con un libro, la naturaleza y el tiempo compartido con sus padres.</p></div></div></article>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-between items-center mt-6">
+        <button id="prev-btn" class="w-full md:w-auto bg-white border-2 border-sky-100 text-sky-700 px-6 py-4 rounded-2xl font-bold hover:border-sky-300 transition-all inline-flex items-center justify-center gap-2">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i> Anterior
+        </button>
+        <div id="page-indicator" class="text-slate-600 font-bold text-lg">Página 1 de 9</div>
+        <button id="next-btn" class="w-full md:w-auto bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all inline-flex items-center justify-center gap-2">
+          Siguiente <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
+        </div>
+        <p class="text-slate-700 font-medium text-lg leading-relaxed">
+          Gloria, este cuento recuerda que los viajes más bonitos no siempre son los más largos. A veces, lo que más se queda en el corazón es un libro, un paseo, un parque y el tiempo vivido con mamá y papá.
+        </p>
+        <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-sky-600 via-blue-600 to-amber-500 text-white p-6 shadow-lg">
+          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
+            “La felicidad también vive en los momentos sencillos compartidos con amor.” 💛
+          </p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🪄</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Ideas para disfrutar más</h2>
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4">
+            <p class="font-black text-sky-700 mb-1">Leer despacio</p>
+            <p class="text-slate-600 font-medium">Puedes pasar una página cada vez y hablar de lo que más te gustó.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4">
+            <p class="font-black text-emerald-700 mb-1">Imaginar el viaje</p>
+            <p class="text-slate-600 font-medium">Pensar cómo será Burgos y qué lugares te gustaría ver en familia.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-amber-100 p-4">
+            <p class="font-black text-amber-700 mb-1">Guardar el recuerdo</p>
+            <p class="text-slate-600 font-medium">Después del viaje, esta historia será aún más especial.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Lecturas · Un viaje contado con cariño y calma 🏰✨</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const pages = Array.from(document.querySelectorAll('.page-card'));
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageIndicator = document.getElementById('page-indicator');
+    let currentPage = 0;
+
+    function makeStars() {
+      const layer = document.getElementById('stars-layer');
+      const icons = ['⭐','✨','🌟','📚'];
+      for (let i = 0; i < 8; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.textContent = icons[i % icons.length];
+        star.style.left = `${12 + Math.random() * 76}%`;
+        star.style.top = `${60 + Math.random() * 16}%`;
+        star.style.animationDelay = `${Math.random() * .12}s`;
+        layer.appendChild(star);
+        setTimeout(() => star.remove(), 1500);
+      }
+    }
+
+    function buildDots() {
+      pages.forEach((_, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'chapter-dot';
+        btn.setAttribute('aria-label', `Ir a la página ${index + 1}`);
+        btn.addEventListener('click', () => {
+          currentPage = index;
+          renderPage();
+        });
+        dotsWrap.appendChild(btn);
+      });
+    }
+
+    function renderPage() {
+      pages.forEach((page, index) => page.classList.toggle('active', index === currentPage));
+      Array.from(dotsWrap.children).forEach((dot, index) => dot.classList.toggle('active', index === currentPage));
+      pageIndicator.textContent = `Página ${currentPage + 1} de ${pages.length}`;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+      prevBtn.style.opacity = currentPage === 0 ? '.55' : '1';
+      nextBtn.style.opacity = currentPage === pages.length - 1 ? '.55' : '1';
+      if (currentPage > 0) makeStars();
+      window.scrollTo({ top: document.getElementById('cuento').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        currentPage -= 1;
+        renderPage();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < pages.length - 1) {
+        currentPage += 1;
+        renderPage();
+      }
+    });
+
+    buildDots();
+    renderPage();
+  </script>
+</body>
+</html>
