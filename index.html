@@ -1,119 +1,271 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia de Gloria Valentina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { font-family: 'Outfit', sans-serif; }
-        .materia-card:hover .icon-bounce { transform: scale(1.2) rotate(5deg); }
-        .icon-bounce { transition: all 0.3s ease; }
-    </style>
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-</head>
-<body class="bg-[#f0f4f8] min-h-screen flex flex-col items-center p-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <header class="text-center mb-10">
-        <h1 class="text-5xl font-extrabold text-indigo-950 mb-3 tracking-tight">Academia de <span class="text-indigo-600">Gloria Valentina</span></h1>
-        <p class="text-slate-500 text-xl font-medium">¡Tu aventura de aprendizaje comienza aquí!</p>
+  <title>Academia de Gloria Valentina</title>
+  <meta name="description" content="Portal principal de la Academia de Gloria: asignaturas, calendario y adicionales PRO." />
+
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, .20), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(192, 132, 252, .20), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #eef6ff 45%, #f9f5ff 100%);
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,.90);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(219, 234, 254, .95);
+      box-shadow: 0 20px 45px rgba(37, 99, 235, .10);
+    }
+
+    .subject-card {
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .subject-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 55px rgba(99, 102, 241, .16);
+      border-color: #bfdbfe;
+    }
+
+    .gradient-title {
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .pulse-float {
+      animation: pulseFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 999px;
+      padding: .5rem .95rem;
+      font-size: .85rem;
+      font-weight: 800;
+      background: #ffffff;
+      border: 2px solid #dbeafe;
+    }
+  </style>
+</head>
+<body class="text-slate-800">
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center">
+        <div>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="hero-badge text-sky-700">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> Curso 2025–2026
+            </span>
+            <span class="hero-badge text-violet-700">
+              <i data-lucide="heart" class="w-4 h-4"></i> Espacio hecho con amor
+            </span>
+            <span class="hero-badge text-cyan-700">
+              <i data-lucide="graduation-cap" class="w-4 h-4"></i> 5º Primaria
+            </span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4">
+            Academia de <span class="gradient-title">Gloria Valentina</span> ✨
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            ¡Tu aventura de aprendizaje comienza aquí! Un portal bonito, claro y motivador para estudiar, repasar y disfrutar aprendiendo cada día.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="adicionales/" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all shadow-lg">
+              <i data-lucide="sparkles" class="w-5 h-5"></i> Entrar a Adicionales PRO
+            </a>
+            <a href="https://sites.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-sky-700 px-6 py-4 rounded-2xl font-bold border-2 border-sky-100 hover:border-sky-300 transition-all">
+              <i data-lucide="school" class="w-5 h-5"></i> Portal del cole
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg pulse-float">
+              🎓
+            </div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-600">Panel principal</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Ruta de estudio</h2>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">1. Elige una asignatura</p>
+              <p class="text-slate-600 font-medium">Entra a Mates, Lengua, Sociales, Science o Inglés.</p>
+            </div>
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
+              <p class="font-black text-violet-700 mb-1">2. Repasa con calma</p>
+              <p class="text-slate-600 font-medium">Usa teoría, fichas, juegos y test.</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+              <p class="font-black text-emerald-700 mb-1">3. Disfruta el proceso</p>
+              <p class="text-slate-600 font-medium">Aprender también puede ser bonito y divertido.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <div class="w-full max-w-4xl mb-12">
-        <a href="https://sites.google.com/gaudem.es/quinto/inicio" target="_blank" class="group block">
-            <div class="bg-white/80 backdrop-blur-sm border-2 border-indigo-100 rounded-3xl p-4 flex items-center justify-between hover:bg-indigo-50 transition-all shadow-sm">
-                <div class="flex items-center gap-4">
-                    <div class="bg-gradient-to-br from-indigo-500 to-purple-500 p-3 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
-                        <i data-lucide="graduation-cap" class="text-white w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <p class="text-indigo-900 font-bold text-lg">Gaudem - Área Oficial 5º Primaria</p>
-                        <p class="text-indigo-400 text-sm font-medium">Curso 25/26 • Acceso al portal del cole</p>
-                    </div>
-                </div>
-                <div class="hidden sm:flex items-center gap-2 text-indigo-400 font-bold text-sm px-4">
-                    <span>Visitar</span>
-                    <i data-lucide="external-link" class="w-4 h-4"></i>
-                </div>
-            </div>
-        </a>
-    </div>
+    <section class="mb-10">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-500 text-white flex items-center justify-center text-2xl shadow-lg">📚</div>
+        <div>
+          <h2 class="text-3xl font-extrabold">Asignaturas principales</h2>
+          <p class="text-slate-600 font-medium">Accesos rápidos a las materias de Gloria.</p>
+        </div>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-        
-        <a href="mates/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-sky-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
-            <div class="icon-bounce text-7xl">🔢</div>
-            <div class="text-left">
-                <span class="block text-sky-600 font-extrabold text-3xl">Mates</span>
-                <p class="text-slate-500 text-lg font-medium">Reino Numérico</p>
-            </div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <a href="mates/" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl mb-4">➗</div>
+          <h3 class="text-2xl font-extrabold mb-2">Mates</h3>
+          <p class="text-slate-600 font-medium mb-4">Números, problemas, lógica y retos matemáticos.</p>
+          <div class="inline-flex items-center gap-2 text-amber-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
 
-        <a href="lengua/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-rose-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
-            <div class="icon-bounce text-7xl">✍️</div>
-            <div class="text-left">
-                <span class="block text-rose-600 font-extrabold text-3xl">Lengua</span>
-                <p class="text-slate-500 text-lg font-medium">Letras y Magia</p>
-            </div>
+        <a href="lengua/" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-3xl mb-4">✍️</div>
+          <h3 class="text-2xl font-extrabold mb-2">Lengua</h3>
+          <p class="text-slate-600 font-medium mb-4">Lectura, escritura, gramática y comprensión.</p>
+          <div class="inline-flex items-center gap-2 text-pink-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
 
-        <a href="sociales/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-amber-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
-            <div class="icon-bounce text-7xl">🏰</div>
-            <div class="text-left">
-                <span class="block text-amber-600 font-extrabold text-3xl">Sociales</span>
-                <p class="text-slate-500 text-lg font-medium">Crónicas del Tiempo</p>
-            </div>
+        <a href="sociales/" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-3xl mb-4">🌍</div>
+          <h3 class="text-2xl font-extrabold mb-2">Sociales</h3>
+          <p class="text-slate-600 font-medium mb-4">Mapas, historia, geografía y cultura general.</p>
+          <div class="inline-flex items-center gap-2 text-sky-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
 
-        <a href="ciencias/index.html" class="materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-green-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
-            <div class="icon-bounce text-7xl">🌿</div>
-            <div class="text-left">
-                <span class="block text-green-600 font-extrabold text-3xl">Science</span>
-                <p class="text-slate-500 text-lg font-medium">Naturaleza y Vida</p>
-            </div>
+        <a href="science/" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl mb-4">🔬</div>
+          <h3 class="text-2xl font-extrabold mb-2">Science</h3>
+          <p class="text-slate-600 font-medium mb-4">Naturaleza, vida, experimentos y curiosidad científica.</p>
+          <div class="inline-flex items-center gap-2 text-emerald-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
 
-        <a href="ingles/index.html" class="md:col-span-2 materia-card group bg-white p-10 rounded-[40px] shadow-xl border-b-[10px] border-orange-500 transition-all hover:-translate-y-2 flex items-center justify-center gap-8">
-            <div class="icon-bounce text-7xl">🦁</div>
-            <div class="text-left">
-                <span class="block text-orange-600 font-extrabold text-3xl">Inglés</span>
-                <p class="text-slate-500 text-lg font-medium">English Adventure</p>
-            </div>
+        <a href="ingles/" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-3xl mb-4">🇬🇧</div>
+          <h3 class="text-2xl font-extrabold mb-2">Inglés</h3>
+          <p class="text-slate-600 font-medium mb-4">Vocabulary, reading, listening y práctica divertida.</p>
+          <div class="inline-flex items-center gap-2 text-indigo-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
-    </div>
 
-    <div class="mt-16 w-full max-w-4xl">
-        <a href="calendario.html" class="block bg-indigo-900 text-white p-8 rounded-[40px] shadow-2xl hover:bg-indigo-800 transition-all text-center">
-            <div class="flex items-center justify-center gap-4">
-                <span class="text-4xl">📅</span>
-                <span class="text-2xl font-bold">Calendario de Exámenes</span>
-            </div>
+        <a href="calendario_examenes.html" class="glass-card subject-card rounded-[2rem] p-6 block">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-3xl mb-4">🗓️</div>
+          <h3 class="text-2xl font-extrabold mb-2">Calendario</h3>
+          <p class="text-slate-600 font-medium mb-4">Fechas importantes y exámenes para organizar el estudio.</p>
+          <div class="inline-flex items-center gap-2 text-cyan-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
-    </div>
+      </div>
+    </section>
 
-    <a href="adicionales/index.html" class="card-topic p-8 flex flex-col items-center text-center">
-    <div class="icon-box w-20 h-20 bg-indigo-50 text-indigo-600 rounded-[2rem] flex items-center justify-center mb-6">
-        <i data-lucide="sparkles" class="w-10 h-10"></i>
-    </div>
-    <h3 class="text-2xl font-black text-slate-800 mb-2">Contenidos Adicionales</h3>
-    <p class="text-slate-500 text-sm leading-relaxed mb-6">
-        Lecturas, música y mucho mas para aprender y divertirte.
-    </p>
-    <div class="mt-auto flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest">
-        Explorar <i data-lucide="chevron-right" class="w-4 h-4"></i>
-    </div>
-</a>
+    <section class="mb-10">
+      <a href="adicionales/" class="group relative block glass-card rounded-[2.3rem] p-7 border-2 border-violet-100 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-100 via-sky-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
 
-    <footer class="mt-20 text-slate-400 font-bold uppercase tracking-widest text-xs">
-        Academia de Gloria Valentina • 2025-2026
+        <div class="relative flex flex-col md:flex-row md:items-center gap-5">
+          <div class="w-20 h-20 rounded-[1.6rem] bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+            ✨
+          </div>
+
+          <div class="flex-1">
+            <p class="text-xs font-black uppercase tracking-[.22em] text-violet-700 mb-2">Espacio especial</p>
+            <h3 class="text-3xl md:text-4xl font-extrabold text-slate-800 mb-2">Adicionales PRO</h3>
+            <p class="text-slate-600 font-medium text-lg">
+              Música, lecturas, juegos y espacios bonitos para aprender, disfrutar y motivarse.
+            </p>
+          </div>
+
+          <div class="text-violet-700 font-black inline-flex items-center gap-2 text-lg group-hover:translate-x-1 transition-transform">
+            Explorar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="grid lg:grid-cols-[1fr_.9fr] gap-6 mb-10">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl">💛</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
+        </div>
+
+        <p class="text-slate-700 font-medium text-lg leading-relaxed">
+          Gloria, esta Academia es un espacio hecho para ti. Aquí puedes aprender paso a paso, a tu ritmo, con calma, alegría y muchísima confianza.
+        </p>
+
+        <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-violet-600 via-sky-600 to-cyan-500 text-white p-6 shadow-lg">
+          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
+            “Aprender también puede ser bonito, claro y divertido.” 🌟
+          </p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🚀</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Accesos rápidos</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          <a href="https://sites.google.com" target="_blank" rel="noopener noreferrer" class="rounded-2xl bg-white border-2 border-sky-100 p-4 hover:border-sky-300 transition-all">
+            <p class="font-black text-sky-700 mb-1">Portal del cole</p>
+            <p class="text-slate-600 font-medium text-sm">Gaudem · Área oficial</p>
+          </a>
+
+          <a href="calendario_examenes.html" class="rounded-2xl bg-white border-2 border-cyan-100 p-4 hover:border-cyan-300 transition-all">
+            <p class="font-black text-cyan-700 mb-1">Exámenes</p>
+            <p class="text-slate-600 font-medium text-sm">Calendario y organización</p>
+          </a>
+
+          <a href="adicionales/musica/" class="rounded-2xl bg-white border-2 border-violet-100 p-4 hover:border-violet-300 transition-all">
+            <p class="font-black text-violet-700 mb-1">Música</p>
+            <p class="text-slate-600 font-medium text-sm">Canciones bonitas con IA</p>
+          </a>
+
+          <a href="adicionales/lecturas/" class="rounded-2xl bg-white border-2 border-pink-100 p-4 hover:border-pink-300 transition-all">
+            <p class="font-black text-pink-700 mb-1">Lecturas</p>
+            <p class="text-slate-600 font-medium text-sm">Historias y textos especiales</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8">
+      <p class="text-slate-500 font-medium">Academia de Gloria Valentina • 2025–2026 • Un portal creado con cariño para aprender mejor ✨</p>
     </footer>
+  </main>
 
-    <script>
-        lucide.createIcons();
-    </script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
-
