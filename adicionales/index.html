@@ -1,95 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionales - Academia de Gloria</title>
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); }
-        .card-topic {
-            background: white;
-            border-radius: 2.5rem;
-            transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-        }
-        .card-topic:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: #6366f1;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Adicionales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, .22), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(192, 132, 252, .22), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #eef6ff 50%, #f9f5ff 100%);
+    }
+    .glass-card {
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(219, 234, 254, .95);
+      box-shadow: 0 20px 45px rgba(37, 99, 235, .10);
+    }
+    .section-card {
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .section-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(99, 102, 241, .16);
+      border-color: #bfdbfe;
+    }
+    .gradient-title {
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .pulse-star {
+      animation: pulseStar 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseStar {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+  </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="text-slate-800">
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div class="max-w-3xl">
+          <a href="../index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Academia de Gloria
+          </a>
 
-    <div class="max-w-6xl mx-auto">
-        <nav class="flex justify-between items-center mb-10">
-            <a href="../index.html" class="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors font-bold">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver al Inicio
-            </a>
-            <div class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-100 text-xs font-black text-slate-600 uppercase">
-                Gloria Valentina
-            </div>
-        </nav>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-sky-100 px-4 py-2 text-sm font-bold text-sky-700">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> Espacios especiales
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-violet-100 px-4 py-2 text-sm font-bold text-violet-700">
+              <i data-lucide="heart" class="w-4 h-4"></i> Aprender con alegría
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-cyan-100 px-4 py-2 text-sm font-bold text-cyan-700">
+              <i data-lucide="stars" class="w-4 h-4"></i> Para Gloria
+            </span>
+          </div>
 
-        <header class="hero-gradient rounded-[3rem] p-8 md:p-12 text-white mb-12 shadow-2xl relative overflow-hidden text-center md:text-left">
-            <div class="relative z-10">
-                <h1 class="text-4xl md:text-6xl font-black mb-4">Contenidos <span class="text-indigo-200">Adicionales</span></h1>
-                <p class="text-indigo-100 text-lg font-medium max-w-md">Lecturas, música y mucho mas para aprender y divertirte.</p>
-            </div>
-            <i data-lucide="sparkles" class="absolute -bottom-10 -right-10 w-64 h-64 text-white/10 rotate-12"></i>
-        </header>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4">
+            Portal de <span class="gradient-title">Adicionales</span> ✨
+          </h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <a href="lecturas.html" class="card-topic p-8">
-                <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-[2rem] flex items-center justify-center mb-6">
-                    <i data-lucide="book-open" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Lecturas Entretenidas</h3>
-                <p class="text-slate-500 text-sm mb-6">Historias y cuentos para disfrutar en tu tiempo libre.</p>
-                <div class="mt-auto text-emerald-600 font-black text-xs uppercase tracking-widest">Entrar <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
-            </a>
-
-            <a href="musica/" class="card-topic p-8">
-                <div class="w-20 h-20 bg-rose-50 text-rose-600 rounded-[2rem] flex items-center justify-center mb-6">
-                    <i data-lucide="music" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Música Entretenida</h3>
-                <p class="text-slate-500 text-sm mb-6">Escucha las canciones creadas con Gemini.</p>
-                <div class="mt-auto text-rose-600 font-black text-xs uppercase tracking-widest">Escuchar <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
-            </a>
-
-            <a href="otros.html" class="card-topic p-8">
-                <div class="w-20 h-20 bg-amber-50 text-amber-600 rounded-[2rem] flex items-center justify-center mb-6">
-                    <i data-lucide="smile" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Otros Entretenimientos</h3>
-                <p class="text-slate-500 text-sm mb-6">Juegos y actividades para descansar la mente.</p>
-                <div class="mt-auto text-amber-600 font-black text-xs uppercase tracking-widest">Descubrir <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
-            </a>
-
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
+            Un lugar bonito dentro de la Academia de Gloria para escuchar música, disfrutar lecturas,
+            jugar, relajarse y seguir aprendiendo de una manera cálida, visual y motivadora.
+          </p>
         </div>
 
-        <footer class="mt-20 text-center border-t border-slate-200 pt-10 pb-10">
-            <div class="inline-flex items-center gap-2 bg-slate-100 px-6 py-2 rounded-full text-slate-500 font-bold text-sm">
-                <i data-lucide="sparkles" class="w-4 h-4 text-indigo-500"></i> Academia Gloria Valentina
+        <div class="glass-card rounded-[2rem] p-6 w-full lg:max-w-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg pulse-star">🌈</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-600">Academia de Gloria</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Espacios especiales</h2>
             </div>
-        </footer>
-    </div>
+          </div>
+          <p class="text-slate-600 font-medium leading-relaxed">
+            Aquí puedes organizar recursos complementarios en carpetas claras y fáciles de usar:
+            música, lecturas, juegos, relajación y mucho más.
+          </p>
+        </div>
+      </div>
+    </header>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+      <a href="musica/" class="glass-card section-card rounded-[2rem] p-6 block">
+        <div class="w-14 h-14 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-3xl mb-4">🎵</div>
+        <h2 class="text-2xl font-extrabold mb-2">Música</h2>
+        <p class="text-slate-600 font-medium leading-relaxed mb-4">
+          Canciones bonitas y motivadoras creadas con IA para acompañar a Gloria.
+        </p>
+        <div class="inline-flex items-center gap-2 text-violet-700 font-black">
+          Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </div>
+      </a>
+
+      <a href="lecturas/" class="glass-card section-card rounded-[2rem] p-6 block">
+        <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-3xl mb-4">📖</div>
+        <h2 class="text-2xl font-extrabold mb-2">Lecturas</h2>
+        <p class="text-slate-600 font-medium leading-relaxed mb-4">
+          Cuentos, textos y materiales para leer con calma y disfrutar aprendiendo.
+        </p>
+        <div class="inline-flex items-center gap-2 text-sky-700 font-black">
+          Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </div>
+      </a>
+
+      <a href="juegos/" class="glass-card section-card rounded-[2rem] p-6 block">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl mb-4">🎮</div>
+        <h2 class="text-2xl font-extrabold mb-2">Juegos</h2>
+        <p class="text-slate-600 font-medium leading-relaxed mb-4">
+          Actividades interactivas para repasar y divertirse al mismo tiempo.
+        </p>
+        <div class="inline-flex items-center gap-2 text-emerald-700 font-black">
+          Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </div>
+      </a>
+
+      <a href="relajacion/" class="glass-card section-card rounded-[2rem] p-6 block">
+        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl mb-4">🌿</div>
+        <h2 class="text-2xl font-extrabold mb-2">Relajación</h2>
+        <p class="text-slate-600 font-medium leading-relaxed mb-4">
+          Un espacio para respirar, calmarse y recuperar energía positiva.
+        </p>
+        <div class="inline-flex items-center gap-2 text-amber-700 font-black">
+          Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </div>
+      </a>
+    </section>
+
+    <section class="grid lg:grid-cols-[1.1fr_.9fr] gap-6 mb-10">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💡</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Organización recomendada</h2>
+        </div>
+
+        <p class="text-slate-600 font-medium mb-5">
+          Para mantener el portal limpio y escalable, esta estructura en GitHub queda muy bien:
+        </p>
+
+        <div class="rounded-[1.5rem] bg-slate-950 text-slate-100 p-5 font-mono text-sm md:text-base overflow-x-auto">
+<pre>/adicionales/
+│
+├── index.html
+│
+├── /musica/
+│   ├── index.html
+│   ├── Mi_Campeona.mp4
+│   ├── Supernova_Star.mp4
+│   └── Superhéroes_del_Alma.mp4
+│
+├── /lecturas/
+│   └── index.html
+│
+├── /juegos/
+│   └── index.html
+│
+└── /relajacion/
+    └── index.html</pre>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl">🚀</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Ventajas</h2>
+        </div>
+
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4">
+            <p class="font-black text-sky-700 mb-1">Más orden</p>
+            <p class="text-slate-600 font-medium">Cada tipo de contenido vive en su propia carpeta.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-violet-100 p-4">
+            <p class="font-black text-violet-700 mb-1">Más fácil crecer</p>
+            <p class="text-slate-600 font-medium">Puedes añadir nuevas páginas sin desordenar el portal.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4">
+            <p class="font-black text-emerald-700 mb-1">Mejor experiencia</p>
+            <p class="text-slate-600 font-medium">Gloria encontrará todo más claro, visual y bonito.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-500 text-white flex items-center justify-center text-2xl shadow-lg">🪄</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold">Siguiente paso recomendado</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-5">
+          <p class="font-black text-sky-700 mb-2">1. Crear carpetas</p>
+          <p class="text-slate-600 font-medium">Crea en GitHub: <strong>musica</strong>, <strong>lecturas</strong>, <strong>juegos</strong> y <strong>relajacion</strong>.</p>
+        </div>
+        <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-5">
+          <p class="font-black text-violet-700 mb-2">2. Mover la página de música</p>
+          <p class="text-slate-600 font-medium">Guarda la nueva página de música como <strong>/adicionales/musica/index.html</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Portal Adicionales PRO · Espacios bonitos para aprender y disfrutar ✨</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
