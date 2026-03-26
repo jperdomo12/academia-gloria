@@ -4,107 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sociales - Academia de Gloria</title>
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;600;700&display=swap');
-        
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #fcf8f1;
-            background-image: radial-gradient(#e7e5e4 1px, transparent 1px);
-            background-size: 24px 24px;
+        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
         }
-
-        .medieval-font { font-family: 'Marcellus', serif; }
-
-        .card-history {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid #e7e5e4;
+        .card-topic {
+            background: white;
+            border-radius: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
         }
-
-        .card-history:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(120, 53, 15, 0.15);
-            border-color: #d97706;
+        .card-topic:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #3b82f6;
         }
-
-        .locked { filter: grayscale(1); opacity: 0.7; cursor: not-allowed; }
+        .icon-box {
+            transition: transform 0.3s ease;
+        }
+        .card-topic:hover .icon-box {
+            transform: scale(1.1) rotate(5deg);
+        }
     </style>
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
 </head>
-<body class="p-6 md:p-12 min-h-screen">
+<body class="p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
-        <header class="mb-16 text-center">
-            <a href="../index.html" class="inline-flex items-center text-amber-700 font-bold mb-6 hover:gap-2 transition-all">
-                <i data-lucide="chevron-left" class="w-5 h-5"></i> Volver al Reino
+        <nav class="flex justify-between items-center mb-10">
+            <a href="../index.html" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-bold">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Inicio Academia
             </a>
-            <h1 class="medieval-font text-6xl text-amber-900 mb-4">Crónicas de <span class="text-amber-600">Sociales</span></h1>
-            <p class="text-amber-800/60 text-xl font-medium">Explora los mapas y la historia del mundo</p>
+            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-100">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-xs font-black text-slate-600 uppercase tracking-wider">Gloria Valentina</span>
+            </div>
+        </nav>
+
+        <header class="hero-gradient rounded-[3rem] p-8 md:p-12 text-white mb-12 shadow-2xl relative overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-black mb-4">Ciencias <span class="text-sky-200">Sociales</span></h1>
+                    <p class="text-blue-100 text-lg font-medium max-w-md">
+                        Explora la historia, la geografía y los misterios de nuestro pasado y nuestro entorno.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
+                        <a href="https://sites.google.com/gaudem.es/quinto/%C3%A1reas/sociales" target="_blank" class="bg-white text-blue-600 px-6 py-3 rounded-2xl font-black flex items-center gap-2 hover:bg-blue-50 transition-all shadow-lg text-sm">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Web Oficial Gaudem
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <i data-lucide="globe" class="w-48 h-48 text-white/20"></i>
+                </div>
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <a href="edad_media.html" class="card-history group bg-white rounded-[2.5rem] p-8 flex flex-col border-b-8 border-amber-600 shadow-sm">
-                <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
-                    🏰
-                </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3 text-left">La Edad Media</h2>
-                <p class="text-slate-500 leading-relaxed mb-6">Viaja al tiempo de los castillos, caballeros y grandes murallas.</p>
-                <div class="mt-auto flex items-center text-amber-600 font-bold uppercase text-xs tracking-widest">
-                    Leer Historia <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
-                </div>
-            </a>
-
-            <a href="localizacion_relieve.html" class="card-history group bg-white rounded-[2.5rem] p-8 flex flex-col border-b-8 border-blue-600 shadow-sm">
-                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
-                    🌍
-                </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3 text-left">Localización y Relieve de Europa</h2>
-                <p class="text-slate-500 leading-relaxed mb-6">Descubre las montañas, ríos y costas del continente europeo.</p>
-                <div class="mt-auto flex items-center text-blue-600 font-bold uppercase text-xs tracking-widest">
-                    Explorar Mapa <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
-                </div>
-            </a>
             
-            <a href="mapa_politico.html" class="card-history group bg-white rounded-[2.5rem] p-8 flex flex-col border-b-8 border-sky-500 shadow-sm">
-                <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
-                    📍
+            <a href="relieve_europa.html" class="card-topic p-8 flex flex-col items-center text-center">
+                <div class="icon-box w-20 h-20 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="map" class="w-10 h-10"></i>
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-800 mb-3 text-left">Mapa Político</h2>
-                <p class="text-slate-500 leading-relaxed mb-6">Aprende los países de Europa y sus capitales de forma divertida.</p>
-                <div class="mt-auto flex items-center text-sky-600 font-bold uppercase text-xs tracking-widest">
-                    Ver Capitales <span class="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                <h3 class="text-2xl font-black text-slate-800 mb-2">Relieve Europa</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                    Localización, montañas, ríos y costas de nuestro continente.
+                </p>
+                <div class="mt-auto flex items-center gap-2 text-blue-600 font-black text-xs uppercase tracking-widest">
+                    Explorar <i data-lucide="chevron-right" class="w-4 h-4"></i>
                 </div>
             </a>
-            
-            <div class="locked rounded-[2.5rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
-                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
-                    ⛵
-                </div>
-                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">Edad Moderna</h2>
-                <p class="text-slate-400 leading-relaxed mb-6">Próximamente exploraremos los grandes descubrimientos.</p>
-                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">Módulo Bloqueado</div>
-            </div>
 
-            <div class="locked rounded-[2.5rem] p-8 flex flex-col border-2 border-dashed border-slate-300">
-                <div class="w-16 h-16 bg-slate-200 rounded-2xl flex items-center justify-center text-3xl mb-6 text-slate-400">
-                    🏛️
+            <a href="edad_media.html" class="card-topic p-8 flex flex-col items-center text-center">
+                <div class="icon-box w-20 h-20 bg-amber-50 text-amber-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="castle" class="w-10 h-10"></i>
                 </div>
-                <h2 class="medieval-font text-2xl text-slate-400 mb-3 text-left">Antigua Roma</h2>
-                <p class="text-slate-400 leading-relaxed mb-6">El Imperio Romano llegará pronto con sus legiones.</p>
-                <div class="mt-auto text-slate-400 font-bold uppercase text-xs tracking-widest">Módulo Bloqueado</div>
-            </div>
+                <h3 class="text-2xl font-black text-slate-800 mb-2">La Edad Media</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                    Invasiones, Al-Ándalus, Reconquista y la vida en los castillos.
+                </p>
+                <div class="mt-auto flex items-center gap-2 text-amber-600 font-black text-xs uppercase tracking-widest">
+                    Explorar <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </div>
+            </a>
+
+            <a href="prehistoria.html" class="card-topic p-8 flex flex-col items-center text-center">
+                <div class="icon-box w-20 h-20 bg-emerald-50 text-emerald-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="mountain" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800 mb-2">Prehistoria</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                    Desde el origen del hombre hasta la aparición de la escritura.
+                </p>
+                <div class="mt-auto flex items-center gap-2 text-emerald-600 font-black text-xs uppercase tracking-widest">
+                    Explorar <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </div>
+            </a>
 
         </div>
 
-        <footer class="mt-20 text-center text-amber-900/40 font-bold uppercase tracking-widest text-xs">
-            Academia de Gloria Valentina • Documentos Reales
+        <footer class="mt-20 text-center border-t border-slate-200 pt-10 pb-10">
+            <div class="inline-flex items-center gap-2 bg-slate-100 px-6 py-2 rounded-full text-slate-500 font-bold text-sm">
+                <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500"></i> Academia de Gloria Valentina
+            </div>
+            <p class="text-slate-400 text-xs mt-4">Mantente estudiando a diario para estar siempre preparada.</p>
         </footer>
     </div>
 
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
