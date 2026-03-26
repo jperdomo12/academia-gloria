@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Música Motivadora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Outfit', sans-serif; background: linear-gradient(180deg, #f5f3ff 0%, #eff6ff 50%, #ecfeff 100%); }
+    .music-card {
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(191, 219, 254, 0.9);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.10);
+    }
+    .pill {
+      display:inline-flex; align-items:center; gap:.5rem;
+      border-radius:999px; padding:.45rem .85rem;
+      font-size:.85rem; font-weight:700;
+      background:#ffffff; border:2px solid #dbeafe; color:#2563eb;
+    }
+    .glow {
+      box-shadow: 0 0 0 4px rgba(255,255,255,.4), 0 18px 40px rgba(139,92,246,.22);
+    }
+    .gradient-title {
+      background: linear-gradient(90deg, #7c3aed, #2563eb, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .track-active {
+      border-color: #a78bfa !important;
+      box-shadow: 0 18px 35px rgba(139,92,246,.18);
+      transform: translateY(-4px);
+    }
+    .star {
+      position: fixed;
+      pointer-events: none;
+      font-size: 24px;
+      z-index: 60;
+      animation: floatUp 1.4s ease forwards;
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(20px) scale(.6) rotate(0deg); opacity: 0; }
+      15%  { opacity: 1; }
+      100% { transform: translateY(-90px) scale(1.25) rotate(16deg); opacity: 0; }
+    }
+    .hero-bg {
+      background:
+        radial-gradient(circle at top left, rgba(192,132,252,.25), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,.22), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.92));
+    }
+    video::-webkit-media-controls-panel { background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(240,249,255,.96)); }
+  </style>
+</head>
+<body class="text-slate-800">
+  <div id="stars-layer"></div>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <header class="hero-bg rounded-[2.5rem] border-2 border-white/70 px-6 py-8 md:px-10 md:py-10 shadow-xl mb-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div class="max-w-3xl">
+          <a href="index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Adicionales
+          </a>
+
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill"><i data-lucide="music-4" class="w-4 h-4"></i> Música con IA</span>
+            <span class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i> Mensajes positivos</span>
+            <span class="pill"><i data-lucide="heart" class="w-4 h-4"></i> Para Gloria</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4">
+            <span class="gradient-title">Música Motivadora</span><br>
+            para Gloria 🎵✨
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl">
+            Un rincón bonito para escuchar canciones creadas con IA, recargar energía, sonreír y recordar que Gloria es valiente, brillante y especial.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-6">
+            <button id="play-all-btn" class="glow bg-violet-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all inline-flex items-center gap-2">
+              <i data-lucide="play-circle" class="w-5 h-5"></i> Escuchar la primera canción
+            </button>
+            <button id="pause-all-btn" class="bg-white text-slate-700 px-6 py-4 rounded-2xl font-bold border-2 border-slate-200 hover:border-sky-300 transition-all inline-flex items-center gap-2">
+              <i data-lucide="pause-circle" class="w-5 h-5"></i> Pausar reproducción
+            </button>
+          </div>
+        </div>
+
+        <div class="music-card rounded-[2rem] p-5 md:p-6 w-full lg:max-w-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 text-white flex items-center justify-center text-3xl shadow-lg">🎤</div>
+            <div>
+              <p class="text-sm font-black uppercase tracking-[.18em] text-sky-600">Ahora sonando</p>
+              <h2 id="now-playing" class="text-2xl font-extrabold text-slate-800">Elige una canción</h2>
+            </div>
+          </div>
+
+          <p id="now-message" class="text-slate-600 font-medium leading-relaxed">
+            Haz clic en una canción para escucharla con calma y disfrutar de su mensaje.
+          </p>
+
+          <div class="mt-5 grid grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-3 text-center">
+              <div class="text-2xl">⭐</div>
+              <div class="text-xs font-black text-violet-700 mt-1">Valentía</div>
+            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-3 text-center">
+              <div class="text-2xl">🌈</div>
+              <div class="text-xs font-black text-sky-700 mt-1">Alegría</div>
+            </div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-3 text-center">
+              <div class="text-2xl">💖</div>
+              <div class="text-xs font-black text-emerald-700 mt-1">Confianza</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid md:grid-cols-3 gap-4 mb-8">
+      <div class="music-card rounded-[2rem] p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-11 h-11 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl">☀️</div>
+          <h3 class="text-xl font-extrabold">Empieza con alegría</h3>
+        </div>
+        <p class="text-slate-600 font-medium">La música ayuda a entrar en modo positivo, respirar y sentirse preparada.</p>
+      </div>
+
+      <div class="music-card rounded-[2rem] p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">🎧</div>
+          <h3 class="text-xl font-extrabold">Escucha a tu ritmo</h3>
+        </div>
+        <p class="text-slate-600 font-medium">Puedes parar, volver a poner una canción o escuchar varias veces la que más te guste.</p>
+      </div>
+
+      <div class="music-card rounded-[2rem] p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🌟</div>
+          <h3 class="text-xl font-extrabold">Mensajes bonitos</h3>
+        </div>
+        <p class="text-slate-600 font-medium">Cada canción refuerza autoestima, valentía, luz interior y confianza.</p>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 text-white flex items-center justify-center text-2xl shadow-lg">🎶</div>
+        <div>
+          <h2 class="text-3xl font-extrabold">Playlist de Gloria</h2>
+          <p class="text-slate-600 font-medium">Canciones creadas con IA para escuchar, disfrutar y motivarse.</p>
+        </div>
+      </div>
+
+      <div class="grid xl:grid-cols-3 gap-6">
+        <article class="music-card track-card rounded-[2rem] p-5 transition-all duration-300" data-track="Mi Campeona">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.2em] text-violet-600 mb-1">Canción 1</p>
+              <h3 class="text-2xl font-extrabold">Mi Campeona</h3>
+              <p class="text-slate-500 font-medium mt-1">Una canción para recordar todo lo fuerte y maravillosa que es Gloria.</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl">🏆</div>
+          </div>
+
+          <video controls preload="metadata" class="w-full rounded-3xl border-2 border-violet-100 shadow-sm player">
+            <source src="Mi_Campeona.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este archivo.
+          </video>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="pill">💪 Fuerza</span>
+            <span class="pill">🌟 Confianza</span>
+            <span class="pill">🎤 IA</span>
+          </div>
+        </article>
+
+        <article class="music-card track-card rounded-[2rem] p-5 transition-all duration-300" data-track="Supernova Star">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.2em] text-sky-600 mb-1">Canción 2</p>
+              <h3 class="text-2xl font-extrabold">Supernova Star</h3>
+              <p class="text-slate-500 font-medium mt-1">Una canción luminosa para recordar que Gloria brilla con luz propia.</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl">✨</div>
+          </div>
+
+          <video controls preload="metadata" class="w-full rounded-3xl border-2 border-sky-100 shadow-sm player">
+            <source src="Supernova_Star.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este archivo.
+          </video>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="pill">🌌 Brillo</span>
+            <span class="pill">🚀 Energía</span>
+            <span class="pill">💙 Motivación</span>
+          </div>
+        </article>
+
+        <article class="music-card track-card rounded-[2rem] p-5 transition-all duration-300" data-track="Superhéroes del Alma">
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.2em] text-emerald-600 mb-1">Canción 3</p>
+              <h3 class="text-2xl font-extrabold">Superhéroes del Alma</h3>
+              <p class="text-slate-500 font-medium mt-1">Una canción tierna y poderosa sobre el valor interior, la bondad y la esperanza.</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🦸</div>
+          </div>
+
+          <video controls preload="metadata" class="w-full rounded-3xl border-2 border-emerald-100 shadow-sm player">
+            <source src="Superhéroes_del_Alma.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este archivo.
+          </video>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="pill">💖 Alma</span>
+            <span class="pill">🌈 Esperanza</span>
+            <span class="pill">🤗 Cariño</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-[1fr_.9fr] gap-6">
+      <div class="music-card rounded-[2rem] p-6 md:p-7">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
+        </div>
+
+        <div class="space-y-4 text-slate-700 font-medium leading-relaxed text-lg">
+          <p>Gloria, cada canción de esta página está aquí para acompañarte con alegría, calma y muchísima energía bonita.</p>
+          <p>Eres una niña valiente, creativa y especial. Tu forma de aprender también es valiosa. Paso a paso, canción a canción, sigues creciendo.</p>
+          <p>Cuando quieras, puedes volver aquí, escuchar tu música favorita y recordar algo importante:</p>
+        </div>
+
+        <div class="mt-6 rounded-[2rem] bg-gradient-to-r from-violet-600 via-sky-600 to-cyan-500 text-white p-6 shadow-lg">
+          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
+            “Gloria puede aprender, brillar y disfrutar a su manera.” 🌟
+          </p>
+        </div>
+      </div>
+
+      <div class="music-card rounded-[2rem] p-6 md:p-7">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl">🎼</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Ideas para usar esta página</h2>
+        </div>
+
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+            <p class="font-black text-sky-700 mb-1">Antes de estudiar</p>
+            <p class="text-slate-600 font-medium">Escuchar una canción para empezar con calma y buena actitud.</p>
+          </div>
+          <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
+            <p class="font-black text-violet-700 mb-1">Después de un esfuerzo</p>
+            <p class="text-slate-600 font-medium">Usarla como premio bonito después de hacer tareas o repasar.</p>
+          </div>
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+            <p class="font-black text-emerald-700 mb-1">Momentos especiales</p>
+            <p class="text-slate-600 font-medium">Escuchar su favorita cuando necesite motivación, ánimo o una sonrisa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Música creada con IA · Un espacio para aprender y sonreír 🎵</p>
+    </footer>
+  </main>
+
+  <script>
+    const players = Array.from(document.querySelectorAll('.player'));
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const nowPlaying = document.getElementById('now-playing');
+    const nowMessage = document.getElementById('now-message');
+
+    const messages = {
+      'Mi Campeona': 'Suena una canción de fuerza y cariño para recordar lo campeona que es Gloria.',
+      'Supernova Star': 'Suena una canción llena de luz para recordar que Gloria brilla muchísimo.',
+      'Superhéroes del Alma': 'Suena una canción tierna y poderosa sobre valentía interior y esperanza.'
+    };
+
+    function updateNowPlaying(title) {
+      nowPlaying.textContent = title;
+      nowMessage.textContent = messages[title] || 'Disfruta de esta canción con calma y alegría.';
+    }
+
+    function activateCard(activePlayer) {
+      players.forEach((player, index) => {
+        const card = cards[index];
+        if (player === activePlayer) {
+          card.classList.add('track-active');
+          updateNowPlaying(card.dataset.track);
+        } else {
+          card.classList.remove('track-active');
+        }
+      });
+    }
+
+    function pauseOthers(current) {
+      players.forEach(player => {
+        if (player !== current) player.pause();
+      });
+    }
+
+    players.forEach((player, index) => {
+      player.addEventListener('play', () => {
+        pauseOthers(player);
+        activateCard(player);
+        makeStars();
+      });
+
+      player.addEventListener('pause', () => {
+        if (!players.some(p => !p.paused)) {
+          nowPlaying.textContent = 'Pausa';
+          nowMessage.textContent = 'Puedes volver a darle al play cuando quieras.';
+          cards[index].classList.remove('track-active');
+        }
+      });
+
+      player.addEventListener('ended', () => {
+        cards[index].classList.remove('track-active');
+      });
+    });
+
+    document.getElementById('play-all-btn').addEventListener('click', () => {
+      players[0].play();
+      players[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.getElementById('pause-all-btn').addEventListener('click', () => {
+      players.forEach(player => player.pause());
+      cards.forEach(card => card.classList.remove('track-active'));
+      nowPlaying.textContent = 'Pausa';
+      nowMessage.textContent = 'La música está en pausa. Elige una canción cuando quieras.';
+    });
+
+    function makeStars() {
+      const layer = document.getElementById('stars-layer');
+      const icons = ['⭐','✨','🌟','🎵'];
+      for (let i = 0; i < 10; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.textContent = icons[i % icons.length];
+        star.style.left = `${10 + Math.random() * 80}%`;
+        star.style.top = `${60 + Math.random() * 20}%`;
+        star.style.animationDelay = `${Math.random() * .15}s`;
+        layer.appendChild(star);
+        setTimeout(() => star.remove(), 1600);
+      }
+    }
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
