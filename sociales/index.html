@@ -18,10 +18,12 @@
         .card-topic {
             background: white;
             border-radius: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            text-align: center;
             height: 100%;
         }
         .card-topic:hover {
@@ -29,8 +31,6 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             border-color: #3b82f6;
         }
-        .icon-box { transition: transform 0.3s ease; }
-        .card-topic:hover .icon-box { transform: scale(1.1) rotate(5deg); }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -47,11 +47,11 @@
         </nav>
 
         <header class="hero-gradient rounded-[3rem] p-8 md:p-12 text-white mb-12 shadow-2xl relative overflow-hidden">
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="text-center md:text-left">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+                <div>
                     <h1 class="text-4xl md:text-6xl font-black mb-4">Ciencias <span class="text-sky-200">Sociales</span></h1>
                     <p class="text-blue-100 text-lg font-medium max-w-md">
-                        Tu centro de estudio para Geografía e Historia. ¡Prepárate para ser la mejor!
+                        Explora la historia y la geografía con tus apuntes y juegos interactivos.
                     </p>
                     <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                         <a href="https://sites.google.com/gaudem.es/quinto/%C3%A1reas/sociales" target="_blank" class="bg-white text-blue-600 px-6 py-3 rounded-2xl font-black flex items-center gap-2 hover:bg-blue-50 transition-all shadow-lg text-sm">
@@ -60,63 +60,45 @@
                     </div>
                 </div>
                 <div class="hidden md:block">
-                    <i data-lucide="globe" class="w-40 h-40 text-white/20"></i>
+                    <i data-lucide="library" class="w-40 h-40 text-white/20"></i>
                 </div>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <a href="relieve_europa.html" class="card-topic p-8 text-center">
-                <div class="icon-box w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i data-lucide="map" class="w-8 h-8"></i>
+            <a href="edad_media.html" class="card-topic p-8">
+                <div class="w-20 h-20 bg-amber-50 text-amber-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="castle" class="w-10 h-10"></i>
                 </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Relieve Europa</h3>
-                <p class="text-slate-500 text-sm mb-6">Montañas, ríos y costas del continente europeo.</p>
-                <div class="mt-auto text-blue-600 font-black text-xs uppercase tracking-widest">Estudiar →</div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">La Edad Media</h3>
+                <p class="text-slate-500 text-sm mb-6">Desde la caída de Roma hasta el descubrimiento de América.</p>
+                <div class="mt-auto text-amber-600 font-black text-xs uppercase tracking-widest">Estudiar <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
             </a>
 
-            <a href="mapa_politico.html" class="card-topic p-8 text-center">
-                <div class="icon-box w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i data-lucide="flag" class="w-8 h-8"></i>
+            <a href="relieve_europa.html" class="card-topic p-8">
+                <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="mountain" class="w-10 h-10"></i>
                 </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Mapa Político</h3>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Localización y Relieve de Europa</h3>
+                <p class="text-slate-500 text-sm mb-6">Montañas, ríos, llanuras y costas del continente.</p>
+                <div class="mt-auto text-blue-600 font-black text-xs uppercase tracking-widest">Estudiar <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
+            </a>
+
+            <a href="mapa_politico.html" class="card-topic p-8">
+                <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-[2rem] flex items-center justify-center mb-6">
+                    <i data-lucide="globe" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Mapa Político de Europa</h3>
                 <p class="text-slate-500 text-sm mb-6">Países y capitales de la Unión Europea.</p>
-                <div class="mt-auto text-indigo-600 font-black text-xs uppercase tracking-widest">Practicar →</div>
-            </a>
-
-            <a href="edad_media.html" class="card-topic p-8 text-center">
-                <div class="icon-box w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i data-lucide="castle" class="w-8 h-8"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Edad Media</h3>
-                <p class="text-slate-500 text-sm mb-6">Visigodos, Al-Ándalus y Reinos Cristianos.</p>
-                <div class="mt-auto text-amber-600 font-black text-xs uppercase tracking-widest">Aprender →</div>
-            </a>
-
-            <a href="relieve_espana.html" class="card-topic p-8 text-center">
-                <div class="icon-box w-16 h-16 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i data-lucide="mountain" class="w-8 h-8"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Relieve España</h3>
-                <p class="text-slate-500 text-sm mb-6">Sistemas montañosos y costas de España.</p>
-                <div class="mt-auto text-rose-600 font-black text-xs uppercase tracking-widest">Explorar →</div>
-            </a>
-
-            <a href="prehistoria.html" class="card-topic p-8 text-center">
-                <div class="icon-box w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <i data-lucide="bone" class="w-8 h-8"></i>
-                </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Prehistoria</h3>
-                <p class="text-slate-500 text-sm mb-6">Paleolítico, Neolítico y Edad de los Metales.</p>
-                <div class="mt-auto text-emerald-600 font-black text-xs uppercase tracking-widest">Ver más →</div>
+                <div class="mt-auto text-indigo-600 font-black text-xs uppercase tracking-widest">Estudiar <i data-lucide="chevron-right" class="inline w-4 h-4"></i></div>
             </a>
 
         </div>
 
         <footer class="mt-20 text-center border-t border-slate-200 pt-10 pb-10">
             <div class="inline-flex items-center gap-2 bg-slate-100 px-6 py-2 rounded-full text-slate-500 font-bold text-sm">
-                <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500"></i> Academia de Gloria Valentina
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Academia de Gloria Valentina
             </div>
         </footer>
     </div>
