@@ -135,7 +135,7 @@
             <i data-lucide="book-marked" class="w-5 h-5"></i> Leer interactivo
           </a>
 
-          <a href="https://app.luminpdf.com/viewer?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b" target="_blank" rel="noopener noreferrer" class="action-btn bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300">
+          <a href="javascript:void(0)" onclick="openSmartPdf('11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b')" class="action-btn bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300">
             <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
           </a>
         </div>
@@ -165,7 +165,7 @@
             <i data-lucide="book-marked" class="w-5 h-5"></i> Leer interactivo
           </a>
 
-          <a href="https://app.luminpdf.com/viewer?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k" target="_blank" rel="noopener noreferrer" class="action-btn bg-white border-2 border-sky-100 text-sky-700 hover:border-sky-300">
+          <a href="javascript:void(0)" onclick="openSmartPdf('1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k')" class="action-btn bg-white border-2 border-sky-100 text-sky-700 hover:border-sky-300">
             <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
           </a>
         </div>
@@ -179,6 +179,16 @@
 
   <script>
     lucide.createIcons();
+
+    function openSmartPdf(fileId) {
+      const ua = navigator.userAgent || "";
+      const isIPad = /iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      const isIPhone = /iPhone/.test(ua);
+      const isIOS = isIPad || isIPhone;
+      const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      const previewUrl = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+      window.open(isIOS ? downloadUrl : previewUrl, "_blank", "noopener,noreferrer");
+    }
   </script>
 </body>
 </html>

@@ -61,7 +61,7 @@
           </p>
 
           <div class="flex flex-wrap gap-4 mt-7">
-            <a href="https://drive.google.com/file/d/1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
+            <a href="javascript:void(0)" onclick="openSmartPdf('1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k')" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
               <i data-lucide="file-text" class="w-5 h-5"></i> Leer cuento en PDF
             </a>
             <a href="#lectura" class="inline-flex items-center gap-2 bg-white text-amber-700 px-6 py-4 rounded-2xl font-bold border-2 border-amber-100 hover:border-amber-300 transition-all">
@@ -95,7 +95,7 @@
         <p class="text-slate-600 font-medium max-w-2xl mx-auto mb-6">
           Para que el PDF se abra mejor en la tablet, aquí usamos un botón directo a Google Drive en vez de mostrarlo dentro de la Academia.
         </p>
-        <a href="https://drive.google.com/file/d/1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
+        <a href="javascript:void(0)" onclick="openSmartPdf('1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k')" class="inline-flex items-center gap-2 bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
           <i data-lucide="external-link" class="w-5 h-5"></i> Abrir cuento en Google Drive
         </a>
       </div>
@@ -169,6 +169,16 @@
 
   <script>
     lucide.createIcons();
+
+    function openSmartPdf(fileId) {
+      const ua = navigator.userAgent || "";
+      const isIPad = /iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      const isIPhone = /iPhone/.test(ua);
+      const isIOS = isIPad || isIPhone;
+      const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      const previewUrl = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+      window.open(isIOS ? downloadUrl : previewUrl, "_blank", "noopener,noreferrer");
+    }
 
     const pages = Array.from(document.querySelectorAll('.page-card'));
     const dotsWrap = document.getElementById('dots');
