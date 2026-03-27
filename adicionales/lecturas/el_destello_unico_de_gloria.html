@@ -6,30 +6,33 @@
     <title>Lectura Mágica - Academia Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .page-container { height: calc(100vh - 180px); }
-        iframe { border: none; width: 100%; height: 100%; border-radius: 20px; }
+        /* Ajuste para que ocupe casi toda la pantalla en el iPad */
+        .viewer-container { height: 85vh; width: 95%; max-width: 1100px; }
+        iframe { border: none; width: 100%; height: 100%; border-radius: 15px; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col items-center p-4 font-sans">
+<body class="bg-violet-50 min-h-screen flex flex-col items-center p-2 font-sans">
 
-    <div class="w-full max-w-5xl mb-4">
-        <a href="index.html" class="text-violet-600 font-bold flex items-center gap-2 hover:text-violet-800 transition-all">
-            ← Volver a la Biblioteca
+    <div class="w-full max-w-5xl flex justify-between items-center mb-2 px-4 py-2">
+        <a href="index.html" class="bg-white text-violet-600 px-4 py-2 rounded-full shadow-sm font-bold flex items-center gap-2 hover:bg-violet-100 transition-all">
+            ← Volver
         </a>
+        <h1 class="text-lg font-bold text-violet-800 truncate ml-4">🌟 El Destello Único de Gloria</h1>
     </div>
 
-    <div class="w-full max-w-5xl bg-white rounded-[30px] shadow-2xl overflow-hidden border-4 border-violet-100 relative">
-        <div class="page-container">
-            <iframe 
-                src="https://drive.google.com/file/d/11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b/preview" 
-                allow="autoplay">
-            </iframe>
-        </div>
+    <div class="viewer-container bg-white rounded-2xl shadow-2xl border-2 border-violet-200 overflow-hidden">
+        <iframe 
+            src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&embedded=true" 
+            allow="autoplay">
+        </iframe>
     </div>
 
-    <div class="mt-6 text-center">
-        <h1 class="text-2xl font-black text-slate-800">🌟 El Destello Único de Gloria</h1>
-        <p class="text-slate-500 mt-1">Usa las flechas del visor para pasar las páginas del cuento.</p>
+    <div class="mt-4">
+        <p class="text-xs text-slate-400 mb-2">¿No carga el cuento? Prueba este botón:</p>
+        <a href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b" 
+           class="text-sm bg-violet-200 text-violet-800 px-4 py-1 rounded-full font-medium hover:bg-violet-300">
+           Abrir archivo original directamente
+        </a>
     </div>
 
 </body>
