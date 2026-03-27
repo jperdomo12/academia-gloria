@@ -62,9 +62,9 @@
 
           <div class="flex flex-wrap gap-4 mt-7">
             <a href="https://drive.google.com/file/d/1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
-              <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
+              <i data-lucide="file-text" class="w-5 h-5"></i> Leer cuento en PDF
             </a>
-            <a href="#cuento" class="inline-flex items-center gap-2 bg-white text-amber-700 px-6 py-4 rounded-2xl font-bold border-2 border-amber-100 hover:border-amber-300 transition-all">
+            <a href="#lectura" class="inline-flex items-center gap-2 bg-white text-amber-700 px-6 py-4 rounded-2xl font-bold border-2 border-amber-100 hover:border-amber-300 transition-all">
               <i data-lucide="book-open" class="w-5 h-5"></i> Empezar lectura
             </a>
           </div>
@@ -88,18 +88,25 @@
       </div>
     </header>
 
-    <section class="grid md:grid-cols-3 gap-4 mb-8">
-      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">🚌</div><h2 class="text-xl font-extrabold mb-2">Aventura</h2><p class="text-slate-600 font-medium">El viaje empieza con ilusión, mochila y ganas de descubrir lugares nuevos.</p></div>
-      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mb-3">🌳</div><h2 class="text-xl font-extrabold mb-2">Calma</h2><p class="text-slate-600 font-medium">El parque, la lectura y el río crean un ambiente tranquilo y especial.</p></div>
-      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">💛</div><h2 class="text-xl font-extrabold mb-2">Familia</h2><p class="text-slate-600 font-medium">Cada escena recuerda lo bonito que es compartir tiempo de verdad.</p></div>
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+      <div class="rounded-[2rem] border-2 border-sky-100 bg-sky-50 p-6 md:p-8 text-center">
+        <div class="text-6xl mb-4">📱🏰</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-sky-700 mb-3">Leer el cuento en tablet</h2>
+        <p class="text-slate-600 font-medium max-w-2xl mx-auto mb-6">
+          Para que el PDF se abra mejor en la tablet, aquí usamos un botón directo a Google Drive en vez de mostrarlo dentro de la Academia.
+        </p>
+        <a href="https://drive.google.com/file/d/1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
+          <i data-lucide="external-link" class="w-5 h-5"></i> Abrir cuento en Google Drive
+        </a>
+      </div>
     </section>
 
-    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8" id="lectura">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-amber-500 text-white flex items-center justify-center text-2xl shadow-lg">📖</div>
           <div>
-            <h2 class="text-2xl md:text-3xl font-extrabold" id="cuento">Leer el cuento</h2>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Resumen interactivo del cuento</h2>
             <p class="text-slate-600 font-medium">Pasa las páginas y acompaña a Gloria en su viaje.</p>
           </div>
         </div>
@@ -125,7 +132,7 @@
       </div>
     </section>
 
-    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8" id="preguntas">
       <div id="quiz-container">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
@@ -152,23 +159,6 @@
         <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all">
           Repetir preguntas
         </button>
-      </div>
-    </section>
-
-    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div><h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2></div>
-        <p class="text-slate-700 font-medium text-lg leading-relaxed">Gloria, este cuento recuerda que los viajes más bonitos no siempre son los más largos. A veces, lo que más se queda en el corazón es un libro, un paseo, un parque y el tiempo vivido con mamá y papá.</p>
-        <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-sky-600 via-blue-600 to-amber-500 text-white p-6 shadow-lg"><p class="text-xl md:text-2xl font-extrabold leading-relaxed">“La felicidad también vive en los momentos sencillos compartidos con amor.” 💛</p></div>
-      </div>
-
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🪄</div><h2 class="text-2xl md:text-3xl font-extrabold">Ideas para disfrutar más</h2></div>
-        <div class="space-y-3">
-          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Leer despacio</p><p class="text-slate-600 font-medium">Puedes pasar una página cada vez y hablar de lo que más te gustó.</p></div>
-          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Imaginar el viaje</p><p class="text-slate-600 font-medium">Pensar cómo será Burgos y qué lugares te gustaría ver en familia.</p></div>
-          <div class="rounded-2xl bg-white border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">Guardar el recuerdo</p><p class="text-slate-600 font-medium">Después del viaje, esta historia será aún más especial.</p></div>
-        </div>
       </div>
     </section>
 
@@ -221,7 +211,7 @@
       prevBtn.style.opacity = currentPage === 0 ? '.55' : '1';
       nextBtn.style.opacity = currentPage === pages.length - 1 ? '.55' : '1';
       if (currentPage > 0) makeStars();
-      window.scrollTo({ top: document.getElementById('cuento').offsetTop - 100, behavior: 'smooth' });
+      window.scrollTo({ top: document.getElementById('lectura').offsetTop - 100, behavior: 'smooth' });
     }
 
     prevBtn.addEventListener('click', () => { if (currentPage > 0) { currentPage -= 1; renderPage(); } });
