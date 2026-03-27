@@ -13,29 +13,30 @@
     body {
       font-family: 'Outfit', sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(196, 181, 253, .24), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(125, 211, 252, .24), transparent 28%),
+        radial-gradient(circle at top left, rgba(196,181,253,.24), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(125,211,252,.24), transparent 28%),
         linear-gradient(180deg, #fffefc 0%, #f7f5ff 45%, #f0f9ff 100%);
     }
-    .glass-card {
-      background: rgba(255,255,255,.90);
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(221, 214, 254, .85);
-      box-shadow: 0 20px 45px rgba(109, 40, 217, .08);
-    }
-    .gradient-title {
-      background: linear-gradient(90deg, #7c3aed, #2563eb, #06b6d4);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .reader-wrap {
-      min-height: 820px;
-      background: linear-gradient(180deg, #ffffff, #fcfbff);
+    .glass-card { background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border: 2px solid rgba(221,214,254,.85); box-shadow: 0 20px 45px rgba(109,40,217,.08); }
+    .gradient-title { background: linear-gradient(90deg, #7c3aed, #2563eb, #06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .reader-wrap { min-height: 820px; background: linear-gradient(180deg, #ffffff, #fcfbff); }
+    .btn-option { transition: all .2s ease; border: 2px solid #e2e8f0; background: white; }
+    .btn-option:hover { border-color: #8b5cf6; background: #faf5ff; }
+    .btn-correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+    .btn-incorrect { background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+    .progress-bar { height: 14px; border-radius: 999px; overflow: hidden; background: #e2e8f0; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #8b5cf6, #22c55e); transition: width .25s ease; }
+    .star-pop { position: fixed; pointer-events: none; font-size: 24px; z-index: 60; animation: floatUp 1.4s ease forwards; opacity: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(20px) scale(.7) rotate(0deg); opacity: 0; }
+      18% { opacity: 1; }
+      100% { transform: translateY(-90px) scale(1.2) rotate(16deg); opacity: 0; }
     }
   </style>
 </head>
 <body class="text-slate-800">
+  <div id="stars-layer"></div>
+
   <main class="max-w-6xl mx-auto p-4 md:p-8">
     <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
       <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
@@ -66,7 +67,7 @@
           </p>
 
           <div class="flex flex-wrap gap-4 mt-7">
-            <a href="El Destello Único de Gloria_compressed.pdf" target="_blank" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all shadow-lg">
+            <a href="https://drive.google.com/file/d/11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all shadow-lg">
               <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
             </a>
             <a href="#cuento" class="inline-flex items-center gap-2 bg-white text-sky-700 px-6 py-4 rounded-2xl font-bold border-2 border-sky-100 hover:border-sky-300 transition-all">
@@ -103,21 +104,9 @@
     </header>
 
     <section class="grid md:grid-cols-3 gap-4 mb-8">
-      <div class="glass-card rounded-[2rem] p-5">
-        <div class="w-12 h-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl mb-3">☀️</div>
-        <h2 class="text-xl font-extrabold mb-2">Luz propia</h2>
-        <p class="text-slate-600 font-medium">Cada persona tiene un brillo diferente. El de Gloria también es precioso.</p>
-      </div>
-      <div class="glass-card rounded-[2rem] p-5">
-        <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl mb-3">💖</div>
-        <h2 class="text-xl font-extrabold mb-2">Confianza</h2>
-        <p class="text-slate-600 font-medium">Este cuento anima a Gloria a confiar más en lo que siente y en quién es.</p>
-      </div>
-      <div class="glass-card rounded-[2rem] p-5">
-        <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl mb-3">🌈</div>
-        <h2 class="text-xl font-extrabold mb-2">Ser única</h2>
-        <p class="text-slate-600 font-medium">No hace falta parecerse a otras niñas para ser especial.</p>
-      </div>
+      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl mb-3">☀️</div><h2 class="text-xl font-extrabold mb-2">Luz propia</h2><p class="text-slate-600 font-medium">Cada persona tiene un brillo diferente. El de Gloria también es precioso.</p></div>
+      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl mb-3">💖</div><h2 class="text-xl font-extrabold mb-2">Confianza</h2><p class="text-slate-600 font-medium">Este cuento anima a Gloria a confiar más en lo que siente y en quién es.</p></div>
+      <div class="glass-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl mb-3">🌈</div><h2 class="text-xl font-extrabold mb-2">Ser única</h2><p class="text-slate-600 font-medium">No hace falta parecerse a otras niñas para ser especial.</p></div>
     </section>
 
     <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
@@ -130,52 +119,58 @@
       </div>
 
       <div class="reader-wrap rounded-[2rem] border-2 border-violet-100 overflow-hidden">
-        <iframe src="El Destello Único de Gloria_compressed.pdf#view=FitH"
+        <iframe src="https://drive.google.com/file/d/11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b/preview"
                 class="w-full h-[820px] bg-white"
                 title="El Destello Único de Gloria">
         </iframe>
       </div>
     </section>
 
-    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div>
-          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+      <div id="quiz-container">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Preguntas del cuento</h2>
+            <p class="text-slate-600 font-medium">Vamos a repasar lo que enseñó esta historia.</p>
+          </div>
+          <span id="q-counter" class="text-violet-700 font-bold">Pregunta 1 de 5</span>
         </div>
 
-        <p class="text-slate-700 font-medium text-lg leading-relaxed">
-          Gloria, no necesitas hacer todo como las demás para ser maravillosa.
-          Lo que piensas, sientes y eliges también tiene valor. Tu destello aparece más fuerte
-          cuando eres tú misma.
-        </p>
+        <div class="flex gap-3 flex-wrap mb-5">
+          <span id="score-live" class="bg-violet-100 text-violet-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span>
+          <span id="streak-box" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span>
+        </div>
 
+        <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+        <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+        <div id="options-grid" class="grid gap-4"></div>
+      </div>
+
+      <div id="score-container" class="hidden text-center">
+        <div class="text-6xl mb-4">🌟</div>
+        <h2 class="text-3xl font-black mb-4 text-slate-800">¡Has terminado!</h2>
+        <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+        <button onclick="resetQuiz()" class="bg-violet-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all">
+          Repetir preguntas
+        </button>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div><h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2></div>
+        <p class="text-slate-700 font-medium text-lg leading-relaxed">Gloria, no necesitas hacer todo como las demás para ser maravillosa. Lo que piensas, sientes y eliges también tiene valor. Tu destello aparece más fuerte cuando eres tú misma.</p>
         <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-violet-600 via-sky-600 to-cyan-500 text-white p-6 shadow-lg">
-          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
-            “La mejor versión de Gloria es la que nace cuando Gloria es auténtica.” 🌟
-          </p>
+          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">“La mejor versión de Gloria es la que nace cuando Gloria es auténtica.” 🌟</p>
         </div>
       </div>
 
       <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl">🪄</div>
-          <h2 class="text-2xl md:text-3xl font-extrabold">Cómo usar esta lectura</h2>
-        </div>
-
+        <div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl">🪄</div><h2 class="text-2xl md:text-3xl font-extrabold">Cómo usar esta lectura</h2></div>
         <div class="space-y-3">
-          <div class="rounded-2xl bg-white border-2 border-violet-100 p-4">
-            <p class="font-black text-violet-700 mb-1">Leer con calma</p>
-            <p class="text-slate-600 font-medium">Ideal para un momento tranquilo, sin prisas.</p>
-          </div>
-          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4">
-            <p class="font-black text-sky-700 mb-1">Hablar después</p>
-            <p class="text-slate-600 font-medium">Preguntar: “¿Qué hace única a Gloria?” o “¿Qué cosas tuyas te gustan?”</p>
-          </div>
-          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4">
-            <p class="font-black text-emerald-700 mb-1">Guardar el mensaje</p>
-            <p class="text-slate-600 font-medium">Volver a este cuento cuando Gloria necesite recordar su propio valor.</p>
-          </div>
+          <div class="rounded-2xl bg-white border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-1">Leer con calma</p><p class="text-slate-600 font-medium">Ideal para un momento tranquilo, sin prisas.</p></div>
+          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Hablar después</p><p class="text-slate-600 font-medium">Preguntar: “¿Qué hace única a Gloria?” o “¿Qué cosas tuyas te gustan?”</p></div>
+          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Guardar el mensaje</p><p class="text-slate-600 font-medium">Volver a este cuento cuando Gloria necesite recordar su propio valor.</p></div>
         </div>
       </div>
     </section>
@@ -187,6 +182,104 @@
 
   <script>
     lucide.createIcons();
+
+    function makeStars() {
+      const layer = document.getElementById('stars-layer');
+      const icons = ['⭐','✨','🌟','💖'];
+      for (let i = 0; i < 8; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-pop';
+        star.textContent = icons[i % icons.length];
+        star.style.left = `${12 + Math.random() * 76}%`;
+        star.style.top = `${60 + Math.random() * 16}%`;
+        star.style.animationDelay = `${Math.random() * .12}s`;
+        layer.appendChild(star);
+        setTimeout(() => star.remove(), 1500);
+      }
+    }
+
+    const questions = [
+      { q: '¿Qué enseña este cuento a Gloria?', a: ['A copiar a sus amigas', 'A ser ella misma', 'A cambiar siempre de opinión'], c: 1 },
+      { q: '¿Qué tiene Gloria dentro de ella?', a: ['Una luz especial', 'Un mapa', 'Un castillo'], c: 0 },
+      { q: '¿Qué no necesita hacer Gloria para ser especial?', a: ['Leer cuentos', 'Copiar a otras niñas', 'Hablar con su familia'], c: 1 },
+      { q: '¿Qué palabra va mejor con este cuento?', a: ['Confianza', 'Prisa', 'Enfado'], c: 0 },
+      { q: '¿Cuál es la idea final más importante?', a: ['La mejor Gloria es la auténtica', 'Hay que hacer todo igual', 'Lo mejor es esconderse'], c: 0 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+    let streak = 0;
+
+    function loadQuestion() {
+      const q = questions[currentQ];
+      document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+      document.getElementById('question-text').innerText = q.q;
+      document.getElementById('quiz-progress').style.width = `${(currentQ / questions.length) * 100}%`;
+
+      const grid = document.getElementById('options-grid');
+      grid.innerHTML = '';
+
+      q.a.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.className = 'btn-option w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+        b.innerText = opt;
+        b.onclick = () => {
+          const allBtns = grid.querySelectorAll('button');
+          allBtns.forEach(btn => btn.onclick = null);
+
+          if (i === q.c) {
+            b.classList.add('btn-correct');
+            score++;
+            streak++;
+            document.getElementById('score-live').innerText = `Puntos: ${score}`;
+            document.getElementById('streak-box').innerText = `🔥 Racha: ${streak}`;
+            makeStars();
+          } else {
+            b.classList.add('btn-incorrect');
+            allBtns[q.c].classList.add('btn-correct');
+            streak = 0;
+            document.getElementById('streak-box').innerText = '🔥 Racha: 0';
+          }
+
+          setTimeout(() => {
+            currentQ++;
+            if (currentQ < questions.length) {
+              loadQuestion();
+            } else {
+              document.getElementById('quiz-progress').style.width = '100%';
+              document.getElementById('quiz-container').classList.add('hidden');
+              document.getElementById('score-container').classList.remove('hidden');
+
+              let message = `Has conseguido ${score} de ${questions.length} puntos. `;
+              if (score === questions.length) {
+                message += '🌟 ¡Excelente comprensión!';
+              } else if (score >= 4) {
+                message += '💜 ¡Muy bien! Has entendido muy bien el cuento.';
+              } else if (score >= 3) {
+                message += '👍 Bien. Puedes volver a leer el cuento con calma.';
+              } else {
+                message += '📖 Vamos poco a poco. Leer otra vez también ayuda.';
+              }
+              document.getElementById('final-score').innerText = message;
+            }
+          }, 1100);
+        };
+        grid.appendChild(b);
+      });
+    }
+
+    function resetQuiz() {
+      currentQ = 0;
+      score = 0;
+      streak = 0;
+      document.getElementById('score-live').innerText = 'Puntos: 0';
+      document.getElementById('streak-box').innerText = '🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      loadQuestion();
+    }
+
+    loadQuestion();
   </script>
 </body>
 </html>
