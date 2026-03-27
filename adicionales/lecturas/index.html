@@ -1,53 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lecturas - Academia Gloria</title>
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturas - Academia de Gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+    <style>
+        .bg-magic {
+            background-color: #f5f3ff;
+            background-image:  radial-gradient(#ddd6fe 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
+<body class="bg-magic min-h-screen font-sans text-slate-800">
 
-<body class="bg-yellow-50 p-6">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-violet-100 shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-black text-violet-700 tracking-tight">📚 Academia de Gloria</h1>
+            <nav class="hidden md:flex gap-6 font-medium text-slate-600">
+                <a href="../../index.html" class="hover:text-violet-600 transition-colors">Inicio</a>
+                <a href="#" class="text-violet-600 border-b-2 border-violet-600">Lecturas</a>
+            </nav>
+        </div>
+    </header>
 
-<h1 class="text-4xl font-bold mb-8 text-center">📚 Lecturas</h1>
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        
+        <div class="mb-12 text-center md:text-left">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-2">Mis Cuentos Mágicos</h2>
+            <p class="text-lg text-slate-500">Explora historias increíbles creadas con amor e imaginación.</p>
+        </div>
 
-<div class="grid md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <article class="bg-white rounded-3xl overflow-hidden border border-violet-100 shadow-sm card-hover transition-all duration-300">
+                <div class="aspect-[4/5] bg-violet-200 relative group">
+                    <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w600" 
+                         alt="Portada" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="bg-white text-violet-700 px-4 py-2 rounded-full font-bold shadow-lg">Abrir Cuento</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">El Destello Único de Gloria</h3>
+                    <p class="text-slate-600 text-sm mb-6">Una aventura mágica donde descubrimos que el brillo más especial está en nuestro interior.</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <a href="el_destello_unico_de_gloria.html" 
+                           class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-center shadow-md shadow-violet-200 flex items-center justify-center gap-2 transition-all">
+                            <i class="lucide-sparkles w-5 h-5"></i> Lectura Mágica
+                        </a>
+                        
+                        <a href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b" 
+                           class="w-full bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300 font-bold py-3 rounded-xl text-center flex items-center justify-center gap-2 transition-all">
+                            <i class="lucide-download w-5 h-5"></i> Descargar PDF
+                        </a>
+                    </div>
+                </div>
+            </article>
 
-<div class="bg-white p-6 rounded-2xl shadow">
-<h2 class="text-2xl font-bold mb-3">🌟 El Destello Único de Gloria</h2>
+            <article class="bg-white rounded-3xl overflow-hidden border border-violet-100 shadow-sm card-hover transition-all duration-300">
+                <div class="aspect-[4/5] bg-violet-100 relative group">
+                    <img src="https://drive.google.com/thumbnail?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k&sz=w600" 
+                         alt="Burgos" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="bg-white text-violet-700 px-4 py-2 rounded-full font-bold shadow-lg">Explorar Burgos</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">El Camino de Burgos</h3>
+                    <p class="text-slate-600 text-sm mb-6">Un viaje histórico lleno de castillos y leyendas por descubrir.</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <a href="el_camino_de_las_historias_en_burgos.html" 
+                           class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-center shadow-md shadow-violet-200 flex items-center justify-center gap-2 transition-all">
+                            <i class="lucide-map-pin w-5 h-5"></i> Lectura Interactiva
+                        </a>
+                        <a href="https://drive.google.com/uc?export=download&id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k" 
+                           class="w-full bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300 font-bold py-3 rounded-xl text-center flex items-center justify-center gap-2 transition-all">
+                            <i class="lucide-download w-5 h-5"></i> Descargar PDF
+                        </a>
+                    </div>
+                </div>
+            </article>
 
-<a href="el_destello_unico_de_gloria.html" class="block bg-violet-600 text-white p-3 rounded-xl font-bold mb-3 text-center">
-Leer interactivo
-</a>
+        </div>
+    </main>
 
-<a 
-href="https://drive.google.com/uc?export=view&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b"
-target="_blank"
-class="block border-2 border-violet-200 text-violet-700 p-3 rounded-xl font-bold text-center"
->
-📖 Leer cuento
-</a>
-</div>
-
-<div class="bg-white p-6 rounded-2xl shadow">
-<h2 class="text-2xl font-bold mb-3">🏰 Burgos</h2>
-
-<a href="el_camino_de_las_historias_en_burgos.html" class="block bg-sky-600 text-white p-3 rounded-xl font-bold mb-3 text-center">
-Leer interactivo
-</a>
-
-<a 
-href="https://drive.google.com/uc?export=view&id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k"
-target="_blank"
-class="block border-2 border-sky-200 text-sky-700 p-3 rounded-xl font-bold text-center"
->
-📖 Leer cuento
-</a>
-</div>
-
-</div>
+    <footer class="mt-20 py-10 text-center text-slate-400 text-sm">
+        <p>© 2026 Academia de Gloria · Hecho con ✨ para una gran lectora</p>
+    </footer>
 
 </body>
 </html>
