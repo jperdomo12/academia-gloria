@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Lecturas</title>
+
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(250, 204, 21, .16), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, .18), transparent 28%),
+        linear-gradient(180deg, #fffdf5 0%, #f8fbff 45%, #fdf4ff 100%);
+    }
+    .glass-card {
+      background: rgba(255,255,255,.90);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(254, 240, 138, .65);
+      box-shadow: 0 20px 45px rgba(234, 179, 8, .08);
+    }
+    .story-card {
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .story-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(14, 165, 233, .14);
+      border-color: #c7d2fe;
+    }
+    .gradient-title {
+      background: linear-gradient(90deg, #f59e0b, #7c3aed, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 999px;
+      padding: .45rem .85rem;
+      font-size: .85rem;
+      font-weight: 700;
+      background: #ffffff;
+      border: 2px solid #e5e7eb;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .8rem 1.1rem;
+      border-radius: 1rem;
+      font-weight: 800;
+      transition: all .2s ease;
+      text-decoration: none;
+    }
+    .action-btn:hover { transform: translateY(-1px); }
+  </style>
+</head>
+<body class="text-slate-800">
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center">
+        <div>
+          <a href="../index.html" class="inline-flex items-center gap-2 text-amber-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Adicionales
+          </a>
+
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-amber-700"><i data-lucide="book-open" class="w-4 h-4"></i> Cuentos con IA</span>
+            <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Sorpresas para Gloria</span>
+            <span class="pill text-cyan-700"><i data-lucide="heart" class="w-4 h-4"></i> Lectura con calma</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4">
+            Rincón de <span class="gradient-title">Lecturas</span> 📖✨
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Un espacio bonito para que Gloria pueda leer cuentos especiales, disfrutar historias creadas con IA
+            y volver a ellas cuando quiera.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-violet-500 to-sky-500 text-white flex items-center justify-center text-3xl shadow-lg">📚</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-amber-700">Biblioteca</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Lecturas de Gloria</h2>
+            </div>
+          </div>
+          <p class="text-slate-600 font-medium leading-relaxed">
+            Los cuentos pueden abrirse directamente desde Google Drive o, cuando exista, desde su versión interactiva especial.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid md:grid-cols-2 gap-6 mb-8">
+      <article class="glass-card story-card rounded-[2rem] p-6 border-2 border-violet-100">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[.18em] text-violet-700 mb-2">Cuento especial 1</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold">El Destello Único de Gloria</h2>
+          </div>
+          <div class="w-14 h-14 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-3xl">🌟</div>
+        </div>
+
+        <p class="text-slate-600 font-medium mb-4">
+          Una historia sobre ser ella misma, confiar en su propia luz y recordar que no necesita copiar a nadie para ser especial.
+        </p>
+
+        <div class="flex flex-wrap gap-2 mb-5">
+          <span class="pill text-violet-700">💖 Ser ella misma</span>
+          <span class="pill text-sky-700">✨ Luz propia</span>
+          <span class="pill text-emerald-700">🌈 Confianza</span>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="./el_destello_unico_de_gloria.html" class="action-btn bg-violet-600 text-white hover:bg-violet-700">
+            <i data-lucide="book-marked" class="w-5 h-5"></i> Leer interactivo
+          </a>
+
+          <a href="https://drive.google.com/file/d/11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="action-btn bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300">
+            <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
+          </a>
+        </div>
+      </article>
+
+      <article class="glass-card story-card rounded-[2rem] p-6 border-2 border-sky-100">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[.18em] text-sky-700 mb-2">Cuento especial 2</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold">El Camino de las Historias en Burgos</h2>
+          </div>
+          <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-3xl">🏰</div>
+        </div>
+
+        <p class="text-slate-600 font-medium mb-4">
+          Un viaje de Semana Santa 2026, del 3 al 4 de abril, lleno de naturaleza, lectura, calma y momentos bonitos en familia.
+        </p>
+
+        <div class="flex flex-wrap gap-2 mb-5">
+          <span class="pill text-sky-700">🚗 Viaje especial</span>
+          <span class="pill text-amber-700">🏰 Burgos</span>
+          <span class="pill text-emerald-700">📖 Aventura</span>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="./el_camino_de_las_historias_en_burgos.html" class="action-btn bg-sky-600 text-white hover:bg-sky-700">
+            <i data-lucide="book-marked" class="w-5 h-5"></i> Leer interactivo
+          </a>
+
+          <a href="https://drive.google.com/file/d/1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="action-btn bg-white border-2 border-sky-100 text-sky-700 hover:border-sky-300">
+            <i data-lucide="file-text" class="w-5 h-5"></i> Abrir PDF
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
+        </div>
+
+        <p class="text-slate-700 font-medium text-lg leading-relaxed">
+          Gloria, cada historia tiene una chispa especial. Algunas te ayudan a recordar tu luz propia y otras te invitan a soñar con viajes, aventuras y momentos bonitos en familia.
+        </p>
+
+        <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-violet-600 via-amber-500 to-sky-500 text-white p-6 shadow-lg">
+          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
+            “Las historias también ayudan a Gloria a brillar, soñar y crecer.” ✨
+          </p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🪄</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Cómo seguirá creciendo</h2>
+        </div>
+
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4">
+            <p class="font-black text-emerald-700 mb-1">Cuentos normales</p>
+            <p class="text-slate-600 font-medium">Se pueden abrir directamente desde Google Drive.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-sky-100 p-4">
+            <p class="font-black text-sky-700 mb-1">Cuentos especiales</p>
+            <p class="text-slate-600 font-medium">Tendrán versión interactiva bonita y también PDF como respaldo.</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-violet-100 p-4">
+            <p class="font-black text-violet-700 mb-1">Biblioteca escalable</p>
+            <p class="text-slate-600 font-medium">Solo necesitas añadir una nueva tarjeta y el enlace del cuento en Drive.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Lecturas · Un rincón para leer, soñar y crecer 📖✨</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
