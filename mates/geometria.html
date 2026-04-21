@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Mates | Geometría</title>
+  <meta name="description" content="Página interactiva de Geometría para 5º de Primaria. Líneas, rectas, ángulos, polígonos, triángulos, cuadriláteros, circunferencia, perímetro y área." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.20), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(251,191,36,.16), transparent 28%),
+        linear-gradient(180deg,#f8fbff 0%,#fffef8 48%,#f6fbff 100%);
+      color:#1e293b;
+    }
+    .glass-card{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border:2px solid rgba(219,234,254,.95);
+      box-shadow:0 18px 40px rgba(37,99,235,.08);
+    }
+    .gradient-title{
+      background:linear-gradient(90deg,#2563eb,#0ea5e9,#f59e0b);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .tab-btn{transition:all .22s ease;}
+    .tab-btn.active{
+      background:linear-gradient(135deg,#2563eb,#0ea5e9);
+      color:#fff;border-color:transparent;box-shadow:0 16px 30px rgba(37,99,235,.22);
+      transform:translateY(-1px);
+    }
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;animation:fadeIn .28s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .topic-card,.flash-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
+    .topic-card:hover,.flash-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(99,102,241,.14);border-color:#bfdbfe;}
+    .pill{
+      display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;
+      font-size:.88rem;font-weight:800;background:#fff;border:2px solid #dbeafe;
+    }
+    .accordion-btn.open .acc-icon{transform:rotate(180deg)}
+    .flash-card{perspective:1000px;min-height:210px;cursor:pointer}
+    .flash-inner{position:relative;width:100%;min-height:210px;transition:transform .6s;transform-style:preserve-3d}
+    .flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{
+      position:absolute;inset:0;backface-visibility:hidden;border-radius:1.5rem;padding:1.2rem;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      border:2px solid #dbeafe;background:#fff;
+    }
+    .flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#eff6ff,#fff7ed)}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#2563eb,#8b5cf6,#22c55e);transition:width .25s ease}
+    .option-btn{transition:all .2s ease;border:2px solid #dbeafe;background:#fff}
+    .option-btn:hover{border-color:#93c5fd;transform:translateY(-1px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}
+    .incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .star-pop{
+      position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(20px) scale(.7) rotate(0);opacity:0}
+      18%{opacity:1}
+      100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}
+    }
+  </style>
+</head>
+<body>
+  <div id="stars-layer"></div>
+
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <a href="../index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Mates
+          </a>
+
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-sky-700"><i data-lucide="calculator" class="w-4 h-4"></i> Matemáticas</span>
+            <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Modo TEL</span>
+            <span class="pill text-amber-700"><i data-lucide="shapes" class="w-4 h-4"></i> Geometría</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+            <span class="gradient-title">Geometría</span> 📐
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Una página visual para aprender líneas, rectas, ángulos, polígonos, triángulos, cuadriláteros, circunferencia, perímetro y área.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="#contenido" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
+              <i data-lucide="play-circle" class="w-5 h-5"></i> Empezar
+            </a>
+            <a href="#test" class="inline-flex items-center gap-2 bg-white text-violet-700 px-6 py-4 rounded-2xl font-bold border-2 border-violet-100 hover:border-violet-300 transition-all">
+              <i data-lucide="brain" class="w-5 h-5"></i> Ir al test
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-blue-500 to-amber-500 text-white flex items-center justify-center text-3xl shadow-lg">📏</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-700">Idea clave</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Mirar y medir</h2>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">Figuras</p>
+              <p class="text-slate-600 font-medium">Aprendemos cómo son y cómo se llaman.</p>
+            </div>
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
+              <p class="font-black text-violet-700 mb-1">Partes</p>
+              <p class="text-slate-600 font-medium">Vemos lados, vértices, ángulos, diagonales y más.</p>
+            </div>
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+              <p class="font-black text-amber-700 mb-1">Medidas</p>
+              <p class="text-slate-600 font-medium">Repasamos perímetro y área.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="contenido" class="mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="resumen">
+          <span class="inline-flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Resumen</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="teoria">
+          <span class="inline-flex items-center gap-2"><i data-lucide="book-open-check" class="w-5 h-5"></i> Teoría</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="fichas">
+          <span class="inline-flex items-center gap-2"><i data-lucide="layers-3" class="w-5 h-5"></i> Fichas</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">
+          <span class="inline-flex items-center gap-2"><i data-lucide="badge-check" class="w-5 h-5"></i> Test</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="resumen" class="tab-panel active">
+      <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">📏</div><h3 class="text-xl font-extrabold mb-2">Líneas y rectas</h3><p class="text-slate-600 font-medium">Recta, semirrecta, segmento, paralelas, secantes y perpendiculares.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl mb-3">📐</div><h3 class="text-xl font-extrabold mb-2">Ángulos</h3><p class="text-slate-600 font-medium">Ángulo recto, agudo y obtuso. Se miden con transportador.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">🔷</div><h3 class="text-xl font-extrabold mb-2">Polígonos</h3><p class="text-slate-600 font-medium">Lados, vértices, ángulos, diagonales, regulares e irregulares.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mb-3">⭕</div><h3 class="text-xl font-extrabold mb-2">Círculo y área</h3><p class="text-slate-600 font-medium">Circunferencia, círculo, radio, diámetro, arco, perímetro y área.</p></div>
+      </div>
+
+      <div class="grid lg:grid-cols-[1fr_.95fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl">🧠</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Lo más importante</h2>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Recta</p><p class="text-slate-600 font-medium">Una línea que no tiene fin.</p></div>
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-1">Semirrecta</p><p class="text-slate-600 font-medium">Una línea con principio pero sin final.</p></div>
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">Segmento</p><p class="text-slate-600 font-medium">Un trozo de línea limitado por dos puntos.</p></div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Perímetro</p><p class="text-slate-600 font-medium">La suma de todos los lados.</p></div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💡</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Frase para recordar</h2>
+          </div>
+          <div class="rounded-[1.8rem] bg-gradient-to-r from-sky-600 via-blue-600 to-amber-500 text-white p-6 shadow-lg">
+            <p class="text-xl md:text-2xl font-extrabold leading-relaxed">“En geometría miramos, nombramos, clasificamos y medimos.” ✨</p>
+          </div>
+          <div class="mt-5 space-y-3">
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-slate-700 mb-1">Pista 1</p><p class="text-slate-600 font-medium">Regular = todos los lados iguales.</p></div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-slate-700 mb-1">Pista 2</p><p class="text-slate-600 font-medium">Área = espacio interior que ocupa una figura.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teoria" class="tab-panel">
+      <div class="space-y-4">
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc1">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">📏</span> Líneas y rectas</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc1" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+                <p class="font-black text-sky-700 mb-2">Definiciones</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Recta: no tiene fin.</li>
+                  <li>• Segmento: está limitado por dos puntos.</li>
+                  <li>• Semirrecta: tiene principio, pero no final.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-slate-700 mb-2">Relaciones entre rectas</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Perpendiculares: forman un ángulo recto.</li>
+                  <li>• Secantes: se cruzan en un punto.</li>
+                  <li>• Paralelas: nunca se tocan.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc2">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">📐</span> Ángulos y transportador</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc2" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-4 gap-4">
+              <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">Recto</p><p class="text-slate-600 font-medium">Mide 90°.</p></div>
+              <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Agudo</p><p class="text-slate-600 font-medium">Menor que 90°.</p></div>
+              <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4"><p class="font-black text-rose-700 mb-1">Obtuso</p><p class="text-slate-600 font-medium">Mayor que 90°.</p></div>
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Instrumento</p><p class="text-slate-600 font-medium">Transportador de ángulos.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc3">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🔷</span> Polígonos</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc3" class="hidden px-5 md:px-6 pb-6">
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4 mb-4">
+              <p class="text-slate-700 font-medium">Los polígonos son figuras planas formadas por segmentos rectos.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Partes</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Lados</li>
+                  <li>• Vértices</li>
+                  <li>• Ángulos</li>
+                  <li>• Diagonales</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Perímetro</p>
+                <p class="text-slate-600 font-medium">Es la suma de lo que miden todos los lados del polígono.</p>
+                <p class="font-black text-violet-700 mt-4 mb-2">Regulares / irregulares</p>
+                <p class="text-slate-600 font-medium">Regulares: lados iguales. Irregulares: lados desiguales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc4">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🔺</span> Triángulos</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc4" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+                <p class="font-black text-amber-700 mb-2">Según sus lados</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Equilátero: 3 lados iguales.</li>
+                  <li>• Isósceles: 2 lados iguales.</li>
+                  <li>• Escaleno: 3 lados desiguales.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4">
+                <p class="font-black text-cyan-700 mb-2">Según sus ángulos</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Rectángulo: 1 ángulo recto.</li>
+                  <li>• Acutángulo: todos agudos.</li>
+                  <li>• Obtusángulo: 1 ángulo obtuso.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc5">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">▭</span> Cuadriláteros</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc5" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-2">Paralelogramos</p><p class="text-slate-600 font-medium">Lados paralelos dos a dos. Ejemplos: cuadrado, rectángulo, rombo y romboide.</p></div>
+              <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-2">Trapecios</p><p class="text-slate-600 font-medium">Solo tienen dos lados paralelos. Ejemplos: trapecio rectángulo, isósceles y escaleno.</p></div>
+              <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-2">Trapezoides</p><p class="text-slate-600 font-medium">Sus lados no son paralelos.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc6">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">⭕</span> Circunferencia y círculo</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc6" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-pink-50 border-2 border-pink-100 p-4">
+                <p class="font-black text-pink-700 mb-2">Diferencia</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Círculo: interior de la circunferencia.</li>
+                  <li>• Circunferencia: línea curva cerrada y plana.</li>
+                  <li>• Se dibuja con compás.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-pink-700 mb-2">Partes</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Radio</li>
+                  <li>• Diámetro</li>
+                  <li>• Arco</li>
+                  <li>• Centro</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc7">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">📦</span> Perímetro y área</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc7" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+                <p class="font-black text-emerald-700 mb-2">Perímetro</p>
+                <p class="text-slate-600 font-medium">Es la suma de todos los lados de un polígono.</p>
+              </div>
+              <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4">
+                <p class="font-black text-cyan-700 mb-2">Área</p>
+                <p class="text-slate-600 font-medium">Es el espacio interior que ocupa una figura plana.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fichas" class="tab-panel">
+      <div class="mb-5"><p class="text-slate-600 font-medium text-lg">Haz clic en cada ficha para verla por detrás.</p></div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">📏</div><h3 class="text-2xl font-extrabold">¿Qué es una recta?</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-sky-700">Respuesta</h3><p class="text-slate-700 font-medium">Una línea que no tiene fin.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">📐</div><h3 class="text-2xl font-extrabold">Ángulo recto</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-violet-700">Respuesta</h3><p class="text-slate-700 font-medium">Mide 90 grados.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔷</div><h3 class="text-2xl font-extrabold">¿Qué es un polígono?</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-amber-700">Respuesta</h3><p class="text-slate-700 font-medium">Una figura plana formada por segmentos rectos.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔺</div><h3 class="text-2xl font-extrabold">Triángulo equilátero</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-emerald-700">Respuesta</h3><p class="text-slate-700 font-medium">Tiene tres lados iguales.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">▭</div><h3 class="text-2xl font-extrabold">Paralelogramo</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-pink-700">Respuesta</h3><p class="text-slate-700 font-medium">Un cuadrilátero con lados paralelos dos a dos.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⭕</div><h3 class="text-2xl font-extrabold">Radio</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-cyan-700">Respuesta</h3><p class="text-slate-700 font-medium">Segmento que une el centro con un punto de la circunferencia.</p></div></div></div>
+      </div>
+    </section>
+
+    <section id="test" class="tab-panel">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div id="quiz-container">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Test de Geometría</h2><p class="text-slate-600 font-medium">Repasamos lo más importante.</p></div>
+            <span id="q-counter" class="text-sky-700 font-bold">Pregunta 1 de 14</span>
+          </div>
+
+          <div class="flex gap-3 flex-wrap mb-5">
+            <span id="score-live" class="bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span>
+            <span id="streak-box" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span>
+          </div>
+
+          <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+          <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+          <div id="options-grid" class="grid gap-4"></div>
+        </div>
+
+        <div id="score-container" class="hidden text-center">
+          <div id="medal" class="text-6xl mb-4">🏆</div>
+          <h2 class="text-3xl font-black mb-4 text-slate-800">¡Has terminado!</h2>
+          <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+          <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all">🔁 Repetir todo</button>
+            <button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-violet-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all">🎯 Practicar solo errores</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Mates · Geometría · Aprender también puede ser claro y bonito 📐</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const tabButtons=document.querySelectorAll('.tab-btn');
+    const tabPanels=document.querySelectorAll('.tab-panel');
+    tabButtons.forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab; tabButtons.forEach(b=>b.classList.remove('active')); btn.classList.add('active'); tabPanels.forEach(panel=>panel.classList.toggle('active',panel.id===tab)); window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});});});
+
+    document.querySelectorAll('.accordion-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.dataset.acc;
+        const body=document.getElementById(id);
+        const isOpen=!body.classList.contains('hidden');
+        body.classList.toggle('hidden');
+        btn.classList.toggle('open',!isOpen);
+      });
+    });
+
+    const questions=[
+      {q:'¿Qué es una recta?',a:['Un trozo de línea', 'Una línea que no tiene fin', 'Una línea con principio'],c:1},
+      {q:'¿Qué es un segmento?',a:['Un fragmento limitado por dos puntos','Una línea infinita','Una curva cerrada'],c:0},
+      {q:'Dos rectas que nunca se tocan son…',a:['Secantes','Perpendiculares','Paralelas'],c:2},
+      {q:'Dos rectas que forman 90° son…',a:['Paralelas','Perpendiculares','Curvas'],c:1},
+      {q:'Un ángulo menor que un recto se llama…',a:['Agudo','Obtuso','Llano'],c:0},
+      {q:'¿Con qué se miden los ángulos?',a:['Regla','Compás','Transportador'],c:2},
+      {q:'¿Qué es un polígono?',a:['Una figura plana con segmentos rectos','Una línea curva','Una esfera'],c:0},
+      {q:'Los polígonos con todos los lados iguales son…',a:['Irregulares','Regulares','Secantes'],c:1},
+      {q:'Un triángulo con tres lados iguales es…',a:['Escaleno','Isósceles','Equilátero'],c:2},
+      {q:'Un triángulo con dos lados iguales es…',a:['Isósceles','Rectángulo','Escaleno'],c:0},
+      {q:'Un cuadrilátero con lados paralelos dos a dos pertenece a los…',a:['Trapecios','Paralelogramos','Trapezoides'],c:1},
+      {q:'El interior de la circunferencia es el…',a:['Arco','Círculo','Radio'],c:1},
+      {q:'El segmento que une el centro con un punto de la circunferencia es el…',a:['Radio','Diámetro','Arco'],c:0},
+      {q:'¿Qué es el área?',a:['La suma de los lados','El espacio interior de una figura','Una línea curva'],c:1}
+    ];
+
+    let currentQ=0, score=0, streak=0, errors=[], activeQuestions=[...questions];
+
+    function makeStars(){
+      const layer=document.getElementById('stars-layer');
+      const icons=['⭐','✨','🌟','📐'];
+      for(let i=0;i<8;i++){
+        const star=document.createElement('div');
+        star.className='star-pop';
+        star.textContent=icons[i%icons.length];
+        star.style.left=`${12+Math.random()*76}%`;
+        star.style.top=`${60+Math.random()*16}%`;
+        star.style.animationDelay=`${Math.random()*.12}s`;
+        layer.appendChild(star);
+        setTimeout(()=>star.remove(),1500);
+      }
+    }
+
+    function loadQuestion(){
+      const q=activeQuestions[currentQ];
+      document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${activeQuestions.length}`;
+      document.getElementById('question-text').innerText=q.q;
+      document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`;
+
+      const grid=document.getElementById('options-grid');
+      grid.innerHTML='';
+      q.a.forEach((opt,i)=>{
+        const b=document.createElement('button');
+        b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+        b.innerText=opt;
+        b.onclick=()=>handleAnswer(i,b,grid,q);
+        grid.appendChild(b);
+      });
+    }
+
+    function handleAnswer(selected,button,grid,q){
+      const allBtns=grid.querySelectorAll('button');
+      allBtns.forEach(btn=>btn.onclick=null);
+
+      if(selected===q.c){
+        button.classList.add('correct');
+        score++; streak++;
+        document.getElementById('score-live').innerText=`Puntos: ${score}`;
+        document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`;
+        makeStars();
+      }else{
+        button.classList.add('incorrect');
+        allBtns[q.c].classList.add('correct');
+        streak=0;
+        document.getElementById('streak-box').innerText='🔥 Racha: 0';
+        if(!errors.find(item=>item.q===q.q)){errors.push(q);}
+      }
+
+      setTimeout(()=>{
+        currentQ++;
+        if(currentQ<activeQuestions.length){loadQuestion();}
+        else{finishQuiz();}
+      },1000);
+    }
+
+    function finishQuiz(){
+      document.getElementById('quiz-progress').style.width='100%';
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('score-container').classList.remove('hidden');
+
+      const pct=Math.round((score/activeQuestions.length)*100);
+      const medal=document.getElementById('medal');
+      let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `;
+      if(pct>=90){medal.textContent='🏆';message+='¡Excelente!';}
+      else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien!';}
+      else if(pct>=50){medal.textContent='👍';message+='Bien. Sigue repasando.';}
+      else{medal.textContent='💪';message+='Sigue practicando. Vas paso a paso.';}
+
+      document.getElementById('final-score').innerText=message;
+      document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);
+    }
+
+    function resetQuiz(){
+      activeQuestions=[...questions];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Puntos: 0';
+      document.getElementById('streak-box').innerText='🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    function repeatErrorsFromEnd(){
+      if(errors.length===0)return;
+      activeQuestions=[...errors];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Puntos: 0';
+      document.getElementById('streak-box').innerText='🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
