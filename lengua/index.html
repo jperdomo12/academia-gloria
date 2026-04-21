@@ -4,301 +4,181 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Academia de Gloria | Lengua</title>
-  <meta name="description" content="Portal de Lengua de la Academia de Gloria con acceso destacado a El Diálogo." />
+  <meta name="description" content="Portal de Lengua de la Academia de Gloria con acceso al sitio oficial del cole, Gramática y El Diálogo." />
 
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    body {
-      font-family: 'Outfit', sans-serif;
+    body{
+      font-family:'Outfit',sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(125, 211, 252, .18), transparent 25%),
-        radial-gradient(circle at bottom right, rgba(192, 132, 252, .18), transparent 28%),
-        linear-gradient(180deg, #f8fbff 0%, #fffef9 45%, #f7f5ff 100%);
+        radial-gradient(circle at top left, rgba(251,191,36,.12), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,.10), transparent 24%),
+        linear-gradient(180deg,#f6f3ee 0%,#f7f5f0 100%);
+      color:#1f2937;
     }
 
-    .glass-card {
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(219, 234, 254, .95);
-      box-shadow: 0 20px 45px rgba(37, 99, 235, .08);
+    .dotted-bg{
+      background-image: radial-gradient(rgba(251,191,36,.22) 1px, transparent 1px);
+      background-size: 18px 18px;
     }
 
-    .topic-card {
+    .hero-card{
+      background: linear-gradient(90deg, #f97316 0%, #f59e0b 100%);
+      border: 6px solid rgba(255,255,255,.95);
+      box-shadow: 0 18px 35px rgba(245, 158, 11, .20);
+    }
+
+    .topic-card{
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(251,191,36,.28);
       transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-      height: 100%;
+      min-height: 430px;
     }
 
-    .topic-card:hover {
+    .topic-card:hover{
       transform: translateY(-6px);
-      box-shadow: 0 24px 50px rgba(99, 102, 241, .14);
-      border-color: #bfdbfe;
+      box-shadow: 0 24px 40px rgba(30, 41, 59, .10);
     }
 
-    .gradient-title {
-      background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .topic-card.dialogo:hover{
+      border-color: rgba(14,165,233,.35);
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      border-radius: 999px;
-      padding: .45rem .9rem;
-      font-size: .85rem;
-      font-weight: 800;
-      background: #ffffff;
-      border: 2px solid #dbeafe;
+    .topic-card.gramatica:hover{
+      border-color: rgba(249,115,22,.35);
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      border-radius: 999px;
-      padding: .5rem .95rem;
-      font-size: .85rem;
-      font-weight: 800;
-      background: #ffffff;
-      border: 2px solid #dbeafe;
+    .soft-icon{
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
     }
 
-    .cta-card {
-      position: relative;
-      overflow: hidden;
+    .ghost-card{
+      background: rgba(255,255,255,.3);
+      border: 3px dashed rgba(251,191,36,.30);
+      min-height: 430px;
     }
 
-    .cta-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(139,92,246,.08), rgba(6,182,212,.08));
-      opacity: 0;
-      transition: opacity .25s ease;
+    .cta-arrow{
+      transition: transform .2s ease;
     }
 
-    .cta-card:hover::before {
-      opacity: 1;
-    }
-
-    .cta-card > * {
-      position: relative;
-      z-index: 1;
+    .topic-card:hover .cta-arrow{
+      transform: translateX(4px);
     }
   </style>
 </head>
-<body class="text-slate-800">
-  <main class="max-w-7xl mx-auto p-4 md:p-8">
-    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
-      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
-        <div>
-          <a href="../index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a la Academia
-          </a>
+<body class="dotted-bg">
+  <main class="max-w-[1800px] mx-auto px-4 py-6 md:px-8 md:py-8">
 
-          <div class="flex flex-wrap gap-3 mb-5">
-            <span class="hero-badge text-sky-700">
-              <i data-lucide="book-open" class="w-4 h-4"></i> Lengua
-            </span>
-            <span class="hero-badge text-violet-700">
-              <i data-lucide="sparkles" class="w-4 h-4"></i> Modo TEL
-            </span>
-            <span class="hero-badge text-cyan-700">
-              <i data-lucide="graduation-cap" class="w-4 h-4"></i> 5º Primaria
-            </span>
+    <header class="hero-card rounded-[3rem] px-6 py-8 md:px-9 md:py-9 mb-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex items-center gap-5">
+          <div class="w-24 h-24 rounded-[2rem] bg-white/20 soft-icon flex items-center justify-center text-white shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14 3 9l9-5 9 5-9 5Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 12v4c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4" />
+            </svg>
           </div>
 
-          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
-            Academia de <span class="gradient-title">Lengua</span> ✍️
-          </h1>
-
-          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
-            Un espacio claro, bonito y motivador para aprender Lengua paso a paso, con actividades visuales y contenido pensado para Gloria.
-          </p>
-
-          <div class="flex flex-wrap gap-4 mt-7">
-            <a href="dialogo.html" class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all shadow-lg">
-              <i data-lucide="messages-square" class="w-5 h-5"></i> Entrar a El Diálogo
-            </a>
+          <div>
+            <h1 class="text-3xl md:text-5xl font-black text-white leading-tight">
+              Gaudem - Área Lengua
+            </h1>
+            <p class="text-white/90 text-xl md:text-2xl font-semibold mt-2">
+              Portal oficial del colegio
+            </p>
           </div>
         </div>
 
-        <div class="glass-card rounded-[2rem] p-6 md:p-7">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-violet-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg">
-              📘
-            </div>
-            <div>
-              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-700">Ruta de trabajo</p>
-              <h2 class="text-2xl font-extrabold text-slate-800">Aprender mejor</h2>
-            </div>
-          </div>
-
-          <div class="space-y-3">
-            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
-              <p class="font-black text-sky-700 mb-1">1. Mira</p>
-              <p class="text-slate-600 font-medium">Lee el contenido con calma y observa los ejemplos.</p>
-            </div>
-            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
-              <p class="font-black text-violet-700 mb-1">2. Practica</p>
-              <p class="text-slate-600 font-medium">Usa fichas, preguntas y mini test para repasar.</p>
-            </div>
-            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
-              <p class="font-black text-emerald-700 mb-1">3. Confía</p>
-              <p class="text-slate-600 font-medium">Aprender poco a poco también es aprender muy bien.</p>
-            </div>
-          </div>
-        </div>
+        <a href="https://sites.google.com/gaudem.es/quinto/%C3%A1reas/lengua"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-flex items-center gap-3 bg-amber-300/90 hover:bg-amber-300 text-white text-2xl md:text-3xl font-black px-8 py-5 rounded-[1.4rem] shadow-md transition-all">
+          Abrir Sitio
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5h5m0 0v5m0-5-9 9" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 9v10h10" />
+          </svg>
+        </a>
       </div>
     </header>
 
-    <section class="mb-10">
-      <div class="flex items-center gap-3 mb-5">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-500 text-white flex items-center justify-center text-2xl shadow-lg">📚</div>
-        <div>
-          <h2 class="text-3xl font-extrabold">Contenidos de Lengua</h2>
-          <p class="text-slate-600 font-medium">Accesos directos a los temas de estudio.</p>
-        </div>
-      </div>
+    <section class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
 
-      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
-        <a href="dialogo.html"
-           class="topic-card cta-card block bg-white rounded-[2rem] p-6 border-2 border-sky-100 shadow-md">
-          <div class="flex items-start gap-4 h-full">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-violet-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg shrink-0">
-              💬
-            </div>
-
-            <div class="flex-1 flex flex-col h-full">
-              <div class="flex flex-wrap gap-2 mb-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-sky-100 text-sky-700">
-                  NUEVO
-                </span>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-violet-100 text-violet-700">
-                  Fichas + Test
-                </span>
-              </div>
-
-              <h3 class="text-2xl font-extrabold text-slate-800 mb-2">El Diálogo</h3>
-
-              <p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
-                Aprende qué es el diálogo, el modo formal e informal y cómo se escribe en estilo directo e indirecto.
-              </p>
-
-              <div class="mt-auto inline-flex items-center gap-2 text-sky-700 font-black">
-                Entrar
-                <span class="transition-transform group-hover:translate-x-1">→</span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <div class="topic-card block bg-white rounded-[2rem] p-6 border-2 border-amber-100 shadow-md opacity-95">
-          <div class="flex items-start gap-4 h-full">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-3xl shadow-lg shrink-0">
-              ✍️
-            </div>
-
-            <div class="flex-1 flex flex-col h-full">
-              <div class="flex flex-wrap gap-2 mb-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-700">
-                  PRÓXIMAMENTE
-                </span>
-              </div>
-
-              <h3 class="text-2xl font-extrabold text-slate-800 mb-2">Ortografía</h3>
-
-              <p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
-                Reglas, ejemplos y actividades para escribir cada vez mejor.
-              </p>
-
-              <div class="mt-auto inline-flex items-center gap-2 text-amber-700 font-black">
-                Próximamente
-              </div>
-            </div>
-          </div>
+      <!-- Gramática -->
+      <a href="gramatica.html"
+         class="topic-card gramatica rounded-[3rem] p-8 md:p-10 block">
+        <div class="w-24 h-24 rounded-[2rem] bg-amber-100 soft-icon flex items-center justify-center text-5xl mb-10">
+          ✍️
         </div>
 
-        <div class="topic-card block bg-white rounded-[2rem] p-6 border-2 border-emerald-100 shadow-md opacity-95">
-          <div class="flex items-start gap-4 h-full">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg shrink-0">
-              📖
-            </div>
+        <h2 class="text-[2.6rem] md:text-[3rem] leading-none font-medium text-slate-800 mb-6" style="font-family: Georgia, 'Times New Roman', serif;">
+          Gramática
+        </h2>
 
-            <div class="flex-1 flex flex-col h-full">
-              <div class="flex flex-wrap gap-2 mb-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-700">
-                  PRÓXIMAMENTE
-                </span>
-              </div>
-
-              <h3 class="text-2xl font-extrabold text-slate-800 mb-2">Comprensión lectora</h3>
-
-              <p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
-                Textos, preguntas y actividades para entender mejor lo que lees.
-              </p>
-
-              <div class="mt-auto inline-flex items-center gap-2 text-emerald-700 font-black">
-                Próximamente
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-10">
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💌</div>
-          <h2 class="text-2xl md:text-3xl font-extrabold">Mensaje para Gloria</h2>
-        </div>
-
-        <p class="text-slate-700 font-medium text-lg leading-relaxed">
-          Gloria, en Lengua puedes aprender con calma, mirar ejemplos bonitos y practicar poco a poco. Cada paso cuenta y cada esfuerzo también brilla.
+        <p class="text-slate-600 text-xl md:text-[2rem] leading-relaxed font-medium mb-12 max-w-[17ch]">
+          Aprende a distinguir sustantivos, verbos, adjetivos y determinantes sin errores.
         </p>
 
-        <div class="mt-5 rounded-[1.8rem] bg-gradient-to-r from-sky-600 via-violet-600 to-cyan-500 text-white p-6 shadow-lg">
-          <p class="text-xl md:text-2xl font-extrabold leading-relaxed">
-            “Leer, pensar y escribir también puede ser claro, bonito y divertido.” ✨
-          </p>
+        <div class="mt-auto inline-flex items-center gap-3 text-orange-600 font-black tracking-[.08em] text-xl md:text-2xl uppercase">
+          Iniciar lección
+          <span class="cta-arrow">→</span>
         </div>
-      </div>
+      </a>
 
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🚀</div>
-          <h2 class="text-2xl md:text-3xl font-extrabold">Acceso recomendado</h2>
-        </div>
+      <!-- El Diálogo -->
+      <a href="dialogo.html"
+         class="topic-card dialogo rounded-[3rem] p-8 md:p-10 block relative overflow-hidden">
+        <div class="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-sky-50/80 via-violet-50/70 to-cyan-50/80"></div>
 
-        <div class="rounded-[1.8rem] bg-white border-2 border-sky-100 p-5">
-          <p class="text-xs font-black uppercase tracking-[.18em] text-sky-700 mb-2">Contenido destacado</p>
-          <h3 class="text-2xl font-extrabold mb-2">El Diálogo</h3>
-          <p class="text-slate-600 font-medium mb-4">
-            Incluye teoría, fichas interactivas y mini test con opción de practicar errores.
+        <div class="relative">
+          <div class="w-24 h-24 rounded-[2rem] bg-sky-100 soft-icon flex items-center justify-center text-sky-600 mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5M7 20l-3 1 1-3a8 8 0 1 1 2 2Z" />
+            </svg>
+          </div>
+
+          <div class="flex gap-2 mb-4 flex-wrap">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-black bg-sky-100 text-sky-700">
+              NUEVO
+            </span>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-black bg-violet-100 text-violet-700">
+              Fichas + Test
+            </span>
+          </div>
+
+          <h2 class="text-[2.4rem] md:text-[2.9rem] leading-none font-extrabold text-slate-800 mb-5">
+            El Diálogo
+          </h2>
+
+          <p class="text-slate-600 text-xl md:text-[1.9rem] leading-relaxed font-medium mb-12 max-w-[19ch]">
+            Estilo directo e indirecto, signos de puntuación y tipos de conversación.
           </p>
-          <a href="dialogo.html" class="inline-flex items-center gap-2 bg-sky-600 text-white px-5 py-3 rounded-2xl font-bold hover:bg-sky-700 transition-all">
-            <i data-lucide="arrow-right" class="w-5 h-5"></i> Ir ahora
-          </a>
+
+          <div class="mt-auto inline-flex items-center gap-3 text-sky-600 font-black tracking-[.08em] text-xl md:text-2xl uppercase">
+            Estudiar
+            <span class="cta-arrow">›</span>
+          </div>
         </div>
+      </a>
+
+      <!-- Próximos temas -->
+      <div class="ghost-card rounded-[3rem] p-8 md:p-10 flex flex-col items-center justify-center text-center">
+        <div class="text-5xl mb-6 opacity-70">📖</div>
+        <p class="text-amber-300 text-2xl md:text-4xl font-extrabold italic mb-4">
+          Próximos temas de Lengua...
+        </p>
+        <p class="text-amber-200 text-lg md:text-2xl font-black tracking-[.12em] uppercase">
+          Preparando material
+        </p>
       </div>
     </section>
 
-    <footer class="text-center py-8">
-      <p class="text-slate-500 font-medium">Academia de Gloria · Lengua · Un portal creado con cariño para aprender mejor ✍️</p>
-    </footer>
   </main>
-
-  <script>
-    lucide.createIcons();
-  </script>
 </body>
 </html>
