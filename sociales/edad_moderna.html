@@ -1,1 +1,528 @@
-ww
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Sociales | Edad Moderna</title>
+  <meta name="description" content="Página interactiva sobre la Edad Moderna para Gloria. Incluye línea del tiempo, Reyes Católicos, conquista de América, imperio hispánico, crisis, sociedad y cultura." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(251,191,36,.16), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,.16), transparent 28%),
+        linear-gradient(180deg,#fffdf8 0%,#f7fbff 48%,#fefcff 100%);
+      color:#1e293b;
+    }
+    .glass-card{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border:2px solid rgba(254,240,138,.55);
+      box-shadow:0 18px 40px rgba(245,158,11,.08);
+    }
+    .gradient-title{
+      background:linear-gradient(90deg,#f59e0b,#2563eb,#7c3aed);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .tab-btn{transition:all .22s ease;}
+    .tab-btn.active{
+      background:linear-gradient(135deg,#f59e0b,#f97316);
+      color:white;border-color:transparent;box-shadow:0 16px 30px rgba(245,158,11,.22);
+      transform:translateY(-1px);
+    }
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;animation:fadeIn .28s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .topic-card,.flash-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
+    .topic-card:hover,.flash-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(99,102,241,.14);border-color:#fde68a;}
+    .pill{
+      display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;
+      font-size:.88rem;font-weight:800;background:#fff;border:2px solid #fde68a;
+    }
+    .accordion-btn.open .acc-icon{transform:rotate(180deg)}
+    .flash-card{perspective:1000px;min-height:220px;cursor:pointer}
+    .flash-inner{position:relative;width:100%;min-height:220px;transition:transform .6s;transform-style:preserve-3d}
+    .flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{
+      position:absolute;inset:0;backface-visibility:hidden;border-radius:1.5rem;padding:1.2rem;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      border:2px solid #fde68a;background:#fff;
+    }
+    .flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#fff7ed,#eff6ff)}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#f59e0b,#8b5cf6,#22c55e);transition:width .25s ease}
+    .option-btn{transition:all .2s ease;border:2px solid #fde68a;background:#fff}
+    .option-btn:hover{border-color:#f59e0b;transform:translateY(-1px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}
+    .incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .star-pop{position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0}
+    @keyframes floatUp{0%{transform:translateY(20px) scale(.7) rotate(0);opacity:0}18%{opacity:1}100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    .timeline .item{border-radius:1.25rem;padding:1rem;text-align:center;font-weight:800}
+    .timeline .item small{display:block;font-size:.78rem;font-weight:700;opacity:.8}
+    .person-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border-radius:999px;font-size:.78rem;font-weight:800}
+  </style>
+</head>
+<body>
+  <div id="stars-layer"></div>
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <a href="../index.html" class="inline-flex items-center gap-2 text-amber-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Sociales
+          </a>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-amber-700"><i data-lucide="landmark" class="w-4 h-4"></i> Sociales</span>
+            <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Modo TEL</span>
+            <span class="pill text-sky-700"><i data-lucide="scroll-text" class="w-4 h-4"></i> Historia</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+            La <span class="gradient-title">Edad Moderna</span> 👑
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Una etapa de reyes, viajes, conquistas, arte y cambios muy importantes. Vamos a aprenderla paso a paso y de forma visual.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="#contenido" class="inline-flex items-center gap-2 bg-amber-500 text-white px-6 py-4 rounded-2xl font-bold hover:bg-amber-600 transition-all shadow-lg">
+              <i data-lucide="play-circle" class="w-5 h-5"></i> Empezar
+            </a>
+            <a href="#test" class="inline-flex items-center gap-2 bg-white text-violet-700 px-6 py-4 rounded-2xl font-bold border-2 border-violet-100 hover:border-violet-300 transition-all">
+              <i data-lucide="brain" class="w-5 h-5"></i> Ir al test
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-sky-500 text-white flex items-center justify-center text-3xl shadow-lg">🕰️</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-amber-700">Idea clave</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Un tiempo de cambios</h2>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+              <p class="font-black text-amber-700 mb-1">Empieza</p>
+              <p class="text-slate-600 font-medium">Con el Descubrimiento de América en 1492.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">Termina</p>
+              <p class="text-slate-600 font-medium">Con la Revolución Francesa en 1789.</p>
+            </div>
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
+              <p class="font-black text-violet-700 mb-1">Pasó de todo</p>
+              <p class="text-slate-600 font-medium">Reyes, viajes, imperio, crisis, literatura y arte.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="contenido" class="mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="resumen">
+          <span class="inline-flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Resumen</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="teoria">
+          <span class="inline-flex items-center gap-2"><i data-lucide="book-open-check" class="w-5 h-5"></i> Teoría</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="fichas">
+          <span class="inline-flex items-center gap-2"><i data-lucide="layers-3" class="w-5 h-5"></i> Fichas</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">
+          <span class="inline-flex items-center gap-2"><i data-lucide="badge-check" class="w-5 h-5"></i> Test</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="resumen" class="tab-panel active">
+      <div class="glass-card rounded-[2rem] p-6 md:p-7 mb-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl">📅</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Línea del tiempo</h2>
+        </div>
+        <div class="timeline">
+          <div class="item bg-lime-100 text-lime-800">Prehistoria</div>
+          <div class="item bg-green-100 text-green-800">Edad Antigua</div>
+          <div class="item bg-blue-100 text-blue-800">Edad Media</div>
+          <div class="item bg-fuchsia-100 text-fuchsia-800 ring-4 ring-amber-300">Edad Moderna<small>1492 - 1789</small></div>
+          <div class="item bg-rose-100 text-rose-800">Edad Contemporánea</div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">👑</div><h3 class="text-xl font-extrabold mb-2">Reyes Católicos</h3><p class="text-slate-600 font-medium">Unieron Castilla y Aragón y conquistaron Granada en 1492.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">🚢</div><h3 class="text-xl font-extrabold mb-2">América</h3><p class="text-slate-600 font-medium">Colón llegó a América en 1492 y después hubo conquistas.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl mb-3">🌍</div><h3 class="text-xl font-extrabold mb-2">Imperio hispánico</h3><p class="text-slate-600 font-medium">España tuvo muchos territorios en Europa, América, África y Asia.</p></div>
+        <div class="glass-card topic-card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mb-3">🎨</div><h3 class="text-xl font-extrabold mb-2">Sociedad y cultura</h3><p class="text-slate-600 font-medium">Siglo de Oro, literatura, arte y una sociedad con privilegiados y no privilegiados.</p></div>
+      </div>
+
+      <div class="grid lg:grid-cols-[1fr_.95fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-2xl">🧭</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Resumen muy fácil</h2>
+          </div>
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-amber-700 mb-1">1. Empieza</p><p class="text-slate-600 font-medium">La Edad Moderna comienza en 1492, con el Descubrimiento de América.</p></div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-sky-700 mb-1">2. Crece</p><p class="text-slate-600 font-medium">España formó un gran imperio con muchos territorios.</p></div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-violet-700 mb-1">3. Se debilita</p><p class="text-slate-600 font-medium">Con el tiempo el imperio se fragmentó y hubo guerras y crisis.</p></div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-emerald-700 mb-1">4. Deja huella</p><p class="text-slate-600 font-medium">Fue una época muy importante para la literatura y el arte.</p></div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">💡</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Frase para recordar</h2>
+          </div>
+          <div class="rounded-[1.8rem] bg-gradient-to-r from-amber-500 via-orange-500 to-sky-500 text-white p-6 shadow-lg">
+            <p class="text-xl md:text-2xl font-extrabold leading-relaxed">“La Edad Moderna fue un tiempo de grandes viajes, grandes reyes y grandes cambios.” ✨</p>
+          </div>
+          <div class="mt-5 space-y-3">
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+              <p class="font-black text-amber-700 mb-1">Fecha clave</p>
+              <p class="text-slate-600 font-medium">1492: Descubrimiento de América.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">Fecha final</p>
+              <p class="text-slate-600 font-medium">1789: Revolución Francesa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teoria" class="tab-panel">
+      <div class="space-y-4">
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc1">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">👑</span> Reyes Católicos</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc1" class="hidden px-5 md:px-6 pb-6">
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 mb-4">
+              <p class="text-slate-700 font-medium">A finales de la Edad Media, la Península Ibérica tenía varios reinos. En 1479 llegaron al poder Isabel de Castilla y Fernando de Aragón, llamados Reyes Católicos.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="person-badge bg-rose-100 text-rose-700">👸 Isabel</span>
+              <span class="person-badge bg-sky-100 text-sky-700">🤴 Fernando</span>
+            </div>
+            <ul class="space-y-2 text-slate-600 font-medium">
+              <li>• Unieron Castilla y Aragón con su matrimonio.</li>
+              <li>• Conquistaron Granada en 1492.</li>
+              <li>• También conquistaron Canarias y Navarra.</li>
+              <li>• Fuera de la Península, ocuparon territorios del norte de África y Nápoles.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc2">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🚢</span> La conquista de América</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc2" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+                <p class="font-black text-sky-700 mb-2">¿Por qué hubo grandes viajes?</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Mejoró la navegación: brújula, astrolabio, carabela y mapas.</li>
+                  <li>• Querían riqueza y oro.</li>
+                  <li>• Buscaban nuevas rutas hacia las Islas de las Especias.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-slate-700 mb-2">Colón</p>
+                <p class="text-slate-600 font-medium">Los Reyes Católicos financiaron a Cristóbal Colón. Salió el 3 de agosto de 1492 desde Palos de la Frontera y llegó a América el 12 de octubre.</p>
+              </div>
+            </div>
+            <div class="mt-4 rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+              <p class="font-black text-emerald-700 mb-2">Después de Colón</p>
+              <p class="text-slate-600 font-medium">Hernán Cortés conquistó México y Francisco de Pizarro conquistó Perú.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc3">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🌍</span> El imperio hispánico</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc3" class="hidden px-5 md:px-6 pb-6">
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4 mb-4">
+              <p class="text-slate-700 font-medium">En el siglo XVI, España se convirtió en un gran imperio con territorios en Europa, América, África y Asia.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Territorios</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• España</li>
+                  <li>• Países Bajos</li>
+                  <li>• Gran parte de Italia</li>
+                  <li>• Territorios del centro de Europa</li>
+                  <li>• Colonias americanas</li>
+                  <li>• Posesiones en África y Asia</li>
+                  <li>• Portugal, desde 1580</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Carlos I y Felipe II</p>
+                <p class="text-slate-600 font-medium mb-3">Carlos I heredó muchos territorios y también fue Carlos V de Alemania.</p>
+                <p class="text-slate-600 font-medium">Felipe II derrotó a Francia y venció a los turcos en Lepanto, pero las guerras costaron mucho dinero.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc4">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">⚔️</span> La crisis del imperio</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc4" class="hidden px-5 md:px-6 pb-6">
+            <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4 mb-4">
+              <p class="text-slate-700 font-medium">El imperio empezó a debilitarse porque perdió territorios, la población se empobreció y hubo problemas de sucesión.</p>
+            </div>
+            <ul class="space-y-2 text-slate-600 font-medium">
+              <li>• En el siglo XVII gobernaron Felipe III, Felipe IV y Carlos II.</li>
+              <li>• Muchos reyes dejaron el gobierno en manos de validos.</li>
+              <li>• Tras la muerte de Carlos II hubo una guerra de Sucesión.</li>
+              <li>• En 1713, el Tratado de Utrecht reconoció a Felipe de Anjou como Felipe V.</li>
+              <li>• Llegó la dinastía de los Borbones.</li>
+              <li>• En el siglo XVIII hubo reformas: ministros, carreteras, canales, manufacturas y comercio.</li>
+              <li>• El final llegó con el motín de Aranjuez en 1808.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc5">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🏘️</span> Sociedad y cultura</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc5" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+                <p class="font-black text-amber-700 mb-2">Sociedad</p>
+                <ul class="space-y-2 text-slate-600 font-medium">
+                  <li>• Privilegiados: nobleza y clero.</li>
+                  <li>• No pagaban impuestos y ocupaban cargos de gobierno.</li>
+                  <li>• No privilegiados: campesinos, comerciantes y artesanos.</li>
+                  <li>• Pagaban impuestos y formaban el pueblo llano.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+                <p class="font-black text-sky-700 mb-2">Siglo de Oro</p>
+                <p class="text-slate-600 font-medium">Se llama así al gran momento de la literatura y el arte españoles entre los siglos XVI y XVII.</p>
+                <p class="text-slate-600 font-medium mt-3">La imprenta ayudó a difundir muchas obras.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Literatura</p>
+                <p class="text-slate-600 font-medium">Destacaron Santa Teresa, San Juan de la Cruz, Garcilaso, Cervantes, Quevedo, Góngora, Lope de Vega, Calderón y Jovellanos.</p>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <p class="font-black text-violet-700 mb-2">Arte</p>
+                <p class="text-slate-600 font-medium">En arquitectura hubo estilo herreriano, barroco y neoclásico. En pintura destacaron el Greco, Velázquez, Zurbarán, Ribera, Murillo y Goya.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fichas" class="tab-panel">
+      <div class="mb-5"><p class="text-slate-600 font-medium text-lg">Haz clic en cada ficha para verla por detrás.</p></div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">📅</div><h3 class="text-2xl font-extrabold">¿Cuándo empieza?</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-amber-700">Respuesta</h3><p class="text-slate-700 font-medium">Empieza en 1492, con el Descubrimiento de América.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">👑</div><h3 class="text-2xl font-extrabold">Reyes Católicos</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-sky-700">Respuesta</h3><p class="text-slate-700 font-medium">Isabel de Castilla y Fernando de Aragón.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🚢</div><h3 class="text-2xl font-extrabold">Cristóbal Colón</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-violet-700">Respuesta</h3><p class="text-slate-700 font-medium">Llegó a América el 12 de octubre de 1492.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🌍</div><h3 class="text-2xl font-extrabold">Imperio hispánico</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-emerald-700">Respuesta</h3><p class="text-slate-700 font-medium">Fue un gran imperio con territorios en Europa, América, África y Asia.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⚔️</div><h3 class="text-2xl font-extrabold">Guerra de Sucesión</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-rose-700">Respuesta</h3><p class="text-slate-700 font-medium">Terminó en 1713 con el Tratado de Utrecht.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🎨</div><h3 class="text-2xl font-extrabold">Siglo de Oro</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-pink-700">Respuesta</h3><p class="text-slate-700 font-medium">Fue un tiempo de gran literatura y gran arte en España.</p></div></div></div>
+      </div>
+    </section>
+
+    <section id="test" class="tab-panel">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8" id="test">
+        <div id="quiz-container">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Test de Edad Moderna</h2><p class="text-slate-600 font-medium">Repasamos lo más importante.</p></div>
+            <span id="q-counter" class="text-amber-700 font-bold">Pregunta 1 de 14</span>
+          </div>
+
+          <div class="flex gap-3 flex-wrap mb-5">
+            <span id="score-live" class="bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span>
+            <span id="streak-box" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span>
+          </div>
+
+          <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+          <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+          <div id="options-grid" class="grid gap-4"></div>
+        </div>
+
+        <div id="score-container" class="hidden text-center">
+          <div id="medal" class="text-6xl mb-4">🏆</div>
+          <h2 class="text-3xl font-black mb-4 text-slate-800">¡Has terminado!</h2>
+          <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+          <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <button onclick="resetQuiz()" class="bg-amber-500 text-white px-8 py-4 rounded-2xl font-bold hover:bg-amber-600 transition-all">🔁 Repetir todo</button>
+            <button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-violet-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all">🎯 Practicar solo errores</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10">
+      <p class="text-slate-500 font-medium">Academia de Gloria · Sociales · Edad Moderna · Aprender historia también puede ser claro y bonito 👑</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const tabButtons=document.querySelectorAll('.tab-btn');
+    const tabPanels=document.querySelectorAll('.tab-panel');
+    tabButtons.forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab; tabButtons.forEach(b=>b.classList.remove('active')); btn.classList.add('active'); tabPanels.forEach(panel=>panel.classList.toggle('active',panel.id===tab)); window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});});});
+
+    document.querySelectorAll('.accordion-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.dataset.acc;
+        const body=document.getElementById(id);
+        const isOpen=!body.classList.contains('hidden');
+        body.classList.toggle('hidden');
+        btn.classList.toggle('open',!isOpen);
+      });
+    });
+
+    const questions=[
+      {q:'¿Cuándo empieza la Edad Moderna?',a:['En 1212','En 1492','En 1789'],c:1},
+      {q:'¿Cuándo termina la Edad Moderna?',a:['Con la Revolución Francesa','Con la conquista de Granada','Con Lepanto'],c:0},
+      {q:'¿Quiénes fueron los Reyes Católicos?',a:['Carlos I y Felipe II','Isabel y Fernando','Felipe V y Carlos III'],c:1},
+      {q:'¿Qué reino conquistaron en 1492?',a:['Portugal','Granada','Navarra'],c:1},
+      {q:'¿Qué marinero llegó a América en 1492?',a:['Magallanes','Pizarro','Cristóbal Colón'],c:2},
+      {q:'¿Qué conquistó Hernán Cortés?',a:['México','Perú','Portugal'],c:0},
+      {q:'¿Qué conquistó Francisco de Pizarro?',a:['Italia','Perú','Francia'],c:1},
+      {q:'¿Cómo se llamó el gran imperio de España?',a:['Imperio hispánico','Imperio romano','Imperio francés'],c:0},
+      {q:'¿Quién fue también Carlos V de Alemania?',a:['Carlos I','Felipe II','Carlos III'],c:0},
+      {q:'¿Qué batalla ganó Felipe II a los turcos?',a:['Trafalgar','Lepanto','Utrecht'],c:1},
+      {q:'¿Qué guerra llevó al trono a Felipe V?',a:['Guerra de Sucesión','Guerra de Granada','Guerra de las Comunidades'],c:0},
+      {q:'¿Qué familia real llegó con Felipe V?',a:['Los Austrias','Los Borbones','Los Trastámara'],c:1},
+      {q:'¿Cómo se llamaba el gran periodo cultural español?',a:['Edad de Oro','Siglo de Oro','Edad de Plata'],c:1},
+      {q:'¿Quién pintó Las Meninas?',a:['Murillo','Velázquez','Goya'],c:1}
+    ];
+
+    let currentQ=0, score=0, streak=0, errors=[], activeQuestions=[...questions];
+
+    function makeStars(){
+      const layer=document.getElementById('stars-layer');
+      const icons=['⭐','✨','🌟','👑'];
+      for(let i=0;i<8;i++){
+        const star=document.createElement('div');
+        star.className='star-pop';
+        star.textContent=icons[i%icons.length];
+        star.style.left=`${12+Math.random()*76}%`;
+        star.style.top=`${60+Math.random()*16}%`;
+        star.style.animationDelay=`${Math.random()*.12}s`;
+        layer.appendChild(star);
+        setTimeout(()=>star.remove(),1500);
+      }
+    }
+
+    function loadQuestion(){
+      const q=activeQuestions[currentQ];
+      document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${activeQuestions.length}`;
+      document.getElementById('question-text').innerText=q.q;
+      document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`;
+
+      const grid=document.getElementById('options-grid');
+      grid.innerHTML='';
+      q.a.forEach((opt,i)=>{
+        const b=document.createElement('button');
+        b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+        b.innerText=opt;
+        b.onclick=()=>handleAnswer(i,b,grid,q);
+        grid.appendChild(b);
+      });
+    }
+
+    function handleAnswer(selected,button,grid,q){
+      const allBtns=grid.querySelectorAll('button');
+      allBtns.forEach(btn=>btn.onclick=null);
+
+      if(selected===q.c){
+        button.classList.add('correct');
+        score++; streak++;
+        document.getElementById('score-live').innerText=`Puntos: ${score}`;
+        document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`;
+        makeStars();
+      }else{
+        button.classList.add('incorrect');
+        allBtns[q.c].classList.add('correct');
+        streak=0;
+        document.getElementById('streak-box').innerText='🔥 Racha: 0';
+        if(!errors.find(item=>item.q===q.q)){errors.push(q);}
+      }
+
+      setTimeout(()=>{
+        currentQ++;
+        if(currentQ<activeQuestions.length){loadQuestion();}
+        else{finishQuiz();}
+      },1000);
+    }
+
+    function finishQuiz(){
+      document.getElementById('quiz-progress').style.width='100%';
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('score-container').classList.remove('hidden');
+
+      const pct=Math.round((score/activeQuestions.length)*100);
+      const medal=document.getElementById('medal');
+      let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `;
+      if(pct>=90){medal.textContent='🏆';message+='¡Excelente!';}
+      else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien!';}
+      else if(pct>=50){medal.textContent='👍';message+='Bien. Sigue repasando.';}
+      else{medal.textContent='💪';message+='Sigue practicando. Vas paso a paso.';}
+
+      document.getElementById('final-score').innerText=message;
+      document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);
+    }
+
+    function resetQuiz(){
+      activeQuestions=[...questions];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Puntos: 0';
+      document.getElementById('streak-box').innerText='🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    function repeatErrorsFromEnd(){
+      if(errors.length===0)return;
+      activeQuestions=[...errors];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Puntos: 0';
+      document.getElementById('streak-box').innerText='🔥 Racha: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
