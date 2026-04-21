@@ -68,6 +68,52 @@
       18%{opacity:1}
       100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}
     }
+    .mini-line{height:4px;border-radius:999px;background:#2563eb;position:relative}
+    .mini-line.segment::before,.mini-line.segment::after{
+      content:"";position:absolute;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:999px;background:#ef4444
+    }
+    .mini-line.segment::before{left:-2px}.mini-line.segment::after{right:-2px}
+    .mini-line.ray::before{
+      content:"";position:absolute;left:-2px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:999px;background:#16a34a
+    }
+    .mini-line.ray::after{
+      content:"→";position:absolute;right:-16px;top:50%;transform:translateY(-58%);font-weight:900;color:#2563eb
+    }
+    .mini-line.line::before,.mini-line.line::after{
+      content:"↔";position:absolute;top:50%;transform:translateY(-60%);font-weight:900;color:#2563eb
+    }
+    .mini-line.line::before{left:-18px}.mini-line.line::after{right:-18px}
+    .shape-box{min-height:140px}
+    .triangle{
+      width:0;height:0;border-left:55px solid transparent;border-right:55px solid transparent;border-bottom:95px solid #a7f3d0;
+      filter:drop-shadow(0 6px 10px rgba(0,0,0,.08));
+    }
+    .triangle.iso{
+      border-left:45px solid transparent;border-right:45px solid transparent;border-bottom:95px solid #fde68a;
+    }
+    .triangle.scalene{
+      width:0;height:0;border-left:35px solid transparent;border-right:60px solid transparent;border-bottom:95px solid #bfdbfe;
+      transform:skewX(-8deg);
+    }
+    .shape-square{width:92px;height:92px;background:#c7d2fe}
+    .shape-rect{width:120px;height:82px;background:#bae6fd}
+    .shape-rhombus{width:92px;height:92px;background:#fbcfe8;transform:rotate(45deg)}
+    .shape-trap{width:120px;height:0;border-bottom:86px solid #fed7aa;border-left:22px solid transparent;border-right:22px solid transparent}
+    .shape-circle{width:96px;height:96px;border-radius:999px;background:#bfdbfe}
+    .shape-ring{width:96px;height:96px;border-radius:999px;border:6px solid #0ea5e9;background:transparent}
+    .angle{
+      width:100px;height:100px;position:relative;
+    }
+    .angle::before,.angle::after{
+      content:"";position:absolute;background:#334155;border-radius:999px;
+    }
+    .angle.right::before{left:50%;bottom:0;width:4px;height:90px;transform:translateX(-50%)}
+    .angle.right::after{left:50%;bottom:0;width:90px;height:4px}
+    .angle.acute::before{left:50%;bottom:0;width:4px;height:90px;transform:translateX(-50%)}
+    .angle.acute::after{left:47px;bottom:2px;width:72px;height:4px;transform:rotate(-35deg);transform-origin:left center}
+    .angle.obtuse::before{left:50%;bottom:0;width:4px;height:90px;transform:translateX(-50%)}
+    .angle.obtuse::after{left:47px;bottom:2px;width:76px;height:4px;transform:rotate(-120deg);transform-origin:left center}
+    .family-grid .item{min-height:150px}
   </style>
 </head>
 <body>
@@ -185,6 +231,58 @@
           </div>
         </div>
       </div>
+
+      <div class="grid lg:grid-cols-3 gap-6 mt-6">
+        <div class="glass-card rounded-[2rem] p-5">
+          <h3 class="text-xl font-extrabold mb-4">Líneas y rectas</h3>
+          <div class="space-y-5">
+            <div>
+              <p class="font-black text-sky-700 mb-2">Recta</p>
+              <div class="mini-line line mx-6"></div>
+            </div>
+            <div>
+              <p class="font-black text-emerald-700 mb-2">Semirrecta</p>
+              <div class="mini-line ray mx-6 bg-emerald-500"></div>
+            </div>
+            <div>
+              <p class="font-black text-rose-700 mb-2">Segmento</p>
+              <div class="mini-line segment mx-6 bg-rose-500"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-5">
+          <h3 class="text-xl font-extrabold mb-4">Tipos de ángulos</h3>
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="rounded-2xl bg-amber-50 p-3 border-2 border-amber-100">
+              <div class="angle right mx-auto"></div>
+              <p class="font-black text-amber-700 mt-2">Recto</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50 p-3 border-2 border-emerald-100">
+              <div class="angle acute mx-auto"></div>
+              <p class="font-black text-emerald-700 mt-2">Agudo</p>
+            </div>
+            <div class="rounded-2xl bg-rose-50 p-3 border-2 border-rose-100">
+              <div class="angle obtuse mx-auto"></div>
+              <p class="font-black text-rose-700 mt-2">Obtuso</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-5">
+          <h3 class="text-xl font-extrabold mb-4">Círculo y circunferencia</h3>
+          <div class="grid grid-cols-2 gap-4 text-center">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <div class="shape-ring mx-auto"></div>
+              <p class="font-black text-sky-700 mt-3">Circunferencia</p>
+            </div>
+            <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4">
+              <div class="shape-circle mx-auto"></div>
+              <p class="font-black text-cyan-700 mt-3">Círculo</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="teoria" class="tab-panel">
@@ -213,6 +311,20 @@
                 </ul>
               </div>
             </div>
+            <div class="grid sm:grid-cols-3 gap-4 mt-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center">
+                <p class="font-black text-sky-700 mb-2">Paralelas</p>
+                <div class="space-y-3 pt-3"><div class="h-1 bg-sky-500 rounded-full"></div><div class="h-1 bg-sky-500 rounded-full"></div></div>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center">
+                <p class="font-black text-sky-700 mb-2">Perpendiculares</p>
+                <div class="relative h-16 w-16 mx-auto mt-2"><div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-sky-500 rounded-full"></div><div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-sky-500 rounded-full"></div></div>
+              </div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center">
+                <p class="font-black text-sky-700 mb-2">Secantes</p>
+                <div class="relative h-16 w-16 mx-auto mt-2"><div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-sky-500 rounded-full rotate-45"></div><div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 bg-sky-500 rounded-full -rotate-45"></div></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -227,6 +339,11 @@
               <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Agudo</p><p class="text-slate-600 font-medium">Menor que 90°.</p></div>
               <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4"><p class="font-black text-rose-700 mb-1">Obtuso</p><p class="text-slate-600 font-medium">Mayor que 90°.</p></div>
               <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Instrumento</p><p class="text-slate-600 font-medium">Transportador de ángulos.</p></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4 mt-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="angle right mx-auto"></div><p class="font-black text-amber-700 mt-2">Recto</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="angle acute mx-auto"></div><p class="font-black text-emerald-700 mt-2">Agudo</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="angle obtuse mx-auto"></div><p class="font-black text-rose-700 mt-2">Obtuso</p></div>
             </div>
           </div>
         </div>
@@ -257,6 +374,22 @@
                 <p class="text-slate-600 font-medium">Regulares: lados iguales. Irregulares: lados desiguales.</p>
               </div>
             </div>
+            <div class="family-grid grid md:grid-cols-3 gap-4 mt-4">
+              <div class="item rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center">
+                <div class="triangle mx-auto"></div>
+                <p class="font-black text-emerald-700 mt-3">Triángulo regular</p>
+              </div>
+              <div class="item rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4 text-center">
+                <div class="shape-square mx-auto"></div>
+                <p class="font-black text-indigo-700 mt-3">Cuadrado</p>
+              </div>
+              <div class="item rounded-2xl bg-fuchsia-50 border-2 border-fuchsia-100 p-4 text-center">
+                <div class="relative mx-auto" style="width:110px;height:95px;">
+                  <div style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); background:#f9a8d4; width:110px; height:95px;"></div>
+                </div>
+                <p class="font-black text-fuchsia-700 mt-3">Pentágono</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -284,6 +417,11 @@
                 </ul>
               </div>
             </div>
+            <div class="grid md:grid-cols-3 gap-4 mt-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle mx-auto"></div><p class="font-black text-emerald-700 mt-3">Equilátero</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle iso mx-auto"></div><p class="font-black text-amber-700 mt-3">Isósceles</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle scalene mx-auto"></div><p class="font-black text-sky-700 mt-3">Escaleno</p></div>
+            </div>
           </div>
         </div>
 
@@ -297,6 +435,12 @@
               <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-2">Paralelogramos</p><p class="text-slate-600 font-medium">Lados paralelos dos a dos. Ejemplos: cuadrado, rectángulo, rombo y romboide.</p></div>
               <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-2">Trapecios</p><p class="text-slate-600 font-medium">Solo tienen dos lados paralelos. Ejemplos: trapecio rectángulo, isósceles y escaleno.</p></div>
               <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-2">Trapezoides</p><p class="text-slate-600 font-medium">Sus lados no son paralelos.</p></div>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4 mt-4">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="shape-square mx-auto"></div><p class="font-black text-indigo-700 mt-3">Cuadrado</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="shape-rect mx-auto"></div><p class="font-black text-sky-700 mt-3">Rectángulo</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="shape-rhombus mx-auto mt-3"></div><p class="font-black text-pink-700 mt-8">Rombo</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="shape-trap mx-auto mt-3"></div><p class="font-black text-amber-700 mt-7">Trapecio</p></div>
             </div>
           </div>
         </div>
@@ -326,6 +470,12 @@
                 </ul>
               </div>
             </div>
+            <div class="grid md:grid-cols-4 gap-4 mt-4 text-center">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="shape-ring mx-auto relative"><div class="absolute left-1/2 top-1/2 w-2 h-2 rounded-full bg-slate-700 -translate-x-1/2 -translate-y-1/2"></div></div><p class="font-black text-slate-700 mt-3">Centro</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="shape-ring mx-auto relative"><div class="absolute left-1/2 top-1/2 h-1 w-10 bg-sky-600 origin-left"></div></div><p class="font-black text-sky-700 mt-3">Radio</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="shape-ring mx-auto relative"><div class="absolute left-2 right-2 top-1/2 h-1 bg-amber-600 -translate-y-1/2"></div></div><p class="font-black text-amber-700 mt-3">Diámetro</p></div>
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="shape-ring mx-auto relative" style="border-color:#f472b6;"><div class="absolute w-10 h-10 border-t-4 border-r-4 border-fuchsia-500 rounded-tr-full right-1 top-1"></div></div><p class="font-black text-fuchsia-700 mt-3">Arco</p></div>
+            </div>
           </div>
         </div>
 
@@ -339,10 +489,12 @@
               <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
                 <p class="font-black text-emerald-700 mb-2">Perímetro</p>
                 <p class="text-slate-600 font-medium">Es la suma de todos los lados de un polígono.</p>
+                <div class="mt-4 mx-auto w-28 h-28 border-4 border-slate-800 relative bg-white"><span class="absolute -top-7 left-1/2 -translate-x-1/2 text-sm font-black text-emerald-700">contorno</span></div>
               </div>
               <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4">
                 <p class="font-black text-cyan-700 mb-2">Área</p>
                 <p class="text-slate-600 font-medium">Es el espacio interior que ocupa una figura plana.</p>
+                <div class="mt-4 mx-auto w-28 h-28 border-4 border-cyan-500 bg-cyan-200 flex items-center justify-center text-xl font-black text-cyan-800">interior</div>
               </div>
             </div>
           </div>
@@ -363,7 +515,7 @@
     </section>
 
     <section id="test" class="tab-panel">
-      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8" id="test">
         <div id="quiz-container">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Test de Geometría</h2><p class="text-slate-600 font-medium">Repasamos lo más importante.</p></div>
