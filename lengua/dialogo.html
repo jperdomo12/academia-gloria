@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Diálogo - Academia de Gloria</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f9ff; color: #1e293b; }
+        .hero-gradient { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .info-card { background: white; border-radius: 2rem; border: 1px solid #cffafe; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="index.html" class="flex items-center gap-2 text-cyan-600 hover:text-cyan-800 font-bold transition-colors">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Lengua
+            </a>
+            <span class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-cyan-100 text-xs font-black text-cyan-600 uppercase">Tema 5 · Primaria</span>
+        </nav>
+
+        <header class="hero-gradient rounded-[3rem] p-8 md:p-12 text-white mb-10 shadow-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">El Diálogo</h1>
+                <p class="text-cyan-100 text-lg font-medium max-w-xl">Aprende a diferenciar cómo hablamos y cómo escribimos las conversaciones.</p>
+            </div>
+            <i data-lucide="messages-square" class="absolute -bottom-6 -right-6 w-48 h-48 text-white/10 rotate-12"></i>
+        </header>
+
+        <div class="grid gap-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="info-card p-8 shadow-sm">
+                    <div class="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="quote"></i>
+                    </div>
+                    <h3 class="text-xl font-black mb-3 text-cyan-900">Estilo Directo</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Reproduce las palabras <b>exactas</b>. Se usan guiones (—) o comillas y dos puntos.</p>
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg border-l-4 border-cyan-400 text-xs italic">
+                        —¿Has visto mi perro? —preguntó el chico.
+                    </div>
+                </div>
+
+                <div class="info-card p-8 shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="message-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-black mb-3 text-blue-900">Estilo Indirecto</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">El narrador <b>cuenta</b> lo que dijeron. No se usan guiones.</p>
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg border-l-4 border-blue-400 text-xs italic">
+                        El chico le preguntó al señor si había visto a su perro negro.
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card p-8 border-2 border-dashed border-cyan-200">
+                <h3 class="text-2xl font-black mb-6 flex items-center gap-2">
+                    <i data-lucide="pen-tool" class="text-cyan-600"></i> Signos de Puntuación
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-cyan-50 rounded-2xl text-center">
+                        <span class="text-2xl block mb-1">¡ !</span>
+                        <span class="text-[10px] font-bold uppercase text-cyan-700">Exclamación</span>
+                    </div>
+                    <div class="p-4 bg-cyan-50 rounded-2xl text-center">
+                        <span class="text-2xl block mb-1">¿ ?</span>
+                        <span class="text-[10px] font-bold uppercase text-cyan-700">Interrogación</span>
+                    </div>
+                    <div class="p-4 bg-cyan-50 rounded-2xl text-center">
+                        <span class="text-2xl block mb-1">...</span>
+                        <span class="text-[10px] font-bold uppercase text-cyan-700">Suspensivos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+                <h3 class="text-xl font-black mb-6">Situación Comunicativa</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-emerald-50 text-emerald-800">
+                        <i data-lucide="user-check"></i>
+                        <div>
+                            <p class="font-bold">Modo Formal</p>
+                            <p class="text-xs opacity-80">Con desconocidos o autoridades. Se usa "Usted".</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-orange-50 text-orange-800">
+                        <i data-lucide="users"></i>
+                        <div>
+                            <p class="font-bold">Modo Informal</p>
+                            <p class="text-xs opacity-80">Con amigos y familia. Se usa "Tú" y muletillas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center pb-10">
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Academia Gloria Valentina · Lengua 5º</p>
+        </footer>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
