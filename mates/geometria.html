@@ -83,7 +83,6 @@
       content:"↔";position:absolute;top:50%;transform:translateY(-60%);font-weight:900;color:#2563eb
     }
     .mini-line.line::before{left:-18px}.mini-line.line::after{right:-18px}
-    .shape-box{min-height:140px}
     .triangle{
       width:0;height:0;border-left:55px solid transparent;border-right:55px solid transparent;border-bottom:95px solid #a7f3d0;
       filter:drop-shadow(0 6px 10px rgba(0,0,0,.08));
@@ -95,6 +94,14 @@
       width:0;height:0;border-left:35px solid transparent;border-right:60px solid transparent;border-bottom:95px solid #bfdbfe;
       transform:skewX(-8deg);
     }
+    .tri-angle{position:relative;width:130px;height:105px;margin:0 auto}
+    .tri-angle svg{width:130px;height:105px;display:block}
+    .angle-badge{
+      position:absolute;font-size:.72rem;font-weight:900;padding:.15rem .45rem;border-radius:999px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08)
+    }
+    .badge-right{left:55px;bottom:8px}
+    .badge-top{left:55px;top:-6px}
+    .badge-side{right:10px;bottom:28px}
     .shape-square{width:92px;height:92px;background:#c7d2fe}
     .shape-rect{width:120px;height:82px;background:#bae6fd}
     .shape-rhombus{width:92px;height:92px;background:#fbcfe8;transform:rotate(45deg)}
@@ -113,7 +120,10 @@
     .angle.acute::after{left:47px;bottom:2px;width:72px;height:4px;transform:rotate(-35deg);transform-origin:left center}
     .angle.obtuse::before{left:50%;bottom:0;width:4px;height:90px;transform:translateX(-50%)}
     .angle.obtuse::after{left:47px;bottom:2px;width:76px;height:4px;transform:rotate(-120deg);transform-origin:left center}
-    .family-grid .item{min-height:150px}
+    .poly{
+      width:110px;height:110px;margin:0 auto;display:block;
+    }
+    .poly svg{width:110px;height:110px;display:block}
   </style>
 </head>
 <body>
@@ -236,50 +246,26 @@
         <div class="glass-card rounded-[2rem] p-5">
           <h3 class="text-xl font-extrabold mb-4">Líneas y rectas</h3>
           <div class="space-y-5">
-            <div>
-              <p class="font-black text-sky-700 mb-2">Recta</p>
-              <div class="mini-line line mx-6"></div>
-            </div>
-            <div>
-              <p class="font-black text-emerald-700 mb-2">Semirrecta</p>
-              <div class="mini-line ray mx-6 bg-emerald-500"></div>
-            </div>
-            <div>
-              <p class="font-black text-rose-700 mb-2">Segmento</p>
-              <div class="mini-line segment mx-6 bg-rose-500"></div>
-            </div>
+            <div><p class="font-black text-sky-700 mb-2">Recta</p><div class="mini-line line mx-6"></div></div>
+            <div><p class="font-black text-emerald-700 mb-2">Semirrecta</p><div class="mini-line ray mx-6 bg-emerald-500"></div></div>
+            <div><p class="font-black text-rose-700 mb-2">Segmento</p><div class="mini-line segment mx-6 bg-rose-500"></div></div>
           </div>
         </div>
 
         <div class="glass-card rounded-[2rem] p-5">
           <h3 class="text-xl font-extrabold mb-4">Tipos de ángulos</h3>
           <div class="grid grid-cols-3 gap-3 text-center">
-            <div class="rounded-2xl bg-amber-50 p-3 border-2 border-amber-100">
-              <div class="angle right mx-auto"></div>
-              <p class="font-black text-amber-700 mt-2">Recto</p>
-            </div>
-            <div class="rounded-2xl bg-emerald-50 p-3 border-2 border-emerald-100">
-              <div class="angle acute mx-auto"></div>
-              <p class="font-black text-emerald-700 mt-2">Agudo</p>
-            </div>
-            <div class="rounded-2xl bg-rose-50 p-3 border-2 border-rose-100">
-              <div class="angle obtuse mx-auto"></div>
-              <p class="font-black text-rose-700 mt-2">Obtuso</p>
-            </div>
+            <div class="rounded-2xl bg-amber-50 p-3 border-2 border-amber-100"><div class="angle right mx-auto"></div><p class="font-black text-amber-700 mt-2">Recto</p></div>
+            <div class="rounded-2xl bg-emerald-50 p-3 border-2 border-emerald-100"><div class="angle acute mx-auto"></div><p class="font-black text-emerald-700 mt-2">Agudo</p></div>
+            <div class="rounded-2xl bg-rose-50 p-3 border-2 border-rose-100"><div class="angle obtuse mx-auto"></div><p class="font-black text-rose-700 mt-2">Obtuso</p></div>
           </div>
         </div>
 
         <div class="glass-card rounded-[2rem] p-5">
           <h3 class="text-xl font-extrabold mb-4">Círculo y circunferencia</h3>
           <div class="grid grid-cols-2 gap-4 text-center">
-            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
-              <div class="shape-ring mx-auto"></div>
-              <p class="font-black text-sky-700 mt-3">Circunferencia</p>
-            </div>
-            <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4">
-              <div class="shape-circle mx-auto"></div>
-              <p class="font-black text-cyan-700 mt-3">Círculo</p>
-            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><div class="shape-ring mx-auto"></div><p class="font-black text-sky-700 mt-3">Circunferencia</p></div>
+            <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4"><div class="shape-circle mx-auto"></div><p class="font-black text-cyan-700 mt-3">Círculo</p></div>
           </div>
         </div>
       </div>
@@ -374,20 +360,26 @@
                 <p class="text-slate-600 font-medium">Regulares: lados iguales. Irregulares: lados desiguales.</p>
               </div>
             </div>
-            <div class="family-grid grid md:grid-cols-3 gap-4 mt-4">
-              <div class="item rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center">
-                <div class="triangle mx-auto"></div>
-                <p class="font-black text-emerald-700 mt-3">Triángulo regular</p>
+
+            <div class="mt-5">
+              <h4 class="text-xl font-extrabold mb-3">Polígonos regulares</h4>
+              <div class="grid md:grid-cols-3 xl:grid-cols-5 gap-4">
+                <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="55,12 98,92 12,92" fill="#86efac"/></svg></div><p class="font-black text-emerald-700 mt-3">Triángulo</p></div>
+                <div class="rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="20,20 90,20 90,90 20,90" fill="#c7d2fe"/></svg></div><p class="font-black text-indigo-700 mt-3">Cuadrado</p></div>
+                <div class="rounded-2xl bg-fuchsia-50 border-2 border-fuchsia-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="55,12 95,42 80,94 30,94 15,42" fill="#f9a8d4"/></svg></div><p class="font-black text-fuchsia-700 mt-3">Pentágono</p></div>
+                <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="35,12 75,12 98,55 75,98 35,98 12,55" fill="#a5f3fc"/></svg></div><p class="font-black text-cyan-700 mt-3">Hexágono</p></div>
+                <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="55,10 90,25 100,58 78,90 32,90 10,58 20,25" fill="#fde68a"/></svg></div><p class="font-black text-amber-700 mt-3">Heptágono</p></div>
               </div>
-              <div class="item rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4 text-center">
-                <div class="shape-square mx-auto"></div>
-                <p class="font-black text-indigo-700 mt-3">Cuadrado</p>
-              </div>
-              <div class="item rounded-2xl bg-fuchsia-50 border-2 border-fuchsia-100 p-4 text-center">
-                <div class="relative mx-auto" style="width:110px;height:95px;">
-                  <div style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); background:#f9a8d4; width:110px; height:95px;"></div>
-                </div>
-                <p class="font-black text-fuchsia-700 mt-3">Pentágono</p>
+            </div>
+
+            <div class="mt-5">
+              <h4 class="text-xl font-extrabold mb-3">Polígonos irregulares</h4>
+              <div class="grid md:grid-cols-3 xl:grid-cols-5 gap-4">
+                <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="18,88 56,16 95,78" fill="#bbf7d0"/></svg></div><p class="font-black text-emerald-700 mt-3">Triángulo irregular</p></div>
+                <div class="rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="18,26 92,18 80,92 28,82" fill="#bfdbfe"/></svg></div><p class="font-black text-indigo-700 mt-3">Cuadrilátero irregular</p></div>
+                <div class="rounded-2xl bg-fuchsia-50 border-2 border-fuchsia-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="54,16 95,34 80,96 32,88 12,44" fill="#fbcfe8"/></svg></div><p class="font-black text-fuchsia-700 mt-3">Pentágono irregular</p></div>
+                <div class="rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="28,14 82,20 98,52 84,98 34,88 10,46" fill="#bae6fd"/></svg></div><p class="font-black text-cyan-700 mt-3">Hexágono irregular</p></div>
+                <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 text-center"><div class="poly"><svg viewBox="0 0 110 110"><polygon points="54,10 90,24 100,52 82,96 44,98 14,70 18,28" fill="#fed7aa"/></svg></div><p class="font-black text-amber-700 mt-3">Heptágono irregular</p></div>
               </div>
             </div>
           </div>
@@ -417,10 +409,48 @@
                 </ul>
               </div>
             </div>
+
             <div class="grid md:grid-cols-3 gap-4 mt-4">
               <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle mx-auto"></div><p class="font-black text-emerald-700 mt-3">Equilátero</p></div>
               <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle iso mx-auto"></div><p class="font-black text-amber-700 mt-3">Isósceles</p></div>
               <div class="rounded-2xl bg-white border-2 border-slate-100 p-4 text-center"><div class="triangle scalene mx-auto"></div><p class="font-black text-sky-700 mt-3">Escaleno</p></div>
+            </div>
+
+            <div class="mt-5">
+              <h4 class="text-xl font-extrabold mb-3">Triángulos según sus ángulos</h4>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 text-center">
+                  <div class="tri-angle">
+                    <svg viewBox="0 0 130 105">
+                      <polygon points="18,90 18,18 112,90" fill="#fde68a" stroke="#92400e" stroke-width="3"/>
+                    </svg>
+                    <span class="angle-badge badge-right text-amber-700">90°</span>
+                  </div>
+                  <p class="font-black text-amber-700 mt-3">Rectángulo</p>
+                </div>
+
+                <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center">
+                  <div class="tri-angle">
+                    <svg viewBox="0 0 130 105">
+                      <polygon points="65,10 112,90 18,90" fill="#bbf7d0" stroke="#166534" stroke-width="3"/>
+                    </svg>
+                    <span class="angle-badge badge-top text-emerald-700">60°</span>
+                    <span class="angle-badge badge-side text-emerald-700">60°</span>
+                    <span class="angle-badge" style="left:16px;bottom:8px;color:#15803d">60°</span>
+                  </div>
+                  <p class="font-black text-emerald-700 mt-3">Acutángulo</p>
+                </div>
+
+                <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4 text-center">
+                  <div class="tri-angle">
+                    <svg viewBox="0 0 130 105">
+                      <polygon points="30,88 96,88 56,18" fill="#fecdd3" stroke="#be123c" stroke-width="3"/>
+                    </svg>
+                    <span class="angle-badge" style="left:52px;top:34px;color:#be123c">120°</span>
+                  </div>
+                  <p class="font-black text-rose-700 mt-3">Obtusángulo</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
