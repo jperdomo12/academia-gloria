@@ -38,8 +38,8 @@
     .tab-panel{display:none;}
     .tab-panel.active{display:block;animation:fadeIn .28s ease;}
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .topic-card,.flash-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
-    .topic-card:hover,.flash-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(99,102,241,.14);border-color:#fde68a;}
+    .topic-card,.flash-card,.scene-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
+    .topic-card:hover,.flash-card:hover,.scene-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(99,102,241,.14);border-color:#fde68a;}
     .pill{
       display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;
       font-size:.88rem;font-weight:800;background:#fff;border:2px solid #fde68a;
@@ -66,6 +66,8 @@
     .timeline .item{border-radius:1.25rem;padding:1rem;text-align:center;font-weight:800}
     .timeline .item small{display:block;font-size:.78rem;font-weight:700;opacity:.8}
     .person-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border-radius:999px;font-size:.78rem;font-weight:800}
+    .scene-emoji{font-size:4rem;line-height:1}
+    .scene-card{border:2px solid #fde68a;background:linear-gradient(180deg,#fff,#fffaf0)}
   </style>
 </head>
 <body>
@@ -151,11 +153,11 @@
           <h2 class="text-2xl md:text-3xl font-extrabold">Línea del tiempo</h2>
         </div>
         <div class="timeline">
-          <div class="item bg-lime-100 text-lime-800">Prehistoria</div>
-          <div class="item bg-green-100 text-green-800">Edad Antigua</div>
-          <div class="item bg-blue-100 text-blue-800">Edad Media</div>
+          <div class="item bg-lime-100 text-lime-800">Prehistoria<small>c. 2.500.000 a.C. - c. 3.000 a.C.</small></div>
+          <div class="item bg-green-100 text-green-800">Edad Antigua<small>c. 3.000 a.C. - 476</small></div>
+          <div class="item bg-blue-100 text-blue-800">Edad Media<small>476 - 1492</small></div>
           <div class="item bg-fuchsia-100 text-fuchsia-800 ring-4 ring-amber-300">Edad Moderna<small>1492 - 1789</small></div>
-          <div class="item bg-rose-100 text-rose-800">Edad Contemporánea</div>
+          <div class="item bg-rose-100 text-rose-800">Edad Contemporánea<small>1789 - hoy</small></div>
         </div>
       </div>
 
@@ -198,6 +200,24 @@
               <p class="text-slate-600 font-medium">1789: Revolución Francesa.</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-6">
+        <div class="scene-card rounded-[2rem] p-5">
+          <div class="scene-emoji">👑🏰</div>
+          <h3 class="text-xl font-extrabold mt-4 mb-2">Reyes y castillos</h3>
+          <p class="text-slate-600 font-medium">La Edad Moderna empieza con reyes poderosos y cambios en los reinos de la Península.</p>
+        </div>
+        <div class="scene-card rounded-[2rem] p-5">
+          <div class="scene-emoji">🚢🌊🧭</div>
+          <h3 class="text-xl font-extrabold mt-4 mb-2">Viajes por el mar</h3>
+          <p class="text-slate-600 font-medium">Los avances de navegación ayudaron a los grandes viajes y al descubrimiento de América.</p>
+        </div>
+        <div class="scene-card rounded-[2rem] p-5">
+          <div class="scene-emoji">📚🎨🖼️</div>
+          <h3 class="text-xl font-extrabold mt-4 mb-2">Arte y literatura</h3>
+          <p class="text-slate-600 font-medium">Fue un tiempo de escritores, pintores, iglesias, palacios y obras muy famosas.</p>
         </div>
       </div>
     </section>
@@ -351,6 +371,9 @@
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🌍</div><h3 class="text-2xl font-extrabold">Imperio hispánico</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-emerald-700">Respuesta</h3><p class="text-slate-700 font-medium">Fue un gran imperio con territorios en Europa, América, África y Asia.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⚔️</div><h3 class="text-2xl font-extrabold">Guerra de Sucesión</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-rose-700">Respuesta</h3><p class="text-slate-700 font-medium">Terminó en 1713 con el Tratado de Utrecht.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🎨</div><h3 class="text-2xl font-extrabold">Siglo de Oro</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-pink-700">Respuesta</h3><p class="text-slate-700 font-medium">Fue un tiempo de gran literatura y gran arte en España.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">📜</div><h3 class="text-2xl font-extrabold">Tratado de Utrecht</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-amber-700">Respuesta</h3><p class="text-slate-700 font-medium">Se firmó en 1713 y reconoció a Felipe V.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🏛️</div><h3 class="text-2xl font-extrabold">Borbones</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-sky-700">Respuesta</h3><p class="text-slate-700 font-medium">La familia real que llegó con Felipe V y sigue siendo la actual.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🖨️</div><h3 class="text-2xl font-extrabold">La imprenta</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-violet-700">Respuesta</h3><p class="text-slate-700 font-medium">Ayudó a difundir muchas obras de literatura en la Edad Moderna.</p></div></div></div>
       </div>
     </section>
 
