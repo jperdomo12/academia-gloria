@@ -32,44 +32,55 @@
     .electron{position:absolute;width:22px;height:22px;border-radius:999px;background:#10b981;box-shadow:0 4px 10px rgba(16,185,129,.35)}.e1{top:24px;left:202px}.e2{left:18px;top:126px}.e3{left:200px;bottom:24px}
     .charge-ball{width:58px;height:58px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:white;box-shadow:0 8px 14px rgba(0,0,0,.12)}.plus{background:linear-gradient(180deg,#fb7185,#dc2626)}.minus{background:linear-gradient(180deg,#60a5fa,#2563eb)}
     .wire-demo{position:relative;height:120px}.wire-demo .copper{position:absolute;left:18px;bottom:22px;width:90px;height:20px;border-radius:999px;background:linear-gradient(90deg,#b45309,#f59e0b)}.wire-demo .plastic{position:absolute;right:18px;bottom:22px;width:100px;height:32px;border-radius:999px;background:linear-gradient(90deg,#e5e7eb,#9ca3af)}
-    .circuit{position:relative;height:320px;border-radius:1.5rem;background:linear-gradient(180deg,#fff,#fffaf0);border:2px solid #fde68a;overflow:hidden}
-    .battery{position:absolute;left:50%;top:24px;transform:translateX(-50%);width:170px;height:54px;border-radius:14px;background:linear-gradient(90deg,#d97706 0 34%, #1f2937 34% 72%, #1d4ed8 72% 100%);box-shadow:0 8px 16px rgba(0,0,0,.14)}
+    .circuit{position:relative;height:350px;border-radius:1.5rem;background:linear-gradient(180deg,#fff,#fffaf0);border:2px solid #fde68a;overflow:hidden}
+    .battery{position:absolute;left:50%;top:24px;transform:translateX(-50%);width:170px;height:54px;border-radius:14px;background:linear-gradient(90deg,#d97706 0 34%, #1f2937 34% 72%, #1d4ed8 72% 100%);box-shadow:0 8px 16px rgba(0,0,0,.14);z-index:5}
     .battery::before,.battery::after{content:"";position:absolute;top:15px;width:14px;height:24px;background:#cbd5e1;border-radius:4px}
     .battery::before{left:-10px}.battery::after{right:-10px}
     .battery-plus,.battery-minus{position:absolute;top:6px;font-size:1.9rem;font-weight:900;line-height:1}
     .battery-plus{left:22px;color:#fff7ed}.battery-minus{right:22px;color:#dbeafe}
-
-    .circuit-svg{position:absolute;inset:0;width:100%;height:100%}
-    .wire-outline{fill:none;stroke:#0f766e;stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+    .circuit-svg,.particle-layer{position:absolute;inset:0;width:100%;height:100%}
+    .wire-outline{fill:none;stroke:#0f766e;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
     .wire-red{fill:none;stroke:#ef4444;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
     .wire-blue{fill:none;stroke:#2563eb;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
-
-    .flow{position:absolute;font-size:1.15rem;font-weight:900;color:#16a34a;opacity:1;transition:opacity .25s ease;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+    .wire-glow{fill:none;stroke:#22c55e;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;opacity:0;filter:drop-shadow(0 0 8px rgba(34,197,94,.7))}
+    .circuit.circuit-on .wire-glow{opacity:.75}
+    .particle-layer{pointer-events:none;z-index:4}
+    .flow-dot{offset-rotate:0deg;position:absolute;width:12px;height:12px;border-radius:999px;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.16),0 0 10px rgba(34,197,94,.6);opacity:0}
+    .circuit.circuit-on .flow-dot{opacity:1;animation:moveCircuit 4s linear infinite;offset-path:path('M 120 72 H 285 M 474 72 H 615 Q 665 72 665 122 V 222 Q 665 262 625 262 H 530 M 285 72 H 120 Q 80 72 80 112 V 238 Q 80 262 104 262 H 126 M 174 262 H 530');}
+    .flow-dot.d2{animation-delay:-1s}.flow-dot.d3{animation-delay:-2s}.flow-dot.d4{animation-delay:-3s}
+    @keyframes moveCircuit{from{offset-distance:0%}to{offset-distance:100%}}
+    .flow{position:absolute;font-size:1.15rem;font-weight:900;color:#16a34a;opacity:1;transition:opacity .25s ease,text-shadow .25s ease;z-index:6}
     .flow.flow-top-left{top:76px;left:118px}
     .flow.flow-top-right{top:76px;right:112px}
     .flow.flow-left{left:62px;top:132px;display:flex;flex-direction:column;gap:18px}
     .flow.flow-right{right:60px;top:144px;display:flex;flex-direction:column;gap:18px}
-    .flow.flow-bottom{bottom:76px;left:170px;display:flex;gap:46px}
-
-    .bulb{position:absolute;left:78px;bottom:42px;width:96px;height:136px}
-    .bulb .glass{width:96px;height:96px;border-radius:999px;background:radial-gradient(circle at 40% 35%, #fff7ad, #fde047);box-shadow:0 0 30px rgba(250,204,21,.5);position:relative;transition:all .25s ease;border:3px solid #eab308}
+    .flow.flow-bottom{bottom:88px;left:170px;display:flex;gap:46px}
+    .circuit.circuit-on .flow{text-shadow:0 0 10px rgba(34,197,94,.5)}
+    .bulb{position:absolute;left:78px;bottom:56px;width:96px;height:136px;z-index:7}
+    .bulb .glass{width:96px;height:96px;border-radius:999px;background:radial-gradient(circle at 40% 35%, #fff7ad, #fde047);box-shadow:0 0 30px rgba(250,204,21,.5);position:relative;transition:all .3s ease;border:3px solid #eab308}
     .bulb .base{width:44px;height:34px;background:#6b7280;margin:0 auto;border-radius:0 0 12px 12px}
     .filament{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a16207;font-size:1.8rem;font-weight:900}
     .bulb-seat{position:absolute;left:8px;bottom:0;width:80px;height:22px;background:#d6d3d1;border-radius:10px;border:2px solid #a8a29e}
     .bulb-rays span{position:absolute;color:#facc15;font-size:1rem;opacity:1;transition:opacity .25s ease}
     .bulb-rays span:nth-child(1){left:-6px;top:10px}.bulb-rays span:nth-child(2){right:-6px;top:14px}.bulb-rays span:nth-child(3){left:10px;top:-8px}.bulb-rays span:nth-child(4){right:12px;top:-10px}
-
-    .switch{position:absolute;right:74px;bottom:54px;width:118px;height:46px;border-radius:10px;background:#e5e7eb;border:2px solid #6b7280;box-shadow:0 6px 12px rgba(0,0,0,.08)}
+    .circuit.circuit-on .bulb .glass{animation:bulbPulse 1.8s ease-in-out infinite}
+    @keyframes bulbPulse{0%,100%{box-shadow:0 0 20px rgba(250,204,21,.42)}50%{box-shadow:0 0 42px rgba(250,204,21,.75)}}
+    .switch{position:absolute;right:74px;bottom:68px;width:118px;height:46px;border-radius:10px;background:#e5e7eb;border:2px solid #6b7280;box-shadow:0 6px 12px rgba(0,0,0,.08);z-index:7}
     .switch-label{position:absolute;bottom:-22px;font-size:.78rem;font-weight:900}
     .switch-label.on{left:12px;color:#16a34a}.switch-label.off{right:12px;color:#dc2626}
     .switch .lever{position:absolute;left:18px;top:-6px;width:54px;height:5px;background:#374151;border-radius:999px;transform:rotate(22deg);transform-origin:left center;transition:transform .25s ease}
     .switch.switch-off .lever{transform:rotate(-18deg)}
     .switch-post{position:absolute;bottom:8px;width:10px;height:10px;border-radius:999px;background:#9ca3af;border:2px solid #6b7280}
     .switch-post.left{left:18px}.switch-post.right{right:18px}
-
+    .circuit-status{position:absolute;right:18px;top:16px;z-index:8;font-size:.78rem;font-weight:900;padding:.35rem .65rem;border-radius:999px;border:2px solid #d1d5db;background:#fff;color:#475569}
+    .circuit.circuit-on .circuit-status{border-color:#86efac;background:#f0fdf4;color:#15803d}
+    .circuit.circuit-off .circuit-status{border-color:#fecaca;background:#fef2f2;color:#b91c1c}
+    .open-gap{position:absolute;right:146px;bottom:109px;width:24px;height:10px;background:#fffaf0;z-index:6;opacity:0;transition:opacity .25s ease}
+    .circuit.circuit-off .open-gap{opacity:1}
     .bulb.bulb-off .glass{background:radial-gradient(circle at 40% 35%, #f3f4f6, #d1d5db);box-shadow:none;border-color:#cbd5e1}
     .bulb.bulb-off .bulb-rays span{opacity:0}
-    .circuit.circuit-off .flow{opacity:.15}
+    .circuit.circuit-off .flow{opacity:.18}
+    .circuit.circuit-off .flow-dot{opacity:0!important;animation:none!important}
     .scene-emoji{font-size:4rem;line-height:1}.scene-card{border:2px solid #fde68a;background:linear-gradient(180deg,#fff,#fffaf0)}
   </style>
 </head>
@@ -170,20 +181,31 @@
           <div id="acc6" class="hidden px-5 md:px-6 pb-6">
             <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-6 items-center">
               <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
-                <div class="circuit" id="interactive-circuit">
+                <div class="circuit circuit-on" id="interactive-circuit">
+                  <div class="circuit-status" id="circuit-status">Circuito cerrado</div>
+                  <div class="open-gap"></div>
+
                   <svg class="circuit-svg" viewBox="0 0 760 320" preserveAspectRatio="none" aria-hidden="true">
                     <path class="wire-outline" d="M120 72 H285" />
                     <path class="wire-red" d="M120 72 H285" />
-
                     <path class="wire-outline" d="M474 72 H615 Q665 72 665 122 V222 Q665 262 625 262 H530" />
                     <path class="wire-blue" d="M474 72 H615 Q665 72 665 122 V222 Q665 262 625 262 H530" />
-
-                    <path class="wire-outline" d="M360 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
+                    <path class="wire-outline" d="M285 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
                     <path class="wire-red" d="M285 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
-
                     <path class="wire-outline" d="M174 262 H530" />
                     <path class="wire-blue" d="M174 262 H530" />
+                    <path class="wire-glow" d="M120 72 H285" />
+                    <path class="wire-glow" d="M474 72 H615 Q665 72 665 122 V222 Q665 262 625 262 H530" />
+                    <path class="wire-glow" d="M285 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
+                    <path class="wire-glow" d="M174 262 H530" />
                   </svg>
+
+                  <div class="particle-layer" aria-hidden="true">
+                    <span class="flow-dot d1"></span>
+                    <span class="flow-dot d2"></span>
+                    <span class="flow-dot d3"></span>
+                    <span class="flow-dot d4"></span>
+                  </div>
 
                   <div class="battery">
                     <span class="battery-plus">+</span>
@@ -318,19 +340,24 @@
       const circuit = document.getElementById('interactive-circuit');
       const bulb = document.getElementById('circuit-bulb');
       const sw = document.getElementById('circuit-switch');
+      const status = document.getElementById('circuit-status');
       const isOn = !circuit.classList.contains('circuit-off');
       if(isOn){
+        circuit.classList.remove('circuit-on');
         circuit.classList.add('circuit-off');
         bulb.classList.remove('bulb-on');
         bulb.classList.add('bulb-off');
         sw.classList.remove('switch-on');
         sw.classList.add('switch-off');
+        status.textContent = 'Circuito abierto';
       }else{
         circuit.classList.remove('circuit-off');
+        circuit.classList.add('circuit-on');
         bulb.classList.remove('bulb-off');
         bulb.classList.add('bulb-on');
         sw.classList.remove('switch-off');
         sw.classList.add('switch-on');
+        status.textContent = 'Circuito cerrado';
       }
     }
     loadQuestion();
