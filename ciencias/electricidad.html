@@ -32,166 +32,45 @@
     .electron{position:absolute;width:22px;height:22px;border-radius:999px;background:#10b981;box-shadow:0 4px 10px rgba(16,185,129,.35)}.e1{top:24px;left:202px}.e2{left:18px;top:126px}.e3{left:200px;bottom:24px}
     .charge-ball{width:58px;height:58px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:white;box-shadow:0 8px 14px rgba(0,0,0,.12)}.plus{background:linear-gradient(180deg,#fb7185,#dc2626)}.minus{background:linear-gradient(180deg,#60a5fa,#2563eb)}
     .wire-demo{position:relative;height:120px}.wire-demo .copper{position:absolute;left:18px;bottom:22px;width:90px;height:20px;border-radius:999px;background:linear-gradient(90deg,#b45309,#f59e0b)}.wire-demo .plastic{position:absolute;right:18px;bottom:22px;width:100px;height:32px;border-radius:999px;background:linear-gradient(90deg,#e5e7eb,#9ca3af)}
-    .circuit{position:relative;height:260px;border-radius:1.5rem;background:linear-gradient(180deg,#fff,#fffaf0);border:2px solid #fde68a}
-    .battery{position:absolute;left:50%;top:20px;transform:translateX(-50%);width:140px;height:44px;border-radius:10px;background:linear-gradient(90deg,#1f2937 0 70%, #6b7280 70% 100%)}.battery::before{content:"+";position:absolute;left:14px;top:8px;color:#60a5fa;font-weight:900;font-size:1.4rem}
-    .bulb{position:absolute;left:92px;bottom:44px;width:70px;height:92px}.bulb .glass{width:70px;height:70px;border-radius:999px;background:radial-gradient(circle at 40% 35%, #fff7ad, #fde047);box-shadow:0 0 24px rgba(250,204,21,.45)}.bulb .base{width:34px;height:24px;background:#6b7280;margin:0 auto;border-radius:0 0 10px 10px}
-    .switch{position:absolute;right:86px;bottom:60px;width:92px;height:32px;border-radius:8px;background:#d1d5db;border:2px solid #6b7280}.switch::after{content:"";position:absolute;left:16px;top:-8px;width:42px;height:4px;background:#374151;transform:rotate(22deg);transform-origin:left center}
-    .wire{position:absolute;border:4px solid #0f766e;border-radius:999px}.w1{left:160px;top:40px;width:150px;height:170px;border-right:none;border-bottom:none}.w2{left:58px;top:40px;width:118px;height:172px;border-left:none;border-bottom:none}.w3{left:120px;bottom:52px;width:228px;height:40px;border-top:none}
+    .circuit{position:relative;height:320px;border-radius:1.5rem;background:linear-gradient(180deg,#fff,#fffaf0);border:2px solid #fde68a;overflow:hidden}
+    .battery{position:absolute;left:50%;top:24px;transform:translateX(-50%);width:170px;height:54px;border-radius:14px;background:linear-gradient(90deg,#d97706 0 34%, #1f2937 34% 72%, #1d4ed8 72% 100%);box-shadow:0 8px 16px rgba(0,0,0,.14)}
+    .battery::before,.battery::after{content:"";position:absolute;top:15px;width:14px;height:24px;background:#cbd5e1;border-radius:4px}
+    .battery::before{left:-10px}.battery::after{right:-10px}
+    .battery-plus,.battery-minus{position:absolute;top:6px;font-size:1.9rem;font-weight:900;line-height:1}
+    .battery-plus{left:22px;color:#fff7ed}.battery-minus{right:22px;color:#dbeafe}
+
+    .circuit-svg{position:absolute;inset:0;width:100%;height:100%}
+    .wire-outline{fill:none;stroke:#0f766e;stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+    .wire-red{fill:none;stroke:#ef4444;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+    .wire-blue{fill:none;stroke:#2563eb;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+
+    .flow{position:absolute;font-size:1.15rem;font-weight:900;color:#16a34a;opacity:1;transition:opacity .25s ease;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+    .flow.flow-top-left{top:76px;left:118px}
+    .flow.flow-top-right{top:76px;right:112px}
+    .flow.flow-left{left:62px;top:132px;display:flex;flex-direction:column;gap:18px}
+    .flow.flow-right{right:60px;top:144px;display:flex;flex-direction:column;gap:18px}
+    .flow.flow-bottom{bottom:76px;left:170px;display:flex;gap:46px}
+
+    .bulb{position:absolute;left:78px;bottom:42px;width:96px;height:136px}
+    .bulb .glass{width:96px;height:96px;border-radius:999px;background:radial-gradient(circle at 40% 35%, #fff7ad, #fde047);box-shadow:0 0 30px rgba(250,204,21,.5);position:relative;transition:all .25s ease;border:3px solid #eab308}
+    .bulb .base{width:44px;height:34px;background:#6b7280;margin:0 auto;border-radius:0 0 12px 12px}
+    .filament{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a16207;font-size:1.8rem;font-weight:900}
+    .bulb-seat{position:absolute;left:8px;bottom:0;width:80px;height:22px;background:#d6d3d1;border-radius:10px;border:2px solid #a8a29e}
+    .bulb-rays span{position:absolute;color:#facc15;font-size:1rem;opacity:1;transition:opacity .25s ease}
+    .bulb-rays span:nth-child(1){left:-6px;top:10px}.bulb-rays span:nth-child(2){right:-6px;top:14px}.bulb-rays span:nth-child(3){left:10px;top:-8px}.bulb-rays span:nth-child(4){right:12px;top:-10px}
+
+    .switch{position:absolute;right:74px;bottom:54px;width:118px;height:46px;border-radius:10px;background:#e5e7eb;border:2px solid #6b7280;box-shadow:0 6px 12px rgba(0,0,0,.08)}
+    .switch-label{position:absolute;bottom:-22px;font-size:.78rem;font-weight:900}
+    .switch-label.on{left:12px;color:#16a34a}.switch-label.off{right:12px;color:#dc2626}
+    .switch .lever{position:absolute;left:18px;top:-6px;width:54px;height:5px;background:#374151;border-radius:999px;transform:rotate(22deg);transform-origin:left center;transition:transform .25s ease}
+    .switch.switch-off .lever{transform:rotate(-18deg)}
+    .switch-post{position:absolute;bottom:8px;width:10px;height:10px;border-radius:999px;background:#9ca3af;border:2px solid #6b7280}
+    .switch-post.left{left:18px}.switch-post.right{right:18px}
+
+    .bulb.bulb-off .glass{background:radial-gradient(circle at 40% 35%, #f3f4f6, #d1d5db);box-shadow:none;border-color:#cbd5e1}
+    .bulb.bulb-off .bulb-rays span{opacity:0}
+    .circuit.circuit-off .flow{opacity:.15}
     .scene-emoji{font-size:4rem;line-height:1}.scene-card{border:2px solid #fde68a;background:linear-gradient(180deg,#fff,#fffaf0)}
-    .battery{
-  position:absolute;
-  left:50%;
-  top:22px;
-  transform:translateX(-50%);
-  width:150px;
-  height:48px;
-  border-radius:12px;
-  background:linear-gradient(90deg,#d97706 0 34%, #1f2937 34% 72%, #1d4ed8 72% 100%);
-  box-shadow:0 8px 16px rgba(0,0,0,.14);
-}
-
-.battery::before,
-.battery::after{
-  content:"";
-  position:absolute;
-  top:12px;
-  width:12px;
-  height:22px;
-  background:#9ca3af;
-  border-radius:4px;
-}
-
-.battery::before{ left:-8px; }
-.battery::after{ right:-8px; }
-
-.battery-plus,
-.battery-minus{
-  position:absolute;
-  top:7px;
-  font-size:1.6rem;
-  font-weight:900;
-  line-height:1;
-}
-
-.battery-plus{ left:18px; color:#fff7ed; }
-.battery-minus{ right:18px; color:#dbeafe; }
-
-.flow{
-  position:absolute;
-  font-size:1.15rem;
-  font-weight:900;
-  color:#16a34a;
-  opacity:1;
-  transition:opacity .25s ease;
-  text-shadow:0 1px 0 rgba(255,255,255,.7);
-}
-
-.flow.flow-top{ top:88px; left:212px; }
-.flow.flow-left{ left:76px; top:150px; display:flex; flex-direction:column; gap:10px; }
-.flow.flow-bottom{ bottom:66px; left:188px; }
-.flow.flow-right{ right:74px; top:146px; display:flex; flex-direction:column; gap:10px; }
-
-.bulb{
-  position:absolute;
-  left:88px;
-  bottom:44px;
-  width:78px;
-  height:112px;
-}
-
-.bulb .glass{
-  width:78px;
-  height:78px;
-  border-radius:999px;
-  background:radial-gradient(circle at 40% 35%, #fff7ad, #fde047);
-  box-shadow:0 0 24px rgba(250,204,21,.45);
-  position:relative;
-  transition:all .25s ease;
-}
-
-.bulb .base{
-  width:38px;
-  height:28px;
-  background:#6b7280;
-  margin:0 auto;
-  border-radius:0 0 12px 12px;
-}
-
-.filament{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#a16207;
-  font-size:1.5rem;
-  font-weight:900;
-}
-
-.bulb-rays span{
-  position:absolute;
-  color:#facc15;
-  font-size:1rem;
-  opacity:1;
-  transition:opacity .25s ease;
-}
-
-.bulb-rays span:nth-child(1){ left:-8px; top:10px; }
-.bulb-rays span:nth-child(2){ right:-8px; top:14px; }
-.bulb-rays span:nth-child(3){ left:8px; top:-8px; }
-.bulb-rays span:nth-child(4){ right:10px; top:-10px; }
-
-.switch{
-  position:absolute;
-  right:82px;
-  bottom:58px;
-  width:110px;
-  height:42px;
-  border-radius:10px;
-  background:#e5e7eb;
-  border:2px solid #6b7280;
-  box-shadow:0 6px 12px rgba(0,0,0,.08);
-}
-
-.switch-label{
-  position:absolute;
-  bottom:-22px;
-  font-size:.78rem;
-  font-weight:900;
-}
-
-.switch-label.on{ left:10px; color:#16a34a; }
-.switch-label.off{ right:10px; color:#dc2626; }
-
-.switch .lever{
-  position:absolute;
-  left:18px;
-  top:-6px;
-  width:48px;
-  height:5px;
-  background:#374151;
-  border-radius:999px;
-  transform:rotate(20deg);
-  transform-origin:left center;
-  transition:transform .25s ease;
-}
-
-.switch.switch-off .lever{
-  transform:rotate(-18deg);
-}
-
-.bulb.bulb-off .glass{
-  background:radial-gradient(circle at 40% 35%, #f3f4f6, #d1d5db);
-  box-shadow:none;
-}
-
-.bulb.bulb-off .bulb-rays span{
-  opacity:0;
-}
-
-.circuit.circuit-off .flow{
-  opacity:.15;
-}
   </style>
 </head>
 <body>
@@ -273,90 +152,112 @@
 
     <section id="teoria" class="tab-panel">
       <div class="space-y-4">
-<div class="glass-card rounded-[2rem] overflow-hidden">
-  <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc6">
-    <span class="inline-flex items-center gap-3"><span class="text-3xl">💡</span> Circuitos eléctricos</span>
-    <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
-  </button>
-  <div id="acc6" class="hidden px-5 md:px-6 pb-6">
-    <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-6 items-center">
-      <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
-        <div class="circuit" id="interactive-circuit">
-          <div class="battery">
-            <span class="battery-plus">+</span>
-            <span class="battery-minus">−</span>
-          </div>
+        <div class="glass-card rounded-[2rem] overflow-hidden"><button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc1"><span class="inline-flex items-center gap-3"><span class="text-3xl">⚡</span> ¿Qué es la electricidad?</span><i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i></button><div id="acc1" class="hidden px-5 md:px-6 pb-6"><div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="text-slate-700 font-medium">La electricidad es una forma de energía que se usa para alimentar aparatos eléctricos y máquinas. Puede encontrarse en la naturaleza, como en un rayo, y también producirse a partir de fuentes de energía renovable y no renovable.</p></div></div></div>
 
-          <div class="wire w1"></div>
-          <div class="wire w2"></div>
-          <div class="wire w3"></div>
+        <div class="glass-card rounded-[2rem] overflow-hidden"><button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc2"><span class="inline-flex items-center gap-3"><span class="text-3xl">⚛️</span> Cargas eléctricas y átomo</span><i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i></button><div id="acc2" class="hidden px-5 md:px-6 pb-6"><div class="grid lg:grid-cols-[.95fr_1.05fr] gap-6 items-center"><div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="atom-wrap"><div class="orbit"></div><div class="orbit o2"></div><div class="orbit o3"></div><div class="nucleus"></div><div class="electron e1"></div><div class="electron e2"></div><div class="electron e3"></div></div><p class="text-center font-black text-slate-700 mt-2">Estructura del átomo</p></div><div class="space-y-4"><div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-2">Átomo</p><p class="text-slate-600 font-medium">Toda la materia está formada por átomos. Dentro del átomo hay protones, neutrones y electrones.</p></div><div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-slate-700 mb-2">¿Cómo ocurre la electricidad?</p><p class="text-slate-600 font-medium">La electricidad se genera cuando un electrón se desplaza de un átomo a otro.</p></div><div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-2">Cargas</p><p class="text-slate-600 font-medium">Los electrones tienen carga negativa y los protones tienen carga positiva.</p></div></div></div></div></div>
 
-          <div class="flow flow-top">→ →</div>
-          <div class="flow flow-left">↑ ↑</div>
-          <div class="flow flow-bottom">← ←</div>
-          <div class="flow flow-right">↓ ↓</div>
+        <div class="glass-card rounded-[2rem] overflow-hidden"><button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc3"><span class="inline-flex items-center gap-3"><span class="text-3xl">➕➖</span> Cargas opuestas e iguales</span><i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i></button><div id="acc3" class="hidden px-5 md:px-6 pb-6"><div class="grid md:grid-cols-2 gap-4"><div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center"><p class="font-black text-emerald-700 mb-3">Las cargas opuestas se atraen</p><div class="flex items-center justify-center gap-4"><div class="charge-ball plus">+</div><div class="text-3xl font-black text-slate-600">↔</div><div class="charge-ball minus">−</div></div></div><div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4 text-center"><p class="font-black text-rose-700 mb-3">Las cargas iguales se repelen</p><div class="flex items-center justify-center gap-4"><div class="charge-ball minus">−</div><div class="text-3xl font-black text-slate-600">⇠ ⇢</div><div class="charge-ball minus">−</div></div></div></div><div class="mt-4 rounded-2xl bg-white border-2 border-slate-100 p-4"><p class="font-black text-slate-700 mb-2">Ganar o perder electrones</p><ul class="space-y-2 text-slate-600 font-medium"><li>• Si un átomo gana electrones, tendrá carga negativa.</li><li>• Si un átomo pierde electrones, tendrá carga positiva.</li><li>• Un átomo es la parte más pequeña que tiene materia.</li></ul></div></div></div>
 
-          <div class="bulb bulb-on" id="circuit-bulb">
-            <div class="glass">
-              <div class="filament">〰</div>
-            </div>
-            <div class="base"></div>
-            <div class="bulb-rays">
-              <span>✦</span>
-              <span>✦</span>
-              <span>✦</span>
-              <span>✦</span>
-            </div>
-          </div>
+        <div class="glass-card rounded-[2rem] overflow-hidden"><button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc4"><span class="inline-flex items-center gap-3"><span class="text-3xl">🔌</span> Conductores y aislantes</span><i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i></button><div id="acc4" class="hidden px-5 md:px-6 pb-6"><div class="grid lg:grid-cols-[1fr_1fr] gap-4 items-center"><div class="rounded-2xl bg-white border-2 border-slate-100 p-4"><div class="wire-demo"><div class="copper"></div><div class="plastic"></div></div><div class="flex justify-between text-sm font-black mt-2"><span class="text-amber-700">COBRE</span><span class="text-slate-500">PLÁSTICO</span></div></div><div class="space-y-4"><div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-2">Conductores</p><p class="text-slate-600 font-medium">Materiales como el cobre, la plata o el aluminio dejan que la electricidad circule a través de ellos.</p></div><div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-2">Aislantes</p><p class="text-slate-600 font-medium">Materiales como el plástico, el papel y la madera no dejan pasar la electricidad.</p></div></div></div></div></div>
 
-          <button class="switch switch-on" id="circuit-switch" onclick="toggleCircuit()" aria-label="Interruptor del circuito">
-            <span class="switch-label on">ON</span>
-            <span class="switch-label off">OFF</span>
-            <span class="lever"></span>
+        <div class="glass-card rounded-[2rem] overflow-hidden"><button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc5"><span class="inline-flex items-center gap-3"><span class="text-3xl">🎈</span> Tipos de electricidad</span><i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i></button><div id="acc5" class="hidden px-5 md:px-6 pb-6"><div class="grid md:grid-cols-2 gap-4"><div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4"><p class="font-black text-rose-700 mb-2">Electricidad estática</p><p class="text-slate-600 font-medium">Se produce cuando hay movimiento de electrones entre dos materiales al frotarlos.</p><p class="text-slate-600 font-medium mt-3">Ejemplo: un globo frotado atrae trocitos de papel.</p></div><div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-2">Corriente eléctrica</p><p class="text-slate-600 font-medium">Es el movimiento o flujo de electrones entre átomos. Cuando enchufamos un aparato, la corriente fluye por el cable.</p></div></div></div></div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc6">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">💡</span> Circuitos eléctricos</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
           </button>
-        </div>
+          <div id="acc6" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-6 items-center">
+              <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+                <div class="circuit" id="interactive-circuit">
+                  <svg class="circuit-svg" viewBox="0 0 760 320" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="wire-outline" d="M120 72 H285" />
+                    <path class="wire-red" d="M120 72 H285" />
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 text-center text-xs font-black">
-          <div class="rounded-xl bg-amber-100 text-amber-700 p-2">BATERÍA</div>
-          <div class="rounded-xl bg-sky-100 text-sky-700 p-2">CABLES</div>
-          <div class="rounded-xl bg-emerald-100 text-emerald-700 p-2">BOMBILLA</div>
-          <div class="rounded-xl bg-violet-100 text-violet-700 p-2">INTERRUPTOR</div>
+                    <path class="wire-outline" d="M474 72 H615 Q665 72 665 122 V222 Q665 262 625 262 H530" />
+                    <path class="wire-blue" d="M474 72 H615 Q665 72 665 122 V222 Q665 262 625 262 H530" />
+
+                    <path class="wire-outline" d="M360 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
+                    <path class="wire-red" d="M285 72 H120 Q80 72 80 112 V238 Q80 262 104 262 H126" />
+
+                    <path class="wire-outline" d="M174 262 H530" />
+                    <path class="wire-blue" d="M174 262 H530" />
+                  </svg>
+
+                  <div class="battery">
+                    <span class="battery-plus">+</span>
+                    <span class="battery-minus">−</span>
+                  </div>
+
+                  <div class="flow flow-top-left">→</div>
+                  <div class="flow flow-top-right">→</div>
+                  <div class="flow flow-left"><span>↑</span><span>↑</span></div>
+                  <div class="flow flow-right"><span>↓</span><span>↓</span></div>
+                  <div class="flow flow-bottom"><span>←</span><span>←</span></div>
+
+                  <div class="bulb bulb-on" id="circuit-bulb">
+                    <div class="glass">
+                      <div class="filament">〰</div>
+                    </div>
+                    <div class="base"></div>
+                    <div class="bulb-seat"></div>
+                    <div class="bulb-rays">
+                      <span>✦</span>
+                      <span>✦</span>
+                      <span>✦</span>
+                      <span>✦</span>
+                    </div>
+                  </div>
+
+                  <button class="switch switch-on" id="circuit-switch" onclick="toggleCircuit()" aria-label="Interruptor del circuito">
+                    <span class="switch-label on">ON</span>
+                    <span class="switch-label off">OFF</span>
+                    <span class="lever"></span>
+                    <span class="switch-post left"></span>
+                    <span class="switch-post right"></span>
+                  </button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 text-center text-xs font-black">
+                  <div class="rounded-xl bg-amber-100 text-amber-700 p-2">BATERÍA</div>
+                  <div class="rounded-xl bg-sky-100 text-sky-700 p-2">CABLES</div>
+                  <div class="rounded-xl bg-emerald-100 text-emerald-700 p-2">BOMBILLA</div>
+                  <div class="rounded-xl bg-violet-100 text-violet-700 p-2">INTERRUPTOR</div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+                  <p class="font-black text-emerald-700 mb-2">¿Qué es un circuito?</p>
+                  <p class="text-slate-600 font-medium">Es un bucle o círculo cerrado.</p>
+                </div>
+                <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+                  <p class="font-black text-amber-700 mb-2">¿Cuándo funciona?</p>
+                  <p class="text-slate-600 font-medium">La electricidad solo fluye si el circuito está cerrado.</p>
+                </div>
+                <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4">
+                  <p class="font-black text-rose-700 mb-2">¿Qué pasa si se interrumpe?</p>
+                  <p class="text-slate-600 font-medium">Si el interruptor está apagado o el circuito se rompe, la corriente deja de fluir.</p>
+                </div>
+                <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
+                  <p class="font-black text-violet-700 mb-2">Pruébalo</p>
+                  <p class="text-slate-600 font-medium">Pulsa el interruptor para encender y apagar la bombilla.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="space-y-4">
-        <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
-          <p class="font-black text-emerald-700 mb-2">¿Qué es un circuito?</p>
-          <p class="text-slate-600 font-medium">Es un bucle o círculo cerrado.</p>
-        </div>
-        <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
-          <p class="font-black text-amber-700 mb-2">¿Cuándo funciona?</p>
-          <p class="text-slate-600 font-medium">La electricidad solo fluye si el circuito está cerrado.</p>
-        </div>
-        <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4">
-          <p class="font-black text-rose-700 mb-2">¿Qué pasa si se interrumpe?</p>
-          <p class="text-slate-600 font-medium">Si el interruptor está apagado o el circuito se rompe, la corriente deja de fluir.</p>
-        </div>
-        <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4">
-          <p class="font-black text-violet-700 mb-2">Pruébalo</p>
-          <p class="text-slate-600 font-medium">Pulsa el interruptor para encender y apagar la bombilla.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>    
-</div>
     </section>
 
     <section id="fichas" class="tab-panel">
       <div class="mb-5"><p class="text-slate-600 font-medium text-lg">Haz clic en cada ficha para verla por detrás.</p></div>
       <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">💡</div><h3 class="text-2xl font-extrabold">¿Qué es la electricidad?</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-amber-700">Respuesta</h3><p class="text-slate-700 font-medium">Es una forma de energía que alimenta aparatos y máquinas.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⚡</div><h3 class="text-2xl font-extrabold">¿Qué es la electricidad?</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-amber-700">Respuesta</h3><p class="text-slate-700 font-medium">Es una forma de energía que alimenta aparatos y máquinas.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⚛️</div><h3 class="text-2xl font-extrabold">Átomo</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-sky-700">Respuesta</h3><p class="text-slate-700 font-medium">Tiene protones, neutrones y electrones.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">➕➖</div><h3 class="text-2xl font-extrabold">Cargas opuestas</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-violet-700">Respuesta</h3><p class="text-slate-700 font-medium">Se atraen entre sí.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔌</div><h3 class="text-2xl font-extrabold">Conductor</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-emerald-700">Respuesta</h3><p class="text-slate-700 font-medium">Material que deja pasar la electricidad, como el cobre.</p></div></div></div>
         <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🎈</div><h3 class="text-2xl font-extrabold">Electricidad estática</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-rose-700">Respuesta</h3><p class="text-slate-700 font-medium">Aparece al frotar dos materiales, como un globo y el papel.</p></div></div></div>
-        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⚡</div><h3 class="text-2xl font-extrabold">Circuito eléctrico</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-pink-700">Respuesta</h3><p class="text-slate-700 font-medium">Es un bucle cerrado por donde puede fluir la corriente.</p></div></div></div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">💡</div><h3 class="text-2xl font-extrabold">Circuito eléctrico</h3><p class="text-slate-500 font-medium mt-2">Pulsa para ver</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold mb-3 text-pink-700">Respuesta</h3><p class="text-slate-700 font-medium">Es un bucle cerrado por donde puede fluir la corriente.</p></div></div></div>
       </div>
     </section>
 
@@ -407,33 +308,31 @@
       {q:'¿Cuándo fluye la corriente en un circuito?',a:['Cuando está cerrado','Cuando está abierto','Cuando no hay cables'],c:0}
     ];
     let currentQ=0, score=0, streak=0, errors=[], activeQuestions=[...questions];
-    function makeStars(){const layer=document.getElementById('stars-layer'); const icons=['⭐','✨','🌟','💡']; for(let i=0;i<8;i++){const star=document.createElement('div'); star.className='star-pop'; star.textContent=icons[i%icons.length]; star.style.left=`${12+Math.random()*76}%`; star.style.top=`${60+Math.random()*16}%`; star.style.animationDelay=`${Math.random()*.12}s`; layer.appendChild(star); setTimeout(()=>star.remove(),1500);}}
+    function makeStars(){const layer=document.getElementById('stars-layer'); const icons=['⭐','✨','🌟','⚡']; for(let i=0;i<8;i++){const star=document.createElement('div'); star.className='star-pop'; star.textContent=icons[i%icons.length]; star.style.left=`${12+Math.random()*76}%`; star.style.top=`${60+Math.random()*16}%`; star.style.animationDelay=`${Math.random()*.12}s`; layer.appendChild(star); setTimeout(()=>star.remove(),1500);}}
     function loadQuestion(){const q=activeQuestions[currentQ]; document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${activeQuestions.length}`; document.getElementById('question-text').innerText=q.q; document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`; const grid=document.getElementById('options-grid'); grid.innerHTML=''; q.a.forEach((opt,i)=>{const b=document.createElement('button'); b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700'; b.innerText=opt; b.onclick=()=>handleAnswer(i,b,grid,q); grid.appendChild(b);});}
     function handleAnswer(selected,button,grid,q){const allBtns=grid.querySelectorAll('button'); allBtns.forEach(btn=>btn.onclick=null); if(selected===q.c){button.classList.add('correct'); score++; streak++; document.getElementById('score-live').innerText=`Puntos: ${score}`; document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`; makeStars();} else {button.classList.add('incorrect'); allBtns[q.c].classList.add('correct'); streak=0; document.getElementById('streak-box').innerText='🔥 Racha: 0'; if(!errors.find(item=>item.q===q.q)){errors.push(q);}} setTimeout(()=>{currentQ++; if(currentQ<activeQuestions.length){loadQuestion();} else {finishQuiz();}},1000);}
     function finishQuiz(){document.getElementById('quiz-progress').style.width='100%'; document.getElementById('quiz-container').classList.add('hidden'); document.getElementById('score-container').classList.remove('hidden'); const pct=Math.round((score/activeQuestions.length)*100); const medal=document.getElementById('medal'); let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `; if(pct>=90){medal.textContent='🏆';message+='¡Excelente!';} else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien!';} else if(pct>=50){medal.textContent='👍';message+='Bien. Sigue repasando.';} else {medal.textContent='💪';message+='Sigue practicando. Vas paso a paso.';} document.getElementById('final-score').innerText=message; document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);}
     function resetQuiz(){activeQuestions=[...questions]; currentQ=0; score=0; streak=0; errors=[]; document.getElementById('score-live').innerText='Puntos: 0'; document.getElementById('streak-box').innerText='🔥 Racha: 0'; document.getElementById('quiz-container').classList.remove('hidden'); document.getElementById('score-container').classList.add('hidden'); document.getElementById('retry-errors-btn').classList.add('hidden'); loadQuestion();}
     function repeatErrorsFromEnd(){if(errors.length===0)return; activeQuestions=[...errors]; currentQ=0; score=0; streak=0; errors=[]; document.getElementById('score-live').innerText='Puntos: 0'; document.getElementById('streak-box').innerText='🔥 Racha: 0'; document.getElementById('quiz-container').classList.remove('hidden'); document.getElementById('score-container').classList.add('hidden'); document.getElementById('retry-errors-btn').classList.add('hidden'); loadQuestion();}
-   function toggleCircuit(){
-    const circuit = document.getElementById('interactive-circuit');
-    const bulb = document.getElementById('circuit-bulb');
-    const sw = document.getElementById('circuit-switch');
-  
-    const isOn = !circuit.classList.contains('circuit-off');
-  
-    if(isOn){
-      circuit.classList.add('circuit-off');
-      bulb.classList.remove('bulb-on');
-      bulb.classList.add('bulb-off');
-      sw.classList.remove('switch-on');
-      sw.classList.add('switch-off');
-    }else{
-      circuit.classList.remove('circuit-off');
-      bulb.classList.remove('bulb-off');
-      bulb.classList.add('bulb-on');
-      sw.classList.remove('switch-off');
-      sw.classList.add('switch-on');
+    function toggleCircuit(){
+      const circuit = document.getElementById('interactive-circuit');
+      const bulb = document.getElementById('circuit-bulb');
+      const sw = document.getElementById('circuit-switch');
+      const isOn = !circuit.classList.contains('circuit-off');
+      if(isOn){
+        circuit.classList.add('circuit-off');
+        bulb.classList.remove('bulb-on');
+        bulb.classList.add('bulb-off');
+        sw.classList.remove('switch-on');
+        sw.classList.add('switch-off');
+      }else{
+        circuit.classList.remove('circuit-off');
+        bulb.classList.remove('bulb-off');
+        bulb.classList.add('bulb-on');
+        sw.classList.remove('switch-off');
+        sw.classList.add('switch-on');
+      }
     }
-  }
     loadQuestion();
   </script>
 </body>
