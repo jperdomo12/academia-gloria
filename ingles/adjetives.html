@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | English | Adjectives</title>
+  <meta name="description" content="Página interactiva de inglés sobre adjectives para 5th grade. Aprende a describir personas, animales y objetos usando color, size, shape, texture, sound, number y weather." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,.16), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(244,114,182,.15), transparent 28%),
+        linear-gradient(180deg,#f8fff9 0%,#fffef8 48%,#fff7fb 100%);
+      color:#1e293b;
+    }
+    .glass-card{
+      background:rgba(255,255,255,.93);
+      backdrop-filter:blur(12px);
+      border:2px solid rgba(187,247,208,.75);
+      box-shadow:0 18px 40px rgba(34,197,94,.08);
+    }
+    .gradient-title{
+      background:linear-gradient(90deg,#16a34a,#0ea5e9,#ec4899);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;
+      font-size:.88rem;font-weight:800;background:#fff;border:2px solid #bbf7d0;
+    }
+    .tab-btn{transition:all .22s ease}
+    .tab-btn.active{
+      background:linear-gradient(135deg,#16a34a,#0ea5e9);
+      color:#fff;border-color:transparent;box-shadow:0 16px 30px rgba(34,197,94,.22);
+      transform:translateY(-1px);
+    }
+    .tab-panel{display:none}
+    .tab-panel.active{display:block;animation:fadeIn .28s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .topic-card,.flash-card,.adj-card,.mission-card{transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
+    .topic-card:hover,.flash-card:hover,.adj-card:hover,.mission-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(34,197,94,.12);border-color:#86efac}
+    .accordion-btn.open .acc-icon{transform:rotate(180deg)}
+    .adj-chip{
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:1.1rem;padding:.6rem .8rem;font-weight:900;
+      border:2px solid #bbf7d0;background:#fff;color:#15803d;
+    }
+    .formula{
+      font-weight:900;border:2px dashed #86efac;background:#f0fdf4;color:#15803d;
+      border-radius:1.2rem;padding:.8rem 1rem;
+    }
+    .flash-card{perspective:1000px;min-height:220px;cursor:pointer}
+    .flash-inner{position:relative;width:100%;min-height:220px;transition:transform .6s;transform-style:preserve-3d}
+    .flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{
+      position:absolute;inset:0;backface-visibility:hidden;border-radius:1.5rem;padding:1.2rem;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      border:2px solid #bbf7d0;background:#fff;
+    }
+    .flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#f0fdf4,#eff6ff)}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#0ea5e9,#ec4899);transition:width .25s ease}
+    .option-btn{transition:all .2s ease;border:2px solid #bbf7d0;background:#fff}
+    .option-btn:hover{border-color:#22c55e;transform:translateY(-1px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}
+    .incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .star-pop{position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0}
+    @keyframes floatUp{0%{transform:translateY(20px) scale(.7) rotate(0);opacity:0}18%{opacity:1}100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}}
+    .mini-input,.mini-select{
+      width:100%;border:2px solid #bbf7d0;border-radius:1rem;padding:.8rem 1rem;font-weight:800;
+      outline:none;transition:all .2s ease;background:#fff;
+    }
+    .mini-input:focus,.mini-select:focus{border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.12)}
+    .sentence-card{border:2px solid #bbf7d0;background:#fff;border-radius:1.4rem;padding:1rem}
+    .toy{
+      position:relative;width:180px;height:180px;margin:0 auto;
+    }
+    .toy-body{position:absolute;left:35px;top:40px;width:110px;height:96px;border-radius:42% 42% 48% 48%;background:#84cc16;border:4px solid #65a30d}
+    .toy-belly{position:absolute;left:58px;top:92px;width:64px;height:44px;border-radius:999px;background:#bef264}
+    .toy-eye{position:absolute;top:22px;width:42px;height:54px;border-radius:999px;background:#f8fafc;border:4px solid #a7f3d0}
+    .toy-eye.left{left:50px}.toy-eye.right{right:50px}
+    .toy-eye::after{content:"";position:absolute;left:12px;top:16px;width:16px;height:18px;border-radius:999px;background:#0f172a}
+    .toy-mouth{position:absolute;left:56px;top:72px;width:68px;height:26px;border-radius:0 0 999px 999px;border-bottom:5px solid #166534}
+    .toy-arm{position:absolute;top:105px;width:42px;height:30px;border-radius:999px;background:#84cc16;border:4px solid #65a30d}
+    .toy-arm.left{left:10px;transform:rotate(-20deg)}.toy-arm.right{right:10px;transform:rotate(20deg)}
+    .toy-leg{position:absolute;bottom:10px;width:52px;height:36px;border-radius:999px;background:#84cc16;border:4px solid #65a30d}
+    .toy-leg.left{left:30px}.toy-leg.right{right:30px}
+    .horse{
+      position:relative;width:220px;height:150px;margin:0 auto;
+    }
+    .horse-body{position:absolute;left:42px;top:54px;width:118px;height:56px;border-radius:60px;background:#92400e}
+    .horse-neck{position:absolute;right:42px;top:32px;width:36px;height:68px;border-radius:20px;background:#92400e;transform:rotate(-25deg)}
+    .horse-head{position:absolute;right:20px;top:24px;width:54px;height:34px;border-radius:40px 30px 28px 18px;background:#a16207;transform:rotate(-8deg)}
+    .horse-mane{position:absolute;right:62px;top:30px;width:14px;height:62px;border-radius:999px;background:#111827;transform:rotate(-24deg)}
+    .horse-tail{position:absolute;left:18px;top:54px;width:46px;height:18px;border-radius:999px;background:#111827;transform:rotate(-22deg)}
+    .horse-leg{position:absolute;top:100px;width:12px;height:46px;background:#92400e;border-radius:999px}
+    .horse-leg.l1{left:58px}.horse-leg.l2{left:92px}.horse-leg.l3{left:132px}.horse-leg.l4{left:154px}
+    .horse-hoof{position:absolute;bottom:-2px;width:18px;height:8px;background:#f8fafc;border-radius:999px}
+  </style>
+</head>
+<body>
+  <div id="stars-layer"></div>
+
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.6rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <a href="./index.html" class="inline-flex items-center gap-2 text-emerald-700 font-bold mb-5 hover:gap-3 transition-all">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a English
+          </a>
+
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-emerald-700"><i data-lucide="languages" class="w-4 h-4"></i> English</span>
+            <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Modo TEL</span>
+            <span class="pill text-pink-700"><i data-lucide="palette" class="w-4 h-4"></i> 5th grade</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+            <span class="gradient-title">Adjectives</span> 🎨
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Aprende a describir personas, animales y objetos usando palabras como <strong>big, small, blue, soft, fast</strong> y muchas más.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="#contenido" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg">
+              <i data-lucide="play-circle" class="w-5 h-5"></i> Start
+            </a>
+            <a href="#test" class="inline-flex items-center gap-2 bg-white text-pink-700 px-6 py-4 rounded-2xl font-bold border-2 border-pink-100 hover:border-pink-300 transition-all">
+              <i data-lucide="brain" class="w-5 h-5"></i> Quiz
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 via-sky-500 to-pink-500 text-white flex items-center justify-center text-3xl shadow-lg">🎨</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-emerald-700">Idea clave</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">Adjective = describe</h2>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+              <p class="font-black text-emerald-700 mb-1">What is it?</p>
+              <p class="text-slate-600 font-medium">An adjective describes a noun.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">Where does it go?</p>
+              <p class="text-slate-600 font-medium">Usually before the noun: a <b>blue</b> ball.</p>
+            </div>
+            <div class="rounded-2xl bg-pink-50 border-2 border-pink-100 p-4">
+              <p class="font-black text-pink-700 mb-1">What can it describe?</p>
+              <p class="text-slate-600 font-medium">Colour, size, shape, texture, weather...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="contenido" class="mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="resumen">
+          <span class="inline-flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Resumen</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="teoria">
+          <span class="inline-flex items-center gap-2"><i data-lucide="book-open-check" class="w-5 h-5"></i> Teoría</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="practica">
+          <span class="inline-flex items-center gap-2"><i data-lucide="pencil" class="w-5 h-5"></i> Práctica</span>
+        </button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">
+          <span class="inline-flex items-center gap-2"><i data-lucide="badge-check" class="w-5 h-5"></i> Test</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="resumen" class="tab-panel active">
+      <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+        <div class="glass-card topic-card rounded-[2rem] p-5">
+          <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-700 flex items-center justify-center text-2xl mb-3">🔴</div>
+          <h3 class="text-xl font-extrabold mb-2">Colour</h3>
+          <p class="text-slate-600 font-medium">red, black, blue, pink, orange...</p>
+        </div>
+        <div class="glass-card topic-card rounded-[2rem] p-5">
+          <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">📏</div>
+          <h3 class="text-xl font-extrabold mb-2">Size</h3>
+          <p class="text-slate-600 font-medium">big, huge, large, small, short...</p>
+        </div>
+        <div class="glass-card topic-card rounded-[2rem] p-5">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl mb-3">🧸</div>
+          <h3 class="text-xl font-extrabold mb-2">Texture</h3>
+          <p class="text-slate-600 font-medium">soft, smooth, squishy, furry, bumpy...</p>
+        </div>
+        <div class="glass-card topic-card rounded-[2rem] p-5">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">☀️</div>
+          <h3 class="text-xl font-extrabold mb-2">Weather</h3>
+          <p class="text-slate-600 font-medium">sunny, windy, rainy, clear, dry...</p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🧠</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">What is an adjective?</h2>
+          </div>
+          <p class="text-slate-600 font-medium text-lg leading-relaxed mb-5">
+            An adjective is a word that describes a noun: a person, a place, a thing or an idea.
+          </p>
+          <div class="formula text-center text-lg md:text-xl">adjective + noun</div>
+          <div class="grid sm:grid-cols-2 gap-4 mt-5">
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+              <p class="font-black text-emerald-700 mb-1">A blue ball</p>
+              <p class="text-slate-600 font-medium">blue describes ball.</p>
+            </div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+              <p class="font-black text-sky-700 mb-1">A small eye</p>
+              <p class="text-slate-600 font-medium">small describes eye.</p>
+            </div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+              <p class="font-black text-pink-700 mb-1">Soft texture</p>
+              <p class="text-slate-600 font-medium">soft describes texture.</p>
+            </div>
+            <div class="rounded-2xl bg-white border-2 border-slate-100 p-4">
+              <p class="font-black text-amber-700 mb-1">A fast horse</p>
+              <p class="text-slate-600 font-medium">fast describes horse.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Golden rule ✨</h2>
+          <div class="rounded-[1.8rem] bg-gradient-to-r from-emerald-600 via-sky-600 to-pink-600 text-white p-6 shadow-lg">
+            <p class="text-xl md:text-2xl font-extrabold leading-relaxed">“In English, the adjective usually goes BEFORE the noun.”</p>
+          </div>
+          <div class="mt-5 space-y-3">
+            <div class="rounded-2xl bg-green-50 border-2 border-green-100 p-4">
+              <p class="font-black text-green-700 mb-1">Correct ✅</p>
+              <p class="text-slate-600 font-medium">She has <b>blue eyes</b>.</p>
+            </div>
+            <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4">
+              <p class="font-black text-rose-700 mb-1">Not usually ❌</p>
+              <p class="text-slate-600 font-medium">She has eyes blue.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-7">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-2xl">🖼️</div>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Visual examples</h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-6">
+            <div class="horse mb-4">
+              <div class="horse-body"></div><div class="horse-neck"></div><div class="horse-head"></div><div class="horse-mane"></div><div class="horse-tail"></div>
+              <div class="horse-leg l1"><div class="horse-hoof"></div></div><div class="horse-leg l2"><div class="horse-hoof"></div></div><div class="horse-leg l3"><div class="horse-hoof"></div></div><div class="horse-leg l4"><div class="horse-hoof"></div></div>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-3">A horse</h3>
+            <p class="text-slate-600 font-medium leading-relaxed">
+              Trotty has <b>brown</b> fur, <b>black</b> hair, <b>white</b> hoofs, a <b>muscular</b> body and <b>smooth</b> texture.
+            </p>
+          </div>
+
+          <div class="rounded-[2rem] bg-lime-50 border-2 border-lime-100 p-6">
+            <div class="toy mb-4">
+              <div class="toy-eye left"></div><div class="toy-eye right"></div><div class="toy-body"></div><div class="toy-belly"></div><div class="toy-mouth"></div><div class="toy-arm left"></div><div class="toy-arm right"></div><div class="toy-leg left"></div><div class="toy-leg right"></div>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-3">A plush toy</h3>
+            <p class="text-slate-600 font-medium leading-relaxed">
+              Ranny is <b>green</b>. She has a <b>spotted</b> body, <b>big</b> blue eyes, <b>soft</b> texture and a <b>squishy</b> body.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teoria" class="tab-panel">
+      <div class="space-y-4">
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc1">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🎨</span> Types of adjectives</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc1" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div class="adj-card rounded-2xl bg-red-50 border-2 border-red-100 p-4"><span class="adj-chip">COLOUR</span><p class="mt-3 text-slate-600 font-medium">red, black, blue, pink, orange</p></div>
+              <div class="adj-card rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><span class="adj-chip">SIZE</span><p class="mt-3 text-slate-600 font-medium">big, huge, large, small, short</p></div>
+              <div class="adj-card rounded-2xl bg-purple-50 border-2 border-purple-100 p-4"><span class="adj-chip">SHAPE</span><p class="mt-3 text-slate-600 font-medium">round, pointed, long, short</p></div>
+              <div class="adj-card rounded-2xl bg-pink-50 border-2 border-pink-100 p-4"><span class="adj-chip">TEXTURE</span><p class="mt-3 text-slate-600 font-medium">soft, smooth, squishy, furry, bumpy</p></div>
+              <div class="adj-card rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><span class="adj-chip">TASTE</span><p class="mt-3 text-slate-600 font-medium">sweet, sour, bitter, salty</p></div>
+              <div class="adj-card rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><span class="adj-chip">WEATHER</span><p class="mt-3 text-slate-600 font-medium">clear, dry, rainy, windy</p></div>
+              <div class="adj-card rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4"><span class="adj-chip">SOUND</span><p class="mt-3 text-slate-600 font-medium">loud, faint, pleasant</p></div>
+              <div class="adj-card rounded-2xl bg-cyan-50 border-2 border-cyan-100 p-4"><span class="adj-chip">NUMBER</span><p class="mt-3 text-slate-600 font-medium">few, many, two, fifty</p></div>
+              <div class="adj-card rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><span class="adj-chip">ODOUR</span><p class="mt-3 text-slate-600 font-medium">fresh, musty, stinky, smelly</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc2">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">📝</span> How to describe something</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc2" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+                <p class="font-black text-emerald-700 mb-2">1. Choose</p>
+                <p class="text-slate-600 font-medium">Choose the person, animal or object.</p>
+              </div>
+              <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+                <p class="font-black text-sky-700 mb-2">2. Think</p>
+                <p class="text-slate-600 font-medium">Think about colour, size, texture and shape.</p>
+              </div>
+              <div class="rounded-2xl bg-pink-50 border-2 border-pink-100 p-4">
+                <p class="font-black text-pink-700 mb-2">3. Write</p>
+                <p class="text-slate-600 font-medium">Use short sentences with adjectives.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 rounded-2xl bg-white border-2 border-slate-100 p-5">
+              <p class="font-black text-slate-800 mb-2">Useful sentences</p>
+              <div class="grid md:grid-cols-2 gap-3 text-slate-600 font-medium">
+                <p>• It is <b>green</b>.</p>
+                <p>• It has <b>big</b> eyes.</p>
+                <p>• It has <b>soft</b> texture.</p>
+                <p>• It has a <b>round</b> mouth.</p>
+                <p>• It is <b>fast</b>.</p>
+                <p>• It is the <b>best</b> toy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] overflow-hidden">
+          <button class="accordion-btn w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left font-black text-xl" data-acc="acc3">
+            <span class="inline-flex items-center gap-3"><span class="text-3xl">🧠</span> Flashcards</span>
+            <i data-lucide="chevron-down" class="acc-icon w-6 h-6 transition-transform"></i>
+          </button>
+          <div id="acc3" class="hidden px-5 md:px-6 pb-6">
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔴</div><h3 class="text-2xl font-extrabold">Colour</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-red-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">red, blue, black, green</p></div></div></div>
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">📏</div><h3 class="text-2xl font-extrabold">Size</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-sky-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">big, small, huge, short</p></div></div></div>
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🧸</div><h3 class="text-2xl font-extrabold">Texture</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-pink-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">soft, smooth, squishy, furry</p></div></div></div>
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">⭕</div><h3 class="text-2xl font-extrabold">Shape</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-purple-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">round, pointed, long</p></div></div></div>
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">☀️</div><h3 class="text-2xl font-extrabold">Weather</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-amber-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">sunny, rainy, windy, clear</p></div></div></div>
+              <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔢</div><h3 class="text-2xl font-extrabold">Number</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-indigo-700 mb-3">Examples</h3><p class="text-slate-700 font-medium">few, many, two, fifty</p></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="practica" class="tab-panel">
+      <div class="grid lg:grid-cols-[1fr_.9fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl">🎯</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">Mini practice</h2>
+          </div>
+          <p class="text-slate-600 font-medium mb-5">Choose the type of adjective.</p>
+
+          <div class="space-y-4" id="practice-list">
+            <div class="sentence-card" data-answer="colour"><p class="font-bold text-slate-700 mb-3">blue eyes</p><select class="mini-select"><option value="">Choose...</option><option value="colour">colour</option><option value="size">size</option><option value="texture">texture</option><option value="weather">weather</option></select></div>
+            <div class="sentence-card" data-answer="size"><p class="font-bold text-slate-700 mb-3">huge hands</p><select class="mini-select"><option value="">Choose...</option><option value="colour">colour</option><option value="size">size</option><option value="texture">texture</option><option value="shape">shape</option></select></div>
+            <div class="sentence-card" data-answer="texture"><p class="font-bold text-slate-700 mb-3">soft texture</p><select class="mini-select"><option value="">Choose...</option><option value="colour">colour</option><option value="size">size</option><option value="texture">texture</option><option value="sound">sound</option></select></div>
+            <div class="sentence-card" data-answer="shape"><p class="font-bold text-slate-700 mb-3">round mouth</p><select class="mini-select"><option value="">Choose...</option><option value="shape">shape</option><option value="number">number</option><option value="weather">weather</option><option value="taste">taste</option></select></div>
+            <div class="sentence-card" data-answer="weather"><p class="font-bold text-slate-700 mb-3">sunny day</p><select class="mini-select"><option value="">Choose...</option><option value="texture">texture</option><option value="weather">weather</option><option value="number">number</option><option value="size">size</option></select></div>
+          </div>
+
+          <div class="flex flex-wrap gap-3 mt-6">
+            <button onclick="checkPractice()" class="bg-emerald-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all">✅ Check</button>
+            <button onclick="resetPractice()" class="bg-white text-pink-700 px-6 py-4 rounded-2xl font-bold border-2 border-pink-100 hover:border-pink-300 transition-all">🔁 Reset</button>
+          </div>
+
+          <div id="practice-result" class="hidden mt-5 rounded-2xl p-4 font-black"></div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Describe your object</h2>
+          <p class="text-slate-600 font-medium mb-5">Use this guide to describe two things in class.</p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+              <p class="font-black text-emerald-700 mb-1">1. Choose</p>
+              <p class="text-slate-700 font-medium">My object is a pencil case.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+              <p class="font-black text-sky-700 mb-1">2. Add adjectives</p>
+              <p class="text-slate-700 font-medium">It is <b>blue</b>, <b>small</b> and <b>soft</b>.</p>
+            </div>
+            <div class="rounded-2xl bg-pink-50 border-2 border-pink-100 p-4">
+              <p class="font-black text-pink-700 mb-1">3. Describe parts</p>
+              <p class="text-slate-700 font-medium">It has a <b>round</b> button and a <b>long</b> zip.</p>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-[1.6rem] bg-gradient-to-r from-emerald-600 to-pink-600 text-white p-5">
+            <p class="font-black text-xl">Template</p>
+            <p class="font-medium mt-1">It is ________. It has ________. It is my favourite ________.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="test" class="tab-panel">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8" id="test">
+        <div id="quiz-container">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Adjectives Quiz</h2><p class="text-slate-600 font-medium">Choose the best answer.</p></div>
+            <span id="q-counter" class="text-emerald-700 font-bold">Question 1 of 16</span>
+          </div>
+
+          <div class="flex gap-3 flex-wrap mb-5">
+            <span id="score-live" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-black">Points: 0</span>
+            <span id="streak-box" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">🔥 Streak: 0</span>
+          </div>
+
+          <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+          <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Loading...</h3>
+          <div id="options-grid" class="grid gap-4"></div>
+        </div>
+
+        <div id="score-container" class="hidden text-center">
+          <div id="medal" class="text-6xl mb-4">🏆</div>
+          <h2 class="text-3xl font-black mb-4 text-slate-800">Great job!</h2>
+          <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+          <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <button onclick="resetQuiz()" class="bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all">🔁 Repeat all</button>
+            <button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-pink-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-pink-700 transition-all">🎯 Practice mistakes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10">
+      <p class="text-slate-500 font-medium">Academia de Gloria · English · Adjectives · Describe the world with beautiful words 🎨</p>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const tabButtons=document.querySelectorAll('.tab-btn');
+    const tabPanels=document.querySelectorAll('.tab-panel');
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const tab=btn.dataset.tab;
+        tabButtons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        tabPanels.forEach(panel=>panel.classList.toggle('active',panel.id===tab));
+        window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});
+      });
+    });
+
+    document.querySelectorAll('.accordion-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.dataset.acc;
+        const body=document.getElementById(id);
+        const isOpen=!body.classList.contains('hidden');
+        body.classList.toggle('hidden');
+        btn.classList.toggle('open',!isOpen);
+      });
+    });
+
+    function makeStars(){
+      const layer=document.getElementById('stars-layer');
+      const icons=['⭐','✨','🌟','🎨'];
+      for(let i=0;i<8;i++){
+        const star=document.createElement('div');
+        star.className='star-pop';
+        star.textContent=icons[i%icons.length];
+        star.style.left=`${12+Math.random()*76}%`;
+        star.style.top=`${60+Math.random()*16}%`;
+        star.style.animationDelay=`${Math.random()*.12}s`;
+        layer.appendChild(star);
+        setTimeout(()=>star.remove(),1500);
+      }
+    }
+
+    function checkPractice(){
+      const cards=document.querySelectorAll('#practice-list .sentence-card');
+      let ok=0;
+      cards.forEach(card=>{
+        const select=card.querySelector('select');
+        const answer=card.dataset.answer;
+        select.classList.remove('correct','incorrect');
+        if(select.value===answer){
+          select.classList.add('correct');
+          ok++;
+        }else{
+          select.classList.add('incorrect');
+        }
+      });
+      const result=document.getElementById('practice-result');
+      result.classList.remove('hidden','bg-green-100','text-green-800','bg-amber-100','text-amber-800');
+      if(ok===cards.length){
+        result.classList.add('bg-green-100','text-green-800');
+        result.textContent='Perfect! You got all answers right. 🌟';
+        makeStars();
+      }else{
+        result.classList.add('bg-amber-100','text-amber-800');
+        result.textContent=`You got ${ok} of ${cards.length}. Try again. 💪`;
+      }
+    }
+
+    function resetPractice(){
+      document.querySelectorAll('#practice-list select').forEach(select=>{
+        select.value='';
+        select.classList.remove('correct','incorrect');
+      });
+      document.getElementById('practice-result').classList.add('hidden');
+    }
+
+    const questions=[
+      {q:'What is an adjective?',a:['A word that describes a noun','A number','A question word'],c:0},
+      {q:'Choose the adjective: blue eyes.',a:['blue','eyes','has'],c:0},
+      {q:'Choose the adjective: big nose.',a:['big','nose','the'],c:0},
+      {q:'Choose the adjective: smooth texture.',a:['texture','smooth','has'],c:1},
+      {q:'Which one is a colour adjective?',a:['green','huge','soft'],c:0},
+      {q:'Which one is a size adjective?',a:['small','salty','windy'],c:0},
+      {q:'Which one is a texture adjective?',a:['squishy','two','rainy'],c:0},
+      {q:'Which one is a weather adjective?',a:['windy','round','fresh'],c:0},
+      {q:'Where does the adjective usually go in English?',a:['Before the noun','After the noun','At the end only'],c:0},
+      {q:'Choose the correct phrase.',a:['a blue ball','a ball blue','blue a ball'],c:0},
+      {q:'Choose the correct phrase.',a:['big eyes','eyes big','eyes the big'],c:0},
+      {q:'What does “round” describe?',a:['shape','taste','sound'],c:0},
+      {q:'What does “sweet” describe?',a:['taste','weather','number'],c:0},
+      {q:'What does “many” describe?',a:['number','texture','colour'],c:0},
+      {q:'In “Ranny is green”, the adjective is...',a:['green','Ranny','is'],c:0},
+      {q:'In “He is really fast”, the adjective is...',a:['fast','really','he'],c:0}
+    ];
+
+    let currentQ=0, score=0, streak=0, errors=[], activeQuestions=[...questions];
+
+    function loadQuestion(){
+      const q=activeQuestions[currentQ];
+      document.getElementById('q-counter').innerText=`Question ${currentQ+1} of ${activeQuestions.length}`;
+      document.getElementById('question-text').innerText=q.q;
+      document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`;
+
+      const grid=document.getElementById('options-grid');
+      grid.innerHTML='';
+      q.a.forEach((opt,i)=>{
+        const b=document.createElement('button');
+        b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+        b.innerText=opt;
+        b.onclick=()=>handleAnswer(i,b,grid,q);
+        grid.appendChild(b);
+      });
+    }
+
+    function handleAnswer(selected,button,grid,q){
+      const allBtns=grid.querySelectorAll('button');
+      allBtns.forEach(btn=>btn.onclick=null);
+
+      if(selected===q.c){
+        button.classList.add('correct');
+        score++;
+        streak++;
+        document.getElementById('score-live').innerText=`Points: ${score}`;
+        document.getElementById('streak-box').innerText=`🔥 Streak: ${streak}`;
+        makeStars();
+      }else{
+        button.classList.add('incorrect');
+        allBtns[q.c].classList.add('correct');
+        streak=0;
+        document.getElementById('streak-box').innerText='🔥 Streak: 0';
+        if(!errors.find(item=>item.q===q.q)){errors.push(q);}
+      }
+
+      setTimeout(()=>{
+        currentQ++;
+        if(currentQ<activeQuestions.length){loadQuestion();}
+        else{finishQuiz();}
+      },1000);
+    }
+
+    function finishQuiz(){
+      document.getElementById('quiz-progress').style.width='100%';
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('score-container').classList.remove('hidden');
+
+      const pct=Math.round((score/activeQuestions.length)*100);
+      const medal=document.getElementById('medal');
+      let message=`You got ${score} of ${activeQuestions.length} points (${pct}%). `;
+      if(pct>=90){medal.textContent='🏆';message+='Amazing!';}
+      else if(pct>=70){medal.textContent='🌟';message+='Very good!';}
+      else if(pct>=50){medal.textContent='👍';message+='Good. Keep practising.';}
+      else{medal.textContent='💪';message+='Keep trying. Step by step.';}
+
+      document.getElementById('final-score').innerText=message;
+      document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);
+    }
+
+    function resetQuiz(){
+      activeQuestions=[...questions];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Points: 0';
+      document.getElementById('streak-box').innerText='🔥 Streak: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    function repeatErrorsFromEnd(){
+      if(errors.length===0)return;
+      activeQuestions=[...errors];
+      currentQ=0; score=0; streak=0; errors=[];
+      document.getElementById('score-live').innerText='Points: 0';
+      document.getElementById('streak-box').innerText='🔥 Streak: 0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('score-container').classList.add('hidden');
+      document.getElementById('retry-errors-btn').classList.add('hidden');
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
