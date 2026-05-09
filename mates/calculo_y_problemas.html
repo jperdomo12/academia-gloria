@@ -123,8 +123,154 @@
 
     <section id="operaciones" class="tab-panel"><div class="grid lg:grid-cols-[1fr_.9fr] gap-6"><div class="glass-card rounded-[2rem] p-6 md:p-7"><h2 class="text-2xl md:text-3xl font-extrabold mb-4">Práctica de operaciones</h2><p class="text-slate-600 font-medium mb-5">Escribe el resultado y pulsa revisar.</p><div class="space-y-4" id="operations-list"><div class="sentence-card" data-answer="72381"><p class="font-bold text-slate-700 mb-3">41.589 + 30.792 =</p><input class="mini-input" placeholder="Resultado..." /></div><div class="sentence-card" data-answer="221828"><p class="font-bold text-slate-700 mb-3">270.653 − 48.825 =</p><input class="mini-input" placeholder="Resultado..." /></div><div class="sentence-card" data-answer="1814792"><p class="font-bold text-slate-700 mb-3">78.904 × 23 =</p><input class="mini-input" placeholder="Resultado..." /></div><div class="sentence-card" data-answer="6949972"><p class="font-bold text-slate-700 mb-3">91.447 × 76 =</p><input class="mini-input" placeholder="Resultado..." /></div><div class="sentence-card" data-answer="2217"><p class="font-bold text-slate-700 mb-3">57.642 ÷ 26 =</p><input class="mini-input" placeholder="Cociente..." /></div><div class="sentence-card" data-answer="5254"><p class="font-bold text-slate-700 mb-3">89.331 ÷ 17 =</p><input class="mini-input" placeholder="Cociente..." /></div></div><div class="flex flex-wrap gap-3 mt-6"><button onclick="checkOperations()" class="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all">✅ Revisar</button><button onclick="resetOperations()" class="bg-white text-sky-700 px-6 py-4 rounded-2xl font-bold border-2 border-sky-100 hover:border-sky-300 transition-all">🔁 Reiniciar</button></div><div id="operations-result" class="hidden mt-5 rounded-2xl p-4 font-black"></div></div><div class="glass-card rounded-[2rem] p-6 md:p-7"><h2 class="text-2xl md:text-3xl font-extrabold mb-4">Prueba de la división</h2><div class="formula text-center mb-5">divisor × cociente + resto = dividendo</div><div class="space-y-4"><div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">8550 : 8 = 1068 resto 6</p><p class="text-slate-600 font-medium">8×1068 + 6 = 8550 ✅</p></div><div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">3612 : 4 = 903 resto 0</p><p class="text-slate-600 font-medium">4×903 + 0 = 3612 ✅</p></div><div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">Atención</p><p class="text-slate-600 font-medium">Si la prueba no da el dividendo, hay que revisar la división.</p></div></div></div></div></section>
 
-    <section id="problemas" class="tab-panel"><div class="grid lg:grid-cols-2 gap-6"><div class="glass-card rounded-[2rem] p-6 md:p-7"><h2 class="text-2xl md:text-3xl font-extrabold mb-4">Problemas guiados</h2><div class="space-y-4"><div class="problem-card rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-2">Nike</p><p class="text-slate-700 font-medium">2019: 5.382 millones. 2020: 7.943 millones.</p><p class="mt-2 text-slate-600 font-medium"><b>Operación:</b> 7.943 − 5.382 = <b>2.561 millones</b>.</p></div><div class="problem-card rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4"><p class="font-black text-indigo-700 mb-2">Gucci vs Dolce & Gabbana</p><p class="text-slate-700 font-medium">Gucci: 87 bolsos × 1.270 € = 110.490 €.</p><p class="mt-2 text-slate-600 font-medium">Dolce & Gabbana: 112.000 €. Gana <b>Dolce & Gabbana</b> por <b>1.510 €</b>.</p></div><div class="problem-card rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-2">Trajes y vestidos</p><p class="text-slate-700 font-medium">2 trajes × 210 = 420 €. Total 720 €.</p><p class="mt-2 text-slate-600 font-medium">720 − 420 = 300 €. 300 ÷ 3 = <b>100 € cada vestido</b>.</p></div><div class="problem-card rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-2">Botones</p><p class="text-slate-700 font-medium">960 botones. Lleva 30 paquetes de 12.</p><p class="mt-2 text-slate-600 font-medium">30×12 = 360. 960 − 360 = <b>600 botones</b>.</p></div></div></div><div class="glass-card rounded-[2rem] p-6 md:p-7"><h2 class="text-2xl md:text-3xl font-extrabold mb-4">Fichas de razonamiento</h2><div class="grid gap-5"><div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">👟</div><h3 class="text-2xl font-extrabold">¿Más o menos?</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-sky-700 mb-3">Resta</h3><p class="text-slate-700 font-medium">Para saber “cuántos más”, restamos.</p></div></div></div><div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">👜</div><h3 class="text-2xl font-extrabold">Precio total</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-indigo-700 mb-3">Multiplicación</h3><p class="text-slate-700 font-medium">Cantidad × precio de cada uno.</p></div></div></div><div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🧵</div><h3 class="text-2xl font-extrabold">Lo que falta</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-emerald-700 mb-3">Resta</h3><p class="text-slate-700 font-medium">Total − hecho = lo que falta.</p></div></div></div></div></div></div></section>
+   <section id="problemas" class="tab-panel">
+  <div class="grid lg:grid-cols-2 gap-6">
 
+    <div class="glass-card rounded-[2rem] p-6 md:p-7">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Problemas guiados paso a paso</h2>
+
+      <div class="space-y-4">
+
+        <div class="problem-card rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+          <p class="font-black text-sky-700 mb-2">👟 Problema Nike</p>
+          <div class="space-y-2 text-slate-700 font-medium">
+            <p><b>1. Leo:</b> Nike vendió zapatillas en 2019 y en 2020.</p>
+            <p><b>2. Datos:</b> 2019 = 5.382 millones / 2020 = 7.943 millones.</p>
+            <p><b>3. Pregunta:</b> ¿Cuántos millones más vendió en 2020?</p>
+            <p><b>4. Operación:</b> 7.943 - 5.382 = 2.561</p>
+            <p><b>5. Respuesta:</b> Vendió <b>2.561 millones</b> más.</p>
+          </div>
+        </div>
+
+        <div class="problem-card rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4">
+          <p class="font-black text-indigo-700 mb-2">👜 Problema Gucci y Dolce & Gabbana</p>
+          <div class="space-y-2 text-slate-700 font-medium">
+            <p><b>1. Leo:</b> Dos marcas vendieron bolsos.</p>
+            <p><b>2. Datos Gucci:</b> 87 bolsos × 1.270 €.</p>
+            <p><b>3. Calculo Gucci:</b> 87 × 1.270 = 110.490 €.</p>
+            <p><b>4. Dato Dolce & Gabbana:</b> 112.000 €.</p>
+            <p><b>5. Comparo:</b> 112.000 € es mayor que 110.490 €.</p>
+            <p><b>6. Diferencia:</b> 112.000 - 110.490 = 1.510 €.</p>
+            <p><b>7. Respuesta:</b> Dolce & Gabbana obtuvo <b>1.510 € más</b>.</p>
+          </div>
+        </div>
+
+        <div class="problem-card rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+          <p class="font-black text-emerald-700 mb-2">👗 Problema trajes y vestidos</p>
+          <div class="space-y-2 text-slate-700 font-medium">
+            <p><b>1. Leo:</b> Hay trajes y vestidos. Todo cuesta 720 €.</p>
+            <p><b>2. Datos:</b> 2 trajes y 3 vestidos valen 720 €.</p>
+            <p><b>3. Dato importante:</b> 1 traje vale 210 €.</p>
+            <p><b>4. Calculo trajes:</b> 2 × 210 = 420 €.</p>
+            <p><b>5. Dinero para vestidos:</b> 720 - 420 = 300 €.</p>
+            <p><b>6. Calculo un vestido:</b> 300 ÷ 3 = 100 €.</p>
+            <p><b>7. Respuesta:</b> Cada vestido cuesta <b>100 €</b>.</p>
+          </div>
+        </div>
+
+        <div class="problem-card rounded-2xl bg-amber-50 border-2 border-amber-100 p-4">
+          <p class="font-black text-amber-700 mb-2">🧵 Problema botones</p>
+          <div class="space-y-2 text-slate-700 font-medium">
+            <p><b>1. Leo:</b> Arturo tiene que coser botones.</p>
+            <p><b>2. Total:</b> Tiene que coser 960 botones.</p>
+            <p><b>3. Ya hizo:</b> 30 paquetes de 12 botones.</p>
+            <p><b>4. Calculo cosidos:</b> 30 × 12 = 360 botones.</p>
+            <p><b>5. Calculo faltan:</b> 960 - 360 = 600 botones.</p>
+            <p><b>6. Respuesta:</b> Le quedan <b>600 botones</b> por colocar.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="glass-card rounded-[2rem] p-6 md:p-7">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Fichas de razonamiento</h2>
+
+      <div class="grid gap-5">
+
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-inner">
+            <div class="flash-face">
+              <div class="text-5xl mb-3">👟</div>
+              <h3 class="text-2xl font-extrabold">¿Cuántos más?</h3>
+              <p class="text-slate-500 font-medium mt-2">Pulsa para ver los pasos</p>
+            </div>
+            <div class="flash-face flash-back">
+              <h3 class="text-2xl font-extrabold text-sky-700 mb-3">Usamos resta</h3>
+              <div class="text-left text-slate-700 font-medium space-y-2">
+                <p><b>Pregunta:</b> ¿Cuántos más?</p>
+                <p><b>Clave:</b> comparar dos cantidades.</p>
+                <p><b>Operación:</b> cantidad grande - cantidad pequeña.</p>
+                <p><b>Ejemplo:</b> 7.943 - 5.382 = 2.561.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-inner">
+            <div class="flash-face">
+              <div class="text-5xl mb-3">👜</div>
+              <h3 class="text-2xl font-extrabold">Precio total</h3>
+              <p class="text-slate-500 font-medium mt-2">Pulsa para ver los pasos</p>
+            </div>
+            <div class="flash-face flash-back">
+              <h3 class="text-2xl font-extrabold text-indigo-700 mb-3">Usamos multiplicación</h3>
+              <div class="text-left text-slate-700 font-medium space-y-2">
+                <p><b>Pregunta:</b> ¿Cuánto dinero obtuvo?</p>
+                <p><b>Clave:</b> hay muchas cosas con el mismo precio.</p>
+                <p><b>Operación:</b> cantidad × precio.</p>
+                <p><b>Ejemplo:</b> 87 × 1.270 = 110.490 €.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-inner">
+            <div class="flash-face">
+              <div class="text-5xl mb-3">👗</div>
+              <h3 class="text-2xl font-extrabold">Precio de una cosa</h3>
+              <p class="text-slate-500 font-medium mt-2">Pulsa para ver los pasos</p>
+            </div>
+            <div class="flash-face flash-back">
+              <h3 class="text-2xl font-extrabold text-emerald-700 mb-3">Restamos y dividimos</h3>
+              <div class="text-left text-slate-700 font-medium space-y-2">
+                <p><b>Primero:</b> quito lo que ya conozco.</p>
+                <p><b>Después:</b> reparto lo que queda.</p>
+                <p><b>Ejemplo:</b> 720 - 420 = 300.</p>
+                <p><b>Luego:</b> 300 ÷ 3 = 100 €.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-inner">
+            <div class="flash-face">
+              <div class="text-5xl mb-3">🧵</div>
+              <h3 class="text-2xl font-extrabold">¿Cuántos faltan?</h3>
+              <p class="text-slate-500 font-medium mt-2">Pulsa para ver los pasos</p>
+            </div>
+            <div class="flash-face flash-back">
+              <h3 class="text-2xl font-extrabold text-amber-700 mb-3">Total - hecho</h3>
+              <div class="text-left text-slate-700 font-medium space-y-2">
+                <p><b>Pregunta:</b> ¿Cuántos quedan?</p>
+                <p><b>Clave:</b> hay un total y una parte hecha.</p>
+                <p><b>Operación:</b> total - hecho.</p>
+                <p><b>Ejemplo:</b> 960 - 360 = 600.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    
     <section id="test" class="tab-panel"><div class="glass-card rounded-[2rem] p-6 md:p-8" id="test"><div id="quiz-container"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6"><div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Evaluación</h2><p class="text-slate-600 font-medium">Selecciona la mejor respuesta.</p></div><span id="q-counter" class="text-indigo-700 font-bold">Pregunta 1 de 14</span></div><div class="flex gap-3 flex-wrap mb-5"><span id="score-live" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span><span id="streak-box" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span></div><div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div><h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3><div id="options-grid" class="grid gap-4"></div></div><div id="score-container" class="hidden text-center"><div id="medal" class="text-6xl mb-4">🏆</div><h2 class="text-3xl font-black mb-4 text-slate-800">¡Muy bien!</h2><p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p><div class="flex flex-col md:flex-row gap-4 justify-center"><button onclick="resetQuiz()" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all">🔁 Repetir todo</button><button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all">🎯 Practicar errores</button></div></div></div></section>
     
     <footer class="text-center py-10"><p class="text-slate-500 font-medium">Academia de Gloria · Matemáticas · Cálculo y Problemas · Pensar paso a paso también es ganar 🧮</p></footer>
