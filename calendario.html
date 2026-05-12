@@ -1,91 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario - Academia de Gloria</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
-        .success-card { 
-            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2);
-        }
-        .motivational-box {
-            border: 2px dashed #cbd5e1;
-            background: #ffffff;
-        }
-        .glow { animation: glow-pulse 2s infinite; }
-        @keyframes glow-pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-    </style>
-       <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendario - Academia de Gloria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at top left,rgba(99,102,241,.16),transparent 25%),radial-gradient(circle at top right,rgba(251,146,60,.14),transparent 24%),radial-gradient(circle at bottom right,rgba(34,197,94,.14),transparent 28%),linear-gradient(180deg,#f8fbff 0%,#fffef8 48%,#fcfaff 100%);color:#1e293b}
+    .glass-card{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border:2px solid rgba(219,234,254,.95);box-shadow:0 18px 40px rgba(37,99,235,.08)}
+    .gradient-title{background:linear-gradient(90deg,#2563eb,#8b5cf6,#f59e0b,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;font-size:.88rem;font-weight:800;background:#fff;border:2px solid #dbeafe}
+    .exam-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.exam-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(99,102,241,.13)}
+    .dot{width:2.7rem;height:2.7rem;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;background:#fff;border:3px solid #dbeafe;box-shadow:0 8px 20px rgba(37,99,235,.12);flex-shrink:0}
+  </style>
 </head>
-<body class="p-4 md:p-8">
-
-    <div class="max-w-4xl mx-auto">
-        <header class="flex justify-between items-center mb-8">
-            <a href="index.html" class="flex items-center gap-2 text-slate-600 hover:text-sky-600 transition-colors font-bold">
-                <i data-lucide="arrow-left"></i> Volver al Inicio
-            </a>
-            <h1 class="text-2xl font-black text-slate-800">Mi Calendario</h1>
-        </header>
-
-        <div class="success-card p-8 md:p-12 rounded-[3rem] text-white text-center mb-8">
-            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 glow">
-                <i data-lucide="party-popper" class="w-10 h-10 text-white"></i>
-            </div>
-            <h2 class="text-3xl font-black mb-4">¡Exámenes Finalizados!</h2>
-            <p class="text-sky-100 text-lg leading-relaxed max-w-xl mx-auto">
-                ¡Lo lograste, Gloria! Has terminado tus exámenes con mucho esfuerzo. Ahora es momento de celebrar tu dedicación.
-            </p>
+<body>
+<main class="max-w-7xl mx-auto p-4 md:p-8">
+  <header class="glass-card rounded-[2.6rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+    <a href="index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all"><i data-lucide="arrow-left" class="w-5 h-5"></i> Volver al Inicio</a>
+    <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+      <div>
+        <div class="flex flex-wrap gap-3 mb-5">
+          <span class="pill text-sky-700"><i data-lucide="calendar-days" class="w-4 h-4"></i> Calendario</span>
+          <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Último trimestre</span>
+          <span class="pill text-amber-700"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Final de 5º</span>
         </div>
-
-        <div class="motivational-box p-8 rounded-[2.5rem] text-center mb-8">
-            <i data-lucide="calendar-off" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
-            <h3 class="text-xl font-extrabold text-slate-700 mb-4">Próximas Fechas</h3>
-            <p class="text-slate-500 font-medium leading-relaxed italic">
-                "Por ahora no tienes programados nuevos exámenes, pero recuerda: <span class="text-sky-600 font-bold">el secreto del éxito es la constancia</span>. Mantente estudiando un poquito cada día; así, cuando lleguen las nuevas fechas, te sentirás súper preparada, tranquila y muy feliz."
-            </p>
+        <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">Calendario de <span class="gradient-title">Exámenes Finales</span> 🌟</h1>
+        <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">Gloria está en la recta final de 5º. Vamos paso a paso, con calma, confianza y repasos cortos.</p>
+      </div>
+      <div class="glass-card rounded-[2rem] p-6 md:p-7">
+        <div class="flex items-center gap-4 mb-4"><div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-violet-500 to-amber-500 text-white flex items-center justify-center text-3xl shadow-lg">🏁</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-sky-700">Meta final</p><h2 class="text-2xl font-extrabold text-slate-800">Último examen: 9 de julio</h2></div></div>
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">10 de julio</p><p class="text-slate-600 font-medium">Último día de Gloria este año escolar.</p></div>
+          <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">19 de julio</p><p class="text-slate-600 font-medium">Fin formal de clases.</p></div>
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Viaje familiar</p><p class="text-slate-600 font-medium">Después del 10, comienza una etapa bonita en familia.</p></div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
-                <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="book-open"></i>
-                </div>
-                <b class="text-slate-700">Lectura Rápida</b>
-                <p class="text-xs text-slate-400 mt-2">15 minutos al día para refrescar lo aprendido.</p>
-            </div>
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
-                <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="gamepad-2"></i>
-                </div>
-                <b class="text-slate-700">Juego de Repaso</b>
-                <p class="text-xs text-slate-400 mt-2">Usa las fichas interactivas de la Academia.</p>
-            </div>
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
-                <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="sparkles"></i>
-                </div>
-                <b class="text-slate-700">Curiosidad</b>
-                <p class="text-xs text-slate-400 mt-2">Investiga algo nuevo sobre lo que más te guste.</p>
-            </div>
-        </div>
-
-        <footer class="mt-12 text-center text-slate-400 text-sm font-medium">
-            ¡Sigue brillando, Valentina! ✨
-        </footer>
+      </div>
     </div>
+  </header>
 
-    <script>
-        lucide.createIcons();
-    </script>
+  <section class="grid md:grid-cols-3 gap-5 mb-8">
+    <div class="glass-card rounded-[2rem] p-6"><div class="text-4xl mb-3">✅</div><h2 class="text-2xl font-black text-slate-800 mb-2">Ya empezó</h2><p class="text-slate-600 font-medium">Science: Electricidad salió aparentemente bien. La Academia fue de ayuda.</p></div>
+    <div class="glass-card rounded-[2rem] p-6"><div class="text-4xl mb-3">📐</div><h2 class="text-2xl font-black text-slate-800 mb-2">Siguiente foco</h2><p class="text-slate-600 font-medium">Mates: Coordenadas, posición y simetría.</p></div>
+    <div class="glass-card rounded-[2rem] p-6"><div class="text-4xl mb-3">💪</div><h2 class="text-2xl font-black text-slate-800 mb-2">Plan diario</h2><p class="text-slate-600 font-medium">Repasos cortos, visuales y sin presión. Una meta por día.</p></div>
+  </section>
+
+  <section class="glass-card rounded-[2.4rem] p-6 md:p-8 mb-8">
+    <div class="flex items-center gap-3 mb-6"><div class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl">📅</div><div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Ruta de exámenes</h2><p class="text-slate-500 font-medium">Último trimestre · cierre de 5º grado</p></div></div>
+    <div class="space-y-5">
+      <article class="exam-card rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-5"><div class="flex gap-4"><div class="dot border-emerald-200">✅</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-black text-xs uppercase tracking-widest">Hoy</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Science</span></div><h3 class="text-2xl font-black text-slate-800">Electricidad</h3><p class="text-slate-600 font-medium mt-1">Examen realizado. Parece que fue bien y el trabajo de la Academia ayudó mucho.</p><a href="ciencias/electricidad.html" class="inline-flex mt-4 items-center gap-2 text-emerald-700 font-black">Repasar electricidad <span>→</span></a></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-indigo-50 border-2 border-indigo-100 p-5"><div class="flex gap-4"><div class="dot border-indigo-200">📐</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest">Mañana</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Mates</span></div><h3 class="text-2xl font-black text-slate-800">Coordenadas, posición y simetría</h3><p class="text-slate-600 font-medium mt-1">Prioridad inmediata. Repasar ubicación, orientación, ejes y simetrías con ejemplos visuales.</p></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-rose-50 border-2 border-rose-100 p-5"><div class="flex gap-4"><div class="dot border-rose-200">✏️</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 font-black text-xs uppercase tracking-widest">25 de junio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Lengua</span></div><h3 class="text-2xl font-black text-slate-800">Expresión y ortografía</h3><p class="text-slate-600 font-medium mt-1">Trabajar escritura clara, frases ordenadas, mayúsculas, puntos y revisión final.</p></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-5"><div class="flex gap-4"><div class="dot border-blue-200">🧮</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-black text-xs uppercase tracking-widest">28 de junio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Mates</span></div><h3 class="text-2xl font-black text-slate-800">Operaciones y problemas</h3><p class="text-slate-600 font-medium mt-1">Repasar escalera de cálculo, operaciones y problemas guiados paso a paso.</p><div class="flex flex-wrap gap-3 mt-4"><a href="mates/escalera_calculo.html" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-black">🪜 Escalera</a><a href="mates/calculo_y_problemas.html" class="inline-flex items-center gap-2 bg-white text-blue-700 border-2 border-blue-100 px-4 py-3 rounded-2xl font-black">🧮 Problemas</a></div></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-fuchsia-50 border-2 border-fuchsia-100 p-5"><div class="flex gap-4"><div class="dot border-fuchsia-200">📚</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-fuchsia-100 text-fuchsia-700 font-black text-xs uppercase tracking-widest">1 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Lengua</span></div><h3 class="text-2xl font-black text-slate-800">Comprensión y gramática</h3><p class="text-slate-600 font-medium mt-1">Leer despacio, subrayar datos importantes y repasar gramática.</p><a href="lengua/gramatica.html" class="inline-flex mt-4 items-center gap-2 text-fuchsia-700 font-black">Repasar gramática <span>→</span></a></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-5"><div class="flex gap-4"><div class="dot border-orange-200">🇬🇧</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-black text-xs uppercase tracking-widest">2 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Inglés</span></div><h3 class="text-2xl font-black text-slate-800">Grammar, writing and vocabulary</h3><p class="text-slate-600 font-medium mt-1">Repasar WH Questions, adjectives, comparatives, superlatives y vocabulario clave.</p><div class="flex flex-wrap gap-3 mt-4"><a href="ingles/wh_questions.html" class="inline-flex items-center gap-2 bg-sky-600 text-white px-4 py-3 rounded-2xl font-black">❓ WH</a><a href="ingles/adjectives.html" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-4 py-3 rounded-2xl font-black">🎨 Adjectives</a><a href="ingles/comparatives_superlatives.html" class="inline-flex items-center gap-2 bg-orange-600 text-white px-4 py-3 rounded-2xl font-black">🏆 Comparatives</a></div></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-5"><div class="flex gap-4"><div class="dot border-sky-200">🎧</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 font-black text-xs uppercase tracking-widest">5 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Inglés</span></div><h3 class="text-2xl font-black text-slate-800">Reading and Listening</h3><p class="text-slate-600 font-medium mt-1">Practicar lectura con calma, escuchar palabras clave y responder sin prisa.</p><a href="ingles/index.html" class="inline-flex mt-4 items-center gap-2 text-sky-700 font-black">Ir a English <span>→</span></a></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-5"><div class="flex gap-4"><div class="dot border-emerald-200">👑</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-black text-xs uppercase tracking-widest">8 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Sociales</span></div><h3 class="text-2xl font-black text-slate-800">Edad Moderna</h3><p class="text-slate-600 font-medium mt-1">Repasar línea del tiempo, Reyes Católicos, descubrimiento de América, imperio y sociedad.</p><a href="sociales/edad_moderna.html" class="inline-flex mt-4 items-center gap-2 text-emerald-700 font-black">Repasar Edad Moderna <span>→</span></a></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-5"><div class="flex gap-4"><div class="dot border-violet-200">⚙️</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-violet-100 text-violet-700 font-black text-xs uppercase tracking-widest">9 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Science</span></div><h3 class="text-2xl font-black text-slate-800">Máquinas</h3><p class="text-slate-600 font-medium mt-1">Último examen del curso. Repasar conceptos, ejemplos y vocabulario con tranquilidad.</p></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-green-50 border-2 border-green-100 p-5"><div class="flex gap-4"><div class="dot border-green-200">🎒</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest">10 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Gloria</span></div><h3 class="text-2xl font-black text-slate-800">Último día escolar de Gloria</h3><p class="text-slate-600 font-medium mt-1">Cierre especial antes del viaje familiar al país de origen.</p></div></div></article>
+      <article class="exam-card rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-5"><div class="flex gap-4"><div class="dot border-amber-200">🏫</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-black text-xs uppercase tracking-widest">19 de julio</span><span class="px-3 py-1 rounded-full bg-white text-slate-600 font-bold text-xs">Colegio</span></div><h3 class="text-2xl font-black text-slate-800">Fin formal de clases</h3><p class="text-slate-600 font-medium mt-1">El curso termina oficialmente el 19, aunque Gloria finaliza el 10 por el viaje familiar.</p></div></div></article>
+    </div>
+  </section>
+
+  <section class="glass-card rounded-[2.4rem] p-6 md:p-8">
+    <div class="grid lg:grid-cols-[1fr_.9fr] gap-6 items-center">
+      <div><h2 class="text-3xl font-black text-slate-800 mb-3">Plan de repaso recomendado</h2><p class="text-slate-600 font-medium text-lg leading-relaxed">Trabajar en bloques cortos: 20 minutos de repaso, pausa, y luego 10 minutos de preguntas fáciles para cerrar con éxito.</p></div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">Antes del examen</p><p class="text-slate-600 font-medium">Poco contenido, mucha calma y repaso visual.</p></div>
+        <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Después del examen</p><p class="text-slate-600 font-medium">Celebrar el esfuerzo, aunque haya dudas.</p></div>
+        <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-1">TEL</p><p class="text-slate-600 font-medium">Frases cortas, pasos claros y apoyo visual.</p></div>
+        <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4"><p class="font-black text-amber-700 mb-1">Motivación</p><p class="text-slate-600 font-medium">Gloria está terminando 5º. Eso ya es enorme.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center py-10"><p class="text-slate-500 font-medium">Academia de Gloria · Calendario final · Paso a paso hasta la meta ✨</p></footer>
+</main>
+<script>lucide.createIcons();</script>
 </body>
 </html>
