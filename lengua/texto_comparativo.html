@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria | Lengua | Texto Comparativo</title>
+  <meta name="description" content="Página interactiva de Lengua sobre el texto comparativo para 5º de Primaria." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at top left,rgba(251,146,60,.15),transparent 25%),radial-gradient(circle at top right,rgba(59,130,246,.14),transparent 26%),radial-gradient(circle at bottom right,rgba(34,197,94,.13),transparent 28%),linear-gradient(180deg,#fffaf5 0%,#fbfdff 48%,#f7fffb 100%);color:#1e293b}
+    .glass-card{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border:2px solid rgba(254,215,170,.9);box-shadow:0 18px 40px rgba(249,115,22,.08)}
+    .gradient-title{background:linear-gradient(90deg,#f97316,#2563eb,#16a34a,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;font-size:.88rem;font-weight:800;background:#fff;border:2px solid #fed7aa}
+    .tab-btn{transition:all .22s ease}.tab-btn.active{background:linear-gradient(135deg,#f97316,#2563eb);color:#fff;border-color:transparent;box-shadow:0 16px 30px rgba(249,115,22,.22);transform:translateY(-1px)}
+    .tab-panel{display:none}.tab-panel.active{display:block;animation:fadeIn .28s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .step-card,.connector-card,.rubric-card,.flash-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.step-card:hover,.connector-card:hover,.rubric-card:hover,.flash-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(249,115,22,.13)}
+    .formula{font-weight:900;border:2px dashed #fdba74;background:#fff7ed;color:#c2410c;border-radius:1.2rem;padding:.8rem 1rem}
+    .tag{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.4rem .8rem;font-size:.8rem;font-weight:900}
+    .connector{display:inline-block;border-radius:.9rem;padding:.35rem .7rem;margin:.15rem;font-weight:900;background:#fff;border:2px solid #fed7aa;color:#c2410c}
+    .option-btn{transition:all .2s ease;border:2px solid #fed7aa;background:#fff}.option-btn:hover{border-color:#f97316;transform:translateY(-1px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}.incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#f97316,#2563eb,#22c55e);transition:width .25s ease}
+    .star-pop{position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0}@keyframes floatUp{0%{transform:translateY(20px) scale(.7);opacity:0}18%{opacity:1}100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}}
+    .mini-textarea{width:100%;min-height:110px;border:2px solid #fed7aa;border-radius:1.3rem;padding:1rem;font-weight:700;outline:none;background:#fff;transition:all .2s ease}.mini-textarea:focus{border-color:#f97316;box-shadow:0 0 0 4px rgba(249,115,22,.12)}
+    .flash-card{perspective:1000px;min-height:220px;cursor:pointer}.flash-inner{position:relative;width:100%;min-height:220px;transition:transform .6s;transform-style:preserve-3d}.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:1.5rem;padding:1.2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:2px solid #fed7aa;background:#fff}.flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#fff7ed,#eff6ff)}
+  </style>
+</head>
+<body>
+  <div id="stars-layer"></div>
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.6rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <a href="./index.html" class="inline-flex items-center gap-2 text-orange-700 font-bold mb-5 hover:gap-3 transition-all"><i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Lengua</a>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-orange-700"><i data-lucide="book-open" class="w-4 h-4"></i> Lengua</span>
+            <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Modo TEL</span>
+            <span class="pill text-sky-700"><i data-lucide="split" class="w-4 h-4"></i> Comparar</span>
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4"><span class="gradient-title">Texto Comparativo</span> ⚖️</h1>
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">Aprende a comparar dos cosas explicando sus <strong>semejanzas</strong> y <strong>diferencias</strong>, usando conectores y párrafos claros.</p>
+          <div class="flex flex-wrap gap-4 mt-7">
+            <a href="#contenido" class="inline-flex items-center gap-2 bg-orange-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-orange-700 transition-all shadow-lg"><i data-lucide="play-circle" class="w-5 h-5"></i> Empezar</a>
+            <a href="#test" class="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-4 rounded-2xl font-bold border-2 border-blue-100 hover:border-blue-300 transition-all"><i data-lucide="badge-check" class="w-5 h-5"></i> Evaluación</a>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4"><div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 via-blue-500 to-emerald-500 text-white flex items-center justify-center text-3xl shadow-lg">⚖️</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-orange-700">Idea clave</p><h2 class="text-2xl font-extrabold text-slate-800">Comparar = mirar dos cosas</h2></div></div>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-4"><p class="font-black text-blue-700 mb-1">Semejanzas</p><p class="text-slate-600 font-medium">Lo que se parece.</p></div>
+            <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><p class="font-black text-orange-700 mb-1">Diferencias</p><p class="text-slate-600 font-medium">Lo que cambia.</p></div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">Conclusión</p><p class="text-slate-600 font-medium">La idea más importante.</p></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="contenido" class="mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="resumen">📘 Resumen</button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="estructura">🏗️ Estructura</button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="conectores">🔗 Conectores</button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="practica">✍️ Práctica</button>
+        <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">✅ Test</button>
+      </div>
+    </section>
+
+    <section id="resumen" class="tab-panel active">
+      <div class="grid lg:grid-cols-[1fr_.95fr] gap-6 mb-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <h2 class="text-3xl font-black text-slate-800 mb-4">¿Qué es un texto comparativo?</h2>
+          <p class="text-slate-600 text-lg font-medium leading-relaxed mb-5">Es un texto que explica las <strong>semejanzas</strong> y las <strong>diferencias</strong> entre dos o más objetos, personas, ideas o situaciones.</p>
+          <div class="formula text-center text-xl">Comparar = ¿en qué se parecen? + ¿en qué se diferencian?</div>
+          <div class="grid md:grid-cols-2 gap-4 mt-6">
+            <div class="rounded-[1.8rem] bg-blue-50 border-2 border-blue-100 p-5 text-center"><div class="text-5xl mb-3">🤝</div><h3 class="text-2xl font-black text-blue-700 mb-2">Semejanzas</h3><p class="text-slate-600 font-medium">Cosas que tienen en común.</p></div>
+            <div class="rounded-[1.8rem] bg-orange-50 border-2 border-orange-100 p-5 text-center"><div class="text-5xl mb-3">↔️</div><h3 class="text-2xl font-black text-orange-700 mb-2">Diferencias</h3><p class="text-slate-600 font-medium">Cosas que no son iguales.</p></div>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <h2 class="text-3xl font-black text-slate-800 mb-4">Ejemplo rápido</h2>
+          <div class="grid grid-cols-2 gap-4 mb-5">
+            <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 text-center"><div class="text-5xl mb-2">🏀</div><p class="font-black text-amber-700">Baloncesto</p></div>
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4 text-center"><div class="text-5xl mb-2">🚴</div><p class="font-black text-sky-700">Ciclismo</p></div>
+          </div>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-4"><b class="text-blue-700">Semejanza:</b> los dos son deportes.</div>
+            <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><b class="text-orange-700">Diferencia:</b> en baloncesto usamos balón y en ciclismo bicicleta.</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-5">
+        <div class="glass-card step-card rounded-[2rem] p-6"><div class="text-5xl mb-3">1️⃣</div><h3 class="text-2xl font-black text-slate-800 mb-2">Elige dos cosas</h3><p class="text-slate-600 font-medium">Por ejemplo: perros y gatos, baloncesto y ciclismo.</p></div>
+        <div class="glass-card step-card rounded-[2rem] p-6"><div class="text-5xl mb-3">2️⃣</div><h3 class="text-2xl font-black text-slate-800 mb-2">Busca semejanzas y diferencias</h3><p class="text-slate-600 font-medium">Primero piensa, luego escribe.</p></div>
+        <div class="glass-card step-card rounded-[2rem] p-6"><div class="text-5xl mb-3">3️⃣</div><h3 class="text-2xl font-black text-slate-800 mb-2">Ordena en párrafos</h3><p class="text-slate-600 font-medium">Introducción, desarrollo y conclusión.</p></div>
+      </div>
+    </section>
+
+    <section id="estructura" class="tab-panel">
+      <div class="glass-card rounded-[2rem] p-6 md:p-8 mb-6">
+        <h2 class="text-3xl font-black text-slate-800 mb-5">Estructura del texto comparativo</h2>
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="step-card rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-6"><span class="tag bg-orange-100 text-orange-700">1º Párrafo</span><div class="text-5xl my-4">🚪</div><h3 class="text-2xl font-black text-orange-700 mb-2">Introducción</h3><p class="text-slate-600 font-medium mb-4">Presento qué voy a comparar.</p><div class="rounded-xl bg-white p-4 font-bold">Voy a comparar los perros y los gatos.</div></div>
+          <div class="step-card rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-6"><span class="tag bg-blue-100 text-blue-700">2º y 3º Párrafo</span><div class="text-5xl my-4">🔍</div><h3 class="text-2xl font-black text-blue-700 mb-2">Desarrollo</h3><p class="text-slate-600 font-medium mb-4">Explico diferencias y semejanzas.</p><div class="rounded-xl bg-white p-4 font-bold">Se parecen en... / En cambio...</div></div>
+          <div class="step-card rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6"><span class="tag bg-emerald-100 text-emerald-700">Último párrafo</span><div class="text-5xl my-4">🏁</div><h3 class="text-2xl font-black text-emerald-700 mb-2">Conclusión</h3><p class="text-slate-600 font-medium mb-4">Resumo lo más importante.</p><div class="rounded-xl bg-white p-4 font-bold">Como conclusión, podemos decir que...</div></div>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-[1fr_.9fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6">
+          <h3 class="text-2xl font-black mb-4">Plantilla fácil para Gloria</h3>
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><b class="text-orange-700">Introducción:</b> Voy a comparar ______ y ______.</div>
+            <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-4"><b class="text-blue-700">Semejanzas:</b> Los dos ______. Del mismo modo, ______.</div>
+            <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4"><b class="text-rose-700">Diferencias:</b> ______, en cambio, ______.</div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><b class="text-emerald-700">Conclusión:</b> Como conclusión, podemos decir que ______.</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6">
+          <h3 class="text-2xl font-black mb-4">Ejemplo: perros y gatos</h3>
+          <div class="space-y-3 text-slate-700 font-medium">
+            <p><b>Introducción:</b> Los perros y los gatos son dos mascotas populares.</p>
+            <p><b>Semejanzas:</b> Los dos pueden ser cariñosos y necesitan cuidados.</p>
+            <p><b>Diferencias:</b> Los perros necesitan más atención diaria; en cambio, los gatos son más independientes.</p>
+            <p><b>Conclusión:</b> Los dos son buenos compañeros para las personas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="conectores" class="tab-panel">
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <div class="text-5xl mb-3">↔️</div><h2 class="text-3xl font-black text-orange-700 mb-4">Conectores de diferencias</h2>
+          <p class="text-slate-600 font-medium mb-4">Sirven para decir que dos cosas no son iguales.</p>
+          <div><span class="connector">pero</span><span class="connector">en cambio</span><span class="connector">a diferencia de</span><span class="connector">por el contrario</span><span class="connector">sin embargo</span><span class="connector">mientras que</span></div>
+          <div class="rounded-xl bg-orange-50 border-2 border-orange-100 p-4 mt-5 font-bold">El baloncesto usa balón, <span class="text-orange-700">en cambio</span>, el ciclismo usa bicicleta.</div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <div class="text-5xl mb-3">🤝</div><h2 class="text-3xl font-black text-blue-700 mb-4">Conectores de semejanzas</h2>
+          <p class="text-slate-600 font-medium mb-4">Sirven para decir que dos cosas se parecen.</p>
+          <div><span class="connector">igualmente</span><span class="connector">del mismo modo</span><span class="connector">como</span><span class="connector">de igual forma</span><span class="connector">de la misma manera</span><span class="connector">también</span></div>
+          <div class="rounded-xl bg-blue-50 border-2 border-blue-100 p-4 mt-5 font-bold">Los dos deportes son olímpicos. <span class="text-blue-700">Del mismo modo</span>, pueden practicarse al aire libre.</div>
+        </div>
+      </div>
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <h2 class="text-2xl md:text-3xl font-black mb-5">Mini reto de conectores</h2>
+        <div id="connector-practice" class="grid md:grid-cols-2 gap-4">
+          <div class="sentence-card rounded-2xl bg-white border-2 border-orange-100 p-4" data-answer="diferencia">
+            <p class="font-bold mb-3">El perro necesita pasear, ______ el gato suele quedarse en casa.</p>
+            <select class="w-full border-2 border-orange-100 rounded-xl p-3 font-bold"><option value="">Selecciona...</option><option value="semejanza">del mismo modo</option><option value="diferencia">en cambio</option></select>
+          </div>
+          <div class="sentence-card rounded-2xl bg-white border-2 border-blue-100 p-4" data-answer="semejanza">
+            <p class="font-bold mb-3">Los perros son cariñosos. ______, los gatos también pueden ser cariñosos.</p>
+            <select class="w-full border-2 border-blue-100 rounded-xl p-3 font-bold"><option value="">Selecciona...</option><option value="diferencia">por el contrario</option><option value="semejanza">de la misma manera</option></select>
+          </div>
+        </div>
+        <button onclick="checkConnectors()" class="mt-5 bg-orange-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-orange-700 transition-all">✅ Revisar conectores</button>
+        <div id="connector-result" class="hidden mt-4 rounded-2xl p-4 font-black"></div>
+      </div>
+    </section>
+
+    <section id="practica" class="tab-panel">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Guía para escribir</h2>
+          <p class="text-slate-600 font-medium mb-5">Escribe poco a poco. No hace falta hacerlo perfecto a la primera.</p>
+          <div class="space-y-4">
+            <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><b class="text-orange-700">1. Introducción:</b> ¿Qué voy a comparar?</div>
+            <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-4"><b class="text-blue-700">2. Semejanzas:</b> ¿En qué se parecen?</div>
+            <div class="rounded-2xl bg-rose-50 border-2 border-rose-100 p-4"><b class="text-rose-700">3. Diferencias:</b> ¿En qué son diferentes?</div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><b class="text-emerald-700">4. Conclusión:</b> ¿Qué idea final quiero decir?</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Constructor de texto</h2>
+          <div class="space-y-4">
+            <div><label class="font-black text-orange-700">Introducción</label><textarea class="mini-textarea" placeholder="Voy a comparar..."></textarea></div>
+            <div><label class="font-black text-blue-700">Semejanzas</label><textarea class="mini-textarea" placeholder="Los dos... Del mismo modo..."></textarea></div>
+            <div><label class="font-black text-rose-700">Diferencias</label><textarea class="mini-textarea" placeholder="En cambio... A diferencia de..."></textarea></div>
+            <div><label class="font-black text-emerald-700">Conclusión</label><textarea class="mini-textarea" placeholder="Como conclusión..."></textarea></div>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card rounded-[2rem] p-6 md:p-8 mt-6">
+        <h2 class="text-2xl md:text-3xl font-black mb-5">Rúbrica fácil antes de entregar</h2>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="rubric-card rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><div class="text-3xl mb-2">📏</div><h3 class="font-black text-sky-700 mb-1">Márgenes</h3><p class="text-slate-600 font-medium">¿He dejado márgenes?</p></div>
+          <div class="rubric-card rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><div class="text-3xl mb-2">✨</div><h3 class="font-black text-emerald-700 mb-1">Limpieza</h3><p class="text-slate-600 font-medium">¿Está limpio y sin tachones?</p></div>
+          <div class="rubric-card rounded-2xl bg-orange-50 border-2 border-orange-100 p-4"><div class="text-3xl mb-2">📄</div><h3 class="font-black text-orange-700 mb-1">Párrafos</h3><p class="text-slate-600 font-medium">¿Tiene introducción, semejanzas, diferencias y conclusión?</p></div>
+          <div class="rubric-card rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><div class="text-3xl mb-2">🔎</div><h3 class="font-black text-violet-700 mb-1">Revisión</h3><p class="text-slate-600 font-medium">¿Lo he leído para corregir faltas?</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="test" class="tab-panel">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-6">
+        <div class="glass-card rounded-[2rem] p-6 md:p-7">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Fichas rápidas</h2>
+          <div class="grid gap-5">
+            <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🚪</div><h3 class="text-2xl font-extrabold">Introducción</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-orange-700 mb-3">Presenta</h3><p class="text-slate-700 font-medium">Dice qué dos cosas se van a comparar.</p></div></div></div>
+            <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🔗</div><h3 class="text-2xl font-extrabold">Conectores</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-blue-700 mb-3">Unen ideas</h3><p class="text-slate-700 font-medium">Ejemplo: en cambio, del mismo modo.</p></div></div></div>
+            <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-5xl mb-3">🏁</div><h3 class="text-2xl font-extrabold">Conclusión</h3><p class="text-slate-500 font-medium mt-2">Pulsa</p></div><div class="flash-face flash-back"><h3 class="text-2xl font-extrabold text-emerald-700 mb-3">Cierra el texto</h3><p class="text-slate-700 font-medium">Resume lo más importante.</p></div></div></div>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <div id="quiz-container">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Evaluación</h2><p class="text-slate-600 font-medium">Selecciona la mejor respuesta.</p></div>
+              <span id="q-counter" class="text-orange-700 font-bold">Pregunta 1 de 14</span>
+            </div>
+            <div class="flex gap-3 flex-wrap mb-5"><span id="score-live" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span><span id="streak-box" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span></div>
+            <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+            <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+            <div id="options-grid" class="grid gap-4"></div>
+          </div>
+          <div id="score-container" class="hidden text-center">
+            <div id="medal" class="text-6xl mb-4">🏆</div>
+            <h2 class="text-3xl font-black mb-4 text-slate-800">¡Muy bien!</h2>
+            <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center"><button onclick="resetQuiz()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-700 transition-all">🔁 Repetir todo</button><button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all">🎯 Practicar errores</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10"><p class="text-slate-500 font-medium">Academia de Gloria · Lengua · Texto Comparativo · Comparar ayuda a pensar mejor ⚖️</p></footer>
+  </main>
+  <script>
+    lucide.createIcons();
+    const tabButtons=document.querySelectorAll('.tab-btn'), tabPanels=document.querySelectorAll('.tab-panel');
+    tabButtons.forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab;tabButtons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');tabPanels.forEach(panel=>panel.classList.toggle('active',panel.id===tab));window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});});});
+    function makeStars(){const layer=document.getElementById('stars-layer');const icons=['⭐','✨','🌟','⚖️'];for(let i=0;i<8;i++){const star=document.createElement('div');star.className='star-pop';star.textContent=icons[i%icons.length];star.style.left=`${12+Math.random()*76}%`;star.style.top=`${60+Math.random()*16}%`;star.style.animationDelay=`${Math.random()*.12}s`;layer.appendChild(star);setTimeout(()=>star.remove(),1500);}}
+    function checkConnectors(){const cards=document.querySelectorAll('#connector-practice .sentence-card');let ok=0;cards.forEach(card=>{const select=card.querySelector('select');const answer=card.dataset.answer;select.classList.remove('correct','incorrect');if(select.value===answer){select.classList.add('correct');ok++;}else{select.classList.add('incorrect');}});const result=document.getElementById('connector-result');result.classList.remove('hidden','bg-green-100','text-green-800','bg-amber-100','text-amber-800');if(ok===cards.length){result.classList.add('bg-green-100','text-green-800');result.textContent='¡Perfecto! Has elegido los conectores correctos 🌟';makeStars();}else{result.classList.add('bg-amber-100','text-amber-800');result.textContent=`Tienes ${ok} de ${cards.length}. Revisa las pistas de semejanza y diferencia 💪`;}}
+    const questions=[
+      {q:'Un texto comparativo sirve para...',a:['comparar semejanzas y diferencias','solo contar un cuento','solo hacer preguntas'],c:0},
+      {q:'Las semejanzas son...',a:['cosas que se parecen','cosas contrarias','faltas de ortografía'],c:0},
+      {q:'Las diferencias son...',a:['cosas que no son iguales','cosas que se repiten','el título'],c:0},
+      {q:'La introducción sirve para...',a:['presentar lo que se va a comparar','cerrar el texto','poner solo conectores'],c:0},
+      {q:'El desarrollo sirve para...',a:['explicar semejanzas y diferencias','poner solo el nombre','despedirse'],c:0},
+      {q:'La conclusión sirve para...',a:['recoger la información más importante','empezar otro tema','hacer una lista de compras'],c:0},
+      {q:'Un conector de diferencia es...',a:['en cambio','del mismo modo','igualmente'],c:0},
+      {q:'Un conector de semejanza es...',a:['por el contrario','del mismo modo','sin embargo'],c:1},
+      {q:'“Pero” se usa para...',a:['marcar diferencia','marcar semejanza','hacer una pregunta'],c:0},
+      {q:'“De igual forma” se usa para...',a:['marcar semejanza','marcar diferencia','cerrar con punto final'],c:0},
+      {q:'Un buen texto comparativo debe tener...',a:['introducción, desarrollo y conclusión','solo un título','solo dibujos'],c:0},
+      {q:'Para comparar perros y gatos, primero debo...',a:['presentar qué voy a comparar','escribir la conclusión sin leer','no usar párrafos'],c:0},
+      {q:'La rúbrica recomienda revisar...',a:['ortografía y si suena bien','solo el color del lápiz','solo el dibujo'],c:0},
+      {q:'Un texto comparativo ordenado debe incluir párrafos para...',a:['introducción, semejanzas, diferencias y conclusión','solo diferencias','solo nombres'],c:0}
+    ];
+    let currentQ=0,score=0,streak=0,errors=[],activeQuestions=[...questions];
+    function loadQuestion(){const q=activeQuestions[currentQ];document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${activeQuestions.length}`;document.getElementById('question-text').innerText=q.q;document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`;const grid=document.getElementById('options-grid');grid.innerHTML='';q.a.forEach((opt,i)=>{const b=document.createElement('button');b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';b.innerText=opt;b.onclick=()=>handleAnswer(i,b,grid,q);grid.appendChild(b);});}
+    function handleAnswer(selected,button,grid,q){const allBtns=grid.querySelectorAll('button');allBtns.forEach(btn=>btn.onclick=null);if(selected===q.c){button.classList.add('correct');score++;streak++;document.getElementById('score-live').innerText=`Puntos: ${score}`;document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`;makeStars();}else{button.classList.add('incorrect');allBtns[q.c].classList.add('correct');streak=0;document.getElementById('streak-box').innerText='🔥 Racha: 0';if(!errors.find(item=>item.q===q.q)){errors.push(q);}}setTimeout(()=>{currentQ++;if(currentQ<activeQuestions.length){loadQuestion();}else{finishQuiz();}},1000);}
+    function finishQuiz(){document.getElementById('quiz-progress').style.width='100%';document.getElementById('quiz-container').classList.add('hidden');document.getElementById('score-container').classList.remove('hidden');const pct=Math.round((score/activeQuestions.length)*100);const medal=document.getElementById('medal');let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `;if(pct>=90){medal.textContent='🏆';message+='¡Excelente! Texto comparativo dominado.';}else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien! Sigue repasando la estructura.';}else if(pct>=50){medal.textContent='👍';message+='Bien. Repite conectores y plantilla.';}else{medal.textContent='💪';message+='No pasa nada. Vuelve al resumen paso a paso.';}document.getElementById('final-score').innerText=message;document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);}
+    function resetQuiz(){activeQuestions=[...questions];currentQ=0;score=0;streak=0;errors=[];document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');document.getElementById('retry-errors-btn').classList.add('hidden');loadQuestion();}
+    function repeatErrorsFromEnd(){if(errors.length===0)return;activeQuestions=[...errors];currentQ=0;score=0;streak=0;errors=[];document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');document.getElementById('retry-errors-btn').classList.add('hidden');loadQuestion();}
+    loadQuestion();
+  </script>
+</body>
+</html>
