@@ -539,6 +539,15 @@
     function finishQuiz(){document.getElementById('quiz-progress').style.width='100%';document.getElementById('quiz-container').classList.add('hidden');document.getElementById('score-container').classList.remove('hidden');const pct=Math.round((score/activeQuestions.length)*100);const medal=document.getElementById('medal');let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `;if(pct>=90){medal.textContent='🏆';message+='¡Excelente!';}else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien!';}else if(pct>=50){medal.textContent='👍';message+='Bien. Sigue practicando.';}else{medal.textContent='💪';message+='Sigue intentando. Paso a paso.';}document.getElementById('final-score').innerText=message;document.getElementById('retry-errors-btn').classList.toggle('hidden',errors.length===0);}
     function resetQuiz(){activeQuestions=[...questions];currentQ=0;score=0;streak=0;errors=[];document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');document.getElementById('retry-errors-btn').classList.add('hidden');loadQuestion();}
     function repeatErrorsFromEnd(){if(errors.length===0)return;activeQuestions=[...errors];currentQ=0;score=0;streak=0;errors=[];document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');document.getElementById('retry-errors-btn').classList.add('hidden');loadQuestion();}
+    function divisionAnswer(btn, ok){
+  if(ok){
+      btn.classList.add('bg-emerald-700');
+      btn.innerText = '✅ Correcto';
+    }else{
+      btn.classList.add('bg-red-600');
+      btn.innerText = '❌ Revisa';
+    }
+  }
     loadQuestion();
   </script>
 </body>
