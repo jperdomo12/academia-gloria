@@ -728,11 +728,16 @@ function loadQuestion(){
 
   const grid=document.getElementById('options-grid');
   grid.innerHTML='';
-  q.a.forEach((opt,i)=>{
+ const opciones = q.a.map((texto, indice) => ({
+  texto,
+  original: indice
+})).sort(() => Math.random() - 0.5);
+
+opciones.forEach((opcion)=>{
     const b=document.createElement('button');
     b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
-    b.innerText=opt;
-    b.onclick=()=>handleAnswer(i,b,grid,q);
+ b.innerText = opcion.texto;
+b.onclick = () => handleAnswer(opcion.original, b, grid, q);
     grid.appendChild(b);
   });
 }
