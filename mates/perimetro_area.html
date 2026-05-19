@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Perímetro y Área | Academia de Gloria</title>
+
+  <meta name="description"
+        content="Aprende perímetro y área de cuadrados, rectángulos y triángulos con ejemplos visuales, teoría, fichas y test." />
+
+  <link rel="apple-touch-icon"
+        href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+
+  <link rel="icon"
+        type="image/png"
+        href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+
+    body{
+      font-family:'Outfit',sans-serif;
+
+      background:
+        radial-gradient(circle at top left, rgba(99,102,241,.14), transparent 25%),
+        radial-gradient(circle at top right, rgba(34,197,94,.14), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(251,146,60,.13), transparent 28%),
+        linear-gradient(180deg,#f8fbff 0%,#fffef8 48%,#f7fffb 100%);
+
+      color:#1e293b;
+    }
+
+    .glass-card{
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(12px);
+
+      border:2px solid rgba(199,210,254,.9);
+
+      box-shadow:0 18px 40px rgba(79,70,229,.08);
+    }
+
+    .gradient-title{
+      background:linear-gradient(
+        90deg,
+        #4f46e5,
+        #0284c7,
+        #16a34a,
+        #f97316
+      );
+
+      -webkit-background-clip:text;
+      background-clip:text;
+
+      color:transparent;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+
+      border-radius:999px;
+
+      padding:.45rem .9rem;
+
+      font-size:.88rem;
+      font-weight:800;
+
+      background:#fff;
+
+      border:2px solid #c7d2fe;
+    }
+
+    .tab-btn{
+      transition:all .22s ease;
+    }
+
+    .tab-btn.active{
+      background:linear-gradient(135deg,#4f46e5,#0284c7);
+
+      color:#fff;
+
+      border-color:transparent;
+
+      box-shadow:0 16px 30px rgba(79,70,229,.22);
+
+      transform:translateY(-1px);
+    }
+
+    .tab-panel{
+      display:none;
+    }
+
+    .tab-panel.active{
+      display:block;
+
+      animation:fadeIn .28s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(8px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .card-hover{
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+    }
+
+    .card-hover:hover{
+      transform:translateY(-4px);
+
+      box-shadow:0 18px 38px rgba(37,99,235,.12);
+    }
+
+    .formula{
+      font-weight:900;
+
+      border:2px dashed #a5b4fc;
+
+      background:#eef2ff;
+
+      color:#3730a3;
+
+      border-radius:1.2rem;
+
+      padding:.85rem 1rem;
+    }
+
+    .option-btn{
+      transition:all .2s ease;
+
+      border:2px solid #c7d2fe;
+
+      background:white;
+    }
+
+    .option-btn:hover{
+      transform:translateY(-2px);
+
+      border-color:#4f46e5;
+    }
+
+    .correct{
+      background:#dcfce7 !important;
+      border-color:#22c55e !important;
+      color:#166534 !important;
+    }
+
+    .incorrect{
+      background:#fee2e2 !important;
+      border-color:#ef4444 !important;
+      color:#991b1b !important;
+    }
+
+    .progress-bar{
+      height:14px;
+
+      border-radius:999px;
+
+      overflow:hidden;
+
+      background:#e2e8f0;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+
+      background:linear-gradient(
+        90deg,
+        #4f46e5,
+        #0284c7,
+        #22c55e,
+        #f97316
+      );
+
+      transition:width .25s ease;
+    }
+
+    .flash-card{
+      perspective:1000px;
+
+      min-height:215px;
+
+      cursor:pointer;
+    }
+
+    .flash-inner{
+      position:relative;
+
+      width:100%;
+      min-height:215px;
+
+      transition:transform .6s;
+
+      transform-style:preserve-3d;
+    }
+
+    .flash-card.flipped .flash-inner{
+      transform:rotateY(180deg);
+    }
+
+    .flash-face{
+      position:absolute;
+
+      inset:0;
+
+      backface-visibility:hidden;
+
+      border-radius:1.5rem;
+
+      padding:1.2rem;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+
+      text-align:center;
+
+      border:2px solid #c7d2fe;
+
+      background:#fff;
+    }
+
+    .flash-back{
+      transform:rotateY(180deg);
+
+      background:linear-gradient(
+        180deg,
+        #eef2ff,
+        #ecfdf5
+      );
+    }
+
+  </style>
+</head>
+
+<body class="text-slate-800">
+
+<main class="max-w-7xl mx-auto p-4 md:p-8">
+
+  <!-- HEADER -->
+  <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+
+    <a href="./index.html"
+       class="inline-flex items-center gap-3 bg-white border-2 border-indigo-100 hover:border-indigo-300 px-5 py-3 rounded-2xl text-indigo-700 font-black shadow-sm hover:shadow-md transition-all mb-6">
+
+      <i data-lucide="arrow-left" class="w-5 h-5"></i>
+
+      Volver a Matemáticas
+
+    </a>
+
+    <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+
+      <div>
+
+        <div class="flex flex-wrap gap-3 mb-5">
+
+          <span class="pill text-indigo-700">
+            <i data-lucide="ruler" class="w-4 h-4"></i>
+            Geometría
+          </span>
+
+          <span class="pill text-sky-700">
+            <i data-lucide="square" class="w-4 h-4"></i>
+            Perímetro
+          </span>
+
+          <span class="pill text-emerald-700">
+            <i data-lucide="box-select" class="w-4 h-4"></i>
+            Área
+          </span>
+
+          <span class="pill text-orange-700">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            TEL Friendly
+          </span>
+
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+
+          <span class="gradient-title">
+            Perímetro y Área
+          </span>
+
+          📐
+
+        </h1>
+
+        <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+
+          Aprende a calcular perímetros y áreas de cuadrados,
+          rectángulos y triángulos con ejemplos visuales,
+          teoría clara y ejercicios paso a paso.
+
+        </p>
+
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-7">
+
+        <div class="flex items-center gap-4 mb-4">
+
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-500 text-white flex items-center justify-center text-3xl shadow-lg">
+            📏
+          </div>
+
+          <div>
+            <p class="text-xs font-black uppercase tracking-[.18em] text-indigo-700">
+              IDEA CLAVE
+            </p>
+
+            <h2 class="text-2xl font-extrabold text-slate-800">
+              Borde ≠ Dentro
+            </h2>
+          </div>
+
+        </div>
+
+        <div class="space-y-3">
+
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4">
+            <p class="font-black text-sky-700 mb-1">
+              📏 Perímetro
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Es todo el borde de una figura.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4">
+            <p class="font-black text-emerald-700 mb-1">
+              🟩 Área
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Es la superficie interior.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-4">
+            <p class="font-black text-orange-700 mb-1">
+              🧠 Truco
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Perímetro → sumo lados.
+              Área → uso fórmula.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- BOTONES -->
+  <section class="mb-8">
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+      <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200"
+              data-tab="resumen">
+
+        📘 Resumen
+
+      </button>
+
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200"
+              data-tab="teoria">
+
+        📐 Teoría
+
+      </button>
+
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200"
+              data-tab="fichas">
+
+        🧩 Fichas
+
+      </button>
+
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200"
+              data-tab="test">
+
+        ✅ Test
+
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- RESUMEN -->
+  <section id="resumen" class="tab-panel active">
+
+    <div class="grid lg:grid-cols-2 gap-6 mb-6">
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+
+        <h2 class="text-3xl font-black text-slate-800 mb-4">
+          📏 Perímetro = Borde
+        </h2>
+
+        <p class="text-slate-600 text-lg font-medium leading-relaxed mb-6">
+
+          El perímetro es la longitud total alrededor
+          de una figura.
+
+        </p>
+
+        <div class="w-full h-56 rounded-[2rem] border-[14px] border-sky-500 bg-white"></div>
+
+        <div class="formula text-center text-xl mt-6">
+          Perímetro = sumar todos los lados
+        </div>
+
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+
+        <h2 class="text-3xl font-black text-slate-800 mb-4">
+          🟩 Área = Dentro
+        </h2>
+
+        <p class="text-slate-600 text-lg font-medium leading-relaxed mb-6">
+
+          El área mide la superficie interior.
+
+        </p>
+
+        <div class="w-full h-56 rounded-[2rem] bg-emerald-400 border-[14px] border-emerald-600"></div>
+
+        <div class="formula text-center text-xl mt-6 !bg-emerald-50 !border-emerald-300 !text-emerald-700">
+          Área = superficie interior
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TEORIA -->
+  <section id="teoria" class="tab-panel">
+
+    <div class="grid lg:grid-cols-3 gap-5 mb-6">
+
+      <div class="glass-card card-hover rounded-[2rem] p-6 text-center">
+
+        <div class="mx-auto w-36 h-36 border-[10px] border-sky-500 rounded-xl mb-5"></div>
+
+        <h3 class="text-2xl font-black mb-2">
+          Cuadrado
+        </h3>
+
+        <div class="space-y-3">
+
+          <div class="formula">
+            P = 4 × lado
+          </div>
+
+          <div class="formula !bg-emerald-50 !border-emerald-300 !text-emerald-700">
+            A = lado × lado
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="glass-card card-hover rounded-[2rem] p-6 text-center">
+
+        <div class="mx-auto w-48 h-28 border-[10px] border-violet-500 rounded-xl mb-5"></div>
+
+        <h3 class="text-2xl font-black mb-2">
+          Rectángulo
+        </h3>
+
+        <div class="space-y-3">
+
+          <div class="formula">
+            P = 2 × (b + h)
+          </div>
+
+          <div class="formula !bg-emerald-50 !border-emerald-300 !text-emerald-700">
+            A = base × altura
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="glass-card card-hover rounded-[2rem] p-6 text-center">
+
+        <div class="mx-auto w-44 h-36 mb-5 relative">
+
+          <div class="absolute inset-0 bg-orange-200 border-[8px] border-orange-500"
+               style="clip-path:polygon(50% 0%,100% 100%,0% 100%)">
+          </div>
+
+        </div>
+
+        <h3 class="text-2xl font-black mb-2">
+          Triángulo
+        </h3>
+
+        <div class="space-y-3">
+
+          <div class="formula">
+            P = a + b + c
+          </div>
+
+          <div class="formula !bg-emerald-50 !border-emerald-300 !text-emerald-700">
+            A = (b × h) ÷ 2
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FICHAS -->
+  <section id="fichas" class="tab-panel">
+
+    <div class="grid lg:grid-cols-2 gap-6">
+
+      <div class="glass-card rounded-[2rem] p-6">
+
+        <h2 class="text-2xl font-black mb-5">
+          🧠 Ficha rápida
+        </h2>
+
+        <div class="space-y-4">
+
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-5">
+            <p class="font-black text-sky-700 mb-2">
+              📏 Perímetro
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Suma todos los lados.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-5">
+            <p class="font-black text-emerald-700 mb-2">
+              🟩 Área
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Calcula la superficie interior.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-5">
+            <p class="font-black text-orange-700 mb-2">
+              🔺 Triángulo
+            </p>
+
+            <p class="text-slate-600 font-medium">
+              Área = base × altura ÷ 2
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6">
+
+        <h2 class="text-2xl font-black mb-5">
+          🎮 Mini retos
+        </h2>
+
+        <div class="space-y-4">
+
+          <button onclick="markAnswer(this,true)"
+                  class="option-btn w-full rounded-2xl p-5 font-black text-left">
+
+            📏 El perímetro mide el borde.
+
+          </button>
+
+          <button onclick="markAnswer(this,true)"
+                  class="option-btn w-full rounded-2xl p-5 font-black text-left">
+
+            🟩 El área mide la superficie.
+
+          </button>
+
+          <button onclick="markAnswer(this,true)"
+                  class="option-btn w-full rounded-2xl p-5 font-black text-left">
+
+            🔺 El área del triángulo se divide entre 2.
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TEST -->
+  <section id="test" class="tab-panel">
+
+    <div class="glass-card rounded-[2rem] p-6 md:p-8">
+
+      <div id="quiz-container">
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+          <div>
+
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">
+              🧠 Evaluación final
+            </h2>
+
+            <p class="text-slate-600 font-medium">
+              Selecciona la respuesta correcta.
+            </p>
+
+          </div>
+
+          <span id="question-counter"
+                class="text-indigo-700 font-bold">
+            Pregunta 1 de 6
+          </span>
+
+        </div>
+
+        <div class="progress-bar mb-6">
+          <div id="quiz-progress" class="progress-fill"></div>
+        </div>
+
+        <h3 id="question"
+            class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">
+
+          Cargando...
+
+        </h3>
+
+        <div id="answers"
+             class="grid gap-4">
+        </div>
+
+      </div>
+
+      <div id="quiz-result"
+           class="hidden text-center">
+
+        <div class="text-6xl mb-4">
+          🌟
+        </div>
+
+        <h2 class="text-3xl font-black mb-4 text-slate-800">
+          ¡Muy bien!
+        </h2>
+
+        <p id="final-text"
+           class="text-xl mb-8 font-medium text-slate-600">
+        </p>
+
+        <button onclick="resetQuiz()"
+                class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all">
+
+          🔁 Repetir test
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-10">
+
+    <p class="text-slate-500 font-medium">
+      Academia de Gloria · Perímetro y Área · Matemáticas PRO 📐
+    </p>
+
+  </footer>
+
+</main>
+
+<script>
+
+  lucide.createIcons();
+
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabButtons.forEach(btn => {
+
+    btn.addEventListener('click', () => {
+
+      const tab = btn.dataset.tab;
+
+      tabButtons.forEach(b => b.classList.remove('active'));
+
+      btn.classList.add('active');
+
+      tabPanels.forEach(panel => {
+
+        panel.classList.toggle(
+          'active',
+          panel.id === tab
+        );
+
+      });
+
+    });
+
+  });
+
+  function markAnswer(btn, ok){
+
+    if(ok){
+
+      btn.classList.add('correct');
+
+      btn.innerHTML += ' ✅';
+
+    }
+
+  }
+
+  const questions = [
+
+    {
+      q:'¿Qué mide el perímetro?',
+      a:[
+        'El borde',
+        'La superficie',
+        'La altura'
+      ],
+      c:0
+    },
+
+    {
+      q:'¿Qué mide el área?',
+      a:[
+        'La superficie interior',
+        'El borde',
+        'Los lados'
+      ],
+      c:0
+    },
+
+    {
+      q:'Área del cuadrado',
+      a:[
+        'lado × lado',
+        'lado + lado',
+        'lado ÷ 2'
+      ],
+      c:0
+    },
+
+    {
+      q:'Área del rectángulo',
+      a:[
+        'base × altura',
+        'base + altura',
+        'base ÷ altura'
+      ],
+      c:0
+    },
+
+    {
+      q:'Área del triángulo',
+      a:[
+        '(base × altura) ÷ 2',
+        'base × altura',
+        'lado × lado'
+      ],
+      c:0
+    },
+
+    {
+      q:'Perímetro de un cuadrado de lado 4',
+      a:[
+        '16',
+        '8',
+        '4'
+      ],
+      c:0
+    }
+
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion(){
+
+    const q = questions[currentQuestion];
+
+    document.getElementById('question-counter').innerText =
+      `Pregunta ${currentQuestion+1} de ${questions.length}`;
+
+    document.getElementById('quiz-progress').style.width =
+      `${(currentQuestion/questions.length)*100}%`;
+
+    document.getElementById('question').innerText = q.q;
+
+    const answers = document.getElementById('answers');
+
+    answers.innerHTML = '';
+
+    q.a.forEach((answer,index)=>{
+
+      const btn = document.createElement('button');
+
+      btn.className =
+        'option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+
+      btn.innerText = answer;
+
+      btn.onclick = () => selectAnswer(index,btn,q);
+
+      answers.appendChild(btn);
+
+    });
+
+  }
+
+  function selectAnswer(index,btn,q){
+
+    const buttons =
+      document.querySelectorAll('#answers button');
+
+    buttons.forEach(b=>b.onclick=null);
+
+    if(index === q.c){
+
+      btn.classList.add('correct');
+
+      score++;
+
+    }else{
+
+      btn.classList.add('incorrect');
+
+      buttons[q.c].classList.add('correct');
+
+    }
+
+    setTimeout(()=>{
+
+      currentQuestion++;
+
+      if(currentQuestion < questions.length){
+
+        loadQuestion();
+
+      }else{
+
+        finishQuiz();
+
+      }
+
+    },900);
+
+  }
+
+  function finishQuiz(){
+
+    document.getElementById('quiz-progress').style.width='100%';
+
+    document.getElementById('quiz-container')
+      .classList.add('hidden');
+
+    document.getElementById('quiz-result')
+      .classList.remove('hidden');
+
+    document.getElementById('final-text').innerText =
+      `Has conseguido ${score} de ${questions.length} respuestas correctas.`;
+
+  }
+
+  function resetQuiz(){
+
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById('quiz-container')
+      .classList.remove('hidden');
+
+    document.getElementById('quiz-result')
+      .classList.add('hidden');
+
+    loadQuestion();
+
+  }
+
+  loadQuestion();
+
+</script>
+
+</body>
+</html>
