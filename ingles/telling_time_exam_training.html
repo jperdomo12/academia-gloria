@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia de Gloria | English | Telling Time Exam Training</title>
+  <title>Academia de Gloria | English | Telling Time Exam Training 2 </title>
   <meta name="description" content="Entrenamiento visual para examen de las horas en inglés para 5th grade." />
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
@@ -129,6 +129,7 @@
       border:2px solid #dbeafe;
       background:#fff;
       text-align:left;
+      cursor:pointer;
     }
 
     .option-btn:hover{
@@ -167,22 +168,6 @@
       background:#fff;
       border-radius:1.4rem;
       padding:1rem;
-    }
-
-    .mini-input{
-      width:100%;
-      border:2px solid #dbeafe;
-      border-radius:1rem;
-      padding:.8rem 1rem;
-      font-weight:800;
-      outline:none;
-      transition:all .2s ease;
-      background:#fff;
-    }
-
-    .mini-input:focus{
-      border-color:#38bdf8;
-      box-shadow:0 0 0 4px rgba(56,189,248,.12);
     }
 
     .en{color:#1d4ed8;font-weight:900}
@@ -342,8 +327,8 @@
         <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
 
         <div class="flex flex-col md:flex-row gap-4 justify-center">
-          <button onclick="resetQuiz()" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all">🔁 Iniciar test completo</button>
-          <button id="retry-errors-btn" onclick="repeatErrorsFromEnd()" class="hidden bg-violet-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all">🎯 Practicar solo errores</button>
+          <button id="reset-quiz-btn" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-sky-700 transition-all">🔁 Iniciar test completo</button>
+          <button id="retry-errors-btn" class="hidden bg-violet-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all">🎯 Practicar solo errores</button>
         </div>
       </div>
     </div>
@@ -355,7 +340,8 @@
 </main>
 
 <script>
-  lucide.createIcons();
+document.addEventListener('DOMContentLoaded', function(){
+  if(window.lucide){ lucide.createIcons(); }
 
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabPanels = document.querySelectorAll('.tab-panel');
@@ -442,6 +428,18 @@
     return [...arr].sort(()=>Math.random()-0.5);
   }
 
+  function lockButtons(card){
+    card.querySelectorAll('button.option-btn').forEach(btn => btn.disabled = true);
+  }
+
+  function markCorrectInCard(card, correctText){
+    card.querySelectorAll('button.option-btn').forEach(btn => {
+      if(btn.dataset.answer === correctText){
+        btn.classList.add('correct');
+      }
+    });
+  }
+
   function renderChoiceTraining(containerId, items, type){
     const root = document.getElementById(containerId);
 
@@ -453,7 +451,7 @@
         : `<div class="text-center"><p class="text-4xl font-black text-slate-800">${String(item.h).padStart(2,'0')}:${String(item.m).padStart(2,'0')}</p><p class="text-slate-500 font-bold">Choose the correct sentence.</p></div>`;
 
       return `
-        <div class="sentence-card" data-answer="${item.text}">
+        <div class="sentence-card training-card" data-correct="${item.text}">
           <div class="mb-4">
             <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-sky-100 text-sky-700 font-black mr-2">${idx+1}</span>
             ${prompt}
@@ -461,32 +459,31 @@
           <div class="grid md:grid-cols-4 gap-4">
             ${options.map(opt => {
               if(type === 'clock'){
-                return `<button class="option-btn p-4 rounded-2xl text-center font-bold text-slate-700" onclick="checkChoice(this,'${item.text}','${opt.text}')">${clockHTML(opt.h,opt.m)}<div class="mt-2 text-sm">${String(opt.h).padStart(2,'0')}:${String(opt.m).padStart(2,'0')}</div></button>`;
+                return `<button type="button" class="option-btn training-option p-4 rounded-2xl text-center font-bold text-slate-700" data-answer="${opt.text}">${clockHTML(opt.h,opt.m)}<div class="mt-2 text-sm">${String(opt.h).padStart(2,'0')}:${String(opt.m).padStart(2,'0')}</div></button>`;
               }
-              return `<button class="option-btn p-4 rounded-2xl font-bold text-slate-700" onclick="checkChoice(this,'${item.text}','${opt.text}')">${opt.text}</button>`;
+              return `<button type="button" class="option-btn training-option p-4 rounded-2xl font-bold text-slate-700" data-answer="${opt.text}">${opt.text}</button>`;
             }).join('')}
           </div>
         </div>
       `;
     }).join('');
-  }
 
-  function checkChoice(button, correct, selected){
-    const card = button.closest('.sentence-card');
-    const buttons = card.querySelectorAll('button');
-    buttons.forEach(btn => btn.onclick = null);
+    root.querySelectorAll('.training-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.training-card');
+        const correct = card.dataset.correct;
+        const selected = btn.dataset.answer;
+        lockButtons(card);
 
-    if(correct === selected){
-      button.classList.add('correct');
-      makeStars();
-    } else {
-      button.classList.add('incorrect');
-      buttons.forEach(btn => {
-        if(btn.innerText.includes(correct) || btn.textContent.includes(correct)){
+        if(selected === correct){
           btn.classList.add('correct');
+          makeStars();
+        } else {
+          btn.classList.add('incorrect');
+          markCorrectInCard(card, correct);
         }
       });
-    }
+    });
   }
 
   renderChoiceTraining('clock-choice-training', schoolTimes.slice(0,8), 'clock');
@@ -506,39 +503,43 @@
     const root = document.getElementById('past-to-training');
 
     root.innerHTML = pastToItems.map((item, idx) => `
-      <div class="sentence-card">
+      <div class="sentence-card past-to-card" data-correct="${item.answer}" data-explanation="${item.explanation}">
         <div class="mb-4">
           <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-sky-100 text-sky-700 font-black mr-2">${idx+1}</span>
           <span class="text-3xl font-black">${item.time}</span>
           <p class="text-slate-500 font-bold mt-2">PAST or TO?</p>
         </div>
         <div class="grid md:grid-cols-2 gap-3">
-          <button class="option-btn p-4 rounded-2xl font-black text-green-700" onclick="checkPastTo(this,'${item.answer}','PAST','${item.explanation}')">🟢 PAST</button>
-          <button class="option-btn p-4 rounded-2xl font-black text-red-700" onclick="checkPastTo(this,'${item.answer}','TO','${item.explanation}')">🔴 TO</button>
+          <button type="button" class="option-btn past-to-option p-4 rounded-2xl font-black text-green-700" data-answer="PAST">🟢 PAST</button>
+          <button type="button" class="option-btn past-to-option p-4 rounded-2xl font-black text-red-700" data-answer="TO">🔴 TO</button>
         </div>
       </div>
     `).join('');
-  }
 
-  function checkPastTo(button, correct, selected, explanation){
-    const card = button.closest('.sentence-card');
-    const buttons = card.querySelectorAll('button');
-    buttons.forEach(btn => btn.onclick = null);
+    root.querySelectorAll('.past-to-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.past-to-card');
+        const correct = card.dataset.correct;
+        const selected = btn.dataset.answer;
 
-    if(correct === selected){
-      button.classList.add('correct');
-      makeStars();
-    } else {
-      button.classList.add('incorrect');
-      buttons.forEach(btn => {
-        if(btn.innerText.includes(correct)) btn.classList.add('correct');
+        card.querySelectorAll('button.option-btn').forEach(b => b.disabled = true);
+
+        if(selected === correct){
+          btn.classList.add('correct');
+          makeStars();
+        } else {
+          btn.classList.add('incorrect');
+          card.querySelectorAll('button.option-btn').forEach(b => {
+            if(b.dataset.answer === correct) b.classList.add('correct');
+          });
+        }
+
+        const msg = document.createElement('p');
+        msg.className = 'mt-3 font-black text-slate-700';
+        msg.textContent = card.dataset.explanation;
+        card.appendChild(msg);
       });
-    }
-
-    const msg = document.createElement('p');
-    msg.className = 'mt-3 font-black text-slate-700';
-    msg.textContent = explanation;
-    card.appendChild(msg);
+    });
   }
 
   renderPastTo();
@@ -580,16 +581,21 @@
 
     q.a.forEach(opt => {
       const b = document.createElement('button');
-      b.className = 'option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700 text-lg';
+      b.type = 'button';
+      b.className = 'option-btn quiz-option w-full p-5 rounded-2xl font-bold text-left text-slate-700 text-lg';
       b.innerText = opt;
-      b.onclick = () => handleAnswer(opt,b,grid,q);
+      b.dataset.answer = opt;
       grid.appendChild(b);
+    });
+
+    grid.querySelectorAll('.quiz-option').forEach(btn => {
+      btn.addEventListener('click', () => handleAnswer(btn.dataset.answer, btn, grid, q));
     });
   }
 
   function handleAnswer(selected, button, grid, q){
     const allBtns = grid.querySelectorAll('button');
-    allBtns.forEach(btn => btn.onclick = null);
+    allBtns.forEach(btn => btn.disabled = true);
 
     if(selected === q.correct){
       button.classList.add('correct');
@@ -601,7 +607,7 @@
     } else {
       button.classList.add('incorrect');
       allBtns.forEach(btn => {
-        if(btn.innerText === q.correct) btn.classList.add('correct');
+        if(btn.dataset.answer === q.correct) btn.classList.add('correct');
       });
       streak = 0;
       document.getElementById('streak-box').innerText = '🔥 Streak: 0';
@@ -686,7 +692,11 @@
     loadQuestion();
   }
 
+  document.getElementById('reset-quiz-btn').addEventListener('click', resetQuiz);
+  document.getElementById('retry-errors-btn').addEventListener('click', repeatErrorsFromEnd);
+
   loadQuestion();
+});
 </script>
 </body>
 </html>
