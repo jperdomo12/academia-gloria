@@ -79,162 +79,23 @@
   </div>
 </section>
 
-<!-- MINUTES AROUND THE CLOCK -->
-<section class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
-  <div class="text-center mb-8">
-    <h2 class="text-4xl font-black text-slate-800 mb-3">⏱️ Minutes Around the Clock</h2>
-    <p class="text-lg text-slate-600 font-semibold">
-      Big numbers are hours. Small numbers are minutes.
-    </p>
-    <p class="text-green-700 font-bold">
-      (Los números grandes son horas. Los números pequeños son minutos)
-    </p>
-  </div>
 
-  <div class="flex justify-center">
-    <div class="relative w-[340px] h-[340px] md:w-[430px] md:h-[430px] bg-white rounded-full shadow-2xl border-[10px] border-slate-100">
-      <svg viewBox="0 0 430 430" class="w-full h-full">
-        <!-- Minute dots -->
-        <g id="minute-dots"></g>
-
-        <!-- Colored key minute bubbles -->
-        <g>
-          <circle cx="215" cy="30" r="18" fill="#2563eb"/>
-          <text x="215" y="36" text-anchor="middle" font-size="16" font-weight="900" fill="white">00</text>
-
-          <circle cx="400" cy="215" r="18" fill="#8b5cf6"/>
-          <text x="400" y="221" text-anchor="middle" font-size="16" font-weight="900" fill="white">15</text>
-
-          <circle cx="215" cy="400" r="18" fill="#2563eb"/>
-          <text x="215" y="406" text-anchor="middle" font-size="16" font-weight="900" fill="white">30</text>
-
-          <circle cx="30" cy="215" r="18" fill="#8b5cf6"/>
-          <text x="30" y="221" text-anchor="middle" font-size="16" font-weight="900" fill="white">45</text>
-
-          <polygon points="335,72 352,102 318,102" fill="#f97316"/>
-          <text x="335" y="96" text-anchor="middle" font-size="15" font-weight="900" fill="white">5</text>
-
-          <polygon points="377,122 395,152 360,152" fill="#22c55e"/>
-          <text x="377" y="146" text-anchor="middle" font-size="15" font-weight="900" fill="white">10</text>
-
-          <polygon points="377,278 395,308 360,308" fill="#f59e0b"/>
-          <text x="377" y="302" text-anchor="middle" font-size="15" font-weight="900" fill="white">20</text>
-
-          <polygon points="335,328 352,358 318,358" fill="#ef4444"/>
-          <text x="335" y="352" text-anchor="middle" font-size="15" font-weight="900" fill="white">25</text>
-
-          <polygon points="95,328 112,358 78,358" fill="#f97316"/>
-          <text x="95" y="352" text-anchor="middle" font-size="15" font-weight="900" fill="white">35</text>
-
-          <polygon points="53,278 70,308 36,308" fill="#22c55e"/>
-          <text x="53" y="302" text-anchor="middle" font-size="15" font-weight="900" fill="white">40</text>
-
-          <polygon points="53,122 70,152 36,152" fill="#facc15"/>
-          <text x="53" y="146" text-anchor="middle" font-size="15" font-weight="900" fill="white">50</text>
-
-          <polygon points="95,72 112,102 78,102" fill="#ef4444"/>
-          <text x="95" y="96" text-anchor="middle" font-size="15" font-weight="900" fill="white">55</text>
-        </g>
-
-        <!-- Main hour numbers -->
-        <g font-weight="900" font-size="54" font-family="Outfit, sans-serif">
-          <text x="215" y="102" text-anchor="middle" fill="#ef4444">12</text>
-          <text x="305" y="125" text-anchor="middle" fill="#8b5cf6">1</text>
-          <text x="365" y="185" text-anchor="middle" fill="#f97316">2</text>
-          <text x="388" y="238" text-anchor="middle" fill="#1d4ed8">3</text>
-          <text x="365" y="310" text-anchor="middle" fill="#22c55e">4</text>
-          <text x="305" y="370" text-anchor="middle" fill="#f59e0b">5</text>
-          <text x="215" y="392" text-anchor="middle" fill="#ef4444">6</text>
-          <text x="125" y="370" text-anchor="middle" fill="#8b5cf6">7</text>
-          <text x="65" y="310" text-anchor="middle" fill="#f97316">8</text>
-          <text x="42" y="238" text-anchor="middle" fill="#1d4ed8">9</text>
-          <text x="65" y="185" text-anchor="middle" fill="#22c55e">10</text>
-          <text x="125" y="125" text-anchor="middle" fill="#f59e0b">11</text>
-        </g>
-
-        <!-- Labels -->
-        <text x="215" y="128" text-anchor="middle" font-size="20" font-weight="900" fill="#b91c1c">O'clock</text>
-        <text x="215" y="344" text-anchor="middle" font-size="20" font-weight="900" fill="#1d4ed8">Half Past</text>
-        <text x="335" y="240" text-anchor="middle" font-size="18" font-weight="900" fill="#15803d">Quarter</text>
-        <text x="335" y="262" text-anchor="middle" font-size="18" font-weight="900" fill="#15803d">Past</text>
-        <text x="95" y="240" text-anchor="middle" font-size="18" font-weight="900" fill="#b91c1c">Quarter</text>
-        <text x="95" y="262" text-anchor="middle" font-size="18" font-weight="900" fill="#b91c1c">To</text>
-
-        <!-- Hands example -->
-        <line x1="215" y1="215" x2="365" y2="178" stroke="#2563eb" stroke-width="10" stroke-linecap="round"/>
-        <line x1="215" y1="215" x2="125" y2="155" stroke="#ef4444" stroke-width="10" stroke-linecap="round"/>
-        <circle cx="215" cy="215" r="10" fill="#22c55e" stroke="#0f172a" stroke-width="2"/>
-      </svg>
+<section class="mb-8">
+  <a href="./telling_time_exam_training.html"
+     class="group block rounded-[2.4rem] overflow-hidden bg-gradient-to-r from-sky-600 via-blue-500 to-red-500 text-white p-6 md:p-8 shadow-xl hover:scale-[1.015] transition-all duration-300">
+    <div class="flex flex-col md:flex-row md:items-center gap-5">
+      <div class="text-6xl">🚀</div>
+      <div class="flex-1">
+        <p class="text-sm font-black uppercase tracking-[0.2em] opacity-90">School Worksheet Practice</p>
+        <h3 class="text-3xl md:text-4xl font-black mt-1">Exam Training</h3>
+        <p class="text-lg font-semibold opacity-95 mt-2">Practice exactly like the school worksheet.</p>
+        <p class="text-sm opacity-90">(Practica exactamente como en la ficha del colegio)</p>
+      </div>
+      <div class="bg-white text-sky-700 px-6 py-4 rounded-2xl font-black shadow-sm">Entrar ahora</div>
     </div>
-  </div>
-
-  <div class="grid md:grid-cols-4 gap-4 mt-8">
-    <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 text-center">
-      <div class="text-3xl font-black text-blue-700">00</div>
-      <div class="font-black">o'clock</div>
-      <div class="text-green-700 font-bold">(en punto)</div>
-    </div>
-
-    <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-4 text-center">
-      <div class="text-3xl font-black text-green-700">15</div>
-      <div class="font-black">quarter past</div>
-      <div class="text-green-700 font-bold">(y cuarto)</div>
-    </div>
-
-    <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-4 text-center">
-      <div class="text-3xl font-black text-orange-700">30</div>
-      <div class="font-black">half past</div>
-      <div class="text-green-700 font-bold">(y media)</div>
-    </div>
-
-    <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-4 text-center">
-      <div class="text-3xl font-black text-red-700">45</div>
-      <div class="font-black">quarter to</div>
-      <div class="text-green-700 font-bold">(menos cuarto)</div>
-    </div>
-  </div>
+  </a>
 </section>
 
-<script>
-(function drawMinuteDots(){
-  const g = document.getElementById('minute-dots');
-  if(!g) return;
-
-  const cx = 215;
-  const cy = 215;
-  const rDot = 195;
-  const rText = 176;
-
-  for(let m = 0; m < 60; m++){
-    const angle = (m * 6 - 90) * Math.PI / 180;
-    const x = cx + rDot * Math.cos(angle);
-    const y = cy + rDot * Math.sin(angle);
-
-    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    dot.setAttribute('cx', x);
-    dot.setAttribute('cy', y);
-    dot.setAttribute('r', m % 5 === 0 ? 3.8 : 2.4);
-    dot.setAttribute('fill', '#0f172a');
-    g.appendChild(dot);
-
-    if(m % 5 !== 0){
-      const tx = cx + rText * Math.cos(angle);
-      const ty = cy + rText * Math.sin(angle) + 4;
-
-      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
-      t.setAttribute('x', tx);
-      t.setAttribute('y', ty);
-      t.setAttribute('text-anchor','middle');
-      t.setAttribute('font-size','12');
-      t.setAttribute('font-weight','800');
-      t.setAttribute('fill','#0f172a');
-      t.textContent = m;
-      g.appendChild(t);
-    }
-  }
-})();
-</script>
-  
 <section id="contenido" class="mb-8"><div class="grid grid-cols-2 md:grid-cols-5 gap-4"><button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="descubre">👀 Descubre</button><button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="entiende">🌈 Entiende</button><button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="superpoderes">⭐ Superpoderes</button><button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="practica">🎮 Practica</button><button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="mision">🏆 Misión</button></div></section>
 <section id="descubre" class="tab-panel active"><div class="glass-card rounded-[2rem] p-6 md:p-8 mb-6"><h2 class="text-3xl font-black mb-2">👀 Mira, escucha y repite</h2><p class="text-slate-600 font-bold">Primero no memorices reglas: mira el reloj, escucha la frase y repite.</p></div><div id="cards" class="grid md:grid-cols-2 xl:grid-cols-4 gap-5"></div></section>
 <section id="entiende" class="tab-panel"><div class="grid md:grid-cols-2 gap-6"><div class="glass-card rounded-[2rem] p-6 rule-blue border-2"><h3 class="text-3xl font-black text-blue-700 mb-3">🔵 O'CLOCK</h3><p class="text-xl font-black mb-2">Minutos = 00</p><p class="en text-2xl">It's three o'clock.</p><p class="es">(Son las tres en punto)</p></div><div class="glass-card rounded-[2rem] p-6 rule-orange border-2"><h3 class="text-3xl font-black text-orange-700 mb-3">🟠 HALF PAST</h3><p class="text-xl font-black mb-2">Minutos = 30</p><p class="en text-2xl">It's half past three.</p><p class="es">(Son las tres y media)</p></div><div class="glass-card rounded-[2rem] p-6 rule-green border-2"><h3 class="text-3xl font-black text-green-700 mb-3">🟢 QUARTER PAST</h3><p class="text-xl font-black mb-2">Minutos = 15</p><p class="en text-2xl">It's quarter past three.</p><p class="es">(Son las tres y cuarto)</p></div><div class="glass-card rounded-[2rem] p-6 rule-red border-2"><h3 class="text-3xl font-black text-red-700 mb-3">🔴 QUARTER TO</h3><p class="text-xl font-black mb-2">Minutos = 45</p><p class="en text-2xl">It's quarter to four.</p><p class="es">(Son las cuatro menos cuarto)</p></div></div><div class="glass-card rounded-[2rem] p-6 md:p-8 mt-6"><h3 class="text-3xl font-black mb-4">🚀 Para el examen de mañana</h3><div class="grid md:grid-cols-4 gap-4 text-center"><div class="rounded-3xl bg-blue-50 p-5 border-2 border-blue-100"><p class="text-4xl">🔵</p><p class="font-black">o'clock</p><p class="es">en punto</p></div><div class="rounded-3xl bg-orange-50 p-5 border-2 border-orange-100"><p class="text-4xl">🟠</p><p class="font-black">half past</p><p class="es">y media</p></div><div class="rounded-3xl bg-green-50 p-5 border-2 border-green-100"><p class="text-4xl">🟢</p><p class="font-black">quarter past</p><p class="es">y cuarto</p></div><div class="rounded-3xl bg-red-50 p-5 border-2 border-red-100"><p class="text-4xl">🔴</p><p class="font-black">quarter to</p><p class="es">menos cuarto</p></div></div></div></section>
