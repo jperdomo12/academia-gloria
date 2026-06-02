@@ -295,9 +295,10 @@
   </header>
 
   <section id="contenido" class="mb-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
       <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="resumen">📘 Resumen</button>
       <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="teoria">📐 Teoría</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="videos">🎥 Vídeos</button>
       <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="fichas">🧩 Fichas</button>
       <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">✅ Test</button>
     </div>
@@ -343,13 +344,21 @@
       </div>
     </div>
 
-    <div class="glass-card rounded-[2rem] p-6 md:p-8">
+    <div class="glass-card rounded-[2rem] p-6 md:p-8 mb-6">
       <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-5">🧠 Regla visual para Gloria</h2>
       <div class="grid md:grid-cols-3 gap-5">
         <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-5 font-bold">📏 ¿Camino alrededor? → Perímetro.</div>
         <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-5 font-bold">🟩 ¿Coloreo por dentro? → Área.</div>
         <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-5 font-bold">⚠️ Perímetro no usa cm². Área sí usa cm² o m².</div>
       </div>
+    </div>
+
+    <div class="rounded-[2rem] bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 border-2 border-yellow-200 p-6 text-center shadow-sm">
+      <div class="text-5xl mb-3 soft-float">🎥</div>
+      <h3 class="text-2xl font-black text-slate-800 mb-2">¿Prefieres aprender viendo?</h3>
+      <p class="text-slate-600 font-medium">
+        Ve a la pestaña <strong>Vídeos</strong> para repasar perímetro y área con explicaciones visuales.
+      </p>
     </div>
   </section>
 
@@ -464,6 +473,69 @@
         </div>
       </div>
     </div>
+  </section>
+
+
+  <!-- VIDEOS -->
+  <section id="videos" class="tab-panel">
+
+    <div class="glass-card rounded-[2rem] p-6 md:p-8 mb-6">
+      <div class="text-center mb-8">
+        <div class="text-6xl mb-4 soft-float">🎬</div>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-3">Cine Matemático</h2>
+        <p class="text-slate-600 font-medium text-lg max-w-3xl mx-auto">
+          Mira los vídeos tantas veces como quieras. Primero observa, después vuelve a las fichas.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-sky-50 to-indigo-50 border-2 border-sky-100 rounded-[2rem] p-6 card-hover">
+          <div class="text-5xl mb-4 text-center">📏</div>
+          <h3 class="text-2xl font-black text-sky-700 mb-3 text-center">Vídeo 1: Perímetro</h3>
+          <p class="text-slate-600 font-medium mb-5 text-center">Aprende a calcular el borde de una figura.</p>
+          <div class="aspect-video rounded-2xl overflow-hidden shadow-lg bg-white">
+            <iframe class="w-full h-full"
+                    src="https://www.youtube.com/embed/2afeM_g2E7M"
+                    title="Vídeo de perímetro"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+          </div>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-white border-2 border-sky-100 p-4 font-bold text-center">👀 Mira el borde</div>
+            <div class="rounded-2xl bg-white border-2 border-sky-100 p-4 font-bold text-center">📏 Cuenta lados</div>
+            <div class="rounded-2xl bg-white border-2 border-sky-100 p-4 font-bold text-center">➕ Suma</div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 border-2 border-emerald-100 rounded-[2rem] p-6 card-hover">
+          <div class="text-5xl mb-4 text-center">🟩</div>
+          <h3 class="text-2xl font-black text-emerald-700 mb-3 text-center">Vídeo 2: Área</h3>
+          <p class="text-slate-600 font-medium mb-5 text-center">Aprende a calcular la superficie interior.</p>
+          <div class="aspect-video rounded-2xl overflow-hidden shadow-lg bg-white">
+            <iframe class="w-full h-full"
+                    src="https://www.youtube.com/embed/lLcxn6i2V6w"
+                    title="Vídeo de área"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+          </div>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4 font-bold text-center">🟩 Mira dentro</div>
+            <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4 font-bold text-center">📐 Usa fórmula</div>
+            <div class="rounded-2xl bg-white border-2 border-emerald-100 p-4 font-bold text-center">✅ Revisa unidad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card rounded-[2rem] p-6 md:p-8">
+      <h3 class="text-2xl md:text-3xl font-black text-slate-800 mb-4">🧠 Después de ver los vídeos...</h3>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-5"><div class="text-4xl mb-2">①</div><p class="font-bold">Vuelve a mirar el vídeo si tienes dudas.</p></div>
+        <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-5"><div class="text-4xl mb-2">②</div><p class="font-bold">Repasa las fichas visuales.</p></div>
+        <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-5"><div class="text-4xl mb-2">③</div><p class="font-bold">Haz los retos y el test final.</p></div>
+      </div>
+    </div>
+
   </section>
 
   <!-- FICHAS -->
@@ -737,6 +809,7 @@ opciones.forEach((opcion)=>{
     const b=document.createElement('button');
     b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
  b.innerText = opcion.texto;
+b.dataset.original = opcion.original;
 b.onclick = () => handleAnswer(opcion.original, b, grid, q);
     grid.appendChild(b);
   });
@@ -755,7 +828,11 @@ function handleAnswer(selected,button,grid,q){
     makeStars();
   }else{
     button.classList.add('incorrect');
-    allBtns[q.c].classList.add('correct');
+    allBtns.forEach(btn=>{
+      if(Number(btn.dataset.original) === q.c){
+        btn.classList.add('correct');
+      }
+    });
     streak=0;
     document.getElementById('streak-box').innerText='🔥 Racha: 0';
   }
