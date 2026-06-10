@@ -1,319 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruta de Misiones Especiales - Academia de Gloria ✨</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Mapa de Metas - Academia de Gloria</title>
+  
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      /* Fondo dinámico y colorido con sutiles degradados pastel */
+      background: 
+        radial-gradient(circle at top left, rgba(245, 158, 11, 0.15), transparent 30%),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.15), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.15), transparent 30%),
+        linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    /* Tarjetas de Cristal (Glassmorphic) */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 2px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.04);
+    }
     
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #fbc531 0%, #4cd137 50%, #00a8ff 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-main: #2f3640;
-            --primary: #9c88ff;
-            --success: #4cd137;
-            --warning: #fbc531;
-            --danger: #e84118;
-            --info: #00a8ff;
-        }
+    /* Título con Degradado de Súper Colores */
+    .gradient-title {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #10b981);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Píldoras informativas */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
+    /* Animación flotante alegre para los iconos */
+    .float-icon {
+      animation: floatAnimation 3.5s ease-in-out infinite;
+    }
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
+    }
 
-        body {
-            background: #f5f6fa;
-            background-image: radial-gradient(#dcdde1 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--text-main);
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    /* Tarjetas del Mapa de Ruta */
+    .roadmap-card {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .roadmap-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.07);
+    }
 
-        /* Contenedor Principal */
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 40px 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border: 4px solid #fff;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        /* Decoración de fondo alegre */
-        .container::before {
-            content: '⭐';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            animation: spin 6s linear infinite;
-        }
-
-        .container::after {
-            content: '🚀';
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 2rem;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes float { 
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Botón Volver */
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-            color: #fff;
-            background: #2f3640;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            align-self: flex-start;
-            max-width: 200px;
-        }
-
-        .btn-back:hover {
-            transform: translateX(-5px);
-            background: var(--info);
-        }
-
-        /* Encabezado */
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2f3640;
-            text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05);
-            margin-bottom: 10px;
-        }
-
-        .badge-grade {
-            background: var(--warning);
-            color: #2f3640;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            display: inline-block;
-            border: 2px solid #2f3640;
-        }
-
-        /* Gran Banner de Celebración */
-        .celebration-banner {
-            background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            border: 3px dashed #fff;
-            box-shadow: 0 8px 20px rgba(255, 159, 243, 0.3);
-            margin-bottom: 40px;
-            transform: rotate(-1deg);
-        }
-
-        .celebration-banner h2 {
-            font-size: 1.8rem;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-            margin-bottom: 5px;
-        }
-
-        .celebration-banner p {
-            font-size: 1.1rem;
-            color: #2f3640;
-            font-weight: 600;
-        }
-
-        /* Línea de Tiempo Atemporal */
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-            border-left: 4px dashed #dcdde1;
-            margin: 20px 10px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
-            transition: all 0.3s ease;
-        }
-
-        /* Círculos con iconos */
-        .timeline-badge {
-            position: absolute;
-            left: -52px;
-            top: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            z-index: 2;
-        }
-
-        /* Tarjetas de eventos */
-        .timeline-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
-            border: 2px solid #f1f2f6;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .timeline-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-        }
-
-        .timeline-date {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 50px;
-            color: #fff;
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #2f3640;
-        }
-
-        .timeline-desc {
-            font-size: 0.95rem;
-            color: #718093;
-            line-height: 1.5;
-        }
-
-        /* Colores estáticos y atractivos por bloque */
-        .fase-cierre .timeline-badge { background-color: var(--success); }
-        .fase-cierre .timeline-date { background-color: var(--success); }
-        .fase-cierre .timeline-card { border-left: 6px solid var(--success); }
-
-        .fase-vacaciones .timeline-badge { background-color: #ff9f43; }
-        .fase-vacaciones .timeline-date { background-color: #ff9f43; }
-        .fase-vacaciones .timeline-card { border-left: 6px solid #ff9f43; }
-
-        .fase-futuro .timeline-badge { background-color: var(--info); }
-        .fase-futuro .timeline-date { background-color: var(--info); }
-        .fase-futuro .timeline-card { border-left: 6px solid var(--info); }
-
-        /* Footer de Confianza */
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-weight: 600;
-            color: #718093;
-            font-size: 0.95rem;
-        }
-
-        footer span {
-            color: #ff9ff3;
-        }
-    </style>
+    /* Círculo indicador con sombra interna alegre */
+    .badge-circle {
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+  </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased p-4 md:p-8">
 
-    <a href="index.html" class="btn-back">⬅️ Panel Principal</a>
+  <main class="max-w-4xl mx-auto">
+    
+    <a href="index.html" class="inline-flex items-center gap-2 text-sky-600 font-black mb-6 hover:gap-3 transition-all text-lg">
+      <i data-lucide="arrow-left" class="w-6 h-6"></i> Volver al Inicio
+    </a>
 
-    <div class="container">
-        
-        <header>
-            <h1>📅 Mi Mapa de Grandes Metas</h1>
-            <div class="badge-grade">¡Camino al Éxito Escolar! 🎓</div>
-        </header>
+    <header class="glass-card rounded-[2.5rem] p-6 md:p-10 mb-8 border-sky-100 bg-gradient-to-br from-white to-sky-50/30">
+      <div class="flex flex-wrap gap-2.5 mb-5">
+        <span class="pill text-amber-600 border-amber-100"><i data-lucide="sparkles" class="w-4 h-4"></i> ¡Lo lograste!</span>
+        <span class="pill text-indigo-600 border-indigo-100"><i data-lucide="compass" class="w-4 h-4"></i> Mi Ruta</span>
+        <span class="pill text-emerald-600 border-emerald-100"><i data-lucide="trophy" class="w-4 h-4"></i> Éxito Total</span>
+      </div>
+      
+      <div class="grid md:grid-cols-[1fr_auto] gap-6 items-center">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-3">
+            Mi Mapa de <span class="gradient-title">Grandes Metas</span> 🌟
+          </h1>
+          <p class="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
+            Gloria, has completado una etapa fantástica. Este mapa muestra tus grandes pasos, tu merecido descanso y las próximas aventuras que te esperan.
+          </p>
+        </div>
+        <div class="text-5xl md:text-6xl float-icon hidden md:block">🚀</div>
+      </div>
+    </header>
 
-        <section class="celebration-banner">
-            <h2>🏆 ¡ETAPA COMPLETADA CON ÉXITO! ⭐</h2>
-            <p>Gloria, has trabajado de forma increíble durante todo el curso. ¡Estamos súper orgullosos de tu dedicación, tu constancia y tu gran entusiasmo! ¡A seguir brillando!</p>
-        </section>
-
-        <main class="timeline">
-
-            <div class="timeline-item fase-cierre">
-                <div class="timeline-badge">🎉</div>
-                <div class="timeline-card">
-                    <span class="timeline-date">Fin de Curso</span>
-                    <h3 class="timeline-title">¡Misión Cumplida en 5º de Primaria! ✔️</h3>
-                    <p class="timeline-desc">Todas las clases y las evaluaciones finales han terminado de forma fantástica. Todo tu esfuerzo dio grandes frutos y has cerrado este ciclo escolar por todo lo alto.</p>
-                </div>
+    <section class="space-y-6 mb-8">
+      
+      <article class="roadmap-card rounded-[2rem] bg-emerald-50/80 border-2 border-emerald-200/90 p-6 md:p-8">
+        <div class="flex flex-col sm:flex-row gap-5 items-start">
+          <div class="badge-circle bg-emerald-500 text-white border-2 border-white font-bold">✔️</div>
+          <div class="flex-1">
+            <div class="mb-2">
+              <span class="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-xs uppercase tracking-wider">
+                Etapa Completada
+              </span>
             </div>
-
-            <div class="timeline-item fase-vacaciones">
-                <div class="timeline-badge">☀️</div>
-                <div class="timeline-card">
-                    <span class="timeline-date">Temporada de Descanso</span>
-                    <h3 class="timeline-title">Misión Vacaciones de Verano 🏖️</h3>
-                    <p class="timeline-desc">¡Un descanso muy merecido! Semanas completas para jugar, relajarte, leer historias fantásticas y recargar las baterías al máximo. Si te apetece explorar cosas curiosas, la sección de <b>Adicionales PRO</b> estará siempre abierta para ti.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item fase-futuro">
-                <div class="timeline-badge">🚀</div>
-                <div class="timeline-card">
-                    <span class="timeline-date">Próximo Horizonte</span>
-                    <h3 class="timeline-title">Siguiente Nivel: ¡6to de Primaria! 🎓</h3>
-                    <p class="timeline-desc">Al iniciar el nuevo periodo escolar, la Academia se transformará con misiones interactivas, juegos multimedia y grandes desafíos pensados especialmente para tu nuevo nivel. ¡Será una aventura genial!</p>
-                </div>
-            </div>
-
-        </main>
-
-        <footer>
-            Hecho con mucho <span>❤️</span> para la mejor estudiante.
-        </footer>
-
-    </div>
-
-    <script>
-        // Animación sutil interactiva pedagógica en las tarjetas
-        document.querySelectorAll('.timeline-card').forEach(card => {
-            card.addEventListener('click', () => {
-                card.style.transform = 'scale(1.04)';
-                setTimeout(() => {
-                    card.style.transform = '';
-                }, 250);
-            });
-        });
-    </script>
-</body>
-</html>
+            <h3 class="text-2xl font-black text-slate-900 mb-2">¡Cierre de 5º de Primaria por todo lo alto!</h3>
+            <p class="text-slate-
