@@ -1,0 +1,10 @@
+<script>
+  /*
+    Protección básica para GitHub Pages.
+    Pega este bloque justo después de <body> en index.html
+    y en las páginas principales que quieras proteger.
+  */
+  if (sessionStorage.getItem("academia_gloria_auth") !== "ok") {
+    window.location.href = "/academia-gloria/login.html";
+  }
+</script>
