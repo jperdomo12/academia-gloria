@@ -70,11 +70,6 @@
   </style>
 </head>
 <body class="text-slate-800">
-  <script>
-    if (sessionStorage.getItem("academia_gloria_auth") !== "ok") {
-      window.location.href = "login.html";
-    }
-  </script>
   <main class="max-w-7xl mx-auto p-4 md:p-8">
     <header class="glass-card rounded-[2.5rem] px-6 py-8 md:px-10 md:py-10 mb-8">
       <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center">
@@ -89,12 +84,6 @@
             <span class="hero-badge text-cyan-700">
               <i data-lucide="graduation-cap" class="w-4 h-4"></i> 5º Primaria
             </span>
-            <span id="welcomeBadge" class="hero-badge text-emerald-700">
-              👋 Bienvenida
-            </span>
-            <button onclick="cerrarSesion()" class="hero-badge text-red-600 hover:bg-red-50 transition-all">
-              🔒 Salir
-            </button>
           </div>
 
           <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4">
@@ -104,9 +93,6 @@
           <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
             ¡Tu aventura de aprendizaje comienza aquí! Un portal bonito, claro y motivador para estudiar, repasar y disfrutar aprendiendo cada día.
           </p>
-          <div id="welcomeMessage" class="mt-5 rounded-[1.5rem] bg-white border-2 border-emerald-100 px-5 py-4 text-emerald-700 font-black inline-flex items-center gap-2 shadow-sm">
-            👋 Bienvenida a la Academia
-          </div>
 
           <div class="flex flex-wrap gap-4 mt-7">
             <a href="adicionales/" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-violet-700 transition-all shadow-lg">
@@ -319,27 +305,8 @@
       <p class="text-slate-500 font-medium">Academia de Gloria Valentina • 2025–2026 • Un portal creado con cariño para aprender mejor ✨</p>
     </footer>
   </main>
-
   <script>
     lucide.createIcons();
-
-    const perfilAcademia = sessionStorage.getItem("academia_gloria_profile") || "Invitada";
-    const welcomeBadge = document.getElementById("welcomeBadge");
-    const welcomeMessage = document.getElementById("welcomeMessage");
-
-    if (perfilAcademia === "Gloria") {
-      welcomeBadge.innerHTML = "👋 Hola Gloria";
-      welcomeMessage.innerHTML = "👋 Hola Gloria, ¡lista para una nueva aventura!";
-    } else {
-      welcomeBadge.innerHTML = "🌟 Invitada";
-      welcomeMessage.innerHTML = "🌟 Bienvenida Invitada, disfruta aprendiendo con Gloria.";
-    }
-
-    function cerrarSesion(){
-      sessionStorage.removeItem("academia_gloria_auth");
-      sessionStorage.removeItem("academia_gloria_profile");
-      window.location.href = "login.html";
-    }
   </script>
 </body>
 </html>
