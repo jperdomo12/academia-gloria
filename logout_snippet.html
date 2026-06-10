@@ -1,0 +1,12 @@
+<button onclick="cerrarSesion()"
+        class="inline-flex items-center gap-2 bg-white text-red-600 px-5 py-3 rounded-2xl font-black border-2 border-red-100 hover:border-red-300 transition-all">
+  🔒 Salir
+</button>
+
+<script>
+  function cerrarSesion(){
+    sessionStorage.removeItem("academia_gloria_auth");
+    sessionStorage.removeItem("academia_gloria_profile");
+    window.location.href="/academia-gloria/login.html";
+  }
+</script>
