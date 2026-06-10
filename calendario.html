@@ -1,129 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mi Mapa de Metas - Academia de Gloria</title>
+<div class="space-y-6 max-w-4xl mx-auto my-8 px-4">
   
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <style>
-    body {
-      font-family: 'Outfit', sans-serif;
-      /* Fondo dinámico y colorido con sutiles degradados pastel */
-      background: 
-        radial-gradient(circle at top left, rgba(245, 158, 11, 0.15), transparent 30%),
-        radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.15), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.15), transparent 30%),
-        linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-      min-height: 100vh;
-    }
-    
-    /* Tarjetas de Cristal (Glassmorphic) */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(16px);
-      border: 2px solid rgba(226, 232, 240, 0.8);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.04);
-    }
-    
-    /* Título con Degradado de Súper Colores */
-    .gradient-title {
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #10b981);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    /* Píldoras informativas */
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      border-radius: 999px;
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 800;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    }
+  <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-6 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center gap-5">
+    <div class="p-3 bg-amber-100 text-amber-600 rounded-2xl shrink-0 shadow-sm">
+      <i data-lucide="sun" class="w-8 h-8"></i>
+    </div>
+    <div class="flex-1">
+      <h3 class="text-xl font-extrabold text-amber-800 mb-2">¡Un merecido descanso de Verano! ☀️</h3>
+      <p class="text-slate-600 font-medium text-base leading-relaxed">
+        ¡Te lo has ganado con creces, Gloria! El verano es tu momento especial para jugar, desconectar, disfrutar de la piscina, reír y descansar un montón. Disfruta cada día con calma y alegría, porque relajar la mente y divertirse también es una parte fundamental para recargar energías y seguir creciendo felices. ¡A disfrutar a tope de tus vacaciones!
+      </p>
+    </div>
+  </div>
 
-    /* Animación flotante alegre para los iconos */
-    .float-icon {
-      animation: floatAnimation 3.5s ease-in-out infinite;
-    }
-    @keyframes floatAnimation {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(3deg); }
-    }
+  <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-6 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center gap-5">
+    <div class="p-3 bg-violet-100 text-violet-600 rounded-2xl shrink-0 shadow-sm">
+      <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+    </div>
+    <div class="flex-1">
+      <h3 class="text-xl font-extrabold text-violet-800 mb-2">Tu próximo gran paso: ¡Rumbo a 6to Grado! 🚀</h3>
+      <p class="text-slate-600 font-medium text-base leading-relaxed">
+        En septiembre comenzarás una etapa que será <span class="text-violet-700 font-extrabold">MUY divertida</span> y <span class="text-violet-700 font-extrabold">MUY importante</span> en tu vida escolar. Vas a descubrir cosas fascinantes y a demostrar lo capaz que eres. Por eso, tras este súper descanso de verano, iremos retomando el ritmo de estudio poco a poco, con calma y confianza, para asegurar que tengas un inicio de 6to grado plenamente feliz, organizado y lleno de éxitos. ¡Estamos listos para esta gran aventura juntos!
+      </p>
+    </div>
+  </div>
 
-    /* Tarjetas del Mapa de Ruta */
-    .roadmap-card {
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .roadmap-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.07);
-    }
-
-    /* Círculo indicador con sombra interna alegre */
-    .badge-circle {
-      width: 3.2rem;
-      height: 3.2rem;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      flex-shrink: 0;
-    }
-  </style>
-</head>
-<body class="text-slate-800 antialiased p-4 md:p-8">
-
-  <main class="max-w-4xl mx-auto">
-    
-    <a href="index.html" class="inline-flex items-center gap-2 text-sky-600 font-black mb-6 hover:gap-3 transition-all text-lg">
-      <i data-lucide="arrow-left" class="w-6 h-6"></i> Volver al Inicio
-    </a>
-
-    <header class="glass-card rounded-[2.5rem] p-6 md:p-10 mb-8 border-sky-100 bg-gradient-to-br from-white to-sky-50/30">
-      <div class="flex flex-wrap gap-2.5 mb-5">
-        <span class="pill text-amber-600 border-amber-100"><i data-lucide="sparkles" class="w-4 h-4"></i> ¡Lo lograste!</span>
-        <span class="pill text-indigo-600 border-indigo-100"><i data-lucide="compass" class="w-4 h-4"></i> Mi Ruta</span>
-        <span class="pill text-emerald-600 border-emerald-100"><i data-lucide="trophy" class="w-4 h-4"></i> Éxito Total</span>
-      </div>
-      
-      <div class="grid md:grid-cols-[1fr_auto] gap-6 items-center">
-        <div>
-          <h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-3">
-            Mi Mapa de <span class="gradient-title">Grandes Metas</span> 🌟
-          </h1>
-          <p class="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
-            Gloria, has completado una etapa fantástica. Este mapa muestra tus grandes pasos, tu merecido descanso y las próximas aventuras que te esperan.
-          </p>
-        </div>
-        <div class="text-5xl md:text-6xl float-icon hidden md:block">🚀</div>
-      </div>
-    </header>
-
-    <section class="space-y-6 mb-8">
-      
-      <article class="roadmap-card rounded-[2rem] bg-emerald-50/80 border-2 border-emerald-200/90 p-6 md:p-8">
-        <div class="flex flex-col sm:flex-row gap-5 items-start">
-          <div class="badge-circle bg-emerald-500 text-white border-2 border-white font-bold">✔️</div>
-          <div class="flex-1">
-            <div class="mb-2">
-              <span class="px-3 py-1 rounded-full bg-emerald-600 text-white font-black text-xs uppercase tracking-wider">
-                Etapa Completada
-              </span>
-            </div>
-            <h3 class="text-2xl font-black text-slate-900 mb-2">¡Cierre de 5º de Primaria por todo lo alto!</h3>
-            <p class="text-slate-
+</div>
