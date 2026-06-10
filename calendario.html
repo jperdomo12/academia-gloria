@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruta de Misiones Especiales - Academia de Gloria ✨</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -149,7 +152,7 @@
             font-weight: 600;
         }
 
-        /* Línea de Tiempo del Éxito y Vacaciones */
+        /* Línea de Tiempo Atemporal */
         .timeline {
             position: relative;
             padding-left: 30px;
@@ -163,7 +166,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Círculos con iconos de la línea de tiempo */
+        /* Círculos con iconos */
         .timeline-badge {
             position: absolute;
             left: -52px;
@@ -203,7 +206,7 @@
             letter-spacing: 1px;
             margin-bottom: 5px;
             display: inline-block;
-            padding: 2px 10px;
+            padding: 2px 12px;
             border-radius: 50px;
             color: #fff;
         }
@@ -221,32 +224,18 @@
             line-height: 1.5;
         }
 
-        /* Colores temáticos dinámicos por Misión */
-        .m-done .timeline-badge { background-color: var(--success); }
-        .m-done .timeline-date { background-color: var(--success); }
-        .m-done .timeline-card { border-left: 6px solid var(--success); }
+        /* Colores estáticos y atractivos por bloque */
+        .fase-cierre .timeline-badge { background-color: var(--success); }
+        .fase-cierre .timeline-date { background-color: var(--success); }
+        .fase-cierre .timeline-card { border-left: 6px solid var(--success); }
 
-        .m-current .timeline-badge { background-color: var(--info); animation: pulse 2s infinite; }
-        .m-current .timeline-date { background-color: var(--info); }
-        .m-current .timeline-card { border-left: 6px solid var(--info); background: #f0f9ff; }
+        .fase-vacaciones .timeline-badge { background-color: #ff9f43; }
+        .fase-vacaciones .timeline-date { background-color: #ff9f43; }
+        .fase-vacaciones .timeline-card { border-left: 6px solid #ff9f43; }
 
-        .m-trip .timeline-badge { background-color: var(--primary); }
-        .m-trip .timeline-date { background-color: var(--primary); }
-        .m-trip .timeline-card { border-left: 6px solid var(--primary); }
-
-        .m-summer .timeline-badge { background-color: #ff9f43; }
-        .m-summer .timeline-date { background-color: #ff9f43; }
-        .m-summer .timeline-card { border-left: 6px solid #ff9f43; }
-
-        .m-future .timeline-badge { background-color: var(--danger); }
-        .m-future .timeline-date { background-color: var(--danger); }
-        .m-future .timeline-card { border-left: 6px solid var(--danger); opacity: 0.9; }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.7); }
-            70% { box-shadow: 0 0 0 12px rgba(0, 168, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0); }
-        }
+        .fase-futuro .timeline-badge { background-color: var(--info); }
+        .fase-futuro .timeline-date { background-color: var(--info); }
+        .fase-futuro .timeline-card { border-left: 6px solid var(--info); }
 
         /* Footer de Confianza */
         footer {
@@ -269,78 +258,60 @@
     <div class="container">
         
         <header>
-            <h1>📅 Mapa de Grandes Misiones</h1>
-            <div class="badge-grade">¡Transición Épica Completada! 🎓</div>
+            <h1>📅 Mi Mapa de Grandes Metas</h1>
+            <div class="badge-grade">¡Camino al Éxito Escolar! 🎓</div>
         </header>
 
         <section class="celebration-banner">
-            <h2>🏆 ¡EXÁMENES COMPLETADOS CON ÉXITO! ⭐</h2>
-            <p>Gloria, has trabajado de forma increíble este año. ¡Estamos súper orgullosos de tu dedicación, tu alegría y tu gran esfuerzo! Tu recompensa ha llegado.</p>
+            <h2>🏆 ¡ETAPA COMPLETADA CON ÉXITO! ⭐</h2>
+            <p>Gloria, has trabajado de forma increíble durante todo el curso. ¡Estamos súper orgullosos de tu dedicación, tu constancia y tu gran entusiasmo! ¡A seguir brillando!</p>
         </section>
 
         <main class="timeline">
 
-            <div class="timeline-item m-done">
-                <div class="timeline-badge">📝</div>
-                <div class="timeline-card">
-                    <span class="timeline-date">Ayer</span>
-                    <h3 class="timeline-title">¡Misión Último Examen! ✔️</h3>
-                    <p class="timeline-desc">Terminaste las evaluaciones de 5º de Primaria. Todo el esfuerzo dio sus frutos y cerraste el ciclo con broche de oro.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item m-current">
+            <div class="timeline-item fase-cierre">
                 <div class="timeline-badge">🎉</div>
                 <div class="timeline-card">
-                    <span class="timeline-date">¡Hoy!</span>
-                    <h3 class="timeline-title">Último Día de Cole 🎒</h3>
-                    <p class="timeline-desc">¡Momento de celebrar con tus compañeros! Aunque las clases formales cierran el 19 de junio, hoy guardas los libros de 5º en la mochila con una sonrisa gigante.</p>
+                    <span class="timeline-date">Fin de Curso</span>
+                    <h3 class="timeline-title">¡Misión Cumplida en 5º de Primaria! ✔️</h3>
+                    <p class="timeline-desc">Todas las clases y las evaluaciones finales han terminado de forma fantástica. Todo tu esfuerzo dio grandes frutos y has cerrado este ciclo escolar por todo lo alto.</p>
                 </div>
             </div>
 
-            <div class="timeline-item m-trip">
-                <div class="timeline-badge">✈️</div>
-                <div class="timeline-card">
-                    <span class="timeline-date">¡Mañana Despegamos!</span>
-                    <h3 class="timeline-title">Aventura Internacional en Familia 🌍</h3>
-                    <p class="timeline-desc">¡Prepara las maletas! Salimos en un hermoso y largo viaje para visitar nuestro maravilloso país de origen. Tiempo de abrazar a los seres queridos, descubrir lugares mágicos y disfrutar juntos.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item m-summer">
+            <div class="timeline-item fase-vacaciones">
                 <div class="timeline-badge">☀️</div>
                 <div class="timeline-card">
-                    <span class="timeline-date">Julio y Agosto</span>
+                    <span class="timeline-date">Temporada de Descanso</span>
                     <h3 class="timeline-title">Misión Vacaciones de Verano 🏖️</h3>
-                    <p class="timeline-desc">¡Te lo has ganado! Dos meses enteros para jugar, explorar, reír y recargar las baterías. Si te apetece leer historias bonitas o jugar, la sección de <b>Adicionales PRO</b> estará lista para ti.</p>
+                    <p class="timeline-desc">¡Un descanso muy merecido! Semanas completas para jugar, relajarte, leer historias fantásticas y recargar las baterías al máximo. Si te apetece explorar cosas curiosas, la sección de <b>Adicionales PRO</b> estará siempre abierta para ti.</p>
                 </div>
             </div>
 
-            <div class="timeline-item m-future">
+            <div class="timeline-item fase-futuro">
                 <div class="timeline-badge">🚀</div>
                 <div class="timeline-card">
-                    <span class="timeline-date">Septiembre</span>
-                    <h3 class="timeline-title">Próximo Nivel: ¡6to de Primaria! 🎓</h3>
-                    <p class="timeline-desc">La Academia se actualizará por completo con juegos dinámicos, misiones espaciales y desafíos interactivos adaptados a tu nuevo curso. ¡Será una aventura increíble!</p>
+                    <span class="timeline-date">Próximo Horizonte</span>
+                    <h3 class="timeline-title">Siguiente Nivel: ¡6to de Primaria! 🎓</h3>
+                    <p class="timeline-desc">Al iniciar el nuevo periodo escolar, la Academia se transformará con misiones interactivas, juegos multimedia y grandes desafíos pensados especialmente para tu nuevo nivel. ¡Será una aventura genial!</p>
                 </div>
             </div>
 
         </main>
 
         <footer>
-            Hecho con mucho <span>❤️</span> para la mejor estudiante del mundo.
+            Hecho con mucho <span>❤️</span> para la mejor estudiante.
         </footer>
 
     </div>
 
     <script>
-        // Pequeña lógica interactiva pedagógica: Efecto visual al hacer clic en las misiones
+        // Animación sutil interactiva pedagógica en las tarjetas
         document.querySelectorAll('.timeline-card').forEach(card => {
             card.addEventListener('click', () => {
-                card.style.transform = 'scale(1.05)';
+                card.style.transform = 'scale(1.04)';
                 setTimeout(() => {
                     card.style.transform = '';
-                }, 300);
+                }, 250);
             });
         });
     </script>
