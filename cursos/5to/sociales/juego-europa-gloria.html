@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria · Juego de Países de Europa</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe3f0;
+      --blue: #3b82f6;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --sea: #dff2ff;
+      --land: #f8fbff;
+      --land-stroke: #9bb8d1;
+      --focus: #1d4ed8;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef5ff 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(29, 78, 216, 0.08);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.1;
+      color: #1d4ed8;
+    }
+
+    .sub {
+      margin: 0;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel, .map-card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(29, 78, 216, 0.06);
+    }
+
+    .panel {
+      padding: 18px;
+      position: sticky;
+      top: 12px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #111827;
+    }
+
+    .mode-grid, .level-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, box-shadow .08s ease, background .2s ease;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(1px); }
+
+    .mode-btn, .level-btn {
+      background: #eef2ff;
+      color: #3730a3;
+      border: 2px solid #c7d2fe;
+    }
+    .mode-btn.active, .level-btn.active {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-color: #93c5fd;
+    }
+
+    .primary {
+      width: 100%;
+      background: #1d4ed8;
+      color: white;
+      margin: 8px 0 12px;
+    }
+
+    .secondary {
+      width: 100%;
+      background: #fff;
+      color: #1d4ed8;
+      border: 2px solid #bfdbfe;
+      margin-bottom: 12px;
+    }
+
+    .hint-box, .task-box, .score-box, .help-box, .stars-box, .timer-box, .progress-box {
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 2px solid var(--line);
+    }
+
+    .task-box { background: #eff6ff; }
+    .hint-box { background: #fff8e8; border-color: #fde68a; }
+    .score-box { background: #eefcf2; border-color: #bbf7d0; }
+    .help-box { background: #faf5ff; border-color: #ddd6fe; }
+    .stars-box { background: #fff1f2; border-color: #fbcfe8; }
+    .timer-box { background: #effcf8; border-color: #a7f3d0; }
+    .progress-box { background: #f8fafc; }
+
+    .big {
+      font-size: 30px;
+      margin: 6px 0;
+      color: #111827;
+      line-height: 1.15;
+    }
+
+    .small {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      background: white;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .stars {
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: #f59e0b;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 16px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #60a5fa, #22c55e);
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .map-card {
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 6px 0 10px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 2px solid rgba(0,0,0,.08);
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: var(--sea);
+      border-radius: 18px;
+      border: 2px solid #bfdbfe;
+    }
+
+    .country {
+      fill: var(--land);
+      stroke: var(--land-stroke);
+      stroke-width: 2;
+      cursor: pointer;
+      transition: fill .18s ease, transform .08s ease, opacity .18s ease;
+    }
+
+    .country:hover, .country:focus {
+      fill: #dbeafe;
+      outline: none;
+    }
+
+    .country.target {
+      fill: #fde68a;
+      stroke: #f59e0b;
+      stroke-width: 3;
+    }
+
+    .country.correct {
+      fill: #bbf7d0;
+      stroke: #16a34a;
+      stroke-width: 3;
+    }
+
+    .country.wrong {
+      fill: #fecaca;
+      stroke: #dc2626;
+      stroke-width: 3;
+    }
+
+    .country.dim {
+      opacity: .35;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 700;
+      fill: #334155;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .celebrate {
+      font-size: 18px;
+      font-weight: 700;
+      color: #15803d;
+    }
+
+    .floating-stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .star-burst {
+      position: absolute;
+      font-size: 28px;
+      animation: floatUp 1.4s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(20px) scale(.7); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .panel { position: static; }
+      h1 { font-size: 28px; }
+      .big { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>🌍 Juego de Europa para Gloria</h1>
+      <p class="sub">Aprende los países de Europa y su lugar en el mapa con un juego claro, visual y amable.</p>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <h2 class="section-title">🎮 Elige un modo</h2>
+        <div class="mode-grid">
+          <button id="mode-find" class="mode-btn active">Buscar país</button>
+          <button id="mode-name" class="mode-btn">Nombrar país</button>
+        </div>
+
+        <h2 class="section-title">⭐ Nivel</h2>
+        <div class="level-grid">
+          <button id="level-easy" class="level-btn active">Fácil</button>
+          <button id="level-full" class="level-btn">Completo</button>
+        </div>
+
+        <div class="task-box">
+          <div class="small">Tu misión</div>
+          <div id="task" class="big">Haz clic en: España</div>
+        </div>
+
+        <button id="next-btn" class="primary">Siguiente reto</button>
+        <button id="reset-btn" class="secondary">Empezar de nuevo</button>
+
+        <div class="hint-box">
+          <div class="small">💡 Pista</div>
+          <div id="hint" class="small">Está en el suroeste de Europa.</div>
+        </div>
+
+        <div class="timer-box">
+          <div class="small">⏱️ Tiempo</div>
+          <div class="big"><span id="timer">20</span>s</div>
+          <div class="small">Cada reto tiene un tiempo suave para practicar sin estrés.</div>
+        </div>
+
+        <div class="score-box">
+          <div class="small">⭐ Puntuación</div>
+          <div class="big"><span id="score">0</span> / <span id="total">0</span></div>
+          <div id="feedback" class="small">Pulsa un país del mapa para empezar.</div>
+        </div>
+
+        <div class="stars-box">
+          <div class="small">🌟 Estrellas de Gloria</div>
+          <div id="stars" class="stars">☆☆☆☆☆</div>
+          <div class="small">Cada acierto suma estrellas.</div>
+        </div>
+
+        <div class="progress-box">
+          <div class="small">🏁 Progreso</div>
+          <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+          <div id="progress-text" class="small">0% completado</div>
+        </div>
+
+        <div class="help-box">
+          <div class="small"><strong>Cómo jugar</strong></div>
+          <div class="small">1. Lee el reto.<br>2. Mira el mapa.<br>3. Haz clic en el país.<br>4. Si te equivocas, aprende y sigue.</div>
+          <div class="pill-row">
+            <span class="pill">🟢 correcto</span>
+            <span class="pill">🔴 revisar</span>
+            <span class="pill">🟡 objetivo</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="map-card">
+        <div id="floating-stars" class="floating-stars"></div>
+        <div class="legend">
+          <span><i class="dot" style="background:#fde68a"></i> país del reto</span>
+          <span><i class="dot" style="background:#bbf7d0"></i> respuesta correcta</span>
+          <span><i class="dot" style="background:#fecaca"></i> respuesta incorrecta</span>
+        </div>
+
+        <svg viewBox="0 0 1100 760" aria-label="Mapa esquemático de Europa">
+          <rect x="0" y="0" width="1100" height="760" fill="#dff2ff"></rect>
+
+          <!-- Islandia -->
+          <rect id="Iceland" class="country" x="70" y="80" width="70" height="40" rx="10"></rect>
+          <text class="label" x="105" y="105">Islandia</text>
+
+          <!-- Irlanda y Reino Unido -->
+          <rect id="Ireland" class="country" x="170" y="205" width="55" height="70" rx="10"></rect>
+          <text class="label" x="197" y="245">Irlanda</text>
+          <rect id="United Kingdom" class="country" x="235" y="170" width="80" height="135" rx="12"></rect>
+          <text class="label" x="275" y="240">R. Unido</text>
+
+          <!-- Península ibérica -->
+          <rect id="Portugal" class="country" x="175" y="420" width="42" height="85" rx="10"></rect>
+          <text class="label" x="196" y="468">Portugal</text>
+          <rect id="Spain" class="country" x="220" y="405" width="125" height="105" rx="12"></rect>
+          <text class="label" x="282" y="462">España</text>
+
+          <!-- Francia / Benelux -->
+          <rect id="France" class="country" x="345" y="330" width="115" height="115" rx="14"></rect>
+          <text class="label" x="402" y="392">Francia</text>
+          <rect id="Belgium" class="country" x="395" y="255" width="34" height="30" rx="7"></rect>
+          <text class="label" x="412" y="275">Bélgica</text>
+          <rect id="Netherlands" class="country" x="397" y="220" width="35" height="32" rx="7"></rect>
+          <text class="label" x="415" y="240">Países Bajos</text>
+          <rect id="Luxembourg" class="country" x="432" y="265" width="20" height="18" rx="5"></rect>
+          <text class="label" x="442" y="260">Lux.</text>
+
+          <!-- Centro -->
+          <rect id="Germany" class="country" x="450" y="230" width="100" height="115" rx="14"></rect>
+          <text class="label" x="500" y="292">Alemania</text>
+          <rect id="Switzerland" class="country" x="455" y="350" width="55" height="35" rx="8"></rect>
+          <text class="label" x="482" y="372">Suiza</text>
+          <rect id="Austria" class="country" x="520" y="352" width="75" height="35" rx="8"></rect>
+          <text class="label" x="557" y="373">Austria</text>
+          <rect id="Czechia" class="country" x="555" y="285" width="75" height="40" rx="8"></rect>
+          <text class="label" x="592" y="309">Chequia</text>
+          <rect id="Poland" class="country" x="610" y="220" width="110" height="95" rx="12"></rect>
+          <text class="label" x="665" y="272">Polonia</text>
+          <rect id="Denmark" class="country" x="510" y="165" width="48" height="38" rx="8"></rect>
+          <text class="label" x="534" y="189">Dinamarca</text>
+
+          <!-- Escandinavia -->
+          <rect id="Norway" class="country" x="510" y="30" width="85" height="155" rx="16"></rect>
+          <text class="label" x="552" y="108">Noruega</text>
+          <rect id="Sweden" class="country" x="600" y="35" width="92" height="165" rx="16"></rect>
+          <text class="label" x="646" y="112">Suecia</text>
+          <rect id="Finland" class="country" x="700" y="45" width="105" height="150" rx="16"></rect>
+          <text class="label" x="752" y="120">Finlandia</text>
+
+          <!-- Bálticos -->
+          <rect id="Estonia" class="country" x="760" y="205" width="55" height="32" rx="8"></rect>
+          <text class="label" x="787" y="226">Estonia</text>
+          <rect id="Latvia" class="country" x="760" y="240" width="58" height="34" rx="8"></rect>
+          <text class="label" x="789" y="262">Letonia</text>
+          <rect id="Lithuania" class="country" x="760" y="278" width="64" height="40" rx="8"></rect>
+          <text class="label" x="792" y="302">Lituania</text>
+
+          <!-- Este -->
+          <rect id="Belarus" class="country" x="725" y="235" width="100" height="95" rx="12"></rect>
+          <text class="label" x="775" y="286">Bielorrusia</text>
+          <rect id="Ukraine" class="country" x="730" y="335" width="170" height="95" rx="14"></rect>
+          <text class="label" x="815" y="388">Ucrania</text>
+          <rect id="Romania" class="country" x="650" y="390" width="100" height="70" rx="12"></rect>
+          <text class="label" x="700" y="430">Rumanía</text>
+          <rect id="Hungary" class="country" x="600" y="395" width="55" height="45" rx="8"></rect>
+          <text class="label" x="628" y="421">Hungría</text>
+          <rect id="Bulgaria" class="country" x="705" y="465" width="95" height="45" rx="10"></rect>
+          <text class="label" x="752" y="492">Bulgaria</text>
+          <rect id="Greece" class="country" x="670" y="530" width="92" height="65" rx="12"></rect>
+          <text class="label" x="716" y="567">Grecia</text>
+          <rect id="Turkey" class="country" x="805" y="500" width="170" height="55" rx="12"></rect>
+          <text class="label" x="890" y="532">Turquía</text>
+
+          <!-- Balcanes -->
+          <rect id="Croatia" class="country" x="590" y="442" width="40" height="40" rx="8"></rect>
+          <text class="label" x="610" y="466">Croacia</text>
+          <rect id="Serbia" class="country" x="635" y="445" width="48" height="52" rx="8"></rect>
+          <text class="label" x="659" y="475">Serbia</text>
+          <rect id="Bosnia and Herzegovina" class="country" x="592" y="485" width="42" height="35" rx="7"></rect>
+          <text class="label" x="613" y="506">Bosnia</text>
+          <rect id="Albania" class="country" x="640" y="530" width="30" height="36" rx="7"></rect>
+          <text class="label" x="655" y="553">Alb.</text>
+          <rect id="North Macedonia" class="country" x="675" y="525" width="42" height="34" rx="7"></rect>
+          <text class="label" x="696" y="547">N. Mac.</text>
+
+          <!-- Italia -->
+          <rect id="Italy" class="country" x="505" y="410" width="70" height="125" rx="16"></rect>
+          <text class="label" x="540" y="475">Italia</text>
+
+          <!-- Optional seas labels -->
+          <text class="label" x="350" y="620" style="fill:#5b88a8;font-size:18px;">Mar Mediterráneo</text>
+          <text class="label" x="860" y="170" style="fill:#5b88a8;font-size:18px;">Rusia</text>
+        </svg>
+
+        <div class="footer-note">Mapa esquemático para aprender la ubicación general de los países. Ideal para practicar antes de mirar un atlas más detallado.</div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const allCountries = [
+      { id: 'Spain', es: 'España', hint: 'Está en el suroeste de Europa.' },
+      { id: 'Portugal', es: 'Portugal', hint: 'Está al oeste de España.' },
+      { id: 'France', es: 'Francia', hint: 'Está al norte de España y al oeste de Alemania.' },
+      { id: 'Ireland', es: 'Irlanda', hint: 'Es una isla al oeste del Reino Unido.' },
+      { id: 'United Kingdom', es: 'Reino Unido', hint: 'Es una isla grande al noroeste de Europa.' },
+      { id: 'Iceland', es: 'Islandia', hint: 'Está muy al noroeste, en una isla del Atlántico.' },
+      { id: 'Belgium', es: 'Bélgica', hint: 'Es un país pequeño entre Francia, Países Bajos y Alemania.' },
+      { id: 'Netherlands', es: 'Países Bajos', hint: 'Está al norte de Bélgica.' },
+      { id: 'Luxembourg', es: 'Luxemburgo', hint: 'Es un país muy pequeño cerca de Bélgica, Francia y Alemania.' },
+      { id: 'Germany', es: 'Alemania', hint: 'Está en el centro de Europa.' },
+      { id: 'Switzerland', es: 'Suiza', hint: 'Está al sur de Alemania y cerca de Francia e Italia.' },
+      { id: 'Austria', es: 'Austria', hint: 'Está al este de Suiza y al sur de Alemania.' },
+      { id: 'Italy', es: 'Italia', hint: 'Tiene forma de bota y está al sur de Europa.' },
+      { id: 'Denmark', es: 'Dinamarca', hint: 'Está al norte de Alemania.' },
+      { id: 'Norway', es: 'Noruega', hint: 'Es el país escandinavo más al oeste.' },
+      { id: 'Sweden', es: 'Suecia', hint: 'Está entre Noruega y Finlandia.' },
+      { id: 'Finland', es: 'Finlandia', hint: 'Está al este de Suecia.' },
+      { id: 'Poland', es: 'Polonia', hint: 'Está al este de Alemania.' },
+      { id: 'Czechia', es: 'Chequia', hint: 'Está entre Alemania, Polonia y Austria.' },
+      { id: 'Estonia', es: 'Estonia', hint: 'Es uno de los países bálticos, el más al norte.' },
+      { id: 'Latvia', es: 'Letonia', hint: 'Está entre Estonia y Lituania.' },
+      { id: 'Lithuania', es: 'Lituania', hint: 'Es uno de los países bálticos, el más al sur.' },
+      { id: 'Belarus', es: 'Bielorrusia', hint: 'Está al este de Polonia y Lituania.' },
+      { id: 'Ukraine', es: 'Ucrania', hint: 'Es un país grande al este de Europa.' },
+      { id: 'Hungary', es: 'Hungría', hint: 'Está entre Austria, Rumanía y Serbia.' },
+      { id: 'Romania', es: 'Rumanía', hint: 'Está al este de Hungría y al norte de Bulgaria.' },
+      { id: 'Croatia', es: 'Croacia', hint: 'Está en la zona de los Balcanes, junto al mar Adriático.' },
+      { id: 'Serbia', es: 'Serbia', hint: 'Está en los Balcanes, al sur de Hungría.' },
+      { id: 'Bosnia and Herzegovina', es: 'Bosnia y Herzegovina', hint: 'Está en los Balcanes, cerca de Croacia y Serbia.' },
+      { id: 'Albania', es: 'Albania', hint: 'Es un país pequeño al oeste de Grecia.' },
+      { id: 'North Macedonia', es: 'Macedonia del Norte', hint: 'Está al norte de Grecia.' },
+      { id: 'Bulgaria', es: 'Bulgaria', hint: 'Está al norte de Grecia y al este de Serbia.' },
+      { id: 'Greece', es: 'Grecia', hint: 'Está al sureste de Europa.' },
+      { id: 'Turkey', es: 'Turquía', hint: 'Está entre Europa y Asia, al este de Grecia.' }
+    ];
+
+    const easyCountryIds = ['Spain','Portugal','France','Germany','Italy','United Kingdom','Norway','Greece'];
+
+    let mode = 'find';
+    let level = 'easy';
+    let current = null;
+    let score = 0;
+    let total = 0;
+    let timerValue = 20;
+    let timerId = null;
+    const asked = [];
+
+    const taskEl = document.getElementById('task');
+    const hintEl = document.getElementById('hint');
+    const feedbackEl = document.getElementById('feedback');
+    const scoreEl = document.getElementById('score');
+    const totalEl = document.getElementById('total');
+    const starsEl = document.getElementById('stars');
+    const timerEl = document.getElementById('timer');
+    const progressFillEl = document.getElementById('progress-fill');
+    const progressTextEl = document.getElementById('progress-text');
+    const floatingStarsEl = document.getElementById('floating-stars');
+    const modeFindBtn = document.getElementById('mode-find');
+    const modeNameBtn = document.getElementById('mode-name');
+    const levelEasyBtn = document.getElementById('level-easy');
+    const levelFullBtn = document.getElementById('level-full');
+    const nextBtn = document.getElementById('next-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const countryEls = Array.from(document.querySelectorAll('.country'));
+
+    function currentCountries() {
+      if (level === 'easy') return allCountries.filter(c => easyCountryIds.includes(c.id));
+      return allCountries;
+    }
+
+    function playTone(type) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const ctx = new AudioContextClass();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      if (type === 'correct') {
+        osc.frequency.value = 660;
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+      } else {
+        osc.frequency.value = 220;
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+      }
+      osc.start();
+      osc.stop(ctx.currentTime + 0.26);
+    }
+
+    function burstStars() {
+      const stars = ['⭐', '🌟', '✨'];
+      for (let i = 0; i < 8; i++) {
+        const el = document.createElement('div');
+        el.className = 'star-burst';
+        el.textContent = stars[i % stars.length];
+        el.style.left = `${10 + Math.random() * 80}%`;
+        el.style.top = `${55 + Math.random() * 20}%`;
+        el.style.animationDelay = `${Math.random() * 0.15}s`;
+        floatingStarsEl.appendChild(el);
+        setTimeout(() => el.remove(), 1500);
+      }
+    }
+
+    function shufflePick() {
+      const list = currentCountries();
+      const remaining = list.filter(c => !asked.includes(c.id));
+      if (remaining.length === 0) asked.length = 0;
+      const pool = list.filter(c => !asked.includes(c.id));
+      const item = pool[Math.floor(Math.random() * pool.length)];
+      asked.push(item.id);
+      return item;
+    }
+
+    function clearMap() {
+      const enabledIds = new Set(currentCountries().map(c => c.id));
+      countryEls.forEach(el => {
+        el.classList.remove('target', 'correct', 'wrong', 'dim');
+        if (level === 'easy' && !enabledIds.has(el.id)) el.classList.add('dim');
+      });
+    }
+
+    function updateScore() {
+      scoreEl.textContent = score;
+      totalEl.textContent = total;
+      const starCount = Math.min(5, Math.floor(score / 2));
+      starsEl.textContent = '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+      const maxCount = currentCountries().length || 1;
+      const progress = Math.min(100, Math.round((asked.length / maxCount) * 100));
+      progressFillEl.style.width = `${progress}%`;
+      progressTextEl.textContent = `${progress}% completado`;
+    }
+
+    function setMode(newMode) {
+      mode = newMode;
+      modeFindBtn.classList.toggle('active', mode === 'find');
+      modeNameBtn.classList.toggle('active', mode === 'name');
+      nextChallenge();
+    }
+
+    function setLevel(newLevel) {
+      level = newLevel;
+      levelEasyBtn.classList.toggle('active', level === 'easy');
+      levelFullBtn.classList.toggle('active', level === 'full');
+      asked.length = 0;
+      nextChallenge();
+      updateScore();
+    }
+
+    function resetGame() {
+      score = 0;
+      total = 0;
+      asked.length = 0;
+      feedbackEl.textContent = 'Nuevo comienzo. ¡Vamos, Gloria!';
+      updateScore();
+      nextChallenge();
+    }
+
+    function stopTimer() {
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+    }
+
+    function startTimer() {
+      stopTimer();
+      timerValue = 20;
+      timerEl.textContent = timerValue;
+      timerId = setInterval(() => {
+        timerValue -= 1;
+        timerEl.textContent = timerValue;
+        if (timerValue <= 0) {
+          stopTimer();
+          total += 1;
+          const correctEl = document.getElementById(current.id);
+          correctEl.classList.add('correct');
+          feedbackEl.innerHTML = `⏰ Tiempo terminado. La respuesta correcta era <strong>${current.es}</strong>.`;
+          playTone('wrong');
+          updateScore();
+        }
+      }, 1000);
+    }
+
+    function nextChallenge() {
+      clearMap();
+      current = shufflePick();
+      if (mode === 'find') {
+        taskEl.textContent = `Haz clic en: ${current.es}`;
+        hintEl.textContent = current.hint;
+      } else {
+        const target = document.getElementById(current.id);
+        target.classList.add('target');
+        taskEl.textContent = '¿Cómo se llama este país?';
+        hintEl.textContent = 'Mira el país amarillo y di su nombre. Luego haz clic en él.';
+      }
+      feedbackEl.textContent = 'Pulsa el país correcto.';
+      updateScore();
+      startTimer();
+    }
+
+    function celebrateMessage() {
+      const messages = [
+        '¡Muy bien, Gloria! 🌟',
+        '¡Genial! Lo has hecho superbién 💛',
+        '¡Correcto! Sigue así 🚀',
+        '¡Bravo! Tu mapa está mejorando 🗺️'
+      ];
+      return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function handleCountryClick(e) {
+      const clickedId = e.currentTarget.id;
+      const enabledIds = new Set(currentCountries().map(c => c.id));
+      if (!enabledIds.has(clickedId)) return;
+      if (!current) return;
+      stopTimer();
+      total += 1;
+
+      if (clickedId === current.id) {
+        score += 1;
+        e.currentTarget.classList.remove('target');
+        e.currentTarget.classList.add('correct');
+        feedbackEl.innerHTML = `<span class="celebrate">${celebrateMessage()}</span><br>${current.es} está en esa zona del mapa.`;
+        playTone('correct');
+        burstStars();
+      } else {
+        e.currentTarget.classList.add('wrong');
+        const correctEl = document.getElementById(current.id);
+        correctEl.classList.add('correct');
+        if (mode === 'find') {
+          feedbackEl.innerHTML = `Casi. Ese país es <strong>${translateId(clickedId)}</strong>.<br>La respuesta correcta es <strong>${current.es}</strong>.`;
+        } else {
+          feedbackEl.innerHTML = `Buen intento. El país amarillo se llama <strong>${current.es}</strong>.`;
+        }
+        playTone('wrong');
+      }
+      updateScore();
+    }
+
+    function translateId(id) {
+      const found = allCountries.find(c => c.id === id);
+      return found ? found.es : id;
+    }
+
+    countryEls.forEach(el => el.addEventListener('click', handleCountryClick));
+    modeFindBtn.addEventListener('click', () => setMode('find'));
+    modeNameBtn.addEventListener('click', () => setMode('name'));
+    levelEasyBtn.addEventListener('click', () => setLevel('easy'));
+    levelFullBtn.addEventListener('click', () => setLevel('full'));
+    nextBtn.addEventListener('click', nextChallenge);
+    resetBtn.addEventListener('click', resetGame);
+
+    updateScore();
+    nextChallenge();
+  </script>
+</body>
+</html>

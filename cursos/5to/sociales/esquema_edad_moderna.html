@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Edad Moderna ULTRA Pilar | Academia de Gloria</title>
+  <meta name="description" content="Esquema visual SUPER PRO de la Edad Moderna basado en el material de Pilar: vídeo, música, mapa, línea del tiempo, flashcards, juego y esquema imprimible." />
+
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left,rgba(245,158,11,.22),transparent 24%),
+        radial-gradient(circle at top right,rgba(59,130,246,.16),transparent 26%),
+        radial-gradient(circle at bottom right,rgba(168,85,247,.17),transparent 28%),
+        linear-gradient(180deg,#fff8eb 0%,#f8fbff 45%,#fff7ed 100%);
+      color:#1e293b;
+      overflow-x:hidden;
+    }
+    .medieval-font{font-family:'Cinzel',serif}
+    .glass-card{
+      background:rgba(255,255,255,.93);
+      backdrop-filter:blur(14px);
+      border:2px solid rgba(253,186,116,.88);
+      box-shadow:0 20px 45px rgba(180,83,9,.10);
+    }
+    .gradient-title{
+      background:linear-gradient(90deg,#b45309,#ea580c,#2563eb,#7c3aed,#16a34a);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      border-radius:999px;
+      padding:.48rem .95rem;
+      font-size:.88rem;
+      font-weight:900;
+      background:#fff;
+      border:2px solid #fed7aa;
+    }
+    .tab-btn{transition:all .22s ease}
+    .tab-btn.active{
+      background:linear-gradient(135deg,#f59e0b,#ea580c,#7c3aed);
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 16px 30px rgba(234,88,12,.22);
+      transform:translateY(-1px);
+    }
+    .tab-panel{display:none}
+    .tab-panel.active{display:block;animation:fadeIn .28s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .soft-float{animation:softFloat 3s ease-in-out infinite}
+    @keyframes softFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .pulse-glow{animation:pulseGlow 2.8s ease-in-out infinite}
+    @keyframes pulseGlow{
+      0%,100%{box-shadow:0 18px 40px rgba(234,88,12,.12)}
+      50%{box-shadow:0 24px 55px rgba(234,88,12,.28)}
+    }
+    .card-hover,.option-btn,.flash-card,.timeline-card,.beat-card,.super-card{
+      transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+    }
+    .card-hover:hover,.timeline-card:hover,.beat-card:hover,.super-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 18px 38px rgba(124,58,237,.13);
+    }
+    .option-btn{
+      border:2px solid #fed7aa;
+      background:white;
+    }
+    .option-btn:hover{border-color:#f97316;transform:translateY(-2px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}
+    .incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#f59e0b,#ea580c,#7c3aed,#22c55e);transition:width .25s ease}
+    .star-pop{
+      position:fixed;pointer-events:none;font-size:24px;z-index:70;
+      animation:floatUp 1.4s ease forwards;opacity:0;
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(20px) scale(.7);opacity:0}
+      18%{opacity:1}
+      100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}
+    }
+    .timeline-line{
+      position:absolute;left:50%;top:0;bottom:0;width:8px;border-radius:999px;
+      transform:translateX(-50%);
+      background:linear-gradient(180deg,#f59e0b,#2563eb,#16a34a,#7c3aed,#ef4444);
+      opacity:.35;
+    }
+    .flash-card{perspective:1000px;min-height:220px;cursor:pointer}
+    .flash-inner{position:relative;width:100%;min-height:220px;transition:transform .6s;transform-style:preserve-3d}
+    .flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{
+      position:absolute;inset:0;backface-visibility:hidden;border-radius:1.5rem;padding:1.2rem;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      border:2px solid #fed7aa;background:#fff;
+    }
+    .flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#fff7ed,#eff6ff)}
+    .song-line{transition:all .2s ease;border:2px solid transparent}
+    .song-line.active{
+      background:#fef3c7;border-color:#f59e0b;transform:scale(1.02);
+      box-shadow:0 16px 30px rgba(245,158,11,.18);
+    }
+    .print-sheet{background:white;border:3px solid #fdba74;box-shadow:0 18px 40px rgba(15,23,42,.10)}
+    .micro-title{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.18em}
+    @media print{
+      body{background:white}
+      header,#contenido,.no-print,footer{display:none!important}
+      .tab-panel{display:block!important}
+      main{max-width:100%;padding:0}
+      #entregar{display:block!important}
+      #entregar>*:not(.print-sheet){display:none!important}
+      .print-sheet{box-shadow:none;border:2px solid #000;border-radius:0!important;page-break-inside:avoid}
+    }
+  </style>
+</head>
+
+<body>
+<div id="stars-layer"></div>
+
+<main class="max-w-7xl mx-auto p-4 md:p-8">
+
+  <header class="glass-card rounded-[2.8rem] px-6 py-8 md:px-10 md:py-10 mb-8 pulse-glow">
+    <a href="./edad_moderna.html"
+       class="inline-flex items-center gap-3 bg-white border-2 border-orange-100 hover:border-orange-300 px-5 py-3 rounded-2xl text-orange-700 font-black shadow-sm hover:shadow-md transition-all mb-6">
+      <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      Volver a Edad Moderna
+    </a>
+
+    <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
+      <div>
+        <div class="flex flex-wrap gap-3 mb-5">
+          <span class="pill text-orange-700"><i data-lucide="scroll" class="w-4 h-4"></i> Esquema Pilar</span>
+          <span class="pill text-blue-700"><i data-lucide="calendar-clock" class="w-4 h-4"></i> 1492 → 1789</span>
+          <span class="pill text-violet-700"><i data-lucide="music-2" class="w-4 h-4"></i> Música</span>
+          <span class="pill text-emerald-700"><i data-lucide="sparkles" class="w-4 h-4"></i> TEL Friendly</span>
+        </div>
+
+        <h1 class="medieval-font text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+          <span class="gradient-title">Misión Edad Moderna</span> 🏰
+        </h1>
+
+        <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+          Versión SUPER PRO basada en el material de Pilar: vídeo, música, mapa visual, línea del tiempo, cultura, tarjetas, juego y esquema para entregar.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mt-7 no-print">
+          <a href="#contenido" class="inline-flex items-center gap-2 bg-orange-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-orange-700 transition-all shadow-lg">
+            <i data-lucide="play-circle" class="w-5 h-5"></i> Empezar misión
+          </a>
+          <button onclick="imprimirEsquema()" class="inline-flex items-center gap-2 bg-white text-violet-700 px-6 py-4 rounded-2xl font-bold border-2 border-violet-100 hover:border-violet-300 transition-all">
+            <i data-lucide="printer" class="w-5 h-5"></i> Imprimir esquema
+          </button>
+        </div>
+      </div>
+
+      <div class="relative glass-card rounded-[2.2rem] p-6 md:p-7 overflow-hidden">
+        <div class="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-orange-200 blur-3xl opacity-60"></div>
+        <div class="relative grid grid-cols-3 gap-3 text-center">
+          <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-4 soft-float"><div class="text-4xl">🚢</div><p class="font-black text-blue-700 text-sm mt-2">1492</p></div>
+          <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-4 soft-float" style="animation-delay:.2s"><div class="text-4xl">👑</div><p class="font-black text-amber-700 text-sm mt-2">Reyes</p></div>
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 soft-float" style="animation-delay:.4s"><div class="text-4xl">🎨</div><p class="font-black text-emerald-700 text-sm mt-2">Arte</p></div>
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4 soft-float" style="animation-delay:.6s"><div class="text-4xl">🧭</div><p class="font-black text-sky-700 text-sm mt-2">Rutas</p></div>
+          <div class="rounded-2xl bg-red-50 border-2 border-red-100 p-4 soft-float" style="animation-delay:.8s"><div class="text-4xl">⚔️</div><p class="font-black text-red-700 text-sm mt-2">Crisis</p></div>
+          <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4 soft-float" style="animation-delay:1s"><div class="text-4xl">🏛️</div><p class="font-black text-violet-700 text-sm mt-2">Cultura</p></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="contenido" class="mb-8 no-print">
+    <div class="grid grid-cols-2 md:grid-cols-8 gap-4">
+      <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="mapa">🗺️ Mapa</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="video">🎥 Vídeo</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="pilar">📌 Pilar</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="linea">🕰️ Línea</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="crisis">⚔️ Crisis</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="cultura">🎨 Cultura</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="cancion">🎵 Música</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="entregar">📄 Entregar</button>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section id="mapa" class="tab-panel active">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">🏰</div>
+        <h2 class="medieval-font text-4xl md:text-5xl font-black text-slate-800 mb-3">La Edad Moderna</h2>
+        <p class="text-2xl font-black text-orange-700">Descubrimiento de América → Revolución Francesa</p>
+        <p class="text-slate-600 font-medium text-lg mt-3">1492 → 1789</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div class="super-card rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-6">
+          <div class="text-6xl mb-3">👑</div>
+          <h3 class="text-2xl font-black text-amber-700 mb-2">1. Reyes Católicos</h3>
+          <p class="text-slate-600 font-bold">Isabel + Fernando. Castilla y Aragón unidos. Granada, Canarias, Navarra, norte de África y Nápoles.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-6">
+          <div class="text-6xl mb-3">🚢</div>
+          <h3 class="text-2xl font-black text-blue-700 mb-2">2. América</h3>
+          <p class="text-slate-600 font-bold">Colón sale de Palos y llega el 12 de octubre de 1492. Cortés conquista México y Pizarro Perú.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6">
+          <div class="text-6xl mb-3">🌍</div>
+          <h3 class="text-2xl font-black text-violet-700 mb-2">3. Imperio Hispánico</h3>
+          <p class="text-slate-600 font-bold">España, Países Bajos, Italia, Europa central, América, África, Asia y Portugal.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-rose-50 border-2 border-rose-100 p-6">
+          <div class="text-6xl mb-3">⚔️</div>
+          <h3 class="text-2xl font-black text-rose-700 mb-2">4. Crisis</h3>
+          <p class="text-slate-600 font-bold">Pérdida de territorios, pobreza, validos, guerras y Guerra de Sucesión.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-6">
+          <div class="text-6xl mb-3">🏛️</div>
+          <h3 class="text-2xl font-black text-pink-700 mb-2">5. Sociedad</h3>
+          <p class="text-slate-600 font-bold">Privilegiados: nobleza y clero. No privilegiados: burgueses y campesinos.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6">
+          <div class="text-6xl mb-3">📚</div>
+          <h3 class="text-2xl font-black text-emerald-700 mb-2">6. Literatura</h3>
+          <p class="text-slate-600 font-bold">Imprenta, Cervantes, Quevedo, Góngora, Lope, Calderón y Jovellanos.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-6">
+          <div class="text-6xl mb-3">🏗️</div>
+          <h3 class="text-2xl font-black text-sky-700 mb-2">7. Arte</h3>
+          <p class="text-slate-600 font-bold">Herreriano, barroco, neoclásico. Greco, Velázquez, Murillo, Goya.</p>
+        </div>
+
+        <div class="super-card rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-6">
+          <div class="text-6xl mb-3">🇫🇷</div>
+          <h3 class="text-2xl font-black text-orange-700 mb-2">8. Final</h3>
+          <p class="text-slate-600 font-bold">La Edad Moderna acaba con la Revolución Francesa en 1789.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8">
+      <h2 class="text-3xl font-black text-slate-800 mb-5">🧠 Frase mágica para recordar</h2>
+      <div class="rounded-[2rem] bg-gradient-to-r from-orange-100 via-yellow-100 to-emerald-100 border-2 border-orange-200 p-6 text-center">
+        <p class="text-2xl md:text-3xl font-black text-slate-800 leading-relaxed">
+          👑 Reyes unen, 🚢 Colón descubre, 🌍 España crece, ⚔️ el imperio sufre, 🏛️ la sociedad se divide y 🎨 la cultura brilla.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">🎥</div>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-3">Vídeo de repaso</h2>
+        <p class="text-slate-600 font-medium text-lg">Mira primero el vídeo. Después canta y juega.</p>
+      </div>
+
+      <div class="max-w-5xl mx-auto">
+        <div class="aspect-video rounded-[2rem] overflow-hidden shadow-xl bg-black border-4 border-orange-200">
+          <iframe class="w-full h-full"
+                  src="https://www.youtube.com/embed/68ZtFPWCBcc"
+                  title="Vídeo Edad Moderna"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4 mt-6">
+          <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-5 font-bold text-center">👀 Mira los dibujos</div>
+          <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-5 font-bold text-center">🧠 Repite las fechas</div>
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-5 font-bold text-center">🎮 Luego haz el juego</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PILAR MASTER -->
+  <section id="pilar" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">📌</div>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-3">Ruta Pilar: de principio a fin</h2>
+        <p class="text-slate-600 font-medium text-lg">Todo el documento ordenado en bloques pequeños para Gloria.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
+        <div class="rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-6">
+          <h3 class="text-3xl font-black text-amber-700 mb-4">👑 1. Cinco reinos</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="rounded-2xl bg-white p-4 font-black">1️⃣ Castilla</div>
+            <div class="rounded-2xl bg-white p-4 font-black">2️⃣ Aragón</div>
+            <div class="rounded-2xl bg-white p-4 font-black">3️⃣ Navarra</div>
+            <div class="rounded-2xl bg-white p-4 font-black">4️⃣ Portugal</div>
+            <div class="rounded-2xl bg-white p-4 font-black sm:col-span-2">5️⃣ Granada · reino musulmán</div>
+          </div>
+        </div>
+        <div class="rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-6">
+          <h3 class="text-3xl font-black text-pink-700 mb-4">💍 2. Isabel + Fernando</h3>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">👸 Isabel: reina de Castilla.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">🤴 Fernando: rey de Aragón.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">⚖️ Unieron reinos, pero cada reino mantuvo sus leyes.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">🏰 Granada, Canarias, Navarra, norte de África y Nápoles.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
+        <div class="rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-6">
+          <h3 class="text-3xl font-black text-blue-700 mb-4">🚢 3. Conquista de América</h3>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">💰 Buscaban oro para fabricar monedas.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">🧭 Nuevas rutas a las Islas de las Especias.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">⛵ Carabela · astrolabio · brújula.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">📅 12 de octubre de 1492: llegada a América.</div>
+          </div>
+        </div>
+        <div class="rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-6">
+          <h3 class="text-3xl font-black text-sky-700 mb-4">🌎 4. Exploradores</h3>
+          <div class="grid gap-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">🚢 Cristóbal Colón: llegó a América pensando que era Asia.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">🇲🇽 Hernán Cortés: conquistó México.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">🇵🇪 Francisco de Pizarro: conquistó Perú.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6">
+          <h3 class="text-3xl font-black text-violet-700 mb-4">🌍 5. Imperio Hispánico</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">España</div><div class="rounded-2xl bg-white p-4 font-bold">Países Bajos</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Italia</div><div class="rounded-2xl bg-white p-4 font-bold">Europa central</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">América</div><div class="rounded-2xl bg-white p-4 font-bold">África y Asia</div>
+            <div class="rounded-2xl bg-white p-4 font-bold sm:col-span-2">Portugal desde 1580</div>
+          </div>
+        </div>
+        <div class="rounded-[2rem] bg-indigo-50 border-2 border-indigo-100 p-6">
+          <h3 class="text-3xl font-black text-indigo-700 mb-4">👑 6. Carlos I y Felipe II</h3>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">Carlos I de España = Carlos V de Alemania.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Carlos tuvo revueltas en Castilla, Valencia y Baleares.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Felipe II derrotó a Turquía en Lepanto.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Guerras caras → impuestos → pobreza.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINEA -->
+  <section id="linea" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <h2 class="text-4xl font-black text-slate-800 mb-3 text-center">🕰️ Línea del tiempo visual</h2>
+      <p class="text-center text-slate-600 font-medium text-lg mb-8">Sigue la ruta de arriba hacia abajo.</p>
+
+      <div class="relative max-w-5xl mx-auto py-4">
+        <div class="timeline-line hidden md:block"></div>
+
+        <div class="space-y-6">
+          <div class="timeline-card md:w-[48%] rounded-[2rem] bg-blue-50 border-2 border-blue-100 p-6">
+            <div class="text-5xl mb-2">🚢</div><h3 class="text-2xl font-black text-blue-700">1492</h3>
+            <p class="font-bold text-slate-700">Reyes Católicos financian a Colón. Llega a América el 12 de octubre.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] md:ml-auto rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6">
+            <div class="text-5xl mb-2">🌍</div><h3 class="text-2xl font-black text-violet-700">Siglo XVI</h3>
+            <p class="font-bold text-slate-700">Imperio Hispánico. Carlos I / Carlos V. Felipe II y Lepanto.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] rounded-[2rem] bg-red-50 border-2 border-red-100 p-6">
+            <div class="text-5xl mb-2">⚔️</div><h3 class="text-2xl font-black text-red-700">Siglo XVII</h3>
+            <p class="font-bold text-slate-700">Crisis del imperio. Validó, revueltas, pobreza y pérdida de territorios.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] md:ml-auto rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-6">
+            <div class="text-5xl mb-2">👑</div><h3 class="text-2xl font-black text-orange-700">1700 - 1713</h3>
+            <p class="font-bold text-slate-700">Carlos II muere sin hijos. Guerra de Sucesión. Tratado de Utrecht. Felipe V.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6">
+            <div class="text-5xl mb-2">🔧</div><h3 class="text-2xl font-black text-emerald-700">Siglo XVIII</h3>
+            <p class="font-bold text-slate-700">Reformas administrativas, obras públicas y reformas económicas.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] md:ml-auto rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-6">
+            <div class="text-5xl mb-2">🏛️</div><h3 class="text-2xl font-black text-pink-700">Sociedad y cultura</h3>
+            <p class="font-bold text-slate-700">Pirámide social, literatura, arquitectura, escultura y pintura.</p>
+          </div>
+
+          <div class="timeline-card md:w-[48%] rounded-[2rem] bg-indigo-50 border-2 border-indigo-100 p-6">
+            <div class="text-5xl mb-2">🇫🇷</div><h3 class="text-2xl font-black text-indigo-700">1789</h3>
+            <p class="font-bold text-slate-700">Revolución Francesa: final de la Edad Moderna.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CRISIS MASTER -->
+  <section id="crisis" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">⚔️</div>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-3">Crisis, validos y sucesión</h2>
+        <p class="text-slate-600 font-medium text-lg">El imperio empezó a debilitarse.</p>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-6 mb-6">
+        <div class="rounded-[2rem] bg-red-50 border-2 border-red-100 p-6"><h3 class="text-2xl font-black text-red-700 mb-4">📉 Crisis</h3><div class="space-y-3"><div class="rounded-2xl bg-white p-4 font-bold">🗺️ Perdieron territorios.</div><div class="rounded-2xl bg-white p-4 font-bold">😟 Población pobre.</div><div class="rounded-2xl bg-white p-4 font-bold">👑 Problemas de sucesión.</div></div></div>
+        <div class="rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-6"><h3 class="text-2xl font-black text-orange-700 mb-4">🤝 Validos</h3><div class="space-y-3"><div class="rounded-2xl bg-white p-4 font-bold">Ayudantes de confianza del rey.</div><div class="rounded-2xl bg-white p-4 font-bold">Duque de Lerma.</div><div class="rounded-2xl bg-white p-4 font-bold">Conde-duque de Olivares.</div></div></div>
+        <div class="rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-6"><h3 class="text-2xl font-black text-pink-700 mb-4">🔥 Revueltas</h3><div class="space-y-3"><div class="rounded-2xl bg-white p-4 font-bold">Portugal se independiza.</div><div class="rounded-2xl bg-white p-4 font-bold">Países Bajos se independiza.</div><div class="rounded-2xl bg-white p-4 font-bold">Revueltas en Italia y Cataluña.</div></div></div>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6"><h3 class="text-3xl font-black text-violet-700 mb-4">👑 Guerra de Sucesión</h3><div class="space-y-3"><div class="rounded-2xl bg-white p-4 font-bold">1700: Carlos II murió sin hijos.</div><div class="rounded-2xl bg-white p-4 font-bold">Archiduque Carlos vs Felipe de Anjou.</div><div class="rounded-2xl bg-white p-4 font-bold">Europa y España se dividen.</div><div class="rounded-2xl bg-white p-4 font-bold">Guerra internacional y guerra civil.</div></div></div>
+        <div class="rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6"><h3 class="text-3xl font-black text-emerald-700 mb-4">📜 Utrecht y reformas</h3><div class="space-y-3"><div class="rounded-2xl bg-white p-4 font-bold">1713: Tratado de Utrecht.</div><div class="rounded-2xl bg-white p-4 font-bold">Felipe de Anjou → Felipe V.</div><div class="rounded-2xl bg-white p-4 font-bold">Monarquía absoluta.</div><div class="rounded-2xl bg-white p-4 font-bold">Siglo XVIII: ministros, carreteras, canales, fábricas y comercio.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CULTURA -->
+  <section id="cultura" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">🎨</div>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-3">Sociedad y Cultura</h2>
+        <p class="text-slate-600 font-medium text-lg">La parte final del esquema de Pilar, con muy poco texto.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
+        <div class="rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-6">
+          <h3 class="text-3xl font-black text-pink-700 mb-4">🏛️ Pirámide social</h3>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-violet-100 border-2 border-violet-200 p-4 font-black text-center">👑 Rey absolutista</div>
+            <div class="rounded-2xl bg-amber-100 border-2 border-amber-200 p-4 font-black text-center">⛪ Nobles y clero · Privilegiados</div>
+            <div class="rounded-2xl bg-sky-100 border-2 border-sky-200 p-4 font-black text-center">💰 Burgueses</div>
+            <div class="rounded-2xl bg-emerald-100 border-2 border-emerald-200 p-4 font-black text-center">🌾 Campesinos · Pagan impuestos</div>
+            <div class="rounded-2xl bg-rose-100 border-2 border-rose-200 p-4 font-black text-center">🧍 Marginados</div>
+          </div>
+        </div>
+
+        <div class="rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-6">
+          <h3 class="text-3xl font-black text-emerald-700 mb-4">📚 Literatura</h3>
+          <div class="grid gap-3">
+            <div class="rounded-2xl bg-white p-4 font-bold">🖨️ Imprenta → difunde obras.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Siglo XVI: Santa Teresa, San Juan, Garcilaso.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Siglo XVII: Cervantes, Quevedo, Góngora, Lope y Calderón.</div>
+            <div class="rounded-2xl bg-white p-4 font-bold">Siglo XVIII: Jovellanos e ilustrados.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-6">
+          <h3 class="text-2xl font-black text-sky-700 mb-4">🏗️ Arquitectura</h3>
+          <p class="font-bold text-slate-700 mb-3">Siglo XVI: herreriano → sencillo.</p>
+          <p class="font-bold text-slate-700 mb-3">Siglo XVII: barroco → mucha decoración.</p>
+          <p class="font-bold text-slate-700">Siglo XVIII: neoclásico → imita Grecia y Roma.</p>
+        </div>
+
+        <div class="rounded-[2rem] bg-orange-50 border-2 border-orange-100 p-6">
+          <h3 class="text-2xl font-black text-orange-700 mb-4">🗿 Escultura</h3>
+          <p class="font-bold text-slate-700 mb-3">Retablos de iglesias.</p>
+          <p class="font-bold text-slate-700 mb-3">Figuras religiosas.</p>
+          <p class="font-bold text-slate-700">Gregorio Fernández, Martínez Montañés, Alonso Cano y Salzillo.</p>
+        </div>
+
+        <div class="rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-6">
+          <h3 class="text-2xl font-black text-violet-700 mb-4">🖼️ Pintura</h3>
+          <p class="font-bold text-slate-700 mb-3">Siglo XVI: El Greco.</p>
+          <p class="font-bold text-slate-700 mb-3">Siglo XVII: Velázquez, Zurbarán, Ribera, Murillo.</p>
+          <p class="font-bold text-slate-700">Siglo XVIII: Goya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANCION -->
+  <section id="cancion" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-8">
+      <div class="text-center mb-8">
+        <div class="text-7xl mb-4 soft-float">🎵</div>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-800 mb-3">Canción MATADORA</h2>
+        <p class="text-slate-600 font-medium text-lg">Escucha, canta y memoriza.</p>
+
+        <div class="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-yellow-100 text-yellow-700 font-black">
+          ⭐ Escucha la canción 3 veces antes del examen ⭐
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 mb-8 border-2 border-violet-200 bg-gradient-to-r from-violet-50 via-pink-50 to-sky-50">
+        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+          <div class="text-6xl soft-float">🎵</div>
+          <div class="flex-1">
+            <h3 class="text-2xl md:text-3xl font-black text-violet-700">Cañones y Brújulas</h3>
+            <p class="text-slate-600 font-medium">La canción oficial de la Edad Moderna de Gloria.</p>
+          </div>
+        </div>
+
+        <video controls class="w-full rounded-2xl shadow-lg bg-black" preload="metadata">
+          <source src="Cañones_y_Brújulas.mp4" type="video/mp4">
+          Tu navegador no soporta vídeo.
+        </video>
+      </div>
+
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-start">
+        <div class="glass-card rounded-[2rem] p-6">
+          <h3 class="text-2xl font-black text-orange-700 mb-4">🥁 Botones de apoyo</h3>
+          <p class="text-slate-600 font-medium mb-5">Usa el ritmo si quieres practicar sin el vídeo.</p>
+
+          <button id="beatBtn" onclick="toggleBeat()" class="w-full bg-orange-600 text-white rounded-2xl py-5 font-black text-xl hover:bg-orange-700 transition-all">▶ Activar ritmo</button>
+          <button id="singBtn" onclick="cantarCancion()" class="w-full mt-4 bg-violet-600 text-white rounded-2xl py-5 font-black text-xl hover:bg-violet-700 transition-all">🎤 Cantar con voz del navegador</button>
+          <button onclick="pararCancion()" class="w-full mt-3 bg-white text-violet-700 border-2 border-violet-100 rounded-2xl py-4 font-black hover:border-violet-300 transition-all">⏹ Parar voz</button>
+
+          <div class="grid grid-cols-4 gap-3 mt-5">
+            <div class="beat-card rounded-2xl bg-orange-50 border-2 border-orange-100 p-4 text-center font-black">👏</div>
+            <div class="beat-card rounded-2xl bg-yellow-50 border-2 border-yellow-100 p-4 text-center font-black">👏</div>
+            <div class="beat-card rounded-2xl bg-pink-50 border-2 border-pink-100 p-4 text-center font-black">🦶</div>
+            <div class="beat-card rounded-2xl bg-violet-50 border-2 border-violet-100 p-4 text-center font-black">👏</div>
+          </div>
+        </div>
+
+        <div class="space-y-4" id="songLines">
+          <div class="song-line rounded-2xl bg-blue-50 p-5 font-black text-xl">🚢 En mil cuatro nueve dos, Colón navegó,</div>
+          <div class="song-line rounded-2xl bg-amber-50 p-5 font-black text-xl">👑 la Edad Moderna empezó y el rey mandó.</div>
+          <div class="song-line rounded-2xl bg-emerald-50 p-5 font-black text-xl">🎨 Con arte y ciencia el mundo brilló,</div>
+          <div class="song-line rounded-2xl bg-sky-50 p-5 font-black text-xl">🧭 por rutas nuevas el comercio creció.</div>
+          <div class="song-line rounded-2xl bg-red-50 p-5 font-black text-xl">⚔️ Cañones, brújula, imprenta y poder,</div>
+          <div class="song-line rounded-2xl bg-violet-50 p-5 font-black text-xl">🇫🇷 y en mil siete ocho nueve Francia hizo caer.</div>
+          <div class="song-line rounded-2xl bg-orange-100 p-5 font-black text-2xl text-center">🏰 Edad Moderna, no se me va: ¡1492 a 1789!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card rounded-[2rem] p-6 md:p-8 mb-8">
+      <h3 class="text-3xl font-black text-slate-800 mb-5">🎯 Misión Express: 5 minutos</h3>
+      <p class="text-slate-600 font-medium text-lg mb-6">Una rutina corta para repetir antes del examen.</p>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-5 text-center"><div class="text-4xl mb-2">1️⃣</div><p class="font-black text-violet-700">Escucha la canción</p></div>
+        <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-5 text-center"><div class="text-4xl mb-2">2️⃣</div><p class="font-black text-blue-700">Mira la línea</p></div>
+        <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-5 text-center"><div class="text-4xl mb-2">3️⃣</div><p class="font-black text-emerald-700">Haz tarjetas</p></div>
+        <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-5 text-center"><div class="text-4xl mb-2">4️⃣</div><p class="font-black text-orange-700">Consigue 18/24</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARJETAS -->
+  <section id="tarjetas" class="tab-panel">
+    <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6">
+      <div class="glass-card rounded-[2rem] p-6 md:p-7">
+        <h2 class="text-2xl md:text-3xl font-extrabold mb-4">🧠 Flashcards clave</h2>
+        <p class="text-slate-600 font-medium mb-5">Pulsa cada tarjeta para ver la respuesta.</p>
+
+        <div class="grid gap-5">
+          <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-6xl mb-3">👑</div><h3 class="text-2xl font-black">¿Quiénes fueron los Reyes Católicos?</h3></div><div class="flash-face flash-back"><h3 class="text-2xl font-black text-amber-700">Isabel de Castilla y Fernando de Aragón.</h3></div></div></div>
+          <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-6xl mb-3">🚢</div><h3 class="text-2xl font-black">¿Qué pasó en 1492?</h3></div><div class="flash-face flash-back"><h3 class="text-2xl font-black text-blue-700">Colón llegó a América.</h3></div></div></div>
+          <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-6xl mb-3">🌍</div><h3 class="text-2xl font-black">¿Qué fue el Imperio Hispánico?</h3></div><div class="flash-face flash-back"><h3 class="text-2xl font-black text-violet-700">Un gran imperio con territorios en varios continentes.</h3></div></div></div>
+          <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><div class="text-6xl mb-3">🏛️</div><h3 class="text-2xl font-black">¿Quién pagaba impuestos?</h3></div><div class="flash-face flash-back"><h3 class="text-2xl font-black text-pink-700">Los no privilegiados: burgueses y campesinos.</h3></div></div></div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-6 md:p-8">
+        <div id="quiz-container">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🎮 Mini juego SUPER</h2><p class="text-slate-600 font-medium">Respuestas aleatorias cada vez.</p></div>
+            <span id="q-counter" class="text-orange-700 font-bold">Pregunta 1 de 24</span>
+          </div>
+
+          <div class="flex gap-3 flex-wrap mb-5">
+            <span id="score-live" class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span>
+            <span id="streak-box" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span>
+          </div>
+
+          <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+          <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+          <div id="options-grid" class="grid gap-4"></div>
+        </div>
+
+        <div id="score-container" class="hidden text-center">
+          <div id="medal" class="text-6xl mb-4">🏆</div>
+          <h2 class="text-3xl font-black mb-4 text-slate-800">¡Misión completada!</h2>
+          <p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p>
+          <button onclick="resetQuiz()" class="bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-700 transition-all">🔁 Repetir juego</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTREGAR -->
+  <section id="entregar" class="tab-panel">
+    <div class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-6 no-print">
+      <div class="flex flex-col md:flex-row md:items-center gap-5 justify-between">
+        <div>
+          <h2 class="text-3xl font-black text-slate-800 mb-2">📄 Esquema para entregar</h2>
+          <p class="text-slate-600 font-medium text-lg">Una hoja visual, clara y fiel al material de Pilar.</p>
+        </div>
+        <button onclick="imprimirEsquema()" class="bg-orange-600 text-white px-7 py-4 rounded-2xl font-black hover:bg-orange-700 transition-all">🖨️ Imprimir</button>
+      </div>
+    </div>
+
+    <div class="print-sheet rounded-[2rem] p-5 md:p-7 max-w-5xl mx-auto">
+      <div class="text-center border-b-4 border-orange-200 pb-4 mb-4">
+        <h1 class="medieval-font text-3xl md:text-4xl font-black text-slate-800">🏰 LA EDAD MODERNA</h1>
+        <p class="text-xl md:text-2xl font-black text-orange-700 mt-1">1492 → 1789</p>
+        <p class="font-bold text-slate-500 mt-1">Descubrimiento de América → Revolución Francesa</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="rounded-2xl bg-amber-50 border-2 border-amber-100 p-3"><h3 class="text-lg font-black text-amber-700">👑 Reyes Católicos</h3><p class="font-bold text-slate-700 text-sm">Isabel y Fernando. Unieron Castilla y Aragón. Granada en 1492.</p></div>
+        <div class="rounded-2xl bg-blue-50 border-2 border-blue-100 p-3"><h3 class="text-lg font-black text-blue-700">🚢 América</h3><p class="font-bold text-slate-700 text-sm">Colón llegó el 12 de octubre de 1492. Cortés: México. Pizarro: Perú.</p></div>
+        <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-3"><h3 class="text-lg font-black text-violet-700">🌍 Imperio Hispánico</h3><p class="font-bold text-slate-700 text-sm">España tuvo territorios en Europa, América, África y Asia.</p></div>
+        <div class="rounded-2xl bg-red-50 border-2 border-red-100 p-3"><h3 class="text-lg font-black text-red-700">⚔️ Crisis</h3><p class="font-bold text-slate-700 text-sm">Guerras, pobreza, validos y pérdida de territorios.</p></div>
+        <div class="rounded-2xl bg-orange-50 border-2 border-orange-100 p-3"><h3 class="text-lg font-black text-orange-700">👑 Sucesión</h3><p class="font-bold text-slate-700 text-sm">Carlos II murió sin hijos. Tratado de Utrecht 1713. Felipe V.</p></div>
+        <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-3"><h3 class="text-lg font-black text-emerald-700">🔧 Siglo XVIII</h3><p class="font-bold text-slate-700 text-sm">Reformas administrativas, obras públicas y economía.</p></div>
+        <div class="rounded-2xl bg-pink-50 border-2 border-pink-100 p-3"><h3 class="text-lg font-black text-pink-700">🏛️ Sociedad</h3><p class="font-bold text-slate-700 text-sm">Privilegiados: nobleza y clero. No privilegiados: burgueses y campesinos.</p></div>
+        <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-3"><h3 class="text-lg font-black text-sky-700">🎨 Cultura</h3><p class="font-bold text-slate-700 text-sm">Literatura, arquitectura, escultura y pintura. Velázquez, Cervantes, Goya.</p></div>
+      </div>
+
+      <div class="mt-4 rounded-2xl bg-gradient-to-r from-orange-100 via-yellow-100 to-emerald-100 border-2 border-orange-200 p-4 text-center">
+        <h3 class="text-xl font-black text-slate-800 mb-1">🎵 Canción para recordar</h3>
+        <p class="text-base md:text-lg font-black text-slate-700">
+          🚢 Colón navegó, 👑 el rey gobernó, 🎨 el arte brilló, 🧭 el comercio creció, ⚔️ la guerra cambió y 🇫🇷 la revolución llegó.
+        </p>
+      </div>
+
+      <div class="mt-4 text-center">
+        <p class="font-black text-slate-700">Nombre: ____________________________  Fecha: ______________</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center py-10 no-print">
+    <p class="text-slate-500 font-medium">Academia de Gloria · Sociales · Edad Moderna ULTRA Pilar 🌟</p>
+  </footer>
+</main>
+
+<script>
+lucide.createIcons();
+
+const tabButtons=document.querySelectorAll('.tab-btn');
+const tabPanels=document.querySelectorAll('.tab-panel');
+
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    abrirTab(tab);
+  });
+});
+
+function abrirTab(tab){
+  tabButtons.forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  tabPanels.forEach(panel=>panel.classList.toggle('active', panel.id===tab));
+  window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});
+}
+
+function imprimirEsquema(){
+  tabPanels.forEach(panel=>panel.classList.remove('active'));
+  document.getElementById('entregar').classList.add('active');
+  setTimeout(()=>window.print(),300);
+}
+
+function makeStars(){
+  const layer=document.getElementById('stars-layer');
+  const icons=['⭐','✨','🌟','🏰'];
+  for(let i=0;i<8;i++){
+    const star=document.createElement('div');
+    star.className='star-pop';
+    star.textContent=icons[i%icons.length];
+    star.style.left=`${12+Math.random()*76}%`;
+    star.style.top=`${60+Math.random()*16}%`;
+    star.style.animationDelay=`${Math.random()*.12}s`;
+    layer.appendChild(star);
+    setTimeout(()=>star.remove(),1500);
+  }
+}
+
+let beatTimer=null;
+let beatIndex=0;
+
+function toggleBeat(){
+  const btn=document.getElementById('beatBtn');
+  const lines=[...document.querySelectorAll('.song-line')];
+
+  if(beatTimer){
+    clearInterval(beatTimer);
+    beatTimer=null;
+    btn.innerText='▶ Activar ritmo';
+    btn.classList.remove('bg-red-600');
+    btn.classList.add('bg-orange-600');
+    lines.forEach(l=>l.classList.remove('active'));
+    return;
+  }
+
+  btn.innerText='⏸ Parar ritmo';
+  btn.classList.remove('bg-orange-600');
+  btn.classList.add('bg-red-600');
+
+  beatTimer=setInterval(()=>{
+    lines.forEach(l=>l.classList.remove('active'));
+    lines[beatIndex % lines.length].classList.add('active');
+    beatIndex++;
+  },950);
+}
+
+function cantarCancion(){
+  if(!('speechSynthesis' in window)){
+    alert('Este navegador no permite voz automática.');
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const texto = `En mil cuatro nueve dos, Colón navegó.
+La Edad Moderna empezó y el rey mandó.
+Con arte y ciencia el mundo brilló.
+Por rutas nuevas el comercio creció.
+Cañones, brújula, imprenta y poder.
+Y en mil siete ocho nueve Francia hizo caer.
+Edad Moderna, no se me va.
+De mil cuatro nueve dos a mil siete ocho nueve.`;
+
+  const voz = new SpeechSynthesisUtterance(texto);
+  voz.lang = 'es-ES';
+  voz.rate = 0.88;
+  voz.pitch = 1.22;
+  voz.volume = 1;
+
+  const voces = speechSynthesis.getVoices();
+  const vozES = voces.find(v => v.lang && v.lang.toLowerCase().startsWith('es'));
+  if(vozES){ voz.voice = vozES; }
+
+  const lines=[...document.querySelectorAll('.song-line')];
+  lines.forEach(l=>l.classList.remove('active'));
+
+  let i=0;
+  const hi=setInterval(()=>{
+    lines.forEach(l=>l.classList.remove('active'));
+    if(i<lines.length){ lines[i].classList.add('active'); i++; }
+    else{ clearInterval(hi); }
+  },2200);
+
+  voz.onend = () => {
+    clearInterval(hi);
+    lines.forEach(l=>l.classList.remove('active'));
+  };
+
+  speechSynthesis.speak(voz);
+}
+
+function pararCancion(){
+  if('speechSynthesis' in window){ speechSynthesis.cancel(); }
+  document.querySelectorAll('.song-line').forEach(l=>l.classList.remove('active'));
+}
+
+const questions=[
+  {q:'¿Cuándo empieza la Edad Moderna?',a:['1492','1789','1713'],c:0},
+  {q:'¿Cuándo termina la Edad Moderna?',a:['1789','1492','1700'],c:0},
+  {q:'¿Qué hecho inicia la Edad Moderna?',a:['Descubrimiento de América','Guerra de Sucesión','Siglo de Oro'],c:0},
+  {q:'¿Cuáles eran reinos cristianos?',a:['Castilla, Aragón, Navarra y Portugal','Granada solamente','México y Perú'],c:0},
+  {q:'¿Cuál era el reino musulmán?',a:['Granada','Castilla','Portugal'],c:0},
+  {q:'¿Quiénes fueron los Reyes Católicos?',a:['Isabel y Fernando','Carlos y Felipe','Velázquez y Goya'],c:0},
+  {q:'¿Qué reino conquistaron en 1492?',a:['Granada','Francia','Portugal'],c:0},
+  {q:'¿Desde dónde salió Colón?',a:['Palos de la Frontera','Madrid','París'],c:0},
+  {q:'¿Qué día llegó Colón a América?',a:['12 de octubre','1 de enero','25 de diciembre'],c:0},
+  {q:'¿Qué pensaba Colón que había encontrado?',a:['Asia','La Luna','Australia'],c:0},
+  {q:'¿Quién conquistó México?',a:['Hernán Cortés','Francisco de Pizarro','Felipe V'],c:0},
+  {q:'¿Quién conquistó Perú?',a:['Francisco de Pizarro','Cristóbal Colón','Carlos II'],c:0},
+  {q:'Carlos I también fue...',a:['Carlos V de Alemania','Felipe V','Carlos IV'],c:0},
+  {q:'Felipe II derrotó a Turquía en...',a:['Lepanto','Utrecht','Aranjuez'],c:0},
+  {q:'Las guerras de Felipe II causaron...',a:['más impuestos y pobreza','más vacaciones','menos gastos'],c:0},
+  {q:'Los validos eran...',a:['personas de confianza del rey','pintores famosos','marineros'],c:0},
+  {q:'La Guerra de Sucesión empezó porque...',a:['Carlos II murió sin hijos','Colón viajó','Goya pintó'],c:0},
+  {q:'El Tratado de Utrecht fue en...',a:['1713','1492','1789'],c:0},
+  {q:'Felipe de Anjou se convirtió en...',a:['Felipe V','Carlos I','Fernando VI'],c:0},
+  {q:'Los privilegiados eran...',a:['nobleza y clero','burgueses y campesinos','marginados'],c:0},
+  {q:'Los no privilegiados...',a:['pagaban impuestos','no pagaban impuestos','eran todos reyes'],c:0},
+  {q:'La imprenta ayudó a...',a:['difundir obras','navegar mejor','ganar guerras'],c:0},
+  {q:'Velázquez fue...',a:['pintor','rey','conquistador'],c:0},
+  {q:'El estilo barroco tenía...',a:['muchas curvas y decoración','poca decoración','solo triángulos'],c:0}
+];
+
+let currentQ=0,score=0,streak=0;
+
+function loadQuestion(){
+  const q=questions[currentQ];
+  document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${questions.length}`;
+  document.getElementById('question-text').innerText=q.q;
+  document.getElementById('quiz-progress').style.width=`${(currentQ/questions.length)*100}%`;
+
+  const grid=document.getElementById('options-grid');
+  grid.innerHTML='';
+
+  const opciones=q.a.map((texto,indice)=>({texto,original:indice})).sort(()=>Math.random()-0.5);
+
+  opciones.forEach(opcion=>{
+    const b=document.createElement('button');
+    b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';
+    b.innerText=opcion.texto;
+    b.dataset.original=opcion.original;
+    b.onclick=()=>handleAnswer(opcion.original,b,grid,q);
+    grid.appendChild(b);
+  });
+}
+
+function handleAnswer(selected,button,grid,q){
+  const allBtns=grid.querySelectorAll('button');
+  allBtns.forEach(btn=>btn.onclick=null);
+
+  if(selected===q.c){
+    button.classList.add('correct');
+    score++;
+    streak++;
+    document.getElementById('score-live').innerText=`Puntos: ${score}`;
+    document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`;
+    makeStars();
+  }else{
+    button.classList.add('incorrect');
+    allBtns.forEach(btn=>{
+      if(Number(btn.dataset.original)===q.c){btn.classList.add('correct');}
+    });
+    streak=0;
+    document.getElementById('streak-box').innerText='🔥 Racha: 0';
+  }
+
+  setTimeout(()=>{
+    currentQ++;
+    if(currentQ<questions.length){loadQuestion();}
+    else{finishQuiz();}
+  },950);
+}
+
+function finishQuiz(){
+  document.getElementById('quiz-progress').style.width='100%';
+  document.getElementById('quiz-container').classList.add('hidden');
+  document.getElementById('score-container').classList.remove('hidden');
+
+  const pct=Math.round((score/questions.length)*100);
+  let message=`Has conseguido ${score} de ${questions.length} puntos (${pct}%). `;
+
+  if(pct>=90){message+='¡Experta en Edad Moderna!';}
+  else if(pct>=70){message+='¡Muy bien! Repasa la canción una vez más.';}
+  else{message+='No pasa nada. Vuelve al mapa visual y canta la canción.';}
+
+  document.getElementById('final-score').innerText=message;
+}
+
+function resetQuiz(){
+  currentQ=0;
+  score=0;
+  streak=0;
+  document.getElementById('score-live').innerText='Puntos: 0';
+  document.getElementById('streak-box').innerText='🔥 Racha: 0';
+  document.getElementById('quiz-container').classList.remove('hidden');
+  document.getElementById('score-container').classList.add('hidden');
+  loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>

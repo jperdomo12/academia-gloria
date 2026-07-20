@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia de Gloria | Escalera de Cálculo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at top left,rgba(99,102,241,.16),transparent 25%),radial-gradient(circle at bottom right,rgba(34,197,94,.14),transparent 28%),linear-gradient(180deg,#fbfdff 0%,#fffef8 48%,#f8fbff 100%);color:#1e293b}
+    .glass-card{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border:2px solid rgba(199,210,254,.9);box-shadow:0 18px 40px rgba(79,70,229,.08)}
+    .gradient-title{background:linear-gradient(90deg,#4f46e5,#0ea5e9,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.45rem .9rem;font-size:.88rem;font-weight:800;background:#fff;border:2px solid #c7d2fe}
+    .tab-btn{transition:all .22s ease}.tab-btn.active{background:linear-gradient(135deg,#4f46e5,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 16px 30px rgba(79,70,229,.22);transform:translateY(-1px)}
+    .tab-panel{display:none}.tab-panel.active{display:block;animation:fadeIn .28s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .card,.option-btn{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(79,70,229,.13);border-color:#a5b4fc}
+    .formula{font-weight:900;border:2px dashed #a5b4fc;background:#eef2ff;color:#4338ca;border-radius:1.2rem;padding:.8rem 1rem}
+    .objects{font-size:1.65rem;letter-spacing:.08rem;line-height:1.7;word-break:break-word}
+    .option-btn{border:2px solid #c7d2fe;background:#fff}.option-btn:hover{border-color:#4f46e5;transform:translateY(-1px)}
+    .correct{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important}.incorrect{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#4f46e5,#0ea5e9,#22c55e);transition:width .25s ease}
+    .star-pop{position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0}@keyframes floatUp{0%{transform:translateY(20px) scale(.7);opacity:0}18%{opacity:1}100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}}
+  </style>
+</head>
+<body>
+<div id="stars-layer"></div>
+<main class="max-w-7xl mx-auto p-4 md:p-8">
+  <header class="glass-card rounded-[2.6rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+    <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+      <div>
+        <a href="./calculo_y_problemas.html" class="inline-flex items-center gap-2 text-indigo-700 font-bold mb-5 hover:gap-3 transition-all"><i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Cálculo y Problemas</a>
+        <div class="flex flex-wrap gap-3 mb-5">
+          <span class="pill text-indigo-700"><i data-lucide="calculator" class="w-4 h-4"></i> Matemáticas</span>
+          <span class="pill text-violet-700"><i data-lucide="sparkles" class="w-4 h-4"></i> Base paso a paso</span>
+          <span class="pill text-emerald-700"><i data-lucide="stairs" class="w-4 h-4"></i> Escalera de Cálculo</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4"><span class="gradient-title">Escalera de Cálculo</span> 🪜</h1>
+        <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">Aprende desde cero: <strong>doble, triple, mitad, cuádruple, quinta parte</strong> y <strong>sexta parte</strong>, usando dibujos, ejemplos y retos cortos.</p>
+        <div class="flex flex-wrap gap-4 mt-7">
+          <a href="#contenido" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg"><i data-lucide="play-circle" class="w-5 h-5"></i> Empezar</a>
+          <a href="calculo_y_problemas.html" class="inline-flex items-center gap-2 bg-white text-emerald-700 px-6 py-4 rounded-2xl font-bold border-2 border-emerald-100 hover:border-emerald-300 transition-all"><i data-lucide="arrow-right-circle" class="w-5 h-5"></i> Ir a Cálculo y Problemas</a>
+        </div>
+      </div>
+      <div class="glass-card rounded-[2rem] p-6 md:p-7">
+        <div class="flex items-center gap-4 mb-4"><div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-500 text-white flex items-center justify-center text-3xl shadow-lg">🪜</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-indigo-700">Idea clave</p><h2 class="text-2xl font-extrabold text-slate-800">Primero entender</h2></div></div>
+        <div class="space-y-3">
+          <div class="rounded-2xl bg-indigo-50 border-2 border-indigo-100 p-4"><p class="font-black text-indigo-700 mb-1">1. Palabra</p><p class="text-slate-600 font-medium">Doble, triple, mitad...</p></div>
+          <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">2. Dibujo</p><p class="text-slate-600 font-medium">Lo vemos con objetos.</p></div>
+          <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">3. Operación</p><p class="text-slate-600 font-medium">Después usamos × o ÷.</p></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="contenido" class="mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <button class="tab-btn active glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="aprender">📘 Aprender</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="niveles">🪜 Niveles</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="practica">🎮 Práctica</button>
+      <button class="tab-btn glass-card rounded-3xl px-4 py-4 font-black text-slate-700 border-2 border-slate-200" data-tab="test">✅ Test</button>
+    </div>
+  </section>
+
+  <section id="aprender" class="tab-panel active">
+    <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 mb-6">
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl mb-3">2️⃣</div><h3 class="text-xl font-extrabold mb-2">Doble</h3><p class="text-slate-600 font-medium mb-3">Repetir <strong>2 veces</strong>.</p><div class="formula">doble de 5 = 5 + 5 = 10</div><div class="objects mt-3">🍎🍎🍎🍎🍎 + 🍎🍎🍎🍎🍎</div></div>
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl mb-3">3️⃣</div><h3 class="text-xl font-extrabold mb-2">Triple</h3><p class="text-slate-600 font-medium mb-3">Repetir <strong>3 veces</strong>.</p><div class="formula">triple de 2 = 2 + 2 + 2 = 6</div><div class="objects mt-3">⭐️⭐️ + ⭐️⭐️ + ⭐️⭐️</div></div>
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mb-3">½</div><h3 class="text-xl font-extrabold mb-2">Mitad</h3><p class="text-slate-600 font-medium mb-3">Repartir en <strong>2 partes iguales</strong>.</p><div class="formula">mitad de 8 = 8 ÷ 2 = 4</div><div class="objects mt-3">🍪🍪🍪🍪 | 🍪🍪🍪🍪</div></div>
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">4️⃣</div><h3 class="text-xl font-extrabold mb-2">Cuádruple</h3><p class="text-slate-600 font-medium mb-3">Repetir <strong>4 veces</strong>.</p><div class="formula">cuádruple de 3 = 3 × 4 = 12</div><div class="objects mt-3">🔵🔵🔵 + 🔵🔵🔵 + 🔵🔵🔵 + 🔵🔵🔵</div></div>
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center text-2xl mb-3">⅕</div><h3 class="text-xl font-extrabold mb-2">Quinta parte</h3><p class="text-slate-600 font-medium mb-3">Repartir en <strong>5 partes iguales</strong>.</p><div class="formula">quinta parte de 20 = 20 ÷ 5 = 4</div><div class="objects mt-3">20 caramelos en 5 grupos → 4</div></div>
+      <div class="glass-card card rounded-[2rem] p-5"><div class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl mb-3">⅙</div><h3 class="text-xl font-extrabold mb-2">Sexta parte</h3><p class="text-slate-600 font-medium mb-3">Repartir en <strong>6 partes iguales</strong>.</p><div class="formula">sexta parte de 36 = 36 ÷ 6 = 6</div><div class="objects mt-3">36 repartido en 6 grupos → 6</div></div>
+    </div>
+    <div class="glass-card rounded-[2rem] p-6 md:p-7">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-4">Tabla de ayuda rápida</h2>
+      <div class="grid md:grid-cols-3 gap-3 font-bold">
+        <div class="bg-indigo-100 text-indigo-800 rounded-xl p-3">Palabra</div><div class="bg-sky-100 text-sky-800 rounded-xl p-3">Significa</div><div class="bg-emerald-100 text-emerald-800 rounded-xl p-3">Operación</div>
+        <div class="bg-white rounded-xl p-3">Doble</div><div class="bg-white rounded-xl p-3">2 veces</div><div class="bg-white rounded-xl p-3">×2</div>
+        <div class="bg-white rounded-xl p-3">Triple</div><div class="bg-white rounded-xl p-3">3 veces</div><div class="bg-white rounded-xl p-3">×3</div>
+        <div class="bg-white rounded-xl p-3">Mitad</div><div class="bg-white rounded-xl p-3">2 partes iguales</div><div class="bg-white rounded-xl p-3">÷2</div>
+        <div class="bg-white rounded-xl p-3">Cuádruple</div><div class="bg-white rounded-xl p-3">4 veces</div><div class="bg-white rounded-xl p-3">×4</div>
+        <div class="bg-white rounded-xl p-3">Quinta parte</div><div class="bg-white rounded-xl p-3">5 partes iguales</div><div class="bg-white rounded-xl p-3">÷5</div>
+        <div class="bg-white rounded-xl p-3">Sexta parte</div><div class="bg-white rounded-xl p-3">6 partes iguales</div><div class="bg-white rounded-xl p-3">÷6</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="niveles" class="tab-panel">
+    <div class="grid lg:grid-cols-2 gap-5">
+      <div class="glass-card card rounded-[2rem] p-6"><h3 class="text-2xl font-black mb-3">1️⃣ Solo doble</h3><p class="text-slate-600 font-medium">Antes de mezclar, practicamos muchas veces: doble de 1, 2, 3, 4, 5...</p><div class="formula mt-4">doble = número + número</div></div>
+      <div class="glass-card card rounded-[2rem] p-6"><h3 class="text-2xl font-black mb-3">2️⃣ Solo triple</h3><p class="text-slate-600 font-medium">Después practicamos triple sin mezclar con otras palabras.</p><div class="formula mt-4">triple = número + número + número</div></div>
+      <div class="glass-card card rounded-[2rem] p-6"><h3 class="text-2xl font-black mb-3">3️⃣ Solo mitad</h3><p class="text-slate-600 font-medium">Luego repartimos en dos partes iguales.</p><div class="formula mt-4">mitad = dividir entre 2</div></div>
+      <div class="glass-card card rounded-[2rem] p-6"><h3 class="text-2xl font-black mb-3">4️⃣ Mezclamos poco a poco</h3><p class="text-slate-600 font-medium">Cuando ya entiende cada palabra, mezclamos dos instrucciones.</p><div class="formula mt-4">doble de 5 + triple de 2 = 10 + 6 = 16</div></div>
+    </div>
+  </section>
+
+  <section id="practica" class="tab-panel">
+    <div class="glass-card rounded-[2rem] p-6 md:p-8">
+      <div id="practice-container">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6"><div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🎮 Práctica guiada</h2><p class="text-slate-600 font-medium">Elige la respuesta correcta. No hay presión.</p></div><span id="practice-counter" class="text-indigo-700 font-bold">Reto 1 de 12</span></div>
+        <div class="progress-bar mb-6"><div id="practice-progress" class="progress-fill"></div></div>
+        <div class="rounded-[1.8rem] bg-indigo-50 border-2 border-indigo-100 p-6 mb-6 text-center"><div id="practice-icon" class="text-6xl mb-4">🍎</div><h3 id="practice-question" class="text-2xl md:text-3xl font-black text-slate-800 mb-3">Cargando...</h3><p id="practice-help" class="text-slate-600 font-bold text-lg"></p></div>
+        <div id="practice-options" class="grid md:grid-cols-3 gap-4"></div>
+      </div>
+      <div id="practice-done" class="hidden text-center"><div class="text-6xl mb-4">🌟</div><h2 class="text-3xl font-black mb-4 text-slate-800">¡Práctica terminada!</h2><p id="practice-score" class="text-xl mb-8 font-medium text-slate-600"></p><button onclick="resetPractice()" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all">🔁 Repetir práctica</button></div>
+    </div>
+  </section>
+
+  <section id="test" class="tab-panel">
+    <div class="glass-card rounded-[2rem] p-6 md:p-8">
+      <div id="quiz-container">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6"><div><h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">🧠 Test suave</h2><p class="text-slate-600 font-medium">Repasamos los conceptos base.</p></div><span id="q-counter" class="text-indigo-700 font-bold">Pregunta 1 de 12</span></div>
+        <div class="flex gap-3 flex-wrap mb-5"><span id="score-live" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-black">Puntos: 0</span><span id="streak-box" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-black">🔥 Racha: 0</span></div>
+        <div class="progress-bar mb-6"><div id="quiz-progress" class="progress-fill"></div></div>
+        <h3 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight">Cargando...</h3>
+        <div id="options-grid" class="grid gap-4"></div>
+      </div>
+      <div id="score-container" class="hidden text-center"><div id="medal" class="text-6xl mb-4">🏆</div><h2 class="text-3xl font-black mb-4 text-slate-800">¡Muy bien!</h2><p id="final-score" class="text-xl mb-8 font-medium text-slate-600"></p><div class="flex flex-col md:flex-row gap-4 justify-center"><button onclick="resetQuiz()" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all">🔁 Repetir todo</button><a href="calculo_y_problemas.html" class="bg-emerald-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all">➡️ Ir a problemas</a></div></div>
+    </div>
+  </section>
+
+  <footer class="text-center py-10"><p class="text-slate-500 font-medium">Academia de Gloria · Matemáticas · Escalera de Cálculo · Primero entender, luego resolver 🪜</p></footer>
+</main>
+
+<script>
+lucide.createIcons();
+const tabButtons=document.querySelectorAll('.tab-btn'), tabPanels=document.querySelectorAll('.tab-panel');
+tabButtons.forEach(btn=>btn.addEventListener('click',()=>{const tab=btn.dataset.tab;tabButtons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');tabPanels.forEach(panel=>panel.classList.toggle('active',panel.id===tab));window.scrollTo({top:document.getElementById('contenido').offsetTop-30,behavior:'smooth'});}));
+function makeStars(){const layer=document.getElementById('stars-layer'), icons=['⭐','✨','🌟','🪜'];for(let i=0;i<8;i++){const star=document.createElement('div');star.className='star-pop';star.textContent=icons[i%icons.length];star.style.left=`${12+Math.random()*76}%`;star.style.top=`${60+Math.random()*16}%`;star.style.animationDelay=`${Math.random()*.12}s`;layer.appendChild(star);setTimeout(()=>star.remove(),1500);}}
+const practiceItems=[
+{icon:'🍎',q:'El doble de 3 es...',help:'Doble = 3 + 3',a:['5','6','9'],c:1},
+{icon:'⭐️',q:'El triple de 2 es...',help:'Triple = 2 + 2 + 2',a:['4','5','6'],c:2},
+{icon:'🍪',q:'La mitad de 8 es...',help:'Mitad = 8 ÷ 2',a:['4','6','16'],c:0},
+{icon:'🔵',q:'El cuádruple de 3 es...',help:'Cuádruple = 3 × 4',a:['7','9','12'],c:2},
+{icon:'🍬',q:'La quinta parte de 20 es...',help:'Quinta parte = 20 ÷ 5',a:['4','5','10'],c:0},
+{icon:'🧁',q:'La sexta parte de 36 es...',help:'Sexta parte = 36 ÷ 6',a:['5','6','7'],c:1},
+{icon:'🍎',q:'El doble de 5 es...',help:'5 + 5',a:['10','7','15'],c:0},
+{icon:'⭐️',q:'El triple de 4 es...',help:'4 + 4 + 4',a:['8','12','16'],c:1},
+{icon:'🍪',q:'La mitad de 10 es...',help:'10 ÷ 2',a:['2','5','20'],c:1},
+{icon:'🔵',q:'El cuádruple de 2 es...',help:'2 × 4',a:['6','8','10'],c:1},
+{icon:'🍬',q:'La quinta parte de 100 es...',help:'100 ÷ 5',a:['10','20','50'],c:1},
+{icon:'🧁',q:'La sexta parte de 12 es...',help:'12 ÷ 6',a:['2','3','6'],c:0}
+];
+let pIndex=0,pScore=0;
+function loadPractice(){const item=practiceItems[pIndex];document.getElementById('practice-counter').innerText=`Reto ${pIndex+1} de ${practiceItems.length}`;document.getElementById('practice-progress').style.width=`${(pIndex/practiceItems.length)*100}%`;document.getElementById('practice-icon').innerText=item.icon;document.getElementById('practice-question').innerText=item.q;document.getElementById('practice-help').innerText=item.help;const box=document.getElementById('practice-options');box.innerHTML='';item.a.forEach((opt,i)=>{const b=document.createElement('button');b.className='option-btn rounded-2xl p-5 text-2xl font-black text-slate-700';b.innerText=opt;b.onclick=()=>handlePractice(i,b,box,item);box.appendChild(b);});}
+function handlePractice(selected,button,box,item){const all=box.querySelectorAll('button');all.forEach(btn=>btn.onclick=null);if(selected===item.c){button.classList.add('correct');pScore++;makeStars();}else{button.classList.add('incorrect');all[item.c].classList.add('correct');}setTimeout(()=>{pIndex++;if(pIndex<practiceItems.length){loadPractice();}else{finishPractice();}},900);}
+function finishPractice(){document.getElementById('practice-progress').style.width='100%';document.getElementById('practice-container').classList.add('hidden');document.getElementById('practice-done').classList.remove('hidden');document.getElementById('practice-score').innerText=`Has conseguido ${pScore} de ${practiceItems.length}.`;}
+function resetPractice(){pIndex=0;pScore=0;document.getElementById('practice-container').classList.remove('hidden');document.getElementById('practice-done').classList.add('hidden');loadPractice();}
+const questions=[
+{q:'Doble significa...',a:['2 veces','3 veces','repartir entre 5'],c:0},
+{q:'Triple significa...',a:['2 veces','3 veces','4 veces'],c:1},
+{q:'Mitad significa...',a:['sumar 2','repartir en 2 partes iguales','multiplicar por 3'],c:1},
+{q:'Cuádruple significa...',a:['4 veces','5 partes','la mitad'],c:0},
+{q:'Quinta parte significa...',a:['multiplicar por 5','repartir entre 5','sumar 5'],c:1},
+{q:'Sexta parte significa...',a:['repartir entre 6','multiplicar por 6','doblar'],c:0},
+{q:'El doble de 5 es...',a:['10','15','7'],c:0},
+{q:'El triple de 2 es...',a:['4','5','6'],c:2},
+{q:'La mitad de 4 es...',a:['2','4','8'],c:0},
+{q:'El cuádruple de 8 es...',a:['12','24','32'],c:2},
+{q:'La sexta parte de 36 es...',a:['6','12','30'],c:0},
+{q:'La quinta parte de 100 es...',a:['10','20','50'],c:1}
+];
+let currentQ=0,score=0,streak=0,activeQuestions=[...questions];
+function loadQuestion(){const q=activeQuestions[currentQ];document.getElementById('q-counter').innerText=`Pregunta ${currentQ+1} de ${activeQuestions.length}`;document.getElementById('question-text').innerText=q.q;document.getElementById('quiz-progress').style.width=`${(currentQ/activeQuestions.length)*100}%`;const grid=document.getElementById('options-grid');grid.innerHTML='';q.a.forEach((opt,i)=>{const b=document.createElement('button');b.className='option-btn w-full p-5 rounded-2xl font-bold text-left text-slate-700';b.innerText=opt;b.onclick=()=>handleAnswer(i,b,grid,q);grid.appendChild(b);});}
+function handleAnswer(selected,button,grid,q){const allBtns=grid.querySelectorAll('button');allBtns.forEach(btn=>btn.onclick=null);if(selected===q.c){button.classList.add('correct');score++;streak++;document.getElementById('score-live').innerText=`Puntos: ${score}`;document.getElementById('streak-box').innerText=`🔥 Racha: ${streak}`;makeStars();}else{button.classList.add('incorrect');allBtns[q.c].classList.add('correct');streak=0;document.getElementById('streak-box').innerText='🔥 Racha: 0';}setTimeout(()=>{currentQ++;if(currentQ<activeQuestions.length){loadQuestion();}else{finishQuiz();}},1000);}
+function finishQuiz(){document.getElementById('quiz-progress').style.width='100%';document.getElementById('quiz-container').classList.add('hidden');document.getElementById('score-container').classList.remove('hidden');const pct=Math.round((score/activeQuestions.length)*100), medal=document.getElementById('medal');let message=`Has conseguido ${score} de ${activeQuestions.length} puntos (${pct}%). `;if(pct>=90){medal.textContent='🏆';message+='¡Excelente! Ya puedes ir a problemas.';}else if(pct>=70){medal.textContent='🌟';message+='¡Muy bien! Puedes seguir practicando.';}else if(pct>=50){medal.textContent='👍';message+='Bien. Repite una vez más para ganar seguridad.';}else{medal.textContent='💪';message+='No pasa nada. Vuelve a la práctica guiada paso a paso.';}document.getElementById('final-score').innerText=message;}
+function resetQuiz(){activeQuestions=[...questions];currentQ=0;score=0;streak=0;document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');loadQuestion();}
+loadPractice();loadQuestion();
+</script>
+</body>
+</html>
