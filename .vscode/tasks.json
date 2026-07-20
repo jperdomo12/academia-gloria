@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Abrir Academia local",
+      "type": "shell",
+      "command": "start http://127.0.0.1:5500/index.html",
+      "problemMatcher": []
+    },
+    {
+      "label": "Abrir Mi Universo local",
+      "type": "shell",
+      "command": "start http://127.0.0.1:5500/mi-universo/index.html",
+      "problemMatcher": []
+    },
+    {
+      "label": "Abrir 5º local",
+      "type": "shell",
+      "command": "start http://127.0.0.1:5500/cursos/5to/index.html",
+      "problemMatcher": []
+    }
+  ]
+}
