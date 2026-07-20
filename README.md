@@ -1,4 +1,4 @@
-# 🎓 Academia de Gloria
+# 🎓 Academia de Gloria - version 2.0
 
 Plataforma educativa interactiva diseñada para apoyar el aprendizaje de Gloria, combinando contenido escolar con experiencias visuales, dinámicas y motivadoras.
 
