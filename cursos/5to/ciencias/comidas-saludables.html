@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Saludable - Gloria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f0fdf4;
+            color: #164e63;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            position: relative;
+            border-left: 10px solid #10b981;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #e2e8f0;
+        }
+
+        .food-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.1);
+            border-color: #34d399;
+        }
+
+        .flip-card { perspective: 1000px; height: 180px; cursor: pointer; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+        }
+        .flip-card-front { background: white; border: 1px solid #e2e8f0; }
+        .flip-card-back { background: #10b981; color: white; transform: rotateY(180deg); }
+
+        .nav-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #10b981;
+            border-radius: 10px;
+        }
+    </style>
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+</head>
+<body class="pb-10">
+
+    <nav class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-emerald-100 mb-8">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-20">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🍎</span>
+                <span class="font-bold text-slate-800 text-xl tracking-tight">Gloria: Salud</span>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="showTab('teoria')" id="btn-teoria" class="nav-btn relative px-4 py-2 font-bold transition-all text-emerald-600 active">Resumen</button>
+                <button onclick="showTab('fichas')" id="btn-fichas" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Fichas</button>
+                <button onclick="showTab('test')" id="btn-test" class="nav-btn relative px-4 py-2 font-bold transition-all text-slate-500">Test</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6">
+
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm text-emerald-600 font-bold hover:bg-emerald-50 hover:shadow-md transition-all border border-emerald-100 group">
+                <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i> 
+                Volver a Science
+            </a>
+        </div>
+        
+        <section id="teoria" class="tab-content active">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-extrabold text-slate-800">Vida Saludable</h1>
+                <div class="w-16 h-1 bg-emerald-400 mx-auto mt-2 rounded-full"></div>
+                <p class="text-slate-400 italic mt-3 font-light">Comer bien es el secreto de la energía</p>
+            </div>
+
+            <div class="mb-10">
+                <a href="https://docs.google.com/presentation/d/1HLgaudm_FKa37unBcq0Jj-cZ37GvJGTZKtUgOrQCJmU/present?slide=id.p" target="_blank" class="block group">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 rounded-[2rem] shadow-lg shadow-emerald-200 flex items-center justify-between hover:scale-[1.02] transition-all border-4 border-white">
+                        <div class="flex items-center gap-6">
+                            <div class="bg-white/20 p-4 rounded-2xl">
+                                <i data-lucide="monitor-play" class="text-white w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-black text-xl">Comidas Saludables</h3>
+                                <p class="text-emerald-50 opacity-90 font-medium">Ver presentación interactiva</p>
+                            </div>
+                        </div>
+                        <i data-lucide="external-link" class="text-white/50 w-6 h-6 mr-4 group-hover:text-white transition-colors"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="hero-card mb-12">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">🥗</span>
+                    <h2 class="text-2xl font-bold text-slate-800">¿Por qué es importante?</h2>
+                </div>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Una alimentación saludable nos da los <span class="font-bold text-emerald-600">nutrientes</span> necesarios para crecer, tener fuerza y que nuestro cerebro funcione súper bien.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="bg-emerald-100 p-2 rounded-lg">🥦</span> Los 5 Grupos de Alimentos
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="food-card p-6 border-l-4 border-green-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">1. Frutas y Verduras</h4>
+                    <p class="text-slate-500 text-sm italic">Vitaminas y Fibra</p>
+                </div>
+                <div class="food-card p-6 border-l-4 border-yellow-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">2. Hidratos de Carbono</h4>
+                    <p class="text-slate-500 text-sm italic">Pan, pasta, patatas (Energía)</p>
+                </div>
+                <div class="food-card p-6 border-l-4 border-red-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">3. Proteínas</h4>
+                    <p class="text-slate-500 text-sm italic">Carne, pescado, huevos, legumbres</p>
+                </div>
+                <div class="food-card p-6 border-l-4 border-blue-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">4. Lácteos</h4>
+                    <p class="text-slate-500 text-sm italic">Leche, queso y yogur (Calcio)</p>
+                </div>
+                <div class="food-card p-6 border-l-4 border-orange-400">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">5. Grasas Saludables</h4>
+                    <p class="text-slate-500 text-sm italic">Aceite de oliva, frutos secos</p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50 p-8 rounded-[2.5rem] border border-emerald-100 shadow-sm mb-12">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span class="text-2xl">⏰</span> La Regla de las 5 Comidas</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 text-center">
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">1</p><p class="text-sm font-medium">Desayuno</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">2</p><p class="text-sm font-medium">Media Mañana</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">3</p><p class="text-sm font-medium">Comida</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">4</p><p class="text-sm font-medium">Merienda</p></div>
+                    <div class="p-3 bg-white rounded-2xl shadow-sm"><p class="text-xs font-bold text-emerald-600 uppercase">5</p><p class="text-sm font-medium">Cena</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fichas" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                <span class="bg-slate-100 p-2 rounded-lg">🃏</span> Fichas de Salud
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fichas-grid"></div>
+        </section>
+
+        <section id="test" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-emerald-700">Misión: Chef Saludable</h2>
+                <p class="text-slate-500">Demuestra lo que sabes sobre nutrición</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-xl shadow-emerald-100 max-w-3xl mx-auto border border-emerald-50">
+                <div id="quiz-container"></div>
+                <div class="mt-10 text-center">
+                    <button id="finish-btn" onclick="checkResults()" class="bg-emerald-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-emerald-200 hover:scale-105 active:scale-95 transition-all">
+                        Finalizar Test
+                    </button>
+                    <div id="final-result-box" class="hidden mt-6 p-6 rounded-2xl bg-emerald-50 border-2 border-emerald-100">
+                        <p id="final-feedback" class="font-bold text-2xl text-emerald-700 mb-2"></p>
+                        <p id="sub-feedback" class="text-emerald-600"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        const flashcards = [
+            { front: "¿Qué nos dan las frutas?", back: "Vitaminas, minerales y fibra.", icon: "🍎" },
+            { front: "¿Para qué sirven las proteínas?", back: "Ayudan a formar y reparar nuestros músculos.", icon: "🍗" },
+            { front: "¿Cuántas veces hay que comer?", back: "Lo ideal es hacer 5 comidas al día.", icon: "⏰" },
+            { front: "¿Qué nutriente tiene la leche?", back: "Calcio, que es vital para nuestros huesos.", icon: "🥛" },
+            { front: "¿Qué nos da el pan y la pasta?", back: "Hidratos de carbono para tener mucha energía.", icon: "🍝" },
+            { front: "¿Cuál es la grasa más sana?", back: "El aceite de oliva virgen extra.", icon: "🫒" }
+        ];
+
+        const questions = [
+            { q: "¿Cuántas piezas de fruta/verdura se recomiendan al día?", a: ["1 pieza", "3 piezas", "5 piezas"], correct: 2 },
+            { q: "¿Qué alimento es una proteína?", a: ["Manzana", "Pescado", "Arroz"], correct: 1 },
+            { q: "La función de los hidratos de carbono es:", a: ["Darnos energía", "Fortalecer huesos", "Darnos vitaminas"], correct: 0 },
+            { q: "¿Cuál es la comida más importante del día?", a: ["Cena", "Merienda", "Desayuno"], correct: 2 },
+            { q: "¿Qué grupo aporta Calcio?", a: ["Lácteos", "Grasas", "Frutas"], correct: 0 },
+            { q: "Legumbres como las lentejas son:", a: ["Grasas", "Proteínas", "Lácteos"], correct: 1 },
+            { q: "¿Qué debemos beber principalmente?", a: ["Refrescos", "Zumos con azúcar", "Agua"], correct: 2 },
+            { q: "¿Cuál es una grasa saludable?", a: ["Mantequilla", "Frutos secos", "Bollería"], correct: 1 },
+            { q: "Comer despacio y masticar bien es...", a: ["Malo", "Saludable", "No importa"], correct: 1 },
+            { q: "La pasta y el cereal nos dan...", a: ["Calcio", "Energía", "Vitaminas"], correct: 1 }
+        ];
+
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('active', 'text-emerald-600');
+                b.classList.add('text-slate-500');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.add('active', 'text-emerald-600');
+        }
+
+        function init() {
+            const grid = document.getElementById('fichas-grid');
+            flashcards.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "flip-card";
+                div.onclick = () => div.classList.toggle('flipped');
+                div.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl mb-4">${c.icon}</span>
+                            <span class="font-bold text-slate-700 text-lg">${c.front}</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium leading-relaxed">${c.back}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+
+            const quiz = document.getElementById('quiz-container');
+            questions.forEach((q, i) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "mb-10 pb-6 border-b border-slate-50 last:border-0";
+                qDiv.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-5 text-lg flex gap-3">
+                        <span class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">${i+1}</span> 
+                        ${q.q}
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        ${q.a.map((ans, ai) => `
+                            <button onclick="select(${i}, ${ai}, this)" class="opt-btn text-left border-2 border-slate-100 px-5 py-3 rounded-2xl text-slate-600 font-medium hover:border-emerald-200 hover:bg-emerald-50 transition-all">${ans}</button>
+                        `).join('')}
+                    </div>
+                `;
+                quiz.appendChild(qDiv);
+            });
+        }
+
+        function select(qI, aI, btn) {
+            userAnswers[qI] = aI;
+            btn.parentElement.querySelectorAll('button').forEach(b => {
+                b.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+                b.classList.add('border-slate-100', 'text-slate-600');
+            });
+            btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+        }
+
+        function checkResults() {
+            if(userAnswers.includes(null)) {
+                alert("¡Gloria, te faltan preguntas por responder!");
+                return;
+            }
+
+            let score = 0;
+            const allOptBtns = document.querySelectorAll('.opt-btn');
+            
+            questions.forEach((q, i) => {
+                const baseIndex = i * 3;
+                const correctBtn = allOptBtns[baseIndex + q.correct];
+                const selectedBtn = allOptBtns[baseIndex + userAnswers[i]];
+
+                correctBtn.style.backgroundColor = "#dcfce7";
+                correctBtn.style.borderColor = "#22c55e";
+                correctBtn.style.color = "#166534";
+
+                if(userAnswers[i] === q.correct) {
+                    score++;
+                } else {
+                    selectedBtn.style.backgroundColor = "#fee2e2";
+                    selectedBtn.style.borderColor = "#ef4444";
+                    selectedBtn.style.color = "#991b1b";
+                }
+            });
+
+            const feedback = document.getElementById('final-feedback');
+            const sub = document.getElementById('sub-feedback');
+            const box = document.getElementById('final-result-box');
+            box.classList.remove('hidden');
+            
+            feedback.innerHTML = score >= 8 ? "¡Super Saludable, Gloria! 🥦" : "¡Sigue aprendiendo! 🍎";
+            sub.innerHTML = `Has acertado ${score} de ${questions.length} preguntas correctamente.`;
+            
+            document.getElementById('finish-btn').classList.add('hidden');
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        init();
+    </script>
+</body>
+</html>

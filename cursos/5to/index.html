@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5º de Primaria | Academia de Gloria Valentina</title>
+  <meta name="description" content="Portal de 5º de Primaria de la Academia de Gloria Valentina: asignaturas, logros, recuerdos y preparación para 6º." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at top left,rgba(56,189,248,.22),transparent 24%),radial-gradient(circle at top right,rgba(251,191,36,.22),transparent 24%),radial-gradient(circle at bottom right,rgba(168,85,247,.18),transparent 28%),linear-gradient(180deg,#f8fbff 0%,#fff7ed 46%,#f5f3ff 100%);color:#1e293b;overflow-x:hidden}
+    .glass-card{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:2px solid rgba(219,234,254,.95);box-shadow:0 22px 50px rgba(37,99,235,.10)}
+    .gradient-title{background:linear-gradient(90deg,#0284c7,#7c3aed,#f59e0b,#16a34a);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.5rem .95rem;font-size:.88rem;font-weight:900;background:#fff;border:2px solid #dbeafe}
+    .soft-float{animation:softFloat 3s ease-in-out infinite}
+    @keyframes softFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+    .card-hover:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(99,102,241,.16)}
+    .progress-shell{height:18px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+    .progress-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#8b5cf6,#f59e0b,#22c55e);animation:growProgress 1.4s ease forwards .35s}
+    @keyframes growProgress{from{width:0}to{width:100%}}
+    .achievement{transition:transform .22s ease,box-shadow .22s ease}
+    .achievement:hover{transform:scale(1.04) rotate(-1deg);box-shadow:0 18px 34px rgba(245,158,11,.16)}
+    .spark{position:fixed;pointer-events:none;font-size:24px;animation:rise 1.4s ease forwards;z-index:50}
+    @keyframes rise{0%{opacity:0;transform:translateY(20px) scale(.7)}20%{opacity:1}100%{opacity:0;transform:translateY(-95px) scale(1.2) rotate(18deg)}}
+  </style>
+</head>
+<body>
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.8rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <a href="../../index.html" class="inline-flex items-center gap-3 bg-white border-2 border-sky-100 hover:border-sky-300 px-5 py-3 rounded-2xl text-sky-700 font-black shadow-sm hover:shadow-md transition-all mb-6">
+        <i data-lucide="home" class="w-5 h-5"></i> Volver a la Academia
+      </a>
+      <div class="grid lg:grid-cols-[1.12fr_.88fr] gap-8 items-center">
+        <div>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="pill text-sky-700"><i data-lucide="graduation-cap" class="w-4 h-4"></i> 5º de Primaria</span>
+            <span class="pill text-amber-700"><i data-lucide="calendar-days" class="w-4 h-4"></i> Curso 2025–2026</span>
+            <span class="pill text-emerald-700"><i data-lucide="badge-check" class="w-4 h-4"></i> Curso completado</span>
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+            Mi aventura en <span class="gradient-title">5º de Primaria</span> 🎓
+          </h1>
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">
+            Todo lo que Gloria aprendió, practicó y disfrutó durante 5º está reunido aquí. Un curso lleno de esfuerzo, descubrimientos, canciones, juegos y muchísimos pasos adelante.
+          </p>
+          <div class="mt-6 rounded-[1.8rem] bg-gradient-to-r from-sky-600 via-violet-600 to-emerald-500 text-white p-6 shadow-xl">
+            <p class="text-xl md:text-2xl font-black leading-relaxed">
+              “Terminar 5º no significa cerrar una puerta. Significa guardar todo lo aprendido para usarlo en la próxima aventura.” 🌈
+            </p>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2.2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-5">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 via-violet-500 to-amber-400 text-white flex items-center justify-center text-3xl shadow-lg soft-float">🏆</div>
+            <div>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-violet-700">Progreso del curso</p>
+              <h2 class="text-2xl font-extrabold text-slate-800">¡Misión completada!</h2>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-black text-slate-700">5º de Primaria</span>
+            <span class="font-black text-emerald-600">100 %</span>
+          </div>
+          <div class="progress-shell mb-5"><div class="progress-fill"></div></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4 text-center"><div class="text-3xl mb-1">📚</div><p class="font-black text-sky-700 text-sm">Mucho aprendido</p></div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4 text-center"><div class="text-3xl mb-1">💪</div><p class="font-black text-emerald-700 text-sm">Gran esfuerzo</p></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="mb-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-500 text-white flex items-center justify-center text-2xl shadow-lg">📚</div>
+        <div><h2 class="text-3xl font-black">Mis asignaturas</h2><p class="text-slate-600 font-medium">Entra para repasar cualquier tema de 5º.</p></div>
+      </div>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <a href="mates/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-amber-100"><div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-4xl mb-5">➗</div><h3 class="text-2xl font-black mb-2">Mates</h3><p class="text-slate-600 font-medium mb-5">Cálculo, problemas, geometría, perímetro, área y razonamiento paso a paso.</p><div class="inline-flex items-center gap-2 text-amber-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+        <a href="lengua/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-pink-100"><div class="w-16 h-16 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-4xl mb-5">✍️</div><h3 class="text-2xl font-black mb-2">Lengua</h3><p class="text-slate-600 font-medium mb-5">Comprensión, gramática, ortografía, acentuación y expresión escrita.</p><div class="inline-flex items-center gap-2 text-pink-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+        <a href="sociales/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-sky-100"><div class="w-16 h-16 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-4xl mb-5">🌍</div><h3 class="text-2xl font-black mb-2">Sociales</h3><p class="text-slate-600 font-medium mb-5">Historia, mapas, líneas del tiempo, Edad Media y Edad Moderna.</p><div class="inline-flex items-center gap-2 text-sky-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+        <a href="ciencias/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-emerald-100"><div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-4xl mb-5">🔬</div><h3 class="text-2xl font-black mb-2">Science</h3><p class="text-slate-600 font-medium mb-5">Electricidad, máquinas, energía, naturaleza y curiosidad científica.</p><div class="inline-flex items-center gap-2 text-emerald-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+        <a href="ingles/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-indigo-100"><div class="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-4xl mb-5">🇬🇧</div><h3 class="text-2xl font-black mb-2">Inglés</h3><p class="text-slate-600 font-medium mb-5">Grammar, vocabulary, reading, listening y pequeñas frases útiles.</p><div class="inline-flex items-center gap-2 text-indigo-700 font-black">Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+        <a href="../../adicionales/" class="glass-card card-hover rounded-[2rem] p-6 block border-2 border-violet-100"><div class="w-16 h-16 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-4xl mb-5">✨</div><h3 class="text-2xl font-black mb-2">Adicionales PRO</h3><p class="text-slate-600 font-medium mb-5">Música, lecturas, juegos y espacios especiales para aprender disfrutando.</p><div class="inline-flex items-center gap-2 text-violet-700 font-black">Explorar <i data-lucide="arrow-right" class="w-5 h-5"></i></div></a>
+      </div>
+    </section>
+
+    <section class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-10">
+      <div class="text-center mb-8"><div class="text-7xl mb-4 soft-float">🏅</div><h2 class="text-3xl md:text-4xl font-black text-slate-800 mb-3">Mis logros de 5º</h2><p class="text-slate-600 font-medium text-lg">No son solo notas. Son habilidades, esfuerzo y confianza.</p></div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="achievement rounded-[2rem] bg-amber-50 border-2 border-amber-100 p-5 text-center"><div class="text-5xl mb-3">🧮</div><p class="font-black text-amber-700">Matemática</p><p class="text-slate-500 text-sm font-medium mt-1">Pienso paso a paso</p></div>
+        <div class="achievement rounded-[2rem] bg-pink-50 border-2 border-pink-100 p-5 text-center"><div class="text-5xl mb-3">📖</div><p class="font-black text-pink-700">Lectora</p><p class="text-slate-500 text-sm font-medium mt-1">Comprendo cada vez mejor</p></div>
+        <div class="achievement rounded-[2rem] bg-sky-50 border-2 border-sky-100 p-5 text-center"><div class="text-5xl mb-3">🗺️</div><p class="font-black text-sky-700">Exploradora</p><p class="text-slate-500 text-sm font-medium mt-1">Conozco el mundo</p></div>
+        <div class="achievement rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 p-5 text-center"><div class="text-5xl mb-3">🔬</div><p class="font-black text-emerald-700">Científica</p><p class="text-slate-500 text-sm font-medium mt-1">Observo y descubro</p></div>
+        <div class="achievement rounded-[2rem] bg-violet-50 border-2 border-violet-100 p-5 text-center"><div class="text-5xl mb-3">🌟</div><p class="font-black text-violet-700">Valiente</p><p class="text-slate-500 text-sm font-medium mt-1">Sigo intentándolo</p></div>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-6 mb-10">
+      <div class="glass-card rounded-[2.2rem] p-6 md:p-8">
+        <div class="flex items-center gap-4 mb-5"><div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center text-3xl">☀️</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-orange-700">Ahora</p><h2 class="text-3xl font-black text-slate-800">Verano y descanso</h2></div></div>
+        <p class="text-slate-600 font-medium text-lg leading-relaxed mb-5">Este espacio seguirá aquí para cuando Gloria quiera recordar, jugar o repasar. Sin prisas y sin presión.</p>
+        <a href="../../calendario.html" class="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-4 rounded-2xl font-black hover:bg-orange-600 transition-all">Ver ruta de verano <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+      </div>
+      <div class="glass-card rounded-[2.2rem] p-6 md:p-8">
+        <div class="flex items-center gap-4 mb-5"><div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 text-white flex items-center justify-center text-3xl">🚀</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-violet-700">Próxima etapa</p><h2 class="text-3xl font-black text-slate-800">Preparándonos para 6º</h2></div></div>
+        <p class="text-slate-600 font-medium text-lg leading-relaxed mb-5">Muy pronto comenzará una nueva aventura: más divertida, más emocionante y también muy importante.</p>
+        <div class="inline-flex items-center gap-2 bg-violet-100 text-violet-700 px-6 py-4 rounded-2xl font-black">Próximamente <i data-lucide="sparkles" class="w-5 h-5"></i></div>
+      </div>
+    </section>
+
+    <section class="rounded-[2.8rem] p-6 md:p-10 mb-8 bg-gradient-to-r from-violet-600 via-sky-600 to-emerald-500 text-white shadow-2xl">
+      <div class="grid lg:grid-cols-[.75fr_1.25fr] gap-8 items-center">
+        <div class="text-center"><div class="text-8xl mb-4 soft-float">🌈</div><p class="font-black uppercase tracking-[.25em] text-white/80">Recuerdo de 5º</p></div>
+        <div><h2 class="text-4xl md:text-5xl font-black mb-4">Todo lo aprendido sigue contigo</h2><p class="text-white/90 text-lg md:text-xl font-medium leading-relaxed mb-6">Gloria, durante este curso aprendiste, cantaste, jugaste, te equivocaste, volviste a intentarlo y creciste muchísimo. Cada pequeño paso te ha hecho más fuerte.</p><button onclick="celebrar()" class="inline-flex items-center gap-2 bg-white text-violet-700 px-7 py-4 rounded-2xl font-black hover:scale-[1.03] transition-all shadow-lg">Celebrar mis logros 🎉</button></div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8"><p class="text-slate-500 font-medium">Academia de Gloria Valentina • 5º de Primaria • Un curso para recordar ✨</p></footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    function celebrar(){
+      const iconos=["⭐","✨","🌟","🎉","🏆"];
+      for(let i=0;i<16;i++){
+        const elemento=document.createElement("div");
+        elemento.className="spark";
+        elemento.textContent=iconos[i%iconos.length];
+        elemento.style.left=(10+Math.random()*80)+"%";
+        elemento.style.top=(65+Math.random()*15)+"%";
+        elemento.style.animationDelay=(Math.random()*.18)+"s";
+        document.body.appendChild(elemento);
+        setTimeout(()=>elemento.remove(),1500);
+      }
+    }
+  </script>
+</body>
+</html>
