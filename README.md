@@ -122,3 +122,5 @@ Aprender debe ser:
 Proyecto desarrollado con dedicación para apoyar el aprendizaje de Gloria.
 
 ---
+
+<!-- Entorno local configurado con éxito en 2026 -->
