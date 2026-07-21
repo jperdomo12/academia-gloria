@@ -1,0 +1,287 @@
+/* Academia de Gloria Valentina | Calendario personal v1.0 */
+
+:root{
+  --gloria-morado:#7c3aed;
+  --gloria-rosa:#ec4899;
+  --gloria-azul:#0ea5e9;
+  --gloria-verde:#10b981;
+  --gloria-amarillo:#f59e0b;
+}
+
+.gloria-resumen{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:22px 0;
+}
+
+.gloria-indicador{
+  padding:18px;
+  border:2px solid #e2e8f0;
+  border-radius:20px;
+  background:white;
+  text-align:center;
+}
+
+.gloria-indicador strong{
+  display:block;
+  font-size:2rem;
+  color:#1e293b;
+}
+
+.gloria-indicador span{
+  color:#64748b;
+  font-weight:700;
+}
+
+.gloria-barra{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  margin:20px 0;
+  padding:16px;
+  border:2px solid #e2e8f0;
+  border-radius:20px;
+  background:rgba(255,255,255,.94);
+}
+
+.gloria-filtros{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.gloria-filtro{
+  border:2px solid #e2e8f0;
+  border-radius:999px;
+  padding:9px 13px;
+  background:white;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.gloria-filtro.activo{
+  color:white;
+  border-color:transparent;
+  background:linear-gradient(90deg,var(--gloria-morado),var(--gloria-rosa));
+}
+
+.gloria-meses{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.gloria-mes{
+  overflow:hidden;
+  border:2px solid #e2e8f0;
+  border-radius:22px;
+  background:white;
+  box-shadow:0 12px 28px rgba(30,41,59,.07);
+}
+
+.gloria-mes__titulo{
+  padding:13px;
+  color:white;
+  text-align:center;
+  font-weight:900;
+  background:linear-gradient(90deg,#7c3aed,#0ea5e9);
+}
+
+.gloria-mes__dias{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+}
+
+.gloria-dia-semana,
+.gloria-dia{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-right:1px solid #edf2f7;
+  border-bottom:1px solid #edf2f7;
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.gloria-dia-semana{
+  min-height:32px;
+  background:#f8fafc;
+  color:#475569;
+}
+
+.gloria-dia{
+  position:relative;
+  cursor:pointer;
+  background:white;
+}
+
+.gloria-dia:hover{
+  background:#f8fafc;
+}
+
+.gloria-dia.vacio{
+  color:transparent;
+  background:#fafafa;
+  cursor:default;
+}
+
+.gloria-dia.hoy{
+  outline:3px solid #f59e0b;
+  outline-offset:-3px;
+  font-weight:900;
+}
+
+.gloria-dia.tiene-evento::after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  bottom:4px;
+  border-radius:999px;
+  background:var(--gloria-rosa);
+}
+
+.gloria-eventos{
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+
+.gloria-evento{
+  display:grid;
+  grid-template-columns:48px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:14px;
+  border:2px solid #e2e8f0;
+  border-radius:18px;
+  background:white;
+}
+
+.gloria-evento.completado{
+  opacity:.68;
+}
+
+.gloria-evento-icono{
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  font-size:23px;
+  background:#f3e8ff;
+}
+
+.gloria-evento h3{
+  margin:0 0 4px;
+  font-size:1rem;
+}
+
+.gloria-evento p{
+  margin:0;
+  color:#64748b;
+  font-size:.88rem;
+  font-weight:650;
+}
+
+.gloria-evento-acciones{
+  display:flex;
+  gap:7px;
+}
+
+.gloria-icon-btn{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.gloria-modal-fondo{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(15,23,42,.48);
+  backdrop-filter:blur(4px);
+}
+
+.gloria-modal-fondo.abierto{
+  display:flex;
+}
+
+.gloria-modal{
+  width:min(640px,100%);
+  max-height:92vh;
+  overflow:auto;
+  padding:24px;
+  border-radius:26px;
+  background:white;
+  box-shadow:0 28px 70px rgba(15,23,42,.25);
+}
+
+.gloria-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.gloria-campo{
+  margin-bottom:14px;
+}
+
+.gloria-campo label{
+  display:block;
+  margin-bottom:7px;
+  font-weight:900;
+}
+
+.gloria-campo input,
+.gloria-campo select,
+.gloria-campo textarea{
+  width:100%;
+  padding:12px 13px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  font:inherit;
+}
+
+.gloria-campo textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.gloria-vacio{
+  padding:28px;
+  text-align:center;
+  border:2px dashed #d8b4fe;
+  border-radius:20px;
+  background:#faf5ff;
+  color:#6b21a8;
+  font-weight:800;
+}
+
+@media(max-width:900px){
+  .gloria-meses{grid-template-columns:repeat(2,1fr)}
+  .gloria-resumen{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:620px){
+  .gloria-meses,
+  .gloria-form-grid{grid-template-columns:1fr}
+  .gloria-evento{grid-template-columns:42px 1fr}
+  .gloria-evento-acciones{grid-column:2}
+}
