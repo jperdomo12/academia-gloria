@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca Encantada | Mi Universo</title>
+  <meta name="description" content="Biblioteca personal de Gloria para registrar libros, valorar lecturas, guardar palabras nuevas y escuchar sus reseñas." />
+
+  <title>Biblioteca Encantada | Academia de Gloria</title>
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="icon"
+        type="image/png"
+        href="../../assets/iconos/icono-principal.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- CSS común de la Academia -->
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+
+  <style>
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:"Outfit",sans-serif;
+      color:#243047;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 8% 8%,rgba(56,189,248,.20),transparent 25%),
+        radial-gradient(circle at 92% 10%,rgba(250,204,21,.18),transparent 24%),
+        radial-gradient(circle at 78% 92%,rgba(168,85,247,.17),transparent 28%),
+        linear-gradient(160deg,#f8fcff,#fffaf0,#f7f2ff);
+    }
+
+    .wrap{
+      max-width:1200px;
+      margin:auto;
+      padding:24px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.94);
+      border:2px solid #e7eaf8;
+      border-radius:28px;
+      box-shadow:0 18px 44px rgba(76,29,149,.09);
+      padding:26px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:24px;
+      align-items:center;
+    }
+
+    .title{
+      font-size:clamp(42px,6vw,74px);
+      line-height:1;
+      margin:10px 0 14px;
+      background:linear-gradient(90deg,#0284c7,#7c3aed,#f59e0b,#16a34a);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .back,.btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
+      border:0;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .back{
+      background:white;
+      color:#0369a1;
+      border:2px solid #bae6fd;
+    }
+
+    .btn:hover,.back:hover{
+      transform:translateY(-2px);
+    }
+
+    .primary{background:linear-gradient(90deg,#0284c7,#7c3aed);color:white}
+    .blue{background:#0ea5e9;color:white}
+    .green{background:#10b981;color:white}
+    .amber{background:#fbbf24;color:#713f12}
+    .light{background:#eef2ff;color:#4f46e5}
+    .red{background:#ffe4e6;color:#be123c}
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:22px 0;
+    }
+
+    .tab{
+      flex:1;
+      min-width:180px;
+      padding:14px;
+      border-radius:16px;
+      border:2px solid #e5e7eb;
+      background:white;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      background:linear-gradient(90deg,#0284c7,#7c3aed);
+      color:white;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 330px;
+      gap:22px;
+    }
+
+    .field{
+      padding:18px;
+      border-radius:22px;
+      border:2px solid #e8eaf2;
+      margin-bottom:16px;
+    }
+
+    .sky{background:#effaff}
+    .violet{background:#f5f0ff}
+    .amber-bg{background:#fff8e7}
+    .green-bg{background:#effcf6}
+    .pink{background:#fff1f6}
+
+    label{
+      display:block;
+      font-weight:900;
+      margin-bottom:8px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      padding:13px 14px;
+      border:2px solid #dfe3ef;
+      border-radius:14px;
+      font:inherit;
+      background:white;
+    }
+
+    textarea{
+      min-height:105px;
+      resize:vertical;
+    }
+
+    input:focus,textarea:focus,select:focus{
+      outline:none;
+      border-color:#38bdf8;
+      box-shadow:0 0 0 4px rgba(56,189,248,.14);
+    }
+
+    .help{
+      font-size:14px;
+      color:#68748b;
+      margin:0 0 9px;
+      font-weight:600;
+    }
+
+    .stars{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .star{
+      border:0;
+      background:white;
+      border-radius:14px;
+      padding:8px 10px;
+      font-size:26px;
+      cursor:pointer;
+      opacity:.38;
+      transition:.15s ease;
+    }
+
+    .star.active{
+      opacity:1;
+      transform:scale(1.08);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .book-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .book{
+      border:2px solid #dbeafe;
+      border-radius:22px;
+      padding:18px;
+      background:white;
+      transition:.2s ease;
+    }
+
+    .book:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 38px rgba(14,165,233,.12);
+    }
+
+    .cover{
+      height:150px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:60px;
+      margin-bottom:14px;
+      background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);
+    }
+
+    .badge{
+      display:inline-flex;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .status-reading{background:#e0f2fe;color:#0369a1}
+    .status-finished{background:#dcfce7;color:#166534}
+    .status-wish{background:#fef3c7;color:#92400e}
+
+    .big-number{
+      font-size:54px;
+      font-weight:900;
+      color:#7c3aed;
+    }
+
+    .hidden{display:none}
+
+    @media(max-width:900px){
+      .hero,.grid{grid-template-columns:1fr}
+      .book-grid{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:560px){
+      .wrap{padding:12px}
+      .card{padding:18px}
+      .book-grid{grid-template-columns:1fr}
+    }
+
+    @media print{
+      .no-print{display:none!important}
+      body{background:white}
+      .card{border:0;box-shadow:none}
+      .wrap{max-width:none;padding:0}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <header class="card hero">
+      <div>
+        <a class="back no-print" href="../index.html">← Volver a Mi Universo</a>
+
+        <h1 class="title">Biblioteca Encantada 📚</h1>
+
+        <p style="font-size:20px;font-weight:600;color:#5c677d;line-height:1.55">
+          Guarda tus libros, tus personajes favoritos, las palabras nuevas y todo lo que descubriste mientras leías.
+        </p>
+      </div>
+
+      <div class="field violet">
+        <p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">MISIÓN LECTORA</p>
+        <p style="font-size:24px;font-weight:900;line-height:1.4">
+          Leer no es correr. Leer es imaginar, descubrir y disfrutar. ✨
+        </p>
+      </div>
+    </header>
+
+    <div class="tabs no-print">
+      <button class="tab active" data-tab="new">➕ Añadir libro</button>
+      <button class="tab" data-tab="library">📚 Mi biblioteca</button>
+      <button class="tab" data-tab="detail">👀 Ver libro</button>
+    </div>
+
+    <section id="new" class="panel">
+      <div class="grid">
+
+        <form id="bookForm" class="card">
+          <input id="bookId" type="hidden">
+
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div>
+              <div style="color:#0284c7;font-weight:900">MI ESTANTERÍA</div>
+              <h2 style="font-size:34px;margin:3px 0 18px">Añade un libro</h2>
+            </div>
+
+            <div id="statusText" style="font-weight:700;color:#64748b">Sin guardar</div>
+          </div>
+
+          <div class="field sky">
+            <label>📖 Título del libro</label>
+            <input id="title" placeholder="Ejemplo: Matilda">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="field violet">
+              <label>✍️ Autor o autora</label>
+              <input id="author" placeholder="Nombre del autor">
+            </div>
+
+            <div class="field amber-bg">
+              <label>📌 Estado</label>
+              <select id="readingStatus">
+                <option value="Leyendo">Estoy leyendo</option>
+                <option value="Terminado">Ya terminé</option>
+                <option value="Quiero leer">Quiero leer</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field green-bg">
+            <label>🎭 Personaje favorito</label>
+            <input id="favoriteCharacter" placeholder="¿Quién te gustó más?">
+          </div>
+
+          <div class="field pink">
+            <label>⭐ Mi valoración</label>
+            <div id="starButtons" class="stars no-print">
+              <button type="button" class="star" data-value="1">⭐</button>
+              <button type="button" class="star" data-value="2">⭐</button>
+              <button type="button" class="star" data-value="3">⭐</button>
+              <button type="button" class="star" data-value="4">⭐</button>
+              <button type="button" class="star" data-value="5">⭐</button>
+            </div>
+            <input id="rating" type="hidden" value="0">
+          </div>
+
+          <div class="field amber-bg">
+            <label>💛 Lo que más me gustó</label>
+            <p class="help">Puedes escribir una escena, un personaje o una emoción.</p>
+            <textarea id="favoritePart" placeholder="Lo que más me gustó fue..."></textarea>
+          </div>
+
+          <div class="field sky">
+            <label>🧠 ¿Qué aprendí?</label>
+            <textarea id="learning" placeholder="Este libro me enseñó..."></textarea>
+          </div>
+
+          <div class="field violet">
+            <label>🔤 Palabras nuevas</label>
+            <p class="help">Sepáralas con comas.</p>
+            <textarea id="newWords" placeholder="palabra 1, palabra 2, palabra 3"></textarea>
+          </div>
+
+          <div class="field green-bg">
+            <label>📝 Mi reseña</label>
+            <p class="help">Cuenta en pocas frases de qué trata y si lo recomendarías.</p>
+            <textarea id="review" placeholder="Este libro trata de... Lo recomiendo porque..."></textarea>
+          </div>
+
+          <div class="actions no-print">
+            <button class="btn primary" type="submit">💾 Guardar libro</button>
+            <button class="btn blue" type="button" id="previewBook">👀 Ver ficha</button>
+            <button class="btn light" type="button" id="newBook">➕ Nuevo</button>
+          </div>
+        </form>
+
+        <aside>
+          <div class="card" style="margin-bottom:18px">
+            <h3>Mi pequeño reto lector</h3>
+            <div id="bookCount" class="big-number">0</div>
+            <p class="help">libros guardados</p>
+            <div class="field amber-bg" style="margin:14px 0 0">
+              <p id="readerMessage" style="font-weight:900;color:#92400e;margin:0">
+                Tu biblioteca empieza con un libro.
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:18px">
+            <h3>Una buena reseña puede decir...</h3>
+            <p>✅ De qué trata.</p>
+            <p>✅ Qué personaje te gustó.</p>
+            <p>✅ Qué aprendiste.</p>
+            <p>✅ Si lo recomendarías.</p>
+          </div>
+
+          <div class="card">
+            <h3>💡 Recuerda</h3>
+            <p style="font-weight:700;color:#64748b">
+              No necesitas escribir mucho. Tres frases claras también pueden ser una excelente reseña.
+            </p>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <section id="library" class="panel hidden">
+      <div class="card">
+
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div>
+            <div style="color:#7c3aed;font-weight:900">MIS LECTURAS</div>
+            <h2 style="font-size:34px;margin:3px 0 18px">Mi biblioteca</h2>
+          </div>
+
+          <div class="actions no-print">
+            <button class="btn blue" id="exportBooks">📤 Exportar</button>
+
+            <label class="btn green">
+              📥 Importar
+              <input id="importBooks" type="file" accept=".json" hidden>
+            </label>
+          </div>
+        </div>
+
+        <div class="field sky no-print">
+          <label>🔎 Buscar libro</label>
+          <input id="searchBook" placeholder="Escribe un título, autor o personaje">
+        </div>
+
+        <div id="bookGrid" class="book-grid"></div>
+
+        <div id="emptyLibrary" class="field violet" style="text-align:center">
+          <div style="font-size:64px">📚</div>
+          <h3>Tu primera estantería está esperando</h3>
+          <p>Empieza añadiendo un libro que hayas leído o estés leyendo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="detail" class="panel hidden">
+      <article class="card">
+        <div id="detailEmpty" style="text-align:center;padding:40px">
+          <div style="font-size:70px">✨</div>
+          <h2>Elige un libro para verlo</h2>
+        </div>
+
+        <div id="detailContent" class="hidden">
+
+          <div class="actions no-print" style="justify-content:flex-end">
+            <button class="btn primary" id="speakReview">🔊 Escuchar reseña</button>
+            <button class="btn light" id="stopSpeech">⏹ Detener</button>
+            <button class="btn blue" onclick="window.print()">🖨️ Imprimir</button>
+          </div>
+
+          <div class="cover" style="max-width:240px;margin:10px auto 18px">📖</div>
+
+          <div style="text-align:center">
+            <span id="detailStatus" class="badge"></span>
+            <h2 id="detailTitle" class="title" style="font-size:50px"></h2>
+            <p id="detailAuthor" style="font-size:20px;font-weight:800;color:#64748b"></p>
+            <div id="detailStars" style="font-size:30px;margin:10px 0"></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <section class="field green-bg">
+              <h3>🎭 Mi personaje favorito</h3>
+              <p id="detailCharacter"></p>
+            </section>
+
+            <section class="field amber-bg">
+              <h3>💛 Lo que más me gustó</h3>
+              <p id="detailFavorite"></p>
+            </section>
+          </div>
+
+          <section class="field sky">
+            <h3>🧠 Lo que aprendí</h3>
+            <p id="detailLearning"></p>
+          </section>
+
+          <section class="field violet">
+            <h3>🔤 Palabras nuevas</h3>
+            <p id="detailWords"></p>
+          </section>
+
+          <section class="field pink">
+            <h3>📝 Mi reseña</h3>
+            <p id="detailReview"></p>
+          </section>
+
+          <div style="background:linear-gradient(90deg,#0284c7,#7c3aed,#f59e0b);color:white;text-align:center;border-radius:20px;padding:18px;font-weight:900;font-size:22px">
+            Libro registrado por Gloria Valentina ✨
+          </div>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <script>
+    const KEY="academiaGloriaBooksV1";
+    let currentBook=null;
+
+    const $=id=>document.getElementById(id);
+
+    const fields=[
+      "title","author","readingStatus","favoriteCharacter",
+      "rating","favoritePart","learning","newWords","review"
+    ];
+
+    function getBooks(){
+      try{
+        return JSON.parse(localStorage.getItem(KEY))||[];
+      }catch{
+        return [];
+      }
+    }
+
+    function setBooks(books){
+      localStorage.setItem(KEY,JSON.stringify(books));
+    }
+
+    function makeId(){
+      return Date.now()+"-"+Math.random().toString(16).slice(2);
+    }
+
+    function bookData(){
+      return{
+        id:$("bookId").value||makeId(),
+        title:$("title").value.trim(),
+        author:$("author").value.trim(),
+        readingStatus:$("readingStatus").value,
+        favoriteCharacter:$("favoriteCharacter").value.trim(),
+        rating:Number($("rating").value)||0,
+        favoritePart:$("favoritePart").value.trim(),
+        learning:$("learning").value.trim(),
+        newWords:$("newWords").value.trim(),
+        review:$("review").value.trim(),
+        updatedAt:new Date().toISOString()
+      };
+    }
+
+    function validateBook(book){
+      if(!book.title){
+        alert("Escribe el título del libro 📖");
+        $("title").focus();
+        return false;
+      }
+
+      return true;
+    }
+
+    function openTab(name){
+      document.querySelectorAll(".panel").forEach(panel=>panel.classList.add("hidden"));
+      $(name).classList.remove("hidden");
+
+      document.querySelectorAll(".tab").forEach(tab=>{
+        tab.classList.toggle("active",tab.dataset.tab===name);
+      });
+
+      if(name==="library") renderBooks();
+
+      scrollTo({top:0,behavior:"smooth"});
+    }
+
+    document.querySelectorAll(".tab").forEach(tab=>{
+      tab.onclick=()=>openTab(tab.dataset.tab);
+    });
+
+    document.querySelectorAll(".star").forEach(button=>{
+      button.onclick=()=>{
+        const value=Number(button.dataset.value);
+        $("rating").value=value;
+        updateStars(value);
+        $("statusText").textContent="Cambios sin guardar";
+      };
+    });
+
+    function updateStars(value){
+      document.querySelectorAll(".star").forEach(button=>{
+        button.classList.toggle("active",Number(button.dataset.value)<=value);
+      });
+    }
+
+    fields.forEach(id=>{
+      $(id).addEventListener("input",()=>{
+        $("statusText").textContent="Cambios sin guardar";
+      });
+    });
+
+    $("bookForm").onsubmit=event=>{
+      event.preventDefault();
+
+      const book=bookData();
+      if(!validateBook(book))return;
+
+      const books=getBooks();
+      const index=books.findIndex(item=>item.id===book.id);
+
+      if(index>=0){
+        book.createdAt=books[index].createdAt;
+        books[index]=book;
+      }else{
+        book.createdAt=book.updatedAt;
+        books.unshift(book);
+      }
+
+      setBooks(books);
+      $("bookId").value=book.id;
+      $("statusText").textContent="Guardado ✅";
+
+      renderBooks();
+      showBook(book);
+      updateCount();
+
+      alert("¡Libro guardado en tu biblioteca! 📚");
+    };
+
+    $("newBook").onclick=()=>{
+      $("bookForm").reset();
+      $("bookId").value="";
+      $("rating").value="0";
+      updateStars(0);
+      $("statusText").textContent="Sin guardar";
+      $("title").focus();
+    };
+
+    $("previewBook").onclick=()=>{
+      const book=bookData();
+      if(!validateBook(book))return;
+      showBook(book);
+      openTab("detail");
+    };
+
+    function renderBooks(filter=""){
+      const books=getBooks().filter(book=>{
+        const text=[
+          book.title,book.author,book.favoriteCharacter,book.readingStatus
+        ].join(" ").toLowerCase();
+
+        return text.includes(filter.toLowerCase());
+      });
+
+      const grid=$("bookGrid");
+      grid.innerHTML="";
+      $("emptyLibrary").classList.toggle("hidden",books.length>0);
+
+      books.forEach(book=>{
+        const article=document.createElement("article");
+        article.className="book";
+
+        const badgeClass=
+          book.readingStatus==="Terminado"?"status-finished":
+          book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
+
+        article.innerHTML=`
+          <div class="cover">📘</div>
+          <span class="badge ${badgeClass}">${escapeHtml(book.readingStatus)}</span>
+          <h3 style="font-size:24px;margin:10px 0 4px">${escapeHtml(book.title)}</h3>
+          <p class="help">${escapeHtml(book.author||"Autor no indicado")}</p>
+          <div style="font-size:22px;margin:8px 0">${"⭐".repeat(book.rating||0)}</div>
+          <div class="actions">
+            <button class="btn blue read">Ver</button>
+            <button class="btn light edit">Editar</button>
+            <button class="btn red delete">Eliminar</button>
+          </div>
+        `;
+
+        article.querySelector(".read").onclick=()=>{
+          showBook(book);
+          openTab("detail");
+        };
+
+        article.querySelector(".edit").onclick=()=>{
+          loadBook(book);
+          openTab("new");
+        };
+
+        article.querySelector(".delete").onclick=()=>{
+          if(!confirm("¿Quieres eliminar este libro?"))return;
+
+          setBooks(getBooks().filter(item=>item.id!==book.id));
+          renderBooks($("searchBook").value);
+          updateCount();
+        };
+
+        grid.appendChild(article);
+      });
+    }
+
+    function loadBook(book){
+      $("bookId").value=book.id;
+
+      fields.forEach(id=>{
+        $(id).value=book[id]??"";
+      });
+
+      updateStars(book.rating||0);
+      $("statusText").textContent="Guardado ✅";
+    }
+
+    function showBook(book){
+      currentBook=book;
+
+      $("detailEmpty").classList.add("hidden");
+      $("detailContent").classList.remove("hidden");
+
+      const badgeClass=
+        book.readingStatus==="Terminado"?"status-finished":
+        book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
+
+      $("detailStatus").className="badge "+badgeClass;
+      $("detailStatus").textContent=book.readingStatus;
+      $("detailTitle").textContent=book.title;
+      $("detailAuthor").textContent=book.author||"Autor no indicado";
+      $("detailStars").textContent="⭐".repeat(book.rating||0) || "Sin valoración todavía";
+      $("detailCharacter").textContent=book.favoriteCharacter||"No indicado";
+      $("detailFavorite").textContent=book.favoritePart||"No indicado";
+      $("detailLearning").textContent=book.learning||"No indicado";
+      $("detailWords").textContent=book.newWords||"No hay palabras guardadas";
+      $("detailReview").textContent=book.review||"Reseña pendiente";
+    }
+
+    $("searchBook").oninput=event=>{
+      renderBooks(event.target.value);
+    };
+
+    function updateCount(){
+      const count=getBooks().length;
+      $("bookCount").textContent=count;
+
+      let message="Tu biblioteca empieza con un libro.";
+      if(count>=1)message="¡Ya tienes tu primera lectura guardada! 🌱";
+      if(count>=3)message="¡Tu estantería está creciendo! 📚";
+      if(count>=5)message="¡Eres una gran exploradora de historias! ✨";
+      if(count>=10)message="¡Biblioteca poderosa! 🌟";
+
+      $("readerMessage").textContent=message;
+    }
+
+    $("speakReview").onclick=()=>{
+      if(!currentBook||!("speechSynthesis" in window))return;
+
+      speechSynthesis.cancel();
+
+      const text=[
+        currentBook.title,
+        currentBook.author ? "Escrito por "+currentBook.author : "",
+        currentBook.review,
+        currentBook.learning
+      ].filter(Boolean).join(". ");
+
+      const utterance=new SpeechSynthesisUtterance(text);
+      utterance.lang="es-ES";
+      utterance.rate=.9;
+      speechSynthesis.speak(utterance);
+    };
+
+    $("stopSpeech").onclick=()=>{
+      if("speechSynthesis" in window)speechSynthesis.cancel();
+    };
+
+    $("exportBooks").onclick=()=>{
+      const blob=new Blob(
+        [JSON.stringify(getBooks(),null,2)],
+        {type:"application/json"}
+      );
+
+      const link=document.createElement("a");
+      link.href=URL.createObjectURL(blob);
+      link.download="biblioteca-gloria.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+
+    $("importBooks").onchange=async event=>{
+      const file=event.target.files[0];
+      if(!file)return;
+
+      try{
+        const imported=JSON.parse(await file.text());
+
+        if(!Array.isArray(imported))throw new Error();
+
+        setBooks(imported);
+        renderBooks();
+        updateCount();
+
+        alert("Biblioteca importada correctamente ✨");
+      }catch{
+        alert("El archivo no es válido.");
+      }
+
+      event.target.value="";
+    };
+
+    function escapeHtml(value=""){
+      return value.replace(/[&<>"']/g,char=>({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      })[char]);
+    }
+
+    renderBooks();
+    updateCount();
+  </script>
+</body>
+</html>

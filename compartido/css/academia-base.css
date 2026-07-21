@@ -1,0 +1,192 @@
+/* Academia de Gloria Valentina | Estilos comunes v1.0 */
+
+:root {
+  --color-primario: #7c3aed;
+  --color-secundario: #0ea5e9;
+  --color-acento: #ec4899;
+  --color-exito: #10b981;
+  --color-aviso: #f59e0b;
+  --color-texto: #243047;
+  --color-texto-suave: #64748b;
+  --color-borde: #e2e8f0;
+  --color-blanco: #ffffff;
+  --radio-pequeno: 14px;
+  --radio-medio: 18px;
+  --radio-grande: 28px;
+  --sombra-suave: 0 14px 34px rgba(76, 29, 149, 0.08);
+  --sombra-media: 0 20px 48px rgba(76, 29, 149, 0.12);
+  --transicion: 0.2s ease;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Outfit", sans-serif;
+  color: var(--color-texto);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(56, 189, 248, 0.18), transparent 25%),
+    radial-gradient(circle at 92% 10%, rgba(244, 114, 182, 0.15), transparent 24%),
+    radial-gradient(circle at 78% 92%, rgba(168, 85, 247, 0.15), transparent 28%),
+    linear-gradient(160deg, #f8fcff, #fffaf0, #f7f2ff);
+}
+
+a { color: inherit; }
+img { max-width: 100%; height: auto; }
+
+.contenedor-academia {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.tarjeta-academia {
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-grande);
+  box-shadow: var(--sombra-suave);
+  padding: 26px;
+}
+
+.tarjeta-academia--interactiva {
+  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+}
+
+.tarjeta-academia--interactiva:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-media);
+  border-color: #c4b5fd;
+}
+
+.titulo-academia {
+  margin: 8px 0 14px;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--color-acento), var(--color-primario), var(--color-secundario), var(--color-exito));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitulo-academia {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.boton-academia,
+.boton-volver {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 13px 18px;
+  border-radius: var(--radio-pequeno);
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--transicion);
+}
+
+.boton-academia { border: 0; }
+.boton-academia:hover,
+.boton-volver:hover { transform: translateY(-2px); }
+
+.boton-academia--primario {
+  color: var(--color-blanco);
+  background: linear-gradient(90deg, var(--color-primario), var(--color-acento));
+}
+
+.boton-academia--secundario { color: white; background: var(--color-secundario); }
+.boton-academia--exito { color: white; background: var(--color-exito); }
+.boton-academia--suave { color: #4f46e5; background: #eef2ff; }
+
+.boton-volver {
+  border: 2px solid #ddd6fe;
+  background: white;
+  color: #6d28d9;
+}
+
+.campo-academia {
+  margin-bottom: 16px;
+  padding: 18px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.campo-academia label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 900;
+}
+
+.campo-academia input,
+.campo-academia select,
+.campo-academia textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 2px solid #dfe3ef;
+  border-radius: var(--radio-pequeno);
+  background: white;
+  font: inherit;
+}
+
+.campo-academia textarea { min-height: 105px; resize: vertical; }
+
+.campo-academia input:focus,
+.campo-academia select:focus,
+.campo-academia textarea:focus {
+  outline: none;
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+}
+
+.texto-ayuda {
+  margin: 0 0 9px;
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.insignia-academia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: #f5f3ff;
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.acciones-academia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.oculto { display: none !important; }
+
+@media (max-width: 720px) {
+  .contenedor-academia { width: min(100% - 20px, 1200px); padding: 12px 0; }
+  .tarjeta-academia { padding: 18px; }
+  .acciones-academia { flex-direction: column; }
+  .boton-academia, .boton-volver { width: 100%; }
+}
+
+@media print {
+  body { background: white; }
+  .no-imprimir { display: none !important; }
+  .tarjeta-academia { border: 0; box-shadow: none; }
+  .contenedor-academia { width: 100%; padding: 0; }
+}
