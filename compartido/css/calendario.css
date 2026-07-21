@@ -1,0 +1,178 @@
+/* Academia de Gloria Valentina | Calendarios v1.0 */
+
+:root {
+  --cal-color-colegio: #0ea5e9;
+  --cal-color-gloria: #8b5cf6;
+  --cal-color-vacacional: #bfdbfe;
+  --cal-color-no-lectivo: #fef08a;
+  --cal-color-festivo: #86cf4b;
+  --cal-color-fin-curso: #ef4444;
+  --cal-color-texto: #243047;
+  --cal-color-suave: #64748b;
+  --cal-borde: #dbeafe;
+  --cal-radio: 24px;
+  --cal-sombra: 0 18px 42px rgba(76, 29, 149, 0.10);
+}
+
+.calendario-pagina {
+  width: min(1200px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 22px 0 40px;
+}
+
+.calendario-superficie {
+  background: rgba(255,255,255,.94);
+  border: 2px solid var(--cal-borde);
+  border-radius: var(--cal-radio);
+  box-shadow: var(--cal-sombra);
+}
+
+.calendario-cabecera {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+}
+
+.calendario-cabecera::after {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  right: -90px;
+  top: -110px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7dd3fc, #c4b5fd);
+  opacity: .25;
+  pointer-events: none;
+}
+
+.calendario-titulo {
+  margin: 8px 0 12px;
+  color: var(--cal-color-texto);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.calendario-subtitulo {
+  margin: 0;
+  color: var(--cal-color-suave);
+  font-size: 1.08rem;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+
+.mes-calendario {
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 26px rgba(30,41,59,.06);
+}
+
+.mes-calendario__titulo {
+  padding: 12px;
+  color: white;
+  text-align: center;
+  background: linear-gradient(90deg, #dc2626, #f97316);
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.mes-calendario__dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dia-semana,
+.dia-calendario {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #edf2f7;
+  border-bottom: 1px solid #edf2f7;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.dia-semana {
+  min-height: 32px;
+  color: #475569;
+  background: #f8fafc;
+  font-weight: 900;
+}
+
+.dia-calendario--vacio {
+  color: transparent;
+  background: #fafafa;
+}
+
+.dia-calendario--vacacional { background: var(--cal-color-vacacional); }
+.dia-calendario--no-lectivo { background: var(--cal-color-no-lectivo); }
+.dia-calendario--festivo { background: var(--cal-color-festivo); }
+.dia-calendario--fin-curso { color: white; background: var(--cal-color-fin-curso); }
+
+.calendario-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px;
+}
+
+.leyenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.leyenda-color {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px solid rgba(15,23,42,.08);
+}
+
+.calendario-eventos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 14px;
+}
+
+.evento-calendario {
+  padding: 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  background: white;
+}
+
+.evento-calendario strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--cal-color-texto);
+}
+
+.evento-calendario span {
+  color: var(--cal-color-suave);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .calendario-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 620px) {
+  .calendario-pagina { width: min(100% - 18px,1200px); padding-top: 10px; }
+  .calendario-cabecera { padding: 22px; }
+  .calendario-grid,
+  .calendario-eventos { grid-template-columns: 1fr; }
+}

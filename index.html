@@ -341,6 +341,82 @@
       cursor:default;
     }
 
+    .atajos-pro{
+      gap:14px;
+    }
+
+    .atajo-pro{
+      display:grid;
+      grid-template-columns:54px 1fr auto;
+      align-items:center;
+      gap:12px;
+      min-height:86px;
+      padding:14px;
+      border-radius:20px;
+      border:2px solid #e8e7f5;
+      background:linear-gradient(135deg,#ffffff,#faf9ff);
+      box-shadow:0 10px 24px rgba(76,29,149,.06);
+    }
+
+    .atajo-pro:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 34px rgba(76,29,149,.12);
+    }
+
+    .atajo-icono{
+      width:52px;
+      height:52px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:17px;
+      font-size:27px;
+      box-shadow:0 8px 18px rgba(30,41,59,.08);
+    }
+
+    .atajo-escritora .atajo-icono{
+      background:linear-gradient(135deg,#fce7f3,#ede9fe);
+    }
+
+    .atajo-biblioteca .atajo-icono{
+      background:linear-gradient(135deg,#e0f2fe,#dcfce7);
+    }
+
+    .atajo-proximo .atajo-icono{
+      background:#f8fafc;
+    }
+
+    .atajo-texto{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+
+    .atajo-texto strong{
+      color:var(--tinta);
+      font-size:1rem;
+      line-height:1.2;
+    }
+
+    .atajo-texto small{
+      margin-top:4px;
+      color:var(--suave);
+      font-size:.82rem;
+      font-weight:700;
+    }
+
+    .atajo-flecha{
+      width:34px;
+      height:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      color:white;
+      background:linear-gradient(135deg,#7c3aed,#ec4899);
+      font-weight:900;
+    }
+
     .cursos{
       border-color:#c6eafd;
       background:
@@ -616,15 +692,6 @@
           Un espacio especial para aprender, crear, descubrir y crecer a tu propio ritmo.
         </p>
 
-        <div class="hero-acciones">
-          <a href="mi-universo/" class="cta cta-principal">
-            🌈 Entrar a Mi Universo
-          </a>
-
-          <a href="cursos/5to/" class="cta cta-secundario">
-            🎓 Explorar 5º
-          </a>
-        </div>
       </div>
 
       <div class="hero-visual">
@@ -660,15 +727,44 @@
           El lugar donde Gloria puede escribir, leer, crear y guardar sus recuerdos.
         </p>
 
-        <div class="atajos">
-          <a class="atajo" href="mi-universo/escritora/">✍️ Gloria Escritora</a>
-          <a class="atajo" href="mi-universo/biblioteca/">📚 Biblioteca Encantada</a>
-          <span class="atajo atajo-proximo">🎨 Taller Creativo · Próximamente</span>
-          <span class="atajo atajo-proximo">🌍 Mis Aventuras · Próximamente</span>
+        <div class="atajos atajos-pro">
+          <a class="atajo atajo-pro atajo-escritora" href="mi-universo/escritora/">
+            <span class="atajo-icono">✍️</span>
+            <span class="atajo-texto">
+              <strong>Gloria Escritora</strong>
+              <small>Crear y guardar historias</small>
+            </span>
+            <span class="atajo-flecha">→</span>
+          </a>
+
+          <a class="atajo atajo-pro atajo-biblioteca" href="mi-universo/biblioteca/">
+            <span class="atajo-icono">📚</span>
+            <span class="atajo-texto">
+              <strong>Biblioteca Encantada</strong>
+              <small>Registrar libros y reseñas</small>
+            </span>
+            <span class="atajo-flecha">→</span>
+          </a>
+
+          <span class="atajo atajo-pro atajo-proximo">
+            <span class="atajo-icono">🎨</span>
+            <span class="atajo-texto">
+              <strong>Taller Creativo</strong>
+              <small>Próximamente</small>
+            </span>
+          </span>
+
+          <span class="atajo atajo-pro atajo-proximo">
+            <span class="atajo-icono">🌍</span>
+            <span class="atajo-texto">
+              <strong>Mis Aventuras</strong>
+              <small>Próximamente</small>
+            </span>
+          </span>
         </div>
 
         <a href="mi-universo/" class="cta cta-principal" style="margin-top:22px">
-          Explorar Mi Universo
+          🌈 Entrar en Mi Universo
         </a>
       </article>
 
