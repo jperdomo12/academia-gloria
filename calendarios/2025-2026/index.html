@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+
+  <title>Calendarios 2025-2026 | Academia de Gloria</title>
+  <meta name="description" content="Calendario del Colegio Gaudem y calendario personal de Gloria para el curso 2025-2026.">
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/calendario.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .curso-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;margin-bottom:26px}
+    .resumen{padding:23px;border-radius:25px;color:white;background:linear-gradient(145deg,#0ea5e9,#7c3aed,#ec4899);box-shadow:0 20px 42px rgba(76,29,149,.2)}
+    .opciones{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+    .opcion{position:relative;overflow:hidden;min-height:350px;padding:27px;text-decoration:none;transition:.22s ease}
+    .opcion:hover{transform:translateY(-6px);box-shadow:0 28px 58px rgba(76,29,149,.15)}
+    .opcion::after{content:"";position:absolute;width:155px;height:155px;right:-55px;bottom:-65px;border-radius:999px;opacity:.12}
+    .cole{border-color:#bae6fd} .cole::after{background:#0ea5e9}
+    .gloria{border-color:#e9d5ff} .gloria::after{background:#a855f7}
+    .icono{width:80px;height:80px;display:flex;align-items:center;justify-content:center;border-radius:25px;font-size:42px;margin-bottom:19px}
+    .cole .icono{background:#e0f2fe} .gloria .icono{background:#f3e8ff}
+    .estado{display:inline-flex;padding:7px 11px;border-radius:999px;font-size:.8rem;font-weight:900}
+    .disponible{color:#166534;background:#dcfce7} .proximamente{color:#7c3aed;background:#ede9fe}
+    .opcion h2{font-size:2.2rem;margin:13px 0 8px}
+    .opcion p{color:#64748b;font-weight:600;line-height:1.58}
+    .lista{padding:0;list-style:none;margin:20px 0 0}
+    .lista li{margin:10px 0;color:#475569;font-weight:750}
+    .accion{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-weight:900}
+    @media(max-width:820px){.curso-hero,.opciones{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="calendario-pagina">
+    <header class="calendario-superficie calendario-cabecera curso-hero">
+      <div>
+        <a href="../" class="boton-volver"><i data-lucide="arrow-left" width="19"></i> Volver a Mis Calendarios</a>
+        <h1 class="calendario-titulo">Curso 2025-2026 🎓</h1>
+        <p class="calendario-subtitulo">Dos miradas del mismo curso: las fechas oficiales del colegio y los momentos personales de Gloria.</p>
+      </div>
+      <div class="resumen">
+        <p style="margin:0 0 7px;font-size:.82rem;letter-spacing:.16em;font-weight:900">5º DE PRIMARIA</p>
+        <h2 style="font-size:2.35rem;line-height:1.05;margin:0 0 10px">¡Misión completada! 🏆</h2>
+        <p style="margin:0;font-weight:700;line-height:1.55">Un curso para recordar, repasar y celebrar.</p>
+      </div>
+    </header>
+
+    <section class="opciones">
+      <a href="colegio.html" class="calendario-superficie opcion cole">
+        <div class="icono">🏫</div>
+        <span class="estado disponible">Disponible</span>
+        <h2>Calendario del Cole</h2>
+        <p>Versión visual del calendario oficial 2025-2026 publicado por el Colegio Gaudem.</p>
+        <ul class="lista">
+          <li>✅ Vacaciones y días no lectivos</li>
+          <li>✅ Festivos oficiales</li>
+          <li>✅ Último día lectivo</li>
+        </ul>
+        <span class="accion">Ver calendario <i data-lucide="arrow-right" width="20"></i></span>
+      </a>
+
+      <article class="calendario-superficie opcion gloria">
+        <div class="icono">⭐</div>
+        <span class="estado proximamente">Próximo producto</span>
+        <h2>Calendario de Gloria</h2>
+        <p>El calendario personal de Gloria para guardar viajes, lecturas, cumpleaños, retos, logros y recuerdos.</p>
+        <ul class="lista">
+          <li>➕ Crear eventos propios</li>
+          <li>✏️ Editar y organizar</li>
+          <li>🎉 Guardar momentos especiales</li>
+        </ul>
+        <span class="accion">Muy pronto ✨</span>
+      </article>
+    </section>
+
+    <footer>Academia de Gloria Valentina · Curso 2025-2026</footer>
+  </main>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
