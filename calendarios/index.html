@@ -205,6 +205,130 @@
     width:100%;
   }
 }
+
+.cursos-calendario{
+  align-items:start;
+}
+
+.curso-cal{
+  min-height:auto;
+}
+
+.curso-acciones-pro{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin-top:22px;
+}
+
+.curso-acceso{
+  display:grid;
+  grid-template-columns:48px 1fr 34px;
+  align-items:center;
+  gap:12px;
+  min-height:72px;
+  padding:12px 14px;
+  border:2px solid #e2e8f0;
+  border-radius:19px;
+  background:white;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 9px 22px rgba(30,41,59,.06);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+
+.curso-acceso:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 30px rgba(76,29,149,.12);
+}
+
+.curso-acceso-academia{
+  border-color:#bae6fd;
+  background:linear-gradient(135deg,#f0f9ff,#ffffff);
+}
+
+.curso-acceso-gloria{
+  border-color:#e9d5ff;
+  background:linear-gradient(135deg,#faf5ff,#ffffff);
+}
+
+.curso-acceso-icono{
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  font-size:23px;
+}
+
+.curso-acceso-academia .curso-acceso-icono{
+  background:#e0f2fe;
+}
+
+.curso-acceso-gloria .curso-acceso-icono{
+  background:#f3e8ff;
+}
+
+.curso-acceso-contenido{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.curso-acceso-titulo{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px;
+  color:#1e293b;
+  font-size:1rem;
+  line-height:1.2;
+  font-weight:900;
+}
+
+.curso-acceso-subtitulo{
+  margin-top:3px;
+  color:#64748b;
+  font-size:.8rem;
+  font-weight:700;
+}
+
+.curso-acceso-etiqueta{
+  display:inline-flex;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.curso-acceso-flecha{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  color:white;
+  font-weight:900;
+}
+
+.curso-acceso-academia .curso-acceso-flecha{
+  background:#0ea5e9;
+}
+
+.curso-acceso-gloria .curso-acceso-flecha{
+  background:#8b5cf6;
+}
+
+@media(max-width:620px){
+  .curso-acceso{
+    grid-template-columns:44px 1fr 30px;
+  }
+}
 </style>
 <style>
 /* Academia de Gloria Valentina | Estilos comunes v1.0 */
@@ -610,27 +734,33 @@ img { max-width: 100%; height: auto; }
 </a>
 </section>
 <section class="cursos-calendario">
-<a class="calendario-superficie curso-cal curso-actual" href="2025-2026/">
+<article class="calendario-superficie curso-cal curso-actual">
 <div class="curso-icono">🎓</div>
 <span class="estado completado">Curso completado</span>
 <h2>2025-2026</h2>
-<p>La aventura de 5º de Primaria: calendario oficial del Gaudem y espacio personal de Gloria.</p>
-<div class="curso-meta"><a class="cal-boton cal-boton-colegio" href="2025-2026/colegio.html">
-<span class="cal-boton-icono">🏫</span>
-<span class="cal-boton-texto">
-<strong>Calendario del Cole</strong>
-<small>2025-2026</small>
+<p>La aventura de 5º de Primaria: calendario oficial del Gaudem y espacio personal de Gloria.</p><div class="curso-acciones-pro">
+<a class="curso-acceso curso-acceso-academia" href="2025-2026/colegio.html">
+<span class="curso-acceso-icono">🌟</span>
+<span class="curso-acceso-contenido">
+<span class="curso-acceso-titulo">
+        Calendario Academia
+        <span class="curso-acceso-etiqueta">PROPIO</span>
 </span>
-<span class="cal-boton-flecha">→</span>
-</a><a class="cal-boton cal-boton-gloria" href="2025-2026/gloria.html">
-<span class="cal-boton-icono">⭐</span>
-<span class="cal-boton-texto">
-<strong>Calendario de Gloria</strong>
-<small>2025-2026</small>
+<span class="curso-acceso-subtitulo">Versión visual e interactiva</span>
 </span>
-<span class="cal-boton-flecha">→</span>
-</a></div>
+<span class="curso-acceso-flecha">→</span>
 </a>
+<a class="curso-acceso curso-acceso-gloria" href="2025-2026/gloria.html">
+<span class="curso-acceso-icono">⭐</span>
+<span class="curso-acceso-contenido">
+<span class="curso-acceso-titulo">Calendario de Gloria</span>
+<span class="curso-acceso-subtitulo">Calendario personal</span>
+</span>
+<span class="curso-acceso-flecha">→</span>
+</a>
+</div>
+
+</article>
 <article class="calendario-superficie curso-cal curso-proximo">
 <div class="curso-icono">🚀</div>
 <span class="estado proximo">Próxima aventura</span>
