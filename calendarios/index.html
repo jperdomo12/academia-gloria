@@ -329,6 +329,144 @@
     grid-template-columns:44px 1fr 30px;
   }
 }
+
+.bloque-calendarios{
+  margin-top:26px;
+  padding:24px;
+  border:2px solid #e2e8f0;
+  border-radius:28px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 18px 42px rgba(76,29,149,.08);
+}
+
+.bloque-calendarios__cabecera{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.bloque-calendarios__icono{
+  width:62px;
+  height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:20px;
+  font-size:31px;
+}
+
+.bloque-calendarios__icono.colegio{background:#e0f2fe}
+.bloque-calendarios__icono.gloria{background:#f3e8ff}
+
+.bloque-calendarios__etiqueta{
+  color:#7c3aed;
+  font-size:.76rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.bloque-calendarios h2{
+  margin:3px 0 3px;
+  font-size:2rem;
+}
+
+.bloque-calendarios p{
+  margin:0;
+  color:#64748b;
+  font-weight:600;
+}
+
+.bloque-calendarios__grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.tarjeta-anio{
+  display:block;
+  padding:20px;
+  border:2px solid #e2e8f0;
+  border-radius:22px;
+  background:white;
+  color:inherit;
+  text-decoration:none;
+  transition:.2s ease;
+}
+
+a.tarjeta-anio:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 34px rgba(76,29,149,.12);
+}
+
+.tarjeta-anio--colegio{border-color:#bae6fd;background:linear-gradient(135deg,#f0f9ff,#fff)}
+.tarjeta-anio--gloria{border-color:#e9d5ff;background:linear-gradient(135deg,#faf5ff,#fff)}
+.tarjeta-anio--proximo{border-color:#e2e8f0;background:#f8fafc;opacity:.8}
+
+.tarjeta-anio__estado{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#dcfce7;
+  color:#166534;
+  font-size:.74rem;
+  font-weight:900;
+}
+
+.tarjeta-anio__estado.proximo{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.tarjeta-anio h3{
+  margin:12px 0 7px;
+  font-size:1.65rem;
+}
+
+.acceso-anio{
+  display:grid;
+  grid-template-columns:44px 1fr 30px;
+  align-items:center;
+  gap:11px;
+  margin-top:16px;
+  padding:11px 12px;
+  border:2px solid #bae6fd;
+  border-radius:17px;
+  background:white;
+  color:inherit;
+  text-decoration:none;
+}
+
+.acceso-anio__icono{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:#e0f2fe;
+}
+
+.acceso-anio strong{display:block}
+.acceso-anio small{display:block;color:#64748b;font-weight:700;margin-top:2px}
+
+.acceso-anio__flecha,
+.tarjeta-anio__accion span{
+  color:#7c3aed;
+  font-weight:900;
+}
+
+.tarjeta-anio__accion{
+  display:flex;
+  justify-content:space-between;
+  margin-top:18px;
+  font-weight:900;
+}
+
+@media(max-width:760px){
+  .bloque-calendarios__grid{grid-template-columns:1fr}
+}
 </style>
 <style>
 /* Academia de Gloria Valentina | Estilos comunes v1.0 */
@@ -733,44 +871,58 @@ img { max-width: 100%; height: auto; }
     <span aria-hidden="true">↗</span>
 </a>
 </section>
-<section class="cursos-calendario">
-<article class="calendario-superficie curso-cal curso-actual">
-<div class="curso-icono">🎓</div>
-<span class="estado completado">Curso completado</span>
-<h2>2025-2026</h2>
-<p>La aventura de 5º de Primaria: calendario oficial del Gaudem y espacio personal de Gloria.</p><div class="curso-acciones-pro">
-<a class="curso-acceso curso-acceso-academia" href="2025-2026/colegio.html">
-<span class="curso-acceso-icono">🌟</span>
-<span class="curso-acceso-contenido">
-<span class="curso-acceso-titulo">
-        Calendario Academia
-        <span class="curso-acceso-etiqueta">PROPIO</span>
+<section class="bloque-calendarios">
+<div class="bloque-calendarios__cabecera">
+<div class="bloque-calendarios__icono colegio">🎓</div>
+<div>
+<span class="bloque-calendarios__etiqueta">Calendarios académicos</span>
+<h2>Calendarios del Colegio</h2>
+<p>Organizados por curso escolar, de septiembre a junio.</p>
+</div>
+</div>
+<div class="bloque-calendarios__grid">
+<article class="tarjeta-anio tarjeta-anio--colegio">
+<span class="tarjeta-anio__estado">Curso completado</span>
+<h3>2025-2026</h3>
+<p>La aventura de 5º de Primaria.</p>
+<a class="acceso-anio" href="escolar/2025-2026.html">
+<span class="acceso-anio__icono">🌟</span>
+<span>
+<strong>Calendario Academia</strong>
+<small>Versión visual e interactiva</small>
 </span>
-<span class="curso-acceso-subtitulo">Versión visual e interactiva</span>
-</span>
-<span class="curso-acceso-flecha">→</span>
+<span class="acceso-anio__flecha">→</span>
 </a>
-<a class="curso-acceso curso-acceso-gloria" href="2025-2026/gloria.html">
-<span class="curso-acceso-icono">⭐</span>
-<span class="curso-acceso-contenido">
-<span class="curso-acceso-titulo">Calendario de Gloria</span>
-<span class="curso-acceso-subtitulo">Calendario personal</span>
-</span>
-<span class="curso-acceso-flecha">→</span>
+</article>
+<article class="tarjeta-anio tarjeta-anio--proximo">
+<span class="tarjeta-anio__estado proximo">Próxima aventura</span>
+<h3>2026-2027</h3>
+<p>Se añadirá cuando el colegio publique el nuevo calendario.</p>
+</article>
+</div>
+</section><section class="bloque-calendarios">
+<div class="bloque-calendarios__cabecera">
+<div class="bloque-calendarios__icono gloria">⭐</div>
+<div>
+<span class="bloque-calendarios__etiqueta">Calendarios personales</span>
+<h2>Mis Calendarios</h2>
+<p>Organizados por año natural, de enero a diciembre.</p>
+</div>
+</div>
+<div class="bloque-calendarios__grid">
+<a class="tarjeta-anio tarjeta-anio--gloria" href="gloria/2025.html">
+<span class="tarjeta-anio__estado">Disponible</span>
+<h3>Mi Calendario 2025</h3>
+<p>Viajes, cumpleaños, libros, logros y recuerdos.</p>
+<span class="tarjeta-anio__accion">Entrar <span>→</span></span>
+</a>
+<a class="tarjeta-anio tarjeta-anio--gloria" href="gloria/2026.html">
+<span class="tarjeta-anio__estado">Año actual</span>
+<h3>Mi Calendario 2026</h3>
+<p>Nuevas aventuras y momentos especiales.</p>
+<span class="tarjeta-anio__accion">Entrar <span>→</span></span>
 </a>
 </div>
-
-</article>
-<article class="calendario-superficie curso-cal curso-proximo">
-<div class="curso-icono">🚀</div>
-<span class="estado proximo">Próxima aventura</span>
-<h2>2026-2027</h2>
-<p>La nueva etapa de 6º de Primaria se añadirá cuando el colegio publique su calendario oficial.</p>
-<div class="curso-meta">
-<div class="meta">📚 6º de Primaria</div>
-<div class="meta">✨ Muy pronto</div>
-</div>
-</article>
 </section>
 <footer>Academia de Gloria Valentina · Calendarios por curso</footer>
 </main>

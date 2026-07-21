@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Calendario de Gloria 2025-2026 | Academia de Gloria</title>
-  <meta name="description" content="Calendario personal de Gloria para el curso 2025-2026.">
+  <title>Mi Calendario 2025 | Academia de Gloria</title>
+  <meta name="description" content="Calendario personal de Gloria para todo el año 2025.">
   <meta name="theme-color" content="#7c3aed">
 
   <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
@@ -17,7 +17,7 @@
 
   <link rel="stylesheet" href="../../compartido/css/academia-base.css">
   <link rel="stylesheet" href="../../compartido/css/calendario.css">
-  <link rel="stylesheet" href="../../compartido/css/calendario-gloria.css">
+  <link rel="stylesheet" href="../../compartido/css/calendario-gloria-2025.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -90,17 +90,17 @@
           Volver
         </button>
 
-        <h1 class="calendario-titulo">Calendario de Gloria ⭐</h1>
+        <h1 class="calendario-titulo">Mi Calendario 2025 ⭐</h1>
         <p class="calendario-subtitulo">
-          Curso 2025-2026 · Viajes, cumpleaños, lecturas, retos, logros y momentos especiales.
+          Enero a diciembre · Viajes, cumpleaños, lecturas, retos, logros y recuerdos especiales.
         </p>
       </div>
 
       <div class="hero-gloria-panel">
-        <p style="margin:0 0 7px;font-size:.82rem;letter-spacing:.16em;font-weight:900">MI PROPIO CALENDARIO</p>
-        <h2>Mis días también cuentan ✨</h2>
+        <p style="margin:0 0 7px;font-size:.82rem;letter-spacing:.16em;font-weight:900">MI AÑO COMPLETO</p>
+        <h2>365 días para recordar ✨</h2>
         <p style="margin:0;font-weight:700;line-height:1.55">
-          Añade todo lo que quieras recordar y celebra cada momento importante.
+          Añade todo lo que quieras recordar y convierte cada mes en una parte de tu historia.
         </p>
       </div>
     </header>
@@ -110,6 +110,10 @@
       <div class="gloria-indicador"><strong id="eventosCompletados">0</strong><span>Completados</span></div>
       <div class="gloria-indicador"><strong id="eventosViajes">0</strong><span>Viajes</span></div>
       <div class="gloria-indicador"><strong id="eventosLogros">0</strong><span>Logros</span></div>
+      <div class="gloria-indicador gloria-indicador--proximo">
+        <strong id="proximoEvento">Añade tu primer evento</strong>
+        <span>Próximo recuerdo</span>
+      </div>
     </section>
 
     <section class="gloria-barra">
@@ -121,6 +125,22 @@
         <button class="gloria-filtro" data-filtro="Logro">🏆 Logros</button>
         <button class="gloria-filtro" data-filtro="Especial">⭐ Especiales</button>
       </div>
+
+      <select id="selectorMes" class="gloria-selector" aria-label="Filtrar por mes">
+        <option value="todos">Todos los meses</option>
+        <option value="0">Enero</option>
+        <option value="1">Febrero</option>
+        <option value="2">Marzo</option>
+        <option value="3">Abril</option>
+        <option value="4">Mayo</option>
+        <option value="5">Junio</option>
+        <option value="6">Julio</option>
+        <option value="7">Agosto</option>
+        <option value="8">Septiembre</option>
+        <option value="9">Octubre</option>
+        <option value="10">Noviembre</option>
+        <option value="11">Diciembre</option>
+      </select>
 
       <div class="acciones-academia" style="margin:0">
         <button class="boton-academia boton-academia--primario" id="nuevoEvento">➕ Nuevo evento</button>
@@ -134,21 +154,21 @@
 
     <section class="calendario-superficie bloque-gloria">
       <h2>Mi año de un vistazo</h2>
-      <p class="bloque-gloria-intro">Pulsa cualquier día para añadir un evento.</p>
+      <p class="bloque-gloria-intro">Los doce meses de enero a diciembre. Pulsa cualquier día para añadir un evento.</p>
       <div id="gloriaMeses" class="gloria-meses"></div>
     </section>
 
     <section class="calendario-superficie bloque-gloria">
-      <h2>Mis próximos recuerdos</h2>
-      <p class="bloque-gloria-intro">Aquí aparecen todos los eventos guardados.</p>
+      <h2>Mis recuerdos de 2025</h2>
+      <p class="bloque-gloria-intro">Filtra por mes o categoría para encontrar rápidamente cada momento.</p>
       <div id="gloriaEventos" class="gloria-eventos"></div>
     </section>
 
     <div class="aviso-local">
-      💡 Esta primera versión guarda los eventos en este navegador. La sincronización entre dispositivos será el siguiente paso.
+      💡 Esta versión guarda los eventos en este navegador. La sincronización entre dispositivos será el siguiente gran paso.
     </div>
 
-    <footer>Academia de Gloria Valentina · Calendario personal 2025-2026</footer>
+    <footer>Academia de Gloria Valentina · Mi Calendario 2025</footer>
   </main>
 
   <div class="gloria-modal-fondo" id="modalEvento" aria-hidden="true">
@@ -169,7 +189,7 @@
         <div class="gloria-form-grid">
           <div class="gloria-campo">
             <label for="eventoFecha">Fecha</label>
-            <input id="eventoFecha" type="date" min="2025-09-01" max="2026-06-30" required>
+            <input id="eventoFecha" type="date" min="2025-01-01" max="2025-12-31" required>
           </div>
 
           <div class="gloria-campo">
@@ -203,7 +223,7 @@
   </div>
 
   <script src="../../compartido/js/navegacion.js"></script>
-  <script src="../../compartido/js/calendario-gloria.js"></script>
+  <script src="../../compartido/js/calendario-gloria-2025.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Calendarios | Academia de Gloria</title>
+  <meta name="description" content="Portada de los calendarios personales de Gloria, organizados por año natural.">
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="icon" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+
+  <style>
+    .pagina{width:min(1080px,calc(100% - 24px));margin:auto;padding:22px 0 40px}
+    .hero{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:center;padding:30px;margin-bottom:24px}
+    .hero-panel{padding:24px;border-radius:26px;color:white;background:linear-gradient(145deg,#7c3aed,#ec4899,#0ea5e9);box-shadow:0 22px 46px rgba(76,29,149,.22)}
+    .anios{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .anio{position:relative;overflow:hidden;padding:24px;border:2px solid #e9d5ff;border-radius:25px;background:linear-gradient(135deg,#faf5ff,#fff);text-decoration:none;transition:.22s ease}
+    .anio:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(76,29,149,.13)}
+    .anio::after{content:"";position:absolute;width:120px;height:120px;right:-45px;bottom:-50px;border-radius:999px;background:#a855f7;opacity:.08}
+    .anio-icono{width:64px;height:64px;display:flex;align-items:center;justify-content:center;border-radius:20px;background:#f3e8ff;font-size:32px}
+    .anio h2{font-size:2rem;margin:14px 0 8px}
+    .anio p{color:#64748b;font-weight:600;line-height:1.5}
+    .anio-accion{display:flex;justify-content:space-between;margin-top:18px;font-weight:900;color:#7c3aed}
+    @media(max-width:780px){.hero,.anios{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="pagina">
+    <header class="tarjeta-academia hero">
+      <div>
+        <a class="boton-volver" href="../">← Volver a Calendarios</a>
+        <h1 class="titulo-academia">Mis Calendarios ⭐</h1>
+        <p class="subtitulo-academia">Cada año guarda un pedacito de mi historia.</p>
+      </div>
+
+      <div class="hero-panel">
+        <p style="margin:0 0 7px;font-size:.82rem;letter-spacing:.16em;font-weight:900">MI HISTORIA</p>
+        <h2 style="font-size:2.35rem;line-height:1.05;margin:0 0 10px">Recuerdos para siempre ✨</h2>
+        <p style="margin:0;font-weight:700;line-height:1.55">Viajes, cumpleaños, libros, logros y días especiales.</p>
+      </div>
+    </header>
+
+    <section class="anios">
+      <a class="anio" href="2025.html">
+        <div class="anio-icono">📖</div>
+        <h2>Mi Calendario 2025</h2>
+        <p>El año de 5º, nuestro viaje a Venezuela y muchos recuerdos especiales.</p>
+        <span class="anio-accion">Entrar <span>→</span></span>
+      </a>
+
+      <a class="anio" href="2026.html">
+        <div class="anio-icono">🌈</div>
+        <h2>Mi Calendario 2026</h2>
+        <p>El año actual de Gloria y el comienzo de nuevas aventuras.</p>
+        <span class="anio-accion">Entrar <span>→</span></span>
+      </a>
+    </section>
+  </main>
+</body>
+</html>
