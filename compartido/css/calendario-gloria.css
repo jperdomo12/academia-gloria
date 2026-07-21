@@ -327,3 +327,137 @@
   .gloria-evento{grid-template-columns:44px 1fr}
   .gloria-evento-acciones{grid-column:2}
 }
+
+/* ==========================================================
+   Colores motivadores por mes
+   ========================================================== */
+
+.gloria-mes {
+  border-width: 3px;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.gloria-mes:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 42px rgba(76, 29, 149, .15);
+}
+
+/* Enero */
+.gloria-mes[data-mes="0"] {
+  border-color: #93c5fd;
+  background: linear-gradient(145deg, #eff6ff, #ffffff);
+}
+
+.gloria-mes[data-mes="0"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+}
+
+/* Febrero */
+.gloria-mes[data-mes="1"] {
+  border-color: #f9a8d4;
+  background: linear-gradient(145deg, #fdf2f8, #ffffff);
+}
+
+.gloria-mes[data-mes="1"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #ec4899, #a855f7);
+}
+
+/* Marzo */
+.gloria-mes[data-mes="2"] {
+  border-color: #86efac;
+  background: linear-gradient(145deg, #f0fdf4, #ffffff);
+}
+
+.gloria-mes[data-mes="2"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #16a34a, #10b981);
+}
+
+/* Abril */
+.gloria-mes[data-mes="3"] {
+  border-color: #c4b5fd;
+  background: linear-gradient(145deg, #faf5ff, #ffffff);
+}
+
+.gloria-mes[data-mes="3"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+}
+
+/* Mayo */
+.gloria-mes[data-mes="4"] {
+  border-color: #fde68a;
+  background: linear-gradient(145deg, #fffbeb, #ffffff);
+}
+
+.gloria-mes[data-mes="4"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+/* Junio */
+.gloria-mes[data-mes="5"] {
+  border-color: #67e8f9;
+  background: linear-gradient(145deg, #ecfeff, #ffffff);
+}
+
+.gloria-mes[data-mes="5"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #0891b2, #06b6d4);
+}
+
+/* Julio */
+.gloria-mes[data-mes="6"] {
+  border-color: #fdba74;
+  background: linear-gradient(145deg, #fff7ed, #ffffff);
+}
+
+.gloria-mes[data-mes="6"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #f97316, #ef4444);
+}
+
+/* Agosto */
+.gloria-mes[data-mes="7"] {
+  border-color: #5eead4;
+  background: linear-gradient(145deg, #f0fdfa, #ffffff);
+}
+
+.gloria-mes[data-mes="7"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #0d9488, #0ea5e9);
+}
+
+/* Septiembre */
+.gloria-mes[data-mes="8"] {
+  border-color: #fcd34d;
+  background: linear-gradient(145deg, #fffbeb, #ffffff);
+}
+
+.gloria-mes[data-mes="8"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #d97706, #f59e0b);
+}
+
+/* Octubre */
+.gloria-mes[data-mes="9"] {
+  border-color: #fb923c;
+  background: linear-gradient(145deg, #fff7ed, #ffffff);
+}
+
+.gloria-mes[data-mes="9"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #ea580c, #dc2626);
+}
+
+/* Noviembre */
+.gloria-mes[data-mes="10"] {
+  border-color: #c4b5fd;
+  background: linear-gradient(145deg, #faf5ff, #ffffff);
+}
+
+.gloria-mes[data-mes="10"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #7c3aed, #9333ea);
+}
+
+/* Diciembre */
+.gloria-mes[data-mes="11"] {
+  border-color: #86efac;
+  background: linear-gradient(145deg, #f0fdf4, #ffffff);
+}
+
+.gloria-mes[data-mes="11"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #15803d, #dc2626);
+}
