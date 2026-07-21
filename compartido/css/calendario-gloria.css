@@ -1,4 +1,4 @@
-/* Academia de Gloria Valentina | Calendario personal v1.0 */
+/* Academia de Gloria | Calendarios personales de Gloria | SUPER PRO */
 
 :root{
   --gloria-morado:#7c3aed;
@@ -10,7 +10,7 @@
 
 .gloria-resumen{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:14px;
   margin:22px 0;
 }
@@ -18,9 +18,10 @@
 .gloria-indicador{
   padding:18px;
   border:2px solid #e2e8f0;
-  border-radius:20px;
+  border-radius:21px;
   background:white;
   text-align:center;
+  box-shadow:0 10px 26px rgba(30,41,59,.05);
 }
 
 .gloria-indicador strong{
@@ -34,17 +35,22 @@
   font-weight:700;
 }
 
+.gloria-indicador--proximo strong{
+  font-size:1rem;
+  line-height:1.3;
+}
+
 .gloria-barra{
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
+  gap:12px;
   align-items:center;
   justify-content:space-between;
   margin:20px 0;
   padding:16px;
   border:2px solid #e2e8f0;
-  border-radius:20px;
-  background:rgba(255,255,255,.94);
+  border-radius:21px;
+  background:rgba(255,255,255,.95);
 }
 
 .gloria-filtros{
@@ -69,6 +75,15 @@
   background:linear-gradient(90deg,var(--gloria-morado),var(--gloria-rosa));
 }
 
+.gloria-selector{
+  padding:10px 12px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  background:white;
+  font:inherit;
+  font-weight:800;
+}
+
 .gloria-meses{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -78,17 +93,24 @@
 .gloria-mes{
   overflow:hidden;
   border:2px solid #e2e8f0;
-  border-radius:22px;
+  border-radius:23px;
   background:white;
-  box-shadow:0 12px 28px rgba(30,41,59,.07);
+  box-shadow:0 13px 30px rgba(30,41,59,.07);
 }
 
 .gloria-mes__titulo{
-  padding:13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 15px;
   color:white;
-  text-align:center;
-  font-weight:900;
   background:linear-gradient(90deg,#7c3aed,#0ea5e9);
+  font-weight:900;
+}
+
+.gloria-mes__titulo small{
+  opacity:.86;
+  font-size:.75rem;
 }
 
 .gloria-mes__dias{
@@ -98,7 +120,7 @@
 
 .gloria-dia-semana,
 .gloria-dia{
-  min-height:38px;
+  min-height:44px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -116,12 +138,17 @@
 
 .gloria-dia{
   position:relative;
+  flex-direction:column;
+  gap:1px;
+  border-top:0;
+  border-left:0;
+  border-radius:0;
   cursor:pointer;
   background:white;
 }
 
 .gloria-dia:hover{
-  background:#f8fafc;
+  background:#faf5ff;
 }
 
 .gloria-dia.vacio{
@@ -133,17 +160,20 @@
 .gloria-dia.hoy{
   outline:3px solid #f59e0b;
   outline-offset:-3px;
+}
+
+.gloria-dia-numero{
   font-weight:900;
 }
 
-.gloria-dia.tiene-evento::after{
-  content:"";
-  position:absolute;
-  width:7px;
-  height:7px;
-  bottom:4px;
-  border-radius:999px;
-  background:var(--gloria-rosa);
+.gloria-dia-iconos{
+  font-size:.63rem;
+  line-height:1;
+  white-space:nowrap;
+}
+
+.gloria-dia.tiene-evento{
+  background:linear-gradient(135deg,#fff,#faf5ff);
 }
 
 .gloria-eventos{
@@ -154,28 +184,40 @@
 
 .gloria-evento{
   display:grid;
-  grid-template-columns:48px 1fr auto;
-  gap:12px;
+  grid-template-columns:50px 1fr auto;
+  gap:13px;
   align-items:center;
-  padding:14px;
+  padding:15px;
   border:2px solid #e2e8f0;
-  border-radius:18px;
+  border-radius:19px;
   background:white;
+  box-shadow:0 9px 22px rgba(30,41,59,.05);
 }
 
 .gloria-evento.completado{
-  opacity:.68;
+  opacity:.65;
 }
 
 .gloria-evento-icono{
-  width:46px;
-  height:46px;
+  width:48px;
+  height:48px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:15px;
-  font-size:23px;
+  border-radius:16px;
+  font-size:24px;
   background:#f3e8ff;
+}
+
+.gloria-evento-categoria{
+  display:inline-flex;
+  margin-bottom:4px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#4f46e5;
+  font-size:.7rem;
+  font-weight:900;
 }
 
 .gloria-evento h3{
@@ -204,7 +246,6 @@
   border:0;
   border-radius:12px;
   cursor:pointer;
-  font-size:16px;
 }
 
 .gloria-modal-fondo{
@@ -274,14 +315,15 @@
   font-weight:800;
 }
 
-@media(max-width:900px){
+@media(max-width:1000px){
+  .gloria-resumen{grid-template-columns:repeat(3,1fr)}
   .gloria-meses{grid-template-columns:repeat(2,1fr)}
-  .gloria-resumen{grid-template-columns:repeat(2,1fr)}
 }
 
-@media(max-width:620px){
+@media(max-width:650px){
+  .gloria-resumen{grid-template-columns:repeat(2,1fr)}
   .gloria-meses,
   .gloria-form-grid{grid-template-columns:1fr}
-  .gloria-evento{grid-template-columns:42px 1fr}
+  .gloria-evento{grid-template-columns:44px 1fr}
   .gloria-evento-acciones{grid-column:2}
 }

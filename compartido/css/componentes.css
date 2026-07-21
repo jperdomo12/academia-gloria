@@ -1,0 +1,209 @@
+/* ==========================================================
+   Academia de Gloria Valentina
+   componentes.css
+   Componentes visuales reutilizables
+   ========================================================== */
+
+/* Etiquetas */
+
+.academia-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 2px solid #e2e8f0;
+  border-radius: 999px;
+  background: white;
+  color: #334155;
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.academia-chip--azul {
+  border-color: #bae6fd;
+  color: #075985;
+  background: #f0f9ff;
+}
+
+.academia-chip--morado {
+  border-color: #ddd6fe;
+  color: #6d28d9;
+  background: #faf5ff;
+}
+
+.academia-chip--verde {
+  border-color: #bbf7d0;
+  color: #166534;
+  background: #f0fdf4;
+}
+
+.academia-chip--amarillo {
+  border-color: #fde68a;
+  color: #92400e;
+  background: #fffbeb;
+}
+
+/* Tarjetas */
+
+.academia-card {
+  padding: 22px;
+  border: 2px solid #e2e8f0;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 16px 38px rgba(76, 29, 149, .08);
+}
+
+.academia-card--interactiva {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+}
+
+.academia-card--interactiva:hover {
+  transform: translateY(-5px);
+  border-color: #c4b5fd;
+  box-shadow: 0 24px 50px rgba(76, 29, 149, .14);
+}
+
+/* Accesos */
+
+.academia-acceso {
+  display: grid;
+  grid-template-columns: 48px 1fr 34px;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 19px;
+  background: white;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 9px 22px rgba(30, 41, 59, .06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.academia-acceso:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(76, 29, 149, .12);
+}
+
+.academia-acceso__icono {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-size: 23px;
+  background: #f3e8ff;
+}
+
+.academia-acceso__contenido {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.academia-acceso__titulo {
+  color: #1e293b;
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.academia-acceso__subtitulo {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.academia-acceso__flecha {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  color: white;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  font-weight: 900;
+}
+
+/* Avisos */
+
+.academia-aviso {
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 750;
+}
+
+.academia-aviso--info {
+  border-color: #bae6fd;
+  background: #f0f9ff;
+  color: #075985;
+}
+
+.academia-aviso--exito {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.academia-aviso--atencion {
+  border-color: #fde68a;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+/* Secciones */
+
+.academia-seccion-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.academia-seccion-icono {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 19px;
+  color: white;
+  font-size: 29px;
+  background: linear-gradient(135deg, #7c3aed, #0ea5e9);
+  box-shadow: 0 12px 24px rgba(76, 29, 149, .18);
+}
+
+.academia-seccion-cabecera h2 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.academia-seccion-cabecera p {
+  margin: 3px 0 0;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Responsive */
+
+@media (max-width: 620px) {
+  .academia-acceso {
+    grid-template-columns: 44px 1fr 30px;
+  }
+
+  .academia-seccion-cabecera {
+    align-items: flex-start;
+  }
+}
