@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia de Gloria Valentina</title>
+  <meta name="description" content="Portal principal de la Academia de Gloria Valentina: cursos, verano, habilidades, calendario y recursos adicionales." />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body{font-family:'Outfit',sans-serif;background:radial-gradient(circle at top left,rgba(56,189,248,.22),transparent 24%),radial-gradient(circle at top right,rgba(251,191,36,.20),transparent 25%),radial-gradient(circle at bottom right,rgba(168,85,247,.18),transparent 28%),linear-gradient(180deg,#f8fbff 0%,#eef6ff 42%,#fff7ed 70%,#f5f3ff 100%);color:#1e293b;overflow-x:hidden}
+    .glass-card{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:2px solid rgba(219,234,254,.95);box-shadow:0 22px 50px rgba(37,99,235,.10)}
+    .gradient-title{background:linear-gradient(90deg,#2563eb,#7c3aed,#06b6d4,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;padding:.5rem .95rem;font-size:.85rem;font-weight:900;background:#fff;border:2px solid #dbeafe}
+    .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+    .card-hover:hover{transform:translateY(-6px);box-shadow:0 24px 52px rgba(99,102,241,.16)}
+    .soft-float{animation:softFloat 3s ease-in-out infinite}
+    @keyframes softFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .pulse-ring{animation:pulseRing 2.8s ease-in-out infinite}
+    @keyframes pulseRing{0%,100%{box-shadow:0 0 0 0 rgba(14,165,233,.15)}50%{box-shadow:0 0 0 14px rgba(14,165,233,0)}}
+    .spark{position:fixed;pointer-events:none;font-size:24px;animation:rise 1.4s ease forwards;z-index:50}
+    @keyframes rise{0%{opacity:0;transform:translateY(20px) scale(.7)}20%{opacity:1}100%{opacity:0;transform:translateY(-95px) scale(1.2) rotate(18deg)}}
+  </style>
+</head>
+<body>
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="glass-card rounded-[2.8rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+      <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
+        <div>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="hero-badge text-sky-700"><i data-lucide="sparkles" class="w-4 h-4"></i>Academia 2.0</span>
+            <span class="hero-badge text-violet-700"><i data-lucide="heart" class="w-4 h-4"></i>Hecha con amor</span>
+            <span class="hero-badge text-emerald-700"><i data-lucide="accessibility" class="w-4 h-4"></i>Aprendizaje visual</span>
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">Academia de <span class="gradient-title">Gloria Valentina</span> ✨</h1>
+          <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-3xl">Un espacio para aprender paso a paso, con ayudas visuales, juegos, música, esquemas y mucha motivación.</p>
+          <div class="mt-7">
+            <a href="calendario.html" class="pulse-ring inline-flex items-center gap-2 bg-white text-sky-700 px-6 py-4 rounded-2xl font-black border-2 border-sky-100 hover:border-sky-300 hover:scale-[1.02] transition-all shadow-md"><i data-lucide="sun" class="w-5 h-5"></i>Ver ruta de verano</a>
+          </div>
+        </div>
+        <div class="glass-card rounded-[2.2rem] p-6 md:p-7">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg soft-float">🎓</div>
+            <div><p class="text-xs font-black uppercase tracking-[.18em] text-sky-600">Ruta de aprendizaje</p><h2 class="text-2xl font-extrabold text-slate-800">Aprende a tu ritmo</h2></div>
+          </div>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-sky-50 border-2 border-sky-100 p-4"><p class="font-black text-sky-700 mb-1">1. Observa</p><p class="text-slate-600 font-medium">Primero dibujos, colores y esquemas.</p></div>
+            <div class="rounded-2xl bg-violet-50 border-2 border-violet-100 p-4"><p class="font-black text-violet-700 mb-1">2. Comprende</p><p class="text-slate-600 font-medium">Todo explicado en pequeños pasos.</p></div>
+            <div class="rounded-2xl bg-emerald-50 border-2 border-emerald-100 p-4"><p class="font-black text-emerald-700 mb-1">3. Practica y celebra</p><p class="text-slate-600 font-medium">Juegos, fichas, test y mensajes positivos.</p></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="mb-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-500 text-white flex items-center justify-center text-2xl shadow-lg">🎒</div>
+        <div><h2 class="text-3xl font-black">Mis cursos</h2><p class="text-slate-600 font-medium">Cada curso conserva sus aprendizajes y aventuras.</p></div>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-6">
+        <a href="cursos/5to/" class="glass-card card-hover rounded-[2.3rem] p-7 block border-2 border-sky-100">
+          <div class="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+            <div class="w-20 h-20 rounded-[1.7rem] bg-gradient-to-br from-sky-500 via-violet-500 to-emerald-500 text-white flex items-center justify-center text-4xl shadow-lg">🎓</div>
+            <div class="flex-1"><p class="text-xs font-black uppercase tracking-[.2em] text-emerald-700 mb-2">Curso completado · 2025–2026</p><h3 class="text-3xl md:text-4xl font-black text-slate-800 mb-2">5º de Primaria</h3><p class="text-slate-600 font-medium text-lg">Todos los temas certificados de Mates, Lengua, Sociales, Science e Inglés.</p><div class="mt-5 inline-flex items-center gap-2 text-sky-700 font-black">Explorar 5º<i data-lucide="arrow-right" class="w-5 h-5"></i></div></div>
+          </div>
+        </a>
+        <div class="glass-card rounded-[2.3rem] p-7 border-2 border-violet-100">
+          <div class="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+            <div class="w-20 h-20 rounded-[1.7rem] bg-gradient-to-br from-violet-500 via-fuchsia-500 to-amber-400 text-white flex items-center justify-center text-4xl shadow-lg soft-float">🚀</div>
+            <div class="flex-1"><p class="text-xs font-black uppercase tracking-[.2em] text-violet-700 mb-2">Próxima aventura</p><h3 class="text-3xl md:text-4xl font-black text-slate-800 mb-2">6º de Primaria</h3><p class="text-slate-600 font-medium text-lg">Una etapa muy divertida, muy importante y llena de nuevos retos.</p><div class="mt-5 inline-flex items-center gap-2 bg-violet-100 text-violet-700 px-5 py-3 rounded-2xl font-black">Próximamente<i data-lucide="sparkles" class="w-5 h-5"></i></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-6 mb-10">
+      <a href="calendario.html" class="glass-card card-hover rounded-[2.2rem] p-6 md:p-8 block border-2 border-amber-100">
+        <div class="flex items-center gap-4 mb-5"><div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center text-3xl">☀️</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-orange-700">Etapa actual</p><h2 class="text-3xl font-black text-slate-800">Verano y preparación</h2></div></div>
+        <p class="text-slate-600 font-medium text-lg leading-relaxed mb-5">Descansar, disfrutar y volver poco a poco a los aprendizajes que seguirán siendo importantes en 6º.</p>
+        <div class="inline-flex items-center gap-2 text-orange-700 font-black">Ver ruta de verano<i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+      </a>
+      <div class="glass-card rounded-[2.2rem] p-6 md:p-8 border-2 border-emerald-100">
+        <div class="flex items-center gap-4 mb-5"><div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 text-white flex items-center justify-center text-3xl">🧠</div><div><p class="text-xs font-black uppercase tracking-[.18em] text-emerald-700">Próxima evolución</p><h2 class="text-3xl font-black text-slate-800">Mis superpoderes</h2></div></div>
+        <p class="text-slate-600 font-medium text-lg leading-relaxed mb-5">Comprensión, razonamiento, escritura, autonomía y gestión positiva de la frustración y mucho más.</p>
+        <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-5 py-3 rounded-2xl font-black">En construcción<i data-lucide="hammer" class="w-5 h-5"></i></div>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <a href="adicionales/" class="group relative block glass-card rounded-[2.4rem] p-7 border-2 border-violet-100 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-100 via-sky-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+        <div class="relative flex flex-col md:flex-row md:items-center gap-5">
+          <div class="w-20 h-20 rounded-[1.6rem] bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">✨</div>
+          <div class="flex-1"><p class="text-xs font-black uppercase tracking-[.22em] text-violet-700 mb-2">Espacio especial</p><h3 class="text-3xl md:text-4xl font-black text-slate-800 mb-2">Adicionales PRO</h3><p class="text-slate-600 font-medium text-lg">Música, lecturas, juegos y experiencias bonitas para aprender, disfrutar y motivarse.</p></div>
+          <div class="text-violet-700 font-black inline-flex items-center gap-2 text-lg group-hover:translate-x-1 transition-transform">Explorar<i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+        </div>
+      </a>
+    </section>
+
+    <section class="rounded-[2.8rem] p-6 md:p-10 mb-10 bg-gradient-to-r from-violet-600 via-sky-600 to-emerald-500 text-white shadow-2xl">
+      <div class="grid lg:grid-cols-[.72fr_1.28fr] gap-8 items-center">
+        <div class="text-center"><div class="text-8xl mb-4 soft-float">🌈</div><p class="font-black uppercase tracking-[.25em] text-white/80">Academia de Gloria</p></div>
+        <div><h2 class="text-4xl md:text-5xl font-black mb-4">Aprender puede ser bonito</h2><p class="text-white/90 text-lg md:text-xl font-medium leading-relaxed mb-6">Gloria, aquí puedes observar, comprender, practicar y volver a intentarlo siempre que lo necesites. Cada pequeño paso cuenta.</p><button onclick="celebrar()" class="inline-flex items-center gap-2 bg-white text-violet-700 px-7 py-4 rounded-2xl font-black hover:scale-[1.03] transition-all shadow-lg">Celebrar el aprendizaje 🎉</button></div>
+      </div>
+    </section>
+
+    <section class="glass-card rounded-[2rem] p-6 md:p-8 mb-10">
+      <div class="flex flex-col md:flex-row md:items-center gap-5">
+        <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-3xl">🏫</div>
+        <div class="flex-1"><p class="text-xs font-black uppercase tracking-[.18em] text-sky-700 mb-1">Enlace útil</p><h2 class="text-2xl md:text-3xl font-black text-slate-800">Colegio Gaudem</h2><p class="text-slate-600 font-medium mt-1">Acceso a la página principal del colegio.</p></div>
+        <a href="https://www.gaudem.es/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-sky-600 text-white px-6 py-4 rounded-2xl font-black hover:bg-sky-700 hover:scale-[1.02] transition-all shadow-md">Visitar Gaudem<i data-lucide="external-link" class="w-5 h-5"></i></a>
+      </div>
+    </section>
+
+    <footer class="text-center py-8"><p class="text-slate-500 font-medium">Academia de Gloria Valentina • Arquitectura 2.0 • Aprender con calma, alegría y confianza ✨</p></footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    function celebrar(){
+      const iconos=["⭐","✨","🌟","🎉","📚","🌈"];
+      for(let i=0;i<18;i++){
+        const elemento=document.createElement("div");
+        elemento.className="spark";
+        elemento.textContent=iconos[i%iconos.length];
+        elemento.style.left=(8+Math.random()*84)+"%";
+        elemento.style.top=(65+Math.random()*18)+"%";
+        elemento.style.animationDelay=(Math.random()*.18)+"s";
+        document.body.appendChild(elemento);
+        setTimeout(()=>elemento.remove(),1500);
+      }
+    }
+  </script>
+</body>
+</html>
