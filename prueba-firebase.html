@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba Firebase | Academia de Gloria</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:760px;margin:50px auto;padding:20px;background:#f8fafc;color:#1e293b}
+    .panel{padding:28px;border:2px solid #c4b5fd;border-radius:22px;background:white;box-shadow:0 18px 40px rgba(76,29,149,.10)}
+    button{padding:12px 18px;border:0;border-radius:14px;color:white;background:linear-gradient(90deg,#7c3aed,#ec4899);font-weight:800;cursor:pointer}
+    #resultado{margin-top:18px;padding:15px;border-radius:14px;background:#f1f5f9;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <h1>Prueba Firebase 🔥</h1>
+    <p>Este botón escribirá y leerá un documento en Firestore.</p>
+    <button id="probarFirebase" type="button">Probar conexión</button>
+    <div id="resultado">Esperando prueba...</div>
+  </main>
+
+  <script type="module">
+    import {
+      probarConexionFirestore
+    } from "./compartido/firebase/firebase-db.js";
+
+    const boton = document.getElementById("probarFirebase");
+    const resultado = document.getElementById("resultado");
+
+    boton.addEventListener("click", async () => {
+      boton.disabled = true;
+      resultado.textContent = "Conectando con Firestore...";
+
+      try {
+        const datos = await probarConexionFirestore();
+        resultado.textContent =
+          "✅ Conexión correcta\n\n" +
+          JSON.stringify(datos, null, 2);
+      } catch (error) {
+        console.error(error);
+        resultado.textContent =
+          "❌ Error de conexión\n\n" +
+          `${error.code || "sin-código"}\n${error.message}`;
+      } finally {
+        boton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

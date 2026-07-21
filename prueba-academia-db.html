@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba AcademiaDB</title>
+
+  <style>
+    body{
+      max-width:760px;
+      margin:40px auto;
+      padding:20px;
+      font-family:Arial,sans-serif;
+      color:#1e293b;
+      background:#f8fafc;
+    }
+
+    .panel{
+      padding:26px;
+      border:2px solid #c4b5fd;
+      border-radius:22px;
+      background:white;
+    }
+
+    button{
+      margin-right:8px;
+      margin-bottom:8px;
+      padding:11px 16px;
+      border:0;
+      border-radius:13px;
+      color:white;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    pre{
+      min-height:120px;
+      padding:16px;
+      border-radius:15px;
+      background:#f1f5f9;
+      white-space:pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="panel">
+    <h1>Prueba AcademiaDB ✨</h1>
+
+    <button id="crear" type="button">Crear evento</button>
+    <button id="leer" type="button">Leer eventos 2026</button>
+
+    <pre id="resultado">Esperando prueba...</pre>
+  </main>
+
+  <script type="module">
+    import {
+      AcademiaDB
+    } from "./compartido/api/academia.js";
+
+    const resultado = document.getElementById("resultado");
+
+    document.getElementById("crear").addEventListener("click", async () => {
+      try {
+        resultado.textContent = "Creando evento...";
+
+        const id = await AcademiaDB.guardarEvento({
+          titulo: "Primer evento desde AcademiaDB",
+          fecha: "2026-07-21",
+          categoria: "Logro",
+          icono: "🚀",
+          nota: "La Academia ya tiene su propia API.",
+          completado: false,
+          anio: 2026
+        });
+
+        resultado.textContent = `✅ Evento creado\nID: ${id}`;
+      } catch (error) {
+        console.error(error);
+        resultado.textContent =
+          `❌ ${error.code || "sin-código"}\n${error.message}`;
+      }
+    });
+
+    document.getElementById("leer").addEventListener("click", async () => {
+      try {
+        resultado.textContent = "Leyendo eventos...";
+
+        const eventos = await AcademiaDB.leerEventos(2026);
+
+        resultado.textContent =
+          `✅ ${eventos.length} evento(s)\n\n` +
+          JSON.stringify(eventos, null, 2);
+      } catch (error) {
+        console.error(error);
+        resultado.textContent =
+          `❌ ${error.code || "sin-código"}\n${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
