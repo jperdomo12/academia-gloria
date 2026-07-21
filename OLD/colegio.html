@@ -30,22 +30,13 @@
     .momento span{color:#64748b;font-weight:600}
     .fuente{margin-top:22px;padding:18px;border:2px solid #dbeafe;border-radius:18px;background:#eff8ff;color:#075985;font-weight:750}
     @media(max-width:900px){.hero-colegio{grid-template-columns:1fr}.momentos{grid-template-columns:1fr}}
-    button.boton-volver{font-family:inherit;cursor:pointer}
   </style>
 </head>
 <body>
   <main class="calendario-pagina">
     <header class="calendario-superficie calendario-cabecera hero-colegio">
       <div>
-        <button
-          type="button"
-          class="boton-volver"
-          data-accion-volver
-          data-ruta-alternativa="./"
-          aria-label="Volver a la página anterior">
-          <i data-lucide="arrow-left" width="19"></i>
-          Volver
-        </button>
+        <a href="./" class="boton-volver"><i data-lucide="arrow-left" width="19"></i> Volver al curso 2025-2026</a>
         <h1 class="calendario-titulo">Calendario del Cole 🏫</h1>
         <p class="calendario-subtitulo">Curso 2025-2026 · Colegio Gaudem · Educación Primaria</p>
       </div>
@@ -192,7 +183,6 @@
 
     <footer>Academia de Gloria Valentina · Calendario del Cole 2025-2026</footer>
   </main>
-  <script src="../../compartido/js/navegacion.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
