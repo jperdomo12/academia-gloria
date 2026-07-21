@@ -39,6 +39,19 @@
       box-shadow:0 16px 34px rgba(59,130,246,.13);
       border-color:#a5b4fc;
     }
+
+    .calendario-curso-btn{
+      transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+    }
+    a.calendario-curso-btn:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 34px rgba(99,102,241,.13);
+      border-color:#a5b4fc;
+    }
+    .calendario-proximo{
+      opacity:.72;
+      cursor:default;
+    }
     </style>
 </head>
 <body>
@@ -123,6 +136,35 @@
         </span>
 <i class="w-5 h-5" data-lucide="external-link"></i>
 </a>
+</div>
+</div>
+</section><section class="glass-card rounded-[2.5rem] p-6 md:p-8 mb-10 calendarios-curso">
+<div class="flex flex-col lg:flex-row lg:items-center gap-6">
+<div class="flex items-center gap-4 lg:flex-1">
+<div class="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 text-white flex items-center justify-center text-3xl shadow-lg">
+        📅
+      </div>
+<div>
+<p class="text-xs font-black uppercase tracking-[.18em] text-violet-700 mb-1">Curso 2025-2026</p>
+<h2 class="text-2xl md:text-3xl font-black text-slate-800">Mis calendarios</h2>
+<p class="text-slate-600 font-medium mt-1">Consulta las fechas oficiales del cole y los momentos personales de Gloria.</p>
+</div>
+</div>
+<div class="grid sm:grid-cols-2 gap-3 lg:min-w-[500px]">
+<a class="calendario-curso-btn inline-flex items-center justify-between gap-3 rounded-2xl bg-sky-50 border-2 border-sky-100 px-5 py-4 text-sky-800 font-black" href="../../calendarios/2025-2026/colegio.html">
+<span class="inline-flex items-center gap-3">
+<span class="text-2xl">🏫</span>
+          Calendario del Cole
+        </span>
+<i class="w-5 h-5" data-lucide="arrow-right"></i>
+</a>
+<div aria-disabled="true" class="calendario-curso-btn calendario-proximo inline-flex items-center justify-between gap-3 rounded-2xl bg-violet-50 border-2 border-violet-100 px-5 py-4 text-violet-800 font-black">
+<span class="inline-flex items-center gap-3">
+<span class="text-2xl">⭐</span>
+          Calendario de Gloria
+        </span>
+<span class="text-xs rounded-full bg-violet-100 px-3 py-1">Próximamente</span>
+</div>
 </div>
 </div>
 </section>
