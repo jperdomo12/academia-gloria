@@ -1,126 +1,175 @@
-# 🎓 Academia de Gloria - version 2.0
+# 🌈 Academia de Gloria Valentina
 
-Plataforma educativa interactiva diseñada para apoyar el aprendizaje de Gloria, combinando contenido escolar con experiencias visuales, dinámicas y motivadoras.
+> **"Aprender puede ser bonito."**
 
----
-
-## 🌟 Objetivo
-
-Facilitar la comprensión de contenidos escolares mediante:
-
-* Explicaciones visuales
-* Interactividad
-* Refuerzo positivo
-* Adaptación a necesidades específicas de aprendizaje
+![Estado](https://img.shields.io/badge/Versión-2.0-blue)
+![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-success)
 
 ---
 
-## 🧠 Enfoque pedagógico
+## 📖 ¿Qué es?
 
-Este proyecto está especialmente pensado para:
+La **Academia de Gloria Valentina** es un entorno digital de aprendizaje creado para acompañar el desarrollo académico, personal y emocional de Gloria.
 
-* Aprendizaje progresivo
-* Refuerzo visual
-* Comprensión antes que memorización
-* Experiencias sin presión ni penalización
+Nació como un apoyo para reforzar los contenidos escolares de **5º de Primaria**, pero ha evolucionado hasta convertirse en una plataforma donde aprender significa también crear, descubrir, imaginar y disfrutar.
 
----
-
-## 📚 Áreas disponibles
-
-* ✏️ Lengua
-* ➗ Matemáticas
-* ⚡ Ciencias
-* 🌍 Sociales
-
-Cada área contiene contenidos explicativos, ejemplos visuales y ejercicios interactivos.
+La Academia está especialmente diseñada teniendo presente las necesidades de niños con **Trastorno del Desarrollo del Lenguaje (TDL/TEL)**, priorizando siempre la comprensión visual, la motivación y la autonomía.
 
 ---
 
-## 🎮 Modo Juego PRO (Tercer Trimestre)
+## ❤️ Nuestra filosofía
 
-Se ha incorporado un modo especial tipo videojuego para preparar los exámenes del tercer trimestre.
+Creemos que:
 
-### 🧩 Misiones disponibles
-
-* 💡 Electricidad
-* 📐 Geometría
-* 💬 Diálogo
-* 👑 Edad Moderna
-
-### 🚀 Características
-
-* Sistema de ⭐ estrellas
-* Puntos acumulativos
-* Progreso guardado en el navegador (localStorage)
-* Panel global de avance
-* Recompensas motivadoras
+- Aprender puede ser bonito.
+- Cada niño aprende a su ritmo.
+- La motivación es tan importante como el contenido.
+- Equivocarse también forma parte del aprendizaje.
+- Cada pequeño avance merece ser celebrado.
 
 ---
 
-## 🗂️ Estructura del proyecto
+# 📚 Organización
 
-```bash
+```
 academia-gloria/
+
+├── assets/
+├── compartido/
+├── cursos/
+│   ├── 5to/
+│   └── 6to/
 │
-├── index.html
+├── mi-universo/
 │
-├── lengua/
-│   └── dialogo.html
+├── habilidades/
 │
-├── mates/
-│   └── geometria.html
-│
-├── ciencias/
-│   └── electricidad.html
-│
-├── sociales/
-│   └── edad_moderna.html
+├── etapas/
 │
 ├── adicionales/
-│   └── juegos/
-│       └── index.html
+│
+├── docs/
+│
+└── index.html
 ```
 
 ---
 
-## 🔗 Acceso
+# 🌟 Principales áreas
 
-👉 https://jperdomo12.github.io/academia-gloria/
+## 🎓 Mis Cursos
 
----
+Contenidos escolares organizados por curso.
 
-## 💾 Progreso
+Actualmente:
 
-El progreso del modo juego se guarda automáticamente en el navegador mediante `localStorage`, permitiendo continuar donde se dejó.
-
----
-
-## 🚧 Próximas mejoras
-
-* Integración automática de resultados desde cada tema
-* Más misiones y contenidos
-* Sistema de recompensas avanzado
-* Animaciones y feedback dinámico
-* Personalización del progreso
+- 5º Primaria
+- Preparación para 6º
 
 ---
 
-## ❤️ Filosofía
+## 🌈 Mi Universo
 
-Aprender debe ser:
+Espacio personal de Gloria.
 
-* Divertido 🎮
-* Visual 👀
-* Motivador 💪
-* Accesible 🤝
+Incluye progresivamente:
 
----
-
-## 👨‍💻 Autor
-
-Proyecto desarrollado con dedicación para apoyar el aprendizaje de Gloria.
+- Gloria Escritora
+- Biblioteca
+- Taller Creativo
+- Aventuras
+- Recuerdos
+- Logros
 
 ---
 
-<!-- Entorno local configurado con éxito en 2026 -->
+## 🧠 Mis Superpoderes
+
+Actividades destinadas a potenciar:
+
+- comprensión
+- organización
+- autonomía
+- razonamiento
+- gestión emocional
+- confianza
+
+---
+
+## ✨ Adicionales
+
+Recursos complementarios:
+
+- juegos
+- música
+- lecturas
+- actividades creativas
+
+---
+
+# 💻 Tecnologías
+
+La Academia utiliza una arquitectura ligera basada en:
+
+- HTML5
+- CSS3
+- JavaScript
+- GitHub Pages
+- GitHub Desktop
+- Visual Studio Code
+
+No utiliza actualmente bases de datos.
+
+---
+
+# 📂 Documentación
+
+La documentación del proyecto se encuentra en:
+
+```
+docs/project/
+```
+
+Documentos principales:
+
+- ADN_ACADEMIA_GLORIA.md
+- DECISION_LOG.md
+- MIGRACION_5TO.md
+- ROADMAP.md
+- README_PROYECTO.md
+
+---
+
+# 🚀 Estado actual
+
+✅ Arquitectura reorganizada
+
+✅ Migración completa de 5º
+
+✅ Portal principal
+
+✅ Mi Universo
+
+🚧 Gloria Escritora
+
+🚧 Preparación para 6º
+
+---
+
+# ❤️ Un proyecto familiar
+
+La Academia ha sido creada por la familia de Gloria como una herramienta para acompañarla en su aprendizaje, reforzar su autonomía y ayudarla a descubrir que aprender puede ser una experiencia bonita.
+
+No pretende sustituir al colegio ni a los profesionales que la acompañan, sino complementar su trabajo desde casa mediante recursos visuales, interactivos y motivadores.
+
+---
+
+> **"Cuando dudemos entre añadir una nueva funcionalidad o hacer más sencillo el aprendizaje de Gloria, siempre elegiremos lo segundo."**
+
+---
+
+**Academia de Gloria Valentina**
+
+Versión pública **2.0**
+
+Madrid · España

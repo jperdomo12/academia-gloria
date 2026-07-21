@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gloria Escritora | Mi Universo</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Outfit,sans-serif;color:#243047;background:linear-gradient(160deg,#fff7fb,#eef8ff,#fff9eb);min-height:100vh}
+.wrap{max-width:1180px;margin:auto;padding:24px}.card{background:#ffffffee;border:2px solid #e7eaf8;border-radius:28px;box-shadow:0 18px 44px #5b21b615;padding:26px}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center}.title{font-size:clamp(40px,6vw,72px);line-height:1;margin:8px 0;background:linear-gradient(90deg,#e83e8c,#7c3aed,#0ea5e9,#10b981);-webkit-background-clip:text;color:transparent}
+.back,.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:0;border-radius:16px;padding:14px 18px;font-weight:900;cursor:pointer}.back{background:white;color:#6d28d9;border:2px solid #ede9fe}.btn.primary{background:linear-gradient(90deg,#7c3aed,#ec4899);color:white}.btn.blue{background:#0ea5e9;color:white}.btn.green{background:#10b981;color:white}.btn.light{background:#eef2ff;color:#4f46e5}.btn.red{background:#ffe4e6;color:#be123c}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.tab{flex:1;min-width:170px;padding:14px;border-radius:16px;border:2px solid #e5e7eb;background:white;font-weight:900;cursor:pointer}.tab.active{background:linear-gradient(90deg,#7c3aed,#ec4899);color:white}
+.grid{display:grid;grid-template-columns:1fr 330px;gap:22px}.field{padding:18px;border-radius:22px;border:2px solid #eee;margin-bottom:16px}.pink{background:#fff1f6}.sky{background:#effaff}.amber{background:#fff8e7}.green{background:#effcf6}.violet{background:#f5f0ff}
+label{display:block;font-weight:900;margin-bottom:8px}input,select,textarea{width:100%;padding:13px 14px;border:2px solid #dfe3ef;border-radius:14px;font:inherit;background:white}textarea{min-height:110px;resize:vertical}input:focus,textarea:focus,select:focus{outline:none;border-color:#a78bfa;box-shadow:0 0 0 4px #a78bfa22}
+.help{font-size:14px;color:#68748b;margin:0 0 9px;font-weight:600}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:2px solid #e9d5ff;background:white;border-radius:999px;padding:9px 12px;font-weight:800;cursor:pointer}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.status{font-weight:700;color:#64748b}.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.story{border:2px solid #ede9fe;border-radius:20px;padding:18px;background:white}.story h3{margin:8px 0}.muted{color:#64748b}.reader section{padding:20px;border-radius:22px;margin:14px 0}.hidden{display:none}.big-number{font-size:54px;font-weight:900;color:#7c3aed}
+@media(max-width:850px){.hero,.grid{grid-template-columns:1fr}.story-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.wrap{padding:12px}.card{padding:18px}.story-grid{grid-template-columns:1fr}}
+@media print{.no-print{display:none!important}.card{border:0;box-shadow:none}.wrap{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="card hero">
+<div>
+<a class="back no-print" href="../index.html">← Volver a Mi Universo</a>
+<h1 class="title">Gloria Escritora ✨</h1>
+<p style="font-size:20px;font-weight:600;color:#5c677d">Escribe, guarda, escucha, edita e imprime tus propias historias. Empieza con una sola frase.</p>
+</div>
+<div class="field violet">
+<p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">REGLA DE ESCRITORA</p>
+<p style="font-size:24px;font-weight:900">Primero imagino. Después escribo. Finalmente reviso con calma. 🌈</p>
+</div>
+</header>
+
+<div class="tabs no-print">
+<button class="tab active" data-tab="write">✍️ Nueva historia</button>
+<button class="tab" data-tab="stories">📚 Mis historias</button>
+<button class="tab" data-tab="reader">👀 Leer historia</button>
+</div>
+
+<section id="write" class="panel">
+<div class="grid">
+<form id="form" class="card">
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><div style="color:#ec4899;font-weight:900">MI TALLER</div><h2 style="font-size:34px;margin:3px 0 18px">Construye tu historia</h2></div><div id="status" class="status">Sin guardar</div></div>
+<input id="id" type="hidden">
+<div class="field pink"><label>📖 Título</label><input id="title" placeholder="Ejemplo: Mi viaje a Venezuela"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div class="field violet"><label>🎭 Tipo</label><select id="category"><option>Aventura</option><option>Recuerdo</option><option>Fantasía</option><option>Misterio</option><option>Humor</option><option>Diario</option></select></div>
+<div class="field sky"><label>📍 Lugar</label><input id="place" placeholder="¿Dónde ocurre?"></div>
+</div>
+<div class="field green"><label>👥 Personajes</label><input id="characters" placeholder="¿Quiénes aparecen?"></div>
+<div class="field amber"><label>1️⃣ Inicio</label><p class="help">¿Cuándo ocurrió? ¿Dónde estabas? ¿Con quién?</p><textarea id="beginning" placeholder="Primero..."></textarea></div>
+<div class="field sky"><label>2️⃣ Lo que ocurrió</label><p class="help">Cuenta los hechos en orden.</p><textarea id="middle" placeholder="Después... Entonces... Más tarde..."></textarea></div>
+<div class="field pink"><label>3️⃣ Cómo me sentí</label><div class="chips no-print" style="margin-bottom:10px"><button type="button" class="chip emotion">Feliz 😊</button><button type="button" class="chip emotion">Emocionada 🤩</button><button type="button" class="chip emotion">Sorprendida 😮</button><button type="button" class="chip emotion">Nerviosa 😟</button><button type="button" class="chip emotion">Orgullosa 🌟</button></div><textarea id="feelings" placeholder="Me sentí... porque..."></textarea></div>
+<div class="field green"><label>4️⃣ Final</label><p class="help">¿Cómo terminó? ¿Qué aprendiste o recordarás?</p><textarea id="ending" placeholder="Finalmente..."></textarea></div>
+<div class="actions no-print"><button class="btn primary" type="submit">💾 Guardar</button><button class="btn blue" type="button" id="preview">👀 Ver historia</button><button class="btn light" type="button" id="newStory">➕ Nueva</button></div>
+</form>
+
+<aside>
+<div class="card" style="margin-bottom:18px"><h3>Palabras puente</h3><div class="chips"><button class="chip connector">Primero</button><button class="chip connector">Después</button><button class="chip connector">Entonces</button><button class="chip connector">Más tarde</button><button class="chip connector">Finalmente</button></div><p class="help" style="margin-top:12px">Pulsa una palabra para añadirla al cuadro activo.</p></div>
+<div class="card" style="margin-bottom:18px"><h3>Palabras escritas</h3><div id="count" class="big-number">0</div><p id="countMsg" class="muted" style="font-weight:800">Empieza con una frase.</p></div>
+<div class="card"><h3>Una buena historia tiene...</h3><p>✅ Un comienzo claro.</p><p>✅ Hechos en orden.</p><p>✅ Emociones.</p><p>✅ Un final.</p></div>
+</aside>
+</div>
+</section>
+
+<section id="stories" class="panel hidden">
+<div class="card">
+<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><div style="color:#7c3aed;font-weight:900">MI BIBLIOTECA</div><h2 style="font-size:34px;margin:3px 0 18px">Mis historias</h2></div><div class="actions no-print"><button class="btn blue" id="export">📤 Exportar</button><label class="btn green">📥 Importar<input id="import" type="file" accept=".json" hidden></label></div></div>
+<div id="storyGrid" class="story-grid"></div>
+<div id="empty" class="field violet" style="text-align:center"><div style="font-size:60px">📖</div><h3>Tu primera historia te está esperando</h3><p>Empieza con una sola frase.</p></div>
+</div>
+</section>
+
+<section id="reader" class="panel hidden">
+<article class="card reader">
+<div id="readerEmpty" style="text-align:center;padding:40px"><div style="font-size:70px">✨</div><h2>Elige una historia para leer</h2></div>
+<div id="readerContent" class="hidden">
+<div class="actions no-print" style="justify-content:flex-end"><button class="btn primary" id="speak">🔊 Escuchar</button><button class="btn light" id="stop">⏹ Detener</button><button class="btn blue" onclick="window.print()">🖨️ Imprimir</button></div>
+<div style="text-align:center"><div id="rCategory" style="font-weight:900;color:#7c3aed"></div><h2 id="rTitle" class="title" style="font-size:52px"></h2><p id="rMeta" class="muted"></p></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px"><div class="field sky"><b>📍 Lugar</b><p id="rPlace"></p></div><div class="field green"><b>👥 Personajes</b><p id="rCharacters"></p></div></div>
+<section class="amber"><h3>1. Inicio</h3><p id="rBeginning"></p></section>
+<section class="sky"><h3>2. Lo que ocurrió</h3><p id="rMiddle"></p></section>
+<section class="pink"><h3>3. Cómo me sentí</h3><p id="rFeelings"></p></section>
+<section class="green"><h3>4. Final</h3><p id="rEnding"></p></section>
+<div style="background:linear-gradient(90deg,#7c3aed,#ec4899,#0ea5e9);color:white;text-align:center;border-radius:20px;padding:18px;font-weight:900;font-size:22px">Historia creada por Gloria Valentina ✨</div>
+</div>
+</article>
+</section>
+</main>
+
+<script>
+const KEY="academiaGloriaStoriesV1";let current=null,activeArea=null;
+const ids=["title","category","place","characters","beginning","middle","feelings","ending"];
+const $=id=>document.getElementById(id);
+const getStories=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch{return[]}};
+const setStories=x=>localStorage.setItem(KEY,JSON.stringify(x));
+const makeId=()=>Date.now()+"-"+Math.random().toString(16).slice(2);
+
+function data(){return{id:$("id").value||makeId(),title:$("title").value.trim(),category:$("category").value,place:$("place").value.trim(),characters:$("characters").value.trim(),beginning:$("beginning").value.trim(),middle:$("middle").value.trim(),feelings:$("feelings").value.trim(),ending:$("ending").value.trim(),updatedAt:new Date().toISOString()}}
+function valid(s){if(!s.title){alert("Ponle un título a tu historia ✨");$("title").focus();return false}if(!s.beginning&&!s.middle&&!s.feelings&&!s.ending){alert("Escribe al menos una parte de tu historia 🌈");return false}return true}
+function openTab(name){document.querySelectorAll(".panel").forEach(x=>x.classList.add("hidden"));$(name).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===name));if(name==="stories")render();scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
+
+$("form").onsubmit=e=>{e.preventDefault();const s=data();if(!valid(s))return;let all=getStories(),i=all.findIndex(x=>x.id===s.id);if(i>=0){s.createdAt=all[i].createdAt;all[i]=s}else{s.createdAt=s.updatedAt;all.unshift(s)}setStories(all);$("id").value=s.id;$("status").textContent="Guardada ✅";show(s);render();alert("¡Historia guardada! 🎉")};
+ids.forEach(id=>{$(id).addEventListener("input",()=>{$("status").textContent="Cambios sin guardar";countWords()});if($(id).tagName==="TEXTAREA")$(id).onfocus=()=>activeArea=$(id)});
+document.querySelectorAll(".emotion").forEach(b=>b.onclick=()=>{$("feelings").value+=($("feelings").value?", ":"")+b.textContent;activeArea=$("feelings");countWords()});
+document.querySelectorAll(".connector").forEach(b=>b.onclick=()=>{let t=activeArea||$("middle");t.value+=(t.value&&!t.value.endsWith(" ")?" ":"")+b.textContent+", ";t.focus();countWords()});
+$("newStory").onclick=()=>{$("form").reset();$("id").value="";$("status").textContent="Sin guardar";countWords();$("title").focus()};
+$("preview").onclick=()=>{let s=data();if(valid(s)){show(s);openTab("reader")}};
+
+function countWords(){let text=["beginning","middle","feelings","ending"].map(x=>$(x).value.trim()).join(" ").trim(),n=text?text.split(/\s+/).length:0;$("count").textContent=n;$("countMsg").textContent=n<10?"Empieza con una frase.":n<30?"¡Tu historia ya está creciendo! 🌱":n<60?"Tus ideas están tomando forma. ✨":n<100?"¡Gran trabajo de escritora! 📚":"¡Historia poderosa! 🌟"}
+function esc(s=""){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function render(){let all=getStories(),g=$("storyGrid");g.innerHTML="";$("empty").classList.toggle("hidden",all.length>0);all.forEach(s=>{let a=document.createElement("article");a.className="story";a.innerHTML=`<div style="display:flex;justify-content:space-between"><b style="color:#7c3aed">${esc(s.category)}</b><span class="muted">${new Date(s.updatedAt).toLocaleDateString("es-ES")}</span></div><h3>${esc(s.title)}</h3><p class="muted">${esc(s.place||"Lugar por descubrir")}</p><div class="actions"><button class="btn blue read">Leer</button><button class="btn light edit">Editar</button><button class="btn red del">Eliminar</button></div>`;a.querySelector(".read").onclick=()=>{show(s);openTab("reader")};a.querySelector(".edit").onclick=()=>{load(s);openTab("write")};a.querySelector(".del").onclick=()=>{if(confirm("¿Eliminar esta historia?")){setStories(all.filter(x=>x.id!==s.id));render()}};g.appendChild(a)})}
+function load(s){$("id").value=s.id;ids.forEach(id=>$(id).value=s[id]||"");$("status").textContent="Guardada ✅";countWords()}
+function show(s){current=s;$("readerEmpty").classList.add("hidden");$("readerContent").classList.remove("hidden");$("rCategory").textContent=s.category;$("rTitle").textContent=s.title;$("rMeta").textContent="Última edición: "+new Date(s.updatedAt).toLocaleDateString("es-ES");$("rPlace").textContent=s.place||"No indicado";$("rCharacters").textContent=s.characters||"No indicado";$("rBeginning").textContent=s.beginning||"—";$("rMiddle").textContent=s.middle||"—";$("rFeelings").textContent=s.feelings||"—";$("rEnding").textContent=s.ending||"—"}
+$("speak").onclick=()=>{if(!current||!("speechSynthesis"in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance([current.title,current.beginning,current.middle,current.feelings,current.ending].filter(Boolean).join(". "));u.lang="es-ES";u.rate=.9;speechSynthesis.speak(u)};
+$("stop").onclick=()=>speechSynthesis.cancel();
+$("export").onclick=()=>{let blob=new Blob([JSON.stringify(getStories(),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="historias-gloria.json";a.click();URL.revokeObjectURL(a.href)};
+$("import").onchange=async e=>{try{let x=JSON.parse(await e.target.files[0].text());if(!Array.isArray(x))throw 0;setStories(x);render();alert("Historias importadas ✨")}catch{alert("Archivo no válido")}e.target.value=""};
+render();countWords();
+</script>
+</body>
+</html>
