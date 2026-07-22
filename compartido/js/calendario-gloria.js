@@ -2,7 +2,7 @@
    Academia de Gloria Valentina
    calendario-gloria-cloud.js
    Calendario personal conectado a Firestore
-   Enero a diciembre
+   Enero a diciembre del año
    ========================================================== */
 
 import { Academia } from "../api/academia.js";
