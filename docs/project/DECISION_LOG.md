@@ -499,6 +499,61 @@ Absoluto.
 
 ---
 
+# DECISION-013
+
+## Nombre
+
+Migración del Calendario Gloria a Cloud Firestore
+
+**Fecha**
+
+Julio 2026
+
+### Estado
+
+✅ Aprobada
+
+### Contexto
+
+El Calendario Gloria almacenaba toda la información utilizando localStorage, lo que impedía la sincronización entre dispositivos y vinculaba los datos al navegador donde se habían creado.
+
+### Decisión
+
+Migrar el almacenamiento del calendario a Cloud Firestore mediante la API propia `AcademiaAPI`, utilizando Firebase Authentication para asociar automáticamente los eventos al usuario autenticado.
+
+Arquitectura:
+
+Calendario Gloria
+
+↓
+
+AcademiaAPI
+
+↓
+
+Cloud Firestore
+
+↓
+
+usuarios/{uid}/eventos
+
+### Justificación
+
+- Sincronización entre dispositivos.
+- Datos asociados a la identidad del usuario.
+- Eliminación de la dependencia de localStorage como almacenamiento principal.
+- Base común para todos los futuros módulos de la Academia.
+
+### Impacto
+
+Estratégico.
+
+Esta decisión convierte oficialmente a la Academia de Gloria en una plataforma cloud preparada para crecer de forma segura y escalable.
+
+
+---
+
+
 # Próximas decisiones
 
 Pendientes.
@@ -539,3 +594,4 @@ Creamos oportunidades para aprender.
 Y cada decisión que tomemos deberá acercarnos un poco más a ese objetivo.
 
 🌈
+
