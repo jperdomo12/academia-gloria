@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../../compartido/css/academia-base.css">
-  <link rel="stylesheet" href="../../compartido/css/calendario.css">
+  <link rel="stylesheet" href="../../compartido/css/calendarios.css">
   <link rel="stylesheet" href="../../compartido/css/calendario-gloria.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -164,11 +164,13 @@
       <div id="gloriaEventos" class="gloria-eventos"></div>
     </section>
 
-    <div class="aviso-local">
-      💡 Esta versión guarda los eventos en este navegador. La sincronización entre dispositivos será el siguiente gran paso.
-    </div>
+  <div class="aviso-local">
+    ☁️ Calendario sincronizado con Firestore.
+    Tus eventos se guardan automáticamente en tu Academia.
+  </div>
 
-    <footer>Academia de Gloria Valentina · Mi Calendario 2025</footer>
+    <footer>Academia de Gloria Valentina · Cloud Edition ☁️</footer>
+
   </main>
 
   <div class="gloria-modal-fondo" id="modalEvento" aria-hidden="true">
@@ -223,7 +225,7 @@
   </div>
 
   <script src="../../compartido/js/navegacion.js"></script>
-  <script src="../../compartido/js/calendario-gloria.js"></script>
+  <script type="module" src="../../compartido/js/calendario-gloria.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
