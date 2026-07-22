@@ -36,6 +36,37 @@ La documentación forma parte integral de la Academia y evoluciona conjuntamente
 
 ---
 
+# Principio de Organización
+
+La documentación de la Academia sigue el principio de **Responsabilidad Única**.
+
+Cada documento responde a una única pregunta y evita duplicar información existente en otros documentos.
+
+| Documento | Pregunta que responde |
+|-----------|-----------------------|
+| README | ¿Dónde está la documentación? |
+| MASTER_PLAN | ¿Qué es la Academia y hacia dónde va? |
+| PROJECT_MAP | ¿Cómo está organizado el proyecto? |
+| ROADMAP | ¿Qué construiremos y cuándo? |
+| CHANGELOG | ¿Qué ha cambiado? |
+| DECISION_LOG | ¿Por qué se tomaron determinadas decisiones? |
+
+Cuando un tema requiera mayor nivel de detalle, deberá desarrollarse en su documento específico, manteniendo este README únicamente como punto de entrada a la documentación oficial.
+
+---
+
+
+| Documento         | Propósito                                   |
+| ----------------- | ------------------------------------------- |
+| `README.md`       | Índice de la documentación.                 |
+| `MASTER_PLAN.md`  | Visión y estrategia del proyecto.           |
+| `ROADMAP.md`      | Evolución funcional por versiones.          |
+| `PROJECT_MAP.md`  | Organización técnica del repositorio.       |
+| `CHANGELOG.md`    | Qué cambió en cada versión.                 |
+| `DECISION_LOG.md` | Por qué se tomaron determinadas decisiones. |
+
+---
+
 # Organización de la Documentación
 
 ```
@@ -250,6 +281,10 @@ Cada documento debe responder a una única pregunta y evitar duplicar informaci�
 # Visión
 
 La documentación crecerá junto con la Academia, acompañando su evolución desde una plataforma educativa familiar hasta un ecosistema completo de aprendizaje, organización y crecimiento personal.
+
+---
+
+---
 
 ---
 
