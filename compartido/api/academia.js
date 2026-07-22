@@ -21,7 +21,13 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-const USUARIO_ID = "gloria";
+
+/**
+ * 22/07/2026: cambiado desde const USUARIO_ID = "gloria"; por el UID de gvpp.2015@gmail.com
+ */
+
+const USUARIO_ID = "PQfCOjCCl8dIhbWJa0XdhBT803C2";
+
 
 /**
  * Referencia a la colección:
