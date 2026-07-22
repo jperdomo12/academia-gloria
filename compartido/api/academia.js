@@ -4,7 +4,8 @@
    API pública de acceso a datos
    ========================================================== */
 
-import { db } from "../firebase/firebase-config.js";
+/* import { db } from "../firebase/firebase-config.js"; */
+import { db, auth } from "../firebase/firebase-config.js";
 import { crearEvento } from "../modelos/evento.js";
 
 import {
@@ -24,9 +25,19 @@ import {
 
 /**
  * 22/07/2026: cambiado desde const USUARIO_ID = "gloria"; por el UID de gvpp.2015@gmail.com
- */
 
-const USUARIO_ID = "PQfCOjCCl8dIhbWJa0XdhBT803C2";
+
+const USUARIO_ID = "PQfCOjCCl8dIhbWJa0XdhBT803C2";  */
+
+function obtenerUID() {
+    const usuario = auth.currentUser;
+
+    if (!usuario) {
+        throw new Error("No hay ningún usuario autenticado.");
+    }
+
+    return usuario.uid;
+}
 
 
 /**
@@ -37,7 +48,7 @@ function coleccionEventos() {
   return collection(
     db,
     "usuarios",
-    USUARIO_ID,
+    obtenerUID(),
     "eventos"
   );
 }
@@ -53,7 +64,7 @@ function documentoEvento(id) {
   return doc(
     db,
     "usuarios",
-    USUARIO_ID,
+    obtenerUID(),
     "eventos",
     id
   );

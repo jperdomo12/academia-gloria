@@ -6,6 +6,7 @@
    ========================================================== */
 
 import { Academia } from "../api/academia.js";
+import { auth } from "../firebase/firebase-config.js";
 
 (() => {
   const ANIO = Number(document.body.dataset.anio);
@@ -409,7 +410,14 @@ import { Academia } from "../api/academia.js";
     );
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+     await auth.authStateReady();
+
+    if (!auth.currentUser) {
+      window.location.replace("/academia-gloria/login.html");
+    return;
+    }
+
     $("nuevoEvento").onclick = () => abrirModal();
     $("cerrarModal").onclick = cerrarModal;
     $("cancelarModal").onclick = cerrarModal;
