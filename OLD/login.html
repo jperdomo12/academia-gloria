@@ -85,27 +85,26 @@
             <p class="text-slate-500 font-medium">Elige tu perfil y escribe la clave mágica.</p>
           </div>
 
-          <form id="loginForm" class="space-y-4">
+          <form onsubmit="entrar(event)" class="space-y-4">
             <div>
-              <label for="email" class="block font-black text-slate-700 mb-2">Correo</label>
-              <input id="email" type="email" autocomplete="username"
-                     placeholder="Correo de Gloria" required
-                     class="w-full rounded-2xl border-2 border-sky-100 px-5 py-4 font-bold text-slate-700 outline-none focus:border-violet-400 bg-white" />
+              <label class="block font-black text-slate-700 mb-2">Perfil</label>
+              <select id="profile" class="w-full rounded-2xl border-2 border-sky-100 px-5 py-4 font-bold text-slate-700 outline-none focus:border-violet-400 bg-white">
+                <option value="Gloria">👧 Gloria</option>
+                <option value="Invitada">🌟 Invitada</option>
+              </select>
             </div>
 
             <div>
-              <label for="password" class="block font-black text-slate-700 mb-2">Clave mágica</label>
-              <input id="password" type="password" autocomplete="current-password"
-                     placeholder="Escribe la contraseña..." required
+              <label class="block font-black text-slate-700 mb-2">Clave mágica</label>
+              <input id="password" type="password" autocomplete="current-password" placeholder="Escribe la clave..."
                      class="w-full rounded-2xl border-2 border-sky-100 px-5 py-4 font-bold text-slate-700 outline-none focus:border-violet-400" />
             </div>
 
-            <button id="loginButton" type="submit"
-                    class="w-full bg-gradient-to-r from-sky-600 via-violet-600 to-amber-500 text-white rounded-2xl py-4 font-black text-lg shadow-lg hover:scale-[1.02] transition-all">
+            <button type="submit" class="w-full bg-gradient-to-r from-sky-600 via-violet-600 to-amber-500 text-white rounded-2xl py-4 font-black text-lg shadow-lg hover:scale-[1.02] transition-all">
               Entrar a la Academia →
             </button>
 
-            <p id="message" class="min-h-[2rem] text-center font-black" role="status"></p>
+            <p id="message" class="min-h-[2rem] text-center font-black"></p>
           </form>
 
           <!--  Bloque comentado para la primera versión (10/06/2026)
@@ -113,89 +112,66 @@
             <p class="text-emerald-700 font-black">Consejo: no compartas la clave mágica fuera de casa.</p>
           </div>
           -->
-
+          
         </div>
       </div>
     </section>
   </main>
 
-  <script type="module">
-    import {
-      iniciarSesion,
-      observarSesion
-    } from "./compartido/firebase/firebase-auth.js";
-
+  <script>
     lucide.createIcons();
 
-    const form = document.getElementById("loginForm");
-    const button = document.getElementById("loginButton");
-    const message = document.getElementById("message");
-    const box = document.getElementById("loginBox");
+    const ACCESS_KEYS = {
+      Gloria: "panda2015",
+      Invitada: "academia"
+    };
 
     function estrellas(){
       const icons = ["⭐","✨","🌟","🔑","🏰"];
-      for(let i = 0; i < 12; i++){
-        const star = document.createElement("div");
-        star.className = "star";
-        star.textContent = icons[i % icons.length];
-        star.style.left = `${15 + Math.random() * 70}%`;
-        star.style.top = `${55 + Math.random() * 20}%`;
-        document.body.appendChild(star);
-        setTimeout(() => star.remove(), 1500);
+      for(let i=0;i<12;i++){
+        const s=document.createElement("div");
+        s.className="star";
+        s.textContent=icons[i%icons.length];
+        s.style.left=(15+Math.random()*70)+"%";
+        s.style.top=(55+Math.random()*20)+"%";
+        s.style.animationDelay=(Math.random()*0.2)+"s";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),1500);
       }
     }
 
-    function mostrarError(error){
-      const textos = {
-        "auth/invalid-credential": "🔑 El correo o la contraseña no son correctos.",
-        "auth/invalid-email": "📧 El correo no es válido.",
-        "auth/too-many-requests": "⏳ Demasiados intentos. Espera un poco.",
-        "auth/network-request-failed": "🌐 Revisa tu conexión a Internet."
-      };
-
-      message.className = "min-h-[2rem] text-center font-black text-red-600";
-      message.textContent = textos[error.code] || "⚠️ No se pudo entrar.";
-
-      box.classList.remove("shake");
-      void box.offsetWidth;
-      box.classList.add("shake");
-    }
-
-    form.addEventListener("submit", async (event) => {
+    function entrar(event){
       event.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+      const profile = document.getElementById("profile").value;
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+      const box = document.getElementById("loginBox");
 
-      button.disabled = true;
-      button.textContent = "Abriendo la puerta... ✨";
-      message.className = "min-h-[2rem] text-center font-black text-violet-600";
-      message.textContent = "Comprobando la clave mágica...";
+      if(password === ACCESS_KEYS[profile]){
+        sessionStorage.setItem("academia_gloria_auth","ok");
+        sessionStorage.setItem("academia_gloria_profile",profile);
 
-      try {
-        await iniciarSesion(email, password);
+        message.className="min-h-[2rem] text-center font-black text-emerald-600";
+        message.textContent = profile === "Gloria"
+          ? "🎉 ¡Hola Gloria! Bienvenida a tu Academia."
+          : "🎉 ¡Bienvenida, " + profile + "!";
 
-        message.className = "min-h-[2rem] text-center font-black text-emerald-600";
-        message.textContent = "🎉 ¡Bienvenida a tu Academia!";
         estrellas();
 
-        setTimeout(() => {
-          window.location.replace("./index.html");
-        }, 800);
-      } catch (error) {
-        console.error(error);
-        mostrarError(error);
-      } finally {
-        button.disabled = false;
-        button.textContent = "Entrar a la Academia →";
+        setTimeout(()=>{ window.location.href = "index.html"; },900);
+      }else{
+        message.className="min-h-[2rem] text-center font-black text-red-600";
+        message.textContent="🔑 Esa no es la clave mágica. Inténtalo otra vez.";
+        box.classList.remove("shake");
+        void box.offsetWidth;
+        box.classList.add("shake");
       }
-    });
+    }
 
-    observarSesion((usuario) => {
-      if (usuario) {
-        window.location.replace("./index.html");
-      }
-    });
+    if(sessionStorage.getItem("academia_gloria_auth")==="ok"){
+      window.location.href = "index.html";
+    }
   </script>
 
 </body>

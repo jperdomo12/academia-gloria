@@ -1,9 +1,11 @@
 /* ==========================================================
    Academia de Gloria Valentina
-   calendario-gloria.js
-   Calendario personal reutilizable por año natural
+   calendario-gloria-cloud.js
+   Calendario personal conectado a Firestore
    Enero a diciembre
    ========================================================== */
+
+import { Academia } from "../api/academia.js";
 
 (() => {
   const ANIO = Number(document.body.dataset.anio);
@@ -12,8 +14,6 @@
     console.error("Calendario de Gloria: falta data-anio en <body>.");
     return;
   }
-
-  const CLAVE = `academiaGloriaCalendario${ANIO}`;
 
   const MESES = [
     [0, "Enero"],
@@ -36,21 +36,7 @@
   let filtroActual = "todos";
   let mesSeleccionado = "todos";
 
-  function leerEventos() {
-    try {
-      return JSON.parse(localStorage.getItem(CLAVE)) || [];
-    } catch {
-      return [];
-    }
-  }
-
-  function guardarEventos(eventos) {
-    localStorage.setItem(CLAVE, JSON.stringify(eventos));
-  }
-
-  function crearId() {
-    return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
+  let eventos = [];
 
   function escapar(texto = "") {
     return texto.replace(/[&<>"']/g, (caracter) => ({
@@ -85,7 +71,7 @@
 
   function renderCalendario() {
     const contenedor = $("gloriaMeses");
-    const eventos = leerEventos();
+    const eventosActuales = eventos;
     const hoy = new Date().toISOString().slice(0, 10);
 
     contenedor.innerHTML = "";
@@ -105,7 +91,7 @@
 
       for (let dia = 1; dia <= diasEnMes(ANIO, mes); dia++) {
         const fecha = fechaISO(ANIO, mes, dia);
-        const eventosDia = eventos.filter((evento) => evento.fecha === fecha);
+        const eventosDia = eventosActuales.filter((evento) => evento.fecha === fecha);
         const clases = ["gloria-dia"];
 
         if (fecha === hoy) clases.push("hoy");
@@ -150,29 +136,29 @@
   }
 
   function eventosFiltrados() {
-    let eventos = leerEventos().sort((a, b) => a.fecha.localeCompare(b.fecha));
+    let resultado = [...eventos].sort((a, b) => a.fecha.localeCompare(b.fecha));
 
     if (filtroActual !== "todos") {
-      eventos = eventos.filter((evento) => evento.categoria === filtroActual);
+      resultado = resultado.filter((evento) => evento.categoria === filtroActual);
     }
 
     if (mesSeleccionado !== "todos") {
-      eventos = eventos.filter(
+      resultado = resultado.filter(
         (evento) =>
           Number(evento.fecha.slice(5, 7)) - 1 === Number(mesSeleccionado)
       );
     }
 
-    return eventos;
+    return resultado;
   }
 
   function renderEventos() {
     const contenedor = $("gloriaEventos");
-    const eventos = eventosFiltrados();
+    const resultado = eventosFiltrados();
 
     contenedor.innerHTML = "";
 
-    if (!eventos.length) {
+    if (!resultado.length) {
       contenedor.innerHTML = `
         <div class="gloria-vacio">
           <div style="font-size:48px">✨</div>
@@ -183,7 +169,7 @@
       return;
     }
 
-    eventos.forEach((evento) => {
+    resultado.forEach((evento) => {
       const tarjeta = document.createElement("article");
       tarjeta.className = `gloria-evento ${evento.completado ? "completado" : ""}`;
 
@@ -209,7 +195,7 @@
 
     contenedor.querySelectorAll("[data-editar]").forEach((boton) => {
       boton.onclick = () => {
-        const evento = leerEventos().find(
+        const evento = eventos.find(
           (item) => item.id === boton.dataset.editar
         );
         abrirModal(evento);
@@ -228,7 +214,7 @@
   }
 
   function actualizarResumen() {
-    const eventos = leerEventos();
+    const eventosActuales = eventos;
 
     $("totalEventos").textContent = eventos.length;
     $("eventosCompletados").textContent = eventos.filter(
@@ -272,21 +258,18 @@
     $("modalEvento").setAttribute("aria-hidden", "true");
   }
 
-  function guardarEvento(eventoFormulario) {
+  async function guardarEvento(eventoFormulario) {
     eventoFormulario.preventDefault();
 
-    const eventos = leerEventos();
-    const id = $("eventoId").value || crearId();
-
+    const id = $("eventoId").value;
     const nuevo = {
-      id,
       titulo: $("eventoTitulo").value.trim(),
       fecha: $("eventoFecha").value,
       categoria: $("eventoCategoria").value,
       icono: $("eventoIcono").value.trim() || "⭐",
       nota: $("eventoNota").value.trim(),
-      completado:
-        eventos.find((evento) => evento.id === id)?.completado || false
+      completado: eventos.find((evento) => evento.id === id)?.completado || false,
+      anio: ANIO
     };
 
     if (!nuevo.titulo || !nuevo.fecha) {
@@ -294,44 +277,50 @@
       return;
     }
 
-    const indice = eventos.findIndex((evento) => evento.id === id);
+    try {
+      if (id) {
+        await Academia.eventos.actualizar(id, nuevo);
+      } else {
+        await Academia.eventos.guardar(nuevo);
+      }
 
-    if (indice >= 0) {
-      eventos[indice] = nuevo;
-    } else {
-      eventos.push(nuevo);
+      cerrarModal();
+    } catch (error) {
+      console.error(error);
+      alert(`No se pudo guardar el evento.\n${error.message}`);
     }
-
-    guardarEventos(eventos);
-    cerrarModal();
-    refrescar();
   }
 
-  function eliminarEvento(id) {
+  async function eliminarEvento(id) {
     if (!confirm("¿Quieres eliminar este evento?")) return;
 
-    guardarEventos(
-      leerEventos().filter((evento) => evento.id !== id)
-    );
-
-    refrescar();
+    try {
+      await Academia.eventos.eliminar(id);
+    } catch (error) {
+      console.error(error);
+      alert(`No se pudo eliminar el evento.\n${error.message}`);
+    }
   }
 
-  function alternarCompletado(id) {
-    const eventos = leerEventos();
+  async function alternarCompletado(id) {
     const evento = eventos.find((item) => item.id === id);
+    if (!evento) return;
 
-    if (evento) {
-      evento.completado = !evento.completado;
+    try {
+      await Academia.eventos.actualizar(id, {
+        ...evento,
+        completado: !evento.completado,
+        anio: ANIO
+      });
+    } catch (error) {
+      console.error(error);
+      alert(`No se pudo actualizar el evento.\n${error.message}`);
     }
-
-    guardarEventos(eventos);
-    refrescar();
   }
 
   function exportarCalendario() {
     const archivo = new Blob(
-      [JSON.stringify(leerEventos(), null, 2)],
+      [JSON.stringify(eventos, null, 2)],
       { type: "application/json" }
     );
 
@@ -348,14 +337,33 @@
       const datos = JSON.parse(await archivo.text());
 
       if (!Array.isArray(datos)) {
-        throw new Error();
+        throw new Error("El archivo no contiene una lista de eventos.");
       }
 
-      guardarEventos(datos);
-      refrescar();
+      const validos = datos.filter((evento) =>
+        String(evento.fecha || "").startsWith(`${ANIO}-`)
+      );
+
+      if (!validos.length) {
+        throw new Error(`No hay eventos válidos del año ${ANIO}.`);
+      }
+
+      if (!confirm(`Se importarán ${validos.length} evento(s). ¿Continuar?`)) {
+        return;
+      }
+
+      for (const evento of validos) {
+        await Academia.eventos.guardar({
+          ...evento,
+          id: undefined,
+          anio: ANIO
+        });
+      }
+
       alert("Calendario importado correctamente ✨");
-    } catch {
-      alert("El archivo no es válido.");
+    } catch (error) {
+      console.error(error);
+      alert(`El archivo no es válido.\n${error.message}`);
     }
   }
 
@@ -370,6 +378,35 @@
   function refrescar() {
     renderCalendario();
     renderEventos();
+  }
+
+  function iniciarSincronizacion() {
+    const aviso = document.querySelector(".aviso-local");
+
+    if (aviso) {
+      aviso.textContent = "☁️ Conectando con la nube...";
+    }
+
+    Academia.eventos.observar(
+      ANIO,
+      (eventosFirestore) => {
+        eventos = eventosFirestore;
+        refrescar();
+
+        if (aviso) {
+          aviso.textContent =
+            "☁️ Calendario sincronizado con Firestore. Tus eventos están disponibles en todos tus dispositivos.";
+        }
+      },
+      (error) => {
+        console.error(error);
+
+        if (aviso) {
+          aviso.textContent =
+            "⚠️ No se pudo conectar con Firestore. Revisa la conexión o los permisos.";
+        }
+      }
+    );
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -414,5 +451,6 @@
     });
 
     refrescar();
+    iniciarSincronizacion();
   });
 })();

@@ -1,4 +1,8 @@
-/* Academia de Gloria Valentina | firebase-config.js */
+/* ==========================================================
+   Academia de Gloria Valentina
+   firebase-config.js
+   Configuración central de Firebase
+   ========================================================== */
 
 import { initializeApp } from
   "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
@@ -10,7 +14,7 @@ import { getAuth } from
   "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAlaMwXJ7tmisb689lYzLTVjc__nJoLg9U",
+  apiKey: "AIzaSyAlaMwXJ7tmisb689lYzlTVjc__nJoLg9U",
   authDomain: "academia-gloria.firebaseapp.com",
   projectId: "academia-gloria",
   storageBucket: "academia-gloria.firebasestorage.app",
@@ -19,6 +23,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 const auth = getAuth(app);
 
