@@ -554,6 +554,46 @@ Esta decisión convierte oficialmente a la Academia de Gloria en una plataforma 
 ---
 
 
+DECISION-014
+Nombre
+
+Adopción de Git como sistema oficial de control de versiones
+
+Fecha
+
+Julio 2026
+
+Estado
+
+✅ Aprobada
+
+Contexto
+
+Tras completar la infraestructura Cloud, el proyecto alcanza un nivel de complejidad que requiere un control formal de versiones.
+
+Decisión
+
+Se adopta Git como sistema oficial de control de versiones de la Academia.
+
+Cada hito importante deberá registrarse mediante:
+
+Commit descriptivo.
+Tag cuando represente una versión estable.
+Publicación en GitHub.
+Justificación
+Historial fiable.
+Recuperación sencilla.
+Trazabilidad.
+Preparación para el crecimiento del proyecto.
+Impacto
+
+Estratégico.
+
+A partir de la versión 2.0 Cloud, la evolución del proyecto quedará registrada mediante hitos de Git.
+
+---
+
+
 # Próximas decisiones
 
 Pendientes.

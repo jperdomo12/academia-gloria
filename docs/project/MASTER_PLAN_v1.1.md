@@ -3,13 +3,13 @@
 
 **Proyecto:** Academia de Gloria
 
-**Versión del Proyecto:** 2.0
+**Versión del Proyecto:** 2.0 Cloud
 
-**Versión del Documento:** 1.0
+**Versión del Documento:** 1.1
 
 **Estado:** Activo
 
-**Última actualización:** 22/07/2026
+**Última actualización:** 23/07/2026
 
 **Autor:** Juan Perdomo
 
@@ -50,11 +50,11 @@ Desarrollar una plataforma moderna, sencilla y escalable que ayude a Gloria a ap
 
 ## Corto plazo
 
-- Finalizar Calendario Gloria.
-- Sincronización Cloud.
-- Gestión completa de eventos.
-- Biblioteca.
-- Logros.
+- ✅ Consolidar la versión 2.0 Cloud.
+- Biblioteca Encantada.
+- Sistema de Logros.
+- Perfil de Gloria.
+- Panel de progreso.
 
 ## Medio plazo
 
@@ -89,7 +89,8 @@ Desarrollar una plataforma moderna, sencilla y escalable que ayude a Gloria a ap
 | Módulo | Estado |
 |---------|:------:|
 | Calendario Escolar | ✅ |
-| Calendario Gloria | 🟡 |
+| Calendario Gloria 2025 | ✅ |
+| Calendario Gloria 2026 | ✅ |
 | Biblioteca | ⏳ |
 | Escritora | ⏳ |
 | Logros | ⏳ |
@@ -210,12 +211,16 @@ README.md
 
 # 12. Roadmap General
 
-Versión 2.x
+Versión 2.x (Cloud)
 
-- Backend
-- Calendarios
+- ✅ Infraestructura Cloud
+- ✅ Firebase Authentication
+- ✅ Cloud Firestore
+- ✅ AcademiaAPI
+- ✅ Calendarios 2025 y 2026
 - Biblioteca
 - Escritora
+- Logros
 
 Versión 3.x
 
@@ -235,9 +240,7 @@ Versión 5.x
 
 # 13. Próximo objetivo
 
-Finalizar la integración completa del Calendario Gloria con Firestore.
-
-Posteriormente comenzar el desarrollo de Biblioteca.
+Comenzar el desarrollo del módulo Biblioteca Encantada, primer gran módulo funcional construido sobre la arquitectura Cloud.
 
 ---
 
@@ -256,7 +259,7 @@ Pretende preservar conocimiento, recuerdos, experiencias, sueños y logros para 
 | README.md | Índice de la documentación. |
 | PROJECT_MAP.md | Organización física del proyecto. |
 | ROADMAP.md | Planificación del desarrollo. |
-| CHANGELOG.md | Historial de cambios. |
+| CHANGELOG.md | Pendiente de creación. |
 | DECISION_LOG.md | Registro de decisiones. |
 
 ---

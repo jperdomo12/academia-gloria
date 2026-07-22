@@ -176,113 +176,6 @@ async function eliminarEvento(id) {
 
 
 
-
-
-/* ==========================================================
-   Biblioteca
-   usuarios/{uid}/biblioteca/{libroId}
-   ========================================================== */
-
-function coleccionBiblioteca() {
-  return collection(db, "usuarios", obtenerUID(), "biblioteca");
-}
-
-function documentoLibro(id) {
-  if (!id) {
-    throw new Error("Falta el identificador del libro.");
-  }
-
-  return doc(db, "usuarios", obtenerUID(), "biblioteca", id);
-}
-
-function normalizarLibro(libro = {}) {
-  const title = String(libro.title ?? "").trim();
-
-  if (!title) {
-    throw new Error("El libro debe tener un título.");
-  }
-
-  const rating = Number(libro.rating ?? 0);
-
-  return {
-    title,
-    author: String(libro.author ?? "").trim(),
-    readingStatus: String(libro.readingStatus ?? "Leyendo").trim(),
-    favoriteCharacter: String(libro.favoriteCharacter ?? "").trim(),
-    rating: Number.isFinite(rating)
-      ? Math.max(0, Math.min(5, rating))
-      : 0,
-    favoritePart: String(libro.favoritePart ?? "").trim(),
-    learning: String(libro.learning ?? "").trim(),
-    newWords: String(libro.newWords ?? "").trim(),
-    review: String(libro.review ?? "").trim()
-  };
-}
-
-async function guardarLibro(libro) {
-  const datos = normalizarLibro(libro);
-
-  const referencia = await addDoc(coleccionBiblioteca(), {
-    ...datos,
-    creadoEn: serverTimestamp(),
-    actualizadoEn: serverTimestamp()
-  });
-
-  return referencia.id;
-}
-
-async function leerLibros() {
-  const consulta = query(
-    coleccionBiblioteca(),
-    orderBy("actualizadoEn", "desc")
-  );
-
-  const resultado = await getDocs(consulta);
-
-  return resultado.docs.map((documento) => ({
-    id: documento.id,
-    ...documento.data()
-  }));
-}
-
-function observarLibros(callback, onError = console.error) {
-  if (typeof callback !== "function") {
-    throw new Error("Se necesita una función callback.");
-  }
-
-  const consulta = query(
-    coleccionBiblioteca(),
-    orderBy("actualizadoEn", "desc")
-  );
-
-  return onSnapshot(
-    consulta,
-    (resultado) => {
-      const libros = resultado.docs.map((documento) => ({
-        id: documento.id,
-        ...documento.data()
-      }));
-
-      callback(libros);
-    },
-    onError
-  );
-}
-
-async function actualizarLibro(id, cambios) {
-  const datos = normalizarLibro(cambios);
-
-  await updateDoc(documentoLibro(id), {
-    ...datos,
-    actualizadoEn: serverTimestamp()
-  });
-}
-
-async function eliminarLibro(id) {
-  await deleteDoc(documentoLibro(id));
-}
-
-
 /**
  * API actual, compatible con la prueba existente.
  */
@@ -304,13 +197,5 @@ export const Academia = Object.freeze({
     observar: observarEventos,
     actualizar: actualizarEvento,
     eliminar: eliminarEvento
-  }),
-
-  biblioteca: Object.freeze({
-    guardar: guardarLibro,
-    leer: leerLibros,
-    observar: observarLibros,
-    actualizar: actualizarLibro,
-    eliminar: eliminarLibro
   })
 });
