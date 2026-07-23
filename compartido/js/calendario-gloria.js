@@ -70,10 +70,45 @@ import { auth } from "../firebase/firebase-config.js";
     });
   }
 
+
+function fechaLocalISO(fecha = new Date()) {
+  const anio = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  return `${anio}-${mes}-${dia}`;
+}
+
+function eventosDeFecha(fecha) {
+  return eventos.filter((evento) => evento.fecha === fecha)
+    .sort((a,b) => a.titulo.localeCompare(b.titulo,"es"));
+}
+
+function mensajeEventosDia(lista, cuando) {
+  if (!lista.length) return cuando === "hoy"
+    ? "Hoy no tienes eventos registrados. Disfruta tu día 😊"
+    : "Mañana no tienes eventos registrados.";
+  if (lista.length === 1) return `${lista[0].icono || "⭐"} ${lista[0].titulo}`;
+  return `${lista.length} eventos: ${lista.slice(0,3).map(e => `${e.icono || "⭐"} ${e.titulo}`).join(" · ")}`;
+}
+
+function actualizarRecordatorios() {
+  const ahora = new Date();
+  const manana = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() + 1);
+  if ($("mensajeHoy")) $("mensajeHoy").textContent = mensajeEventosDia(eventosDeFecha(fechaLocalISO(ahora)), "hoy");
+  if ($("mensajeManana")) $("mensajeManana").textContent = mensajeEventosDia(eventosDeFecha(fechaLocalISO(manana)), "mañana");
+}
+
+function seleccionarIcono(icono = "⭐") {
+  $("eventoIcono").value = icono;
+  document.querySelectorAll("[data-icono]").forEach((boton) => {
+    boton.classList.toggle("seleccionado", boton.dataset.icono === icono);
+  });
+}
+
   function renderCalendario() {
     const contenedor = $("gloriaMeses");
     const eventosActuales = eventos;
-    const hoy = new Date().toISOString().slice(0, 10);
+    const hoy = fechaLocalISO();
 
     contenedor.innerHTML = "";
 
@@ -228,7 +263,7 @@ import { auth } from "../firebase/firebase-config.js";
       (evento) => evento.categoria === "Logro"
     ).length;
 
-    const hoy = new Date().toISOString().slice(0, 10);
+    const hoy = fechaLocalISO();
 
     const siguiente = eventos
       .filter((evento) => evento.fecha >= hoy)
@@ -245,7 +280,7 @@ import { auth } from "../firebase/firebase-config.js";
     $("eventoFecha").value =
       evento?.fecha || fecha || `${ANIO}-01-01`;
     $("eventoCategoria").value = evento?.categoria || "Especial";
-    $("eventoIcono").value = evento?.icono || "⭐";
+    seleccionarIcono(evento?.icono || "⭐");
     $("eventoNota").value = evento?.nota || "";
     $("modalTitulo").textContent = evento ? "Editar evento" : "Nuevo evento";
 
@@ -379,6 +414,7 @@ import { auth } from "../firebase/firebase-config.js";
   function refrescar() {
     renderCalendario();
     renderEventos();
+    actualizarRecordatorios();
   }
 
   function iniciarSincronizacion() {
@@ -451,6 +487,19 @@ import { auth } from "../firebase/firebase-config.js";
         renderEventos();
       };
     });
+
+    document.querySelectorAll("[data-icono]").forEach((boton) => {
+      boton.onclick = () => seleccionarIcono(boton.dataset.icono);
+    });
+
+    $("eventoCategoria").onchange = () => {
+      const mapa = {
+        Cole:"🏫", Viaje:"✈️", Lectura:"📚", Logro:"🏆",
+        Cumpleaños:"🎂", Examen:"📝", Festivo:"🎉", Médico:"🩺",
+        Tarea:"📚", Actividad:"🎭", Especial:"⭐"
+      };
+      seleccionarIcono(mapa[$("eventoCategoria").value] || "⭐");
+    };
 
     $("modalEvento").addEventListener("click", (evento) => {
       if (evento.target === $("modalEvento")) {

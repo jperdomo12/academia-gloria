@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi Rincón de Lectura | Academia</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/iconos/icono-principal.png?v=1.3">
+  <link rel="shortcut icon" type="image/png" href="/assets/iconos/icono-principal.png?v=1.3">
+  <link rel="apple-touch-icon" href="/assets/iconos/icono-principal.png?v=1.3">
+  <meta
+    name="description"
+    content="Un rincón colorido para leer, grabar la voz, comprender historias y crecer con confianza."
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    *{box-sizing:border-box}
+
+    :root{
+      --ink:#243047;
+      --violet:#7c3aed;
+      --pink:#ec4899;
+      --sky:#0284c7;
+      --green:#16a34a;
+      --amber:#f59e0b;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Outfit",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%,rgba(56,189,248,.24),transparent 25%),
+        radial-gradient(circle at 92% 10%,rgba(244,114,182,.20),transparent 25%),
+        radial-gradient(circle at 80% 90%,rgba(168,85,247,.20),transparent 28%),
+        linear-gradient(155deg,#f8fcff,#fff7ed,#f7f2ff);
+    }
+
+    button,input,textarea,select{font:inherit}
+
+    .wrap{
+      max-width:1180px;
+      margin:auto;
+      padding:20px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.94);
+      border:2px solid rgba(219,234,254,.95);
+      border-radius:30px;
+      box-shadow:0 22px 55px rgba(76,29,149,.10);
+      padding:26px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:24px;
+      align-items:center;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::after{
+      content:"✨";
+      position:absolute;
+      right:30px;
+      top:20px;
+      font-size:34px;
+      animation:float 3s ease-in-out infinite;
+    }
+
+    .back,.btn{
+      border:0;
+      border-radius:18px;
+      padding:14px 18px;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      transition:.2s ease;
+    }
+
+    .back{
+      background:white;
+      color:#0369a1;
+      border:2px solid #bae6fd;
+    }
+
+    .btn:hover,.back:hover{transform:translateY(-2px)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+    .primary{background:linear-gradient(90deg,var(--violet),var(--pink));color:white}
+    .blue{background:#0ea5e9;color:white}
+    .green{background:#10b981;color:white}
+    .light{background:#eef2ff;color:#4f46e5}
+    .red{background:#ffe4e6;color:#be123c}
+
+    .title{
+      font-size:clamp(42px,6vw,74px);
+      line-height:1;
+      margin:16px 0;
+      background:linear-gradient(90deg,var(--sky),var(--violet),var(--pink),var(--amber),var(--green));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .lia{
+      min-height:250px;
+      border-radius:26px;
+      background:linear-gradient(145deg,#ede9fe,#fce7f3,#e0f2fe);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:24px;
+    }
+
+    .lia-avatar{
+      font-size:82px;
+      animation:float 3s ease-in-out infinite;
+    }
+
+    .stepper{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:22px 0;
+    }
+
+    .step{
+      border:2px solid #e5e7eb;
+      background:white;
+      border-radius:18px;
+      padding:13px;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .step small{
+      display:block;
+      margin-top:4px;
+      font-size:12px;
+      font-weight:700;
+      color:#64748b;
+    }
+
+    .step.active small{color:rgba(255,255,255,.86)}
+
+    .top-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .nav-back{
+      margin-bottom:18px;
+    }
+
+    .answers-list{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .answer-row{
+      border:2px solid #e7eaf8;
+      background:#f8fafc;
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .answer-row strong{
+      display:block;
+      margin-bottom:5px;
+      color:#334155;
+    }
+
+    .answer-status{
+      display:inline-flex;
+      margin-top:8px;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .answer-status.ok{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .answer-status.review{
+      background:#fef3c7;
+      color:#92400e;
+    }
+
+    .step.active{
+      background:linear-gradient(90deg,var(--sky),var(--violet));
+      color:white;
+    }
+
+    .panel{margin-top:20px}
+    .hidden{display:none!important}
+
+    .story-head{
+      text-align:center;
+      padding:16px;
+      border-radius:24px;
+      background:linear-gradient(135deg,#fef3c7,#fce7f3,#ede9fe);
+      margin-bottom:18px;
+    }
+
+    .story-scene{
+      min-height:220px;
+      border-radius:28px;
+      background:
+        radial-gradient(circle at 25% 25%,rgba(255,255,255,.9),transparent 18%),
+        linear-gradient(180deg,#312e81,#4338ca 56%,#14532d 57%,#166534);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:86px;
+      margin-bottom:20px;
+    }
+
+    .moon{position:absolute;top:22px;left:35px;font-size:54px}
+    .owl{position:absolute;right:70px;bottom:36px;font-size:58px}
+    .stars{position:absolute;inset:0;font-size:30px;letter-spacing:28px;opacity:.85}
+
+    .paragraph{
+      display:grid;
+      grid-template-columns:58px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:18px;
+      margin:12px 0;
+      border-radius:22px;
+      border:2px solid #e7eaf8;
+      background:white;
+      font-size:20px;
+      line-height:1.65;
+      font-weight:600;
+    }
+
+    .paragraph-icon{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:28px;
+    }
+
+    .voice-box{
+      border:2px solid #ddd6fe;
+      border-radius:24px;
+      padding:20px;
+      background:linear-gradient(135deg,#faf5ff,#eff6ff);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .voice-status{
+      min-height:24px;
+      margin-top:12px;
+      font-weight:900;
+      color:#6d28d9;
+    }
+
+    audio{width:100%;margin-top:12px}
+
+    textarea{
+      width:100%;
+      min-height:115px;
+      resize:vertical;
+      border:2px solid #dfe3ef;
+      border-radius:16px;
+      padding:14px;
+      background:white;
+    }
+
+    .question{
+      padding:18px;
+      border-radius:22px;
+      margin-bottom:14px;
+      border:2px solid #e7eaf8;
+    }
+
+    .question:nth-child(odd){background:#effaff}
+    .question:nth-child(even){background:#fff7ed}
+
+    .options{
+      display:grid;
+      gap:9px;
+      margin-top:12px;
+    }
+
+    .option{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:12px;
+      border-radius:14px;
+      background:white;
+      border:2px solid #e5e7eb;
+      font-weight:700;
+    }
+
+    .reflection{
+      background:linear-gradient(135deg,#fff7ed,#fef3c7);
+      border:2px solid #fde68a;
+      border-radius:24px;
+      padding:22px;
+      font-size:19px;
+      line-height:1.6;
+    }
+
+    .phrase{
+      margin-top:16px;
+      background:linear-gradient(90deg,var(--violet),var(--pink),var(--amber));
+      color:white;
+      border-radius:22px;
+      padding:20px;
+      text-align:center;
+      font-size:24px;
+      font-weight:900;
+    }
+
+    .celebration{text-align:center}
+    .celebration-icon{font-size:94px;animation:float 2.2s ease-in-out infinite}
+
+    .catalog-title{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin:22px 0 14px}
+    .category-filter{display:flex;gap:8px;flex-wrap:wrap}
+
+    .language-selector{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:12px 14px;
+      border:2px solid #bfdbfe;
+      border-radius:18px;
+      background:#eff6ff;
+      font-weight:900;
+    }
+
+    .language-selector select{
+      border:2px solid #93c5fd;
+      border-radius:13px;
+      padding:9px 12px;
+      background:white;
+      font-weight:900;
+      color:#1e3a8a;
+    }
+
+    .delete-session{
+      background:#ffe4e6;
+      color:#be123c;
+      border:2px solid #fecdd3;
+      margin-top:12px;
+    }
+    .filter-chip{border:2px solid #e5e7eb;background:white;border-radius:999px;padding:9px 13px;font-weight:900;cursor:pointer}
+    .filter-chip.active{color:white;border-color:transparent;background:linear-gradient(90deg,var(--sky),var(--violet))}
+    .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .story-card{border:2px solid #e7eaf8;border-radius:24px;padding:18px;background:white;cursor:pointer;transition:.2s ease;text-align:left}
+    .story-card:hover,.story-card.selected{transform:translateY(-4px);border-color:#a78bfa;box-shadow:0 18px 38px rgba(124,58,237,.13)}
+    .story-card-icon{min-height:110px;border-radius:20px;display:flex;justify-content:center;align-items:center;font-size:62px;background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);margin-bottom:12px}
+    .recording-dashboard{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-top:16px;padding:14px;border-radius:20px;border:2px solid #fecaca;background:#fff}
+    .record-light{width:18px;height:18px;border-radius:50%;background:#cbd5e1}
+    .record-light.active{background:#ef4444;animation:recordBlink .9s infinite;box-shadow:0 0 0 8px rgba(239,68,68,.14)}
+    .record-progress{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+    .record-progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#fb7185,#ef4444);transition:width .2s linear}
+    .stop-round{width:58px;height:58px;padding:0;border-radius:50%;color:white;background:#dc2626;box-shadow:0 8px 20px rgba(220,38,38,.25);font-size:22px}
+    .feedback{margin-top:10px;padding:12px;border-radius:14px;font-weight:900}
+    .feedback.correct{background:#dcfce7;color:#166534;border:2px solid #86efac}
+    .feedback.retry{background:#fef3c7;color:#92400e;border:2px solid #fcd34d}
+    .history-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .history-card{border:2px solid #e7eaf8;border-radius:20px;padding:16px;background:white}
+    .history-card audio{margin-top:10px}
+
+    @keyframes recordBlink{
+      0%,100%{opacity:1}
+      50%{opacity:.3}
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+
+    @media(max-width:900px){.story-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr}
+      .stepper{grid-template-columns:1fr 1fr}
+      .history-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:520px){
+      .wrap{padding:12px}
+      .card{padding:18px}
+      .stepper{grid-template-columns:1fr}
+      .paragraph{grid-template-columns:1fr}
+      .story-grid{grid-template-columns:1fr}
+      .recording-dashboard{grid-template-columns:auto 1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <header class="card hero">
+      <div>
+        <a class="back" href="../index.html">← Volver a Mi Universo</a>
+
+        <h1 class="title">Mi Rincón de Lectura 🎙️</h1>
+
+        <p id="welcomeText" style="font-size:21px;line-height:1.6;font-weight:650;color:#5c677d">
+          Bienvenida. Hoy tenemos una historia especial.
+        </p>
+
+        
+      </div>
+
+      <aside class="lia">
+        <div class="lia-avatar" id="userAvatar">🦉</div>
+        <h2 style="margin:8px 0">✨ Lía dice...</h2>
+        <p style="font-size:20px;line-height:1.5;font-weight:800;margin:0">
+          No importa si lees despacio. Tu voz merece ser escuchada.
+        </p>
+      </aside>
+    </header>
+
+    <nav class="stepper" aria-label="Pasos de la aventura">
+      <div class="step active" data-step="welcome">
+        1. Seleccionar aventura
+        <small>Elige la historia que más te guste.</small>
+      </div>
+      <div class="step" data-step="reading">
+        2. Leer aventura
+        <small>Lee, graba y escucha tu voz.</small>
+      </div>
+      <div class="step" data-step="questions">
+        3. Pensar aventura
+        <small>Responde y comparte tus ideas.</small>
+      </div>
+      <div class="step" data-step="celebration">
+        4. Celebrar aventura
+        <small>Guarda y celebra lo aprendido.</small>
+      </div>
+    </nav>
+
+    <section id="welcomePanel" class="panel card">
+      <div class="catalog-title">
+        <div>
+          <div style="color:#7c3aed;font-weight:900">ELIGE TU AVENTURA</div>
+          <h2 style="font-size:34px;margin:4px 0">Lecturas para crecer y disfrutar</h2>
+        </div>
+      </div>
+
+      <div class="reflection" style="margin-bottom:18px">
+        <strong>🌈 Antes de comenzar</strong>
+        <p>
+          Busca un lugar tranquilo. Respira despacio. Puedes detenerte cuando lo necesites.
+          Aquí no buscamos hacerlo perfecto: buscamos disfrutar y seguir aprendiendo.
+        </p>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn primary" id="startAdventure">
+          📖 Comenzar aventura
+        </button>
+        <button class="btn blue" id="showHistoryButton">
+          🎧 Mis lecturas guardadas
+        </button>
+      </div>
+
+      <div class="language-selector">
+        <label for="languageFilter">🌍 Idioma de la aventura</label>
+        <select id="languageFilter">
+          <option value="all">Todos los idiomas</option>
+          <option value="es-ES">🇪🇸 Español</option>
+          <option value="en-GB">🇬🇧 English</option>
+        </select>
+      </div>
+
+      <div id="categoryFilters" class="category-filter" style="margin-top:14px"></div>
+      <div id="storyCatalog" class="story-grid" style="margin-top:16px"></div>
+
+      <div class="story-head" style="margin-top:20px">
+        <div id="storyPreviewIcon" style="font-size:54px">🌟</div>
+        <h2 id="storyPreviewTitle" style="font-size:34px;margin:8px 0"></h2>
+        <p id="storyPreviewSubtitle" style="font-size:19px;font-weight:700;color:#64748b"></p>
+        <div id="storyMeta" style="font-weight:900;color:#7c3aed"></div>
+      </div>
+    </section>
+
+    <section id="historyPanel" class="panel card hidden">
+      <div class="catalog-title">
+        <div>
+          <div style="color:#0284c7;font-weight:900">MI HISTORIAL</div>
+          <h2 style="font-size:34px;margin:4px 0">Mis lecturas guardadas</h2>
+        </div>
+        <button class="btn light" id="backToCatalog">← Volver a las lecturas</button>
+      </div>
+
+      <div id="historyStatus" class="reflection">Cargando tus lecturas...</div>
+      <p style="color:#64748b;font-weight:700">
+        Cada aventura conserva una única grabación: cuando la repites, se actualiza la anterior.
+      </p>
+      <div id="readingHistory" class="history-grid" style="margin-top:16px"></div>
+    </section>
+
+    <section id="readingPanel" class="panel card hidden">
+      <div class="nav-back">
+        <button class="btn light backToSelection" type="button">← Seleccionar otra aventura</button>
+      </div>
+      <div class="story-head">
+        <div style="color:#7c3aed;font-weight:900">LECTURA SELECCIONADA</div>
+        <h2 id="storyTitle" style="font-size:38px;margin:8px 0"></h2>
+        <p id="storySubtitle" style="font-size:18px;font-weight:700;color:#64748b"></p>
+      </div>
+
+      <div id="storyScene" class="story-scene" aria-label="Escena ilustrada de la historia">
+        <span id="sceneSky" class="moon">🌙</span>
+        <span id="sceneStars" class="stars">✨ ✨ ✨</span>
+        <span id="sceneCharacter">⭐</span>
+        <span id="sceneCompanion" class="owl">🦉</span>
+      </div>
+
+      <div id="storyText"></div>
+
+      <div class="voice-box">
+        <h3>🎤 Ahora, lee la historia con tu propia voz</h3>
+        <p style="font-weight:650;color:#64748b">
+          Habla con calma. Puedes mirar el texto mientras lees.
+          La grabación se detendrá automáticamente a los 60 segundos.
+        </p>
+
+        <div class="actions">
+          <button class="btn primary" id="recordButton">🎤 Grabar</button>
+          <button class="btn stop-round" id="stopButton" title="Detener grabación" disabled>■</button>
+          <button class="btn blue" id="playButton" disabled>▶️ Escuchar</button>
+          <button class="btn red" id="clearButton" disabled>🗑️ Borrar</button>
+        </div>
+
+        <div class="recording-dashboard">
+          <span id="recordLight" class="record-light"></span>
+          <div>
+            <div id="voiceStatus" class="voice-status" style="margin:0">Sin grabación.</div>
+            <div class="record-progress"><span id="recordProgressBar"></span></div>
+          </div>
+          <strong id="recordTimer">00:00 / 01:00</strong>
+        </div>
+        <audio id="audioPreview" class="hidden" controls></audio>
+
+        <div style="margin-top:18px">
+          <label for="transcript" style="font-weight:900">📝 Lo que entendió la Academia</label>
+          <p style="color:#64748b;font-weight:650">
+            Puedes corregir cualquier palabra que no se haya entendido bien.
+          </p>
+          <textarea id="transcript" placeholder="La transcripción aparecerá aquí..."></textarea>
+          <div id="speechSupport" style="margin-top:8px;font-size:13px;font-weight:800;color:#6b7280"></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn green" id="goQuestions" disabled>
+            💬 Continuar con las preguntas
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="questionsPanel" class="panel card hidden">
+      <div class="nav-back">
+        <button class="btn light backToSelection" type="button">← Seleccionar otra aventura</button>
+      </div>
+      <div class="story-head">
+        <div style="font-size:50px">💭</div>
+        <h2 style="font-size:36px;margin:8px 0">Pensemos juntos</h2>
+        <p style="font-weight:700;color:#64748b">
+          No necesitas responder perfecto. Solo queremos conocer tus ideas.
+        </p>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="reflection">
+        <h3>🌟 Píldora de valentía</h3>
+        <p id="reflectionText"></p>
+      </div>
+
+      <div class="phrase">
+        🌈 Mi frase de hoy:
+        <div id="dailyPhrase"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="saveSession">
+          💾 Guardar mi aventura
+        </button>
+      </div>
+    </section>
+
+    <section id="celebrationPanel" class="panel card celebration hidden">
+      <div class="nav-back" style="text-align:left">
+        <button class="btn light backToSelection" type="button">← Seleccionar otra aventura</button>
+      </div>
+      <div class="celebration-icon">🎉</div>
+      <h2 id="celebrationTitle" class="title" style="font-size:54px"></h2>
+      <p style="font-size:22px;font-weight:750;color:#64748b">
+        Hoy leíste, escuchaste tu voz, pensaste sobre una historia y compartiste tus ideas.
+      </p>
+      <div class="phrase">
+        ¡Cada vez que lo intentas, tu confianza crece! 🌟
+      </div>
+
+      <div class="actions" style="justify-content:center">
+        <button class="btn primary" id="restartSession">📖 Leer otra vez</button>
+        <a class="btn blue" href="../index.html">🌈 Volver a Mi Universo</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="./rincon-lectura.js"></script>
+</body>
+</html>

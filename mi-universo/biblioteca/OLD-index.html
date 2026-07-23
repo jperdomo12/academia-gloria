@@ -329,25 +329,6 @@
       margin-top:12px;
     }
 
-    .transcript-box{
-      margin-top:16px;
-      padding:16px;
-      border-radius:18px;
-      border:2px dashed #c4b5fd;
-      background:#ffffff;
-    }
-
-    .transcript-box textarea{
-      min-height:120px;
-    }
-
-    .speech-support{
-      font-size:13px;
-      font-weight:800;
-      margin-top:8px;
-      color:#6b7280;
-    }
-
     @keyframes pulseVoice{
       0%,100%{transform:scale(1)}
       50%{transform:scale(1.03)}
@@ -525,18 +506,6 @@
 
             <div id="voiceStatus" class="voice-status">Sin grabación.</div>
             <audio id="voicePreview" class="voice-player hidden" controls></audio>
-
-            <div class="transcript-box">
-              <label>📝 Lo que entendió la Academia</label>
-              <p class="help">
-                Puedes corregir el texto si alguna palabra no se entendió bien.
-              </p>
-              <textarea
-                id="voiceTranscript"
-                placeholder="La transcripción aparecerá aquí..."
-              ></textarea>
-              <div id="speechSupport" class="speech-support"></div>
-            </div>
           </div>
 
           <div class="actions no-print">
@@ -691,11 +660,6 @@
             <audio id="detailVoiceAudio" class="voice-player" controls></audio>
             <div class="detail-audio-actions">
               <span id="detailVoiceDuration" class="badge audio-badge"></span>
-            </div>
-
-            <div id="detailTranscriptBox" class="transcript-box hidden">
-              <h3>📝 Lo que dije</h3>
-              <p id="detailVoiceTranscript"></p>
             </div>
           </section>
 

@@ -461,17 +461,3 @@
 .gloria-mes[data-mes="11"] .gloria-mes__titulo {
   background: linear-gradient(90deg, #15803d, #dc2626);
 }
-
-
-.recordatorios-dia{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
-.recordatorio-card{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:center;padding:18px;border:2px solid #e2e8f0;border-radius:22px;background:white;box-shadow:0 10px 26px rgba(30,41,59,.06)}
-.recordatorio-card--hoy{border-color:#bfdbfe;background:linear-gradient(135deg,#eff6ff,#fff)}
-.recordatorio-card--manana{border-color:#ddd6fe;background:linear-gradient(135deg,#f5f3ff,#fff)}
-.recordatorio-icono{width:54px;height:54px;display:flex;align-items:center;justify-content:center;border-radius:17px;background:white;font-size:28px;box-shadow:0 8px 18px rgba(30,41,59,.08)}
-.recordatorio-etiqueta{display:block;margin-bottom:4px;color:#7c3aed;font-size:.75rem;font-weight:900;letter-spacing:.12em}
-.recordatorio-mensaje{color:#334155;font-size:1rem;font-weight:800;line-height:1.45}
-.selector-iconos{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
-.icono-opcion{min-height:48px;border:2px solid #e2e8f0;border-radius:14px;background:white;font-size:24px;cursor:pointer;transition:.18s ease}
-.icono-opcion:hover{transform:translateY(-2px);border-color:#c4b5fd;background:#faf5ff}
-.icono-opcion.seleccionado{border-color:#7c3aed;background:#ede9fe;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
-@media(max-width:650px){.recordatorios-dia{grid-template-columns:1fr}.selector-iconos{grid-template-columns:repeat(4,1fr)}}

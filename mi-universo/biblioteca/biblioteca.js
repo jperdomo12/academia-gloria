@@ -5,11 +5,23 @@ let books = [];
 let currentBook = null;
 let detenerObservacion = null;
 
+let mediaRecorder = null;
+let audioChunks = [];
+let recordedAudioData = "";
+let recordedAudioMimeType = "audio/webm";
+let recordedAudioDuration = 0;
+let recordingStartedAt = 0;
+let recordingTimer = null;
+let speechRecognition = null;
+let finalTranscript = "";
+let transcriptEdited = false;
+const SPEECH_LANGUAGE = "es-ES";
+
 const $ = id => document.getElementById(id);
 
 const fields = [
   "title","author","readingStatus","favoriteCharacter",
-  "rating","favoritePart","learning","newWords","review"
+  "rating","favoritePart","learning","newWords","review","coverImage"
 ];
 
 function bookData(){
@@ -23,9 +35,351 @@ function bookData(){
     favoritePart: $("favoritePart").value.trim(),
     learning: $("learning").value.trim(),
     newWords: $("newWords").value.trim(),
-    review: $("review").value.trim()
+    review: $("review").value.trim(),
+    coverImage: $("coverImage").value,
+    hasAudio: currentBook?.id === $("bookId").value
+      ? Boolean(currentBook?.hasAudio)
+      : Boolean(recordedAudioData)
   };
 }
+
+
+const COVER_PLACEHOLDER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='210' viewBox='0 0 150 210'%3E%3Crect width='150' height='210' rx='18' fill='%23f5f3ff'/%3E%3Ctext x='75' y='115' text-anchor='middle' font-size='54'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E";
+
+function mostrarVistaPreviaCaratula(dataUrl = "") {
+  const preview = $("coverPreview");
+  preview.src = dataUrl || COVER_PLACEHOLDER;
+  preview.classList.toggle("empty", !dataUrl);
+}
+
+function cargarImagen(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error("No se pudo leer la imagen."));
+      image.src = reader.result;
+    };
+
+    reader.onerror = () => reject(new Error("No se pudo leer el archivo."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function reducirCaratula(file) {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Selecciona un archivo de imagen.");
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("La imagen supera los 5 MB.");
+  }
+
+  const image = await cargarImagen(file);
+  const scale = Math.min(1, 420 / image.width, 600 / image.height);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(image.width * scale));
+  canvas.height = Math.max(1, Math.round(image.height * scale));
+
+  const context = canvas.getContext("2d");
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.76);
+
+  if (dataUrl.length > 700000) {
+    throw new Error("La carátula sigue siendo demasiado grande.");
+  }
+
+  return dataUrl;
+}
+
+$("coverFile").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    $("statusText").textContent = "Preparando carátula...";
+    const dataUrl = await reducirCaratula(file);
+    $("coverImage").value = dataUrl;
+    mostrarVistaPreviaCaratula(dataUrl);
+    $("statusText").textContent = "Cambios sin guardar";
+  } catch (error) {
+    console.error(error);
+    event.target.value = "";
+    alert(error.message);
+    $("statusText").textContent = "Sin guardar";
+  }
+});
+
+$("removeCover").onclick = () => {
+  $("coverFile").value = "";
+  $("coverImage").value = "";
+  mostrarVistaPreviaCaratula();
+  $("statusText").textContent = "Cambios sin guardar";
+};
+
+
+
+function speechRecognitionSupported() {
+  return Boolean(
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition
+  );
+}
+
+function configurarReconocimientoVoz() {
+  const Recognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    $("speechSupport").textContent =
+      "La transcripción automática no está disponible en este navegador.";
+    return;
+  }
+
+  $("speechSupport").textContent =
+    "Transcripción automática disponible en español.";
+
+  speechRecognition = new Recognition();
+  speechRecognition.lang = SPEECH_LANGUAGE;
+  speechRecognition.continuous = true;
+  speechRecognition.interimResults = true;
+
+  speechRecognition.onresult = event => {
+    let interim = "";
+    let complete = finalTranscript;
+
+    for (let index = event.resultIndex; index < event.results.length; index += 1) {
+      const text = event.results[index][0].transcript;
+
+      if (event.results[index].isFinal) {
+        complete += `${text} `;
+      } else {
+        interim += text;
+      }
+    }
+
+    finalTranscript = complete.trim();
+    $("voiceTranscript").value =
+      [finalTranscript, interim].filter(Boolean).join(" ").trim();
+    transcriptEdited = false;
+  };
+
+  speechRecognition.onerror = event => {
+    console.warn("SpeechRecognition:", event.error);
+
+    if (event.error !== "no-speech" && event.error !== "aborted") {
+      $("speechSupport").textContent =
+        "No se pudo completar la transcripción automática.";
+    }
+  };
+}
+
+function iniciarReconocimientoVoz() {
+  if (!speechRecognition) return;
+
+  finalTranscript = "";
+  transcriptEdited = false;
+  $("voiceTranscript").value = "";
+
+  try {
+    speechRecognition.start();
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
+function detenerReconocimientoVoz() {
+  if (!speechRecognition) return;
+
+  try {
+    speechRecognition.stop();
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
+$("voiceTranscript").addEventListener("input", () => {
+  transcriptEdited = true;
+  $("statusText").textContent = "Cambios sin guardar";
+});
+
+function formatDuration(seconds = 0) {
+  const value = Math.max(0, Math.round(seconds));
+  const minutes = String(Math.floor(value / 60)).padStart(2, "0");
+  const remaining = String(value % 60).padStart(2, "0");
+  return `${minutes}:${remaining}`;
+}
+
+function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("No se pudo preparar el audio."));
+    reader.readAsDataURL(blob);
+  });
+}
+
+function actualizarControlesAudio() {
+  const hasAudio = Boolean(recordedAudioData);
+  $("playRecording").disabled = !hasAudio;
+  $("deleteRecording").disabled = !hasAudio;
+  $("voicePreview").classList.toggle("hidden", !hasAudio);
+
+  if (hasAudio) {
+    $("voicePreview").src = recordedAudioData;
+    $("voiceStatus").textContent =
+      `Grabación lista · ${formatDuration(recordedAudioDuration)}`;
+  } else {
+    $("voicePreview").removeAttribute("src");
+    $("voiceStatus").textContent = "Sin grabación.";
+  }
+}
+
+async function cargarAudioLibro(libroId) {
+  recordedAudioData = "";
+  recordedAudioDuration = 0;
+  recordedAudioMimeType = "audio/webm";
+  actualizarControlesAudio();
+
+  if (!libroId) return;
+
+  const audio = await Academia.biblioteca.audio.leer(libroId);
+
+  if (!audio) return;
+
+  recordedAudioData = audio.audioData || "";
+  recordedAudioDuration = Number(audio.duration || 0);
+  recordedAudioMimeType = audio.mimeType || "audio/webm";
+  finalTranscript = audio.transcript || "";
+  transcriptEdited = Boolean(audio.transcriptEdited);
+  $("voiceTranscript").value = finalTranscript;
+  actualizarControlesAudio();
+}
+
+async function guardarAudioActual(libroId) {
+  if (!recordedAudioData) return;
+
+  await Academia.biblioteca.audio.guardar(libroId, {
+    audioData: recordedAudioData,
+    mimeType: recordedAudioMimeType,
+    duration: recordedAudioDuration,
+    transcript: $("voiceTranscript").value.trim(),
+    language: SPEECH_LANGUAGE,
+    transcriptEdited
+  });
+
+  if (currentBook?.id === libroId) {
+    currentBook.hasAudio = true;
+  }
+}
+
+$("startRecording").onclick = async () => {
+  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+    alert("Este navegador no permite grabar audio.");
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    audioChunks = [];
+    recordedAudioData = "";
+    recordedAudioDuration = 0;
+    actualizarControlesAudio();
+
+    const preferredType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+      ? "audio/webm;codecs=opus"
+      : "audio/webm";
+
+    mediaRecorder = new MediaRecorder(stream, {
+      mimeType: preferredType,
+      audioBitsPerSecond: 32000
+    });
+
+    recordedAudioMimeType = mediaRecorder.mimeType || preferredType;
+    recordingStartedAt = Date.now();
+
+    mediaRecorder.ondataavailable = event => {
+      if (event.data.size > 0) audioChunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+      clearTimeout(recordingTimer);
+      detenerReconocimientoVoz();
+      stream.getTracks().forEach(track => track.stop());
+
+      const blob = new Blob(audioChunks, {
+        type: recordedAudioMimeType
+      });
+
+      recordedAudioDuration = (Date.now() - recordingStartedAt) / 1000;
+      recordedAudioData = await blobToDataUrl(blob);
+
+      $("startRecording").disabled = false;
+      $("startRecording").classList.remove("recording");
+      $("stopRecording").disabled = true;
+      actualizarControlesAudio();
+      $("statusText").textContent = "Cambios sin guardar";
+    };
+
+    mediaRecorder.start(250);
+    iniciarReconocimientoVoz();
+
+    $("startRecording").disabled = true;
+    $("startRecording").classList.add("recording");
+    $("stopRecording").disabled = false;
+    $("voiceStatus").textContent = "Grabando... habla con calma 🎙️";
+
+    recordingTimer = setTimeout(() => {
+      if (mediaRecorder?.state === "recording") {
+        mediaRecorder.stop();
+      }
+    }, 30000);
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo usar el micrófono. Revisa el permiso del navegador.");
+  }
+};
+
+$("stopRecording").onclick = () => {
+  if (mediaRecorder?.state === "recording") {
+    mediaRecorder.stop();
+  }
+};
+
+$("playRecording").onclick = () => {
+  if (!recordedAudioData) return;
+  $("voicePreview").play();
+};
+
+$("deleteRecording").onclick = async () => {
+  if (!recordedAudioData) return;
+  if (!confirm("¿Quieres borrar esta grabación?")) return;
+
+  const libroId = $("bookId").value;
+
+  if (libroId) {
+    await Academia.biblioteca.audio.eliminar(libroId);
+  }
+
+  if (currentBook?.id === libroId) {
+    currentBook.hasAudio = false;
+  }
+
+  recordedAudioData = "";
+  recordedAudioDuration = 0;
+  finalTranscript = "";
+  transcriptEdited = false;
+  $("voiceTranscript").value = "";
+  actualizarControlesAudio();
+  $("statusText").textContent = "Cambios sin guardar";
+};
 
     function validateBook(book){
       if(!book.title){
@@ -53,6 +407,11 @@ function bookData(){
     document.querySelectorAll(".tab").forEach(tab=>{
       tab.onclick=()=>openTab(tab.dataset.tab);
     });
+
+$("addBookFromLibrary").onclick = () => {
+  $("newBook").click();
+  openTab("new");
+};
 
     document.querySelectorAll(".star").forEach(button=>{
       button.onclick=()=>{
@@ -95,8 +454,10 @@ $("bookForm").onsubmit = async event => {
       book.id = id;
     }
 
+    await guardarAudioActual(book.id);
+
     $("statusText").textContent = "Guardado ✅";
-    showBook(book);
+    await showBook(book);
     alert("¡Libro guardado en tu biblioteca! 📚");
   } catch (error) {
     console.error(error);
@@ -111,15 +472,24 @@ $("bookForm").onsubmit = async event => {
       $("bookForm").reset();
       $("bookId").value="";
       $("rating").value="0";
+      $("coverImage").value="";
+      $("coverFile").value="";
+      mostrarVistaPreviaCaratula();
+      recordedAudioData = "";
+      recordedAudioDuration = 0;
+      finalTranscript = "";
+      transcriptEdited = false;
+      $("voiceTranscript").value = "";
+      actualizarControlesAudio();
       updateStars(0);
       $("statusText").textContent="Sin guardar";
       $("title").focus();
     };
 
-    $("previewBook").onclick=()=>{
+    $("previewBook").onclick=async ()=>{
       const book=bookData();
       if(!validateBook(book))return;
-      showBook(book);
+      await showBook(book);
       openTab("detail");
     };
 
@@ -145,8 +515,15 @@ $("bookForm").onsubmit = async event => {
           book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
 
         article.innerHTML=`
-          <div class="cover">📘</div>
-          <span class="badge ${badgeClass}">${escapeHtml(book.readingStatus)}</span>
+          ${
+            book.coverImage
+              ? `<img class="book-cover-image" src="${book.coverImage}" alt="Carátula de ${escapeHtml(book.title)}">`
+              : `<div class="cover">📘</div>`
+          }
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+            <span class="badge ${badgeClass}">${escapeHtml(book.readingStatus)}</span>
+            ${book.hasAudio ? '<span class="badge audio-badge" title="Este libro tiene una grabación">🎙️ Audio</span>' : ''}
+          </div>
           <h3 style="font-size:24px;margin:10px 0 4px">${escapeHtml(book.title)}</h3>
           <p class="help">${escapeHtml(book.author||"Autor no indicado")}</p>
           <div style="font-size:22px;margin:8px 0">${"⭐".repeat(book.rating||0)}</div>
@@ -157,13 +534,13 @@ $("bookForm").onsubmit = async event => {
           </div>
         `;
 
-        article.querySelector(".read").onclick=()=>{
-          showBook(book);
+        article.querySelector(".read").onclick = async () => {
+          await showBook(book);
           openTab("detail");
         };
 
-        article.querySelector(".edit").onclick=()=>{
-          loadBook(book);
+        article.querySelector(".edit").onclick = async () => {
+          await loadBook(book);
           openTab("new");
         };
 
@@ -182,18 +559,22 @@ $("bookForm").onsubmit = async event => {
       });
     }
 
-    function loadBook(book){
+    async function loadBook(book){
+      currentBook = book;
       $("bookId").value=book.id;
 
       fields.forEach(id=>{
         $(id).value=book[id]??"";
       });
 
+      $("coverFile").value = "";
+      mostrarVistaPreviaCaratula(book.coverImage || "");
       updateStars(book.rating||0);
+      await cargarAudioLibro(book.id);
       $("statusText").textContent="Guardado ✅";
     }
 
-    function showBook(book){
+    async function showBook(book){
       currentBook=book;
 
       $("detailEmpty").classList.add("hidden");
@@ -202,6 +583,16 @@ $("bookForm").onsubmit = async event => {
       const badgeClass=
         book.readingStatus==="Terminado"?"status-finished":
         book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
+
+      if (book.coverImage) {
+        $("detailCoverImage").src = book.coverImage;
+        $("detailCoverImage").classList.remove("hidden");
+        $("detailCoverFallback").classList.add("hidden");
+      } else {
+        $("detailCoverImage").removeAttribute("src");
+        $("detailCoverImage").classList.add("hidden");
+        $("detailCoverFallback").classList.remove("hidden");
+      }
 
       $("detailStatus").className="badge "+badgeClass;
       $("detailStatus").textContent=book.readingStatus;
@@ -213,24 +604,68 @@ $("bookForm").onsubmit = async event => {
       $("detailLearning").textContent=book.learning||"No indicado";
       $("detailWords").textContent=book.newWords||"No hay palabras guardadas";
       $("detailReview").textContent=book.review||"Reseña pendiente";
+
+      try {
+        const audio = book.id
+          ? await Academia.biblioteca.audio.leer(book.id)
+          : null;
+
+        if (audio?.audioData) {
+          $("detailVoiceAudio").src = audio.audioData;
+          $("detailVoiceDuration").textContent =
+            `Duración: ${formatDuration(audio.duration || 0)}`;
+
+          const transcript = String(audio.transcript || "").trim();
+
+          if (transcript) {
+            $("detailVoiceTranscript").textContent = transcript;
+            $("detailTranscriptBox").classList.remove("hidden");
+          } else {
+            $("detailVoiceTranscript").textContent = "";
+            $("detailTranscriptBox").classList.add("hidden");
+          }
+
+          $("detailVoiceSection").classList.remove("hidden");
+        } else {
+          $("detailVoiceAudio").removeAttribute("src");
+          $("detailVoiceDuration").textContent = "";
+          $("detailVoiceTranscript").textContent = "";
+          $("detailTranscriptBox").classList.add("hidden");
+          $("detailVoiceSection").classList.add("hidden");
+        }
+      } catch (error) {
+        console.error(error);
+        $("detailVoiceSection").classList.add("hidden");
+      }
     }
 
     $("searchBook").oninput=event=>{
       renderBooks(event.target.value);
     };
 
-    function updateCount(){
-      const count = books.length;
-      $("bookCount").textContent=count;
+function updateCount(){
+  const count = books.length;
+  const reading = books.filter(book => book.readingStatus === "Leyendo").length;
+  const finished = books.filter(book => book.readingStatus === "Terminado").length;
+  const rated = books.filter(book => Number(book.rating) > 0);
+  const average = rated.length
+    ? rated.reduce((sum, book) => sum + Number(book.rating || 0), 0) / rated.length
+    : 0;
 
-      let message="Tu biblioteca empieza con un libro.";
-      if(count>=1)message="¡Ya tienes tu primera lectura guardada! 🌱";
-      if(count>=3)message="¡Tu estantería está creciendo! 📚";
-      if(count>=5)message="¡Eres una gran exploradora de historias! ✨";
-      if(count>=10)message="¡Biblioteca poderosa! 🌟";
+  $("bookCount").textContent = count;
+  $("statTotal").textContent = count;
+  $("statReading").textContent = reading;
+  $("statFinished").textContent = finished;
+  $("statRating").textContent = average.toFixed(1);
 
-      $("readerMessage").textContent=message;
-    }
+  let message = "Tu biblioteca empieza con un libro.";
+  if(count >= 1) message = "¡Ya tienes tu primera lectura guardada! 🌱";
+  if(count >= 3) message = "¡Tu estantería está creciendo! 📚";
+  if(count >= 5) message = "¡Eres una gran exploradora de historias! ✨";
+  if(count >= 10) message = "¡Biblioteca poderosa! 🌟";
+
+  $("readerMessage").textContent = message;
+}
 
     $("speakReview").onclick=()=>{
       if(!currentBook||!("speechSynthesis" in window))return;
@@ -311,6 +746,10 @@ $("importBooks").onchange = async event => {
     renderBooks();
     updateCount();
 
+
+mostrarVistaPreviaCaratula();
+actualizarControlesAudio();
+configurarReconocimientoVoz();
 
 async function iniciarBiblioteca() {
   await auth.authStateReady();
