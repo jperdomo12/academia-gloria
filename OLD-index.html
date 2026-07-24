@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Academia Gloria Valentina</title>
+  <title>Academia de Gloria Valentina</title>
   <meta name="description" content="Un espacio visual, creativo y motivador para aprender, crear y crecer con confianza.">
   <meta name="theme-color" content="#6d5dfc">
 
@@ -17,7 +17,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="compartido/css/academia-base.css">
-  <link rel="stylesheet" href="compartido/css/panel-usuario.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -44,12 +43,6 @@
       width:min(1240px,calc(100% - 30px));
       margin:auto;
       padding:20px 0 38px;
-    }
-
-    .barra-usuario{
-      display:flex;
-      justify-content:flex-end;
-      margin-bottom:16px;
     }
 
     .superficie{
@@ -687,8 +680,6 @@
 <body>
   <main class="pagina">
 
-    <div class="barra-usuario" data-panel-usuario></div>
-
     <header class="superficie hero">
       <div class="hero-copy">
         <div class="pildoras">
@@ -887,27 +878,6 @@
         setTimeout(()=>elemento.remove(),1550);
       }
     }
-  </script>
-
-  <script type="module">
-    import { protegerPagina } from
-      "./compartido/js/auth-guard.js";
-
-    import { iniciarPanelUsuario } from
-      "./compartido/js/panel-usuario.js";
-
-    protegerPagina({
-      loginUrl: "./login.html",
-      onAuthenticated: async () => {
-        await iniciarPanelUsuario({
-          contenedor: "[data-panel-usuario]",
-          loginUrl: "./login.html",
-
-          // Se activará cuando exista la página oficial de perfil.
-          mostrarPerfil: false
-        });
-      }
-    });
   </script>
 </body>
 </html>
