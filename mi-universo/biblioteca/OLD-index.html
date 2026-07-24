@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biblioteca Encantada | Mi Universo</title>
-  <meta name="description" content="Biblioteca personal de Gloria para registrar libros, valorar lecturas, guardar palabras nuevas y escuchar sus reseñas." />
+  <meta name="description" content="Biblioteca personal para registrar libros, valorar lecturas, guardar palabras nuevas y escuchar reseñas." />
 
   <meta name="theme-color" content="#7c3aed">
 
@@ -15,7 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- CSS común de la Academia -->
-  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css>
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
 
   <style>
     *{box-sizing:border-box}
@@ -246,7 +247,7 @@
     .cover-preview{
       width:150px;
       height:210px;
-      object-fit:cover;
+      object-fit:contain;
       border-radius:18px;
       border:2px solid #dbeafe;
       background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);
@@ -261,7 +262,7 @@
     .book-cover-image{
       width:100%;
       height:210px;
-      object-fit:cover;
+      object-fit:contain;
       border-radius:18px;
       margin-bottom:14px;
       background:#f8fafc;
@@ -329,12 +330,59 @@
       margin-top:12px;
     }
 
+    .transcript-box{
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      border:2px dashed #c4b5fd;
+      background:#ffffff;
+    }
+
+    .transcript-box textarea{
+      min-height:120px;
+    }
+
+    .speech-support{
+      font-size:13px;
+      font-weight:800;
+      margin-top:8px;
+      color:#6b7280;
+    }
+
     @keyframes pulseVoice{
       0%,100%{transform:scale(1)}
       50%{transform:scale(1.03)}
     }
 
     .hidden{display:none}
+
+    .mensaje-personalizado{
+      margin-top:18px;
+      padding:16px 18px;
+      border:2px solid #c4b5fd;
+      border-radius:20px;
+      background:linear-gradient(135deg,#faf5ff,#eff6ff,#fff7ed);
+      color:#5b21b6;
+      font-size:17px;
+      font-weight:900;
+      line-height:1.45;
+    }
+
+    .icono-detener{
+      display:inline-block;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#ef4444;
+      box-shadow:0 0 0 3px rgba(239,68,68,.14);
+      flex:0 0 auto;
+    }
+
+    .biblioteca-panel-usuario{
+      display:flex;
+      justify-content:flex-end;
+      margin-bottom:16px;
+    }
 
     @media(max-width:900px){
       .hero,.grid{grid-template-columns:1fr}
@@ -359,6 +407,8 @@
 <body>
   <main class="wrap">
 
+    <div class="biblioteca-panel-usuario no-print" data-panel-usuario></div>
+
     <header class="card hero">
       <div>
         <a class="back no-print" href="../index.html">← Volver a Mi Universo</a>
@@ -368,6 +418,10 @@
         <p style="font-size:20px;font-weight:600;color:#5c677d;line-height:1.55">
           Guarda tus libros, tus personajes favoritos, las palabras nuevas y todo lo que descubriste mientras leías.
         </p>
+
+        <div id="mensajeBiblioteca" class="mensaje-personalizado">
+          ✨ Cada libro que descubres abre una puerta nueva a tu imaginación.
+        </div>
       </div>
 
       <div class="field violet">
@@ -493,19 +547,31 @@
           <div class="voice-box">
             <label>🎙️ Cuéntamelo con tus palabras</label>
             <p class="help">
-              Gloria, cuéntame de qué trata este libro o qué fue lo que más te gustó.
-              Máximo 30 segundos.
+              <span data-nombre-visible>Exploradora</span>, cuéntame de qué trata este libro o qué fue lo que más te gustó.
+              Máximo 60 segundos.
             </p>
 
             <div class="actions no-print">
               <button class="btn primary" type="button" id="startRecording">🎤 Grabar</button>
-              <button class="btn light" type="button" id="stopRecording" disabled>⏹️ Detener</button>
+              <button class="btn light" type="button" id="stopRecording" disabled><span class="icono-detener" aria-hidden="true"></span> Detener</button>
               <button class="btn blue" type="button" id="playRecording" disabled>▶️ Escuchar</button>
               <button class="btn red" type="button" id="deleteRecording" disabled>🗑️ Borrar</button>
             </div>
 
             <div id="voiceStatus" class="voice-status">Sin grabación.</div>
             <audio id="voicePreview" class="voice-player hidden" controls></audio>
+
+            <div class="transcript-box">
+              <label>📝 Lo que entendió la Academia</label>
+              <p class="help">
+                Puedes corregir el texto si alguna palabra no se entendió bien.
+              </p>
+              <textarea
+                id="voiceTranscript"
+                placeholder="La transcripción aparecerá aquí..."
+              ></textarea>
+              <div id="speechSupport" class="speech-support"></div>
+            </div>
           </div>
 
           <div class="actions no-print">
@@ -611,7 +677,7 @@
 
           <div class="actions no-print" style="justify-content:flex-end">
             <button class="btn primary" id="speakReview">🔊 Escuchar reseña</button>
-            <button class="btn light" id="stopSpeech">⏹ Detener</button>
+            <button class="btn light" id="stopSpeech"><span class="icono-detener" aria-hidden="true"></span> Detener</button>
             <button class="btn blue" onclick="window.print()">🖨️ Imprimir</button>
           </div>
 
@@ -661,10 +727,15 @@
             <div class="detail-audio-actions">
               <span id="detailVoiceDuration" class="badge audio-badge"></span>
             </div>
+
+            <div id="detailTranscriptBox" class="transcript-box hidden">
+              <h3>📝 Lo que dije</h3>
+              <p id="detailVoiceTranscript"></p>
+            </div>
           </section>
 
           <div style="background:linear-gradient(90deg,#0284c7,#7c3aed,#f59e0b);color:white;text-align:center;border-radius:20px;padding:18px;font-weight:900;font-size:22px">
-            Libro registrado por Gloria Valentina ✨
+            Libro registrado por <span data-nombre-completo>la persona lectora</span> ✨
           </div>
         </div>
       </article>

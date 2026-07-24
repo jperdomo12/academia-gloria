@@ -1,5 +1,7 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
+import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
+import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
 
 let books = [];
 let currentBook = null;
@@ -12,6 +14,10 @@ let recordedAudioMimeType = "audio/webm";
 let recordedAudioDuration = 0;
 let recordingStartedAt = 0;
 let recordingTimer = null;
+let speechRecognition = null;
+let finalTranscript = "";
+let transcriptEdited = false;
+const SPEECH_LANGUAGE = "es-ES";
 
 const $ = id => document.getElementById(id);
 
@@ -119,6 +125,92 @@ $("removeCover").onclick = () => {
 };
 
 
+
+function speechRecognitionSupported() {
+  return Boolean(
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition
+  );
+}
+
+function configurarReconocimientoVoz() {
+  const Recognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    $("speechSupport").textContent =
+      "La transcripción automática no está disponible en este navegador.";
+    return;
+  }
+
+  $("speechSupport").textContent =
+    "Transcripción automática disponible en español.";
+
+  speechRecognition = new Recognition();
+  speechRecognition.lang = SPEECH_LANGUAGE;
+  speechRecognition.continuous = true;
+  speechRecognition.interimResults = true;
+
+  speechRecognition.onresult = event => {
+    let interim = "";
+    let complete = finalTranscript;
+
+    for (let index = event.resultIndex; index < event.results.length; index += 1) {
+      const text = event.results[index][0].transcript;
+
+      if (event.results[index].isFinal) {
+        complete += `${text} `;
+      } else {
+        interim += text;
+      }
+    }
+
+    finalTranscript = complete.trim();
+    $("voiceTranscript").value =
+      [finalTranscript, interim].filter(Boolean).join(" ").trim();
+    transcriptEdited = false;
+  };
+
+  speechRecognition.onerror = event => {
+    console.warn("SpeechRecognition:", event.error);
+
+    if (event.error !== "no-speech" && event.error !== "aborted") {
+      $("speechSupport").textContent =
+        "No se pudo completar la transcripción automática.";
+    }
+  };
+}
+
+function iniciarReconocimientoVoz() {
+  if (!speechRecognition) return;
+
+  finalTranscript = "";
+  transcriptEdited = false;
+  $("voiceTranscript").value = "";
+
+  try {
+    speechRecognition.start();
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
+function detenerReconocimientoVoz() {
+  if (!speechRecognition) return;
+
+  try {
+    speechRecognition.stop();
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
+$("voiceTranscript").addEventListener("input", () => {
+  transcriptEdited = true;
+  $("statusText").textContent = "Cambios sin guardar";
+});
+
 function formatDuration(seconds = 0) {
   const value = Math.max(0, Math.round(seconds));
   const minutes = String(Math.floor(value / 60)).padStart(2, "0");
@@ -166,6 +258,9 @@ async function cargarAudioLibro(libroId) {
   recordedAudioData = audio.audioData || "";
   recordedAudioDuration = Number(audio.duration || 0);
   recordedAudioMimeType = audio.mimeType || "audio/webm";
+  finalTranscript = audio.transcript || "";
+  transcriptEdited = Boolean(audio.transcriptEdited);
+  $("voiceTranscript").value = finalTranscript;
   actualizarControlesAudio();
 }
 
@@ -175,7 +270,10 @@ async function guardarAudioActual(libroId) {
   await Academia.biblioteca.audio.guardar(libroId, {
     audioData: recordedAudioData,
     mimeType: recordedAudioMimeType,
-    duration: recordedAudioDuration
+    duration: recordedAudioDuration,
+    transcript: $("voiceTranscript").value.trim(),
+    language: SPEECH_LANGUAGE,
+    transcriptEdited
   });
 
   if (currentBook?.id === libroId) {
@@ -215,6 +313,7 @@ $("startRecording").onclick = async () => {
 
     mediaRecorder.onstop = async () => {
       clearTimeout(recordingTimer);
+      detenerReconocimientoVoz();
       stream.getTracks().forEach(track => track.stop());
 
       const blob = new Blob(audioChunks, {
@@ -232,6 +331,7 @@ $("startRecording").onclick = async () => {
     };
 
     mediaRecorder.start(250);
+    iniciarReconocimientoVoz();
 
     $("startRecording").disabled = true;
     $("startRecording").classList.add("recording");
@@ -242,7 +342,7 @@ $("startRecording").onclick = async () => {
       if (mediaRecorder?.state === "recording") {
         mediaRecorder.stop();
       }
-    }, 30000);
+    }, 60000);
   } catch (error) {
     console.error(error);
     alert("No se pudo usar el micrófono. Revisa el permiso del navegador.");
@@ -276,6 +376,9 @@ $("deleteRecording").onclick = async () => {
 
   recordedAudioData = "";
   recordedAudioDuration = 0;
+  finalTranscript = "";
+  transcriptEdited = false;
+  $("voiceTranscript").value = "";
   actualizarControlesAudio();
   $("statusText").textContent = "Cambios sin guardar";
 };
@@ -376,6 +479,9 @@ $("bookForm").onsubmit = async event => {
       mostrarVistaPreviaCaratula();
       recordedAudioData = "";
       recordedAudioDuration = 0;
+      finalTranscript = "";
+      transcriptEdited = false;
+      $("voiceTranscript").value = "";
       actualizarControlesAudio();
       updateStars(0);
       $("statusText").textContent="Sin guardar";
@@ -510,10 +616,23 @@ $("bookForm").onsubmit = async event => {
           $("detailVoiceAudio").src = audio.audioData;
           $("detailVoiceDuration").textContent =
             `Duración: ${formatDuration(audio.duration || 0)}`;
+
+          const transcript = String(audio.transcript || "").trim();
+
+          if (transcript) {
+            $("detailVoiceTranscript").textContent = transcript;
+            $("detailTranscriptBox").classList.remove("hidden");
+          } else {
+            $("detailVoiceTranscript").textContent = "";
+            $("detailTranscriptBox").classList.add("hidden");
+          }
+
           $("detailVoiceSection").classList.remove("hidden");
         } else {
           $("detailVoiceAudio").removeAttribute("src");
           $("detailVoiceDuration").textContent = "";
+          $("detailVoiceTranscript").textContent = "";
+          $("detailTranscriptBox").classList.add("hidden");
           $("detailVoiceSection").classList.add("hidden");
         }
       } catch (error) {
@@ -580,7 +699,7 @@ function updateCount(){
 
       const link=document.createElement("a");
       link.href=URL.createObjectURL(blob);
-      link.download="biblioteca-gloria.json";
+      link.download="mi-biblioteca.json";
       link.click();
       URL.revokeObjectURL(link.href);
     };
@@ -632,6 +751,32 @@ $("importBooks").onchange = async event => {
 
 mostrarVistaPreviaCaratula();
 actualizarControlesAudio();
+configurarReconocimientoVoz();
+
+function aplicarPersonalizacionBiblioteca(perfil) {
+  const nombreCompleto = String(
+    perfil.nombre || perfil.nombreVisible || "Exploradora"
+  ).trim();
+
+  const nombreVisible = String(
+    perfil.nombreVisible || perfil.nombre || "Exploradora"
+  ).trim();
+
+  document.querySelectorAll("[data-nombre-completo]").forEach(elemento => {
+    elemento.textContent = nombreCompleto;
+  });
+
+  document.querySelectorAll("[data-nombre-visible]").forEach(elemento => {
+    elemento.textContent = nombreVisible;
+  });
+
+  const mensaje = $("mensajeBiblioteca");
+  if (mensaje) {
+    mensaje.textContent =
+      `🌟 ${nombreVisible}, cada libro que descubres abre una puerta nueva ` +
+      `a tu imaginación. Sigue leyendo a tu ritmo y celebra cada página.`;
+  }
+}
 
 async function iniciarBiblioteca() {
   await auth.authStateReady();
@@ -640,6 +785,15 @@ async function iniciarBiblioteca() {
     window.location.replace("/academia-gloria/login.html");
     return;
   }
+
+  const perfil = await obtenerPerfil();
+  aplicarPersonalizacionBiblioteca(perfil);
+
+  await iniciarPanelUsuario({
+    contenedor: "[data-panel-usuario]",
+    loginUrl: "/academia-gloria/login.html",
+    mostrarPerfil: false
+  });
 
   detenerObservacion = Academia.biblioteca.observar(
     librosFirestore => {

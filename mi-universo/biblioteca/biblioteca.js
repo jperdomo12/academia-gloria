@@ -1,5 +1,7 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
+import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
+import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
 
 let books = [];
 let currentBook = null;
@@ -12,6 +14,8 @@ let recordedAudioMimeType = "audio/webm";
 let recordedAudioDuration = 0;
 let recordingStartedAt = 0;
 let recordingTimer = null;
+let recordingTicker = null;
+const MAX_RECORDING_SECONDS = 60;
 let speechRecognition = null;
 let finalTranscript = "";
 let transcriptEdited = false;
@@ -225,6 +229,37 @@ function blobToDataUrl(blob) {
   });
 }
 
+function actualizarPanelGrabacion(segundos = 0, grabando = false) {
+  const valor = Math.min(
+    MAX_RECORDING_SECONDS,
+    Math.max(0, Number(segundos) || 0)
+  );
+
+  const progreso = (valor / MAX_RECORDING_SECONDS) * 100;
+
+  $("recordTimer").textContent =
+    `${formatDuration(valor)} / ${formatDuration(MAX_RECORDING_SECONDS)}`;
+
+  $("recordProgressBar").style.width = `${progreso}%`;
+  $("recordLight").classList.toggle("active", grabando);
+}
+
+function iniciarPanelGrabacion() {
+  clearInterval(recordingTicker);
+  actualizarPanelGrabacion(0, true);
+
+  recordingTicker = setInterval(() => {
+    const segundos = (Date.now() - recordingStartedAt) / 1000;
+    actualizarPanelGrabacion(segundos, true);
+  }, 200);
+}
+
+function detenerPanelGrabacion() {
+  clearInterval(recordingTicker);
+  recordingTicker = null;
+  actualizarPanelGrabacion(recordedAudioDuration, false);
+}
+
 function actualizarControlesAudio() {
   const hasAudio = Boolean(recordedAudioData);
   $("playRecording").disabled = !hasAudio;
@@ -235,9 +270,11 @@ function actualizarControlesAudio() {
     $("voicePreview").src = recordedAudioData;
     $("voiceStatus").textContent =
       `Grabación lista · ${formatDuration(recordedAudioDuration)}`;
+    actualizarPanelGrabacion(recordedAudioDuration, false);
   } else {
     $("voicePreview").removeAttribute("src");
     $("voiceStatus").textContent = "Sin grabación.";
+    actualizarPanelGrabacion(0, false);
   }
 }
 
@@ -311,6 +348,8 @@ $("startRecording").onclick = async () => {
 
     mediaRecorder.onstop = async () => {
       clearTimeout(recordingTimer);
+      clearInterval(recordingTicker);
+      recordingTicker = null;
       detenerReconocimientoVoz();
       stream.getTracks().forEach(track => track.stop());
 
@@ -318,8 +357,12 @@ $("startRecording").onclick = async () => {
         type: recordedAudioMimeType
       });
 
-      recordedAudioDuration = (Date.now() - recordingStartedAt) / 1000;
+      recordedAudioDuration = Math.min(
+        MAX_RECORDING_SECONDS,
+        (Date.now() - recordingStartedAt) / 1000
+      );
       recordedAudioData = await blobToDataUrl(blob);
+      detenerPanelGrabacion();
 
       $("startRecording").disabled = false;
       $("startRecording").classList.remove("recording");
@@ -335,12 +378,13 @@ $("startRecording").onclick = async () => {
     $("startRecording").classList.add("recording");
     $("stopRecording").disabled = false;
     $("voiceStatus").textContent = "Grabando... habla con calma 🎙️";
+    iniciarPanelGrabacion();
 
     recordingTimer = setTimeout(() => {
       if (mediaRecorder?.state === "recording") {
         mediaRecorder.stop();
       }
-    }, 30000);
+    }, MAX_RECORDING_SECONDS * 1000);
   } catch (error) {
     console.error(error);
     alert("No se pudo usar el micrófono. Revisa el permiso del navegador.");
@@ -374,6 +418,7 @@ $("deleteRecording").onclick = async () => {
 
   recordedAudioData = "";
   recordedAudioDuration = 0;
+  detenerPanelGrabacion();
   finalTranscript = "";
   transcriptEdited = false;
   $("voiceTranscript").value = "";
@@ -697,7 +742,7 @@ function updateCount(){
 
       const link=document.createElement("a");
       link.href=URL.createObjectURL(blob);
-      link.download="biblioteca-gloria.json";
+      link.download="mi-biblioteca.json";
       link.click();
       URL.revokeObjectURL(link.href);
     };
@@ -749,7 +794,33 @@ $("importBooks").onchange = async event => {
 
 mostrarVistaPreviaCaratula();
 actualizarControlesAudio();
+actualizarPanelGrabacion(0, false);
 configurarReconocimientoVoz();
+
+function aplicarPersonalizacionBiblioteca(perfil) {
+  const nombreCompleto = String(
+    perfil.nombre || perfil.nombreVisible || "Exploradora"
+  ).trim();
+
+  const nombreVisible = String(
+    perfil.nombreVisible || perfil.nombre || "Exploradora"
+  ).trim();
+
+  document.querySelectorAll("[data-nombre-completo]").forEach(elemento => {
+    elemento.textContent = nombreCompleto;
+  });
+
+  document.querySelectorAll("[data-nombre-visible]").forEach(elemento => {
+    elemento.textContent = nombreVisible;
+  });
+
+  const mensaje = $("mensajeBiblioteca");
+  if (mensaje) {
+    mensaje.textContent =
+      `🌟 ${nombreVisible}, cada libro que descubres abre una puerta nueva ` +
+      `a tu imaginación. Sigue leyendo a tu ritmo y celebra cada página.`;
+  }
+}
 
 async function iniciarBiblioteca() {
   await auth.authStateReady();
@@ -758,6 +829,15 @@ async function iniciarBiblioteca() {
     window.location.replace("/academia-gloria/login.html");
     return;
   }
+
+  const perfil = await obtenerPerfil();
+  aplicarPersonalizacionBiblioteca(perfil);
+
+  await iniciarPanelUsuario({
+    contenedor: "[data-panel-usuario]",
+    loginUrl: "/academia-gloria/login.html",
+    mostrarPerfil: false
+  });
 
   detenerObservacion = Academia.biblioteca.observar(
     librosFirestore => {
