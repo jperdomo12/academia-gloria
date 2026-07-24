@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Academia de Gloria Valentina</title>
+  <title>Academia Gloria Valentina</title>
   <meta name="description" content="Un espacio visual, creativo y motivador para aprender, crear y crecer con confianza.">
   <meta name="theme-color" content="#6d5dfc">
 
@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="compartido/css/academia-base.css">
+  <link rel="stylesheet" href="compartido/css/panel-usuario.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -43,6 +44,81 @@
       width:min(1240px,calc(100% - 30px));
       margin:auto;
       padding:20px 0 38px;
+    }
+
+    .hero-panel-usuario{
+      position:absolute;
+      top:22px;
+      right:24px;
+      z-index:6;
+      width:min(285px,calc(100% - 48px));
+    }
+
+    .hero-panel-usuario .panel-usuario__boton,
+    .hero-panel-usuario .panel-usuario--cargando,
+    .hero-panel-usuario .panel-usuario--error{
+      min-width:0;
+      width:100%;
+    }
+
+    .hero-panel-usuario .panel-usuario__boton{
+      grid-template-columns:44px minmax(0,1fr) 20px;
+      gap:9px;
+      padding:8px 10px;
+      border-radius:17px;
+      box-shadow:0 10px 24px rgba(76,29,149,.11);
+    }
+
+    .hero-panel-usuario .panel-usuario__avatar{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      font-size:24px;
+    }
+
+    .hero-panel-usuario .panel-usuario__saludo{
+      font-size:.69rem;
+    }
+
+    .hero-panel-usuario .panel-usuario__nombre{
+      font-size:.93rem;
+    }
+
+    .hero-panel-usuario .panel-usuario__menu{
+      width:min(290px,calc(100vw - 32px));
+    }
+
+    .gran-titulo-linea{
+      display:block;
+    }
+
+    .gran-titulo-nombre{
+      margin-top:4px;
+    }
+
+    @media(max-width:900px){
+      .hero{
+        padding-top:110px;
+      }
+
+      .hero-panel-usuario{
+        top:20px;
+        left:24px;
+        right:24px;
+        width:auto;
+      }
+    }
+
+    @media(max-width:560px){
+      .hero{
+        padding-top:104px;
+      }
+
+      .hero-panel-usuario{
+        top:16px;
+        left:16px;
+        right:16px;
+      }
     }
 
     .superficie{
@@ -681,6 +757,8 @@
   <main class="pagina">
 
     <header class="superficie hero">
+      <div class="hero-panel-usuario" data-panel-usuario></div>
+
       <div class="hero-copy">
         <div class="pildoras">
           <span class="pildora">🌈 Academia 2.0</span>
@@ -689,7 +767,8 @@
         </div>
 
         <h1 class="gran-titulo">
-          Academia de <span>Gloria Valentina</span>
+          <span class="gran-titulo-linea">Academia</span>
+          <span class="gran-titulo-linea gran-titulo-nombre">Gloria Valentina</span>
         </h1>
 
         <p class="hero-texto">
@@ -700,7 +779,7 @@
 
       <div class="hero-visual">
         <div class="bienvenida">
-          <small>BIENVENIDA, GLORIA</small>
+          <small>¡QUÉ ALEGRÍA VERTE, <span data-nombre-visible>EXPLORADORA</span>!</small>
           <h2>Aprender puede ser bonito ✨</h2>
           <p>
             Aquí puedes equivocarte, volver a intentarlo y celebrar cada pequeño avance.
@@ -728,14 +807,14 @@
         <span class="etiqueta-estado estado-verde">Ya disponible</span>
         <h3>🌈 Mi Universo</h3>
         <p>
-          El lugar donde Gloria puede escribir, leer, crear y guardar sus recuerdos.
+          El lugar donde <span data-nombre-completo>cada estudiante</span> puede escribir, leer, crear y guardar sus recuerdos.
         </p>
 
         <div class="atajos atajos-pro">
           <a class="atajo atajo-pro atajo-escritora" href="mi-universo/escritora/">
             <span class="atajo-icono">✍️</span>
             <span class="atajo-texto">
-              <strong>Gloria Escritora</strong>
+              <strong>Mi Rincón de Escritura</strong>
               <small>Crear y guardar historias</small>
             </span>
             <span class="atajo-flecha">→</span>
@@ -805,7 +884,7 @@
         </div>
 
         <a href="https://www.gaudem.es/" target="_blank" rel="noopener noreferrer" class="colegio">
-          🏫 Colegio Gaudem
+          🏫 Sitio Oficial del Colegio
           <i data-lucide="external-link" width="18"></i>
         </a>
       </article>
@@ -848,7 +927,7 @@
     <section class="franja-final">
       <h2>Cada pequeño paso cuenta 🌟</h2>
       <p>
-        Gloria, aquí puedes aprender con calma, crear tus propias historias y sentirte orgullosa de todo lo que consigues.
+        <span data-nombre-visible>Exploradora</span>, aquí puedes aprender con calma, crear tus propias historias y sentirte orgullosa de todo lo que consigues.
       </p>
 
       <button class="cta boton-celebrar" onclick="celebrar()">
@@ -857,7 +936,7 @@
     </section>
 
     <footer>
-      Academia de Gloria Valentina · Versión 2.0 · Madrid
+      Academia Gloria Valentina · Versión 2.0
     </footer>
 
   </main>
@@ -878,6 +957,53 @@
         setTimeout(()=>elemento.remove(),1550);
       }
     }
+  </script>
+
+  <script type="module">
+    import { protegerPagina } from
+      "./compartido/js/auth-guard.js";
+
+    import { iniciarPanelUsuario } from
+      "./compartido/js/panel-usuario.js";
+
+    import { obtenerPerfil } from
+      "./compartido/js/perfil-usuario.js";
+
+    function aplicarPersonalizacion(perfil) {
+      const nombreCompleto =
+        String(perfil.nombre || perfil.nombreVisible || "Exploradora").trim();
+
+      const nombreVisible =
+        String(perfil.nombreVisible || perfil.nombre || "Exploradora").trim();
+
+      document
+        .querySelectorAll("[data-nombre-completo]")
+        .forEach((elemento) => {
+          elemento.textContent = nombreCompleto;
+        });
+
+      document
+        .querySelectorAll("[data-nombre-visible]")
+        .forEach((elemento) => {
+          elemento.textContent = nombreVisible;
+        });
+    }
+
+    protegerPagina({
+      loginUrl: "./login.html",
+      onAuthenticated: async () => {
+        const perfil = await obtenerPerfil();
+        aplicarPersonalizacion(perfil);
+
+        await iniciarPanelUsuario({
+          contenedor: "[data-panel-usuario]",
+          loginUrl: "./login.html",
+
+          // Se activará cuando exista la página oficial de perfil.
+          mostrarPerfil: false
+        });
+      }
+    });
   </script>
 </body>
 </html>

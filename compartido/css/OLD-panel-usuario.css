@@ -21,15 +21,14 @@
 
 .panel-usuario__boton{
   display:grid;
-  grid-template-columns:40px minmax(0,1fr) 20px;
+  grid-template-columns:52px minmax(0,1fr) 24px;
   align-items:center;
   gap:12px;
-  min-width:220px;
-  padding:7px 9px;
+  min-width:245px;
+  padding:10px 13px;
   border:2px solid #e8e7f5;
-  border-radius:16px;
-  background:linear-gradient(135deg,rgba(255,255,255,.93),rgba(250,249,255,.90));
-  backdrop-filter:blur(12px);
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(250,249,255,.98));
   box-shadow:0 12px 30px rgba(76,29,149,.10);
   color:inherit;
   cursor:pointer;
@@ -59,16 +58,16 @@
 }
 
 .panel-usuario__avatar{
-  width:40px;
-  height:40px;
+  width:52px;
+  height:52px;
   display:flex;
   align-items:center;
   justify-content:center;
   flex:0 0 auto;
-  border-radius:13px;
+  border-radius:17px;
   background:linear-gradient(135deg,#ede9fe,#fce7f3,#e0f2fe);
   box-shadow:0 8px 18px rgba(76,29,149,.10);
-  font-size:22px;
+  font-size:28px;
   line-height:1;
 }
 
@@ -89,7 +88,7 @@
 .panel-usuario__saludo{
   overflow:hidden;
   color:#7c3aed;
-  font-size:.66rem;
+  font-size:.76rem;
   font-weight:900;
   letter-spacing:.025em;
   line-height:1.15;
@@ -100,9 +99,9 @@
 .panel-usuario__nombre{
   display:block;
   overflow:hidden;
-  margin-top:2px;
+  margin-top:3px;
   color:#243047;
-  font-size:.9rem;
+  font-size:1rem;
   font-weight:900;
   line-height:1.2;
   text-overflow:ellipsis;
@@ -321,31 +320,5 @@
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
-  }
-}
-
-
-/* Ajustes v1.1: panel más ligero e integrado */
-.panel-usuario__nombre{
-  order:1;
-}
-
-.panel-usuario__saludo{
-  order:2;
-  margin-top:2px;
-}
-
-.panel-usuario__boton{
-  animation:panelUsuarioEntrada .25s ease both;
-}
-
-@keyframes panelUsuarioEntrada{
-  from{
-    opacity:0;
-    transform:translateY(-8px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
   }
 }

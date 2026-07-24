@@ -46,10 +46,50 @@
       padding:20px 0 38px;
     }
 
-    .barra-usuario{
+    .hero-panel-usuario{
       display:flex;
       justify-content:flex-end;
-      margin-bottom:16px;
+      align-items:flex-start;
+      width:100%;
+      margin:0 0 10px;
+      position:relative;
+      z-index:8;
+    }
+
+    .hero-panel-usuario .panel-usuario{
+      width:min(225px,100%);
+    }
+
+    .hero-panel-usuario .panel-usuario__boton,
+    .hero-panel-usuario .panel-usuario--cargando,
+    .hero-panel-usuario .panel-usuario--error{
+      width:100%;
+      min-width:0;
+    }
+
+    .hero-panel-usuario .panel-usuario__menu{
+      width:min(290px,calc(100vw - 32px));
+    }
+
+    .gran-titulo-linea{
+      display:block;
+    }
+
+    .gran-titulo-nombre{
+      margin-top:4px;
+    }
+
+    @media(max-width:900px){
+      .hero-panel-usuario{
+        justify-content:flex-start;
+        margin-bottom:14px;
+      }
+    }
+
+    @media(max-width:560px){
+      .hero-panel-usuario .panel-usuario{
+        width:100%;
+      }
     }
 
     .superficie{
@@ -179,7 +219,7 @@
     }
 
     .bienvenida{
-      padding:25px;
+      padding:28px 25px 25px;
       border-radius:28px;
       color:white;
       background:linear-gradient(145deg,#7957f7 0%,#e754ad 54%,#14a4dd 100%);
@@ -687,8 +727,6 @@
 <body>
   <main class="pagina">
 
-    <div class="barra-usuario" data-panel-usuario></div>
-
     <header class="superficie hero">
       <div class="hero-copy">
         <div class="pildoras">
@@ -698,7 +736,8 @@
         </div>
 
         <h1 class="gran-titulo">
-          Academia de <span>Gloria Valentina</span>
+          <span class="gran-titulo-linea">Academia</span>
+          <span class="gran-titulo-linea gran-titulo-nombre">Gloria Valentina</span>
         </h1>
 
         <p class="hero-texto">
@@ -708,8 +747,10 @@
       </div>
 
       <div class="hero-visual">
+        <div class="hero-panel-usuario" data-panel-usuario></div>
+
         <div class="bienvenida">
-          <small>BIENVENIDA, GLORIA</small>
+          <small>¡QUÉ ALEGRÍA VERTE, <span data-nombre-visible>EXPLORADORA</span>!</small>
           <h2>Aprender puede ser bonito ✨</h2>
           <p>
             Aquí puedes equivocarte, volver a intentarlo y celebrar cada pequeño avance.
@@ -737,14 +778,24 @@
         <span class="etiqueta-estado estado-verde">Ya disponible</span>
         <h3>🌈 Mi Universo</h3>
         <p>
-          El lugar donde Gloria puede escribir, leer, crear y guardar sus recuerdos.
+          El lugar donde <span data-nombre-completo>cada estudiante</span> puede escribir, leer, crear y guardar sus recuerdos.
         </p>
 
         <div class="atajos atajos-pro">
+
+          <a class="atajo atajo-pro atajo-rincon" href="mi-universo/rincon-lectura/">
+            <span class="atajo-icono">🎙️</span>
+            <span class="atajo-texto">
+              <strong>Mi Rincón de Lectura</strong>
+              <small>Leer aventuras, grabar mi voz y descubrir cuánto he mejorado</small>
+            </span>
+            <span class="atajo-flecha">→</span>
+          </a>
+
           <a class="atajo atajo-pro atajo-escritora" href="mi-universo/escritora/">
             <span class="atajo-icono">✍️</span>
             <span class="atajo-texto">
-              <strong>Gloria Escritora</strong>
+              <strong>Mi Rincón de Escritura</strong>
               <small>Crear y guardar historias</small>
             </span>
             <span class="atajo-flecha">→</span>
@@ -767,14 +818,6 @@
             </span>
           </span>
 
-          <a class="atajo atajo-pro atajo-rincon" href="mi-universo/rincon-lectura/">
-            <span class="atajo-icono">🎙️</span>
-            <span class="atajo-texto">
-              <strong>Mi Rincón de Lectura</strong>
-              <small>Leer aventuras, grabar mi voz y descubrir cuánto he mejorado</small>
-            </span>
-            <span class="atajo-flecha">→</span>
-          </a>
         </div>
 
         <a href="mi-universo/" class="cta cta-principal" style="margin-top:22px">
@@ -814,7 +857,7 @@
         </div>
 
         <a href="https://www.gaudem.es/" target="_blank" rel="noopener noreferrer" class="colegio">
-          🏫 Colegio Gaudem
+          🏫 Sitio Oficial del Colegio
           <i data-lucide="external-link" width="18"></i>
         </a>
       </article>
@@ -857,7 +900,7 @@
     <section class="franja-final">
       <h2>Cada pequeño paso cuenta 🌟</h2>
       <p>
-        Gloria, aquí puedes aprender con calma, crear tus propias historias y sentirte orgullosa de todo lo que consigues.
+        <span data-nombre-visible>Exploradora</span>, aquí puedes aprender con calma, crear tus propias historias y sentirte orgullosa de todo lo que consigues.
       </p>
 
       <button class="cta boton-celebrar" onclick="celebrar()">
@@ -866,7 +909,7 @@
     </section>
 
     <footer>
-      Academia de Gloria Valentina · Versión 2.0 · Madrid
+      Academia Gloria Valentina · Versión 2.0
     </footer>
 
   </main>
@@ -896,9 +939,35 @@
     import { iniciarPanelUsuario } from
       "./compartido/js/panel-usuario.js";
 
+    import { obtenerPerfil } from
+      "./compartido/js/perfil-usuario.js";
+
+    function aplicarPersonalizacion(perfil) {
+      const nombreCompleto =
+        String(perfil.nombre || perfil.nombreVisible || "Exploradora").trim();
+
+      const nombreVisible =
+        String(perfil.nombreVisible || perfil.nombre || "Exploradora").trim();
+
+      document
+        .querySelectorAll("[data-nombre-completo]")
+        .forEach((elemento) => {
+          elemento.textContent = nombreCompleto;
+        });
+
+      document
+        .querySelectorAll("[data-nombre-visible]")
+        .forEach((elemento) => {
+          elemento.textContent = nombreVisible;
+        });
+    }
+
     protegerPagina({
       loginUrl: "./login.html",
       onAuthenticated: async () => {
+        const perfil = await obtenerPerfil();
+        aplicarPersonalizacion(perfil);
+
         await iniciarPanelUsuario({
           contenedor: "[data-panel-usuario]",
           loginUrl: "./login.html",

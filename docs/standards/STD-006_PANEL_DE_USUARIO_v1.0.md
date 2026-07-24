@@ -373,3 +373,12 @@ Este documento forma parte de los estándares oficiales de la Academia Gloria.
 Su finalidad es garantizar que todos los módulos presentes y futuros compartan una identidad común, una experiencia consistente y una arquitectura reutilizable.
 
 El Panel de Usuario representa el primer componente transversal de la Academia y constituye la base sobre la que evolucionarán el Perfil del Alumno, Lía y el resto de servicios inteligentes.
+
+## Principio de Personalización
+
+Todo texto mostrado al alumno deberá ser:
+
+- Personalizado mediante el perfil del usuario, o
+- Universal, evitando referencias a un alumno concreto.
+
+El nombre "Gloria" solo podrá aparecer cuando forme parte del nombre oficial del proyecto "Academia Gloria" o de contenidos específicamente dedicados a Gloria.

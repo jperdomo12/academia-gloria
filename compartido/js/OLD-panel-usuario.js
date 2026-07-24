@@ -147,12 +147,12 @@ async function construirPanel(contenedor) {
               type="button"
               aria-haspopup="menu"
               aria-expanded="false"
-              aria-label="Abrir el panel de ${nombreSeguro}">
+              aria-label="Abrir menú de ${nombreSeguro}">
         <span class="panel-usuario__avatar" aria-hidden="true">${avatarSeguro}</span>
 
         <span class="panel-usuario__texto">
-          <strong class="panel-usuario__nombre">${nombreSeguro}</strong>
           <span class="panel-usuario__saludo">${saludoSeguro}</span>
+          <strong class="panel-usuario__nombre">${nombreSeguro}</strong>
         </span>
 
         <span class="panel-usuario__flecha" aria-hidden="true">⌄</span>
