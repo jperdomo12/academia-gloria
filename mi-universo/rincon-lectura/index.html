@@ -18,6 +18,8 @@
     rel="stylesheet"
   >
 
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+
   <style>
     *{box-sizing:border-box}
 
@@ -124,7 +126,48 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      padding:24px;
+      padding:22px 24px 24px;
+      position:relative;
+    }
+
+    .lia-user-panel{
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      margin-bottom:8px;
+      position:relative;
+      z-index:4;
+    }
+
+    .lia-user-panel .panel-usuario{
+      width:min(250px,100%);
+    }
+
+    .lia-user-panel .panel-usuario__boton{
+      width:100%;
+      min-width:0;
+      background:rgba(255,255,255,.82);
+      border-color:rgba(124,58,237,.16);
+      box-shadow:0 10px 24px rgba(76,29,149,.10);
+      backdrop-filter:blur(12px);
+    }
+
+    .lia-user-panel .panel-usuario__menu{
+      right:0;
+      width:min(290px,calc(100vw - 32px));
+      text-align:left;
+    }
+
+    @media(max-width:800px){
+      .lia-user-panel{
+        justify-content:center;
+      }
+    }
+
+    @media(max-width:520px){
+      .lia-user-panel .panel-usuario{
+        width:100%;
+      }
     }
 
     .lia-avatar{
@@ -446,6 +489,8 @@
       </div>
 
       <aside class="lia">
+        <div class="lia-user-panel" data-panel-usuario></div>
+
         <div class="lia-avatar" id="userAvatar">🦉</div>
         <h2 style="margin:8px 0">✨ Lía dice...</h2>
         <p style="font-size:20px;line-height:1.5;font-weight:800;margin:0">
@@ -647,5 +692,16 @@
   </main>
 
   <script type="module" src="./rincon-lectura.js"></script>
+
+  <script type="module">
+    import { iniciarPanelUsuario } from
+      "../../compartido/js/panel-usuario.js";
+
+    iniciarPanelUsuario({
+      contenedor: "[data-panel-usuario]",
+      loginUrl: "/academia-gloria/login.html",
+      mostrarPerfil: false
+    });
+  </script>
 </body>
 </html>

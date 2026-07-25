@@ -200,11 +200,54 @@
     }
 
     .library-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
     .stat-card{padding:16px;border-radius:18px;border:2px solid #e7eaf8;background:white;text-align:center}
     .stat-card strong{display:block;font-size:30px;color:#7c3aed}
     .tools-panel{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 18px;border-radius:20px;border:2px solid #e7eaf8;background:#fafaff;margin-bottom:18px}
+    .reading-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:4px 0 16px;
+    }
+    .reading-filter{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:11px 15px;
+      border:2px solid #e2e8f0;
+      border-radius:999px;
+      background:#fff;
+      color:#172554;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .reading-filter:hover{
+      transform:translateY(-2px);
+      border-color:#c4b5fd;
+      box-shadow:0 8px 18px rgba(76,29,149,.08);
+    }
+    .reading-filter.active{
+      border-color:transparent;
+      background:linear-gradient(90deg,#0284c7,#7c3aed);
+      color:#fff;
+      box-shadow:0 10px 22px rgba(124,58,237,.18);
+    }
+    .reading-filter span{
+      min-width:24px;
+      padding:2px 7px;
+      border-radius:999px;
+      background:rgba(124,58,237,.10);
+      font-size:12px;
+    }
+    .reading-filter.active span{
+      background:rgba(255,255,255,.22);
+    }
     .shelf-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px;padding-top:18px;border-top:2px dashed #dbeafe}
+    @media(max-width:920px){.stats-grid{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:760px){.stats-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:460px){.stats-grid{grid-template-columns:1fr}}
     .book-grid{
@@ -378,31 +421,140 @@
       flex:0 0 auto;
     }
 
+    .hero-side{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-self:stretch;
+    }
+
     .biblioteca-panel-usuario{
-      grid-column:1/-1;
       display:flex;
       justify-content:flex-end;
       width:100%;
-      margin-bottom:0;
     }
 
     .biblioteca-panel-usuario .panel-usuario{
-      width:min(235px,100%);
+      width:min(270px,100%);
+    }
+
+    /* Refuerzo visual local para que el panel siempre se vea integrado,
+       incluso si el CSS compartido tarda en cargar. */
+    .biblioteca-panel-usuario .panel-usuario__boton{
+      width:100%;
+      min-width:0;
+      display:grid;
+      grid-template-columns:42px minmax(0,1fr) 20px;
+      align-items:center;
+      gap:10px;
+      padding:9px 11px;
+      border:2px solid rgba(124,58,237,.18);
+      border-radius:18px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.96),rgba(245,243,255,.94));
+      box-shadow:0 12px 26px rgba(76,29,149,.11);
+      backdrop-filter:blur(12px);
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__avatar{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__texto{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      text-align:left;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__nombre{
+      font-size:.94rem;
+      font-weight:900;
+      color:#243047;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__saludo{
+      margin-top:2px;
+      font-size:.69rem;
+      font-weight:900;
+      color:#7c3aed;
+      white-space:nowrap;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__flecha{
+      color:#7c3aed;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__menu{
+      right:0;
+      width:min(290px,calc(100vw - 32px));
+      border-radius:20px;
+      box-shadow:0 20px 46px rgba(76,29,149,.18);
+    }
+
+    .mission-card{
+      margin:0;
+      flex:1;
     }
 
     .title-books-icon{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      width:78px;
-      height:64px;
+      width:88px;
+      height:70px;
       margin-left:12px;
-      border-radius:20px;
-      background:linear-gradient(135deg,#fef3c7,#fde68a,#ddd6fe);
-      box-shadow:0 12px 28px rgba(124,58,237,.14);
-      font-size:48px;
+      border-radius:22px;
+      background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fff7ed);
+      border:2px solid rgba(124,58,237,.12);
+      box-shadow:0 12px 28px rgba(124,58,237,.12);
       vertical-align:middle;
       -webkit-text-fill-color:initial;
+    }
+
+    .title-books-icon svg{
+      width:68px;
+      height:56px;
+      display:block;
+    }
+
+    @media(max-width:900px){
+      .hero-side{
+        width:100%;
+      }
+
+      .biblioteca-panel-usuario{
+        justify-content:flex-start;
+      }
+    }
+
+    @media(max-width:620px){
+      .biblioteca-panel-usuario .panel-usuario{
+        width:100%;
+      }
+
+      .title-books-icon{
+        width:64px;
+        height:54px;
+        margin-left:6px;
+      }
+
+      .title-books-icon svg{
+        width:50px;
+        height:42px;
+      }
     }
 
     .stop-text{
@@ -527,14 +679,22 @@
   <main class="wrap">
 
     <header class="card hero">
-      <div class="biblioteca-panel-usuario no-print" data-panel-usuario></div>
-
       <div>
         <a class="back no-print" href="../index.html">← Volver a Mi Universo</a>
 
         <h1 class="title">
           Biblioteca Encantada
-          <span class="title-books-icon" aria-hidden="true">📚</span>
+          <span class="title-books-icon" aria-hidden="true">
+            <svg viewBox="0 0 92 74" role="img" aria-label="Libros">
+              <rect x="8" y="13" width="20" height="50" rx="5" fill="#0ea5e9"/>
+              <rect x="31" y="7" width="21" height="56" rx="5" fill="#8b5cf6"/>
+              <rect x="55" y="17" width="27" height="46" rx="5" fill="#f59e0b"/>
+              <rect x="12" y="23" width="12" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <rect x="35" y="19" width="13" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <rect x="60" y="28" width="17" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <path d="M7 64h77" stroke="#334155" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </span>
         </h1>
 
         <p style="font-size:20px;font-weight:600;color:#5c677d;line-height:1.55">
@@ -546,11 +706,15 @@
         </div>
       </div>
 
-      <div class="field violet">
-        <p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">MISIÓN LECTORA</p>
+      <div class="hero-side">
+        <div class="biblioteca-panel-usuario no-print" data-panel-usuario></div>
+
+        <div class="field violet mission-card">
+          <p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">MISIÓN LECTORA</p>
         <p style="font-size:24px;font-weight:900;line-height:1.4">
           Leer no es correr. Leer es imaginar, descubrir y disfrutar. ✨
         </p>
+        </div>
       </div>
     </header>
 
@@ -760,10 +924,26 @@
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card"><strong id="statTotal">0</strong><span>📚 Libros</span></div>
+          <div class="stat-card"><strong id="statTotal">0</strong><span>📚 Total</span></div>
           <div class="stat-card"><strong id="statReading">0</strong><span>📖 Leyendo</span></div>
           <div class="stat-card"><strong id="statFinished">0</strong><span>✅ Terminados</span></div>
+          <div class="stat-card"><strong id="statWish">0</strong><span>🌟 Quiero leer</span></div>
           <div class="stat-card"><strong id="statRating">0.0</strong><span>⭐ Valoración media</span></div>
+        </div>
+
+        <div class="reading-filters no-print" aria-label="Filtrar libros por estado">
+          <button class="reading-filter active" type="button" data-status-filter="">
+            🌈 Todos <span id="filterCountAll">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Leyendo">
+            📖 Leyendo <span id="filterCountReading">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Terminado">
+            ✅ Terminados <span id="filterCountFinished">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Quiero leer">
+            🌟 Quiero leer <span id="filterCountWish">0</span>
+          </button>
         </div>
 
         <div class="field sky no-print">

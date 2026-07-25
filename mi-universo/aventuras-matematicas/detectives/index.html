@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Detectives de Problemas | Aventuras Matemáticas</title>
+
+  <meta
+    name="description"
+    content="Aprende a comprender un problema, descubrir qué ocurre y elegir la operación adecuada."
+  >
+
+  <meta name="theme-color" content="#7c3aed">
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="../../../assets/iconos/icono-principal.png?v=1.0"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../../compartido/css/academia-base.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../../compartido/css/panel-usuario.css"
+  >
+
+  <style>
+    *{box-sizing:border-box}
+
+    :root{
+      --ink:#243047;
+      --violet:#7c3aed;
+      --pink:#ec4899;
+      --sky:#0284c7;
+      --green:#16a34a;
+      --amber:#f59e0b;
+      --red:#dc2626;
+      --soft:#f8fafc;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Outfit",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%,rgba(56,189,248,.22),transparent 24%),
+        radial-gradient(circle at 94% 10%,rgba(244,114,182,.18),transparent 24%),
+        linear-gradient(155deg,#f8fcff,#fff7ed,#f7f2ff);
+    }
+
+    button,a,input{font:inherit}
+
+    .wrap{
+      width:min(1180px,calc(100% - 28px));
+      margin:auto;
+      padding:20px 0 42px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.96);
+      border:2px solid #e7eaf8;
+      border-radius:28px;
+      box-shadow:0 20px 48px rgba(76,29,149,.09);
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      margin-bottom:16px;
+    }
+
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:11px 15px;
+      border:2px solid #bae6fd;
+      border-radius:16px;
+      background:#fff;
+      color:#0369a1;
+      font-weight:900;
+      text-decoration:none;
+      transition:.18s ease;
+    }
+
+    .back:hover{transform:translateY(-2px)}
+
+    .detective-user-panel{
+      display:flex;
+      justify-content:flex-end;
+      width:min(280px,100%);
+    }
+
+    .detective-user-panel .panel-usuario{
+      width:100%;
+    }
+
+    .detective-user-panel .panel-usuario__boton{
+      width:100%;
+      min-width:0;
+      background:rgba(255,255,255,.88);
+      border-color:rgba(124,58,237,.16);
+      box-shadow:0 10px 24px rgba(76,29,149,.10);
+      backdrop-filter:blur(12px);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 310px;
+      gap:22px;
+      align-items:center;
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      right:-110px;
+      bottom:-120px;
+      border-radius:50%;
+      background:radial-gradient(circle,#fde68a 0 32%,#f9a8d4 33% 58%,#c4b5fd 59% 100%);
+      opacity:.28;
+    }
+
+    .hero-copy,
+    .hero-guide{
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow{
+      color:var(--violet);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.16em;
+    }
+
+    .title{
+      margin:7px 0 10px;
+      font-size:clamp(42px,6vw,68px);
+      line-height:1;
+      background:linear-gradient(90deg,var(--sky),var(--violet),var(--pink),var(--amber));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero-copy p{
+      margin:0;
+      color:#5c677d;
+      font-size:19px;
+      font-weight:700;
+      line-height:1.55;
+    }
+
+    .welcome{
+      margin-top:17px;
+      padding:15px 17px;
+      border:2px solid #c4b5fd;
+      border-radius:19px;
+      background:linear-gradient(135deg,#faf5ff,#eff6ff,#fff7ed);
+      color:#5b21b6;
+      font-size:16px;
+      font-weight:900;
+      line-height:1.5;
+    }
+
+    .hero-guide{
+      min-height:230px;
+      padding:18px;
+      border:2px solid #ddd6fe;
+      border-radius:24px;
+      background:linear-gradient(145deg,#ede9fe,#fce7f3,#e0f2fe);
+      text-align:center;
+    }
+
+    .hero-guide img{
+      display:block;
+      width:118px;
+      height:118px;
+      margin:0 auto 8px;
+      object-fit:contain;
+    }
+
+    .hero-guide h2{
+      margin:4px 0 6px;
+      font-size:23px;
+    }
+
+    .hero-guide p{
+      margin:0;
+      color:#5c677d;
+      font-weight:800;
+      line-height:1.4;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:18px 0;
+    }
+
+    .step{
+      padding:13px 12px;
+      border:2px solid #e5e7eb;
+      border-radius:18px;
+      background:#fff;
+      color:#64748b;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .step.active{
+      border-color:transparent;
+      background:linear-gradient(90deg,var(--sky),var(--violet));
+      color:#fff;
+      box-shadow:0 10px 22px rgba(124,58,237,.15);
+    }
+
+    .play-card{
+      padding:24px;
+    }
+
+    .play-head{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .play-head h2{
+      margin:0;
+      font-size:30px;
+    }
+
+    .counter{
+      padding:8px 12px;
+      border-radius:999px;
+      background:#f5f3ff;
+      color:#6d28d9;
+      font-weight:900;
+    }
+
+    .story-box{
+      margin-top:18px;
+      padding:22px;
+      border:2px solid #bae6fd;
+      border-radius:23px;
+      background:linear-gradient(135deg,#f0f9ff,#fff,#fff7ed);
+    }
+
+    .story-box__label{
+      color:#0369a1;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.12em;
+    }
+
+    .story-box__text{
+      margin:9px 0 0;
+      font-size:clamp(23px,3vw,31px);
+      font-weight:900;
+      line-height:1.38;
+    }
+
+    .question{
+      margin:22px 0 12px;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .choices{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:13px;
+    }
+
+    .choice{
+      min-height:78px;
+      padding:15px;
+      border:2px solid #e5e7eb;
+      border-radius:20px;
+      background:#fff;
+      color:#243047;
+      font-weight:900;
+      cursor:pointer;
+      text-align:left;
+      transition:.18s ease;
+    }
+
+    .choice:hover{
+      transform:translateY(-2px);
+      border-color:#c4b5fd;
+      box-shadow:0 10px 20px rgba(76,29,149,.08);
+    }
+
+    .choice.selected{
+      border-color:#8b5cf6;
+      background:#f5f3ff;
+      color:#5b21b6;
+    }
+
+    .choice.correct{
+      border-color:#22c55e;
+      background:#f0fdf4;
+      color:#166534;
+    }
+
+    .choice.incorrect{
+      border-color:#f59e0b;
+      background:#fffbeb;
+      color:#92400e;
+    }
+
+    .operation-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .operation{
+      min-height:112px;
+      border:2px solid #e5e7eb;
+      border-radius:23px;
+      background:#fff;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .operation:hover{
+      transform:translateY(-3px);
+      border-color:#c4b5fd;
+    }
+
+    .operation-symbol{
+      display:block;
+      font-size:48px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .operation-name{
+      display:block;
+      margin-top:7px;
+      font-weight:900;
+    }
+
+    .operation.correct{
+      border-color:#22c55e;
+      background:#f0fdf4;
+      color:#166534;
+    }
+
+    .operation.incorrect{
+      border-color:#f59e0b;
+      background:#fffbeb;
+      color:#92400e;
+    }
+
+    .calculation{
+      display:grid;
+      grid-template-columns:1fr auto 1fr auto 1fr;
+      gap:10px;
+      align-items:center;
+      margin-top:14px;
+    }
+
+    .number-box,
+    .result-input{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid #ddd6fe;
+      border-radius:18px;
+      background:#faf5ff;
+      font-size:30px;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .result-input{
+      width:100%;
+      padding:8px;
+      background:#fff;
+    }
+
+    .math-sign{
+      font-size:32px;
+      font-weight:900;
+      color:#7c3aed;
+    }
+
+    .feedback{
+      display:none;
+      margin-top:18px;
+      padding:16px 18px;
+      border-radius:20px;
+      font-size:17px;
+      font-weight:900;
+      line-height:1.45;
+    }
+
+    .feedback.show{display:block}
+
+    .feedback.good{
+      border:2px solid #86efac;
+      background:#f0fdf4;
+      color:#166534;
+    }
+
+    .feedback.try{
+      border:2px solid #fcd34d;
+      background:#fffbeb;
+      color:#92400e;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:50px;
+      padding:12px 18px;
+      border:0;
+      border-radius:17px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn:hover:not(:disabled){transform:translateY(-2px)}
+
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .btn-light{
+      background:#eef2ff;
+      color:#4f46e5;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg,var(--violet),var(--pink));
+      color:#fff;
+      box-shadow:0 12px 26px rgba(124,58,237,.18);
+    }
+
+    .summary{
+      text-align:center;
+      padding:30px 24px;
+    }
+
+    .summary-icon{
+      font-size:76px;
+    }
+
+    .summary h2{
+      margin:7px 0;
+      font-size:34px;
+    }
+
+    .summary p{
+      max-width:650px;
+      margin:0 auto;
+      color:#64748b;
+      font-size:19px;
+      font-weight:700;
+      line-height:1.5;
+    }
+
+    .summary-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:13px;
+      max-width:720px;
+      margin:22px auto;
+    }
+
+    .summary-stat{
+      padding:18px;
+      border:2px solid #e7eaf8;
+      border-radius:20px;
+      background:#fff;
+    }
+
+    .summary-stat strong{
+      display:block;
+      font-size:34px;
+      color:#7c3aed;
+    }
+
+
+
+    .case-selector{
+      margin:18px 0;
+      padding:20px;
+    }
+
+    .case-selector h2{
+      margin:0 0 5px;
+      font-size:28px;
+    }
+
+    .case-selector p{
+      margin:0 0 17px;
+      color:#64748b;
+      font-weight:700;
+    }
+
+    .selector-grid{
+      display:grid;
+      grid-template-columns:1.4fr 1fr;
+      gap:18px;
+      align-items:end;
+    }
+
+    .level-options{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .level-button{
+      flex:1;
+      min-width:130px;
+      min-height:54px;
+      border:2px solid #e5e7eb;
+      border-radius:17px;
+      background:#fff;
+      color:#334155;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .level-button:hover{
+      transform:translateY(-2px);
+      border-color:#c4b5fd;
+    }
+
+    .level-button.active{
+      border-color:transparent;
+      background:linear-gradient(90deg,#0284c7,#7c3aed);
+      color:#fff;
+      box-shadow:0 10px 22px rgba(124,58,237,.16);
+    }
+
+    .selector-field label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .selector-field select{
+      width:100%;
+      min-height:54px;
+      padding:11px 13px;
+      border:2px solid #dfe3ef;
+      border-radius:16px;
+      background:#fff;
+      font:inherit;
+      font-weight:800;
+    }
+
+    .selector-summary{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:17px;
+      padding-top:16px;
+      border-top:2px dashed #e5e7eb;
+    }
+
+    .case-count{
+      color:#6d28d9;
+      font-weight:900;
+    }
+
+    .case-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:11px;
+    }
+
+    .case-chip{
+      display:inline-flex;
+      padding:6px 9px;
+      border-radius:999px;
+      background:#f1f5f9;
+      color:#475569;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .substep-banner{
+      margin-top:17px;
+      padding:13px 15px;
+      border:2px solid #ddd6fe;
+      border-radius:18px;
+      background:#faf5ff;
+      color:#5b21b6;
+      font-weight:900;
+    }
+
+    .substep-list{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .substep-pill{
+      padding:6px 10px;
+      border-radius:999px;
+      background:#e2e8f0;
+      color:#64748b;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .substep-pill.done{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .substep-pill.current{
+      background:#ede9fe;
+      color:#6d28d9;
+    }
+
+    @media(max-width:760px){
+      .selector-grid{grid-template-columns:1fr}
+    }
+
+    .case-celebration{display:none;position:relative;overflow:hidden;margin-top:18px;padding:22px 20px;border:2px solid #a7f3d0;border-radius:24px;background:linear-gradient(135deg,#ecfdf5,#eff6ff,#faf5ff);text-align:center}
+    .case-celebration.show{display:block;animation:celebrationAppear .35s ease both}
+    .case-celebration h3{margin:2px 0 7px;font-size:27px;color:#166534}
+    .case-celebration p{margin:0;color:#475569;font-size:17px;font-weight:800}
+    .celebration-macaws{position:relative;height:92px;margin-bottom:8px}
+    .celebration-macaw{position:absolute;top:0;width:82px;height:82px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(15,23,42,.12))}
+    .celebration-macaw.one{left:calc(50% - 92px);animation:macawJoyLeft 1.8s ease-in-out infinite alternate}
+    .celebration-macaw.two{left:calc(50% + 12px);transform:scaleX(-1);animation:macawJoyRight 1.8s ease-in-out infinite alternate}
+    @keyframes celebrationAppear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes macawJoyLeft{from{transform:translateY(5px) rotate(-3deg)}to{transform:translateY(-7px) rotate(3deg)}}
+    @keyframes macawJoyRight{from{transform:scaleX(-1) translateY(-4px) rotate(-3deg)}to{transform:scaleX(-1) translateY(7px) rotate(3deg)}}
+
+    .hidden{display:none!important}
+
+    @media(max-width:850px){
+      .hero{grid-template-columns:1fr}
+      .topbar{flex-direction:column}
+      .detective-user-panel{justify-content:flex-start;width:100%}
+      .steps{grid-template-columns:1fr 1fr}
+      .operation-grid{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:620px){
+      .wrap{width:min(100% - 18px,1180px);padding-top:10px}
+      .hero,.play-card{padding:18px}
+      .choices{grid-template-columns:1fr}
+      .calculation{grid-template-columns:1fr auto 1fr}
+      .calculation .equals,
+      .calculation .result-input{grid-column:auto}
+      .summary-stats{grid-template-columns:1fr}
+      .actions .btn{width:100%}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <div class="topbar">
+      <a class="back" href="../index.html">← Volver a Aventuras Matemáticas</a>
+      <div class="detective-user-panel" data-panel-usuario></div>
+    </div>
+
+    <header class="card hero">
+      <div class="hero-copy">
+        <div class="eyebrow">PRIMER MUNDO · COMPRENDER ANTES DE CALCULAR</div>
+        <h1 class="title">🧩 Detectives de Problemas</h1>
+
+        <p>
+          Aquí no empezamos haciendo cuentas. Primero investigamos qué está
+          pasando, descubrimos las pistas y elegimos la operación que puede ayudarnos.
+        </p>
+
+        <div id="detectiveWelcome" class="welcome">
+          🌟 Hoy aprenderemos a encontrar la operación escondida.
+        </div>
+      </div>
+
+      <aside class="hero-guide">
+        <img
+          src="../../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png"
+          alt="Guacamaya azul y amarilla"
+        >
+        <h2>La pista más importante</h2>
+        <p>No busques una palabra mágica. Piensa qué está ocurriendo en la historia.</p>
+      </aside>
+    </header>
+
+
+    <section id="caseSelector" class="card case-selector">
+      <h2>🔎 Elige tu aventura</h2>
+      <p>El nivel es obligatorio. El tema es opcional.</p>
+
+      <div class="selector-grid">
+        <div class="selector-field">
+          <label>Nivel de dificultad</label>
+          <div class="level-options" role="group" aria-label="Nivel de dificultad">
+            <button class="level-button active" type="button" data-level="1">🌱 Nivel 1 · Sencillo</button>
+            <button class="level-button" type="button" data-level="2">🌿 Nivel 2 · Con pistas</button>
+            <button class="level-button" type="button" data-level="3">🌳 Nivel 3 · Compuesto</button>
+          </div>
+        </div>
+
+        <div class="selector-field">
+          <label for="themeFilter">Tema (opcional)</label>
+          <select id="themeFilter">
+            <option value="">🌈 Todos los temas</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="selector-summary">
+        <span id="caseCount" class="case-count">0 casos disponibles</span>
+        <button id="startAdventureButton" class="btn btn-primary" type="button">
+          🚀 Comenzar aventura
+        </button>
+      </div>
+    </section>
+
+    <nav class="steps hidden" aria-label="Pasos de la aventura">
+      <div class="step active" data-step-indicator="1">1. Comprendo</div>
+      <div class="step" data-step-indicator="2">2. Descubro</div>
+      <div class="step" data-step-indicator="3">3. Elijo</div>
+      <div class="step" data-step-indicator="4">4. Resuelvo</div>
+    </nav>
+
+    <section id="gamePanel" class="card play-card hidden">
+      <div class="play-head">
+        <h2 id="stageTitle">Primero, comprendemos la historia</h2>
+        <span id="challengeCounter" class="counter">Reto 1 de 6</span>
+      </div>
+
+      <div class="story-box">
+        <div class="story-box__label">HISTORIA DEL RETO</div>
+        <p id="storyText" class="story-box__text"></p>
+        <div class="case-meta">
+          <span id="caseLevelChip" class="case-chip"></span>
+          <span id="caseThemeChip" class="case-chip"></span>
+          <span id="caseTypeChip" class="case-chip"></span>
+        </div>
+      </div>
+
+      <div id="substepStatus" class="substep-banner hidden"></div>
+
+      <div id="stageContent"></div>
+
+      <div id="caseCelebration" class="case-celebration" aria-live="polite">
+        <div class="celebration-macaws" aria-hidden="true">
+          <img class="celebration-macaw one" src="../../../assets/identidad/guacamayas/guacamaya-azul-posada-01.png" alt="">
+          <img class="celebration-macaw two" src="../../../assets/identidad/guacamayas/guacamaya-azul-posada-02.png" alt="">
+        </div>
+        <h3>¡Caso resuelto!</h3>
+        <p id="caseCelebrationText">Has comprendido la historia, elegido la operación y encontrado la solución.</p>
+      </div>
+
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+
+      <div class="actions">
+        <button id="listenButton" class="btn btn-light" type="button">
+          🔊 Escuchar historia
+        </button>
+
+        <button id="continueButton" class="btn btn-primary" type="button" disabled>
+          Continuar →
+        </button>
+      </div>
+    </section>
+
+    <section id="summaryPanel" class="card summary hidden">
+      <div class="summary-icon">🦜🦜</div>
+      <h2>¡Primera misión completada!</h2>
+
+      <p id="summaryMessage">
+        Has practicado cómo comprender una historia y elegir una operación.
+      </p>
+
+      <div class="summary-stats">
+        <div class="summary-stat">
+          <strong id="summaryChallenges">0</strong>
+          <span>Retos completados</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong id="summaryOperations">0</strong>
+          <span>Operaciones descubiertas</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong id="summaryAttempts">0</strong>
+          <span>Intentos valientes</span>
+        </div>
+      </div>
+
+      <div class="actions" style="justify-content:center">
+        <button id="restartButton" class="btn btn-light" type="button">
+          🔁 Repetir aventura
+        </button>
+
+        <button id="chooseAnotherAdventureButton" class="btn btn-primary" type="button">
+          🔎 Elegir otra aventura
+        </button>
+
+        <a class="btn btn-light" href="../index.html" style="text-decoration:none">
+          🌈 Volver a los mundos
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { auth } from "../../../compartido/firebase/firebase-config.js";
+    import { obtenerPerfil } from "../../../compartido/js/perfil-usuario.js";
+    import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
+
+    await auth.authStateReady();
+
+    if (!auth.currentUser) {
+      window.location.replace("/academia-gloria/login.html");
+      throw new Error("Sesión no disponible.");
+    }
+
+    const perfil = await obtenerPerfil();
+    const nombreVisible = String(
+      perfil.nombreVisible || perfil.nombre || "Detective"
+    ).trim();
+
+    document.getElementById("detectiveWelcome").textContent =
+      `🔎 ${nombreVisible}, hoy no necesitamos correr. ` +
+      `Vamos a leer con calma, encontrar las pistas y elegir el mejor camino.`;
+
+    await iniciarPanelUsuario({
+      contenedor: "[data-panel-usuario]",
+      loginUrl: "/academia-gloria/login.html",
+      mostrarPerfil: false
+    });
+
+    const fallbackCases = [{"id": "DP-0001", "titulo": "Las naranjas de la cesta", "texto": "En una cesta había 5 naranjas. Ana añadió 3 naranjas más.", "nivel": 1, "tema": "casa", "tipo": "simple", "comprension": {"pregunta": "¿Qué ocurrió con la cantidad de naranjas?", "opciones": [{"id": "aumento", "texto": "🍊 Aumentó porque añadieron más."}, {"id": "disminuyo", "texto": "📉 Disminuyó porque quitaron algunas."}, {"id": "reparto", "texto": "🤝 Se repartieron en partes iguales."}], "correcta": "aumento"}, "descubrimiento": {"pregunta": "¿Qué necesitamos averiguar?", "opciones": [{"id": "total", "texto": "Cuántas naranjas hay ahora."}, {"id": "faltan", "texto": "Cuántas naranjas faltan."}, {"id": "grupos", "texto": "Cuántos grupos se pueden formar."}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas naranjas hay ahora?", "operacion": "sumar", "a": 5, "b": 3, "resultado": 8}], "activo": true}, {"id": "DP-0002", "titulo": "Las pegatinas compartidas", "texto": "Gloria tenía 9 pegatinas y regaló 4 a una amiga.", "nivel": 1, "tema": "amistad", "tipo": "simple", "comprension": {"pregunta": "¿Qué pasó con las pegatinas de Gloria?", "opciones": [{"id": "mas", "texto": "✨ Ahora tiene más."}, {"id": "menos", "texto": "🎁 Ahora tiene menos porque regaló algunas."}, {"id": "igual", "texto": "⚖️ Sigue teniendo la misma cantidad."}], "correcta": "menos"}, "descubrimiento": {"pregunta": "¿Qué pregunta debemos responder?", "opciones": [{"id": "quedan", "texto": "Cuántas pegatinas le quedan."}, {"id": "regalo", "texto": "De qué color eran las pegatinas."}, {"id": "total_amigas", "texto": "Cuántas amigas tiene Gloria."}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántas pegatinas le quedan?", "operacion": "restar", "a": 9, "b": 4, "resultado": 5}], "activo": true}, {"id": "DP-0003", "titulo": "Los vasos de las mesas", "texto": "Hay 4 mesas. En cada mesa colocaron 3 vasos.", "nivel": 1, "tema": "cumpleaños", "tipo": "simple", "comprension": {"pregunta": "¿Cómo están organizados los vasos?", "opciones": [{"id": "grupos", "texto": "🍽️ En grupos iguales: 3 vasos por mesa."}, {"id": "quitar", "texto": "➖ Se quitaron vasos."}, {"id": "repartir", "texto": "🤝 Se reparten los vasos entre personas."}], "correcta": "grupos"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "El total de vasos en todas las mesas."}, {"id": "mesas", "texto": "El color de las mesas."}, {"id": "sobran", "texto": "Cuántos vasos sobran."}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántos vasos hay en total?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}], "activo": true}, {"id": "DP-0004", "titulo": "Las galletas para compartir", "texto": "Doce galletas se reparten por igual entre 3 niños.", "nivel": 1, "tema": "merienda", "tipo": "simple", "comprension": {"pregunta": "¿Qué significa repartir por igual?", "opciones": [{"id": "igual", "texto": "🤝 Cada niño recibe la misma cantidad."}, {"id": "uno", "texto": "🍪 Un niño recibe todas las galletas."}, {"id": "sobran", "texto": "📦 Las galletas se guardan sin repartir."}], "correcta": "igual"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar?", "opciones": [{"id": "cada", "texto": "Cuántas galletas recibe cada niño."}, {"id": "total", "texto": "Cuántos niños hay en el colegio."}, {"id": "precio", "texto": "Cuánto cuestan las galletas."}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántas galletas recibe cada niño?", "operacion": "dividir", "a": 12, "b": 3, "resultado": 4}], "activo": true}, {"id": "DP-0005", "titulo": "Las palomas del parque", "texto": "En el parque había 7 palomas. Después llegaron 2 más.", "nivel": 1, "tema": "parque", "tipo": "simple", "comprension": {"pregunta": "¿La cantidad de palomas aumenta o disminuye?", "opciones": [{"id": "aumenta", "texto": "🕊️ Aumenta porque llegaron más."}, {"id": "disminuye", "texto": "📉 Disminuye porque se fueron."}, {"id": "igual", "texto": "⚖️ No cambia."}], "correcta": "aumenta"}, "descubrimiento": {"pregunta": "¿Qué dato buscamos?", "opciones": [{"id": "ahora", "texto": "Cuántas palomas hay ahora."}, {"id": "arboles", "texto": "Cuántos árboles hay en el parque."}, {"id": "comida", "texto": "Qué comen las palomas."}], "correcta": "ahora"}, "pasos": [{"pregunta": "¿Cuántas palomas hay ahora?", "operacion": "sumar", "a": 7, "b": 2, "resultado": 9}], "activo": true}, {"id": "DP-0006", "titulo": "Los lápices en estuches", "texto": "Hay 15 lápices y se guardan por igual en 5 estuches.", "nivel": 1, "tema": "colegio", "tipo": "simple", "comprension": {"pregunta": "¿Qué se hace con los lápices?", "opciones": [{"id": "repartir", "texto": "✏️ Se reparten por igual entre estuches."}, {"id": "añadir", "texto": "➕ Se añaden más lápices."}, {"id": "perder", "texto": "➖ Se pierden algunos lápices."}], "correcta": "repartir"}, "descubrimiento": {"pregunta": "¿Qué necesitamos saber?", "opciones": [{"id": "cada", "texto": "Cuántos lápices van en cada estuche."}, {"id": "color", "texto": "De qué color son los estuches."}, {"id": "precio", "texto": "Cuánto cuesta cada lápiz."}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos lápices van en cada estuche?", "operacion": "dividir", "a": 15, "b": 5, "resultado": 3}], "activo": true}, {"id": "DP-0101", "titulo": "Helados en la playa", "texto": "En la playa, una familia compró 6 helados por la mañana y 5 por la tarde. También llevó 3 toallas.", "nivel": 2, "tema": "playa", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para saber cuántos helados compraron?", "opciones": [{"id": "toallas", "texto": "🏖️ Las 3 toallas."}, {"id": "mañana", "texto": "🍦 Los 6 helados de la mañana."}, {"id": "tarde", "texto": "🌅 Los 5 helados de la tarde."}], "correcta": "toallas"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "helados", "texto": "El total de helados comprados."}, {"id": "personas", "texto": "Cuántas personas hay en la playa."}, {"id": "toallas", "texto": "Cuántas toallas faltan."}], "correcta": "helados"}, "pasos": [{"pregunta": "¿Cuántos helados compraron en total?", "operacion": "sumar", "a": 6, "b": 5, "resultado": 11}], "activo": true}, {"id": "DP-0102", "titulo": "Entradas para el museo", "texto": "Una entrada cuesta 4 euros. Anais compra 3 entradas para visitar un museo.", "nivel": 2, "tema": "viaje", "tipo": "simple", "comprension": {"pregunta": "¿Qué se repite en esta historia?", "opciones": [{"id": "precio", "texto": "🎟️ El mismo precio, 4 euros, tres veces."}, {"id": "resta", "texto": "➖ Se quitan entradas."}, {"id": "reparto", "texto": "🤝 Se reparte el dinero por igual."}], "correcta": "precio"}, "descubrimiento": {"pregunta": "¿Qué queremos averiguar?", "opciones": [{"id": "coste", "texto": "Cuánto cuestan las 3 entradas."}, {"id": "hora", "texto": "A qué hora abre el museo."}, {"id": "salas", "texto": "Cuántas salas tiene el museo."}], "correcta": "coste"}, "pasos": [{"pregunta": "¿Cuánto cuestan las 3 entradas?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}], "activo": true}, {"id": "DP-0103", "titulo": "Frutas del supermercado", "texto": "En el supermercado, Juan Pablo compra 18 mandarinas. Guarda 6 para otra semana y coloca las demás en una cesta.", "nivel": 2, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué cantidad cambia?", "opciones": [{"id": "mandarinas", "texto": "🍊 La cantidad de mandarinas disponibles ahora."}, {"id": "semanas", "texto": "📅 El número de semanas del año."}, {"id": "cestas", "texto": "🧺 El número de cestas."}], "correcta": "mandarinas"}, "descubrimiento": {"pregunta": "¿Qué necesitamos calcular?", "opciones": [{"id": "quedan", "texto": "Cuántas mandarinas quedan para la cesta."}, {"id": "precio", "texto": "Cuánto cuesta cada mandarina."}, {"id": "peso", "texto": "Cuánto pesa la cesta."}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántas mandarinas coloca en la cesta?", "operacion": "restar", "a": 18, "b": 6, "resultado": 12}], "activo": true}, {"id": "DP-0201", "titulo": "Material para el colegio", "texto": "Gloria compra un cuaderno por 4 euros y dos lápices de 2 euros cada uno. Paga con 10 euros. ¿Cuánto cambio recibe?", "nivel": 3, "tema": "supermercado", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final del problema?", "opciones": [{"id": "cambio", "texto": "💶 Cuánto cambio recibe Gloria."}, {"id": "lapices", "texto": "✏️ Cuántos lápices compra."}, {"id": "cuaderno", "texto": "📓 De qué color es el cuaderno."}], "correcta": "cambio"}, "descubrimiento": {"pregunta": "¿Qué necesitamos averiguar primero?", "opciones": [{"id": "lapices", "texto": "El precio de los dos lápices."}, {"id": "cambio", "texto": "El cambio, sin calcular antes la compra."}, {"id": "color", "texto": "El color del material."}], "correcta": "lapices"}, "pasos": [{"pregunta": "¿Cuánto cuestan los dos lápices?", "operacion": "multiplicar", "a": 2, "b": 2, "resultado": 4}, {"pregunta": "¿Cuánto cuesta toda la compra?", "operacion": "sumar", "a": 4, "b": 4, "resultado": 8}, {"pregunta": "¿Cuánto cambio recibe Gloria?", "operacion": "restar", "a": 10, "b": 8, "resultado": 2}], "activo": true}, {"id": "DP-0202", "titulo": "La merienda del cumpleaños", "texto": "Para un cumpleaños hay 5 mesas con 4 zumos en cada mesa. Durante la fiesta se beben 13 zumos. ¿Cuántos quedan?", "nivel": 3, "tema": "cumpleaños", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos conocer antes de saber cuántos zumos quedan?", "opciones": [{"id": "total", "texto": "🥤 Cuántos zumos había al principio."}, {"id": "mesas", "texto": "🎈 El color de las mesas."}, {"id": "invitados", "texto": "👥 Los nombres de los invitados."}], "correcta": "total"}, "descubrimiento": {"pregunta": "¿Cuál es el primer cálculo útil?", "opciones": [{"id": "multiplicar", "texto": "Calcular 5 grupos de 4 zumos."}, {"id": "restar", "texto": "Restar 13 sin saber el total inicial."}, {"id": "dividir", "texto": "Repartir las mesas."}], "correcta": "multiplicar"}, "pasos": [{"pregunta": "¿Cuántos zumos había al principio?", "operacion": "multiplicar", "a": 5, "b": 4, "resultado": 20}, {"pregunta": "¿Cuántos zumos quedan?", "operacion": "restar", "a": 20, "b": 13, "resultado": 7}], "activo": true}, {"id": "DP-0203", "titulo": "Excursión al bosque", "texto": "En una excursión viajan 24 niños en 4 grupos iguales. Cada grupo necesita 2 botellas de agua. ¿Cuántas botellas necesitan en total?", "nivel": 3, "tema": "bosque", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué información relaciona a los niños con los grupos?", "opciones": [{"id": "iguales", "texto": "🌳 Los 24 niños se dividen en 4 grupos iguales."}, {"id": "botellas", "texto": "💧 Cada botella tiene un color."}, {"id": "viaje", "texto": "🚌 Viajan en autobús."}], "correcta": "iguales"}, "descubrimiento": {"pregunta": "¿Qué podemos averiguar primero?", "opciones": [{"id": "ninos_grupo", "texto": "Cuántos niños hay en cada grupo."}, {"id": "total_botellas", "texto": "El total de botellas sin usar los grupos."}, {"id": "arboles", "texto": "Cuántos árboles hay en el bosque."}], "correcta": "ninos_grupo"}, "pasos": [{"pregunta": "¿Cuántos niños hay en cada grupo?", "operacion": "dividir", "a": 24, "b": 4, "resultado": 6}, {"pregunta": "Si cada grupo necesita 2 botellas, ¿cuántas botellas necesitan los 4 grupos?", "operacion": "multiplicar", "a": 4, "b": 2, "resultado": 8}], "activo": true}, {"id": "DP-0007", "titulo": "Conchas en la playa", "texto": "Gloria encontró 6 conchas y después encontró 4 más.", "nivel": 1, "tema": "playa", "tipo": "simple", "comprension": {"pregunta": "¿Qué ocurrió con la colección de conchas?", "opciones": [{"id": "crecio", "texto": "🐚 Creció porque encontró más."}, {"id": "bajo", "texto": "📉 Disminuyó."}, {"id": "repartio", "texto": "🤝 Se repartió."}], "correcta": "crecio"}, "descubrimiento": {"pregunta": "¿Qué queremos saber?", "opciones": [{"id": "total", "texto": "¿Cuántas conchas tiene ahora?"}, {"id": "arena", "texto": "¿Cuánta arena hay?"}, {"id": "color", "texto": "¿De qué color son?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas conchas tiene ahora?", "operacion": "sumar", "a": 6, "b": 4, "resultado": 10}], "activo": true}, {"id": "DP-0008", "titulo": "Libros en la estantería", "texto": "Había 11 libros en una estantería. Juan Pablo retiró 3 para leerlos.", "nivel": 1, "tema": "biblioteca", "tipo": "simple", "comprension": {"pregunta": "¿Qué pasó con los libros de la estantería?", "opciones": [{"id": "menos", "texto": "📚 Quedaron menos libros."}, {"id": "mas", "texto": "➕ Aparecieron más libros."}, {"id": "igual", "texto": "⚖️ No cambió la cantidad."}], "correcta": "menos"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "quedan", "texto": "¿Cuántos libros quedan en la estantería?"}, {"id": "paginas", "texto": "¿Cuántas páginas tienen?"}, {"id": "autor", "texto": "¿Quién escribió los libros?"}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántos libros quedan en la estantería?", "operacion": "restar", "a": 11, "b": 3, "resultado": 8}], "activo": true}, {"id": "DP-0009", "titulo": "Bolsas de manzanas", "texto": "Hay 3 bolsas y cada bolsa contiene 5 manzanas.", "nivel": 1, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué se repite en la historia?", "opciones": [{"id": "grupo", "texto": "🍎 El mismo grupo de 5 manzanas, 3 veces."}, {"id": "quitar", "texto": "➖ Se quitan manzanas."}, {"id": "repartir", "texto": "🤝 Se reparten manzanas."}], "correcta": "grupo"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "¿Cuántas manzanas hay en total?"}, {"id": "precio", "texto": "¿Cuánto cuesta una bolsa?"}, {"id": "peso", "texto": "¿Cuánto pesan?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas manzanas hay en total?", "operacion": "multiplicar", "a": 3, "b": 5, "resultado": 15}], "activo": true}, {"id": "DP-0010", "titulo": "Botellas para equipos", "texto": "Hay 16 botellas de agua para repartir por igual entre 4 equipos.", "nivel": 1, "tema": "deporte", "tipo": "simple", "comprension": {"pregunta": "¿Qué debe ocurrir con las botellas?", "opciones": [{"id": "igual", "texto": "💧 Cada equipo debe recibir la misma cantidad."}, {"id": "añadir", "texto": "➕ Hay que comprar más."}, {"id": "guardar", "texto": "📦 Se guardan todas."}], "correcta": "igual"}, "descubrimiento": {"pregunta": "¿Qué debemos descubrir?", "opciones": [{"id": "cada", "texto": "¿Cuántas botellas recibe cada equipo?"}, {"id": "jugadores", "texto": "¿Cuántos jugadores hay?"}, {"id": "marca", "texto": "¿Qué marca tienen?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántas botellas recibe cada equipo?", "operacion": "dividir", "a": 16, "b": 4, "resultado": 4}], "activo": true}, {"id": "DP-0104", "titulo": "Sillas para una reunión", "texto": "En una sala hay 5 filas con 6 sillas en cada fila. Las paredes son blancas.", "nivel": 2, "tema": "colegio", "tipo": "simple", "comprension": {"pregunta": "¿Qué información no sirve para contar las sillas?", "opciones": [{"id": "paredes", "texto": "🎨 El color de las paredes."}, {"id": "filas", "texto": "5️⃣ Las 5 filas."}, {"id": "sillas", "texto": "6️⃣ Las 6 sillas por fila."}], "correcta": "paredes"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "¿Cuántas sillas hay en total?"}, {"id": "color", "texto": "¿De qué color son las paredes?"}, {"id": "puertas", "texto": "¿Cuántas puertas hay?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas sillas hay en total?", "operacion": "multiplicar", "a": 5, "b": 6, "resultado": 30}], "activo": true}, {"id": "DP-0105", "titulo": "Monedas para ahorrar", "texto": "Gloria tenía 20 euros y gastó 7 euros en un libro. El libro tiene una portada azul.", "nivel": 2, "tema": "dinero", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato es decorativo y no cambia la cuenta?", "opciones": [{"id": "portada", "texto": "📘 El color azul de la portada."}, {"id": "tenia", "texto": "💶 Los 20 euros iniciales."}, {"id": "gasto", "texto": "🛍️ Los 7 euros gastados."}], "correcta": "portada"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar?", "opciones": [{"id": "restan", "texto": "¿Cuánto dinero le queda?"}, {"id": "paginas", "texto": "¿Cuántas páginas tiene el libro?"}, {"id": "color", "texto": "¿De qué color es?"}], "correcta": "restan"}, "pasos": [{"pregunta": "¿Cuánto dinero le queda?", "operacion": "restar", "a": 20, "b": 7, "resultado": 13}], "activo": true}, {"id": "DP-0106", "titulo": "Zumos para la excursión", "texto": "Hay 24 zumos para repartir por igual entre 6 grupos. El autobús es amarillo.", "nivel": 2, "tema": "viaje", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para repartir los zumos?", "opciones": [{"id": "bus", "texto": "🚌 El color del autobús."}, {"id": "zumos", "texto": "🥤 Los 24 zumos."}, {"id": "grupos", "texto": "👥 Los 6 grupos."}], "correcta": "bus"}, "descubrimiento": {"pregunta": "¿Qué pregunta resolvemos?", "opciones": [{"id": "cada", "texto": "¿Cuántos zumos recibe cada grupo?"}, {"id": "bus", "texto": "¿Cuántas ruedas tiene el autobús?"}, {"id": "hora", "texto": "¿A qué hora salen?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos zumos recibe cada grupo?", "operacion": "dividir", "a": 24, "b": 6, "resultado": 4}], "activo": true}, {"id": "DP-0107", "titulo": "Entradas vendidas", "texto": "Por la mañana se vendieron 14 entradas y por la tarde 9. La taquilla cerró a las 8.", "nivel": 2, "tema": "espectaculo", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no se usa para calcular el total vendido?", "opciones": [{"id": "cierre", "texto": "🕗 La hora de cierre."}, {"id": "mañana", "texto": "🎟️ Las 14 entradas de la mañana."}, {"id": "tarde", "texto": "🎫 Las 9 entradas de la tarde."}], "correcta": "cierre"}, "descubrimiento": {"pregunta": "¿Qué queremos calcular?", "opciones": [{"id": "total", "texto": "¿Cuántas entradas se vendieron en total?"}, {"id": "hora", "texto": "¿A qué hora cerró la taquilla?"}, {"id": "precio", "texto": "¿Cuánto costaba cada entrada?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas entradas se vendieron en total?", "operacion": "sumar", "a": 14, "b": 9, "resultado": 23}], "activo": true}, {"id": "DP-0108", "titulo": "Árboles del parque", "texto": "En el parque había 25 árboles. Una tormenta dañó 4. También había 7 bancos.", "nivel": 2, "tema": "parque", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para saber cuántos árboles quedaron?", "opciones": [{"id": "bancos", "texto": "🪑 Los 7 bancos."}, {"id": "arboles", "texto": "🌳 Los 25 árboles."}, {"id": "dañados", "texto": "⛈️ Los 4 árboles dañados."}], "correcta": "bancos"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "quedan", "texto": "¿Cuántos árboles quedaron sin daño?"}, {"id": "bancos", "texto": "¿Cuántos bancos hay?"}, {"id": "hojas", "texto": "¿Cuántas hojas tienen?"}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántos árboles quedaron sin daño?", "operacion": "restar", "a": 25, "b": 4, "resultado": 21}], "activo": true}, {"id": "DP-0109", "titulo": "Paquetes de galletas", "texto": "Hay 7 paquetes con 4 galletas cada uno. La caja grande pesa 2 kilos.", "nivel": 2, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no hace falta para contar las galletas?", "opciones": [{"id": "peso", "texto": "⚖️ El peso de la caja."}, {"id": "paquetes", "texto": "📦 Los 7 paquetes."}, {"id": "galletas", "texto": "🍪 Las 4 galletas por paquete."}], "correcta": "peso"}, "descubrimiento": {"pregunta": "¿Qué queremos averiguar?", "opciones": [{"id": "total", "texto": "¿Cuántas galletas hay en total?"}, {"id": "peso", "texto": "¿Cuánto pesa cada galleta?"}, {"id": "precio", "texto": "¿Cuánto cuesta la caja?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas galletas hay en total?", "operacion": "multiplicar", "a": 7, "b": 4, "resultado": 28}], "activo": true}, {"id": "DP-0110", "titulo": "Reparto de cromos", "texto": "Treinta cromos se reparten por igual entre 5 niños. Uno lleva una camiseta verde.", "nivel": 2, "tema": "amistad", "tipo": "simple", "comprension": {"pregunta": "¿Qué detalle no cambia el reparto?", "opciones": [{"id": "camiseta", "texto": "👕 El color de la camiseta."}, {"id": "cromos", "texto": "🃏 Los 30 cromos."}, {"id": "niños", "texto": "👧 Los 5 niños."}], "correcta": "camiseta"}, "descubrimiento": {"pregunta": "¿Qué debemos saber?", "opciones": [{"id": "cada", "texto": "¿Cuántos cromos recibe cada niño?"}, {"id": "color", "texto": "¿De qué color es la camiseta?"}, {"id": "album", "texto": "¿Cuántas páginas tiene el álbum?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos cromos recibe cada niño?", "operacion": "dividir", "a": 30, "b": 5, "resultado": 6}], "activo": true}, {"id": "DP-0204", "titulo": "Compra para una merienda", "texto": "Anais compra 3 zumos de 2 euros cada uno y una bolsa de fruta de 5 euros. Paga con 20 euros. ¿Cuánto cambio recibe?", "nivel": 3, "tema": "supermercado", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la meta final?", "opciones": [{"id": "cambio", "texto": "💶 Saber cuánto cambio recibe."}, {"id": "zumos", "texto": "🥤 Saber cuántos zumos compra."}, {"id": "fruta", "texto": "🍎 Saber qué fruta eligió."}], "correcta": "cambio"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "zumos", "texto": "¿Cuánto cuestan los 3 zumos?"}, {"id": "cambio", "texto": "¿El cambio directamente?"}, {"id": "fruta", "texto": "¿El peso de la fruta?"}], "correcta": "zumos"}, "pasos": [{"pregunta": "¿Cuánto cuestan los 3 zumos?", "operacion": "multiplicar", "a": 3, "b": 2, "resultado": 6}, {"pregunta": "¿Cuánto cuesta toda la compra?", "operacion": "sumar", "a": 6, "b": 5, "resultado": 11}, {"pregunta": "¿Cuánto cambio recibe?", "operacion": "restar", "a": 20, "b": 11, "resultado": 9}], "activo": true}, {"id": "DP-0205", "titulo": "Libros para las mesas", "texto": "La biblioteca prepara 6 mesas con 3 libros en cada una. Después presta 5 de esos libros. ¿Cuántos libros quedan?", "nivel": 3, "tema": "biblioteca", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos saber antes de restar los libros prestados?", "opciones": [{"id": "total", "texto": "📚 Cuántos libros había en total."}, {"id": "autores", "texto": "✍️ Quién escribió los libros."}, {"id": "mesas", "texto": "🎨 De qué color son las mesas."}], "correcta": "total"}, "descubrimiento": {"pregunta": "¿Qué cálculo va primero?", "opciones": [{"id": "multiplicar", "texto": "¿Cuántos libros hay en las 6 mesas?"}, {"id": "restar", "texto": "¿Cuántos quedan sin saber el total?"}, {"id": "dividir", "texto": "¿Cómo se reparten los autores?"}], "correcta": "multiplicar"}, "pasos": [{"pregunta": "¿Cuántos libros había en total?", "operacion": "multiplicar", "a": 6, "b": 3, "resultado": 18}, {"pregunta": "¿Cuántos libros quedan?", "operacion": "restar", "a": 18, "b": 5, "resultado": 13}], "activo": true}, {"id": "DP-0206", "titulo": "Frutas para tres familias", "texto": "Hay 27 manzanas para repartir por igual entre 3 familias. Cada familia come 2 manzanas. ¿Cuántas le quedan a cada familia?", "nivel": 3, "tema": "familia", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final?", "opciones": [{"id": "quedan", "texto": "🍎 Cuántas manzanas le quedan a cada familia."}, {"id": "familias", "texto": "👨‍👩‍👧 Cuántas familias hay."}, {"id": "color", "texto": "🎨 De qué color son las manzanas."}], "correcta": "quedan"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar primero?", "opciones": [{"id": "reparto", "texto": "¿Cuántas manzanas recibe cada familia?"}, {"id": "resta", "texto": "¿Cuántas quedan sin repartir primero?"}, {"id": "precio", "texto": "¿Cuánto cuestan?"}], "correcta": "reparto"}, "pasos": [{"pregunta": "¿Cuántas manzanas recibe cada familia?", "operacion": "dividir", "a": 27, "b": 3, "resultado": 9}, {"pregunta": "Si cada familia come 2, ¿cuántas le quedan?", "operacion": "restar", "a": 9, "b": 2, "resultado": 7}], "activo": true}, {"id": "DP-0207", "titulo": "Entradas de cine", "texto": "Cuatro entradas cuestan 6 euros cada una. Además compran palomitas por 8 euros. ¿Cuánto pagan en total?", "nivel": 3, "tema": "espectaculo", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué dos gastos aparecen?", "opciones": [{"id": "dos", "texto": "🎟️ Las entradas y las palomitas."}, {"id": "uno", "texto": "🍿 Solo las palomitas."}, {"id": "ninguno", "texto": "🚫 No aparece ningún gasto."}], "correcta": "dos"}, "descubrimiento": {"pregunta": "¿Qué calculamos primero?", "opciones": [{"id": "entradas", "texto": "¿Cuánto cuestan las 4 entradas?"}, {"id": "total", "texto": "¿El total sin conocer el precio de las entradas?"}, {"id": "hora", "texto": "¿A qué hora empieza la película?"}], "correcta": "entradas"}, "pasos": [{"pregunta": "¿Cuánto cuestan las 4 entradas?", "operacion": "multiplicar", "a": 4, "b": 6, "resultado": 24}, {"pregunta": "¿Cuánto pagan sumando las palomitas?", "operacion": "sumar", "a": 24, "b": 8, "resultado": 32}], "activo": true}, {"id": "DP-0208", "titulo": "Receta de magdalenas", "texto": "Para una bandeja se necesitan 4 huevos. Gloria prepara 3 bandejas y ya tiene 5 huevos. ¿Cuántos huevos más necesita?", "nivel": 3, "tema": "cocina", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos descubrir al final?", "opciones": [{"id": "faltan", "texto": "🥚 Cuántos huevos más necesita."}, {"id": "bandejas", "texto": "🧁 Cuántas bandejas prepara."}, {"id": "color", "texto": "🎨 El color de las magdalenas."}], "correcta": "faltan"}, "descubrimiento": {"pregunta": "¿Qué cálculo hacemos primero?", "opciones": [{"id": "necesarios", "texto": "¿Cuántos huevos necesita para 3 bandejas?"}, {"id": "restar", "texto": "¿Cuántos faltan sin saber el total necesario?"}, {"id": "sumar", "texto": "¿Cuántos huevos sobran?"}], "correcta": "necesarios"}, "pasos": [{"pregunta": "¿Cuántos huevos necesita para 3 bandejas?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}, {"pregunta": "Si ya tiene 5, ¿cuántos huevos más necesita?", "operacion": "restar", "a": 12, "b": 5, "resultado": 7}], "activo": true}, {"id": "DP-0209", "titulo": "Viaje en autobús", "texto": "Un autobús tiene 8 filas con 4 asientos en cada fila. Ya están ocupados 21 asientos. ¿Cuántos quedan libres?", "nivel": 3, "tema": "viaje", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué queremos saber al final?", "opciones": [{"id": "libres", "texto": "🚌 Cuántos asientos quedan libres."}, {"id": "filas", "texto": "🔢 Cuántas filas tiene."}, {"id": "color", "texto": "🎨 De qué color es el autobús."}], "correcta": "libres"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "total", "texto": "¿Cuántos asientos tiene el autobús?"}, {"id": "libres", "texto": "¿Cuántos libres hay sin saber el total?"}, {"id": "ruedas", "texto": "¿Cuántas ruedas tiene?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántos asientos tiene el autobús?", "operacion": "multiplicar", "a": 8, "b": 4, "resultado": 32}, {"pregunta": "¿Cuántos asientos quedan libres?", "operacion": "restar", "a": 32, "b": 21, "resultado": 11}], "activo": true}, {"id": "DP-0210", "titulo": "Ahorro para un juego", "texto": "Gloria ahorra 5 euros cada semana durante 4 semanas. Después gasta 7 euros en un libro. ¿Cuánto dinero le queda?", "nivel": 3, "tema": "dinero", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final?", "opciones": [{"id": "queda", "texto": "💰 Cuánto dinero le queda."}, {"id": "semanas", "texto": "📅 Cuántas semanas ahorra."}, {"id": "libro", "texto": "📘 Cómo se llama el libro."}], "correcta": "queda"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "ahorro", "texto": "¿Cuánto ahorra en 4 semanas?"}, {"id": "gasto", "texto": "¿Cuánto queda sin saber el ahorro total?"}, {"id": "titulo", "texto": "¿Cuál es el título del libro?"}], "correcta": "ahorro"}, "pasos": [{"pregunta": "¿Cuánto ahorra en 4 semanas?", "operacion": "multiplicar", "a": 5, "b": 4, "resultado": 20}, {"pregunta": "Después de gastar 7 euros, ¿cuánto le queda?", "operacion": "restar", "a": 20, "b": 7, "resultado": 13}], "activo": true}];
+
+    async function loadCases(){
+      try{
+        const response = await fetch("./historias.json", {cache:"no-store"});
+        if(!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        if(!Array.isArray(data)) throw new Error("Formato inválido");
+        return data.filter(item => item && item.activo !== false);
+      }catch(error){
+        console.warn("Se usará la colección de respaldo.", error);
+        return fallbackCases;
+      }
+    }
+
+    const allCases = await loadCases();
+
+    const operationChoices = [
+      {id:"sumar",symbol:"+",name:"Sumar"},
+      {id:"restar",symbol:"−",name:"Restar"},
+      {id:"multiplicar",symbol:"×",name:"Multiplicar"},
+      {id:"dividir",symbol:"÷",name:"Dividir"}
+    ];
+
+    const operationSymbols = {
+      sumar:"+", restar:"−", multiplicar:"×", dividir:"÷"
+    };
+
+    const themeLabels = {
+      casa:"Casa", amistad:"Amistad", cumpleaños:"Cumpleaños",
+      merienda:"Merienda", parque:"Parque", colegio:"Colegio",
+      playa:"Playa", viaje:"Viaje", supermercado:"Supermercado",
+      bosque:"Bosque"
+    };
+
+    const state = {
+      selectedLevel:1,
+      selectedTheme:"",
+      challenges:[],
+      challengeIndex:0,
+      stage:1,
+      stepIndex:0,
+      attempts:0,
+      completedOperations:0,
+      simpleCompleted:0,
+      compoundCompleted:0,
+      awaitingManualNext:false
+    };
+
+    const $ = id => document.getElementById(id);
+
+    function currentCase(){ return state.challenges[state.challengeIndex]; }
+    function currentStep(){ return currentCase().pasos[state.stepIndex]; }
+
+    function getFilteredCases(){
+      return allCases.filter(item =>
+        Number(item.nivel) === state.selectedLevel &&
+        (!state.selectedTheme || item.tema === state.selectedTheme)
+      );
+    }
+
+    function populateThemes(){
+      const select = $("themeFilter");
+      const themes = [...new Set(
+        allCases
+          .filter(item => Number(item.nivel) === state.selectedLevel)
+          .map(item => item.tema)
+          .filter(Boolean)
+      )].sort();
+
+      const previous = state.selectedTheme;
+      select.innerHTML = '<option value="">🌈 Todos los temas</option>';
+
+      themes.forEach(theme => {
+        const option = document.createElement("option");
+        option.value = theme;
+        option.textContent = themeLabels[theme] || theme;
+        select.appendChild(option);
+      });
+
+      if(themes.includes(previous)){
+        select.value = previous;
+      }else{
+        state.selectedTheme = "";
+        select.value = "";
+      }
+    }
+
+    function updateCaseCount(){
+      const count = getFilteredCases().length;
+      $("caseCount").textContent =
+        `${count} ${count === 1 ? "caso disponible" : "casos disponibles"}`;
+      $("startAdventureButton").disabled = count === 0;
+    }
+
+    document.querySelectorAll("[data-level]").forEach(button => {
+      button.onclick = () => {
+        state.selectedLevel = Number(button.dataset.level);
+        state.selectedTheme = "";
+
+        document.querySelectorAll("[data-level]").forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+
+        populateThemes();
+        updateCaseCount();
+      };
+    });
+
+    $("themeFilter").onchange = event => {
+      state.selectedTheme = event.target.value;
+      updateCaseCount();
+    };
+
+    $("startAdventureButton").onclick = () => {
+      state.challenges = getFilteredCases();
+      state.challengeIndex = 0;
+      state.stage = 1;
+      state.stepIndex = 0;
+      state.attempts = 0;
+      state.completedOperations = 0;
+      state.simpleCompleted = 0;
+      state.compoundCompleted = 0;
+      state.awaitingManualNext = false;
+
+      $("caseSelector").classList.add("hidden");
+      $("gamePanel").classList.remove("hidden");
+      document.querySelector(".steps").classList.remove("hidden");
+      $("continueButton").textContent = "Continuar →";
+      render();
+    };
+
+    function setFeedback(message,type){
+      const box = $("feedback");
+      box.textContent = message;
+      box.className = `feedback show ${type}`;
+    }
+
+    function clearFeedback(){
+      $("feedback").className = "feedback";
+      $("feedback").textContent = "";
+    }
+
+    function updateIndicators(){
+      document.querySelectorAll("[data-step-indicator]").forEach(item => {
+        item.classList.toggle(
+          "active",
+          Number(item.dataset.stepIndicator) === state.stage
+        );
+      });
+    }
+
+    function updateSubsteps(){
+      const item = currentCase();
+      const box = $("substepStatus");
+
+      if(item.tipo !== "compuesto"){
+        box.classList.add("hidden");
+        box.innerHTML = "";
+        return;
+      }
+
+      box.classList.remove("hidden");
+      const pills = item.pasos.map((step,index) => {
+        const status =
+          index < state.stepIndex ? "done" :
+          index === state.stepIndex ? "current" : "";
+        return `<span class="substep-pill ${status}">Paso ${index + 1}</span>`;
+      }).join("");
+
+      box.innerHTML = `
+        🧠 Este es un problema compuesto. Lo resolveremos paso a paso.
+        <div class="substep-list">${pills}</div>
+      `;
+    }
+
+    function render(){
+      clearFeedback();
+      $("caseCelebration").classList.remove("show");
+      state.awaitingManualNext = false;
+      updateIndicators();
+      updateSubsteps();
+
+      const item = currentCase();
+      $("challengeCounter").textContent =
+        `Caso ${state.challengeIndex + 1} de ${state.challenges.length}`;
+
+      $("storyText").textContent = item.texto;
+      $("caseLevelChip").textContent = `Nivel ${item.nivel}`;
+      $("caseThemeChip").textContent = `📍 ${themeLabels[item.tema] || item.tema}`;
+      $("caseTypeChip").textContent =
+        item.tipo === "compuesto" ? "🧠 Problema compuesto" : "🧩 Problema simple";
+
+      $("continueButton").disabled = true;
+
+      if(state.stage === 1) renderQuestionStage(
+        "Primero, comprendemos la historia",
+        item.comprension
+      );
+
+      if(state.stage === 2) renderQuestionStage(
+        "Descubrimos qué necesitamos averiguar",
+        item.descubrimiento
+      );
+
+      if(state.stage === 3) renderOperationStage();
+      if(state.stage === 4) renderCalculationStage();
+    }
+
+    function renderQuestionStage(title,questionData){
+      $("stageTitle").textContent = title;
+      $("stageContent").innerHTML = `
+        <p class="question">${questionData.pregunta}</p>
+        <div class="choices" id="dynamicChoices"></div>
+      `;
+
+      const container = $("dynamicChoices");
+
+      questionData.opciones.forEach(option => {
+        const button = document.createElement("button");
+        button.className = "choice";
+        button.textContent = option.texto;
+
+        button.onclick = () => {
+          state.attempts += 1;
+
+          container.querySelectorAll(".choice").forEach(item => {
+            item.classList.remove("correct","incorrect");
+          });
+
+          if(option.id === questionData.correcta){
+            button.classList.add("correct");
+            setFeedback(
+              state.stage === 1
+                ? "🌟 ¡Muy bien! Has comprendido una pista importante."
+                : "🔎 ¡Exacto! Ya sabemos qué debemos buscar.",
+              "good"
+            );
+            $("continueButton").disabled = false;
+          }else{
+            button.classList.add("incorrect");
+            setFeedback(
+              "Buena observación. Vuelve a leer la historia y prueba otra pista.",
+              "try"
+            );
+          }
+        };
+
+        container.appendChild(button);
+      });
+    }
+
+    function renderOperationStage(){
+      const step = currentStep();
+
+      $("stageTitle").textContent =
+        currentCase().tipo === "compuesto"
+          ? `Elegimos la operación del paso ${state.stepIndex + 1}`
+          : "Elegimos la herramienta matemática";
+
+      $("stageContent").innerHTML = `
+        <p class="question">${step.pregunta}</p>
+        <div class="operation-grid" id="operationChoices"></div>
+      `;
+
+      const container = $("operationChoices");
+
+      operationChoices.forEach(choice => {
+        const button = document.createElement("button");
+        button.className = "operation";
+        button.innerHTML = `
+          <span class="operation-symbol">${choice.symbol}</span>
+          <span class="operation-name">${choice.name}</span>
+        `;
+
+        button.onclick = () => {
+          state.attempts += 1;
+
+          container.querySelectorAll(".operation").forEach(item => {
+            item.classList.remove("correct","incorrect");
+          });
+
+          if(choice.id === step.operacion){
+            button.classList.add("correct");
+            setFeedback(
+              `✨ ¡Muy bien! En este paso nos ayuda ${choice.name.toLowerCase()}.`,
+              "good"
+            );
+            $("continueButton").disabled = false;
+          }else{
+            button.classList.add("incorrect");
+            setFeedback(
+              "Has probado un camino. Piensa qué debe ocurrir en este paso y elige otra herramienta.",
+              "try"
+            );
+          }
+        };
+
+        container.appendChild(button);
+      });
+    }
+
+    function renderCalculationStage(){
+      const step = currentStep();
+
+      $("stageTitle").textContent =
+        currentCase().tipo === "compuesto"
+          ? `Resolvemos el paso ${state.stepIndex + 1} con calma`
+          : "Resolvemos con calma";
+
+      $("stageContent").innerHTML = `
+        <p class="question">${step.pregunta}</p>
+        <div class="calculation">
+          <div class="number-box">${step.a}</div>
+          <div class="math-sign">${operationSymbols[step.operacion]}</div>
+          <div class="number-box">${step.b}</div>
+          <div class="math-sign equals">=</div>
+          <input id="resultInput" class="result-input" inputmode="numeric"
+                 aria-label="Resultado" placeholder="?">
+        </div>
+      `;
+
+      const input = $("resultInput");
+      input.focus();
+      input.addEventListener("input", () => {
+        $("continueButton").disabled = input.value.trim() === "";
+      });
+    }
+
+    function playSuccessChime(){
+      try{
+        const AudioContextClass =
+          window.AudioContext || window.webkitAudioContext;
+        if(!AudioContextClass) return;
+
+        const context = new AudioContextClass();
+        const now = context.currentTime;
+        [523.25,659.25,783.99].forEach((frequency,index) => {
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          oscillator.type = "sine";
+          oscillator.frequency.value = frequency;
+          gain.gain.setValueAtTime(0, now + index * .12);
+          gain.gain.linearRampToValueAtTime(.09, now + index * .12 + .02);
+          gain.gain.exponentialRampToValueAtTime(.001, now + index * .12 + .35);
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+          oscillator.start(now + index * .12);
+          oscillator.stop(now + index * .12 + .4);
+        });
+        setTimeout(() => context.close(), 1000);
+      }catch(error){
+        console.warn("No fue posible reproducir la celebración.", error);
+      }
+    }
+
+    function validateCalculation(){
+      const step = currentStep();
+      const value = Number($("resultInput").value);
+      state.attempts += 1;
+
+      if(value !== Number(step.resultado)){
+        setFeedback(
+          "Ya elegiste la operación correcta. Revisa la cuenta con calma y vuelve a intentarlo.",
+          "try"
+        );
+        return false;
+      }
+
+      state.completedOperations += 1;
+      state.awaitingManualNext = true;
+      $("resultInput").disabled = true;
+      clearFeedback();
+      playSuccessChime();
+
+      const hasMoreSteps =
+        state.stepIndex < currentCase().pasos.length - 1;
+
+      $("caseCelebrationText").textContent = hasMoreSteps
+        ? `¡Paso ${state.stepIndex + 1} resuelto! Ahora continuaremos con la siguiente parte de la historia.`
+        : "Has comprendido la historia, elegido las operaciones y encontrado la solución.";
+
+      $("caseCelebration").classList.add("show");
+
+      if(hasMoreSteps){
+        $("continueButton").textContent =
+          `Continuar con el paso ${state.stepIndex + 2} →`;
+      }else{
+        $("continueButton").textContent =
+          state.challengeIndex === state.challenges.length - 1
+            ? "Ver mi logro 🌟"
+            : "Ir al siguiente caso →";
+      }
+
+      $("continueButton").disabled = false;
+      return true;
+    }
+
+    $("continueButton").onclick = () => {
+      if(state.stage < 4){
+        state.stage += 1;
+        render();
+        return;
+      }
+
+      if(!state.awaitingManualNext){
+        validateCalculation();
+        return;
+      }
+
+      const item = currentCase();
+      const hasMoreSteps = state.stepIndex < item.pasos.length - 1;
+
+      if(hasMoreSteps){
+        state.stepIndex += 1;
+        state.stage = 3;
+        state.awaitingManualNext = false;
+        $("continueButton").textContent = "Continuar →";
+        render();
+        return;
+      }
+
+      if(item.tipo === "compuesto"){
+        state.compoundCompleted += 1;
+      }else{
+        state.simpleCompleted += 1;
+      }
+
+      if(state.challengeIndex === state.challenges.length - 1){
+        finishAdventure();
+        return;
+      }
+
+      state.challengeIndex += 1;
+      state.stage = 1;
+      state.stepIndex = 0;
+      state.awaitingManualNext = false;
+      $("continueButton").textContent = "Continuar →";
+      render();
+    };
+
+    $("listenButton").onclick = () => {
+      if(!("speechSynthesis" in window)) return;
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(currentCase().texto);
+      utterance.lang = perfil.idioma === "en" ? "en-GB" : "es-ES";
+      utterance.rate = .88;
+      speechSynthesis.speak(utterance);
+    };
+
+    function finishAdventure(){
+      $("gamePanel").classList.add("hidden");
+      document.querySelector(".steps").classList.add("hidden");
+      $("summaryPanel").classList.remove("hidden");
+
+      $("summaryChallenges").textContent = state.challenges.length;
+      $("summaryOperations").textContent = state.completedOperations;
+      $("summaryAttempts").textContent = state.attempts;
+
+      $("summaryMessage").textContent =
+        `${nombreVisible}, has completado el nivel ${state.selectedLevel}. ` +
+        `Hoy practicaste cómo comprender, dividir los problemas en pasos y elegir las operaciones.`;
+
+      const storageKey =
+        `aventurasMatematicas:${auth.currentUser.uid}:detectives:nivel${state.selectedLevel}`;
+
+      localStorage.setItem(storageKey, JSON.stringify({
+        completed:true,
+        completedAt:new Date().toISOString(),
+        level:state.selectedLevel,
+        theme:state.selectedTheme || "todos",
+        challenges:state.challenges.length,
+        operations:state.completedOperations,
+        simpleCompleted:state.simpleCompleted,
+        compoundCompleted:state.compoundCompleted,
+        attempts:state.attempts
+      }));
+    }
+
+    function returnToSelector(){
+      if("speechSynthesis" in window) speechSynthesis.cancel();
+      $("summaryPanel").classList.add("hidden");
+      $("gamePanel").classList.add("hidden");
+      document.querySelector(".steps").classList.add("hidden");
+      $("caseSelector").classList.remove("hidden");
+      state.challengeIndex=0; state.stage=1; state.stepIndex=0;
+      state.attempts=0; state.completedOperations=0;
+      state.simpleCompleted=0; state.compoundCompleted=0;
+      state.awaitingManualNext=false; state.selectedTheme="";
+      $("themeFilter").value=""; populateThemes(); updateCaseCount();
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    $("restartButton").onclick = returnToSelector;
+    $("chooseAnotherAdventureButton").onclick = returnToSelector;
+
+    populateThemes();
+    updateCaseCount();
+  </script>
+</body>
+</html>

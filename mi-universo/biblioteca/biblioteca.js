@@ -5,6 +5,7 @@ import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
 
 let books = [];
 let currentBook = null;
+let currentStatusFilter = "";
 let detenerObservacion = null;
 
 let mediaRecorder = null;
@@ -502,8 +503,8 @@ $("bookForm").onsubmit = async event => {
     await guardarAudioActual(book.id);
 
     $("statusText").textContent = "Guardado ✅";
-    await showBook(book);
-    alert("¡Libro guardado en tu biblioteca! 📚");
+    openTab("library");
+    alert("🌟 ¡Libro guardado! Ya puedes verlo en tu estantería.");
   } catch (error) {
     console.error(error);
     $("statusText").textContent = "No se pudo guardar";
@@ -539,12 +540,22 @@ $("bookForm").onsubmit = async event => {
     };
 
     function renderBooks(filter=""){
+      const normalizedFilter = String(filter || "").toLowerCase().trim();
+
       const filteredBooks = books.filter(book=>{
         const text=[
-          book.title,book.author,book.favoriteCharacter,book.readingStatus
+          book.title,
+          book.author,
+          book.favoriteCharacter,
+          book.readingStatus
         ].join(" ").toLowerCase();
 
-        return text.includes(filter.toLowerCase());
+        const matchesText = text.includes(normalizedFilter);
+        const matchesStatus =
+          !currentStatusFilter ||
+          book.readingStatus === currentStatusFilter;
+
+        return matchesText && matchesStatus;
       });
 
       const grid=$("bookGrid");
@@ -684,6 +695,18 @@ $("bookForm").onsubmit = async event => {
       }
     }
 
+    document.querySelectorAll("[data-status-filter]").forEach(button => {
+      button.addEventListener("click", () => {
+        currentStatusFilter = button.dataset.statusFilter || "";
+
+        document.querySelectorAll("[data-status-filter]").forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+
+        renderBooks($("searchBook").value);
+      });
+    });
+
     $("searchBook").oninput=event=>{
       renderBooks(event.target.value);
     };
@@ -692,6 +715,7 @@ function updateCount(){
   const count = books.length;
   const reading = books.filter(book => book.readingStatus === "Leyendo").length;
   const finished = books.filter(book => book.readingStatus === "Terminado").length;
+  const wish = books.filter(book => book.readingStatus === "Quiero leer").length;
   const rated = books.filter(book => Number(book.rating) > 0);
   const average = rated.length
     ? rated.reduce((sum, book) => sum + Number(book.rating || 0), 0) / rated.length
@@ -701,7 +725,13 @@ function updateCount(){
   $("statTotal").textContent = count;
   $("statReading").textContent = reading;
   $("statFinished").textContent = finished;
+  $("statWish").textContent = wish;
   $("statRating").textContent = average.toFixed(1);
+
+  $("filterCountAll").textContent = count;
+  $("filterCountReading").textContent = reading;
+  $("filterCountFinished").textContent = finished;
+  $("filterCountWish").textContent = wish;
 
   let message = "Tu biblioteca empieza con un libro.";
   if(count >= 1) message = "¡Ya tienes tu primera lectura guardada! 🌱";

@@ -378,10 +378,238 @@
       flex:0 0 auto;
     }
 
+    .hero-side{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-self:stretch;
+    }
+
     .biblioteca-panel-usuario{
       display:flex;
       justify-content:flex-end;
-      margin-bottom:16px;
+      width:100%;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario{
+      width:min(270px,100%);
+    }
+
+    /* Refuerzo visual local para que el panel siempre se vea integrado,
+       incluso si el CSS compartido tarda en cargar. */
+    .biblioteca-panel-usuario .panel-usuario__boton{
+      width:100%;
+      min-width:0;
+      display:grid;
+      grid-template-columns:42px minmax(0,1fr) 20px;
+      align-items:center;
+      gap:10px;
+      padding:9px 11px;
+      border:2px solid rgba(124,58,237,.18);
+      border-radius:18px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.96),rgba(245,243,255,.94));
+      box-shadow:0 12px 26px rgba(76,29,149,.11);
+      backdrop-filter:blur(12px);
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__avatar{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fef3c7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__texto{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      text-align:left;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__nombre{
+      font-size:.94rem;
+      font-weight:900;
+      color:#243047;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__saludo{
+      margin-top:2px;
+      font-size:.69rem;
+      font-weight:900;
+      color:#7c3aed;
+      white-space:nowrap;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__flecha{
+      color:#7c3aed;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .biblioteca-panel-usuario .panel-usuario__menu{
+      right:0;
+      width:min(290px,calc(100vw - 32px));
+      border-radius:20px;
+      box-shadow:0 20px 46px rgba(76,29,149,.18);
+    }
+
+    .mission-card{
+      margin:0;
+      flex:1;
+    }
+
+    .title-books-icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:88px;
+      height:70px;
+      margin-left:12px;
+      border-radius:22px;
+      background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fff7ed);
+      border:2px solid rgba(124,58,237,.12);
+      box-shadow:0 12px 28px rgba(124,58,237,.12);
+      vertical-align:middle;
+      -webkit-text-fill-color:initial;
+    }
+
+    .title-books-icon svg{
+      width:68px;
+      height:56px;
+      display:block;
+    }
+
+    @media(max-width:900px){
+      .hero-side{
+        width:100%;
+      }
+
+      .biblioteca-panel-usuario{
+        justify-content:flex-start;
+      }
+    }
+
+    @media(max-width:620px){
+      .biblioteca-panel-usuario .panel-usuario{
+        width:100%;
+      }
+
+      .title-books-icon{
+        width:64px;
+        height:54px;
+        margin-left:6px;
+      }
+
+      .title-books-icon svg{
+        width:50px;
+        height:42px;
+      }
+    }
+
+    .stop-text{
+      background:#fff1f2;
+      color:#be123c;
+      border:2px solid #fecdd3;
+    }
+
+    .stop-text:hover:not(:disabled){
+      background:#ffe4e6;
+    }
+
+    .recording-dashboard{
+      display:grid;
+      grid-template-columns:18px minmax(0,1fr) auto;
+      gap:14px;
+      align-items:center;
+      margin-top:16px;
+      padding:14px 16px;
+      border:2px solid #fecaca;
+      border-radius:20px;
+      background:rgba(255,255,255,.88);
+    }
+
+    .record-light{
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#cbd5e1;
+      box-shadow:0 0 0 5px rgba(203,213,225,.18);
+    }
+
+    .record-light.active{
+      background:#ef4444;
+      box-shadow:0 0 0 5px rgba(239,68,68,.16);
+      animation:pulseRecordLight 1s ease-in-out infinite;
+    }
+
+    .recording-dashboard__main{
+      min-width:0;
+    }
+
+    .recording-dashboard .voice-status{
+      margin:0 0 7px;
+      min-height:0;
+    }
+
+    .record-progress{
+      height:12px;
+      overflow:hidden;
+      border-radius:999px;
+      background:#e2e8f0;
+    }
+
+    .record-progress span{
+      display:block;
+      width:0;
+      height:100%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,#7c3aed,#ec4899,#ef4444);
+      transition:width .2s linear;
+    }
+
+    #recordTimer{
+      white-space:nowrap;
+      color:#172554;
+      font-size:16px;
+    }
+
+    @keyframes pulseRecordLight{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.18)}
+    }
+
+    @media(max-width:620px){
+      .biblioteca-panel-usuario{
+        justify-content:stretch;
+      }
+
+      .biblioteca-panel-usuario .panel-usuario{
+        width:100%;
+      }
+
+      .title-books-icon{
+        width:58px;
+        height:50px;
+        margin-left:6px;
+        font-size:36px;
+      }
+
+      .recording-dashboard{
+        grid-template-columns:18px minmax(0,1fr);
+      }
+
+      #recordTimer{
+        grid-column:1/-1;
+        text-align:right;
+      }
     }
 
     @media(max-width:900px){
@@ -407,13 +635,24 @@
 <body>
   <main class="wrap">
 
-    <div class="biblioteca-panel-usuario no-print" data-panel-usuario></div>
-
     <header class="card hero">
       <div>
         <a class="back no-print" href="../index.html">← Volver a Mi Universo</a>
 
-        <h1 class="title">Biblioteca Encantada 📚</h1>
+        <h1 class="title">
+          Biblioteca Encantada
+          <span class="title-books-icon" aria-hidden="true">
+            <svg viewBox="0 0 92 74" role="img" aria-label="Libros">
+              <rect x="8" y="13" width="20" height="50" rx="5" fill="#0ea5e9"/>
+              <rect x="31" y="7" width="21" height="56" rx="5" fill="#8b5cf6"/>
+              <rect x="55" y="17" width="27" height="46" rx="5" fill="#f59e0b"/>
+              <rect x="12" y="23" width="12" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <rect x="35" y="19" width="13" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <rect x="60" y="28" width="17" height="4" rx="2" fill="#ffffff" opacity=".82"/>
+              <path d="M7 64h77" stroke="#334155" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </h1>
 
         <p style="font-size:20px;font-weight:600;color:#5c677d;line-height:1.55">
           Guarda tus libros, tus personajes favoritos, las palabras nuevas y todo lo que descubriste mientras leías.
@@ -424,11 +663,15 @@
         </div>
       </div>
 
-      <div class="field violet">
-        <p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">MISIÓN LECTORA</p>
+      <div class="hero-side">
+        <div class="biblioteca-panel-usuario no-print" data-panel-usuario></div>
+
+        <div class="field violet mission-card">
+          <p style="font-size:13px;letter-spacing:.16em;font-weight:900;color:#7c3aed">MISIÓN LECTORA</p>
         <p style="font-size:24px;font-weight:900;line-height:1.4">
           Leer no es correr. Leer es imaginar, descubrir y disfrutar. ✨
         </p>
+        </div>
       </div>
     </header>
 
@@ -553,12 +796,25 @@
 
             <div class="actions no-print">
               <button class="btn primary" type="button" id="startRecording">🎤 Grabar</button>
-              <button class="btn light" type="button" id="stopRecording" disabled><span class="icono-detener" aria-hidden="true"></span> Detener</button>
+              <button class="btn stop-text" type="button" id="stopRecording" disabled>
+                <span class="icono-detener" aria-hidden="true"></span>
+                Detener
+              </button>
               <button class="btn blue" type="button" id="playRecording" disabled>▶️ Escuchar</button>
               <button class="btn red" type="button" id="deleteRecording" disabled>🗑️ Borrar</button>
             </div>
 
-            <div id="voiceStatus" class="voice-status">Sin grabación.</div>
+            <div class="recording-dashboard">
+              <span id="recordLight" class="record-light" aria-hidden="true"></span>
+              <div class="recording-dashboard__main">
+                <div id="voiceStatus" class="voice-status">Sin grabación.</div>
+                <div class="record-progress" aria-hidden="true">
+                  <span id="recordProgressBar"></span>
+                </div>
+              </div>
+              <strong id="recordTimer">00:00 / 01:00</strong>
+            </div>
+
             <audio id="voicePreview" class="voice-player hidden" controls></audio>
 
             <div class="transcript-box">
