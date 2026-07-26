@@ -200,11 +200,54 @@
     }
 
     .library-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
     .stat-card{padding:16px;border-radius:18px;border:2px solid #e7eaf8;background:white;text-align:center}
     .stat-card strong{display:block;font-size:30px;color:#7c3aed}
     .tools-panel{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 18px;border-radius:20px;border:2px solid #e7eaf8;background:#fafaff;margin-bottom:18px}
+    .reading-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:4px 0 16px;
+    }
+    .reading-filter{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:11px 15px;
+      border:2px solid #e2e8f0;
+      border-radius:999px;
+      background:#fff;
+      color:#172554;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .reading-filter:hover{
+      transform:translateY(-2px);
+      border-color:#c4b5fd;
+      box-shadow:0 8px 18px rgba(76,29,149,.08);
+    }
+    .reading-filter.active{
+      border-color:transparent;
+      background:linear-gradient(90deg,#0284c7,#7c3aed);
+      color:#fff;
+      box-shadow:0 10px 22px rgba(124,58,237,.18);
+    }
+    .reading-filter span{
+      min-width:24px;
+      padding:2px 7px;
+      border-radius:999px;
+      background:rgba(124,58,237,.10);
+      font-size:12px;
+    }
+    .reading-filter.active span{
+      background:rgba(255,255,255,.22);
+    }
     .shelf-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px;padding-top:18px;border-top:2px dashed #dbeafe}
+    @media(max-width:920px){.stats-grid{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:760px){.stats-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:460px){.stats-grid{grid-template-columns:1fr}}
     .book-grid{
@@ -881,10 +924,26 @@
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card"><strong id="statTotal">0</strong><span>📚 Libros</span></div>
+          <div class="stat-card"><strong id="statTotal">0</strong><span>📚 Total</span></div>
           <div class="stat-card"><strong id="statReading">0</strong><span>📖 Leyendo</span></div>
           <div class="stat-card"><strong id="statFinished">0</strong><span>✅ Terminados</span></div>
+          <div class="stat-card"><strong id="statWish">0</strong><span>🌟 Quiero leer</span></div>
           <div class="stat-card"><strong id="statRating">0.0</strong><span>⭐ Valoración media</span></div>
+        </div>
+
+        <div class="reading-filters no-print" aria-label="Filtrar libros por estado">
+          <button class="reading-filter active" type="button" data-status-filter="">
+            🌈 Todos <span id="filterCountAll">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Leyendo">
+            📖 Leyendo <span id="filterCountReading">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Terminado">
+            ✅ Terminados <span id="filterCountFinished">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Quiero leer">
+            🌟 Quiero leer <span id="filterCountWish">0</span>
+          </button>
         </div>
 
         <div class="field sky no-print">

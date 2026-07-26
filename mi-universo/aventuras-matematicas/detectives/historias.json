@@ -156,7 +156,14 @@
         "operacion": "multiplicar",
         "a": 4,
         "b": 3,
-        "resultado": 12
+        "resultado": 12,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 3,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       }
     ],
     "activo": true
@@ -210,7 +217,14 @@
         "operacion": "dividir",
         "a": 12,
         "b": 3,
-        "resultado": 4
+        "resultado": 4,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 12,
+          "grupos": 3,
+          "grupoIcono": "👧",
+          "elementoIcono": "🍪"
+        }
       }
     ],
     "activo": true
@@ -318,7 +332,14 @@
         "operacion": "dividir",
         "a": 15,
         "b": 5,
-        "resultado": 3
+        "resultado": 3,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 15,
+          "grupos": 5,
+          "grupoIcono": "🟦",
+          "elementoIcono": "●"
+        }
       }
     ],
     "activo": true
@@ -426,7 +447,14 @@
         "operacion": "multiplicar",
         "a": 4,
         "b": 3,
-        "resultado": 12
+        "resultado": 12,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 3,
+          "grupoIcono": "🎟️",
+          "elementoIcono": "💶"
+        }
       }
     ],
     "activo": true
@@ -534,7 +562,14 @@
         "operacion": "multiplicar",
         "a": 2,
         "b": 2,
-        "resultado": 4
+        "resultado": 4,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 2,
+          "elementosPorGrupo": 2,
+          "grupoIcono": "📅",
+          "elementoIcono": "💶"
+        }
       },
       {
         "pregunta": "¿Cuánto cuesta toda la compra?",
@@ -602,7 +637,14 @@
         "operacion": "multiplicar",
         "a": 5,
         "b": 4,
-        "resultado": 20
+        "resultado": 20,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 5,
+          "elementosPorGrupo": 4,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       },
       {
         "pregunta": "¿Cuántos zumos quedan?",
@@ -663,14 +705,28 @@
         "operacion": "dividir",
         "a": 24,
         "b": 4,
-        "resultado": 6
+        "resultado": 6,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 24,
+          "grupos": 4,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       },
       {
         "pregunta": "Si cada grupo necesita 2 botellas, ¿cuántas botellas necesitan los 4 grupos?",
         "operacion": "multiplicar",
         "a": 4,
         "b": 2,
-        "resultado": 8
+        "resultado": 8,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 2,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       }
     ],
     "activo": true
@@ -832,7 +888,14 @@
         "operacion": "multiplicar",
         "a": 3,
         "b": 5,
-        "resultado": 15
+        "resultado": 15,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 3,
+          "elementosPorGrupo": 5,
+          "grupoIcono": "🛍️",
+          "elementoIcono": "🍎"
+        }
       }
     ],
     "activo": true
@@ -886,7 +949,14 @@
         "operacion": "dividir",
         "a": 16,
         "b": 4,
-        "resultado": 4
+        "resultado": 4,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 16,
+          "grupos": 4,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       }
     ],
     "activo": true
@@ -940,7 +1010,14 @@
         "operacion": "multiplicar",
         "a": 5,
         "b": 6,
-        "resultado": 30
+        "resultado": 30,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 5,
+          "elementosPorGrupo": 6,
+          "grupoIcono": "➖",
+          "elementoIcono": "🪑"
+        }
       }
     ],
     "activo": true
@@ -1048,7 +1125,14 @@
         "operacion": "dividir",
         "a": 24,
         "b": 6,
-        "resultado": 4
+        "resultado": 4,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 24,
+          "grupos": 6,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       }
     ],
     "activo": true
@@ -1210,7 +1294,14 @@
         "operacion": "multiplicar",
         "a": 7,
         "b": 4,
-        "resultado": 28
+        "resultado": 28,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 7,
+          "elementosPorGrupo": 4,
+          "grupoIcono": "👧",
+          "elementoIcono": "🍪"
+        }
       }
     ],
     "activo": true
@@ -1264,7 +1355,14 @@
         "operacion": "dividir",
         "a": 30,
         "b": 5,
-        "resultado": 6
+        "resultado": 6,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 30,
+          "grupos": 5,
+          "grupoIcono": "👧",
+          "elementoIcono": "🃏"
+        }
       }
     ],
     "activo": true
@@ -1318,7 +1416,14 @@
         "operacion": "multiplicar",
         "a": 3,
         "b": 2,
-        "resultado": 6
+        "resultado": 6,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 3,
+          "elementosPorGrupo": 2,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🥛"
+        }
       },
       {
         "pregunta": "¿Cuánto cuesta toda la compra?",
@@ -1386,7 +1491,14 @@
         "operacion": "multiplicar",
         "a": 6,
         "b": 3,
-        "resultado": 18
+        "resultado": 18,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 6,
+          "elementosPorGrupo": 3,
+          "grupoIcono": "🟫",
+          "elementoIcono": "📚"
+        }
       },
       {
         "pregunta": "¿Cuántos libros quedan?",
@@ -1447,7 +1559,14 @@
         "operacion": "dividir",
         "a": 27,
         "b": 3,
-        "resultado": 9
+        "resultado": 9,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 27,
+          "grupos": 3,
+          "grupoIcono": "🛍️",
+          "elementoIcono": "🍎"
+        }
       },
       {
         "pregunta": "Si cada familia come 2, ¿cuántas le quedan?",
@@ -1508,7 +1627,14 @@
         "operacion": "multiplicar",
         "a": 4,
         "b": 6,
-        "resultado": 24
+        "resultado": 24,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 6,
+          "grupoIcono": "🎟️",
+          "elementoIcono": "💶"
+        }
       },
       {
         "pregunta": "¿Cuánto pagan sumando las palomitas?",
@@ -1569,7 +1695,14 @@
         "operacion": "multiplicar",
         "a": 4,
         "b": 3,
-        "resultado": 12
+        "resultado": 12,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 3,
+          "grupoIcono": "🧁",
+          "elementoIcono": "🥚"
+        }
       },
       {
         "pregunta": "Si ya tiene 5, ¿cuántos huevos más necesita?",
@@ -1630,7 +1763,14 @@
         "operacion": "multiplicar",
         "a": 8,
         "b": 4,
-        "resultado": 32
+        "resultado": 32,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 8,
+          "elementosPorGrupo": 4,
+          "grupoIcono": "➖",
+          "elementoIcono": "🪑"
+        }
       },
       {
         "pregunta": "¿Cuántos asientos quedan libres?",
@@ -1691,7 +1831,14 @@
         "operacion": "multiplicar",
         "a": 5,
         "b": 4,
-        "resultado": 20
+        "resultado": 20,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 5,
+          "elementosPorGrupo": 4,
+          "grupoIcono": "🟫",
+          "elementoIcono": "📚"
+        }
       },
       {
         "pregunta": "Después de gastar 7 euros, ¿cuánto le queda?",

@@ -345,6 +345,43 @@
       background:white;
     }
 
+    .transcript-box,
+    .family-observation-box{
+      margin-top:18px;
+      padding:17px;
+      border-radius:20px;
+    }
+
+    .transcript-box{
+      border:2px solid #c7d2fe;
+      background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    }
+
+    .family-observation-box{
+      border:2px solid #bae6fd;
+      background:linear-gradient(135deg,#f0f9ff,#fff);
+    }
+
+    .transcript-help{
+      margin:7px 0 11px;
+      color:#64748b;
+      font-weight:650;
+      line-height:1.5;
+    }
+
+    .transcript-readonly{
+      resize:none;
+      color:#334155;
+      background:#f8fafc;
+      border-color:#cbd5e1;
+      cursor:default;
+    }
+
+    .transcript-readonly:focus{
+      outline:3px solid rgba(99,102,241,.12);
+      border-color:#a5b4fc;
+    }
+
     .question{
       padding:18px;
       border-radius:22px;
@@ -602,7 +639,7 @@
         <h3>🎤 Ahora, lee la historia con tu propia voz</h3>
         <p style="font-weight:650;color:#64748b">
           Habla con calma. Puedes mirar el texto mientras lees.
-          La grabación se detendrá automáticamente a los 60 segundos.
+          La grabación se detendrá automáticamente a los 120 segundos. A los 90 segundos recibirás un aviso.
         </p>
 
         <div class="actions">
@@ -618,17 +655,45 @@
             <div id="voiceStatus" class="voice-status" style="margin:0">Sin grabación.</div>
             <div class="record-progress"><span id="recordProgressBar"></span></div>
           </div>
-          <strong id="recordTimer">00:00 / 01:00</strong>
+          <strong id="recordTimer">00:00 / 02:00</strong>
         </div>
         <audio id="audioPreview" class="hidden" controls></audio>
 
-        <div style="margin-top:18px">
+        <div class="transcript-box">
           <label for="transcript" style="font-weight:900">📝 Lo que entendió la Academia</label>
-          <p style="color:#64748b;font-weight:650">
-            Puedes corregir cualquier palabra que no se haya entendido bien.
+          <p class="transcript-help">
+            Este texto se conserva tal como lo entendió la computadora y no puede editarse.
+            La transcripción automática puede equivocarse aunque la lectura se haya realizado correctamente.
           </p>
-          <textarea id="transcript" placeholder="La transcripción aparecerá aquí..."></textarea>
-          <div id="speechSupport" style="margin-top:8px;font-size:13px;font-weight:800;color:#6b7280"></div>
+
+          <textarea
+            id="transcript"
+            class="transcript-readonly"
+            placeholder="La transcripción aparecerá aquí..."
+            readonly
+            aria-readonly="true"
+          ></textarea>
+
+          <div
+            id="speechSupport"
+            style="margin-top:8px;font-size:13px;font-weight:800;color:#6b7280"
+          ></div>
+        </div>
+
+        <div class="family-observation-box">
+          <label for="familyObservation" style="font-weight:900">
+            👨‍👩‍👧 Observación de la familia
+          </label>
+
+          <p class="transcript-help">
+            Campo opcional para indicar, por ejemplo, que una palabra se leyó correctamente
+            aunque la computadora la entendiera de otra manera.
+          </p>
+
+          <textarea
+            id="familyObservation"
+            placeholder="Ejemplo: Gloria pronunció correctamente «sendero», pero la computadora escribió otra palabra."
+          ></textarea>
         </div>
 
         <div class="actions">

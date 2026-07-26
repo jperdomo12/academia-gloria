@@ -307,6 +307,44 @@
       transition:.18s ease;
     }
 
+    .choice{
+      display:grid;
+      grid-template-columns:38px 1fr;
+      gap:11px;
+      align-items:center;
+    }
+
+    .choice-letter{
+      width:34px;
+      height:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:11px;
+      background:#ede9fe;
+      color:#6d28d9;
+      font-size:.92rem;
+      font-weight:900;
+    }
+
+    .choice-text{
+      min-width:0;
+    }
+
+    .choice.selected .choice-letter{
+      background:#ddd6fe;
+    }
+
+    .choice.correct .choice-letter{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .choice.incorrect .choice-letter{
+      background:#fef3c7;
+      color:#92400e;
+    }
+
     .choice:hover{
       transform:translateY(-2px);
       border-color:#c4b5fd;
@@ -408,6 +446,69 @@
       font-size:32px;
       font-weight:900;
       color:#7c3aed;
+    }
+
+    .visual-help{
+      margin:18px 0 4px;
+      padding:18px;
+      border:2px solid #bfdbfe;
+      border-radius:22px;
+      background:linear-gradient(135deg,#eff6ff,#fff,#f0fdf4);
+    }
+
+    .visual-help__title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:12px;
+      color:#075985;
+      font-weight:900;
+    }
+
+    .visual-groups{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+      gap:12px;
+    }
+
+    .visual-group{
+      min-height:112px;
+      padding:13px;
+      border:2px solid #dbeafe;
+      border-radius:18px;
+      background:#fff;
+      text-align:center;
+    }
+
+    .visual-group__icon{
+      display:block;
+      margin-bottom:7px;
+      font-size:34px;
+    }
+
+    .visual-group__items{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:5px;
+      margin-bottom:7px;
+      font-size:25px;
+      line-height:1.1;
+    }
+
+    .visual-help__caption{
+      margin:13px 0 0;
+      color:#475569;
+      font-weight:850;
+      text-align:center;
+    }
+
+    .visual-help__note{
+      margin:8px 0 0;
+      color:#64748b;
+      font-size:.88rem;
+      font-weight:700;
+      text-align:center;
     }
 
     .feedback{
@@ -812,7 +913,7 @@
 
       <div class="actions">
         <button id="listenButton" class="btn btn-light" type="button">
-          🔊 Escuchar historia
+          🔊 Escuchar reto completo
         </button>
 
         <button id="continueButton" class="btn btn-primary" type="button" disabled>
@@ -890,18 +991,30 @@
       mostrarPerfil: false
     });
 
-    const fallbackCases = [{"id": "DP-0001", "titulo": "Las naranjas de la cesta", "texto": "En una cesta había 5 naranjas. Ana añadió 3 naranjas más.", "nivel": 1, "tema": "casa", "tipo": "simple", "comprension": {"pregunta": "¿Qué ocurrió con la cantidad de naranjas?", "opciones": [{"id": "aumento", "texto": "🍊 Aumentó porque añadieron más."}, {"id": "disminuyo", "texto": "📉 Disminuyó porque quitaron algunas."}, {"id": "reparto", "texto": "🤝 Se repartieron en partes iguales."}], "correcta": "aumento"}, "descubrimiento": {"pregunta": "¿Qué necesitamos averiguar?", "opciones": [{"id": "total", "texto": "Cuántas naranjas hay ahora."}, {"id": "faltan", "texto": "Cuántas naranjas faltan."}, {"id": "grupos", "texto": "Cuántos grupos se pueden formar."}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas naranjas hay ahora?", "operacion": "sumar", "a": 5, "b": 3, "resultado": 8}], "activo": true}, {"id": "DP-0002", "titulo": "Las pegatinas compartidas", "texto": "Gloria tenía 9 pegatinas y regaló 4 a una amiga.", "nivel": 1, "tema": "amistad", "tipo": "simple", "comprension": {"pregunta": "¿Qué pasó con las pegatinas de Gloria?", "opciones": [{"id": "mas", "texto": "✨ Ahora tiene más."}, {"id": "menos", "texto": "🎁 Ahora tiene menos porque regaló algunas."}, {"id": "igual", "texto": "⚖️ Sigue teniendo la misma cantidad."}], "correcta": "menos"}, "descubrimiento": {"pregunta": "¿Qué pregunta debemos responder?", "opciones": [{"id": "quedan", "texto": "Cuántas pegatinas le quedan."}, {"id": "regalo", "texto": "De qué color eran las pegatinas."}, {"id": "total_amigas", "texto": "Cuántas amigas tiene Gloria."}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántas pegatinas le quedan?", "operacion": "restar", "a": 9, "b": 4, "resultado": 5}], "activo": true}, {"id": "DP-0003", "titulo": "Los vasos de las mesas", "texto": "Hay 4 mesas. En cada mesa colocaron 3 vasos.", "nivel": 1, "tema": "cumpleaños", "tipo": "simple", "comprension": {"pregunta": "¿Cómo están organizados los vasos?", "opciones": [{"id": "grupos", "texto": "🍽️ En grupos iguales: 3 vasos por mesa."}, {"id": "quitar", "texto": "➖ Se quitaron vasos."}, {"id": "repartir", "texto": "🤝 Se reparten los vasos entre personas."}], "correcta": "grupos"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "El total de vasos en todas las mesas."}, {"id": "mesas", "texto": "El color de las mesas."}, {"id": "sobran", "texto": "Cuántos vasos sobran."}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántos vasos hay en total?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}], "activo": true}, {"id": "DP-0004", "titulo": "Las galletas para compartir", "texto": "Doce galletas se reparten por igual entre 3 niños.", "nivel": 1, "tema": "merienda", "tipo": "simple", "comprension": {"pregunta": "¿Qué significa repartir por igual?", "opciones": [{"id": "igual", "texto": "🤝 Cada niño recibe la misma cantidad."}, {"id": "uno", "texto": "🍪 Un niño recibe todas las galletas."}, {"id": "sobran", "texto": "📦 Las galletas se guardan sin repartir."}], "correcta": "igual"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar?", "opciones": [{"id": "cada", "texto": "Cuántas galletas recibe cada niño."}, {"id": "total", "texto": "Cuántos niños hay en el colegio."}, {"id": "precio", "texto": "Cuánto cuestan las galletas."}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántas galletas recibe cada niño?", "operacion": "dividir", "a": 12, "b": 3, "resultado": 4}], "activo": true}, {"id": "DP-0005", "titulo": "Las palomas del parque", "texto": "En el parque había 7 palomas. Después llegaron 2 más.", "nivel": 1, "tema": "parque", "tipo": "simple", "comprension": {"pregunta": "¿La cantidad de palomas aumenta o disminuye?", "opciones": [{"id": "aumenta", "texto": "🕊️ Aumenta porque llegaron más."}, {"id": "disminuye", "texto": "📉 Disminuye porque se fueron."}, {"id": "igual", "texto": "⚖️ No cambia."}], "correcta": "aumenta"}, "descubrimiento": {"pregunta": "¿Qué dato buscamos?", "opciones": [{"id": "ahora", "texto": "Cuántas palomas hay ahora."}, {"id": "arboles", "texto": "Cuántos árboles hay en el parque."}, {"id": "comida", "texto": "Qué comen las palomas."}], "correcta": "ahora"}, "pasos": [{"pregunta": "¿Cuántas palomas hay ahora?", "operacion": "sumar", "a": 7, "b": 2, "resultado": 9}], "activo": true}, {"id": "DP-0006", "titulo": "Los lápices en estuches", "texto": "Hay 15 lápices y se guardan por igual en 5 estuches.", "nivel": 1, "tema": "colegio", "tipo": "simple", "comprension": {"pregunta": "¿Qué se hace con los lápices?", "opciones": [{"id": "repartir", "texto": "✏️ Se reparten por igual entre estuches."}, {"id": "añadir", "texto": "➕ Se añaden más lápices."}, {"id": "perder", "texto": "➖ Se pierden algunos lápices."}], "correcta": "repartir"}, "descubrimiento": {"pregunta": "¿Qué necesitamos saber?", "opciones": [{"id": "cada", "texto": "Cuántos lápices van en cada estuche."}, {"id": "color", "texto": "De qué color son los estuches."}, {"id": "precio", "texto": "Cuánto cuesta cada lápiz."}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos lápices van en cada estuche?", "operacion": "dividir", "a": 15, "b": 5, "resultado": 3}], "activo": true}, {"id": "DP-0101", "titulo": "Helados en la playa", "texto": "En la playa, una familia compró 6 helados por la mañana y 5 por la tarde. También llevó 3 toallas.", "nivel": 2, "tema": "playa", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para saber cuántos helados compraron?", "opciones": [{"id": "toallas", "texto": "🏖️ Las 3 toallas."}, {"id": "mañana", "texto": "🍦 Los 6 helados de la mañana."}, {"id": "tarde", "texto": "🌅 Los 5 helados de la tarde."}], "correcta": "toallas"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "helados", "texto": "El total de helados comprados."}, {"id": "personas", "texto": "Cuántas personas hay en la playa."}, {"id": "toallas", "texto": "Cuántas toallas faltan."}], "correcta": "helados"}, "pasos": [{"pregunta": "¿Cuántos helados compraron en total?", "operacion": "sumar", "a": 6, "b": 5, "resultado": 11}], "activo": true}, {"id": "DP-0102", "titulo": "Entradas para el museo", "texto": "Una entrada cuesta 4 euros. Anais compra 3 entradas para visitar un museo.", "nivel": 2, "tema": "viaje", "tipo": "simple", "comprension": {"pregunta": "¿Qué se repite en esta historia?", "opciones": [{"id": "precio", "texto": "🎟️ El mismo precio, 4 euros, tres veces."}, {"id": "resta", "texto": "➖ Se quitan entradas."}, {"id": "reparto", "texto": "🤝 Se reparte el dinero por igual."}], "correcta": "precio"}, "descubrimiento": {"pregunta": "¿Qué queremos averiguar?", "opciones": [{"id": "coste", "texto": "Cuánto cuestan las 3 entradas."}, {"id": "hora", "texto": "A qué hora abre el museo."}, {"id": "salas", "texto": "Cuántas salas tiene el museo."}], "correcta": "coste"}, "pasos": [{"pregunta": "¿Cuánto cuestan las 3 entradas?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}], "activo": true}, {"id": "DP-0103", "titulo": "Frutas del supermercado", "texto": "En el supermercado, Juan Pablo compra 18 mandarinas. Guarda 6 para otra semana y coloca las demás en una cesta.", "nivel": 2, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué cantidad cambia?", "opciones": [{"id": "mandarinas", "texto": "🍊 La cantidad de mandarinas disponibles ahora."}, {"id": "semanas", "texto": "📅 El número de semanas del año."}, {"id": "cestas", "texto": "🧺 El número de cestas."}], "correcta": "mandarinas"}, "descubrimiento": {"pregunta": "¿Qué necesitamos calcular?", "opciones": [{"id": "quedan", "texto": "Cuántas mandarinas quedan para la cesta."}, {"id": "precio", "texto": "Cuánto cuesta cada mandarina."}, {"id": "peso", "texto": "Cuánto pesa la cesta."}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántas mandarinas coloca en la cesta?", "operacion": "restar", "a": 18, "b": 6, "resultado": 12}], "activo": true}, {"id": "DP-0201", "titulo": "Material para el colegio", "texto": "Gloria compra un cuaderno por 4 euros y dos lápices de 2 euros cada uno. Paga con 10 euros. ¿Cuánto cambio recibe?", "nivel": 3, "tema": "supermercado", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final del problema?", "opciones": [{"id": "cambio", "texto": "💶 Cuánto cambio recibe Gloria."}, {"id": "lapices", "texto": "✏️ Cuántos lápices compra."}, {"id": "cuaderno", "texto": "📓 De qué color es el cuaderno."}], "correcta": "cambio"}, "descubrimiento": {"pregunta": "¿Qué necesitamos averiguar primero?", "opciones": [{"id": "lapices", "texto": "El precio de los dos lápices."}, {"id": "cambio", "texto": "El cambio, sin calcular antes la compra."}, {"id": "color", "texto": "El color del material."}], "correcta": "lapices"}, "pasos": [{"pregunta": "¿Cuánto cuestan los dos lápices?", "operacion": "multiplicar", "a": 2, "b": 2, "resultado": 4}, {"pregunta": "¿Cuánto cuesta toda la compra?", "operacion": "sumar", "a": 4, "b": 4, "resultado": 8}, {"pregunta": "¿Cuánto cambio recibe Gloria?", "operacion": "restar", "a": 10, "b": 8, "resultado": 2}], "activo": true}, {"id": "DP-0202", "titulo": "La merienda del cumpleaños", "texto": "Para un cumpleaños hay 5 mesas con 4 zumos en cada mesa. Durante la fiesta se beben 13 zumos. ¿Cuántos quedan?", "nivel": 3, "tema": "cumpleaños", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos conocer antes de saber cuántos zumos quedan?", "opciones": [{"id": "total", "texto": "🥤 Cuántos zumos había al principio."}, {"id": "mesas", "texto": "🎈 El color de las mesas."}, {"id": "invitados", "texto": "👥 Los nombres de los invitados."}], "correcta": "total"}, "descubrimiento": {"pregunta": "¿Cuál es el primer cálculo útil?", "opciones": [{"id": "multiplicar", "texto": "Calcular 5 grupos de 4 zumos."}, {"id": "restar", "texto": "Restar 13 sin saber el total inicial."}, {"id": "dividir", "texto": "Repartir las mesas."}], "correcta": "multiplicar"}, "pasos": [{"pregunta": "¿Cuántos zumos había al principio?", "operacion": "multiplicar", "a": 5, "b": 4, "resultado": 20}, {"pregunta": "¿Cuántos zumos quedan?", "operacion": "restar", "a": 20, "b": 13, "resultado": 7}], "activo": true}, {"id": "DP-0203", "titulo": "Excursión al bosque", "texto": "En una excursión viajan 24 niños en 4 grupos iguales. Cada grupo necesita 2 botellas de agua. ¿Cuántas botellas necesitan en total?", "nivel": 3, "tema": "bosque", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué información relaciona a los niños con los grupos?", "opciones": [{"id": "iguales", "texto": "🌳 Los 24 niños se dividen en 4 grupos iguales."}, {"id": "botellas", "texto": "💧 Cada botella tiene un color."}, {"id": "viaje", "texto": "🚌 Viajan en autobús."}], "correcta": "iguales"}, "descubrimiento": {"pregunta": "¿Qué podemos averiguar primero?", "opciones": [{"id": "ninos_grupo", "texto": "Cuántos niños hay en cada grupo."}, {"id": "total_botellas", "texto": "El total de botellas sin usar los grupos."}, {"id": "arboles", "texto": "Cuántos árboles hay en el bosque."}], "correcta": "ninos_grupo"}, "pasos": [{"pregunta": "¿Cuántos niños hay en cada grupo?", "operacion": "dividir", "a": 24, "b": 4, "resultado": 6}, {"pregunta": "Si cada grupo necesita 2 botellas, ¿cuántas botellas necesitan los 4 grupos?", "operacion": "multiplicar", "a": 4, "b": 2, "resultado": 8}], "activo": true}, {"id": "DP-0007", "titulo": "Conchas en la playa", "texto": "Gloria encontró 6 conchas y después encontró 4 más.", "nivel": 1, "tema": "playa", "tipo": "simple", "comprension": {"pregunta": "¿Qué ocurrió con la colección de conchas?", "opciones": [{"id": "crecio", "texto": "🐚 Creció porque encontró más."}, {"id": "bajo", "texto": "📉 Disminuyó."}, {"id": "repartio", "texto": "🤝 Se repartió."}], "correcta": "crecio"}, "descubrimiento": {"pregunta": "¿Qué queremos saber?", "opciones": [{"id": "total", "texto": "¿Cuántas conchas tiene ahora?"}, {"id": "arena", "texto": "¿Cuánta arena hay?"}, {"id": "color", "texto": "¿De qué color son?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas conchas tiene ahora?", "operacion": "sumar", "a": 6, "b": 4, "resultado": 10}], "activo": true}, {"id": "DP-0008", "titulo": "Libros en la estantería", "texto": "Había 11 libros en una estantería. Juan Pablo retiró 3 para leerlos.", "nivel": 1, "tema": "biblioteca", "tipo": "simple", "comprension": {"pregunta": "¿Qué pasó con los libros de la estantería?", "opciones": [{"id": "menos", "texto": "📚 Quedaron menos libros."}, {"id": "mas", "texto": "➕ Aparecieron más libros."}, {"id": "igual", "texto": "⚖️ No cambió la cantidad."}], "correcta": "menos"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "quedan", "texto": "¿Cuántos libros quedan en la estantería?"}, {"id": "paginas", "texto": "¿Cuántas páginas tienen?"}, {"id": "autor", "texto": "¿Quién escribió los libros?"}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántos libros quedan en la estantería?", "operacion": "restar", "a": 11, "b": 3, "resultado": 8}], "activo": true}, {"id": "DP-0009", "titulo": "Bolsas de manzanas", "texto": "Hay 3 bolsas y cada bolsa contiene 5 manzanas.", "nivel": 1, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué se repite en la historia?", "opciones": [{"id": "grupo", "texto": "🍎 El mismo grupo de 5 manzanas, 3 veces."}, {"id": "quitar", "texto": "➖ Se quitan manzanas."}, {"id": "repartir", "texto": "🤝 Se reparten manzanas."}], "correcta": "grupo"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "¿Cuántas manzanas hay en total?"}, {"id": "precio", "texto": "¿Cuánto cuesta una bolsa?"}, {"id": "peso", "texto": "¿Cuánto pesan?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas manzanas hay en total?", "operacion": "multiplicar", "a": 3, "b": 5, "resultado": 15}], "activo": true}, {"id": "DP-0010", "titulo": "Botellas para equipos", "texto": "Hay 16 botellas de agua para repartir por igual entre 4 equipos.", "nivel": 1, "tema": "deporte", "tipo": "simple", "comprension": {"pregunta": "¿Qué debe ocurrir con las botellas?", "opciones": [{"id": "igual", "texto": "💧 Cada equipo debe recibir la misma cantidad."}, {"id": "añadir", "texto": "➕ Hay que comprar más."}, {"id": "guardar", "texto": "📦 Se guardan todas."}], "correcta": "igual"}, "descubrimiento": {"pregunta": "¿Qué debemos descubrir?", "opciones": [{"id": "cada", "texto": "¿Cuántas botellas recibe cada equipo?"}, {"id": "jugadores", "texto": "¿Cuántos jugadores hay?"}, {"id": "marca", "texto": "¿Qué marca tienen?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántas botellas recibe cada equipo?", "operacion": "dividir", "a": 16, "b": 4, "resultado": 4}], "activo": true}, {"id": "DP-0104", "titulo": "Sillas para una reunión", "texto": "En una sala hay 5 filas con 6 sillas en cada fila. Las paredes son blancas.", "nivel": 2, "tema": "colegio", "tipo": "simple", "comprension": {"pregunta": "¿Qué información no sirve para contar las sillas?", "opciones": [{"id": "paredes", "texto": "🎨 El color de las paredes."}, {"id": "filas", "texto": "5️⃣ Las 5 filas."}, {"id": "sillas", "texto": "6️⃣ Las 6 sillas por fila."}], "correcta": "paredes"}, "descubrimiento": {"pregunta": "¿Qué queremos conocer?", "opciones": [{"id": "total", "texto": "¿Cuántas sillas hay en total?"}, {"id": "color", "texto": "¿De qué color son las paredes?"}, {"id": "puertas", "texto": "¿Cuántas puertas hay?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas sillas hay en total?", "operacion": "multiplicar", "a": 5, "b": 6, "resultado": 30}], "activo": true}, {"id": "DP-0105", "titulo": "Monedas para ahorrar", "texto": "Gloria tenía 20 euros y gastó 7 euros en un libro. El libro tiene una portada azul.", "nivel": 2, "tema": "dinero", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato es decorativo y no cambia la cuenta?", "opciones": [{"id": "portada", "texto": "📘 El color azul de la portada."}, {"id": "tenia", "texto": "💶 Los 20 euros iniciales."}, {"id": "gasto", "texto": "🛍️ Los 7 euros gastados."}], "correcta": "portada"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar?", "opciones": [{"id": "restan", "texto": "¿Cuánto dinero le queda?"}, {"id": "paginas", "texto": "¿Cuántas páginas tiene el libro?"}, {"id": "color", "texto": "¿De qué color es?"}], "correcta": "restan"}, "pasos": [{"pregunta": "¿Cuánto dinero le queda?", "operacion": "restar", "a": 20, "b": 7, "resultado": 13}], "activo": true}, {"id": "DP-0106", "titulo": "Zumos para la excursión", "texto": "Hay 24 zumos para repartir por igual entre 6 grupos. El autobús es amarillo.", "nivel": 2, "tema": "viaje", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para repartir los zumos?", "opciones": [{"id": "bus", "texto": "🚌 El color del autobús."}, {"id": "zumos", "texto": "🥤 Los 24 zumos."}, {"id": "grupos", "texto": "👥 Los 6 grupos."}], "correcta": "bus"}, "descubrimiento": {"pregunta": "¿Qué pregunta resolvemos?", "opciones": [{"id": "cada", "texto": "¿Cuántos zumos recibe cada grupo?"}, {"id": "bus", "texto": "¿Cuántas ruedas tiene el autobús?"}, {"id": "hora", "texto": "¿A qué hora salen?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos zumos recibe cada grupo?", "operacion": "dividir", "a": 24, "b": 6, "resultado": 4}], "activo": true}, {"id": "DP-0107", "titulo": "Entradas vendidas", "texto": "Por la mañana se vendieron 14 entradas y por la tarde 9. La taquilla cerró a las 8.", "nivel": 2, "tema": "espectaculo", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no se usa para calcular el total vendido?", "opciones": [{"id": "cierre", "texto": "🕗 La hora de cierre."}, {"id": "mañana", "texto": "🎟️ Las 14 entradas de la mañana."}, {"id": "tarde", "texto": "🎫 Las 9 entradas de la tarde."}], "correcta": "cierre"}, "descubrimiento": {"pregunta": "¿Qué queremos calcular?", "opciones": [{"id": "total", "texto": "¿Cuántas entradas se vendieron en total?"}, {"id": "hora", "texto": "¿A qué hora cerró la taquilla?"}, {"id": "precio", "texto": "¿Cuánto costaba cada entrada?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas entradas se vendieron en total?", "operacion": "sumar", "a": 14, "b": 9, "resultado": 23}], "activo": true}, {"id": "DP-0108", "titulo": "Árboles del parque", "texto": "En el parque había 25 árboles. Una tormenta dañó 4. También había 7 bancos.", "nivel": 2, "tema": "parque", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no necesitamos para saber cuántos árboles quedaron?", "opciones": [{"id": "bancos", "texto": "🪑 Los 7 bancos."}, {"id": "arboles", "texto": "🌳 Los 25 árboles."}, {"id": "dañados", "texto": "⛈️ Los 4 árboles dañados."}], "correcta": "bancos"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular?", "opciones": [{"id": "quedan", "texto": "¿Cuántos árboles quedaron sin daño?"}, {"id": "bancos", "texto": "¿Cuántos bancos hay?"}, {"id": "hojas", "texto": "¿Cuántas hojas tienen?"}], "correcta": "quedan"}, "pasos": [{"pregunta": "¿Cuántos árboles quedaron sin daño?", "operacion": "restar", "a": 25, "b": 4, "resultado": 21}], "activo": true}, {"id": "DP-0109", "titulo": "Paquetes de galletas", "texto": "Hay 7 paquetes con 4 galletas cada uno. La caja grande pesa 2 kilos.", "nivel": 2, "tema": "supermercado", "tipo": "simple", "comprension": {"pregunta": "¿Qué dato no hace falta para contar las galletas?", "opciones": [{"id": "peso", "texto": "⚖️ El peso de la caja."}, {"id": "paquetes", "texto": "📦 Los 7 paquetes."}, {"id": "galletas", "texto": "🍪 Las 4 galletas por paquete."}], "correcta": "peso"}, "descubrimiento": {"pregunta": "¿Qué queremos averiguar?", "opciones": [{"id": "total", "texto": "¿Cuántas galletas hay en total?"}, {"id": "peso", "texto": "¿Cuánto pesa cada galleta?"}, {"id": "precio", "texto": "¿Cuánto cuesta la caja?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántas galletas hay en total?", "operacion": "multiplicar", "a": 7, "b": 4, "resultado": 28}], "activo": true}, {"id": "DP-0110", "titulo": "Reparto de cromos", "texto": "Treinta cromos se reparten por igual entre 5 niños. Uno lleva una camiseta verde.", "nivel": 2, "tema": "amistad", "tipo": "simple", "comprension": {"pregunta": "¿Qué detalle no cambia el reparto?", "opciones": [{"id": "camiseta", "texto": "👕 El color de la camiseta."}, {"id": "cromos", "texto": "🃏 Los 30 cromos."}, {"id": "niños", "texto": "👧 Los 5 niños."}], "correcta": "camiseta"}, "descubrimiento": {"pregunta": "¿Qué debemos saber?", "opciones": [{"id": "cada", "texto": "¿Cuántos cromos recibe cada niño?"}, {"id": "color", "texto": "¿De qué color es la camiseta?"}, {"id": "album", "texto": "¿Cuántas páginas tiene el álbum?"}], "correcta": "cada"}, "pasos": [{"pregunta": "¿Cuántos cromos recibe cada niño?", "operacion": "dividir", "a": 30, "b": 5, "resultado": 6}], "activo": true}, {"id": "DP-0204", "titulo": "Compra para una merienda", "texto": "Anais compra 3 zumos de 2 euros cada uno y una bolsa de fruta de 5 euros. Paga con 20 euros. ¿Cuánto cambio recibe?", "nivel": 3, "tema": "supermercado", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la meta final?", "opciones": [{"id": "cambio", "texto": "💶 Saber cuánto cambio recibe."}, {"id": "zumos", "texto": "🥤 Saber cuántos zumos compra."}, {"id": "fruta", "texto": "🍎 Saber qué fruta eligió."}], "correcta": "cambio"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "zumos", "texto": "¿Cuánto cuestan los 3 zumos?"}, {"id": "cambio", "texto": "¿El cambio directamente?"}, {"id": "fruta", "texto": "¿El peso de la fruta?"}], "correcta": "zumos"}, "pasos": [{"pregunta": "¿Cuánto cuestan los 3 zumos?", "operacion": "multiplicar", "a": 3, "b": 2, "resultado": 6}, {"pregunta": "¿Cuánto cuesta toda la compra?", "operacion": "sumar", "a": 6, "b": 5, "resultado": 11}, {"pregunta": "¿Cuánto cambio recibe?", "operacion": "restar", "a": 20, "b": 11, "resultado": 9}], "activo": true}, {"id": "DP-0205", "titulo": "Libros para las mesas", "texto": "La biblioteca prepara 6 mesas con 3 libros en cada una. Después presta 5 de esos libros. ¿Cuántos libros quedan?", "nivel": 3, "tema": "biblioteca", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos saber antes de restar los libros prestados?", "opciones": [{"id": "total", "texto": "📚 Cuántos libros había en total."}, {"id": "autores", "texto": "✍️ Quién escribió los libros."}, {"id": "mesas", "texto": "🎨 De qué color son las mesas."}], "correcta": "total"}, "descubrimiento": {"pregunta": "¿Qué cálculo va primero?", "opciones": [{"id": "multiplicar", "texto": "¿Cuántos libros hay en las 6 mesas?"}, {"id": "restar", "texto": "¿Cuántos quedan sin saber el total?"}, {"id": "dividir", "texto": "¿Cómo se reparten los autores?"}], "correcta": "multiplicar"}, "pasos": [{"pregunta": "¿Cuántos libros había en total?", "operacion": "multiplicar", "a": 6, "b": 3, "resultado": 18}, {"pregunta": "¿Cuántos libros quedan?", "operacion": "restar", "a": 18, "b": 5, "resultado": 13}], "activo": true}, {"id": "DP-0206", "titulo": "Frutas para tres familias", "texto": "Hay 27 manzanas para repartir por igual entre 3 familias. Cada familia come 2 manzanas. ¿Cuántas le quedan a cada familia?", "nivel": 3, "tema": "familia", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final?", "opciones": [{"id": "quedan", "texto": "🍎 Cuántas manzanas le quedan a cada familia."}, {"id": "familias", "texto": "👨‍👩‍👧 Cuántas familias hay."}, {"id": "color", "texto": "🎨 De qué color son las manzanas."}], "correcta": "quedan"}, "descubrimiento": {"pregunta": "¿Qué debemos averiguar primero?", "opciones": [{"id": "reparto", "texto": "¿Cuántas manzanas recibe cada familia?"}, {"id": "resta", "texto": "¿Cuántas quedan sin repartir primero?"}, {"id": "precio", "texto": "¿Cuánto cuestan?"}], "correcta": "reparto"}, "pasos": [{"pregunta": "¿Cuántas manzanas recibe cada familia?", "operacion": "dividir", "a": 27, "b": 3, "resultado": 9}, {"pregunta": "Si cada familia come 2, ¿cuántas le quedan?", "operacion": "restar", "a": 9, "b": 2, "resultado": 7}], "activo": true}, {"id": "DP-0207", "titulo": "Entradas de cine", "texto": "Cuatro entradas cuestan 6 euros cada una. Además compran palomitas por 8 euros. ¿Cuánto pagan en total?", "nivel": 3, "tema": "espectaculo", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué dos gastos aparecen?", "opciones": [{"id": "dos", "texto": "🎟️ Las entradas y las palomitas."}, {"id": "uno", "texto": "🍿 Solo las palomitas."}, {"id": "ninguno", "texto": "🚫 No aparece ningún gasto."}], "correcta": "dos"}, "descubrimiento": {"pregunta": "¿Qué calculamos primero?", "opciones": [{"id": "entradas", "texto": "¿Cuánto cuestan las 4 entradas?"}, {"id": "total", "texto": "¿El total sin conocer el precio de las entradas?"}, {"id": "hora", "texto": "¿A qué hora empieza la película?"}], "correcta": "entradas"}, "pasos": [{"pregunta": "¿Cuánto cuestan las 4 entradas?", "operacion": "multiplicar", "a": 4, "b": 6, "resultado": 24}, {"pregunta": "¿Cuánto pagan sumando las palomitas?", "operacion": "sumar", "a": 24, "b": 8, "resultado": 32}], "activo": true}, {"id": "DP-0208", "titulo": "Receta de magdalenas", "texto": "Para una bandeja se necesitan 4 huevos. Gloria prepara 3 bandejas y ya tiene 5 huevos. ¿Cuántos huevos más necesita?", "nivel": 3, "tema": "cocina", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué debemos descubrir al final?", "opciones": [{"id": "faltan", "texto": "🥚 Cuántos huevos más necesita."}, {"id": "bandejas", "texto": "🧁 Cuántas bandejas prepara."}, {"id": "color", "texto": "🎨 El color de las magdalenas."}], "correcta": "faltan"}, "descubrimiento": {"pregunta": "¿Qué cálculo hacemos primero?", "opciones": [{"id": "necesarios", "texto": "¿Cuántos huevos necesita para 3 bandejas?"}, {"id": "restar", "texto": "¿Cuántos faltan sin saber el total necesario?"}, {"id": "sumar", "texto": "¿Cuántos huevos sobran?"}], "correcta": "necesarios"}, "pasos": [{"pregunta": "¿Cuántos huevos necesita para 3 bandejas?", "operacion": "multiplicar", "a": 4, "b": 3, "resultado": 12}, {"pregunta": "Si ya tiene 5, ¿cuántos huevos más necesita?", "operacion": "restar", "a": 12, "b": 5, "resultado": 7}], "activo": true}, {"id": "DP-0209", "titulo": "Viaje en autobús", "texto": "Un autobús tiene 8 filas con 4 asientos en cada fila. Ya están ocupados 21 asientos. ¿Cuántos quedan libres?", "nivel": 3, "tema": "viaje", "tipo": "compuesto", "comprension": {"pregunta": "¿Qué queremos saber al final?", "opciones": [{"id": "libres", "texto": "🚌 Cuántos asientos quedan libres."}, {"id": "filas", "texto": "🔢 Cuántas filas tiene."}, {"id": "color", "texto": "🎨 De qué color es el autobús."}], "correcta": "libres"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "total", "texto": "¿Cuántos asientos tiene el autobús?"}, {"id": "libres", "texto": "¿Cuántos libres hay sin saber el total?"}, {"id": "ruedas", "texto": "¿Cuántas ruedas tiene?"}], "correcta": "total"}, "pasos": [{"pregunta": "¿Cuántos asientos tiene el autobús?", "operacion": "multiplicar", "a": 8, "b": 4, "resultado": 32}, {"pregunta": "¿Cuántos asientos quedan libres?", "operacion": "restar", "a": 32, "b": 21, "resultado": 11}], "activo": true}, {"id": "DP-0210", "titulo": "Ahorro para un juego", "texto": "Gloria ahorra 5 euros cada semana durante 4 semanas. Después gasta 7 euros en un libro. ¿Cuánto dinero le queda?", "nivel": 3, "tema": "dinero", "tipo": "compuesto", "comprension": {"pregunta": "¿Cuál es la pregunta final?", "opciones": [{"id": "queda", "texto": "💰 Cuánto dinero le queda."}, {"id": "semanas", "texto": "📅 Cuántas semanas ahorra."}, {"id": "libro", "texto": "📘 Cómo se llama el libro."}], "correcta": "queda"}, "descubrimiento": {"pregunta": "¿Qué debemos calcular primero?", "opciones": [{"id": "ahorro", "texto": "¿Cuánto ahorra en 4 semanas?"}, {"id": "gasto", "texto": "¿Cuánto queda sin saber el ahorro total?"}, {"id": "titulo", "texto": "¿Cuál es el título del libro?"}], "correcta": "ahorro"}, "pasos": [{"pregunta": "¿Cuánto ahorra en 4 semanas?", "operacion": "multiplicar", "a": 5, "b": 4, "resultado": 20}, {"pregunta": "Después de gastar 7 euros, ¿cuánto le queda?", "operacion": "restar", "a": 20, "b": 7, "resultado": 13}], "activo": true}];
+    const fallbackCases = [{"id":"DP-0001","titulo":"Las naranjas de la cesta","texto":"En una cesta había 5 naranjas. Ana añadió 3 naranjas más.","nivel":1,"tema":"casa","tipo":"simple","comprension":{"pregunta":"¿Qué ocurrió con la cantidad de naranjas?","opciones":[{"id":"aumento","texto":"🍊 Aumentó porque añadieron más."},{"id":"disminuyo","texto":"📉 Disminuyó porque quitaron algunas."},{"id":"reparto","texto":"🤝 Se repartieron en partes iguales."}],"correcta":"aumento"},"descubrimiento":{"pregunta":"¿Qué necesitamos averiguar?","opciones":[{"id":"total","texto":"Cuántas naranjas hay ahora."},{"id":"faltan","texto":"Cuántas naranjas faltan."},{"id":"grupos","texto":"Cuántos grupos se pueden formar."}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas naranjas hay ahora?","operacion":"sumar","a":5,"b":3,"resultado":8}],"activo":true},{"id":"DP-0002","titulo":"Las pegatinas compartidas","texto":"Gloria tenía 9 pegatinas y regaló 4 a una amiga.","nivel":1,"tema":"amistad","tipo":"simple","comprension":{"pregunta":"¿Qué pasó con las pegatinas de Gloria?","opciones":[{"id":"mas","texto":"✨ Ahora tiene más."},{"id":"menos","texto":"🎁 Ahora tiene menos porque regaló algunas."},{"id":"igual","texto":"⚖️ Sigue teniendo la misma cantidad."}],"correcta":"menos"},"descubrimiento":{"pregunta":"¿Qué pregunta debemos responder?","opciones":[{"id":"quedan","texto":"Cuántas pegatinas le quedan."},{"id":"regalo","texto":"De qué color eran las pegatinas."},{"id":"total_amigas","texto":"Cuántas amigas tiene Gloria."}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántas pegatinas le quedan?","operacion":"restar","a":9,"b":4,"resultado":5}],"activo":true},{"id":"DP-0003","titulo":"Los vasos de las mesas","texto":"Hay 4 mesas. En cada mesa colocaron 3 vasos.","nivel":1,"tema":"cumpleaños","tipo":"simple","comprension":{"pregunta":"¿Cómo están organizados los vasos?","opciones":[{"id":"grupos","texto":"🍽️ En grupos iguales: 3 vasos por mesa."},{"id":"quitar","texto":"➖ Se quitaron vasos."},{"id":"repartir","texto":"🤝 Se reparten los vasos entre personas."}],"correcta":"grupos"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"El total de vasos en todas las mesas."},{"id":"mesas","texto":"El color de las mesas."},{"id":"sobran","texto":"Cuántos vasos sobran."}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántos vasos hay en total?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0004","titulo":"Las galletas para compartir","texto":"Doce galletas se reparten por igual entre 3 niños.","nivel":1,"tema":"merienda","tipo":"simple","comprension":{"pregunta":"¿Qué significa repartir por igual?","opciones":[{"id":"igual","texto":"🤝 Cada niño recibe la misma cantidad."},{"id":"uno","texto":"🍪 Un niño recibe todas las galletas."},{"id":"sobran","texto":"📦 Las galletas se guardan sin repartir."}],"correcta":"igual"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar?","opciones":[{"id":"cada","texto":"Cuántas galletas recibe cada niño."},{"id":"total","texto":"Cuántos niños hay en el colegio."},{"id":"precio","texto":"Cuánto cuestan las galletas."}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántas galletas recibe cada niño?","operacion":"dividir","a":12,"b":3,"resultado":4,"visual":{"tipo":"reparto","totalElementos":12,"grupos":3,"grupoIcono":"👧","elementoIcono":"🍪"}}],"activo":true},{"id":"DP-0005","titulo":"Las palomas del parque","texto":"En el parque había 7 palomas. Después llegaron 2 más.","nivel":1,"tema":"parque","tipo":"simple","comprension":{"pregunta":"¿La cantidad de palomas aumenta o disminuye?","opciones":[{"id":"aumenta","texto":"🕊️ Aumenta porque llegaron más."},{"id":"disminuye","texto":"📉 Disminuye porque se fueron."},{"id":"igual","texto":"⚖️ No cambia."}],"correcta":"aumenta"},"descubrimiento":{"pregunta":"¿Qué dato buscamos?","opciones":[{"id":"ahora","texto":"Cuántas palomas hay ahora."},{"id":"arboles","texto":"Cuántos árboles hay en el parque."},{"id":"comida","texto":"Qué comen las palomas."}],"correcta":"ahora"},"pasos":[{"pregunta":"¿Cuántas palomas hay ahora?","operacion":"sumar","a":7,"b":2,"resultado":9}],"activo":true},{"id":"DP-0006","titulo":"Los lápices en estuches","texto":"Hay 15 lápices y se guardan por igual en 5 estuches.","nivel":1,"tema":"colegio","tipo":"simple","comprension":{"pregunta":"¿Qué se hace con los lápices?","opciones":[{"id":"repartir","texto":"✏️ Se reparten por igual entre estuches."},{"id":"añadir","texto":"➕ Se añaden más lápices."},{"id":"perder","texto":"➖ Se pierden algunos lápices."}],"correcta":"repartir"},"descubrimiento":{"pregunta":"¿Qué necesitamos saber?","opciones":[{"id":"cada","texto":"Cuántos lápices van en cada estuche."},{"id":"color","texto":"De qué color son los estuches."},{"id":"precio","texto":"Cuánto cuesta cada lápiz."}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos lápices van en cada estuche?","operacion":"dividir","a":15,"b":5,"resultado":3,"visual":{"tipo":"reparto","totalElementos":15,"grupos":5,"grupoIcono":"🟦","elementoIcono":"●"}}],"activo":true},{"id":"DP-0101","titulo":"Helados en la playa","texto":"En la playa, una familia compró 6 helados por la mañana y 5 por la tarde. También llevó 3 toallas.","nivel":2,"tema":"playa","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para saber cuántos helados compraron?","opciones":[{"id":"toallas","texto":"🏖️ Las 3 toallas."},{"id":"mañana","texto":"🍦 Los 6 helados de la mañana."},{"id":"tarde","texto":"🌅 Los 5 helados de la tarde."}],"correcta":"toallas"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"helados","texto":"El total de helados comprados."},{"id":"personas","texto":"Cuántas personas hay en la playa."},{"id":"toallas","texto":"Cuántas toallas faltan."}],"correcta":"helados"},"pasos":[{"pregunta":"¿Cuántos helados compraron en total?","operacion":"sumar","a":6,"b":5,"resultado":11}],"activo":true},{"id":"DP-0102","titulo":"Entradas para el museo","texto":"Una entrada cuesta 4 euros. Anais compra 3 entradas para visitar un museo.","nivel":2,"tema":"viaje","tipo":"simple","comprension":{"pregunta":"¿Qué se repite en esta historia?","opciones":[{"id":"precio","texto":"🎟️ El mismo precio, 4 euros, tres veces."},{"id":"resta","texto":"➖ Se quitan entradas."},{"id":"reparto","texto":"🤝 Se reparte el dinero por igual."}],"correcta":"precio"},"descubrimiento":{"pregunta":"¿Qué queremos averiguar?","opciones":[{"id":"coste","texto":"Cuánto cuestan las 3 entradas."},{"id":"hora","texto":"A qué hora abre el museo."},{"id":"salas","texto":"Cuántas salas tiene el museo."}],"correcta":"coste"},"pasos":[{"pregunta":"¿Cuánto cuestan las 3 entradas?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🎟️","elementoIcono":"💶"}}],"activo":true},{"id":"DP-0103","titulo":"Frutas del supermercado","texto":"En el supermercado, Juan Pablo compra 18 mandarinas. Guarda 6 para otra semana y coloca las demás en una cesta.","nivel":2,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué cantidad cambia?","opciones":[{"id":"mandarinas","texto":"🍊 La cantidad de mandarinas disponibles ahora."},{"id":"semanas","texto":"📅 El número de semanas del año."},{"id":"cestas","texto":"🧺 El número de cestas."}],"correcta":"mandarinas"},"descubrimiento":{"pregunta":"¿Qué necesitamos calcular?","opciones":[{"id":"quedan","texto":"Cuántas mandarinas quedan para la cesta."},{"id":"precio","texto":"Cuánto cuesta cada mandarina."},{"id":"peso","texto":"Cuánto pesa la cesta."}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántas mandarinas coloca en la cesta?","operacion":"restar","a":18,"b":6,"resultado":12}],"activo":true},{"id":"DP-0201","titulo":"Material para el colegio","texto":"Gloria compra un cuaderno por 4 euros y dos lápices de 2 euros cada uno. Paga con 10 euros. ¿Cuánto cambio recibe?","nivel":3,"tema":"supermercado","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final del problema?","opciones":[{"id":"cambio","texto":"💶 Cuánto cambio recibe Gloria."},{"id":"lapices","texto":"✏️ Cuántos lápices compra."},{"id":"cuaderno","texto":"📓 De qué color es el cuaderno."}],"correcta":"cambio"},"descubrimiento":{"pregunta":"¿Qué necesitamos averiguar primero?","opciones":[{"id":"lapices","texto":"El precio de los dos lápices."},{"id":"cambio","texto":"El cambio, sin calcular antes la compra."},{"id":"color","texto":"El color del material."}],"correcta":"lapices"},"pasos":[{"pregunta":"¿Cuánto cuestan los dos lápices?","operacion":"multiplicar","a":2,"b":2,"resultado":4,"visual":{"tipo":"grupos","grupos":2,"elementosPorGrupo":2,"grupoIcono":"📅","elementoIcono":"💶"}},{"pregunta":"¿Cuánto cuesta toda la compra?","operacion":"sumar","a":4,"b":4,"resultado":8},{"pregunta":"¿Cuánto cambio recibe Gloria?","operacion":"restar","a":10,"b":8,"resultado":2}],"activo":true},{"id":"DP-0202","titulo":"La merienda del cumpleaños","texto":"Para un cumpleaños hay 5 mesas con 4 zumos en cada mesa. Durante la fiesta se beben 13 zumos. ¿Cuántos quedan?","nivel":3,"tema":"cumpleaños","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos conocer antes de saber cuántos zumos quedan?","opciones":[{"id":"total","texto":"🥤 Cuántos zumos había al principio."},{"id":"mesas","texto":"🎈 El color de las mesas."},{"id":"invitados","texto":"👥 Los nombres de los invitados."}],"correcta":"total"},"descubrimiento":{"pregunta":"¿Cuál es el primer cálculo útil?","opciones":[{"id":"multiplicar","texto":"Calcular 5 grupos de 4 zumos."},{"id":"restar","texto":"Restar 13 sin saber el total inicial."},{"id":"dividir","texto":"Repartir las mesas."}],"correcta":"multiplicar"},"pasos":[{"pregunta":"¿Cuántos zumos había al principio?","operacion":"multiplicar","a":5,"b":4,"resultado":20,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":4,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"¿Cuántos zumos quedan?","operacion":"restar","a":20,"b":13,"resultado":7}],"activo":true},{"id":"DP-0203","titulo":"Excursión al bosque","texto":"En una excursión viajan 24 niños en 4 grupos iguales. Cada grupo necesita 2 botellas de agua. ¿Cuántas botellas necesitan en total?","nivel":3,"tema":"bosque","tipo":"compuesto","comprension":{"pregunta":"¿Qué información relaciona a los niños con los grupos?","opciones":[{"id":"iguales","texto":"🌳 Los 24 niños se dividen en 4 grupos iguales."},{"id":"botellas","texto":"💧 Cada botella tiene un color."},{"id":"viaje","texto":"🚌 Viajan en autobús."}],"correcta":"iguales"},"descubrimiento":{"pregunta":"¿Qué podemos averiguar primero?","opciones":[{"id":"ninos_grupo","texto":"Cuántos niños hay en cada grupo."},{"id":"total_botellas","texto":"El total de botellas sin usar los grupos."},{"id":"arboles","texto":"Cuántos árboles hay en el bosque."}],"correcta":"ninos_grupo"},"pasos":[{"pregunta":"¿Cuántos niños hay en cada grupo?","operacion":"dividir","a":24,"b":4,"resultado":6,"visual":{"tipo":"reparto","totalElementos":24,"grupos":4,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"Si cada grupo necesita 2 botellas, ¿cuántas botellas necesitan los 4 grupos?","operacion":"multiplicar","a":4,"b":2,"resultado":8,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":2,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0007","titulo":"Conchas en la playa","texto":"Gloria encontró 6 conchas y después encontró 4 más.","nivel":1,"tema":"playa","tipo":"simple","comprension":{"pregunta":"¿Qué ocurrió con la colección de conchas?","opciones":[{"id":"crecio","texto":"🐚 Creció porque encontró más."},{"id":"bajo","texto":"📉 Disminuyó."},{"id":"repartio","texto":"🤝 Se repartió."}],"correcta":"crecio"},"descubrimiento":{"pregunta":"¿Qué queremos saber?","opciones":[{"id":"total","texto":"¿Cuántas conchas tiene ahora?"},{"id":"arena","texto":"¿Cuánta arena hay?"},{"id":"color","texto":"¿De qué color son?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas conchas tiene ahora?","operacion":"sumar","a":6,"b":4,"resultado":10}],"activo":true},{"id":"DP-0008","titulo":"Libros en la estantería","texto":"Había 11 libros en una estantería. Juan Pablo retiró 3 para leerlos.","nivel":1,"tema":"biblioteca","tipo":"simple","comprension":{"pregunta":"¿Qué pasó con los libros de la estantería?","opciones":[{"id":"menos","texto":"📚 Quedaron menos libros."},{"id":"mas","texto":"➕ Aparecieron más libros."},{"id":"igual","texto":"⚖️ No cambió la cantidad."}],"correcta":"menos"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"quedan","texto":"¿Cuántos libros quedan en la estantería?"},{"id":"paginas","texto":"¿Cuántas páginas tienen?"},{"id":"autor","texto":"¿Quién escribió los libros?"}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántos libros quedan en la estantería?","operacion":"restar","a":11,"b":3,"resultado":8}],"activo":true},{"id":"DP-0009","titulo":"Bolsas de manzanas","texto":"Hay 3 bolsas y cada bolsa contiene 5 manzanas.","nivel":1,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué se repite en la historia?","opciones":[{"id":"grupo","texto":"🍎 El mismo grupo de 5 manzanas, 3 veces."},{"id":"quitar","texto":"➖ Se quitan manzanas."},{"id":"repartir","texto":"🤝 Se reparten manzanas."}],"correcta":"grupo"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"¿Cuántas manzanas hay en total?"},{"id":"precio","texto":"¿Cuánto cuesta una bolsa?"},{"id":"peso","texto":"¿Cuánto pesan?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas manzanas hay en total?","operacion":"multiplicar","a":3,"b":5,"resultado":15,"visual":{"tipo":"grupos","grupos":3,"elementosPorGrupo":5,"grupoIcono":"🛍️","elementoIcono":"🍎"}}],"activo":true},{"id":"DP-0010","titulo":"Botellas para equipos","texto":"Hay 16 botellas de agua para repartir por igual entre 4 equipos.","nivel":1,"tema":"deporte","tipo":"simple","comprension":{"pregunta":"¿Qué debe ocurrir con las botellas?","opciones":[{"id":"igual","texto":"💧 Cada equipo debe recibir la misma cantidad."},{"id":"añadir","texto":"➕ Hay que comprar más."},{"id":"guardar","texto":"📦 Se guardan todas."}],"correcta":"igual"},"descubrimiento":{"pregunta":"¿Qué debemos descubrir?","opciones":[{"id":"cada","texto":"¿Cuántas botellas recibe cada equipo?"},{"id":"jugadores","texto":"¿Cuántos jugadores hay?"},{"id":"marca","texto":"¿Qué marca tienen?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántas botellas recibe cada equipo?","operacion":"dividir","a":16,"b":4,"resultado":4,"visual":{"tipo":"reparto","totalElementos":16,"grupos":4,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0104","titulo":"Sillas para una reunión","texto":"En una sala hay 5 filas con 6 sillas en cada fila. Las paredes son blancas.","nivel":2,"tema":"colegio","tipo":"simple","comprension":{"pregunta":"¿Qué información no sirve para contar las sillas?","opciones":[{"id":"paredes","texto":"🎨 El color de las paredes."},{"id":"filas","texto":"5️⃣ Las 5 filas."},{"id":"sillas","texto":"6️⃣ Las 6 sillas por fila."}],"correcta":"paredes"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"¿Cuántas sillas hay en total?"},{"id":"color","texto":"¿De qué color son las paredes?"},{"id":"puertas","texto":"¿Cuántas puertas hay?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas sillas hay en total?","operacion":"multiplicar","a":5,"b":6,"resultado":30,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":6,"grupoIcono":"➖","elementoIcono":"🪑"}}],"activo":true},{"id":"DP-0105","titulo":"Monedas para ahorrar","texto":"Gloria tenía 20 euros y gastó 7 euros en un libro. El libro tiene una portada azul.","nivel":2,"tema":"dinero","tipo":"simple","comprension":{"pregunta":"¿Qué dato es decorativo y no cambia la cuenta?","opciones":[{"id":"portada","texto":"📘 El color azul de la portada."},{"id":"tenia","texto":"💶 Los 20 euros iniciales."},{"id":"gasto","texto":"🛍️ Los 7 euros gastados."}],"correcta":"portada"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar?","opciones":[{"id":"restan","texto":"¿Cuánto dinero le queda?"},{"id":"paginas","texto":"¿Cuántas páginas tiene el libro?"},{"id":"color","texto":"¿De qué color es?"}],"correcta":"restan"},"pasos":[{"pregunta":"¿Cuánto dinero le queda?","operacion":"restar","a":20,"b":7,"resultado":13}],"activo":true},{"id":"DP-0106","titulo":"Zumos para la excursión","texto":"Hay 24 zumos para repartir por igual entre 6 grupos. El autobús es amarillo.","nivel":2,"tema":"viaje","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para repartir los zumos?","opciones":[{"id":"bus","texto":"🚌 El color del autobús."},{"id":"zumos","texto":"🥤 Los 24 zumos."},{"id":"grupos","texto":"👥 Los 6 grupos."}],"correcta":"bus"},"descubrimiento":{"pregunta":"¿Qué pregunta resolvemos?","opciones":[{"id":"cada","texto":"¿Cuántos zumos recibe cada grupo?"},{"id":"bus","texto":"¿Cuántas ruedas tiene el autobús?"},{"id":"hora","texto":"¿A qué hora salen?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos zumos recibe cada grupo?","operacion":"dividir","a":24,"b":6,"resultado":4,"visual":{"tipo":"reparto","totalElementos":24,"grupos":6,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0107","titulo":"Entradas vendidas","texto":"Por la mañana se vendieron 14 entradas y por la tarde 9. La taquilla cerró a las 8.","nivel":2,"tema":"espectaculo","tipo":"simple","comprension":{"pregunta":"¿Qué dato no se usa para calcular el total vendido?","opciones":[{"id":"cierre","texto":"🕗 La hora de cierre."},{"id":"mañana","texto":"🎟️ Las 14 entradas de la mañana."},{"id":"tarde","texto":"🎫 Las 9 entradas de la tarde."}],"correcta":"cierre"},"descubrimiento":{"pregunta":"¿Qué queremos calcular?","opciones":[{"id":"total","texto":"¿Cuántas entradas se vendieron en total?"},{"id":"hora","texto":"¿A qué hora cerró la taquilla?"},{"id":"precio","texto":"¿Cuánto costaba cada entrada?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas entradas se vendieron en total?","operacion":"sumar","a":14,"b":9,"resultado":23}],"activo":true},{"id":"DP-0108","titulo":"Árboles del parque","texto":"En el parque había 25 árboles. Una tormenta dañó 4. También había 7 bancos.","nivel":2,"tema":"parque","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para saber cuántos árboles quedaron?","opciones":[{"id":"bancos","texto":"🪑 Los 7 bancos."},{"id":"arboles","texto":"🌳 Los 25 árboles."},{"id":"dañados","texto":"⛈️ Los 4 árboles dañados."}],"correcta":"bancos"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"quedan","texto":"¿Cuántos árboles quedaron sin daño?"},{"id":"bancos","texto":"¿Cuántos bancos hay?"},{"id":"hojas","texto":"¿Cuántas hojas tienen?"}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántos árboles quedaron sin daño?","operacion":"restar","a":25,"b":4,"resultado":21}],"activo":true},{"id":"DP-0109","titulo":"Paquetes de galletas","texto":"Hay 7 paquetes con 4 galletas cada uno. La caja grande pesa 2 kilos.","nivel":2,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué dato no hace falta para contar las galletas?","opciones":[{"id":"peso","texto":"⚖️ El peso de la caja."},{"id":"paquetes","texto":"📦 Los 7 paquetes."},{"id":"galletas","texto":"🍪 Las 4 galletas por paquete."}],"correcta":"peso"},"descubrimiento":{"pregunta":"¿Qué queremos averiguar?","opciones":[{"id":"total","texto":"¿Cuántas galletas hay en total?"},{"id":"peso","texto":"¿Cuánto pesa cada galleta?"},{"id":"precio","texto":"¿Cuánto cuesta la caja?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas galletas hay en total?","operacion":"multiplicar","a":7,"b":4,"resultado":28,"visual":{"tipo":"grupos","grupos":7,"elementosPorGrupo":4,"grupoIcono":"👧","elementoIcono":"🍪"}}],"activo":true},{"id":"DP-0110","titulo":"Reparto de cromos","texto":"Treinta cromos se reparten por igual entre 5 niños. Uno lleva una camiseta verde.","nivel":2,"tema":"amistad","tipo":"simple","comprension":{"pregunta":"¿Qué detalle no cambia el reparto?","opciones":[{"id":"camiseta","texto":"👕 El color de la camiseta."},{"id":"cromos","texto":"🃏 Los 30 cromos."},{"id":"niños","texto":"👧 Los 5 niños."}],"correcta":"camiseta"},"descubrimiento":{"pregunta":"¿Qué debemos saber?","opciones":[{"id":"cada","texto":"¿Cuántos cromos recibe cada niño?"},{"id":"color","texto":"¿De qué color es la camiseta?"},{"id":"album","texto":"¿Cuántas páginas tiene el álbum?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos cromos recibe cada niño?","operacion":"dividir","a":30,"b":5,"resultado":6,"visual":{"tipo":"reparto","totalElementos":30,"grupos":5,"grupoIcono":"👧","elementoIcono":"🃏"}}],"activo":true},{"id":"DP-0204","titulo":"Compra para una merienda","texto":"Anais compra 3 zumos de 2 euros cada uno y una bolsa de fruta de 5 euros. Paga con 20 euros. ¿Cuánto cambio recibe?","nivel":3,"tema":"supermercado","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la meta final?","opciones":[{"id":"cambio","texto":"💶 Saber cuánto cambio recibe."},{"id":"zumos","texto":"🥤 Saber cuántos zumos compra."},{"id":"fruta","texto":"🍎 Saber qué fruta eligió."}],"correcta":"cambio"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"zumos","texto":"¿Cuánto cuestan los 3 zumos?"},{"id":"cambio","texto":"¿El cambio directamente?"},{"id":"fruta","texto":"¿El peso de la fruta?"}],"correcta":"zumos"},"pasos":[{"pregunta":"¿Cuánto cuestan los 3 zumos?","operacion":"multiplicar","a":3,"b":2,"resultado":6,"visual":{"tipo":"grupos","grupos":3,"elementosPorGrupo":2,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"¿Cuánto cuesta toda la compra?","operacion":"sumar","a":6,"b":5,"resultado":11},{"pregunta":"¿Cuánto cambio recibe?","operacion":"restar","a":20,"b":11,"resultado":9}],"activo":true},{"id":"DP-0205","titulo":"Libros para las mesas","texto":"La biblioteca prepara 6 mesas con 3 libros en cada una. Después presta 5 de esos libros. ¿Cuántos libros quedan?","nivel":3,"tema":"biblioteca","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos saber antes de restar los libros prestados?","opciones":[{"id":"total","texto":"📚 Cuántos libros había en total."},{"id":"autores","texto":"✍️ Quién escribió los libros."},{"id":"mesas","texto":"🎨 De qué color son las mesas."}],"correcta":"total"},"descubrimiento":{"pregunta":"¿Qué cálculo va primero?","opciones":[{"id":"multiplicar","texto":"¿Cuántos libros hay en las 6 mesas?"},{"id":"restar","texto":"¿Cuántos quedan sin saber el total?"},{"id":"dividir","texto":"¿Cómo se reparten los autores?"}],"correcta":"multiplicar"},"pasos":[{"pregunta":"¿Cuántos libros había en total?","operacion":"multiplicar","a":6,"b":3,"resultado":18,"visual":{"tipo":"grupos","grupos":6,"elementosPorGrupo":3,"grupoIcono":"🟫","elementoIcono":"📚"}},{"pregunta":"¿Cuántos libros quedan?","operacion":"restar","a":18,"b":5,"resultado":13}],"activo":true},{"id":"DP-0206","titulo":"Frutas para tres familias","texto":"Hay 27 manzanas para repartir por igual entre 3 familias. Cada familia come 2 manzanas. ¿Cuántas le quedan a cada familia?","nivel":3,"tema":"familia","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final?","opciones":[{"id":"quedan","texto":"🍎 Cuántas manzanas le quedan a cada familia."},{"id":"familias","texto":"👨‍👩‍👧 Cuántas familias hay."},{"id":"color","texto":"🎨 De qué color son las manzanas."}],"correcta":"quedan"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar primero?","opciones":[{"id":"reparto","texto":"¿Cuántas manzanas recibe cada familia?"},{"id":"resta","texto":"¿Cuántas quedan sin repartir primero?"},{"id":"precio","texto":"¿Cuánto cuestan?"}],"correcta":"reparto"},"pasos":[{"pregunta":"¿Cuántas manzanas recibe cada familia?","operacion":"dividir","a":27,"b":3,"resultado":9,"visual":{"tipo":"reparto","totalElementos":27,"grupos":3,"grupoIcono":"🛍️","elementoIcono":"🍎"}},{"pregunta":"Si cada familia come 2, ¿cuántas le quedan?","operacion":"restar","a":9,"b":2,"resultado":7}],"activo":true},{"id":"DP-0207","titulo":"Entradas de cine","texto":"Cuatro entradas cuestan 6 euros cada una. Además compran palomitas por 8 euros. ¿Cuánto pagan en total?","nivel":3,"tema":"espectaculo","tipo":"compuesto","comprension":{"pregunta":"¿Qué dos gastos aparecen?","opciones":[{"id":"dos","texto":"🎟️ Las entradas y las palomitas."},{"id":"uno","texto":"🍿 Solo las palomitas."},{"id":"ninguno","texto":"🚫 No aparece ningún gasto."}],"correcta":"dos"},"descubrimiento":{"pregunta":"¿Qué calculamos primero?","opciones":[{"id":"entradas","texto":"¿Cuánto cuestan las 4 entradas?"},{"id":"total","texto":"¿El total sin conocer el precio de las entradas?"},{"id":"hora","texto":"¿A qué hora empieza la película?"}],"correcta":"entradas"},"pasos":[{"pregunta":"¿Cuánto cuestan las 4 entradas?","operacion":"multiplicar","a":4,"b":6,"resultado":24,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":6,"grupoIcono":"🎟️","elementoIcono":"💶"}},{"pregunta":"¿Cuánto pagan sumando las palomitas?","operacion":"sumar","a":24,"b":8,"resultado":32}],"activo":true},{"id":"DP-0208","titulo":"Receta de magdalenas","texto":"Para una bandeja se necesitan 4 huevos. Gloria prepara 3 bandejas y ya tiene 5 huevos. ¿Cuántos huevos más necesita?","nivel":3,"tema":"cocina","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos descubrir al final?","opciones":[{"id":"faltan","texto":"🥚 Cuántos huevos más necesita."},{"id":"bandejas","texto":"🧁 Cuántas bandejas prepara."},{"id":"color","texto":"🎨 El color de las magdalenas."}],"correcta":"faltan"},"descubrimiento":{"pregunta":"¿Qué cálculo hacemos primero?","opciones":[{"id":"necesarios","texto":"¿Cuántos huevos necesita para 3 bandejas?"},{"id":"restar","texto":"¿Cuántos faltan sin saber el total necesario?"},{"id":"sumar","texto":"¿Cuántos huevos sobran?"}],"correcta":"necesarios"},"pasos":[{"pregunta":"¿Cuántos huevos necesita para 3 bandejas?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🧁","elementoIcono":"🥚"}},{"pregunta":"Si ya tiene 5, ¿cuántos huevos más necesita?","operacion":"restar","a":12,"b":5,"resultado":7}],"activo":true},{"id":"DP-0209","titulo":"Viaje en autobús","texto":"Un autobús tiene 8 filas con 4 asientos en cada fila. Ya están ocupados 21 asientos. ¿Cuántos quedan libres?","nivel":3,"tema":"viaje","tipo":"compuesto","comprension":{"pregunta":"¿Qué queremos saber al final?","opciones":[{"id":"libres","texto":"🚌 Cuántos asientos quedan libres."},{"id":"filas","texto":"🔢 Cuántas filas tiene."},{"id":"color","texto":"🎨 De qué color es el autobús."}],"correcta":"libres"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"total","texto":"¿Cuántos asientos tiene el autobús?"},{"id":"libres","texto":"¿Cuántos libres hay sin saber el total?"},{"id":"ruedas","texto":"¿Cuántas ruedas tiene?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántos asientos tiene el autobús?","operacion":"multiplicar","a":8,"b":4,"resultado":32,"visual":{"tipo":"grupos","grupos":8,"elementosPorGrupo":4,"grupoIcono":"➖","elementoIcono":"🪑"}},{"pregunta":"¿Cuántos asientos quedan libres?","operacion":"restar","a":32,"b":21,"resultado":11}],"activo":true},{"id":"DP-0210","titulo":"Ahorro para un juego","texto":"Gloria ahorra 5 euros cada semana durante 4 semanas. Después gasta 7 euros en un libro. ¿Cuánto dinero le queda?","nivel":3,"tema":"dinero","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final?","opciones":[{"id":"queda","texto":"💰 Cuánto dinero le queda."},{"id":"semanas","texto":"📅 Cuántas semanas ahorra."},{"id":"libro","texto":"📘 Cómo se llama el libro."}],"correcta":"queda"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"ahorro","texto":"¿Cuánto ahorra en 4 semanas?"},{"id":"gasto","texto":"¿Cuánto queda sin saber el ahorro total?"},{"id":"titulo","texto":"¿Cuál es el título del libro?"}],"correcta":"ahorro"},"pasos":[{"pregunta":"¿Cuánto ahorra en 4 semanas?","operacion":"multiplicar","a":5,"b":4,"resultado":20,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":4,"grupoIcono":"🟫","elementoIcono":"📚"}},{"pregunta":"Después de gastar 7 euros, ¿cuánto le queda?","operacion":"restar","a":20,"b":7,"resultado":13}],"activo":true}];
 
     async function loadCases(){
       try{
         const response = await fetch("./historias.json", {cache:"no-store"});
-        if(!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        if(!response.ok){
+          throw new Error(`HTTP ${response.status}`);
+        }
+
         const data = await response.json();
-        if(!Array.isArray(data)) throw new Error("Formato inválido");
+
+        if(!Array.isArray(data)){
+          throw new Error("Formato inválido");
+        }
+
         return data.filter(item => item && item.activo !== false);
       }catch(error){
-        console.warn("Se usará la colección de respaldo.", error);
-        return fallbackCases;
+        console.warn(
+          "No se pudo cargar historias.json. Se usará la colección de respaldo.",
+          error
+        );
+
+        return fallbackCases.filter(item => item && item.activo !== false);
       }
     }
 
@@ -1108,10 +1221,23 @@
 
       const container = $("dynamicChoices");
 
-      questionData.opciones.forEach(option => {
+      questionData.opciones.forEach((option,index) => {
         const button = document.createElement("button");
         button.className = "choice";
-        button.textContent = option.texto;
+
+        const letter = document.createElement("span");
+        letter.className = "choice-letter";
+        letter.textContent = String.fromCharCode(65 + index);
+
+        const text = document.createElement("span");
+        text.className = "choice-text";
+        text.textContent = option.texto;
+
+        button.append(letter,text);
+        button.setAttribute(
+          "aria-label",
+          `Opción ${letter.textContent}: ${stripLeadingIcon(option.texto)}`
+        );
 
         button.onclick = () => {
           state.attempts += 1;
@@ -1142,6 +1268,106 @@
       });
     }
 
+    function escapeHtml(value = ""){
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      })[char]);
+    }
+
+    function stripLeadingIcon(value = ""){
+      return String(value)
+        .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\u200D\s]+/gu,"")
+        .replace(/\s+/g," ")
+        .trim();
+    }
+
+    function operationName(operation){
+      return {
+        sumar:"más",
+        restar:"menos",
+        multiplicar:"por",
+        dividir:"dividido entre"
+      }[operation] || operation;
+    }
+
+    function buildVisualHelp(step){
+      const visual = step?.visual;
+
+      if(!visual || !["multiplicar","dividir"].includes(step.operacion)){
+        return "";
+      }
+
+      const groupIcon = escapeHtml(visual.grupoIcono || "🟦");
+      const itemIcon = escapeHtml(visual.elementoIcono || "●");
+      const groups = Math.max(1,Number(visual.grupos || step.b || 1));
+      const total = Math.max(0,Number(visual.totalElementos || step.a || 0));
+      const perGroup = step.operacion === "multiplicar"
+        ? Math.max(0,Number(visual.elementosPorGrupo || step.b || 0))
+        : Math.floor(total / groups);
+
+      const cards = Array.from({length:Math.min(groups,12)},(_,index) => {
+        const items = Array.from(
+          {length:Math.min(perGroup,15)},
+          () => `<span aria-hidden="true">${itemIcon}</span>`
+        ).join("");
+
+        return `
+          <div class="visual-group">
+            <span class="visual-group__icon" aria-hidden="true">${groupIcon}</span>
+            <div class="visual-group__items">${items}</div>
+            <strong>Grupo ${index + 1}</strong>
+          </div>
+        `;
+      }).join("");
+
+      const caption = step.operacion === "multiplicar"
+        ? `${groups} grupos con ${perGroup} elementos en cada grupo`
+        : `${total} elementos repartidos por igual en ${groups} grupos: ${perGroup} en cada grupo`;
+
+      return `
+        <section class="visual-help" aria-label="Ayuda visual de la operación">
+          <div class="visual-help__title">👀 Ver con un dibujo</div>
+          <div class="visual-groups">${cards}</div>
+          <p class="visual-help__caption">${escapeHtml(caption)}</p>
+          <p class="visual-help__note">
+            El dibujo ayuda a comprender la organización; todavía debes elegir y resolver la operación.
+          </p>
+        </section>
+      `;
+    }
+
+    function speechTextForCurrentStage(){
+      const item = currentCase();
+      const parts = [item.texto];
+
+      if(state.stage === 1){
+        parts.push(item.comprension.pregunta);
+        parts.push("Escucha las tres opciones y elige la mejor respuesta.");
+        item.comprension.opciones.forEach((option,index) => {
+          parts.push(`Opción ${String.fromCharCode(65 + index)}. ${stripLeadingIcon(option.texto)}`);
+        });
+      }else if(state.stage === 2){
+        parts.push(item.descubrimiento.pregunta);
+        parts.push("Escucha las tres opciones y elige la mejor respuesta.");
+        item.descubrimiento.opciones.forEach((option,index) => {
+          parts.push(`Opción ${String.fromCharCode(65 + index)}. ${stripLeadingIcon(option.texto)}`);
+        });
+      }else if(state.stage === 3){
+        parts.push(currentStep().pregunta);
+        parts.push("Elige la operación: sumar, restar, multiplicar o dividir.");
+      }else if(state.stage === 4){
+        const step = currentStep();
+        parts.push(step.pregunta);
+        parts.push(`La operación es ${step.a} ${operationName(step.operacion)} ${step.b}.`);
+      }
+
+      return parts.join(". ");
+    }
+
     function renderOperationStage(){
       const step = currentStep();
 
@@ -1152,6 +1378,7 @@
 
       $("stageContent").innerHTML = `
         <p class="question">${step.pregunta}</p>
+        ${buildVisualHelp(step)}
         <div class="operation-grid" id="operationChoices"></div>
       `;
 
@@ -1202,6 +1429,7 @@
 
       $("stageContent").innerHTML = `
         <p class="question">${step.pregunta}</p>
+        ${buildVisualHelp(step)}
         <div class="calculation">
           <div class="number-box">${step.a}</div>
           <div class="math-sign">${operationSymbols[step.operacion]}</div>
@@ -1332,11 +1560,23 @@
     };
 
     $("listenButton").onclick = () => {
-      if(!("speechSynthesis" in window)) return;
+      if(!("speechSynthesis" in window)){
+        setFeedback(
+          "Este navegador no permite escuchar el reto automáticamente.",
+          "try"
+        );
+        return;
+      }
+
       speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(currentCase().texto);
+
+      const utterance = new SpeechSynthesisUtterance(
+        speechTextForCurrentStage()
+      );
+
       utterance.lang = perfil.idioma === "en" ? "en-GB" : "es-ES";
-      utterance.rate = .88;
+      utterance.rate = .84;
+      utterance.pitch = 1;
       speechSynthesis.speak(utterance);
     };
 

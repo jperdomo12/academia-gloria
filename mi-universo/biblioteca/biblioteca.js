@@ -16,7 +16,7 @@ let recordedAudioDuration = 0;
 let recordingStartedAt = 0;
 let recordingTimer = null;
 let recordingTicker = null;
-const MAX_RECORDING_SECONDS = 60;
+const MAX_RECORDING_SECONDS = 90;
 let speechRecognition = null;
 let finalTranscript = "";
 let transcriptEdited = false;
@@ -148,7 +148,7 @@ function configurarReconocimientoVoz() {
   }
 
   $("speechSupport").textContent =
-    "Transcripción automática disponible en español.";
+    "Transcripción automática disponible en español. El texto quedará bloqueado para poder comparar y volver a intentarlo.";
 
   speechRecognition = new Recognition();
   speechRecognition.lang = SPEECH_LANGUAGE;
@@ -209,11 +209,6 @@ function detenerReconocimientoVoz() {
   }
 }
 
-$("voiceTranscript").addEventListener("input", () => {
-  transcriptEdited = true;
-  $("statusText").textContent = "Cambios sin guardar";
-});
-
 function formatDuration(seconds = 0) {
   const value = Math.max(0, Math.round(seconds));
   const minutes = String(Math.floor(value / 60)).padStart(2, "0");
@@ -270,11 +265,13 @@ function actualizarControlesAudio() {
   if (hasAudio) {
     $("voicePreview").src = recordedAudioData;
     $("voiceStatus").textContent =
-      `Grabación lista · ${formatDuration(recordedAudioDuration)}`;
+      `Lía guardó tu voz · ${formatDuration(recordedAudioDuration)}`;
+    $("voiceSuccess").classList.add("show");
     actualizarPanelGrabacion(recordedAudioDuration, false);
   } else {
     $("voicePreview").removeAttribute("src");
-    $("voiceStatus").textContent = "Sin grabación.";
+    $("voiceStatus").textContent = "Lía está preparada para escucharte.";
+    $("voiceSuccess").classList.remove("show");
     actualizarPanelGrabacion(0, false);
   }
 }
@@ -295,8 +292,9 @@ async function cargarAudioLibro(libroId) {
   recordedAudioDuration = Number(audio.duration || 0);
   recordedAudioMimeType = audio.mimeType || "audio/webm";
   finalTranscript = audio.transcript || "";
-  transcriptEdited = Boolean(audio.transcriptEdited);
+  transcriptEdited = false;
   $("voiceTranscript").value = finalTranscript;
+  $("familyObservation").value = String(audio.familyObservation || "");
   actualizarControlesAudio();
 }
 
@@ -308,8 +306,9 @@ async function guardarAudioActual(libroId) {
     mimeType: recordedAudioMimeType,
     duration: recordedAudioDuration,
     transcript: $("voiceTranscript").value.trim(),
+    familyObservation: $("familyObservation").value.trim(),
     language: SPEECH_LANGUAGE,
-    transcriptEdited
+    transcriptEdited: false
   });
 
   if (currentBook?.id === libroId) {
@@ -378,7 +377,8 @@ $("startRecording").onclick = async () => {
     $("startRecording").disabled = true;
     $("startRecording").classList.add("recording");
     $("stopRecording").disabled = false;
-    $("voiceStatus").textContent = "Grabando... habla con calma 🎙️";
+    $("voiceStatus").textContent = "Lía te está escuchando... habla con calma 🎙️";
+    $("voiceSuccess").classList.remove("show");
     iniciarPanelGrabacion();
 
     recordingTimer = setTimeout(() => {
@@ -423,6 +423,7 @@ $("deleteRecording").onclick = async () => {
   finalTranscript = "";
   transcriptEdited = false;
   $("voiceTranscript").value = "";
+  $("familyObservation").value = "";
   actualizarControlesAudio();
   $("statusText").textContent = "Cambios sin guardar";
 };
@@ -480,6 +481,10 @@ $("addBookFromLibrary").onclick = () => {
       });
     });
 
+    $("familyObservation").addEventListener("input",()=>{
+      $("statusText").textContent="Cambios sin guardar";
+    });
+
 $("bookForm").onsubmit = async event => {
   event.preventDefault();
 
@@ -504,7 +509,7 @@ $("bookForm").onsubmit = async event => {
 
     $("statusText").textContent = "Guardado ✅";
     openTab("library");
-    alert("🌟 ¡Libro guardado! Ya puedes verlo en tu estantería.");
+    alert("🌟 ¡Libro guardado! Lía ya lo añadió a tu Biblioteca Encantada.");
   } catch (error) {
     console.error(error);
     $("statusText").textContent = "No se pudo guardar";
@@ -526,6 +531,7 @@ $("bookForm").onsubmit = async event => {
       finalTranscript = "";
       transcriptEdited = false;
       $("voiceTranscript").value = "";
+      $("familyObservation").value = "";
       actualizarControlesAudio();
       updateStars(0);
       $("statusText").textContent="Sin guardar";
@@ -681,12 +687,25 @@ $("bookForm").onsubmit = async event => {
             $("detailTranscriptBox").classList.add("hidden");
           }
 
+          const familyObservation =
+            String(audio.familyObservation || "").trim();
+
+          if (familyObservation) {
+            $("detailFamilyObservation").textContent = familyObservation;
+            $("detailFamilyObservationBox").classList.remove("hidden");
+          } else {
+            $("detailFamilyObservation").textContent = "";
+            $("detailFamilyObservationBox").classList.add("hidden");
+          }
+
           $("detailVoiceSection").classList.remove("hidden");
         } else {
           $("detailVoiceAudio").removeAttribute("src");
           $("detailVoiceDuration").textContent = "";
           $("detailVoiceTranscript").textContent = "";
           $("detailTranscriptBox").classList.add("hidden");
+          $("detailFamilyObservation").textContent = "";
+          $("detailFamilyObservationBox").classList.add("hidden");
           $("detailVoiceSection").classList.add("hidden");
         }
       } catch (error) {
