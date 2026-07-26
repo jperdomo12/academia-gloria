@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.0
+ * Versión: 1.2
  ******************************************************************************/
 
 import {
@@ -14,11 +14,21 @@ import {
   observarSesion
 } from "./perfil-usuario.js";
 
+function obtenerBaseAcademia() {
+  return window.location.hostname.endsWith("github.io")
+    ? "/academia-gloria"
+    : "";
+}
+
+const BASE_ACADEMIA = obtenerBaseAcademia();
+
 const CONFIGURACION_PREDETERMINADA = Object.freeze({
   contenedor: "[data-panel-usuario]",
-  loginUrl: "/academia-gloria/login.html",
-  perfilUrl: "/academia-gloria/perfil/",
-  mostrarPerfil: true,
+  loginUrl: `${BASE_ACADEMIA}/login.html`,
+  descubreAcademiaUrl: `${BASE_ACADEMIA}/descubre-la-academia/`,
+  mostrarEspacio: true,
+  mostrarDescubreAcademia: true,
+  mostrarCamino: true,
   mostrarConfiguracion: true,
   mostrarLogros: true
 });
@@ -81,21 +91,43 @@ function renderizarEstadoCarga(contenedor) {
 function construirMenu() {
   const items = [];
 
-  if (configuracionActiva.mostrarPerfil) {
+  if (configuracionActiva.mostrarEspacio) {
     items.push(`
-      <a class="panel-usuario__opcion" href="${escaparHTML(configuracionActiva.perfilUrl)}">
-        <span aria-hidden="true">👤</span>
-        <span>Mi Perfil</span>
+      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+        <span aria-hidden="true">✨</span>
+        <span>
+          Mi Espacio
+          <small>Próximamente</small>
+        </span>
+      </button>
+    `);
+  }
+
+  if (configuracionActiva.mostrarDescubreAcademia) {
+    const volver = encodeURIComponent(
+      `${window.location.pathname}${window.location.search}${window.location.hash}`
+    );
+
+    const urlDescubre =
+      `${configuracionActiva.descubreAcademiaUrl}?volver=${volver}`;
+
+    items.push(`
+      <a class="panel-usuario__opcion" href="${escaparHTML(urlDescubre)}">
+        <span aria-hidden="true">🌈</span>
+        <span>
+          Descubre la Academia
+          <small>Conoce este proyecto</small>
+        </span>
       </a>
     `);
   }
 
-  if (configuracionActiva.mostrarConfiguracion) {
+  if (configuracionActiva.mostrarCamino) {
     items.push(`
       <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-        <span aria-hidden="true">⚙️</span>
+        <span aria-hidden="true">🌱</span>
         <span>
-          Configuración
+          Mi Camino
           <small>Próximamente</small>
         </span>
       </button>
@@ -108,6 +140,18 @@ function construirMenu() {
         <span aria-hidden="true">🏆</span>
         <span>
           Mis Logros
+          <small>Próximamente</small>
+        </span>
+      </button>
+    `);
+  }
+
+  if (configuracionActiva.mostrarConfiguracion) {
+    items.push(`
+      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+        <span aria-hidden="true">⚙️</span>
+        <span>
+          Configuración
           <small>Próximamente</small>
         </span>
       </button>

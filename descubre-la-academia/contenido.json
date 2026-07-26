@@ -1,0 +1,172 @@
+[
+  {
+    "id": "bienvenida",
+    "eyebrow": "UNA AVENTURA PARA APRENDER Y CRECER",
+    "title": "🌈 Bienvenido a la Academia",
+    "subtitle": "Aprender puede ser una aventura.",
+    "text": "Este es un espacio creado para leer, escribir, pensar, descubrir y aprender de una forma cercana, alegre y motivadora.",
+    "highlight": "Cada persona aprende de una manera diferente. Aquí cada camino puede convertirse en una aventura propia.",
+    "visualType": "macaws",
+    "layout": "default",
+    "accent": "#7c3aed",
+    "accentSoft": "#c4b5fd",
+    "background": "linear-gradient(145deg,#fff,#faf5ff,#eff6ff)"
+  },
+  {
+    "id": "que-es",
+    "eyebrow": "UN ESPACIO QUE CRECE CON CADA ALUMNO",
+    "title": "¿Qué es la Academia?",
+    "subtitle": "Mucho más que una colección de actividades.",
+    "text": "La Academia reúne experiencias educativas que conectan el aprendizaje con la vida cotidiana, la creatividad, la autonomía y la confianza.",
+    "highlight": "No pretende sustituir al colegio ni a los profesionales. Busca complementar y unir esfuerzos.",
+    "visualType": "icon",
+    "icon": "🏡",
+    "layout": "default",
+    "accent": "#0284c7",
+    "accentSoft": "#bae6fd",
+    "background": "linear-gradient(145deg,#f0f9ff,#fff,#f0fdf4)"
+  },
+  {
+    "id": "filosofia",
+    "eyebrow": "NUESTRA FORMA DE ENTENDER EL APRENDIZAJE",
+    "title": "Aquí creemos que...",
+    "subtitle": "Comprender importa más que correr.",
+    "text": "El aprendizaje debe respetar ritmos, despertar curiosidad y celebrar el progreso personal.",
+    "highlight": "Equivocarse no es fracasar: es encontrar una pista para probar otro camino.",
+    "visualType": "items",
+    "items": [
+      {
+        "icon": "🌱",
+        "title": "Cada persona aprende distinto",
+        "text": "La Academia se adapta y evoluciona."
+      },
+      {
+        "icon": "❤️",
+        "title": "Comprender antes que memorizar",
+        "text": "Pensar con calma también es aprender."
+      },
+      {
+        "icon": "✨",
+        "title": "Motivación sin presión",
+        "text": "Celebramos avances, no comparaciones."
+      },
+      {
+        "icon": "🧭",
+        "title": "Autonomía como norte",
+        "text": "Aprender para desenvolverse en la vida."
+      }
+    ],
+    "layout": "center",
+    "accent": "#ec4899",
+    "accentSoft": "#f9a8d4",
+    "background": "linear-gradient(145deg,#fff1f6,#fff,#faf5ff)"
+  },
+  {
+    "id": "organizacion",
+    "eyebrow": "UN UNIVERSO CON MUCHOS CAMINOS",
+    "title": "Dos caminos para aprender",
+    "subtitle": "Mi Universo y Mis Cursos se complementan.",
+    "text": "La Academia organiza sus experiencias en dos grandes caminos que se conectan entre sí.",
+    "highlight": "Mis Cursos indica qué se está aprendiendo. Mi Universo ayuda a comprenderlo, practicarlo y llevarlo a la vida.",
+    "visualType": "items",
+    "items": [
+      {
+        "icon": "🌈",
+        "title": "Mi Universo",
+        "text": "Leer, escribir, crear, resolver y desarrollar autonomía mediante experiencias significativas."
+      },
+      {
+        "icon": "🎓",
+        "title": "Mis Cursos",
+        "text": "Aprender y repasar contenidos escolares organizados por curso, asignatura y tema."
+      },
+      {
+        "icon": "🔗",
+        "title": "Dos caminos conectados",
+        "text": "El contenido académico puede convertirse en una experiencia más cercana y comprensible."
+      },
+      {
+        "icon": "🚀",
+        "title": "Una aventura completa",
+        "text": "Aprender para el colegio y aprender para la vida forman parte del mismo camino."
+      }
+    ],
+    "layout": "center",
+    "accent": "#7c3aed",
+    "accentSoft": "#ddd6fe",
+    "background": "linear-gradient(145deg,#faf5ff,#fff,#eff6ff)"
+  },
+  {
+    "id": "red",
+    "eyebrow": "APRENDER NUNCA ES UN CAMINO EN SOLITARIO",
+    "title": "Una red que acompaña",
+    "subtitle": "Cada rol aporta una mirada diferente.",
+    "text": "La familia, el colegio y los profesionales pueden compartir observaciones e ideas para construir apoyos cada vez más útiles.",
+    "highlight": "Cuando colaboramos, el aprendizaje deja de ser un esfuerzo individual y se convierte en una aventura compartida.",
+    "visualType": "network",
+    "roles": [
+      "👨‍👩‍👧 Familia",
+      "👩‍🏫 Tutoría",
+      "🗣️ Logopedia",
+      "👧 El alumno",
+      "🧠 Psicología",
+      "📚 Pedagogía Terapéutica",
+      "🏫 Colegio"
+    ],
+    "layout": "center",
+    "accent": "#16a34a",
+    "accentSoft": "#bbf7d0",
+    "background": "linear-gradient(145deg,#f0fdf4,#fff,#eff6ff)"
+  },
+  {
+    "id": "camino",
+    "eyebrow": "UNA FORMA DE APRENDER SIN MIEDO",
+    "title": "Nuestro camino",
+    "subtitle": "Cada paso tiene valor.",
+    "text": "La Academia propone experiencias breves, claras y progresivas. El objetivo no es responder rápido, sino comprender y ganar confianza.",
+    "highlight": "El progreso se compara con el propio camino recorrido, nunca con el de otras personas.",
+    "visualType": "flow",
+    "flow": [
+      "👀 Observar",
+      "📖 Comprender",
+      "💭 Pensar",
+      "🧪 Intentar",
+      "🧩 Aprender del error",
+      "🌟 Celebrar",
+      "🚀 Continuar"
+    ],
+    "layout": "center",
+    "accent": "#f59e0b",
+    "accentSoft": "#fde68a",
+    "background": "linear-gradient(145deg,#fffbeb,#fff,#faf5ff)"
+  },
+  {
+    "id": "guacamayas",
+    "eyebrow": "UN SÍMBOLO DE LIBERTAD, CURIOSIDAD Y CRECIMIENTO",
+    "title": "Las guacamayas",
+    "subtitle": "Pequeñas compañeras de viaje.",
+    "text": "Inspiradas en las guacamayas azules y amarillas de los bosques tropicales, aparecen en momentos especiales para acompañar, animar y celebrar.",
+    "highlight": "Representan curiosidad, alegría, libertad y crecimiento. No ofrecen respuestas: recuerdan que cada persona puede descubrir sus propias alas.",
+    "visualType": "macaws",
+    "layout": "default",
+    "accent": "#0284c7",
+    "accentSoft": "#93c5fd",
+    "background": "linear-gradient(180deg,#e0f2fe,#eff6ff 52%,#dcfce7)"
+  },
+  {
+    "id": "abierta",
+    "eyebrow": "UN PROYECTO ABIERTO A NUEVAS IDEAS",
+    "title": "Esta Academia sigue creciendo",
+    "subtitle": "Cada aportación puede abrir un nuevo camino.",
+    "text": "La Academia nació para una niña, pero está siendo diseñada para que otros alumnos, familias y profesionales también puedan encontrar aquí un espacio útil y acogedor.",
+    "highlight": "Si una idea puede ayudar a aprender con más confianza, alegría o autonomía, esta Academia siempre tendrá un lugar para ella.",
+    "visualType": "image",
+    "image": "../assets/identidad/guacamayas/guacamaya-azul-posada-01.png",
+    "imageAlt": "Guacamaya azul y amarilla",
+    "layout": "default",
+    "accent": "#7c3aed",
+    "accentSoft": "#c4b5fd",
+    "background": "linear-gradient(145deg,#fff,#faf5ff,#f0fdf4)",
+    "finalButton": "🌈 Volver y comenzar la aventura"
+  }
+]

@@ -47,41 +47,24 @@
     }
 
     .hero-panel-usuario{
-      position:absolute;
-      top:22px;
-      right:24px;
-      z-index:6;
-      width:min(285px,calc(100% - 48px));
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-start;
+      width:100%;
+      margin:0 0 10px;
+      position:relative;
+      z-index:8;
+    }
+
+    .hero-panel-usuario .panel-usuario{
+      width:min(225px,100%);
     }
 
     .hero-panel-usuario .panel-usuario__boton,
     .hero-panel-usuario .panel-usuario--cargando,
     .hero-panel-usuario .panel-usuario--error{
-      min-width:0;
       width:100%;
-    }
-
-    .hero-panel-usuario .panel-usuario__boton{
-      grid-template-columns:44px minmax(0,1fr) 20px;
-      gap:9px;
-      padding:8px 10px;
-      border-radius:17px;
-      box-shadow:0 10px 24px rgba(76,29,149,.11);
-    }
-
-    .hero-panel-usuario .panel-usuario__avatar{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      font-size:24px;
-    }
-
-    .hero-panel-usuario .panel-usuario__saludo{
-      font-size:.69rem;
-    }
-
-    .hero-panel-usuario .panel-usuario__nombre{
-      font-size:.93rem;
+      min-width:0;
     }
 
     .hero-panel-usuario .panel-usuario__menu{
@@ -97,28 +80,101 @@
     }
 
     @media(max-width:900px){
-      .hero{
-        padding-top:110px;
-      }
-
       .hero-panel-usuario{
-        top:20px;
-        left:24px;
-        right:24px;
-        width:auto;
+        justify-content:flex-start;
+        margin-bottom:14px;
       }
     }
 
     @media(max-width:560px){
-      .hero{
-        padding-top:104px;
+      .hero-panel-usuario .panel-usuario{
+        width:100%;
       }
+    }
 
-      .hero-panel-usuario{
-        top:16px;
-        left:16px;
-        right:16px;
-      }
+
+    .descubre-academia{
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:1fr 280px;
+      gap:26px;
+      align-items:center;
+      margin-top:24px;
+      padding:30px;
+      border-color:#d8ccff;
+      background:
+        radial-gradient(circle at 88% 18%,rgba(56,189,248,.20),transparent 25%),
+        linear-gradient(145deg,#fff,#faf5ff,#eff6ff);
+    }
+
+    .descubre-academia::after{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      right:-95px;
+      bottom:-120px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#fde68a,#f9a8d4,#c4b5fd);
+      opacity:.22;
+    }
+
+    .descubre-academia__contenido,
+    .descubre-academia__visual{
+      position:relative;
+      z-index:2;
+    }
+
+    .descubre-academia h2{
+      margin:9px 0 9px;
+      font-size:clamp(2rem,4vw,3.25rem);
+      line-height:1.04;
+      color:var(--tinta);
+    }
+
+    .descubre-academia p{
+      max-width:760px;
+      margin:0;
+      color:var(--suave);
+      font-size:1.06rem;
+      line-height:1.6;
+      font-weight:650;
+    }
+
+    .descubre-academia__visual{
+      min-height:185px;
+    }
+
+    .descubre-academia__visual img{
+      position:absolute;
+      width:158px;
+      height:158px;
+      object-fit:contain;
+      filter:drop-shadow(0 13px 18px rgba(15,23,42,.14));
+    }
+
+    .descubre-academia__visual img:first-child{
+      left:3px;
+      top:3px;
+      animation:guacamayaDescubreUno 3.1s ease-in-out infinite;
+    }
+
+    .descubre-academia__visual img:last-child{
+      right:0;
+      top:36px;
+      transform:scaleX(-1);
+      animation:guacamayaDescubreDos 3.4s ease-in-out infinite;
+    }
+
+    @keyframes guacamayaDescubreUno{
+      0%,100%{transform:translateY(4px) rotate(-3deg)}
+      50%{transform:translateY(-8px) rotate(3deg)}
+    }
+
+    @keyframes guacamayaDescubreDos{
+      0%,100%{transform:scaleX(-1) translateY(-4px) rotate(-3deg)}
+      50%{transform:scaleX(-1) translateY(8px) rotate(3deg)}
     }
 
     .superficie{
@@ -248,7 +304,7 @@
     }
 
     .bienvenida{
-      padding:25px;
+      padding:28px 25px 25px;
       border-radius:28px;
       color:white;
       background:linear-gradient(145deg,#7957f7 0%,#e754ad 54%,#14a4dd 100%);
@@ -734,8 +790,9 @@
     }
 
     @media(max-width:930px){
-      .hero,.zona-principal{grid-template-columns:1fr}
+      .hero,.zona-principal,.descubre-academia{grid-template-columns:1fr}
       .zona-secundaria{grid-template-columns:1fr 1fr}
+      .descubre-academia__visual{width:min(310px,100%);margin:auto}
     }
 
     @media(max-width:640px){
@@ -749,6 +806,9 @@
       .curso-tarjeta{grid-template-columns:56px 1fr}
       .curso-icono{width:52px;height:52px;font-size:27px}
       .curso-flecha,.curso-sello{grid-column:2;justify-self:start}
+      .descubre-academia{padding:22px}
+      .descubre-academia__visual{min-height:150px}
+      .descubre-academia__visual img{width:132px;height:132px}
     }
   </style>
 </head>
@@ -757,8 +817,6 @@
   <main class="pagina">
 
     <header class="superficie hero">
-      <div class="hero-panel-usuario" data-panel-usuario></div>
-
       <div class="hero-copy">
         <div class="pildoras">
           <span class="pildora">🌈 Academia 2.0</span>
@@ -778,6 +836,8 @@
       </div>
 
       <div class="hero-visual">
+        <div class="hero-panel-usuario" data-panel-usuario></div>
+
         <div class="bienvenida">
           <small>¡QUÉ ALEGRÍA VERTE, <span data-nombre-visible>EXPLORADORA</span>!</small>
           <h2>Aprender puede ser bonito ✨</h2>
@@ -793,6 +853,37 @@
         </div>
       </div>
     </header>
+
+    <section class="superficie descubre-academia">
+      <div class="descubre-academia__contenido">
+        <span class="etiqueta-estado estado-azul">Guía breve y visual</span>
+        <h2>🌈 Descubre la Academia</h2>
+        <p>
+          Conoce en pocos minutos qué es este proyecto, cómo está organizado,
+          cuál es nuestra forma de aprender y cómo pueden contribuir las familias,
+          el colegio y los profesionales.
+        </p>
+
+        <a
+          href="descubre-la-academia/?volver=/academia-gloria/"
+          class="cta cta-principal"
+          style="margin-top:20px"
+        >
+          🦜 Conocer la Academia
+        </a>
+      </div>
+
+      <div class="descubre-academia__visual" aria-hidden="true">
+        <img
+          src="assets/identidad/guacamayas/guacamaya-azul-posada-01.png"
+          alt=""
+        >
+        <img
+          src="assets/identidad/guacamayas/guacamaya-azul-posada-02.png"
+          alt=""
+        >
+      </div>
+    </section>
 
     <div class="encabezado-seccion">
       <div class="icono-seccion">⭐</div>
@@ -811,6 +902,16 @@
         </p>
 
         <div class="atajos atajos-pro">
+
+          <a class="atajo atajo-pro atajo-rincon" href="mi-universo/rincon-lectura/">
+            <span class="atajo-icono">🎙️</span>
+            <span class="atajo-texto">
+              <strong>Mi Rincón de Lectura</strong>
+              <small>Leer aventuras, grabar mi voz y descubrir cuánto he mejorado</small>
+            </span>
+            <span class="atajo-flecha">→</span>
+          </a>
+
           <a class="atajo atajo-pro atajo-escritora" href="mi-universo/escritora/">
             <span class="atajo-icono">✍️</span>
             <span class="atajo-texto">
@@ -837,14 +938,6 @@
             </span>
           </span>
 
-          <a class="atajo atajo-pro atajo-rincon" href="mi-universo/rincon-lectura/">
-            <span class="atajo-icono">🎙️</span>
-            <span class="atajo-texto">
-              <strong>Mi Rincón de Lectura</strong>
-              <small>Leer aventuras, grabar mi voz y descubrir cuánto he mejorado</small>
-            </span>
-            <span class="atajo-flecha">→</span>
-          </a>
         </div>
 
         <a href="mi-universo/" class="cta cta-principal" style="margin-top:22px">
@@ -899,13 +992,6 @@
     </div>
 
     <section class="zona-secundaria">
-      <article class="superficie tarjeta modulo superpoderes">
-        <div class="modulo-icono">🧠</div>
-        <span class="etiqueta-estado estado-amarillo">En crecimiento</span>
-        <h3>Mis Superpoderes</h3>
-        <p>Comprender, pensar paso a paso, organizar ideas y ganar autonomía.</p>
-        <span class="accion">Muy pronto ✨</span>
-      </article>
 
       <a class="superficie tarjeta modulo calendarios" href="calendarios/">
         <div class="modulo-icono">📅</div>
@@ -914,6 +1000,14 @@
         <p>Calendario oficial del colegio y, muy pronto, el calendario personal de Gloria.</p>
         <span class="accion">Ver calendarios <i data-lucide="arrow-right" width="20"></i></span>
       </a>
+
+      <article class="superficie tarjeta modulo superpoderes">
+        <div class="modulo-icono">🧠</div>
+        <span class="etiqueta-estado estado-amarillo">En crecimiento</span>
+        <h3>Mis Superpoderes</h3>
+        <p>Comprender, pensar paso a paso, organizar ideas y ganar autonomía.</p>
+        <span class="accion">Muy pronto ✨</span>
+      </article>
 
       <a class="superficie tarjeta modulo adicionales" href="adicionales/">
         <div class="modulo-icono">✨</div>
@@ -1000,7 +1094,11 @@
           loginUrl: "./login.html",
 
           // Se activará cuando exista la página oficial de perfil.
-          mostrarPerfil: false
+          mostrarPerfil: false,
+          mostrarDescubreAcademia: true,
+          mostrarCamino: true,
+          mostrarConfiguracion: true,
+          mostrarLogros: true
         });
       }
     });

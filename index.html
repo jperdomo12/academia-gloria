@@ -92,6 +92,91 @@
       }
     }
 
+
+
+    .descubre-academia{
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:1fr 280px;
+      gap:25px;
+      align-items:center;
+      margin-top:24px;
+      padding:29px;
+      border-color:#d9ccff;
+      background:
+        radial-gradient(circle at 91% 16%,rgba(56,189,248,.20),transparent 25%),
+        linear-gradient(145deg,#fff,#faf5ff,#eff6ff);
+    }
+
+    .descubre-academia h2{
+      margin:10px 0 8px;
+      font-size:clamp(2rem,4vw,3.15rem);
+      color:var(--tinta);
+    }
+
+    .descubre-academia p{
+      max-width:760px;
+      margin:0;
+      color:var(--suave);
+      font-size:1.05rem;
+      line-height:1.58;
+      font-weight:650;
+    }
+
+    .descubre-academia__visual{
+      position:relative;
+      min-height:185px;
+    }
+
+    .descubre-academia__visual img{
+      position:absolute;
+      width:158px;
+      height:158px;
+      object-fit:contain;
+      filter:drop-shadow(0 13px 18px rgba(15,23,42,.14));
+    }
+
+    .descubre-academia__visual img:first-child{
+      left:0;
+      top:0;
+      animation:flotarGuacamayaUno 3.1s ease-in-out infinite;
+    }
+
+    .descubre-academia__visual img:last-child{
+      right:0;
+      top:38px;
+      transform:scaleX(-1);
+      animation:flotarGuacamayaDos 3.4s ease-in-out infinite;
+    }
+
+    @keyframes flotarGuacamayaUno{
+      0%,100%{transform:translateY(4px) rotate(-3deg)}
+      50%{transform:translateY(-8px) rotate(3deg)}
+    }
+
+    @keyframes flotarGuacamayaDos{
+      0%,100%{transform:scaleX(-1) translateY(-4px) rotate(-3deg)}
+      50%{transform:scaleX(-1) translateY(8px) rotate(3deg)}
+    }
+
+    .acceso-universo-principal{
+      position:relative;
+      z-index:3;
+      margin-top:18px;
+    }
+
+    .atajos-etiqueta{
+      position:relative;
+      z-index:2;
+      margin:22px 0 -8px;
+      color:#6d28d9;
+      font-size:.88rem;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
     .superficie{
       background:rgba(255,255,255,.93);
       border:2px solid rgba(218,226,245,.9);
@@ -705,13 +790,16 @@
     }
 
     @media(max-width:930px){
-      .hero,.zona-principal{grid-template-columns:1fr}
+      .hero,.zona-principal,.descubre-academia{grid-template-columns:1fr}
       .zona-secundaria{grid-template-columns:1fr 1fr}
+      .descubre-academia__visual{width:min(310px,100%);min-height:165px;margin:auto}
     }
 
     @media(max-width:640px){
       .pagina{width:min(100% - 18px,1240px);padding-top:9px}
       .hero{padding:22px;min-height:auto}
+      .descubre-academia{padding:22px}
+      .descubre-academia__visual img{width:135px;height:135px}
       .metodo,.zona-secundaria,.atajos{grid-template-columns:1fr}
       .hero-acciones{flex-direction:column}
       .cta{width:100%}
@@ -765,11 +853,37 @@
       </div>
     </header>
 
+
+    <section class="superficie descubre-academia">
+      <div>
+        <span class="etiqueta-estado estado-azul">Guía breve y visual</span>
+        <h2>🌈 Descubre la Academia</h2>
+        <p>
+          Conoce en pocos minutos qué es este proyecto, sus dos grandes caminos,
+          nuestra forma de aprender y cómo pueden contribuir las familias,
+          el colegio y los profesionales.
+        </p>
+
+        <a
+          href="descubre-la-academia/?volver=/"
+          class="cta cta-principal"
+          style="margin-top:20px"
+        >
+          🦜 Conocer la Academia
+        </a>
+      </div>
+
+      <div class="descubre-academia__visual" aria-hidden="true">
+        <img src="assets/identidad/guacamayas/guacamaya-azul-posada-01.png" alt="">
+        <img src="assets/identidad/guacamayas/guacamaya-azul-posada-02.png" alt="">
+      </div>
+    </section>
+
     <div class="encabezado-seccion">
       <div class="icono-seccion">⭐</div>
       <div>
-        <h2>Empieza por aquí</h2>
-        <p>Los dos espacios principales de la Academia.</p>
+        <h2>Dos caminos para aprender</h2>
+        <p>Mi Universo y Mis Cursos se complementan dentro de la Academia.</p>
       </div>
     </div>
 
@@ -780,6 +894,12 @@
         <p>
           El lugar donde <span data-nombre-completo>cada estudiante</span> puede escribir, leer, crear y guardar sus recuerdos.
         </p>
+
+        <a href="mi-universo/" class="cta cta-principal acceso-universo-principal">
+          🌈 Entrar en Mi Universo
+        </a>
+
+        <div class="atajos-etiqueta">También puedes ir directamente a</div>
 
         <div class="atajos atajos-pro">
 
@@ -820,15 +940,12 @@
 
         </div>
 
-        <a href="mi-universo/" class="cta cta-principal" style="margin-top:22px">
-          🌈 Entrar en Mi Universo
-        </a>
       </article>
 
       <article class="superficie tarjeta cursos">
         <span class="etiqueta-estado estado-azul">Área académica</span>
         <h3>🎓 Mis Cursos</h3>
-        <p>Todos los contenidos escolares organizados por curso y asignatura.</p>
+        <p>El camino académico de la aventura: contenidos escolares organizados por curso, asignatura y tema para aprender y repasar.</p>
 
         <a href="cursos/5to/" class="curso-tarjeta curso-tarjeta--activo">
           <div class="curso-icono">🎓</div>
@@ -918,6 +1035,20 @@
   <script>
     lucide.createIcons();
 
+    const enlaceDescubre = document.querySelector(".descubre-academia .cta");
+    if (enlaceDescubre) {
+      const baseAcademia = window.location.hostname.endsWith("github.io")
+        ? "/academia-gloria"
+        : "";
+
+      const volver = encodeURIComponent(
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+      );
+
+      enlaceDescubre.href =
+        `${baseAcademia}/descubre-la-academia/?volver=${volver}`;
+    }
+
     function celebrar(){
       const iconos=["⭐","✨","🌟","🎉","📚","🌈"];
       for(let i=0;i<20;i++){
@@ -973,8 +1104,11 @@
           contenedor: "[data-panel-usuario]",
           loginUrl: "./login.html",
 
-          // Se activará cuando exista la página oficial de perfil.
-          mostrarPerfil: false
+          mostrarEspacio: true,
+          mostrarDescubreAcademia: true,
+          mostrarCamino: true,
+          mostrarConfiguracion: true,
+          mostrarLogros: true
         });
       }
     });

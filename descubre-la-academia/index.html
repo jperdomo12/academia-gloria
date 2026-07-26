@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Descubre la Academia | Academia Gloria Valentina</title>
+<meta name="description" content="Guía breve y visual para descubrir la Academia.">
+<meta name="theme-color" content="#7c3aed">
+<link rel="icon" type="image/png" href="../assets/iconos/icono-principal.png?v=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../compartido/css/academia-base.css">
+<link rel="stylesheet" href="../compartido/css/panel-usuario.css">
+<link rel="stylesheet" href="./guia.css">
+</head>
+<body>
+<main class="guide-shell">
+<header class="guide-topbar">
+<button id="backButton" class="guide-back" type="button">← Volver</button>
+<div class="guide-user-panel" data-panel-usuario></div>
+</header>
+
+<section class="guide-frame" aria-labelledby="guideTitle">
+<div class="guide-progress" aria-hidden="true"><span id="progressBar"></span></div>
+<div class="guide-counter"><span id="slideCounter">1 de 8</span></div>
+<article id="slideContent" class="guide-slide" tabindex="-1">
+<div class="guide-loading"><span>🌈</span><p>Preparando la aventura...</p></div>
+</article>
+
+<nav class="guide-actions" aria-label="Navegación de la guía">
+<button id="previousButton" class="guide-button guide-button--secondary" type="button">← Anterior</button>
+<div id="dotNavigation" class="guide-dots" aria-label="Secciones de la guía"></div>
+<button id="nextButton" class="guide-button guide-button--primary" type="button">Siguiente →</button>
+</nav>
+</section>
+
+<p class="guide-hint">Puedes volver a esta guía cuando quieras desde las páginas principales de la Academia.</p>
+</main>
+<script type="module" src="./guia.js"></script>
+</body>
+</html>
