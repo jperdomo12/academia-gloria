@@ -56,6 +56,7 @@ function resetSessionData() {
   finalTranscript = "";
   $("transcript").value = "";
   $("familyObservation").value = "";
+  resetReadingComparison();
   updateAudioControls();
 }
 
@@ -207,6 +208,129 @@ function renderQuestions() {
   });
 }
 
+function normalizeForComparison(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(/[^\p{L}\p{N}'’]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function tokenizeForComparison(value = "") {
+  const normalized = normalizeForComparison(value);
+  return normalized ? normalized.split(" ") : [];
+}
+
+function longestCommonSubsequenceLength(expected, heard) {
+  const previous = new Array(heard.length + 1).fill(0);
+  const current = new Array(heard.length + 1).fill(0);
+
+  for (let i = 1; i <= expected.length; i += 1) {
+    current.fill(0);
+
+    for (let j = 1; j <= heard.length; j += 1) {
+      current[j] = expected[i - 1] === heard[j - 1]
+        ? previous[j - 1] + 1
+        : Math.max(previous[j], current[j - 1]);
+    }
+
+    for (let j = 0; j <= heard.length; j += 1) {
+      previous[j] = current[j];
+    }
+  }
+
+  return previous[heard.length];
+}
+
+function expectedReadingText() {
+  return historia?.parrafos?.map(parrafo => parrafo.texto).join(" ").trim() || "";
+}
+
+function comparisonFeedback(score) {
+  if (score >= 90) {
+    return {
+      className: "excellent",
+      message:
+        "🌟 ¡Lía te entendió muy bien! La lectura coincide casi por completo con el texto."
+    };
+  }
+
+  if (score >= 75) {
+    return {
+      className: "very-good",
+      message:
+        "✨ Se entendió muy bien. Puedes escuchar la grabación y decidir si deseas conservarla o pulir alguna parte."
+    };
+  }
+
+  if (score >= 55) {
+    return {
+      className: "good",
+      message:
+        "😊 Se entendió una buena parte. Una nueva lectura más pausada puede ayudar a que Lía reconozca más palabras."
+    };
+  }
+
+  return {
+    className: "practice",
+    message:
+      "🌱 Esta lectura nos deja pistas para practicar. Prueba otra vez sin prisa, haciendo pequeñas pausas y moviendo bien la boca."
+  };
+}
+
+function resetReadingComparison() {
+  const comparison = $("readingComparison");
+  if (!comparison) return;
+
+  comparison.classList.add("hidden");
+  comparison.classList.remove("excellent", "very-good", "good", "practice");
+
+  $("comparisonScore").textContent = "—";
+  $("comparisonMessage").textContent = "";
+  $("matchedWords").textContent = "0";
+  $("expectedWords").textContent = "0";
+  $("readingPace").textContent = "—";
+  $("expectedTextComparison").textContent = "";
+  $("heardTextComparison").textContent = "";
+}
+
+function renderReadingComparison() {
+  const expectedText = expectedReadingText();
+  const heardText = $("transcript").value.trim();
+  const expectedTokens = tokenizeForComparison(expectedText);
+  const heardTokens = tokenizeForComparison(heardText);
+
+  resetReadingComparison();
+
+  if (!expectedTokens.length || !heardTokens.length) {
+    return;
+  }
+
+  const matched = longestCommonSubsequenceLength(expectedTokens, heardTokens);
+  const score = Math.max(
+    0,
+    Math.min(100, Math.round((matched / expectedTokens.length) * 100))
+  );
+  const pace = audioDuration > 0
+    ? Math.round((expectedTokens.length / audioDuration) * 60)
+    : 0;
+  const feedback = comparisonFeedback(score);
+  const comparison = $("readingComparison");
+
+  comparison.classList.remove("hidden");
+  comparison.classList.add(feedback.className);
+
+  $("comparisonScore").textContent = `${score}%`;
+  $("comparisonMessage").textContent = feedback.message;
+  $("matchedWords").textContent = String(matched);
+  $("expectedWords").textContent = String(expectedTokens.length);
+  $("readingPace").textContent = pace ? String(pace) : "—";
+  $("expectedTextComparison").textContent = expectedText;
+  $("heardTextComparison").textContent = heardText;
+}
+
 function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -234,11 +358,16 @@ function updateAudioControls() {
 
   if (hasAudio) {
     $("audioPreview").src = audioData;
-    $("voiceStatus").textContent = `Grabación lista · ${formatDuration(audioDuration)}`;
+    $("voiceStatus").textContent =
+      `Lía guardó tu lectura · ${formatDuration(audioDuration)}`;
+    $("voiceSuccess")?.classList.remove("hidden");
     updateRecordingDashboard(audioDuration, false);
+    renderReadingComparison();
   } else {
     $("audioPreview").removeAttribute("src");
-    $("voiceStatus").textContent = "Sin grabación.";
+    $("voiceStatus").textContent = "Lía está preparada para escucharte.";
+    $("voiceSuccess")?.classList.add("hidden");
+    resetReadingComparison();
     updateRecordingDashboard(0, false);
   }
 }
@@ -271,6 +400,10 @@ function configureSpeechRecognition() {
     finalTranscript = complete.trim();
     $("transcript").value =
       [finalTranscript, interim].filter(Boolean).join(" ").trim();
+
+    if (audioData) {
+      renderReadingComparison();
+    }
   };
 
   recognition.onerror = event => {
@@ -305,6 +438,9 @@ $("recordButton").onclick = async () => {
     audioChunks = [];
     audioData = "";
     audioDuration = 0;
+    finalTranscript = "";
+    $("transcript").value = "";
+    resetReadingComparison();
     updateAudioControls();
 
     const preferredType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
@@ -339,6 +475,10 @@ $("recordButton").onclick = async () => {
       $("recordButton").disabled = false;
       $("stopButton").disabled = true;
       updateAudioControls();
+
+      window.setTimeout(() => {
+        renderReadingComparison();
+      }, 450);
     };
 
     if (recognition) {
@@ -350,7 +490,10 @@ $("recordButton").onclick = async () => {
 
     $("recordButton").disabled = true;
     $("stopButton").disabled = false;
-    $("voiceStatus").textContent = "Grabando... lee con calma 🎙️";
+    $("voiceStatus").textContent =
+      "Lía te está escuchando... lee con calma 🎙️";
+    $("voiceSuccess")?.classList.add("hidden");
+    resetReadingComparison();
     updateRecordingDashboard(0, true);
 
     let warningShown = false;
@@ -362,7 +505,7 @@ $("recordButton").onclick = async () => {
       if (!warningShown && elapsedSeconds >= 90) {
         warningShown = true;
         $("voiceStatus").textContent =
-          "Te quedan 30 segundos. Continúa con calma 🎙️";
+          "Te quedan 30 segundos. Lía sigue escuchándote; continúa con calma 🎙️";
       }
     }, 200);
 
@@ -601,7 +744,7 @@ async function loadReadingHistory() {
             📝 Ver transcripción y respuestas
           </summary>
           <div style="margin-top:10px">
-            <strong>Lo que entendió la Academia</strong>
+            <strong>🦜 Lo que entendió Lía</strong>
             <p>${escapeHtml(session.transcripcion || "Sin transcripción.")}</p>
 
             ${session.observacionFamilia

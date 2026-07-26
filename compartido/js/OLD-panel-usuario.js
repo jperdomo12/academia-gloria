@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.2
+ * Versión: 1.4
  ******************************************************************************/
 
 import {
@@ -14,23 +14,17 @@ import {
   observarSesion
 } from "./perfil-usuario.js";
 
-function obtenerBaseAcademia() {
-  return window.location.hostname.endsWith("github.io")
-    ? "/academia-gloria"
-    : "";
-}
-
-const BASE_ACADEMIA = obtenerBaseAcademia();
-
 const CONFIGURACION_PREDETERMINADA = Object.freeze({
   contenedor: "[data-panel-usuario]",
-  loginUrl: `${BASE_ACADEMIA}/login.html`,
-  descubreAcademiaUrl: `${BASE_ACADEMIA}/descubre-la-academia/`,
-  mostrarEspacio: true,
+  loginUrl: null,
+  perfilUrl: null,
+  mostrarPerfil: true,
   mostrarDescubreAcademia: true,
-  mostrarCamino: true,
+  mostrarEspacioPersonal: true,
   mostrarConfiguracion: true,
-  mostrarLogros: true
+  mostrarLogros: true,
+  mostrarCamino: true,
+  mostrarTareas: true
 });
 
 let configuracionActiva = { ...CONFIGURACION_PREDETERMINADA };
@@ -39,6 +33,80 @@ let botonPrincipal = null;
 let menu = null;
 let manejadorDocumento = null;
 let cancelarObservacionSesion = null;
+
+function obtenerBaseAcademia() {
+  return window.location.hostname.endsWith("github.io")
+    ? "/academia-gloria"
+    : "";
+}
+
+function construirUrlAcademia(ruta = "/") {
+  const base = obtenerBaseAcademia();
+  const rutaNormalizada = ruta.startsWith("/") ? ruta : `/${ruta}`;
+  return `${base}${rutaNormalizada}`;
+}
+
+function obtenerRutaActual() {
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+}
+
+function asegurarEstilosPanelAvanzado() {
+  if (document.getElementById("panel-usuario-estilos-v14")) return;
+
+  const estilo = document.createElement("style");
+  estilo.id = "panel-usuario-estilos-v14";
+  estilo.textContent = `
+    .panel-usuario__menu{
+      max-height:calc(100vh - 24px);
+      overflow-y:auto;
+      overscroll-behavior:contain;
+      scrollbar-width:thin;
+      z-index:9999;
+    }
+
+    .panel-usuario__grupo-boton{
+      width:100%;
+      justify-content:flex-start;
+    }
+
+    .panel-usuario__grupo-flecha{
+      margin-left:auto;
+      transition:transform .18s ease;
+    }
+
+    .panel-usuario__grupo-boton[aria-expanded="true"] .panel-usuario__grupo-flecha{
+      transform:rotate(180deg);
+    }
+
+    .panel-usuario__subgrupo{
+      margin:4px 8px 8px;
+      padding:7px;
+      border:2px solid #ede9fe;
+      border-radius:16px;
+      background:linear-gradient(145deg,#faf5ff,#f8fafc);
+    }
+
+    .panel-usuario__subgrupo[hidden]{display:none!important}
+
+    .panel-usuario__subgrupo .panel-usuario__opcion{
+      min-height:48px;
+      border-radius:12px;
+    }
+
+    .panel-usuario__opcion small{
+      display:block;
+      margin-top:2px;
+      font-size:.72rem;
+      opacity:.72;
+    }
+
+    @media(max-height:620px){
+      .panel-usuario__identidad{padding-top:12px;padding-bottom:12px}
+      .panel-usuario__opcion{min-height:46px}
+    }
+  `;
+  document.head.appendChild(estilo);
+}
 
 function escaparHTML(valor = "") {
   return String(valor)
@@ -55,10 +123,54 @@ function crearElementoDesdeHTML(html) {
   return plantilla.content.firstElementChild;
 }
 
+function limpiarPosicionMenu() {
+  if (!menu) return;
+  menu.style.removeProperty("position");
+  menu.style.removeProperty("top");
+  menu.style.removeProperty("bottom");
+  menu.style.removeProperty("left");
+  menu.style.removeProperty("right");
+  menu.style.removeProperty("width");
+  menu.style.removeProperty("max-height");
+}
+
+function posicionarMenuEnVentana() {
+  if (!menu || !botonPrincipal) return;
+
+  const margen = 12;
+  const rect = botonPrincipal.getBoundingClientRect();
+  const ancho = Math.min(310, window.innerWidth - margen * 2);
+  const espacioAbajo = window.innerHeight - rect.bottom - margen;
+  const espacioArriba = rect.top - margen;
+  const abrirHaciaArriba = espacioAbajo < 330 && espacioArriba > espacioAbajo;
+  const alturaDisponible = Math.max(
+    180,
+    abrirHaciaArriba ? espacioArriba - 8 : espacioAbajo - 8
+  );
+
+  let izquierda = rect.right - ancho;
+  izquierda = Math.max(margen, Math.min(izquierda, window.innerWidth - ancho - margen));
+
+  menu.style.position = "fixed";
+  menu.style.width = `${ancho}px`;
+  menu.style.left = `${izquierda}px`;
+  menu.style.right = "auto";
+  menu.style.maxHeight = `${alturaDisponible}px`;
+
+  if (abrirHaciaArriba) {
+    menu.style.top = "auto";
+    menu.style.bottom = `${window.innerHeight - rect.top + 8}px`;
+  } else {
+    menu.style.bottom = "auto";
+    menu.style.top = `${rect.bottom + 8}px`;
+  }
+}
+
 function cerrarMenu() {
   if (!menu || !botonPrincipal) return;
 
   menu.hidden = true;
+  limpiarPosicionMenu();
   botonPrincipal.setAttribute("aria-expanded", "false");
   panelRaiz?.classList.remove("panel-usuario--abierto");
 }
@@ -67,6 +179,7 @@ function abrirMenu() {
   if (!menu || !botonPrincipal) return;
 
   menu.hidden = false;
+  posicionarMenuEnVentana();
   botonPrincipal.setAttribute("aria-expanded", "true");
   panelRaiz?.classList.add("panel-usuario--abierto");
 }
@@ -91,25 +204,9 @@ function renderizarEstadoCarga(contenedor) {
 function construirMenu() {
   const items = [];
 
-  if (configuracionActiva.mostrarEspacio) {
-    items.push(`
-      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-        <span aria-hidden="true">✨</span>
-        <span>
-          Mi Espacio
-          <small>Próximamente</small>
-        </span>
-      </button>
-    `);
-  }
-
   if (configuracionActiva.mostrarDescubreAcademia) {
-    const volver = encodeURIComponent(
-      `${window.location.pathname}${window.location.search}${window.location.hash}`
-    );
-
-    const urlDescubre =
-      `${configuracionActiva.descubreAcademiaUrl}?volver=${volver}`;
+    const volver = encodeURIComponent(obtenerRutaActual());
+    const urlDescubre = `${construirUrlAcademia("/descubre-la-academia/")}?volver=${volver}`;
 
     items.push(`
       <a class="panel-usuario__opcion" href="${escaparHTML(urlDescubre)}">
@@ -122,39 +219,46 @@ function construirMenu() {
     `);
   }
 
-  if (configuracionActiva.mostrarCamino) {
+  if (configuracionActiva.mostrarEspacioPersonal) {
     items.push(`
-      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-        <span aria-hidden="true">🌱</span>
+      <button class="panel-usuario__opcion panel-usuario__grupo-boton"
+              type="button"
+              aria-expanded="false"
+              data-panel-usuario-grupo>
+        <span aria-hidden="true">🪪</span>
         <span>
-          Mi Camino
-          <small>Próximamente</small>
+          Mi espacio personal
+          <small>Perfil, camino, tareas y premios</small>
         </span>
+        <span class="panel-usuario__grupo-flecha" aria-hidden="true">⌄</span>
       </button>
-    `);
-  }
 
-  if (configuracionActiva.mostrarLogros) {
-    items.push(`
-      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-        <span aria-hidden="true">🏆</span>
-        <span>
-          Mis Logros
-          <small>Próximamente</small>
-        </span>
-      </button>
-    `);
-  }
+      <div class="panel-usuario__subgrupo" data-panel-usuario-subgrupo hidden>
+        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+          <span aria-hidden="true">✨</span>
+          <span>Mi Espacio<small>Próximamente</small></span>
+        </button>
 
-  if (configuracionActiva.mostrarConfiguracion) {
-    items.push(`
-      <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-        <span aria-hidden="true">⚙️</span>
-        <span>
-          Configuración
-          <small>Próximamente</small>
-        </span>
-      </button>
+        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+          <span aria-hidden="true">🌱</span>
+          <span>Mi Camino<small>Próximamente</small></span>
+        </button>
+
+        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+          <span aria-hidden="true">📌</span>
+          <span>Mis Tareas<small>Próximamente</small></span>
+        </button>
+
+        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+          <span aria-hidden="true">🏆</span>
+          <span>Mis Logros<small>Próximamente</small></span>
+        </button>
+
+        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
+          <span aria-hidden="true">⚙️</span>
+          <span>Configuración<small>Próximamente</small></span>
+        </button>
+      </div>
     `);
   }
 
@@ -224,6 +328,16 @@ async function construirPanel(contenedor) {
   botonPrincipal = panelRaiz.querySelector(".panel-usuario__boton");
   menu = panelRaiz.querySelector(".panel-usuario__menu");
 
+  const botonGrupo = panelRaiz.querySelector("[data-panel-usuario-grupo]");
+  const subgrupo = panelRaiz.querySelector("[data-panel-usuario-subgrupo]");
+
+  botonGrupo?.addEventListener("click", (evento) => {
+    evento.stopPropagation();
+    const abierto = botonGrupo.getAttribute("aria-expanded") === "true";
+    botonGrupo.setAttribute("aria-expanded", String(!abierto));
+    subgrupo.hidden = abierto;
+  });
+
   botonPrincipal.addEventListener("click", (evento) => {
     evento.stopPropagation();
     alternarMenu();
@@ -261,6 +375,8 @@ async function construirPanel(contenedor) {
   };
 
   document.addEventListener("click", manejadorDocumento);
+  window.addEventListener("resize", cerrarMenu, { passive: true });
+  window.addEventListener("scroll", cerrarMenu, { passive: true });
 
   document.addEventListener("keydown", (evento) => {
     if (evento.key === "Escape") {
@@ -289,10 +405,16 @@ function destruirPanel() {
 async function iniciarPanelUsuario(opciones = {}) {
   destruirPanel();
 
+  const base = obtenerBaseAcademia();
+
   configuracionActiva = {
     ...CONFIGURACION_PREDETERMINADA,
+    loginUrl: `${base}/login.html`,
+    perfilUrl: `${base}/perfil/`,
     ...opciones
   };
+
+  asegurarEstilosPanelAvanzado();
 
   const contenedor = document.querySelector(
     configuracionActiva.contenedor

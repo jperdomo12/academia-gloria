@@ -240,13 +240,27 @@
       position:absolute;
       left:50%;
       bottom:5px;
-      width:210px;
+      width:230px;
       height:225px;
       transform:translateX(-50%);
       border-radius:50% 50% 18% 18% / 100% 100% 14% 14%;
+      background:linear-gradient(180deg,#bbf7d0 0%,#4ade80 55%,#15803d 100%);
+      clip-path:polygon(34% 0,66% 0,100% 100%,0 100%);
+      opacity:.96;
+      box-shadow:inset 0 -18px 28px rgba(21,128,61,.16);
+    }
+
+    .sendero::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      width:62px;
+      height:100%;
+      transform:translateX(-50%);
       background:linear-gradient(180deg,#fef3c7,#fdba74);
       clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);
-      opacity:.93;
+      opacity:.96;
     }
 
     .arbol{
@@ -524,6 +538,144 @@
       font-weight:700;
     }
 
+    .aventura-hoy{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:22px;
+      align-items:center;
+      padding:26px;
+      border-color:#c4b5fd;
+      background:
+        radial-gradient(circle at 92% 12%,rgba(244,114,182,.14),transparent 25%),
+        linear-gradient(135deg,#faf5ff,#eff6ff,#fff);
+    }
+
+    .lia-grande{
+      width:112px;
+      height:112px;
+      object-fit:contain;
+      filter:drop-shadow(0 12px 18px rgba(15,23,42,.14));
+      animation:flotarSuave 3.5s ease-in-out infinite;
+    }
+
+    .aventura-hoy h3{
+      margin:0 0 8px;
+      font-size:clamp(2rem,4vw,3rem);
+    }
+
+    .aventura-hoy p{
+      margin:0;
+      color:var(--suave);
+      font-weight:700;
+      line-height:1.55;
+    }
+
+    .misiones-hoy{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .mision-hoy{
+      padding:14px;
+      border:2px solid #e9d5ff;
+      border-radius:18px;
+      background:#fff;
+      font-weight:850;
+    }
+
+    .arbol-camino{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:24px;
+      align-items:center;
+      padding:26px;
+      border-color:#bbf7d0;
+      background:linear-gradient(135deg,#f0fdf4,#fff,#eff6ff);
+    }
+
+    .arbol-camino__visual{
+      min-height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:145px;
+      filter:drop-shadow(0 16px 20px rgba(15,23,42,.12));
+    }
+
+    .arbol-etapas{
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .arbol-etapa{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding:12px 14px;
+      border:2px solid #dcfce7;
+      border-radius:16px;
+      background:#fff;
+      font-weight:850;
+    }
+
+    .arbol-etapa.actual{
+      border-color:#86efac;
+      background:#f0fdf4;
+      color:#166534;
+    }
+
+    .tarjeta.enlace{
+      display:block;
+    }
+
+    .tarjeta.enlace .estado{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .tarjeta.enlace:hover .estado{
+      transform:translateX(3px);
+    }
+
+    .proxima-estrella{
+      margin-top:20px;
+      padding:18px;
+      border:2px solid #fde68a;
+      border-radius:21px;
+      background:linear-gradient(135deg,#fffbeb,#fff);
+    }
+
+    .proxima-estrella strong{
+      display:block;
+      margin-bottom:5px;
+      color:#92400e;
+      font-size:1.15rem;
+    }
+
+    @media(max-width:760px){
+      .aventura-hoy,
+      .arbol-camino{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .lia-grande{
+        margin:auto;
+      }
+
+      .misiones-hoy{
+        grid-template-columns:1fr;
+        text-align:left;
+      }
+
+      .arbol-camino__visual{
+        min-height:160px;
+      }
+    }
+
     .lema{
       margin-top:25px;
       padding:30px;
@@ -685,35 +837,43 @@
     </header>
 
     <div class="seccion-titulo">
-      <div class="seccion-icono">❤️</div>
+      <div class="seccion-icono">🌈</div>
 
       <div>
-        <h2>Hoy estoy descubriendo...</h2>
-        <p>Aprender también es conocerte un poquito mejor.</p>
+        <h2>Mi aventura de hoy</h2>
+        <p>Un pequeño paso preparado para seguir creciendo.</p>
       </div>
     </div>
 
-    <section class="superficie descubrimiento">
+    <section class="superficie aventura-hoy">
+      <img
+        class="lia-grande"
+        src="../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png"
+        alt="Lía, la guacamaya de la Academia"
+      >
+
       <div>
-        <span class="eyebrow">Pequeñas semillas</span>
+        <span class="eyebrow">🦜 Lía te acompaña</span>
 
         <h3>
-          <span data-nombre-visible>Exploradora</span>, cada paso cuenta.
+          <span data-nombre-visible>Exploradora</span>, hoy tienes tres pequeñas misiones.
         </h3>
 
         <p>
-          Aquí irán apareciendo mensajes construidos a partir de tus actividades, tu esfuerzo y los nuevos retos que vas superando.
+          No necesitas hacerlas todas de una vez. Elige una, avanza con calma
+          y celebra cada intento.
         </p>
 
-        <div class="descubrimiento-lista">
-          <div class="descubrimiento-item">🌱 Estoy aprendiendo a avanzar con calma.</div>
-          <div class="descubrimiento-item">✨ Volver a intentarlo también es crecer.</div>
-          <div class="descubrimiento-item">💛 Cada día conozco mejor mis fortalezas.</div>
+        <div class="misiones-hoy">
+          <div class="mision-hoy">📖 Leer o contar una historia durante unos minutos.</div>
+          <div class="mision-hoy">🧩 Resolver un caso de Detectives de Problemas.</div>
+          <div class="mision-hoy">🎙️ Contarle a Lía algo que hayas aprendido.</div>
         </div>
-      </div>
 
-      <div class="descubrimiento-visual" aria-hidden="true">
-        🌱✨
+        <div class="proxima-estrella">
+          <strong>⭐ Próxima estrella</strong>
+          Completar una aventura y volver para contar qué descubriste.
+        </div>
       </div>
     </section>
 
@@ -739,38 +899,38 @@
         </div>
       </article>
 
-      <article class="superficie tarjeta tarjeta--aventuras">
+      <a class="superficie tarjeta tarjeta--aventuras enlace" href="../aventuras-matematicas/detectives/">
         <div class="tarjeta-contenido">
-          <div class="tarjeta-icono">🌈</div>
-          <h3>Mis Aventuras</h3>
+          <div class="tarjeta-icono">🧩</div>
+          <h3>Detectives de Problemas</h3>
           <p>
-            Lectura, escritura, biblioteca, matemáticas y todos los mundos que vas explorando.
+            Comprende historias, descubre pistas y encuentra la operación escondida.
           </p>
-          <span class="estado">✨ Próximamente</span>
+          <span class="estado">Entrar en la aventura →</span>
         </div>
-      </article>
+      </a>
 
-      <article class="superficie tarjeta tarjeta--progreso">
+      <a class="superficie tarjeta tarjeta--progreso enlace" href="../rincon-lectura/">
         <div class="tarjeta-contenido">
-          <div class="tarjeta-icono">🌱</div>
-          <h3>Mi Progreso</h3>
+          <div class="tarjeta-icono">📖</div>
+          <h3>Mi Rincón de Lectura</h3>
           <p>
-            Una visión clara y positiva de todo lo que vas aprendiendo y comprendiendo mejor.
+            Lee, escucha tu voz, compara lo que entendió la Academia y vuelve a intentarlo con calma.
           </p>
-          <span class="estado">✨ Próximamente</span>
+          <span class="estado">Seguir leyendo →</span>
         </div>
-      </article>
+      </a>
 
-      <article class="superficie tarjeta tarjeta--estrellas">
+      <a class="superficie tarjeta tarjeta--estrellas enlace" href="../biblioteca/">
         <div class="tarjeta-contenido">
-          <div class="tarjeta-icono">⭐</div>
-          <h3>Mis Estrellas</h3>
+          <div class="tarjeta-icono">📚</div>
+          <h3>Biblioteca Encantada</h3>
           <p>
-            Reconocimientos por intentarlo, completar actividades, ser constante y seguir aprendiendo.
+            Guarda libros, valoraciones y grabaciones para construir tu propio álbum de lecturas.
           </p>
-          <span class="estado">✨ Próximamente</span>
+          <span class="estado">Visitar mi biblioteca →</span>
         </div>
-      </article>
+      </a>
 
       <article class="superficie tarjeta tarjeta--logros">
         <div class="tarjeta-contenido">
@@ -797,37 +957,30 @@
     </section>
 
     <div class="seccion-titulo">
-      <div class="seccion-icono">✨</div>
+      <div class="seccion-icono">🌳</div>
 
       <div>
-        <h2>Tu recorrido de hoy</h2>
-        <p>Una primera vista de cómo se integrarán todos tus avances.</p>
+        <h2>El Árbol de Mi Camino</h2>
+        <p>Crece con cada aventura, intento y descubrimiento.</p>
       </div>
     </div>
 
-    <section class="superficie resumen">
-      <div class="resumen-item">
-        <span>📌</span>
-        <strong>0 tareas</strong>
-        <small>Preparadas</small>
-      </div>
+    <section class="superficie arbol-camino">
+      <div class="arbol-camino__visual" aria-hidden="true">🌱</div>
 
-      <div class="resumen-item">
-        <span>⭐</span>
-        <strong>0 estrellas</strong>
-        <small>Conseguidas</small>
-      </div>
+      <div>
+        <span class="eyebrow">Primera etapa</span>
+        <h2 style="margin:10px 0 6px;font-size:2.25rem">Tu camino acaba de comenzar</h2>
+        <p style="margin:0;color:var(--suave);font-weight:700;line-height:1.55">
+          El árbol irá creciendo cuando explores la Academia, vuelvas a intentarlo,
+          completes pequeños retos y descubras nuevas capacidades.
+        </p>
 
-      <div class="resumen-item">
-        <span>🏆</span>
-        <strong>0 logros</strong>
-        <small>Desbloqueados</small>
-      </div>
-
-      <div class="resumen-item">
-        <span>🌱</span>
-        <strong>Primer paso</strong>
-        <small>Mi Camino comienza hoy</small>
+        <div class="arbol-etapas">
+          <div class="arbol-etapa actual">🌱 Semilla · Estoy empezando</div>
+          <div class="arbol-etapa">🌿 Brote · Sigo explorando</div>
+          <div class="arbol-etapa">🌳 Árbol · Mi camino está creciendo</div>
+        </div>
       </div>
     </section>
 
@@ -839,7 +992,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Primera versión visual
+      Academia Gloria Valentina · Mi Camino · Tu aventura continúa
     </footer>
 
   </main>

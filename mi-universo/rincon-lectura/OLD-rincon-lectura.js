@@ -3,7 +3,7 @@ import { auth } from "../../compartido/firebase/firebase-config.js";
 import { HISTORIAS } from "./historias.js";
 
 const $ = id => document.getElementById(id);
-const MAX_RECORDING_SECONDS = 60;
+const MAX_RECORDING_SECONDS = 120;
 
 let historia = HISTORIAS[0];
 let perfil = null;
@@ -55,6 +55,7 @@ function resetSessionData() {
   audioDuration = 0;
   finalTranscript = "";
   $("transcript").value = "";
+  $("familyObservation").value = "";
   updateAudioControls();
 }
 
@@ -251,7 +252,7 @@ function configureSpeechRecognition() {
     return;
   }
 
-  $("speechSupport").textContent = "Transcripción automática disponible en español.";
+  $("speechSupport").textContent = `Transcripción automática disponible en ${historia.idioma === "en-GB" ? "inglés" : "español"}. El texto quedará bloqueado.`;
   recognition = new Recognition();
   recognition.lang = historia.idioma || "es-ES";
   recognition.continuous = true;
@@ -352,8 +353,17 @@ $("recordButton").onclick = async () => {
     $("voiceStatus").textContent = "Grabando... lee con calma 🎙️";
     updateRecordingDashboard(0, true);
 
+    let warningShown = false;
+
     recordingInterval = setInterval(() => {
-      updateRecordingDashboard((Date.now() - recordingStartedAt) / 1000, true);
+      const elapsedSeconds = (Date.now() - recordingStartedAt) / 1000;
+      updateRecordingDashboard(elapsedSeconds, true);
+
+      if (!warningShown && elapsedSeconds >= 90) {
+        warningShown = true;
+        $("voiceStatus").textContent =
+          "Te quedan 30 segundos. Continúa con calma 🎙️";
+      }
     }, 200);
 
     recordingTimer = setTimeout(() => {
@@ -425,6 +435,7 @@ $("saveSession").onclick = async () => {
       mimeType: audioMimeType,
       duracion: audioDuration,
       transcripcion: $("transcript").value.trim(),
+      observacionFamilia: $("familyObservation").value.trim(),
       respuestas: collectAnswers(),
       reflexion: historia.reflexion,
       fraseDelDia: historia.fraseDelDia,
@@ -592,6 +603,13 @@ async function loadReadingHistory() {
           <div style="margin-top:10px">
             <strong>Lo que entendió la Academia</strong>
             <p>${escapeHtml(session.transcripcion || "Sin transcripción.")}</p>
+
+            ${session.observacionFamilia
+              ? `<strong>Observación de la familia</strong>
+                 <p>${escapeHtml(session.observacionFamilia)}</p>`
+              : ""
+            }
+
             <strong>Respuestas</strong>
             ${renderSavedAnswers(session)}
           </div>

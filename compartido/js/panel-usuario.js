@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.4
+ * Versión: 1.6
  ******************************************************************************/
 
 import {
@@ -51,10 +51,10 @@ function obtenerRutaActual() {
 }
 
 function asegurarEstilosPanelAvanzado() {
-  if (document.getElementById("panel-usuario-estilos-v14")) return;
+  if (document.getElementById("panel-usuario-estilos-v16")) return;
 
   const estilo = document.createElement("style");
-  estilo.id = "panel-usuario-estilos-v14";
+  estilo.id = "panel-usuario-estilos-v16";
   estilo.textContent = `
     .panel-usuario__menu{
       max-height:calc(100vh - 24px);
@@ -228,7 +228,7 @@ function construirMenu() {
         <span aria-hidden="true">🪪</span>
         <span>
           Mi espacio personal
-          <small>Perfil, camino, tareas y premios</small>
+          <small>Camino, tareas, logros y preferencias</small>
         </span>
         <span class="panel-usuario__grupo-flecha" aria-hidden="true">⌄</span>
       </button>
@@ -236,27 +236,39 @@ function construirMenu() {
       <div class="panel-usuario__subgrupo" data-panel-usuario-subgrupo hidden>
         <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
           <span aria-hidden="true">✨</span>
-          <span>Mi Espacio<small>Próximamente</small></span>
+          <span>Mi Espacio<small>Perfil personal · Próximamente</small></span>
         </button>
 
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">🌱</span>
-          <span>Mi Camino<small>Próximamente</small></span>
-        </button>
+        ${
+          configuracionActiva.mostrarCamino
+            ? `
+              <a class="panel-usuario__opcion"
+                 href="${escaparHTML(
+                   `${construirUrlAcademia("/mi-universo/mi-camino/")}?volver=${encodeURIComponent(obtenerRutaActual())}`
+                 )}">
+                <span aria-hidden="true">🌱</span>
+                <span>
+                  Mi Camino
+                  <small>Asignaciones, progreso y motivación</small>
+                </span>
+              </a>
+            `
+            : ""
+        }
 
         <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
           <span aria-hidden="true">📌</span>
-          <span>Mis Tareas<small>Próximamente</small></span>
+          <span>Mis Tareas<small>Asignaciones · Próximamente</small></span>
         </button>
 
         <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
           <span aria-hidden="true">🏆</span>
-          <span>Mis Logros<small>Próximamente</small></span>
+          <span>Mis Logros<small>Insignias y reconocimientos · Próximamente</small></span>
         </button>
 
         <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
           <span aria-hidden="true">⚙️</span>
-          <span>Configuración<small>Próximamente</small></span>
+          <span>Configuración<small>Perfil y preferencias · Próximamente</small></span>
         </button>
       </div>
     `);
