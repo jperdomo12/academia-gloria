@@ -1,101 +1,451 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecturas - Academia de Gloria</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
-    <style>
-        .bg-magic {
-            background-color: #f5f3ff;
-            background-image:  radial-gradient(#ddd6fe 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-    </style>
-</head>
-<body class="bg-magic min-h-screen font-sans text-slate-800">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-violet-100 shadow-sm">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-3xl font-black text-violet-700 tracking-tight">📚 Academia de Gloria</h1>
-            <nav class="hidden md:flex gap-6 font-medium text-slate-600">
-                <a href="../../index.html" class="hover:text-violet-600 transition-colors">Inicio</a>
-                <a href="#" class="text-violet-600 border-b-2 border-violet-600">Lecturas</a>
-            </nav>
+  <title>Lecturas | Academia Gloria Valentina</title>
+
+  <meta
+    name="description"
+    content="Cuentos y lecturas especiales para disfrutar, imaginar y aprender."
+  >
+
+  <meta name="theme-color" content="#7c3aed">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root{
+      --tinta:#243047;
+      --suave:#64748b;
+      --violeta:#7c3aed;
+      --rosa:#ec4899;
+      --cielo:#0284c7;
+      --verde:#16a34a;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Outfit",sans-serif;
+      color:var(--tinta);
+      background:
+        radial-gradient(circle at 8% 8%,rgba(56,189,248,.20),transparent 24%),
+        radial-gradient(circle at 92% 10%,rgba(236,72,153,.15),transparent 24%),
+        radial-gradient(circle at 82% 92%,rgba(124,58,237,.14),transparent 28%),
+        linear-gradient(155deg,#f8fcff,#fff7ed,#f7f2ff);
+    }
+
+    .glass-card{
+      background:rgba(255,255,255,.93);
+      border:2px solid rgba(226,232,240,.95);
+      box-shadow:0 20px 50px rgba(76,29,149,.09);
+      backdrop-filter:blur(12px);
+    }
+
+    .gradient-title{
+      background:linear-gradient(90deg,#7c3aed,#ec4899,#0284c7,#16a34a);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .back-button{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      min-height:46px;
+      padding:10px 15px;
+      border:2px solid #bae6fd;
+      border-radius:16px;
+      background:#fff;
+      color:#0369a1;
+      font-weight:900;
+      text-decoration:none;
+      box-shadow:0 9px 22px rgba(14,116,144,.08);
+      transition:.18s ease;
+    }
+
+    .back-button:hover{
+      transform:translateY(-2px);
+      border-color:#7dd3fc;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:30px;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:250px;
+      height:250px;
+      right:-90px;
+      bottom:-125px;
+      border-radius:50%;
+      background:radial-gradient(circle,#fde68a 0 30%,#f9a8d4 31% 58%,#c4b5fd 59% 100%);
+      opacity:.20;
+    }
+
+    .hero-content,
+    .hero-visual{
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-visual{
+      min-height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-books{
+      font-size:clamp(100px,15vw,170px);
+      filter:drop-shadow(0 16px 22px rgba(15,23,42,.13));
+      animation:floatBooks 3.4s ease-in-out infinite;
+    }
+
+    .reading-card{
+      overflow:hidden;
+      border-radius:28px;
+      transition:
+        transform .20s ease,
+        box-shadow .20s ease,
+        border-color .20s ease;
+    }
+
+    .reading-card:hover{
+      transform:translateY(-5px);
+      border-color:#c4b5fd;
+      box-shadow:0 28px 58px rgba(76,29,149,.14);
+    }
+
+    .cover{
+      position:relative;
+      overflow:hidden;
+      aspect-ratio:4/5;
+      background:#ede9fe;
+    }
+
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .35s ease;
+    }
+
+    .reading-card:hover .cover img{
+      transform:scale(1.035);
+    }
+
+    .cover-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:linear-gradient(180deg,transparent 35%,rgba(15,23,42,.55));
+      opacity:0;
+      transition:opacity .25s ease;
+    }
+
+    .reading-card:hover .cover-overlay{
+      opacity:1;
+    }
+
+    .cover-label{
+      align-self:flex-end;
+      padding:9px 13px;
+      border-radius:999px;
+      background:rgba(255,255,255,.95);
+      color:#6d28d9;
+      font-weight:900;
+      box-shadow:0 10px 24px rgba(15,23,42,.16);
+    }
+
+    .reading-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    .reading-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 9px;
+      border-radius:999px;
+      background:#f5f3ff;
+      color:#6d28d9;
+      font-size:.75rem;
+      font-weight:900;
+    }
+
+    .primary-action,
+    .secondary-action{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      width:100%;
+      min-height:48px;
+      padding:11px 14px;
+      border-radius:15px;
+      font-weight:900;
+      text-decoration:none;
+      transition:.18s ease;
+    }
+
+    .primary-action{
+      color:#fff;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      box-shadow:0 11px 24px rgba(124,58,237,.18);
+    }
+
+    .secondary-action{
+      color:#6d28d9;
+      background:#fff;
+      border:2px solid #ddd6fe;
+    }
+
+    .primary-action:hover,
+    .secondary-action:hover{
+      transform:translateY(-2px);
+    }
+
+    .empty-note{
+      margin-top:28px;
+      padding:20px;
+      border:2px dashed #d8b4fe;
+      border-radius:22px;
+      background:rgba(250,245,255,.82);
+      text-align:center;
+      color:#6d28d9;
+      font-weight:800;
+    }
+
+    @keyframes floatBooks{
+      0%,100%{transform:translateY(0) rotate(-2deg)}
+      50%{transform:translateY(-9px) rotate(2deg)}
+    }
+
+    @media(max-width:768px){
+      .hero{
+        padding:22px;
+      }
+
+      .hero-visual{
+        min-height:150px;
+      }
+
+      .cover-overlay{
+        opacity:1;
+        background:linear-gradient(180deg,transparent 48%,rgba(15,23,42,.48));
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+
+    <div class="mb-5">
+      <a href="../" class="back-button">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        Volver a Adicionales
+      </a>
+    </div>
+
+    <header class="glass-card hero rounded-[2.5rem] mb-8">
+      <div class="grid lg:grid-cols-[1.25fr_.75fr] gap-8 items-center">
+
+        <div class="hero-content">
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-violet-100 px-4 py-2 text-sm font-black text-violet-700">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              Lecturas especiales
+            </span>
+
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-pink-100 px-4 py-2 text-sm font-black text-pink-700">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              Imaginar y disfrutar
+            </span>
+          </div>
+
+          <p class="text-xs font-black uppercase tracking-[.18em] text-violet-700 mb-2">
+            Adicionales
+          </p>
+
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">
+            Mis <span class="gradient-title">Cuentos Mágicos</span> 📚
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-600 font-semibold leading-relaxed max-w-3xl">
+            Historias creadas para leer con calma, despertar la imaginación y descubrir mensajes que ayudan a crecer.
+          </p>
         </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-books">📚✨</div>
+        </div>
+
+      </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-12">
-        
-        <div class="mb-12 text-center md:text-left">
-            <h2 class="text-4xl font-extrabold text-slate-900 mb-2">Mis Cuentos Mágicos</h2>
-            <p class="text-lg text-slate-500">Explora historias increíbles creadas con amor e imaginación.</p>
+    <section class="mb-7">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 text-white flex items-center justify-center text-3xl shadow-lg">
+          📖
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <article class="bg-white rounded-3xl overflow-hidden border border-violet-100 shadow-sm card-hover transition-all duration-300">
-                <div class="aspect-[4/5] bg-violet-200 relative group">
-                    <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w600" 
-                         alt="Portada" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span class="bg-white text-violet-700 px-4 py-2 rounded-full font-bold shadow-lg">Abrir Cuento</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">El Destello Único de Gloria</h3>
-                    <p class="text-slate-600 text-sm mb-6">Una aventura mágica donde descubrimos que el brillo más especial está en nuestro interior.</p>
-                    
-                    <div class="flex flex-col gap-3">
-                        <a href="el_destello_unico_de_gloria.html" 
-                           class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-center shadow-md shadow-violet-200 flex items-center justify-center gap-2 transition-all">
-                            <i class="lucide-sparkles w-5 h-5"></i> Lectura Mágica
-                        </a>
-                        
-                        <a href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b" 
-                           class="w-full bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300 font-bold py-3 rounded-xl text-center flex items-center justify-center gap-2 transition-all">
-                            <i class="lucide-download w-5 h-5"></i> Descargar PDF
-                        </a>
-                    </div>
-                </div>
-            </article>
+        <div>
+          <p class="text-xs font-black uppercase tracking-[.18em] text-violet-700">
+            Biblioteca de lecturas
+          </p>
 
-            <article class="bg-white rounded-3xl overflow-hidden border border-violet-100 shadow-sm card-hover transition-all duration-300">
-                <div class="aspect-[4/5] bg-violet-100 relative group">
-                    <img src="https://drive.google.com/thumbnail?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k&sz=w600" 
-                         alt="Burgos" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span class="bg-white text-violet-700 px-4 py-2 rounded-full font-bold shadow-lg">Explorar Burgos</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">El Camino de Burgos</h3>
-                    <p class="text-slate-600 text-sm mb-6">Un viaje histórico lleno de castillos y leyendas por descubrir.</p>
-                    
-                    <div class="flex flex-col gap-3">
-                        <a href="el_camino_de_las_historias_en_burgos.html" 
-                           class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 rounded-xl text-center shadow-md shadow-violet-200 flex items-center justify-center gap-2 transition-all">
-                            <i class="lucide-map-pin w-5 h-5"></i> Lectura Interactiva
-                        </a>
-                        <a href="https://drive.google.com/uc?export=download&id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k" 
-                           class="w-full bg-white border-2 border-violet-100 text-violet-700 hover:border-violet-300 font-bold py-3 rounded-xl text-center flex items-center justify-center gap-2 transition-all">
-                            <i class="lucide-download w-5 h-5"></i> Descargar PDF
-                        </a>
-                    </div>
-                </div>
-            </article>
+          <h2 class="text-3xl md:text-4xl font-black text-slate-800">
+            Elige una historia
+          </h2>
 
+          <p class="text-slate-600 font-semibold mt-1">
+            Puedes abrir la lectura interactiva o guardar una copia en PDF.
+          </p>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer class="mt-20 py-10 text-center text-slate-400 text-sm">
-        <p>© 2026 Academia de Gloria · Hecho con ✨ para una gran lectora</p>
+    <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+
+      <article class="glass-card reading-card">
+        <div class="cover">
+          <img
+            src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w600"
+            alt="Portada de El Destello Único de Gloria"
+          >
+
+          <div class="cover-overlay" aria-hidden="true">
+            <span class="cover-label">✨ Abrir cuento</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="reading-meta">
+            <span class="reading-chip">✨ Identidad</span>
+            <span class="reading-chip">💛 Confianza</span>
+          </div>
+
+          <h3 class="text-2xl font-black text-slate-900 mb-3">
+            El Destello Único de Gloria
+          </h3>
+
+          <p class="text-slate-600 font-semibold leading-relaxed mb-6">
+            Una aventura mágica donde descubrimos que el brillo más especial está en nuestro interior.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            <a
+              href="el_destello_unico_de_gloria.html"
+              class="primary-action"
+            >
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+              Lectura Mágica
+            </a>
+
+            <a
+              href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b"
+              class="secondary-action"
+            >
+              <i data-lucide="download" class="w-5 h-5"></i>
+              Descargar PDF
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="glass-card reading-card">
+        <div class="cover">
+          <img
+            src="https://drive.google.com/thumbnail?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k&sz=w600"
+            alt="Portada de El Camino de las Historias en Burgos"
+          >
+
+          <div class="cover-overlay" aria-hidden="true">
+            <span class="cover-label">🏰 Explorar Burgos</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="reading-meta">
+            <span class="reading-chip">🏰 Historia</span>
+            <span class="reading-chip">🧭 Viaje</span>
+          </div>
+
+          <h3 class="text-2xl font-black text-slate-900 mb-3">
+            El Camino de las Historias en Burgos
+          </h3>
+
+          <p class="text-slate-600 font-semibold leading-relaxed mb-6">
+            Un viaje histórico lleno de castillos, lugares especiales y leyendas por descubrir.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            <a
+              href="el_camino_de_las_historias_en_burgos.html"
+              class="primary-action"
+            >
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+              Lectura Interactiva
+            </a>
+
+            <a
+              href="https://drive.google.com/uc?export=download&id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k"
+              class="secondary-action"
+            >
+              <i data-lucide="download" class="w-5 h-5"></i>
+              Descargar PDF
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="empty-note">
+      🌈 Esta biblioteca seguirá creciendo con nuevas historias, viajes y personajes.
+    </div>
+
+    <footer class="text-center py-10 text-slate-500 text-sm font-semibold">
+      Academia Gloria Valentina · Adicionales · Lecturas para imaginar y crecer ✨
     </footer>
 
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

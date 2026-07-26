@@ -514,6 +514,10 @@
       background:linear-gradient(135deg,#e0f2fe,#dcfce7);
     }
 
+    .atajo-matematicas .atajo-icono{
+      background:linear-gradient(135deg,#e0f2fe,#ede9fe,#fce7f3);
+    }
+
     .atajo-rincon .atajo-icono{
       background:linear-gradient(135deg,#ede9fe,#fce7f3,#e0f2fe);
     }
@@ -701,7 +705,7 @@
 
     .zona-secundaria{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(2,1fr);
       gap:20px;
     }
 
@@ -930,13 +934,14 @@
             <span class="atajo-flecha">→</span>
           </a>
 
-          <span class="atajo atajo-pro atajo-proximo">
-            <span class="atajo-icono">🎨</span>
+          <a class="atajo atajo-pro atajo-matematicas" href="mi-universo/aventuras-matematicas/">
+            <span class="atajo-icono">🌈</span>
             <span class="atajo-texto">
-              <strong>Taller Creativo</strong>
-              <small>Próximamente</small>
+              <strong>Aventuras Matemáticas</strong>
+              <small>Descubrir, comprender y resolver</small>
             </span>
-          </span>
+            <span class="atajo-flecha">→</span>
+          </a>
 
         </div>
 
@@ -991,20 +996,22 @@
     <section class="zona-secundaria">
 
       <a class="superficie tarjeta modulo calendarios" href="calendarios/">
-        <div class="modulo-icono">📅</div>
+        <div class="modulo-icono">🗓️</div>
         <span class="etiqueta-estado estado-verde">Etapa actual</span>
-        <h3>Calendarios</h3>
-        <p>Calendario oficial del colegio y, muy pronto, el calendario personal de Gloria.</p>
-        <span class="accion">Ver calendarios <i data-lucide="arrow-right" width="20"></i></span>
-      </a>
 
-      <article class="superficie tarjeta modulo superpoderes">
-        <div class="modulo-icono">🧠</div>
-        <span class="etiqueta-estado estado-amarillo">En crecimiento</span>
-        <h3>Mis Superpoderes</h3>
-        <p>Comprender, pensar paso a paso, organizar ideas y ganar autonomía.</p>
-        <span class="accion">Muy pronto ✨</span>
-      </article>
+        <h3>Calendarios</h3>
+
+        <p>
+          Calendario oficial del colegio y calendarios personales de
+          <strong><span data-nombre-completo>el alumno</span></strong>,
+          organizados por curso y por año escolar.
+        </p>
+
+        <span class="accion">
+          Ver calendarios
+          <i data-lucide="arrow-right" width="20"></i>
+        </span>
+      </a>
 
       <a class="superficie tarjeta modulo adicionales" href="adicionales/">
         <div class="modulo-icono">✨</div>
@@ -1027,7 +1034,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Versión 2.0
+      Academia Gloria Valentina · Versión 2.3
     </footer>
 
   </main>
@@ -1112,6 +1119,8 @@
         });
       }
     });
+
+
   </script>
 </body>
 </html>

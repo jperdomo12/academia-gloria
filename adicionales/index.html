@@ -3,46 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia de Gloria | Adicionales</title>
+  <title>Academia Gloria Valentina | Adicionales</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body {
-      font-family: 'Outfit', sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(125, 211, 252, .22), transparent 25%),
-        radial-gradient(circle at bottom right, rgba(192, 132, 252, .22), transparent 28%),
-        linear-gradient(180deg, #f8fbff 0%, #eef6ff 50%, #f9f5ff 100%);
+
+
+
+<style>
+  :root{
+    --tinta:#243047;
+    --suave:#64748b;
+    --morado:#7c3aed;
+    --rosa:#ec4899;
+    --azul:#0ea5e9;
+    --verde:#10b981;
+  }
+
+  *{
+    box-sizing:border-box;
+  }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:"Outfit",sans-serif;
+    color:var(--tinta);
+    background:
+      radial-gradient(circle at 8% 8%,rgba(56,189,248,.20),transparent 24%),
+      radial-gradient(circle at 92% 10%,rgba(236,72,153,.16),transparent 24%),
+      radial-gradient(circle at 82% 92%,rgba(124,58,237,.14),transparent 28%),
+      linear-gradient(155deg,#f8fcff,#fff7ed,#f7f2ff);
+  }
+
+  .glass-card{
+    background:rgba(255,255,255,.92);
+    border:2px solid rgba(226,232,240,.95);
+    box-shadow:0 20px 50px rgba(76,29,149,.09);
+    backdrop-filter:blur(12px);
+  }
+
+  .gradient-title{
+    background:linear-gradient(90deg,#7c3aed,#ec4899,#0ea5e9,#10b981);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .section-card{
+    min-height:285px;
+    text-decoration:none;
+    color:inherit;
+    transition:
+      transform .20s ease,
+      box-shadow .20s ease,
+      border-color .20s ease;
+  }
+
+  .section-card:hover{
+    transform:translateY(-5px);
+    border-color:#c4b5fd;
+    box-shadow:0 28px 58px rgba(76,29,149,.14);
+  }
+
+  .section-card:focus-visible{
+    outline:4px solid rgba(124,58,237,.20);
+    outline-offset:4px;
+  }
+
+  .pulse-star{
+    animation:pulseStar 3.2s ease-in-out infinite;
+  }
+
+  @keyframes pulseStar{
+    0%,100%{
+      transform:translateY(0) scale(1);
     }
-    .glass-card {
-      background: rgba(255,255,255,.88);
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(219, 234, 254, .95);
-      box-shadow: 0 20px 45px rgba(37, 99, 235, .10);
+    50%{
+      transform:translateY(-5px) scale(1.04);
     }
-    .section-card {
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  /* =======================================================
+     TARJETAS DE PRODUCTOS EN CRECIMIENTO
+     ======================================================= */
+
+  .future-card{
+    position:relative;
+    min-height:285px;
+    overflow:hidden;
+    opacity:.88;
+    background:
+      radial-gradient(circle at 92% 85%,rgba(251,191,36,.18),transparent 29%),
+      rgba(255,255,255,.91);
+  }
+
+  .future-card::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-48px;
+    bottom:-55px;
+    border-radius:50%;
+    background:#fde68a;
+    opacity:.22;
+  }
+
+  .future-badge{
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    margin-bottom:16px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#fef3c7;
+    color:#92400e;
+    font-size:.72rem;
+    font-weight:900;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+
+  .future-card > *{
+    position:relative;
+    z-index:1;
+  }
+
+  @media(max-width:640px){
+    .section-card,
+    .future-card{
+      min-height:auto;
     }
-    .section-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 50px rgba(99, 102, 241, .16);
-      border-color: #bfdbfe;
+
+    .future-badge{
+      position:static;
+      width:max-content;
+      margin-bottom:16px;
     }
-    .gradient-title {
-      background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{
+      animation-duration:.01ms!important;
+      animation-iteration-count:1!important;
+      transition-duration:.01ms!important;
     }
-    .pulse-star {
-      animation: pulseStar 2.4s ease-in-out infinite;
-    }
-    @keyframes pulseStar {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-  </style>
+  }
+</style>
+
+
+
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
 </head>
@@ -52,7 +163,7 @@
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
         <div class="max-w-3xl">
           <a href="../index.html" class="inline-flex items-center gap-2 text-sky-700 font-bold mb-5 hover:gap-3 transition-all">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Academia de Gloria
+            <i data-lucide="arrow-left" class="w-5 h-5"></i> Volver a Academia Gloria Valentina
           </a>
 
           <div class="flex flex-wrap gap-3 mb-5">
@@ -72,7 +183,7 @@
           </h1>
 
           <p class="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
-            Un lugar bonito dentro de la Academia de Gloria para escuchar música, disfrutar lecturas,
+            Un lugar bonito dentro de la Academia Gloria Valentina para escuchar música, disfrutar lecturas,
             jugar, relajarse y seguir aprendiendo de una manera cálida, visual y motivadora.
           </p>
         </div>
@@ -81,7 +192,7 @@
           <div class="flex items-center gap-4 mb-4">
             <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 via-sky-500 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-lg pulse-star">🌈</div>
             <div>
-              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-600">Academia de Gloria</p>
+              <p class="text-xs font-black uppercase tracking-[.18em] text-sky-600">Academia Gloria Valentina</p>
               <h2 class="text-2xl font-extrabold text-slate-800">Espacios especiales</h2>
             </div>
           </div>
@@ -98,7 +209,7 @@
         <div class="w-14 h-14 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center text-3xl mb-4">🎵</div>
         <h2 class="text-2xl font-extrabold mb-2">Música</h2>
         <p class="text-slate-600 font-medium leading-relaxed mb-4">
-          Canciones bonitas y motivadoras creadas con IA para acompañar a Gloria.
+          Canciones bonitas y motivadoras para acompañar momentos de alegría, calma y aprendizaje.
         </p>
         <div class="inline-flex items-center gap-2 text-violet-700 font-black">
           Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -127,20 +238,28 @@
         </div>
       </a>
 
-      <a href="relajacion/" class="glass-card section-card rounded-[2rem] p-6 block">
-        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl mb-4">🌿</div>
-        <h2 class="text-2xl font-extrabold mb-2">Relajación</h2>
-        <p class="text-slate-600 font-medium leading-relaxed mb-4">
-          Un espacio para respirar, calmarse y recuperar energía positiva.
-        </p>
-        <div class="inline-flex items-center gap-2 text-amber-700 font-black">
-          Entrar <i data-lucide="arrow-right" class="w-5 h-5"></i>
+      <article class="glass-card future-card rounded-[2rem] p-6 block border-2 border-amber-100">
+        <span class="future-badge">✨ En crecimiento</span>
+
+        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl mb-4">
+          🌿
         </div>
-      </a>
+
+        <h2 class="text-2xl font-extrabold mb-2">Relajación</h2>
+
+        <p class="text-slate-600 font-medium leading-relaxed mb-4">
+          Un espacio para respirar, relajarse, recuperar energía positiva y aprender a gestionar las emociones.
+        </p>
+
+        <div class="inline-flex items-center gap-2 text-amber-700 font-black">
+          Próximamente
+        </div>
+      </article>
+
     </section>
 
     <footer class="text-center py-8">
-      <p class="text-slate-500 font-medium">Academia de Gloria · Portal Adicionales PRO · Espacios bonitos para aprender y disfrutar ✨</p>
+      <p class="text-slate-500 font-medium">Academia Gloria Valentina · Adicionales · Espacios para aprender y disfrutar ✨</p>
     </footer>
   </main>
 
