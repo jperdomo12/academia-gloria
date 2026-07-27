@@ -788,9 +788,14 @@
   <main class="pagina">
 
     <div class="barra-superior">
-      <a href="../" class="boton-regreso">
+      <a
+        id="botonVolver"
+        href="../"
+        class="boton-regreso"
+        aria-label="Volver a la página anterior"
+      >
         <i data-lucide="arrow-left" width="20"></i>
-        Volver a Mi Universo
+        <span id="textoBotonVolver">Volver</span>
       </a>
 
       <div class="panel-camino" data-panel-usuario></div>
@@ -992,7 +997,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Tu aventura continúa
+      Academia Gloria Valentina · Mi Camino · Versión 2.1
     </footer>
 
   </main>
@@ -1010,6 +1015,59 @@
 
     import { obtenerPerfil } from
       "../../compartido/js/perfil-usuario.js";
+
+    function obtenerBaseAcademia() {
+      return window.location.hostname.endsWith("github.io")
+        ? "/academia-gloria"
+        : "";
+    }
+
+    function obtenerRutaRetornoSegura() {
+      const parametros = new URLSearchParams(window.location.search);
+      const volver = parametros.get("volver");
+      const base = obtenerBaseAcademia();
+
+      if (!volver) {
+        return `${base}/mi-universo/`;
+      }
+
+      try {
+        const destino = new URL(volver, window.location.origin);
+
+        if (destino.origin !== window.location.origin) {
+          return `${base}/mi-universo/`;
+        }
+
+        const ruta = `${destino.pathname}${destino.search}${destino.hash}`;
+
+        if (base && !destino.pathname.startsWith(`${base}/`)) {
+          return `${base}/mi-universo/`;
+        }
+
+        if (!base && destino.pathname.startsWith("/academia-gloria/")) {
+          return "/mi-universo/";
+        }
+
+        return ruta;
+      } catch (error) {
+        console.warn("Ruta de retorno no válida.", error);
+        return `${base}/mi-universo/`;
+      }
+    }
+
+    function configurarBotonVolver() {
+      const boton = document.getElementById("botonVolver");
+      const texto = document.getElementById("textoBotonVolver");
+
+      if (!boton) return;
+
+      const destino = obtenerRutaRetornoSegura();
+      boton.href = destino;
+
+      if (texto) {
+        texto.textContent = "Volver";
+      }
+    }
 
     const MENSAJES = [
       "Hoy también es un buen día para descubrir todo lo que eres capaz de hacer.",
@@ -1044,6 +1102,8 @@
           `${nombreVisible}, ${mensaje.charAt(0).toLowerCase()}${mensaje.slice(1)}`;
       }
     }
+
+    configurarBotonVolver();
 
     protegerPagina({
       loginUrl:"../../login.html",

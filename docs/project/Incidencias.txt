@@ -1,0 +1,23 @@
+--
+-- Control y seguimiento de incidencias
+--
+
+
+- Incidencia registrada: 27Julio2026
+
+	Síntoma: el reconocimiento de voz en español no funciona en Chrome con la cuenta supervisada gvpp.2015@gmail.com.
+
+	Comprobaciones realizadas:
+
+	Academia en español: no transcribe.
+	Academia en inglés: sí transcribe.
+	Google Translate en español: no reconoce la voz.
+	Google Translate en inglés y francés: sí reconoce.
+	Otro perfil de Chrome en la misma portátil: español e inglés funcionan.
+	Grabación de audio: funciona correctamente.
+
+	Conclusión actual: comportamiento asociado al perfil de Chrome de la cuenta supervisada y no al código de la Academia. La causa concreta queda pendiente.
+
+	Solución temporal: Gloria utilizará su cuenta escolar para trabajar con Mi Rincón de Lectura.
+
+	Decisión: no continuar investigando por ahora.
