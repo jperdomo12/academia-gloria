@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mis Tareas | Academia Gloria Valentina</title>
+  <meta name="description" content="Creación, seguimiento y presentación motivadora de tareas y misiones.">
+  <meta name="theme-color" content="#f59e0b">
+
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="./mis-tareas.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+  <main class="pagina">
+    <div class="barra-superior">
+      <a href="../mi-camino/" class="boton-regreso">
+        <i data-lucide="arrow-left"></i>
+        Volver a Mi Camino
+      </a>
+
+      <div class="panel-tareas" data-panel-usuario></div>
+    </div>
+
+    <header class="hero-tareas superficie">
+      <div>
+        <span class="eyebrow">📌 Planificación y acompañamiento</span>
+        <h1>Mis Tareas</h1>
+        <p>
+          Aquí la familia puede preparar actividades y la Academia las transforma
+          en misiones claras, amables y motivadoras.
+        </p>
+      </div>
+
+      <div class="hero-tareas__visual" aria-hidden="true">🗺️</div>
+    </header>
+
+    <nav class="tabs" aria-label="Secciones de Mis Tareas">
+      <button class="tab active" type="button" data-tab="lista">
+        📋 Tareas
+      </button>
+      <button class="tab" type="button" data-tab="crear">
+        ➕ Crear tarea
+      </button>
+    </nav>
+
+    <section id="panelLista" class="panel-seccion">
+      <div class="cabecera-seccion">
+        <div>
+          <span class="eyebrow">Seguimiento</span>
+          <h2>Tareas registradas</h2>
+          <p>Revisa qué está preparado, en curso o completado.</p>
+        </div>
+
+        <div class="filtros">
+          <button class="filtro active" type="button" data-filter="activas">Activas</button>
+          <button class="filtro" type="button" data-filter="todas">Todas</button>
+          <button class="filtro" type="button" data-filter="completadas">Completadas</button>
+        </div>
+      </div>
+
+      <div id="estadoTareas" class="estado-carga">Cargando tareas...</div>
+      <div id="listaTareas" class="lista-tareas"></div>
+    </section>
+
+    <section id="panelCrear" class="panel-seccion hidden">
+      <div class="cabecera-seccion">
+        <div>
+          <span class="eyebrow">Nueva asignación</span>
+          <h2>Crear una tarea</h2>
+          <p>La misma información se mostrará a Gloria como una misión.</p>
+        </div>
+      </div>
+
+      <form id="formTarea" class="form-tarea superficie">
+        <div class="grupo-formulario">
+          <h3>1. Información básica</h3>
+
+          <label>
+            Título de la tarea
+            <input id="titulo" required maxlength="100" placeholder="Ej. Leer una historia esta semana">
+          </label>
+
+          <label>
+            Descripción
+            <textarea id="descripcion" placeholder="Explica brevemente qué debe realizar."></textarea>
+          </label>
+
+          <div class="grid-formulario">
+            <label>
+              Tipo
+              <select id="tipo">
+                <option value="actividad_modulo">Actividad de un módulo</option>
+                <option value="tiempo_practica">Tiempo de práctica</option>
+                <option value="cantidad_actividades">Cantidad de actividades</option>
+                <option value="tarea_libre">Tarea libre</option>
+                <option value="tarea_combinada">Tarea combinada</option>
+              </select>
+            </label>
+
+            <label>
+              Módulo asociado
+              <select id="modulo">
+                <option value="rincon-lectura">Mi Rincón de Lectura</option>
+                <option value="detectives">Detectives de Problemas</option>
+                <option value="biblioteca">Biblioteca Encantada</option>
+                <option value="libre">Actividad fuera de la Academia</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo-formulario">
+          <h3>2. Planificación</h3>
+
+          <div class="grid-formulario">
+            <label>
+              Fecha de inicio
+              <input id="fechaInicio" type="date">
+            </label>
+
+            <label>
+              Fecha límite
+              <input id="fechaLimite" type="date">
+            </label>
+
+            <label>
+              Tiempo estimado
+              <div class="input-con-unidad">
+                <input id="tiempoEstimado" type="number" min="0" max="240" value="15">
+                <span>min</span>
+              </div>
+            </label>
+
+            <label>
+              Prioridad
+              <select id="prioridad">
+                <option value="normal">Normal</option>
+                <option value="alta">Alta</option>
+                <option value="baja">Baja</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo-formulario grupo-mision">
+          <h3>3. Cómo la verá Gloria</h3>
+
+          <div class="grid-formulario grid-mision">
+            <label>
+              Icono
+              <input id="icono" maxlength="4" value="📖">
+            </label>
+
+            <label>
+              Título de la misión
+              <input id="tituloMision" required maxlength="80" value="Misión de lectura">
+            </label>
+          </div>
+
+          <label>
+            Mensaje de Lía
+            <textarea id="mensajeMision">Lía tiene una nueva aventura esperando para ti.</textarea>
+          </label>
+
+          <div id="vistaPrevia" class="vista-previa-mision">
+            <span id="previewIcono">📖</span>
+            <div>
+              <strong id="previewTitulo">Misión de lectura</strong>
+              <p id="previewMensaje">Lía tiene una nueva aventura esperando para ti.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grupo-formulario">
+          <h3>4. Acompañamiento</h3>
+
+          <label>
+            Objetivo educativo
+            <textarea id="objetivo" placeholder="Ej. Leer con más calma y escuchar su propia voz."></textarea>
+          </label>
+
+          <label>
+            Criterio de finalización
+            <textarea id="criterio" placeholder="Ej. Guardar una sesión de lectura."></textarea>
+          </label>
+
+          <label>
+            Observación inicial
+            <textarea id="observacion" placeholder="Indicaciones para acompañar la actividad."></textarea>
+          </label>
+        </div>
+
+        <div class="acciones-formulario">
+          <button class="btn secundaria" type="reset">Limpiar</button>
+          <button class="btn primaria" type="submit">✨ Crear misión</button>
+        </div>
+
+        <div id="mensajeFormulario" class="mensaje-formulario" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer>
+      Academia Gloria Valentina · Mis Tareas · MVP 1.0
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+  <script type="module" src="./mis-tareas.js"></script>
+</body>
+</html>
