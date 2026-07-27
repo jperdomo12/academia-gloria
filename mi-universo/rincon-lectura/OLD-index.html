@@ -19,6 +19,7 @@
   >
 
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="./rincon-lectura-lia.css">
 
   <style>
     *{box-sizing:border-box}
@@ -635,35 +636,64 @@
 
       <div id="storyText"></div>
 
-      <div class="voice-box">
-        <h3>🎤 Ahora, lee la historia con tu propia voz</h3>
-        <p style="font-weight:650;color:#64748b">
-          Habla con calma. Puedes mirar el texto mientras lees.
-          La grabación se detendrá automáticamente a los 120 segundos. A los 90 segundos recibirás un aviso.
-        </p>
+      <div class="voice-box voice-box--lia">
+        <div class="lia-reading-header">
+          <img
+            class="lia-reading-avatar"
+            src="../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png"
+            alt="Lía, la guacamaya de la Academia"
+          >
 
-        <div class="actions">
-          <button class="btn primary" id="recordButton">🎤 Grabar</button>
-          <button class="btn stop-round" id="stopButton" title="Detener grabación" disabled>■</button>
-          <button class="btn blue" id="playButton" disabled>▶️ Escuchar</button>
-          <button class="btn red" id="clearButton" disabled>🗑️ Borrar</button>
+          <div>
+            <div class="lia-reading-eyebrow">LEO, ESCUCHO Y DESCUBRO MI VOZ</div>
+            <h3>🎙️ Cuéntaselo a Lía</h3>
+            <p>
+              Lee la historia mirando el texto. Habla con calma, abre bien la boca
+              y utiliza <strong>Detener</strong> cuando quieras volver a empezar.
+            </p>
+          </div>
         </div>
 
-        <div class="recording-dashboard">
-          <span id="recordLight" class="record-light"></span>
-          <div>
-            <div id="voiceStatus" class="voice-status" style="margin:0">Sin grabación.</div>
-            <div class="record-progress"><span id="recordProgressBar"></span></div>
+        <div class="actions lia-recording-actions">
+          <button class="btn primary" id="recordButton">🎤 Leer para Lía</button>
+
+          <button class="btn stop-text" id="stopButton" title="Detener grabación" disabled>
+            <span class="lia-stop-icon" aria-hidden="true"></span>
+            Detener
+          </button>
+
+          <button class="btn blue" id="playButton" disabled>▶️ Escuchar</button>
+          <button class="btn red" id="clearButton" disabled>🗑️ Borrar y repetir</button>
+        </div>
+
+        <div class="recording-dashboard lia-recording-dashboard">
+          <span id="recordLight" class="record-light" aria-hidden="true"></span>
+
+          <div class="recording-dashboard__main">
+            <div id="voiceStatus" class="voice-status" style="margin:0">
+              Lía está preparada para escucharte.
+            </div>
+            <div class="record-progress" aria-hidden="true">
+              <span id="recordProgressBar"></span>
+            </div>
           </div>
+
           <strong id="recordTimer">00:00 / 02:00</strong>
         </div>
+
+        <div id="voiceSuccess" class="lia-message lia-message--success hidden" role="status" aria-live="polite">
+          ✨ Lía guardó tu lectura. Ahora puedes escucharla y descubrir qué entendió la computadora.
+        </div>
+
         <audio id="audioPreview" class="hidden" controls></audio>
 
-        <div class="transcript-box">
-          <label for="transcript" style="font-weight:900">📝 Lo que entendió la Academia</label>
+        <div class="transcript-box lia-transcript-box">
+          <label for="transcript">🦜 Lía escuchó esto...</label>
+
           <p class="transcript-help">
-            Este texto se conserva tal como lo entendió la computadora y no puede editarse.
-            La transcripción automática puede equivocarse aunque la lectura se haya realizado correctamente.
+            Compáralo con la historia que acabas de leer. Si no expresa lo que querías decir,
+            puedes borrar la grabación y volver a intentarlo con más calma.
+            La computadora también puede equivocarse.
           </p>
 
           <textarea
@@ -676,23 +706,72 @@
 
           <div
             id="speechSupport"
-            style="margin-top:8px;font-size:13px;font-weight:800;color:#6b7280"
+            class="lia-speech-support"
           ></div>
         </div>
 
-        <div class="family-observation-box">
-          <label for="familyObservation" style="font-weight:900">
+        <section id="readingComparison" class="lia-comparison hidden" aria-live="polite">
+          <div class="lia-comparison__header">
+            <div>
+              <div class="lia-reading-eyebrow">COMPARACIÓN ORIENTATIVA</div>
+              <h3>🔎 Lo que leí y lo que Lía entendió</h3>
+            </div>
+
+            <div id="comparisonScore" class="lia-score">—</div>
+          </div>
+
+          <p id="comparisonMessage" class="lia-comparison__message"></p>
+
+          <div class="lia-comparison__stats">
+            <div>
+              <strong id="matchedWords">0</strong>
+              <span>palabras coincidentes</span>
+            </div>
+            <div>
+              <strong id="expectedWords">0</strong>
+              <span>palabras del texto</span>
+            </div>
+            <div>
+              <strong id="readingPace">—</strong>
+              <span>palabras por minuto</span>
+            </div>
+          </div>
+
+          <details class="lia-comparison__details">
+            <summary>Ver los dos textos juntos</summary>
+
+            <div class="lia-text-comparison">
+              <div>
+                <h4>📖 Texto que quería leer</h4>
+                <p id="expectedTextComparison"></p>
+              </div>
+
+              <div>
+                <h4>🦜 Lo que entendió Lía</h4>
+                <p id="heardTextComparison"></p>
+              </div>
+            </div>
+          </details>
+
+          <p class="lia-comparison__notice">
+            Esta comparación depende del reconocimiento de voz del navegador:
+            sirve como pista para practicar, no como evaluación clínica ni como medida exacta de pronunciación.
+          </p>
+        </section>
+
+        <div class="family-observation-box lia-family-box">
+          <label for="familyObservation">
             👨‍👩‍👧 Observación de la familia
           </label>
 
           <p class="transcript-help">
-            Campo opcional para indicar, por ejemplo, que una palabra se leyó correctamente
-            aunque la computadora la entendiera de otra manera.
+            Campo opcional para anotar que una palabra se leyó correctamente aunque la computadora
+            la entendiera de otra manera, o registrar qué aspecto conviene practicar.
           </p>
 
           <textarea
             id="familyObservation"
-            placeholder="Ejemplo: Gloria pronunció correctamente «sendero», pero la computadora escribió otra palabra."
+            placeholder="Ejemplo: leyó correctamente «sendero», pero la computadora escribió otra palabra."
           ></textarea>
         </div>
 

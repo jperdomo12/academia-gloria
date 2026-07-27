@@ -19,6 +19,8 @@ let recordingTimer = null;
 let recordingInterval = null;
 let recognition = null;
 let finalTranscript = "";
+let recordingAttempts = 0;
+let currentReadingAnalysis = {};
 
 function displayName(value = "") {
   return String(value).trim() || "Explorador";
@@ -50,7 +52,12 @@ function showPanel(panelId, stepName = "welcome") {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function resetSessionData() {
+function resetSessionData({ resetAttempts = false } = {}) {
+  if (resetAttempts) {
+    recordingAttempts = 0;
+  }
+
+  currentReadingAnalysis = {};
   audioData = "";
   audioDuration = 0;
   finalTranscript = "";
@@ -208,6 +215,133 @@ function renderQuestions() {
   });
 }
 
+const LIA_MESSAGES = Object.freeze({
+  ready: [
+    "🦜 Estoy preparada. Lee con calma y recuerda: puedes detenerte y volver a empezar cuando quieras.",
+    "🌿 No tengas prisa. Una lectura clara vale más que una lectura rápida.",
+    "✨ Cada intento cuenta. Yo estaré aquí para escucharte."
+  ],
+  recording: [
+    "🎙️ Te estoy escuchando. Haz pequeñas pausas y abre bien la boca.",
+    "🦜 Vas muy bien. Continúa a tu ritmo.",
+    "🌈 Respira, mira el texto y sigue con calma."
+  ],
+  retry: [
+    "🌱 Has decidido volver a intentarlo. Eso también es aprender.",
+    "💛 Qué buena decisión: escuchar, revisar y probar otra vez.",
+    "🦜 Cada nuevo intento puede ayudarte a leer con más claridad."
+  ]
+});
+
+function liaMessage(type, index = 0) {
+  const messages = LIA_MESSAGES[type] || LIA_MESSAGES.ready;
+  return messages[Math.abs(index) % messages.length];
+}
+
+function setLiaCoachMessage(message) {
+  const element = $("liaCoachMessage");
+  if (element) element.textContent = message;
+}
+
+function tokenizeWithOriginal(value = "") {
+  return String(value)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(original => ({
+      original,
+      normalized: normalizeForComparison(original)
+    }));
+}
+
+function buildWordComparison(expectedText, heardText) {
+  const expected = tokenizeWithOriginal(expectedText);
+  const heard = tokenizeWithOriginal(heardText);
+  const rows = expected.length + 1;
+  const cols = heard.length + 1;
+  const dp = Array.from({ length: rows }, () => new Array(cols).fill(0));
+
+  for (let i = expected.length - 1; i >= 0; i -= 1) {
+    for (let j = heard.length - 1; j >= 0; j -= 1) {
+      dp[i][j] = expected[i].normalized === heard[j].normalized
+        ? dp[i + 1][j + 1] + 1
+        : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+
+  const result = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < expected.length && j < heard.length) {
+    if (expected[i].normalized === heard[j].normalized) {
+      result.push({
+        type: "match",
+        expected: expected[i].original,
+        heard: heard[j].original
+      });
+      i += 1;
+      j += 1;
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) {
+      result.push({
+        type: "missing",
+        expected: expected[i].original,
+        heard: ""
+      });
+      i += 1;
+    } else {
+      result.push({
+        type: "different",
+        expected: "",
+        heard: heard[j].original
+      });
+      j += 1;
+    }
+  }
+
+  while (i < expected.length) {
+    result.push({
+      type: "missing",
+      expected: expected[i].original,
+      heard: ""
+    });
+    i += 1;
+  }
+
+  while (j < heard.length) {
+    result.push({
+      type: "different",
+      expected: "",
+      heard: heard[j].original
+    });
+    j += 1;
+  }
+
+  return result;
+}
+
+function wordComparisonMapHtml(expectedText, heardText) {
+  const comparison = buildWordComparison(expectedText, heardText);
+
+  return comparison.map(item => {
+    if (item.type === "match") {
+      return `<span class="word-token word-token--match" title="Palabra reconocida">${escapeHtml(item.expected)}</span>`;
+    }
+
+    if (item.type === "missing") {
+      return `<span class="word-token word-token--missing" title="Palabra que conviene revisar">${escapeHtml(item.expected)}</span>`;
+    }
+
+    return `<span class="word-token word-token--different" title="Palabra diferente reconocida por Lía">+ ${escapeHtml(item.heard)}</span>`;
+  }).join(" ");
+}
+
+function renderWordComparisonMap(expectedText, heardText) {
+  const container = $("wordComparisonMap");
+  if (!container) return;
+  container.innerHTML = wordComparisonMapHtml(expectedText, heardText);
+}
+
 function normalizeForComparison(value = "") {
   return String(value)
     .normalize("NFD")
@@ -253,7 +387,9 @@ function comparisonFeedback(score) {
     return {
       className: "excellent",
       message:
-        "🌟 ¡Lía te entendió muy bien! La lectura coincide casi por completo con el texto."
+        "🌟 ¡Lía te entendió muy bien! La lectura coincide casi por completo con el texto.",
+      coach:
+        "🦜 ¡Qué lectura tan clara! Puedes sentirte orgullosa de este intento."
     };
   }
 
@@ -261,7 +397,9 @@ function comparisonFeedback(score) {
     return {
       className: "very-good",
       message:
-        "✨ Se entendió muy bien. Puedes escuchar la grabación y decidir si deseas conservarla o pulir alguna parte."
+        "✨ Se entendió muy bien. Puedes escuchar la grabación y decidir si deseas conservarla o pulir alguna parte.",
+      coach:
+        "💛 Lía entendió casi todo. Escucha tu voz y decide tú misma si quieres repetir."
     };
   }
 
@@ -269,14 +407,18 @@ function comparisonFeedback(score) {
     return {
       className: "good",
       message:
-        "😊 Se entendió una buena parte. Una nueva lectura más pausada puede ayudar a que Lía reconozca más palabras."
+        "😊 Se entendió una buena parte. Una nueva lectura más pausada puede ayudar a que Lía reconozca más palabras.",
+      coach:
+        "🌿 Vas avanzando. Prueba con pequeñas pausas entre frases."
     };
   }
 
   return {
     className: "practice",
     message:
-      "🌱 Esta lectura nos deja pistas para practicar. Prueba otra vez sin prisa, haciendo pequeñas pausas y moviendo bien la boca."
+      "🌱 Esta lectura nos deja pistas para practicar. Prueba otra vez sin prisa, haciendo pequeñas pausas y moviendo bien la boca.",
+    coach:
+      "🦜 No pasa nada. Escuchar, descubrir y volver a intentarlo forma parte del aprendizaje."
   };
 }
 
@@ -294,6 +436,8 @@ function resetReadingComparison() {
   $("readingPace").textContent = "—";
   $("expectedTextComparison").textContent = "";
   $("heardTextComparison").textContent = "";
+  $("wordComparisonMap").innerHTML = "";
+  $("attemptBadge").textContent = `Intento ${Math.max(1, recordingAttempts || 1)}`;
 }
 
 function renderReadingComparison() {
@@ -329,6 +473,20 @@ function renderReadingComparison() {
   $("readingPace").textContent = pace ? String(pace) : "—";
   $("expectedTextComparison").textContent = expectedText;
   $("heardTextComparison").textContent = heardText;
+  $("attemptBadge").textContent = `Intento ${Math.max(1, recordingAttempts)}`;
+  renderWordComparisonMap(expectedText, heardText);
+
+  currentReadingAnalysis = {
+    coincidencia: score,
+    palabrasCoincidentes: matched,
+    palabrasTexto: expectedTokens.length,
+    palabrasReconocidas: heardTokens.length,
+    palabrasPorMinuto: pace,
+    mensaje: feedback.message,
+    nivel: feedback.className
+  };
+
+  setLiaCoachMessage(feedback.coach);
 }
 
 function blobToDataUrl(blob) {
@@ -440,7 +598,13 @@ $("recordButton").onclick = async () => {
     audioDuration = 0;
     finalTranscript = "";
     $("transcript").value = "";
+    recordingAttempts += 1;
     resetReadingComparison();
+    setLiaCoachMessage(
+      recordingAttempts > 1
+        ? liaMessage("retry", recordingAttempts)
+        : liaMessage("recording", recordingAttempts)
+    );
     updateAudioControls();
 
     const preferredType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
@@ -526,7 +690,10 @@ $("playButton").onclick = () => {
   if (audioData) $("audioPreview").play();
 };
 
-$("clearButton").onclick = resetSessionData;
+$("clearButton").onclick = () => {
+  resetSessionData();
+  setLiaCoachMessage(liaMessage("retry", recordingAttempts));
+};
 
 $("startAdventure").onclick = () => {
   renderSelectedStory();
@@ -579,6 +746,8 @@ $("saveSession").onclick = async () => {
       duracion: audioDuration,
       transcripcion: $("transcript").value.trim(),
       observacionFamilia: $("familyObservation").value.trim(),
+      intentos: Math.max(1, recordingAttempts),
+      analisisLectura: currentReadingAnalysis,
       respuestas: collectAnswers(),
       reflexion: historia.reflexion,
       fraseDelDia: historia.fraseDelDia,
@@ -598,7 +767,7 @@ $("saveSession").onclick = async () => {
 };
 
 $("restartSession").onclick = () => {
-  resetSessionData();
+  resetSessionData({ resetAttempts: true });
   renderQuestions();
   showPanel("welcomePanel", "welcome");
 };
@@ -685,6 +854,169 @@ function renderSavedAnswers(session) {
   `;
 }
 
+function historyAnalysisHtml(session) {
+  const analysis =
+    session.analisisLectura && typeof session.analisisLectura === "object"
+      ? session.analisisLectura
+      : {};
+
+  const score = Number(analysis.coincidencia || 0);
+  const matched = Number(analysis.palabrasCoincidentes || 0);
+  const total = Number(analysis.palabrasTexto || 0);
+  const pace = Number(analysis.palabrasPorMinuto || 0);
+  const attempts = Math.max(1, Number(session.intentos || 1));
+  const expectedText = String(session.textoOriginal || "");
+  const heardText = String(session.transcripcion || "");
+
+  if (!score && !total && !pace) {
+    return `
+      <div class="history-analysis history-analysis--empty">
+        <strong>🔎 Análisis de lectura</strong>
+        <p>Esta lectura fue guardada antes de incorporar el análisis detallado.</p>
+      </div>
+    `;
+  }
+
+  return `
+    <section class="history-analysis">
+      <div class="history-analysis__header">
+        <div>
+          <strong>🔎 Análisis guardado</strong>
+          <small>Intentos realizados: ${attempts}</small>
+        </div>
+        <span class="history-analysis__score">${score}%</span>
+      </div>
+
+      <div class="history-analysis__stats">
+        <div><strong>${matched}</strong><span>coincidentes</span></div>
+        <div><strong>${total}</strong><span>palabras del texto</span></div>
+        <div><strong>${pace || "—"}</strong><span>palabras/minuto</span></div>
+      </div>
+
+      ${analysis.mensaje
+        ? `<p class="history-analysis__message">${escapeHtml(analysis.mensaje)}</p>`
+        : ""
+      }
+
+      ${expectedText && heardText
+        ? `
+          <details class="history-analysis__details">
+            <summary>🎨 Revisar mapa y comparación</summary>
+
+            <div class="history-word-map">
+              ${wordComparisonMapHtml(expectedText, heardText)}
+            </div>
+
+            <div class="history-text-pair">
+              <div>
+                <h4>📖 Texto original</h4>
+                <p>${escapeHtml(expectedText)}</p>
+              </div>
+              <div>
+                <h4>🦜 Lo que entendió Lía</h4>
+                <p>${escapeHtml(heardText)}</p>
+              </div>
+            </div>
+          </details>
+        `
+        : ""
+      }
+    </section>
+  `;
+}
+
+function familyObservationHistoryHtml(session) {
+  const history = Array.isArray(session.historialObservacionesFamilia)
+    ? session.historialObservacionesFamilia
+    : [];
+
+  if (!history.length) {
+    return `
+      <p class="history-family-empty">
+        Todavía no hay versiones anteriores de esta observación.
+      </p>
+    `;
+  }
+
+  return `
+    <div class="history-family-timeline">
+      ${[...history].reverse().map(entry => `
+        <article>
+          <time>${escapeHtml(formatFirestoreDate(entry.fecha))}</time>
+          <p>${escapeHtml(entry.texto || "")}</p>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+function attachHistoryActions() {
+  document
+    .querySelectorAll("[data-save-family-observation]")
+    .forEach(button => {
+      button.onclick = async () => {
+        const storyId = button.dataset.saveFamilyObservation;
+        const textarea = document.querySelector(
+          `[data-family-observation-editor="${CSS.escape(storyId)}"]`
+        );
+
+        if (!textarea) return;
+
+        const originalText = button.textContent;
+
+        try {
+          button.disabled = true;
+          button.textContent = "Guardando...";
+
+          await Academia.rinconLectura.actualizarObservacion(
+            storyId,
+            textarea.value
+          );
+
+          button.textContent = "✅ Guardada";
+
+          window.setTimeout(async () => {
+            await loadReadingHistory();
+          }, 650);
+        } catch (error) {
+          console.error(error);
+          alert(`No se pudo actualizar la observación.\n${error.message}`);
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      };
+    });
+
+  document
+    .querySelectorAll("[data-delete-story]")
+    .forEach(button => {
+      button.onclick = async () => {
+        const storyId = button.dataset.deleteStory;
+        const title = button.dataset.deleteTitle;
+
+        const confirmed = confirm(
+          `¿Quieres eliminar la grabación y las respuestas de "${title}"?`
+        );
+
+        if (!confirmed) return;
+
+        try {
+          button.disabled = true;
+          button.textContent = "Eliminando...";
+          await Academia.rinconLectura.eliminarSesion(storyId);
+          await loadReadingHistory();
+        } catch (deleteError) {
+          console.error(deleteError);
+          alert(
+            `No se pudo eliminar la aventura guardada.\n${deleteError.message}`
+          );
+          button.disabled = false;
+          button.textContent = "🗑️ Eliminar";
+        }
+      };
+    });
+}
+
 async function loadReadingHistory() {
   $("historyStatus").classList.remove("hidden");
   $("historyStatus").textContent = "Cargando tus lecturas...";
@@ -700,105 +1032,133 @@ async function loadReadingHistory() {
     }
 
     $("historyStatus").classList.add("hidden");
-    $("readingHistory").innerHTML = sessions.map(session => `
-      ${(() => {
-        const score = calculateCorrectAnswers(session);
-        return `
-      <article class="history-card">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
-          <div>
-            <span style="font-weight:900;color:#7c3aed">
-              ${escapeHtml(session.categoria || "Lectura")}
+
+    $("readingHistory").innerHTML = sessions.map(session => {
+      const comprehension = calculateCorrectAnswers(session);
+      const observation = String(session.observacionFamilia || "");
+
+      return `
+        <article class="history-card history-card--complete">
+          <header class="history-card__header">
+            <div>
+              <span class="history-card__category">
+                ${escapeHtml(session.categoria || "Lectura")}
+              </span>
+              <h3>${escapeHtml(session.titulo || "Historia")}</h3>
+              <p>
+                📅 ${escapeHtml(
+                  formatFirestoreDate(session.actualizadaEn || session.creadaEn)
+                )}
+              </p>
+            </div>
+
+            <span class="feedback correct history-card__duration">
+              ${formatDuration(session.duracion || 0)}
             </span>
-            <h3 style="margin:5px 0">${escapeHtml(session.titulo || "Historia")}</h3>
-          </div>
-          <span class="feedback correct" style="margin:0">
-            ${formatDuration(session.duracion || 0)}
-          </span>
-        </div>
+          </header>
 
-        <p style="color:#64748b;font-weight:650">
-          📅 ${escapeHtml(formatFirestoreDate(session.actualizadaEn || session.creadaEn))}
-        </p>
+          <div class="history-card__badges">
+            <span class="answer-status ok">🎤 Grabación guardada</span>
 
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
-          <span class="answer-status ok">🎤 Grabación guardada</span>
-          ${score.total
-            ? `<span class="answer-status ${score.correct === score.total ? "ok" : "review"}">
-                 🧠 Comprensión ${score.correct}/${score.total}
-               </span>`
-            : ""
-          }
-          <span class="answer-status ok">
-            🌍 ${session.idioma === "en-GB" ? "English" : "Español"}
-          </span>
-        </div>
-
-        ${session.audioData
-          ? `<audio controls src="${session.audioData}"></audio>`
-          : "<p>Sin audio guardado.</p>"
-        }
-
-        <details style="margin-top:12px">
-          <summary style="cursor:pointer;font-weight:900;color:#0284c7">
-            📝 Ver transcripción y respuestas
-          </summary>
-          <div style="margin-top:10px">
-            <strong>🦜 Lo que entendió Lía</strong>
-            <p>${escapeHtml(session.transcripcion || "Sin transcripción.")}</p>
-
-            ${session.observacionFamilia
-              ? `<strong>Observación de la familia</strong>
-                 <p>${escapeHtml(session.observacionFamilia)}</p>`
+            ${comprehension.total
+              ? `<span class="answer-status ${
+                  comprehension.correct === comprehension.total ? "ok" : "review"
+                }">
+                   🧠 Comprensión ${comprehension.correct}/${comprehension.total}
+                 </span>`
               : ""
             }
 
-            <strong>Respuestas</strong>
-            ${renderSavedAnswers(session)}
+            <span class="answer-status ok">
+              🌍 ${session.idioma === "en-GB" ? "English" : "Español"}
+            </span>
+
+            <span class="answer-status ok">
+              🔁 ${Math.max(1, Number(session.intentos || 1))} intento(s)
+            </span>
           </div>
-        </details>
 
-        <button
-          type="button"
-          class="btn delete-session"
-          data-delete-story="${escapeHtml(session.id)}"
-          data-delete-title="${escapeHtml(session.titulo || "esta aventura")}"
-        >
-          🗑️ Eliminar
-        </button>
-      </article>`;
-      })()}
-    `).join("");
-
-    $("readingHistory")
-      .querySelectorAll("[data-delete-story]")
-      .forEach(button => {
-        button.onclick = async () => {
-          const storyId = button.dataset.deleteStory;
-          const title = button.dataset.deleteTitle;
-
-          const confirmed = confirm(
-            `¿Quieres eliminar la grabación y las respuestas de "${title}"?`
-          );
-
-          if (!confirmed) return;
-
-          try {
-            button.disabled = true;
-            button.textContent = "Eliminando...";
-            await Academia.rinconLectura.eliminarSesion(storyId);
-            await loadReadingHistory();
-          } catch (deleteError) {
-            console.error(deleteError);
-            alert(
-              `No se pudo eliminar la aventura guardada.
-${deleteError.message}`
-            );
-            button.disabled = false;
-            button.textContent = "🗑️ Eliminar";
+          ${session.audioData
+            ? `<audio controls src="${session.audioData}"></audio>`
+            : "<p>Sin audio guardado.</p>"
           }
-        };
-      });
+
+          ${historyAnalysisHtml(session)}
+
+          <details class="history-section">
+            <summary>🧠 Revisar comprensión y respuestas</summary>
+            <div class="history-section__content">
+              ${renderSavedAnswers(session)}
+            </div>
+          </details>
+
+          <details class="history-section" open>
+            <summary>👨‍👩‍👧 Observaciones de la familia</summary>
+
+            <div class="history-section__content">
+              <p class="history-help">
+                Puedes leer y actualizar la observación. Cada cambio diferente
+                se conserva en el historial de esta lectura.
+              </p>
+
+              <textarea
+                class="history-family-editor"
+                data-family-observation-editor="${escapeHtml(session.id)}"
+                placeholder="Añadir una observación de la familia..."
+              >${escapeHtml(observation)}</textarea>
+
+              <div class="history-family-actions">
+                <button
+                  type="button"
+                  class="btn green"
+                  data-save-family-observation="${escapeHtml(session.id)}"
+                >
+                  💾 Guardar observación
+                </button>
+              </div>
+
+              <details class="history-family-versions">
+                <summary>📅 Ver historial de observaciones</summary>
+                ${familyObservationHistoryHtml(session)}
+              </details>
+            </div>
+          </details>
+
+          <details class="history-section">
+            <summary>📄 Revisar todos los datos guardados</summary>
+
+            <div class="history-section__content history-all-data">
+              <h4>🦜 Transcripción</h4>
+              <p>${escapeHtml(session.transcripcion || "Sin transcripción.")}</p>
+
+              <h4>🌟 Reflexión</h4>
+              <p>${escapeHtml(session.reflexion || "Sin reflexión guardada.")}</p>
+
+              <h4>🌈 Frase del día</h4>
+              <p>${escapeHtml(session.fraseDelDia || "Sin frase guardada.")}</p>
+
+              <h4>🏷️ Valores</h4>
+              <p>${escapeHtml(
+                Array.isArray(session.valores) && session.valores.length
+                  ? session.valores.join(", ")
+                  : "Sin valores registrados."
+              )}</p>
+            </div>
+          </details>
+
+          <button
+            type="button"
+            class="btn delete-session"
+            data-delete-story="${escapeHtml(session.id)}"
+            data-delete-title="${escapeHtml(session.titulo || "esta aventura")}"
+          >
+            🗑️ Eliminar lectura guardada
+          </button>
+        </article>
+      `;
+    }).join("");
+
+    attachHistoryActions();
   } catch (error) {
     console.error(error);
     $("historyStatus").textContent =
@@ -847,6 +1207,7 @@ async function initialize() {
   renderSelectedStory();
   configureSpeechRecognition();
   updateAudioControls();
+  setLiaCoachMessage(liaMessage("ready", new Date().getDate()));
 }
 
 initialize();

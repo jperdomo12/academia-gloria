@@ -311,3 +311,373 @@
     animation:none;
   }
 }
+
+
+/* Lía 2.1: personalidad, intentos y mapa visual */
+.lia-coach-message{
+  position:relative;
+  z-index:1;
+  margin-top:15px;
+  padding:14px 16px;
+  border:2px solid #bfdbfe;
+  border-radius:18px;
+  background:linear-gradient(135deg,#eff6ff,#fff);
+  color:#1e3a8a;
+  font-weight:900;
+  line-height:1.5;
+}
+
+.lia-score-group{
+  display:grid;
+  justify-items:end;
+  gap:7px;
+}
+
+.lia-attempt-badge{
+  padding:6px 10px;
+  border-radius:999px;
+  color:#6d28d9;
+  background:#ede9fe;
+  font-size:.75rem;
+  font-weight:900;
+}
+
+.lia-word-map{
+  margin-top:16px;
+  padding:15px;
+  border:2px solid #e2e8f0;
+  border-radius:18px;
+  background:#f8fafc;
+}
+
+.lia-word-map h4{
+  margin:0 0 5px;
+  color:#334155;
+}
+
+.lia-word-map__help{
+  margin:0 0 12px;
+  color:#64748b;
+  font-size:.82rem;
+  font-weight:700;
+}
+
+.lia-word-map__content{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  line-height:1.8;
+}
+
+.word-token{
+  display:inline-flex;
+  align-items:center;
+  min-height:31px;
+  padding:4px 9px;
+  border:2px solid transparent;
+  border-radius:10px;
+  font-weight:850;
+}
+
+.word-token--match{
+  color:#166534;
+  border-color:#86efac;
+  background:#dcfce7;
+}
+
+.word-token--missing{
+  color:#92400e;
+  border-color:#fcd34d;
+  background:#fef3c7;
+}
+
+.word-token--different{
+  color:#075985;
+  border-color:#7dd3fc;
+  background:#e0f2fe;
+}
+
+@media(max-width:680px){
+  .lia-score-group{
+    justify-items:start;
+  }
+}
+
+
+/* Mi Diario de Lecturas · revisión completa y observaciones editables */
+.history-card--complete{
+  padding:20px;
+}
+
+.history-card__header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+}
+
+.history-card__header h3{
+  margin:5px 0;
+}
+
+.history-card__header p{
+  margin:0;
+  color:#64748b;
+  font-weight:700;
+}
+
+.history-card__category{
+  color:#7c3aed;
+  font-weight:900;
+}
+
+.history-card__duration{
+  flex:0 0 auto;
+  margin:0!important;
+}
+
+.history-card__badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:13px 0;
+}
+
+.history-analysis{
+  margin-top:16px;
+  padding:16px;
+  border:2px solid #c4b5fd;
+  border-radius:20px;
+  background:linear-gradient(135deg,#faf5ff,#fff);
+}
+
+.history-analysis--empty{
+  color:#64748b;
+  border-color:#e2e8f0;
+  background:#f8fafc;
+}
+
+.history-analysis--empty p{
+  margin-bottom:0;
+}
+
+.history-analysis__header{
+  display:flex;
+  justify-content:space-between;
+  gap:13px;
+  align-items:center;
+}
+
+.history-analysis__header strong{
+  display:block;
+  color:#5b21b6;
+  font-size:1.08rem;
+}
+
+.history-analysis__header small{
+  display:block;
+  margin-top:3px;
+  color:#64748b;
+  font-weight:800;
+}
+
+.history-analysis__score{
+  min-width:74px;
+  padding:9px 11px;
+  border-radius:15px;
+  color:#5b21b6;
+  background:#ede9fe;
+  font-size:1.35rem;
+  font-weight:900;
+  text-align:center;
+}
+
+.history-analysis__stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:13px;
+}
+
+.history-analysis__stats div{
+  padding:11px;
+  border:2px solid #eef2f7;
+  border-radius:14px;
+  background:white;
+  text-align:center;
+}
+
+.history-analysis__stats strong,
+.history-analysis__stats span{
+  display:block;
+}
+
+.history-analysis__stats strong{
+  color:#5b21b6;
+  font-size:1.25rem;
+}
+
+.history-analysis__stats span{
+  color:#64748b;
+  font-size:.75rem;
+  font-weight:800;
+}
+
+.history-analysis__message{
+  margin:13px 0 0;
+  color:#475569;
+  font-weight:800;
+  line-height:1.5;
+}
+
+.history-analysis__details{
+  margin-top:13px;
+}
+
+.history-analysis__details summary,
+.history-section summary,
+.history-family-versions summary{
+  cursor:pointer;
+  color:#0369a1;
+  font-weight:900;
+}
+
+.history-word-map{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:13px;
+  padding:13px;
+  border:2px solid #e2e8f0;
+  border-radius:16px;
+  background:#f8fafc;
+}
+
+.history-text-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.history-text-pair > div{
+  padding:13px;
+  border:2px solid #e2e8f0;
+  border-radius:16px;
+  background:white;
+}
+
+.history-text-pair h4{
+  margin:0 0 7px;
+}
+
+.history-text-pair p{
+  margin:0;
+  color:#475569;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+.history-section{
+  margin-top:13px;
+  border:2px solid #e2e8f0;
+  border-radius:18px;
+  background:#fff;
+  overflow:hidden;
+}
+
+.history-section > summary{
+  padding:14px 15px;
+  background:#f8fafc;
+}
+
+.history-section__content{
+  padding:15px;
+}
+
+.history-help{
+  margin-top:0;
+  color:#64748b;
+  font-weight:700;
+  line-height:1.5;
+}
+
+.history-family-editor{
+  min-height:105px;
+  resize:vertical;
+  background:#fff;
+}
+
+.history-family-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:10px;
+}
+
+.history-family-versions{
+  margin-top:14px;
+  padding-top:13px;
+  border-top:2px solid #eef2f7;
+}
+
+.history-family-timeline{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+
+.history-family-timeline article{
+  padding:12px 14px;
+  border-left:5px solid #38bdf8;
+  border-radius:0 14px 14px 0;
+  background:#f0f9ff;
+}
+
+.history-family-timeline time{
+  color:#0369a1;
+  font-size:.78rem;
+  font-weight:900;
+}
+
+.history-family-timeline p{
+  margin:5px 0 0;
+  color:#334155;
+  font-weight:700;
+  white-space:pre-wrap;
+}
+
+.history-family-empty{
+  color:#64748b;
+  font-weight:700;
+}
+
+.history-all-data h4{
+  margin:15px 0 5px;
+}
+
+.history-all-data h4:first-child{
+  margin-top:0;
+}
+
+.history-all-data p{
+  margin:0;
+  color:#475569;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+@media(max-width:680px){
+  .history-card__header,
+  .history-analysis__header{
+    flex-direction:column;
+  }
+
+  .history-analysis__stats,
+  .history-text-pair{
+    grid-template-columns:1fr;
+  }
+
+  .history-family-actions .btn{
+    width:100%;
+  }
+}

@@ -654,6 +654,10 @@
           </div>
         </div>
 
+        <div id="liaCoachMessage" class="lia-coach-message" role="status" aria-live="polite">
+          🦜 Estoy preparada. Lee con calma y recuerda: puedes detenerte y volver a empezar cuando quieras.
+        </div>
+
         <div class="actions lia-recording-actions">
           <button class="btn primary" id="recordButton">🎤 Leer para Lía</button>
 
@@ -717,7 +721,10 @@
               <h3>🔎 Lo que leí y lo que Lía entendió</h3>
             </div>
 
-            <div id="comparisonScore" class="lia-score">—</div>
+            <div class="lia-score-group">
+              <div id="attemptBadge" class="lia-attempt-badge">Intento 1</div>
+              <div id="comparisonScore" class="lia-score">—</div>
+            </div>
           </div>
 
           <p id="comparisonMessage" class="lia-comparison__message"></p>
@@ -735,6 +742,14 @@
               <strong id="readingPace">—</strong>
               <span>palabras por minuto</span>
             </div>
+          </div>
+
+          <div class="lia-word-map">
+            <h4>🎨 Mapa de palabras</h4>
+            <p class="lia-word-map__help">
+              Verde: Lía la reconoció. Amarillo: conviene revisarla. Azul: apareció una palabra diferente.
+            </p>
+            <div id="wordComparisonMap" class="lia-word-map__content"></div>
           </div>
 
           <details class="lia-comparison__details">

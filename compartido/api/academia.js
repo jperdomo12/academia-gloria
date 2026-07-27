@@ -438,6 +438,12 @@ function normalizarSesionLectura(sesion = {}) {
     mimeType: String(sesion.mimeType ?? "audio/webm").trim(),
     duracion: Number(sesion.duracion ?? 0),
     transcripcion: String(sesion.transcripcion ?? "").trim(),
+    observacionFamilia: String(sesion.observacionFamilia ?? "").trim(),
+    intentos: Math.max(0, Number(sesion.intentos ?? 0)),
+    analisisLectura:
+      sesion.analisisLectura && typeof sesion.analisisLectura === "object"
+        ? sesion.analisisLectura
+        : {},
     respuestas: sesion.respuestas ?? {},
     reflexion: String(sesion.reflexion ?? "").trim(),
     fraseDelDia: String(sesion.fraseDelDia ?? "").trim(),
@@ -484,6 +490,59 @@ async function leerSesionesLectura() {
     id: documento.id,
     ...documento.data()
   }));
+}
+
+
+async function actualizarObservacionSesionLectura(
+  historiaId,
+  observacionFamilia
+) {
+  const id = String(historiaId ?? "").trim();
+
+  if (!id) {
+    throw new Error("Falta el identificador de la aventura.");
+  }
+
+  const observacion = String(observacionFamilia ?? "").trim();
+  const referencia = doc(
+    db,
+    "usuarios",
+    obtenerUID(),
+    "sesionesLectura",
+    id
+  );
+
+  const existente = await getDoc(referencia);
+
+  if (!existente.exists()) {
+    throw new Error("No se encontró la lectura guardada.");
+  }
+
+  const datosActuales = existente.data();
+  const historialActual = Array.isArray(datosActuales.historialObservacionesFamilia)
+    ? datosActuales.historialObservacionesFamilia
+    : [];
+
+  const ultimaObservacion =
+    String(datosActuales.observacionFamilia ?? "").trim();
+
+  const historialNuevo =
+    observacion && observacion !== ultimaObservacion
+      ? [
+          ...historialActual,
+          {
+            texto: observacion,
+            fecha: new Date().toISOString()
+          }
+        ]
+      : historialActual;
+
+  await updateDoc(referencia, {
+    observacionFamilia: observacion,
+    historialObservacionesFamilia: historialNuevo,
+    observacionActualizadaEn: serverTimestamp(),
+    actualizadaEn: serverTimestamp()
+  });
 }
 
 
@@ -547,6 +606,7 @@ export const Academia = Object.freeze({
   rinconLectura: Object.freeze({
     guardarSesion: guardarSesionLectura,
     leerSesiones: leerSesionesLectura,
+    actualizarObservacion: actualizarObservacionSesionLectura,
     eliminarSesion: eliminarSesionLectura
   })
 });

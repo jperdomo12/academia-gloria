@@ -487,6 +487,23 @@ async function leerSesionesLectura() {
 }
 
 
+async function eliminarSesionLectura(historiaId) {
+  if (!historiaId) {
+    throw new Error("Falta el identificador de la aventura.");
+  }
+
+  await deleteDoc(
+    doc(
+      db,
+      "usuarios",
+      obtenerUID(),
+      "sesionesLectura",
+      historiaId
+    )
+  );
+}
+
+
 /**
  * API actual, compatible con la prueba existente.
  */
@@ -529,6 +546,7 @@ export const Academia = Object.freeze({
 
   rinconLectura: Object.freeze({
     guardarSesion: guardarSesionLectura,
-    leerSesiones: leerSesionesLectura
+    leerSesiones: leerSesionesLectura,
+    eliminarSesion: eliminarSesionLectura
   })
 });
