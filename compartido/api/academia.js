@@ -641,6 +641,7 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
     prioridad: ["baja", "normal", "alta"].includes(tarea.prioridad)
       ? tarea.prioridad
       : "normal",
+    visibleParaAlumno: tarea.visibleParaAlumno !== false,
     estado: estadosValidos.has(tarea.estado)
       ? tarea.estado
       : "pendiente",
@@ -658,9 +659,13 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
         tarea.titulo ??
         "Nueva misión"
       ).trim(),
+      descripcionMision: String(
+        tarea.presentacionAlumno?.descripcionMision ??
+        tarea.descripcion ??
+        ""
+      ).trim(),
       mensaje: String(
-        tarea.presentacionAlumno?.mensaje ??
-        "Lía tiene una nueva aventura esperando para ti."
+        tarea.presentacionAlumno?.mensaje ?? ""
       ).trim(),
       icono: String(
         tarea.presentacionAlumno?.icono ?? "🌟"
@@ -753,7 +758,72 @@ function observarTareas(callback, onError = console.error) {
 }
 
 async function actualizarTarea(id, cambios = {}) {
-  const datos = normalizarTarea(cambios, { parcial: true });
+  const permitidos = new Set([
+    "titulo",
+    "descripcion",
+    "tipo",
+    "modulo",
+    "destinoUrl",
+    "objetivo",
+    "criterioFinalizacion",
+    "fechaInicio",
+    "fechaLimite",
+    "tiempoEstimadoMinutos",
+    "prioridad",
+    "estado",
+    "visibleParaAlumno",
+    "asignadaPor",
+    "presentacionAlumno",
+    "progreso",
+    "evidencia",
+    "observacionActual",
+    "historialObservaciones"
+  ]);
+
+  const datos = {};
+
+  Object.entries(cambios).forEach(([clave, valor]) => {
+    if (permitidos.has(clave) && valor !== undefined) {
+      datos[clave] = valor;
+    }
+  });
+
+  if ("titulo" in datos) {
+    datos.titulo = String(datos.titulo ?? "").trim();
+
+    if (!datos.titulo) {
+      throw new Error("La tarea debe tener un título.");
+    }
+  }
+
+  if ("descripcion" in datos) {
+    datos.descripcion = String(datos.descripcion ?? "").trim();
+  }
+
+  if ("visibleParaAlumno" in datos) {
+    datos.visibleParaAlumno = datos.visibleParaAlumno !== false;
+  }
+
+  if ("tiempoEstimadoMinutos" in datos) {
+    const minutos = Number(datos.tiempoEstimadoMinutos);
+    datos.tiempoEstimadoMinutos =
+      Number.isFinite(minutos) ? Math.max(0, minutos) : 0;
+  }
+
+  if ("presentacionAlumno" in datos) {
+    const presentacion = datos.presentacionAlumno || {};
+
+    datos.presentacionAlumno = {
+      icono: String(presentacion.icono ?? "🌟").trim() || "🌟",
+      tituloMision: String(
+        presentacion.tituloMision ?? datos.titulo ?? "Nueva misión"
+      ).trim(),
+      descripcionMision: String(
+        presentacion.descripcionMision ?? datos.descripcion ?? ""
+      ).trim(),
+      mensaje: String(presentacion.mensaje ?? "").trim()
+    };
+  }
 
   await updateDoc(documentoTarea(id), {
     ...datos,

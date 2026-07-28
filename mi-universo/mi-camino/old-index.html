@@ -947,6 +947,20 @@
       font-weight:900;
     }
 
+    .estado-preparacion{display:inline-flex;align-items:center;gap:7px;margin-bottom:13px;padding:7px 11px;border:2px solid #fde68a;border-radius:999px;background:#fffbeb;color:#92400e;font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+    .estado-preparacion--violeta{border-color:#ddd6fe;background:#faf5ff;color:#6d28d9}
+    .aviso-datos-ejemplo{margin:0 0 15px;padding:11px 13px;border:2px dashed #cbd5e1;border-radius:15px;background:rgba(255,255,255,.8);color:#64748b;font-size:.82rem;font-weight:800;line-height:1.45}
+    .tareas-resumen-bloque{margin-top:14px}
+    .tareas-resumen-bloque:first-of-type{margin-top:0}
+    .tareas-resumen-titulo{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 9px;color:#92400e;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+    .tareas-resumen-titulo span{min-width:26px;padding:3px 8px;border-radius:999px;background:#fef3c7;text-align:center}
+    .tarea-mini--completada{border-color:#bbf7d0;background:#f0fdf4}
+    .tarea-mini--completada .tarea-mini__estado{background:#dcfce7}
+    .tareas-vacias{padding:13px;border:2px dashed #dbe2ea;border-radius:15px;background:rgba(255,255,255,.76);color:#64748b;font-size:.86rem;font-weight:800;line-height:1.45}
+    .seguimiento-card__acciones{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+    .seguimiento-card__boton{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;border-radius:13px;color:#92400e;background:#fef3c7;text-decoration:none;font-size:.84rem;font-weight:900}
+    .seguimiento-card__boton--secundario{color:#475569;background:#f1f5f9}
+
     .seguimiento-card{
       position:relative;
     }
@@ -1163,6 +1177,8 @@
     <div class="barra-superior">
       <a
         id="botonVolver"
+        data-volver-modulo
+        data-ruta-alternativa="../"
         href="../"
         class="boton-regreso"
         aria-label="Volver a la página anterior"
@@ -1320,8 +1336,8 @@
         <div id="misionesHoy" class="misiones-hoy">
           <div class="mision-hoy mision-hoy--cargando">
             <span class="mision-hoy__icono">🦜</span>
-            <strong>Lía está preparando tus misiones...</strong>
-            <p>En unos segundos aparecerán las tareas creadas para ti.</p>
+            <strong>Lía está revisando tu camino...</strong>
+            <p>En unos segundos aparecerán las misiones visibles que la familia ha preparado para ti.</p>
           </div>
         </div>
 
@@ -1343,9 +1359,6 @@
 
     <section class="seguimiento-grid">
       <article class="superficie seguimiento-card seguimiento-card--tareas">
-        <a class="seguimiento-card__enlace" href="../mis-tareas/">
-          Gestionar tareas →
-        </a>
         <div class="seguimiento-card__cabecera">
           <div class="seguimiento-card__icono">📌</div>
           <div>
@@ -1354,18 +1367,39 @@
           </div>
         </div>
 
-        <div id="resumenTareas" class="tarea-lista">
-          <div class="tarea-mini">
-            <div class="tarea-mini__estado">🦜</div>
-            <div>
-              <strong>Cargando tareas...</strong>
-              <small>Preparando tu seguimiento</small>
+        <section class="tareas-resumen-bloque">
+          <div class="tareas-resumen-titulo">
+            <strong>🌱 Activas</strong>
+            <span id="contadorTareasActivas">0</span>
+          </div>
+          <div id="resumenTareasActivas" class="tarea-lista">
+            <div class="tarea-mini">
+              <div class="tarea-mini__estado">🦜</div>
+              <div>
+                <strong>Lía está revisando tus tareas...</strong>
+                <small>Preparando tu seguimiento</small>
+              </div>
             </div>
           </div>
+        </section>
+
+        <section class="tareas-resumen-bloque">
+          <div class="tareas-resumen-titulo">
+            <strong>✅ Completadas recientemente</strong>
+            <span id="contadorTareasCompletadas">0</span>
+          </div>
+          <div id="resumenTareasCompletadas" class="tarea-lista">
+            <div class="tareas-vacias">Las tareas completadas recientemente aparecerán aquí.</div>
+          </div>
+        </section>
+
+        <div class="seguimiento-card__acciones">
+          <a class="seguimiento-card__boton" href="../mis-tareas/">📋 Ver todas las tareas</a>
+          <a class="seguimiento-card__boton seguimiento-card__boton--secundario" href="../mis-tareas/?vista=crear">➕ Crear una tarea</a>
         </div>
 
         <div class="seguimiento-card__pie">
-          ✨ Próximamente podrás ver y organizar todas tus tareas.
+          ✨ Las tareas completadas permanecen disponibles para revisar tu camino.
         </div>
       </article>
 
@@ -1378,6 +1412,10 @@
           </div>
         </div>
 
+        <div class="estado-preparacion estado-preparacion--violeta">🚧 En preparación</div>
+        <p class="aviso-datos-ejemplo">
+          Los logros que ves debajo son ejemplos visuales. Todavía no se calculan automáticamente con las actividades reales.
+        </p>
         <div class="logros-mini">
           <div class="logro-mini">
             <span>📖</span>
@@ -1414,6 +1452,10 @@
           </div>
         </div>
 
+        <div class="estado-preparacion">🚧 En preparación</div>
+        <p class="aviso-datos-ejemplo">
+          Los días marcados son ejemplos de diseño. La constancia real se conectará más adelante con actividades significativas de la Academia.
+        </p>
         <div class="constancia-semana" aria-label="Ejemplo visual de constancia semanal">
           <div class="constancia-dia activo">L<span></span></div>
           <div class="constancia-dia activo">M<span></span></div>
@@ -1438,7 +1480,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Tareas reales MVP 1.0
+      Academia Gloria Valentina · Mi Camino · Seguimiento MVP 1.1
     </footer>
 
   </main>
@@ -1446,6 +1488,8 @@
   <script>
     lucide.createIcons();
   </script>
+
+  <script src="../../compartido/js/navegacion.js"></script>
 
   <script type="module">
     import { protegerPagina } from
@@ -1459,45 +1503,6 @@
 
     import { Academia } from
       "../../compartido/api/academia.js";
-
-    function obtenerBaseAcademia() {
-      return window.location.hostname.endsWith("github.io")
-        ? "/academia-gloria"
-        : "";
-    }
-
-    function obtenerRutaRetornoSegura() {
-      const parametros = new URLSearchParams(window.location.search);
-      const volver = parametros.get("volver");
-      const base = obtenerBaseAcademia();
-
-      if (!volver) {
-        return `${base}/mi-universo/`;
-      }
-
-      try {
-        const destino = new URL(volver, window.location.origin);
-
-        if (destino.origin !== window.location.origin) {
-          return `${base}/mi-universo/`;
-        }
-
-        const ruta = `${destino.pathname}${destino.search}${destino.hash}`;
-
-        if (base && !destino.pathname.startsWith(`${base}/`)) {
-          return `${base}/mi-universo/`;
-        }
-
-        if (!base && destino.pathname.startsWith("/academia-gloria/")) {
-          return "/mi-universo/";
-        }
-
-        return ruta;
-      } catch (error) {
-        console.warn("Ruta de retorno no válida.", error);
-        return `${base}/mi-universo/`;
-      }
-    }
 
     const DESTINOS_TAREA = Object.freeze({
       "rincon-lectura": "../rincon-lectura/",
@@ -1547,8 +1552,13 @@
       }).format(fecha);
     }
 
+    function esVisibleComoMision(tarea = {}) {
+      return tarea.visibleParaAlumno !== false;
+    }
+
     function tareasActivas(tareas = []) {
       return tareas.filter(tarea =>
+        esVisibleComoMision(tarea) &&
         !["completada", "cancelada"].includes(tarea.estado)
       );
     }
@@ -1640,31 +1650,24 @@
       });
     }
 
-    function renderResumenTareas(tareas = []) {
-      const contenedor = document.getElementById("resumenTareas");
+    function renderListaResumenTareas(contenedor, tareas, { completadas = false } = {}) {
       if (!contenedor) return;
 
-      const seleccion = tareas
-        .filter(tarea => tarea.estado !== "cancelada")
-        .slice(0, 3);
-
-      if (!seleccion.length) {
+      if (!tareas.length) {
         contenedor.innerHTML = `
-          <div class="tarea-mini">
-            <div class="tarea-mini__estado">🌱</div>
-            <div>
-              <strong>Tu camino está preparado</strong>
-              <small>Aún no hay tareas registradas</small>
-            </div>
+          <div class="tareas-vacias">
+            ${completadas
+              ? "Aún no hay tareas completadas para mostrar."
+              : "No hay tareas activas en este momento."}
           </div>
         `;
         return;
       }
 
-      contenedor.innerHTML = seleccion.map(tarea => `
-        <div class="tarea-mini">
+      contenedor.innerHTML = tareas.map(tarea => `
+        <div class="tarea-mini ${completadas ? "tarea-mini--completada" : ""}">
           <div class="tarea-mini__estado">
-            ${escaparHTML(tarea.presentacionAlumno?.icono || "🌟")}
+            ${escaparHTML(tarea.presentacionAlumno?.icono || (completadas ? "✅" : "🌟"))}
           </div>
           <div>
             <strong>${escaparHTML(tarea.titulo || "Tarea")}</strong>
@@ -1675,6 +1678,32 @@
           </div>
         </div>
       `).join("");
+    }
+
+    function renderResumenTareas(tareas = []) {
+      const activasTodas = tareas.filter(tarea =>
+        !["completada", "cancelada"].includes(tarea.estado)
+      );
+      const completadasTodas = tareas.filter(tarea =>
+        tarea.estado === "completada"
+      );
+
+      const contadorActivas = document.getElementById("contadorTareasActivas");
+      const contadorCompletadas = document.getElementById("contadorTareasCompletadas");
+
+      if (contadorActivas) contadorActivas.textContent = String(activasTodas.length);
+      if (contadorCompletadas) contadorCompletadas.textContent = String(completadasTodas.length);
+
+      renderListaResumenTareas(
+        document.getElementById("resumenTareasActivas"),
+        activasTodas.slice(0, 3)
+      );
+
+      renderListaResumenTareas(
+        document.getElementById("resumenTareasCompletadas"),
+        completadasTodas.slice(0, 2),
+        { completadas: true }
+      );
     }
 
     function iniciarTareasEnTiempoReal() {
@@ -1746,8 +1775,6 @@
           `${nombreVisible}, ${mensaje.charAt(0).toLowerCase()}${mensaje.slice(1)}`;
       }
     }
-
-    configurarBotonVolver();
 
     protegerPagina({
       loginUrl:"../../login.html",
