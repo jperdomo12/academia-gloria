@@ -1163,6 +1163,8 @@
     <div class="barra-superior">
       <a
         id="botonVolver"
+        data-volver-modulo
+        data-ruta-alternativa="../"
         href="../"
         class="boton-regreso"
         aria-label="Volver a la página anterior"
@@ -1447,6 +1449,8 @@
     lucide.createIcons();
   </script>
 
+  <script src="../../compartido/js/navegacion.js"></script>
+
   <script type="module">
     import { protegerPagina } from
       "../../compartido/js/auth-guard.js";
@@ -1459,259 +1463,6 @@
 
     import { Academia } from
       "../../compartido/api/academia.js";
-
-    function obtenerBaseAcademia() {
-      return window.location.hostname.endsWith("github.io")
-        ? "/academia-gloria"
-        : "";
-    }
-
-    function obtenerRutaRetornoSegura() {
-      const parametros = new URLSearchParams(window.location.search);
-      const volver = parametros.get("volver");
-      const base = obtenerBaseAcademia();
-
-      if (!volver) {
-        return `${base}/mi-universo/`;
-      }
-
-      try {
-        const destino = new URL(volver, window.location.origin);
-
-        if (destino.origin !== window.location.origin) {
-          return `${base}/mi-universo/`;
-        }
-
-        const ruta = `${destino.pathname}${destino.search}${destino.hash}`;
-
-        if (base && !destino.pathname.startsWith(`${base}/`)) {
-          return `${base}/mi-universo/`;
-        }
-
-        if (!base && destino.pathname.startsWith("/academia-gloria/")) {
-          return "/mi-universo/";
-        }
-
-        return ruta;
-      } catch (error) {
-        console.warn("Ruta de retorno no válida.", error);
-        return `${base}/mi-universo/`;
-      }
-    }
-
-    const DESTINOS_TAREA = Object.freeze({
-      "rincon-lectura": "../rincon-lectura/",
-      detectives: "../aventuras-matematicas/detectives/",
-      biblioteca: "../biblioteca/",
-      libre: "../mis-tareas/"
-    });
-
-    function escaparHTML(valor = "") {
-      return String(valor)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function textoEstadoTarea(estado) {
-      return {
-        pendiente: "🌱 Preparada",
-        en_curso: "▶️ En aventura",
-        completada_pendiente_validacion: "✨ Por validar",
-        completada: "✅ Conseguida",
-        necesita_ayuda: "🤝 Necesita ayuda",
-        vencida: "🌿 Retomable"
-      }[estado] || "🌱 Preparada";
-    }
-
-    function claseEstadoMision(estado) {
-      if (estado === "en_curso") return "mision-hoy__estado--curso";
-      if (estado === "necesita_ayuda") return "mision-hoy__estado--ayuda";
-      return "";
-    }
-
-    function fechaCorta(valor) {
-      if (!valor) return "Sin fecha límite";
-
-      const fecha = new Date(`${valor}T12:00:00`);
-
-      if (Number.isNaN(fecha.getTime())) {
-        return valor;
-      }
-
-      return new Intl.DateTimeFormat("es-ES", {
-        day: "numeric",
-        month: "short"
-      }).format(fecha);
-    }
-
-    function tareasActivas(tareas = []) {
-      return tareas.filter(tarea =>
-        !["completada", "cancelada"].includes(tarea.estado)
-      );
-    }
-
-    function renderMisiones(tareas = []) {
-      const contenedor = document.getElementById("misionesHoy");
-      if (!contenedor) return;
-
-      const activas = tareasActivas(tareas).slice(0, 3);
-
-      if (!activas.length) {
-        contenedor.innerHTML = `
-          <div class="mision-vacia">
-            <strong>🌈 No hay misiones pendientes</strong>
-            <p>
-              La familia puede preparar una nueva tarea desde Mis Tareas.
-            </p>
-            <a href="../mis-tareas/">Crear una misión →</a>
-          </div>
-        `;
-        return;
-      }
-
-      contenedor.innerHTML = activas.map(tarea => {
-        const presentacion = tarea.presentacionAlumno || {};
-        const destino =
-          tarea.destinoUrl ||
-          DESTINOS_TAREA[tarea.modulo] ||
-          "../mis-tareas/";
-        const icono = presentacion.icono || "🌟";
-        const titulo =
-          presentacion.tituloMision ||
-          tarea.titulo ||
-          "Nueva misión";
-        const mensaje =
-          presentacion.mensaje ||
-          tarea.descripcion ||
-          "Lía tiene una nueva aventura esperando para ti.";
-        const estado = textoEstadoTarea(tarea.estado);
-        const claseEstado = claseEstadoMision(tarea.estado);
-        const tiempo = Number(tarea.tiempoEstimadoMinutos || 0);
-
-        return `
-          <a
-            class="mision-hoy"
-            href="${escaparHTML(destino)}"
-            data-tarea-id="${escaparHTML(tarea.id)}"
-          >
-            <span class="mision-hoy__icono">${escaparHTML(icono)}</span>
-            <strong>${escaparHTML(titulo)}</strong>
-            <p>${escaparHTML(mensaje)}</p>
-
-            <div class="mision-hoy__meta">
-              ${
-                tiempo
-                  ? `<span>⏱️ ${tiempo} min</span>`
-                  : ""
-              }
-              <span>📅 ${escaparHTML(fechaCorta(tarea.fechaLimite))}</span>
-              <span class="${claseEstado}">${escaparHTML(estado)}</span>
-            </div>
-
-            <span class="mision-hoy__accion">
-              ${tarea.estado === "en_curso" ? "Continuar misión" : "Comenzar misión"} →
-            </span>
-          </a>
-        `;
-      }).join("");
-
-      contenedor.querySelectorAll("[data-tarea-id]").forEach(enlace => {
-        enlace.addEventListener("click", async evento => {
-          const id = enlace.dataset.tareaId;
-          const tarea = tareas.find(item => item.id === id);
-
-          if (!tarea || tarea.estado !== "pendiente") {
-            return;
-          }
-
-          evento.preventDefault();
-
-          try {
-            await Academia.tareas.cambiarEstado(id, "en_curso");
-          } catch (error) {
-            console.warn("No se pudo iniciar la tarea.", error);
-          }
-
-          window.location.href = enlace.href;
-        });
-      });
-    }
-
-    function renderResumenTareas(tareas = []) {
-      const contenedor = document.getElementById("resumenTareas");
-      if (!contenedor) return;
-
-      const seleccion = tareas
-        .filter(tarea => tarea.estado !== "cancelada")
-        .slice(0, 3);
-
-      if (!seleccion.length) {
-        contenedor.innerHTML = `
-          <div class="tarea-mini">
-            <div class="tarea-mini__estado">🌱</div>
-            <div>
-              <strong>Tu camino está preparado</strong>
-              <small>Aún no hay tareas registradas</small>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      contenedor.innerHTML = seleccion.map(tarea => `
-        <div class="tarea-mini">
-          <div class="tarea-mini__estado">
-            ${escaparHTML(tarea.presentacionAlumno?.icono || "🌟")}
-          </div>
-          <div>
-            <strong>${escaparHTML(tarea.titulo || "Tarea")}</strong>
-            <small>
-              ${escaparHTML(textoEstadoTarea(tarea.estado))}
-              · ${escaparHTML(fechaCorta(tarea.fechaLimite))}
-            </small>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function iniciarTareasEnTiempoReal() {
-      return Academia.tareas.observar(
-        tareas => {
-          renderMisiones(tareas);
-          renderResumenTareas(tareas);
-        },
-        error => {
-          console.error("No se pudieron cargar las tareas.", error);
-
-          const misiones = document.getElementById("misionesHoy");
-          if (misiones) {
-            misiones.innerHTML = `
-              <div class="mision-vacia">
-                <strong>🦜 Lía no pudo cargar las misiones</strong>
-                <p>Puedes volver a intentarlo recargando la página.</p>
-              </div>
-            `;
-          }
-        }
-      );
-    }
-
-    function configurarBotonVolver() {
-      const boton = document.getElementById("botonVolver");
-      const texto = document.getElementById("textoBotonVolver");
-
-      if (!boton) return;
-
-      const destino = obtenerRutaRetornoSegura();
-      boton.href = destino;
-
-      if (texto) {
-        texto.textContent = "Volver";
-      }
-    }
 
     const MENSAJES = [
       "Hoy también es un buen día para descubrir todo lo que eres capaz de hacer.",
@@ -1746,8 +1497,6 @@
           `${nombreVisible}, ${mensaje.charAt(0).toLowerCase()}${mensaje.slice(1)}`;
       }
     }
-
-    configurarBotonVolver();
 
     protegerPagina({
       loginUrl:"../../login.html",

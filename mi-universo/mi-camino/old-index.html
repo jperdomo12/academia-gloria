@@ -947,6 +947,72 @@
       font-weight:900;
     }
 
+    .seguimiento-card{
+      position:relative;
+    }
+
+    .seguimiento-card__enlace{
+      position:absolute;
+      top:20px;
+      right:20px;
+      color:#92400e;
+      font-size:.82rem;
+      font-weight:900;
+      text-decoration:none;
+    }
+
+    .mision-hoy--cargando{
+      grid-column:1 / -1;
+      min-height:150px;
+    }
+
+    .mision-hoy__estado--curso{
+      color:#075985!important;
+      background:#e0f2fe!important;
+    }
+
+    .mision-hoy__estado--ayuda{
+      color:#9f1239!important;
+      background:#ffe4e6!important;
+    }
+
+    .mision-vacia{
+      grid-column:1 / -1;
+      padding:22px;
+      border:2px dashed #c4b5fd;
+      border-radius:20px;
+      background:#faf5ff;
+      text-align:center;
+    }
+
+    .mision-vacia strong{
+      display:block;
+      color:#5b21b6;
+      font-size:1.2rem;
+    }
+
+    .mision-vacia p{
+      margin:7px 0 14px;
+    }
+
+    .mision-vacia a{
+      display:inline-flex;
+      padding:9px 13px;
+      border-radius:13px;
+      color:white;
+      background:#7c3aed;
+      text-decoration:none;
+      font-weight:900;
+    }
+
+    @media(max-width:680px){
+      .seguimiento-card__enlace{
+        position:static;
+        display:inline-flex;
+        margin-bottom:14px;
+      }
+    }
+
     .seguimiento-card--tareas{
       border-color:#fde68a;
       background:linear-gradient(135deg,#fffbeb,#fff);
@@ -1251,45 +1317,12 @@
           al lugar donde se realiza.
         </p>
 
-        <div class="misiones-hoy">
-          <a class="mision-hoy" href="../rincon-lectura/">
-            <span class="mision-hoy__icono">📖</span>
-            <strong>Misión de lectura</strong>
-            <p>Lee una historia, escucha tu voz y cuéntasela a Lía.</p>
-
-            <div class="mision-hoy__meta">
-              <span>⏱️ 10–15 min</span>
-              <span>🌱 Preparada</span>
-            </div>
-
-            <span class="mision-hoy__accion">Comenzar misión →</span>
-          </a>
-
-          <a class="mision-hoy" href="../aventuras-matematicas/detectives/">
-            <span class="mision-hoy__icono">🧩</span>
-            <strong>Misión detective</strong>
-            <p>Lee las pistas y descubre la operación escondida.</p>
-
-            <div class="mision-hoy__meta">
-              <span>⏱️ 8–10 min</span>
-              <span>🌱 Preparada</span>
-            </div>
-
-            <span class="mision-hoy__accion">Resolver misión →</span>
-          </a>
-
-          <a class="mision-hoy" href="../biblioteca/">
-            <span class="mision-hoy__icono">🎙️</span>
-            <strong>Misión para contar</strong>
-            <p>Elige un libro y cuéntale a Lía lo que más te gustó.</p>
-
-            <div class="mision-hoy__meta">
-              <span>⏱️ 10 min</span>
-              <span>🌱 Preparada</span>
-            </div>
-
-            <span class="mision-hoy__accion">Contárselo a Lía →</span>
-          </a>
+        <div id="misionesHoy" class="misiones-hoy">
+          <div class="mision-hoy mision-hoy--cargando">
+            <span class="mision-hoy__icono">🦜</span>
+            <strong>Lía está preparando tus misiones...</strong>
+            <p>En unos segundos aparecerán las tareas creadas para ti.</p>
+          </div>
         </div>
 
         <div class="proxima-estrella">
@@ -1310,6 +1343,9 @@
 
     <section class="seguimiento-grid">
       <article class="superficie seguimiento-card seguimiento-card--tareas">
+        <a class="seguimiento-card__enlace" href="../mis-tareas/">
+          Gestionar tareas →
+        </a>
         <div class="seguimiento-card__cabecera">
           <div class="seguimiento-card__icono">📌</div>
           <div>
@@ -1318,28 +1354,12 @@
           </div>
         </div>
 
-        <div class="tarea-lista">
+        <div id="resumenTareas" class="tarea-lista">
           <div class="tarea-mini">
-            <div class="tarea-mini__estado">🌱</div>
+            <div class="tarea-mini__estado">🦜</div>
             <div>
-              <strong>Leer una historia</strong>
-              <small>Preparada · Antes del domingo</small>
-            </div>
-          </div>
-
-          <div class="tarea-mini">
-            <div class="tarea-mini__estado">▶️</div>
-            <div>
-              <strong>Resolver un caso</strong>
-              <small>En aventura</small>
-            </div>
-          </div>
-
-          <div class="tarea-mini">
-            <div class="tarea-mini__estado">✅</div>
-            <div>
-              <strong>Contarle un libro a Lía</strong>
-              <small>Conseguida</small>
+              <strong>Cargando tareas...</strong>
+              <small>Preparando tu seguimiento</small>
             </div>
           </div>
         </div>
@@ -1418,7 +1438,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Versión visual 3.0
+      Academia Gloria Valentina · Mi Camino · Tareas reales MVP 1.0
     </footer>
 
   </main>
@@ -1436,6 +1456,9 @@
 
     import { obtenerPerfil } from
       "../../compartido/js/perfil-usuario.js";
+
+    import { Academia } from
+      "../../compartido/api/academia.js";
 
     function obtenerBaseAcademia() {
       return window.location.hostname.endsWith("github.io")
@@ -1474,6 +1497,206 @@
         console.warn("Ruta de retorno no válida.", error);
         return `${base}/mi-universo/`;
       }
+    }
+
+    const DESTINOS_TAREA = Object.freeze({
+      "rincon-lectura": "../rincon-lectura/",
+      detectives: "../aventuras-matematicas/detectives/",
+      biblioteca: "../biblioteca/",
+      libre: "../mis-tareas/"
+    });
+
+    function escaparHTML(valor = "") {
+      return String(valor)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function textoEstadoTarea(estado) {
+      return {
+        pendiente: "🌱 Preparada",
+        en_curso: "▶️ En aventura",
+        completada_pendiente_validacion: "✨ Por validar",
+        completada: "✅ Conseguida",
+        necesita_ayuda: "🤝 Necesita ayuda",
+        vencida: "🌿 Retomable"
+      }[estado] || "🌱 Preparada";
+    }
+
+    function claseEstadoMision(estado) {
+      if (estado === "en_curso") return "mision-hoy__estado--curso";
+      if (estado === "necesita_ayuda") return "mision-hoy__estado--ayuda";
+      return "";
+    }
+
+    function fechaCorta(valor) {
+      if (!valor) return "Sin fecha límite";
+
+      const fecha = new Date(`${valor}T12:00:00`);
+
+      if (Number.isNaN(fecha.getTime())) {
+        return valor;
+      }
+
+      return new Intl.DateTimeFormat("es-ES", {
+        day: "numeric",
+        month: "short"
+      }).format(fecha);
+    }
+
+    function tareasActivas(tareas = []) {
+      return tareas.filter(tarea =>
+        !["completada", "cancelada"].includes(tarea.estado)
+      );
+    }
+
+    function renderMisiones(tareas = []) {
+      const contenedor = document.getElementById("misionesHoy");
+      if (!contenedor) return;
+
+      const activas = tareasActivas(tareas).slice(0, 3);
+
+      if (!activas.length) {
+        contenedor.innerHTML = `
+          <div class="mision-vacia">
+            <strong>🌈 No hay misiones pendientes</strong>
+            <p>
+              La familia puede preparar una nueva tarea desde Mis Tareas.
+            </p>
+            <a href="../mis-tareas/">Crear una misión →</a>
+          </div>
+        `;
+        return;
+      }
+
+      contenedor.innerHTML = activas.map(tarea => {
+        const presentacion = tarea.presentacionAlumno || {};
+        const destino =
+          tarea.destinoUrl ||
+          DESTINOS_TAREA[tarea.modulo] ||
+          "../mis-tareas/";
+        const icono = presentacion.icono || "🌟";
+        const titulo =
+          presentacion.tituloMision ||
+          tarea.titulo ||
+          "Nueva misión";
+        const mensaje =
+          presentacion.mensaje ||
+          tarea.descripcion ||
+          "Lía tiene una nueva aventura esperando para ti.";
+        const estado = textoEstadoTarea(tarea.estado);
+        const claseEstado = claseEstadoMision(tarea.estado);
+        const tiempo = Number(tarea.tiempoEstimadoMinutos || 0);
+
+        return `
+          <a
+            class="mision-hoy"
+            href="${escaparHTML(destino)}"
+            data-tarea-id="${escaparHTML(tarea.id)}"
+          >
+            <span class="mision-hoy__icono">${escaparHTML(icono)}</span>
+            <strong>${escaparHTML(titulo)}</strong>
+            <p>${escaparHTML(mensaje)}</p>
+
+            <div class="mision-hoy__meta">
+              ${
+                tiempo
+                  ? `<span>⏱️ ${tiempo} min</span>`
+                  : ""
+              }
+              <span>📅 ${escaparHTML(fechaCorta(tarea.fechaLimite))}</span>
+              <span class="${claseEstado}">${escaparHTML(estado)}</span>
+            </div>
+
+            <span class="mision-hoy__accion">
+              ${tarea.estado === "en_curso" ? "Continuar misión" : "Comenzar misión"} →
+            </span>
+          </a>
+        `;
+      }).join("");
+
+      contenedor.querySelectorAll("[data-tarea-id]").forEach(enlace => {
+        enlace.addEventListener("click", async evento => {
+          const id = enlace.dataset.tareaId;
+          const tarea = tareas.find(item => item.id === id);
+
+          if (!tarea || tarea.estado !== "pendiente") {
+            return;
+          }
+
+          evento.preventDefault();
+
+          try {
+            await Academia.tareas.cambiarEstado(id, "en_curso");
+          } catch (error) {
+            console.warn("No se pudo iniciar la tarea.", error);
+          }
+
+          window.location.href = enlace.href;
+        });
+      });
+    }
+
+    function renderResumenTareas(tareas = []) {
+      const contenedor = document.getElementById("resumenTareas");
+      if (!contenedor) return;
+
+      const seleccion = tareas
+        .filter(tarea => tarea.estado !== "cancelada")
+        .slice(0, 3);
+
+      if (!seleccion.length) {
+        contenedor.innerHTML = `
+          <div class="tarea-mini">
+            <div class="tarea-mini__estado">🌱</div>
+            <div>
+              <strong>Tu camino está preparado</strong>
+              <small>Aún no hay tareas registradas</small>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      contenedor.innerHTML = seleccion.map(tarea => `
+        <div class="tarea-mini">
+          <div class="tarea-mini__estado">
+            ${escaparHTML(tarea.presentacionAlumno?.icono || "🌟")}
+          </div>
+          <div>
+            <strong>${escaparHTML(tarea.titulo || "Tarea")}</strong>
+            <small>
+              ${escaparHTML(textoEstadoTarea(tarea.estado))}
+              · ${escaparHTML(fechaCorta(tarea.fechaLimite))}
+            </small>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function iniciarTareasEnTiempoReal() {
+      return Academia.tareas.observar(
+        tareas => {
+          renderMisiones(tareas);
+          renderResumenTareas(tareas);
+        },
+        error => {
+          console.error("No se pudieron cargar las tareas.", error);
+
+          const misiones = document.getElementById("misionesHoy");
+          if (misiones) {
+            misiones.innerHTML = `
+              <div class="mision-vacia">
+                <strong>🦜 Lía no pudo cargar las misiones</strong>
+                <p>Puedes volver a intentarlo recargando la página.</p>
+              </div>
+            `;
+          }
+        }
+      );
     }
 
     function configurarBotonVolver() {
@@ -1543,6 +1766,8 @@
           mostrarConfiguracion:true,
           mostrarLogros:true
         });
+
+        iniciarTareasEnTiempoReal();
       }
     });
   </script>

@@ -7,12 +7,11 @@
   <title>Mi Universo | Academia Gloria Valentina</title>
   <meta name="description" content="Mi Universo: lectura, escritura, biblioteca, matemáticas, creatividad y nuevas aventuras." />
 
-  <link rel="icon" type="image/png" href="../assets/iconos/icono-principal.png">
-  <link rel="shortcut icon" href="../assets/iconos/icono-principal.png">
-  <link rel="apple-touch-icon" href="../assets/iconos/icono-principal.png">
+  <link rel="icon" type="image/png" href="../iconos/icono-principal.png">
+  <link rel="shortcut icon" href="../iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../iconos/icono-principal.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../compartido/css/panel-usuario.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -71,32 +70,6 @@
       100%{opacity:0;transform:translateY(-95px) scale(1.2) rotate(18deg)}
     }
 
-    .barra-superior-universo{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:14px;
-      margin-bottom:18px;
-    }
-
-    .panel-universo{
-      width:min(285px,100%);
-    }
-
-    .panel-universo .panel-usuario{width:100%;}
-    .panel-universo .panel-usuario__boton{
-      width:100%;
-      min-width:0;
-      background:rgba(255,255,255,.94);
-      border-color:rgba(99,102,241,.18);
-      box-shadow:0 10px 24px rgba(99,102,241,.10);
-    }
-
-    @media(max-width:640px){
-      .barra-superior-universo{flex-direction:column;}
-      .panel-universo{width:100%;}
-    }
-
     .future-card{
       position:relative;
       opacity:.74;
@@ -129,17 +102,13 @@
 <body>
   <main class="max-w-7xl mx-auto p-4 md:p-8">
 
-    <div class="barra-superior-universo">
+    <header class="glass-card rounded-[2.8rem] px-6 py-8 md:px-10 md:py-10 mb-8">
+
       <a href="../index.html"
-         class="inline-flex items-center gap-3 bg-white border-2 border-sky-100 hover:border-sky-300 px-5 py-3 rounded-2xl text-sky-700 font-black shadow-sm hover:shadow-md transition-all">
+         class="inline-flex items-center gap-3 bg-white border-2 border-sky-100 hover:border-sky-300 px-5 py-3 rounded-2xl text-sky-700 font-black shadow-sm hover:shadow-md transition-all mb-6">
         <i data-lucide="home" class="w-5 h-5"></i>
         Volver a la Academia
       </a>
-
-      <div class="panel-universo" data-panel-usuario></div>
-    </div>
-
-    <header class="glass-card rounded-[2.8rem] px-6 py-8 md:px-10 md:py-10 mb-8">
 
       <div class="grid lg:grid-cols-[1.15fr_.85fr] gap-8 items-center">
 
@@ -371,30 +340,6 @@
         setTimeout(()=>elemento.remove(),1500);
       }
     }
-  </script>
-
-  <script type="module">
-    import { protegerPagina } from
-      "../compartido/js/auth-guard.js";
-
-    import { iniciarPanelUsuario } from
-      "../compartido/js/panel-usuario.js";
-
-    protegerPagina({
-      loginUrl:"../login.html",
-      onAuthenticated: async () => {
-        await iniciarPanelUsuario({
-          contenedor:"[data-panel-usuario]",
-          loginUrl:"../login.html",
-          mostrarEspacio:true,
-          mostrarDescubreAcademia:true,
-          mostrarCamino:true,
-          mostrarConfiguracion:true,
-          mostrarLogros:true
-        });
-        lucide.createIcons();
-      }
-    });
   </script>
 </body>
 </html>
