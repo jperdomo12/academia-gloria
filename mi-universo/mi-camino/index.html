@@ -236,31 +236,26 @@
       animation:flotarSuave 3.6s ease-in-out infinite;
     }
 
-    .sendero{
+    .paisaje-camino{
       position:absolute;
-      left:50%;
-      bottom:5px;
-      width:230px;
-      height:225px;
-      transform:translateX(-50%);
-      border-radius:50% 50% 18% 18% / 100% 100% 14% 14%;
-      background:linear-gradient(180deg,#bbf7d0 0%,#4ade80 55%,#15803d 100%);
-      clip-path:polygon(34% 0,66% 0,100% 100%,0 100%);
-      opacity:.96;
-      box-shadow:inset 0 -18px 28px rgba(21,128,61,.16);
+      inset:0;
+      width:100%;
+      height:100%;
+      overflow:visible;
+      filter:drop-shadow(0 18px 22px rgba(15,23,42,.12));
     }
 
-    .sendero::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:0;
-      width:62px;
-      height:100%;
-      transform:translateX(-50%);
-      background:linear-gradient(180deg,#fef3c7,#fdba74);
-      clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);
-      opacity:.96;
+    .paisaje-camino .nube{
+      animation:flotarSuave 5s ease-in-out infinite;
+      transform-origin:center;
+    }
+
+    .paisaje-camino .nube--dos{
+      animation-delay:-2.2s;
+    }
+
+    .paisaje-camino .sendero-svg{
+      filter:drop-shadow(0 5px 5px rgba(120,53,15,.16));
     }
 
     .arbol{
@@ -287,18 +282,19 @@
       filter:drop-shadow(0 12px 16px rgba(15,23,42,.14));
     }
 
-    .guacamaya--uno{
-      left:60px;
-      top:18px;
-      animation:guacamayaUno 3.1s ease-in-out infinite;
-    }
+  .guacamaya--uno{
+    left:75px;
+    top:90px;
+    animation:guacamayaUno 4.2s ease-in-out infinite;
+  }
 
-    .guacamaya--dos{
-      left:145px;
+  .guacamaya--dos{
+      left:160px;
       top:66px;
       transform:scaleX(-1);
-      animation:guacamayaDos 3.4s ease-in-out infinite;
-    }
+      animation:guacamayaDos 5.1s ease-in-out infinite;
+      animation-delay:-1.4s;
+  }
 
     .seccion-titulo{
       display:flex;
@@ -1065,6 +1061,16 @@
       background:#ffe4e6;
     }
 
+
+    /* Ajuste visual 1.4: guacamayas un poco más integradas en la montaña */
+    .guacamaya--uno{
+      transform:translateY(18px);
+    }
+
+    .guacamaya--dos{
+      transform:translateY(22px) scaleX(-1);
+    }
+
     @media(max-width:900px){
       .seguimiento-grid{
         grid-template-columns:1fr;
@@ -1108,6 +1114,7 @@
       50%{transform:translateY(-8px)}
     }
 
+
     @keyframes guacamayaUno{
       0%,100%{transform:translateY(4px) rotate(-3deg)}
       50%{transform:translateY(-8px) rotate(3deg)}
@@ -1117,6 +1124,7 @@
       0%,100%{transform:scaleX(-1) translateY(-4px) rotate(-3deg)}
       50%{transform:scaleX(-1) translateY(8px) rotate(3deg)}
     }
+
 
     @media(max-width:900px){
       .hero,
@@ -1217,8 +1225,91 @@
 
       <div class="hero-visual" aria-hidden="true">
         <div class="camino-ilustracion">
-          <div class="sol">☀️</div>
-          <div class="sendero"></div>
+          <svg class="paisaje-camino"
+               viewBox="0 0 390 290"
+               role="img"
+               aria-label="Montaña verde con un sendero que avanza hacia la cima">
+            <defs>
+              <linearGradient id="cieloCamino" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#dff6ff"/>
+                <stop offset="100%" stop-color="#f6fbff"/>
+              </linearGradient>
+              <linearGradient id="montanaLejana" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#86d59a"/>
+                <stop offset="100%" stop-color="#3f9a62"/>
+              </linearGradient>
+              <linearGradient id="montanaPrincipal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#65c779"/>
+                <stop offset="55%" stop-color="#31965a"/>
+                <stop offset="100%" stop-color="#176a3d"/>
+              </linearGradient>
+              <linearGradient id="senderoCamino" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fff2bd"/>
+                <stop offset="55%" stop-color="#efbd72"/>
+                <stop offset="100%" stop-color="#cb7b42"/>
+              </linearGradient>
+              <radialGradient id="solCamino">
+                <stop offset="0%" stop-color="#fff7bd"/>
+                <stop offset="72%" stop-color="#ffd95c"/>
+                <stop offset="100%" stop-color="#f5b82e"/>
+              </radialGradient>
+            </defs>
+
+            <rect width="390" height="290" rx="34" fill="url(#cieloCamino)"/>
+
+            <circle cx="320" cy="52" r="34" fill="url(#solCamino)"/>
+            <circle cx="320" cy="52" r="44" fill="#fde68a" opacity=".26"/>
+
+            <g class="nube" fill="#fff" opacity=".88">
+              <ellipse cx="77" cy="55" rx="29" ry="13"/>
+              <ellipse cx="58" cy="59" rx="18" ry="10"/>
+              <ellipse cx="96" cy="60" rx="20" ry="11"/>
+            </g>
+            <g class="nube nube--dos" fill="#fff" opacity=".7">
+              <ellipse cx="245" cy="91" rx="24" ry="10"/>
+              <ellipse cx="230" cy="94" rx="15" ry="8"/>
+              <ellipse cx="260" cy="95" rx="17" ry="8"/>
+            </g>
+
+            <path d="M0 230 L76 145 L132 190 L202 105 L270 174 L330 124 L390 207 L390 290 L0 290 Z"
+                  fill="url(#montanaLejana)" opacity=".82"/>
+
+            <path d="M15 290 L85 215 L132 238 L198 122 L258 214 L305 178 L378 290 Z"
+                  fill="url(#montanaPrincipal)"/>
+
+            <path d="M70 290
+                     C112 259, 151 266, 169 236
+                     C184 211, 161 193, 194 166
+                     C214 150, 219 137, 202 122
+                     C223 134, 239 152, 221 174
+                     C194 207, 220 221, 196 247
+                     C171 273, 151 281, 139 290 Z"
+                  fill="url(#senderoCamino)"
+                  class="sendero-svg"/>
+
+            <path d="M76 286
+                     C117 260, 151 266, 170 237
+                     C186 211, 164 193, 195 167"
+                  fill="none"
+                  stroke="#fff7d6"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  opacity=".65"/>
+
+            <g fill="#14532d" opacity=".9">
+              <circle cx="53" cy="245" r="7"/>
+              <circle cx="66" cy="236" r="5"/>
+              <circle cx="300" cy="230" r="7"/>
+              <circle cx="317" cy="217" r="5"/>
+              <circle cx="343" cy="244" r="6"/>
+            </g>
+
+            <g fill="#fef3c7">
+              <circle cx="102" cy="260" r="3"/>
+              <circle cx="287" cy="249" r="3"/>
+              <circle cx="332" cy="260" r="3"/>
+            </g>
+          </svg>
 
           <div class="arbol arbol--uno">🌳</div>
           <div class="arbol arbol--dos">🌲</div>
@@ -1488,7 +1579,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Misiones 1.2
+      Academia Gloria Valentina · Mi Camino · Misiones 1.4
     </footer>
 
   </main>
@@ -1564,11 +1655,27 @@
       return tarea.visibleParaAlumno !== false;
     }
 
+    function ordenMision(tarea = {}) {
+      const valor = Number(tarea.ordenMision);
+      return Number.isFinite(valor) ? valor : 9999;
+    }
+
     function tareasActivas(tareas = []) {
-      return tareas.filter(tarea =>
-        esVisibleComoMision(tarea) &&
-        !["completada", "cancelada"].includes(tarea.estado)
-      );
+      return tareas
+        .filter(tarea =>
+          esVisibleComoMision(tarea) &&
+          !["completada", "cancelada"].includes(tarea.estado)
+        )
+        .sort((a, b) => {
+          const diferencia = ordenMision(a) - ordenMision(b);
+
+          if (diferencia !== 0) return diferencia;
+
+          const fechaA = String(a.fechaLimite || "9999-12-31");
+          const fechaB = String(b.fechaLimite || "9999-12-31");
+
+          return fechaA.localeCompare(fechaB);
+        });
     }
 
     function renderMisiones(tareas = []) {
@@ -1605,7 +1712,7 @@
           presentacion.descripcionMision ||
           tarea.descripcion ||
           presentacion.mensaje ||
-          "Lía tiene esta aventura para ti.";
+          "Lía tiene una nueva aventura esperando para ti.";
         const estado = textoEstadoTarea(tarea.estado);
         const claseEstado = claseEstadoMision(tarea.estado);
         const tiempo = Number(tarea.tiempoEstimadoMinutos || 0);

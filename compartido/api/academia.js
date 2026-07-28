@@ -642,6 +642,10 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
       ? tarea.prioridad
       : "normal",
     visibleParaAlumno: tarea.visibleParaAlumno !== false,
+    ordenMision: Math.max(
+      0,
+      numeroSeguro(tarea.ordenMision, 9999)
+    ),
     estado: estadosValidos.has(tarea.estado)
       ? tarea.estado
       : "pendiente",
@@ -772,6 +776,7 @@ async function actualizarTarea(id, cambios = {}) {
     "prioridad",
     "estado",
     "visibleParaAlumno",
+    "ordenMision",
     "asignadaPor",
     "presentacionAlumno",
     "progreso",
@@ -808,6 +813,12 @@ async function actualizarTarea(id, cambios = {}) {
     const minutos = Number(datos.tiempoEstimadoMinutos);
     datos.tiempoEstimadoMinutos =
       Number.isFinite(minutos) ? Math.max(0, minutos) : 0;
+  }
+
+  if ("ordenMision" in datos) {
+    const orden = Number(datos.ordenMision);
+    datos.ordenMision =
+      Number.isFinite(orden) ? Math.max(0, orden) : 9999;
   }
 
   if ("presentacionAlumno" in datos) {

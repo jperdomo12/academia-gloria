@@ -397,3 +397,204 @@ footer{
     flex:1;
   }
 }
+
+
+/* Gestión y Misiones 1.1 */
+.grupo-mision__cabecera{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.grupo-mision__cabecera h3{margin-bottom:5px}
+.grupo-mision__cabecera p{
+  margin:0;
+  color:#64748b;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.interruptor{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.interruptor input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.interruptor__control{
+  position:relative;
+  width:52px;
+  height:29px;
+  flex:0 0 auto;
+  border-radius:999px;
+  background:#cbd5e1;
+  transition:.2s ease;
+}
+
+.interruptor__control::after{
+  content:"";
+  position:absolute;
+  top:4px;
+  left:4px;
+  width:21px;
+  height:21px;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 3px 8px rgba(15,23,42,.22);
+  transition:.2s ease;
+}
+
+.interruptor input:checked + .interruptor__control{
+  background:linear-gradient(90deg,#7c3aed,#ec4899);
+}
+
+.interruptor input:checked + .interruptor__control::after{
+  transform:translateX(23px);
+}
+
+.selector-iconos{
+  margin:0 0 17px;
+  padding:15px;
+  border:2px solid #e9d5ff;
+  border-radius:18px;
+  background:#fff;
+}
+
+.selector-iconos legend{
+  padding:0 7px;
+  color:#5b21b6;
+  font-weight:900;
+}
+
+.galeria-iconos{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.icono-opcion{
+  width:47px;
+  height:47px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  background:#fff;
+  cursor:pointer;
+  font-size:25px;
+  transition:.16s ease;
+}
+
+.icono-opcion:hover{
+  transform:translateY(-2px);
+  border-color:#c4b5fd;
+}
+
+.icono-opcion.active{
+  border-color:#7c3aed;
+  background:#f5f3ff;
+  box-shadow:0 0 0 3px rgba(124,58,237,.12);
+}
+
+.icono-personalizado{
+  max-width:310px;
+  margin:14px 0 0;
+}
+
+.campo-opcional{
+  color:#64748b;
+  font-size:.8rem;
+  font-weight:700;
+}
+
+.vista-previa-mision small{
+  display:block;
+  margin-top:7px;
+  color:#7c3aed;
+  font-weight:850;
+}
+
+.aviso-mision-oculta{
+  padding:15px;
+  border:2px solid #cbd5e1;
+  border-radius:18px;
+  background:#f8fafc;
+  color:#475569;
+  font-weight:850;
+  line-height:1.5;
+}
+
+.tarea-visibilidad{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:.76rem;
+  font-weight:900;
+}
+
+.tarea-visibilidad.visible{
+  color:#6d28d9;
+  background:#ede9fe;
+}
+
+.tarea-visibilidad.oculta{
+  color:#475569;
+  background:#e2e8f0;
+}
+
+.accion-editar{
+  color:#5b21b6;
+  background:#ede9fe;
+}
+
+.accion-visibilidad{
+  color:#92400e;
+  background:#fef3c7;
+}
+
+.form-tarea.modo-edicion{
+  border-color:#c4b5fd;
+  box-shadow:0 22px 55px rgba(124,58,237,.15);
+}
+
+@media(max-width:680px){
+  .grupo-mision__cabecera{
+    flex-direction:column;
+  }
+
+  .interruptor{
+    white-space:normal;
+  }
+}
+
+
+/* Orden de misiones 1.3 */
+.tarea-orden{
+  display:inline-flex;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#ecfdf5;
+  color:#166534;
+  font-size:.76rem;
+  font-weight:900;
+}
+
+.accion-orden{
+  color:#166534;
+  background:#dcfce7;
+}
+
+.accion-orden:hover{
+  background:#bbf7d0;
+}

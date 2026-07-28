@@ -74,12 +74,13 @@
       <div class="cabecera-seccion">
         <div>
           <span class="eyebrow">Nueva asignación</span>
-          <h2>Crear una tarea</h2>
-          <p>La misma información se mostrará a Gloria como una misión.</p>
+          <h2 id="tituloFormulario">Crear una tarea</h2>
+          <p id="subtituloFormulario">Decide si también se mostrará a Gloria como una misión.</p>
         </div>
       </div>
 
       <form id="formTarea" class="form-tarea superficie">
+        <input id="tareaId" type="hidden">
         <div class="grupo-formulario">
           <h3>1. Información básica</h3>
 
@@ -151,31 +152,85 @@
         </div>
 
         <div class="grupo-formulario grupo-mision">
-          <h3>3. Cómo la verá Gloria</h3>
+          <div class="grupo-mision__cabecera">
+            <div>
+              <h3>3. Cómo lo verá Gloria</h3>
+              <p>
+                Una tarea solo aparecerá en Mi Camino cuando se active
+                como misión.
+              </p>
+            </div>
 
-          <div class="grid-formulario grid-mision">
-            <label>
-              Icono
-              <input id="icono" maxlength="4" value="📖">
-            </label>
-
-            <label>
-              Título de la misión
-              <input id="tituloMision" required maxlength="80" value="Misión de lectura">
+            <label class="interruptor">
+              <input id="visibleParaAlumno" type="checkbox" checked>
+              <span class="interruptor__control" aria-hidden="true"></span>
+              <span>Mostrar como misión</span>
             </label>
           </div>
 
-          <label>
-            Mensaje de Lía
-            <textarea id="mensajeMision">Lía tiene una nueva aventura esperando para ti.</textarea>
-          </label>
+          <div id="camposMision">
+            <fieldset class="selector-iconos">
+              <legend>Icono de la misión</legend>
 
-          <div id="vistaPrevia" class="vista-previa-mision">
-            <span id="previewIcono">📖</span>
-            <div>
-              <strong id="previewTitulo">Misión de lectura</strong>
-              <p id="previewMensaje">Lía tiene una nueva aventura esperando para ti.</p>
+              <div id="galeriaIconos" class="galeria-iconos" role="radiogroup"
+                   aria-label="Iconos sugeridos">
+                <button type="button" class="icono-opcion active" data-icono="📖" aria-label="Libro">📖</button>
+                <button type="button" class="icono-opcion" data-icono="📚" aria-label="Libros">📚</button>
+                <button type="button" class="icono-opcion" data-icono="🧩" aria-label="Rompecabezas">🧩</button>
+                <button type="button" class="icono-opcion" data-icono="🔎" aria-label="Detective">🔎</button>
+                <button type="button" class="icono-opcion" data-icono="✏️" aria-label="Escritura">✏️</button>
+                <button type="button" class="icono-opcion" data-icono="🎨" aria-label="Arte">🎨</button>
+                <button type="button" class="icono-opcion" data-icono="🧠" aria-label="Pensamiento">🧠</button>
+                <button type="button" class="icono-opcion" data-icono="🌱" aria-label="Crecimiento">🌱</button>
+                <button type="button" class="icono-opcion" data-icono="🌳" aria-label="Árbol">🌳</button>
+                <button type="button" class="icono-opcion" data-icono="🌈" aria-label="Arcoíris">🌈</button>
+                <button type="button" class="icono-opcion" data-icono="⭐" aria-label="Estrella">⭐</button>
+                <button type="button" class="icono-opcion" data-icono="🏆" aria-label="Logro">🏆</button>
+                <button type="button" class="icono-opcion" data-icono="🚀" aria-label="Cohete">🚀</button>
+                <button type="button" class="icono-opcion" data-icono="🦜" aria-label="Lía">🦜</button>
+                <button type="button" class="icono-opcion" data-icono="💛" aria-label="Corazón">💛</button>
+                <button type="button" class="icono-opcion" data-icono="🌍" aria-label="Mundo">🌍</button>
+              </div>
+
+              <label class="icono-personalizado">
+                Otro icono
+                <input id="icono" maxlength="8" value="📖"
+                       placeholder="Pega aquí otro emoji">
+              </label>
+            </fieldset>
+
+            <label>
+              Título de la misión
+              <input id="tituloMision" maxlength="80"
+                     value="Misión de lectura"
+                     placeholder="Ej. Desafío de detectives">
+            </label>
+
+            <label>
+              Descripción para Gloria
+              <textarea id="descripcionMision"
+                        placeholder="Explica con claridad qué debe hacer Gloria.">Realiza esta aventura con calma y celebra cada pequeño paso.</textarea>
+            </label>
+
+            <label>
+              Mensaje breve de Lía <span class="campo-opcional">(opcional)</span>
+              <input id="mensajeMision" maxlength="140"
+                     placeholder="Ej. ¡Yo te acompaño en esta aventura!">
+            </label>
+
+            <div id="vistaPrevia" class="vista-previa-mision">
+              <span id="previewIcono">📖</span>
+              <div>
+                <strong id="previewTitulo">Misión de lectura</strong>
+                <p id="previewDescripcion">Realiza esta aventura con calma y celebra cada pequeño paso.</p>
+                <small id="previewMensaje" class="hidden"></small>
+              </div>
             </div>
+          </div>
+
+          <div id="avisoMisionOculta" class="aviso-mision-oculta hidden">
+            🔒 Esta tarea se guardará para seguimiento adulto y no aparecerá
+            en Mi aventura de hoy.
           </div>
         </div>
 
@@ -199,8 +254,13 @@
         </div>
 
         <div class="acciones-formulario">
+          <button id="cancelarEdicion" class="btn secundaria hidden" type="button">
+            Cancelar edición
+          </button>
           <button class="btn secundaria" type="reset">Limpiar</button>
-          <button class="btn primaria" type="submit">✨ Crear misión</button>
+          <button id="guardarTarea" class="btn primaria" type="submit">
+            💾 Guardar tarea
+          </button>
         </div>
 
         <div id="mensajeFormulario" class="mensaje-formulario" aria-live="polite"></div>
@@ -208,7 +268,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mis Tareas · MVP 1.0
+      Academia Gloria Valentina · Mis Tareas · Gestión y Misiones 1.1
     </footer>
   </main>
 

@@ -59,6 +59,38 @@ function esVisibleComoMision(tarea = {}) {
   return tarea.visibleParaAlumno !== false;
 }
 
+function ordenMision(tarea = {}) {
+  const valor = Number(tarea.ordenMision);
+  return Number.isFinite(valor) ? valor : 9999;
+}
+
+function compararMisiones(a, b) {
+  const diferencia = ordenMision(a) - ordenMision(b);
+
+  if (diferencia !== 0) return diferencia;
+
+  const fechaA = String(a.fechaLimite || "9999-12-31");
+  const fechaB = String(b.fechaLimite || "9999-12-31");
+
+  if (fechaA !== fechaB) {
+    return fechaA.localeCompare(fechaB);
+  }
+
+  return String(a.titulo || "").localeCompare(
+    String(b.titulo || ""),
+    "es"
+  );
+}
+
+function misionesOrdenables() {
+  return tareas
+    .filter(tarea =>
+      esVisibleComoMision(tarea) &&
+      !["completada", "cancelada"].includes(tarea.estado)
+    )
+    .sort(compararMisiones);
+}
+
 function tareasFiltradas() {
   if (filtroActual === "todas") return tareas;
 
@@ -68,9 +100,20 @@ function tareasFiltradas() {
     );
   }
 
-  return tareas.filter(tarea =>
-    !["completada", "cancelada"].includes(tarea.estado)
-  );
+  return tareas
+    .filter(tarea =>
+      !["completada", "cancelada"].includes(tarea.estado)
+    )
+    .sort((a, b) => {
+      const visibleA = esVisibleComoMision(a);
+      const visibleB = esVisibleComoMision(b);
+
+      if (visibleA !== visibleB) {
+        return visibleA ? -1 : 1;
+      }
+
+      return compararMisiones(a, b);
+    });
 }
 
 function renderTareas() {
@@ -117,6 +160,11 @@ function renderTareas() {
           <span class="tarea-visibilidad ${visible ? "visible" : "oculta"}">
             ${visible ? "🌈 Visible como misión" : "🔒 Solo seguimiento adulto"}
           </span>
+          ${
+            visible && !["completada", "cancelada"].includes(tarea.estado)
+              ? `<span class="tarea-orden">Posición ${ordenMision(tarea) === 9999 ? "automática" : ordenMision(tarea)}</span>`
+              : ""
+          }
         </div>
 
         ${
@@ -149,6 +197,23 @@ function renderTareas() {
           </button>
 
           ${
+            visible && !["completada", "cancelada"].includes(tarea.estado)
+              ? `<button class="btn accion-orden"
+                    data-action="up"
+                    data-id="${escapar(tarea.id)}"
+                    title="Subir misión">
+                   ⬆️ Subir
+                 </button>
+                 <button class="btn accion-orden"
+                    data-action="down"
+                    data-id="${escapar(tarea.id)}"
+                    title="Bajar misión">
+                   ⬇️ Bajar
+                 </button>`
+              : ""
+          }
+
+          ${
             destino && tarea.estado !== "completada"
               ? `<button class="btn accion-iniciar"
                     data-action="start"
@@ -166,7 +231,11 @@ function renderTareas() {
                     data-id="${escapar(tarea.id)}">
                    ✅ Marcar completada
                  </button>`
-              : ""
+              : `<button class="btn accion-reabrir"
+                    data-action="reopen"
+                    data-id="${escapar(tarea.id)}">
+                   ↩️ Volver a En aventura
+                 </button>`
           }
 
           ${
@@ -194,6 +263,49 @@ function renderTareas() {
   });
 }
 
+async function normalizarOrdenMisiones() {
+  const visibles = misionesOrdenables();
+
+  await Promise.all(
+    visibles.map((tarea, indice) =>
+      Academia.tareas.actualizar(tarea.id, {
+        ordenMision: indice + 1
+      })
+    )
+  );
+}
+
+async function moverMision(id, direccion) {
+  const visibles = misionesOrdenables();
+  const indice = visibles.findIndex(tarea => tarea.id === id);
+
+  if (indice === -1) return;
+
+  const destino = direccion === "up" ? indice - 1 : indice + 1;
+
+  if (destino < 0 || destino >= visibles.length) {
+    return;
+  }
+
+  const actual = visibles[indice];
+  const otra = visibles[destino];
+
+  const ordenActual =
+    ordenMision(actual) === 9999 ? indice + 1 : ordenMision(actual);
+
+  const ordenOtra =
+    ordenMision(otra) === 9999 ? destino + 1 : ordenMision(otra);
+
+  await Promise.all([
+    Academia.tareas.actualizar(actual.id, {
+      ordenMision: ordenOtra
+    }),
+    Academia.tareas.actualizar(otra.id, {
+      ordenMision: ordenActual
+    })
+  ]);
+}
+
 async function ejecutarAccion(button) {
   const { action, id, url } = button.dataset;
   const tarea = tareas.find(item => item.id === id);
@@ -209,9 +321,20 @@ async function ejecutarAccion(button) {
     }
 
     if (action === "visibility") {
+      const nuevaVisibilidad = !esVisibleComoMision(tarea);
+
       await Academia.tareas.actualizar(id, {
-        visibleParaAlumno: !esVisibleComoMision(tarea)
+        visibleParaAlumno: nuevaVisibilidad,
+        ordenMision: nuevaVisibilidad
+          ? misionesOrdenables().length + 1
+          : ordenMision(tarea)
       });
+
+      return;
+    }
+
+    if (action === "up" || action === "down") {
+      await moverMision(id, action);
       return;
     }
 
@@ -223,6 +346,13 @@ async function ejecutarAccion(button) {
 
     if (action === "complete") {
       await Academia.tareas.cambiarEstado(id, "completada");
+      return;
+    }
+
+    if (action === "reopen") {
+      await Academia.tareas.cambiarEstado(id, "en_curso", {
+        "progreso.completadaEn": null
+      });
       return;
     }
 
@@ -411,6 +541,15 @@ function recogerFormulario() {
     tiempoEstimadoMinutos: $("tiempoEstimado").value,
     prioridad: $("prioridad").value,
     visibleParaAlumno: visible,
+    ordenMision: visible
+      ? (
+          $("tareaId").value.trim()
+            ? ordenMision(
+                tareas.find(item => item.id === $("tareaId").value.trim())
+              )
+            : misionesOrdenables().length + 1
+        )
+      : 9999,
     presentacionAlumno: {
       icono: $("icono").value,
       tituloMision: visible ? $("tituloMision").value : "",
@@ -515,9 +654,21 @@ protegerPagina({
     limpiarFormulario();
 
     detenerObservacion = Academia.tareas.observar(
-      nuevasTareas => {
+      async nuevasTareas => {
         tareas = nuevasTareas;
         renderTareas();
+
+        const requiereNormalizar = misionesOrdenables().some(
+          tarea => ordenMision(tarea) === 9999
+        );
+
+        if (requiereNormalizar) {
+          try {
+            await normalizarOrdenMisiones();
+          } catch (error) {
+            console.warn("No se pudo normalizar el orden de misiones.", error);
+          }
+        }
       },
       error => {
         console.error(error);
