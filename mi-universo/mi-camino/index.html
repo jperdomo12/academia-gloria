@@ -954,10 +954,19 @@
     .estado-preparacion{display:inline-flex;align-items:center;gap:7px;margin-bottom:13px;padding:7px 11px;border:2px solid #fde68a;border-radius:999px;background:#fffbeb;color:#92400e;font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
     .estado-preparacion--violeta{border-color:#ddd6fe;background:#faf5ff;color:#6d28d9}
     .aviso-datos-ejemplo{margin:0 0 15px;padding:11px 13px;border:2px dashed #cbd5e1;border-radius:15px;background:rgba(255,255,255,.8);color:#64748b;font-size:.82rem;font-weight:800;line-height:1.45}
-    .tareas-resumen-bloque{margin-top:14px}
+    .tareas-resumen-bloque{margin-top:12px}
     .tareas-resumen-bloque:first-of-type{margin-top:0}
-    .tareas-resumen-titulo{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 9px;color:#92400e;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
-    .tareas-resumen-titulo span{min-width:26px;padding:3px 8px;border-radius:999px;background:#fef3c7;text-align:center}
+    .tareas-acordeon{overflow:hidden;border:2px solid #fde68a;border-radius:16px;background:rgba(255,255,255,.88)}
+    .tareas-resumen-titulo{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0;padding:12px 13px;color:#92400e;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;list-style:none;transition:.18s ease}
+    .tareas-resumen-titulo::-webkit-details-marker{display:none}
+    .tareas-resumen-titulo:hover{background:#fffbeb}
+    .tareas-resumen-titulo:focus-visible{outline:3px solid rgba(245,158,11,.35);outline-offset:-3px}
+    .tareas-resumen-etiqueta{display:inline-flex;align-items:center;gap:7px;min-width:0}
+    .tareas-resumen-contador{min-width:26px;padding:3px 8px;border-radius:999px;background:#fef3c7;text-align:center}
+    .tareas-acordeon__flecha{display:inline-block;font-size:.72rem;transition:transform .18s ease}
+    .tareas-acordeon[open] .tareas-acordeon__flecha{transform:rotate(90deg)}
+    .tareas-acordeon__contenido{padding:0 12px 12px}
+    .tareas-acordeon[open] .tareas-resumen-titulo{margin-bottom:9px;background:#fffbeb}
     .tarea-mini--completada{border-color:#bbf7d0;background:#f0fdf4}
     .tarea-mini--completada .tarea-mini__estado{background:#dcfce7}
     .tareas-vacias{padding:13px;border:2px dashed #dbe2ea;border-radius:15px;background:rgba(255,255,255,.76);color:#64748b;font-size:.86rem;font-weight:800;line-height:1.45}
@@ -1330,79 +1339,6 @@
     </header>
 
     <div class="seccion-titulo">
-      <div class="seccion-icono">🌳</div>
-
-      <div>
-        <h2>El Árbol de Mi Camino</h2>
-        <p>Crece con cada aventura, intento, ayuda y descubrimiento.</p>
-      </div>
-    </div>
-
-    <section class="superficie arbol-camino">
-      <div class="arbol-camino__visual" aria-hidden="true">🌱</div>
-
-      <div>
-        <span class="eyebrow">Etapa actual · Semilla</span>
-
-        <h2 style="margin:10px 0 6px;font-size:2.25rem">
-          Tu camino está comenzando
-        </h2>
-
-        <p style="margin:0;color:var(--suave);font-weight:700;line-height:1.55">
-          Tu árbol crece cuando exploras, completas pequeñas misiones,
-          vuelves a intentarlo y pides ayuda cuando la necesitas.
-        </p>
-
-        <div class="arbol-progreso" aria-label="Progreso orientativo de la etapa Semilla">
-          <div class="arbol-progreso__cabecera">
-            <span>Camino hacia la etapa Brote</span>
-            <span>28 %</span>
-          </div>
-
-          <div class="arbol-progreso__barra" aria-hidden="true">
-            <span></span>
-          </div>
-        </div>
-
-        <div class="arbol-etapas">
-          <div class="arbol-etapa actual">🌱 Semilla · Estoy descubriendo</div>
-          <div class="arbol-etapa">🌿 Brote · Estoy construyendo confianza</div>
-          <div class="arbol-etapa">🌳 Árbol · Mi camino tiene raíces</div>
-        </div>
-
-        <details class="arbol-explicacion">
-          <summary>❓ ¿Qué significa cada etapa?</summary>
-
-          <div class="arbol-explicacion__contenido">
-            <div class="arbol-explicacion__etapa">
-              <strong>🌱 Semilla</strong>
-              <p>
-                Estoy descubriendo la Academia, probando aventuras
-                y aprendiendo cómo funciona cada espacio.
-              </p>
-            </div>
-
-            <div class="arbol-explicacion__etapa">
-              <strong>🌿 Brote</strong>
-              <p>
-                Completo actividades, vuelvo a intentarlo
-                y empiezo a construir constancia y confianza.
-              </p>
-            </div>
-
-            <div class="arbol-explicacion__etapa">
-              <strong>🌳 Árbol</strong>
-              <p>
-                He recorrido distintas aventuras, conseguido logros
-                y mi camino empieza a tener raíces fuertes.
-              </p>
-            </div>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <div class="seccion-titulo">
       <div class="seccion-icono">🌈</div>
 
       <div>
@@ -1466,12 +1402,15 @@
           </div>
         </div>
 
-        <section class="tareas-resumen-bloque">
-          <div class="tareas-resumen-titulo">
-            <strong>🌱 Activas</strong>
-            <span id="contadorTareasActivas">0</span>
-          </div>
-          <div id="resumenTareasActivas" class="tarea-lista">
+        <details class="tareas-resumen-bloque tareas-acordeon">
+          <summary class="tareas-resumen-titulo">
+            <span class="tareas-resumen-etiqueta">
+              <span class="tareas-acordeon__flecha" aria-hidden="true">▶</span>
+              <strong>🌱 Tareas activas</strong>
+            </span>
+            <span id="contadorTareasActivas" class="tareas-resumen-contador">0</span>
+          </summary>
+          <div id="resumenTareasActivas" class="tarea-lista tareas-acordeon__contenido">
             <div class="tarea-mini">
               <div class="tarea-mini__estado">🦜</div>
               <div>
@@ -1480,21 +1419,24 @@
               </div>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="tareas-resumen-bloque">
-          <div class="tareas-resumen-titulo">
-            <strong>✅ Completadas recientemente</strong>
-            <span id="contadorTareasCompletadas">0</span>
-          </div>
-          <div id="resumenTareasCompletadas" class="tarea-lista">
+        <details class="tareas-resumen-bloque tareas-acordeon">
+          <summary class="tareas-resumen-titulo">
+            <span class="tareas-resumen-etiqueta">
+              <span class="tareas-acordeon__flecha" aria-hidden="true">▶</span>
+              <strong>✅ Tareas completadas recientemente</strong>
+            </span>
+            <span id="contadorTareasCompletadas" class="tareas-resumen-contador">0</span>
+          </summary>
+          <div id="resumenTareasCompletadas" class="tarea-lista tareas-acordeon__contenido">
             <div class="tareas-vacias">Las tareas completadas recientemente aparecerán aquí.</div>
           </div>
-        </section>
+        </details>
 
         <div class="seguimiento-card__acciones">
           <a class="seguimiento-card__boton" href="../mis-tareas/">📋 Ver todas las tareas</a>
-          <a class="seguimiento-card__boton seguimiento-card__boton--secundario" href="../mis-tareas/?vista=crear">➕ Crear una tarea</a>
+          <a class="seguimiento-card__boton seguimiento-card__boton--secundario" href="../mis-tareas/?vista=crear">📝 Preparar una tarea</a>
         </div>
 
         <div class="seguimiento-card__pie">
@@ -1571,6 +1513,79 @@
       </article>
     </section>
 
+    <div class="seccion-titulo">
+      <div class="seccion-icono">🌳</div>
+
+      <div>
+        <h2>El Árbol de Mi Camino</h2>
+        <p>Crece con cada aventura, intento, ayuda y descubrimiento.</p>
+      </div>
+    </div>
+
+    <section class="superficie arbol-camino">
+      <div class="arbol-camino__visual" aria-hidden="true">🌱</div>
+
+      <div>
+        <span class="eyebrow">Etapa actual · Semilla</span>
+
+        <h2 style="margin:10px 0 6px;font-size:2.25rem">
+          Tu camino está comenzando
+        </h2>
+
+        <p style="margin:0;color:var(--suave);font-weight:700;line-height:1.55">
+          Tu árbol crece cuando exploras, completas pequeñas misiones,
+          vuelves a intentarlo y pides ayuda cuando la necesitas.
+        </p>
+
+        <div class="arbol-progreso" aria-label="Progreso orientativo de la etapa Semilla">
+          <div class="arbol-progreso__cabecera">
+            <span>Camino hacia la etapa Brote</span>
+            <span>28 %</span>
+          </div>
+
+          <div class="arbol-progreso__barra" aria-hidden="true">
+            <span></span>
+          </div>
+        </div>
+
+        <div class="arbol-etapas">
+          <div class="arbol-etapa actual">🌱 Semilla · Estoy descubriendo</div>
+          <div class="arbol-etapa">🌿 Brote · Estoy construyendo confianza</div>
+          <div class="arbol-etapa">🌳 Árbol · Mi camino tiene raíces</div>
+        </div>
+
+        <details class="arbol-explicacion">
+          <summary>❓ ¿Qué significa cada etapa?</summary>
+
+          <div class="arbol-explicacion__contenido">
+            <div class="arbol-explicacion__etapa">
+              <strong>🌱 Semilla</strong>
+              <p>
+                Estoy descubriendo la Academia, probando aventuras
+                y aprendiendo cómo funciona cada espacio.
+              </p>
+            </div>
+
+            <div class="arbol-explicacion__etapa">
+              <strong>🌿 Brote</strong>
+              <p>
+                Completo actividades, vuelvo a intentarlo
+                y empiezo a construir constancia y confianza.
+              </p>
+            </div>
+
+            <div class="arbol-explicacion__etapa">
+              <strong>🌳 Árbol</strong>
+              <p>
+                He recorrido distintas aventuras, conseguido logros
+                y mi camino empieza a tener raíces fuertes.
+              </p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <section class="lema">
       <h2>Cada pequeño paso cuenta 🌟</h2>
       <p>
@@ -1579,7 +1594,7 @@
     </section>
 
     <footer>
-      Academia Gloria Valentina · Mi Camino · Misiones 1.4
+      Academia Gloria Valentina · Mi Camino · v2.1
     </footer>
 
   </main>
