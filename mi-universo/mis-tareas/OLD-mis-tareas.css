@@ -598,3 +598,14 @@ footer{
 .accion-orden:hover{
   background:#bbf7d0;
 }
+
+
+/* Reapertura de tareas 1.4 */
+.accion-reabrir{
+  color:#075985;
+  background:#e0f2fe;
+}
+
+.accion-reabrir:hover{
+  background:#bae6fd;
+}

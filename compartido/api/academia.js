@@ -696,6 +696,23 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
             referenciaId: null,
             resumen: null
           },
+    resultado: {
+      fechaFinalizacion: String(
+        tarea.resultado?.fechaFinalizacion ?? ""
+      ).trim(),
+      observaciones: String(
+        tarea.resultado?.observaciones ?? ""
+      ).trim(),
+      masDeLoEsperado: Boolean(
+        tarea.resultado?.masDeLoEsperado
+      ),
+      necesitoAyuda: Boolean(
+        tarea.resultado?.necesitoAyuda
+      ),
+      convieneRepetir: Boolean(
+        tarea.resultado?.convieneRepetir
+      )
+    },
     observacionActual: String(tarea.observacionActual ?? "").trim(),
     historialObservaciones: Array.isArray(tarea.historialObservaciones)
       ? tarea.historialObservaciones
@@ -781,6 +798,7 @@ async function actualizarTarea(id, cambios = {}) {
     "presentacionAlumno",
     "progreso",
     "evidencia",
+    "resultado",
     "observacionActual",
     "historialObservaciones"
   ]);
@@ -819,6 +837,22 @@ async function actualizarTarea(id, cambios = {}) {
     const orden = Number(datos.ordenMision);
     datos.ordenMision =
       Number.isFinite(orden) ? Math.max(0, orden) : 9999;
+  }
+
+  if ("resultado" in datos) {
+    const resultado = datos.resultado || {};
+
+    datos.resultado = {
+      fechaFinalizacion: String(
+        resultado.fechaFinalizacion ?? ""
+      ).trim(),
+      observaciones: String(
+        resultado.observaciones ?? ""
+      ).trim(),
+      masDeLoEsperado: Boolean(resultado.masDeLoEsperado),
+      necesitoAyuda: Boolean(resultado.necesitoAyuda),
+      convieneRepetir: Boolean(resultado.convieneRepetir)
+    };
   }
 
   if ("presentacionAlumno" in datos) {

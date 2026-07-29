@@ -231,7 +231,11 @@ function renderTareas() {
                     data-id="${escapar(tarea.id)}">
                    ✅ Marcar completada
                  </button>`
-              : ""
+              : `<button class="btn accion-reabrir"
+                    data-action="reopen"
+                    data-id="${escapar(tarea.id)}">
+                   ↩️ Volver a En aventura
+                 </button>`
           }
 
           ${
@@ -342,6 +346,13 @@ async function ejecutarAccion(button) {
 
     if (action === "complete") {
       await Academia.tareas.cambiarEstado(id, "completada");
+      return;
+    }
+
+    if (action === "reopen") {
+      await Academia.tareas.cambiarEstado(id, "en_curso", {
+        "progreso.completadaEn": null
+      });
       return;
     }
 

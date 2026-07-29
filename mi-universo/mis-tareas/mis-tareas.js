@@ -1,5 +1,6 @@
 import { protegerPagina } from "../../compartido/js/auth-guard.js";
 import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
+import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
 import { Academia } from "../../compartido/api/academia.js";
 
 const $ = (id) => document.getElementById(id);
@@ -41,6 +42,47 @@ function formatearFecha(valor) {
     month: "short",
     year: "numeric"
   }).format(fecha);
+}
+
+
+function fechaHoraLocalAhora() {
+  const fecha = new Date();
+  const corregida = new Date(
+    fecha.getTime() - fecha.getTimezoneOffset() * 60000
+  );
+
+  return corregida.toISOString().slice(0, 16);
+}
+
+function resultadoTarea(tarea = {}) {
+  return tarea.resultado && typeof tarea.resultado === "object"
+    ? tarea.resultado
+    : {};
+}
+
+function tieneResultado(tarea = {}) {
+  const resultado = resultadoTarea(tarea);
+
+  return Boolean(
+    resultado.fechaFinalizacion ||
+    String(resultado.observaciones || "").trim() ||
+    resultado.masDeLoEsperado ||
+    resultado.necesitoAyuda ||
+    resultado.convieneRepetir
+  );
+}
+
+function aplicarNombreAlumno(perfil = {}) {
+  const nombreCompleto = String(
+    perfil.nombreCompleto ||
+    perfil.nombre ||
+    perfil.nombreVisible ||
+    "el alumno"
+  ).trim();
+
+  document.querySelectorAll("[data-alumno-nombre]").forEach(elemento => {
+    elemento.textContent = nombreCompleto;
+  });
 }
 
 function textoEstado(estado) {
@@ -179,6 +221,18 @@ function renderTareas() {
                      "Lía tiene una nueva aventura esperando para ti."
                    )}</p>
                  </div>
+               </div>`
+            : ""
+        }
+
+        ${
+          tieneResultado(tarea)
+            ? `<div class="resultado-resumen">
+                 <strong>⭐ Resultado registrado</strong>
+                 <p>${escapar(
+                   resultadoTarea(tarea).observaciones ||
+                   "La tarea tiene información de cierre."
+                 )}</p>
                </div>`
             : ""
         }
@@ -345,6 +399,16 @@ async function ejecutarAccion(button) {
     }
 
     if (action === "complete") {
+      const resultadoActual = resultadoTarea(tarea);
+
+      await Academia.tareas.actualizar(id, {
+        resultado: {
+          ...resultadoActual,
+          fechaFinalizacion:
+            resultadoActual.fechaFinalizacion || fechaHoraLocalAhora()
+        }
+      });
+
       await Academia.tareas.cambiarEstado(id, "completada");
       return;
     }
@@ -452,6 +516,85 @@ function configurarFiltros() {
   });
 }
 
+function configurarAcordeones() {
+  const acordeones = [...document.querySelectorAll("[data-acordeon]")];
+
+  acordeones.forEach(acordeon => {
+    acordeon.addEventListener("toggle", () => {
+      const abiertos = acordeones
+        .filter(item => item.open)
+        .map(item => item.dataset.acordeon);
+
+      sessionStorage.setItem(
+        "academia.misTareas.acordeones",
+        JSON.stringify(abiertos)
+      );
+    });
+  });
+}
+
+function establecerAcordeones(modo = "crear") {
+  const acordeones = [...document.querySelectorAll("[data-acordeon]")];
+
+  if (modo === "editar") {
+    acordeones.forEach(item => {
+      item.open = false;
+    });
+    return;
+  }
+
+  const guardados = sessionStorage.getItem(
+    "academia.misTareas.acordeones"
+  );
+
+  if (guardados) {
+    try {
+      const abiertos = new Set(JSON.parse(guardados));
+
+      acordeones.forEach(item => {
+        item.open = abiertos.has(item.dataset.acordeon);
+      });
+
+      return;
+    } catch {
+      // Usa el estado inicial.
+    }
+  }
+
+  acordeones.forEach(item => {
+    item.open = ["informacion", "mision"].includes(
+      item.dataset.acordeon
+    );
+  });
+}
+
+function actualizarBloqueResultado(estado = "pendiente") {
+  const completada = estado === "completada";
+  const tieneDatos = Boolean(
+    $("fechaFinalizacion").value ||
+    $("observacionesResultado").value.trim() ||
+    $("resultadoMasEsperado").checked ||
+    $("resultadoNecesitoAyuda").checked ||
+    $("resultadoConvieneRepetir").checked
+  );
+
+  $("tituloBloqueResultado").textContent = completada
+    ? "Resultado de la tarea"
+    : "Cuando termine la tarea";
+
+  $("subtituloBloqueResultado").textContent = completada
+    ? "Guarda brevemente qué ocurrió y qué conviene recordar."
+    : "Aquí podrás guardar brevemente qué ocurrió.";
+
+  $("estadoBloqueResultado").textContent = tieneDatos
+    ? "Registrado"
+    : "Opcional";
+
+  document
+    .querySelector('[data-acordeon="resultado"]')
+    ?.classList.toggle("resultado-registrado", tieneDatos);
+}
+
 function limpiarFormulario({ conservarMensaje = false } = {}) {
   $("formTarea").reset();
   $("tareaId").value = "";
@@ -461,10 +604,16 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   $("descripcionMision").value =
     "Realiza esta aventura con calma y celebra cada pequeño paso.";
   $("mensajeMision").value = "";
+  $("fechaFinalizacion").value = "";
+  $("observacionesResultado").value = "";
+  $("resultadoMasEsperado").checked = false;
+  $("resultadoNecesitoAyuda").checked = false;
+  $("resultadoConvieneRepetir").checked = false;
 
-  $("tituloFormulario").textContent = "Crear una tarea";
+  $("tituloFormulario").innerHTML =
+    `Preparando una tarea para <span data-alumno-nombre>el alumno</span>`;
   $("subtituloFormulario").textContent =
-    "Decide si también se mostrará a Gloria como una misión.";
+    "Completa solo la información que realmente resulte útil.";
   $("guardarTarea").textContent = "💾 Guardar tarea";
   $("cancelarEdicion").classList.add("hidden");
   $("formTarea").classList.remove("modo-edicion");
@@ -476,6 +625,8 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
 
   seleccionarIcono("📖");
   actualizarEstadoMision();
+  actualizarBloqueResultado("pendiente");
+  establecerAcordeones("crear");
 }
 
 function cargarTareaEnFormulario(tarea) {
@@ -503,19 +654,28 @@ function cargarTareaEnFormulario(tarea) {
     "Realiza esta aventura con calma.";
   $("mensajeMision").value = presentacion.mensaje || "";
 
+  const resultado = resultadoTarea(tarea);
+  $("fechaFinalizacion").value = resultado.fechaFinalizacion || "";
+  $("observacionesResultado").value = resultado.observaciones || "";
+  $("resultadoMasEsperado").checked = Boolean(resultado.masDeLoEsperado);
+  $("resultadoNecesitoAyuda").checked = Boolean(resultado.necesitoAyuda);
+  $("resultadoConvieneRepetir").checked = Boolean(resultado.convieneRepetir);
+
   seleccionarIcono(
     presentacion.icono || ICONOS[tarea.modulo] || "🌟"
   );
 
   $("tituloFormulario").textContent = "Editar tarea";
   $("subtituloFormulario").textContent =
-    "Actualiza la tarea y decide si debe aparecer como misión.";
+    "Abre únicamente el bloque que necesites actualizar.";
   $("guardarTarea").textContent = "💾 Guardar cambios";
   $("cancelarEdicion").classList.remove("hidden");
   $("formTarea").classList.add("modo-edicion");
 
   actualizarEstadoMision();
   actualizarVistaPrevia();
+  actualizarBloqueResultado(tarea.estado);
+  establecerAcordeones("editar");
   cambiarVista("crear");
 
   window.scrollTo({
@@ -556,7 +716,14 @@ function recogerFormulario() {
       descripcionMision: visible ? $("descripcionMision").value : "",
       mensaje: visible ? $("mensajeMision").value : ""
     },
-    observacionActual: $("observacion").value
+    observacionActual: $("observacion").value,
+    resultado: {
+      fechaFinalizacion: $("fechaFinalizacion").value,
+      observaciones: $("observacionesResultado").value,
+      masDeLoEsperado: $("resultadoMasEsperado").checked,
+      necesitoAyuda: $("resultadoNecesitoAyuda").checked,
+      convieneRepetir: $("resultadoConvieneRepetir").checked
+    }
   };
 }
 
@@ -578,6 +745,30 @@ function configurarFormulario() {
   $("visibleParaAlumno").addEventListener("change", () => {
     actualizarEstadoMision();
     actualizarVistaPrevia();
+  });
+
+  [
+    "fechaFinalizacion",
+    "observacionesResultado",
+    "resultadoMasEsperado",
+    "resultadoNecesitoAyuda",
+    "resultadoConvieneRepetir"
+  ].forEach(id => {
+    $(id).addEventListener("input", () => {
+      const tarea = tareas.find(
+        item => item.id === $("tareaId").value.trim()
+      );
+
+      actualizarBloqueResultado(tarea?.estado || "pendiente");
+    });
+
+    $(id).addEventListener("change", () => {
+      const tarea = tareas.find(
+        item => item.id === $("tareaId").value.trim()
+      );
+
+      actualizarBloqueResultado(tarea?.estado || "pendiente");
+    });
   });
 
   $("modulo").addEventListener("change", () => {
@@ -648,10 +839,15 @@ protegerPagina({
       mostrarLogros: true
     });
 
+    const perfil = await obtenerPerfil();
+    aplicarNombreAlumno(perfil);
+
     configurarTabs();
     configurarFiltros();
     configurarFormulario();
+    configurarAcordeones();
     limpiarFormulario();
+    aplicarNombreAlumno(perfil);
 
     detenerObservacion = Academia.tareas.observar(
       async nuevasTareas => {
