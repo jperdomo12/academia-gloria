@@ -953,15 +953,14 @@
       </div>
     </section>
 
-    <section id="historyPanel" class="card history-card">
-      <div class="history-head">
+    <section id="historyPanel" class="card history-panel">
+      <div class="history-heading">
         <div>
           <h2>📚 Mis casos investigados</h2>
-          <p>Consulta las historias que ya has completado en este dispositivo.</p>
+          <p>Consulta las historias completadas, su evolución y vuelve a practicarlas.</p>
         </div>
-        <button id="toggleHistoryButton" class="btn btn-light" type="button">Ver historial</button>
+        <a class="btn btn-light" href="./historial.html" style="text-decoration:none">Ver historial completo →</a>
       </div>
-      <div id="historyList" class="history-list hidden"></div>
     </section>
 
     <nav class="steps hidden" aria-label="Pasos de la aventura">
@@ -1059,6 +1058,7 @@
     import { auth } from "../../../compartido/firebase/firebase-config.js";
     import { obtenerPerfil } from "../../../compartido/js/perfil-usuario.js";
     import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
+    import { registrarResolucionDetective } from "../../../compartido/js/detectives-progreso.js";
 
     await auth.authStateReady();
 
@@ -1234,7 +1234,11 @@
       completedOperations:0,
       simpleCompleted:0,
       compoundCompleted:0,
-      awaitingManualNext:false
+      awaitingManualNext:false,
+      operandosValidados:false,
+      operandosIndicados:[],
+      respuestasPorCaso:{},
+      caseStats:null
     };
 
     const $ = id => document.getElementById(id);
@@ -1354,6 +1358,10 @@
       state.compoundCompleted = 0;
       state.awaitingManualNext = false;
       state.displayedOptions = {};
+      state.operandosValidados = false;
+      state.operandosIndicados = [];
+      state.respuestasPorCaso = {};
+      iniciarEstadisticasCaso();
 
       $("caseSelector").classList.add("hidden");
       $("historyPanel").classList.add("hidden");
@@ -1405,6 +1413,47 @@
         🧠 Este es un problema compuesto. Lo resolveremos paso a paso.
         <div class="substep-list">${pills}</div>
       `;
+    }
+
+    function iniciarEstadisticasCaso(){
+      state.caseStats = {
+        historiaId:currentCase()?.id || "",
+        intentosComprension:0,
+        intentosDescubrimiento:0,
+        intentosOperacion:0,
+        intentosOperandos:0,
+        intentosResultado:0,
+        pistasUtilizadas:0,
+        pasos:[]
+      };
+    }
+
+    function statsPaso(){
+      if(!state.caseStats) iniciarEstadisticasCaso();
+      if(!state.caseStats.pasos[state.stepIndex]){
+        state.caseStats.pasos[state.stepIndex] = {
+          paso:state.stepIndex + 1,
+          operacionIndicada:"",
+          operacionCorrecta:currentStep().operacion,
+          operandosIndicados:[],
+          operandosCorrectos:[Number(currentStep().a),Number(currentStep().b)],
+          resultadoIndicado:null,
+          resultadoCorrecto:Number(currentStep().resultado),
+          intentosOperacion:0,
+          intentosOperandos:0,
+          intentosResultado:0
+        };
+      }
+      return state.caseStats.pasos[state.stepIndex];
+    }
+
+    function operandosSonCorrectos(a,b,step){
+      const first=Number(a), second=Number(b);
+      if(["sumar","multiplicar"].includes(step.operacion)){
+        return (first===Number(step.a) && second===Number(step.b)) ||
+               (first===Number(step.b) && second===Number(step.a));
+      }
+      return first===Number(step.a) && second===Number(step.b);
     }
 
     function render(){
@@ -1472,6 +1521,8 @@
 
         button.onclick = () => {
           state.attempts += 1;
+          if(state.stage === 1) state.caseStats.intentosComprension += 1;
+          if(state.stage === 2) state.caseStats.intentosDescubrimiento += 1;
 
           container.querySelectorAll(".choice").forEach(item => {
             item.classList.remove("correct","incorrect");
@@ -1595,7 +1646,11 @@
       }else if(state.stage === 4){
         const step = currentStep();
         parts.push(step.pregunta);
-        parts.push(`La operación es ${step.a} ${operationName(step.operacion)} ${step.b}.`);
+        if(state.operandosValidados){
+          parts.push(`La operación es ${step.a} ${operationName(step.operacion)} ${step.b}.`);
+        }else{
+          parts.push("Escribe los dos números de la historia que necesitas para esta operación.");
+        }
       }
 
       return parts.join(". ");
@@ -1611,7 +1666,6 @@
 
       $("stageContent").innerHTML = `
         <p class="question">${step.pregunta}</p>
-        <div class="operation-numbers">🔢 Números que vamos a usar: <strong>${step.a}</strong> y <strong>${step.b}</strong></div>
         ${buildVisualHelp(step)}
         <div class="operation-grid" id="operationChoices"></div>
       `;
@@ -1628,6 +1682,8 @@
 
         button.onclick = () => {
           state.attempts += 1;
+          if(state.stage === 1) state.caseStats.intentosComprension += 1;
+          if(state.stage === 2) state.caseStats.intentosDescubrimiento += 1;
 
           container.querySelectorAll(".operation").forEach(item => {
             item.classList.remove("correct","incorrect");
@@ -1655,6 +1711,8 @@
 
     function renderCalculationStage(){
       const step = currentStep();
+      state.operandosValidados = false;
+      state.operandosIndicados = [];
 
       $("stageTitle").textContent =
         currentCase().tipo === "compuesto"
@@ -1663,22 +1721,72 @@
 
       $("stageContent").innerHTML = `
         <p class="question">${step.pregunta}</p>
-        ${buildVisualHelp(step)}
-        <div class="calculation">
-          <div class="number-box">${step.a}</div>
-          <div class="math-sign">${operationSymbols[step.operacion]}</div>
-          <div class="number-box">${step.b}</div>
-          <div class="math-sign equals">=</div>
-          <input id="resultInput" class="result-input" inputmode="numeric"
-                 aria-label="Resultado" placeholder="?">
+        <div class="substep-banner">
+          <strong>1. Encuentra los números</strong> · Después calcularemos el resultado.
         </div>
+        <div class="calculation operand-entry" style="grid-template-columns:1fr auto 1fr">
+          <input id="operandAInput" class="result-input" inputmode="numeric" aria-label="Primer número" placeholder="Primer número">
+          <div class="math-sign">y</div>
+          <input id="operandBInput" class="result-input" inputmode="numeric" aria-label="Segundo número" placeholder="Segundo número">
+        </div>
+        <div class="actions" style="justify-content:center">
+          <button id="checkOperandsButton" class="btn btn-light" type="button" disabled>🔎 Comprobar números</button>
+        </div>
+        <div id="calculationAfterOperands"></div>
       `;
 
-      const input = $("resultInput");
-      input.focus();
-      input.addEventListener("input", () => {
-        $("continueButton").disabled = input.value.trim() === "";
-      });
+      const aInput=$("operandAInput");
+      const bInput=$("operandBInput");
+      const checkButton=$("checkOperandsButton");
+      const refresh=()=>{
+        checkButton.disabled = aInput.value.trim()==="" || bInput.value.trim()==="";
+      };
+      aInput.addEventListener("input",refresh);
+      bInput.addEventListener("input",refresh);
+      aInput.focus();
+
+      checkButton.onclick=()=>{
+        state.attempts += 1;
+        state.caseStats.intentosOperandos += 1;
+        const pasoStats=statsPaso();
+        pasoStats.intentosOperandos += 1;
+        pasoStats.operandosIndicados=[Number(aInput.value),Number(bInput.value)];
+
+        if(!operandosSonCorrectos(aInput.value,bInput.value,step)){
+          const tries=pasoStats.intentosOperandos;
+          const message=tries===1
+            ? "🔎 Revisa la historia: busca las dos cantidades relacionadas con la pregunta."
+            : tries===2
+              ? "💡 Piensa qué cantidad había primero y qué cantidad cambia o se repite."
+              : `🦜 Una pista: uno de los números es ${step.a}. Encuentra ahora el otro.`;
+          if(tries>=3) state.caseStats.pistasUtilizadas += 1;
+          setFeedback(message,"try");
+          return;
+        }
+
+        state.operandosValidados=true;
+        state.operandosIndicados=[Number(aInput.value),Number(bInput.value)];
+        aInput.disabled=true; bInput.disabled=true; checkButton.disabled=true;
+        setFeedback("🌟 ¡Muy bien! Has encontrado las dos cantidades de la operación.","good");
+        $("calculationAfterOperands").innerHTML=`
+          <div class="substep-banner" style="margin-top:18px">
+            <strong>✓ Números encontrados</strong> · 2. Calcula el resultado.
+          </div>
+          ${buildVisualHelp(step)}
+          <div class="calculation">
+            <div class="number-box">${escapeHtml(aInput.value)}</div>
+            <div class="math-sign">${operationSymbols[step.operacion]}</div>
+            <div class="number-box">${escapeHtml(bInput.value)}</div>
+            <div class="math-sign equals">=</div>
+            <input id="resultInput" class="result-input" inputmode="numeric" aria-label="Resultado" placeholder="?">
+          </div>
+        `;
+        const result=$("resultInput");
+        result.focus();
+        result.addEventListener("input",()=>{
+          $("continueButton").disabled=result.value.trim()==="";
+        });
+      };
     }
 
     function playSuccessChime(){
@@ -1710,8 +1818,13 @@
 
     function validateCalculation(){
       const step = currentStep();
+      if(!state.operandosValidados || !$("resultInput")) return false;
       const value = Number($("resultInput").value);
       state.attempts += 1;
+      state.caseStats.intentosResultado += 1;
+      const pasoStats=statsPaso();
+      pasoStats.intentosResultado += 1;
+      pasoStats.resultadoIndicado=value;
 
       if(value !== Number(step.resultado)){
         setFeedback(
@@ -1750,7 +1863,7 @@
       return true;
     }
 
-    $("continueButton").onclick = () => {
+    $("continueButton").onclick = async () => {
       if(state.stage < 4){
         state.stage += 1;
         render();
@@ -1769,6 +1882,8 @@
         state.stepIndex += 1;
         state.stage = 3;
         state.awaitingManualNext = false;
+        state.operandosValidados = false;
+        state.operandosIndicados = [];
         $("continueButton").textContent = "Continuar →";
         render();
         return;
@@ -1780,6 +1895,24 @@
         state.simpleCompleted += 1;
       }
 
+      try{
+        const lastStep=item.pasos[item.pasos.length-1];
+        await registrarResolucionDetective(auth.currentUser.uid,{
+          historiaId:item.id,nivel:item.nivel,tema:item.tema,tipo:item.tipo,
+          intentosTotales:Object.values(state.caseStats).filter(v=>typeof v==="number").reduce((a,b)=>a+b,0),
+          ...state.caseStats,
+          operacionIndicada:state.caseStats.pasos.at(-1)?.operacionIndicada || "",
+          operacionCorrecta:lastStep.operacion,
+          operandosIndicados:state.caseStats.pasos.at(-1)?.operandosIndicados || [],
+          operandosCorrectos:[lastStep.a,lastStep.b],
+          resultadoIndicado:state.caseStats.pasos.at(-1)?.resultadoIndicado,
+          resultadoCorrecto:lastStep.resultado
+        });
+      }catch(error){
+        console.error("No se pudo guardar el progreso en Firestore.",error);
+        setFeedback("El caso está resuelto, pero no pudimos guardar el historial. Comprueba la conexión.","try");
+      }
+
       if(state.challengeIndex === state.challenges.length - 1){
         finishAdventure();
         return;
@@ -1789,6 +1922,9 @@
       state.stage = 1;
       state.stepIndex = 0;
       state.awaitingManualNext = false;
+      state.operandosValidados = false;
+      state.operandosIndicados = [];
+      iniciarEstadisticasCaso();
       $("continueButton").textContent = "Continuar →";
       render();
     };
@@ -1815,71 +1951,6 @@
     };
 
 
-    const historyStorageKey =
-      `aventurasMatematicas:${auth.currentUser.uid}:detectives:historial`;
-
-    function readHistory(){
-      try{
-        const value = JSON.parse(localStorage.getItem(historyStorageKey) || "[]");
-        return Array.isArray(value) ? value : [];
-      }catch(error){
-        return [];
-      }
-    }
-
-    function saveCompletedCases(){
-      const now = new Date().toISOString();
-      const previous = readHistory();
-      const records = state.challenges.map(item => ({
-        id:item.id,
-        titulo:item.titulo,
-        nivel:item.nivel,
-        tema:item.tema,
-        completedAt:now
-      }));
-
-      const merged = [...records,...previous];
-      const unique = [...new Map(merged.map(item => [item.id,item])).values()]
-        .sort((a,b) => new Date(b.completedAt) - new Date(a.completedAt));
-      localStorage.setItem(historyStorageKey,JSON.stringify(unique));
-      renderHistory();
-    }
-
-    function renderHistory(){
-      const list = $("historyList");
-      const history = readHistory();
-
-      if(!history.length){
-        list.innerHTML = '<div class="history-empty">Todavía no hay casos completados. Tu primera investigación aparecerá aquí.</div>';
-        return;
-      }
-
-      list.innerHTML = history.map(item => {
-        const date = new Date(item.completedAt);
-        const dateText = Number.isNaN(date.getTime())
-          ? ""
-          : date.toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"});
-        return `
-          <article class="history-item">
-            <span class="history-item__icon">✅</span>
-            <div>
-              <strong>${escapeHtml(item.titulo || item.id)}</strong>
-              <small>Nivel ${Number(item.nivel) || "—"} · ${escapeHtml(themeLabels[item.tema] || item.tema || "Sin tema")}</small>
-            </div>
-            <small>${escapeHtml(dateText)}</small>
-          </article>
-        `;
-      }).join("");
-    }
-
-    $("toggleHistoryButton").onclick = () => {
-      const list = $("historyList");
-      const willShow = list.classList.contains("hidden");
-      list.classList.toggle("hidden",!willShow);
-      $("toggleHistoryButton").textContent = willShow ? "Ocultar historial" : "Ver historial";
-      if(willShow) renderHistory();
-    };
-
     function finishAdventure(){
       $("gamePanel").classList.add("hidden");
       document.querySelector(".steps").classList.add("hidden");
@@ -1895,8 +1966,6 @@
 
       const storageKey =
         `aventurasMatematicas:${auth.currentUser.uid}:detectives:nivel${state.selectedLevel}`;
-
-      saveCompletedCases();
 
       localStorage.setItem(storageKey, JSON.stringify({
         completed:true,
@@ -1921,7 +1990,7 @@
       state.challengeIndex=0; state.stage=1; state.stepIndex=0;
       state.attempts=0; state.completedOperations=0;
       state.simpleCompleted=0; state.compoundCompleted=0;
-      state.awaitingManualNext=false; state.selectedTheme=""; state.selectedQuantity=5; state.displayedOptions={};
+      state.awaitingManualNext=false; state.operandosValidados=false; state.operandosIndicados=[]; state.respuestasPorCaso={}; state.selectedTheme=""; state.selectedQuantity=5; state.displayedOptions={};
       $("themeFilter").value=""; populateThemes(); updateCaseCount();
       window.scrollTo({top:0,behavior:"smooth"});
     }
@@ -1931,7 +2000,36 @@
 
     populateThemes();
     updateCaseCount();
-    renderHistory();
+
+    const requestedStoryId = new URLSearchParams(window.location.search).get("practicar");
+    if(requestedStoryId){
+      const requestedStory = allCases.find(item => item.id === requestedStoryId);
+      if(requestedStory){
+        state.selectedLevel = Number(requestedStory.nivel);
+        state.selectedTheme = requestedStory.tema || "";
+        state.selectedQuantity = 1;
+        state.challenges = [requestedStory];
+        state.challengeIndex = 0;
+        state.stage = 1;
+        state.stepIndex = 0;
+        state.attempts = 0;
+        state.completedOperations = 0;
+        state.simpleCompleted = 0;
+        state.compoundCompleted = 0;
+        state.awaitingManualNext = false;
+        state.displayedOptions = {};
+        state.operandosValidados = false;
+        state.operandosIndicados = [];
+        state.respuestasPorCaso = {};
+        iniciarEstadisticasCaso();
+        $("caseSelector").classList.add("hidden");
+        $("historyPanel").classList.add("hidden");
+        $("gamePanel").classList.remove("hidden");
+        document.querySelector(".steps").classList.remove("hidden");
+        $("continueButton").textContent = "Continuar →";
+        render();
+      }
+    }
   </script>
   <script src="../../../compartido/js/navegacion.js"></script>
 </body>

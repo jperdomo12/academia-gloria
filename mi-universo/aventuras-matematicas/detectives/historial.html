@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mis casos investigados | Detectives de Problemas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Outfit,sans-serif;color:#243047;background:linear-gradient(150deg,#f0f9ff,#fff7ed,#faf5ff)}
+    .wrap{width:min(1120px,calc(100% - 28px));margin:auto;padding:20px 0 48px}.card{background:#fff;border:2px solid #e7eaf8;border-radius:26px;box-shadow:0 18px 42px rgba(76,29,149,.08)}
+    .topbar,.hero-head,.toolbar,.item,.actions{display:flex;align-items:center;gap:12px}.topbar{justify-content:space-between;margin-bottom:16px}.back,.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 16px;border:0;border-radius:16px;font-weight:900;text-decoration:none;cursor:pointer}.back,.btn-light{background:#eef2ff;color:#4f46e5}.btn-danger{background:#fff1f2;color:#be123c;border:2px solid #fecdd3}.btn-primary{background:linear-gradient(90deg,#7c3aed,#ec4899);color:#fff}
+    .hero{padding:25px}.hero-head{justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.hero h1{margin:0;font-size:clamp(34px,5vw,54px);color:#6d28d9}.hero p{color:#64748b;font-weight:700;font-size:18px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat{padding:15px;border-radius:18px;background:#faf5ff;text-align:center}.stat strong{display:block;font-size:30px;color:#7c3aed}
+    .toolbar{margin:18px 0;padding:16px;flex-wrap:wrap}.toolbar select,.toolbar input{min-height:48px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:14px;font:inherit;font-weight:700}.toolbar input{flex:1;min-width:220px}.list{display:grid;gap:12px}.item{padding:17px;justify-content:space-between;flex-wrap:wrap}.item-main{display:flex;gap:13px;align-items:flex-start;flex:1;min-width:260px}.icon{font-size:32px}.item h2{margin:0 0 5px;font-size:21px}.meta{color:#64748b;font-weight:700}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{padding:5px 9px;border-radius:999px;background:#f1f5f9;color:#475569;font-size:12px;font-weight:900}.empty,.error{padding:30px;text-align:center;color:#64748b;font-weight:800}.error{color:#9f1239}.loading{text-align:center;padding:30px;font-weight:900;color:#6d28d9}
+    @media(max-width:650px){.stats{grid-template-columns:1fr}.actions,.actions .btn{width:100%}.item{align-items:stretch}}
+  </style>
+</head>
+<body><main class="wrap">
+  <div class="topbar"><a class="back" href="./index.html">← Volver a Detectives</a><div data-panel-usuario></div></div>
+  <section class="card hero"><div class="hero-head"><div><h1>📚 Mis casos investigados</h1><p>Consulta lo aprendido, revisa cada historia y vuelve a practicar cuando quieras.</p></div><button id="clearHistory" class="btn btn-danger" type="button">Vaciar historial</button></div>
+    <div class="stats"><div class="stat"><strong id="totalCompleted">0</strong><span>Historias completadas</span></div><div class="stat"><strong id="totalPractices">0</strong><span>Resoluciones</span></div><div class="stat"><strong id="totalPending">0</strong><span>Por descubrir</span></div></div>
+  </section>
+  <section class="card toolbar"><input id="searchInput" type="search" placeholder="Buscar una historia…"><select id="levelFilter"><option value="">Todos los niveles</option><option value="1">Nivel 1</option><option value="2">Nivel 2</option><option value="3">Nivel 3</option></select><select id="statusFilter"><option value="">Todos los estados</option><option value="en_practica">En práctica</option><option value="reforzar">Reforzar</option><option value="dominada">Dominada</option></select></section>
+  <section id="historyList" class="list"><div class="card loading">Cargando historial…</div></section>
+</main>
+<script type="module">
+  import { auth } from "../../../compartido/firebase/firebase-config.js";
+  import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
+  import { obtenerHistorialDetectives,eliminarHistorialDetectives } from "../../../compartido/js/detectives-progreso.js";
+  await auth.authStateReady();
+  if(!auth.currentUser){location.replace("/academia-gloria/login.html");throw new Error("Sesión no disponible");}
+  await iniciarPanelUsuario({contenedor:"[data-panel-usuario]",loginUrl:"/academia-gloria/login.html",mostrarPerfil:false});
+  const $=id=>document.getElementById(id);let histories=[],stories=[];
+  const escape=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
+  const dateText=value=>value?new Date(value).toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"}):"—";
+  async function load(){
+    try{const [historyResponse,storyResponse]=await Promise.all([obtenerHistorialDetectives(auth.currentUser.uid),fetch("./historias.json",{cache:"no-store"})]);histories=historyResponse;stories=storyResponse.ok?await storyResponse.json():[];render();}
+    catch(error){console.error(error);$("historyList").innerHTML='<div class="card error">No fue posible cargar el historial. Revisa la conexión y las reglas de Firestore.</div>';}
+  }
+  function render(){
+    const byId=new Map(stories.map(item=>[item.id,item]));const q=$("searchInput").value.trim().toLowerCase();const level=$("levelFilter").value;const status=$("statusFilter").value;
+    const filtered=histories.filter(item=>{const story=byId.get(item.historiaId||item.id)||{};return(!level||String(item.nivel)===level)&&(!status||item.estado===status)&&(!q||`${story.titulo||item.historiaId} ${story.texto||""}`.toLowerCase().includes(q));});
+    $("totalCompleted").textContent=histories.length;$("totalPractices").textContent=histories.reduce((sum,item)=>sum+Number(item.vecesCompletada||0),0);$("totalPending").textContent=Math.max(0,stories.length-histories.length);
+    if(!filtered.length){$("historyList").innerHTML='<div class="card empty">No hay historias que coincidan con estos filtros.</div>';return;}
+    $("historyList").innerHTML=filtered.map(item=>{const story=byId.get(item.historiaId||item.id)||{};const id=item.historiaId||item.id;return `<article class="card item"><div class="item-main"><span class="icon">✅</span><div><h2>${escape(story.titulo||id)}</h2><div class="meta">Nivel ${item.nivel||"—"} · ${escape(item.tema||"Sin tema")} · Última vez: ${escape(dateText(item.ultimaResolucion))}</div><div class="chips"><span class="chip">${Number(item.vecesCompletada||0)} veces</span><span class="chip">${escape((item.estado||"en_practica").replaceAll("_"," "))}</span><span class="chip">Mejor: ${item.mejorIntentos??"—"} intentos</span></div></div></div><div class="actions"><a class="btn btn-light" href="./historia.html?id=${encodeURIComponent(id)}">Ver detalle</a><a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(id)}">Practicar otra vez</a></div></article>`}).join("");
+  }
+  ["searchInput","levelFilter","statusFilter"].forEach(id=>$(id).addEventListener(id==="searchInput"?"input":"change",render));
+  $("clearHistory").onclick=async()=>{if(!confirm("¿Seguro que deseas borrar todo el historial de Detectives? Esta acción no se puede deshacer."))return;if(!confirm("Confirma por segunda vez: se eliminarán todas las resoluciones guardadas."))return;$("clearHistory").disabled=true;try{await eliminarHistorialDetectives(auth.currentUser.uid);histories=[];render();}finally{$("clearHistory").disabled=false;}};
+  await load();
+</script><script src="../../../compartido/js/navegacion.js"></script></body></html>
