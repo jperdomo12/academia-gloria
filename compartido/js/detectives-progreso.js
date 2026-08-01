@@ -128,7 +128,7 @@ export async function registrarResolucionDetective(uid,registro){
     });
   });
 
-  return {historiaId,guardado:true};
+  return {historiaId,sesionId:sessionRef.id,guardado:true};
 }
 
 export async function obtenerHistorialDetectives(uid){

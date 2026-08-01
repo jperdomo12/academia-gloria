@@ -34,6 +34,11 @@
     href="../../../compartido/css/panel-usuario.css"
   >
 
+  <link
+    rel="stylesheet"
+    href="../../../compartido/css/celebracion.css"
+  >
+
   <style>
     *{box-sizing:border-box}
 
@@ -853,6 +858,26 @@
     .history-item small{color:#64748b;font-weight:700}
     .history-empty{padding:18px;border-radius:17px;background:#f8fafc;color:#64748b;font-weight:800;text-align:center}
 
+    .mission-banner{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:14px;align-items:center;margin:18px 0;padding:17px 18px;border:2px solid #c4b5fd;border-radius:22px;background:linear-gradient(135deg,#faf5ff,#eff6ff,#fff);box-shadow:0 13px 30px rgba(124,58,237,.09)}
+    .mission-banner__icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:18px;background:#ede9fe;font-size:31px}
+    .mission-banner h2{margin:0 0 4px;color:#5b21b6;font-size:1.3rem}.mission-banner p{margin:0;color:#64748b;font-weight:750;line-height:1.45}.mission-banner__progress{min-width:105px;padding:10px 13px;border-radius:16px;background:#fff;color:#6d28d9;text-align:center;font-weight:900}.mission-banner__progress strong{display:block;font-size:1.3rem}
+    .mission-banner--done{border-color:#86efac;background:linear-gradient(135deg,#f0fdf4,#fff)}
+    .mission-banner--done h2{color:#166534}
+    .mission-banner--free{border-color:#bae6fd;background:linear-gradient(135deg,#f0f9ff,#fff,#f0fdf4)}
+    .mission-banner--free .mission-banner__icon{background:#e0f2fe}
+    .mission-banner--free h2{color:#0369a1}
+    .mission-banner--free .mission-banner__progress{color:#0369a1;background:#f8fdff}
+    .mission-banner--help{border-color:#fecdd3;background:linear-gradient(135deg,#fff1f2,#fff)}
+    .mission-banner--help .mission-banner__icon{background:#ffe4e6}
+    .mission-banner--help h2{color:#9f1239}
+    .mission-banner__actions{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:155px}
+    .mission-banner__status{display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;border-radius:999px;color:#5b21b6;background:#ede9fe;font-size:.76rem;font-weight:900;cursor:default;user-select:none}
+    .mission-banner__status--help{color:#9f1239;background:#ffe4e6}
+    .mission-banner__status--done{color:#166534;background:#dcfce7}
+    .mission-banner__status--free{color:#075985;background:#e0f2fe}
+    .mission-banner__help{min-height:36px;padding:7px 11px;border:2px solid #e9d5ff;border-radius:12px;white-space:nowrap;font-size:.82rem}
+    @media(max-width:700px){.mission-banner{grid-template-columns:48px 1fr}.mission-banner__progress{grid-column:1/-1;width:100%}.mission-banner__actions{grid-column:1/-1;width:100%;flex-direction:row;justify-content:space-between;align-items:center}.mission-banner__help{width:auto}}
+
     .hidden{display:none!important}
 
     @media(max-width:850px){
@@ -879,6 +904,49 @@
         animation-duration:.01ms!important;
         animation-iteration-count:1!important;
         transition-duration:.01ms!important;
+      }
+    }
+  
+    .quantity-custom{
+      display:grid;
+      grid-template-columns:auto minmax(90px,130px) auto;
+      gap:8px;
+      align-items:center;
+      width:100%;
+      margin-top:10px;
+      padding:11px 12px;
+      border:2px dashed #c4b5fd;
+      border-radius:15px;
+      background:#faf5ff;
+    }
+
+    .quantity-custom label{
+      color:#5b21b6;
+      font-weight:900;
+    }
+
+    .quantity-custom input{
+      min-height:40px;
+      padding:8px 10px;
+      border:2px solid #ddd6fe;
+      border-radius:11px;
+      font:inherit;
+      font-weight:850;
+    }
+
+    .quantity-custom small{
+      grid-column:1/-1;
+      color:#64748b;
+      font-weight:700;
+    }
+
+    @media(max-width:560px){
+      .quantity-custom{
+        grid-template-columns:1fr;
+      }
+
+      .quantity-custom small{
+        grid-column:auto;
       }
     }
   </style>
@@ -916,6 +984,26 @@
         <p>No busques una palabra mágica. Piensa qué está ocurriendo en la historia.</p>
       </aside>
     </header>
+
+    <section id="missionBanner" class="mission-banner hidden" aria-live="polite">
+      <div class="mission-banner__icon">🌟</div>
+      <div>
+        <h2 id="missionTitle">Misión en curso</h2>
+        <p id="missionDescription">Cada historia completada contará para tu misión.</p>
+      </div>
+      <div class="mission-banner__progress">
+        <strong id="missionProgress">0 de 0</strong>
+        <span>historias</span>
+      </div>
+      <div class="mission-banner__actions">
+        <span id="missionStatus" class="mission-banner__status" aria-label="Estado de la misión">
+          Estado: En curso
+        </span>
+        <button id="missionHelpButton" class="btn btn-light mission-banner__help" type="button">
+          🤝 Necesito ayuda
+        </button>
+      </div>
+    </section>
 
 
     <section id="caseSelector" class="card case-selector">
@@ -995,7 +1083,7 @@
           <img class="celebration-macaw one" src="../../../assets/identidad/guacamayas/guacamaya-azul-posada-01.png" alt="">
           <img class="celebration-macaw two" src="../../../assets/identidad/guacamayas/guacamaya-azul-posada-02.png" alt="">
         </div>
-        <h3>¡Caso resuelto!</h3>
+        <h3 id="caseCelebrationTitle">¡Historia resuelta!</h3>
         <p id="caseCelebrationText">Has comprendido la historia, elegido la operación y encontrado la solución.</p>
       </div>
 
@@ -1014,7 +1102,7 @@
 
     <section id="summaryPanel" class="card summary hidden">
       <div class="summary-icon">🦜🦜</div>
-      <h2>¡Primera misión completada!</h2>
+      <h2 id="summaryTitle">¡Aventura completada!</h2>
 
       <p id="summaryMessage">
         Has practicado cómo comprender una historia y elegir una operación.
@@ -1023,31 +1111,27 @@
       <div class="summary-stats">
         <div class="summary-stat">
           <strong id="summaryChallenges">0</strong>
-          <span>Retos completados</span>
+          <span>Historias resueltas</span>
         </div>
 
         <div class="summary-stat">
           <strong id="summaryOperations">0</strong>
-          <span>Operaciones descubiertas</span>
+          <span>Operaciones resueltas</span>
         </div>
 
         <div class="summary-stat">
           <strong id="summaryAttempts">0</strong>
-          <span>Intentos valientes</span>
+          <span>Intentos realizados</span>
         </div>
       </div>
 
       <div class="actions" style="justify-content:center">
         <button id="restartButton" class="btn btn-light" type="button">
-          🔁 Repetir aventura
+          🌈 Seguir practicando sin misión
         </button>
 
-        <button id="chooseAnotherAdventureButton" class="btn btn-primary" type="button">
-          🔎 Elegir otra aventura
-        </button>
-
-        <a class="btn btn-light" data-volver-modulo data-ruta-alternativa="../index.html" href="../index.html" style="text-decoration:none">
-          🌈 Volver a los mundos
+        <a id="summaryBackButton" class="btn btn-light" data-volver-modulo data-ruta-alternativa="../index.html" href="../index.html" style="text-decoration:none">
+          🌈 Volver a Aventuras Matemáticas
         </a>
       </div>
     </section>
@@ -1059,6 +1143,8 @@
     import { obtenerPerfil } from "../../../compartido/js/perfil-usuario.js";
     import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
     import { registrarResolucionDetective } from "../../../compartido/js/detectives-progreso.js";
+    import { Academia } from "../../../compartido/api/academia.js";
+    import { mostrarCelebracion } from "../../../compartido/js/celebracion.js";
 
     await auth.authStateReady();
 
@@ -1081,6 +1167,179 @@
       loginUrl: "/academia-gloria/login.html",
       mostrarPerfil: false
     });
+
+
+    const parametrosPagina = new URLSearchParams(window.location.search);
+    let misionId = parametrosPagina.get("misionId");
+    let misionActiva = null;
+
+    function progresoMision() {
+      const actual = Number(misionActiva?.progreso?.cantidadActual || 0);
+      const objetivo = Number(
+        misionActiva?.progreso?.cantidadObjetivo ||
+        misionActiva?.criterioCumplimiento?.cantidadObjetivo ||
+        0
+      );
+      return { actual, objetivo, restante: Math.max(0, objetivo - actual) };
+    }
+
+    function actualizarBandaMision({ terminada = false } = {}) {
+      const banner = document.getElementById("missionBanner");
+      if (!misionActiva || !banner) return;
+
+      const { actual, objetivo } = progresoMision();
+      const misionTerminada = terminada || (objetivo > 0 && actual >= objetivo);
+
+      banner.classList.remove("hidden", "mission-banner--free");
+      banner.classList.toggle("mission-banner--done", misionTerminada);
+
+      document.querySelector(".mission-banner__icon").textContent =
+        misionTerminada ? "🎉" : "🌟";
+
+      document.getElementById("missionTitle").textContent =
+        misionTerminada ? "🎉 ¡Misión terminada!" : "🌟 Misión en curso";
+
+      document.getElementById("missionDescription").textContent =
+        misionTerminada
+          ? "¡Excelente trabajo! Tu familia ya puede revisar y celebrar lo que has conseguido."
+          : (misionActiva.presentacionAlumno?.tituloMision ||
+              misionActiva.titulo ||
+              "Misión de Detectives") +
+            ". Cada historia completada contará para esta misión.";
+
+      document.getElementById("missionProgress").textContent =
+        `${actual} de ${objetivo}`;
+      document.querySelector(".mission-banner__progress span").textContent =
+        "historias";
+      const status = document.getElementById("missionStatus");
+      if (status) {
+        status.className = "mission-banner__status";
+        status.classList.toggle("mission-banner__status--done", misionTerminada);
+        status.textContent = misionTerminada
+          ? "Estado: Terminada"
+          : "Estado: En curso";
+      }
+
+      const helpButton = document.getElementById("missionHelpButton");
+      if (helpButton) {
+        helpButton.classList.remove("hidden");
+        helpButton.textContent =
+          misionActiva.estado === "necesita_ayuda"
+            ? "▶️ Ya puedo continuar"
+            : "🤝 Necesito ayuda";
+      }
+    }
+
+    function mostrarBandaAventuraLibre() {
+      const banner = document.getElementById("missionBanner");
+      if (!banner) return;
+
+      banner.classList.remove("hidden", "mission-banner--done");
+      banner.classList.add("mission-banner--free");
+
+      document.querySelector(".mission-banner__icon").textContent = "🌈";
+      document.getElementById("missionTitle").textContent =
+        "🌈 Aventura libre";
+      document.getElementById("missionDescription").textContent =
+        "Ahora estás practicando por tu cuenta. Estas historias no contarán para una misión asignada.";
+      document.getElementById("missionProgress").textContent = "Sin misión";
+      document.querySelector(".mission-banner__progress span").textContent =
+        "práctica libre";
+      document.getElementById("missionHelpButton")?.classList.add("hidden");
+      const status = document.getElementById("missionStatus");
+      if (status) {
+        status.className = "mission-banner__status mission-banner__status--free";
+        status.textContent = "Estado: Aventura libre";
+      }
+    }
+
+    function abandonarContextoMision() {
+      misionId = null;
+      misionActiva = null;
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("misionId");
+      window.history.replaceState({}, "", url);
+
+      mostrarBandaAventuraLibre();
+      actualizarBotonRegresoContextual();
+    }
+
+
+    function actualizarBandaAyuda() {
+      const banner = document.getElementById("missionBanner");
+      if (!banner || !misionActiva) return;
+      const necesitaAyuda = misionActiva.estado === "necesita_ayuda";
+      banner.classList.toggle("mission-banner--help", necesitaAyuda);
+
+      if (necesitaAyuda) {
+        document.querySelector(".mission-banner__icon").textContent = "🤝";
+        document.getElementById("missionTitle").textContent = "🤝 Has pedido ayuda";
+        document.getElementById("missionDescription").textContent =
+          "Tu familia podrá ver que necesitas acompañamiento. Puedes continuar cuando estés preparada.";
+      } else {
+        actualizarBandaMision();
+      }
+
+      const button = document.getElementById("missionHelpButton");
+      if (button) button.textContent = necesitaAyuda ? "▶️ Ya puedo continuar" : "🤝 Necesito ayuda";
+    }
+
+    async function alternarSolicitudAyuda() {
+      if (!misionActiva || !misionId) return;
+      const necesitaAyuda = misionActiva.estado !== "necesita_ayuda";
+      const nuevoEstado = necesitaAyuda ? "necesita_ayuda" : "en_curso";
+      const button = document.getElementById("missionHelpButton");
+      if (button) button.disabled = true;
+      try {
+        await Academia.tareas.cambiarEstado(misionId, nuevoEstado);
+        misionActiva.estado = nuevoEstado;
+        actualizarBandaAyuda();
+        setFeedback(necesitaAyuda ? "🤝 Tu familia verá que necesitas ayuda." : "🌟 ¡Muy bien! Puedes continuar con tu misión.", "good");
+      } catch (error) {
+        console.error("No se pudo actualizar la solicitud de ayuda.", error);
+        setFeedback("No pudimos guardar la solicitud de ayuda. Comprueba la conexión.", "try");
+      } finally {
+        if (button) button.disabled = false;
+      }
+    }
+
+
+    function actualizarBotonRegresoContextual() {
+      const boton = document.getElementById("summaryBackButton");
+      if (!boton) return;
+
+      if (misionId) {
+        const volver = new URLSearchParams(window.location.search).get("volver");
+        boton.textContent = "🌟 Volver a Mi Camino";
+        boton.href = volver || "../../mi-camino/";
+        boton.dataset.rutaAlternativa = "../../mi-camino/";
+      } else {
+        boton.textContent = "🌈 Volver a Aventuras Matemáticas";
+        boton.href = "../";
+        boton.dataset.rutaAlternativa = "../";
+      }
+    }
+
+    async function cargarMision() {
+      if (!misionId) {
+        mostrarBandaAventuraLibre();
+        return null;
+      }
+      try {
+        const mision = await Academia.tareas.obtener(misionId);
+        if (!mision) throw new Error("La misión no existe.");
+        if (mision.modulo !== "detectives") throw new Error("Esta misión no corresponde a Detectives.");
+        misionActiva = mision;
+        actualizarBandaMision();
+        return mision;
+      } catch (error) {
+        console.error("No se pudo cargar la misión.", error);
+        abandonarContextoMision();
+        setTimeout(() => setFeedback("No pudimos cargar la misión. Has pasado a Aventura libre y esta actividad no contará para una misión.", "try"), 0);
+        return null;
+      }
+    }
 
     const fallbackCases = [{"id":"DP-0001","titulo":"Las naranjas de la cesta","texto":"En una cesta había 5 naranjas. Ana añadió 3 naranjas más.","nivel":1,"tema":"casa","tipo":"simple","comprension":{"pregunta":"¿Qué ocurrió con la cantidad de naranjas?","opciones":[{"id":"aumento","texto":"🍊 Aumentó porque añadieron más."},{"id":"disminuyo","texto":"📉 Disminuyó porque quitaron algunas."},{"id":"reparto","texto":"🤝 Se repartieron en partes iguales."}],"correcta":"aumento"},"descubrimiento":{"pregunta":"¿Qué necesitamos averiguar?","opciones":[{"id":"total","texto":"Cuántas naranjas hay ahora."},{"id":"faltan","texto":"Cuántas naranjas faltan."},{"id":"grupos","texto":"Cuántos grupos se pueden formar."}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas naranjas hay ahora?","operacion":"sumar","a":5,"b":3,"resultado":8}],"activo":true},{"id":"DP-0002","titulo":"Las pegatinas compartidas","texto":"Gloria tenía 9 pegatinas y regaló 4 a una amiga.","nivel":1,"tema":"amistad","tipo":"simple","comprension":{"pregunta":"¿Qué pasó con las pegatinas de Gloria?","opciones":[{"id":"mas","texto":"✨ Ahora tiene más."},{"id":"menos","texto":"🎁 Ahora tiene menos porque regaló algunas."},{"id":"igual","texto":"⚖️ Sigue teniendo la misma cantidad."}],"correcta":"menos"},"descubrimiento":{"pregunta":"¿Qué pregunta debemos responder?","opciones":[{"id":"quedan","texto":"Cuántas pegatinas le quedan."},{"id":"regalo","texto":"De qué color eran las pegatinas."},{"id":"total_amigas","texto":"Cuántas amigas tiene Gloria."}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántas pegatinas le quedan?","operacion":"restar","a":9,"b":4,"resultado":5}],"activo":true},{"id":"DP-0003","titulo":"Los vasos de las mesas","texto":"Hay 4 mesas. En cada mesa colocaron 3 vasos.","nivel":1,"tema":"cumpleaños","tipo":"simple","comprension":{"pregunta":"¿Cómo están organizados los vasos?","opciones":[{"id":"grupos","texto":"🍽️ En grupos iguales: 3 vasos por mesa."},{"id":"quitar","texto":"➖ Se quitaron vasos."},{"id":"repartir","texto":"🤝 Se reparten los vasos entre personas."}],"correcta":"grupos"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"El total de vasos en todas las mesas."},{"id":"mesas","texto":"El color de las mesas."},{"id":"sobran","texto":"Cuántos vasos sobran."}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántos vasos hay en total?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0004","titulo":"Las galletas para compartir","texto":"Doce galletas se reparten por igual entre 3 niños.","nivel":1,"tema":"merienda","tipo":"simple","comprension":{"pregunta":"¿Qué significa repartir por igual?","opciones":[{"id":"igual","texto":"🤝 Cada niño recibe la misma cantidad."},{"id":"uno","texto":"🍪 Un niño recibe todas las galletas."},{"id":"sobran","texto":"📦 Las galletas se guardan sin repartir."}],"correcta":"igual"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar?","opciones":[{"id":"cada","texto":"Cuántas galletas recibe cada niño."},{"id":"total","texto":"Cuántos niños hay en el colegio."},{"id":"precio","texto":"Cuánto cuestan las galletas."}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántas galletas recibe cada niño?","operacion":"dividir","a":12,"b":3,"resultado":4,"visual":{"tipo":"reparto","totalElementos":12,"grupos":3,"grupoIcono":"👧","elementoIcono":"🍪"}}],"activo":true},{"id":"DP-0005","titulo":"Las palomas del parque","texto":"En el parque había 7 palomas. Después llegaron 2 más.","nivel":1,"tema":"parque","tipo":"simple","comprension":{"pregunta":"¿La cantidad de palomas aumenta o disminuye?","opciones":[{"id":"aumenta","texto":"🕊️ Aumenta porque llegaron más."},{"id":"disminuye","texto":"📉 Disminuye porque se fueron."},{"id":"igual","texto":"⚖️ No cambia."}],"correcta":"aumenta"},"descubrimiento":{"pregunta":"¿Qué dato buscamos?","opciones":[{"id":"ahora","texto":"Cuántas palomas hay ahora."},{"id":"arboles","texto":"Cuántos árboles hay en el parque."},{"id":"comida","texto":"Qué comen las palomas."}],"correcta":"ahora"},"pasos":[{"pregunta":"¿Cuántas palomas hay ahora?","operacion":"sumar","a":7,"b":2,"resultado":9}],"activo":true},{"id":"DP-0006","titulo":"Los lápices en estuches","texto":"Hay 15 lápices y se guardan por igual en 5 estuches.","nivel":1,"tema":"colegio","tipo":"simple","comprension":{"pregunta":"¿Qué se hace con los lápices?","opciones":[{"id":"repartir","texto":"✏️ Se reparten por igual entre estuches."},{"id":"añadir","texto":"➕ Se añaden más lápices."},{"id":"perder","texto":"➖ Se pierden algunos lápices."}],"correcta":"repartir"},"descubrimiento":{"pregunta":"¿Qué necesitamos saber?","opciones":[{"id":"cada","texto":"Cuántos lápices van en cada estuche."},{"id":"color","texto":"De qué color son los estuches."},{"id":"precio","texto":"Cuánto cuesta cada lápiz."}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos lápices van en cada estuche?","operacion":"dividir","a":15,"b":5,"resultado":3,"visual":{"tipo":"reparto","totalElementos":15,"grupos":5,"grupoIcono":"🟦","elementoIcono":"●"}}],"activo":true},{"id":"DP-0101","titulo":"Helados en la playa","texto":"En la playa, una familia compró 6 helados por la mañana y 5 por la tarde. También llevó 3 toallas.","nivel":2,"tema":"playa","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para saber cuántos helados compraron?","opciones":[{"id":"toallas","texto":"🏖️ Las 3 toallas."},{"id":"mañana","texto":"🍦 Los 6 helados de la mañana."},{"id":"tarde","texto":"🌅 Los 5 helados de la tarde."}],"correcta":"toallas"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"helados","texto":"El total de helados comprados."},{"id":"personas","texto":"Cuántas personas hay en la playa."},{"id":"toallas","texto":"Cuántas toallas faltan."}],"correcta":"helados"},"pasos":[{"pregunta":"¿Cuántos helados compraron en total?","operacion":"sumar","a":6,"b":5,"resultado":11}],"activo":true},{"id":"DP-0102","titulo":"Entradas para el museo","texto":"Una entrada cuesta 4 euros. Anais compra 3 entradas para visitar un museo.","nivel":2,"tema":"viaje","tipo":"simple","comprension":{"pregunta":"¿Qué se repite en esta historia?","opciones":[{"id":"precio","texto":"🎟️ El mismo precio, 4 euros, tres veces."},{"id":"resta","texto":"➖ Se quitan entradas."},{"id":"reparto","texto":"🤝 Se reparte el dinero por igual."}],"correcta":"precio"},"descubrimiento":{"pregunta":"¿Qué queremos averiguar?","opciones":[{"id":"coste","texto":"Cuánto cuestan las 3 entradas."},{"id":"hora","texto":"A qué hora abre el museo."},{"id":"salas","texto":"Cuántas salas tiene el museo."}],"correcta":"coste"},"pasos":[{"pregunta":"¿Cuánto cuestan las 3 entradas?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🎟️","elementoIcono":"💶"}}],"activo":true},{"id":"DP-0103","titulo":"Frutas del supermercado","texto":"En el supermercado, Juan Pablo compra 18 mandarinas. Guarda 6 para otra semana y coloca las demás en una cesta.","nivel":2,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué cantidad cambia?","opciones":[{"id":"mandarinas","texto":"🍊 La cantidad de mandarinas disponibles ahora."},{"id":"semanas","texto":"📅 El número de semanas del año."},{"id":"cestas","texto":"🧺 El número de cestas."}],"correcta":"mandarinas"},"descubrimiento":{"pregunta":"¿Qué necesitamos calcular?","opciones":[{"id":"quedan","texto":"Cuántas mandarinas quedan para la cesta."},{"id":"precio","texto":"Cuánto cuesta cada mandarina."},{"id":"peso","texto":"Cuánto pesa la cesta."}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántas mandarinas coloca en la cesta?","operacion":"restar","a":18,"b":6,"resultado":12}],"activo":true},{"id":"DP-0201","titulo":"Material para el colegio","texto":"Gloria compra un cuaderno por 4 euros y dos lápices de 2 euros cada uno. Paga con 10 euros. ¿Cuánto cambio recibe?","nivel":3,"tema":"supermercado","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final del problema?","opciones":[{"id":"cambio","texto":"💶 Cuánto cambio recibe Gloria."},{"id":"lapices","texto":"✏️ Cuántos lápices compra."},{"id":"cuaderno","texto":"📓 De qué color es el cuaderno."}],"correcta":"cambio"},"descubrimiento":{"pregunta":"¿Qué necesitamos averiguar primero?","opciones":[{"id":"lapices","texto":"El precio de los dos lápices."},{"id":"cambio","texto":"El cambio, sin calcular antes la compra."},{"id":"color","texto":"El color del material."}],"correcta":"lapices"},"pasos":[{"pregunta":"¿Cuánto cuestan los dos lápices?","operacion":"multiplicar","a":2,"b":2,"resultado":4,"visual":{"tipo":"grupos","grupos":2,"elementosPorGrupo":2,"grupoIcono":"📅","elementoIcono":"💶"}},{"pregunta":"¿Cuánto cuesta toda la compra?","operacion":"sumar","a":4,"b":4,"resultado":8},{"pregunta":"¿Cuánto cambio recibe Gloria?","operacion":"restar","a":10,"b":8,"resultado":2}],"activo":true},{"id":"DP-0202","titulo":"La merienda del cumpleaños","texto":"Para un cumpleaños hay 5 mesas con 4 zumos en cada mesa. Durante la fiesta se beben 13 zumos. ¿Cuántos quedan?","nivel":3,"tema":"cumpleaños","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos conocer antes de saber cuántos zumos quedan?","opciones":[{"id":"total","texto":"🥤 Cuántos zumos había al principio."},{"id":"mesas","texto":"🎈 El color de las mesas."},{"id":"invitados","texto":"👥 Los nombres de los invitados."}],"correcta":"total"},"descubrimiento":{"pregunta":"¿Cuál es el primer cálculo útil?","opciones":[{"id":"multiplicar","texto":"Calcular 5 grupos de 4 zumos."},{"id":"restar","texto":"Restar 13 sin saber el total inicial."},{"id":"dividir","texto":"Repartir las mesas."}],"correcta":"multiplicar"},"pasos":[{"pregunta":"¿Cuántos zumos había al principio?","operacion":"multiplicar","a":5,"b":4,"resultado":20,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":4,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"¿Cuántos zumos quedan?","operacion":"restar","a":20,"b":13,"resultado":7}],"activo":true},{"id":"DP-0203","titulo":"Excursión al bosque","texto":"En una excursión viajan 24 niños en 4 grupos iguales. Cada grupo necesita 2 botellas de agua. ¿Cuántas botellas necesitan en total?","nivel":3,"tema":"bosque","tipo":"compuesto","comprension":{"pregunta":"¿Qué información relaciona a los niños con los grupos?","opciones":[{"id":"iguales","texto":"🌳 Los 24 niños se dividen en 4 grupos iguales."},{"id":"botellas","texto":"💧 Cada botella tiene un color."},{"id":"viaje","texto":"🚌 Viajan en autobús."}],"correcta":"iguales"},"descubrimiento":{"pregunta":"¿Qué podemos averiguar primero?","opciones":[{"id":"ninos_grupo","texto":"Cuántos niños hay en cada grupo."},{"id":"total_botellas","texto":"El total de botellas sin usar los grupos."},{"id":"arboles","texto":"Cuántos árboles hay en el bosque."}],"correcta":"ninos_grupo"},"pasos":[{"pregunta":"¿Cuántos niños hay en cada grupo?","operacion":"dividir","a":24,"b":4,"resultado":6,"visual":{"tipo":"reparto","totalElementos":24,"grupos":4,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"Si cada grupo necesita 2 botellas, ¿cuántas botellas necesitan los 4 grupos?","operacion":"multiplicar","a":4,"b":2,"resultado":8,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":2,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0007","titulo":"Conchas en la playa","texto":"Gloria encontró 6 conchas y después encontró 4 más.","nivel":1,"tema":"playa","tipo":"simple","comprension":{"pregunta":"¿Qué ocurrió con la colección de conchas?","opciones":[{"id":"crecio","texto":"🐚 Creció porque encontró más."},{"id":"bajo","texto":"📉 Disminuyó."},{"id":"repartio","texto":"🤝 Se repartió."}],"correcta":"crecio"},"descubrimiento":{"pregunta":"¿Qué queremos saber?","opciones":[{"id":"total","texto":"¿Cuántas conchas tiene ahora?"},{"id":"arena","texto":"¿Cuánta arena hay?"},{"id":"color","texto":"¿De qué color son?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas conchas tiene ahora?","operacion":"sumar","a":6,"b":4,"resultado":10}],"activo":true},{"id":"DP-0008","titulo":"Libros en la estantería","texto":"Había 11 libros en una estantería. Juan Pablo retiró 3 para leerlos.","nivel":1,"tema":"biblioteca","tipo":"simple","comprension":{"pregunta":"¿Qué pasó con los libros de la estantería?","opciones":[{"id":"menos","texto":"📚 Quedaron menos libros."},{"id":"mas","texto":"➕ Aparecieron más libros."},{"id":"igual","texto":"⚖️ No cambió la cantidad."}],"correcta":"menos"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"quedan","texto":"¿Cuántos libros quedan en la estantería?"},{"id":"paginas","texto":"¿Cuántas páginas tienen?"},{"id":"autor","texto":"¿Quién escribió los libros?"}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántos libros quedan en la estantería?","operacion":"restar","a":11,"b":3,"resultado":8}],"activo":true},{"id":"DP-0009","titulo":"Bolsas de manzanas","texto":"Hay 3 bolsas y cada bolsa contiene 5 manzanas.","nivel":1,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué se repite en la historia?","opciones":[{"id":"grupo","texto":"🍎 El mismo grupo de 5 manzanas, 3 veces."},{"id":"quitar","texto":"➖ Se quitan manzanas."},{"id":"repartir","texto":"🤝 Se reparten manzanas."}],"correcta":"grupo"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"¿Cuántas manzanas hay en total?"},{"id":"precio","texto":"¿Cuánto cuesta una bolsa?"},{"id":"peso","texto":"¿Cuánto pesan?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas manzanas hay en total?","operacion":"multiplicar","a":3,"b":5,"resultado":15,"visual":{"tipo":"grupos","grupos":3,"elementosPorGrupo":5,"grupoIcono":"🛍️","elementoIcono":"🍎"}}],"activo":true},{"id":"DP-0010","titulo":"Botellas para equipos","texto":"Hay 16 botellas de agua para repartir por igual entre 4 equipos.","nivel":1,"tema":"deporte","tipo":"simple","comprension":{"pregunta":"¿Qué debe ocurrir con las botellas?","opciones":[{"id":"igual","texto":"💧 Cada equipo debe recibir la misma cantidad."},{"id":"añadir","texto":"➕ Hay que comprar más."},{"id":"guardar","texto":"📦 Se guardan todas."}],"correcta":"igual"},"descubrimiento":{"pregunta":"¿Qué debemos descubrir?","opciones":[{"id":"cada","texto":"¿Cuántas botellas recibe cada equipo?"},{"id":"jugadores","texto":"¿Cuántos jugadores hay?"},{"id":"marca","texto":"¿Qué marca tienen?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántas botellas recibe cada equipo?","operacion":"dividir","a":16,"b":4,"resultado":4,"visual":{"tipo":"reparto","totalElementos":16,"grupos":4,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0104","titulo":"Sillas para una reunión","texto":"En una sala hay 5 filas con 6 sillas en cada fila. Las paredes son blancas.","nivel":2,"tema":"colegio","tipo":"simple","comprension":{"pregunta":"¿Qué información no sirve para contar las sillas?","opciones":[{"id":"paredes","texto":"🎨 El color de las paredes."},{"id":"filas","texto":"5️⃣ Las 5 filas."},{"id":"sillas","texto":"6️⃣ Las 6 sillas por fila."}],"correcta":"paredes"},"descubrimiento":{"pregunta":"¿Qué queremos conocer?","opciones":[{"id":"total","texto":"¿Cuántas sillas hay en total?"},{"id":"color","texto":"¿De qué color son las paredes?"},{"id":"puertas","texto":"¿Cuántas puertas hay?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas sillas hay en total?","operacion":"multiplicar","a":5,"b":6,"resultado":30,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":6,"grupoIcono":"➖","elementoIcono":"🪑"}}],"activo":true},{"id":"DP-0105","titulo":"Monedas para ahorrar","texto":"Gloria tenía 20 euros y gastó 7 euros en un libro. El libro tiene una portada azul.","nivel":2,"tema":"dinero","tipo":"simple","comprension":{"pregunta":"¿Qué dato es decorativo y no cambia la cuenta?","opciones":[{"id":"portada","texto":"📘 El color azul de la portada."},{"id":"tenia","texto":"💶 Los 20 euros iniciales."},{"id":"gasto","texto":"🛍️ Los 7 euros gastados."}],"correcta":"portada"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar?","opciones":[{"id":"restan","texto":"¿Cuánto dinero le queda?"},{"id":"paginas","texto":"¿Cuántas páginas tiene el libro?"},{"id":"color","texto":"¿De qué color es?"}],"correcta":"restan"},"pasos":[{"pregunta":"¿Cuánto dinero le queda?","operacion":"restar","a":20,"b":7,"resultado":13}],"activo":true},{"id":"DP-0106","titulo":"Zumos para la excursión","texto":"Hay 24 zumos para repartir por igual entre 6 grupos. El autobús es amarillo.","nivel":2,"tema":"viaje","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para repartir los zumos?","opciones":[{"id":"bus","texto":"🚌 El color del autobús."},{"id":"zumos","texto":"🥤 Los 24 zumos."},{"id":"grupos","texto":"👥 Los 6 grupos."}],"correcta":"bus"},"descubrimiento":{"pregunta":"¿Qué pregunta resolvemos?","opciones":[{"id":"cada","texto":"¿Cuántos zumos recibe cada grupo?"},{"id":"bus","texto":"¿Cuántas ruedas tiene el autobús?"},{"id":"hora","texto":"¿A qué hora salen?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos zumos recibe cada grupo?","operacion":"dividir","a":24,"b":6,"resultado":4,"visual":{"tipo":"reparto","totalElementos":24,"grupos":6,"grupoIcono":"🟫","elementoIcono":"🥛"}}],"activo":true},{"id":"DP-0107","titulo":"Entradas vendidas","texto":"Por la mañana se vendieron 14 entradas y por la tarde 9. La taquilla cerró a las 8.","nivel":2,"tema":"espectaculo","tipo":"simple","comprension":{"pregunta":"¿Qué dato no se usa para calcular el total vendido?","opciones":[{"id":"cierre","texto":"🕗 La hora de cierre."},{"id":"mañana","texto":"🎟️ Las 14 entradas de la mañana."},{"id":"tarde","texto":"🎫 Las 9 entradas de la tarde."}],"correcta":"cierre"},"descubrimiento":{"pregunta":"¿Qué queremos calcular?","opciones":[{"id":"total","texto":"¿Cuántas entradas se vendieron en total?"},{"id":"hora","texto":"¿A qué hora cerró la taquilla?"},{"id":"precio","texto":"¿Cuánto costaba cada entrada?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas entradas se vendieron en total?","operacion":"sumar","a":14,"b":9,"resultado":23}],"activo":true},{"id":"DP-0108","titulo":"Árboles del parque","texto":"En el parque había 25 árboles. Una tormenta dañó 4. También había 7 bancos.","nivel":2,"tema":"parque","tipo":"simple","comprension":{"pregunta":"¿Qué dato no necesitamos para saber cuántos árboles quedaron?","opciones":[{"id":"bancos","texto":"🪑 Los 7 bancos."},{"id":"arboles","texto":"🌳 Los 25 árboles."},{"id":"dañados","texto":"⛈️ Los 4 árboles dañados."}],"correcta":"bancos"},"descubrimiento":{"pregunta":"¿Qué debemos calcular?","opciones":[{"id":"quedan","texto":"¿Cuántos árboles quedaron sin daño?"},{"id":"bancos","texto":"¿Cuántos bancos hay?"},{"id":"hojas","texto":"¿Cuántas hojas tienen?"}],"correcta":"quedan"},"pasos":[{"pregunta":"¿Cuántos árboles quedaron sin daño?","operacion":"restar","a":25,"b":4,"resultado":21}],"activo":true},{"id":"DP-0109","titulo":"Paquetes de galletas","texto":"Hay 7 paquetes con 4 galletas cada uno. La caja grande pesa 2 kilos.","nivel":2,"tema":"supermercado","tipo":"simple","comprension":{"pregunta":"¿Qué dato no hace falta para contar las galletas?","opciones":[{"id":"peso","texto":"⚖️ El peso de la caja."},{"id":"paquetes","texto":"📦 Los 7 paquetes."},{"id":"galletas","texto":"🍪 Las 4 galletas por paquete."}],"correcta":"peso"},"descubrimiento":{"pregunta":"¿Qué queremos averiguar?","opciones":[{"id":"total","texto":"¿Cuántas galletas hay en total?"},{"id":"peso","texto":"¿Cuánto pesa cada galleta?"},{"id":"precio","texto":"¿Cuánto cuesta la caja?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántas galletas hay en total?","operacion":"multiplicar","a":7,"b":4,"resultado":28,"visual":{"tipo":"grupos","grupos":7,"elementosPorGrupo":4,"grupoIcono":"👧","elementoIcono":"🍪"}}],"activo":true},{"id":"DP-0110","titulo":"Reparto de cromos","texto":"Treinta cromos se reparten por igual entre 5 niños. Uno lleva una camiseta verde.","nivel":2,"tema":"amistad","tipo":"simple","comprension":{"pregunta":"¿Qué detalle no cambia el reparto?","opciones":[{"id":"camiseta","texto":"👕 El color de la camiseta."},{"id":"cromos","texto":"🃏 Los 30 cromos."},{"id":"niños","texto":"👧 Los 5 niños."}],"correcta":"camiseta"},"descubrimiento":{"pregunta":"¿Qué debemos saber?","opciones":[{"id":"cada","texto":"¿Cuántos cromos recibe cada niño?"},{"id":"color","texto":"¿De qué color es la camiseta?"},{"id":"album","texto":"¿Cuántas páginas tiene el álbum?"}],"correcta":"cada"},"pasos":[{"pregunta":"¿Cuántos cromos recibe cada niño?","operacion":"dividir","a":30,"b":5,"resultado":6,"visual":{"tipo":"reparto","totalElementos":30,"grupos":5,"grupoIcono":"👧","elementoIcono":"🃏"}}],"activo":true},{"id":"DP-0204","titulo":"Compra para una merienda","texto":"Anais compra 3 zumos de 2 euros cada uno y una bolsa de fruta de 5 euros. Paga con 20 euros. ¿Cuánto cambio recibe?","nivel":3,"tema":"supermercado","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la meta final?","opciones":[{"id":"cambio","texto":"💶 Saber cuánto cambio recibe."},{"id":"zumos","texto":"🥤 Saber cuántos zumos compra."},{"id":"fruta","texto":"🍎 Saber qué fruta eligió."}],"correcta":"cambio"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"zumos","texto":"¿Cuánto cuestan los 3 zumos?"},{"id":"cambio","texto":"¿El cambio directamente?"},{"id":"fruta","texto":"¿El peso de la fruta?"}],"correcta":"zumos"},"pasos":[{"pregunta":"¿Cuánto cuestan los 3 zumos?","operacion":"multiplicar","a":3,"b":2,"resultado":6,"visual":{"tipo":"grupos","grupos":3,"elementosPorGrupo":2,"grupoIcono":"🟫","elementoIcono":"🥛"}},{"pregunta":"¿Cuánto cuesta toda la compra?","operacion":"sumar","a":6,"b":5,"resultado":11},{"pregunta":"¿Cuánto cambio recibe?","operacion":"restar","a":20,"b":11,"resultado":9}],"activo":true},{"id":"DP-0205","titulo":"Libros para las mesas","texto":"La biblioteca prepara 6 mesas con 3 libros en cada una. Después presta 5 de esos libros. ¿Cuántos libros quedan?","nivel":3,"tema":"biblioteca","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos saber antes de restar los libros prestados?","opciones":[{"id":"total","texto":"📚 Cuántos libros había en total."},{"id":"autores","texto":"✍️ Quién escribió los libros."},{"id":"mesas","texto":"🎨 De qué color son las mesas."}],"correcta":"total"},"descubrimiento":{"pregunta":"¿Qué cálculo va primero?","opciones":[{"id":"multiplicar","texto":"¿Cuántos libros hay en las 6 mesas?"},{"id":"restar","texto":"¿Cuántos quedan sin saber el total?"},{"id":"dividir","texto":"¿Cómo se reparten los autores?"}],"correcta":"multiplicar"},"pasos":[{"pregunta":"¿Cuántos libros había en total?","operacion":"multiplicar","a":6,"b":3,"resultado":18,"visual":{"tipo":"grupos","grupos":6,"elementosPorGrupo":3,"grupoIcono":"🟫","elementoIcono":"📚"}},{"pregunta":"¿Cuántos libros quedan?","operacion":"restar","a":18,"b":5,"resultado":13}],"activo":true},{"id":"DP-0206","titulo":"Frutas para tres familias","texto":"Hay 27 manzanas para repartir por igual entre 3 familias. Cada familia come 2 manzanas. ¿Cuántas le quedan a cada familia?","nivel":3,"tema":"familia","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final?","opciones":[{"id":"quedan","texto":"🍎 Cuántas manzanas le quedan a cada familia."},{"id":"familias","texto":"👨‍👩‍👧 Cuántas familias hay."},{"id":"color","texto":"🎨 De qué color son las manzanas."}],"correcta":"quedan"},"descubrimiento":{"pregunta":"¿Qué debemos averiguar primero?","opciones":[{"id":"reparto","texto":"¿Cuántas manzanas recibe cada familia?"},{"id":"resta","texto":"¿Cuántas quedan sin repartir primero?"},{"id":"precio","texto":"¿Cuánto cuestan?"}],"correcta":"reparto"},"pasos":[{"pregunta":"¿Cuántas manzanas recibe cada familia?","operacion":"dividir","a":27,"b":3,"resultado":9,"visual":{"tipo":"reparto","totalElementos":27,"grupos":3,"grupoIcono":"🛍️","elementoIcono":"🍎"}},{"pregunta":"Si cada familia come 2, ¿cuántas le quedan?","operacion":"restar","a":9,"b":2,"resultado":7}],"activo":true},{"id":"DP-0207","titulo":"Entradas de cine","texto":"Cuatro entradas cuestan 6 euros cada una. Además compran palomitas por 8 euros. ¿Cuánto pagan en total?","nivel":3,"tema":"espectaculo","tipo":"compuesto","comprension":{"pregunta":"¿Qué dos gastos aparecen?","opciones":[{"id":"dos","texto":"🎟️ Las entradas y las palomitas."},{"id":"uno","texto":"🍿 Solo las palomitas."},{"id":"ninguno","texto":"🚫 No aparece ningún gasto."}],"correcta":"dos"},"descubrimiento":{"pregunta":"¿Qué calculamos primero?","opciones":[{"id":"entradas","texto":"¿Cuánto cuestan las 4 entradas?"},{"id":"total","texto":"¿El total sin conocer el precio de las entradas?"},{"id":"hora","texto":"¿A qué hora empieza la película?"}],"correcta":"entradas"},"pasos":[{"pregunta":"¿Cuánto cuestan las 4 entradas?","operacion":"multiplicar","a":4,"b":6,"resultado":24,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":6,"grupoIcono":"🎟️","elementoIcono":"💶"}},{"pregunta":"¿Cuánto pagan sumando las palomitas?","operacion":"sumar","a":24,"b":8,"resultado":32}],"activo":true},{"id":"DP-0208","titulo":"Receta de magdalenas","texto":"Para una bandeja se necesitan 4 huevos. Gloria prepara 3 bandejas y ya tiene 5 huevos. ¿Cuántos huevos más necesita?","nivel":3,"tema":"cocina","tipo":"compuesto","comprension":{"pregunta":"¿Qué debemos descubrir al final?","opciones":[{"id":"faltan","texto":"🥚 Cuántos huevos más necesita."},{"id":"bandejas","texto":"🧁 Cuántas bandejas prepara."},{"id":"color","texto":"🎨 El color de las magdalenas."}],"correcta":"faltan"},"descubrimiento":{"pregunta":"¿Qué cálculo hacemos primero?","opciones":[{"id":"necesarios","texto":"¿Cuántos huevos necesita para 3 bandejas?"},{"id":"restar","texto":"¿Cuántos faltan sin saber el total necesario?"},{"id":"sumar","texto":"¿Cuántos huevos sobran?"}],"correcta":"necesarios"},"pasos":[{"pregunta":"¿Cuántos huevos necesita para 3 bandejas?","operacion":"multiplicar","a":4,"b":3,"resultado":12,"visual":{"tipo":"grupos","grupos":4,"elementosPorGrupo":3,"grupoIcono":"🧁","elementoIcono":"🥚"}},{"pregunta":"Si ya tiene 5, ¿cuántos huevos más necesita?","operacion":"restar","a":12,"b":5,"resultado":7}],"activo":true},{"id":"DP-0209","titulo":"Viaje en autobús","texto":"Un autobús tiene 8 filas con 4 asientos en cada fila. Ya están ocupados 21 asientos. ¿Cuántos quedan libres?","nivel":3,"tema":"viaje","tipo":"compuesto","comprension":{"pregunta":"¿Qué queremos saber al final?","opciones":[{"id":"libres","texto":"🚌 Cuántos asientos quedan libres."},{"id":"filas","texto":"🔢 Cuántas filas tiene."},{"id":"color","texto":"🎨 De qué color es el autobús."}],"correcta":"libres"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"total","texto":"¿Cuántos asientos tiene el autobús?"},{"id":"libres","texto":"¿Cuántos libres hay sin saber el total?"},{"id":"ruedas","texto":"¿Cuántas ruedas tiene?"}],"correcta":"total"},"pasos":[{"pregunta":"¿Cuántos asientos tiene el autobús?","operacion":"multiplicar","a":8,"b":4,"resultado":32,"visual":{"tipo":"grupos","grupos":8,"elementosPorGrupo":4,"grupoIcono":"➖","elementoIcono":"🪑"}},{"pregunta":"¿Cuántos asientos quedan libres?","operacion":"restar","a":32,"b":21,"resultado":11}],"activo":true},{"id":"DP-0210","titulo":"Ahorro para un juego","texto":"Gloria ahorra 5 euros cada semana durante 4 semanas. Después gasta 7 euros en un libro. ¿Cuánto dinero le queda?","nivel":3,"tema":"dinero","tipo":"compuesto","comprension":{"pregunta":"¿Cuál es la pregunta final?","opciones":[{"id":"queda","texto":"💰 Cuánto dinero le queda."},{"id":"semanas","texto":"📅 Cuántas semanas ahorra."},{"id":"libro","texto":"📘 Cómo se llama el libro."}],"correcta":"queda"},"descubrimiento":{"pregunta":"¿Qué debemos calcular primero?","opciones":[{"id":"ahorro","texto":"¿Cuánto ahorra en 4 semanas?"},{"id":"gasto","texto":"¿Cuánto queda sin saber el ahorro total?"},{"id":"titulo","texto":"¿Cuál es el título del libro?"}],"correcta":"ahorro"},"pasos":[{"pregunta":"¿Cuánto ahorra en 4 semanas?","operacion":"multiplicar","a":5,"b":4,"resultado":20,"visual":{"tipo":"grupos","grupos":5,"elementosPorGrupo":4,"grupoIcono":"🟫","elementoIcono":"📚"}},{"pregunta":"Después de gastar 7 euros, ¿cuánto le queda?","operacion":"restar","a":20,"b":7,"resultado":13}],"activo":true}];
 
@@ -1221,10 +1480,19 @@
       bosque:"Bosque"
     };
 
+    await cargarMision();
+
+    const criterioMision = misionActiva?.criterioCumplimiento || {};
+    const progresoInicialMision = progresoMision();
+    const nivelInicial = Number(criterioMision.filtros?.nivel || 1);
+    const cantidadInicial = misionActiva
+      ? Math.max(1, progresoInicialMision.restante || 1)
+      : 5;
+
     const state = {
-      selectedLevel:1,
+      selectedLevel:nivelInicial,
       selectedTheme:"",
-      selectedQuantity:5,
+      selectedQuantity:cantidadInicial,
       displayedOptions:{},
       challenges:[],
       challengeIndex:0,
@@ -1292,23 +1560,52 @@
     function renderQuantityOptions(){
       const available = getFilteredCases().length;
       const container = $("quantityOptions");
-      const choices = [...new Set([5,10,15,available].filter(value => value > 0 && value <= available))];
-      if(!choices.length){
-        state.selectedQuantity = 0;
-        container.innerHTML = '<span class="history-empty">No hay historias disponibles.</span>';
+
+      if (misionActiva) {
+        const { restante } = progresoMision();
+        state.selectedQuantity = Math.max(
+          1,
+          Math.min(restante || 1, available || 1)
+        );
+        container.innerHTML =
+          `<span class="case-chip">🎯 Resolverás ${state.selectedQuantity} ` +
+          `${state.selectedQuantity === 1 ? "historia pendiente" : "historias pendientes"}</span>`;
         return;
       }
 
-      if(!choices.includes(state.selectedQuantity)){
-        state.selectedQuantity = choices.includes(5) ? 5 : choices[choices.length - 1];
+      const choices = [
+        ...new Set(
+          [5, 10, 15, available]
+            .filter(value => value > 0 && value <= available)
+        )
+      ];
+
+      if (!choices.length) {
+        state.selectedQuantity = 0;
+        container.innerHTML =
+          '<span class="history-empty">No hay historias disponibles.</span>';
+        return;
+      }
+
+      if (
+        !Number.isInteger(state.selectedQuantity) ||
+        state.selectedQuantity < 1 ||
+        state.selectedQuantity > available
+      ) {
+        state.selectedQuantity = choices.includes(5)
+          ? 5
+          : choices[choices.length - 1];
       }
 
       container.innerHTML = "";
+
       choices.forEach(value => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = `quantity-button ${value === state.selectedQuantity ? "active" : ""}`;
-        button.textContent = value === available ? `${value} · Todas` : String(value);
+        button.className =
+          `quantity-button ${value === state.selectedQuantity ? "active" : ""}`;
+        button.textContent =
+          value === available ? `${value} · Todas` : String(value);
         button.onclick = () => {
           state.selectedQuantity = value;
           renderQuantityOptions();
@@ -1316,6 +1613,63 @@
         };
         container.appendChild(button);
       });
+
+      const custom = document.createElement("div");
+      custom.className = "quantity-custom";
+      custom.innerHTML = `
+        <label for="customQuantity">Otra cantidad</label>
+        <input
+          id="customQuantity"
+          type="number"
+          min="1"
+          max="${available}"
+          step="1"
+          inputmode="numeric"
+          value="${
+            choices.includes(state.selectedQuantity)
+              ? ""
+              : state.selectedQuantity
+          }"
+          placeholder="Ej. 3"
+        >
+        <button id="applyCustomQuantity" class="btn btn-light" type="button">
+          Usar
+        </button>
+        <small>Entre 1 y ${available}</small>
+      `;
+      container.appendChild(custom);
+
+      const input = $("customQuantity");
+      const apply = $("applyCustomQuantity");
+
+      const aplicarCantidad = () => {
+        const value = Number(input.value);
+
+        if (
+          !Number.isInteger(value) ||
+          value < 1 ||
+          value > available
+        ) {
+          input.setCustomValidity(
+            `Escribe un número entero entre 1 y ${available}.`
+          );
+          input.reportValidity();
+          return;
+        }
+
+        input.setCustomValidity("");
+        state.selectedQuantity = value;
+        renderQuantityOptions();
+        updateCaseCount(false);
+      };
+
+      apply.onclick = aplicarCantidad;
+      input.onkeydown = event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          aplicarCantidad();
+        }
+      };
     }
 
     function updateCaseCount(refreshQuantities = true){
@@ -1329,6 +1683,7 @@
 
     document.querySelectorAll("[data-level]").forEach(button => {
       button.onclick = () => {
+        if (misionActiva) return;
         state.selectedLevel = Number(button.dataset.level);
         state.selectedTheme = "";
 
@@ -1342,9 +1697,25 @@
     });
 
     $("themeFilter").onchange = event => {
+      if (misionActiva) return;
       state.selectedTheme = event.target.value;
       updateCaseCount();
     };
+
+    if (misionActiva) {
+      document.querySelectorAll("[data-level]").forEach(button => {
+        const activo = Number(button.dataset.level) === state.selectedLevel;
+        button.classList.toggle("active", activo);
+        button.disabled = true;
+      });
+      $("themeFilter").disabled = true;
+      $("startAdventureButton").textContent = "🚀 Comenzar misión";
+      const { restante } = progresoMision();
+      if (restante <= 0) {
+        $("startAdventureButton").disabled = true;
+        $("caseCount").textContent = "Esta misión ya está terminada y espera revisión.";
+      }
+    }
 
     $("startAdventureButton").onclick = () => {
       state.challenges = shuffle(getFilteredCases())
@@ -1843,8 +2214,12 @@
       const hasMoreSteps =
         state.stepIndex < currentCase().pasos.length - 1;
 
+      $("caseCelebrationTitle").textContent = hasMoreSteps
+        ? `¡Parte ${state.stepIndex + 1} resuelta!`
+        : "¡Historia resuelta!";
+
       $("caseCelebrationText").textContent = hasMoreSteps
-        ? `¡Paso ${state.stepIndex + 1} resuelto! Ahora continuaremos con la siguiente parte de la historia.`
+        ? "Muy bien. Ahora continúa con la siguiente parte de la historia."
         : "Has comprendido la historia, elegido las operaciones y encontrado la solución.";
 
       $("caseCelebration").classList.add("show");
@@ -1897,9 +2272,13 @@
 
       try{
         const lastStep=item.pasos[item.pasos.length-1];
-        await registrarResolucionDetective(auth.currentUser.uid,{
+        const intentosCaso = Object.values(state.caseStats)
+          .filter(v => typeof v === "number")
+          .reduce((a, b) => a + b, 0);
+
+        const resolucion = await registrarResolucionDetective(auth.currentUser.uid,{
           historiaId:item.id,nivel:item.nivel,tema:item.tema,tipo:item.tipo,
-          intentosTotales:Object.values(state.caseStats).filter(v=>typeof v==="number").reduce((a,b)=>a+b,0),
+          intentosTotales:intentosCaso,
           ...state.caseStats,
           operacionIndicada:state.caseStats.pasos.at(-1)?.operacionIndicada || "",
           operacionCorrecta:lastStep.operacion,
@@ -1908,9 +2287,64 @@
           resultadoIndicado:state.caseStats.pasos.at(-1)?.resultadoIndicado,
           resultadoCorrecto:lastStep.resultado
         });
+
+        if (misionActiva && misionId) {
+          const aplicacion = await Academia.tareas.registrarEvidencia({
+            alumnoId: auth.currentUser.uid,
+            misionId,
+            modulo: "detectives",
+            tipo: "historia_resuelta",
+            actividadId: item.id,
+            sesionId: resolucion.sesionId,
+            tituloActividad: item.titulo,
+            atributos: {
+              nivel: Number(item.nivel),
+              tema: item.tema,
+              tipo: item.tipo
+            },
+            resultado: {
+              intentos: intentosCaso,
+              pistas: Number(state.caseStats.pistasUtilizadas || 0)
+            },
+            destinoRevision:
+              `../detectives/historia.html?id=${encodeURIComponent(item.id)}` +
+              `&sesionId=${encodeURIComponent(resolucion.sesionId)}`
+          });
+
+          misionActiva = {
+            ...misionActiva,
+            estado: aplicacion.estado,
+            progreso: {
+              ...misionActiva.progreso,
+              cantidadActual: aplicacion.cantidadActual,
+              cantidadObjetivo: aplicacion.cantidadObjetivo
+            }
+          };
+
+          actualizarBandaMision({ terminada: aplicacion.objetivoAlcanzado });
+
+          if (aplicacion.objetivoAlcanzado) {
+            mostrarCelebracion({
+              titulo: "¡Misión terminada!",
+              mensaje:
+                `Has resuelto ${aplicacion.cantidadObjetivo} ` +
+                `${aplicacion.cantidadObjetivo === 1 ? "historia" : "historias"}. ` +
+                "¡Excelente trabajo!",
+              duracion: 3000,
+              mostrarGuacamayas: true
+            });
+          }
+
+          setFeedback(
+            aplicacion.objetivoAlcanzado
+              ? "🎉 ¡Misión terminada! Tu familia ya puede revisar y celebrar tu trabajo."
+              : `✅ ¡Historia registrada para tu misión! Ya llevas ${aplicacion.cantidadActual} de ${aplicacion.cantidadObjetivo}.`,
+            "good"
+          );
+        }
       }catch(error){
         console.error("No se pudo guardar el progreso en Firestore.",error);
-        setFeedback("El caso está resuelto, pero no pudimos guardar el historial. Comprueba la conexión.","try");
+        setFeedback("La historia está resuelta, pero no pudimos guardar el historial. Comprueba la conexión.","try");
       }
 
       if(state.challengeIndex === state.challenges.length - 1){
@@ -1956,13 +2390,28 @@
       document.querySelector(".steps").classList.add("hidden");
       $("summaryPanel").classList.remove("hidden");
 
+      const { actual, objetivo } = progresoMision();
+      const misionTerminada =
+        Boolean(misionActiva) && objetivo > 0 && actual >= objetivo;
+
+      $("summaryTitle").textContent = misionTerminada
+        ? "🎉 ¡Misión terminada!"
+        : "🌈 ¡Aventura completada!";
+
       $("summaryChallenges").textContent = state.challenges.length;
       $("summaryOperations").textContent = state.completedOperations;
       $("summaryAttempts").textContent = state.attempts;
 
-      $("summaryMessage").textContent =
-        `${nombreVisible}, has completado el nivel ${state.selectedLevel}. ` +
-        `Hoy practicaste cómo comprender, dividir los problemas en pasos y elegir las operaciones.`;
+      $("summaryMessage").textContent = misionTerminada
+        ? `${nombreVisible}, has resuelto ${actual} de ${objetivo} historias. ` +
+          "¡Excelente trabajo! Tu familia ya puede revisar y celebrar lo que has conseguido."
+        : misionActiva
+          ? `${nombreVisible}, has completado esta aventura y tu misión continúa. ` +
+            `Llevas ${actual} de ${objetivo} historias.`
+          : `${nombreVisible}, has completado una aventura libre de nivel ${state.selectedLevel}. ` +
+            "Hoy practicaste cómo comprender, dividir los problemas en pasos y elegir las operaciones.";
+
+      $("restartButton").textContent = "🌈 Seguir practicando";
 
       const storageKey =
         `aventurasMatematicas:${auth.currentUser.uid}:detectives:nivel${state.selectedLevel}`;
@@ -1995,8 +2444,14 @@
       window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    $("restartButton").onclick = returnToSelector;
-    $("chooseAnotherAdventureButton").onclick = returnToSelector;
+    function continuarEnAventuraLibre() {
+      abandonarContextoMision();
+      returnToSelector();
+    }
+
+    $("restartButton").onclick = continuarEnAventuraLibre;
+    $("missionHelpButton").onclick = alternarSolicitudAyuda;
+    actualizarBotonRegresoContextual();
 
     populateThemes();
     updateCaseCount();

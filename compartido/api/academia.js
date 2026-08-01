@@ -18,6 +18,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -564,16 +565,50 @@ async function eliminarSesionLectura(historiaId) {
 
 
 /* ==========================================================
-   Mis Tareas
+   Mis Tareas / Misiones
    usuarios/{uid}/tareas/{tareaId}
+   usuarios/{uid}/evidencias/{evidenciaId}
    ========================================================== */
+
+const ESTADOS_TAREA_VALIDOS = Object.freeze([
+  "pendiente",
+  "asignada",
+  "en_curso",
+  "pendiente_validacion",
+  "completada",
+  "necesita_ayuda",
+  "vencida",
+  "cancelada"
+]);
+
+const ESTADO_LEGADO_PENDIENTE_VALIDACION =
+  "completada_pendiente_validacion";
+
+function normalizarEstadoTarea(estado, respaldo = "pendiente") {
+  const valor = String(estado ?? "").trim();
+
+  if (valor === ESTADO_LEGADO_PENDIENTE_VALIDACION) {
+    return "pendiente_validacion";
+  }
+
+  return ESTADOS_TAREA_VALIDOS.includes(valor) ? valor : respaldo;
+}
+
+function numeroSeguro(valor, respaldo = 0) {
+  const numero = Number(valor);
+  return Number.isFinite(numero) ? numero : respaldo;
+}
+
+function textoSeguro(valor) {
+  return String(valor ?? "").trim();
+}
 
 function coleccionTareas() {
   return collection(db, "usuarios", obtenerUID(), "tareas");
 }
 
 function documentoTarea(id) {
-  const tareaId = String(id ?? "").trim();
+  const tareaId = textoSeguro(id);
 
   if (!tareaId) {
     throw new Error("Falta el identificador de la tarea.");
@@ -582,22 +617,86 @@ function documentoTarea(id) {
   return doc(db, "usuarios", obtenerUID(), "tareas", tareaId);
 }
 
+function coleccionEvidencias() {
+  return collection(db, "usuarios", obtenerUID(), "evidencias");
+}
+
+function documentoEvidencia(id) {
+  const evidenciaId = textoSeguro(id);
+
+  if (!evidenciaId) {
+    throw new Error("Falta el identificador de la evidencia.");
+  }
+
+  return doc(db, "usuarios", obtenerUID(), "evidencias", evidenciaId);
+}
+
+function normalizarCriterioCumplimiento(criterio = {}) {
+  const filtrosEntrada =
+    criterio.filtros && typeof criterio.filtros === "object"
+      ? criterio.filtros
+      : {};
+
+  const filtros = Object.fromEntries(
+    Object.entries(filtrosEntrada)
+      .filter(([, valor]) => valor !== undefined && valor !== null && valor !== "")
+      .map(([clave, valor]) => [clave, valor])
+  );
+
+  return {
+    tipo: ["cantidad", "actividad", "tiempo", "evento", "combinado"].includes(
+      criterio.tipo
+    )
+      ? criterio.tipo
+      : "cantidad",
+    modulo: textoSeguro(criterio.modulo),
+    evidenciaTipo: textoSeguro(criterio.evidenciaTipo),
+    cantidadObjetivo: Math.max(
+      1,
+      Math.trunc(numeroSeguro(criterio.cantidadObjetivo, 1))
+    ),
+    filtros
+  };
+}
+
+function normalizarProgresoTarea(progreso = {}, criterio = {}) {
+  const cantidadObjetivo = Math.max(
+    1,
+    Math.trunc(
+      numeroSeguro(
+        progreso.cantidadObjetivo,
+        criterio.cantidadObjetivo || 1
+      )
+    )
+  );
+
+  const evidenciaIds = Array.isArray(progreso.evidenciaIds)
+    ? [...new Set(progreso.evidenciaIds.map(textoSeguro).filter(Boolean))]
+    : [];
+
+  return {
+    iniciadaEn: progreso.iniciadaEn ?? null,
+    completadaEn: progreso.completadaEn ?? null,
+    cantidadActual: Math.max(
+      0,
+      Math.trunc(numeroSeguro(progreso.cantidadActual, evidenciaIds.length))
+    ),
+    cantidadObjetivo,
+    evidenciaIds,
+    tiempoRealMinutos: Math.max(
+      0,
+      numeroSeguro(progreso.tiempoRealMinutos)
+    ),
+    intentos: Math.max(0, Math.trunc(numeroSeguro(progreso.intentos)))
+  };
+}
+
 function normalizarTarea(tarea = {}, { parcial = false } = {}) {
-  const titulo = String(tarea.titulo ?? "").trim();
+  const titulo = textoSeguro(tarea.titulo);
 
   if (!parcial && !titulo) {
     throw new Error("La tarea debe tener un título.");
   }
-
-  const estadosValidos = new Set([
-    "pendiente",
-    "en_curso",
-    "completada_pendiente_validacion",
-    "completada",
-    "necesita_ayuda",
-    "vencida",
-    "cancelada"
-  ]);
 
   const tiposValidos = new Set([
     "actividad_modulo",
@@ -614,26 +713,42 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
     "libre"
   ]);
 
-  const numeroSeguro = (valor, respaldo = 0) => {
-    const numero = Number(valor);
-    return Number.isFinite(numero) ? numero : respaldo;
-  };
+  const criterioCumplimiento = normalizarCriterioCumplimiento(
+    tarea.criterioCumplimiento || {
+      tipo: tarea.tipo === "cantidad_actividades" ? "cantidad" : "actividad",
+      modulo: tarea.modulo,
+      evidenciaTipo: "",
+      cantidadObjetivo: tarea.progreso?.cantidadObjetivo || 1,
+      filtros: {}
+    }
+  );
+
+  const progreso = normalizarProgresoTarea(
+    tarea.progreso,
+    criterioCumplimiento
+  );
+
+  const uidActual = obtenerUID();
 
   const resultado = {
+    alumnoId: textoSeguro(tarea.alumnoId) || uidActual,
+    creadaPorUid: textoSeguro(tarea.creadaPorUid) || uidActual,
+    asignadaPorUid: textoSeguro(tarea.asignadaPorUid) || uidActual,
     titulo,
-    descripcion: String(tarea.descripcion ?? "").trim(),
+    descripcion: textoSeguro(tarea.descripcion),
     tipo: tiposValidos.has(tarea.tipo)
       ? tarea.tipo
       : "actividad_modulo",
     modulo: modulosValidos.has(tarea.modulo)
       ? tarea.modulo
       : "libre",
-    destinoUrl: String(tarea.destinoUrl ?? "").trim(),
-    objetivo: String(tarea.objetivo ?? "").trim(),
-    criterioFinalizacion:
-      String(tarea.criterioFinalizacion ?? "").trim(),
-    fechaInicio: String(tarea.fechaInicio ?? "").trim(),
-    fechaLimite: String(tarea.fechaLimite ?? "").trim(),
+    destinoUrl: textoSeguro(tarea.destinoUrl),
+    objetivo: textoSeguro(tarea.objetivo),
+    criterioFinalizacion: textoSeguro(tarea.criterioFinalizacion),
+    criterioCumplimiento,
+    requiereRevision: tarea.requiereRevision !== false,
+    fechaInicio: textoSeguro(tarea.fechaInicio),
+    fechaLimite: textoSeguro(tarea.fechaLimite),
     tiempoEstimadoMinutos: Math.max(
       0,
       numeroSeguro(tarea.tiempoEstimadoMinutos)
@@ -642,51 +757,31 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
       ? tarea.prioridad
       : "normal",
     visibleParaAlumno: tarea.visibleParaAlumno !== false,
-    ordenMision: Math.max(
-      0,
-      numeroSeguro(tarea.ordenMision, 9999)
-    ),
-    estado: estadosValidos.has(tarea.estado)
-      ? tarea.estado
-      : "pendiente",
+    ordenMision: Math.max(0, numeroSeguro(tarea.ordenMision, 9999)),
+    estado: normalizarEstadoTarea(tarea.estado),
     asignadaPor:
       tarea.asignadaPor && typeof tarea.asignadaPor === "object"
         ? tarea.asignadaPor
         : {
-            uid: obtenerUID(),
+            uid: uidActual,
             rol: "familia",
             nombreVisible: "Familia"
           },
     presentacionAlumno: {
-      tituloMision: String(
+      tituloMision: textoSeguro(
         tarea.presentacionAlumno?.tituloMision ??
         tarea.titulo ??
         "Nueva misión"
-      ).trim(),
-      descripcionMision: String(
+      ),
+      descripcionMision: textoSeguro(
         tarea.presentacionAlumno?.descripcionMision ??
         tarea.descripcion ??
         ""
-      ).trim(),
-      mensaje: String(
-        tarea.presentacionAlumno?.mensaje ?? ""
-      ).trim(),
-      icono: String(
-        tarea.presentacionAlumno?.icono ?? "🌟"
-      ).trim() || "🌟"
-    },
-    progreso: {
-      iniciadaEn: tarea.progreso?.iniciadaEn ?? null,
-      completadaEn: tarea.progreso?.completadaEn ?? null,
-      tiempoRealMinutos: Math.max(
-        0,
-        numeroSeguro(tarea.progreso?.tiempoRealMinutos)
       ),
-      intentos: Math.max(
-        0,
-        numeroSeguro(tarea.progreso?.intentos)
-      )
+      mensaje: textoSeguro(tarea.presentacionAlumno?.mensaje),
+      icono: textoSeguro(tarea.presentacionAlumno?.icono) || "🌟"
     },
+    progreso,
     evidencia:
       tarea.evidencia && typeof tarea.evidencia === "object"
         ? tarea.evidencia
@@ -697,23 +792,13 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
             resumen: null
           },
     resultado: {
-      fechaFinalizacion: String(
-        tarea.resultado?.fechaFinalizacion ?? ""
-      ).trim(),
-      observaciones: String(
-        tarea.resultado?.observaciones ?? ""
-      ).trim(),
-      masDeLoEsperado: Boolean(
-        tarea.resultado?.masDeLoEsperado
-      ),
-      necesitoAyuda: Boolean(
-        tarea.resultado?.necesitoAyuda
-      ),
-      convieneRepetir: Boolean(
-        tarea.resultado?.convieneRepetir
-      )
+      fechaFinalizacion: textoSeguro(tarea.resultado?.fechaFinalizacion),
+      observaciones: textoSeguro(tarea.resultado?.observaciones),
+      masDeLoEsperado: Boolean(tarea.resultado?.masDeLoEsperado),
+      necesitoAyuda: Boolean(tarea.resultado?.necesitoAyuda),
+      convieneRepetir: Boolean(tarea.resultado?.convieneRepetir)
     },
-    observacionActual: String(tarea.observacionActual ?? "").trim(),
+    observacionActual: textoSeguro(tarea.observacionActual),
     historialObservaciones: Array.isArray(tarea.historialObservaciones)
       ? tarea.historialObservaciones
       : []
@@ -728,6 +813,23 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
   return resultado;
 }
 
+function normalizarTareaLeida(documento) {
+  const datos = documento.data();
+
+  return {
+    id: documento.id,
+    ...datos,
+    estado: normalizarEstadoTarea(datos.estado),
+    criterioCumplimiento: normalizarCriterioCumplimiento(
+      datos.criterioCumplimiento || {}
+    ),
+    progreso: normalizarProgresoTarea(
+      datos.progreso,
+      datos.criterioCumplimiento || {}
+    )
+  };
+}
+
 async function crearTarea(tarea) {
   const datos = normalizarTarea(tarea);
 
@@ -740,6 +842,11 @@ async function crearTarea(tarea) {
   return referencia.id;
 }
 
+async function obtenerTarea(id) {
+  const resultado = await getDoc(documentoTarea(id));
+  return resultado.exists() ? normalizarTareaLeida(resultado) : null;
+}
+
 async function leerTareas() {
   const consulta = query(
     coleccionTareas(),
@@ -747,11 +854,7 @@ async function leerTareas() {
   );
 
   const resultado = await getDocs(consulta);
-
-  return resultado.docs.map((documento) => ({
-    id: documento.id,
-    ...documento.data()
-  }));
+  return resultado.docs.map(normalizarTareaLeida);
 }
 
 function observarTareas(callback, onError = console.error) {
@@ -766,20 +869,16 @@ function observarTareas(callback, onError = console.error) {
 
   return onSnapshot(
     consulta,
-    (resultado) => {
-      callback(
-        resultado.docs.map((documento) => ({
-          id: documento.id,
-          ...documento.data()
-        }))
-      );
-    },
+    (resultado) => callback(resultado.docs.map(normalizarTareaLeida)),
     onError
   );
 }
 
 async function actualizarTarea(id, cambios = {}) {
   const permitidos = new Set([
+    "alumnoId",
+    "creadaPorUid",
+    "asignadaPorUid",
     "titulo",
     "descripcion",
     "tipo",
@@ -787,6 +886,8 @@ async function actualizarTarea(id, cambios = {}) {
     "destinoUrl",
     "objetivo",
     "criterioFinalizacion",
+    "criterioCumplimiento",
+    "requiereRevision",
     "fechaInicio",
     "fechaLimite",
     "tiempoEstimadoMinutos",
@@ -812,43 +913,57 @@ async function actualizarTarea(id, cambios = {}) {
   });
 
   if ("titulo" in datos) {
-    datos.titulo = String(datos.titulo ?? "").trim();
-
-    if (!datos.titulo) {
-      throw new Error("La tarea debe tener un título.");
-    }
+    datos.titulo = textoSeguro(datos.titulo);
+    if (!datos.titulo) throw new Error("La tarea debe tener un título.");
   }
 
-  if ("descripcion" in datos) {
-    datos.descripcion = String(datos.descripcion ?? "").trim();
+  ["descripcion", "objetivo", "criterioFinalizacion", "destinoUrl"].forEach(
+    clave => {
+      if (clave in datos) datos[clave] = textoSeguro(datos[clave]);
+    }
+  );
+
+  if ("estado" in datos) {
+    datos.estado = normalizarEstadoTarea(datos.estado);
   }
 
   if ("visibleParaAlumno" in datos) {
     datos.visibleParaAlumno = datos.visibleParaAlumno !== false;
   }
 
+  if ("requiereRevision" in datos) {
+    datos.requiereRevision = datos.requiereRevision !== false;
+  }
+
   if ("tiempoEstimadoMinutos" in datos) {
-    const minutos = Number(datos.tiempoEstimadoMinutos);
-    datos.tiempoEstimadoMinutos =
-      Number.isFinite(minutos) ? Math.max(0, minutos) : 0;
+    datos.tiempoEstimadoMinutos = Math.max(
+      0,
+      numeroSeguro(datos.tiempoEstimadoMinutos)
+    );
   }
 
   if ("ordenMision" in datos) {
-    const orden = Number(datos.ordenMision);
-    datos.ordenMision =
-      Number.isFinite(orden) ? Math.max(0, orden) : 9999;
+    datos.ordenMision = Math.max(0, numeroSeguro(datos.ordenMision, 9999));
+  }
+
+  if ("criterioCumplimiento" in datos) {
+    datos.criterioCumplimiento = normalizarCriterioCumplimiento(
+      datos.criterioCumplimiento
+    );
+  }
+
+  if ("progreso" in datos) {
+    datos.progreso = normalizarProgresoTarea(
+      datos.progreso,
+      datos.criterioCumplimiento || {}
+    );
   }
 
   if ("resultado" in datos) {
     const resultado = datos.resultado || {};
-
     datos.resultado = {
-      fechaFinalizacion: String(
-        resultado.fechaFinalizacion ?? ""
-      ).trim(),
-      observaciones: String(
-        resultado.observaciones ?? ""
-      ).trim(),
+      fechaFinalizacion: textoSeguro(resultado.fechaFinalizacion),
+      observaciones: textoSeguro(resultado.observaciones),
       masDeLoEsperado: Boolean(resultado.masDeLoEsperado),
       necesitoAyuda: Boolean(resultado.necesitoAyuda),
       convieneRepetir: Boolean(resultado.convieneRepetir)
@@ -857,16 +972,15 @@ async function actualizarTarea(id, cambios = {}) {
 
   if ("presentacionAlumno" in datos) {
     const presentacion = datos.presentacionAlumno || {};
-
     datos.presentacionAlumno = {
-      icono: String(presentacion.icono ?? "🌟").trim() || "🌟",
-      tituloMision: String(
+      icono: textoSeguro(presentacion.icono) || "🌟",
+      tituloMision: textoSeguro(
         presentacion.tituloMision ?? datos.titulo ?? "Nueva misión"
-      ).trim(),
-      descripcionMision: String(
+      ),
+      descripcionMision: textoSeguro(
         presentacion.descripcionMision ?? datos.descripcion ?? ""
-      ).trim(),
-      mensaje: String(presentacion.mensaje ?? "").trim()
+      ),
+      mensaje: textoSeguro(presentacion.mensaje)
     };
   }
 
@@ -877,32 +991,24 @@ async function actualizarTarea(id, cambios = {}) {
 }
 
 async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
-  const estadosValidos = new Set([
-    "pendiente",
-    "en_curso",
-    "completada_pendiente_validacion",
-    "completada",
-    "necesita_ayuda",
-    "vencida",
-    "cancelada"
-  ]);
+  const estadoNormalizado = normalizarEstadoTarea(estado, "");
 
-  if (!estadosValidos.has(estado)) {
+  if (!estadoNormalizado) {
     throw new Error("El estado indicado no es válido.");
   }
 
   const cambios = {
-    estado,
+    estado: estadoNormalizado,
     actualizadaEn: serverTimestamp()
   };
 
-  if (estado === "en_curso") {
+  if (estadoNormalizado === "en_curso") {
     cambios["progreso.iniciadaEn"] = serverTimestamp();
   }
 
   if (
-    estado === "completada" ||
-    estado === "completada_pendiente_validacion"
+    estadoNormalizado === "completada" ||
+    estadoNormalizado === "pendiente_validacion"
   ) {
     cambios["progreso.completadaEn"] = serverTimestamp();
   }
@@ -914,8 +1020,214 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
   await updateDoc(documentoTarea(id), cambios);
 }
 
+function normalizarEvidencia(evidencia = {}) {
+  const misionId = textoSeguro(evidencia.misionId || evidencia.tareaId);
+  const modulo = textoSeguro(evidencia.modulo);
+  const tipo = textoSeguro(evidencia.tipo);
+  const actividadId = textoSeguro(evidencia.actividadId);
+  const sesionId = textoSeguro(evidencia.sesionId);
+
+  if (!misionId || !modulo || !tipo || !actividadId) {
+    throw new Error(
+      "La evidencia debe indicar misión, módulo, tipo y actividad."
+    );
+  }
+
+  return {
+    alumnoId: textoSeguro(evidencia.alumnoId) || obtenerUID(),
+    misionId,
+    modulo,
+    tipo,
+    actividadId,
+    sesionId: sesionId || null,
+    atributos:
+      evidencia.atributos && typeof evidencia.atributos === "object"
+        ? evidencia.atributos
+        : {},
+    resultado:
+      evidencia.resultado && typeof evidencia.resultado === "object"
+        ? evidencia.resultado
+        : {},
+    destinoRevision: textoSeguro(evidencia.destinoRevision),
+    origen: textoSeguro(evidencia.origen) || "mision",
+    creadaPorUid: textoSeguro(evidencia.creadaPorUid) || obtenerUID()
+  };
+}
+
+function crearIdEvidencia(evidencia) {
+  const base = [
+    evidencia.misionId,
+    evidencia.modulo,
+    evidencia.sesionId || evidencia.actividadId
+  ]
+    .join("__")
+    .replace(/[^a-zA-Z0-9_-]/g, "_");
+
+  return base.slice(0, 240);
+}
+
+function evidenciaCumpleCriterio(evidencia, criterio) {
+  if (criterio.modulo && evidencia.modulo !== criterio.modulo) return false;
+  if (criterio.evidenciaTipo && evidencia.tipo !== criterio.evidenciaTipo) {
+    return false;
+  }
+
+  return Object.entries(criterio.filtros || {}).every(
+    ([clave, valorEsperado]) =>
+      String(evidencia.atributos?.[clave] ?? "") === String(valorEsperado)
+  );
+}
+
+async function registrarEvidenciaMision(evidenciaEntrada) {
+  const evidencia = normalizarEvidencia(evidenciaEntrada);
+  const evidenciaId = crearIdEvidencia(evidencia);
+  const tareaRef = documentoTarea(evidencia.misionId);
+  const evidenciaRef = documentoEvidencia(evidenciaId);
+
+  const resultado = await runTransaction(db, async transaction => {
+    const [tareaSnapshot, evidenciaSnapshot] = await Promise.all([
+      transaction.get(tareaRef),
+      transaction.get(evidenciaRef)
+    ]);
+
+    if (!tareaSnapshot.exists()) {
+      throw new Error("No se encontró la misión relacionada.");
+    }
+
+    if (evidenciaSnapshot.exists()) {
+      const tarea = tareaSnapshot.data();
+      const progreso = normalizarProgresoTarea(
+        tarea.progreso,
+        tarea.criterioCumplimiento || {}
+      );
+
+      return {
+        evidenciaId,
+        duplicada: true,
+        aplicada: true,
+        cantidadActual: progreso.cantidadActual,
+        cantidadObjetivo: progreso.cantidadObjetivo,
+        estado: normalizarEstadoTarea(tarea.estado),
+        objetivoAlcanzado:
+          progreso.cantidadObjetivo > 0 &&
+          progreso.cantidadActual >= progreso.cantidadObjetivo
+      };
+    }
+
+    const tarea = tareaSnapshot.data();
+    const alumnoId = textoSeguro(tarea.alumnoId) || obtenerUID();
+
+    if (alumnoId !== evidencia.alumnoId) {
+      throw new Error("La evidencia no pertenece al alumno de la misión.");
+    }
+
+    const estadoActual = normalizarEstadoTarea(tarea.estado);
+    const estadosActivos = new Set([
+      "pendiente",
+      "asignada",
+      "en_curso",
+      "necesita_ayuda"
+    ]);
+
+    if (!estadosActivos.has(estadoActual)) {
+      throw new Error("La misión no está activa para recibir evidencias.");
+    }
+
+    const criterio = normalizarCriterioCumplimiento(
+      tarea.criterioCumplimiento || {}
+    );
+
+    if (!evidenciaCumpleCriterio(evidencia, criterio)) {
+      throw new Error("La actividad no cumple el criterio de esta misión.");
+    }
+
+    const progresoActual = normalizarProgresoTarea(
+      tarea.progreso,
+      criterio
+    );
+    const evidenciaIds = [...progresoActual.evidenciaIds, evidenciaId];
+    const cantidadActual = Math.min(
+      criterio.cantidadObjetivo,
+      progresoActual.cantidadActual + 1
+    );
+    const objetivoAlcanzado = cantidadActual >= criterio.cantidadObjetivo;
+    const requiereRevision = tarea.requiereRevision !== false;
+    const nuevoEstado = objetivoAlcanzado
+      ? requiereRevision
+        ? "pendiente_validacion"
+        : "completada"
+      : "en_curso";
+
+    transaction.set(evidenciaRef, {
+      ...evidencia,
+      evidenciaId,
+      contabilizada: true,
+      aplicadaEn: serverTimestamp(),
+      ocurridaEn: evidenciaEntrada.ocurridaEn || serverTimestamp(),
+      creadaEn: serverTimestamp()
+    });
+
+    const cambiosTarea = {
+      estado: nuevoEstado,
+      "progreso.cantidadActual": cantidadActual,
+      "progreso.cantidadObjetivo": criterio.cantidadObjetivo,
+      "progreso.evidenciaIds": evidenciaIds,
+      actualizadaEn: serverTimestamp()
+    };
+
+    if (!progresoActual.iniciadaEn) {
+      cambiosTarea["progreso.iniciadaEn"] = serverTimestamp();
+    }
+
+    if (objetivoAlcanzado) {
+      cambiosTarea["progreso.completadaEn"] = serverTimestamp();
+    }
+
+    transaction.update(tareaRef, cambiosTarea);
+
+    return {
+      evidenciaId,
+      duplicada: false,
+      aplicada: true,
+      cantidadActual,
+      cantidadObjetivo: criterio.cantidadObjetivo,
+      objetivoAlcanzado,
+      estado: nuevoEstado
+    };
+  });
+
+  // Refuerzo de consistencia RC3.
+  if (resultado.objetivoAlcanzado) {
+    await updateDoc(tareaRef, {
+      estado: resultado.estado,
+      "progreso.cantidadActual": resultado.cantidadActual,
+      "progreso.cantidadObjetivo": resultado.cantidadObjetivo,
+      "progreso.completadaEn": serverTimestamp(),
+      actualizadaEn: serverTimestamp()
+    });
+  }
+
+  return resultado;
+}
+async function leerEvidenciasMision(misionId) {
+  const id = textoSeguro(misionId);
+  if (!id) throw new Error("Falta el identificador de la misión.");
+
+  const resultado = await getDocs(
+    query(coleccionEvidencias(), where("misionId", "==", id))
+  );
+
+  return resultado.docs
+    .map(documento => ({ id: documento.id, ...documento.data() }))
+    .sort((a, b) => {
+      const fechaA = a.ocurridaEn?.toMillis?.() || 0;
+      const fechaB = b.ocurridaEn?.toMillis?.() || 0;
+      return fechaB - fechaA;
+    });
+}
+
 async function guardarObservacionTarea(id, texto) {
-  const observacion = String(texto ?? "").trim();
+  const observacion = textoSeguro(texto);
   const referencia = documentoTarea(id);
   const existente = await getDoc(referencia);
 
@@ -927,8 +1239,7 @@ async function guardarObservacionTarea(id, texto) {
   const historial = Array.isArray(datos.historialObservaciones)
     ? datos.historialObservaciones
     : [];
-
-  const actual = String(datos.observacionActual ?? "").trim();
+  const actual = textoSeguro(datos.observacionActual);
 
   const nuevoHistorial =
     observacion && observacion !== actual
@@ -1003,11 +1314,19 @@ export const Academia = Object.freeze({
 
   tareas: Object.freeze({
     crear: crearTarea,
+    obtener: obtenerTarea,
     leer: leerTareas,
     observar: observarTareas,
     actualizar: actualizarTarea,
     cambiarEstado: cambiarEstadoTarea,
+    registrarEvidencia: registrarEvidenciaMision,
+    leerEvidencias: leerEvidenciasMision,
     guardarObservacion: guardarObservacionTarea,
     eliminar: eliminarTarea
+  }),
+
+  evidencias: Object.freeze({
+    registrarParaMision: registrarEvidenciaMision,
+    leerPorMision: leerEvidenciasMision
   })
 });

@@ -1,13 +1,18 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.1
+   Versión 2.2
    ========================================================== */
 
 window.Academia = window.Academia || {};
 
 (function configurarNavegacionAcademia() {
   "use strict";
+
+  const SELECTOR_VOLVER = "[data-accion-volver]";
+  const SELECTOR_VOLVER_MODULO = "[data-volver-modulo]";
+  const SELECTOR_INICIO = "[data-accion-inicio]";
+  const SELECTOR_CONSERVAR_RETORNO = "[data-conservar-retorno]";
 
   function obtenerBaseAcademia() {
     return window.location.hostname.endsWith("github.io")
@@ -80,6 +85,14 @@ window.Academia = window.Academia || {};
     }
   }
 
+  function obtenerRutaInicio() {
+    return `${obtenerBaseAcademia()}/mi-universo/`;
+  }
+
+  function irAInicio() {
+    window.location.href = obtenerRutaInicio();
+  }
+
   function obtenerRutaRetorno(rutaAlternativa = "./") {
     const parametros = new URLSearchParams(window.location.search);
     const volver = normalizarRutaInterna(parametros.get("volver"));
@@ -100,7 +113,7 @@ window.Academia = window.Academia || {};
 
     return (
       normalizarRutaInterna(rutaAlternativa) ||
-      `${obtenerBaseAcademia()}/mi-universo/`
+      obtenerRutaInicio()
     );
   }
 
@@ -127,19 +140,45 @@ window.Academia = window.Academia || {};
     }
   }
 
+  function obtenerElementos(selectorOElementos) {
+    if (typeof selectorOElementos === "string") {
+      return document.querySelectorAll(selectorOElementos);
+    }
+
+    if (selectorOElementos instanceof Element) {
+      return [selectorOElementos];
+    }
+
+    return selectorOElementos || [];
+  }
+
+  function configurarBotonInicio(selector = SELECTOR_INICIO) {
+    const elementos = obtenerElementos(selector);
+    const destino = obtenerRutaInicio();
+
+    elementos.forEach((elemento) => {
+      if (!elemento) return;
+
+      if (elemento.tagName === "A") {
+        elemento.href = destino;
+        return;
+      }
+
+      if (elemento.dataset.navegacionInicioConfigurada === "true") {
+        return;
+      }
+
+      elemento.dataset.navegacionInicioConfigurada = "true";
+
+      elemento.addEventListener("click", irAInicio);
+    });
+  }
+
   function configurarBotonVolver(
-    selector = "[data-accion-volver]",
+    selector = SELECTOR_VOLVER,
     rutaAlternativa = "./"
   ) {
-    const elementos =
-      typeof selector === "string"
-        ? document.querySelectorAll(selector)
-        : selector instanceof Element
-          ? [selector]
-          : selector;
-
-    if (!elementos) return;
-
+    const elementos = obtenerElementos(selector);
     const destino = obtenerRutaRetorno(rutaAlternativa);
 
     elementos.forEach((elemento) => {
@@ -150,11 +189,11 @@ window.Academia = window.Academia || {};
         return;
       }
 
-      if (elemento.dataset.navegacionConfigurada === "true") {
+      if (elemento.dataset.navegacionVolverConfigurada === "true") {
         return;
       }
 
-      elemento.dataset.navegacionConfigurada = "true";
+      elemento.dataset.navegacionVolverConfigurada = "true";
 
       elemento.addEventListener("click", () => {
         window.location.href = destino;
@@ -163,7 +202,7 @@ window.Academia = window.Academia || {};
   }
 
   function prepararEnlaces(
-    selector = "[data-conservar-retorno]"
+    selector = SELECTOR_CONSERVAR_RETORNO
   ) {
     document.querySelectorAll(selector).forEach((enlace) => {
       if (enlace.dataset.retornoPreparado === "true") {
@@ -210,11 +249,14 @@ window.Academia = window.Academia || {};
 
   Academia.navegacion = Object.freeze({
     volver,
+    irAInicio,
     abrirModulo,
     prepararEnlaces,
     configurarBotonVolver,
+    configurarBotonInicio,
     construirUrlConRetorno,
     obtenerRutaRetorno,
+    obtenerRutaInicio,
     obtenerRutaActual,
     obtenerBaseAcademia
   });
@@ -224,7 +266,7 @@ window.Academia = window.Academia || {};
 
   function inicializarNavegacionDeclarativa() {
     document
-      .querySelectorAll("[data-accion-volver]")
+      .querySelectorAll(SELECTOR_VOLVER)
       .forEach((boton) => {
         configurarBotonVolver(
           boton,
@@ -233,7 +275,7 @@ window.Academia = window.Academia || {};
       });
 
     document
-      .querySelectorAll("[data-volver-modulo]")
+      .querySelectorAll(SELECTOR_VOLVER_MODULO)
       .forEach((boton) => {
         configurarBotonVolver(
           boton,
@@ -241,6 +283,7 @@ window.Academia = window.Academia || {};
         );
       });
 
+    configurarBotonInicio();
     prepararEnlaces();
   }
 

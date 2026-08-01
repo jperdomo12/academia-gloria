@@ -1,0 +1,161 @@
+/* Academia Gloria Valentina · Celebración reutilizable v1.0 */
+
+.celebracion{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  padding:22px;
+  background:rgba(76,29,149,.12);
+  backdrop-filter:blur(3px);
+  animation:celebracionFondoEntrada .22s ease both;
+  pointer-events:none;
+}
+
+.celebracion--saliendo{
+  animation:celebracionFondoSalida .25s ease both;
+}
+
+.celebracion__tarjeta{
+  position:relative;
+  z-index:2;
+  width:min(520px,100%);
+  padding:24px 26px 27px;
+  border:3px solid #a7f3d0;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(253,224,71,.24),transparent 25%),
+    radial-gradient(circle at 90% 10%,rgba(244,114,182,.20),transparent 25%),
+    linear-gradient(135deg,#ecfdf5,#fff,#faf5ff);
+  box-shadow:0 28px 70px rgba(76,29,149,.22);
+  text-align:center;
+  animation:celebracionTarjetaEntrada .42s cubic-bezier(.2,.9,.3,1.2) both;
+}
+
+.celebracion__tarjeta h2{
+  margin:4px 0 8px;
+  color:#166534;
+  font-family:"Outfit",sans-serif;
+  font-size:clamp(2rem,6vw,3.15rem);
+  line-height:1;
+}
+
+.celebracion__tarjeta p{
+  max-width:410px;
+  margin:0 auto;
+  color:#475569;
+  font-family:"Outfit",sans-serif;
+  font-size:1.08rem;
+  font-weight:800;
+  line-height:1.5;
+}
+
+.celebracion__guacamayas{
+  display:flex;
+  justify-content:center;
+  align-items:end;
+  height:100px;
+  margin-bottom:4px;
+}
+
+.celebracion__guacamayas img{
+  width:92px;
+  height:92px;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 12px rgba(15,23,42,.12));
+}
+
+.celebracion__guacamayas img:first-child{
+  animation:celebracionGuacamayaIzquierda .72s ease-in-out infinite alternate;
+}
+
+.celebracion__guacamayas img:last-child{
+  margin-left:-8px;
+  transform:scaleX(-1);
+  animation:celebracionGuacamayaDerecha .72s ease-in-out infinite alternate;
+}
+
+.celebracion__icono{
+  font-size:72px;
+}
+
+.celebracion__particulas{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.celebracion__particula{
+  position:absolute;
+  top:-50px;
+  left:var(--izquierda);
+  font-size:clamp(18px,3vw,29px);
+  animation:
+    celebracionParticulaCaida var(--duracion) ease-in var(--retraso) both;
+}
+
+@keyframes celebracionFondoEntrada{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes celebracionFondoSalida{
+  from{opacity:1}
+  to{opacity:0}
+}
+
+@keyframes celebracionTarjetaEntrada{
+  from{opacity:0;transform:translateY(18px) scale(.90)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes celebracionParticulaCaida{
+  0%{
+    opacity:0;
+    transform:translate3d(0,-30px,0) rotate(0deg);
+  }
+  12%{opacity:1}
+  100%{
+    opacity:0;
+    transform:
+      translate3d(var(--desplazamiento),calc(100vh + 90px),0)
+      rotate(540deg);
+  }
+}
+
+@keyframes celebracionGuacamayaIzquierda{
+  from{transform:translateY(5px) rotate(-4deg)}
+  to{transform:translateY(-7px) rotate(4deg)}
+}
+
+@keyframes celebracionGuacamayaDerecha{
+  from{transform:scaleX(-1) translateY(-4px) rotate(-4deg)}
+  to{transform:scaleX(-1) translateY(7px) rotate(4deg)}
+}
+
+@media(max-width:560px){
+  .celebracion__tarjeta{
+    padding:20px 17px 23px;
+  }
+
+  .celebracion__guacamayas{
+    height:84px;
+  }
+
+  .celebracion__guacamayas img{
+    width:78px;
+    height:78px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .celebracion,
+  .celebracion__tarjeta,
+  .celebracion__particula,
+  .celebracion__guacamayas img{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+  }
+}

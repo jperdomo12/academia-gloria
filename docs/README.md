@@ -76,6 +76,8 @@ docs/
 │
 ├── project/
 │
+├── modelos/
+│
 ├── standards/
 │
 ├── etapas/
@@ -107,7 +109,31 @@ docs/project/
 | ROADMAP.md | Planificación y evolución funcional del proyecto. |
 | DECISION_LOG.md | Registro histórico de decisiones técnicas y funcionales. |
 | CHANGELOG.md | Historial de cambios relevantes del proyecto. |
+| RELEASE_NOTES.md | Novedades funcionales publicadas en cada versión. |
 | MIGRACION_5TO.md | Documentación específica de la migración entre cursos escolares. |
+
+---
+
+---
+
+# 🧩 Modelos
+
+Contiene los modelos funcionales y de datos que describen el comportamiento interno de la Academia.
+
+Ubicación:
+
+```text
+docs/modelos/
+```
+
+Documentos previstos:
+
+- `MODELO_MISIONES.md`
+- `MODELO_EVIDENCIAS.md`
+- `MODELO_LOGROS.md`
+- `MODELO_USUARIOS.md`
+
+Cada documento describe el funcionamiento interno de un dominio funcional y sirve como referencia para el desarrollo.
 
 ---
 
@@ -249,6 +275,8 @@ README
 │      ├── ROADMAP
 │      ├── CHANGELOG
 │      └── DECISION LOG
+│
+├── MODELOS
 │
 ├── STANDARDS
 │

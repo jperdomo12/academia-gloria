@@ -75,11 +75,11 @@
           <button class="filtro active" type="button" data-filter="activas">
             Activas
           </button>
-          <button class="filtro" type="button" data-filter="todas">
-            Todas
-          </button>
           <button class="filtro" type="button" data-filter="completadas">
             Completadas
+          </button>
+          <button class="filtro" type="button" data-filter="todas">
+            Todas
           </button>
         </div>
       </div>
@@ -92,6 +92,14 @@
     </section>
 
     <section id="panelCrear" class="panel-seccion hidden">
+      <aside class="superficie gestion-familiar-aviso">
+        <span aria-hidden="true">👨‍👩‍👧</span>
+        <div>
+          <strong>Gestión familiar de misiones</strong>
+          <p>Esta pantalla está pensada para padres y tutores: aquí se crean, organizan, revisan y cierran las asignaciones del alumno.</p>
+        </div>
+      </aside>
+
       <div class="introduccion-formulario superficie">
         <div class="introduccion-formulario__icono" aria-hidden="true">🌟</div>
 
@@ -125,24 +133,6 @@
           </summary>
 
           <div class="acordeon__contenido">
-            <label>
-              Título de la tarea
-              <input
-                id="titulo"
-                required
-                maxlength="100"
-                placeholder="Ej. Realizar cinco retos de Detectives"
-              >
-            </label>
-
-            <label>
-              Descripción de la tarea
-              <textarea
-                id="descripcion"
-                placeholder="Explica brevemente qué se propone realizar."
-              ></textarea>
-            </label>
-
             <div class="grid-formulario">
               <label>
                 Tipo de tarea
@@ -165,6 +155,84 @@
                 </select>
               </label>
             </div>
+
+            <section
+              id="configuracionDetectives"
+              class="configuracion-rapida configuracion-rapida--detectives hidden"
+              aria-labelledby="tituloConfiguracionDetectives"
+            >
+              <div class="configuracion-rapida__cabecera">
+                <span aria-hidden="true">🧩</span>
+                <div>
+                  <h3 id="tituloConfiguracionDetectives">
+                    Configuración rápida de la misión
+                  </h3>
+                  <p>
+                    Indica solamente cuántas historias debe resolver y el nivel.
+                    La Academia preparará automáticamente el criterio de cumplimiento.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-formulario">
+                <label>
+                  Cantidad de historias
+                  <input
+                    id="cantidadHistorias"
+                    type="number"
+                    min="1"
+                    max="50"
+                    step="1"
+                    value="5"
+                    inputmode="numeric"
+                  >
+                  <span class="ayuda-campo">
+                    Cada historia terminada desde esta misión contará como una actividad.
+                  </span>
+                </label>
+
+                <label>
+                  Nivel de Detectives
+                  <select id="nivelDetectives">
+                    <option value="1">🌱 Nivel 1 · Sencillo</option>
+                    <option value="2">🌿 Nivel 2 · Con pistas</option>
+                    <option value="3">🌳 Nivel 3 · Compuesto</option>
+                  </select>
+                  <span class="ayuda-campo">
+                    Solo contarán historias del nivel seleccionado.
+                  </span>
+                </label>
+              </div>
+
+              <div class="configuracion-rapida__resumen">
+                <strong>La misión contará:</strong>
+                <span id="resumenCriterioDetectives">
+                  5 historias de Detectives de nivel 1
+                </span>
+              </div>
+            </section>
+
+            <label class="titulo-automatico">
+              Título automático de la misión
+              <input
+                id="titulo"
+                required
+                readonly
+                aria-readonly="true"
+                value="Misión de Mi Rincón de Lectura"
+              >
+              <span class="ayuda-campo">
+                Se forma automáticamente a partir del módulo y de su configuración.
+              </span>
+            </label>
+
+            <label>
+              Descripción de la tarea
+              <textarea
+                id="descripcion"
+                placeholder="Explica brevemente qué se propone realizar."
+              ></textarea>
+            </label>
           </div>
         </details>
 
@@ -238,16 +306,15 @@
                   >
                 </label>
               </fieldset>
+              <input id="tituloMision" type="hidden">
 
-              <label>
-                Título de la misión
-                <input
-                  id="tituloMision"
-                  maxlength="80"
-                  value="Misión de lectura"
-                  placeholder="Ej. Desafío de detectives"
-                >
-              </label>
+              <div class="aviso-titulo-unico">
+                <strong>🏷️ Un solo título para todos</strong>
+                <p>
+                  El título indicado en el primer bloque será el mismo que verá
+                  el alumno en Mi Camino.
+                </p>
+              </div>
 
               <label>
                 Descripción para

@@ -204,6 +204,7 @@ button,input,textarea,select{font:inherit}
 .estado-pendiente{color:#92400e;background:#fef3c7}
 .estado-en_curso{color:#075985;background:#e0f2fe}
 .estado-completada{color:#166534;background:#dcfce7}
+.estado-pendiente_validacion,
 .estado-completada_pendiente_validacion{color:#6d28d9;background:#ede9fe}
 .estado-necesita_ayuda{color:#9f1239;background:#ffe4e6}
 .estado-vencida{color:#9a3412;background:#ffedd5}
@@ -970,5 +971,235 @@ footer{
 
   .acciones-formulario__botones .btn{
     flex:1;
+  }
+}
+
+
+/* ==========================================================
+   Misiones · Configuración rápida de Detectives 2.1
+   ========================================================== */
+
+.configuracion-rapida{
+  margin-top:18px;
+  padding:18px;
+  border:2px solid #bfdbfe;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 94% 10%,rgba(124,58,237,.10),transparent 28%),
+    linear-gradient(135deg,#eff6ff,#faf5ff,#fff);
+}
+
+.configuracion-rapida__cabecera{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:12px;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.configuracion-rapida__cabecera > span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:#ede9fe;
+  font-size:27px;
+}
+
+.configuracion-rapida__cabecera h3{
+  margin:0 0 4px;
+  color:#5b21b6;
+  font-size:1.15rem;
+}
+
+.configuracion-rapida__cabecera p{
+  margin:0;
+  color:#64748b;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.configuracion-rapida__resumen{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:2px;
+  padding:12px 14px;
+  border:2px dashed #c4b5fd;
+  border-radius:15px;
+  background:rgba(255,255,255,.86);
+  color:#5b21b6;
+  font-weight:850;
+}
+
+.configuracion-rapida__resumen strong{
+  color:#334155;
+}
+
+@media(max-width:620px){
+  .configuracion-rapida{
+    padding:15px;
+  }
+
+  .configuracion-rapida__cabecera{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* Revisión de Evidencias de aprendizaje 2.1 */
+.evidencias-mision{
+  margin-top:16px;
+  padding:16px;
+  border:2px solid #c4b5fd;
+  border-radius:19px;
+  background:linear-gradient(135deg,#faf5ff,#fff);
+}
+.evidencias-mision__cabecera{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.evidencias-mision__cabecera strong{display:block;color:#5b21b6;font-size:1.05rem}
+.evidencias-mision__cabecera p{margin:4px 0 0;color:#64748b;font-size:.9rem}
+.evidencias-mision__lista{display:grid;gap:9px;margin-top:14px}
+.evidencias-mision__cargando,.evidencias-mision__vacia{padding:13px;border-radius:14px;background:#fff;color:#64748b;font-weight:800}
+.evidencia-item{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:11px;padding:12px;border:2px solid #ede9fe;border-radius:15px;background:#fff}
+.evidencia-item__icono{font-size:24px;text-align:center}
+.evidencia-item__contenido strong,.evidencia-item__contenido small{display:block}
+.evidencia-item__contenido small{margin-top:3px;color:#64748b;font-weight:700}
+.evidencia-item__enlace{text-decoration:none;white-space:nowrap}
+@media(max-width:680px){.evidencia-item{grid-template-columns:36px 1fr}.evidencia-item__enlace{grid-column:1/-1;width:100%}}
+
+.gestion-familiar-aviso{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center;margin:20px 0 12px;padding:16px 18px;border-color:#bfdbfe;background:linear-gradient(135deg,#eff6ff,#fff)}
+.gestion-familiar-aviso>span{font-size:36px;text-align:center}
+.gestion-familiar-aviso strong{color:#075985;font-size:1.08rem}
+.gestion-familiar-aviso p{margin:4px 0 0;color:#64748b;font-weight:700;line-height:1.45}
+@media(max-width:620px){.gestion-familiar-aviso{grid-template-columns:1fr}}
+
+.mover-posicion{display:inline-flex;align-items:center;gap:7px;margin:0;padding:6px 9px;border-radius:14px;color:#166534;background:#ecfdf5;font-size:.78rem;font-weight:900}
+.mover-posicion select{width:auto;min-width:62px;padding:5px 8px;border:1px solid #86efac;border-radius:9px;background:white}
+@media(max-width:620px){.mover-posicion{width:100%;justify-content:space-between}}
+
+/* Academia Gloria · RC5 */
+
+.aviso-titulo-unico{
+  margin:4px 0 17px;
+  padding:12px 14px;
+  border:2px dashed #c4b5fd;
+  border-radius:16px;
+  color:#5b21b6;
+  background:#faf5ff;
+}
+
+.aviso-titulo-unico strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.aviso-titulo-unico p{
+  margin:0;
+  color:#64748b;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.mision-conservada{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:8px 12px;
+  border-radius:13px;
+  color:#475569;
+  background:#f1f5f9;
+  font-size:.82rem;
+  font-weight:900;
+}
+
+
+/* Academia Gloria · RC6 */
+
+.titulo-automatico input[readonly]{
+  color:#5b21b6;
+  border-color:#c4b5fd;
+  background:linear-gradient(135deg,#faf5ff,#fff);
+  font-weight:900;
+  cursor:default;
+}
+
+.tarea-card{
+  overflow:hidden;
+}
+
+.tarea-card > summary{
+  list-style:none;
+}
+
+.tarea-card > summary::-webkit-details-marker{
+  display:none;
+}
+
+.tarea-card__cabecera{
+  margin:-20px;
+  padding:20px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.tarea-card__resumen-principal{
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  min-width:0;
+}
+
+.tarea-card__resumen-principal h3{
+  margin:0 0 4px;
+}
+
+.tarea-card__resumen-principal p{
+  display:-webkit-box;
+  margin:0;
+  overflow:hidden;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:1;
+  color:#64748b;
+  text-overflow:ellipsis;
+}
+
+.tarea-card__resumen-estado{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tarea-card__flecha{
+  color:#7c3aed;
+  font-size:1.5rem;
+  font-weight:900;
+  transition:transform .2s ease;
+}
+
+.tarea-card[open] .tarea-card__flecha{
+  transform:rotate(180deg);
+}
+
+.tarea-card__detalle{
+  margin:20px -2px 0;
+  padding-top:18px;
+  border-top:2px solid #eef2ff;
+}
+
+@media(max-width:620px){
+  .tarea-card__cabecera{
+    align-items:flex-start;
+  }
+
+  .tarea-card__resumen-principal{
+    grid-template-columns:42px minmax(0,1fr);
+  }
+
+  .tarea-card__resumen-estado{
+    width:100%;
+    justify-content:space-between;
   }
 }
