@@ -1,36 +1,26 @@
 # RELEASE NOTES
 
-## Academia Gloria Valentina · v2.1-RC6
+## Academia Gloria Valentina · v2.2-RC2
 
-**Nombre:** Simplicidad de creación, tareas compactas y Detectives flexible  
+**Nombre:** Modelo de Navegación v1.0  
 **Fecha:** 01/08/2026  
-**Base requerida:** v2.1-RC5
+**Base requerida:** v2.2-RC1
 
-## Mi Camino
+### Arquitectura
 
-- Botón “Entendido” integrado con el diseño visual de la Academia.
+- El árbol se separa en `compartido/modelos/navegacion.js`.
+- El componente ya no contiene páginas concretas.
+- Los HTML de RC1 no necesitan modificarse.
+- Futuras altas, bajas o cambios de navegación se realizan en el modelo central.
 
-## Crear una misión
+### Experiencia
 
-- Tipo y módulo aparecen antes del título.
-- Configuración de Detectives aparece antes del título.
-- El título es automático y no editable.
-- Familia y alumno utilizan exactamente el mismo título.
-- Las descripciones continúan siendo editables e independientes.
-- La descripción para el alumno mantiene su valor automático inicial y puede personalizarse.
-
-## Gestión familiar
-
-- Orden de filtros: Activas, Completadas, Todas.
-- Todas las tareas aparecen inicialmente comprimidas.
-- Cada tarea puede expandirse individualmente.
-- La vista comprimida muestra título, descripción breve y estado.
-- Los detalles y botones aparecen únicamente al expandir.
-
-## Detectives
-
-- En historias compuestas, completar la primera parte muestra “Parte resuelta”, no “Historia resuelta”.
-- La evidencia continúa registrándose únicamente después de completar toda la historia.
-- Se elimina el botón redundante “Elegir otra aventura libre”.
-- Permanece “Seguir practicando sin misión”.
-- Se puede elegir cualquier cantidad entera válida de historias.
+- Cualquier nodo puede ser página y grupo desplegable a la vez.
+- `5.º de Primaria` aparece comprimido.
+- Al expandirlo aparecen sus materias.
+- Se puede ir directamente:
+  - a 5.º;
+  - a Inglés;
+  - a cualquier otra materia.
+- El mismo patrón se aplica a toda la Academia.
+- La rama de la página actual se abre automáticamente.

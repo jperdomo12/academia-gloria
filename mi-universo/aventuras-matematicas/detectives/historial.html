@@ -19,6 +19,7 @@
     .toolbar{margin:18px 0;padding:16px;flex-wrap:wrap}.toolbar select,.toolbar input{min-height:48px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:14px;font:inherit;font-weight:700}.toolbar input{flex:1;min-width:220px}.list{display:grid;gap:12px}.item{padding:17px;justify-content:space-between;flex-wrap:wrap}.item-main{display:flex;gap:13px;align-items:flex-start;flex:1;min-width:260px}.icon{font-size:32px}.item h2{margin:0 0 5px;font-size:21px}.meta{color:#64748b;font-weight:700}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{padding:5px 9px;border-radius:999px;background:#f1f5f9;color:#475569;font-size:12px;font-weight:900}.empty,.error{padding:30px;text-align:center;color:#64748b;font-weight:800}.error{color:#9f1239}.loading{text-align:center;padding:30px;font-weight:900;color:#6d28d9}
     @media(max-width:650px){.stats{grid-template-columns:1fr}.actions,.actions .btn{width:100%}.item{align-items:stretch}}
   </style>
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css">
 </head>
 <body><main class="wrap">
   <div class="topbar"><a class="back" data-volver-modulo data-ruta-alternativa="./index.html" href="./index.html">← Volver a Detectives</a><div data-panel-usuario></div></div>
@@ -53,4 +54,5 @@
   ["searchInput","levelFilter","statusFilter"].forEach(id=>$(id).addEventListener(id==="searchInput"?"input":"change",render));
   $("clearHistory").onclick=async()=>{if(!confirm("¿Seguro que deseas borrar todo el historial de Detectives? Esta acción no se puede deshacer."))return;if(!confirm("Confirma por segunda vez: se eliminarán todas las resoluciones guardadas."))return;$("clearHistory").disabled=true;try{await eliminarHistorialDetectives(auth.currentUser.uid);histories=[];render();}finally{$("clearHistory").disabled=false;}};
   await load();
-</script><script src="../../../compartido/js/navegacion.js"></script></body></html>
+</script><script src="../../../compartido/js/navegacion.js"></script>  <script type="module" src="../../../compartido/componentes/navegacion-global.js"></script>
+</body></html>
