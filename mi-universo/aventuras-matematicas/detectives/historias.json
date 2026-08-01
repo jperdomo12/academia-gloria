@@ -710,8 +710,8 @@
           "tipo": "reparto",
           "totalElementos": 24,
           "grupos": 4,
-          "grupoIcono": "🟫",
-          "elementoIcono": "🥛"
+          "grupoIcono": "👥",
+          "elementoIcono": "🧒"
         }
       },
       {
@@ -724,8 +724,8 @@
           "tipo": "grupos",
           "grupos": 4,
           "elementosPorGrupo": 2,
-          "grupoIcono": "🟫",
-          "elementoIcono": "🥛"
+          "grupoIcono": "👥",
+          "elementoIcono": "🧴"
         }
       }
     ],
@@ -3599,6 +3599,520 @@
         "a": 30,
         "b": 22,
         "resultado": 8
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0021",
+    "titulo": "Libros para la estantería",
+    "texto": "En una estantería había 7 libros y Gloria colocó 5 libros más.",
+    "nivel": 1,
+    "tema": "biblioteca",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué ocurrió con la cantidad de libros?",
+      "opciones": [
+        {
+          "id": "aumento",
+          "texto": "📚 Aumentó porque colocaron más libros."
+        },
+        {
+          "id": "disminuyo",
+          "texto": "📉 Disminuyó porque retiraron libros."
+        },
+        {
+          "id": "reparto",
+          "texto": "🤝 Se repartieron por igual."
+        }
+      ],
+      "correcta": "aumento"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué queremos averiguar?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "Cuántos libros hay ahora."
+        },
+        {
+          "id": "color",
+          "texto": "De qué color son los libros."
+        },
+        {
+          "id": "estantes",
+          "texto": "Cuántas estanterías hay."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos libros hay ahora?",
+        "operacion": "sumar",
+        "a": 7,
+        "b": 5,
+        "resultado": 12
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0022",
+    "titulo": "Lápices que quedaron",
+    "texto": "Había 14 lápices en un bote. Se utilizaron 6 para una actividad.",
+    "nivel": 1,
+    "tema": "colegio",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué pasó con la cantidad de lápices del bote?",
+      "opciones": [
+        {
+          "id": "menos",
+          "texto": "✏️ Quedaron menos porque se utilizaron algunos."
+        },
+        {
+          "id": "mas",
+          "texto": "➕ Aparecieron más lápices."
+        },
+        {
+          "id": "igual",
+          "texto": "⚖️ La cantidad no cambió."
+        }
+      ],
+      "correcta": "menos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos calcular?",
+      "opciones": [
+        {
+          "id": "quedan",
+          "texto": "Cuántos lápices quedaron."
+        },
+        {
+          "id": "usaron",
+          "texto": "Quién usó cada lápiz."
+        },
+        {
+          "id": "colores",
+          "texto": "Cuántos colores existen."
+        }
+      ],
+      "correcta": "quedan"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos lápices quedaron?",
+        "operacion": "restar",
+        "a": 14,
+        "b": 6,
+        "resultado": 8
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0023",
+    "titulo": "Cajas de pinturas",
+    "texto": "Hay 3 cajas. Cada caja contiene 4 pinturas.",
+    "nivel": 1,
+    "tema": "arte",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Cómo están organizadas las pinturas?",
+      "opciones": [
+        {
+          "id": "grupos",
+          "texto": "🎨 En 3 grupos iguales de 4 pinturas."
+        },
+        {
+          "id": "resta",
+          "texto": "➖ Se retiraron pinturas."
+        },
+        {
+          "id": "suma",
+          "texto": "➕ Se añadieron pinturas sueltas."
+        }
+      ],
+      "correcta": "grupos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué queremos conocer?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "El total de pinturas."
+        },
+        {
+          "id": "cajas",
+          "texto": "El color de las cajas."
+        },
+        {
+          "id": "sobran",
+          "texto": "Cuántas pinturas sobran."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas pinturas hay en total?",
+        "operacion": "multiplicar",
+        "a": 3,
+        "b": 4,
+        "resultado": 12,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 3,
+          "elementosPorGrupo": 4,
+          "grupoIcono": "📦",
+          "elementoIcono": "🖍️"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0024",
+    "titulo": "Manzanas para los equipos",
+    "texto": "Doce manzanas se reparten por igual entre 4 equipos.",
+    "nivel": 1,
+    "tema": "deporte",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué significa repartir por igual?",
+      "opciones": [
+        {
+          "id": "misma",
+          "texto": "🍎 Cada equipo recibe la misma cantidad."
+        },
+        {
+          "id": "azar",
+          "texto": "🎲 Cada equipo recibe una cantidad diferente."
+        },
+        {
+          "id": "quitar",
+          "texto": "➖ Se eliminan todas las manzanas."
+        }
+      ],
+      "correcta": "misma"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos averiguar?",
+      "opciones": [
+        {
+          "id": "por_equipo",
+          "texto": "Cuántas manzanas recibe cada equipo."
+        },
+        {
+          "id": "total",
+          "texto": "Cuántos equipos nuevos aparecen."
+        },
+        {
+          "id": "color",
+          "texto": "De qué color son las manzanas."
+        }
+      ],
+      "correcta": "por_equipo"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas manzanas recibe cada equipo?",
+        "operacion": "dividir",
+        "a": 12,
+        "b": 4,
+        "resultado": 3,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 12,
+          "grupos": 4,
+          "grupoIcono": "👥",
+          "elementoIcono": "🍎"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0025",
+    "titulo": "Peces del acuario",
+    "texto": "En un acuario nadaban 8 peces y añadieron 6 peces más.",
+    "nivel": 1,
+    "tema": "naturaleza",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué ocurrió con los peces?",
+      "opciones": [
+        {
+          "id": "aumento",
+          "texto": "🐟 La cantidad aumentó."
+        },
+        {
+          "id": "disminuyo",
+          "texto": "📉 La cantidad disminuyó."
+        },
+        {
+          "id": "reparto",
+          "texto": "🤝 Se repartieron los peces."
+        }
+      ],
+      "correcta": "aumento"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué pregunta debemos responder?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "Cuántos peces hay ahora."
+        },
+        {
+          "id": "agua",
+          "texto": "Cuánta agua tiene el acuario."
+        },
+        {
+          "id": "colores",
+          "texto": "De qué colores son los peces."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos peces hay ahora?",
+        "operacion": "sumar",
+        "a": 8,
+        "b": 6,
+        "resultado": 14
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0026",
+    "titulo": "Entradas para el teatro",
+    "texto": "La clase tenía 15 entradas para el teatro y entregó 7 a un grupo.",
+    "nivel": 1,
+    "tema": "teatro",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué pasó con las entradas disponibles?",
+      "opciones": [
+        {
+          "id": "menos",
+          "texto": "🎟️ Quedaron menos entradas."
+        },
+        {
+          "id": "mas",
+          "texto": "➕ Llegaron nuevas entradas."
+        },
+        {
+          "id": "igual",
+          "texto": "⚖️ No cambió la cantidad."
+        }
+      ],
+      "correcta": "menos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué queremos averiguar?",
+      "opciones": [
+        {
+          "id": "quedan",
+          "texto": "Cuántas entradas quedan."
+        },
+        {
+          "id": "obra",
+          "texto": "Cómo se llama la obra."
+        },
+        {
+          "id": "asientos",
+          "texto": "De qué color son los asientos."
+        }
+      ],
+      "correcta": "quedan"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas entradas quedan?",
+        "operacion": "restar",
+        "a": 15,
+        "b": 7,
+        "resultado": 8
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0121",
+    "titulo": "Paquetes de semillas",
+    "texto": "El huerto escolar recibió 6 paquetes con 8 semillas en cada paquete.",
+    "nivel": 2,
+    "tema": "huerto",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Cómo están organizadas las semillas?",
+      "opciones": [
+        {
+          "id": "grupos",
+          "texto": "🌱 En 6 grupos iguales de 8 semillas."
+        },
+        {
+          "id": "resta",
+          "texto": "➖ Se quitaron semillas."
+        },
+        {
+          "id": "reparto",
+          "texto": "🤝 Se reparten entre 8 huertos."
+        }
+      ],
+      "correcta": "grupos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué necesitamos conocer?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "El total de semillas recibidas."
+        },
+        {
+          "id": "tierra",
+          "texto": "Cuánta tierra hay."
+        },
+        {
+          "id": "color",
+          "texto": "El color de los paquetes."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas semillas recibieron en total?",
+        "operacion": "multiplicar",
+        "a": 6,
+        "b": 8,
+        "resultado": 48,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 6,
+          "elementosPorGrupo": 8,
+          "grupoIcono": "📦",
+          "elementoIcono": "🌱"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0122",
+    "titulo": "Cuadernos por mesa",
+    "texto": "Treinta y seis cuadernos se reparten por igual entre 6 mesas.",
+    "nivel": 2,
+    "tema": "colegio",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué indica que debemos repartir?",
+      "opciones": [
+        {
+          "id": "igual",
+          "texto": "📒 Cada mesa recibe la misma cantidad."
+        },
+        {
+          "id": "sumar",
+          "texto": "➕ Se añaden 6 cuadernos."
+        },
+        {
+          "id": "restar",
+          "texto": "➖ Se pierden cuadernos."
+        }
+      ],
+      "correcta": "igual"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos averiguar?",
+      "opciones": [
+        {
+          "id": "por_mesa",
+          "texto": "Cuántos cuadernos recibe cada mesa."
+        },
+        {
+          "id": "total",
+          "texto": "Cuántos cuadernos había antes."
+        },
+        {
+          "id": "alumnos",
+          "texto": "Cuántos alumnos hay en el colegio."
+        }
+      ],
+      "correcta": "por_mesa"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos cuadernos recibe cada mesa?",
+        "operacion": "dividir",
+        "a": 36,
+        "b": 6,
+        "resultado": 6,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 36,
+          "grupos": 6,
+          "grupoIcono": "🟫",
+          "elementoIcono": "📒"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0123",
+    "titulo": "Puntos del torneo",
+    "texto": "Un equipo tenía 27 puntos y consiguió 18 puntos más en la siguiente ronda.",
+    "nivel": 2,
+    "tema": "deporte",
+    "tipo": "simple",
+    "comprension": {
+      "pregunta": "¿Qué ocurrió con la puntuación?",
+      "opciones": [
+        {
+          "id": "aumento",
+          "texto": "🏆 Aumentó al conseguir más puntos."
+        },
+        {
+          "id": "disminuyo",
+          "texto": "📉 Perdió puntos."
+        },
+        {
+          "id": "reparto",
+          "texto": "🤝 Se repartieron los puntos."
+        }
+      ],
+      "correcta": "aumento"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué necesitamos calcular?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "La puntuación total del equipo."
+        },
+        {
+          "id": "jugadores",
+          "texto": "Cuántos jugadores tiene."
+        },
+        {
+          "id": "rondas",
+          "texto": "Cuántas rondas faltan."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos puntos tiene ahora el equipo?",
+        "operacion": "sumar",
+        "a": 27,
+        "b": 18,
+        "resultado": 45
       }
     ],
     "activo": true

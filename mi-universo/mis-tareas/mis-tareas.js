@@ -313,12 +313,18 @@ function renderTareas() {
           }
 
           ${
-            destino && tarea.estado !== "completada"
+            destino
               ? `<button class="btn accion-iniciar"
                     data-action="start"
                     data-id="${escapar(tarea.id)}"
                     data-url="${escapar(destino)}">
-                   ▶️ Abrir actividad
+                   ${
+                     tarea.modulo === "rincon-lectura" &&
+                     ["pendiente_validacion", "completada_pendiente_validacion", "completada"]
+                       .includes(tarea.estado)
+                       ? "📚 Ver lecturas de la misión"
+                       : "▶️ Abrir actividad"
+                   }
                  </button>`
               : ""
           }
@@ -441,7 +447,17 @@ async function mostrarEvidenciasMision(id, button) {
       });
 
       const destinoCorrecto =
-        `../aventuras-matematicas/detectives/historia.html?${parametros.toString()}`;
+        evidencia.modulo === "rincon-lectura"
+          ? (
+              `../rincon-lectura/?vista=historial` +
+              `&misionId=${encodeURIComponent(id)}` +
+              `&historiaId=${encodeURIComponent(evidencia.actividadId || "")}` +
+              `&sesionId=${encodeURIComponent(evidencia.sesionId || "")}` +
+              `&volver=${encodeURIComponent(
+                `${window.location.pathname}${window.location.search}`
+              )}`
+            )
+          : `../aventuras-matematicas/detectives/historia.html?${parametros.toString()}`;
 
       return `
         <article class="evidencia-item">
@@ -578,15 +594,40 @@ async function ejecutarAccion(button) {
     }
 
     if (action === "start") {
-      await Academia.tareas.cambiarEstado(id, "en_curso");
       const destino = new URL(url, window.location.href);
       destino.searchParams.set("misionId", id);
-      destino.searchParams.set("volver", `${window.location.pathname}${window.location.search}`);
+      destino.searchParams.set(
+        "volver",
+        `${window.location.pathname}${window.location.search}`
+      );
+
+      if (
+        tarea.modulo === "rincon-lectura" &&
+        ["pendiente_validacion", "completada_pendiente_validacion", "completada"]
+          .includes(tarea.estado)
+      ) {
+        destino.searchParams.set("vista", "historial");
+      }
+
+      // Gestión familiar solo consulta o revisa.
+      // El cambio a en_curso ocurre únicamente cuando el alumno inicia
+      // la misión desde Mi Camino.
       window.location.href = destino.href;
       return;
     }
 
     if (action === "complete") {
+      const confirmado = confirm(
+        "¿Confirmas que deseas cerrar esta misión?\n\n" +
+        "La misión pasará al historial como conseguida. " +
+        "Las evidencias de aprendizaje se conservarán."
+      );
+
+      if (!confirmado) {
+        button.disabled = false;
+        return;
+      }
+
       const resultadoActual = resultadoTarea(tarea);
 
       await Academia.tareas.actualizar(id, {
@@ -598,6 +639,7 @@ async function ejecutarAccion(button) {
       });
 
       await Academia.tareas.cambiarEstado(id, "completada");
+      alert("✅ Misión cerrada correctamente.");
       return;
     }
 
@@ -822,6 +864,90 @@ const textosAutomaticosDetectives = {
 };
 
 
+
+const textosAutomaticosLectura = {
+  descripcionMision: "",
+  criterio: ""
+};
+
+function normalizarCantidadLecturas(valor, valorPredeterminado = 2) {
+  const numero = Number(valor);
+  if (!Number.isFinite(numero)) return valorPredeterminado;
+  return Math.min(50, Math.max(1, Math.trunc(numero)));
+}
+
+function normalizarNivelLectura(valor) {
+  const texto = String(valor ?? "todos");
+  return ["1", "2", "3"].includes(texto) ? Number(texto) : null;
+}
+
+function crearTextosLectura(cantidad, nivel) {
+  const unidad = cantidad === 1 ? "historia" : "historias";
+  const nivelTexto = nivel ? ` de nivel ${nivel}` : "";
+
+  return {
+    titulo:
+      `Leer ${cantidad} ${unidad} de Mi Rincón de Lectura${nivelTexto}`,
+    descripcionMision:
+      `Lee ${cantidad} ${unidad} en Mi Rincón de Lectura${nivelTexto}. ` +
+      "Cada aventura guardada desde esta misión contará para tu progreso.",
+    criterio:
+      `Guardar ${cantidad} ${cantidad === 1 ? "lectura" : "lecturas"}` +
+      `${nivelTexto}.`
+  };
+}
+
+function aplicarTextosAutomaticosLectura({ forzar = false } = {}) {
+  if ($("modulo").value !== "rincon-lectura") return;
+
+  const cantidad = normalizarCantidadLecturas(
+    $("cantidadLecturas").value,
+    2
+  );
+  const nivel = normalizarNivelLectura($("nivelLectura").value);
+  const siguientes = crearTextosLectura(cantidad, nivel);
+
+  $("titulo").value = siguientes.titulo;
+  $("tituloMision").value = siguientes.titulo;
+
+  [
+    ["descripcionMision", "descripcionMision"],
+    ["criterio", "criterio"]
+  ].forEach(([id, clave]) => {
+    const actual = $(id).value.trim();
+    const anterior = textosAutomaticosLectura[clave];
+
+    if (forzar || !actual || !anterior || actual === anterior) {
+      $(id).value = siguientes[clave];
+    }
+  });
+
+  Object.assign(textosAutomaticosLectura, siguientes);
+  actualizarResumenCriterioLectura();
+  actualizarVistaPrevia();
+}
+
+function reiniciarTextosAutomaticosLectura() {
+  Object.keys(textosAutomaticosLectura).forEach(
+    clave => textosAutomaticosLectura[clave] = ""
+  );
+}
+
+function actualizarResumenCriterioLectura() {
+  const resumen = $("resumenCriterioLectura");
+  if (!resumen) return;
+
+  const cantidad = normalizarCantidadLecturas(
+    $("cantidadLecturas")?.value,
+    2
+  );
+  const nivel = normalizarNivelLectura($("nivelLectura")?.value);
+
+  resumen.textContent =
+    `${cantidad} ${cantidad === 1 ? "lectura" : "lecturas"} ` +
+    `${nivel ? `de nivel ${nivel}` : "de cualquier nivel"}`;
+}
+
 function tituloAutomaticoPorModulo() {
   const modulo = $("modulo").value;
 
@@ -839,7 +965,10 @@ function tituloAutomaticoPorModulo() {
   }
 
   return {
-    "rincon-lectura": "Misión de Mi Rincón de Lectura",
+    "rincon-lectura": crearTextosLectura(
+      normalizarCantidadLecturas($("cantidadLecturas")?.value, 2),
+      normalizarNivelLectura($("nivelLectura")?.value)
+    ).titulo,
     biblioteca: "Misión de Biblioteca Encantada",
     libre: "Misión fuera de la Academia"
   }[modulo] || "Nueva misión";
@@ -941,16 +1070,42 @@ function actualizarConfiguracionPorModulo({
 } = {}) {
   const modulo = $("modulo").value;
   const esDetectives = modulo === "detectives";
-  $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives);
+  const esLectura = modulo === "rincon-lectura";
 
-  if (!esDetectives) {
-    reiniciarTextosAutomaticosDetectives();
-    actualizarTituloAutomatico();
+  $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives);
+  $("configuracionLectura")?.classList.toggle("hidden", !esLectura);
+
+  if (esDetectives) {
+    reiniciarTextosAutomaticosLectura();
+    actualizarResumenCriterioDetectives();
+    if (completarSugerencias) aplicarTextosAutomaticosDetectives();
     return;
   }
 
-  actualizarResumenCriterioDetectives();
-  if (completarSugerencias) aplicarTextosAutomaticosDetectives();
+  if (esLectura) {
+    reiniciarTextosAutomaticosDetectives();
+  reiniciarTextosAutomaticosLectura();
+    actualizarResumenCriterioLectura();
+    if (completarSugerencias) aplicarTextosAutomaticosLectura();
+    return;
+  }
+
+  reiniciarTextosAutomaticosDetectives();
+  reiniciarTextosAutomaticosLectura();
+  actualizarTituloAutomatico();
+}
+
+
+function fechaLocalISO(desplazamientoDias = 0) {
+  const fecha = new Date();
+  fecha.setHours(12, 0, 0, 0);
+  fecha.setDate(fecha.getDate() + desplazamientoDias);
+
+  const anio = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+
+  return `${anio}-${mes}-${dia}`;
 }
 
 function limpiarFormulario({ conservarMensaje = false } = {}) {
@@ -964,7 +1119,11 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
     "Realiza esta aventura con calma y celebra cada pequeño paso.";
   $("mensajeMision").value = "";
   $("cantidadHistorias").value = "5";
+  $("cantidadLecturas").value = "2";
+  $("nivelLectura").value = "todos";
   $("nivelDetectives").value = "1";
+  $("fechaInicio").value = fechaLocalISO(0);
+  $("fechaLimite").value = fechaLocalISO(1);
   $("fechaFinalizacion").value = "";
   $("observacionesResultado").value = "";
   $("resultadoMasEsperado").checked = false;
@@ -1022,6 +1181,18 @@ function cargarTareaEnFormulario(tarea) {
       1
     )
   );
+  $("cantidadLecturas").value = String(
+    normalizarCantidadLecturas(
+      criterioCumplimiento.cantidadObjetivo ??
+        tarea.progreso?.cantidadObjetivo,
+      2
+    )
+  );
+  $("nivelLectura").value =
+    tarea.modulo === "rincon-lectura" &&
+    criterioCumplimiento.filtros?.nivel
+      ? String(criterioCumplimiento.filtros.nivel)
+      : "todos";
   $("observacion").value = tarea.observacionActual || "";
 
   $("visibleParaAlumno").checked = esVisibleComoMision(tarea);
@@ -1068,6 +1239,7 @@ function recogerFormulario() {
   const modulo = $("modulo").value;
   const visible = $("visibleParaAlumno").checked;
   const esDetectives = modulo === "detectives";
+  const esLectura = modulo === "rincon-lectura";
 
   const cantidadObjetivo = esDetectives
     ? normalizarCantidadHistorias($("cantidadHistorias").value, 5)
@@ -1075,6 +1247,14 @@ function recogerFormulario() {
 
   const nivelDetectives = esDetectives
     ? normalizarNivelDetectives($("nivelDetectives").value, 1)
+    : null;
+
+  const cantidadLecturas = esLectura
+    ? normalizarCantidadLecturas($("cantidadLecturas").value, 2)
+    : 0;
+
+  const nivelLectura = esLectura
+    ? normalizarNivelLectura($("nivelLectura").value)
     : null;
 
   return {
@@ -1095,7 +1275,17 @@ function recogerFormulario() {
             nivel: nivelDetectives
           }
         }
-      : null,
+      : esLectura
+        ? {
+            tipo: "cantidad",
+            modulo: "rincon-lectura",
+            evidenciaTipo: "lectura_completada",
+            cantidadObjetivo: cantidadLecturas,
+            filtros: nivelLectura
+              ? { nivel: nivelLectura }
+              : {}
+          }
+        : null,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -1121,7 +1311,11 @@ function recogerFormulario() {
       ? {
           cantidadObjetivo
         }
-      : undefined,
+      : esLectura
+        ? {
+            cantidadObjetivo: cantidadLecturas
+          }
+        : undefined,
     observacionActual: $("observacion").value,
     resultado: {
       fechaFinalizacion: $("fechaFinalizacion").value,
@@ -1181,7 +1375,9 @@ function configurarFormulario() {
     const modulo = $("modulo").value;
     seleccionarIcono(ICONOS[modulo] || "🌟");
     actualizarConfiguracionPorModulo({
-      completarSugerencias: modulo === "detectives"
+      completarSugerencias:
+        modulo === "detectives" ||
+        modulo === "rincon-lectura"
     });
   });
 
@@ -1199,6 +1395,24 @@ function configurarFormulario() {
 
       if ($("modulo").value === "detectives") {
         aplicarTextosAutomaticosDetectives();
+      }
+    });
+  });
+
+  ["cantidadLecturas", "nivelLectura"].forEach(id => {
+    $(id).addEventListener("input", () => {
+      actualizarResumenCriterioLectura();
+
+      if ($("modulo").value === "rincon-lectura") {
+        aplicarTextosAutomaticosLectura();
+      }
+    });
+
+    $(id).addEventListener("change", () => {
+      actualizarResumenCriterioLectura();
+
+      if ($("modulo").value === "rincon-lectura") {
+        aplicarTextosAutomaticosLectura();
       }
     });
   });
@@ -1229,6 +1443,18 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de historias para la misión.";
       $("cantidadHistorias").focus();
+      return;
+    }
+
+    if (
+      datos.modulo === "rincon-lectura" &&
+      (!datos.criterioCumplimiento ||
+        datos.criterioCumplimiento.cantidadObjetivo < 1)
+    ) {
+      $("mensajeFormulario").className = "mensaje-formulario error";
+      $("mensajeFormulario").textContent =
+        "Indica una cantidad válida de lecturas para la misión.";
+      $("cantidadLecturas").focus();
       return;
     }
 

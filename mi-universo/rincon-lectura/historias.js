@@ -258,5 +258,569 @@ export const HISTORIAS = [
     ],
     reflexion: "Asking for help is not a weakness. It is a smart and brave step towards learning.",
     fraseDelDia: "I am brave enough to ask."
+  },
+{
+    "id": "mochila-de-los-pequenos-pasos",
+    "titulo": "La mochila de los pequeños pasos",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre organizarse sin agobiarse",
+    "nivel": 1,
+    "categoria": "Organización",
+    "tiempoEstimado": "4 minutos",
+    "portada": "🎒",
+    "escena": {
+      "fondo": "colegio",
+      "cielo": "☀️",
+      "personaje": "👧",
+      "companera": "🐦"
+    },
+    "valores": [
+      "Organización",
+      "Calma",
+      "Autonomía"
+    ],
+    "parrafos": [
+      {
+        "icono": "🎒",
+        "texto": "Clara miró su mochila y pensó que tenía demasiadas cosas por hacer: guardar los libros, preparar el estuche y terminar un dibujo."
+      },
+      {
+        "icono": "😟",
+        "texto": "Quiso hacerlo todo al mismo tiempo y empezó a sentirse nerviosa. No sabía por dónde comenzar."
+      },
+      {
+        "icono": "🐦",
+        "texto": "Un pajarito se posó en la ventana y fue llevando ramitas a su nido, una por una. Clara lo observó y tuvo una idea."
+      },
+      {
+        "icono": "✅",
+        "texto": "Primero guardó los libros, después preparó el estuche y al final terminó el dibujo. Cada pequeño paso hacía que la mochila se sintiera más ligera."
+      },
+      {
+        "icono": "🌟",
+        "texto": "Clara comprendió que no necesitaba resolverlo todo de golpe. Cuando dividía una tarea en pasos, podía avanzar con más calma."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "problema",
+        "tipo": "opcion",
+        "texto": "¿Por qué Clara se sintió nerviosa?",
+        "opciones": [
+          "Porque quería hacerlo todo al mismo tiempo",
+          "Porque perdió la mochila",
+          "Porque no tenía libros"
+        ],
+        "correcta": "Porque quería hacerlo todo al mismo tiempo",
+        "ayuda": "Busca qué intentó hacer Clara al principio."
+      },
+      {
+        "id": "idea",
+        "tipo": "opcion",
+        "texto": "¿Qué le dio una idea a Clara?",
+        "opciones": [
+          "Un pajarito construyendo su nido",
+          "Una canción",
+          "Una bicicleta"
+        ],
+        "correcta": "Un pajarito construyendo su nido",
+        "ayuda": "Recuerda qué vio en la ventana."
+      },
+      {
+        "id": "orden",
+        "tipo": "opcion",
+        "texto": "¿Qué hizo primero?",
+        "opciones": [
+          "Guardó los libros",
+          "Terminó el dibujo",
+          "Salió a jugar"
+        ],
+        "correcta": "Guardó los libros",
+        "ayuda": "Vuelve al cuarto párrafo."
+      },
+      {
+        "id": "aprendizaje",
+        "tipo": "texto",
+        "texto": "¿Qué aprendió Clara sobre las tareas grandes?"
+      },
+      {
+        "id": "vida",
+        "tipo": "texto",
+        "texto": "Escribe una tarea que puedas dividir en pequeños pasos."
+      }
+    ],
+    "reflexion": "Cuando algo parece grande, puedes convertirlo en varios pasos pequeños. Cada paso cuenta.",
+    "fraseDelDia": "Paso a paso puedo avanzar."
+  },
+  {
+    "id": "nube-que-escuchaba",
+    "titulo": "La nube que aprendió a escuchar",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre escuchar antes de responder",
+    "nivel": 1,
+    "categoria": "Conversación",
+    "tiempoEstimado": "4 minutos",
+    "portada": "☁️",
+    "escena": {
+      "fondo": "cielo",
+      "cielo": "🌤️",
+      "personaje": "☁️",
+      "companera": "🌳"
+    },
+    "valores": [
+      "Escucha",
+      "Respeto",
+      "Amistad"
+    ],
+    "parrafos": [
+      {
+        "icono": "☁️",
+        "texto": "Nuba era una nube alegre que hablaba sin parar. Siempre tenía una historia, una idea o una pregunta."
+      },
+      {
+        "icono": "🌳",
+        "texto": "Un día, el viejo árbol quiso contarle que una de sus ramas estaba triste, pero Nuba lo interrumpió varias veces."
+      },
+      {
+        "icono": "🤫",
+        "texto": "El viento le susurró: «Escuchar también es una forma de cuidar». Nuba decidió quedarse en silencio un momento."
+      },
+      {
+        "icono": "👂",
+        "texto": "Entonces oyó toda la historia del árbol. Comprendió cómo se sentía y dejó caer una lluvia suave sobre la rama seca."
+      },
+      {
+        "icono": "💚",
+        "texto": "Desde aquel día, Nuba siguió contando historias, pero aprendió a dejar espacio para las palabras de los demás."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "costumbre",
+        "tipo": "opcion",
+        "texto": "¿Qué hacía Nuba con frecuencia?",
+        "opciones": [
+          "Hablaba sin parar",
+          "Dormía todo el día",
+          "Se escondía"
+        ],
+        "correcta": "Hablaba sin parar",
+        "ayuda": "Busca cómo era Nuba al comienzo."
+      },
+      {
+        "id": "problema",
+        "tipo": "opcion",
+        "texto": "¿Qué hizo cuando el árbol intentó hablar?",
+        "opciones": [
+          "Lo interrumpió",
+          "Lo abrazó",
+          "Se fue"
+        ],
+        "correcta": "Lo interrumpió",
+        "ayuda": "Lee el segundo párrafo."
+      },
+      {
+        "id": "consejo",
+        "tipo": "opcion",
+        "texto": "¿Qué le enseñó el viento?",
+        "opciones": [
+          "Escuchar también es cuidar",
+          "Las nubes no hablan",
+          "La lluvia siempre molesta"
+        ],
+        "correcta": "Escuchar también es cuidar",
+        "ayuda": "Busca la frase entre comillas."
+      },
+      {
+        "id": "aprendizaje",
+        "tipo": "texto",
+        "texto": "¿Por qué escuchar ayudó a Nuba a comprender al árbol?"
+      },
+      {
+        "id": "vida",
+        "tipo": "texto",
+        "texto": "¿Qué puedes hacer para demostrar que estás escuchando a alguien?"
+      }
+    ],
+    "reflexion": "Escuchar con atención ayuda a comprender lo que otra persona piensa y siente.",
+    "fraseDelDia": "Escuchar también es cuidar."
+  },
+  {
+    "id": "farol-de-las-preguntas",
+    "titulo": "El farol de las preguntas",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre pedir ayuda con confianza",
+    "nivel": 1,
+    "categoria": "Confianza",
+    "tiempoEstimado": "4 minutos",
+    "portada": "🏮",
+    "escena": {
+      "fondo": "noche",
+      "cielo": "🌙",
+      "personaje": "👦",
+      "companera": "👵"
+    },
+    "valores": [
+      "Confianza",
+      "Aprendizaje",
+      "Valentía"
+    ],
+    "parrafos": [
+      {
+        "icono": "📘",
+        "texto": "Tomás intentaba resolver una actividad, pero había una palabra que no entendía."
+      },
+      {
+        "icono": "😕",
+        "texto": "Pensó en quedarse callado porque le daba vergüenza preguntar delante de los demás."
+      },
+      {
+        "icono": "🏮",
+        "texto": "Su abuela le había dicho que cada pregunta es como encender un farol en un camino oscuro."
+      },
+      {
+        "icono": "🙋",
+        "texto": "Tomás levantó la mano y preguntó qué significaba aquella palabra. La maestra se la explicó con un ejemplo sencillo."
+      },
+      {
+        "icono": "✨",
+        "texto": "La actividad dejó de parecer difícil. Tomás descubrió que preguntar no apagaba su inteligencia: la ayudaba a brillar."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "dificultad",
+        "tipo": "opcion",
+        "texto": "¿Qué no entendía Tomás?",
+        "opciones": [
+          "Una palabra",
+          "Un dibujo",
+          "Una canción"
+        ],
+        "correcta": "Una palabra",
+        "ayuda": "Lee el primer párrafo."
+      },
+      {
+        "id": "sentimiento",
+        "tipo": "opcion",
+        "texto": "¿Por qué no quería preguntar?",
+        "opciones": [
+          "Sentía vergüenza",
+          "Tenía sueño",
+          "Ya sabía la respuesta"
+        ],
+        "correcta": "Sentía vergüenza",
+        "ayuda": "Busca cómo se sentía."
+      },
+      {
+        "id": "comparacion",
+        "tipo": "opcion",
+        "texto": "¿Con qué comparaba la abuela una pregunta?",
+        "opciones": [
+          "Con un farol",
+          "Con una puerta cerrada",
+          "Con una tormenta"
+        ],
+        "correcta": "Con un farol",
+        "ayuda": "Recuerda la enseñanza de la abuela."
+      },
+      {
+        "id": "aprendizaje",
+        "tipo": "texto",
+        "texto": "¿Qué descubrió Tomás al preguntar?"
+      },
+      {
+        "id": "vida",
+        "tipo": "texto",
+        "texto": "Escribe una pregunta que podrías hacer cuando no entiendes algo."
+      }
+    ],
+    "reflexion": "Pedir una explicación es una forma inteligente y valiente de seguir aprendiendo.",
+    "fraseDelDia": "Mis preguntas iluminan mi aprendizaje."
+  },
+  {
+    "id": "jardin-de-las-decisiones",
+    "titulo": "El jardín de las decisiones",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre pensar antes de elegir",
+    "nivel": 2,
+    "categoria": "Autonomía",
+    "tiempoEstimado": "5 minutos",
+    "portada": "🌷",
+    "escena": {
+      "fondo": "jardin",
+      "cielo": "☀️",
+      "personaje": "👧",
+      "companera": "🦋"
+    },
+    "valores": [
+      "Autonomía",
+      "Responsabilidad",
+      "Reflexión"
+    ],
+    "parrafos": [
+      {
+        "icono": "🌱",
+        "texto": "Elena recibió tres semillas y un pequeño espacio en el jardín. Podía plantarlas donde quisiera, pero cada lugar tenía ventajas y dificultades."
+      },
+      {
+        "icono": "☀️",
+        "texto": "La zona soleada daba mucha luz, aunque la tierra se secaba pronto. Cerca del árbol había sombra, pero también raíces grandes."
+      },
+      {
+        "icono": "🦋",
+        "texto": "Una mariposa le aconsejó observar antes de decidir. Elena tocó la tierra, miró el recorrido del sol y preguntó cuánto crecía cada planta."
+      },
+      {
+        "icono": "💧",
+        "texto": "Finalmente eligió una zona con luz por la mañana y sombra por la tarde. También preparó un pequeño canal para conservar el agua."
+      },
+      {
+        "icono": "🌷",
+        "texto": "Semanas después brotaron las tres plantas. Elena comprendió que una buena decisión no siempre es la más rápida, sino la que considera la información disponible."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "reto",
+        "tipo": "opcion",
+        "texto": "¿Qué debía decidir Elena?",
+        "opciones": [
+          "Dónde plantar las semillas",
+          "Qué libro leer",
+          "A qué hora dormir"
+        ],
+        "correcta": "Dónde plantar las semillas",
+        "ayuda": "Busca el reto del primer párrafo."
+      },
+      {
+        "id": "observacion",
+        "tipo": "opcion",
+        "texto": "¿Qué hizo antes de elegir?",
+        "opciones": [
+          "Observó la tierra y la luz",
+          "Plantó sin mirar",
+          "Regaló las semillas"
+        ],
+        "correcta": "Observó la tierra y la luz",
+        "ayuda": "Lee el tercer párrafo."
+      },
+      {
+        "id": "eleccion",
+        "tipo": "opcion",
+        "texto": "¿Qué lugar escogió?",
+        "opciones": [
+          "Luz por la mañana y sombra por la tarde",
+          "Oscuridad todo el día",
+          "Dentro de una caja"
+        ],
+        "correcta": "Luz por la mañana y sombra por la tarde",
+        "ayuda": "Vuelve al cuarto párrafo."
+      },
+      {
+        "id": "aprendizaje",
+        "tipo": "texto",
+        "texto": "¿Qué características tiene una buena decisión según la historia?"
+      },
+      {
+        "id": "vida",
+        "tipo": "texto",
+        "texto": "Describe una decisión en la que te convenga observar y pensar antes de actuar."
+      }
+    ],
+    "reflexion": "Tomarse un momento para observar, preguntar y comparar ayuda a elegir con más seguridad.",
+    "fraseDelDia": "Puedo pensar antes de elegir."
+  },
+  {
+    "id": "orquesta-de-las-emociones",
+    "titulo": "La orquesta de las emociones",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre reconocer y regular lo que sentimos",
+    "nivel": 2,
+    "categoria": "Emociones",
+    "tiempoEstimado": "5 minutos",
+    "portada": "🎻",
+    "escena": {
+      "fondo": "teatro",
+      "cielo": "🎵",
+      "personaje": "👧",
+      "companera": "🎼"
+    },
+    "valores": [
+      "Autoconocimiento",
+      "Calma",
+      "Expresión emocional"
+    ],
+    "parrafos": [
+      {
+        "icono": "🎻",
+        "texto": "Alicia imaginaba que sus emociones formaban una orquesta. La alegría tocaba una flauta ligera y la tristeza, un violonchelo profundo."
+      },
+      {
+        "icono": "🥁",
+        "texto": "Cuando se enfadaba, el tambor sonaba tan fuerte que parecía cubrir todos los demás instrumentos."
+      },
+      {
+        "icono": "🎼",
+        "texto": "Su profesora de música le explicó que dirigir una orquesta no significa silenciar instrumentos, sino ayudar a que cada uno encuentre su momento y su volumen."
+      },
+      {
+        "icono": "🌬️",
+        "texto": "La siguiente vez que se enfadó, Alicia respiró lentamente, nombró lo que sentía y pidió unos minutos antes de responder."
+      },
+      {
+        "icono": "🎶",
+        "texto": "El tambor seguía allí, pero ya no dominaba toda la canción. Alicia aprendió que podía escuchar sus emociones sin dejar que una sola decidiera por ella."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "metafora",
+        "tipo": "opcion",
+        "texto": "¿Con qué comparaba Alicia sus emociones?",
+        "opciones": [
+          "Con una orquesta",
+          "Con una carrera",
+          "Con una biblioteca"
+        ],
+        "correcta": "Con una orquesta",
+        "ayuda": "Lee el primer párrafo."
+      },
+      {
+        "id": "enfado",
+        "tipo": "opcion",
+        "texto": "¿Qué instrumento representaba el enfado?",
+        "opciones": [
+          "El tambor",
+          "La flauta",
+          "El violonchelo"
+        ],
+        "correcta": "El tambor",
+        "ayuda": "Busca el instrumento que sonaba muy fuerte."
+      },
+      {
+        "id": "estrategia",
+        "tipo": "opcion",
+        "texto": "¿Qué hizo Alicia para regularse?",
+        "opciones": [
+          "Respiró, nombró lo que sentía y pidió tiempo",
+          "Gritó más fuerte",
+          "Ignoró todo"
+        ],
+        "correcta": "Respiró, nombró lo que sentía y pidió tiempo",
+        "ayuda": "Vuelve al cuarto párrafo."
+      },
+      {
+        "id": "aprendizaje",
+        "tipo": "texto",
+        "texto": "¿Qué significa escuchar una emoción sin dejar que decida por ti?"
+      },
+      {
+        "id": "vida",
+        "tipo": "texto",
+        "texto": "¿Qué estrategia puedes usar cuando una emoción se siente muy fuerte?"
+      }
+    ],
+    "reflexion": "Todas las emociones pueden decirnos algo. Regularlas no es esconderlas, sino escucharlas y elegir cómo actuar.",
+    "fraseDelDia": "Puedo escuchar lo que siento y elegir mi respuesta."
+  },
+  {
+    "id": "mapa-de-las-voces",
+    "titulo": "El mapa de las voces",
+    "idioma": "es-ES",
+    "idiomaEtiqueta": "Español",
+    "subtitulo": "Una historia sobre comprender distintos puntos de vista",
+    "nivel": 3,
+    "categoria": "Empatía",
+    "tiempoEstimado": "6 minutos",
+    "portada": "🗺️",
+    "escena": {
+      "fondo": "pueblo",
+      "cielo": "🌤️",
+      "personaje": "👧",
+      "companera": "🧭"
+    },
+    "valores": [
+      "Empatía",
+      "Pensamiento crítico",
+      "Diálogo"
+    ],
+    "parrafos": [
+      {
+        "icono": "🗺️",
+        "texto": "En el pueblo de Valleverde querían construir un nuevo parque. El ayuntamiento pidió a los vecinos que señalaran en un mapa el mejor lugar."
+      },
+      {
+        "icono": "👧",
+        "texto": "Lara eligió una plaza cercana a su casa porque podría ir caminando. Pensó que todos estarían de acuerdo con ella."
+      },
+      {
+        "icono": "🧓",
+        "texto": "Sin embargo, una vecina mayor explicó que aquella plaza tenía muchas escaleras. Un padre comentó que la zona junto a la carretera era ruidosa, y unos niños pequeños pidieron árboles que dieran sombra."
+      },
+      {
+        "icono": "🧭",
+        "texto": "Lara empezó a dibujar no solo lugares, sino también las necesidades de cada persona. Descubrió que cada opinión mostraba una parte diferente del problema."
+      },
+      {
+        "icono": "🌳",
+        "texto": "El grupo eligió finalmente un terreno accesible, tranquilo y con espacio para plantar árboles. Lara comprendió que escuchar distintos puntos de vista no debilita una idea: puede hacerla más completa y justa."
+      }
+    ],
+    "preguntas": [
+      {
+        "id": "proyecto",
+        "tipo": "opcion",
+        "texto": "¿Qué quería construir el pueblo?",
+        "opciones": [
+          "Un parque",
+          "Un aeropuerto",
+          "Una fábrica"
+        ],
+        "correcta": "Un parque",
+        "ayuda": "Busca el proyecto del primer párrafo."
+      },
+      {
+        "id": "primera-eleccion",
+        "tipo": "opcion",
+        "texto": "¿Por qué Lara eligió la plaza cercana a su casa?",
+        "opciones": [
+          "Porque podía ir caminando",
+          "Porque tenía una piscina",
+          "Porque nadie la usaba"
+        ],
+        "correcta": "Porque podía ir caminando",
+        "ayuda": "Lee el segundo párrafo."
+      },
+      {
+        "id": "cambio",
+        "tipo": "opcion",
+        "texto": "¿Qué hizo Lara después de escuchar a los demás?",
+        "opciones": [
+          "Anotó sus necesidades en el mapa",
+          "Rompió el mapa",
+          "Ignoró las opiniones"
+        ],
+        "correcta": "Anotó sus necesidades en el mapa",
+        "ayuda": "Vuelve al cuarto párrafo."
+      },
+      {
+        "id": "inferencia",
+        "tipo": "texto",
+        "texto": "¿Por qué la primera propuesta de Lara no atendía a todas las personas?"
+      },
+      {
+        "id": "reflexion",
+        "tipo": "texto",
+        "texto": "Explica cómo escuchar varios puntos de vista puede mejorar una decisión."
+      }
+    ],
+    "reflexion": "Una situación puede verse de maneras diferentes. Escuchar otras voces nos ayuda a construir soluciones más completas.",
+    "fraseDelDia": "Cada voz puede mostrar una parte del mapa."
   }
 ];

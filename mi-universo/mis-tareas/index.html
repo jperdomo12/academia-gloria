@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="./mis-tareas.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
 </head>
 
 <body>
@@ -156,6 +155,63 @@
                 </select>
               </label>
             </div>
+
+            <section
+              id="configuracionLectura"
+              class="configuracion-rapida configuracion-rapida--lectura"
+              aria-labelledby="tituloConfiguracionLectura"
+            >
+              <div class="configuracion-rapida__cabecera">
+                <span aria-hidden="true">📖</span>
+                <div>
+                  <h3 id="tituloConfiguracionLectura">
+                    Configuración rápida de la misión
+                  </h3>
+                  <p>
+                    Indica cuántas lecturas debe guardar y, si lo deseas,
+                    el nivel de las historias.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-formulario">
+                <label>
+                  Cantidad de lecturas
+                  <input
+                    id="cantidadLecturas"
+                    type="number"
+                    min="1"
+                    max="50"
+                    step="1"
+                    value="2"
+                    inputmode="numeric"
+                  >
+                  <span class="ayuda-campo">
+                    Cada aventura guardada desde esta misión contará una vez.
+                  </span>
+                </label>
+
+                <label>
+                  Nivel de lectura
+                  <select id="nivelLectura">
+                    <option value="todos">🌈 Cualquier nivel</option>
+                    <option value="1">🌱 Nivel 1</option>
+                    <option value="2">🌿 Nivel 2</option>
+                    <option value="3">🌳 Nivel 3</option>
+                  </select>
+                  <span class="ayuda-campo">
+                    Solo contarán lecturas del nivel seleccionado.
+                  </span>
+                </label>
+              </div>
+
+              <div class="configuracion-rapida__resumen">
+                <strong>La misión contará:</strong>
+                <span id="resumenCriterioLectura">
+                  2 lecturas de cualquier nivel
+                </span>
+              </div>
+            </section>
 
             <section
               id="configuracionDetectives"
@@ -564,6 +620,5 @@
   </script>
 
   <script type="module" src="./mis-tareas.js"></script>
-  <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
 </body>
 </html>

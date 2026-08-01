@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="./rincon-lectura-lia.css">
+  <link rel="stylesheet" href="../../compartido/css/celebracion.css">
 
   <style>
     *{box-sizing:border-box}
@@ -557,6 +558,28 @@
       </div>
     </nav>
 
+    <section id="readingMissionBanner" class="reading-mission hidden">
+      <div class="reading-mission__icon" aria-hidden="true">🌟</div>
+      <div class="reading-mission__content">
+        <h2 id="readingMissionTitle">Misión en curso</h2>
+        <p id="readingMissionDescription">
+          Cada lectura guardada contará para tu misión.
+        </p>
+      </div>
+      <div class="reading-mission__progress">
+        <strong id="readingMissionProgress">0 de 0</strong>
+        <span>lecturas</span>
+      </div>
+      <div class="reading-mission__actions">
+        <span id="readingMissionStatus" class="reading-mission__status">
+          Estado: En curso
+        </span>
+        <button id="readingMissionHelp" class="btn light" type="button">
+          🤝 Necesito ayuda
+        </button>
+      </div>
+    </section>
+
     <section id="welcomePanel" class="panel card">
       <div class="catalog-title">
         <div>
@@ -582,13 +605,25 @@
         </button>
       </div>
 
-      <div class="language-selector">
-        <label for="languageFilter">🌍 Idioma de la aventura</label>
-        <select id="languageFilter">
-          <option value="all">Todos los idiomas</option>
-          <option value="es-ES">🇪🇸 Español</option>
-          <option value="en-GB">🇬🇧 English</option>
-        </select>
+      <div class="reading-filter-row">
+        <div class="language-selector">
+          <label for="languageFilter">🌍 Idioma</label>
+          <select id="languageFilter">
+            <option value="all">Todos los idiomas</option>
+            <option value="es-ES">🇪🇸 Español</option>
+            <option value="en-GB">🇬🇧 English</option>
+          </select>
+        </div>
+
+        <div class="language-selector">
+          <label for="levelFilter">🌱 Nivel</label>
+          <select id="levelFilter">
+            <option value="all">Todos los niveles</option>
+            <option value="1">Nivel 1</option>
+            <option value="2">Nivel 2</option>
+            <option value="3">Nivel 3</option>
+          </select>
+        </div>
       </div>
 
       <div id="categoryFilters" class="category-filter" style="margin-top:14px"></div>

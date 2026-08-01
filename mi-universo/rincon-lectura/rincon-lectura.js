@@ -1,6 +1,7 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { HISTORIAS } from "./historias.js";
+import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
 
 const $ = id => document.getElementById(id);
 const MAX_RECORDING_SECONDS = 120;
@@ -9,6 +10,7 @@ let historia = HISTORIAS[0];
 let perfil = null;
 let activeCategory = "Todas";
 let activeLanguage = "all";
+let activeLevel = "all";
 let mediaRecorder = null;
 let audioChunks = [];
 let audioData = "";
@@ -21,6 +23,10 @@ let recognition = null;
 let finalTranscript = "";
 let recordingAttempts = 0;
 let currentReadingAnalysis = {};
+const parametrosPagina = new URLSearchParams(window.location.search);
+let misionId = parametrosPagina.get("misionId");
+let misionActiva = null;
+let sesionesGuardadas = new Map();
 
 function displayName(value = "") {
   return String(value).trim() || "Explorador";
@@ -68,9 +74,17 @@ function resetSessionData({ resetAttempts = false } = {}) {
 }
 
 function storiesByLanguage() {
-  return activeLanguage === "all"
-    ? HISTORIAS
-    : HISTORIAS.filter(item => item.idioma === activeLanguage);
+  return HISTORIAS.filter(item => {
+    const coincideIdioma =
+      activeLanguage === "all" ||
+      item.idioma === activeLanguage;
+
+    const coincideNivel =
+      activeLevel === "all" ||
+      Number(item.nivel) === Number(activeLevel);
+
+    return coincideIdioma && coincideNivel;
+  });
 }
 
 function renderCategoryFilters() {
@@ -103,22 +117,191 @@ function renderCategoryFilters() {
   });
 }
 
+
+function progresoMision() {
+  const criterio = misionActiva?.criterioCumplimiento || {};
+  const progreso = misionActiva?.progreso || {};
+
+  const objetivo = Number(
+    criterio.cantidadObjetivo ??
+    progreso.cantidadObjetivo ??
+    0
+  );
+  const actual = Number(progreso.cantidadActual || 0);
+
+  return {
+    actual,
+    objetivo,
+    restante: Math.max(0, objetivo - actual)
+  };
+}
+
+function actualizarBandaLectura() {
+  const banner = $("readingMissionBanner");
+  if (!banner) return;
+
+  banner.classList.remove(
+    "hidden",
+    "reading-mission--free",
+    "reading-mission--help",
+    "reading-mission--done"
+  );
+
+  if (!misionActiva) {
+    banner.classList.add("reading-mission--free");
+    $("readingMissionTitle").textContent = "🌈 Lectura libre";
+    $("readingMissionDescription").textContent =
+      "Esta lectura no pertenece a ninguna misión.";
+    $("readingMissionProgress").textContent = "Sin misión";
+    $("readingMissionStatus").textContent = "Estado: Lectura libre";
+    $("readingMissionHelp").classList.add("hidden");
+    return;
+  }
+
+  const { actual, objetivo } = progresoMision();
+  const terminada =
+    objetivo > 0 && actual >= objetivo;
+  const necesitaAyuda =
+    misionActiva.estado === "necesita_ayuda";
+
+  if (terminada) banner.classList.add("reading-mission--done");
+  if (necesitaAyuda) banner.classList.add("reading-mission--help");
+
+  $("readingMissionTitle").textContent = terminada
+    ? "🎉 ¡Misión terminada!"
+    : necesitaAyuda
+      ? "🤝 Has pedido ayuda"
+      : "🌟 Misión en curso";
+
+  $("readingMissionDescription").textContent = terminada
+    ? "Tu familia ya puede revisar y celebrar tus lecturas."
+    : necesitaAyuda
+      ? "Tu familia verá que necesitas acompañamiento."
+      : (
+          misionActiva.presentacionAlumno?.descripcionMision ||
+          misionActiva.descripcion ||
+          "Cada lectura guardada contará para tu misión."
+        );
+
+  $("readingMissionProgress").textContent = `${actual} de ${objetivo}`;
+  $("readingMissionStatus").textContent = terminada
+    ? "Estado: Terminada"
+    : necesitaAyuda
+      ? "Estado: He pedido ayuda"
+      : "Estado: En curso";
+
+  $("readingMissionHelp").classList.toggle("hidden", terminada);
+  $("readingMissionHelp").textContent = necesitaAyuda
+    ? "▶️ Ya puedo continuar"
+    : "🤝 Necesito ayuda";
+}
+
+async function cargarMisionLectura() {
+  if (!misionId) {
+    actualizarBandaLectura();
+    return;
+  }
+
+  try {
+    const tarea = await Academia.tareas.obtener(misionId);
+    const criterio = tarea?.criterioCumplimiento || {};
+
+    if (
+      !tarea ||
+      tarea.modulo !== "rincon-lectura" ||
+      criterio.evidenciaTipo !== "lectura_completada"
+    ) {
+      throw new Error("La misión no corresponde a Mi Rincón de Lectura.");
+    }
+
+    misionActiva = tarea;
+    actualizarBandaLectura();
+  } catch (error) {
+    console.error("No se pudo cargar la misión de lectura.", error);
+    misionId = null;
+    misionActiva = null;
+    actualizarBandaLectura();
+  }
+}
+
+async function alternarAyudaLectura() {
+  if (!misionActiva || !misionId) return;
+
+  const necesitaAyuda =
+    misionActiva.estado !== "necesita_ayuda";
+  const nuevoEstado = necesitaAyuda
+    ? "necesita_ayuda"
+    : "en_curso";
+
+  const boton = $("readingMissionHelp");
+  boton.disabled = true;
+
+  try {
+    await Academia.tareas.cambiarEstado(misionId, nuevoEstado);
+    misionActiva.estado = nuevoEstado;
+    actualizarBandaLectura();
+  } catch (error) {
+    console.error(error);
+    alert("No pudimos guardar la solicitud de ayuda.");
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function etiquetaLecturaGuardada(item) {
+  const sesion = sesionesGuardadas.get(item.id);
+  if (!sesion) {
+    return '<span class="story-status story-status--new">✨ Nueva</span>';
+  }
+
+  return `
+    <span class="story-status story-status--read">
+      ✅ Ya la leíste
+    </span>
+  `;
+}
+
+async function cargarMarcasLectura() {
+  try {
+    const sesiones = await Academia.rinconLectura.leerSesiones();
+    sesionesGuardadas = new Map(
+      sesiones.map(sesion => [sesion.historiaId || sesion.id, sesion])
+    );
+  } catch (error) {
+    console.warn("No se pudieron cargar las marcas de lectura.", error);
+    sesionesGuardadas = new Map();
+  }
+}
+
 function renderStoryCatalog() {
   const languageStories = storiesByLanguage();
   const stories = activeCategory === "Todas"
     ? languageStories
     : languageStories.filter(item => item.categoria === activeCategory);
 
+  if (!stories.length) {
+    $("storyCatalog").innerHTML = `
+      <div class="reading-filter-empty">
+        <strong>📚 No hay lecturas con estos filtros</strong>
+        <p>Prueba con otro nivel, idioma o categoría.</p>
+      </div>
+    `;
+    return;
+  }
+
   $("storyCatalog").innerHTML = stories.map(item => `
     <button type="button"
       class="story-card ${item.id === historia.id ? "selected" : ""}"
       data-story-id="${escapeHtml(item.id)}">
       <div class="story-card-icon">${item.portada || "📖"}</div>
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+      <div class="story-card__top">
         <span style="color:#7c3aed;font-weight:900">${escapeHtml(item.categoria)}</span>
         <span style="font-size:13px;font-weight:900;color:#0369a1">
           ${item.idioma === "en-GB" ? "🇬🇧 English" : "🇪🇸 Español"}
         </span>
+      </div>
+      <div class="story-card__status">
+        ${etiquetaLecturaGuardada(item)}
       </div>
       <h3 style="font-size:22px;margin:7px 0">${escapeHtml(item.titulo)}</h3>
       <p style="color:#64748b;font-weight:650">${escapeHtml(item.subtitulo)}</p>
@@ -734,7 +917,7 @@ $("saveSession").onclick = async () => {
     button.disabled = true;
     button.textContent = "Guardando...";
 
-    await Academia.rinconLectura.guardarSesion({
+    const sesionId = await Academia.rinconLectura.guardarSesion({
       historiaId: historia.id,
       titulo: historia.titulo,
       nivel: historia.nivel,
@@ -754,8 +937,60 @@ $("saveSession").onclick = async () => {
       idioma: historia.idioma || "es-ES"
     });
 
+    sesionesGuardadas.set(historia.id, {
+      historiaId: historia.id,
+      titulo: historia.titulo
+    });
+    renderStoryCatalog();
+
+    let aplicacionMision = null;
+
+    if (misionActiva && misionId) {
+      aplicacionMision = await Academia.evidencias.registrarParaMision({
+        misionId,
+        modulo: "rincon-lectura",
+        tipo: "lectura_completada",
+        actividadId: historia.id,
+        sesionId,
+        atributos: {
+          nivel: historia.nivel,
+          categoria: historia.categoria,
+          idioma: historia.idioma || "es-ES"
+        },
+        resultado: {
+          intentos: Math.max(1, recordingAttempts),
+          duracion: audioDuration,
+          preguntasRespondidas: historia.preguntas.length
+        },
+        destinoRevision:
+          `../rincon-lectura/?vista=historial&historiaId=${encodeURIComponent(historia.id)}`
+      });
+
+      misionActiva.estado = aplicacionMision.estado;
+      misionActiva.progreso = {
+        ...(misionActiva.progreso || {}),
+        cantidadActual: aplicacionMision.cantidadActual,
+        cantidadObjetivo: aplicacionMision.cantidadObjetivo
+      };
+      actualizarBandaLectura();
+
+      if (aplicacionMision.objetivoAlcanzado) {
+        mostrarCelebracion({
+          titulo: "¡Misión terminada!",
+          mensaje:
+            `Has completado ${aplicacionMision.cantidadObjetivo} ` +
+            `${aplicacionMision.cantidadObjetivo === 1 ? "lectura" : "lecturas"}.`,
+          duracion: 3000,
+          mostrarGuacamayas: true
+        });
+      }
+    }
+
     $("celebrationTitle").textContent =
-      `¡Fantástico, ${displayName(perfil?.nombre)}!`;
+      aplicacionMision?.objetivoAlcanzado
+        ? `¡Misión terminada, ${displayName(perfil?.nombre)}!`
+        : `¡Fantástico, ${displayName(perfil?.nombre)}!`;
+
     showPanel("celebrationPanel", "celebration");
   } catch (error) {
     console.error(error);
@@ -878,15 +1113,16 @@ function historyAnalysisHtml(session) {
   }
 
   return `
-    <section class="history-analysis">
-      <div class="history-analysis__header">
-        <div>
-          <strong>🔎 Análisis guardado</strong>
-          <small>Intentos realizados: ${attempts}</small>
-        </div>
-        <span class="history-analysis__score">${score}%</span>
-      </div>
+    <details class="history-section history-section--analysis">
+      <summary>
+        <span>🔎 Análisis guardado</span>
+        <span class="history-analysis__summary-score">${score}%</span>
+      </summary>
 
+      <div class="history-analysis__body">
+        <p class="history-analysis__attempts">
+          Intentos realizados: <strong>${attempts}</strong>
+        </p>
       <div class="history-analysis__stats">
         <div><strong>${matched}</strong><span>coincidentes</span></div>
         <div><strong>${total}</strong><span>palabras del texto</span></div>
@@ -921,7 +1157,8 @@ function historyAnalysisHtml(session) {
         `
         : ""
       }
-    </section>
+      </div>
+    </details>
   `;
 }
 
@@ -1023,22 +1260,82 @@ async function loadReadingHistory() {
   $("readingHistory").innerHTML = "";
 
   try {
-    const sessions = await Academia.rinconLectura.leerSesiones();
+    let sessions = await Academia.rinconLectura.leerSesiones();
+
+    const misionFiltro = parametrosPagina.get("misionId");
+    const sesionFiltro = parametrosPagina.get("sesionId");
+    const historiaFiltro = parametrosPagina.get("historiaId");
+
+    if (misionFiltro) {
+      try {
+        const evidencias = await Academia.tareas.leerEvidencias(misionFiltro);
+        const sesionesMision = new Set(
+          evidencias
+            .filter(evidencia => evidencia.modulo === "rincon-lectura")
+            .map(evidencia => evidencia.sesionId)
+            .filter(Boolean)
+        );
+
+        const historiasMision = new Set(
+          evidencias
+            .filter(evidencia => evidencia.modulo === "rincon-lectura")
+            .map(evidencia => evidencia.actividadId)
+            .filter(Boolean)
+        );
+
+        sessions = sessions.filter(session =>
+          sesionesMision.has(session.id) ||
+          historiasMision.has(session.historiaId)
+        );
+      } catch (error) {
+        console.warn("No se pudieron filtrar las lecturas de la misión.", error);
+      }
+    }
+
+    if (sesionFiltro) {
+      sessions = sessions.filter(session => session.id === sesionFiltro);
+    } else if (historiaFiltro) {
+      sessions = sessions.filter(
+        session => session.historiaId === historiaFiltro
+      );
+    }
 
     if (!sessions.length) {
       $("historyStatus").textContent =
-        "Todavía no hay lecturas guardadas. Tu primera aventura está esperando 🌟";
+        parametrosPagina.get("misionId")
+          ? "Esta misión todavía no tiene lecturas guardadas."
+          : "Todavía no hay lecturas guardadas. Tu primera aventura está esperando 🌟";
       return;
     }
 
     $("historyStatus").classList.add("hidden");
 
-    $("readingHistory").innerHTML = sessions.map(session => {
+    const encabezadoMision = parametrosPagina.get("misionId")
+      ? `
+        <section class="history-mission-context">
+          <strong>🎯 Lecturas asociadas a esta misión</strong>
+          <span>${sessions.length} ${
+            sessions.length === 1 ? "lectura guardada" : "lecturas guardadas"
+          }</span>
+        </section>
+      `
+      : "";
+
+    $("readingHistory").innerHTML =
+      encabezadoMision +
+      sessions.map(session => {
       const comprehension = calculateCorrectAnswers(session);
       const observation = String(session.observacionFamilia || "");
 
       return `
-        <article class="history-card history-card--complete">
+        <article
+          class="history-card history-card--complete ${
+            parametrosPagina.get("sesionId") === session.id
+              ? "history-card--focused"
+              : ""
+          }"
+          data-session-id="${escapeHtml(session.id || "")}"
+        >
           <header class="history-card__header">
             <div>
               <span class="history-card__category">
@@ -1083,6 +1380,13 @@ async function loadReadingHistory() {
             : "<p>Sin audio guardado.</p>"
           }
 
+          <details class="history-details">
+            <summary>
+              <span>📚 Ver detalles de la lectura</span>
+              <small>Análisis, comprensión, reflexión y observaciones</small>
+            </summary>
+
+            <div class="history-details__content">
           ${historyAnalysisHtml(session)}
 
           <details class="history-section">
@@ -1092,7 +1396,7 @@ async function loadReadingHistory() {
             </div>
           </details>
 
-          <details class="history-section" open>
+          <details class="history-section">
             <summary>👨‍👩‍👧 Observaciones de la familia</summary>
 
             <div class="history-section__content">
@@ -1154,6 +1458,9 @@ async function loadReadingHistory() {
           >
             🗑️ Eliminar lectura guardada
           </button>
+            </div>
+          </details>
+
         </article>
       `;
     }).join("");
@@ -1167,24 +1474,30 @@ async function loadReadingHistory() {
 }
 
 
-$("languageFilter").onchange = () => {
+$("readingMissionHelp").onclick = alternarAyudaLectura;
+
+function aplicarFiltrosLectura() {
   activeLanguage = $("languageFilter").value;
+  activeLevel = $("levelFilter").value;
   activeCategory = "Todas";
 
-  const available = storiesByLanguage();
+  const disponibles = storiesByLanguage();
 
   if (
-    available.length &&
-    !available.some(item => item.id === historia.id)
+    disponibles.length &&
+    !disponibles.some(item => item.id === historia.id)
   ) {
-    historia = available[0];
+    historia = disponibles[0];
     resetSessionData();
     renderSelectedStory();
   }
 
   renderCategoryFilters();
   renderStoryCatalog();
-};
+}
+
+$("languageFilter").onchange = aplicarFiltrosLectura;
+$("levelFilter").onchange = aplicarFiltrosLectura;
 
 async function initialize() {
   await auth.authStateReady();
@@ -1195,6 +1508,10 @@ async function initialize() {
   }
 
   perfil = await Academia.usuario.leerPerfil();
+  await Promise.all([
+    cargarMisionLectura(),
+    cargarMarcasLectura()
+  ]);
 
   const nombre = displayName(perfil.nombre);
   $("userAvatar").textContent = perfil.avatar || "🦉";
@@ -1208,6 +1525,11 @@ async function initialize() {
   configureSpeechRecognition();
   updateAudioControls();
   setLiaCoachMessage(liaMessage("ready", new Date().getDate()));
+
+  if (parametrosPagina.get("vista") === "historial") {
+    showPanel("historyPanel", "welcome");
+    await loadReadingHistory();
+  }
 }
 
 initialize();

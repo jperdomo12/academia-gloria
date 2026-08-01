@@ -1,6 +1,11 @@
 /**
  * Academia Gloria Valentina
- * Sistema Global de Navegación · v1.1
+ * Sistema Global de Navegación · v1.2
+ *
+ * RC3:
+ * - El nombre de un nodo con hijos navega a su página.
+ * - La flecha es el único control para expandir o comprimir.
+ * - Las ramas de la página actual se abren automáticamente.
  */
 
 import { NAVEGACION_ACADEMIA } from "../modelos/navegacion.js";
@@ -63,92 +68,111 @@ function escaparHTML(valor = "") {
     .replaceAll("'", "&#039;");
 }
 
-function enlaceNodo(nodo, actual = false, clase = "") {
+function contenidoNodo(nodo) {
+  return `
+    <span class="nav-global__enlace-icono" aria-hidden="true">
+      ${escaparHTML(nodo.icono || "•")}
+    </span>
+    <span class="nav-global__enlace-texto">
+      <strong>${escaparHTML(nodo.titulo)}</strong>
+      ${
+        nodo.descripcion
+          ? `<small>${escaparHTML(nodo.descripcion)}</small>`
+          : ""
+      }
+    </span>
+  `;
+}
+
+function renderHoja(nodo, rutaActual) {
+  const esActual =
+    Boolean(nodo.ruta) &&
+    rutaNormalizada(nodo.ruta) === rutaActual;
+
   if (!nodo.ruta) return "";
 
   return `
     <a
-      class="nav-global__enlace ${clase} ${actual ? "nav-global__enlace--actual" : ""}"
+      class="nav-global__enlace ${esActual ? "nav-global__enlace--actual" : ""}"
       href="${urlAcademia(nodo.ruta)}"
-      ${actual ? 'aria-current="page"' : ""}
+      ${esActual ? 'aria-current="page"' : ""}
     >
-      <span class="nav-global__enlace-icono" aria-hidden="true">
-        ${escaparHTML(nodo.icono || "•")}
-      </span>
-      <span class="nav-global__enlace-texto">
-        <strong>${escaparHTML(nodo.titulo)}</strong>
-        ${
-          nodo.descripcion
-            ? `<small>${escaparHTML(nodo.descripcion)}</small>`
-            : ""
-        }
-      </span>
+      ${contenidoNodo(nodo)}
     </a>
+  `;
+}
+
+function renderRama(nodo, rutaActual, nivel) {
+  const ramaActual = contieneRuta(nodo, rutaActual);
+  const esActual =
+    Boolean(nodo.ruta) &&
+    rutaNormalizada(nodo.ruta) === rutaActual;
+  const idPanel = `nav-rama-${escaparHTML(nodo.id)}`;
+
+  return `
+    <section
+      class="nav-global__rama ${nivel > 1 ? "nav-global__rama--interna" : ""}"
+      data-nav-rama
+      data-nav-id="${escaparHTML(nodo.id)}"
+      data-abierta="${ramaActual ? "true" : "false"}"
+    >
+      <div class="nav-global__rama-cabecera">
+        ${
+          nodo.ruta
+            ? `
+              <a
+                class="nav-global__enlace nav-global__enlace--rama ${
+                  esActual ? "nav-global__enlace--actual" : ""
+                }"
+                href="${urlAcademia(nodo.ruta)}"
+                ${esActual ? 'aria-current="page"' : ""}
+              >
+                ${contenidoNodo(nodo)}
+              </a>
+            `
+            : `
+              <div class="nav-global__enlace nav-global__enlace--rama nav-global__enlace--sin-ruta">
+                ${contenidoNodo(nodo)}
+              </div>
+            `
+        }
+
+        <button
+          class="nav-global__expandir"
+          type="button"
+          aria-expanded="${ramaActual ? "true" : "false"}"
+          aria-controls="${idPanel}"
+          aria-label="${
+            ramaActual ? "Comprimir" : "Expandir"
+          } ${escaparHTML(nodo.titulo)}"
+          title="${
+            ramaActual ? "Comprimir" : "Expandir"
+          } ${escaparHTML(nodo.titulo)}"
+        >
+          <span aria-hidden="true">⌄</span>
+        </button>
+      </div>
+
+      <div
+        id="${idPanel}"
+        class="nav-global__subnivel"
+        ${ramaActual ? "" : "hidden"}
+      >
+        ${nodo.hijos
+          .map(hijo => renderNodo(hijo, rutaActual, nivel + 1))
+          .join("")}
+      </div>
+    </section>
   `;
 }
 
 function renderNodo(nodo, rutaActual, nivel = 1) {
   const tieneHijos =
     Array.isArray(nodo.hijos) && nodo.hijos.length > 0;
-  const esActual =
-    Boolean(nodo.ruta) &&
-    rutaNormalizada(nodo.ruta) === rutaActual;
-  const ramaActual = contieneRuta(nodo, rutaActual);
 
-  if (!tieneHijos) {
-    return enlaceNodo(nodo, esActual);
-  }
-
-  const claseNivel =
-    nivel === 1
-      ? "nav-global__nivel"
-      : "nav-global__nivel nav-global__nivel--interno";
-
-  return `
-    <details
-      class="${claseNivel}"
-      data-nav-id="${escaparHTML(nodo.id)}"
-      ${ramaActual ? "open" : ""}
-    >
-      <summary>
-        <span class="nav-global__summary-icono" aria-hidden="true">
-          ${escaparHTML(nodo.icono || "•")}
-        </span>
-
-        <span class="nav-global__summary-texto">
-          <strong>${escaparHTML(nodo.titulo)}</strong>
-          ${
-            nodo.descripcion
-              ? `<small>${escaparHTML(nodo.descripcion)}</small>`
-              : ""
-          }
-        </span>
-
-        ${
-          nodo.ruta
-            ? `
-              <a
-                class="nav-global__ir"
-                href="${urlAcademia(nodo.ruta)}"
-                aria-label="Ir a ${escaparHTML(nodo.titulo)}"
-                title="Ir a ${escaparHTML(nodo.titulo)}"
-              >
-                Ir
-              </a>
-            `
-            : ""
-        }
-
-        <span class="nav-global__flecha" aria-hidden="true">⌄</span>
-      </summary>
-
-      <div class="nav-global__subnivel">
-        ${nodo.hijos
-          .map(hijo => renderNodo(hijo, rutaActual, nivel + 1))
-          .join("")}
-      </div>
-    </details>
-  `;
+  return tieneHijos
+    ? renderRama(nodo, rutaActual, nivel)
+    : renderHoja(nodo, rutaActual);
 }
 
 function crearMenu() {
@@ -190,8 +214,8 @@ function crearMenu() {
     <div id="menuGlobalAcademia" class="nav-global__panel" hidden>
       <div class="nav-global__cabecera">
         <div>
-          <strong>¿A dónde quieres ir?</strong>
-          <small>Elige uno de los caminos de la Academia.</small>
+          <strong>Academia Gloria Valentina</strong>
+          <small>¿A dónde quieres ir?</small>
         </div>
 
         <button
@@ -218,7 +242,7 @@ function crearMenu() {
   const panel = contenedor.querySelector(".nav-global__panel");
   const fondo = contenedor.querySelector(".nav-global__fondo");
 
-  function establecerAbierto(abierto) {
+  function establecerMenuAbierto(abierto) {
     boton.setAttribute("aria-expanded", String(abierto));
     panel.hidden = !abierto;
     fondo.hidden = !abierto;
@@ -231,28 +255,49 @@ function crearMenu() {
     }
   }
 
+  function establecerRamaAbierta(rama, abierta) {
+    const control = rama.querySelector(":scope > .nav-global__rama-cabecera .nav-global__expandir");
+    const contenido = rama.querySelector(":scope > .nav-global__subnivel");
+
+    rama.dataset.abierta = String(abierta);
+    control.setAttribute("aria-expanded", String(abierta));
+    control.setAttribute(
+      "aria-label",
+      `${abierta ? "Comprimir" : "Expandir"} ${
+        rama.querySelector(":scope > .nav-global__rama-cabecera strong")
+          ?.textContent || "sección"
+      }`
+    );
+    contenido.hidden = !abierta;
+  }
+
   boton.addEventListener("click", () => {
-    establecerAbierto(boton.getAttribute("aria-expanded") !== "true");
+    establecerMenuAbierto(
+      boton.getAttribute("aria-expanded") !== "true"
+    );
   });
 
-  cerrar.addEventListener("click", () => establecerAbierto(false));
-  fondo.addEventListener("click", () => establecerAbierto(false));
+  cerrar.addEventListener("click", () => establecerMenuAbierto(false));
+  fondo.addEventListener("click", () => establecerMenuAbierto(false));
+
+  contenedor
+    .querySelectorAll(".nav-global__expandir")
+    .forEach(control => {
+      control.addEventListener("click", evento => {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        const rama = control.closest("[data-nav-rama]");
+        const abierta = control.getAttribute("aria-expanded") === "true";
+        establecerRamaAbierta(rama, !abierta);
+      });
+    });
 
   contenedor.addEventListener("keydown", evento => {
     if (evento.key === "Escape" && panel.hidden === false) {
-      establecerAbierto(false);
+      establecerMenuAbierto(false);
     }
   });
-
-  contenedor
-    .querySelectorAll(".nav-global__nivel > summary")
-    .forEach(summary => {
-      summary.addEventListener("click", evento => {
-        if (evento.target.closest(".nav-global__ir")) {
-          evento.preventDefault();
-        }
-      });
-    });
 }
 
 function iniciarNavegacionGlobal() {

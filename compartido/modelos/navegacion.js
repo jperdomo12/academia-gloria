@@ -42,7 +42,7 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
       },
       {
         id: "escritora",
-        titulo: "Escritora",
+        titulo: "Mi Rincón de Escritura",
         icono: "✍️",
         ruta: "mi-universo/escritora/"
       },

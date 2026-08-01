@@ -8,7 +8,7 @@ Academia
 ├── Mi Universo
 │   ├── Biblioteca Encantada
 │   ├── Mi Rincón de Lectura
-│   ├── Escritora
+│   ├── Mi Rincón de Escritura
 │   └── Aventuras Matemáticas
 │       ├── Detectives
 │       └── Historial de Detectives
@@ -22,10 +22,8 @@ Academia
         └── Inglés
 ```
 
-## Comportamiento
+## Uso de una rama
 
-- Mi Universo puede abrirse como página y expandirse como rama.
-- Aventuras Matemáticas puede abrirse y expandirse.
-- 5.º de Primaria puede abrirse y expandirse.
-- Cada materia abre directamente su página.
+- Pulsar el nombre abre su página principal.
+- Pulsar la flecha muestra u oculta sus hijos.
 - La rama correspondiente a la página actual se abre automáticamente.

@@ -1,26 +1,26 @@
 # RELEASE NOTES
 
-## Academia Gloria Valentina · v2.2-RC2
+## Academia Gloria Valentina · v2.3-RC6
 
-**Nombre:** Modelo de Navegación v1.0  
-**Fecha:** 01/08/2026  
-**Base requerida:** v2.2-RC1
+**Nombre:** Nuevas lecturas y nuevos casos de Detectives  
+**Fecha:** 01/08/2026
 
-### Arquitectura
+### Mi Rincón de Lectura
 
-- El árbol se separa en `compartido/modelos/navegacion.js`.
-- El componente ya no contiene páginas concretas.
-- Los HTML de RC1 no necesitan modificarse.
-- Futuras altas, bajas o cambios de navegación se realizan en el modelo central.
+Se incorporan seis lecturas nuevas en español:
 
-### Experiencia
+- 3 de nivel 1.
+- 2 de nivel 2.
+- 1 de nivel 3.
 
-- Cualquier nodo puede ser página y grupo desplegable a la vez.
-- `5.º de Primaria` aparece comprimido.
-- Al expandirlo aparecen sus materias.
-- Se puede ir directamente:
-  - a 5.º;
-  - a Inglés;
-  - a cualquier otra materia.
-- El mismo patrón se aplica a toda la Academia.
-- La rama de la página actual se abre automáticamente.
+Las historias trabajan organización, escucha, confianza, autonomía,
+regulación emocional, empatía y distintos puntos de vista.
+
+### Detectives
+
+- Se corrige el soporte visual de `DP-0203 · Excursión al bosque`.
+- La primera parte muestra niños distribuidos en grupos.
+- La segunda parte muestra grupos y botellas.
+- Se incorporan:
+  - 6 historias nuevas de nivel 1.
+  - 3 historias nuevas de nivel 2.

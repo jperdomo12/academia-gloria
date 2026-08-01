@@ -1681,8 +1681,8 @@
       return {
         pendiente: "🌱 Preparada",
         en_curso: "▶️ En aventura",
-        pendiente_validacion: "🎉 Misión terminada",
-        completada_pendiente_validacion: "🎉 Misión terminada",
+        pendiente_validacion: "👨‍👩‍👧 Esperando a mi familia",
+        completada_pendiente_validacion: "👨‍👩‍👧 Esperando a mi familia",
         completada: "✅ Conseguida",
         necesita_ayuda: "🤝 Necesita ayuda",
         vencida: "🌿 Retomable"
@@ -1784,9 +1784,13 @@
           <p>
             Has completado
             <strong>${actual}${objetivo ? ` de ${objetivo}` : ""}</strong>
-            ${actual === 1 ? "historia" : "historias"}.
+            ${
+              tarea.modulo === "rincon-lectura"
+                ? actual === 1 ? "lectura" : "lecturas"
+                : actual === 1 ? "historia" : "historias"
+            }.
           </p>
-          <p>Ahora tu familia la revisará. Tú no tienes nada pendiente.</p>
+          <p>Ahora tu familia revisará tu misión. Tú no tienes nada pendiente.</p>
           <div class="mision-info-modal__acciones">
             <button id="cerrarMisionInfo" class="btn btn-primary mision-info-modal__boton" type="button">
               Entendido
