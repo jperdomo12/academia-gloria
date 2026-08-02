@@ -19,7 +19,6 @@
   >
 
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
-  <link rel="stylesheet" href="../../compartido/css/palabras-para-crecer.css">
   <link rel="stylesheet" href="./rincon-lectura-lia.css">
   <link rel="stylesheet" href="../../compartido/css/celebracion.css">
 
@@ -782,47 +781,17 @@
           </div>
 
           <div class="lia-word-map">
-            <div class="lia-word-map__heading">
-              <h4>🎨 Mapa de palabras</h4>
-
-              <details class="word-colour-help">
-                <summary>¿Qué significan los colores?</summary>
-
-                <div class="word-colour-help__body">
-                  <p>
-                    Los colores comparan el texto original con lo que entendió
-                    el reconocimiento de voz. Son una guía para practicar, no
-                    una calificación de pronunciación.
-                  </p>
-
-                  <ul>
-                    <li>
-                      <span class="word-colour-sample word-token--match">Verde</span>
-                      La palabra aparece en ambos textos.
-                    </li>
-                    <li>
-                      <span class="word-colour-sample word-token--missing">Amarillo</span>
-                      La palabra del texto original no apareció en la transcripción.
-                    </li>
-                    <li>
-                      <span class="word-colour-sample word-token--different">Azul</span>
-                      El reconocimiento de voz añadió una palabra diferente.
-                    </li>
-                  </ul>
-                </div>
-              </details>
-            </div>
-
+            <h4>🎨 Mapa de palabras</h4>
+            <p class="lia-word-map__help">
+              Verde: Lía la reconoció. Amarillo: conviene revisarla. Azul: apareció una palabra diferente.
+            </p>
             <div id="wordComparisonMap" class="lia-word-map__content"></div>
           </div>
 
-          <details class="lia-comparison__details text-comparison-panel">
-            <summary class="text-comparison-panel__summary">
-              <span>📖 Ver los dos textos juntos</span>
-            </summary>
+          <details class="lia-comparison__details">
+            <summary>Ver los dos textos juntos</summary>
 
-            <div class="text-comparison-panel__body">
-              <div class="lia-text-comparison">
+            <div class="lia-text-comparison">
               <div>
                 <h4>📖 Texto que quería leer</h4>
                 <p id="expectedTextComparison"></p>
@@ -832,36 +801,6 @@
                 <h4>🦜 Lo que entendió Lía</h4>
                 <p id="heardTextComparison"></p>
               </div>
-              </div>
-            </div>
-          </details>
-
-          <details
-            id="pronunciationPractice"
-            class="pronunciation-practice hidden"
-          >
-            <summary class="pronunciation-practice__summary">
-              <span>🌱 Palabras para crecer</span>
-              <span
-                id="pronunciationPracticeCount"
-                class="pronunciation-practice__count"
-              ></span>
-            </summary>
-
-            <div class="pronunciation-practice__body">
-              <p id="pronunciationPracticeIntro">
-                Lía ha elegido algunas palabras importantes para practicar con calma.
-              </p>
-
-              <div
-                id="pronunciationPracticeList"
-                class="pronunciation-practice__list"
-              ></div>
-
-              <p class="pronunciation-practice__notice">
-                La Academia comprueba qué palabra entendió el reconocimiento de voz.
-                No sustituye una valoración profesional de la pronunciación.
-              </p>
             </div>
           </details>
 

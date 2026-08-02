@@ -633,15 +633,9 @@ function documentoEvidencia(id) {
 }
 
 function normalizarCriterioCumplimiento(criterio = {}) {
-  const criterioSeguro =
-    criterio && typeof criterio === "object"
-      ? criterio
-      : {};
-
   const filtrosEntrada =
-    criterioSeguro.filtros &&
-    typeof criterioSeguro.filtros === "object"
-      ? criterioSeguro.filtros
+    criterio.filtros && typeof criterio.filtros === "object"
+      ? criterio.filtros
       : {};
 
   const filtros = Object.fromEntries(
@@ -652,15 +646,15 @@ function normalizarCriterioCumplimiento(criterio = {}) {
 
   return {
     tipo: ["cantidad", "actividad", "tiempo", "evento", "combinado"].includes(
-      criterioSeguro.tipo
+      criterio.tipo
     )
-      ? criterioSeguro.tipo
+      ? criterio.tipo
       : "cantidad",
-    modulo: textoSeguro(criterioSeguro.modulo),
-    evidenciaTipo: textoSeguro(criterioSeguro.evidenciaTipo),
+    modulo: textoSeguro(criterio.modulo),
+    evidenciaTipo: textoSeguro(criterio.evidenciaTipo),
     cantidadObjetivo: Math.max(
       1,
-      Math.trunc(numeroSeguro(criterioSeguro.cantidadObjetivo, 1))
+      Math.trunc(numeroSeguro(criterio.cantidadObjetivo, 1))
     ),
     filtros
   };
@@ -954,16 +948,9 @@ async function actualizarTarea(id, cambios = {}) {
   }
 
   if ("criterioCumplimiento" in datos) {
-    if (
-      datos.criterioCumplimiento === null ||
-      datos.criterioCumplimiento === undefined
-    ) {
-      delete datos.criterioCumplimiento;
-    } else {
-      datos.criterioCumplimiento = normalizarCriterioCumplimiento(
-        datos.criterioCumplimiento
-      );
-    }
+    datos.criterioCumplimiento = normalizarCriterioCumplimiento(
+      datos.criterioCumplimiento
+    );
   }
 
   if ("progreso" in datos) {

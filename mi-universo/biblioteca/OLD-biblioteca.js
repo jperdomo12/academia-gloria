@@ -22,473 +22,7 @@ let finalTranscript = "";
 let transcriptEdited = false;
 const SPEECH_LANGUAGE = "es-ES";
 
-const parametrosPagina = new URLSearchParams(window.location.search);
-let misionId = parametrosPagina.get("misionId");
-let libroIdSolicitado = parametrosPagina.get("libroId");
-let misionActiva = null;
-let libroMisionSeleccionado = null;
-let perfilActual = null;
-let missionStatusFilter = "";
-let missionSearchFilter = "";
-
-const MISSION_MIN_AUDIO_SECONDS = 15;
-const MISSION_MIN_WORDS = 15;
-
 const $ = id => document.getElementById(id);
-
-
-function contarPalabras(texto = "") {
-  return String(texto)
-    .trim()
-    .split(/\s+/)
-    .filter(palabra => /[\p{L}\p{N}]/u.test(palabra))
-    .length;
-}
-
-function libroElegibleParaMision(book = {}) {
-  return Boolean(book?.id && String(book.title || "").trim());
-}
-
-function imagenLibroHtml(book = {}) {
-  return book.coverImage
-    ? `<img src="${escapeHtml(book.coverImage)}" alt="Carátula de ${escapeHtml(book.title || "libro")}">`
-    : "📘";
-}
-
-function renderSelectorLibrosMision() {
-  const selector = $("missionBookSelector");
-  const grid = $("missionBookSelectorGrid");
-  const empty = $("missionBookSelectorEmpty");
-  const count = $("missionBookSelectorCount");
-  if (!selector || !grid || !empty || !count) return;
-
-  const activa = Boolean(misionActiva && misionId && !libroMisionSeleccionado);
-  selector.classList.toggle("hidden", !activa);
-  if (!activa) return;
-
-  const textoBuscado = String(missionSearchFilter || "").toLowerCase().trim();
-
-  const disponibles = books
-    .filter(libroElegibleParaMision)
-    .filter(book => {
-      const coincideEstado =
-        !missionStatusFilter ||
-        book.readingStatus === missionStatusFilter;
-
-      const contenido = [
-        book.title,
-        book.author,
-        book.favoriteCharacter,
-        book.readingStatus
-      ].join(" ").toLowerCase();
-
-      const coincideTexto =
-        !textoBuscado ||
-        contenido.includes(textoBuscado);
-
-      return coincideEstado && coincideTexto;
-    });
-
-  count.textContent = `${disponibles.length} ${disponibles.length === 1 ? "libro" : "libros"}`;
-  empty.classList.toggle("hidden", disponibles.length > 0);
-  empty.textContent = books.length
-    ? "No hay libros que coincidan con este filtro."
-    : "Todavía no hay libros registrados. Pide ayuda a tu familia para añadir uno primero.";
-
-  grid.innerHTML = disponibles.map(book => `
-    <button type="button" class="mission-book-choice" data-mission-book-id="${escapeHtml(book.id)}">
-      <span class="mission-book-choice__cover">${imagenLibroHtml(book)}</span>
-      <span>
-        <strong>${escapeHtml(book.title || "Libro sin título")}</strong>
-        <small>${escapeHtml(book.author || "Autor no indicado")}</small>
-        <small>${escapeHtml(book.readingStatus || "Sin estado")}</small>
-      </span>
-    </button>
-  `).join("");
-
-  grid.querySelectorAll("[data-mission-book-id]").forEach(button => {
-    button.onclick = async () => {
-      const book = books.find(item => item.id === button.dataset.missionBookId);
-      if (book) await seleccionarLibroParaMision(book);
-    };
-  });
-}
-
-function renderLibroMisionSeleccionado() {
-  const panel = $("missionSelectedBook");
-  if (!panel) return;
-
-  const visible = Boolean(misionActiva && misionId && libroMisionSeleccionado);
-  panel.classList.toggle("hidden", !visible);
-  if (!visible) return;
-
-  $("missionSelectedBookTitle").textContent = libroMisionSeleccionado.title || "Libro";
-  $("missionSelectedBookAuthor").textContent =
-    libroMisionSeleccionado.author || "Autor no indicado";
-  $("missionSelectedBookCover").innerHTML = imagenLibroHtml(libroMisionSeleccionado);
-}
-
-function enfocarGrabacionBiblioteca() {
-  const voiceBox = document.querySelector(".voice-box");
-  if (!voiceBox) return;
-  setTimeout(() => voiceBox.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
-}
-
-async function seleccionarLibroParaMision(book) {
-  libroMisionSeleccionado = book;
-  currentBook = book;
-  await loadBook(book);
-  openTab("new");
-  renderSelectorLibrosMision();
-  renderLibroMisionSeleccionado();
-  actualizarProgresoOralMision();
-  enfocarGrabacionBiblioteca();
-}
-
-async function cambiarLibroDeMision() {
-  libroMisionSeleccionado = null;
-  currentBook = null;
-  missionStatusFilter = "";
-  missionSearchFilter = "";
-
-  document.querySelectorAll("[data-mission-status-filter]").forEach(button => {
-    button.classList.toggle(
-      "active",
-      !button.dataset.missionStatusFilter
-    );
-  });
-
-  if ($("missionBookSearch")) {
-    $("missionBookSearch").value = "";
-  }
-  $("bookForm").reset();
-  $("bookId").value = "";
-  $("rating").value = "0";
-  $("coverImage").value = "";
-  $("coverFile").value = "";
-  mostrarVistaPreviaCaratula();
-
-  recordedAudioData = "";
-  recordedAudioDuration = 0;
-  finalTranscript = "";
-  transcriptEdited = false;
-  $("voiceTranscript").value = "";
-  $("familyObservation").value = "";
-  actualizarControlesAudio();
-
-  renderLibroMisionSeleccionado();
-  renderSelectorLibrosMision();
-  openTab("library");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function mostrarMensajeLiaTrasGrabacion() {
-  const box = $("liaMissionRecordingMessage");
-  if (!box) return;
-
-  const activa = Boolean(misionActiva && misionId);
-  box.classList.toggle("hidden", !activa);
-  if (!activa) return;
-
-  const estado = criteriosMisionBiblioteca();
-  box.classList.toggle("lia-mission-recording-message--success", estado.completa);
-
-  if (estado.completa) {
-    box.textContent =
-      "🦜 ¡Qué bien! Ahora ya conozco un poquito mejor este libro gracias a ti.";
-  } else if (!estado.cumplePalabras) {
-    box.textContent =
-      `🦜 Cuéntame un poco más, ${perfilActual?.nombre || "exploradora"}. ` +
-      `He escuchado ${estado.palabras} de ${MISSION_MIN_WORDS} palabras.`;
-  } else if (!estado.cumpleDuracion) {
-    box.textContent =
-      `🦜 Me está encantando escucharte. Cuéntame un poquito más hasta llegar a ${MISSION_MIN_AUDIO_SECONDS} segundos.`;
-  } else {
-    box.textContent =
-      "🦜 Ya casi está. Revisa que el libro esté marcado como Terminado.";
-  }
-}
-
-function criteriosMisionBiblioteca() {
-  const transcripcion = $("voiceTranscript")?.value?.trim() || "";
-  const palabras = contarPalabras(transcripcion);
-  const segundos = Number(recordedAudioDuration || 0);
-  const estadoTerminado = $("readingStatus")?.value === "Terminado";
-  const tieneTitulo = Boolean($("title")?.value?.trim());
-  const tieneAudio = Boolean(recordedAudioData);
-  const tieneLibroSeleccionado =
-    !misionActiva || !misionId || Boolean(libroMisionSeleccionado?.id);
-
-  return {
-    tieneTitulo,
-    tieneLibroSeleccionado,
-    estadoTerminado,
-    tieneAudio,
-    segundos,
-    palabras,
-    cumpleDuracion: tieneAudio && segundos >= MISSION_MIN_AUDIO_SECONDS,
-    cumplePalabras: palabras >= MISSION_MIN_WORDS,
-    completa:
-      tieneTitulo &&
-      tieneLibroSeleccionado &&
-      estadoTerminado &&
-      tieneAudio &&
-      segundos >= MISSION_MIN_AUDIO_SECONDS &&
-      palabras >= MISSION_MIN_WORDS
-  };
-}
-
-function actualizarProgresoOralMision() {
-  const panel = $("oralMissionProgress");
-  if (!panel) return;
-
-  const activa = Boolean(misionActiva && misionId);
-  panel.classList.toggle("hidden", !activa);
-  if (!activa) return;
-
-  const estado = criteriosMisionBiblioteca();
-  const duracion = Math.min(100, estado.segundos / MISSION_MIN_AUDIO_SECONDS * 100);
-  const palabras = Math.min(100, estado.palabras / MISSION_MIN_WORDS * 100);
-  const libro = estado.estadoTerminado ? 100 : 0;
-  const total = Math.round((duracion + palabras + libro) / 3);
-
-  $("oralMissionSeconds").textContent =
-    `${Math.floor(estado.segundos)} / ${MISSION_MIN_AUDIO_SECONDS} s`;
-  $("oralMissionWords").textContent =
-    `${estado.palabras} / ${MISSION_MIN_WORDS}`;
-  $("oralMissionBookStatus").textContent =
-    estado.estadoTerminado ? "Terminado ✅" : "Debe estar terminado";
-  $("oralMissionProgressBar").style.width = `${total}%`;
-
-  panel.classList.toggle("oral-mission-progress--ready", estado.completa);
-  $("oralMissionReady").textContent =
-    estado.completa ? "¡Preparada! ✅" : "En preparación";
-
-  $("oralMissionMessage").textContent =
-    !estado.tieneLibroSeleccionado
-      ? "Elige primero un libro ya registrado en la Biblioteca."
-      : !estado.estadoTerminado
-        ? "Marca el libro como Terminado cuando hayas acabado de leerlo."
-        : !estado.tieneAudio
-        ? "Tengo muchas ganas de conocer este libro. Cuéntamelo con calma."
-        : !estado.cumpleDuracion || !estado.cumplePalabras
-          ? "Me está gustando mucho lo que me cuentas. ¿Podrías contarme un poquito más?"
-          : "¡Qué bien! Ya conozco un poquito mejor este libro gracias a ti.";
-
-  const boton = $("saveBookButton");
-  const aviso = $("missionSaveHint");
-
-  if (boton) {
-    boton.disabled = false;
-    boton.classList.toggle("mission-save-incomplete", !estado.completa);
-    boton.setAttribute("aria-disabled", String(!estado.completa));
-    boton.title = estado.completa
-      ? "Guardar libro y enviar la misión a revisión"
-      : "Pulsa para saber qué falta antes de completar la misión";
-  }
-
-  if (aviso) {
-    aviso.classList.toggle("hidden", estado.completa);
-    aviso.textContent = estado.completa
-      ? ""
-      : "Puedes pulsar Guardar libro para que Lía te indique qué falta.";
-  }
-}
-
-function progresoMisionBiblioteca() {
-  const criterio = misionActiva?.criterioCumplimiento || {};
-  const progreso = misionActiva?.progreso || {};
-  const objetivo = Number(
-    criterio.cantidadObjetivo ?? progreso.cantidadObjetivo ?? 1
-  );
-  const actual = Number(progreso.cantidadActual || 0);
-
-  return {
-    actual,
-    objetivo,
-    terminada: objetivo > 0 && actual >= objetivo
-  };
-}
-
-function actualizarBandaMisionBiblioteca() {
-  const banner = $("libraryMissionBanner");
-  if (!banner) return;
-
-  banner.classList.remove(
-    "library-mission--free",
-    "library-mission--help",
-    "library-mission--done"
-  );
-
-  if (!misionActiva) {
-    banner.classList.add("library-mission--free");
-    $("libraryMissionTitle").textContent = "🌈 Biblioteca libre";
-    $("libraryMissionDescription").textContent =
-      "Guarda y comparte tus libros a tu propio ritmo.";
-    $("libraryMissionProgress").textContent = "Sin misión";
-    $("libraryMissionStatus").textContent = "Estado: Lectura libre";
-    $("libraryMissionHelp").classList.add("hidden");
-    $("oralMissionProgress")?.classList.add("hidden");
-    $("missionBookSelector")?.classList.add("hidden");
-    $("missionSelectedBook")?.classList.add("hidden");
-    $("liaMissionRecordingMessage")?.classList.add("hidden");
-    $("saveBookButton").disabled = false;
-    $("missionSaveHint")?.classList.add("hidden");
-    return;
-  }
-
-  const { actual, objetivo, terminada } = progresoMisionBiblioteca();
-  const ayuda = misionActiva.estado === "necesita_ayuda";
-  const revision = [
-    "pendiente_validacion",
-    "completada_pendiente_validacion"
-  ].includes(misionActiva.estado);
-
-  if (terminada || revision) banner.classList.add("library-mission--done");
-  else if (ayuda) banner.classList.add("library-mission--help");
-
-  $("libraryMissionTitle").textContent = revision
-    ? "🌟 Libro compartido"
-    : terminada
-      ? "🎉 ¡Misión terminada!"
-      : ayuda
-        ? "🤝 Has pedido ayuda"
-        : "📚 Misión en curso";
-
-  $("libraryMissionDescription").textContent = revision
-    ? "Tu familia ya puede escuchar y revisar cómo compartiste este libro."
-    : (
-        misionActiva.presentacionAlumno?.descripcionMision ||
-        misionActiva.descripcion ||
-        "Cuéntale a Lía un libro que hayas terminado."
-      );
-
-  $("libraryMissionProgress").textContent = `${actual} de ${objetivo}`;
-  $("libraryMissionStatus").textContent = revision
-    ? "Estado: Esperando revisión"
-    : terminada
-      ? "Estado: Terminada"
-      : ayuda
-        ? "Estado: He pedido ayuda"
-        : "Estado: En curso";
-
-  $("libraryMissionHelp").classList.toggle("hidden", terminada || revision);
-  $("libraryMissionHelp").textContent = ayuda
-    ? "▶️ Ya puedo continuar"
-    : "🤝 Necesito ayuda";
-
-  actualizarProgresoOralMision();
-}
-
-async function cargarMisionBiblioteca() {
-  if (!misionId) {
-    actualizarBandaMisionBiblioteca();
-    return;
-  }
-
-  try {
-    const tarea = await Academia.tareas.obtener(misionId);
-    const criterio = tarea?.criterioCumplimiento || {};
-
-    if (
-      !tarea ||
-      tarea.modulo !== "biblioteca" ||
-      (criterio.modulo && criterio.modulo !== "biblioteca")
-    ) {
-      throw new Error("La misión no corresponde a Biblioteca Encantada.");
-    }
-
-    misionActiva = tarea;
-
-    if (["pendiente", "asignada"].includes(tarea.estado)) {
-      await Academia.tareas.cambiarEstado(misionId, "en_curso");
-      misionActiva.estado = "en_curso";
-    }
-
-    actualizarBandaMisionBiblioteca();
-    renderSelectorLibrosMision();
-    renderLibroMisionSeleccionado();
-    openTab("library");
-  } catch (error) {
-    console.error("No se pudo cargar la misión de Biblioteca.", error);
-    alert(error.message);
-    misionId = null;
-    misionActiva = null;
-    actualizarBandaMisionBiblioteca();
-  }
-}
-
-async function alternarAyudaMisionBiblioteca() {
-  if (!misionActiva || !misionId) return;
-
-  const pedir = misionActiva.estado !== "necesita_ayuda";
-  const boton = $("libraryMissionHelp");
-  boton.disabled = true;
-
-  try {
-    await Academia.tareas.cambiarEstado(
-      misionId,
-      pedir ? "necesita_ayuda" : "en_curso"
-    );
-    misionActiva.estado = pedir ? "necesita_ayuda" : "en_curso";
-    actualizarBandaMisionBiblioteca();
-  } catch (error) {
-    console.error(error);
-    alert("No pudimos guardar la solicitud de ayuda.");
-  } finally {
-    boton.disabled = false;
-  }
-}
-
-async function registrarEvidenciaBiblioteca(libro, audio) {
-  if (!misionActiva || !misionId) return null;
-
-  const estado = criteriosMisionBiblioteca();
-  if (!estado.completa) {
-    throw new Error(
-      "La misión necesita un libro terminado, 15 segundos de audio y 15 palabras escuchadas."
-    );
-  }
-
-  const criterio = misionActiva.criterioCumplimiento || {};
-  const resultado = await Academia.tareas.registrarEvidencia({
-    misionId,
-    modulo: "biblioteca",
-    tipo: criterio.evidenciaTipo || "libro_compartido",
-    actividadId: libroMisionSeleccionado?.id || libro.id,
-    sesionId: libroMisionSeleccionado?.id || libro.id,
-    atributos: {
-      readingStatus: libro.readingStatus,
-      estadoLibro: libro.readingStatus,
-      tieneAudio: true,
-      hasAudio: true,
-      duracionMinimaCumplida: true,
-      palabrasMinimasCumplidas: true
-    },
-    resultado: {
-      libroId: libro.id,
-      titulo: libro.title,
-      autor: libro.author || "",
-      estado: libro.readingStatus,
-      duracionAudio: Number(audio.duration || 0),
-      palabrasReconocidas: contarPalabras(audio.transcript || ""),
-      transcripcion: audio.transcript || "",
-      observacionFamilia: audio.familyObservation || ""
-    },
-    destinoRevision:
-      `mi-universo/biblioteca/?libroId=${encodeURIComponent(libro.id)}`
-  });
-
-  misionActiva.estado = resultado.estado;
-  misionActiva.progreso = {
-    ...(misionActiva.progreso || {}),
-    cantidadActual: resultado.cantidadActual,
-    cantidadObjetivo: resultado.cantidadObjetivo
-  };
-  actualizarBandaMisionBiblioteca();
-  return resultado;
-}
-
 
 const fields = [
   "title","author","readingStatus","favoriteCharacter",
@@ -639,7 +173,6 @@ function configurarReconocimientoVoz() {
     $("voiceTranscript").value =
       [finalTranscript, interim].filter(Boolean).join(" ").trim();
     transcriptEdited = false;
-    actualizarProgresoOralMision();
   };
 
   speechRecognition.onerror = event => {
@@ -763,13 +296,12 @@ async function cargarAudioLibro(libroId) {
   $("voiceTranscript").value = finalTranscript;
   $("familyObservation").value = String(audio.familyObservation || "");
   actualizarControlesAudio();
-  actualizarProgresoOralMision();
 }
 
 async function guardarAudioActual(libroId) {
-  if (!recordedAudioData) return null;
+  if (!recordedAudioData) return;
 
-  const audio = {
+  await Academia.biblioteca.audio.guardar(libroId, {
     audioData: recordedAudioData,
     mimeType: recordedAudioMimeType,
     duration: recordedAudioDuration,
@@ -777,15 +309,11 @@ async function guardarAudioActual(libroId) {
     familyObservation: $("familyObservation").value.trim(),
     language: SPEECH_LANGUAGE,
     transcriptEdited: false
-  };
-
-  await Academia.biblioteca.audio.guardar(libroId, audio);
+  });
 
   if (currentBook?.id === libroId) {
     currentBook.hasAudio = true;
   }
-
-  return audio;
 }
 
 $("startRecording").onclick = async () => {
@@ -840,8 +368,6 @@ $("startRecording").onclick = async () => {
       $("startRecording").classList.remove("recording");
       $("stopRecording").disabled = true;
       actualizarControlesAudio();
-      actualizarProgresoOralMision();
-      mostrarMensajeLiaTrasGrabacion();
       $("statusText").textContent = "Cambios sin guardar";
     };
 
@@ -899,7 +425,6 @@ $("deleteRecording").onclick = async () => {
   $("voiceTranscript").value = "";
   $("familyObservation").value = "";
   actualizarControlesAudio();
-  actualizarProgresoOralMision();
   $("statusText").textContent = "Cambios sin guardar";
 };
 
@@ -908,48 +433,6 @@ $("deleteRecording").onclick = async () => {
         alert("Escribe el título del libro 📖");
         $("title").focus();
         return false;
-      }
-
-      if (misionActiva && misionId) {
-        const estado = criteriosMisionBiblioteca();
-
-        if (!estado.tieneLibroSeleccionado) {
-          alert("Elige primero un libro ya registrado en la Biblioteca.");
-          openTab("library");
-          renderSelectorLibrosMision();
-          return false;
-        }
-
-        if (!estado.estadoTerminado) {
-          $("oralMissionMessage").textContent =
-            "Marca el libro como Terminado cuando hayas acabado de leerlo.";
-          alert("Para completar esta misión, marca el libro como Terminado.");
-          $("readingStatus").focus();
-          return false;
-        }
-
-        if (!estado.tieneAudio) {
-          $("liaMissionRecordingMessage").classList.remove("hidden");
-          $("liaMissionRecordingMessage").classList.remove(
-            "lia-mission-recording-message--success"
-          );
-          $("liaMissionRecordingMessage").textContent =
-            `🦜 ${perfilActual?.nombre || "Exploradora"}, cuéntame este libro con tu voz para poder guardar la misión.`;
-          document.querySelector(".voice-box")?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-          return false;
-        }
-
-        if (!estado.cumpleDuracion || !estado.cumplePalabras) {
-          mostrarMensajeLiaTrasGrabacion();
-          document.querySelector(".voice-box")?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-          return false;
-        }
       }
 
       return true;
@@ -963,10 +446,7 @@ $("deleteRecording").onclick = async () => {
         tab.classList.toggle("active",tab.dataset.tab===name);
       });
 
-      if(name==="library") {
-        renderBooks();
-        renderSelectorLibrosMision();
-      }
+      if(name==="library") renderBooks();
 
       scrollTo({top:0,behavior:"smooth"});
     }
@@ -998,11 +478,8 @@ $("addBookFromLibrary").onclick = () => {
     fields.forEach(id=>{
       $(id).addEventListener("input",()=>{
         $("statusText").textContent="Cambios sin guardar";
-        actualizarProgresoOralMision();
       });
     });
-
-    $("readingStatus").addEventListener("change", actualizarProgresoOralMision);
 
     $("familyObservation").addEventListener("input",()=>{
       $("statusText").textContent="Cambios sin guardar";
@@ -1012,12 +489,6 @@ $("bookForm").onsubmit = async event => {
   event.preventDefault();
 
   const book = bookData();
-
-  if (misionActiva && misionId && libroMisionSeleccionado?.id) {
-    book.id = libroMisionSeleccionado.id;
-    $("bookId").value = libroMisionSeleccionado.id;
-  }
-
   if (!validateBook(book)) return;
 
   const button = event.submitter;
@@ -1034,27 +505,11 @@ $("bookForm").onsubmit = async event => {
       book.id = id;
     }
 
-    const audio = await guardarAudioActual(book.id);
-
-    if (misionActiva && misionId) {
-      await registrarEvidenciaBiblioteca(book, audio || {
-        duration: recordedAudioDuration,
-        transcript: $("voiceTranscript").value.trim(),
-        familyObservation: $("familyObservation").value.trim()
-      });
-    }
+    await guardarAudioActual(book.id);
 
     $("statusText").textContent = "Guardado ✅";
-    libroMisionSeleccionado = book;
-    renderLibroMisionSeleccionado();
-    await showBook(book);
-    openTab(misionActiva ? "detail" : "library");
-
-    alert(
-      misionActiva
-        ? "🦜 ¡Gracias por compartir este libro conmigo! Tu familia ya puede revisarlo."
-        : "🌟 ¡Libro guardado! Lía ya lo añadió a tu Biblioteca Encantada."
-    );
+    openTab("library");
+    alert("🌟 ¡Libro guardado! Lía ya lo añadió a tu Biblioteca Encantada.");
   } catch (error) {
     console.error(error);
     $("statusText").textContent = "No se pudo guardar";
@@ -1065,13 +520,6 @@ $("bookForm").onsubmit = async event => {
 };
 
     $("newBook").onclick=()=>{
-      if (misionActiva && misionId) {
-        alert("Para esta misión, elige un libro que ya haya registrado tu familia.");
-        openTab("library");
-        renderSelectorLibrosMision();
-        return;
-      }
-
       $("bookForm").reset();
       $("bookId").value="";
       $("rating").value="0";
@@ -1085,21 +533,14 @@ $("bookForm").onsubmit = async event => {
       $("voiceTranscript").value = "";
       $("familyObservation").value = "";
       actualizarControlesAudio();
-      actualizarProgresoOralMision();
       updateStars(0);
       $("statusText").textContent="Sin guardar";
       $("title").focus();
     };
 
     $("previewBook").onclick=async ()=>{
-      const book = bookData();
-
-      if (!book.title) {
-        alert("Escribe el título del libro 📖");
-        $("title").focus();
-        return;
-      }
-
+      const book=bookData();
+      if(!validateBook(book))return;
       await showBook(book);
       openTab("detail");
     };
@@ -1192,7 +633,6 @@ $("bookForm").onsubmit = async event => {
       mostrarVistaPreviaCaratula(book.coverImage || "");
       updateStars(book.rating||0);
       await cargarAudioLibro(book.id);
-      actualizarProgresoOralMision();
       $("statusText").textContent="Guardado ✅";
     }
 
@@ -1406,26 +846,6 @@ actualizarControlesAudio();
 actualizarPanelGrabacion(0, false);
 configurarReconocimientoVoz();
 
-$("libraryMissionHelp").addEventListener("click", alternarAyudaMisionBiblioteca);
-$("changeMissionBook").addEventListener("click", cambiarLibroDeMision);
-
-document.querySelectorAll("[data-mission-status-filter]").forEach(button => {
-  button.addEventListener("click", () => {
-    missionStatusFilter = button.dataset.missionStatusFilter || "";
-
-    document.querySelectorAll("[data-mission-status-filter]").forEach(item => {
-      item.classList.toggle("active", item === button);
-    });
-
-    renderSelectorLibrosMision();
-  });
-});
-
-$("missionBookSearch").addEventListener("input", event => {
-  missionSearchFilter = event.target.value || "";
-  renderSelectorLibrosMision();
-});
-
 function aplicarPersonalizacionBiblioteca(perfil) {
   const nombreCompleto = String(
     perfil.nombre || perfil.nombreVisible || "Exploradora"
@@ -1460,7 +880,6 @@ async function iniciarBiblioteca() {
   }
 
   const perfil = await obtenerPerfil();
-  perfilActual = perfil;
   aplicarPersonalizacionBiblioteca(perfil);
 
   await iniciarPanelUsuario({
@@ -1469,23 +888,11 @@ async function iniciarBiblioteca() {
     mostrarPerfil: false
   });
 
-  await cargarMisionBiblioteca();
-  actualizarProgresoOralMision();
-
   detenerObservacion = Academia.biblioteca.observar(
     librosFirestore => {
       books = librosFirestore;
       renderBooks($("searchBook").value);
-      renderSelectorLibrosMision();
       updateCount();
-
-      if (libroIdSolicitado) {
-        const solicitado = books.find(book => book.id === libroIdSolicitado);
-        if (solicitado) {
-          libroIdSolicitado = null;
-          showBook(solicitado).then(() => openTab("detail"));
-        }
-      }
     },
     error => {
       console.error(error);

@@ -1285,7 +1285,7 @@ function recogerFormulario() {
               ? { nivel: nivelLectura }
               : {}
           }
-        : undefined,
+        : null,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -1431,12 +1431,8 @@ function configurarFormulario() {
     event.preventDefault();
 
     const mensaje = $("mensajeFormulario");
-    const guardarButton = $("guardarTarea");
     const id = $("tareaId").value.trim();
     const datos = recogerFormulario();
-
-    guardarButton.disabled = true;
-    guardarButton.setAttribute("aria-busy", "true");
 
     if (
       datos.modulo === "detectives" &&
@@ -1447,8 +1443,6 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de historias para la misión.";
       $("cantidadHistorias").focus();
-      guardarButton.disabled = false;
-      guardarButton.removeAttribute("aria-busy");
       return;
     }
 
@@ -1461,8 +1455,6 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de lecturas para la misión.";
       $("cantidadLecturas").focus();
-      guardarButton.disabled = false;
-      guardarButton.removeAttribute("aria-busy");
       return;
     }
 
@@ -1494,9 +1486,6 @@ function configurarFormulario() {
       mensaje.classList.add("error");
       mensaje.textContent =
         `No se pudo guardar la tarea: ${error.message}`;
-    } finally {
-      guardarButton.disabled = false;
-      guardarButton.removeAttribute("aria-busy");
     }
   });
 }

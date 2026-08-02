@@ -1210,10 +1210,3 @@ footer{
   border-color:#bae6fd;
   background:linear-gradient(135deg,#f0f9ff,#fff,#f0fdf4);
 }
-
-
-/* Corrección guardado de edición · v2.0.1 */
-#guardarTarea[aria-busy="true"]{
-  opacity:.72;
-  cursor:wait;
-}

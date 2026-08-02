@@ -2,7 +2,6 @@ import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { HISTORIAS } from "./historias.js";
 import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
-import { crearPalabrasParaCrecer } from "../../compartido/js/palabras-para-crecer.js";
 
 const $ = id => document.getElementById(id);
 const MAX_RECORDING_SECONDS = 120;
@@ -24,36 +23,10 @@ let recognition = null;
 let finalTranscript = "";
 let recordingAttempts = 0;
 let currentReadingAnalysis = {};
-let palabrasParaCrecer = null;
 const parametrosPagina = new URLSearchParams(window.location.search);
 let misionId = parametrosPagina.get("misionId");
 let misionActiva = null;
 let sesionesGuardadas = new Map();
-
-function inicializarPalabrasParaCrecer() {
-  if (palabrasParaCrecer) return palabrasParaCrecer;
-
-  const root = $("pronunciationPractice");
-  if (!root) return null;
-
-  palabrasParaCrecer = crearPalabrasParaCrecer({
-    root,
-    maxAttempts: 3,
-    idioma: historia?.idioma || "es-ES",
-    origen: {
-      modulo: "rincon-lectura",
-      contenidoId: historia?.id || ""
-    },
-    onChange(resultados) {
-      currentReadingAnalysis = {
-        ...currentReadingAnalysis,
-        palabrasParaCrecer: resultados
-      };
-    }
-  });
-
-  return palabrasParaCrecer;
-}
 
 function displayName(value = "") {
   return String(value).trim() || "Explorador";
@@ -382,16 +355,6 @@ function renderSelectedStory() {
 
   $("reflectionText").textContent = historia.reflexion;
   $("dailyPhrase").textContent = `“${historia.fraseDelDia}”`;
-
-  inicializarPalabrasParaCrecer()?.setContext({
-    idioma: historia?.idioma || "es-ES",
-    origen: {
-      modulo: "rincon-lectura",
-      contenidoId: historia?.id || "",
-      misionId: misionId || ""
-    }
-  });
-
   renderQuestions();
 }
 
@@ -633,7 +596,6 @@ function expectedReadingText() {
   return historia?.parrafos?.map(parrafo => parrafo.texto).join(" ").trim() || "";
 }
 
-
 function comparisonFeedback(score) {
   if (score >= 90) {
     return {
@@ -689,7 +651,6 @@ function resetReadingComparison() {
   $("expectedTextComparison").textContent = "";
   $("heardTextComparison").textContent = "";
   $("wordComparisonMap").innerHTML = "";
-  inicializarPalabrasParaCrecer()?.reset();
   $("attemptBadge").textContent = `Intento ${Math.max(1, recordingAttempts || 1)}`;
 }
 
@@ -739,17 +700,6 @@ function renderReadingComparison() {
     nivel: feedback.className
   };
 
-  inicializarPalabrasParaCrecer()?.prepare({
-    textoObjetivo: expectedText,
-    textoReconocido: heardText,
-    porcentaje: score,
-    idioma: historia?.idioma || "es-ES",
-    origen: {
-      modulo: "rincon-lectura",
-      contenidoId: historia?.id || "",
-      misionId: misionId || ""
-    }
-  });
   setLiaCoachMessage(feedback.coach);
 }
 
@@ -1170,93 +1120,6 @@ function renderSavedAnswers(session) {
   `;
 }
 
-
-function historyGrowthWordsHtml(analysis = {}) {
-  const words = Array.isArray(analysis.palabrasParaCrecer)
-    ? analysis.palabrasParaCrecer
-    : [];
-
-  if (!words.length) {
-    return "";
-  }
-
-  const statusLabel = status => ({
-    superada: "✅ Superada",
-    success: "✅ Superada",
-    en_practica: "🌱 En práctica",
-    practice: "🌱 En práctica",
-    reintentar: "🔁 Para repetir",
-    retry: "🔁 Para repetir",
-    pendiente: "⏳ Pendiente",
-    listening: "🎙️ En proceso"
-  })[status] || "⏳ Pendiente";
-
-  const completed = words.filter(word =>
-    ["superada", "success"].includes(word.estado)
-  ).length;
-
-  return `
-    <details class="history-growth-words">
-      <summary>
-        <span>🌱 Palabras para crecer</span>
-        <span class="history-growth-words__count">
-          ${completed}/${words.length}
-        </span>
-      </summary>
-
-      <div class="history-growth-words__body">
-        <p class="history-growth-words__intro">
-          Resultado guardado del entrenamiento de esta lectura.
-        </p>
-
-        <div class="history-growth-words__list">
-          ${words.map((word, index) => {
-            const originalHeard = String(
-              word.palabraReconocidaInicialmente ||
-              word.palabraReconocidaEnLectura ||
-              ""
-            );
-            const lastHeard = String(
-              word.ultimaPalabraReconocida || ""
-            );
-            const attempts = Number(word.intentos || 0);
-            const state = String(word.estado || "pendiente");
-
-            return `
-              <article class="history-growth-word ${
-                ["superada", "success"].includes(state)
-                  ? "history-growth-word--success"
-                  : ""
-              }">
-                <span class="history-growth-word__number">${index + 1}</span>
-
-                <div class="history-growth-word__content">
-                  <strong>${escapeHtml(word.palabra || "")}</strong>
-
-                  ${originalHeard
-                    ? `<small>En la lectura, Lía entendió «${escapeHtml(originalHeard)}».</small>`
-                    : `<small>No apareció con claridad en la transcripción inicial.</small>`
-                  }
-
-                  ${lastHeard && lastHeard !== originalHeard
-                    ? `<small>Último intento reconocido: «${escapeHtml(lastHeard)}».</small>`
-                    : ""
-                  }
-                </div>
-
-                <div class="history-growth-word__result">
-                  <span>${statusLabel(state)}</span>
-                  <small>${attempts} ${attempts === 1 ? "intento" : "intentos"}</small>
-                </div>
-              </article>
-            `;
-          }).join("")}
-        </div>
-      </div>
-    </details>
-  `;
-}
-
 function historyAnalysisHtml(session) {
   const analysis =
     session.analisisLectura && typeof session.analisisLectura === "object"
@@ -1301,8 +1164,6 @@ function historyAnalysisHtml(session) {
         ? `<p class="history-analysis__message">${escapeHtml(analysis.mensaje)}</p>`
         : ""
       }
-
-      ${historyGrowthWordsHtml(analysis)}
 
       ${expectedText && heardText
         ? `
