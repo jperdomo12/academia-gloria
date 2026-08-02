@@ -8,9 +8,9 @@
   <meta name="description" content="Un espacio visual, creativo y motivador para aprender, crear y crecer con confianza.">
   <meta name="theme-color" content="#6d5dfc">
 
-  <link rel="icon" type="image/png" href="assets/iconos/icono-principal.png">
-  <link rel="shortcut icon" href="assets/iconos/icono-principal.png">
-  <link rel="apple-touch-icon" href="assets/iconos/icono-principal.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/iconos/icono-principal.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="assets/iconos/icono-principal.png?v=2">
+  <link rel="apple-touch-icon" href="assets/iconos/icono-principal.png?v=2">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,6 +160,73 @@
       50%{transform:scaleX(-1) translateY(8px) rotate(3deg)}
     }
 
+    /* Acceso principal de Gloria: Mi Camino */
+    .mi-camino-principal{
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 300px;
+      gap:28px;
+      align-items:center;
+      margin-top:24px;
+      padding:28px 30px;
+      border-color:#cfe8dc;
+      background:
+        radial-gradient(circle at 88% 16%,rgba(248,188,64,.20),transparent 25%),
+        radial-gradient(circle at 76% 92%,rgba(19,156,216,.14),transparent 30%),
+        linear-gradient(145deg,#ffffff,#f3fff8 55%,#f2f8ff);
+    }
+
+    .mi-camino-principal::after{
+      content:"";
+      position:absolute;
+      width:235px;
+      height:235px;
+      right:-100px;
+      bottom:-135px;
+      border-radius:50%;
+      background:rgba(36,185,133,.11);
+      pointer-events:none;
+    }
+
+    .mi-camino-principal__contenido,
+    .mi-camino-principal__visual{position:relative;z-index:2}
+
+    .mi-camino-principal h2{
+      margin:10px 0 8px;
+      font-size:clamp(2rem,4vw,3.15rem);
+      color:var(--tinta);
+    }
+
+    .mi-camino-principal p{
+      max-width:760px;
+      margin:0;
+      color:var(--suave);
+      font-size:1.05rem;
+      line-height:1.58;
+      font-weight:650;
+    }
+
+    .mi-camino-principal__visual{
+      min-height:185px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mi-camino-principal__visual img{
+      width:min(245px,100%);
+      max-height:190px;
+      object-fit:contain;
+      filter:drop-shadow(0 13px 18px rgba(15,23,42,.14));
+      animation:flotarCamino 3.3s ease-in-out infinite;
+    }
+
+    @keyframes flotarCamino{
+      0%,100%{transform:translateY(3px) rotate(-2deg)}
+      50%{transform:translateY(-7px) rotate(2deg)}
+    }
+
     .acceso-universo-principal{
       position:relative;
       z-index:3;
@@ -191,8 +258,8 @@
       grid-template-columns:1.12fr .88fr;
       gap:30px;
       align-items:center;
-      padding:38px;
-      min-height:430px;
+      padding:30px 38px;
+      min-height:390px;
     }
 
     .hero::before,
@@ -793,8 +860,111 @@
       font-weight:600;
     }
 
+    /* Bloques completos como accesos, sin botones interiores */
+    .bloque-enlace{
+      color:inherit;
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+    }
+
+    .bloque-enlace:hover,
+    .bloque-enlace:focus-visible{
+      transform:translateY(-3px);
+      box-shadow:0 28px 65px rgba(67,56,202,.15);
+      border-color:#b9a6f8;
+      outline:none;
+    }
+
+    .bloque-enlace:focus-visible{
+      box-shadow:0 0 0 5px rgba(124,58,237,.16),0 28px 65px rgba(67,56,202,.15);
+    }
+
+    .bloque-pista{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-top:14px;
+      color:#6d28d9;
+      font-size:.9rem;
+      font-weight:900;
+    }
+
+    /* Mi Camino: acceso compacto y dinámico */
+    .mi-camino-principal{
+      grid-template-columns:minmax(0,1fr) 220px;
+      gap:18px;
+      padding:22px 28px;
+    }
+
+    .mi-camino-principal h2{
+      margin:7px 0 5px;
+      font-size:clamp(1.75rem,3vw,2.45rem);
+    }
+
+    .mi-camino-principal p{
+      font-size:1rem;
+      line-height:1.48;
+    }
+
+    .mi-camino-principal__visual{min-height:128px}
+    .mi-camino-principal__visual img{
+      width:min(180px,100%);
+      max-height:135px;
+    }
+
+    .camino-estado{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .camino-contador{
+      display:inline-flex;
+      align-items:center;
+      min-height:31px;
+      padding:6px 11px;
+      border-radius:999px;
+      color:#08744f;
+      background:#e8fff5;
+      border:1px solid #bcebd8;
+      font-size:.82rem;
+      font-weight:900;
+    }
+
+    /* Hero más plano, conservando su identidad */
+    .hero{
+      min-height:350px;
+      padding:25px 34px;
+      gap:25px;
+    }
+
+    .pildoras{margin-bottom:13px}
+    .gran-titulo{
+      margin-bottom:11px;
+      font-size:clamp(2.8rem,5.45vw,4.8rem);
+    }
+    .hero-texto{font-size:1.08rem;line-height:1.5}
+    .hero-visual{gap:9px}
+    .bienvenida{padding:22px 23px 20px;border-radius:25px}
+    .bienvenida h2{font-size:clamp(1.85rem,2.8vw,2.7rem);margin-bottom:7px}
+    .bienvenida p{font-size:.98rem;line-height:1.45}
+    .metodo{gap:8px}
+    .paso{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:9px 10px;
+      border-radius:15px;
+    }
+    .paso span{font-size:1.25rem}
+    .paso strong{display:inline;margin-top:0;font-size:.88rem}
+
     @media(max-width:930px){
-      .hero,.zona-principal,.descubre-academia{grid-template-columns:1fr}
+      .hero,.zona-principal,.descubre-academia,.mi-camino-principal{grid-template-columns:1fr}
       .zona-secundaria{grid-template-columns:1fr 1fr}
       .descubre-academia__visual{width:min(310px,100%);min-height:165px;margin:auto}
     }
@@ -802,8 +972,11 @@
     @media(max-width:640px){
       .pagina{width:min(100% - 18px,1240px);padding-top:9px}
       .hero{padding:22px;min-height:auto}
-      .descubre-academia{padding:22px}
+      .descubre-academia,.mi-camino-principal{padding:22px}
       .descubre-academia__visual img{width:135px;height:135px}
+      .mi-camino-principal__visual{min-height:110px}
+      .mi-camino-principal__visual img{max-height:120px}
+      .paso{justify-content:flex-start}
       .metodo,.zona-secundaria,.atajos{grid-template-columns:1fr}
       .hero-acciones{flex-direction:column}
       .cta{width:100%}
@@ -859,7 +1032,11 @@
     </header>
 
 
-    <section class="superficie descubre-academia">
+    <a
+      class="superficie descubre-academia bloque-enlace"
+      href="descubre-la-academia/?volver=/"
+      aria-label="Conocer la Academia"
+    >
       <div>
         <span class="etiqueta-estado estado-azul">Guía breve y visual</span>
         <h2>🌈 Descubre la Academia</h2>
@@ -868,21 +1045,36 @@
           nuestra forma de aprender y cómo pueden contribuir las familias,
           el colegio y los profesionales.
         </p>
-
-        <a
-          href="descubre-la-academia/?volver=/"
-          class="cta cta-principal"
-          style="margin-top:20px"
-        >
-          🦜 Conocer la Academia
-        </a>
+        <span class="bloque-pista">Toca el bloque o las guacamayas para entrar →</span>
       </div>
 
       <div class="descubre-academia__visual" aria-hidden="true">
         <img src="assets/identidad/guacamayas/guacamaya-azul-posada-01.png" alt="">
         <img src="assets/identidad/guacamayas/guacamaya-azul-posada-02.png" alt="">
       </div>
-    </section>
+    </a>
+
+    <a
+      class="superficie mi-camino-principal bloque-enlace"
+      href="mi-universo/mi-camino/"
+      aria-labelledby="titulo-mi-camino"
+    >
+      <div class="mi-camino-principal__contenido">
+        <span class="etiqueta-estado estado-verde">⭐ Tu punto de partida</span>
+        <h2 id="titulo-mi-camino">Continúa tu aventura</h2>
+        <p id="mensajeMiCamino" aria-live="polite">
+          Lía está mirando tu camino para mostrarte qué aventura te espera hoy.
+        </p>
+        <div class="camino-estado">
+          <span id="contadorMiCamino" class="camino-contador">🌱 Preparando tu camino…</span>
+          <span class="bloque-pista">Toca aquí o en la guacamaya →</span>
+        </div>
+      </div>
+
+      <div class="mi-camino-principal__visual" aria-hidden="true">
+        <img src="assets/identidad/guacamayas/guacamaya-azul-ilustracion-01.png" alt="">
+      </div>
+    </a>
 
     <div class="encabezado-seccion">
       <div class="icono-seccion">⭐</div>
@@ -989,8 +1181,8 @@
     <div class="encabezado-seccion">
       <div class="icono-seccion">🧭</div>
       <div>
-        <h2>Continúa tu aventura</h2>
-        <p>Habilidades, etapas y recursos para disfrutar aprendiendo.</p>
+        <h2>Explora más</h2>
+        <p>Calendarios y recursos para disfrutar aprendiendo.</p>
       </div>
     </div>
 
@@ -1043,7 +1235,7 @@
   <script>
     lucide.createIcons();
 
-    const enlaceDescubre = document.querySelector(".descubre-academia .cta");
+    const enlaceDescubre = document.querySelector(".descubre-academia");
     if (enlaceDescubre) {
       const baseAcademia = window.location.hostname.endsWith("github.io")
         ? "/academia-gloria"
@@ -1082,6 +1274,9 @@
     import { obtenerPerfil } from
       "./compartido/js/perfil-usuario.js";
 
+    import { Academia } from
+      "./compartido/api/academia.js";
+
     function aplicarPersonalizacion(perfil) {
       const nombreCompleto =
         String(perfil.nombre || perfil.nombreVisible || "Exploradora").trim();
@@ -1102,11 +1297,69 @@
         });
     }
 
+    function actualizarResumenMiCamino(tareas = []) {
+      const mensaje = document.getElementById("mensajeMiCamino");
+      const contador = document.getElementById("contadorMiCamino");
+      if (!mensaje || !contador) return;
+
+      const visibles = tareas.filter(tarea => tarea.visibleParaAlumno !== false);
+      const activas = visibles.filter(tarea =>
+        ["pendiente", "asignada", "en_curso", "necesita_ayuda", "vencida"].includes(tarea.estado)
+      );
+      const esperandoFamilia = visibles.filter(tarea =>
+        ["pendiente_validacion", "completada_pendiente_validacion"].includes(tarea.estado)
+      );
+      const enCurso = activas.find(tarea => tarea.estado === "en_curso");
+      const nombre = document.querySelector("[data-nombre-visible]")?.textContent || "Gloria";
+
+      if (enCurso) {
+        mensaje.textContent = `${nombre}, ya comenzaste “${enCurso.titulo || "una misión"}”. Puedes continuar justo donde la dejaste.`;
+        contador.textContent = activas.length === 1
+          ? "▶️ 1 misión en marcha"
+          : `▶️ ${activas.length} misiones por continuar`;
+        return;
+      }
+
+      if (activas.length > 0) {
+        const primera = activas[0];
+        mensaje.textContent = `${nombre}, Lía tiene ${activas.length === 1 ? "una misión preparada" : `${activas.length} misiones preparadas`} para ti. La primera es “${primera.titulo || "una nueva aventura"}”.`;
+        contador.textContent = activas.length === 1
+          ? "🌟 1 misión pendiente"
+          : `🌟 ${activas.length} misiones pendientes`;
+        return;
+      }
+
+      if (esperandoFamilia.length > 0) {
+        mensaje.textContent = `${nombre}, terminaste tus misiones. Ahora tu familia está revisando ${esperandoFamilia.length === 1 ? "tu avance" : "tus avances"}.`;
+        contador.textContent = esperandoFamilia.length === 1
+          ? "🎉 1 misión esperando validación"
+          : `🎉 ${esperandoFamilia.length} misiones esperando validación`;
+        return;
+      }
+
+      mensaje.textContent = `${nombre}, ¡todo está al día! Entra en Mi Camino para recordar tus logros y descubrir tu próxima aventura.`;
+      contador.textContent = "✨ Todo al día";
+    }
+
+    function iniciarResumenMiCamino() {
+      return Academia.tareas.observar(
+        actualizarResumenMiCamino,
+        error => {
+          console.warn("No se pudo cargar el resumen de Mi Camino.", error);
+          const mensaje = document.getElementById("mensajeMiCamino");
+          const contador = document.getElementById("contadorMiCamino");
+          if (mensaje) mensaje.textContent = "Entra en Mi Camino para ver tus misiones y continuar tu aventura.";
+          if (contador) contador.textContent = "🌱 Abrir Mi Camino";
+        }
+      );
+    }
+
     protegerPagina({
       loginUrl: "./login.html",
       onAuthenticated: async () => {
         const perfil = await obtenerPerfil();
         aplicarPersonalizacion(perfil);
+        iniciarResumenMiCamino();
 
         await iniciarPanelUsuario({
           contenedor: "[data-panel-usuario]",
