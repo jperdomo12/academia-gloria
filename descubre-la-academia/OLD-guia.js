@@ -5,9 +5,6 @@ const $ = id => document.getElementById(id);
 let slides = [];
 let currentIndex = 0;
 
-const GUACAMAYA_POSADA = "../assets/identidad/guacamayas/guacamaya-azul-posada-01.png";
-const GUACAMAYA_VOLANDO = "../assets/identidad/guacamayas/guacamaya-azul-posada-02.png";
-
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
     ? "/academia-gloria"
@@ -84,8 +81,8 @@ function esc(value=""){
 function renderVisual(slide){
   if(slide.visualType === "macaws"){
     return `<div class="guide-macaws" aria-hidden="true">
-      <img class="guide-macaw one" src="${GUACAMAYA_POSADA}" alt="">
-      <img class="guide-macaw two" src="${GUACAMAYA_VOLANDO}" alt="">
+      <img class="guide-macaw one" src="../assets/identidad/guacamayas/guacamaya-azul-posada-01.png" alt="">
+      <img class="guide-macaw two" src="../assets/identidad/guacamayas/guacamaya-azul-posada-02.png" alt="">
     </div>`;
   }
 
