@@ -553,25 +553,26 @@ Esta decisión convierte oficialmente a la Academia de Gloria en una plataforma 
 
 ---
 
+###  DECISION-014
 
-DECISION-014
-Nombre
+## Nombre
 
 Adopción de Git como sistema oficial de control de versiones
 
-Fecha
+**Fecha**
 
 Julio 2026
 
-Estado
+### Estado
 
 ✅ Aprobada
 
-Contexto
+
+### Contexto
 
 Tras completar la infraestructura Cloud, el proyecto alcanza un nivel de complejidad que requiere un control formal de versiones.
 
-Decisión
+### Decisión
 
 Se adopta Git como sistema oficial de control de versiones de la Academia.
 
@@ -590,6 +591,31 @@ Impacto
 Estratégico.
 
 A partir de la versión 2.0 Cloud, la evolución del proyecto quedará registrada mediante hitos de Git.
+
+---
+
+### DECISION-015
+
+## Nombre
+Catálogo de Assets desacoplado
+
+###  Estado
+⏸️ Pospuesta
+
+### Contexto
+Se evaluó la creación de un catálogo de assets mediante
+config/assets.json y un Asset Resolver para desacoplar los
+recursos físicos del código HTML.
+
+### Conclusión
+Tras analizar la arquitectura actual, se determinó que el
+beneficio obtenido no compensa la complejidad añadida.
+
+Se mantiene el uso de nombres descriptivos de archivos.
+
+Revisión futura
+Reevaluar únicamente si la cantidad de recursos compartidos
+o la necesidad de asignación dinámica lo justifican.
 
 ---
 

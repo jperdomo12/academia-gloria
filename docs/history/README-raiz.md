@@ -1,14 +1,14 @@
 # 📚 Documentación Oficial
 # Academia Gloria Valentina 🌈
 
-**Ruta oficial:** `docs/README.md`  
-**Proyecto:** Academia Gloria Valentina  
-**Versión del proyecto:** 2.3  
-**Etapa:** II — De aplicación a producto  
-**Versión del documento:** 2.0  
-**Estado:** Activo  
-**Última actualización:** 02/08/2026  
-**Propietario del proyecto:** Juan Perdomo  
+**Ruta oficial:** `docs/README.md`
+**Proyecto:** Academia Gloria Valentina
+**Versión del proyecto:** 2.3
+**Etapa:** II — De aplicación a producto
+**Versión del documento:** 2.0
+**Estado:** Activo
+**Última actualización:** 02/08/2026
+**Propietario del proyecto:** Juan Perdomo
 
 ---
 
@@ -87,7 +87,7 @@ Ejemplos:
 | `ROADMAP.md` | ¿Qué construiremos después? |
 | `DECISION_LOG.md` | ¿Por qué se tomó una decisión? |
 | `RELEASE_NOTES.md` | ¿Qué se entregó en cada versión relevante? |
-| Documentos de `modelos/` | ¿Cómo funciona un dominio concreto? |
+| Documentos de `models/` | ¿Cómo funciona un dominio concreto? |
 | Documentos de `standards/` | ¿Cómo debemos construir o mantener una solución? |
 | Documentos de `vision/` | ¿Qué visión o experiencia queremos alcanzar? |
 
@@ -148,7 +148,7 @@ docs/
 │
 ├── vision/
 │
-├── modelos/
+├── models/
 │
 └── standards/
 ```
@@ -179,9 +179,9 @@ Responde principalmente a:
 
 Los documentos de `vision/` no deben confundirse con especificaciones técnicas ni con el estado implementado.
 
-## 4.3 `modelos/`
+## 4.3 `models/`
 
-Contiene modelos funcionales, conceptuales y de datos.
+Contiene models funcionales, conceptuales y de datos.
 
 Responde principalmente a:
 
@@ -216,11 +216,11 @@ Responde principalmente a:
 | Las decisiones tomadas y sus motivos | `project/DECISION_LOG.md` |
 | Las entregas y novedades publicadas | `project/RELEASE_NOTES.md` |
 | La migración de 5.º de Primaria | `project/MIGRACION_5TO.md` |
-| El modelo general de misiones | `modelos/MODELO_MISIONES.md` |
-| La integración de misiones con lectura | `modelos/MODELO_MISIONES_LECTURA.md` |
-| El modelo de navegación | `modelos/MODELO_NAVEGACION.md` |
-| El árbol de navegación | `modelos/ARBOL_NAVEGACION.md` |
-| Los roles actuales y futuros | `modelos/MODELO_ROLES.md` |
+| El modelo general de misiones | `models/MODELO_MISIONES.md` |
+| La integración de misiones con lectura | `models/MODELO_MISIONES_LECTURA.md` |
+| El modelo de navegación | `models/MODELO_NAVEGACION.md` |
+| El árbol de navegación | `models/ARBOL_NAVEGACION.md` |
+| Los roles actuales y futuros | `models/MODELO_ROLES.md` |
 | El vocabulario oficial del proyecto | `standards/GLOSARIO.md` |
 | Las instrucciones generales para una IA | `standards/IA_SYSTEM_PROMPT.md` |
 | La guía global de desarrollo | `standards/GUIA_DESARROLLO_ULTRA_PRO_v2.0_Cloud.md` |
@@ -231,7 +231,7 @@ Responde principalmente a:
 | La visión de Mi Camino | `vision/08_MI_CAMINO_v1.0.md` |
 | La visión de Mis Tareas | `vision/09_MIS_TAREAS_v1.0.md` |
 
-> Los nombres exactos deben mantenerse sincronizados con los archivos reales del repositorio.  
+> Los nombres exactos deben mantenerse sincronizados con los archivos reales del repositorio.
 > Cuando un archivo se renombre, este mapa debe actualizarse.
 
 ---
@@ -251,7 +251,7 @@ Responde principalmente a:
 
 1. Leer este `README.md`.
 2. Consultar `MASTER_ARCHITECTURE_AND_AI_HANDOFF...md`.
-3. Identificar el modelo correspondiente en `modelos/`.
+3. Identificar el modelo correspondiente en `models/`.
 4. Revisar el estándar aplicable en `standards/`.
 5. Consultar la visión correspondiente en `vision/`, cuando exista.
 6. Comparar siempre la documentación con el código actual.
@@ -349,7 +349,7 @@ Usar rutas relativas desde `docs/` siempre que sea posible.
 Ejemplo:
 
 ```markdown
-Consulta [Modelo de Misiones](modelos/MODELO_MISIONES.md).
+Consulta [Modelo de Misiones](models/MODELO_MISIONES.md).
 ```
 
 No copiar contenido completo cuando basta con una referencia.

@@ -88,7 +88,7 @@ academia-gloria/
 | **etapas/** | Organización temporal del aprendizaje: verano, preparación de curso, vacaciones y transiciones. |
 | **adicionales/** | Juegos, música, lecturas y recursos complementarios. |
 | **docs/** | Documentación funcional, técnica, estratégica y de gestión del proyecto. |
-| **OLD/** | Contenido histórico conservado como referencia durante la transición entre versiones. |
+| **history/** | Contenido histórico conservado como referencia durante la transición entre versiones. |
 | **.vscode/** | Configuración recomendada para Visual Studio Code. |
 
 ---

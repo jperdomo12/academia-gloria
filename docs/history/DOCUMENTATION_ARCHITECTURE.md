@@ -4,12 +4,12 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_ARCHITECTURE.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.0 |
 | **Estado** | Activo |
-| **Fecha de aprobación** | 04/08/2026 |
-| **Última actualización** | 04/08/2026 |
-| **Propietario** | Arquitectura Documental |
-| **Responsables** | Product Owner + AI Collaborator |
+| **Fecha de aprobación** | 03/08/2026 |
+| **Última actualización** | 03/08/2026 |
+| **Propietario** | Arquitectura del Producto |
+| **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
 | **Ámbito** | Organización y gobierno del conocimiento oficial del producto |
 
 ## Documentos relacionados
@@ -19,12 +19,7 @@
 | `docs/README.md` | Portal de entrada, inventario operativo y rutas de lectura. |
 | `docs/DOCUMENTATION_STANDARD.md` | Reglas para crear, revisar, versionar y mantener documentos. |
 | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | Fuente fundacional de identidad, misión y principios del producto. |
-| `docs/ai/AI_COLLABORATION_GUIDE.md` | Modelo oficial de colaboración entre personas, documentación e IA. |
-| `docs/ai/AI_CHAT_BOOTSTRAP.md` | Protocolo de incorporación rápida de una nueva IA al proyecto. |
-| `docs/project/PROJECT_ROLES.md` | Roles, responsabilidades, autoridad y asignación vigente. |
-| `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | Ciclo operativo oficial de los cambios del producto. |
-| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | Arquitectura conceptual de la experiencia del producto. |
-| `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | Identidad visual, emocional y Personajes Oficiales. |
+| `docs/project/MASTER_ARCHITECTURE_AND_AI_HANDOFF_actualizado_v1.1.md` | Arquitectura global y continuidad técnica y funcional. |
 | `docs/project/PROJECT_MAP_v1.1.md` | Organización física del repositorio. |
 | `docs/project/DECISION_LOG.md` | Registro transversal de decisiones relevantes. |
 | `docs/project/ROADMAP.md` | Evolución prevista del producto. |
@@ -37,7 +32,6 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Evolución menor de la versión 1.0. Incorpora oficialmente los dominios `ai/`, `product/` y `history/`; actualiza documentos relacionados, responsabilidades y gobierno; y alinea la arquitectura con la estructura documental vigente. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Primera versión aprobada. Consolida principios, tipos, dominios, propiedad, relaciones, ciclo de vida, adopción incremental y tratamiento del conocimiento histórico. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta consolidada construida a partir de la documentación y estructura real del producto. |
 
@@ -282,20 +276,17 @@ Conserva lo ocurrido y su contexto: decisiones, notas de versión, migraciones, 
 
 ## 6. Dominios y organización física
 
-La estructura física vigente es:
+La estructura física vigente se mantiene:
 
 ```text
 docs/
 ├── README.md
 ├── DOCUMENTATION_ARCHITECTURE.md
 ├── DOCUMENTATION_STANDARD.md
-├── ai/
-├── history/
-├── models/
-├── product/
 ├── project/
-├── standards/
-└── vision/
+├── vision/
+├── models/
+└── standards/
 ```
 
 La estructura se ampliará solo cuando exista una necesidad real y sostenida que no pueda resolverse con claridad dentro de los dominios actuales.
@@ -310,74 +301,56 @@ Contiene únicamente documentos transversales que gobiernan o permiten navegar t
 
 No debe convertirse en una colección general de archivos.
 
-### 6.2. `ai/`
+### 6.2. `project/`
 
-Contiene la documentación propietaria de la colaboración con IA:
+Contiene gobierno, arquitectura global, planificación, continuidad e historia transversal del producto.
 
-- modelo de colaboración;
-- incorporación de nuevos chats o modelos;
-- reglas transversales de actuación;
-- continuidad y handoff relacionados con IA.
+Aquí pertenecen documentos que responden, entre otras, a estas preguntas:
 
-No contiene especificaciones funcionales del producto ni documentación propia de un proveedor concreto.
+- ¿qué es el producto y cuál es su estado global?;
+- ¿cómo está construido?;
+- ¿hacia dónde evoluciona?;
+- ¿qué decisiones se han tomado?;
+- ¿cómo puede continuarlo otra persona o IA?
 
-### 6.3. `history/`
+Un documento fundacional puede residir aquí sin que su ubicación física cambie su tipo documental.
 
-Contiene documentos sustituidos o históricos que conservan valor de contexto, trazabilidad o aprendizaje.
+### 6.3. `vision/`
 
-No forma parte de la ruta normal de lectura y no constituye fuente oficial vigente.
+Contiene visión pedagógica, funcional, emocional, narrativa y de experiencia.
 
-Cada documento histórico debe indicar, cuando sea posible:
-
-- su estado;
-- motivo de archivo;
-- fecha;
-- y documento vigente que lo sustituye.
-
-`history/` no es una papelera documental.
+Describe intención y futuro deseado, no necesariamente el estado implementado.
 
 ### 6.4. `models/`
 
 Contiene representaciones funcionales y conceptuales: estados, reglas, relaciones y estructuras de dominio.
 
-### 6.5. `product/`
-
-Contiene arquitectura y conocimiento estructural propio del producto:
-
-- experiencia;
-- identidad;
-- recursos;
-- personajes;
-- relaciones estables entre componentes o capacidades.
-
-No contiene planificación operativa ni gobierno del proyecto.
-
-### 6.6. `project/`
-
-Contiene gobierno, planificación, continuidad y operación transversal del proyecto.
-
-Aquí pertenecen documentos que responden, entre otras, a estas preguntas:
-
-- ¿qué es el producto y cuál es su estado global?;
-- ¿hacia dónde evoluciona?;
-- ¿qué decisiones se han tomado?;
-- ¿qué roles existen?;
-- ¿cómo se ejecuta el ciclo de desarrollo?;
-- ¿cómo puede continuarlo otra persona o IA?
-
-Un documento fundacional puede residir aquí sin que su ubicación física cambie su tipo documental.
-
-### 6.7. `standards/`
+### 6.5. `standards/`
 
 Contiene estándares, guías, glosario e instrucciones generales de construcción y colaboración.
 
-Las especificaciones podrán residir inicialmente en `models/` cuando describan un dominio concreto. Si crecen de forma sostenida, se evaluará un dominio propio sin crear estructuras anticipadamente.
+Las especificaciones futuras podrán residir inicialmente aquí si son pocas y están estrechamente ligadas a un estándar. Si crecen de forma sostenida, se evaluará un dominio propio.
 
-### 6.8. `vision/`
+### 6.6. Dominio histórico y futura carpeta `history/`
 
-Contiene visión pedagógica, funcional, emocional, narrativa y de experiencia.
+El **tipo documental Histórico** existe desde esta versión, pero no se crea todavía una carpeta adicional.
 
-Describe intención y futuro deseado, no necesariamente el estado implementado.
+Los documentos históricos actuales permanecen en su dominio natural, con estado explícito y trazabilidad.
+
+Se evaluará crear:
+
+```text
+docs/history/
+```
+
+cuando se cumpla al menos una de estas condiciones:
+
+- exista un volumen sostenido de documentos sustituidos o cerrados;
+- la documentación histórica dificulte localizar la documentación activa;
+- sea necesario separar claramente archivos de gobierno vigente y memoria histórica;
+- una jornada de actualización documental justifique la migración.
+
+La carpeta no se creará solo por anticipación. Si se crea, no será un lugar de descarte: cada documento deberá indicar origen, motivo de archivo y sustituto vigente cuando exista.
 
 ---
 
@@ -540,15 +513,13 @@ Si alguna respuesta esencial no está clara, el documento no debe crearse todav�
 
 ## 13. Gobierno y responsabilidades
 
-### 13.1. Roles responsables
+### 13.1. Arquitectos del producto
 
-El **Product Owner** y el **AI Collaborator** actúan conjuntamente en el análisis y construcción de la arquitectura del producto.
+Juan Perdomo y la IA colaboradora actúan conjuntamente en el análisis y construcción de la arquitectura del producto.
 
-El Product Owner mantiene la propiedad, visión, priorización y decisión final sobre la Academia.
+Juan mantiene la propiedad, visión y decisión final sobre la Academia.
 
-El AI Collaborator debe analizar el contexto completo, preservar decisiones, detectar duplicidades y contradicciones, proponer soluciones sostenibles, distinguir hechos de propuestas y construir una vez aprobado el alcance.
-
-Las responsabilidades detalladas y la asignación vigente se mantienen en `docs/project/PROJECT_ROLES.md`.
+La IA colaboradora debe analizar el contexto completo, preservar decisiones, detectar duplicidades y contradicciones, proponer soluciones sostenibles, distinguir hechos de propuestas y construir una vez aprobado el alcance.
 
 ### 13.2. Metodología de decisión
 
@@ -563,11 +534,11 @@ Como norma práctica:
 5. se construye;
 6. se valida y consolida.
 
-Cuando el análisis deje de aportar información nueva, cualquiera de los roles participantes debe promover una decisión explícita.
+Cuando el análisis deje de aportar información nueva, cualquiera de los arquitectos debe promover una decisión explícita.
 
 ### 13.3. Evidencias de uso
 
-Las observaciones del uso real del Primary Learner y futuros alumnos son una fuente relevante de evolución.
+Las observaciones del uso real de Gloria y futuros alumnos son una fuente relevante de evolución.
 
 Permiten validar si la experiencia se comprende, motiva, promueve autonomía, invita a regresar y cumple su propósito.
 
@@ -617,26 +588,17 @@ Toda evolución conservará:
 
 | ID | Decisión | Estado | Impacto |
 |---|---|---|---|
-| DA-001 | Mantener una estructura física de `docs/` basada en dominios claros y ampliarla solo ante una necesidad real y sostenida. | Aprobada | Organización documental |
-| DA-002 | Incorporar oficialmente los dominios `docs/ai/` y `docs/product/`. | Aprobada | Especialización y propiedad documental |
-| DA-003 | Formalizar `docs/history/` como dominio para documentos históricos o sustituidos, fuera de la ruta normal de lectura. | Aprobada | Preservación y trazabilidad |
+| DA-001 | Mantener la estructura física actual de `docs/` y ampliarla solo ante una necesidad real y sostenida. | Aprobada | Organización documental |
+| DA-002 | Reconocer el tipo documental Histórico sin crear todavía una carpeta específica. | Aprobada | Preservación y trazabilidad |
+| DA-003 | Evaluar `docs/history/` cuando el volumen o la localización de documentos históricos lo justifique. | Aprobada | Evolución de estructura |
 | DA-004 | Ubicar `Documentos relacionados` en la cabecera de los documentos que lo requieran. | Aprobada | Navegabilidad y SSOT |
 | DA-005 | Incorporar `Decisiones adoptadas` en documentos que consoliden decisiones arquitectónicas, normativas o de producto. | Aprobada | Gobierno y trazabilidad |
 | DA-006 | Aplicar el estándar de forma inmediata a documentos nuevos e incrementalmente a documentos existentes revisados. | Aprobada | Adopción sostenible |
-| DA-007 | Referenciar roles estables en lugar de nombres personales, manteniendo la asignación vigente en `PROJECT_ROLES.md`. | Aprobada | Continuidad y mantenibilidad |
-| DA-008 | Evolucionar los documentos aprobados mediante cambios mínimos sobre la versión vigente, evitando reescrituras sin justificación. | Aprobada | Preservación del conocimiento |
 
 ---
 
 ## DECISIÓN
 
-| Campo | Valor |
-|---|---|
-| **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 04/08/2026 |
-| **Aprobado por** | Product Owner |
-| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.0 |
-| **Sustituido por** | — |
-
-**Impacto:** Arquitectura Documental · Gobierno del Conocimiento · Continuidad del Producto · SSOT · Navegación
+**Estado:** 🟢 Aprobado
+**Próximo paso:** `DOCUMENTATION_STANDARD.md`
+**Impacto:** Arquitectura Documental · Gobierno del Conocimiento · Continuidad del Producto
