@@ -1,9 +1,8 @@
-/******************************************************************************
- * Academia Gloria
+/****************************************************************************
+ * Academia Gloria Valentina
  * Archivo: compartido/js/panel-usuario.js
- * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.6
- ******************************************************************************/
+ * Menú unificado del alumno · Versión 2.1
+ ****************************************************************************/
 
 import {
   obtenerPerfil,
@@ -11,20 +10,24 @@ import {
   obtenerAvatar,
   obtenerSaludo,
   cerrarSesion,
-  observarSesion
+  observarSesion,
+  estaAutenticado
 } from "./perfil-usuario.js";
+
+import {
+  NAVEGACION_ACADEMIA,
+  DESCUBRE_ACADEMIA
+} from "../modelos/navegacion.js";
 
 const CONFIGURACION_PREDETERMINADA = Object.freeze({
   contenedor: "[data-panel-usuario]",
   loginUrl: null,
-  perfilUrl: null,
-  mostrarPerfil: true,
   mostrarDescubreAcademia: true,
   mostrarEspacioPersonal: true,
-  mostrarConfiguracion: true,
-  mostrarLogros: true,
   mostrarCamino: true,
-  mostrarTareas: true
+  mostrarTareas: true,
+  mostrarLogros: true,
+  mostrarConfiguracion: true
 });
 
 let configuracionActiva = { ...CONFIGURACION_PREDETERMINADA };
@@ -32,6 +35,7 @@ let panelRaiz = null;
 let botonPrincipal = null;
 let menu = null;
 let manejadorDocumento = null;
+let manejadorEscape = null;
 let cancelarObservacionSesion = null;
 
 function obtenerBaseAcademia() {
@@ -50,64 +54,6 @@ function obtenerRutaActual() {
   return `${window.location.pathname}${window.location.search}${window.location.hash}`;
 }
 
-function asegurarEstilosPanelAvanzado() {
-  if (document.getElementById("panel-usuario-estilos-v16")) return;
-
-  const estilo = document.createElement("style");
-  estilo.id = "panel-usuario-estilos-v16";
-  estilo.textContent = `
-    .panel-usuario__menu{
-      max-height:calc(100vh - 24px);
-      overflow-y:auto;
-      overscroll-behavior:contain;
-      scrollbar-width:thin;
-      z-index:9999;
-    }
-
-    .panel-usuario__grupo-boton{
-      width:100%;
-      justify-content:flex-start;
-    }
-
-    .panel-usuario__grupo-flecha{
-      margin-left:auto;
-      transition:transform .18s ease;
-    }
-
-    .panel-usuario__grupo-boton[aria-expanded="true"] .panel-usuario__grupo-flecha{
-      transform:rotate(180deg);
-    }
-
-    .panel-usuario__subgrupo{
-      margin:4px 8px 8px;
-      padding:7px;
-      border:2px solid #ede9fe;
-      border-radius:16px;
-      background:linear-gradient(145deg,#faf5ff,#f8fafc);
-    }
-
-    .panel-usuario__subgrupo[hidden]{display:none!important}
-
-    .panel-usuario__subgrupo .panel-usuario__opcion{
-      min-height:48px;
-      border-radius:12px;
-    }
-
-    .panel-usuario__opcion small{
-      display:block;
-      margin-top:2px;
-      font-size:.72rem;
-      opacity:.72;
-    }
-
-    @media(max-height:620px){
-      .panel-usuario__identidad{padding-top:12px;padding-bottom:12px}
-      .panel-usuario__opcion{min-height:46px}
-    }
-  `;
-  document.head.appendChild(estilo);
-}
-
 function escaparHTML(valor = "") {
   return String(valor)
     .replaceAll("&", "&amp;")
@@ -123,15 +69,39 @@ function crearElementoDesdeHTML(html) {
   return plantilla.content.firstElementChild;
 }
 
+function cerrarGrupos(excepto = null, alcance = panelRaiz) {
+  alcance?.querySelectorAll("[data-menu-grupo]").forEach(grupo => {
+    if (grupo === excepto) return;
+    const boton = grupo.querySelector(":scope > [data-menu-grupo-boton]");
+    const contenido = grupo.querySelector(":scope > [data-menu-grupo-contenido]");
+    if (!boton || !contenido) return;
+    boton.setAttribute("aria-expanded", "false");
+    contenido.hidden = true;
+  });
+}
+
+function activarAcordeon() {
+  panelRaiz.querySelectorAll("[data-menu-grupo-boton]").forEach(boton => {
+    boton.addEventListener("click", evento => {
+      evento.stopPropagation();
+
+      const grupo = boton.closest("[data-menu-grupo]");
+      const contenido = grupo.querySelector(":scope > [data-menu-grupo-contenido]");
+      const abierto = boton.getAttribute("aria-expanded") === "true";
+      const contenedorHermanos = grupo.parentElement;
+
+      cerrarGrupos(grupo, contenedorHermanos);
+      boton.setAttribute("aria-expanded", String(!abierto));
+      contenido.hidden = abierto;
+    });
+  });
+}
+
 function limpiarPosicionMenu() {
   if (!menu) return;
-  menu.style.removeProperty("position");
-  menu.style.removeProperty("top");
-  menu.style.removeProperty("bottom");
-  menu.style.removeProperty("left");
-  menu.style.removeProperty("right");
-  menu.style.removeProperty("width");
-  menu.style.removeProperty("max-height");
+  for (const propiedad of ["position", "top", "bottom", "left", "right", "width", "max-height"]) {
+    menu.style.removeProperty(propiedad);
+  }
 }
 
 function posicionarMenuEnVentana() {
@@ -139,14 +109,11 @@ function posicionarMenuEnVentana() {
 
   const margen = 12;
   const rect = botonPrincipal.getBoundingClientRect();
-  const ancho = Math.min(310, window.innerWidth - margen * 2);
+  const ancho = Math.min(350, window.innerWidth - margen * 2);
   const espacioAbajo = window.innerHeight - rect.bottom - margen;
   const espacioArriba = rect.top - margen;
-  const abrirHaciaArriba = espacioAbajo < 330 && espacioArriba > espacioAbajo;
-  const alturaDisponible = Math.max(
-    180,
-    abrirHaciaArriba ? espacioArriba - 8 : espacioAbajo - 8
-  );
+  const abrirHaciaArriba = espacioAbajo < 390 && espacioArriba > espacioAbajo;
+  const alturaDisponible = Math.max(220, abrirHaciaArriba ? espacioArriba - 8 : espacioAbajo - 8);
 
   let izquierda = rect.right - ancho;
   izquierda = Math.max(margen, Math.min(izquierda, window.innerWidth - ancho - margen));
@@ -166,18 +133,21 @@ function posicionarMenuEnVentana() {
   }
 }
 
-function cerrarMenu() {
+function cerrarMenu({ devolverFoco = false } = {}) {
   if (!menu || !botonPrincipal) return;
 
   menu.hidden = true;
   limpiarPosicionMenu();
+  cerrarGrupos();
   botonPrincipal.setAttribute("aria-expanded", "false");
   panelRaiz?.classList.remove("panel-usuario--abierto");
+  if (devolverFoco) botonPrincipal.focus();
 }
 
 function abrirMenu() {
   if (!menu || !botonPrincipal) return;
 
+  cerrarGrupos();
   menu.hidden = false;
   posicionarMenuEnVentana();
   botonPrincipal.setAttribute("aria-expanded", "true");
@@ -194,97 +164,101 @@ function renderizarEstadoCarga(contenedor) {
     <div class="panel-usuario panel-usuario--cargando" aria-busy="true">
       <div class="panel-usuario__avatar">✨</div>
       <div class="panel-usuario__texto">
-        <span class="panel-usuario__saludo">Preparando tu espacio...</span>
         <strong class="panel-usuario__nombre">Academia Gloria</strong>
+        <span class="panel-usuario__saludo">Preparando tu espacio...</span>
       </div>
     </div>
   `;
 }
 
+function renderEnlace(nodo, claseExtra = "") {
+  if (nodo.proximo) {
+    return `
+      <button class="panel-usuario__opcion panel-usuario__opcion--proxima ${claseExtra}" type="button" disabled>
+        <span aria-hidden="true">${escaparHTML(nodo.icono || "•")}</span>
+        <span>${escaparHTML(nodo.titulo)}</span>
+      </button>
+    `;
+  }
+
+  return `
+    <a class="panel-usuario__opcion ${claseExtra}" href="${escaparHTML(construirUrlAcademia(`/${nodo.ruta || ""}`))}">
+      <span aria-hidden="true">${escaparHTML(nodo.icono || "•")}</span>
+      <span>${escaparHTML(nodo.titulo)}</span>
+    </a>
+  `;
+}
+
+function renderGrupo(nodo, nivel = 1) {
+  const hijos = Array.isArray(nodo.hijos) ? nodo.hijos : [];
+  const claseNivel = nivel > 1 ? "panel-usuario__grupo--interno" : "";
+
+  return `
+    <section class="panel-usuario__grupo ${claseNivel}" data-menu-grupo>
+      <button class="panel-usuario__opcion panel-usuario__grupo-boton" type="button"
+              aria-expanded="false" data-menu-grupo-boton>
+        <span aria-hidden="true">${escaparHTML(nodo.icono || "•")}</span>
+        <span>${escaparHTML(nodo.titulo)}</span>
+        <span class="panel-usuario__grupo-flecha" aria-hidden="true">⌄</span>
+      </button>
+      <div class="panel-usuario__subgrupo" data-menu-grupo-contenido hidden>
+        ${nodo.ruta ? renderEnlace({ ...nodo, titulo: `Abrir ${nodo.titulo}`, hijos: undefined }, "panel-usuario__opcion--abrir") : ""}
+        ${hijos.map(hijo => Array.isArray(hijo.hijos) && hijo.hijos.length
+          ? renderGrupo(hijo, nivel + 1)
+          : renderEnlace(hijo)).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function construirMenu() {
-  const items = [];
+  const secciones = [];
+
+  if (configuracionActiva.mostrarEspacioPersonal) {
+    const opciones = [];
+    if (configuracionActiva.mostrarCamino) {
+      opciones.push({ id: "mi-camino", titulo: "Mi Camino", icono: "🌱", ruta: "mi-universo/mi-camino/" });
+    }
+    if (configuracionActiva.mostrarTareas) {
+      opciones.push({ id: "mis-tareas", titulo: "Mis Tareas", icono: "📌", ruta: "mi-universo/mis-tareas/", proximo: true });
+    }
+    if (configuracionActiva.mostrarLogros) {
+      opciones.push({ id: "mis-logros", titulo: "Mis Logros", icono: "🏆", ruta: "mi-universo/mis-logros/", proximo: true });
+    }
+    if (configuracionActiva.mostrarConfiguracion) {
+      opciones.push({ id: "configuracion", titulo: "Configuración", icono: "⚙️", ruta: "configuracion/", proximo: true });
+    }
+
+    secciones.push(renderGrupo({
+      id: "espacio-personal",
+      titulo: "Mi espacio personal",
+      icono: "👤",
+      hijos: opciones
+    }));
+  }
+
+  secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
+  secciones.push(...NAVEGACION_ACADEMIA.map(nodo => renderGrupo(nodo)));
+  secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
 
   if (configuracionActiva.mostrarDescubreAcademia) {
     const volver = encodeURIComponent(obtenerRutaActual());
-    const urlDescubre = `${construirUrlAcademia("/descubre-la-academia/")}?volver=${volver}`;
-
-    items.push(`
-      <a class="panel-usuario__opcion" href="${escaparHTML(urlDescubre)}">
-        <span aria-hidden="true">🌈</span>
-        <span>
-          Descubre la Academia
-          <small>Conoce este proyecto</small>
-        </span>
-      </a>
-    `);
+    const descubre = {
+      ...DESCUBRE_ACADEMIA,
+      ruta: `${DESCUBRE_ACADEMIA.ruta}?volver=${volver}`
+    };
+    secciones.push(renderEnlace(descubre, "panel-usuario__opcion--destacada"));
+    secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
   }
 
-  if (configuracionActiva.mostrarEspacioPersonal) {
-    items.push(`
-      <button class="panel-usuario__opcion panel-usuario__grupo-boton"
-              type="button"
-              aria-expanded="false"
-              data-panel-usuario-grupo>
-        <span aria-hidden="true">🪪</span>
-        <span>
-          Mi espacio personal
-          <small>Camino, tareas, logros y preferencias</small>
-        </span>
-        <span class="panel-usuario__grupo-flecha" aria-hidden="true">⌄</span>
-      </button>
-
-      <div class="panel-usuario__subgrupo" data-panel-usuario-subgrupo hidden>
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">✨</span>
-          <span>Mi Espacio<small>Perfil personal · Próximamente</small></span>
-        </button>
-
-        ${
-          configuracionActiva.mostrarCamino
-            ? `
-              <a class="panel-usuario__opcion"
-                 href="${escaparHTML(
-                   `${construirUrlAcademia("/mi-universo/mi-camino/")}?volver=${encodeURIComponent(obtenerRutaActual())}`
-                 )}">
-                <span aria-hidden="true">🌱</span>
-                <span>
-                  Mi Camino
-                  <small>Asignaciones, progreso y motivación</small>
-                </span>
-              </a>
-            `
-            : ""
-        }
-
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">📌</span>
-          <span>Mis Tareas<small>Asignaciones · Próximamente</small></span>
-        </button>
-
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">🏆</span>
-          <span>Mis Logros<small>Insignias y reconocimientos · Próximamente</small></span>
-        </button>
-
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">⚙️</span>
-          <span>Configuración<small>Perfil y preferencias · Próximamente</small></span>
-        </button>
-      </div>
-    `);
-  }
-
-  items.push(`
-    <div class="panel-usuario__separador" role="separator"></div>
-    <button class="panel-usuario__opcion panel-usuario__opcion--salir"
-            type="button"
-            data-panel-usuario-salir>
+  secciones.push(`
+    <button class="panel-usuario__opcion panel-usuario__opcion--salir" type="button" data-panel-usuario-salir>
       <span aria-hidden="true">🚪</span>
       <span>Cerrar sesión</span>
     </button>
   `);
 
-  return items.join("");
+  return secciones.join("");
 }
 
 async function construirPanel(contenedor) {
@@ -301,114 +275,78 @@ async function construirPanel(contenedor) {
   const tipoUsuarioSeguro = escaparHTML(perfil.tipoUsuario || "alumno");
 
   panelRaiz = crearElementoDesdeHTML(`
-    <div class="panel-usuario"
-         data-tipo-usuario="${tipoUsuarioSeguro}">
-      <button class="panel-usuario__boton"
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded="false"
-              aria-label="Abrir el panel de ${nombreSeguro}">
+    <div class="panel-usuario" data-tipo-usuario="${tipoUsuarioSeguro}">
+      <button class="panel-usuario__boton" type="button" aria-haspopup="menu"
+              aria-expanded="false" aria-label="Abrir el menú de ${nombreSeguro}">
         <span class="panel-usuario__avatar" aria-hidden="true">${avatarSeguro}</span>
-
         <span class="panel-usuario__texto">
           <strong class="panel-usuario__nombre">${nombreSeguro}</strong>
           <span class="panel-usuario__saludo">${saludoSeguro}</span>
         </span>
-
         <span class="panel-usuario__flecha" aria-hidden="true">⌄</span>
       </button>
 
-      <div class="panel-usuario__menu"
-           role="menu"
-           hidden>
+      <div class="panel-usuario__menu" role="menu" hidden>
         <div class="panel-usuario__identidad">
-          <span class="panel-usuario__avatar panel-usuario__avatar--menu"
-                aria-hidden="true">${avatarSeguro}</span>
+          <span class="panel-usuario__avatar panel-usuario__avatar--menu" aria-hidden="true">${avatarSeguro}</span>
           <div>
             <strong>${nombreSeguro}</strong>
             <small>${saludoSeguro}</small>
           </div>
         </div>
-
         ${construirMenu()}
       </div>
     </div>
   `);
 
   contenedor.replaceChildren(panelRaiz);
-
   botonPrincipal = panelRaiz.querySelector(".panel-usuario__boton");
   menu = panelRaiz.querySelector(".panel-usuario__menu");
 
-  const botonGrupo = panelRaiz.querySelector("[data-panel-usuario-grupo]");
-  const subgrupo = panelRaiz.querySelector("[data-panel-usuario-subgrupo]");
+  activarAcordeon();
 
-  botonGrupo?.addEventListener("click", (evento) => {
-    evento.stopPropagation();
-    const abierto = botonGrupo.getAttribute("aria-expanded") === "true";
-    botonGrupo.setAttribute("aria-expanded", String(!abierto));
-    subgrupo.hidden = abierto;
-  });
-
-  botonPrincipal.addEventListener("click", (evento) => {
+  botonPrincipal.addEventListener("click", evento => {
     evento.stopPropagation();
     alternarMenu();
   });
 
-  panelRaiz
-    .querySelector("[data-panel-usuario-salir]")
-    .addEventListener("click", async (evento) => {
-      const botonSalir = evento.currentTarget;
+  panelRaiz.querySelector("[data-panel-usuario-salir]").addEventListener("click", async evento => {
+    const botonSalir = evento.currentTarget;
+    botonSalir.disabled = true;
+    botonSalir.innerHTML = '<span aria-hidden="true">⏳</span><span>Cerrando sesión...</span>';
 
-      botonSalir.disabled = true;
-      botonSalir.innerHTML = `
-        <span aria-hidden="true">⏳</span>
-        <span>Cerrando sesión...</span>
-      `;
-
-      try {
-        await cerrarSesion();
-        window.location.replace(configuracionActiva.loginUrl);
-      } catch (error) {
-        console.error("No se pudo cerrar la sesión.", error);
-        botonSalir.disabled = false;
-        botonSalir.innerHTML = `
-          <span aria-hidden="true">🚪</span>
-          <span>Cerrar sesión</span>
-        `;
-        alert("No se pudo cerrar la sesión.");
-      }
-    });
-
-  manejadorDocumento = (evento) => {
-    if (!panelRaiz.contains(evento.target)) {
-      cerrarMenu();
+    try {
+      await cerrarSesion();
+      window.location.replace(configuracionActiva.loginUrl);
+    } catch (error) {
+      console.error("No se pudo cerrar la sesión.", error);
+      botonSalir.disabled = false;
+      botonSalir.innerHTML = '<span aria-hidden="true">🚪</span><span>Cerrar sesión</span>';
+      alert("No se pudo cerrar la sesión.");
     }
+  });
+
+  manejadorDocumento = evento => {
+    if (!panelRaiz.contains(evento.target)) cerrarMenu();
+  };
+  manejadorEscape = evento => {
+    if (evento.key === "Escape" && !menu.hidden) cerrarMenu({ devolverFoco: true });
   };
 
   document.addEventListener("click", manejadorDocumento);
+  document.addEventListener("keydown", manejadorEscape);
   window.addEventListener("resize", cerrarMenu, { passive: true });
   window.addEventListener("scroll", cerrarMenu, { passive: true });
-
-  document.addEventListener("keydown", (evento) => {
-    if (evento.key === "Escape") {
-      cerrarMenu();
-      botonPrincipal?.focus();
-    }
-  });
 }
 
 function destruirPanel() {
-  if (manejadorDocumento) {
-    document.removeEventListener("click", manejadorDocumento);
-    manejadorDocumento = null;
-  }
+  if (manejadorDocumento) document.removeEventListener("click", manejadorDocumento);
+  if (manejadorEscape) document.removeEventListener("keydown", manejadorEscape);
+  if (cancelarObservacionSesion) cancelarObservacionSesion();
 
-  if (cancelarObservacionSesion) {
-    cancelarObservacionSesion();
-    cancelarObservacionSesion = null;
-  }
-
+  manejadorDocumento = null;
+  manejadorEscape = null;
+  cancelarObservacionSesion = null;
   panelRaiz = null;
   botonPrincipal = null;
   menu = null;
@@ -418,60 +356,58 @@ async function iniciarPanelUsuario(opciones = {}) {
   destruirPanel();
 
   const base = obtenerBaseAcademia();
-
   configuracionActiva = {
     ...CONFIGURACION_PREDETERMINADA,
     loginUrl: `${base}/login.html`,
-    perfilUrl: `${base}/perfil/`,
     ...opciones
   };
 
-  asegurarEstilosPanelAvanzado();
-
-  const contenedor = document.querySelector(
-    configuracionActiva.contenedor
-  );
-
+  const contenedor = document.querySelector(configuracionActiva.contenedor);
   if (!contenedor) {
-    console.warn(
-      `No se encontró el contenedor del Panel de Usuario: ${configuracionActiva.contenedor}`
-    );
+    console.warn(`No se encontró el contenedor del Panel de Usuario: ${configuracionActiva.contenedor}`);
     return null;
   }
 
   renderizarEstadoCarga(contenedor);
 
-  cancelarObservacionSesion = observarSesion(async (usuario) => {
-    if (!usuario) {
+  // La primera renderización se realiza de forma determinista.
+  // Así el menú no depende de que onAuthStateChanged vuelva a emitir
+  // después de que la cabecera global haya creado su contenedor.
+  try {
+    const autenticado = await estaAutenticado();
+
+    if (!autenticado) {
       window.location.replace(configuracionActiva.loginUrl);
-      return;
+      return contenedor;
     }
 
-    try {
-      await construirPanel(contenedor);
-    } catch (error) {
-      console.error("No se pudo cargar el Panel de Usuario.", error);
-
-      contenedor.innerHTML = `
-        <div class="panel-usuario panel-usuario--error">
-          <div class="panel-usuario__avatar">⚠️</div>
-          <div class="panel-usuario__texto">
-            <span class="panel-usuario__saludo">No pudimos cargar tu perfil</span>
-            <strong class="panel-usuario__nombre">Recarga la página</strong>
-          </div>
+    await construirPanel(contenedor);
+  } catch (error) {
+    console.error("No se pudo cargar el Panel de Usuario.", error);
+    contenedor.innerHTML = `
+      <div class="panel-usuario panel-usuario--error">
+        <div class="panel-usuario__avatar">⚠️</div>
+        <div class="panel-usuario__texto">
+          <strong class="panel-usuario__nombre">Recarga la página</strong>
+          <span class="panel-usuario__saludo">No pudimos cargar tu perfil</span>
         </div>
-      `;
+      </div>
+    `;
+    return contenedor;
+  }
+
+  // Después de construir el panel, el observador queda únicamente
+  // para reaccionar a un cierre de sesión posterior.
+  cancelarObservacionSesion = observarSesion(usuario => {
+    if (!usuario) {
+      window.location.replace(configuracionActiva.loginUrl);
     }
   });
 
   return contenedor;
 }
 
-export {
-  iniciarPanelUsuario,
-  cerrarMenu,
-  destruirPanel
-};
+export { iniciarPanelUsuario, cerrarMenu, destruirPanel };
 
 export const PanelUsuario = Object.freeze({
   iniciar: iniciarPanelUsuario,

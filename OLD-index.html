@@ -46,6 +46,53 @@
       padding:20px 0 38px;
     }
 
+    .hero-panel-usuario{
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-start;
+      width:100%;
+      margin:0 0 10px;
+      position:relative;
+      z-index:8;
+    }
+
+    .hero-panel-usuario .panel-usuario{
+      width:min(225px,100%);
+    }
+
+    .hero-panel-usuario .panel-usuario__boton,
+    .hero-panel-usuario .panel-usuario--cargando,
+    .hero-panel-usuario .panel-usuario--error{
+      width:100%;
+      min-width:0;
+    }
+
+    .hero-panel-usuario .panel-usuario__menu{
+      width:min(290px,calc(100vw - 32px));
+    }
+
+    .gran-titulo-linea{
+      display:block;
+    }
+
+    .gran-titulo-nombre{
+      margin-top:4px;
+    }
+
+    @media(max-width:900px){
+      .hero-panel-usuario{
+        justify-content:flex-start;
+        margin-bottom:14px;
+      }
+    }
+
+    @media(max-width:560px){
+      .hero-panel-usuario .panel-usuario{
+        width:100%;
+      }
+    }
+
+
 
     .descubre-academia{
       position:relative;
@@ -923,28 +970,28 @@
 
     /* Hero más plano, conservando su identidad */
     .hero{
-      min-height:300px;
-      padding:20px 30px;
-      gap:22px;
+      min-height:350px;
+      padding:25px 34px;
+      gap:25px;
     }
 
-    .pildoras{margin-bottom:10px}
+    .pildoras{margin-bottom:13px}
     .gran-titulo{
-      margin-bottom:8px;
-      font-size:clamp(2.65rem,5.1vw,4.5rem);
+      margin-bottom:11px;
+      font-size:clamp(2.8rem,5.45vw,4.8rem);
     }
-    .hero-texto{font-size:1.03rem;line-height:1.45}
-    .hero-visual{gap:7px}
-    .bienvenida{padding:18px 21px 17px;border-radius:23px}
-    .bienvenida h2{font-size:clamp(1.75rem,2.6vw,2.45rem);margin-bottom:5px}
-    .bienvenida p{font-size:.94rem;line-height:1.4}
+    .hero-texto{font-size:1.08rem;line-height:1.5}
+    .hero-visual{gap:9px}
+    .bienvenida{padding:22px 23px 20px;border-radius:25px}
+    .bienvenida h2{font-size:clamp(1.85rem,2.8vw,2.7rem);margin-bottom:7px}
+    .bienvenida p{font-size:.98rem;line-height:1.45}
     .metodo{gap:8px}
     .paso{
       display:flex;
       align-items:center;
       justify-content:center;
       gap:8px;
-      padding:8px 10px;
+      padding:9px 10px;
       border-radius:15px;
     }
     .paso span{font-size:1.25rem}
@@ -1012,6 +1059,8 @@
       </div>
 
       <div class="hero-visual">
+        <div class="hero-panel-usuario" data-panel-usuario></div>
+
         <div class="bienvenida">
           <small>¡QUÉ ALEGRÍA VERTE, <span data-nombre-visible>EXPLORADORA</span>!</small>
           <h2>Aprender puede ser bonito ✨</h2>
@@ -1265,6 +1314,9 @@
     import { protegerPagina } from
       "./compartido/js/auth-guard.js";
 
+    import { iniciarPanelUsuario } from
+      "./compartido/js/panel-usuario.js";
+
     import { obtenerPerfil } from
       "./compartido/js/perfil-usuario.js";
 
@@ -1355,6 +1407,16 @@
         aplicarPersonalizacion(perfil);
         iniciarResumenMiCamino();
 
+        await iniciarPanelUsuario({
+          contenedor: "[data-panel-usuario]",
+          loginUrl: "./login.html",
+
+          mostrarEspacio: true,
+          mostrarDescubreAcademia: true,
+          mostrarCamino: true,
+          mostrarConfiguracion: true,
+          mostrarLogros: true
+        });
       }
     });
 
