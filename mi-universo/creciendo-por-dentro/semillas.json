@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "modulo": "creciendo-por-dentro",
+  "familias": [
+    {
+      "id": "comunicacion",
+      "nombre": "Comunicación",
+      "icono": "💬"
+    },
+    {
+      "id": "emociones",
+      "nombre": "Emociones",
+      "icono": "💜"
+    },
+    {
+      "id": "autoestima",
+      "nombre": "Autoestima",
+      "icono": "✨"
+    },
+    {
+      "id": "relaciones",
+      "nombre": "Relaciones",
+      "icono": "🤝"
+    }
+  ],
+  "semillas": [
+    {
+      "id": "aprendo-a-decir-lo-que-siento",
+      "titulo": "Aprendo a decir lo que siento",
+      "subtitulo": "Organizo mis ideas y hablo con claridad y respeto.",
+      "familia": "comunicacion",
+      "tipoSituacion": "colegio",
+      "emociones": [
+        "enfado",
+        "confusion",
+        "nervios",
+        "tristeza"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 8,
+      "activo": true,
+      "recomendada": true,
+      "portada": {
+        "icono": "🌱",
+        "ilustracion": "✏️",
+        "fondo": "menta"
+      },
+      "bienvenida": {
+        "titulo": "Hoy practicaremos cómo decir lo que sentimos",
+        "mensaje": "A veces algo nos molesta y sabemos lo que queremos decir, pero las palabras no salen enseguida. Lo pensaremos paso a paso.",
+        "lia": "No hay respuestas perfectas. Puedes tomarte tu tiempo y yo estaré contigo."
+      },
+      "situacion": {
+        "titulo": "El lápiz",
+        "texto": "Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso.",
+        "ilustracion": "🧒🏽 ✏️ 🧒🏻",
+        "audioTexto": "Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso."
+      },
+      "pasos": [
+        {
+          "id": "describir",
+          "orden": 1,
+          "titulo": "¿Qué ocurrió?",
+          "ayuda": "Primero contamos solamente lo que pasó, como si fuéramos reporteras.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "d1",
+              "texto": "Mi compañero cogió mi lápiz sin preguntarme.",
+              "recomendada": true
+            },
+            {
+              "id": "d2",
+              "texto": "Mi compañero es malo.",
+              "recomendada": false
+            },
+            {
+              "id": "d3",
+              "texto": "Todo salió fatal.",
+              "recomendada": false
+            }
+          ],
+          "otraRespuesta": true,
+          "liaSiNecesitaApoyo": "Esa frase cuenta lo que piensas. ¿Buscamos también una frase que diga exactamente qué ocurrió?"
+        },
+        {
+          "id": "expresar",
+          "orden": 2,
+          "titulo": "¿Cómo podrías sentirte?",
+          "ayuda": "Podemos sentir más de una emoción al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "enfadada",
+              "texto": "Enfadada",
+              "icono": "😠"
+            },
+            {
+              "id": "confundida",
+              "texto": "Confundida",
+              "icono": "😕"
+            },
+            {
+              "id": "nerviosa",
+              "texto": "Nerviosa",
+              "icono": "😟"
+            },
+            {
+              "id": "triste",
+              "texto": "Triste",
+              "icono": "😢"
+            },
+            {
+              "id": "no-segura",
+              "texto": "No estoy segura",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "solicitar",
+          "orden": 3,
+          "titulo": "¿Qué te gustaría pedir?",
+          "ayuda": "Una petición clara ayuda a la otra persona a comprender lo que necesitas.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "s1",
+              "texto": "Que me devuelva el lápiz."
+            },
+            {
+              "id": "s2",
+              "texto": "Que me pregunte antes de cogerlo."
+            },
+            {
+              "id": "s3",
+              "texto": "Que espere a que termine."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "consecuencia",
+          "orden": 4,
+          "titulo": "¿Qué podría mejorar?",
+          "ayuda": "No podemos asegurar el resultado, pero sí explicar qué esperamos que ocurra.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "c1",
+              "texto": "Podremos seguir trabajando tranquilos."
+            },
+            {
+              "id": "c2",
+              "texto": "Nos entenderemos mejor."
+            },
+            {
+              "id": "c3",
+              "texto": "Podrá saber qué necesito."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Cuando {describir}, me siento {expresar}. Me gustaría {solicitar}. Así {consecuencia}.",
+      "desc": {
+        "mostrarAAlumno": false,
+        "nombre": "DESC",
+        "pasos": {
+          "D": "Describir",
+          "E": "Expresar",
+          "S": "Solicitar o sugerir",
+          "C": "Consecuencia"
+        }
+      },
+      "cierre": {
+        "titulo": "Has plantado una Semilla",
+        "mensaje": "Has organizado lo que ocurrió, cómo te sentiste, qué querías pedir y qué podía mejorar.",
+        "lia": "No siempre es fácil decir lo que sentimos. Hoy lo has practicado con claridad y respeto.",
+        "frase": "Mi voz merece ser escuchada.",
+        "crecimiento": "brote"
+      }
+    }
+  ]
+}

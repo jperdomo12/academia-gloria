@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#16a34a">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/iconos/icono-principal.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png?v=2">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png?v=2">
+  <title>Crear misión piloto · Creciendo por dentro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Outfit,sans-serif;background:linear-gradient(145deg,#ecfdf5,#eff6ff,#faf5ff);color:#253047}
+    main{width:min(760px,calc(100% - 28px));margin:60px auto;background:white;border:2px solid #bbf7d0;border-radius:28px;padding:28px;box-shadow:0 22px 55px rgba(30,64,175,.12)}
+    h1{font-size:clamp(34px,6vw,56px);margin:0 0 12px;color:#15803d}.box{padding:18px;border-radius:20px;background:#f0fdf4;margin:18px 0}
+    button,a{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border:0;border-radius:16px;font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+    button{background:linear-gradient(90deg,#16a34a,#0284c7);color:white}a{background:#eef2ff;color:#4f46e5}.status{margin-top:16px;padding:14px;border-radius:14px;background:#eff6ff;font-weight:800;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<main>
+  <div>🌱 Herramienta temporal del piloto</div>
+  <h1>Crear misión de Gloria</h1>
+  <p>Esta página crea una única misión para completar la Semilla <strong>“Aprendo a decir lo que siento”</strong>.</p>
+  <div class="box">
+    <strong>Misión:</strong> Practico cómo decir lo que siento<br>
+    <strong>Cantidad:</strong> 1 Semilla<br>
+    <strong>Semilla:</strong> Aprendo a decir lo que siento
+  </div>
+  <button id="createMission" type="button">🌟 Crear misión piloto</button>
+  <a href="./index.html">Volver al módulo</a>
+  <div id="status" class="status">Esperando confirmación.</div>
+</main>
+<script type="module">
+  import { Academia } from "../../compartido/api/academia.js";
+  import { auth } from "../../compartido/firebase/firebase-config.js";
+
+  const button = document.getElementById("createMission");
+  const status = document.getElementById("status");
+
+  await auth.authStateReady();
+  if (!auth.currentUser) {
+    window.location.replace("/academia-gloria/login.html");
+  }
+
+  button.onclick = async () => {
+    button.disabled = true;
+    status.textContent = "Creando misión...";
+    try {
+      const misionId = await Academia.tareas.crear({
+        titulo:"Practico cómo decir lo que siento",
+        descripcion:"Completa la Semilla “Aprendo a decir lo que siento”.",
+        tipo:"cantidad_actividades",
+        modulo:"creciendo-por-dentro",
+        destinoUrl:"/mi-universo/creciendo-por-dentro/",
+        objetivo:"Practicar una forma clara y respetuosa de expresar lo que siento.",
+        criterioFinalizacion:"Completar la Semilla asignada.",
+        criterioCumplimiento:{
+          tipo:"cantidad",
+          modulo:"creciendo-por-dentro",
+          evidenciaTipo:"semilla_completada",
+          cantidadObjetivo:1,
+          filtros:{
+            semillasIds:["aprendo-a-decir-lo-que-siento"]
+          }
+        },
+        requiereRevision:true,
+        tiempoEstimadoMinutos:10,
+        prioridad:"normal",
+        estado:"pendiente",
+        visibleParaAlumno:true,
+        presentacionAlumno:{
+          icono:"🌱",
+          tituloMision:"Practico cómo decir lo que siento",
+          descripcionMision:"Completa una Semilla para organizar tus ideas y practicar con tu voz.",
+          mensaje:"Lía estará contigo paso a paso."
+        },
+        progreso:{
+          cantidadActual:0,
+          cantidadObjetivo:1,
+          evidenciaIds:[],
+          intentos:0
+        }
+      });
+
+      const destino =
+        `/mi-universo/creciendo-por-dentro/?misionId=${encodeURIComponent(misionId)}`;
+
+      status.innerHTML =
+        `✅ Misión creada correctamente.\n\nID: ${misionId}\n\n` +
+        `<a href="${destino}">Abrir ahora la misión piloto</a>`;
+      button.textContent = "✅ Misión creada";
+    } catch (error) {
+      console.error(error);
+      status.textContent = `No se pudo crear la misión.\n${error.message}`;
+      button.disabled = false;
+    }
+  };
+</script>
+</body>
+</html>

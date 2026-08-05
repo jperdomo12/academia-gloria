@@ -1,4 +1,16 @@
 # Documentación Oficial
+
+
+## Antes de comenzar...
+
+Si quieres comprender el propósito y la filosofía de la Academia Gloria Valentina, te recomendamos comenzar leyendo:
+
+📖 `docs/FOUNDATION.md`
+
+Este documento explica la visión, los principios y la razón de ser del proyecto.
+##
+
+
 ## Academia Gloria Valentina
 
 | Campo | Valor |
