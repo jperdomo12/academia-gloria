@@ -5,6 +5,50 @@ import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
 const MAX_RECORDING_SECONDS = 90;
+const SEED_IMAGE_BASE =
+  "../../assets/imagenes/creciendo-por-dentro/semillas/";
+
+function seedImageUrl(seed) {
+  const resource = String(seed?.recursos?.imagen || "").trim();
+  if (!resource) return "";
+
+  if (
+    resource.startsWith("/") ||
+    resource.startsWith("http://") ||
+    resource.startsWith("https://")
+  ) {
+    return resource;
+  }
+
+  return `${SEED_IMAGE_BASE}${resource}`;
+}
+
+function imageMarkup(seed, className = "") {
+  const source = seedImageUrl(seed);
+  if (!source) return "";
+
+  return `
+    <figure class="seed-illustration ${className}">
+      <img
+        src="${escapeHtml(source)}"
+        alt="${escapeHtml(
+          seed?.situacion?.texto ||
+          seed?.titulo ||
+          "Ilustración de la Semilla"
+        )}"
+        loading="eager"
+      >
+    </figure>
+  `;
+}
+
+function activateImageFallback(container = document) {
+  container.querySelectorAll(".seed-illustration img").forEach(image => {
+    image.addEventListener("error", () => {
+      image.closest(".seed-illustration")?.classList.add("hidden");
+    }, { once:true });
+  });
+}
 
 let catalogo = { familias: [], semillas: [] };
 let perfil = null;
@@ -176,7 +220,16 @@ function renderCatalog() {
     const saved = sessionForSeed(item.id);
     return `
       <article class="seed-card">
-        <div class="seed-card__icon">${escapeHtml(item.portada?.icono || "🌱")}</div>
+        ${seedImageUrl(item)
+          ? `<div class="seed-card__image">
+               <img
+                 src="${escapeHtml(seedImageUrl(item))}"
+                 alt="${escapeHtml(item.situacion?.texto || item.titulo)}"
+                 loading="lazy"
+               >
+             </div>`
+          : `<div class="seed-card__icon">${escapeHtml(item.portada?.icono || "🌱")}</div>`
+        }
         <div class="badges">
           <span class="badge">${escapeHtml(item.familia || "Semilla")}</span>
           <span class="badge">⏱️ ${Number(item.duracionEstimada || 5)} min</span>
@@ -190,6 +243,7 @@ function renderCatalog() {
       </article>
     `;
   }).join("");
+  activateImageFallback($("seedCatalog"));
   $("seedCatalog").querySelectorAll("[data-start-seed]").forEach(button => {
     button.onclick = () => startSeed(button.dataset.startSeed);
   });
@@ -240,7 +294,8 @@ function renderWelcome() {
   const data = semilla.bienvenida || {};
   $("experienceContent").innerHTML = `
     <section class="scene">
-      <div class="scene__art">🌱🦜</div>
+      ${imageMarkup(semilla, "seed-illustration--welcome")}
+      <div class="scene__art ${seedImageUrl(semilla) ? "hidden" : ""}">🌱🦜</div>
       <div class="eyebrow">${escapeHtml(semilla.titulo)}</div>
       <h2>${escapeHtml(data.titulo || semilla.titulo)}</h2>
       <p>${escapeHtml(data.mensaje || "")}</p>
@@ -250,6 +305,7 @@ function renderWelcome() {
         <button id="leaveSeed" class="btn btn--light" type="button">Ahora no</button>
       </div>
     </section>`;
+  activateImageFallback($("experienceContent"));
   $("continueSeed").onclick = () => { stepIndex++; renderExperience(); };
   $("leaveSeed").onclick = () => { showPanel("catalogPanel"); renderCatalog(); };
 }
@@ -260,13 +316,17 @@ function renderSituation() {
     <section class="scene">
       <div class="eyebrow">La situación</div>
       <h2>${escapeHtml(data.titulo || "")}</h2>
-      <div class="scene__art">${escapeHtml(data.ilustracion || "🌈")}</div>
-      <p>${escapeHtml(data.texto || "")}</p>
+      ${imageMarkup(semilla, "seed-illustration--situation")}
+      <div class="scene__art ${seedImageUrl(semilla) ? "hidden" : ""}">
+        ${escapeHtml(data.ilustracion || "🌈")}
+      </div>
+      <p class="scene__situation-text">${escapeHtml(data.texto || "")}</p>
       <div class="actions" style="justify-content:center">
         <button id="listenSituation" class="btn btn--light" type="button">🔊 Escuchar</button>
         <button id="continueSituation" class="btn btn--primary" type="button">Continuar</button>
       </div>
     </section>`;
+  activateImageFallback($("experienceContent"));
   $("listenSituation").onclick = () => speak(data.audioTexto || data.texto);
   $("continueSituation").onclick = () => { stepIndex++; renderExperience(); };
 }
@@ -361,11 +421,37 @@ function normalizePhrase(value = "") {
 }
 
 function builtResponse() {
-  const d = normalizePhrase(chosenText("describir"));
-  const e = normalizePhrase(chosenText("expresar")).toLowerCase();
-  const s = normalizePhrase(chosenText("solicitar")).replace(/^que\s+/i,"").toLowerCase();
-  const c = normalizePhrase(chosenText("consecuencia")).toLowerCase();
-  return `Cuando ${d.charAt(0).toLowerCase() + d.slice(1)}, me siento ${e}. Me gustaría ${s}. Así ${c}.`;
+  const originalIds = ["describir","expresar","solicitar","consecuencia"];
+  const usesOriginalTemplate = originalIds.every(id =>
+    semilla?.pasos?.some(step => step.id === id)
+  );
+
+  if (usesOriginalTemplate) {
+    const d = normalizePhrase(chosenText("describir"));
+    const e = normalizePhrase(chosenText("expresar")).toLowerCase();
+    const s = normalizePhrase(chosenText("solicitar"))
+      .replace(/^que\s+/i,"")
+      .toLowerCase();
+    const c = normalizePhrase(chosenText("consecuencia")).toLowerCase();
+
+    return `Cuando ${
+      d.charAt(0).toLowerCase() + d.slice(1)
+    }, me siento ${e}. Me gustaría ${s}. Así ${c}.`;
+  }
+
+  const template = String(
+    semilla?.plantillaRespuesta ||
+    semilla?.pasos?.map(step => `{${step.id}}`).join(". ") ||
+    ""
+  );
+
+  return template
+    .replace(/\{([^}]+)\}/g, (_, stepId) =>
+      normalizePhrase(chosenText(stepId))
+    )
+    .replace(/\s+/g," ")
+    .replace(/\s+([.,;:!?])/g,"$1")
+    .trim();
 }
 
 function renderComposer() {
