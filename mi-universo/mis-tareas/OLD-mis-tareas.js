@@ -45,33 +45,6 @@ function formatearFecha(valor) {
   }).format(fecha);
 }
 
-function formatearFechaEstado(tarea = {}) {
-  const resultado = resultadoTarea(tarea);
-  const valor =
-    resultado.fechaFinalizacion ||
-    tarea.fechaEstado ||
-    tarea.actualizadaEn ||
-    tarea.updatedAt ||
-    tarea.creadaEn;
-
-  if (!valor) return "Fecha no disponible";
-
-  const fecha =
-    typeof valor?.toDate === "function"
-      ? valor.toDate()
-      : new Date(valor);
-
-  if (Number.isNaN(fecha.getTime())) {
-    return String(valor);
-  }
-
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  }).format(fecha);
-}
-
 
 function fechaHoraLocalAhora() {
   const fecha = new Date();
@@ -226,11 +199,8 @@ function renderTareas() {
           </div>
 
           <div class="tarea-card__resumen-estado">
-            <span class="tarea-estado-con-fecha">
-              <span class="tarea-estado estado-${escapar(tarea.estado)}">
-                ${escapar(textoEstado(tarea.estado))}
-              </span>
-              <small>${escapar(formatearFechaEstado(tarea))}</small>
+            <span class="tarea-estado estado-${escapar(tarea.estado)}">
+              ${escapar(textoEstado(tarea.estado))}
             </span>
             <span class="tarea-card__flecha" aria-hidden="true">⌄</span>
           </div>
@@ -284,27 +254,17 @@ function renderTareas() {
             ? `<section class="evidencias-mision" data-evidencias-mision="${escapar(tarea.id)}">
                  <div class="evidencias-mision__cabecera">
                    <div>
-                     <strong>📖 Trabajo realizado</strong>
-                     <p>Consulta las actividades relacionadas y su detalle antes de cerrar la misión.</p>
+                     <strong>📚 Evidencias de aprendizaje</strong>
+                     <p>Consulta las actividades relacionadas antes de cerrar la misión.</p>
                    </div>
                    <button class="btn secundaria"
-                           data-action="${tarea.modulo === "detectives" ? "review" : "evidence"}"
+                           data-action="evidence"
                            data-id="${escapar(tarea.id)}">
-                     ${
-                       tarea.modulo === "detectives"
-                         ? "📖 Ver trabajo realizado"
-                         : evidenciasAbiertas.has(tarea.id)
-                           ? "Ocultar trabajo realizado"
-                           : "Ver trabajo realizado"
-                     }
+                     ${evidenciasAbiertas.has(tarea.id) ? "Ocultar evidencias" : "Ver evidencias"}
                    </button>
                  </div>
-                 ${
-                   tarea.modulo === "detectives"
-                     ? ""
-                     : `<div class="evidencias-mision__lista ${evidenciasAbiertas.has(tarea.id) ? "" : "hidden"}"
-                            data-evidencias-lista="${escapar(tarea.id)}"></div>`
-                 }
+                 <div class="evidencias-mision__lista ${evidenciasAbiertas.has(tarea.id) ? "" : "hidden"}"
+                      data-evidencias-lista="${escapar(tarea.id)}"></div>
                </section>`
             : ""
         }
@@ -355,13 +315,7 @@ function renderTareas() {
           ${
             destino
               ? `<button class="btn accion-iniciar"
-                    data-action="${
-                      tarea.modulo === "detectives" &&
-                      ["pendiente_validacion", "completada_pendiente_validacion", "completada"]
-                        .includes(tarea.estado)
-                        ? "review"
-                        : "start"
-                    }"
+                    data-action="start"
                     data-id="${escapar(tarea.id)}"
                     data-url="${escapar(destino)}">
                    ${
@@ -369,11 +323,7 @@ function renderTareas() {
                      ["pendiente_validacion", "completada_pendiente_validacion", "completada"]
                        .includes(tarea.estado)
                        ? "📚 Ver lecturas de la misión"
-                       : tarea.modulo === "detectives" &&
-                         ["pendiente_validacion", "completada_pendiente_validacion", "completada"]
-                           .includes(tarea.estado)
-                         ? "📖 Ver trabajo realizado"
-                         : "▶️ Abrir actividad"
+                       : "▶️ Abrir actividad"
                    }
                  </button>`
               : ""
@@ -463,15 +413,15 @@ async function mostrarEvidenciasMision(id, button) {
     evidenciasAbiertas.delete(id);
     contenedor.classList.add("hidden");
     contenedor.innerHTML = "";
-    button.textContent = "Ver trabajo realizado";
+    button.textContent = "Ver evidencias";
     return;
   }
 
   evidenciasAbiertas.add(id);
   contenedor.classList.remove("hidden");
   contenedor.innerHTML =
-    '<div class="evidencias-mision__cargando">Lía está preparando el trabajo realizado…</div>';
-  button.textContent = "Ocultar trabajo realizado";
+    '<div class="evidencias-mision__cargando">Lía está buscando las evidencias…</div>';
+  button.textContent = "Ocultar evidencias";
 
   try {
     const evidencias = await Academia.tareas.leerEvidencias(id);
@@ -528,7 +478,7 @@ async function mostrarEvidenciasMision(id, button) {
   } catch (error) {
     console.error("No se pudieron cargar las evidencias.", error);
     evidenciasAbiertas.delete(id);
-    button.textContent = "Ver trabajo realizado";
+    button.textContent = "Ver evidencias";
     contenedor.innerHTML =
       '<div class="evidencias-mision__vacia">No fue posible cargar las evidencias. Revisa la conexión.</div>';
   }
@@ -640,22 +590,6 @@ async function ejecutarAccion(button) {
 
     if (action === "evidence") {
       await mostrarEvidenciasMision(id, button);
-      return;
-    }
-
-    if (action === "review") {
-      const destino = new URL(
-        "../aventuras-matematicas/detectives/trabajo-realizado.html",
-        window.location.href
-      );
-
-      destino.searchParams.set("misionId", id);
-      destino.searchParams.set(
-        "volver",
-        `${window.location.pathname}${window.location.search}`
-      );
-
-      window.location.href = destino.href;
       return;
     }
 
@@ -1351,7 +1285,7 @@ function recogerFormulario() {
               ? { nivel: nivelLectura }
               : {}
           }
-        : null,
+        : undefined,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -1497,8 +1431,12 @@ function configurarFormulario() {
     event.preventDefault();
 
     const mensaje = $("mensajeFormulario");
+    const guardarButton = $("guardarTarea");
     const id = $("tareaId").value.trim();
     const datos = recogerFormulario();
+
+    guardarButton.disabled = true;
+    guardarButton.setAttribute("aria-busy", "true");
 
     if (
       datos.modulo === "detectives" &&
@@ -1509,6 +1447,8 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de historias para la misión.";
       $("cantidadHistorias").focus();
+      guardarButton.disabled = false;
+      guardarButton.removeAttribute("aria-busy");
       return;
     }
 
@@ -1521,6 +1461,8 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de lecturas para la misión.";
       $("cantidadLecturas").focus();
+      guardarButton.disabled = false;
+      guardarButton.removeAttribute("aria-busy");
       return;
     }
 
@@ -1552,6 +1494,9 @@ function configurarFormulario() {
       mensaje.classList.add("error");
       mensaje.textContent =
         `No se pudo guardar la tarea: ${error.message}`;
+    } finally {
+      guardarButton.disabled = false;
+      guardarButton.removeAttribute("aria-busy");
     }
   });
 }

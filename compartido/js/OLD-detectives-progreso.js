@@ -112,10 +112,6 @@ export async function registrarResolucionDetective(uid,registro){
       intentosOperacion:Number(registro.intentosOperacion || 0),
       intentosOperandos:Number(registro.intentosOperandos || 0),
       intentosResultado:Number(registro.intentosResultado || 0),
-      respuestaComprension:String(registro.respuestaComprension || ""),
-      respuestaComprensionTexto:String(registro.respuestaComprensionTexto || ""),
-      respuestaDescubrimiento:String(registro.respuestaDescubrimiento || ""),
-      respuestaDescubrimientoTexto:String(registro.respuestaDescubrimientoTexto || ""),
       pistasUtilizadas:Number(registro.pistasUtilizadas || 0),
       operacionIndicada:String(registro.operacionIndicada || ""),
       operacionCorrecta:String(registro.operacionCorrecta || ""),
@@ -128,15 +124,6 @@ export async function registrarResolucionDetective(uid,registro){
       resultadoIndicado:Number(registro.resultadoIndicado),
       resultadoCorrecto:Number(registro.resultadoCorrecto),
       pasos:Array.isArray(registro.pasos) ? registro.pasos : [],
-      plantillaId:String(registro.plantillaId || ""),
-      intentosMinimos:Number(registro.intentosMinimos || 0),
-      intentosAdicionales:Number(registro.intentosAdicionales || 0),
-      tiempoActivoSegundos:Number(registro.tiempoActivoSegundos || 0),
-      tiempoActivoPorSegmento:
-        registro.tiempoActivoPorSegmento &&
-        typeof registro.tiempoActivoPorSegmento === "object"
-          ? registro.tiempoActivoPorSegmento
-          : {},
       completadaEn:serverTimestamp()
     });
   });
@@ -160,13 +147,6 @@ export async function obtenerSesionesHistoria(uid,historiaId){
   return snapshot.docs.map(normalizeSession);
 }
 
-export async function obtenerSesionHistoria(uid,historiaId,sesionId){
-  const id = String(sesionId || "").trim();
-  if(!id) return null;
-  const snapshot = await getDoc(doc(sessionsRef(uid,historiaId),id));
-  return snapshot.exists() ? normalizeSession(snapshot) : null;
-}
-
 async function borrarSubcoleccionSesiones(uid,historiaId){
   const snapshot = await getDocs(sessionsRef(uid,historiaId));
   const chunks = [];
@@ -186,48 +166,7 @@ export async function reiniciarProgresoHistoria(uid,historiaId){
 }
 
 export async function eliminarSesionHistoria(uid,historiaId,sesionId){
-  const userId = requireUid(uid);
-  const storyId = String(historiaId);
-  await deleteDoc(doc(sessionsRef(userId,storyId),String(sesionId)));
-
-  const remaining = await getDocs(
-    query(sessionsRef(userId,storyId),orderBy("completadaEn","desc"))
-  );
-
-  if(remaining.empty){
-    await deleteDoc(progressRef(userId,storyId));
-    return;
-  }
-
-  const sessions = remaining.docs.map(item => item.data());
-  const latest = sessions[0];
-  const oldest = sessions[sessions.length - 1];
-  const attempts = sessions
-    .map(item => Number(item.intentosTotales || 0))
-    .filter(value => value > 0);
-
-  const current = await getDoc(progressRef(userId,storyId));
-  const currentData = current.exists() ? current.data() : {};
-
-  await setDoc(progressRef(userId,storyId),{
-    historiaId:storyId,
-    nivel:Number(latest.nivel || currentData.nivel || 0),
-    tema:String(latest.tema || currentData.tema || ""),
-    tipo:String(latest.tipo || currentData.tipo || "simple"),
-    primeraResolucion:oldest.completadaEn || currentData.primeraResolucion || serverTimestamp(),
-    ultimaResolucion:latest.completadaEn || serverTimestamp(),
-    vecesCompletada:sessions.length,
-    mejorIntentos:attempts.length ? Math.min(...attempts) : null,
-    ultimoIntentos:Number(latest.intentosTotales || 0),
-    pistasUltimaSesion:Number(latest.pistasUtilizadas || 0),
-    operacionCorrecta:String(latest.operacionCorrecta || ""),
-    ultimosOperandosIndicados:Array.isArray(latest.operandosIndicados)
-      ? latest.operandosIndicados.map(Number)
-      : [],
-    ultimoResultadoIndicado:Number(latest.resultadoIndicado),
-    estado:String(currentData.estado || "en_practica"),
-    actualizadaEn:serverTimestamp()
-  },{merge:false});
+  await deleteDoc(doc(sessionsRef(uid,historiaId),String(sesionId)));
 }
 
 export async function eliminarHistorialDetectives(uid){

@@ -770,16 +770,13 @@
     }
 
     .substep-pill.done{
-      background:#f1f5f9;
-      color:#94a3b8;
-      border-color:#e2e8f0;
+      background:#dcfce7;
+      color:#166534;
     }
 
     .substep-pill.current{
-      background:#dcfce7;
-      color:#166534;
-      border-color:#86efac;
-      box-shadow:0 0 0 3px rgba(34,197,94,.12);
+      background:#ede9fe;
+      color:#6d28d9;
     }
 
     @media(max-width:760px){
@@ -1821,7 +1818,8 @@
       box.classList.remove("hidden");
       const pills = item.pasos.map((step,index) => {
         const status =
-          index === state.stepIndex ? "current" : "done";
+          index < state.stepIndex ? "done" :
+          index === state.stepIndex ? "current" : "";
         return `<span class="substep-pill ${status}">Paso ${index + 1}</span>`;
       }).join("");
 
@@ -1841,9 +1839,7 @@
         intentosResultado:0,
         pistasUtilizadas:0,
         respuestaComprension:"",
-        respuestaComprensionTexto:"",
         respuestaDescubrimiento:"",
-        respuestaDescubrimientoTexto:"",
         pasos:[]
       };
     }
@@ -2010,17 +2006,9 @@
       if(state.stage === 1){
         state.caseStats.intentosComprension += 1;
         state.caseStats.respuestaComprension = state.respuestaSeleccionada;
-        state.caseStats.respuestaComprensionTexto =
-          questionData.opciones.find(option =>
-            option.id === state.respuestaSeleccionada
-          )?.texto || "";
       }else{
         state.caseStats.intentosDescubrimiento += 1;
         state.caseStats.respuestaDescubrimiento = state.respuestaSeleccionada;
-        state.caseStats.respuestaDescubrimientoTexto =
-          questionData.opciones.find(option =>
-            option.id === state.respuestaSeleccionada
-          )?.texto || "";
       }
       actualizarContadorIntentos();
 

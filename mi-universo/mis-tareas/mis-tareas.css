@@ -1217,3 +1217,19 @@ footer{
   opacity:.72;
   cursor:wait;
 }
+
+
+/* Fecha visible junto al estado en la tarjeta comprimida */
+.tarea-estado-con-fecha{
+  display:grid;
+  justify-items:end;
+  gap:5px;
+}
+.tarea-estado-con-fecha small{
+  color:#64748b;
+  font-size:.74rem;
+  font-weight:800;
+}
+@media(max-width:680px){
+  .tarea-estado-con-fecha{justify-items:start}
+}

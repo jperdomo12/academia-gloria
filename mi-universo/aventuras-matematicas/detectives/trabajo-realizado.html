@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6d28d9">
+  <title>Trabajo realizado | Detectives de Problemas</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/iconos/icono-principal.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png?v=2">
+  <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css">
+
+  <style>
+    *{box-sizing:border-box}
+    :root{--ink:#253047;--muted:#64748b;--violet:#6d28d9;--pink:#db2777;--line:#e2e8f0}
+    body{margin:0;min-height:100vh;font-family:"Outfit",system-ui,sans-serif;color:var(--ink);
+      background:radial-gradient(circle at 8% 8%,rgba(59,130,246,.16),transparent 25%),
+      radial-gradient(circle at 92% 10%,rgba(236,72,153,.15),transparent 25%),
+      linear-gradient(145deg,#eff6ff,#fff7ed,#faf5ff)}
+    .wrap{width:min(1080px,calc(100% - 28px));margin:auto;padding:24px 0 56px}
+    .card{background:rgba(255,255,255,.97);border:2px solid #e7eaf8;border-radius:26px;
+      box-shadow:0 20px 50px rgba(76,29,149,.10);padding:24px;margin-bottom:18px}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;
+      border-radius:15px;padding:11px 16px;font:inherit;font-weight:900;text-decoration:none;cursor:pointer}
+    .btn-light{background:#eef2ff;color:#4f46e5}
+    .eyebrow{text-transform:uppercase;letter-spacing:.10em;font-size:13px;font-weight:900;color:var(--violet)}
+    h1{font-size:clamp(38px,6vw,62px);line-height:1;margin:8px 0 12px;color:var(--violet)}
+    h2{font-size:28px;margin:5px 0 15px}
+    .lead{font-size:19px;line-height:1.55;color:#475569;font-weight:650}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+    .stat{padding:16px;border-radius:19px;background:#f8fafc;border:2px solid #edf2f7;text-align:center}
+    .stat strong{display:block;font-size:27px;color:var(--violet)}
+    .stat span{color:#64748b;font-weight:750}
+    .mission-description{margin-top:18px;padding:15px 17px;border-radius:17px;background:#f5f3ff;line-height:1.55}
+    .status{padding:15px 17px;border-radius:17px;background:#eff6ff;color:#1e40af;font-weight:800}
+    .status.error{background:#fff1f2;color:#9f1239}
+    .activity-list{display:grid;gap:14px}
+    details.activity{background:white;border:2px solid #dbeafe;border-radius:21px;overflow:hidden}
+    details.activity[open]{border-color:#a78bfa;box-shadow:0 14px 34px rgba(109,40,217,.08)}
+    summary{list-style:none;cursor:pointer;padding:18px 20px;display:grid;grid-template-columns:auto 1fr auto;
+      gap:14px;align-items:center}
+    summary::-webkit-details-marker{display:none}
+    .chevron{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;
+      background:#ede9fe;color:#6d28d9;font-weight:900;transition:transform .2s}
+    details[open] .chevron{transform:rotate(90deg)}
+    .activity-title{font-size:20px;font-weight:900}
+    .activity-meta{margin-top:4px;color:#64748b;font-weight:700;font-size:14px}
+    .activity-state{padding:7px 10px;border-radius:999px;background:#ecfdf5;color:#166534;font-weight:900;font-size:13px}
+    .activity-body{border-top:2px solid #eef2ff;padding:20px}
+    .story-text{font-size:19px;line-height:1.55;font-weight:750;padding:16px;border-radius:17px;background:#f0f9ff}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:16px 0}
+    .metric{padding:15px;border-radius:17px;background:#faf5ff;text-align:center}
+    .metric strong{display:block;font-size:25px;color:#6d28d9}
+    .metric span{display:block;color:#64748b;font-weight:800;margin-top:3px}
+    .process{display:grid;gap:11px;margin-top:16px}
+    .process-step{padding:15px;border-radius:17px;background:#f8fafc;border-left:6px solid #c4b5fd}
+    .process-step h3{margin:0 0 7px;font-size:19px}
+    .learning-state{display:flex;align-items:center;justify-content:space-between;gap:12px;
+      flex-wrap:wrap;margin:14px 0;padding:13px 15px;border-radius:17px;background:#f0fdf4}
+    .learning-state label{font-weight:900;color:#166534}
+    .learning-state select{min-height:42px;border:2px solid #86efac;border-radius:13px;
+      padding:8px 11px;background:white;font:inherit;font-weight:850;color:#166534}
+    .process-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:#475569;font-weight:750}
+    .resolution{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+    .value{padding:12px;border-radius:14px;background:#fff;border:2px solid #e2e8f0}
+    .value span{display:block;color:#64748b;font-size:13px;font-weight:800}
+    .value strong{display:block;margin-top:4px}
+    .hidden{display:none!important}
+    @media(max-width:780px){.summary-grid{grid-template-columns:repeat(2,1fr)}.metrics,.resolution{grid-template-columns:1fr}}
+    @media(max-width:520px){.wrap{width:min(100% - 18px,1080px)}.card{padding:18px;border-radius:21px}
+      summary{grid-template-columns:auto 1fr}.activity-state{grid-column:2}}
+  </style>
+</head>
+<body data-page-title="Trabajo realizado">
+  <main class="wrap">
+    <div class="toolbar">
+      <button id="backButton" class="btn btn-light" type="button">← Volver</button>
+      <div data-panel-usuario></div>
+    </div>
+
+    <section id="missionSummary" class="card">
+      <div class="status">Preparando el trabajo realizado...</div>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Actividades realizadas</div>
+      <h2>🕵️ Historias de la Misión</h2>
+      <p class="lead">Abre una historia para comprender cómo fue realizada.</p>
+      <div id="activityStatus" class="status">Buscando actividades...</div>
+      <div id="activityList" class="activity-list"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { auth } from "../../../compartido/firebase/firebase-config.js";
+    import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
+    import { Academia } from "../../../compartido/api/academia.js";
+    import {
+      obtenerSesionHistoria,
+      obtenerSesionesHistoria,
+      obtenerProgresoHistoria,
+      marcarEstadoHistoria
+    } from "../../../compartido/js/detectives-progreso.js";
+
+    const params=new URLSearchParams(location.search);
+    const misionId=params.get("misionId");
+    const volver=params.get("volver");
+    const summary=document.getElementById("missionSummary");
+    const list=document.getElementById("activityList");
+    const status=document.getElementById("activityStatus");
+    const escape=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
+
+    const plantillasDetectives=Object.freeze({
+      simple:Object.freeze({id:"detective-simple-v1",intentosBase:2,intentosPorPaso:3}),
+      compuesto:Object.freeze({id:"detective-compuesto-v1",intentosBase:2,intentosPorPaso:3})
+    });
+
+    function intentosMinimos(story,session){
+      if(Number(session?.intentosMinimos)>0) return Number(session.intentosMinimos);
+      const template=plantillasDetectives[story?.tipo]||plantillasDetectives.simple;
+      return template.intentosBase+(Array.isArray(story?.pasos)?story.pasos.length:1)*template.intentosPorPaso;
+    }
+
+    function asDate(value){
+      if(!value) return null;
+      if(typeof value.toDate==="function") return value.toDate();
+      const date=new Date(value);
+      return Number.isNaN(date.getTime())?null:date;
+    }
+    function dateText(value){
+      const date=asDate(value);
+      return date?new Intl.DateTimeFormat("es-ES",{dateStyle:"medium",timeStyle:"short"}).format(date):"Fecha no disponible";
+    }
+    function durationText(seconds){
+      const value=Number(seconds);
+      if(!Number.isFinite(value)||value<=0) return "No disponible";
+      const minutes=Math.floor(value/60);
+      const rest=Math.round(value%60);
+      return minutes?`${minutes} min ${rest?`${rest} s`:""}`.trim():`${rest} s`;
+    }
+    function value(value,fallback="—"){
+      return value===null||value===undefined||value===""?fallback:String(value);
+    }
+    function optionText(section,id,savedText=""){
+      if(String(savedText || "").trim()) return savedText;
+      const selected=section?.opciones?.find(option=>option.id===id)?.texto;
+      if(selected) return selected;
+      const correct=section?.opciones?.find(option=>option.id===section?.correcta)?.texto;
+      return correct || "Respuesta no disponible";
+    }
+    function operationText(operation){
+      return {sumar:"Sumar",restar:"Restar",multiplicar:"Multiplicar",dividir:"Dividir"}[operation]||value(operation);
+    }
+    function returnToCaller(){
+      if(volver){
+        try{
+          const destination=new URL(volver,location.href);
+          if(destination.origin===location.origin){location.href=destination.href;return;}
+        }catch{}
+      }
+      location.href="../../mis-tareas/";
+    }
+    document.getElementById("backButton").onclick=returnToCaller;
+
+    await auth.authStateReady();
+    if(!auth.currentUser){location.replace("/academia-gloria/login.html");throw new Error("Sesión no disponible");}
+    await iniciarPanelUsuario({contenedor:"[data-panel-usuario]",loginUrl:"/academia-gloria/login.html",mostrarPerfil:false});
+
+    async function loadStories(){
+      const response=await fetch("./historias.json",{cache:"no-store"});
+      return response.ok?await response.json():[];
+    }
+    async function resolveSession(evidence){
+      const storyId=String(evidence.actividadId||"").trim();
+      const sessionId=String(evidence.sesionId||"").trim();
+      if(!storyId) return null;
+      if(sessionId){
+        const exact=await obtenerSesionHistoria(auth.currentUser.uid,storyId,sessionId);
+        if(exact) return exact;
+      }
+      const sessions=await obtenerSesionesHistoria(auth.currentUser.uid,storyId);
+      if(!sessions.length) return null;
+      const evidenceDate=asDate(evidence.ocurridaEn);
+      if(!evidenceDate) return sessions[0];
+      return [...sessions].sort((a,b)=>{
+        const da=asDate(a.completadaEn),db=asDate(b.completadaEn);
+        return Math.abs((da||0)-evidenceDate)-Math.abs((db||0)-evidenceDate);
+      })[0];
+    }
+
+    function processHtml(story,session){
+      const steps=Array.isArray(story?.pasos)?story.pasos:[];
+      const saved=Array.isArray(session?.pasos)?session.pasos:[];
+
+      const common=`
+        <article class="process-step">
+          <h3>1. Comprendo · ${escape(story?.comprension?.pregunta || "Pregunta no disponible")}</h3>
+          <div class="process-row">
+            <span>Respuesta final: ${escape(optionText(
+              story?.comprension,
+              session?.respuestaComprension,
+              session?.respuestaComprensionTexto
+            ))}</span>
+            <strong>Intentos: ${Number(session?.intentosComprension||0)||"—"}</strong>
+          </div>
+        </article>
+        <article class="process-step">
+          <h3>2. Descubro · ${escape(story?.descubrimiento?.pregunta || "Pregunta no disponible")}</h3>
+          <div class="process-row">
+            <span>Respuesta final: ${escape(optionText(
+              story?.descubrimiento,
+              session?.respuestaDescubrimiento,
+              session?.respuestaDescubrimientoTexto
+            ))}</span>
+            <strong>Intentos: ${Number(session?.intentosDescubrimiento||0)||"—"}</strong>
+          </div>
+        </article>`;
+
+      const math=steps.map((step,index)=>{
+        const item=saved[index]||{};
+        return `
+          <article class="process-step">
+            <h3>${steps.length>1?`Paso matemático ${index+1}`:"3. Elijo y 4. Resuelvo"}</h3>
+            <div class="process-row">
+              <span>Operación elegida: ${escape(operationText(item.operacionIndicada||session?.operacionIndicada))}</span>
+              <strong>Intentos para elegir: ${Number(item.intentosOperacion||0)||"—"}</strong>
+            </div>
+            <div class="resolution">
+              <div class="value"><span>Números confirmados</span><strong>${escape((item.operandosIndicados||session?.operandosIndicados||[]).join(" y ")||"—")}</strong><small>Intentos: ${Number(item.intentosOperandos||0)||"—"}</small></div>
+              <div class="value"><span>Resultado confirmado</span><strong>${escape(value(item.resultadoIndicado??session?.resultadoIndicado))}</strong><small>Intentos: ${Number(item.intentosResultado||0)||"—"}</small></div>
+              <div class="value"><span>Resultado de la actividad</span><strong>✅ Completada</strong></div>
+            </div>
+          </article>`;
+      }).join("");
+
+      return common+math;
+    }
+
+    function renderActivity({evidence,story,session,progress},index){
+      const title=evidence.tituloActividad||story?.titulo||evidence.actividadId||`Actividad ${index+1}`;
+      const minimum=intentosMinimos(story,session);
+      const actual=Number(session?.intentosTotales||evidence.resultado?.intentosRealizados||evidence.resultado?.intentos||0);
+      const extra=Math.max(0,actual-minimum);
+      const active=Number(session?.tiempoActivoSegundos||evidence.resultado?.tiempoActivoSegundos||0);
+      const level=evidence.atributos?.nivel??session?.nivel??story?.nivel??"—";
+      return `
+        <details class="activity">
+          <summary>
+            <span class="chevron">›</span>
+            <span><span class="activity-title">${escape(title)}</span>
+              <span class="activity-meta">Nivel ${escape(level)} · ${escape(dateText(evidence.ocurridaEn||session?.completadaEn))}</span>
+            </span>
+            <span class="activity-state">✅ Completada</span>
+          </summary>
+          <div class="activity-body">
+            ${story?.texto?`<p class="story-text">${escape(story.texto)}</p>`:""}
+            <div class="metrics">
+              <div class="metric"><strong>${escape(durationText(active))}</strong><span>⏱️ Tiempo Activo</span></div>
+              <div class="metric"><strong>${minimum}</strong><span>🌱 Intentos mínimos</span></div>
+              <div class="metric"><strong>${actual||"—"}</strong><span>🌱 Intentos realizados</span></div>
+            </div>
+            ${extra>0?`<div class="status">${extra} intento${extra===1?"":"s"} adicional${extra===1?"":"es"} durante la actividad.</div>`:""}
+            <div class="learning-state">
+              <label for="state-${escape(evidence.actividadId)}">Acompañamiento de esta historia</label>
+              <select class="learning-state-select"
+                      id="state-${escape(evidence.actividadId)}"
+                      data-story-id="${escape(evidence.actividadId)}">
+                <option value="en_practica" ${progress?.estado==="en_practica"||!progress?.estado?"selected":""}>En práctica</option>
+                <option value="reforzar" ${progress?.estado==="reforzar"?"selected":""}>Reforzar</option>
+                <option value="dominada" ${progress?.estado==="dominada"?"selected":""}>Dominada</option>
+              </select>
+            </div>
+            <div class="process">${processHtml(story,session||{})}</div>
+            ${!session?'<div class="status">La actividad está registrada, pero su detalle completo no está disponible.</div>':""}
+          </div>
+        </details>`;
+    }
+
+    async function load(){
+      try{
+        if(!misionId) throw new Error("Falta misionId");
+        const [mission,evidences,stories]=await Promise.all([
+          Academia.tareas.obtener(misionId),
+          Academia.tareas.leerEvidencias(misionId),
+          loadStories()
+        ]);
+        const detective=evidences.filter(item=>item.modulo==="detectives");
+        const byId=new Map(stories.map(item=>[item.id,item]));
+        const items=await Promise.all(detective.map(async evidence=>{
+          const story=byId.get(evidence.actividadId)||null;
+          const [session,progress]=await Promise.all([
+            resolveSession(evidence),
+            obtenerProgresoHistoria(auth.currentUser.uid,evidence.actividadId)
+          ]);
+          return {evidence,story,session,progress};
+        }));
+
+        const totalActive=items.reduce((sum,item)=>sum+Number(item.session?.tiempoActivoSegundos||item.evidence.resultado?.tiempoActivoSegundos||0),0);
+        const totalMinimum=items.reduce((sum,item)=>sum+intentosMinimos(item.story,item.session),0);
+        const totalActual=items.reduce((sum,item)=>sum+Number(item.session?.intentosTotales||item.evidence.resultado?.intentosRealizados||item.evidence.resultado?.intentos||0),0);
+        const target=Number(mission?.criterioCumplimiento?.cantidadObjetivo??mission?.progreso?.cantidadObjetivo??items.length);
+
+        summary.innerHTML=`
+          <div class="eyebrow">Resumen de la Misión</div>
+          <h1>📖 Trabajo realizado</h1>
+          <p class="lead">La familia puede ver qué se realizó y cómo avanzó cada historia.</p>
+          <h2>${escape(mission?.titulo||mission?.presentacionAlumno?.tituloMision||"Misión de Detectives")}</h2>
+          <div class="summary-grid">
+            <div class="stat"><strong>${items.length}/${target}</strong><span>Historias realizadas</span></div>
+            <div class="stat"><strong>${escape(durationText(totalActive))}</strong><span>Tiempo Activo</span></div>
+            <div class="stat"><strong>${totalMinimum}</strong><span>Intentos mínimos</span></div>
+            <div class="stat"><strong>${totalActual||"—"}</strong><span>Intentos realizados</span></div>
+          </div>
+          <div class="mission-description">${escape(mission?.presentacionAlumno?.descripcionMision||mission?.descripcion||"Misión de práctica de Detectives.")}</div>`;
+
+        if(!items.length){
+          status.textContent="Todavía no hay trabajo registrado para esta Misión.";
+          return;
+        }
+        status.classList.add("hidden");
+        list.innerHTML=items.map(renderActivity).join("");
+        document.querySelectorAll(".learning-state-select").forEach(select=>{
+          select.addEventListener("change",async()=>{
+            const previous=select.dataset.previousValue || "";
+            select.disabled=true;
+            try{
+              await marcarEstadoHistoria(
+                auth.currentUser.uid,
+                select.dataset.storyId,
+                select.value
+              );
+              select.dataset.previousValue=select.value;
+            }catch(error){
+              console.error(error);
+              if(previous) select.value=previous;
+              alert("No pudimos actualizar el estado de aprendizaje.");
+            }finally{
+              select.disabled=false;
+            }
+          });
+          select.dataset.previousValue=select.value;
+        });
+      }catch(error){
+        console.error(error);
+        summary.innerHTML='<div class="status error">No pudimos cargar el resumen de la Misión.</div>';
+        status.className="status error";
+        status.textContent="No pudimos cargar el trabajo realizado.";
+      }
+    }
+    await load();
+  </script>
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js"></script>
+</body>
+</html>
