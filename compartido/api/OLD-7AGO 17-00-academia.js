@@ -564,6 +564,99 @@ async function eliminarSesionLectura(historiaId) {
   );
 }
 
+/* ==========================================================
+   Creciendo por dentro
+   usuarios/{uid}/sesionesSemillas/{sesionId}
+   ========================================================== */
+
+function coleccionSesionesSemillas() {
+  return collection(db, "usuarios", obtenerUID(), "sesionesSemillas");
+}
+
+function documentoSesionSemilla(sesionId) {
+  const id = String(sesionId ?? "").trim();
+  if (!id) {
+    throw new Error("Falta el identificador de la sesión de Semillas.");
+  }
+  return doc(db, "usuarios", obtenerUID(), "sesionesSemillas", id);
+}
+
+function normalizarSesionSemilla(sesion = {}) {
+  const semillaId = String(sesion.semillaId ?? "").trim();
+  const titulo = String(sesion.titulo ?? "").trim();
+
+  if (!semillaId) {
+    throw new Error("La sesión debe indicar una Semilla.");
+  }
+  if (!titulo) {
+    throw new Error("La sesión debe indicar un título.");
+  }
+
+  return {
+    semillaId,
+    titulo,
+    familia: String(sesion.familia ?? "").trim(),
+    tipoSituacion: String(sesion.tipoSituacion ?? "").trim(),
+    nivelApoyo: Math.max(1, Number(sesion.nivelApoyo ?? 1)),
+    fechaInicio: String(sesion.fechaInicio ?? "").trim(),
+    duracion: Math.max(0, Number(sesion.duracion ?? 0)),
+    intentos: Math.max(0, Number(sesion.intentos ?? 0)),
+    respuestaConstruida: String(sesion.respuestaConstruida ?? "").trim(),
+    audioData: String(sesion.audioData ?? "").trim(),
+    mimeType: String(sesion.mimeType ?? "audio/webm").trim(),
+    duracionAudio: Math.max(0, Number(sesion.duracionAudio ?? 0)),
+    transcripcion: String(sesion.transcripcion ?? "").trim(),
+    respuestas:
+      sesion.respuestas && typeof sesion.respuestas === "object"
+        ? sesion.respuestas
+        : {},
+    analisisEducativo:
+      sesion.analisisEducativo && typeof sesion.analisisEducativo === "object"
+        ? sesion.analisisEducativo
+        : {},
+    observacionFamilia: String(sesion.observacionFamilia ?? "").trim(),
+    misionId: String(sesion.misionId ?? "").trim()
+  };
+}
+
+async function guardarSesionSemilla(sesion) {
+  const datos = normalizarSesionSemilla(sesion);
+  const referencia = await addDoc(coleccionSesionesSemillas(), {
+    ...datos,
+    creadaEn: serverTimestamp(),
+    actualizadaEn: serverTimestamp()
+  });
+  return referencia.id;
+}
+
+async function leerSesionesSemillas() {
+  const consulta = query(
+    coleccionSesionesSemillas(),
+    orderBy("actualizadaEn", "desc")
+  );
+  const resultado = await getDocs(consulta);
+  return resultado.docs.map(documento => ({
+    id: documento.id,
+    ...documento.data()
+  }));
+}
+
+async function actualizarObservacionSesionSemilla(
+  sesionId,
+  observacionFamilia
+) {
+  const referencia = documentoSesionSemilla(sesionId);
+  await updateDoc(referencia, {
+    observacionFamilia: String(observacionFamilia ?? "").trim(),
+    actualizadaEn: serverTimestamp()
+  });
+}
+
+async function eliminarSesionSemilla(sesionId) {
+  await deleteDoc(documentoSesionSemilla(sesionId));
+}
+
+
 
 /* ==========================================================
    Mis Tareas / Misiones
@@ -633,9 +726,15 @@ function documentoEvidencia(id) {
 }
 
 function normalizarCriterioCumplimiento(criterio = {}) {
+  const criterioSeguro =
+    criterio && typeof criterio === "object"
+      ? criterio
+      : {};
+
   const filtrosEntrada =
-    criterio.filtros && typeof criterio.filtros === "object"
-      ? criterio.filtros
+    criterioSeguro.filtros &&
+    typeof criterioSeguro.filtros === "object"
+      ? criterioSeguro.filtros
       : {};
 
   const filtros = Object.fromEntries(
@@ -646,15 +745,15 @@ function normalizarCriterioCumplimiento(criterio = {}) {
 
   return {
     tipo: ["cantidad", "actividad", "tiempo", "evento", "combinado"].includes(
-      criterio.tipo
+      criterioSeguro.tipo
     )
-      ? criterio.tipo
+      ? criterioSeguro.tipo
       : "cantidad",
-    modulo: textoSeguro(criterio.modulo),
-    evidenciaTipo: textoSeguro(criterio.evidenciaTipo),
+    modulo: textoSeguro(criterioSeguro.modulo),
+    evidenciaTipo: textoSeguro(criterioSeguro.evidenciaTipo),
     cantidadObjetivo: Math.max(
       1,
-      Math.trunc(numeroSeguro(criterio.cantidadObjetivo, 1))
+      Math.trunc(numeroSeguro(criterioSeguro.cantidadObjetivo, 1))
     ),
     filtros
   };
@@ -837,7 +936,6 @@ async function crearTarea(tarea) {
 
   const referencia = await addDoc(coleccionTareas(), {
     ...datos,
-    fechaEstado: serverTimestamp(),
     creadaEn: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   });
@@ -950,9 +1048,16 @@ async function actualizarTarea(id, cambios = {}) {
   }
 
   if ("criterioCumplimiento" in datos) {
-    datos.criterioCumplimiento = normalizarCriterioCumplimiento(
-      datos.criterioCumplimiento
-    );
+    if (
+      datos.criterioCumplimiento === null ||
+      datos.criterioCumplimiento === undefined
+    ) {
+      delete datos.criterioCumplimiento;
+    } else {
+      datos.criterioCumplimiento = normalizarCriterioCumplimiento(
+        datos.criterioCumplimiento
+      );
+    }
   }
 
   if ("progreso" in datos) {
@@ -989,11 +1094,6 @@ async function actualizarTarea(id, cambios = {}) {
 
   await updateDoc(documentoTarea(id), {
     ...datos,
-    ...(
-      "estado" in datos
-        ? { fechaEstado: serverTimestamp() }
-        : {}
-    ),
     actualizadaEn: serverTimestamp()
   });
 }
@@ -1007,7 +1107,6 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
 
   const cambios = {
     estado: estadoNormalizado,
-    fechaEstado: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   };
 
@@ -1082,8 +1181,21 @@ function evidenciaCumpleCriterio(evidencia, criterio) {
   }
 
   return Object.entries(criterio.filtros || {}).every(
-    ([clave, valorEsperado]) =>
-      String(evidencia.atributos?.[clave] ?? "") === String(valorEsperado)
+    ([clave, valorEsperado]) => {
+      const valorReal =
+        clave === "actividadId" || clave === "semillasIds"
+          ? evidencia.actividadId
+          : evidencia.atributos?.[clave];
+
+      if (Array.isArray(valorEsperado)) {
+        if (!valorEsperado.length) return true;
+        return valorEsperado
+          .map(valor => String(valor))
+          .includes(String(valorReal ?? ""));
+      }
+
+      return String(valorReal ?? "") === String(valorEsperado);
+    }
   );
 }
 
@@ -1183,10 +1295,6 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       "progreso.evidenciaIds": evidenciaIds,
       actualizadaEn: serverTimestamp()
     };
-
-    if (nuevoEstado !== estadoActual) {
-      cambiosTarea.fechaEstado = serverTimestamp();
-    }
 
     if (!progresoActual.iniciadaEn) {
       cambiosTarea["progreso.iniciadaEn"] = serverTimestamp();
@@ -1323,6 +1431,13 @@ export const Academia = Object.freeze({
     leerSesiones: leerSesionesLectura,
     actualizarObservacion: actualizarObservacionSesionLectura,
     eliminarSesion: eliminarSesionLectura
+  }),
+
+  semillas: Object.freeze({
+    guardarSesion: guardarSesionSemilla,
+    leerSesiones: leerSesionesSemillas,
+    actualizarObservacion: actualizarObservacionSesionSemilla,
+    eliminarSesion: eliminarSesionSemilla
   }),
 
   tareas: Object.freeze({

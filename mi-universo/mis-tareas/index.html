@@ -150,6 +150,7 @@
                 <select id="modulo">
                   <option value="rincon-lectura">Mi Rincón de Lectura</option>
                   <option value="detectives">Detectives de Problemas</option>
+                  <option value="creciendo-por-dentro">Creciendo por Dentro</option>
                   <option value="biblioteca">Biblioteca Encantada</option>
                   <option value="libre">Actividad fuera de la Academia</option>
                 </select>
@@ -265,6 +266,70 @@
                 <strong>La misión contará:</strong>
                 <span id="resumenCriterioDetectives">
                   5 historias de Detectives de nivel 1
+                </span>
+              </div>
+            </section>
+
+            <section
+              id="configuracionSemillas"
+              class="configuracion-rapida configuracion-rapida--semillas hidden"
+              aria-labelledby="tituloConfiguracionSemillas"
+            >
+              <div class="configuracion-rapida__cabecera">
+                <span aria-hidden="true">🌱</span>
+                <div>
+                  <h3 id="tituloConfiguracionSemillas">
+                    Configuración rápida de la misión
+                  </h3>
+                  <p>
+                    Indica cuántas Semillas debe completar y, si lo deseas,
+                    selecciona las Semillas concretas.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-formulario">
+                <label>
+                  Cantidad de Semillas
+                  <input
+                    id="cantidadSemillas"
+                    type="number"
+                    min="1"
+                    max="20"
+                    step="1"
+                    value="1"
+                    inputmode="numeric"
+                  >
+                  <span class="ayuda-campo">
+                    Cada Semilla completada desde esta misión contará una vez.
+                  </span>
+                </label>
+
+                <label>
+                  Primera Semilla
+                  <select id="semillaPrimera">
+                    <option value="">🌈 Cualquier Semilla</option>
+                  </select>
+                  <span class="ayuda-campo">
+                    Déjala en blanco para que Gloria pueda elegir.
+                  </span>
+                </label>
+
+                <label>
+                  Segunda Semilla
+                  <select id="semillaSegunda">
+                    <option value="">🌈 Cualquier Semilla</option>
+                  </select>
+                  <span class="ayuda-campo">
+                    Es opcional. Se utiliza cuando la misión pide más de una Semilla.
+                  </span>
+                </label>
+              </div>
+
+              <div class="configuracion-rapida__resumen">
+                <strong>La misión contará:</strong>
+                <span id="resumenCriterioSemillas">
+                  1 Semilla de Creciendo por Dentro
                 </span>
               </div>
             </section>

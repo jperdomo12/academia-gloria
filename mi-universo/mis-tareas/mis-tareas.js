@@ -8,6 +8,7 @@ const $ = (id) => document.getElementById(id);
 const DESTINOS = Object.freeze({
   "rincon-lectura": "../rincon-lectura/",
   detectives: "../aventuras-matematicas/detectives/",
+  "creciendo-por-dentro": "../creciendo-por-dentro/",
   biblioteca: "../biblioteca/",
   libre: ""
 });
@@ -15,6 +16,7 @@ const DESTINOS = Object.freeze({
 const ICONOS = Object.freeze({
   "rincon-lectura": "📖",
   detectives: "🧩",
+  "creciendo-por-dentro": "🌱",
   biblioteca: "📚",
   libre: "✏️"
 });
@@ -23,6 +25,7 @@ let tareas = [];
 const evidenciasAbiertas = new Set();
 let filtroActual = "activas";
 let detenerObservacion = null;
+let catalogoSemillas = [];
 
 function escapar(valor = "") {
   return String(valor)
@@ -37,33 +40,6 @@ function formatearFecha(valor) {
   if (!valor) return "Sin fecha límite";
   const fecha = new Date(`${valor}T12:00:00`);
   if (Number.isNaN(fecha.getTime())) return valor;
-
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  }).format(fecha);
-}
-
-function formatearFechaEstado(tarea = {}) {
-  const resultado = resultadoTarea(tarea);
-  const valor =
-    resultado.fechaFinalizacion ||
-    tarea.fechaEstado ||
-    tarea.actualizadaEn ||
-    tarea.updatedAt ||
-    tarea.creadaEn;
-
-  if (!valor) return "Fecha no disponible";
-
-  const fecha =
-    typeof valor?.toDate === "function"
-      ? valor.toDate()
-      : new Date(valor);
-
-  if (Number.isNaN(fecha.getTime())) {
-    return String(valor);
-  }
 
   return new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
@@ -226,11 +202,8 @@ function renderTareas() {
           </div>
 
           <div class="tarea-card__resumen-estado">
-            <span class="tarea-estado-con-fecha">
-              <span class="tarea-estado estado-${escapar(tarea.estado)}">
-                ${escapar(textoEstado(tarea.estado))}
-              </span>
-              <small>${escapar(formatearFechaEstado(tarea))}</small>
+            <span class="tarea-estado estado-${escapar(tarea.estado)}">
+              ${escapar(textoEstado(tarea.estado))}
             </span>
             <span class="tarea-card__flecha" aria-hidden="true">⌄</span>
           </div>
@@ -1014,8 +987,148 @@ function actualizarResumenCriterioLectura() {
     `${nivel ? `de nivel ${nivel}` : "de cualquier nivel"}`;
 }
 
+async function cargarCatalogoSemillas() {
+  try {
+    const response = await fetch("../creciendo-por-dentro/semillas.json", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("No se pudo cargar semillas.json.");
+    }
+
+    const data = await response.json();
+    catalogoSemillas = Array.isArray(data.semillas)
+      ? data.semillas.filter(item => item.activo !== false)
+      : [];
+  } catch (error) {
+    console.warn("No se pudo cargar el catálogo de Semillas.", error);
+    catalogoSemillas = [];
+  }
+
+  poblarSelectoresSemillas();
+}
+
+function poblarSelectoresSemillas() {
+  ["semillaPrimera", "semillaSegunda"].forEach(id => {
+    const select = $(id);
+    if (!select) return;
+
+    const valorActual = select.value;
+    select.innerHTML = `
+      <option value="">🌈 Cualquier Semilla</option>
+      ${catalogoSemillas.map(item => `
+        <option value="${escapar(item.id)}">
+          ${escapar(item.portada?.icono || "🌱")} ${escapar(item.titulo)}
+        </option>
+      `).join("")}
+    `;
+
+    if ([...select.options].some(option => option.value === valorActual)) {
+      select.value = valorActual;
+    }
+  });
+}
+
+function normalizarCantidadSemillas(valor, valorPredeterminado = 1) {
+  const numero = Number(valor);
+  if (!Number.isFinite(numero)) return valorPredeterminado;
+  return Math.min(20, Math.max(1, Math.trunc(numero)));
+}
+
+function semillasSeleccionadas() {
+  return [
+    $("semillaPrimera")?.value,
+    $("semillaSegunda")?.value
+  ].filter(Boolean).filter((value, index, values) =>
+    values.indexOf(value) === index
+  );
+}
+
+function tituloSemillaPorId(id) {
+  return catalogoSemillas.find(item => item.id === id)?.titulo || "";
+}
+
+function crearTextosSemillas(cantidad, ids = []) {
+  const unidad = cantidad === 1 ? "Semilla" : "Semillas";
+  const titulos = ids.map(tituloSemillaPorId).filter(Boolean);
+
+  if (cantidad === 1 && titulos.length === 1) {
+    return {
+      titulo: titulos[0],
+      descripcionMision:
+        `Completa la Semilla “${titulos[0]}” de Creciendo por Dentro. ` +
+        `Lía te acompañará paso a paso.`,
+      criterio: `Completar la Semilla “${titulos[0]}”.`
+    };
+  }
+
+  const seleccion =
+    titulos.length
+      ? `: ${titulos.join(" y ")}`
+      : " que prefieras";
+
+  return {
+    titulo: `Completar ${cantidad} ${unidad} de Creciendo por Dentro`,
+    descripcionMision:
+      `Completa ${cantidad} ${unidad.toLowerCase()} de Creciendo por Dentro${seleccion}.`,
+    criterio:
+      `Completar ${cantidad} ${unidad.toLowerCase()} de Creciendo por Dentro${seleccion}.`
+  };
+}
+
+function aplicarTextosAutomaticosSemillas({ forzar = false } = {}) {
+  if ($("modulo").value !== "creciendo-por-dentro") return;
+
+  const cantidad = normalizarCantidadSemillas(
+    $("cantidadSemillas")?.value,
+    1
+  );
+  const textos = crearTextosSemillas(cantidad, semillasSeleccionadas());
+
+  $("titulo").value = textos.titulo;
+  $("tituloMision").value = textos.titulo;
+
+  if (forzar || !$("descripcionMision").value.trim()) {
+    $("descripcionMision").value = textos.descripcionMision;
+  }
+
+  if (forzar || !$("criterio").value.trim()) {
+    $("criterio").value = textos.criterio;
+  }
+
+  actualizarVistaPrevia();
+}
+
+function actualizarResumenCriterioSemillas() {
+  const resumen = $("resumenCriterioSemillas");
+  if (!resumen) return;
+
+  const cantidad = normalizarCantidadSemillas(
+    $("cantidadSemillas")?.value,
+    1
+  );
+  const ids = semillasSeleccionadas();
+  const titulos = ids.map(tituloSemillaPorId).filter(Boolean);
+
+  resumen.textContent =
+    `${cantidad} ${cantidad === 1 ? "Semilla" : "Semillas"} ` +
+    (
+      titulos.length
+        ? `seleccionada${titulos.length === 1 ? "" : "s"}: ${titulos.join(" y ")}`
+        : "de libre elección"
+    );
+}
+
 function tituloAutomaticoPorModulo() {
   const modulo = $("modulo").value;
+
+  if (modulo === "creciendo-por-dentro") {
+    return crearTextosSemillas(
+      normalizarCantidadSemillas($("cantidadSemillas")?.value, 1),
+      semillasSeleccionadas()
+    ).titulo;
+  }
 
   if (modulo === "detectives") {
     const cantidad = normalizarCantidadHistorias(
@@ -1137,9 +1250,21 @@ function actualizarConfiguracionPorModulo({
   const modulo = $("modulo").value;
   const esDetectives = modulo === "detectives";
   const esLectura = modulo === "rincon-lectura";
+  const esSemillas = modulo === "creciendo-por-dentro";
 
   $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives);
   $("configuracionLectura")?.classList.toggle("hidden", !esLectura);
+  $("configuracionSemillas")?.classList.toggle("hidden", !esSemillas);
+
+  if (esSemillas) {
+    reiniciarTextosAutomaticosDetectives();
+    reiniciarTextosAutomaticosLectura();
+    actualizarResumenCriterioSemillas();
+    if (completarSugerencias) {
+      aplicarTextosAutomaticosSemillas({ forzar: true });
+    }
+    return;
+  }
 
   if (esDetectives) {
     reiniciarTextosAutomaticosLectura();
@@ -1185,6 +1310,9 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
     "Realiza esta aventura con calma y celebra cada pequeño paso.";
   $("mensajeMision").value = "";
   $("cantidadHistorias").value = "5";
+  $("cantidadSemillas").value = "1";
+  $("semillaPrimera").value = "";
+  $("semillaSegunda").value = "";
   $("cantidadLecturas").value = "2";
   $("nivelLectura").value = "todos";
   $("nivelDetectives").value = "1";
@@ -1213,6 +1341,7 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   actualizarEstadoMision();
   actualizarConfiguracionPorModulo({ completarSugerencias: true });
   actualizarResumenCriterioDetectives();
+  actualizarResumenCriterioSemillas();
   actualizarTituloAutomatico();
   actualizarBloqueResultado("pendiente");
   establecerAcordeones("crear");
@@ -1259,6 +1388,20 @@ function cargarTareaEnFormulario(tarea) {
     criterioCumplimiento.filtros?.nivel
       ? String(criterioCumplimiento.filtros.nivel)
       : "todos";
+  $("cantidadSemillas").value = String(
+    normalizarCantidadSemillas(
+      criterioCumplimiento.cantidadObjetivo ??
+        tarea.progreso?.cantidadObjetivo,
+      1
+    )
+  );
+  const semillasIds = Array.isArray(
+    criterioCumplimiento.filtros?.semillasIds
+  )
+    ? criterioCumplimiento.filtros.semillasIds.map(String)
+    : [];
+  $("semillaPrimera").value = semillasIds[0] || "";
+  $("semillaSegunda").value = semillasIds[1] || "";
   $("observacion").value = tarea.observacionActual || "";
 
   $("visibleParaAlumno").checked = esVisibleComoMision(tarea);
@@ -1290,6 +1433,7 @@ function cargarTareaEnFormulario(tarea) {
   actualizarEstadoMision();
   actualizarConfiguracionPorModulo();
   actualizarResumenCriterioDetectives();
+  actualizarResumenCriterioSemillas();
   actualizarVistaPrevia();
   actualizarBloqueResultado(tarea.estado);
   establecerAcordeones("editar");
@@ -1306,6 +1450,7 @@ function recogerFormulario() {
   const visible = $("visibleParaAlumno").checked;
   const esDetectives = modulo === "detectives";
   const esLectura = modulo === "rincon-lectura";
+  const esSemillas = modulo === "creciendo-por-dentro";
 
   const cantidadObjetivo = esDetectives
     ? normalizarCantidadHistorias($("cantidadHistorias").value, 5)
@@ -1322,6 +1467,14 @@ function recogerFormulario() {
   const nivelLectura = esLectura
     ? normalizarNivelLectura($("nivelLectura").value)
     : null;
+
+  const cantidadSemillas = esSemillas
+    ? normalizarCantidadSemillas($("cantidadSemillas").value, 1)
+    : 0;
+
+  const semillasIds = esSemillas
+    ? semillasSeleccionadas().slice(0, cantidadSemillas)
+    : [];
 
   return {
     titulo: $("titulo").value,
@@ -1351,7 +1504,17 @@ function recogerFormulario() {
               ? { nivel: nivelLectura }
               : {}
           }
-        : null,
+        : esSemillas
+          ? {
+              tipo: "cantidad",
+              modulo: "creciendo-por-dentro",
+              evidenciaTipo: "semilla_completada",
+              cantidadObjetivo: cantidadSemillas,
+              filtros: semillasIds.length
+                ? { semillasIds }
+                : {}
+            }
+          : null,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -1381,7 +1544,11 @@ function recogerFormulario() {
         ? {
             cantidadObjetivo: cantidadLecturas
           }
-        : undefined,
+        : esSemillas
+          ? {
+              cantidadObjetivo: cantidadSemillas
+            }
+          : undefined,
     observacionActual: $("observacion").value,
     resultado: {
       fechaFinalizacion: $("fechaFinalizacion").value,
@@ -1443,7 +1610,8 @@ function configurarFormulario() {
     actualizarConfiguracionPorModulo({
       completarSugerencias:
         modulo === "detectives" ||
-        modulo === "rincon-lectura"
+        modulo === "rincon-lectura" ||
+        modulo === "creciendo-por-dentro"
     });
   });
 
@@ -1461,6 +1629,24 @@ function configurarFormulario() {
 
       if ($("modulo").value === "detectives") {
         aplicarTextosAutomaticosDetectives();
+      }
+    });
+  });
+
+  ["cantidadSemillas", "semillaPrimera", "semillaSegunda"].forEach(id => {
+    $(id)?.addEventListener("input", () => {
+      actualizarResumenCriterioSemillas();
+
+      if ($("modulo").value === "creciendo-por-dentro") {
+        aplicarTextosAutomaticosSemillas({ forzar: true });
+      }
+    });
+
+    $(id)?.addEventListener("change", () => {
+      actualizarResumenCriterioSemillas();
+
+      if ($("modulo").value === "creciendo-por-dentro") {
+        aplicarTextosAutomaticosSemillas({ forzar: true });
       }
     });
   });
@@ -1509,6 +1695,18 @@ function configurarFormulario() {
       $("mensajeFormulario").textContent =
         "Indica una cantidad válida de historias para la misión.";
       $("cantidadHistorias").focus();
+      return;
+    }
+
+    if (
+      datos.modulo === "creciendo-por-dentro" &&
+      (!datos.criterioCumplimiento ||
+        datos.criterioCumplimiento.cantidadObjetivo < 1)
+    ) {
+      $("mensajeFormulario").className = "mensaje-formulario error";
+      $("mensajeFormulario").textContent =
+        "Indica una cantidad válida de Semillas para la misión.";
+      $("cantidadSemillas").focus();
       return;
     }
 
@@ -1572,6 +1770,8 @@ protegerPagina({
 
     const perfil = await obtenerPerfil();
     aplicarNombreAlumno(perfil);
+
+    await cargarCatalogoSemillas();
 
     configurarTabs();
     configurarFiltros();
