@@ -5,22 +5,25 @@ import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
 const MAX_RECORDING_SECONDS = 90;
-const SEED_IMAGE_BASE =
-  "../../assets/imagenes/creciendo-por-dentro/semillas/";
+const SEED_IMAGE_BASE = new URL(
+  "../../assets/imagenes/creciendo-por-dentro/semillas/",
+  import.meta.url
+);
 
 function seedImageUrl(seed) {
   const resource = String(seed?.recursos?.imagen || "").trim();
   if (!resource) return "";
 
   if (
-    resource.startsWith("/") ||
     resource.startsWith("http://") ||
-    resource.startsWith("https://")
+    resource.startsWith("https://") ||
+    resource.startsWith("data:") ||
+    resource.startsWith("blob:")
   ) {
     return resource;
   }
 
-  return `${SEED_IMAGE_BASE}${resource}`;
+  return new URL(resource, SEED_IMAGE_BASE).href;
 }
 
 function imageMarkup(seed, className = "") {
