@@ -1236,3 +1236,119 @@ footer{
   background:#faf5ff;
   color:#5b21b6;
 }
+
+
+/* ==========================================================
+   Gestión de Misiones · Interfaz 3.0
+   Evolución visual conservadora sobre Mis Tareas 2.0
+   ========================================================== */
+
+.hero-tareas{
+  border-color:#c4b5fd;
+  background:
+    radial-gradient(circle at 88% 18%,rgba(59,130,246,.13),transparent 23%),
+    radial-gradient(circle at 72% 90%,rgba(34,197,94,.10),transparent 25%),
+    linear-gradient(135deg,#ffffff,#faf5ff 55%,#f8fbff);
+}
+
+.hero-tareas h1{
+  background:linear-gradient(90deg,#7c3aed,#2563eb,#16a34a);
+  background-clip:text;
+  -webkit-background-clip:text;
+}
+
+.hero-tareas__visual{
+  font-size:104px;
+}
+
+.hero-tareas__nota{
+  display:block;
+  margin-top:10px;
+  color:#5b21b6;
+  font-size:.84rem;
+  font-weight:850;
+}
+
+.tabs{
+  padding:7px;
+  border:1.5px solid #e2e8f0;
+  border-radius:18px;
+  background:rgba(255,255,255,.78);
+  width:max-content;
+  max-width:100%;
+}
+
+.tab{
+  border-color:transparent;
+}
+
+.tab.active{
+  border-color:#c4b5fd;
+  background:linear-gradient(135deg,#f5f3ff,#eff6ff);
+}
+
+.gestion-familiar-aviso{
+  border-color:#bfdbfe;
+  background:linear-gradient(135deg,#eff6ff,#fff,#f5f3ff);
+}
+
+.introduccion-formulario{
+  border-color:#c4b5fd;
+  background:
+    radial-gradient(circle at 92% 15%,rgba(59,130,246,.12),transparent 23%),
+    linear-gradient(135deg,#faf5ff,#fff);
+}
+
+.acordeon--mision{
+  border-color:#c4b5fd;
+}
+
+.acordeon--mision[open]{
+  box-shadow:0 20px 45px rgba(124,58,237,.11);
+}
+
+.grupo-mision__cabecera{
+  padding:13px 15px;
+  border:1.5px solid #ddd6fe;
+  border-radius:18px;
+  background:linear-gradient(135deg,#faf5ff,#fff);
+}
+
+.interruptor input:checked + .interruptor__control{
+  background:linear-gradient(90deg,#2563eb,#7c3aed);
+}
+
+.vista-previa-mision{
+  border-color:#bfdbfe;
+  background:linear-gradient(135deg,#fff,#f8fbff);
+}
+
+.vista-previa-mision strong{
+  color:#1d4ed8;
+}
+
+.estado-pendiente_validacion,
+.estado-completada_pendiente_validacion{
+  color:#1d4ed8;
+  background:#dbeafe;
+}
+
+.tarea-visibilidad.visible{
+  color:#1d4ed8;
+  background:#dbeafe;
+}
+
+.accion-visibilidad{
+  color:#1e40af;
+  background:#dbeafe;
+}
+
+.accion-visibilidad:hover{
+  background:#bfdbfe;
+}
+
+@media(max-width:760px){
+  .tabs{
+    width:100%;
+  }
+}

@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v1.2
+ * Modelo central de navegación · v1.1
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -50,18 +50,6 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
             ruta: "mi-universo/aventuras-matematicas/detectives/historial.html"
           }
         ]
-      },
-      {
-        id: "creciendo-por-dentro",
-        titulo: "Creciendo por Dentro",
-        icono: "🌱",
-        ruta: "mi-universo/creciendo-por-dentro/"
-      },
-      {
-        id: "gestion-misiones",
-        titulo: "Gestión de Misiones",
-        icono: "⚙️",
-        ruta: "mi-universo/mis-tareas/"
       }
     ]
   },

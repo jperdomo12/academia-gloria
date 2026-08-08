@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mis Tareas | Academia Gloria Valentina</title>
-  <meta name="description" content="Planificación, seguimiento y resultados de las tareas y misiones del alumno.">
+  <title>Gestión de Misiones | Academia Gloria Valentina</title>
+  <meta name="description" content="Preparación, seguimiento, revisión y cierre de las Misiones del alumno.">
   <meta name="theme-color" content="#7c3aed">
 
   <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
@@ -37,26 +37,27 @@
 
     <header class="hero-tareas superficie">
       <div>
-        <span class="eyebrow">📌 Planificación y acompañamiento</span>
-        <h1>Mis Tareas</h1>
+        <span class="eyebrow">⚙️ Gestión familiar</span>
+        <h1>Gestión de Misiones</h1>
         <p>
-          Aquí preparamos aventuras para
+          Aquí preparamos Misiones para
           <strong data-alumno-nombre>el alumno</strong>,
-          acompañamos su realización y conservamos lo más importante
+          acompañamos su recorrido y conservamos lo más importante
           de cada experiencia.
+          <span class="hero-tareas__nota">Mi Camino es el espacio de Gloria; aquí la familia prepara y acompaña sus Misiones.</span>
         </p>
       </div>
 
       <div class="hero-tareas__visual" aria-hidden="true">🗺️</div>
     </header>
 
-    <nav class="tabs" aria-label="Secciones de Mis Tareas">
+    <nav class="tabs" aria-label="Secciones de Gestión de Misiones">
       <button class="tab active" type="button" data-tab="lista">
-        📋 Tareas
+        📋 Misiones
       </button>
 
       <button class="tab" type="button" data-tab="crear">
-        ➕ Preparar tarea
+        ➕ Preparar misión
       </button>
     </nav>
 
@@ -64,10 +65,10 @@
       <div class="cabecera-seccion">
         <div>
           <span class="eyebrow">Seguimiento</span>
-          <h2>Tareas registradas</h2>
+          <h2>Misiones registradas</h2>
           <p>
             Revisa qué está preparado, en curso o completado
-            y actualiza cada tarea cuando sea necesario.
+            y acompaña cada Misión cuando sea necesario.
           </p>
         </div>
 
@@ -85,7 +86,7 @@
       </div>
 
       <div id="estadoTareas" class="estado-carga">
-        🦜 Lía está revisando las tareas...
+        🦜 Lía está revisando las Misiones...
       </div>
 
       <div id="listaTareas" class="lista-tareas"></div>
@@ -95,8 +96,8 @@
       <aside class="superficie gestion-familiar-aviso">
         <span aria-hidden="true">👨‍👩‍👧</span>
         <div>
-          <strong>Gestión familiar de misiones</strong>
-          <p>Esta pantalla está pensada para padres y tutores: aquí se crean, organizan, revisan y cierran las asignaciones del alumno.</p>
+          <strong>Espacio familiar de Gestión de Misiones</strong>
+          <p>Esta pantalla está pensada para padres y tutores: aquí se preparan, organizan, revisan y cierran las Misiones que aparecerán en Mi Camino.</p>
         </div>
       </aside>
 
@@ -106,7 +107,7 @@
         <div>
           <span class="eyebrow">Nueva aventura</span>
           <h2 id="tituloFormulario">
-            Preparando una tarea para
+            Preparando una Misión para
             <span data-alumno-nombre>el alumno</span>
           </h2>
 
@@ -127,7 +128,7 @@
             <span class="acordeon__icono">📘</span>
             <span class="acordeon__texto">
               <strong>Información básica</strong>
-              <small>Qué actividad queremos preparar.</small>
+              <small>Qué Misión queremos preparar.</small>
             </span>
             <span class="acordeon__flecha" aria-hidden="true">⌄</span>
           </summary>
@@ -135,13 +136,13 @@
           <div class="acordeon__contenido">
             <div class="grid-formulario">
               <label>
-                Tipo de tarea
+                Tipo de misión
                 <select id="tipo">
                   <option value="actividad_modulo">Actividad de un módulo</option>
                   <option value="tiempo_practica">Tiempo de práctica</option>
                   <option value="cantidad_actividades">Cantidad de actividades</option>
-                  <option value="tarea_libre">Tarea libre</option>
-                  <option value="tarea_combinada">Tarea combinada</option>
+                  <option value="tarea_libre">Misión libre</option>
+                  <option value="tarea_combinada">Misión combinada</option>
                 </select>
               </label>
 
@@ -349,7 +350,7 @@
             </label>
 
             <label>
-              Descripción de la tarea
+              Descripción de la misión
               <textarea
                 id="descripcion"
                 placeholder="Explica brevemente qué se propone realizar."
@@ -365,10 +366,10 @@
             <span class="acordeon__icono">🦜</span>
             <span class="acordeon__texto">
               <strong>
-                Cómo lo verá
+                Así la verá
                 <span data-alumno-nombre>el alumno</span>
               </strong>
-              <small>La cara amable y motivadora de la tarea.</small>
+              <small>La forma en que Gloria verá esta Misión.</small>
             </span>
             <span class="acordeon__flecha" aria-hidden="true">⌄</span>
           </summary>
@@ -376,9 +377,9 @@
           <div class="acordeon__contenido">
             <div class="grupo-mision__cabecera">
               <div>
-                <h3>Presentación como misión</h3>
+                <h3>Así la verá Gloria</h3>
                 <p>
-                  Solo las tareas activadas aquí aparecerán en
+                  Solo las Misiones activadas aquí aparecerán en
                   “Mi aventura de hoy”.
                 </p>
               </div>
@@ -386,7 +387,7 @@
               <label class="interruptor">
                 <input id="visibleParaAlumno" type="checkbox" checked>
                 <span class="interruptor__control" aria-hidden="true"></span>
-                <span>Mostrar como misión</span>
+                <span>Mostrar en Mi Camino</span>
               </label>
             </div>
 
@@ -473,7 +474,7 @@
             </div>
 
             <div id="avisoMisionOculta" class="aviso-mision-oculta hidden">
-              🔒 Esta tarea se guardará para seguimiento adulto y no aparecerá
+              🔒 Esta Misión se conservará para seguimiento familiar y no aparecerá
               en Mi aventura de hoy.
             </div>
           </div>

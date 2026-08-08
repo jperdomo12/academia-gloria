@@ -1,7 +1,7 @@
 /****************************************************************************
  * Academia Gloria Valentina
  * Archivo: compartido/js/panel-usuario.js
- * Menú unificado del alumno · Versión 2.1
+ * Menú unificado del alumno · Versión 2.2
  ****************************************************************************/
 
 import {
@@ -25,7 +25,7 @@ const CONFIGURACION_PREDETERMINADA = Object.freeze({
   mostrarDescubreAcademia: true,
   mostrarEspacioPersonal: true,
   mostrarCamino: true,
-  mostrarTareas: true,
+  mostrarCalendario: true,
   mostrarLogros: true,
   mostrarConfiguracion: true
 });
@@ -37,6 +37,7 @@ let menu = null;
 let manejadorDocumento = null;
 let manejadorEscape = null;
 let cancelarObservacionSesion = null;
+let calendarioSlugActivo = "";
 
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
@@ -61,6 +62,16 @@ function escaparHTML(valor = "") {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function crearSlugSeguro(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function crearElementoDesdeHTML(html) {
@@ -217,10 +228,15 @@ function construirMenu() {
   if (configuracionActiva.mostrarEspacioPersonal) {
     const opciones = [];
     if (configuracionActiva.mostrarCamino) {
-      opciones.push({ id: "mi-camino", titulo: "Mi Camino", icono: "🌱", ruta: "mi-universo/mi-camino/" });
+      opciones.push({ id: "mi-camino", titulo: "Mi Camino", icono: "🌅", ruta: "mi-universo/mi-camino/" });
     }
-    if (configuracionActiva.mostrarTareas) {
-      opciones.push({ id: "mis-tareas", titulo: "Mis Tareas", icono: "📌", ruta: "mi-universo/mis-tareas/", proximo: true });
+    if (configuracionActiva.mostrarCalendario && calendarioSlugActivo) {
+      opciones.push({
+        id: "mi-calendario",
+        titulo: "Mi Calendario",
+        icono: "📅",
+        ruta: `calendarios/${calendarioSlugActivo}/`
+      });
     }
     if (configuracionActiva.mostrarLogros) {
       opciones.push({ id: "mis-logros", titulo: "Mis Logros", icono: "🏆", ruta: "mi-universo/mis-logros/", proximo: true });
@@ -268,6 +284,10 @@ async function construirPanel(contenedor) {
     obtenerAvatar(),
     obtenerSaludo()
   ]);
+
+  calendarioSlugActivo =
+    crearSlugSeguro(perfil.calendarioSlug) ||
+    crearSlugSeguro(nombreVisible);
 
   const nombreSeguro = escaparHTML(nombreVisible);
   const avatarSeguro = escaparHTML(avatar);

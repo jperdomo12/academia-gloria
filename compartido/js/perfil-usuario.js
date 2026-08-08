@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/perfil-usuario.js
  * Servicio oficial para consultar el perfil del usuario autenticado.
- * Versión: 1.0
+ * Versión: 1.1
  ******************************************************************************/
 
 import { auth, db } from "../firebase/firebase-config.js";
@@ -71,6 +71,7 @@ function crearPerfilPredeterminado(usuario) {
     curso: "",
     cursoEscolar: "",
     colegio: "",
+    calendarioSlug: "",
     zonaHoraria: "Europe/Madrid",
     tipoUsuario: "alumno",
     activo: true,
@@ -94,6 +95,7 @@ function normalizarPerfil(perfil, usuario) {
     ).trim(),
     avatar: String(perfil?.avatar || base.avatar).trim(),
     idioma: String(perfil?.idioma || base.idioma).trim(),
+    calendarioSlug: String(perfil?.calendarioSlug || base.calendarioSlug).trim(),
     zonaHoraria: String(
       perfil?.zonaHoraria || base.zonaHoraria
     ).trim(),
@@ -179,6 +181,10 @@ async function obtenerColegio() {
   return (await obtenerPerfil()).colegio || "";
 }
 
+async function obtenerCalendarioSlug() {
+  return (await obtenerPerfil()).calendarioSlug || "";
+}
+
 async function obtenerTipoUsuario() {
   return (await obtenerPerfil()).tipoUsuario || "alumno";
 }
@@ -243,6 +249,7 @@ export const PerfilUsuario = Object.freeze({
   obtenerIdioma,
   obtenerCurso,
   obtenerColegio,
+  obtenerCalendarioSlug,
   obtenerTipoUsuario,
   obtenerIniciales,
   obtenerSaludo,
@@ -262,6 +269,7 @@ export {
   obtenerIdioma,
   obtenerCurso,
   obtenerColegio,
+  obtenerCalendarioSlug,
   obtenerTipoUsuario,
   obtenerIniciales,
   obtenerSaludo,

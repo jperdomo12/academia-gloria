@@ -93,8 +93,8 @@ function textoEstado(estado) {
   return {
     pendiente: "🌱 Preparada",
     en_curso: "▶️ En aventura",
-    pendiente_validacion: "✨ Pendiente de validación",
-    completada_pendiente_validacion: "✨ Pendiente de validación",
+    pendiente_validacion: "⏳ Esperando a mi familia",
+    completada_pendiente_validacion: "⏳ Esperando a mi familia",
     completada: "✅ Conseguida",
     necesita_ayuda: "🤝 Necesita ayuda",
     vencida: "🌿 Retomable",
@@ -172,8 +172,8 @@ function renderTareas() {
     estado.classList.remove("hidden");
     estado.textContent =
       filtroActual === "activas"
-        ? "No hay tareas activas. Puedes preparar una nueva ✨"
-        : "No hay tareas en este filtro.";
+        ? "No hay Misiones activas. Puedes preparar una nueva ✨"
+        : "No hay Misiones en este filtro.";
     lista.innerHTML = "";
     return;
   }
@@ -192,7 +192,7 @@ function renderTareas() {
           <div class="tarea-card__resumen-principal">
             <div class="tarea-icono">${escapar(icono)}</div>
             <div>
-              <h3>${escapar(tarea.titulo || "Tarea")}</h3>
+              <h3>${escapar(tarea.titulo || "Misión")}</h3>
               <p>${escapar(
                 tarea.descripcion ||
                 presentacion.descripcionMision ||
@@ -215,7 +215,7 @@ function renderTareas() {
           <span>⏱️ ${Number(tarea.tiempoEstimadoMinutos || 0)} min</span>
           <span>🧭 ${escapar(tarea.modulo || "libre")}</span>
           <span class="tarea-visibilidad ${visible ? "visible" : "oculta"}">
-            ${visible ? "🌈 Visible como misión" : "🔒 Solo seguimiento adulto"}
+            ${visible ? "🌈 Visible en Mi Camino" : "🔒 Solo seguimiento familiar"}
           </span>
           ${
             visible && !["completada", "cancelada"].includes(tarea.estado)
@@ -246,7 +246,7 @@ function renderTareas() {
                  <strong>⭐ Resultado registrado</strong>
                  <p>${escapar(
                    resultadoTarea(tarea).observaciones ||
-                   "La tarea tiene información de cierre."
+                   "La Misión tiene información de cierre."
                  )}</p>
                </div>`
             : ""
@@ -292,7 +292,7 @@ function renderTareas() {
           <button class="btn accion-visibilidad"
                   data-action="visibility"
                   data-id="${escapar(tarea.id)}">
-            ${visible ? "🔒 Ocultar misión" : "🌈 Mostrar como misión"}
+            ${visible ? "🔒 Ocultar de Mi Camino" : "🌈 Mostrar en Mi Camino"}
           </button>
 
           ${
