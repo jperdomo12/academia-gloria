@@ -1,7 +1,7 @@
 /****************************************************************************
  * Academia Gloria Valentina
  * Archivo: compartido/js/panel-usuario.js
- * Menú unificado del alumno · Versión 2.3
+ * Menú unificado del alumno · Versión 2.2
  ****************************************************************************/
 
 import {
@@ -37,6 +37,7 @@ let menu = null;
 let manejadorDocumento = null;
 let manejadorEscape = null;
 let cancelarObservacionSesion = null;
+let calendarioSlugActivo = "";
 
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
@@ -63,6 +64,15 @@ function escaparHTML(valor = "") {
     .replaceAll("'", "&#039;");
 }
 
+function crearSlugSeguro(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 
 function crearElementoDesdeHTML(html) {
   const plantilla = document.createElement("template");
@@ -220,12 +230,12 @@ function construirMenu() {
     if (configuracionActiva.mostrarCamino) {
       opciones.push({ id: "mi-camino", titulo: "Mi Camino", icono: "🌅", ruta: "mi-universo/mi-camino/" });
     }
-    if (configuracionActiva.mostrarCalendario) {
+    if (configuracionActiva.mostrarCalendario && calendarioSlugActivo) {
       opciones.push({
         id: "mi-calendario",
         titulo: "Mi Calendario",
         icono: "📅",
-        ruta: "calendarios/"
+        ruta: `calendarios/${calendarioSlugActivo}/`
       });
     }
     if (configuracionActiva.mostrarLogros) {
@@ -274,6 +284,10 @@ async function construirPanel(contenedor) {
     obtenerAvatar(),
     obtenerSaludo()
   ]);
+
+  calendarioSlugActivo =
+    crearSlugSeguro(perfil.calendarioSlug) ||
+    crearSlugSeguro(nombreVisible);
 
   const nombreSeguro = escaparHTML(nombreVisible);
   const avatarSeguro = escaparHTML(avatar);

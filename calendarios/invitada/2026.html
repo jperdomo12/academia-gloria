@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi Calendario 2026 | Academia de Gloria</title>
+  <meta name="description" content="Calendario personal de Gloria para todo el año 2026.">
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/calendarios.css">
+  <link rel="stylesheet" href="../../compartido/css/calendario-gloria.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .hero-gloria{
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:24px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+
+    .hero-gloria-panel{
+      padding:24px;
+      border-radius:26px;
+      color:white;
+      background:linear-gradient(145deg,#7c3aed,#ec4899,#0ea5e9);
+      box-shadow:0 22px 46px rgba(76,29,149,.22);
+    }
+
+    .hero-gloria-panel h2{
+      margin:0 0 10px;
+      font-size:clamp(2rem,3.5vw,3rem);
+      line-height:1.05;
+    }
+
+    .bloque-gloria{
+      margin-top:22px;
+      padding:24px;
+    }
+
+    .bloque-gloria h2{
+      margin:0 0 6px;
+      font-size:2rem;
+    }
+
+    .bloque-gloria-intro{
+      margin:0 0 18px;
+      color:#64748b;
+      font-weight:600;
+    }
+
+    .aviso-local{
+      margin-top:20px;
+      padding:16px;
+      border:2px solid #fef3c7;
+      border-radius:18px;
+      background:#fffaf0;
+      color:#7c4a03;
+      font-weight:750;
+    }
+
+    @media(max-width:850px){
+      .hero-gloria{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body data-anio="2026">
+  <main class="calendario-pagina">
+
+    <header class="calendario-superficie calendario-cabecera hero-gloria">
+      <div>
+        <button
+          type="button"
+          class="boton-volver"
+          data-accion-volver
+          data-ruta-alternativa="./">
+          <i data-lucide="arrow-left" width="19"></i>
+          Volver
+        </button>
+
+        <h1 class="calendario-titulo">Mi Calendario 2026 🌈</h1>
+        <p class="calendario-subtitulo">
+          Enero a diciembre · Nuevas aventuras, 6º de Primaria y momentos especiales.
+        </p>
+      </div>
+
+      <div class="hero-gloria-panel">
+        <p style="margin:0 0 7px;font-size:.82rem;letter-spacing:.16em;font-weight:900">MI AÑO COMPLETO</p>
+        <h2>Nuevas aventuras comienzan ✨</h2>
+        <p style="margin:0;font-weight:700;line-height:1.55">
+          Añade cada momento importante de 2026 y construye tu historia día a día.
+        </p>
+      </div>
+    </header>
+
+    <section class="recordatorios-dia">
+      <article class="recordatorio-card recordatorio-card--hoy">
+        <div class="recordatorio-icono">📅</div>
+        <div><span class="recordatorio-etiqueta">PARA HOY</span><div id="mensajeHoy" class="recordatorio-mensaje">Cargando tus eventos de hoy...</div></div>
+      </article>
+      <article class="recordatorio-card recordatorio-card--manana">
+        <div class="recordatorio-icono">⏰</div>
+        <div><span class="recordatorio-etiqueta">PARA MAÑANA</span><div id="mensajeManana" class="recordatorio-mensaje">Cargando tus eventos de mañana...</div></div>
+      </article>
+    </section>
+
+    <section class="gloria-resumen">
+      <div class="gloria-indicador"><strong id="totalEventos">0</strong><span>Eventos</span></div>
+      <div class="gloria-indicador"><strong id="eventosCompletados">0</strong><span>Completados</span></div>
+      <div class="gloria-indicador"><strong id="eventosViajes">0</strong><span>Viajes</span></div>
+      <div class="gloria-indicador"><strong id="eventosLogros">0</strong><span>Logros</span></div>
+      <div class="gloria-indicador gloria-indicador--proximo">
+        <strong id="proximoEvento">Añade tu primer evento</strong>
+        <span>Próximo recuerdo</span>
+      </div>
+    </section>
+
+    <section class="gloria-barra">
+      <div class="gloria-filtros">
+        <button class="gloria-filtro activo" data-filtro="todos">Todos</button>
+        <button class="gloria-filtro" data-filtro="Cole">🏫 Cole</button>
+        <button class="gloria-filtro" data-filtro="Viaje">✈️ Viajes</button>
+        <button class="gloria-filtro" data-filtro="Lectura">📚 Lecturas</button>
+        <button class="gloria-filtro" data-filtro="Logro">🏆 Logros</button>
+        <button class="gloria-filtro" data-filtro="Especial">⭐ Especiales</button>
+        <button class="gloria-filtro" data-filtro="Cumpleaños">🎂 Cumpleaños</button>
+        <button class="gloria-filtro" data-filtro="Examen">📝 Exámenes</button>
+        <button class="gloria-filtro" data-filtro="Festivo">🎉 Festivos</button>
+      </div>
+
+      <select id="selectorMes" class="gloria-selector" aria-label="Filtrar por mes">
+        <option value="todos">Todos los meses</option>
+        <option value="0">Enero</option>
+        <option value="1">Febrero</option>
+        <option value="2">Marzo</option>
+        <option value="3">Abril</option>
+        <option value="4">Mayo</option>
+        <option value="5">Junio</option>
+        <option value="6">Julio</option>
+        <option value="7">Agosto</option>
+        <option value="8">Septiembre</option>
+        <option value="9">Octubre</option>
+        <option value="10">Noviembre</option>
+        <option value="11">Diciembre</option>
+      </select>
+
+      <div class="acciones-academia" style="margin:0">
+        <button class="boton-academia boton-academia--primario" id="nuevoEvento">➕ Nuevo evento</button>
+        <button class="boton-academia boton-academia--secundario" id="exportarCalendario">📤 Exportar</button>
+        <label class="boton-academia boton-academia--exito">
+          📥 Importar
+          <input id="importarCalendario" type="file" accept=".json" hidden>
+        </label>
+      </div>
+    </section>
+
+    <section class="calendario-superficie bloque-gloria">
+      <h2>Mi año de un vistazo</h2>
+      <p class="bloque-gloria-intro">Los doce meses de enero a diciembre. Pulsa cualquier día para añadir un evento.</p>
+      <div id="gloriaMeses" class="gloria-meses"></div>
+    </section>
+
+    <section class="calendario-superficie bloque-gloria">
+      <h2>Mis recuerdos de 2026</h2>
+      <p class="bloque-gloria-intro">Filtra por mes o categoría para encontrar rápidamente cada momento.</p>
+      <div id="gloriaEventos" class="gloria-eventos"></div>
+    </section>
+
+    <div class="aviso-local">
+      ☁️ Conectando con la nube...
+    </div>
+
+    <footer>Academia de Gloria Valentina · Mi Calendario 2026</footer>
+  </main>
+
+  <div class="gloria-modal-fondo" id="modalEvento" aria-hidden="true">
+    <div class="gloria-modal">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px">
+        <h2 id="modalTitulo" style="margin:0">Nuevo evento</h2>
+        <button class="gloria-icon-btn" id="cerrarModal" type="button">✕</button>
+      </div>
+
+      <form id="formEvento">
+        <input id="eventoId" type="hidden">
+
+        <div class="gloria-campo">
+          <label for="eventoTitulo">Título</label>
+          <input id="eventoTitulo" placeholder="Ejemplo: Terminé mi libro" required>
+        </div>
+
+        <div class="gloria-form-grid">
+          <div class="gloria-campo">
+            <label for="eventoFecha">Fecha</label>
+            <input id="eventoFecha" type="date" min="2026-01-01" max="2026-12-31" required>
+          </div>
+
+          <div class="gloria-campo">
+            <label for="eventoCategoria">Categoría</label>
+            <select id="eventoCategoria">
+              <option>Cole</option>
+              <option>Viaje</option>
+              <option>Lectura</option>
+              <option>Logro</option>
+              <option>Cumpleaños</option>
+              <option>Examen</option>
+              <option>Festivo</option>
+              <option>Médico</option>
+              <option>Tarea</option>
+              <option>Actividad</option>
+              <option selected>Especial</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gloria-campo">
+          <label>Icono</label>
+          <div id="selectorIconos" class="selector-iconos">
+            <button type="button" class="icono-opcion seleccionado" data-icono="⭐">⭐</button>
+            <button type="button" class="icono-opcion" data-icono="🎂">🎂</button>
+            <button type="button" class="icono-opcion" data-icono="📝">📝</button>
+            <button type="button" class="icono-opcion" data-icono="🎉">🎉</button>
+            <button type="button" class="icono-opcion" data-icono="🏫">🏫</button>
+            <button type="button" class="icono-opcion" data-icono="📚">📚</button>
+            <button type="button" class="icono-opcion" data-icono="✈️">✈️</button>
+            <button type="button" class="icono-opcion" data-icono="🏆">🏆</button>
+            <button type="button" class="icono-opcion" data-icono="🩺">🩺</button>
+            <button type="button" class="icono-opcion" data-icono="🎭">🎭</button>
+            <button type="button" class="icono-opcion" data-icono="🎁">🎁</button>
+            <button type="button" class="icono-opcion" data-icono="❤️">❤️</button>
+          </div>
+          <input id="eventoIcono" type="hidden" value="⭐">
+        </div>
+
+        <div class="gloria-campo">
+          <label for="eventoNota">Nota</label>
+          <textarea id="eventoNota" placeholder="¿Qué quieres recordar de este día?"></textarea>
+        </div>
+
+        <div class="acciones-academia">
+          <button class="boton-academia boton-academia--primario" type="submit">💾 Guardar</button>
+          <button class="boton-academia boton-academia--suave" id="cancelarModal" type="button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../compartido/js/calendario-gloria.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

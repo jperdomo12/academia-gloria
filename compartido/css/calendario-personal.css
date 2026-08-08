@@ -1,0 +1,1083 @@
+/* Academia de Gloria | Calendarios personales de Gloria | SUPER PRO */
+
+:root {
+  --gloria-morado: #7c3aed;
+  --gloria-rosa: #ec4899;
+  --gloria-azul: #0ea5e9;
+  --gloria-verde: #10b981;
+  --gloria-amarillo: #f59e0b;
+}
+
+.gloria-resumen {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin: 22px 0;
+}
+
+.gloria-indicador {
+  padding: 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 21px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 10px 26px rgba(30, 41, 59, .05);
+}
+
+.gloria-indicador strong {
+  display: block;
+  font-size: 2rem;
+  color: #1e293b;
+}
+
+.gloria-indicador span {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.gloria-indicador--proximo strong {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.gloria-barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 21px;
+  background: rgba(255, 255, 255, .95);
+}
+
+.gloria-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gloria-filtro {
+  border: 2px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 9px 13px;
+  background: white;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.gloria-filtro.activo {
+  color: white;
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--gloria-morado), var(--gloria-rosa));
+}
+
+.gloria-selector {
+  padding: 10px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  background: white;
+  font: inherit;
+  font-weight: 800;
+}
+
+.gloria-meses {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.gloria-mes {
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  border-radius: 23px;
+  background: white;
+  box-shadow: 0 13px 30px rgba(30, 41, 59, .07);
+}
+
+.gloria-mes__titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 15px;
+  color: white;
+  background: linear-gradient(90deg, #7c3aed, #0ea5e9);
+  font-weight: 900;
+}
+
+.gloria-mes__titulo small {
+  opacity: .86;
+  font-size: .75rem;
+}
+
+.gloria-mes__dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.gloria-dia-semana,
+.gloria-dia {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #edf2f7;
+  border-bottom: 1px solid #edf2f7;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.gloria-dia-semana {
+  min-height: 32px;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.gloria-dia {
+  position: relative;
+  flex-direction: column;
+  gap: 1px;
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0;
+  cursor: pointer;
+  background: white;
+}
+
+.gloria-dia:hover {
+  background: #faf5ff;
+}
+
+.gloria-dia.vacio {
+  color: transparent;
+  background: #fafafa;
+  cursor: default;
+}
+
+.gloria-dia.hoy {
+  outline: 3px solid #f59e0b;
+  outline-offset: -3px;
+}
+
+.gloria-dia-numero {
+  font-weight: 900;
+}
+
+.gloria-dia-iconos {
+  font-size: .63rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.gloria-dia.tiene-evento {
+  background: linear-gradient(135deg, #fff, #faf5ff);
+}
+
+.gloria-eventos {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.gloria-evento {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 13px;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 19px;
+  background: white;
+  box-shadow: 0 9px 22px rgba(30, 41, 59, .05);
+}
+
+.gloria-evento.completado {
+  opacity: .65;
+}
+
+.gloria-evento-icono {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  font-size: 24px;
+  background: #f3e8ff;
+}
+
+.gloria-evento-categoria {
+  display: inline-flex;
+  margin-bottom: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: .7rem;
+  font-weight: 900;
+}
+
+.gloria-evento h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.gloria-evento p {
+  margin: 0;
+  color: #64748b;
+  font-size: .88rem;
+  font-weight: 650;
+}
+
+.gloria-evento-acciones {
+  display: flex;
+  gap: 7px;
+}
+
+.gloria-icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.gloria-modal-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(15, 23, 42, .48);
+  backdrop-filter: blur(4px);
+}
+
+.gloria-modal-fondo.abierto {
+  display: flex;
+}
+
+.gloria-modal {
+  width: min(640px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 24px;
+  border-radius: 26px;
+  background: white;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, .25);
+}
+
+.gloria-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.gloria-campo {
+  margin-bottom: 14px;
+}
+
+.gloria-campo label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 900;
+}
+
+.gloria-campo input,
+.gloria-campo select,
+.gloria-campo textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font: inherit;
+}
+
+.gloria-campo textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.gloria-vacio {
+  padding: 28px;
+  text-align: center;
+  border: 2px dashed #d8b4fe;
+  border-radius: 20px;
+  background: #faf5ff;
+  color: #6b21a8;
+  font-weight: 800;
+}
+
+@media(max-width:1000px) {
+  .gloria-resumen {
+    grid-template-columns: repeat(3, 1fr)
+  }
+
+  .gloria-meses {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+@media(max-width:650px) {
+  .gloria-resumen {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .gloria-meses,
+  .gloria-form-grid {
+    grid-template-columns: 1fr
+  }
+
+  .gloria-evento {
+    grid-template-columns: 44px 1fr
+  }
+
+  .gloria-evento-acciones {
+    grid-column: 2
+  }
+}
+
+/* ==========================================================
+   Colores motivadores por mes
+   ========================================================== */
+
+.gloria-mes {
+  border-width: 3px;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.gloria-mes:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 42px rgba(76, 29, 149, .15);
+}
+
+/* Enero */
+.gloria-mes[data-mes="0"] {
+  border-color: #93c5fd;
+  background: linear-gradient(145deg, #eff6ff, #ffffff);
+}
+
+.gloria-mes[data-mes="0"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+}
+
+/* Febrero */
+.gloria-mes[data-mes="1"] {
+  border-color: #f9a8d4;
+  background: linear-gradient(145deg, #fdf2f8, #ffffff);
+}
+
+.gloria-mes[data-mes="1"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #ec4899, #a855f7);
+}
+
+/* Marzo */
+.gloria-mes[data-mes="2"] {
+  border-color: #86efac;
+  background: linear-gradient(145deg, #f0fdf4, #ffffff);
+}
+
+.gloria-mes[data-mes="2"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #16a34a, #10b981);
+}
+
+/* Abril */
+.gloria-mes[data-mes="3"] {
+  border-color: #c4b5fd;
+  background: linear-gradient(145deg, #faf5ff, #ffffff);
+}
+
+.gloria-mes[data-mes="3"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+}
+
+/* Mayo */
+.gloria-mes[data-mes="4"] {
+  border-color: #fde68a;
+  background: linear-gradient(145deg, #fffbeb, #ffffff);
+}
+
+.gloria-mes[data-mes="4"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+/* Junio */
+.gloria-mes[data-mes="5"] {
+  border-color: #67e8f9;
+  background: linear-gradient(145deg, #ecfeff, #ffffff);
+}
+
+.gloria-mes[data-mes="5"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #0891b2, #06b6d4);
+}
+
+/* Julio */
+.gloria-mes[data-mes="6"] {
+  border-color: #fdba74;
+  background: linear-gradient(145deg, #fff7ed, #ffffff);
+}
+
+.gloria-mes[data-mes="6"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #f97316, #ef4444);
+}
+
+/* Agosto */
+.gloria-mes[data-mes="7"] {
+  border-color: #5eead4;
+  background: linear-gradient(145deg, #f0fdfa, #ffffff);
+}
+
+.gloria-mes[data-mes="7"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #0d9488, #0ea5e9);
+}
+
+/* Septiembre */
+.gloria-mes[data-mes="8"] {
+  border-color: #fcd34d;
+  background: linear-gradient(145deg, #fffbeb, #ffffff);
+}
+
+.gloria-mes[data-mes="8"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #d97706, #f59e0b);
+}
+
+/* Octubre */
+.gloria-mes[data-mes="9"] {
+  border-color: #fb923c;
+  background: linear-gradient(145deg, #fff7ed, #ffffff);
+}
+
+.gloria-mes[data-mes="9"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #ea580c, #dc2626);
+}
+
+/* Noviembre */
+.gloria-mes[data-mes="10"] {
+  border-color: #c4b5fd;
+  background: linear-gradient(145deg, #faf5ff, #ffffff);
+}
+
+.gloria-mes[data-mes="10"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #7c3aed, #9333ea);
+}
+
+/* Diciembre */
+.gloria-mes[data-mes="11"] {
+  border-color: #86efac;
+  background: linear-gradient(145deg, #f0fdf4, #ffffff);
+}
+
+.gloria-mes[data-mes="11"] .gloria-mes__titulo {
+  background: linear-gradient(90deg, #15803d, #dc2626);
+}
+
+
+.recordatorios-dia {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 22px 0
+}
+
+.recordatorio-card {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 10px 26px rgba(30, 41, 59, .06)
+}
+
+.recordatorio-card--hoy {
+  border-color: #bfdbfe;
+  background: linear-gradient(135deg, #eff6ff, #fff)
+}
+
+.recordatorio-card--manana {
+  border-color: #ddd6fe;
+  background: linear-gradient(135deg, #f5f3ff, #fff)
+}
+
+.recordatorio-icono {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 17px;
+  background: white;
+  font-size: 28px;
+  box-shadow: 0 8px 18px rgba(30, 41, 59, .08)
+}
+
+.recordatorio-etiqueta {
+  display: block;
+  margin-bottom: 4px;
+  color: #7c3aed;
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .12em
+}
+
+.recordatorio-mensaje {
+  color: #334155;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.45
+}
+
+.selector-iconos {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 9px
+}
+
+.icono-opcion {
+  min-height: 48px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  background: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: .18s ease
+}
+
+.icono-opcion:hover {
+  transform: translateY(-2px);
+  border-color: #c4b5fd;
+  background: #faf5ff
+}
+
+.icono-opcion.seleccionado {
+  border-color: #7c3aed;
+  background: #ede9fe;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, .12)
+}
+
+@media(max-width:650px) {
+  .recordatorios-dia {
+    grid-template-columns: 1fr
+  }
+
+  .selector-iconos {
+    grid-template-columns: repeat(4, 1fr)
+  }
+}
+
+
+/* ==========================================================
+   Calendario Personal v2.0 · Multiusuario / multi-año
+   ========================================================== */
+
+.calendario-hero-personal {
+  display: grid;
+  grid-template-columns: 1.12fr .88fr;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendario-eyebrow {
+  display: inline-flex;
+  margin-top: 15px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f3e8ff;
+  color: #6d28d9;
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.hero-calendario-panel {
+  padding: 24px;
+  border-radius: 26px;
+  color: white;
+  background: linear-gradient(145deg, #7c3aed, #ec4899, #0ea5e9);
+  box-shadow: 0 22px 46px rgba(76, 29, 149, .22);
+}
+
+.hero-calendario-panel__eyebrow {
+  margin: 0 0 7px;
+  font-size: .82rem;
+  letter-spacing: .16em;
+  font-weight: 900;
+}
+
+.hero-calendario-panel h2 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.05;
+}
+
+.hero-calendario-panel p:last-child {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.navegacion-anios {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 15px 18px;
+}
+
+.navegacion-anios__centro {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+}
+
+.navegacion-anios__etiqueta {
+  color: #64748b;
+  font-size: .72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.navegacion-anios__centro small {
+  color: #94a3b8;
+  font-weight: 750;
+  text-align: center;
+}
+
+.selector-anio {
+  min-width: 135px;
+  padding: 8px 36px 8px 14px;
+  border: 2px solid #ddd6fe;
+  border-radius: 13px;
+  background: #fff;
+  color: #5b21b6;
+  font: inherit;
+  font-size: 1.08rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.anio-nav-btn {
+  width: 46px;
+  height: 46px;
+  border: 2px solid #ddd6fe;
+  border-radius: 15px;
+  background: #faf5ff;
+  color: #6d28d9;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.anio-nav-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.bloque-calendario-personal {
+  margin-top: 22px;
+  padding: 24px;
+}
+
+.bloque-calendario-personal h2 {
+  margin: 0 0 6px;
+  font-size: 2rem;
+}
+
+.bloque-calendario-intro {
+  margin: 0 0 18px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.aviso-local {
+  margin-top: 20px;
+  padding: 16px;
+  border: 2px solid #fef3c7;
+  border-radius: 18px;
+  background: #fffaf0;
+  color: #7c4a03;
+  font-weight: 750;
+}
+
+.modal-cabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.modal-cabecera h2 {
+  margin: 0
+}
+
+.gloria-dia.fuera-rango {
+  opacity: .34;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.gloria-dia.fuera-rango::after {
+  display: none !important;
+}
+
+@media(max-width:850px) {
+  .calendario-hero-personal {
+    grid-template-columns: 1fr
+  }
+}
+
+@media(max-width:650px) {
+  .navegacion-anios {
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .anio-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .selector-anio {
+    min-width: 112px;
+  }
+
+  .bloque-calendario-personal {
+    padding: 16px;
+  }
+}
+
+
+/* ==========================================================
+   v2.1 · Resumen: etiqueta arriba / valor abajo
+   ========================================================== */
+
+.gloria-indicador {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 98px;
+  text-align: center;
+}
+
+.gloria-indicador>span {
+  order: 1;
+  margin: 0 0 4px;
+  line-height: 1.15;
+}
+
+.gloria-indicador>strong {
+  order: 2;
+  margin: 0;
+  line-height: 1.08;
+}
+
+.gloria-indicador--proximo {
+  justify-content: center;
+}
+
+.gloria-indicador--proximo>strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25em;
+  max-width: 100%;
+  text-align: center;
+  font-size: .98rem;
+  line-height: 1.15;
+}
+
+
+/* ==========================================================
+   v2.4 · Accesos a Calendarios del Cole
+   ========================================================== */
+.accesos-calendario-colegio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.acceso-colegio {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 2px solid #dbeafe;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #f8fbff, #ffffff);
+  color: #172554;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(30, 64, 175, .07);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.acceso-colegio:hover,
+.acceso-colegio:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(30, 64, 175, .12);
+  border-color: #93c5fd;
+  outline: none;
+}
+
+.acceso-colegio--oficial {
+  border-color: #bae6fd;
+  background: linear-gradient(145deg, #f0f9ff, #ffffff);
+}
+
+.acceso-colegio__icono {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #e0f2fe;
+  font-size: 23px;
+}
+
+.acceso-colegio__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.acceso-colegio__texto strong {
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.acceso-colegio__texto small {
+  color: #64748b;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.acceso-colegio__flecha {
+  color: #2563eb;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+@media(max-width:720px) {
+  .accesos-calendario-colegio {
+    grid-template-columns: 1fr
+  }
+}
+
+
+/* ==========================================================
+   v2.6 · Jerarquía Calendario / Colegio / Mis eventos
+   ========================================================== */
+.navegacion-anios {
+  position: relative;
+  overflow: hidden;
+  grid-template-columns: auto minmax(300px, 1fr) auto;
+  padding: 18px 22px;
+  border: 2px solid #ddd6fe;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(196, 181, 253, .24), transparent 23%),
+    radial-gradient(circle at 88% 80%, rgba(125, 211, 252, .18), transparent 26%),
+    linear-gradient(135deg, #ffffff, #fbfaff 55%, #f5fbff);
+  box-shadow: 0 14px 32px rgba(99, 102, 241, .09);
+}
+
+.navegacion-anios::after {
+  content: "✨";
+  position: absolute;
+  right: 82px;
+  top: 12px;
+  opacity: .18;
+  font-size: 28px;
+  pointer-events: none;
+}
+
+.navegacion-anios__controles {
+  display: grid;
+  grid-template-columns: minmax(140px, 190px) minmax(160px, 210px);
+  justify-content: center;
+  gap: 9px 16px;
+  align-items: end;
+}
+
+.navegacion-anios__controles>small {
+  grid-column: 1/-1;
+  color: #8b8da3;
+  font-weight: 750;
+  text-align: center;
+}
+
+.control-periodo {
+  display: grid;
+  gap: 5px
+}
+
+.control-periodo>span {
+  color: #64748b;
+  font-size: .72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+  text-align: center;
+}
+
+.selector-mes {
+  min-width: 160px
+}
+
+.acciones-calendario-compactas {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 14px;
+}
+
+.acciones-calendario-compactas .acciones-academia {
+  margin: 0 !important
+}
+
+.zona-accesos-colegio {
+  margin-top: 18px
+}
+
+.zona-accesos-colegio .accesos-calendario-colegio {
+  margin-bottom: 0
+}
+
+.filtros-eventos {
+  margin-top: 22px;
+  margin-bottom: 12px;
+  padding: 18px 20px;
+  border: 2px solid #e9d5ff;
+  background: linear-gradient(135deg, #faf5ff, #ffffff);
+}
+
+.filtros-eventos__cabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 13px;
+}
+
+.filtros-eventos__cabecera>div {
+  display: grid;
+  gap: 2px
+}
+
+.filtros-eventos__eyebrow {
+  color: #7c3aed;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+.filtros-eventos__cabecera strong {
+  color: #1e293b;
+  font-size: 1.15rem
+}
+
+.filtros-eventos__cabecera small {
+  color: #64748b;
+  font-weight: 650
+}
+
+.filtros-eventos .gloria-filtros {
+  margin: 0
+}
+
+@media(max-width:720px) {
+  .navegacion-anios {
+    grid-template-columns: auto 1fr auto
+  }
+
+  .navegacion-anios__controles {
+    grid-template-columns: 1fr
+  }
+
+  .navegacion-anios__controles>small {
+    grid-column: auto
+  }
+
+  .selector-anio,
+  .selector-mes {
+    width: 100%;
+    min-width: 0
+  }
+
+  .acciones-calendario-compactas {
+    justify-content: stretch
+  }
+
+  .acciones-calendario-compactas .acciones-academia {
+    width: 100%
+  }
+
+  .filtros-eventos__cabecera {
+    align-items: flex-start;
+    flex-direction: column
+  }
+}
+
+
+/* ==========================================================
+   v2.7 · Orden final de bloques de Mi Calendario
+   ========================================================== */
+
+.recordatorios-dia {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recordatorio-card--proximo {
+  border-color: #ddd6fe;
+  background: linear-gradient(135deg, #faf5ff, #ffffff);
+}
+
+.recordatorio-card--proximo .recordatorio-icono {
+  background: #f3e8ff;
+}
+
+.gloria-resumen {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gloria-resumen .gloria-indicador {
+  min-height: 92px;
+}
+
+.acciones-calendario-compactas {
+  margin-top: 12px;
+  margin-bottom: 18px;
+}
+
+@media(max-width:900px) {
+  .recordatorios-dia {
+    grid-template-columns: 1fr;
+  }
+
+  .gloria-resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media(max-width:560px) {
+  .gloria-resumen {
+    grid-template-columns: 1fr 1fr;
+  }
+}

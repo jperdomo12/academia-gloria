@@ -565,98 +565,6 @@ async function eliminarSesionLectura(historiaId) {
 }
 
 
-
-/* ==========================================================
-   Creciendo por Dentro · Sesiones de Semillas
-   usuarios/{uid}/sesionesSemillas/{sesionId}
-   ========================================================== */
-
-function coleccionSesionesSemillas() {
-  return collection(
-    db,
-    "usuarios",
-    obtenerUID(),
-    "sesionesSemillas"
-  );
-}
-
-function normalizarSesionSemilla(sesion = {}) {
-  const semillaId = String(sesion.semillaId ?? "").trim();
-  const titulo = String(sesion.titulo ?? "").trim();
-
-  if (!semillaId || !titulo) {
-    throw new Error("La sesión de Semilla no contiene una experiencia válida.");
-  }
-
-  const audioData = String(sesion.audioData ?? "").trim();
-
-  if (audioData.length > 900000) {
-    throw new Error(
-      "La grabación es demasiado grande. Intenta grabar menos tiempo."
-    );
-  }
-
-  return {
-    semillaId,
-    titulo,
-    familia: String(sesion.familia ?? "").trim(),
-    tipoSituacion: String(sesion.tipoSituacion ?? "").trim(),
-    nivelApoyo: Number(sesion.nivelApoyo ?? 1),
-    fechaInicio: String(sesion.fechaInicio ?? "").trim(),
-    duracion: Math.max(0, Number(sesion.duracion ?? 0)),
-    intentos: Math.max(0, Number(sesion.intentos ?? 0)),
-    respuestaConstruida: String(sesion.respuestaConstruida ?? "").trim(),
-    audioData,
-    mimeType: String(sesion.mimeType ?? "audio/webm").trim(),
-    duracionAudio: Math.max(0, Number(sesion.duracionAudio ?? 0)),
-    transcripcion: String(sesion.transcripcion ?? "").trim(),
-    respuestas:
-      sesion.respuestas && typeof sesion.respuestas === "object"
-        ? sesion.respuestas
-        : {},
-    analisisEducativo:
-      sesion.analisisEducativo && typeof sesion.analisisEducativo === "object"
-        ? sesion.analisisEducativo
-        : {},
-    observacionFamilia: String(sesion.observacionFamilia ?? "").trim(),
-    misionId: String(sesion.misionId ?? "").trim()
-  };
-}
-
-async function guardarSesionSemilla(sesion) {
-  const datos = normalizarSesionSemilla(sesion);
-
-  /*
-   * Cada práctica se conserva como una sesión independiente.
-   * Así una misma Semilla puede repetirse sin sobrescribir el historial.
-   */
-  const referencia = await addDoc(
-    coleccionSesionesSemillas(),
-    {
-      ...datos,
-      creadaEn: serverTimestamp(),
-      actualizadaEn: serverTimestamp()
-    }
-  );
-
-  return referencia.id;
-}
-
-async function leerSesionesSemillas() {
-  const consulta = query(
-    coleccionSesionesSemillas(),
-    orderBy("actualizadaEn", "desc")
-  );
-
-  const resultado = await getDocs(consulta);
-
-  return resultado.docs.map((documento) => ({
-    id: documento.id,
-    ...documento.data()
-  }));
-}
-
-
 /* ==========================================================
    Mis Tareas / Misiones
    usuarios/{uid}/tareas/{tareaId}
@@ -802,6 +710,7 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
   const modulosValidos = new Set([
     "rincon-lectura",
     "detectives",
+    "creciendo-por-dentro",
     "biblioteca",
     "libre"
   ]);
@@ -928,6 +837,7 @@ async function crearTarea(tarea) {
 
   const referencia = await addDoc(coleccionTareas(), {
     ...datos,
+    fechaEstado: serverTimestamp(),
     creadaEn: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   });
@@ -1079,6 +989,11 @@ async function actualizarTarea(id, cambios = {}) {
 
   await updateDoc(documentoTarea(id), {
     ...datos,
+    ...(
+      "estado" in datos
+        ? { fechaEstado: serverTimestamp() }
+        : {}
+    ),
     actualizadaEn: serverTimestamp()
   });
 }
@@ -1092,6 +1007,7 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
 
   const cambios = {
     estado: estadoNormalizado,
+    fechaEstado: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   };
 
@@ -1268,6 +1184,10 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       actualizadaEn: serverTimestamp()
     };
 
+    if (nuevoEstado !== estadoActual) {
+      cambiosTarea.fechaEstado = serverTimestamp();
+    }
+
     if (!progresoActual.iniciadaEn) {
       cambiosTarea["progreso.iniciadaEn"] = serverTimestamp();
     }
@@ -1403,11 +1323,6 @@ export const Academia = Object.freeze({
     leerSesiones: leerSesionesLectura,
     actualizarObservacion: actualizarObservacionSesionLectura,
     eliminarSesion: eliminarSesionLectura
-  }),
-
-  semillas: Object.freeze({
-    guardarSesion: guardarSesionSemilla,
-    leerSesiones: leerSesionesSemillas
   }),
 
   tareas: Object.freeze({
