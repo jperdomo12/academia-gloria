@@ -835,14 +835,35 @@ async function initialize() {
     window.location.replace("/academia-gloria/login.html");
     return;
   }
+
   perfil = await Academia.usuario.leerPerfil();
   await Promise.all([loadCatalog(), loadMission(), loadSavedSessions()]);
+
   configureRecognition();
   renderFilters();
   renderCatalog();
+
   $("liaMessage").textContent =
     `Hola, ${String(perfil?.nombre || "exploradora").trim()} 😊 Puedes pensar, hablar y volver a intentarlo.`;
-  if (params.get("vista") === "historial") await showHistory();
+
+  if (params.get("vista") === "historial") {
+    await showHistory();
+    return;
+  }
+
+  /*
+   * Entrada contextual desde Mi Camino / Gestión de Misiones:
+   * - una sola Semilla asignada  -> abrirla directamente;
+   * - varias Semillas asignadas  -> mostrar únicamente esas;
+   * - sin Semillas específicas   -> mantener el catálogo normal.
+   */
+  if (misionActiva) {
+    const asignadas = filteredSeeds();
+
+    if (missionAllowedIds().length === 1 && asignadas.length === 1) {
+      startSeed(asignadas[0].id);
+    }
+  }
 }
 
 $("startRecommended").onclick = () => {
