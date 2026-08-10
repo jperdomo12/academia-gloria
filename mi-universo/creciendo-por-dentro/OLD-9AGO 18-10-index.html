@@ -49,10 +49,6 @@
 </head>
 <body data-page-title="Creciendo por dentro">
   <main class="wrap">
-    <div class="module-backbar">
-      <a id="volverModulo" class="btn btn--back" href="../index.html">← Volver</a>
-    </div>
-
 <section class="card hero">
       <div>
         <div class="eyebrow">Mi Universo · Un espacio para crecer</div>
@@ -64,6 +60,7 @@
         <div class="actions">
           <button id="startRecommended" class="btn btn--primary" type="button">🌱 Empezar una Semilla</button>
           <button id="showHistory" class="btn btn--light" type="button">📚 Ver mi jardín</button>
+          <a class="btn btn--light" data-volver-modulo href="../index.html">← Volver a Mi Universo</a>
         </div>
       </div>
       <aside class="lia" aria-live="polite">
@@ -116,33 +113,6 @@
       </div>
     </section>
   </main>
-
-  <script>
-    (() => {
-      const boton = document.getElementById("volverModulo");
-      if (!boton) return;
-
-      const params = new URLSearchParams(window.location.search);
-      const volver = String(params.get("volver") || "").trim();
-
-      if (volver) {
-        try {
-          const destino = new URL(volver, window.location.origin);
-          if (destino.origin === window.location.origin) {
-            boton.href = `${destino.pathname}${destino.search}${destino.hash}`;
-            return;
-          }
-        } catch {}
-      }
-
-      boton.addEventListener("click", (event) => {
-        if (window.history.length > 1) {
-          event.preventDefault();
-          window.history.back();
-        }
-      });
-    })();
-  </script>
 
   <script type="module" src="./creciendo-por-dentro.js"></script>
 <script src="../../compartido/js/navegacion.js"></script>

@@ -802,7 +802,6 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
   const modulosValidos = new Set([
     "rincon-lectura",
     "detectives",
-    "creciendo-por-dentro",
     "biblioteca",
     "libre"
   ]);
@@ -909,29 +908,17 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
 
 function normalizarTareaLeida(documento) {
   const datos = documento.data();
-  const criterioCumplimiento = normalizarCriterioCumplimiento(
-    datos.criterioCumplimiento || {}
-  );
-
-  /*
-   * Compatibilidad con misiones de Creciendo por Dentro creadas antes
-   * de que el módulo fuese reconocido por normalizarTarea().
-   */
-  const modulo =
-    datos.modulo === "libre" &&
-    criterioCumplimiento.modulo === "creciendo-por-dentro"
-      ? "creciendo-por-dentro"
-      : datos.modulo;
 
   return {
     id: documento.id,
     ...datos,
-    modulo,
     estado: normalizarEstadoTarea(datos.estado),
-    criterioCumplimiento,
+    criterioCumplimiento: normalizarCriterioCumplimiento(
+      datos.criterioCumplimiento || {}
+    ),
     progreso: normalizarProgresoTarea(
       datos.progreso,
-      criterioCumplimiento
+      datos.criterioCumplimiento || {}
     )
   };
 }
