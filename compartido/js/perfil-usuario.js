@@ -1,35 +1,45 @@
 /******************************************************************************
- * Academia Gloria
+ * Academia Gloria Valentina
  * Archivo: compartido/js/perfil-usuario.js
- * Servicio oficial para consultar el perfil del usuario autenticado.
- * Versión: 1.1
+ * Servicio oficial para consultar el perfil del Usuario / Persona Activa.
+ * Versión: 1.2
+ *
+ * FASE 1.5
+ * - USER resuelve identidad técnica y acceso.
+ * - PERSON es la fuente de nombre, avatar, email y datos personales.
+ * - Los campos funcionales todavía no migrados permanecen temporalmente
+ *   disponibles mediante la compatibilidad de ContextoUsuario.
  ******************************************************************************/
 
-import { auth, db } from "../firebase/firebase-config.js";
-
-import {
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { auth } from "../firebase/firebase-config.js";
+import { ContextoUsuario } from "./contexto-usuario.js";
 
 import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
+
 let perfilCache = null;
 let uidCache = null;
 let promesaPerfil = null;
 
+
+/* ==========================================================================
+   Autenticación
+   ========================================================================== */
+
 function esperarEstadoAutenticacion() {
+  if (auth.currentUser) return Promise.resolve(auth.currentUser);
+
   return new Promise((resolve, reject) => {
     const cancelar = onAuthStateChanged(
       auth,
-      (usuario) => {
+      usuario => {
         cancelar();
         resolve(usuario);
       },
-      (error) => {
+      error => {
         cancelar();
         reject(error);
       }
@@ -55,65 +65,75 @@ async function obtenerUID() {
   return usuario.uid;
 }
 
-function crearPerfilPredeterminado(usuario) {
-  const nombreDesdeCorreo = String(usuario?.email || "")
-    .split("@")[0]
-    .replace(/[._-]+/g, " ")
-    .trim();
+
+/* ==========================================================================
+   Perfil
+   ========================================================================== */
+
+function crearPerfilDesdeContexto(contexto) {
+  const usuario = contexto.usuario;
+  const persona = contexto.personaActiva;
+  const rolPrincipal = contexto.roles?.[0] || null;
 
   return {
-    id: usuario.uid,
-    uid: usuario.uid,
-    nombre: nombreDesdeCorreo || "Explorador",
-    nombreVisible: nombreDesdeCorreo || "Explorador",
-    avatar: "🌟",
-    idioma: "es",
-    curso: "",
-    cursoEscolar: "",
-    colegio: "",
-    calendarioSlug: "",
-    zonaHoraria: "Europe/Madrid",
-    tipoUsuario: "alumno",
-    activo: true,
-    perfilIncompleto: true
-  };
-}
+    /*
+     * id / uid permanecen como UID por compatibilidad con consumidores
+     * existentes. personaId identifica la Persona real del nuevo modelo.
+     */
+    id: usuario.userId,
+    uid: usuario.userId,
+    userId: usuario.userId,
+    personaId: persona.personaId,
 
-function normalizarPerfil(perfil, usuario) {
-  const base = crearPerfilPredeterminado(usuario);
+    login: usuario.login,
 
-  return {
-    ...base,
-    ...perfil,
-    id: usuario.uid,
-    uid: usuario.uid,
-    nombre: String(perfil?.nombre || base.nombre).trim(),
+    /* Datos personales: fuente oficial PERSON. */
+    nombre: String(persona.nombre || "Explorador").trim(),
+    apellidos: String(persona.apellidos || "").trim(),
     nombreVisible: String(
-      perfil?.nombreVisible ||
-      perfil?.nombre ||
-      base.nombreVisible
+      persona.nombreVisible ||
+      persona.nombre ||
+      "Explorador"
     ).trim(),
-    avatar: String(perfil?.avatar || base.avatar).trim(),
-    idioma: String(perfil?.idioma || base.idioma).trim(),
-    calendarioSlug: String(perfil?.calendarioSlug || base.calendarioSlug).trim(),
+    avatar: String(persona.avatar || "🌟").trim(),
+    email: persona.email ?? null,
+    fechaNacimiento: persona.fechaNacimiento ?? null,
+    activo: persona.activo !== false && usuario.activo !== false,
+
+    /*
+     * Datos funcionales todavía legacy.
+     * ContextoUsuario los conserva temporalmente desde usuarios/{uid}
+     * mientras se decide su ubicación definitiva.
+     */
+    idioma: String(persona.idioma || "es").trim(),
+    curso: String(persona.curso || "").trim(),
+    cursoEscolar: String(persona.cursoEscolar || "").trim(),
+    colegio: String(persona.colegio || "").trim(),
+    calendarioSlug: String(persona.calendarioSlug || "").trim(),
     zonaHoraria: String(
-      perfil?.zonaHoraria || base.zonaHoraria
+      persona.zonaHoraria || "Europe/Madrid"
     ).trim(),
-    activo: perfil?.activo !== false
+
+    /* Rol real del nuevo modelo. */
+    tipoUsuario: rolPrincipal?.roleId || "alumno",
+    roleId: rolPrincipal?.roleId || "alumno",
+    nivelAcceso: contexto.nivelAcceso,
+
+    perfilIncompleto: false,
+    origenPerfil: persona.origen || "personas"
   };
 }
 
 async function obtenerPerfil({ forzarRecarga = false } = {}) {
-  const usuario = await obtenerUsuarioAutenticado();
+  const usuarioAuth = await obtenerUsuarioAutenticado();
 
-  if (!usuario) {
+  if (!usuarioAuth) {
     throw new Error("No hay ningún usuario autenticado.");
   }
 
-  if (uidCache !== usuario.uid) {
-    perfilCache = null;
-    promesaPerfil = null;
-    uidCache = usuario.uid;
+  if (uidCache !== usuarioAuth.uid) {
+    limpiarCache();
+    uidCache = usuarioAuth.uid;
   }
 
   if (!forzarRecarga && perfilCache) {
@@ -125,13 +145,11 @@ async function obtenerPerfil({ forzarRecarga = false } = {}) {
   }
 
   promesaPerfil = (async () => {
-    const resultado = await getDoc(
-      doc(db, "usuarios", usuario.uid)
-    );
+    const contexto = await ContextoUsuario.inicializar({
+      forzarRecarga
+    });
 
-    const perfil = resultado.exists()
-      ? normalizarPerfil(resultado.data(), usuario)
-      : crearPerfilPredeterminado(usuario);
+    const perfil = crearPerfilDesdeContexto(contexto);
 
     perfilCache = Object.freeze(perfil);
     return perfilCache;
@@ -147,6 +165,7 @@ async function obtenerPerfil({ forzarRecarga = false } = {}) {
 async function recargarPerfil() {
   perfilCache = null;
   promesaPerfil = null;
+  ContextoUsuario.limpiarCache();
   return obtenerPerfil({ forzarRecarga: true });
 }
 
@@ -154,7 +173,13 @@ function limpiarCache() {
   perfilCache = null;
   promesaPerfil = null;
   uidCache = null;
+  ContextoUsuario.limpiarCache();
 }
+
+
+/* ==========================================================================
+   API de conveniencia
+   ========================================================================== */
 
 async function obtenerNombre() {
   return (await obtenerPerfil()).nombre;
@@ -181,12 +206,25 @@ async function obtenerColegio() {
   return (await obtenerPerfil()).colegio || "";
 }
 
+/*
+ * LEGACY TRANSITORIO.
+ * Se mantiene porque todavía puede existir código consumidor.
+ * No forma parte del modelo objetivo.
+ */
 async function obtenerCalendarioSlug() {
   return (await obtenerPerfil()).calendarioSlug || "";
 }
 
 async function obtenerTipoUsuario() {
-  return (await obtenerPerfil()).tipoUsuario || "alumno";
+  return (await obtenerPerfil()).roleId || "alumno";
+}
+
+async function obtenerPersonaId() {
+  return (await obtenerPerfil()).personaId;
+}
+
+async function obtenerNivelAcceso() {
+  return (await obtenerPerfil()).nivelAcceso;
 }
 
 async function obtenerIniciales() {
@@ -196,13 +234,14 @@ async function obtenerIniciales() {
     .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
-    .map((parte) => parte.charAt(0).toUpperCase())
+    .map(parte => parte.charAt(0).toUpperCase())
     .join("") || "A";
 }
 
 async function obtenerSaludo(fecha = new Date()) {
   const perfil = await obtenerPerfil();
   const zonaHoraria = perfil.zonaHoraria || "Europe/Madrid";
+
   let hora;
 
   try {
@@ -222,13 +261,25 @@ async function obtenerSaludo(fecha = new Date()) {
   return "🌙 Buenas noches";
 }
 
+
+/* ==========================================================================
+   Sesión
+   ========================================================================== */
+
 async function cerrarSesion() {
   limpiarCache();
+
+  try {
+    sessionStorage.removeItem("academia.personaActivaId");
+  } catch {
+    // Sin impacto si sessionStorage no está disponible.
+  }
+
   await signOut(auth);
 }
 
 function observarSesion(callback = () => {}) {
-  return onAuthStateChanged(auth, (usuario) => {
+  return onAuthStateChanged(auth, usuario => {
     if (!usuario || usuario.uid !== uidCache) {
       limpiarCache();
     }
@@ -237,12 +288,19 @@ function observarSesion(callback = () => {}) {
   });
 }
 
+
+/* ==========================================================================
+   Exportación
+   ========================================================================== */
+
 export const PerfilUsuario = Object.freeze({
   estaAutenticado,
   obtenerUID,
+
   obtenerPerfil,
   recargarPerfil,
   limpiarCache,
+
   obtenerNombre,
   obtenerNombreVisible,
   obtenerAvatar,
@@ -251,8 +309,11 @@ export const PerfilUsuario = Object.freeze({
   obtenerColegio,
   obtenerCalendarioSlug,
   obtenerTipoUsuario,
+  obtenerPersonaId,
+  obtenerNivelAcceso,
   obtenerIniciales,
   obtenerSaludo,
+
   cerrarSesion,
   observarSesion
 });
@@ -260,9 +321,11 @@ export const PerfilUsuario = Object.freeze({
 export {
   estaAutenticado,
   obtenerUID,
+
   obtenerPerfil,
   recargarPerfil,
   limpiarCache,
+
   obtenerNombre,
   obtenerNombreVisible,
   obtenerAvatar,
@@ -271,8 +334,11 @@ export {
   obtenerColegio,
   obtenerCalendarioSlug,
   obtenerTipoUsuario,
+  obtenerPersonaId,
+  obtenerNivelAcceso,
   obtenerIniciales,
   obtenerSaludo,
+
   cerrarSesion,
   observarSesion
 };

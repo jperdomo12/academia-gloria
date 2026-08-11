@@ -118,7 +118,7 @@
         transform:translateY(6px) rotate(2deg);
       }
     }
-*/
+
 
 .descubre-academia__visual img:first-child{
   left:48px;
@@ -137,6 +137,29 @@
   animation:flotarGuacamayaDos 3.4s ease-in-out infinite;
 }
 
+*/
+
+/* Primera guacamaya (posada): se acerca más a la derecha (left: 110px) */
+.descubre-academia__visual img:first-child {
+  left: 60px;
+  top: 48px;
+  width: 100px;
+  height: 100px;
+  animation: none;
+}
+
+/* Segunda guacamaya (volando): se quita la animación quitando la propiedad 'animation' */
+.descubre-academia__visual img:last-child {
+  right: -2px;
+  top: -28px;
+  width: 158px;
+  height: 158px;
+  transform: none;
+  animation: none;
+}
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    */
 @keyframes flotarGuacamayaDos{
   0%,100%{
     transform:translateY(-3px) rotate(-2deg);
@@ -993,7 +1016,7 @@
       .descubre-academia,.mi-camino-principal{padding:22px}
       .descubre-academia__visual img{width:135px;height:135px}
       .descubre-academia__visual img:first-child{
-        left:32px;
+        left:90px;
         top:48px;
         width:96px;
         height:96px;

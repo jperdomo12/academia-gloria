@@ -7,7 +7,6 @@
 /* import { db } from "../firebase/firebase-config.js"; */
 import { db, auth } from "../firebase/firebase-config.js";
 import { crearEvento } from "../modelos/evento.js";
-import { PerfilUsuario } from "../js/perfil-usuario.js";
 
 import {
   addDoc,
@@ -380,13 +379,23 @@ async function eliminarAudioLibro(libroId) {
    ========================================================== */
 
 async function leerPerfilUsuario() {
-  /*
-   * Fase 1.5:
-   * el perfil se resuelve mediante PerfilUsuario / ContextoUsuario.
-   * Los históricos y subcolecciones funcionales continúan bajo
-   * usuarios/{uid}/... hasta una fase posterior.
-   */
-  return PerfilUsuario.obtenerPerfil();
+  const resultado = await getDoc(
+    doc(db, "usuarios", obtenerUID())
+  );
+
+  if (!resultado.exists()) {
+    return {
+      id: obtenerUID(),
+      nombre: "Explorador",
+      avatar: "🌟",
+      idioma: "es"
+    };
+  }
+
+  return {
+    id: resultado.id,
+    ...resultado.data()
+  };
 }
 
 

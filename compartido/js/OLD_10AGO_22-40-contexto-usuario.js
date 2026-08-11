@@ -2,15 +2,12 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/contexto-usuario.js
  * Contexto central de Usuario, Persona Activa y nivel de acceso
- * Versión: 0.4
+ * Versión: 0.2
  *
  * FASE 1.5
  * - Activa el nuevo modelo USER -> PERSON -> USER_ROLE -> ROLE.
  * - Mantiene compatibilidad con usuarios legacy que todavía no tengan personaId.
  * - Persona Activa propia se resuelve desde PERSON.
- * - idioma, zonaHoraria, colegio, curso y cursoEscolar se obtienen
- *   prioritariamente desde PERSON.
- * - USER conserva temporalmente esos campos solo como fallback legacy.
  * - Las subcolecciones funcionales continúan bajo usuarios/{uid}.
  ******************************************************************************/
 
@@ -202,30 +199,6 @@ function normalizarPersona(documentoPersona, fallback) {
 
     avatar: texto(documentoPersona.avatar, fallback.avatar),
     activo: documentoPersona.activo !== false,
-
-    /*
-     * Fase 1.5 · Paso 5
-     * PERSON es ya la fuente oficial de estos datos.
-     * El valor de USER permanece únicamente como fallback durante
-     * la transición y podrá eliminarse después de la prueba funcional.
-     */
-    idioma: texto(documentoPersona.idioma, fallback.idioma || "es"),
-    zonaHoraria: texto(
-      documentoPersona.zonaHoraria,
-      fallback.zonaHoraria || "Europe/Madrid"
-    ),
-
-    /*
-     * Datos académicos actuales.
-     * PERSON es ya la fuente prioritaria; USER se mantiene solo como
-     * fallback temporal hasta completar la prueba funcional.
-     */
-    colegio: texto(documentoPersona.colegio, fallback.colegio),
-    curso: texto(documentoPersona.curso, fallback.curso),
-    cursoEscolar: texto(
-      documentoPersona.cursoEscolar,
-      fallback.cursoEscolar
-    ),
 
     origen: "personas"
   });

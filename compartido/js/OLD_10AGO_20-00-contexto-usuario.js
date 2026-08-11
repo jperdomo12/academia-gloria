@@ -2,16 +2,12 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/contexto-usuario.js
  * Contexto central de Usuario, Persona Activa y nivel de acceso
- * Versión: 0.4
+ * Versión: 0.1
  *
- * FASE 1.5
- * - Activa el nuevo modelo USER -> PERSON -> USER_ROLE -> ROLE.
- * - Mantiene compatibilidad con usuarios legacy que todavía no tengan personaId.
- * - Persona Activa propia se resuelve desde PERSON.
- * - idioma, zonaHoraria, colegio, curso y cursoEscolar se obtienen
- *   prioritariamente desde PERSON.
- * - USER conserva temporalmente esos campos solo como fallback legacy.
- * - Las subcolecciones funcionales continúan bajo usuarios/{uid}.
+ * FASE 0
+ * - Compatible con la estructura histórica usuarios/{uid}.
+ * - No exige todavía que existan PERSON, ROLE, USER_ROLE o PERSON_RELATION.
+ * - Si las nuevas entidades no existen, conserva el comportamiento actual.
  ******************************************************************************/
 
 import { auth, db } from "../firebase/firebase-config.js";
@@ -131,10 +127,10 @@ function normalizarUsuario(usuarioAuth, documentoUsuario) {
       usuarioAuth.uid
     ),
 
-    activo: legacy.activo !== false,
-
-    /* Campo histórico: se conserva solo para diagnóstico/transición. */
-    estadoLegacy: legacy.estado ?? null,
+    estado: texto(
+      legacy.estado,
+      legacy.activo === false ? "inactivo" : "activo"
+    ),
 
     emailAuth: texto(usuarioAuth.email)
   });
@@ -169,7 +165,10 @@ function personaDesdeLegacy(usuario, documentoUsuario) {
     email: datos.email ?? usuario.emailAuth ?? null,
     avatar: texto(datos.avatar, "🌟"),
 
-    activo: datos.activo !== false,
+    estado: texto(
+      datos.estado,
+      datos.activo === false ? "inactivo" : "activo"
+    ),
 
     /* Compatibilidad temporal con campos del perfil actual. */
     idioma: texto(datos.idioma, "es"),
@@ -201,31 +200,7 @@ function normalizarPersona(documentoPersona, fallback) {
     ),
 
     avatar: texto(documentoPersona.avatar, fallback.avatar),
-    activo: documentoPersona.activo !== false,
-
-    /*
-     * Fase 1.5 · Paso 5
-     * PERSON es ya la fuente oficial de estos datos.
-     * El valor de USER permanece únicamente como fallback durante
-     * la transición y podrá eliminarse después de la prueba funcional.
-     */
-    idioma: texto(documentoPersona.idioma, fallback.idioma || "es"),
-    zonaHoraria: texto(
-      documentoPersona.zonaHoraria,
-      fallback.zonaHoraria || "Europe/Madrid"
-    ),
-
-    /*
-     * Datos académicos actuales.
-     * PERSON es ya la fuente prioritaria; USER se mantiene solo como
-     * fallback temporal hasta completar la prueba funcional.
-     */
-    colegio: texto(documentoPersona.colegio, fallback.colegio),
-    curso: texto(documentoPersona.curso, fallback.curso),
-    cursoEscolar: texto(
-      documentoPersona.cursoEscolar,
-      fallback.cursoEscolar
-    ),
+    estado: texto(documentoPersona.estado, fallback.estado),
 
     origen: "personas"
   });
@@ -236,23 +211,22 @@ function normalizarPersona(documentoPersona, fallback) {
    ROLE / USER_ROLE
    ========================================================================== */
 
-async function leerRolesUsuario(userId, { modeloNuevoActivo = false } = {}) {
+async function leerRolesUsuario(userId) {
   try {
-    /*
-     * Fase 1.5:
-     * usuarioRoles utiliza directamente el UID como ID de documento.
-     * Esto evita consultas e índices innecesarios mientras cada USER
-     * tenga un único Rol efectivo.
-     */
-    const asignacion = await leerDocumentoSeguro("usuarioRoles", userId);
+    const consulta = query(
+      collection(db, "usuarioRoles"),
+      where("userId", "==", userId),
+      where("estado", "==", "activo")
+    );
 
-    if (!asignacion || asignacion.activo === false) {
-      if (modeloNuevoActivo) {
-        throw new Error(
-          "El Usuario tiene PERSON configurada pero no dispone de un USER_ROLE activo."
-        );
-      }
+    const resultado = await getDocs(consulta);
 
+    if (resultado.empty) {
+      /*
+       * Compatibilidad Fase 0:
+       * el usuario autenticado conserva capacidad de gestión sobre sus
+       * propios datos mientras USER_ROLE todavía no haya sido creado.
+       */
       return Object.freeze([
         Object.freeze({
           roleId: "gestion",
@@ -263,35 +237,38 @@ async function leerRolesUsuario(userId, { modeloNuevoActivo = false } = {}) {
       ]);
     }
 
-    const roleId = texto(asignacion.roleId);
+    const roles = [];
 
-    if (!roleId) {
-      throw new Error("USER_ROLE no contiene roleId.");
-    }
+    for (const asignacion of resultado.docs) {
+      const datosAsignacion = asignacion.data();
+      const roleId = texto(datosAsignacion.roleId);
 
-    const rol = await leerDocumentoSeguro("roles", roleId);
+      if (!roleId) continue;
 
-    if (!rol) {
-      throw new Error(`No existe el ROLE '${roleId}'.`);
-    }
+      const rol = await leerDocumentoSeguro("roles", roleId);
 
-    if (rol.activo === false) {
-      throw new Error(`El ROLE '${roleId}' está inactivo.`);
-    }
-
-    return Object.freeze([
-      Object.freeze({
+      roles.push(Object.freeze({
         roleId,
-        nombre: texto(rol.nombre, roleId),
-        nivelAcceso: nivelSeguro(rol.nivelAcceso, "consulta"),
-        origen: "roles"
-      })
-    ]);
-  } catch (error) {
-    if (modeloNuevoActivo) {
-      throw error;
+        nombre: texto(rol?.nombre, roleId),
+        nivelAcceso: nivelSeguro(
+          rol?.nivelAcceso ?? datosAsignacion.nivelAcceso,
+          "consulta"
+        ),
+        origen: rol ? "roles" : "usuarioRoles"
+      }));
     }
 
+    return Object.freeze(
+      roles.length
+        ? roles
+        : [{
+            roleId: "gestion",
+            nombre: "Gestión",
+            nivelAcceso: "gestion",
+            origen: "fallback"
+          }]
+    );
+  } catch (error) {
     console.debug(
       "[ContextoUsuario] USER_ROLE todavía no disponible. Se usa gestión legacy.",
       error
@@ -322,7 +299,7 @@ async function buscarRelacion(sourcePersonId, targetPersonId) {
       collection(db, "personaRelaciones"),
       where("sourcePersonId", "==", sourcePersonId),
       where("targetPersonId", "==", targetPersonId),
-      where("activo", "==", true)
+      where("estado", "==", "activo")
     );
 
     const resultado = await getDocs(consulta);
@@ -443,7 +420,7 @@ async function resolverPersonaActiva({
         fechaNacimiento: null,
         email: null,
         avatar: "🌟",
-        activo: true,
+        estado: "activo",
         idioma: "es",
         curso: "",
         cursoEscolar: "",
@@ -489,35 +466,17 @@ async function construirContexto() {
     documentoUsuario
   );
 
-  const tienePersonaIdNuevo =
-    Boolean(documentoUsuario?.personaId) &&
-    usuario.personaId !== usuario.uid;
-
-  const documentoPersona = await leerDocumentoSeguro(
-    "personas",
-    usuario.personaId
-  );
-
-  /*
-   * Cuando USER ya declara un personaId del nuevo modelo, PERSON debe existir.
-   * No ocultamos errores de configuración con fallback silencioso.
-   */
-  if (tienePersonaIdNuevo && !documentoPersona) {
-    throw new Error(
-      `El Usuario ${usuario.userId} referencia la Persona ` +
-      `'${usuario.personaId}', pero esa PERSON no existe o no es accesible.`
-    );
-  }
+  const documentoPersona =
+    usuario.personaId !== usuario.uid
+      ? await leerDocumentoSeguro("personas", usuario.personaId)
+      : await leerDocumentoSeguro("personas", usuario.personaId);
 
   const personaUsuario = normalizarPersona(
     documentoPersona,
     personaLegacy
   );
 
-  const roles = await leerRolesUsuario(
-    usuario.userId,
-    { modeloNuevoActivo: Boolean(documentoPersona && tienePersonaIdNuevo) }
-  );
+  const roles = await leerRolesUsuario(usuario.userId);
 
   const {
     personaActiva,
@@ -591,11 +550,6 @@ async function obtenerRoles() {
   return (await inicializar()).roles;
 }
 
-async function obtenerRolPrincipal() {
-  const roles = await obtenerRoles();
-  return roles[0] || null;
-}
-
 async function obtenerNivelAcceso() {
   return (await inicializar()).nivelAcceso;
 }
@@ -660,7 +614,6 @@ export const ContextoUsuario = Object.freeze({
   obtenerPersona,
   obtenerPersonaActiva,
   obtenerRoles,
-  obtenerRolPrincipal,
   obtenerNivelAcceso,
 
   puedeConsultar,
@@ -680,7 +633,6 @@ export {
   obtenerPersona,
   obtenerPersonaActiva,
   obtenerRoles,
-  obtenerRolPrincipal,
   obtenerNivelAcceso,
 
   puedeConsultar,

@@ -1,0 +1,19 @@
+// 01/08/2026 Copiado manualmente desde la consola de firebase.
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+​
+    function esPropietario(userId) {
+      return request.auth != null
+        && request.auth.uid == userId;
+    }
+	
+    // Documento principal del usuario y cualquier subcolección interna:
+    // tareas, detectivesHistorias, sesiones, logros, preferencias, etc.
+    match /usuarios/{userId}/{documento=**} {
+      allow read, write: if esPropietario(userId);
+    }
+  }
+}
