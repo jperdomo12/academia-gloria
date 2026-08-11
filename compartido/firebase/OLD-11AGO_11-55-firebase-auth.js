@@ -2,21 +2,18 @@
  * Academia Gloria Valentina
  * Archivo: compartido/firebase/firebase-auth.js
  * Servicio de autenticación Firebase
- * Versión: 1.2
+ * Versión: 1.1
  *
  * FASE 1.6
  * - La persona entra con un login funcional (ej. "gloria").
  * - accesosLogin/{login} resuelve la cuenta técnica de Firebase Auth.
  * - Tras autenticar, Firebase conserva el UID técnico como userId.
- * - La sesión se persiste explícitamente con browserLocalPersistence.
  ******************************************************************************/
 
 import { auth, db } from "./firebase-config.js";
 
 import {
-  browserLocalPersistence,
   onAuthStateChanged,
-  setPersistence,
   signInWithEmailAndPassword,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
@@ -96,9 +93,6 @@ export async function resolverLogin(login) {
  */
 export async function iniciarSesion(login, password) {
   const acceso = await resolverLogin(login);
-
-  // Persistencia explícita entre login.html e index.html.
-  await setPersistence(auth, browserLocalPersistence);
 
   const credencial = await signInWithEmailAndPassword(
     auth,

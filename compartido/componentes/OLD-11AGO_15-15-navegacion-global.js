@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v2.1 estable
+ * Cabecera global de navegación · v2.0
  *
  * Estructura:
  * LOGO · PANTALLA ACTUAL · PANEL DEL ALUMNO

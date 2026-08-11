@@ -2,26 +2,16 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.8
+ * Versión: 1.6
  ******************************************************************************/
 
 import {
   obtenerPerfil,
+  obtenerNombreVisible,
+  obtenerAvatar,
   obtenerSaludo,
   cerrarSesion
 } from "./perfil-usuario.js";
-
-import { ContextoUsuario } from "./contexto-usuario.js";
-import { db } from "../firebase/firebase-config.js";
-
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const CONFIGURACION_PREDETERMINADA = Object.freeze({
   contenedor: "[data-panel-usuario]",
@@ -106,50 +96,6 @@ function asegurarEstilosPanelAvanzado() {
       margin-top:2px;
       font-size:.72rem;
       opacity:.72;
-    }
-
-    .panel-usuario__persona-activa{
-      margin:10px 8px 12px;
-      padding:10px;
-      border:2px solid #dbeafe;
-      border-radius:16px;
-      background:linear-gradient(145deg,#eff6ff,#faf5ff);
-    }
-
-    .panel-usuario__persona-activa-titulo{
-      display:block;
-      margin-bottom:6px;
-      font-size:.72rem;
-      font-weight:900;
-      color:#475569;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-    }
-
-    .panel-usuario__persona-activa-select{
-      width:100%;
-      min-height:42px;
-      padding:8px 10px;
-      border:2px solid #c4b5fd;
-      border-radius:12px;
-      background:#fff;
-      color:#1e293b;
-      font:inherit;
-      font-weight:850;
-      cursor:pointer;
-    }
-
-    .panel-usuario__persona-activa-select:disabled{
-      cursor:wait;
-      opacity:.65;
-    }
-
-    .panel-usuario__persona-activa-ayuda{
-      display:block;
-      margin-top:6px;
-      color:#64748b;
-      font-size:.68rem;
-      line-height:1.35;
     }
 
     @media(max-height:620px){
@@ -253,114 +199,6 @@ function renderizarEstadoCarga(contenedor) {
   `;
 }
 
-
-async function leerPersonasRelacionadas(contexto) {
-  const sourcePersonId = String(
-    contexto?.personaUsuario?.personaId || ""
-  ).trim();
-
-  if (!sourcePersonId) return [];
-
-  /*
-   * La consulta incorpora sourcePersonId, que es exactamente la condición
-   * exigida por las Rules para que un profesional vea solo sus relaciones.
-   *
-   * Filtramos "activo" en cliente para evitar depender de un índice compuesto.
-   */
-  const resultado = await getDocs(
-    query(
-      collection(db, "personaRelaciones"),
-      where("sourcePersonId", "==", sourcePersonId)
-    )
-  );
-
-  const relaciones = resultado.docs
-    .map(documento => ({
-      relationId: documento.id,
-      ...documento.data()
-    }))
-    .filter(relacion => relacion.activo !== false);
-
-  const relacionadas = [];
-
-  for (const relacion of relaciones) {
-    const targetPersonId = String(relacion.targetPersonId || "").trim();
-    if (!targetPersonId || targetPersonId === sourcePersonId) continue;
-
-    try {
-      /*
-       * Las Rules de PERSON permiten esta lectura únicamente cuando existe
-       * PERSON_RELATION activa desde la Persona propia a la Persona destino.
-       */
-      const personaDoc = await getDoc(
-        doc(db, "personas", targetPersonId)
-      );
-
-      if (!personaDoc.exists()) continue;
-
-      const persona = personaDoc.data();
-
-      relacionadas.push({
-        personaId: targetPersonId,
-        nombreVisible: String(
-          persona.nombreVisible ||
-          persona.nombre ||
-          targetPersonId
-        ).trim(),
-        avatar: String(persona.avatar || "🌟").trim(),
-        relacion
-      });
-    } catch (error) {
-      console.warn(
-        `[PanelUsuario] No se pudo leer la Persona relacionada '${targetPersonId}'.`,
-        error
-      );
-    }
-  }
-
-  return relacionadas;
-}
-
-function construirSelectorPersonaActiva(contexto, relacionadas) {
-  if (!contexto || relacionadas.length === 0) return "";
-
-  const propia = contexto.personaUsuario;
-  const activa = contexto.personaActiva || propia;
-
-  const opciones = [
-    {
-      personaId: propia.personaId,
-      nombreVisible: `Yo · ${propia.nombreVisible || propia.nombre || "Mi perfil"}`,
-      avatar: propia.avatar || "🌟"
-    },
-    ...relacionadas
-  ];
-
-  return `
-    <div class="panel-usuario__persona-activa">
-      <label class="panel-usuario__persona-activa-titulo"
-             for="panelUsuarioPersonaActiva">
-        Persona activa
-      </label>
-
-      <select id="panelUsuarioPersonaActiva"
-              class="panel-usuario__persona-activa-select"
-              data-panel-usuario-persona-activa>
-        ${opciones.map(opcion => `
-          <option value="${escaparHTML(opcion.personaId)}"
-                  ${opcion.personaId === activa.personaId ? "selected" : ""}>
-            ${escaparHTML(`${opcion.avatar} ${opcion.nombreVisible}`)}
-          </option>
-        `).join("")}
-      </select>
-
-      <small class="panel-usuario__persona-activa-ayuda">
-        La sesión sigue siendo tuya; aquí eliges la Persona con la que trabajas.
-      </small>
-    </div>
-  `;
-}
-
 function construirMenu() {
   const items = [];
 
@@ -446,33 +284,12 @@ function construirMenu() {
 }
 
 async function construirPanel(contenedor) {
-  /*
-   * Identidad del panel = Persona propia del usuario autenticado.
-   * Persona Activa = contexto funcional sobre el que trabaja.
-   *
-   * Esto evita que al seleccionar Gloria el panel "convierta" visualmente
-   * a Azucena en Gloria.
-   */
-  const contexto = await ContextoUsuario.inicializar();
-  const perfil = await obtenerPerfil();
-  const saludo = await obtenerSaludo();
-
-  const personaUsuario = contexto.personaUsuario;
-  const relacionadas = await leerPersonasRelacionadas(contexto);
-  const selectorPersonaActiva =
-    construirSelectorPersonaActiva(contexto, relacionadas);
-
-  const nombreVisible =
-    personaUsuario.nombreVisible ||
-    personaUsuario.nombre ||
-    perfil.nombreVisible ||
-    perfil.nombre ||
-    "Explorador";
-
-  const avatar =
-    personaUsuario.avatar ||
-    perfil.avatar ||
-    "🌟";
+  const [perfil, nombreVisible, avatar, saludo] = await Promise.all([
+    obtenerPerfil(),
+    obtenerNombreVisible(),
+    obtenerAvatar(),
+    obtenerSaludo()
+  ]);
 
   const nombreSeguro = escaparHTML(nombreVisible);
   const avatarSeguro = escaparHTML(avatar);
@@ -509,8 +326,6 @@ async function construirPanel(contenedor) {
           </div>
         </div>
 
-        ${selectorPersonaActiva}
-
         ${construirMenu()}
       </div>
     </div>
@@ -529,44 +344,6 @@ async function construirPanel(contenedor) {
     const abierto = botonGrupo.getAttribute("aria-expanded") === "true";
     botonGrupo.setAttribute("aria-expanded", String(!abierto));
     subgrupo.hidden = abierto;
-  });
-
-  const selectorPersona = panelRaiz.querySelector(
-    "[data-panel-usuario-persona-activa]"
-  );
-
-  selectorPersona?.addEventListener("click", evento => {
-    evento.stopPropagation();
-  });
-
-  selectorPersona?.addEventListener("change", async evento => {
-    evento.stopPropagation();
-
-    const personaId = String(evento.currentTarget.value || "").trim();
-    if (!personaId) return;
-
-    selectorPersona.disabled = true;
-
-    try {
-      const contextoActual = await ContextoUsuario.inicializar();
-
-      if (personaId === contextoActual.personaUsuario.personaId) {
-        await ContextoUsuario.volverAPersonaPropia();
-      } else {
-        await ContextoUsuario.seleccionarPersonaActiva(personaId);
-      }
-
-      /*
-       * Recarga completa intencionada:
-       * la Persona Activa influye en perfil, textos, navegación y módulos.
-       * Así ningún componente conserva datos del contexto anterior.
-       */
-      window.location.reload();
-    } catch (error) {
-      console.error("No se pudo cambiar la Persona Activa.", error);
-      selectorPersona.disabled = false;
-      alert("No se pudo cambiar la Persona Activa.");
-    }
   });
 
   botonPrincipal.addEventListener("click", (evento) => {
