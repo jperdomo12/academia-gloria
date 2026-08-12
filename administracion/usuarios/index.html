@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Usuarios · Academia Gloria Valentina</title>
+  <meta name="description" content="Administración de Usuarios, Personas, Roles y Relaciones de la Academia.">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/iconos/icono-principal.png?v=2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
+  <link rel="stylesheet" href="./usuarios.css">
+</head>
+<body data-page-title="Gestión de Usuarios">
+  <main class="pagina-admin">
+    <header class="cabecera-admin superficie">
+      <div>
+        <p class="eyebrow">🛡️ Administración</p>
+        <h1>Gestión de Usuarios</h1>
+        <p class="subtitulo">
+          La cuenta de Firebase Authentication se crea manualmente. La Academia mantiene el resto de la identidad de forma coordinada.
+        </p>
+      </div>
+      <button id="btnNuevoUsuario" class="boton boton--primario" type="button">＋ Nuevo usuario</button>
+    </header>
+
+    <section id="estadoAcceso" class="mensaje">Comprobando permisos…</section>
+
+    <section id="zonaAdministracion" hidden>
+      <section class="paso-manual superficie">
+        <strong>Único paso manual</strong>
+        <span>Firebase Console → Authentication → Agregar usuario → copiar UID.</span>
+      </section>
+
+      <div class="barra-herramientas">
+        <label class="busqueda">
+          <span>Buscar</span>
+          <input id="buscarUsuario" type="search" placeholder="Nombre, login, correo o rol">
+        </label>
+        <button id="btnRecargar" class="boton" type="button">↻ Actualizar</button>
+      </div>
+
+      <section class="superficie tabla-card">
+        <div class="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Persona</th>
+                <th>Login</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Consistencia</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tablaUsuarios"></tbody>
+          </table>
+        </div>
+        <p id="sinUsuarios" class="vacio" hidden>No hay usuarios que mostrar.</p>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="dialogoUsuario" class="dialogo">
+    <form id="formUsuario" class="formulario">
+      <header class="dialogo__cabecera">
+        <div>
+          <p class="eyebrow">Identidad integral</p>
+          <h2 id="tituloFormulario">Nuevo usuario</h2>
+        </div>
+        <button type="button" class="boton-cerrar" id="btnCerrarDialogo" aria-label="Cerrar">×</button>
+      </header>
+
+      <input name="personaId" type="hidden">
+      <input name="relationIdAnterior" type="hidden">
+
+      <fieldset>
+        <legend>1. Firebase Authentication</legend>
+        <p class="ayuda">Crea primero la cuenta manualmente en Firebase Authentication y pega aquí sus datos.</p>
+        <div class="grid-form">
+          <label>UID Firebase
+            <input name="userId" required autocomplete="off" placeholder="Ej. fYLPJU5X…">
+          </label>
+          <label>Correo Authentication
+            <input name="authEmail" type="email" required placeholder="correo@ejemplo.com">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Persona</legend>
+        <p class="ayuda">
+          Los datos personales pertenecen a PERSON. Los campos académicos son opcionales y solo se guardan cuando se indican.
+        </p>
+
+        <div class="grid-form">
+          <label>Nombre
+            <input name="nombre" required maxlength="80">
+          </label>
+          <label>Apellidos
+            <input name="apellidos" maxlength="120">
+          </label>
+          <label>Nombre visible
+            <input name="nombreVisible" maxlength="100">
+          </label>
+          <label>Correo personal <small>(opcional)</small>
+            <input name="email" type="email" maxlength="160">
+          </label>
+
+          <label>Avatar <small>(opcional)</small>
+            <input name="avatar" maxlength="20" placeholder="Ej. 🌈">
+          </label>
+          <label>Fecha de nacimiento <small>(opcional)</small>
+            <input name="fechaNacimiento" type="date">
+          </label>
+          <label>Idioma <small>(opcional)</small>
+            <input name="idioma" maxlength="12" placeholder="es">
+          </label>
+          <label>Zona horaria <small>(opcional)</small>
+            <input name="zonaHoraria" maxlength="80" placeholder="Europe/Madrid">
+          </label>
+
+          <label>Colegio <small>(opcional)</small>
+            <input name="colegio" maxlength="120">
+          </label>
+          <label>Curso <small>(opcional)</small>
+            <input name="curso" maxlength="80">
+          </label>
+          <label>Curso escolar <small>(opcional)</small>
+            <input name="cursoEscolar" maxlength="20" placeholder="2026-2027">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Acceso a la Academia</legend>
+        <div class="grid-form">
+          <label>Login funcional
+            <input name="login" required maxlength="60" autocomplete="off" placeholder="Ej. azucena">
+          </label>
+          <label>Rol
+            <select name="roleId" id="selectRol" required></select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Acceso a otra Persona <small>(opcional)</small></legend>
+        <p class="ayuda">Úsalo, por ejemplo, para que un profesional pueda trabajar con Gloria.</p>
+        <div class="grid-form">
+          <label>Persona destino
+            <select name="targetPersonId" id="selectPersonaDestino">
+              <option value="">Sin relación</option>
+            </select>
+          </label>
+          <label>Tipo de relación
+            <input name="tipoRelacion" maxlength="60" placeholder="psicologo, familiar…">
+          </label>
+          <label>Nivel sobre esa Persona
+            <select name="nivelRelacion">
+              <option value="consulta">Consulta</option>
+              <option value="gestion">Gestión</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="registro-auditoria">
+        <legend>5. Registro</legend>
+        <p class="ayuda">Información automática de auditoría. Estos campos son de solo consulta.</p>
+        <div class="grid-form">
+          <label>Creado
+            <input id="registroCreado" type="text" value="—" readonly tabindex="-1">
+          </label>
+          <label>Creado por
+            <input id="registroCreadoPor" type="text" value="—" readonly tabindex="-1">
+          </label>
+          <label>Última actualización
+            <input id="registroActualizado" type="text" value="—" readonly tabindex="-1">
+          </label>
+          <label>Actualizado por
+            <input id="registroActualizadoPor" type="text" value="—" readonly tabindex="-1">
+          </label>
+        </div>
+      </fieldset>
+
+      <label class="activo-check">
+        <input name="activo" type="checkbox" checked>
+        <span>Usuario activo en la Academia</span>
+      </label>
+
+      <div id="errorFormulario" class="mensaje mensaje--error" hidden></div>
+
+      <footer class="acciones">
+        <button id="btnCancelar" class="boton" type="button">Cancelar</button>
+        <button id="btnGuardar" class="boton boton--primario" type="submit">Guardar usuario</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <script type="module" src="./usuarios.js"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
+</body>
+</html>

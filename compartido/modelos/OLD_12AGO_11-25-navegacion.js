@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v1.3
+ * Modelo central de navegación · v1.2
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -82,21 +82,6 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         icono: "🚀",
         ruta: "cursos/6to/",
         proximo: true
-      }
-    ]
-  },
-  {
-    id: "administracion",
-    titulo: "Administración",
-    icono: "🛡️",
-    nivelMinimo: "administracion",
-    hijos: [
-      {
-        id: "gestion-usuarios",
-        titulo: "Gestión de Usuarios",
-        icono: "👥",
-        ruta: "administracion/usuarios/",
-        nivelMinimo: "administracion"
       }
     ]
   },

@@ -22,7 +22,6 @@ import {
   runTransaction,
   serverTimestamp,
   setDoc,
-  Timestamp,
   updateDoc,
   where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -1365,7 +1364,7 @@ async function eliminarTarea(id) {
 
 
 /* ==========================================================
-   Administración de Usuarios · v0.3 gratuita · Auditoría Fase A
+   Administración de Usuarios · v0.1 gratuita
 
    Firebase Authentication se crea manualmente en Firebase Console.
    Desde la Academia se mantiene de forma atómica:
@@ -1383,31 +1382,6 @@ function textoAdmin(valor, alternativo = "") {
 
 function normalizarLoginAdmin(valor) {
   return textoAdmin(valor).toLowerCase();
-}
-
-async function siguientePersonaIdAdministracion() {
-  const personas = await leerColeccionAdmin("personas");
-  let maximo = 0;
-
-  for (const persona of personas) {
-    const coincidencia = /^per_(\d{3,})$/i.exec(String(persona.id || "").trim());
-    if (!coincidencia) continue;
-    maximo = Math.max(maximo, Number(coincidencia[1]));
-  }
-
-  return `per_${String(maximo + 1).padStart(3, "0")}`;
-}
-
-function fechaNacimientoAdministracion(valor) {
-  const texto = textoAdmin(valor);
-  if (!texto) return null;
-
-  const fecha = new Date(`${texto}T12:00:00`);
-  if (Number.isNaN(fecha.getTime())) {
-    throw new Error("La fecha de nacimiento no es válida.");
-  }
-
-  return Timestamp.fromDate(fecha);
 }
 
 async function exigirAdministrador() {
@@ -1540,13 +1514,6 @@ function validarDatosUsuarioAdministracion(datos = {}, creando = false) {
     apellidos: textoAdmin(datos.apellidos),
     nombreVisible: textoAdmin(datos.nombreVisible, nombre),
     email: textoAdmin(datos.email).toLowerCase(),
-    avatar: textoAdmin(datos.avatar),
-    fechaNacimiento: fechaNacimientoAdministracion(datos.fechaNacimiento),
-    idioma: textoAdmin(datos.idioma),
-    zonaHoraria: textoAdmin(datos.zonaHoraria),
-    colegio: textoAdmin(datos.colegio),
-    curso: textoAdmin(datos.curso),
-    cursoEscolar: textoAdmin(datos.cursoEscolar),
     roleId,
     activo: datos.activo !== false,
     personaId: textoAdmin(datos.personaId),
@@ -1568,10 +1535,8 @@ async function guardarUsuarioAdministracion(datos = {}) {
   const accesoRef = doc(db, "accesosLogin", entrada.login);
   const roleRef = doc(db, "roles", entrada.roleId);
 
-  // Convención vigente documentada: per_001, per_002, per_003...
-  // Se toma el mayor ID utilizado y se propone el siguiente.
-  // La transacción verifica que no exista antes de escribir.
-  const personaId = entrada.personaId || await siguientePersonaIdAdministracion();
+  // PERSON obtiene un ID interno aleatorio e independiente del nombre/login/email.
+  const personaId = entrada.personaId || doc(collection(db, "personas")).id;
   const personRef = doc(db, "personas", personaId);
   const userRoleRef = doc(db, "usuarioRoles", entrada.userId);
 
@@ -1581,7 +1546,6 @@ async function guardarUsuarioAdministracion(datos = {}) {
     const accesoSnap = await transaction.get(accesoRef);
     const roleSnap = await transaction.get(roleRef);
     const personSnap = await transaction.get(personRef);
-    const userRoleSnap = await transaction.get(userRoleRef);
 
     if (!roleSnap.exists() || roleSnap.data().activo === false) {
       throw new Error("El Rol seleccionado no existe o está inactivo.");
@@ -1623,99 +1587,52 @@ async function guardarUsuarioAdministracion(datos = {}) {
       }
     }
 
-    const relationIdNuevo = entrada.targetPersonId
-      ? `${personaId}__${entrada.targetPersonId}`
-      : "";
-
-    let relationNuevoRef = null;
-    let relationNuevoSnap = null;
-
-    if (relationIdNuevo) {
-      relationNuevoRef = doc(db, "personaRelaciones", relationIdNuevo);
-      relationNuevoSnap = await transaction.get(relationNuevoRef);
-    }
-
-    const personaCambios = {
+    transaction.set(personRef, {
       nombre: entrada.nombre,
       apellidos: entrada.apellidos,
       nombreVisible: entrada.nombreVisible,
-      activo: entrada.activo
-    };
-
-    // PERSON se actualiza con merge para conservar atributos existentes
-    // que esta pantalla todavía no administra.
-    if (entrada.email) personaCambios.email = entrada.email;
-    if (entrada.avatar) personaCambios.avatar = entrada.avatar;
-    if (entrada.fechaNacimiento) personaCambios.fechaNacimiento = entrada.fechaNacimiento;
-    if (entrada.idioma) personaCambios.idioma = entrada.idioma;
-    if (entrada.zonaHoraria) personaCambios.zonaHoraria = entrada.zonaHoraria;
-    if (entrada.colegio) personaCambios.colegio = entrada.colegio;
-    if (entrada.curso) personaCambios.curso = entrada.curso;
-    if (entrada.cursoEscolar) personaCambios.cursoEscolar = entrada.cursoEscolar;
-
-    if (!personSnap.exists()) {
-      personaCambios.createdAt = serverTimestamp();
-      personaCambios.createdBy = adminUid;
-    }
-    personaCambios.updatedAt = serverTimestamp();
-    personaCambios.updatedBy = adminUid;
-
-    transaction.set(personRef, personaCambios, { merge: true });
-
-    // USER vigente: exactamente activo, personaId, login y fechaAlta.
-    // Se reemplaza el documento raíz para retirar campos ajenos al esquema
-    // sin afectar sus subcolecciones.
-    transaction.set(userRef, {
+      email: entrada.email || null,
       activo: entrada.activo,
-      personaId,
-      login: entrada.login,
-      fechaAlta: creando
-        ? serverTimestamp()
-        : (userSnap.data()?.fechaAlta || serverTimestamp())
-    });
+      ...(creando ? { createdAt: serverTimestamp(), createdBy: adminUid } : {}),
+      updatedAt: serverTimestamp(),
+      updatedBy: adminUid
+    }, { merge: true });
 
-    const userRoleDatos = {
+    transaction.set(userRef, {
+      login: entrada.login,
+      authEmail: entrada.authEmail,
+      personaId,
+      activo: entrada.activo,
+      ...(creando ? { createdAt: serverTimestamp(), createdBy: adminUid } : {}),
+      updatedAt: serverTimestamp(),
+      updatedBy: adminUid
+    }, { merge: true });
+
+    transaction.set(userRoleRef, {
       userId: entrada.userId,
       roleId: entrada.roleId,
       activo: entrada.activo,
+      ...(creando ? { createdAt: serverTimestamp(), createdBy: adminUid } : {}),
       updatedAt: serverTimestamp(),
       updatedBy: adminUid
-    };
-    if (!userRoleSnap.exists()) {
-      userRoleDatos.createdAt = serverTimestamp();
-      userRoleDatos.createdBy = adminUid;
-    }
-    transaction.set(userRoleRef, userRoleDatos, { merge: true });
+    }, { merge: true });
 
-    const accesoCreacionFuente = accesoSnap.exists()
-      ? accesoSnap.data()
-      : (accesoAnteriorSnap?.exists() ? accesoAnteriorSnap.data() : null);
-
-    const accesoDatos = {
+    transaction.set(accesoRef, {
       userId: entrada.userId,
       authEmail: entrada.authEmail,
       activo: entrada.activo,
       updatedAt: serverTimestamp(),
-      updatedBy: adminUid
-    };
-
-    if (accesoCreacionFuente?.createdAt) {
-      accesoDatos.createdAt = accesoCreacionFuente.createdAt;
-    } else {
-      accesoDatos.createdAt = serverTimestamp();
-    }
-
-    if (accesoCreacionFuente?.createdBy) {
-      accesoDatos.createdBy = accesoCreacionFuente.createdBy;
-    } else {
-      accesoDatos.createdBy = adminUid;
-    }
-
-    transaction.set(accesoRef, accesoDatos, { merge: true });
+      updatedBy: adminUid,
+      ...(creando ? { createdAt: serverTimestamp(), createdBy: adminUid } : {})
+    }, { merge: true });
 
     if (accesoAnteriorRef && accesoAnteriorSnap?.exists()) {
       transaction.delete(accesoAnteriorRef);
     }
+
+    const relationIdNuevo = entrada.targetPersonId
+      ? `${personaId}__${entrada.targetPersonId}`
+      : "";
 
     if (
       entrada.relationIdAnterior &&
@@ -1726,23 +1643,17 @@ async function guardarUsuarioAdministracion(datos = {}) {
       );
     }
 
-    if (relationIdNuevo && relationNuevoRef) {
-      const relacionDatos = {
+    if (relationIdNuevo) {
+      transaction.set(doc(db, "personaRelaciones", relationIdNuevo), {
         sourcePersonId: personaId,
         targetPersonId: entrada.targetPersonId,
         tipoRelacion: entrada.tipoRelacion || "autorizado",
         nivelAcceso: entrada.nivelRelacion,
         activo: entrada.activo,
+        ...(creando ? { createdAt: serverTimestamp(), createdBy: adminUid } : {}),
         updatedAt: serverTimestamp(),
         updatedBy: adminUid
-      };
-
-      if (!relationNuevoSnap?.exists()) {
-        relacionDatos.createdAt = serverTimestamp();
-        relacionDatos.createdBy = adminUid;
-      }
-
-      transaction.set(relationNuevoRef, relacionDatos, { merge: true });
+      }, { merge: true });
     }
 
     return { userId: entrada.userId, personaId, creando };

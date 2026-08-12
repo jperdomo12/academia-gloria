@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 2.4
+ * Versión: 2.3
  ******************************************************************************/
 
 import {
@@ -445,24 +445,7 @@ function renderGrupo(nodo, nivel = 1) {
   `;
 }
 
-function filtrarNavegacionPorNivel(nodos, nivelActual) {
-  const orden = ContextoUsuario.NIVEL;
-  const valorActual = orden[nivelActual] || orden.consulta;
-
-  return nodos
-    .filter(nodo => {
-      const minimo = nodo.nivelMinimo || "consulta";
-      return valorActual >= (orden[minimo] || orden.consulta);
-    })
-    .map(nodo => ({
-      ...nodo,
-      hijos: Array.isArray(nodo.hijos)
-        ? filtrarNavegacionPorNivel(nodo.hijos, nivelActual)
-        : nodo.hijos
-    }));
-}
-
-function construirMenu(nivelActual = "consulta") {
+function construirMenu() {
   const secciones = [];
 
   /*
@@ -521,7 +504,7 @@ function construirMenu(nivelActual = "consulta") {
    * fuente central NAVEGACION_ACADEMIA. El panel no inventa opciones.
    */
   secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
-  secciones.push(...filtrarNavegacionPorNivel(NAVEGACION_ACADEMIA, nivelActual).map(nodo => renderGrupo(nodo)));
+  secciones.push(...NAVEGACION_ACADEMIA.map(nodo => renderGrupo(nodo)));
   secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
 
   if (configuracionActiva.mostrarDescubreAcademia) {
@@ -627,7 +610,7 @@ async function construirPanel(contenedor) {
 
         ${selectorPersonaActiva}
 
-        ${construirMenu(contexto.nivelAcceso)}
+        ${construirMenu()}
       </div>
     </div>
   `);

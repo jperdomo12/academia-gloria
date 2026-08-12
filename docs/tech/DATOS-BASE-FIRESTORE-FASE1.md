@@ -3,7 +3,7 @@
 # Academia Gloria Valentina
 ## Datos base de identidad · Fase 1
 
-**Versión:** 1.3  
+**Versión:** 1.4  
 **Fecha:** 2026-08-10  
 **Estado:** Implementado y validado funcionalmente
 
@@ -17,6 +17,7 @@
 | 1.1 | 2026-08-10 | Incorpora `per_001`, `activo` booleano y timeout `0 = desactivado` |
 | 1.2 | 2026-08-10 | Consolida implementación real: rol `alumno`, USER_ROLE por UID, `estado` legacy conservado y reglas Firestore publicadas |
 | 1.3 | 2026-08-10 | Activa el nuevo modelo con Gloria, elimina redundancias de USER y retira `calendarioSlug` y estructura física legacy de calendarios |
+| 1.4 | 2026-08-12 | Consolida Gestión de Usuarios y Auditoría Fase A sin modificar el esquema mínimo de USER |
 
 ---
 
@@ -601,4 +602,69 @@ Todavía no será necesario migrar los históricos de Gloria.
 
 ---
 
-**Fin de DATOS-BASE-FIRESTORE-FASE1.md · v1.3**
+# 13. Gestión de Usuarios y Auditoría Fase A
+
+La administración vigente mantiene desde la Academia:
+
+```text
+PERSON
+USER
+USER_ROLE
+PERSON_RELATION
+accesosLogin
+```
+
+Firebase Authentication continúa creándose manualmente en Firebase Console en la modalidad gratuita/Spark.
+
+## 13.1 USER permanece sin cambios
+
+El esquema físico de USER continúa siendo:
+
+```text
+activo
+personaId
+login
+fechaAlta
+```
+
+No se añaden campos de auditoría a USER.
+
+## 13.2 Entidades auditadas
+
+A partir de Gestión de Usuarios v0.3 incorporan auditoría básica:
+
+```text
+personas/{personaId}
+usuarioRoles/{uid}
+personaRelaciones/{source__target}
+accesosLogin/{login}
+```
+
+Campos:
+
+```text
+createdAt
+createdBy
+updatedAt
+updatedBy
+```
+
+`createdBy` y `updatedBy` contienen el UID Firebase del administrador real.
+
+Los documentos existentes anteriores a esta fase no reciben una fecha o autor de creación inventados. La auditoría comienza con información histórica real disponible y con las modificaciones posteriores.
+
+## 13.3 Presentación
+
+Gestión de Usuarios incorpora el bloque de solo consulta:
+
+```text
+5. Registro
+```
+
+La interfaz puede mostrar el nombre visible del administrador resolviendo el UID, sin duplicar dicho nombre en Firestore.
+
+La Fase B de historial detallado de eventos queda pospuesta.
+
+---
+
+**Fin de DATOS-BASE-FIRESTORE-FASE1.md · v1.4**
