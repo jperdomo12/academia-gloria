@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 1.8
+ * Versión: 2.3
  ******************************************************************************/
 
 import {
@@ -10,6 +10,11 @@ import {
   obtenerSaludo,
   cerrarSesion
 } from "./perfil-usuario.js";
+
+import {
+  NAVEGACION_ACADEMIA,
+  DESCUBRE_ACADEMIA
+} from "../modelos/navegacion.js";
 
 import { ContextoUsuario } from "./contexto-usuario.js";
 import { db } from "../firebase/firebase-config.js";
@@ -41,6 +46,8 @@ let panelRaiz = null;
 let botonPrincipal = null;
 let menu = null;
 let manejadorDocumento = null;
+
+let calendarioSlugActivo = "";
 
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
@@ -167,6 +174,16 @@ function escaparHTML(valor = "") {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function crearSlugSeguro(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function crearElementoDesdeHTML(html) {
@@ -361,79 +378,151 @@ function construirSelectorPersonaActiva(contexto, relacionadas) {
   `;
 }
 
-function construirMenu() {
-  const items = [];
+function iconoVisible(nodo) {
+  /*
+   * Único ajuste visual solicitado:
+   * Gestión de Misiones representa un listado de asignaciones,
+   * no una configuración del sistema.
+   */
+  if (String(nodo?.titulo || "").trim() === "Gestión de Misiones") {
+    return "📋";
+  }
+  return nodo?.icono || "•";
+}
 
-  if (configuracionActiva.mostrarDescubreAcademia) {
-    const volver = encodeURIComponent(obtenerRutaActual());
-    const urlDescubre = `${construirUrlAcademia("/descubre-la-academia/")}?volver=${volver}`;
-
-    items.push(`
-      <a class="panel-usuario__opcion" href="${escaparHTML(urlDescubre)}">
-        <span aria-hidden="true">🌈</span>
-        <span>
-          Descubre la Academia
-          <small>Conoce este proyecto</small>
-        </span>
-      </a>
-    `);
+function renderEnlace(nodo, claseExtra = "") {
+  if (nodo.proximo) {
+    return `
+      <button class="panel-usuario__opcion panel-usuario__opcion--proxima ${claseExtra}"
+              type="button" disabled>
+        <span aria-hidden="true">${escaparHTML(iconoVisible(nodo))}</span>
+        <span>${escaparHTML(nodo.titulo)}</span>
+      </button>
+    `;
   }
 
-  if (configuracionActiva.mostrarEspacioPersonal) {
-    items.push(`
+  return `
+    <a class="panel-usuario__opcion ${claseExtra}"
+       href="${escaparHTML(construirUrlAcademia(`/${nodo.ruta || ""}`))}">
+      <span aria-hidden="true">${escaparHTML(iconoVisible(nodo))}</span>
+      <span>${escaparHTML(nodo.titulo)}</span>
+    </a>
+  `;
+}
+
+function renderGrupo(nodo, nivel = 1) {
+  const hijos = Array.isArray(nodo.hijos) ? nodo.hijos : [];
+  const claseNivel = nivel > 1 ? "panel-usuario__grupo--interno" : "";
+
+  return `
+    <section class="panel-usuario__grupo ${claseNivel}" data-menu-grupo>
       <button class="panel-usuario__opcion panel-usuario__grupo-boton"
               type="button"
               aria-expanded="false"
-              data-panel-usuario-grupo>
-        <span aria-hidden="true">🪪</span>
-        <span>
-          Mi espacio personal
-          <small>Camino, tareas, logros y preferencias</small>
-        </span>
+              data-menu-grupo-boton>
+        <span aria-hidden="true">${escaparHTML(iconoVisible(nodo))}</span>
+        <span>${escaparHTML(nodo.titulo)}</span>
         <span class="panel-usuario__grupo-flecha" aria-hidden="true">⌄</span>
       </button>
 
-      <div class="panel-usuario__subgrupo" data-panel-usuario-subgrupo hidden>
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">✨</span>
-          <span>Mi Espacio<small>Perfil personal · Próximamente</small></span>
-        </button>
-
+      <div class="panel-usuario__subgrupo" data-menu-grupo-contenido hidden>
         ${
-          configuracionActiva.mostrarCamino
-            ? `
-              <a class="panel-usuario__opcion"
-                 href="${escaparHTML(construirUrlAcademia("/mi-universo/mi-camino/"))}">
-                <span aria-hidden="true">🌱</span>
-                <span>
-                  Mi Camino
-                  <small>Asignaciones, progreso y motivación</small>
-                </span>
-              </a>
-            `
+          nodo.ruta
+            ? renderEnlace(
+                { ...nodo, titulo: `Abrir ${nodo.titulo}`, hijos: undefined },
+                "panel-usuario__opcion--abrir"
+              )
             : ""
         }
 
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">📌</span>
-          <span>Mis Tareas<small>Asignaciones · Próximamente</small></span>
-        </button>
-
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">🏆</span>
-          <span>Mis Logros<small>Insignias y reconocimientos · Próximamente</small></span>
-        </button>
-
-        <button class="panel-usuario__opcion panel-usuario__opcion--proxima" type="button" disabled>
-          <span aria-hidden="true">⚙️</span>
-          <span>Configuración<small>Perfil y preferencias · Próximamente</small></span>
-        </button>
+        ${hijos.map(hijo =>
+          Array.isArray(hijo.hijos) && hijo.hijos.length
+            ? renderGrupo(hijo, nivel + 1)
+            : renderEnlace(hijo)
+        ).join("")}
       </div>
-    `);
+    </section>
+  `;
+}
+
+function construirMenu() {
+  const secciones = [];
+
+  /*
+   * Mi espacio personal se conserva como en la navegación validada:
+   * Mi Camino, Mi Calendario, Mis Logros y Configuración.
+   * No se expone "Tareas" como término de interfaz.
+   */
+  if (configuracionActiva.mostrarEspacioPersonal) {
+    const opciones = [];
+
+    if (configuracionActiva.mostrarCamino) {
+      opciones.push({
+        id: "mi-camino",
+        titulo: "Mi Camino",
+        icono: "🌅",
+        ruta: "mi-universo/mi-camino/"
+      });
+    }
+
+    if (calendarioSlugActivo) {
+      opciones.push({
+        id: "mi-calendario",
+        titulo: "Mi Calendario",
+        icono: "📅",
+        ruta: `calendarios/${calendarioSlugActivo}/`
+      });
+    }
+
+    opciones.push(
+      {
+        id: "mis-logros",
+        titulo: "Mis Logros",
+        icono: "🏆",
+        ruta: "mi-universo/mis-logros/",
+        proximo: true
+      },
+      {
+        id: "configuracion",
+        titulo: "Configuración",
+        icono: "⚙️",
+        ruta: "configuracion/",
+        proximo: true
+      }
+    );
+
+    secciones.push(renderGrupo({
+      id: "espacio-personal",
+      titulo: "Mi espacio personal",
+      icono: "👤",
+      hijos: opciones
+    }));
   }
 
-  items.push(`
-    <div class="panel-usuario__separador" role="separator"></div>
+  /*
+   * Mi Universo, Mis Cursos y Explorar más vuelven a proceder de la
+   * fuente central NAVEGACION_ACADEMIA. El panel no inventa opciones.
+   */
+  secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
+  secciones.push(...NAVEGACION_ACADEMIA.map(nodo => renderGrupo(nodo)));
+  secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
+
+  if (configuracionActiva.mostrarDescubreAcademia) {
+    const volver = encodeURIComponent(obtenerRutaActual());
+    const descubre = {
+      ...DESCUBRE_ACADEMIA,
+      ruta: `${DESCUBRE_ACADEMIA.ruta}?volver=${volver}`
+    };
+
+    secciones.push(
+      renderEnlace(descubre, "panel-usuario__opcion--destacada")
+    );
+    secciones.push(
+      '<div class="panel-usuario__separador" role="separator"></div>'
+    );
+  }
+
+  secciones.push(`
     <button class="panel-usuario__opcion panel-usuario__opcion--salir"
             type="button"
             data-panel-usuario-salir>
@@ -442,7 +531,7 @@ function construirMenu() {
     </button>
   `);
 
-  return items.join("");
+  return secciones.join("");
 }
 
 async function construirPanel(contenedor) {
@@ -458,6 +547,16 @@ async function construirPanel(contenedor) {
   const saludo = await obtenerSaludo();
 
   const personaUsuario = contexto.personaUsuario;
+
+  calendarioSlugActivo =
+    crearSlugSeguro(perfil.calendarioSlug) ||
+    crearSlugSeguro(
+      personaUsuario.nombreVisible ||
+      personaUsuario.nombre ||
+      perfil.nombreVisible ||
+      perfil.nombre
+    );
+
   const relacionadas = await leerPersonasRelacionadas(contexto);
   const selectorPersonaActiva =
     construirSelectorPersonaActiva(contexto, relacionadas);
@@ -521,14 +620,33 @@ async function construirPanel(contenedor) {
   botonPrincipal = panelRaiz.querySelector(".panel-usuario__boton");
   menu = panelRaiz.querySelector(".panel-usuario__menu");
 
-  const botonGrupo = panelRaiz.querySelector("[data-panel-usuario-grupo]");
-  const subgrupo = panelRaiz.querySelector("[data-panel-usuario-subgrupo]");
 
-  botonGrupo?.addEventListener("click", (evento) => {
-    evento.stopPropagation();
-    const abierto = botonGrupo.getAttribute("aria-expanded") === "true";
-    botonGrupo.setAttribute("aria-expanded", String(!abierto));
-    subgrupo.hidden = abierto;
+  panelRaiz.querySelectorAll("[data-menu-grupo-boton]").forEach((botonGrupo) => {
+    botonGrupo.addEventListener("click", (evento) => {
+      evento.stopPropagation();
+
+      const grupo = botonGrupo.closest("[data-menu-grupo]");
+      const contenido = grupo?.querySelector(":scope > [data-menu-grupo-contenido]");
+      if (!grupo || !contenido) return;
+
+      const abierto = botonGrupo.getAttribute("aria-expanded") === "true";
+      const contenedorHermanos = grupo.parentElement;
+
+      contenedorHermanos
+        ?.querySelectorAll(":scope > [data-menu-grupo]")
+        .forEach((otroGrupo) => {
+          if (otroGrupo === grupo) return;
+          const otroBoton = otroGrupo.querySelector(":scope > [data-menu-grupo-boton]");
+          const otroContenido = otroGrupo.querySelector(":scope > [data-menu-grupo-contenido]");
+          otroBoton?.setAttribute("aria-expanded", "false");
+          if (otroContenido) otroContenido.hidden = true;
+        });
+
+      botonGrupo.setAttribute("aria-expanded", String(!abierto));
+      contenido.hidden = abierto;
+
+      requestAnimationFrame(posicionarMenuEnVentana);
+    });
   });
 
   const selectorPersona = panelRaiz.querySelector(
