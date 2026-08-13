@@ -2,6 +2,7 @@
    Academia de Gloria Valentina
    academia.js
    API pública de acceso a datos
+   Persona Activa · Fase 1.8: eventos, tareas y evidencias resuelven el USER de datos.
    ========================================================== */
 
 /* import { db } from "../firebase/firebase-config.js"; */
@@ -44,16 +45,27 @@ function obtenerUID() {
     return usuario.uid;
 }
 
+async function obtenerUIDPersonaActiva() {
+  const { ContextoUsuario } = await import("../js/contexto-usuario.js");
+  const userId = await ContextoUsuario.obtenerUserIdPersonaActiva();
+
+  if (!userId) {
+    throw new Error("No se pudo resolver el Usuario asociado a la Persona Activa.");
+  }
+
+  return userId;
+}
+
 
 /**
  * Referencia a la colección:
  * usuarios/gloria/eventos
  */
-function coleccionEventos() {
+function coleccionEventos(userId) {
   return collection(
     db,
     "usuarios",
-    obtenerUID(),
+    userId,
     "eventos"
   );
 }
@@ -61,7 +73,7 @@ function coleccionEventos() {
 /**
  * Referencia a un evento concreto.
  */
-function documentoEvento(id) {
+function documentoEvento(id, userId) {
   if (!id) {
     throw new Error("Falta el identificador del evento.");
   }
@@ -69,7 +81,7 @@ function documentoEvento(id) {
   return doc(
     db,
     "usuarios",
-    obtenerUID(),
+    userId,
     "eventos",
     id
   );
@@ -80,9 +92,10 @@ function documentoEvento(id) {
  */
 async function guardarEvento(evento) {
   const datos = crearEvento(evento);
+  const userId = await obtenerUIDPersonaActiva();
 
   const referencia = await addDoc(
-    coleccionEventos(),
+    coleccionEventos(userId),
     {
       ...datos,
       creadoEn: serverTimestamp(),
@@ -103,8 +116,10 @@ async function leerEventos(anio) {
     throw new Error("El año indicado no es válido.");
   }
 
+  const userId = await obtenerUIDPersonaActiva();
+
   const consulta = query(
-    coleccionEventos(),
+    coleccionEventos(userId),
     where("anio", "==", anioNormalizado),
     orderBy("fecha", "asc")
   );
@@ -136,24 +151,41 @@ function observarEventos(
     throw new Error("Se necesita una función callback.");
   }
 
-  const consulta = query(
-    coleccionEventos(),
-    where("anio", "==", anioNormalizado),
-    orderBy("fecha", "asc")
-  );
+  let cancelarSnapshot = null;
+  let cancelado = false;
 
-  return onSnapshot(
-    consulta,
-    (resultado) => {
-      const eventos = resultado.docs.map((documento) => ({
-        id: documento.id,
-        ...documento.data()
-      }));
+  (async () => {
+    try {
+      const userId = await obtenerUIDPersonaActiva();
+      if (cancelado) return;
 
-      callback(eventos);
-    },
-    onError
-  );
+      const consulta = query(
+        coleccionEventos(userId),
+        where("anio", "==", anioNormalizado),
+        orderBy("fecha", "asc")
+      );
+
+      cancelarSnapshot = onSnapshot(
+        consulta,
+        (resultado) => {
+          const eventos = resultado.docs.map((documento) => ({
+            id: documento.id,
+            ...documento.data()
+          }));
+
+          callback(eventos);
+        },
+        onError
+      );
+    } catch (error) {
+      onError(error);
+    }
+  })();
+
+  return () => {
+    cancelado = true;
+    if (typeof cancelarSnapshot === "function") cancelarSnapshot();
+  };
 }
 
 /**
@@ -161,9 +193,10 @@ function observarEventos(
  */
 async function actualizarEvento(id, cambios) {
   const datos = crearEvento(cambios);
+  const userId = await obtenerUIDPersonaActiva();
 
   await updateDoc(
-    documentoEvento(id),
+    documentoEvento(id, userId),
     {
       ...datos,
       actualizadoEn: serverTimestamp()
@@ -175,7 +208,8 @@ async function actualizarEvento(id, cambios) {
  * Elimina un evento.
  */
 async function eliminarEvento(id) {
-  await deleteDoc(documentoEvento(id));
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoEvento(id, userId));
 }
 
 
@@ -688,32 +722,32 @@ function textoSeguro(valor) {
   return String(valor ?? "").trim();
 }
 
-function coleccionTareas() {
-  return collection(db, "usuarios", obtenerUID(), "tareas");
+function coleccionTareas(userId) {
+  return collection(db, "usuarios", userId, "tareas");
 }
 
-function documentoTarea(id) {
+function documentoTarea(id, userId) {
   const tareaId = textoSeguro(id);
 
   if (!tareaId) {
     throw new Error("Falta el identificador de la tarea.");
   }
 
-  return doc(db, "usuarios", obtenerUID(), "tareas", tareaId);
+  return doc(db, "usuarios", userId, "tareas", tareaId);
 }
 
-function coleccionEvidencias() {
-  return collection(db, "usuarios", obtenerUID(), "evidencias");
+function coleccionEvidencias(userId) {
+  return collection(db, "usuarios", userId, "evidencias");
 }
 
-function documentoEvidencia(id) {
+function documentoEvidencia(id, userId) {
   const evidenciaId = textoSeguro(id);
 
   if (!evidenciaId) {
     throw new Error("Falta el identificador de la evidencia.");
   }
 
-  return doc(db, "usuarios", obtenerUID(), "evidencias", evidenciaId);
+  return doc(db, "usuarios", userId, "evidencias", evidenciaId);
 }
 
 function normalizarCriterioCumplimiento(criterio = {}) {
@@ -776,7 +810,7 @@ function normalizarProgresoTarea(progreso = {}, criterio = {}) {
   };
 }
 
-function normalizarTarea(tarea = {}, { parcial = false } = {}) {
+function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}) {
   const titulo = textoSeguro(tarea.titulo);
 
   if (!parcial && !titulo) {
@@ -815,9 +849,10 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
   );
 
   const uidActual = obtenerUID();
+  const uidAlumno = textoSeguro(alumnoUserId) || uidActual;
 
   const resultado = {
-    alumnoId: textoSeguro(tarea.alumnoId) || uidActual,
+    alumnoId: textoSeguro(tarea.alumnoId) || uidAlumno,
     creadaPorUid: textoSeguro(tarea.creadaPorUid) || uidActual,
     asignadaPorUid: textoSeguro(tarea.asignadaPorUid) || uidActual,
     titulo,
@@ -929,9 +964,10 @@ function normalizarTareaLeida(documento) {
 }
 
 async function crearTarea(tarea) {
-  const datos = normalizarTarea(tarea);
+  const userId = await obtenerUIDPersonaActiva();
+  const datos = normalizarTarea(tarea, { alumnoUserId: userId });
 
-  const referencia = await addDoc(coleccionTareas(), {
+  const referencia = await addDoc(coleccionTareas(userId), {
     ...datos,
     creadaEn: serverTimestamp(),
     actualizadaEn: serverTimestamp()
@@ -941,13 +977,15 @@ async function crearTarea(tarea) {
 }
 
 async function obtenerTarea(id) {
-  const resultado = await getDoc(documentoTarea(id));
+  const userId = await obtenerUIDPersonaActiva();
+  const resultado = await getDoc(documentoTarea(id, userId));
   return resultado.exists() ? normalizarTareaLeida(resultado) : null;
 }
 
 async function leerTareas() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionTareas(),
+    coleccionTareas(userId),
     orderBy("actualizadaEn", "desc")
   );
 
@@ -960,16 +998,33 @@ function observarTareas(callback, onError = console.error) {
     throw new Error("Se necesita una función callback.");
   }
 
-  const consulta = query(
-    coleccionTareas(),
-    orderBy("actualizadaEn", "desc")
-  );
+  let cancelarSnapshot = null;
+  let cancelado = false;
 
-  return onSnapshot(
-    consulta,
-    (resultado) => callback(resultado.docs.map(normalizarTareaLeida)),
-    onError
-  );
+  (async () => {
+    try {
+      const userId = await obtenerUIDPersonaActiva();
+      if (cancelado) return;
+
+      const consulta = query(
+        coleccionTareas(userId),
+        orderBy("actualizadaEn", "desc")
+      );
+
+      cancelarSnapshot = onSnapshot(
+        consulta,
+        (resultado) => callback(resultado.docs.map(normalizarTareaLeida)),
+        onError
+      );
+    } catch (error) {
+      onError(error);
+    }
+  })();
+
+  return () => {
+    cancelado = true;
+    if (typeof cancelarSnapshot === "function") cancelarSnapshot();
+  };
 }
 
 async function actualizarTarea(id, cambios = {}) {
@@ -1082,7 +1137,8 @@ async function actualizarTarea(id, cambios = {}) {
     };
   }
 
-  await updateDoc(documentoTarea(id), {
+  const userId = await obtenerUIDPersonaActiva();
+  await updateDoc(documentoTarea(id, userId), {
     ...datos,
     actualizadaEn: serverTimestamp()
   });
@@ -1115,10 +1171,11 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
     cambios[clave] = valor;
   });
 
-  await updateDoc(documentoTarea(id), cambios);
+  const userId = await obtenerUIDPersonaActiva();
+  await updateDoc(documentoTarea(id, userId), cambios);
 }
 
-function normalizarEvidencia(evidencia = {}) {
+function normalizarEvidencia(evidencia = {}, { alumnoUserId = "" } = {}) {
   const misionId = textoSeguro(evidencia.misionId || evidencia.tareaId);
   const modulo = textoSeguro(evidencia.modulo);
   const tipo = textoSeguro(evidencia.tipo);
@@ -1131,8 +1188,10 @@ function normalizarEvidencia(evidencia = {}) {
     );
   }
 
+  const uidAlumno = textoSeguro(alumnoUserId) || obtenerUID();
+
   return {
-    alumnoId: textoSeguro(evidencia.alumnoId) || obtenerUID(),
+    alumnoId: textoSeguro(evidencia.alumnoId) || uidAlumno,
     misionId,
     modulo,
     tipo,
@@ -1177,10 +1236,14 @@ function evidenciaCumpleCriterio(evidencia, criterio) {
 }
 
 async function registrarEvidenciaMision(evidenciaEntrada) {
-  const evidencia = normalizarEvidencia(evidenciaEntrada);
+  const userId = await obtenerUIDPersonaActiva();
+  const evidencia = normalizarEvidencia(
+    evidenciaEntrada,
+    { alumnoUserId: userId }
+  );
   const evidenciaId = crearIdEvidencia(evidencia);
-  const tareaRef = documentoTarea(evidencia.misionId);
-  const evidenciaRef = documentoEvidencia(evidenciaId);
+  const tareaRef = documentoTarea(evidencia.misionId, userId);
+  const evidenciaRef = documentoEvidencia(evidenciaId, userId);
 
   const resultado = await runTransaction(db, async transaction => {
     const [tareaSnapshot, evidenciaSnapshot] = await Promise.all([
@@ -1213,7 +1276,7 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
     }
 
     const tarea = tareaSnapshot.data();
-    const alumnoId = textoSeguro(tarea.alumnoId) || obtenerUID();
+    const alumnoId = textoSeguro(tarea.alumnoId) || userId;
 
     if (alumnoId !== evidencia.alumnoId) {
       throw new Error("La evidencia no pertenece al alumno de la misión.");
@@ -1311,8 +1374,9 @@ async function leerEvidenciasMision(misionId) {
   const id = textoSeguro(misionId);
   if (!id) throw new Error("Falta el identificador de la misión.");
 
+  const userId = await obtenerUIDPersonaActiva();
   const resultado = await getDocs(
-    query(coleccionEvidencias(), where("misionId", "==", id))
+    query(coleccionEvidencias(userId), where("misionId", "==", id))
   );
 
   return resultado.docs
@@ -1326,7 +1390,8 @@ async function leerEvidenciasMision(misionId) {
 
 async function guardarObservacionTarea(id, texto) {
   const observacion = textoSeguro(texto);
-  const referencia = documentoTarea(id);
+  const userId = await obtenerUIDPersonaActiva();
+  const referencia = documentoTarea(id, userId);
   const existente = await getDoc(referencia);
 
   if (!existente.exists()) {
@@ -1359,7 +1424,8 @@ async function guardarObservacionTarea(id, texto) {
 }
 
 async function eliminarTarea(id) {
-  await deleteDoc(documentoTarea(id));
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoTarea(id, userId));
 }
 
 

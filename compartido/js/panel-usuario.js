@@ -47,7 +47,6 @@ let botonPrincipal = null;
 let menu = null;
 let manejadorDocumento = null;
 
-let calendarioSlugActivo = "";
 
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
@@ -159,6 +158,15 @@ function asegurarEstilosPanelAvanzado() {
       line-height:1.35;
     }
 
+    .panel-usuario__contexto-activo{
+      display:block;
+      margin-top:3px;
+      color:#5b21b6;
+      font-size:.72rem;
+      font-weight:900;
+      line-height:1.25;
+    }
+
     @media(max-height:620px){
       .panel-usuario__identidad{padding-top:12px;padding-bottom:12px}
       .panel-usuario__opcion{min-height:46px}
@@ -174,16 +182,6 @@ function escaparHTML(valor = "") {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-}
-
-function crearSlugSeguro(valor = "") {
-  return String(valor)
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 function crearElementoDesdeHTML(html) {
@@ -445,15 +443,15 @@ function renderGrupo(nodo, nivel = 1) {
   `;
 }
 
-function filtrarNavegacionPorNivel(nodos, nivelActual) {
-  const orden = ContextoUsuario.NIVEL;
-  const valorActual = orden[nivelActual] || orden.consulta;
+function permiteNivel(nodo, nivelActual) {
+  const orden = { consulta: 10, gestion: 20, administracion: 30 };
+  const minimo = nodo?.nivelMinimo || "consulta";
+  return (orden[nivelActual] || 0) >= (orden[minimo] || 0);
+}
 
+function filtrarNavegacionPorNivel(nodos, nivelActual) {
   return nodos
-    .filter(nodo => {
-      const minimo = nodo.nivelMinimo || "consulta";
-      return valorActual >= (orden[minimo] || orden.consulta);
-    })
+    .filter(nodo => permiteNivel(nodo, nivelActual))
     .map(nodo => ({
       ...nodo,
       hijos: Array.isArray(nodo.hijos)
@@ -482,14 +480,12 @@ function construirMenu(nivelActual = "consulta") {
       });
     }
 
-    if (calendarioSlugActivo) {
-      opciones.push({
-        id: "mi-calendario",
-        titulo: "Mi Calendario",
-        icono: "📅",
-        ruta: `calendarios/${calendarioSlugActivo}/`
-      });
-    }
+    opciones.push({
+      id: "mi-calendario",
+      titulo: "Mi Calendario",
+      icono: "📅",
+      ruta: "calendarios/"
+    });
 
     opciones.push(
       {
@@ -564,15 +560,15 @@ async function construirPanel(contenedor) {
   const saludo = await obtenerSaludo();
 
   const personaUsuario = contexto.personaUsuario;
+  const personaActiva = contexto.personaActiva || personaUsuario;
+  const personaActivaEsPropia =
+    personaActiva?.personaId === personaUsuario?.personaId;
 
-  calendarioSlugActivo =
-    crearSlugSeguro(perfil.calendarioSlug) ||
-    crearSlugSeguro(
-      personaUsuario.nombreVisible ||
-      personaUsuario.nombre ||
-      perfil.nombreVisible ||
-      perfil.nombre
-    );
+  const indicadorPersonaActiva = personaActivaEsPropia
+    ? ""
+    : `<span class="panel-usuario__contexto-activo">🎯 Viendo a: ${escaparHTML(
+        personaActiva.nombreVisible || personaActiva.nombre || "Persona activa"
+      )}</span>`;
 
   const relacionadas = await leerPersonasRelacionadas(contexto);
   const selectorPersonaActiva =
@@ -608,6 +604,7 @@ async function construirPanel(contenedor) {
         <span class="panel-usuario__texto">
           <strong class="panel-usuario__nombre">${nombreSeguro}</strong>
           <span class="panel-usuario__saludo">${saludoSeguro}</span>
+          ${indicadorPersonaActiva}
         </span>
 
         <span class="panel-usuario__flecha" aria-hidden="true">⌄</span>

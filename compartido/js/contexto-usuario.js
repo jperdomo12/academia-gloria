@@ -2,9 +2,9 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/contexto-usuario.js
  * Contexto central de Usuario, Persona Activa y nivel de acceso
- * Versión: 0.4
+ * Versión: 0.5
  *
- * FASE 1.5
+ * FASE 1.8
  * - Activa el nuevo modelo USER -> PERSON -> USER_ROLE -> ROLE.
  * - Mantiene compatibilidad con usuarios legacy que todavía no tengan personaId.
  * - Persona Activa propia se resuelve desde PERSON.
@@ -12,6 +12,8 @@
  *   prioritariamente desde PERSON.
  * - USER conserva temporalmente esos campos solo como fallback legacy.
  * - Las subcolecciones funcionales continúan bajo usuarios/{uid}.
+ * - Resuelve el userId físico asociado a la Persona Activa para módulos legacy.
+ * - Mantiene trazabilidad: Usuario autenticado y Persona Activa siguen separados.
  ******************************************************************************/
 
 import { auth, db } from "../firebase/firebase-config.js";
@@ -37,6 +39,7 @@ const NIVEL = Object.freeze({
 });
 
 const CLAVE_PERSONA_ACTIVA = "academia.personaActivaId";
+const CLAVE_USER_ID_PERSONA_ACTIVA = "academia.personaActivaUserId";
 
 let contextoCache = null;
 let promesaInicializacion = null;
@@ -366,6 +369,51 @@ function guardarPersonaActiva(personaId) {
   }
 }
 
+function guardarUserIdPersonaActiva(userId) {
+  try {
+    sessionStorage.setItem(CLAVE_USER_ID_PERSONA_ACTIVA, userId);
+  } catch {
+    // sessionStorage puede no estar disponible en algún contexto restringido.
+  }
+}
+
+async function resolverUserIdPersona(personaId, usuarioActual) {
+  const objetivo = texto(personaId);
+
+  if (!objetivo) {
+    throw new Error("Falta la Persona Activa para resolver sus datos.");
+  }
+
+  if (objetivo === usuarioActual.personaId) {
+    return usuarioActual.userId;
+  }
+
+  /*
+   * La relación con la Persona objetivo ya fue validada por
+   * resolverPersonaActiva(). Aquí solo resolvemos dónde viven todavía
+   * sus subcolecciones legacy: usuarios/{uid}/...
+   */
+  const consulta = query(
+    collection(db, "usuarios"),
+    where("personaId", "==", objetivo)
+  );
+
+  const resultado = await getDocs(consulta);
+  const candidatos = resultado.docs
+    .map(documento => ({ id: documento.id, ...documento.data() }))
+    .filter(usuario => usuario.activo !== false);
+
+  if (candidatos.length !== 1) {
+    throw new Error(
+      candidatos.length === 0
+        ? `La Persona Activa '${objetivo}' no tiene un USER activo asociado.`
+        : `La Persona Activa '${objetivo}' tiene más de un USER activo asociado.`
+    );
+  }
+
+  return candidatos[0].id;
+}
+
 async function resolverPersonaActiva({
   usuario,
   personaUsuario,
@@ -529,10 +577,18 @@ async function construirContexto() {
     roles
   });
 
+  const userIdPersonaActiva = await resolverUserIdPersona(
+    personaActiva.personaId,
+    usuario
+  );
+
+  guardarUserIdPersonaActiva(userIdPersonaActiva);
+
   return Object.freeze({
     usuario,
     personaUsuario,
     personaActiva,
+    userIdPersonaActiva,
     roles,
     relacion,
     nivelAcceso,
@@ -585,6 +641,10 @@ async function obtenerPersona() {
 
 async function obtenerPersonaActiva() {
   return (await inicializar()).personaActiva;
+}
+
+async function obtenerUserIdPersonaActiva() {
+  return (await inicializar()).userIdPersonaActiva;
 }
 
 async function obtenerRoles() {
@@ -659,6 +719,7 @@ export const ContextoUsuario = Object.freeze({
   obtenerUsuario,
   obtenerPersona,
   obtenerPersonaActiva,
+  obtenerUserIdPersonaActiva,
   obtenerRoles,
   obtenerRolPrincipal,
   obtenerNivelAcceso,
@@ -679,6 +740,7 @@ export {
   obtenerUsuario,
   obtenerPersona,
   obtenerPersonaActiva,
+  obtenerUserIdPersonaActiva,
   obtenerRoles,
   obtenerRolPrincipal,
   obtenerNivelAcceso,

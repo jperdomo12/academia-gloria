@@ -7,6 +7,7 @@
 /* import { db } from "../firebase/firebase-config.js"; */
 import { db, auth } from "../firebase/firebase-config.js";
 import { crearEvento } from "../modelos/evento.js";
+import { PerfilUsuario } from "../js/perfil-usuario.js";
 
 import {
   addDoc,
@@ -21,6 +22,7 @@ import {
   runTransaction,
   serverTimestamp,
   setDoc,
+  Timestamp,
   updateDoc,
   where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -379,23 +381,13 @@ async function eliminarAudioLibro(libroId) {
    ========================================================== */
 
 async function leerPerfilUsuario() {
-  const resultado = await getDoc(
-    doc(db, "usuarios", obtenerUID())
-  );
-
-  if (!resultado.exists()) {
-    return {
-      id: obtenerUID(),
-      nombre: "Explorador",
-      avatar: "🌟",
-      idioma: "es"
-    };
-  }
-
-  return {
-    id: resultado.id,
-    ...resultado.data()
-  };
+  /*
+   * Fase 1.5:
+   * el perfil se resuelve mediante PerfilUsuario / ContextoUsuario.
+   * Los históricos y subcolecciones funcionales continúan bajo
+   * usuarios/{uid}/... hasta una fase posterior.
+   */
+  return PerfilUsuario.obtenerPerfil();
 }
 
 
@@ -562,6 +554,98 @@ async function eliminarSesionLectura(historiaId) {
       historiaId
     )
   );
+}
+
+
+
+/* ==========================================================
+   Creciendo por Dentro · Sesiones de Semillas
+   usuarios/{uid}/sesionesSemillas/{sesionId}
+   ========================================================== */
+
+function coleccionSesionesSemillas() {
+  return collection(
+    db,
+    "usuarios",
+    obtenerUID(),
+    "sesionesSemillas"
+  );
+}
+
+function normalizarSesionSemilla(sesion = {}) {
+  const semillaId = String(sesion.semillaId ?? "").trim();
+  const titulo = String(sesion.titulo ?? "").trim();
+
+  if (!semillaId || !titulo) {
+    throw new Error("La sesión de Semilla no contiene una experiencia válida.");
+  }
+
+  const audioData = String(sesion.audioData ?? "").trim();
+
+  if (audioData.length > 900000) {
+    throw new Error(
+      "La grabación es demasiado grande. Intenta grabar menos tiempo."
+    );
+  }
+
+  return {
+    semillaId,
+    titulo,
+    familia: String(sesion.familia ?? "").trim(),
+    tipoSituacion: String(sesion.tipoSituacion ?? "").trim(),
+    nivelApoyo: Number(sesion.nivelApoyo ?? 1),
+    fechaInicio: String(sesion.fechaInicio ?? "").trim(),
+    duracion: Math.max(0, Number(sesion.duracion ?? 0)),
+    intentos: Math.max(0, Number(sesion.intentos ?? 0)),
+    respuestaConstruida: String(sesion.respuestaConstruida ?? "").trim(),
+    audioData,
+    mimeType: String(sesion.mimeType ?? "audio/webm").trim(),
+    duracionAudio: Math.max(0, Number(sesion.duracionAudio ?? 0)),
+    transcripcion: String(sesion.transcripcion ?? "").trim(),
+    respuestas:
+      sesion.respuestas && typeof sesion.respuestas === "object"
+        ? sesion.respuestas
+        : {},
+    analisisEducativo:
+      sesion.analisisEducativo && typeof sesion.analisisEducativo === "object"
+        ? sesion.analisisEducativo
+        : {},
+    observacionFamilia: String(sesion.observacionFamilia ?? "").trim(),
+    misionId: String(sesion.misionId ?? "").trim()
+  };
+}
+
+async function guardarSesionSemilla(sesion) {
+  const datos = normalizarSesionSemilla(sesion);
+
+  /*
+   * Cada práctica se conserva como una sesión independiente.
+   * Así una misma Semilla puede repetirse sin sobrescribir el historial.
+   */
+  const referencia = await addDoc(
+    coleccionSesionesSemillas(),
+    {
+      ...datos,
+      creadaEn: serverTimestamp(),
+      actualizadaEn: serverTimestamp()
+    }
+  );
+
+  return referencia.id;
+}
+
+async function leerSesionesSemillas() {
+  const consulta = query(
+    coleccionSesionesSemillas(),
+    orderBy("actualizadaEn", "desc")
+  );
+
+  const resultado = await getDocs(consulta);
+
+  return resultado.docs.map((documento) => ({
+    id: documento.id,
+    ...documento.data()
+  }));
 }
 
 
@@ -817,17 +901,29 @@ function normalizarTarea(tarea = {}, { parcial = false } = {}) {
 
 function normalizarTareaLeida(documento) {
   const datos = documento.data();
+  const criterioCumplimiento = normalizarCriterioCumplimiento(
+    datos.criterioCumplimiento || {}
+  );
+
+  /*
+   * Compatibilidad con misiones de Creciendo por Dentro creadas antes
+   * de que el módulo fuese reconocido por normalizarTarea().
+   */
+  const modulo =
+    datos.modulo === "libre" &&
+    criterioCumplimiento.modulo === "creciendo-por-dentro"
+      ? "creciendo-por-dentro"
+      : datos.modulo;
 
   return {
     id: documento.id,
     ...datos,
+    modulo,
     estado: normalizarEstadoTarea(datos.estado),
-    criterioCumplimiento: normalizarCriterioCumplimiento(
-      datos.criterioCumplimiento || {}
-    ),
+    criterioCumplimiento,
     progreso: normalizarProgresoTarea(
       datos.progreso,
-      datos.criterioCumplimiento || {}
+      criterioCumplimiento
     )
   };
 }
@@ -837,7 +933,6 @@ async function crearTarea(tarea) {
 
   const referencia = await addDoc(coleccionTareas(), {
     ...datos,
-    fechaEstado: serverTimestamp(),
     creadaEn: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   });
@@ -989,11 +1084,6 @@ async function actualizarTarea(id, cambios = {}) {
 
   await updateDoc(documentoTarea(id), {
     ...datos,
-    ...(
-      "estado" in datos
-        ? { fechaEstado: serverTimestamp() }
-        : {}
-    ),
     actualizadaEn: serverTimestamp()
   });
 }
@@ -1007,7 +1097,6 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
 
   const cambios = {
     estado: estadoNormalizado,
-    fechaEstado: serverTimestamp(),
     actualizadaEn: serverTimestamp()
   };
 
@@ -1184,10 +1273,6 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       actualizadaEn: serverTimestamp()
     };
 
-    if (nuevoEstado !== estadoActual) {
-      cambiosTarea.fechaEstado = serverTimestamp();
-    }
-
     if (!progresoActual.iniciadaEn) {
       cambiosTarea["progreso.iniciadaEn"] = serverTimestamp();
     }
@@ -1278,6 +1363,395 @@ async function eliminarTarea(id) {
 }
 
 
+
+/* ==========================================================
+   Administración de Usuarios · v0.3 gratuita · Auditoría Fase A
+
+   Firebase Authentication se crea manualmente en Firebase Console.
+   Desde la Academia se mantiene de forma atómica:
+   - usuarios/{uid}
+   - personas/{personaId}
+   - usuarioRoles/{uid}
+   - accesosLogin/{login}
+   - personaRelaciones/{sourcePersonId__targetPersonId}
+   ========================================================== */
+
+function textoAdmin(valor, alternativo = "") {
+  const normalizado = String(valor ?? "").trim();
+  return normalizado || alternativo;
+}
+
+function normalizarLoginAdmin(valor) {
+  return textoAdmin(valor).toLowerCase();
+}
+
+async function siguientePersonaIdAdministracion() {
+  const personas = await leerColeccionAdmin("personas");
+  let maximo = 0;
+
+  for (const persona of personas) {
+    const coincidencia = /^per_(\d{3,})$/i.exec(String(persona.id || "").trim());
+    if (!coincidencia) continue;
+    maximo = Math.max(maximo, Number(coincidencia[1]));
+  }
+
+  return `per_${String(maximo + 1).padStart(3, "0")}`;
+}
+
+function fechaNacimientoAdministracion(valor) {
+  const texto = textoAdmin(valor);
+  if (!texto) return null;
+
+  const fecha = new Date(`${texto}T12:00:00`);
+  if (Number.isNaN(fecha.getTime())) {
+    throw new Error("La fecha de nacimiento no es válida.");
+  }
+
+  return Timestamp.fromDate(fecha);
+}
+
+async function exigirAdministrador() {
+  const { ContextoUsuario } = await import("../js/contexto-usuario.js");
+
+  if (!(await ContextoUsuario.esAdministrador())) {
+    throw new Error("Esta operación requiere nivel de administración.");
+  }
+
+  return ContextoUsuario.inicializar();
+}
+
+async function leerColeccionAdmin(nombre) {
+  const resultado = await getDocs(collection(db, nombre));
+  return resultado.docs.map(documento => ({
+    id: documento.id,
+    ...documento.data()
+  }));
+}
+
+async function listarUsuariosAdministracion() {
+  await exigirAdministrador();
+
+  const [usuarios, personas, roles, usuarioRoles, accesosLogin, relaciones] =
+    await Promise.all([
+      leerColeccionAdmin("usuarios"),
+      leerColeccionAdmin("personas"),
+      leerColeccionAdmin("roles"),
+      leerColeccionAdmin("usuarioRoles"),
+      leerColeccionAdmin("accesosLogin"),
+      leerColeccionAdmin("personaRelaciones")
+    ]);
+
+  const personasPorId = new Map(personas.map(persona => [persona.id, persona]));
+  const rolesPorId = new Map(roles.map(rol => [rol.id, rol]));
+  const asignacionesPorUsuario = new Map(
+    usuarioRoles.map(asignacion => [asignacion.userId || asignacion.id, asignacion])
+  );
+  const accesosPorUsuario = new Map(
+    accesosLogin.map(acceso => [acceso.userId, acceso])
+  );
+
+  return usuarios.map(usuario => {
+    const userId = usuario.id;
+    const persona = personasPorId.get(usuario.personaId) || null;
+    const asignacion = asignacionesPorUsuario.get(userId) || null;
+    const rol = asignacion ? rolesPorId.get(asignacion.roleId) || null : null;
+    const acceso = accesosPorUsuario.get(userId) || null;
+    const relacionesUsuario = relaciones.filter(
+      relacion => relacion.sourcePersonId === usuario.personaId
+    );
+
+    const incidencias = [];
+    if (!usuario.personaId) incidencias.push("USER sin personaId");
+    else if (!persona) incidencias.push("PERSON inexistente");
+    if (!asignacion) incidencias.push("USER_ROLE inexistente");
+    else if (!rol) incidencias.push("ROLE inexistente");
+    else if (rol.activo === false) incidencias.push("ROLE inactivo");
+    if (!usuario.login) incidencias.push("USER sin login");
+    if (!acceso) incidencias.push("accesosLogin inexistente");
+    else {
+      if (acceso.userId !== userId) incidencias.push("accesosLogin con UID distinto");
+      if (normalizarLoginAdmin(acceso.id) !== normalizarLoginAdmin(usuario.login)) {
+        incidencias.push("login USER/accesosLogin no coincide");
+      }
+    }
+
+    return {
+      ...usuario,
+      userId,
+      persona,
+      asignacion,
+      rol,
+      acceso,
+      relaciones: relacionesUsuario,
+      incidencias
+    };
+  }).sort((a, b) => {
+    const nombreA = textoAdmin(a.persona?.nombreVisible, a.persona?.nombre || a.login);
+    const nombreB = textoAdmin(b.persona?.nombreVisible, b.persona?.nombre || b.login);
+    return nombreA.localeCompare(nombreB, "es");
+  });
+}
+
+async function leerCatalogosAdministracion() {
+  await exigirAdministrador();
+
+  const [personas, roles] = await Promise.all([
+    leerColeccionAdmin("personas"),
+    leerColeccionAdmin("roles")
+  ]);
+
+  return {
+    personas: personas
+      .filter(persona => persona.activo !== false)
+      .sort((a, b) => textoAdmin(a.nombreVisible, a.nombre)
+        .localeCompare(textoAdmin(b.nombreVisible, b.nombre), "es")),
+    roles: roles
+      .filter(rol => rol.activo !== false)
+      .sort((a, b) => textoAdmin(a.nombre, a.id)
+        .localeCompare(textoAdmin(b.nombre, b.id), "es"))
+  };
+}
+
+function validarDatosUsuarioAdministracion(datos = {}, creando = false) {
+  const userId = textoAdmin(datos.userId);
+  const login = normalizarLoginAdmin(datos.login);
+  const authEmail = textoAdmin(datos.authEmail).toLowerCase();
+  const nombre = textoAdmin(datos.nombre);
+  const roleId = textoAdmin(datos.roleId);
+
+  if (!userId) throw new Error("Falta el UID de Firebase Authentication.");
+  if (!login) throw new Error("El login funcional es obligatorio.");
+  if (!authEmail || !authEmail.includes("@")) {
+    throw new Error("El correo de Firebase Authentication no es válido.");
+  }
+  if (!nombre) throw new Error("El nombre de la Persona es obligatorio.");
+  if (!roleId) throw new Error("Debe seleccionar un Rol.");
+
+  if (creando && userId === auth.currentUser?.uid) {
+    // Es válido crear/completar al propio administrador, pero se deja explícito.
+    console.debug("[Administración] Se está completando el usuario administrador actual.");
+  }
+
+  return {
+    userId,
+    login,
+    authEmail,
+    nombre,
+    apellidos: textoAdmin(datos.apellidos),
+    nombreVisible: textoAdmin(datos.nombreVisible, nombre),
+    email: textoAdmin(datos.email).toLowerCase(),
+    avatar: textoAdmin(datos.avatar),
+    fechaNacimiento: fechaNacimientoAdministracion(datos.fechaNacimiento),
+    idioma: textoAdmin(datos.idioma),
+    zonaHoraria: textoAdmin(datos.zonaHoraria),
+    colegio: textoAdmin(datos.colegio),
+    curso: textoAdmin(datos.curso),
+    cursoEscolar: textoAdmin(datos.cursoEscolar),
+    roleId,
+    activo: datos.activo !== false,
+    personaId: textoAdmin(datos.personaId),
+    relationIdAnterior: textoAdmin(datos.relationIdAnterior),
+    targetPersonId: textoAdmin(datos.targetPersonId),
+    tipoRelacion: textoAdmin(datos.tipoRelacion),
+    nivelRelacion: ["consulta", "gestion"].includes(textoAdmin(datos.nivelRelacion))
+      ? textoAdmin(datos.nivelRelacion)
+      : "consulta"
+  };
+}
+
+async function guardarUsuarioAdministracion(datos = {}) {
+  const contexto = await exigirAdministrador();
+  const entrada = validarDatosUsuarioAdministracion(datos, !textoAdmin(datos.personaId));
+  const adminUid = contexto.usuario.userId;
+
+  const userRef = doc(db, "usuarios", entrada.userId);
+  const accesoRef = doc(db, "accesosLogin", entrada.login);
+  const roleRef = doc(db, "roles", entrada.roleId);
+
+  // Convención vigente documentada: per_001, per_002, per_003...
+  // Se toma el mayor ID utilizado y se propone el siguiente.
+  // La transacción verifica que no exista antes de escribir.
+  const personaId = entrada.personaId || await siguientePersonaIdAdministracion();
+  const personRef = doc(db, "personas", personaId);
+  const userRoleRef = doc(db, "usuarioRoles", entrada.userId);
+
+  const resultado = await runTransaction(db, async transaction => {
+    // Todas las lecturas se realizan antes de cualquier escritura.
+    const userSnap = await transaction.get(userRef);
+    const accesoSnap = await transaction.get(accesoRef);
+    const roleSnap = await transaction.get(roleRef);
+    const personSnap = await transaction.get(personRef);
+    const userRoleSnap = await transaction.get(userRoleRef);
+
+    if (!roleSnap.exists() || roleSnap.data().activo === false) {
+      throw new Error("El Rol seleccionado no existe o está inactivo.");
+    }
+
+    const creando = !userSnap.exists();
+
+    if (!creando && entrada.personaId && userSnap.data().personaId !== entrada.personaId) {
+      throw new Error("El personaId del Usuario no coincide con la Persona editada.");
+    }
+
+    if (creando && personSnap.exists()) {
+      throw new Error("El identificador interno de Persona ya existe. Reintente el alta.");
+    }
+
+    if (accesoSnap.exists() && accesoSnap.data().userId !== entrada.userId) {
+      throw new Error("El login funcional ya está asignado a otro Usuario.");
+    }
+
+    const loginAnterior = normalizarLoginAdmin(userSnap.data()?.login);
+    let accesoAnteriorRef = null;
+    let accesoAnteriorSnap = null;
+
+    if (loginAnterior && loginAnterior !== entrada.login) {
+      accesoAnteriorRef = doc(db, "accesosLogin", loginAnterior);
+      accesoAnteriorSnap = await transaction.get(accesoAnteriorRef);
+    }
+
+    let targetSnap = null;
+    if (entrada.targetPersonId) {
+      if (entrada.targetPersonId === personaId) {
+        throw new Error("Una Persona no puede relacionarse consigo misma.");
+      }
+      targetSnap = await transaction.get(
+        doc(db, "personas", entrada.targetPersonId)
+      );
+      if (!targetSnap.exists()) {
+        throw new Error("La Persona destino indicada no existe.");
+      }
+    }
+
+    const relationIdNuevo = entrada.targetPersonId
+      ? `${personaId}__${entrada.targetPersonId}`
+      : "";
+
+    let relationNuevoRef = null;
+    let relationNuevoSnap = null;
+
+    if (relationIdNuevo) {
+      relationNuevoRef = doc(db, "personaRelaciones", relationIdNuevo);
+      relationNuevoSnap = await transaction.get(relationNuevoRef);
+    }
+
+    const personaCambios = {
+      nombre: entrada.nombre,
+      apellidos: entrada.apellidos,
+      nombreVisible: entrada.nombreVisible,
+      activo: entrada.activo
+    };
+
+    // PERSON se actualiza con merge para conservar atributos existentes
+    // que esta pantalla todavía no administra.
+    if (entrada.email) personaCambios.email = entrada.email;
+    if (entrada.avatar) personaCambios.avatar = entrada.avatar;
+    if (entrada.fechaNacimiento) personaCambios.fechaNacimiento = entrada.fechaNacimiento;
+    if (entrada.idioma) personaCambios.idioma = entrada.idioma;
+    if (entrada.zonaHoraria) personaCambios.zonaHoraria = entrada.zonaHoraria;
+    if (entrada.colegio) personaCambios.colegio = entrada.colegio;
+    if (entrada.curso) personaCambios.curso = entrada.curso;
+    if (entrada.cursoEscolar) personaCambios.cursoEscolar = entrada.cursoEscolar;
+
+    if (!personSnap.exists()) {
+      personaCambios.createdAt = serverTimestamp();
+      personaCambios.createdBy = adminUid;
+    }
+    personaCambios.updatedAt = serverTimestamp();
+    personaCambios.updatedBy = adminUid;
+
+    transaction.set(personRef, personaCambios, { merge: true });
+
+    // USER vigente: exactamente activo, personaId, login y fechaAlta.
+    // Se reemplaza el documento raíz para retirar campos ajenos al esquema
+    // sin afectar sus subcolecciones.
+    transaction.set(userRef, {
+      activo: entrada.activo,
+      personaId,
+      login: entrada.login,
+      fechaAlta: creando
+        ? serverTimestamp()
+        : (userSnap.data()?.fechaAlta || serverTimestamp())
+    });
+
+    const userRoleDatos = {
+      userId: entrada.userId,
+      roleId: entrada.roleId,
+      activo: entrada.activo,
+      updatedAt: serverTimestamp(),
+      updatedBy: adminUid
+    };
+    if (!userRoleSnap.exists()) {
+      userRoleDatos.createdAt = serverTimestamp();
+      userRoleDatos.createdBy = adminUid;
+    }
+    transaction.set(userRoleRef, userRoleDatos, { merge: true });
+
+    const accesoCreacionFuente = accesoSnap.exists()
+      ? accesoSnap.data()
+      : (accesoAnteriorSnap?.exists() ? accesoAnteriorSnap.data() : null);
+
+    const accesoDatos = {
+      userId: entrada.userId,
+      authEmail: entrada.authEmail,
+      activo: entrada.activo,
+      updatedAt: serverTimestamp(),
+      updatedBy: adminUid
+    };
+
+    if (accesoCreacionFuente?.createdAt) {
+      accesoDatos.createdAt = accesoCreacionFuente.createdAt;
+    } else {
+      accesoDatos.createdAt = serverTimestamp();
+    }
+
+    if (accesoCreacionFuente?.createdBy) {
+      accesoDatos.createdBy = accesoCreacionFuente.createdBy;
+    } else {
+      accesoDatos.createdBy = adminUid;
+    }
+
+    transaction.set(accesoRef, accesoDatos, { merge: true });
+
+    if (accesoAnteriorRef && accesoAnteriorSnap?.exists()) {
+      transaction.delete(accesoAnteriorRef);
+    }
+
+    if (
+      entrada.relationIdAnterior &&
+      entrada.relationIdAnterior !== relationIdNuevo
+    ) {
+      transaction.delete(
+        doc(db, "personaRelaciones", entrada.relationIdAnterior)
+      );
+    }
+
+    if (relationIdNuevo && relationNuevoRef) {
+      const relacionDatos = {
+        sourcePersonId: personaId,
+        targetPersonId: entrada.targetPersonId,
+        tipoRelacion: entrada.tipoRelacion || "autorizado",
+        nivelAcceso: entrada.nivelRelacion,
+        activo: entrada.activo,
+        updatedAt: serverTimestamp(),
+        updatedBy: adminUid
+      };
+
+      if (!relationNuevoSnap?.exists()) {
+        relacionDatos.createdAt = serverTimestamp();
+        relacionDatos.createdBy = adminUid;
+      }
+
+      transaction.set(relationNuevoRef, relacionDatos, { merge: true });
+    }
+
+    return { userId: entrada.userId, personaId, creando };
+  });
+
+  return resultado;
+}
+
+
 /**
  * API actual, compatible con la prueba existente.
  */
@@ -1325,6 +1799,11 @@ export const Academia = Object.freeze({
     eliminarSesion: eliminarSesionLectura
   }),
 
+  semillas: Object.freeze({
+    guardarSesion: guardarSesionSemilla,
+    leerSesiones: leerSesionesSemillas
+  }),
+
   tareas: Object.freeze({
     crear: crearTarea,
     obtener: obtenerTarea,
@@ -1341,5 +1820,13 @@ export const Academia = Object.freeze({
   evidencias: Object.freeze({
     registrarParaMision: registrarEvidenciaMision,
     leerPorMision: leerEvidenciasMision
+  }),
+
+  administracion: Object.freeze({
+    usuarios: Object.freeze({
+      listar: listarUsuariosAdministracion,
+      catalogos: leerCatalogosAdministracion,
+      guardar: guardarUsuarioAdministracion
+    })
   })
 });

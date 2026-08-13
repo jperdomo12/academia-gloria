@@ -1,0 +1,262 @@
+rules_version = '2';
+
+// Academia Gloria Valentina
+// Identidad Multi-Persona · Fase 1.8
+// Login funcional separado del UID Firebase
+// Administración de Usuarios + acceso funcional por Persona Activa · Spark / sin Cloud Functions
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function estaAutenticado() {
+      return request.auth != null;
+    }
+
+    function esPropietario(userId) {
+      return estaAutenticado()
+        && request.auth.uid == userId;
+    }
+
+    function existeUsuarioActual() {
+      return estaAutenticado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid));
+    }
+
+    function personaIdUsuarioActual() {
+      return get(
+        /databases/$(database)/documents/usuarios/$(request.auth.uid)
+      ).data.personaId;
+    }
+
+    function rutaRelacionCon(personaId) {
+      return /databases/$(database)/documents/personaRelaciones/$(personaIdUsuarioActual() + "__" + personaId);
+    }
+
+    function tieneRelacionActivaCon(personaId) {
+      let relacionPath = rutaRelacionCon(personaId);
+
+      return existeUsuarioActual()
+        && personaId is string
+        && exists(relacionPath)
+        && get(relacionPath).data.activo == true;
+    }
+
+    function tieneRolActualActivo() {
+      let asignacionPath =
+        /databases/$(database)/documents/usuarioRoles/$(request.auth.uid);
+
+      return estaAutenticado()
+        && exists(asignacionPath)
+        && get(asignacionPath).data.activo == true
+        && get(asignacionPath).data.roleId is string
+        && exists(
+          /databases/$(database)/documents/roles/$(get(asignacionPath).data.roleId)
+        )
+        && get(
+          /databases/$(database)/documents/roles/$(get(asignacionPath).data.roleId)
+        ).data.activo == true;
+    }
+
+    function nivelRolActual() {
+      let asignacionPath =
+        /databases/$(database)/documents/usuarioRoles/$(request.auth.uid);
+
+      return get(
+        /databases/$(database)/documents/roles/$(get(asignacionPath).data.roleId)
+      ).data.nivelAcceso;
+    }
+
+    function puedeConsultarPersona(personaId) {
+      return tieneRelacionActivaCon(personaId)
+        && tieneRolActualActivo();
+    }
+
+    function puedeGestionarPersona(personaId) {
+      let relacionPath = rutaRelacionCon(personaId);
+
+      return tieneRelacionActivaCon(personaId)
+        && tieneRolActualActivo()
+        && get(relacionPath).data.nivelAcceso == "gestion"
+        && (
+          nivelRolActual() == "gestion"
+          || nivelRolActual() == "administracion"
+        );
+    }
+
+    function personaIdUsuarioObjetivo(userId) {
+      return get(
+        /databases/$(database)/documents/usuarios/$(userId)
+      ).data.personaId;
+    }
+
+    // ADMINISTRACIÓN · Fase 1.7 / 1.8
+    //
+    // Un administrador se determina exclusivamente mediante el modelo
+    // vigente USER_ROLE -> ROLE.
+    //
+    // Requisitos:
+    // - usuario autenticado;
+    // - USER_ROLE existente y activo;
+    // - ROLE existente y activo;
+    // - ROLE.nivelAcceso == "administracion".
+    function esAdministrador() {
+      let asignacionPath =
+        /databases/$(database)/documents/usuarioRoles/$(request.auth.uid);
+
+      let asignacion = get(asignacionPath);
+
+      return estaAutenticado()
+        && exists(asignacionPath)
+        && asignacion.data.activo == true
+        && asignacion.data.roleId is string
+        && exists(
+          /databases/$(database)/documents/roles/$(asignacion.data.roleId)
+        )
+        && get(
+          /databases/$(database)/documents/roles/$(asignacion.data.roleId)
+        ).data.activo == true
+        && get(
+          /databases/$(database)/documents/roles/$(asignacion.data.roleId)
+        ).data.nivelAcceso == "administracion";
+    }
+
+    // LOGIN FUNCIONAL · Fase 1.6 / 1.8
+    //
+    // El usuario aún NO está autenticado cuando escribe su login.
+    // Se permite únicamente GET directo a accesosLogin/{login}.
+    //
+    // LIST permanece bloqueado para usuarios normales.
+    // Un administrador autenticado puede consultar y mantener la colección
+    // para la Gestión de Usuarios.
+    match /accesosLogin/{loginId} {
+      allow get: if true;
+      allow list: if esAdministrador();
+
+      allow create, update, delete: if esAdministrador();
+    }
+
+    // USER + SUBCOLECCIONES FUNCIONALES · Fase 1.8
+    //
+    // - Propietario y Administración conservan su comportamiento existente.
+    // - Un Usuario relacionado puede leer el USER mínimo de la Persona objetivo
+    //   para resolver personaId -> userId.
+    // - El acceso relacionado se abre SOLO a eventos, tareas y evidencias.
+    // - Escritura relacionada exige acceso efectivo de gestión.
+    // - El resto de subcolecciones continúa restringido al propietario/admin.
+    match /usuarios/{userId} {
+      allow read: if esPropietario(userId)
+        || esAdministrador()
+        || (
+          resource.data.personaId is string
+          && puedeConsultarPersona(resource.data.personaId)
+        );
+
+      allow create, update, delete: if esPropietario(userId) || esAdministrador();
+
+      match /eventos/{eventoId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      match /tareas/{tareaId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      match /evidencias/{evidenciaId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      match /{documento=**} {
+        allow read, write: if esPropietario(userId) || esAdministrador();
+      }
+    }
+
+    // PERSON
+    //
+    // Comportamiento existente:
+    // - el usuario puede consultar su propia Persona;
+    // - también una Persona destino cuando existe una relación activa
+    //   desde su propia Persona hacia ella.
+    //
+    // Fase 1.8:
+    // - administración puede consultar y mantener Personas.
+    match /personas/{personaId} {
+      allow read: if esAdministrador()
+        || (
+          existeUsuarioActual()
+          && (
+            personaIdUsuarioActual() == personaId
+            ||
+            (
+              exists(
+                /databases/$(database)/documents/personaRelaciones/
+                $(personaIdUsuarioActual() + "__" + personaId)
+              )
+              &&
+              get(
+                /databases/$(database)/documents/personaRelaciones/
+                $(personaIdUsuarioActual() + "__" + personaId)
+              ).data.activo == true
+            )
+          )
+        );
+
+      allow create, update, delete: if esAdministrador();
+    }
+
+    // ROLE
+    //
+    // Catálogo global de solo lectura para autenticados.
+    // La Gestión de Usuarios v0.1 asigna Roles existentes;
+    // no administra todavía el catálogo ROLE.
+    match /roles/{roleId} {
+      allow read: if estaAutenticado();
+      allow write: if false;
+    }
+
+    // USER_ROLE
+    //
+    // El ID del documento es el UID Firebase del usuario.
+    // - el usuario puede consultar su propia asignación;
+    // - administración puede consultar y mantener asignaciones.
+    match /usuarioRoles/{userId} {
+      allow read: if esPropietario(userId) || esAdministrador();
+      allow create, update, delete: if esAdministrador();
+    }
+
+    // PERSON_RELATION
+    //
+    // Comportamiento existente:
+    // - un usuario autenticado puede consultar las relaciones
+    //   cuyo origen sea su propia PERSON.
+    //
+    // Fase 1.8:
+    // - administración puede consultar y mantener relaciones.
+    match /personaRelaciones/{relationId} {
+      allow read: if esAdministrador()
+        || (
+          existeUsuarioActual()
+          && resource.data.sourcePersonId == personaIdUsuarioActual()
+        );
+
+      allow create, update, delete: if esAdministrador();
+    }
+  }
+}
