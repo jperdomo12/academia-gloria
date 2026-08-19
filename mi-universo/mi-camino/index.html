@@ -2471,6 +2471,37 @@
 
     const $ = id => document.getElementById(id);
 
+    function configurarBotonVolver(){
+      const boton = $("botonVolver");
+      if (!boton) return;
+
+      const fallback = boton.dataset.rutaAlternativa || boton.getAttribute("href") || "../";
+      const params = new URLSearchParams(window.location.search);
+      const volver = String(params.get("volver") || "").trim();
+
+      if (volver) {
+        try {
+          const destino = new URL(volver, window.location.origin);
+          if (destino.origin === window.location.origin) {
+            boton.href = `${destino.pathname}${destino.search}${destino.hash}`;
+            return;
+          }
+        } catch {}
+      }
+
+      boton.href = fallback;
+      boton.addEventListener("click", event => {
+        if (!document.referrer || window.history.length <= 1) return;
+
+        try {
+          const origen = new URL(document.referrer);
+          if (origen.origin !== window.location.origin) return;
+          event.preventDefault();
+          window.history.back();
+        } catch {}
+      });
+    }
+
     function escapar(valor=""){
       return String(valor)
         .replaceAll("&","&amp;")
@@ -2490,7 +2521,9 @@
 
       if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
         const fecha = new Date(`${valor}T12:00:00`);
-        return Number.isNaN(fecha.getTime()) ? null : fecha;
+        if (Number.isNaN(fecha.getTime())) return null;
+        fecha.__soloFechaAcademia = true;
+        return fecha;
       }
 
       const fecha = new Date(valor);
@@ -2500,7 +2533,6 @@
     function fechaInicio(tarea={}){
       return fechaDesdeValor(
         tarea.fechaInicio ||
-        tarea.creadaEn ||
         tarea.createdAt
       );
     }
@@ -2521,7 +2553,7 @@
         tarea.fechaFinalizacion ||
         (
           estadoTerminado
-            ? tarea.fechaEstado
+            ? tarea.statusChangedAt
             : null
         )
       );
@@ -2529,8 +2561,7 @@
 
     function fechaEstado(tarea={}){
       return fechaDesdeValor(
-        tarea.fechaEstado ||
-        tarea.actualizadaEn ||
+        tarea.statusChangedAt ||
         (
           ["completada","pendiente_validacion","completada_pendiente_validacion"]
             .includes(tarea.estado)
@@ -2539,7 +2570,7 @@
         ) ||
         tarea.progreso?.iniciadaEn ||
         tarea.fechaInicio ||
-        tarea.creadaEn
+        tarea.createdAt
       );
     }
 
@@ -2557,11 +2588,9 @@
        * 2) progreso.completadaEn;
        * 3) fechaFinalizacion de la Misión.
        *
-       * Compatibilidad histórica:
-       * fechaEstado solo puede representar la finalización de Gloria
-       * mientras la Misión SIGUE en "Esperando a mi familia".
-       * Una vez que la familia la cierra, fechaEstado ya representa
-       * una acción administrativa y NO se usa.
+       * Para una Misión en revisión, statusChangedAt representa el momento
+       * del último cambio de estado. La finalización educativa sigue teniendo
+       * prioridad mediante progreso.completadaEn.
        */
       return fechaDesdeValor(
         resultado.fechaFinalizacion ||
@@ -2569,7 +2598,7 @@
         tarea.fechaFinalizacion ||
         (
           ESTADOS_REVISION.has(tarea.estado)
-            ? tarea.fechaEstado
+            ? tarea.statusChangedAt
             : null
         )
       );
@@ -2577,11 +2606,21 @@
 
     function fechaCorta(fecha){
       if (!fecha) return "Fecha no disponible";
-      return new Intl.DateTimeFormat("es-ES",{
+
+      const opciones = {
         day:"numeric",
         month:"short",
         year:"numeric"
-      }).format(fecha);
+      };
+
+      // Las fechas de calendario (YYYY-MM-DD) no tienen una hora real.
+      // No mostramos el 12:00 artificial usado únicamente para construir Date.
+      if (!fecha.__soloFechaAcademia) {
+        opciones.hour = "2-digit";
+        opciones.minute = "2-digit";
+      }
+
+      return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
     }
 
     function esVisible(tarea={}){
@@ -2822,6 +2861,7 @@
 
         if (evidencia?.destinoRevision) {
           const url = new URL(evidencia.destinoRevision,window.location.href);
+          url.searchParams.set("misionId",tarea.id);
           url.searchParams.set(
             "volver",
             `${window.location.pathname}${window.location.search}`
@@ -3312,6 +3352,7 @@
       );
     }
 
+    configurarBotonVolver();
     configurarFolders();
 
     protegerPagina({

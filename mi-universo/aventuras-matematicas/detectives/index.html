@@ -2491,6 +2491,7 @@
               tipo: item.tipo
             },
             resultado: {
+              titulo:item.titulo,
               estado:"completada",
               intentosMinimos,
               intentosRealizados:intentosCaso,
@@ -2500,7 +2501,8 @@
             },
             destinoRevision:
               `../detectives/historia.html?id=${encodeURIComponent(item.id)}` +
-              `&sesionId=${encodeURIComponent(resolucion.sesionId)}`
+              `&sesionId=${encodeURIComponent(resolucion.sesionId)}` +
+              `&misionId=${encodeURIComponent(misionId)}`
           });
 
           misionActiva = {

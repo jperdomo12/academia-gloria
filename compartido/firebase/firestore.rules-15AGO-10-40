@@ -197,6 +197,17 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // CRECIENDO POR DENTRO · Persona Activa
+      match /sesionesSemillas/{sesionId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       match /{documento=**} {
         allow read, write: if esPropietario(userId) || esAdministrador();
       }

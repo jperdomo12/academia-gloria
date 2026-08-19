@@ -1,192 +1,176 @@
 # 🌈 Academia de Gloria Valentina
 
-> **"Aprender puede ser bonito."**
+> **“Aprender puede ser bonito.”**
 
-![Versión](https://img.shields.io/badge/Versión-2.0%20Cloud-blue)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-success)
 ![Firebase](https://img.shields.io/badge/Firebase-Activo-orange)
 ![Firestore](https://img.shields.io/badge/Firestore-Sincronizado-brightgreen)
+![Arquitectura](https://img.shields.io/badge/Arquitectura-Multi--Persona-blue)
+
+---
+
+## 📝 Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---|---|---|
+| 2.2 | 13/08/2026 | Product Owner + AI Collaborator | Actualiza el README como puerta de entrada al producto; separa claramente producto y documentación; incorpora arquitectura Multi-Persona, Persona Activa, Gestión de Usuarios y ruta mínima de incorporación al proyecto. |
+| 2.1 | 13/08/2026 | Product Owner + AI Collaborator | Actualización de arquitectura y estado del producto. |
+| 2.0 | Anterior | Proyecto Academia | README Cloud inicial. |
 
 ---
 
 # 📖 ¿Qué es?
 
-La **Academia de Gloria Valentina** es una plataforma educativa digital creada para acompañar el desarrollo académico, personal y emocional de Gloria.
+La **Academia de Gloria Valentina** es una plataforma educativa digital creada para acompañar el desarrollo académico, personal y emocional del alumnado.
 
-Nació inicialmente como un apoyo para reforzar los contenidos escolares de **5º de Primaria** y ha evolucionado hacia un ecosistema digital donde aprender también significa crear, descubrir, imaginar, organizarse y disfrutar.
+Nació inicialmente como apoyo para Gloria durante **5.º de Primaria** y ha evolucionado hacia una Academia modular con contenidos educativos, espacios personales, calendario, misiones, seguimiento y colaboración familiar/profesional.
 
-La Academia está especialmente diseñada teniendo presentes las necesidades de niños con **Trastorno del Desarrollo del Lenguaje (TDL/TEL)**, priorizando siempre:
+La experiencia mantiene especialmente presentes las necesidades asociadas al **Trastorno del Desarrollo del Lenguaje (TDL/TEL)**, priorizando:
 
 - aprendizaje visual;
 - motivación;
 - autonomía;
 - organización del pensamiento;
-- desarrollo de la autoestima.
+- autoestima;
+- acompañamiento respetuoso del error.
 
-Su objetivo no es sustituir el trabajo del colegio ni de los profesionales que acompañan a Gloria, sino complementar ese trabajo desde casa mediante recursos digitales visuales, interactivos y motivadores.
+La Academia no sustituye al colegio ni a los profesionales. Complementa ese trabajo mediante recursos digitales visuales, interactivos y motivadores.
 
 ---
 
-# ❤️ Nuestra filosofía
+# ❤️ Filosofía
 
-Creemos que:
+La Academia parte de principios sencillos:
 
 - Aprender puede ser bonito.
-- Cada niño aprende a su propio ritmo.
+- Cada alumna o alumno aprende a su propio ritmo.
 - La motivación es tan importante como el contenido.
-- Equivocarse también forma parte del aprendizaje.
-- La creatividad merece tanto espacio como las asignaturas.
-- Cada pequeño avance merece ser celebrado.
+- Equivocarse forma parte del aprendizaje.
+- La creatividad merece espacio junto a las asignaturas.
+- Cada avance merece ser reconocido.
+- La tecnología debe simplificar el aprendizaje, no complicarlo.
 
 ---
 
-# 📂 Organización del proyecto
+# 🧭 Arquitectura funcional actual
+
+La Academia separa claramente la identidad autenticada del contexto funcional de trabajo.
 
 ```text
-academia-gloria/
-│
-├── index.html
-├── login.html
-├── README.md
-│
-├── assets/
-├── calendarios/
-│   ├── escolar/
-│   └── gloria/
-│       ├── 2025.html
-│       └── 2026.html
-├── compartido/
-│   ├── api/
-│   ├── componentes/
-│   ├── css/
-│   ├── firebase/
-│   ├── js/
-│   ├── modelos/
-│   └── templates/
-├── cursos/
-├── mi-universo/
-├── habilidades/
-├── etapas/
-├── adicionales/
-├── docs/
-├── OLD/
-└── .vscode/
+Usuario autenticado
+       │
+       ▼
+Persona conectada
+       │
+       ├── puede trabajar sobre sí misma
+       │
+       └── puede tener acceso autorizado a otra Persona
+                    │
+                    ▼
+              Persona Activa
 ```
 
----
+Conceptos principales:
 
-# 📁 Descripción de las carpetas
+- **Usuario**: identidad técnica que accede mediante Firebase Authentication.
+- **Persona conectada**: Persona asociada al Usuario autenticado.
+- **Persona Activa**: Persona sobre la que opera funcionalmente la pantalla.
+- **Rol**: determina el nivel máximo de acceso del Usuario.
+- **Relación**: autoriza el acceso a otra Persona y puede limitar dicho nivel.
+- **Administración**: permite gestionar Usuarios, Personas, Roles asignados y Relaciones.
 
-| Carpeta | Descripción |
-|----------|-------------|
-| **assets/** | Recursos multimedia compartidos: imágenes, iconos, audio, vídeo y fuentes. |
-| **calendarios/** | Calendarios escolares y calendarios personales de Gloria organizados por año. |
-| **compartido/** | Núcleo técnico reutilizable: API, Firebase, CSS, JavaScript, componentes, modelos y plantillas. |
-| **cursos/** | Contenido académico organizado por curso escolar: 5º, 6º y futuros cursos. |
-| **mi-universo/** | Espacio personal y creativo de Gloria: historias, biblioteca, aventuras, recuerdos, logros y proyectos. |
-| **habilidades/** | Actividades para fortalecer comprensión, razonamiento, autonomía, organización y habilidades emocionales. |
-| **etapas/** | Organización temporal del aprendizaje: verano, preparación de curso, vacaciones y transiciones. |
-| **adicionales/** | Juegos, música, lecturas y recursos complementarios. |
-| **docs/** | Documentación funcional, técnica, estratégica y de gestión del proyecto. |
-| **history/** | Contenido histórico conservado como referencia durante la transición entre versiones. |
-| **.vscode/** | Configuración recomendada para Visual Studio Code. |
+Cuando la Persona Activa es distinta de la Persona conectada, la interfaz muestra el contexto de forma visible.
 
 ---
 
-# 🎓 Principales módulos
+# 🎓 Módulos principales
 
-## 📅 Calendarios
+## 🌅 Mi Camino
 
-La Academia dispone actualmente de:
+Espacio de misiones y tareas de la Persona Activa.
 
-- Calendario Gloria 2025.
-- Calendario Gloria 2026.
-- Calendarios escolares organizados por curso académico.
-- Sincronización en la nube mediante Cloud Firestore.
+## 📅 Mi Calendario
 
-## 📚 Mis Cursos
+Calendario funcional de la Persona Activa.
 
-Contenidos académicos organizados por niveles escolares.
+La ruta actual es única:
 
-Actualmente:
+```text
+calendarios/
+```
 
-- 5º de Primaria.
-- Preparación para 6º de Primaria.
-- Estructura preparada para cursos futuros.
+No depende de carpetas físicas por Persona ni de `calendarioSlug`.
 
 ## 🌈 Mi Universo
 
-Espacio personal donde Gloria puede crear, imaginar, escribir y conservar sus propios recuerdos.
+Incluye, entre otros:
 
-Incluye progresivamente:
+- Mi Rincón de Lectura;
+- Biblioteca Encantada;
+- Mi Rincón de Escritura;
+- Aventuras Matemáticas;
+- Detectives;
+- Historial de Detectives;
+- Creciendo por Dentro;
+- Gestión de Misiones.
 
-- Gloria Escritora.
-- Biblioteca Encantada.
-- Taller Creativo.
-- Aventuras.
-- Mis Logros.
+## 🎓 Mis Cursos
 
-## 🧠 Mis Superpoderes
+Contenidos académicos organizados por curso escolar.
 
-Actividades destinadas a desarrollar capacidades que van más allá de las asignaturas:
+Actualmente:
 
-- comprensión lectora;
-- razonamiento lógico;
-- organización;
-- autonomía;
-- gestión emocional;
-- autoestima.
+- 5.º de Primaria;
+- 6.º de Primaria en preparación/evolución.
 
-## ✨ Adicionales
+## 🛡️ Administración
 
-Recursos para aprender disfrutando:
-
-- juegos;
-- lecturas;
-- música;
-- retos;
-- curiosidades.
+Incluye la Gestión de Usuarios y accesos para perfiles con nivel de administración.
 
 ---
 
-# ☁️ Arquitectura Cloud
+# ☁️ Arquitectura técnica
 
-Desde la versión 2.0, la Academia utiliza una arquitectura Cloud:
+La Academia utiliza una arquitectura web modular apoyada en Firebase:
 
 ```text
 Interfaz Web
       │
       ▼
-Calendarios / Módulos
+Contexto de Usuario / Persona Activa
       │
       ▼
-AcademiaAPI
+Academia API
       │
-      ▼
-Firebase Authentication
-      │
-      ▼
-Cloud Firestore
+      ├── Firebase Authentication
+      └── Cloud Firestore
 ```
 
-Esto permite:
+Firebase Authentication gestiona exclusivamente:
 
-- autenticación real de usuarios;
-- identificación automática mediante UID;
-- almacenamiento seguro por usuario;
-- sincronización entre dispositivos;
-- persistencia de eventos en la nube;
-- reutilización de la misma arquitectura en futuros módulos.
+- email técnico de autenticación;
+- contraseña;
+- UID Firebase.
+
+La Academia gestiona funcionalmente:
+
+- login;
+- Persona;
+- Rol;
+- Relaciones;
+- Persona Activa;
+- datos educativos;
+- auditoría funcional.
+
+Las contraseñas **no se almacenan en Firestore**.
 
 ---
 
-# 💻 Tecnologías utilizadas
-
-La Academia utiliza:
+# 💻 Tecnologías
 
 - HTML5
 - CSS3
-- JavaScript ES6 Modules
+- JavaScript ES Modules
 - Firebase Authentication
 - Cloud Firestore
 - GitHub Pages
@@ -194,129 +178,156 @@ La Academia utiliza:
 - GitHub Desktop
 - Visual Studio Code
 
+La arquitectura actual no utiliza backend propio ni Firebase Functions.
+
 ---
 
-# 📖 Documentación
+# 📂 Organización principal del repositorio
 
-La documentación oficial se encuentra en:
+```text
+academia-gloria/
+│
+├── .git/
+├── .vscode/
+├── adicionales/
+├── administracion/
+├── assets/
+├── calendarios/
+├── compartido/
+├── cursos/
+├── descubre-la-academia/
+├── docs/
+├── history/
+├── mi-universo/
+│
+├── index.html
+├── login.html
+└── README.md
+```
+
+La estructura física evoluciona gradualmente. Para decisiones de implementación debe verificarse siempre el repositorio actual.
+
+---
+
+# 📁 Descripción de las carpetas
+
+| Carpeta | Descripción |
+|---|---|
+| **.git/** | Metadatos internos del repositorio Git. |
+| **.vscode/** | Configuración de trabajo recomendada para Visual Studio Code. |
+| **adicionales/** | Recursos y experiencias complementarias de la Academia. |
+| **administracion/** | Funcionalidades administrativas, actualmente incluyendo Gestión de Usuarios. |
+| **assets/** | Recursos multimedia y visuales compartidos: imágenes, iconos y otros recursos estáticos. |
+| **calendarios/** | Módulo de calendarios personales y escolares. La navegación funcional utiliza una ruta única y el contenido se resuelve según la Persona Activa. |
+| **compartido/** | Núcleo reutilizable de la aplicación: API, Firebase, JavaScript común, CSS, componentes, modelos y plantillas. |
+| **cursos/** | Contenido académico organizado por curso escolar, incluyendo 5.º de Primaria y la evolución hacia 6.º. |
+| **descubre-la-academia/** | Presentación y exploración general de la Academia. |
+| **docs/** | Documentación oficial funcional, técnica, de producto, arquitectura, estándares, proyecto e IA. Su punto de entrada es `docs/README.md`. |
+| **history/** | Contenido histórico del repositorio conservado como referencia. No constituye fuente de verdad vigente. |
+| **mi-universo/** | Espacio personal y creativo: lectura, biblioteca, escritura, aventuras, Creciendo por Dentro y Gestión de Misiones. |
+
+---
+
+# 📖 Documentación oficial
+
+La documentación oficial del proyecto se encuentra en:
 
 ```text
 docs/
 ```
 
-## Documentación del proyecto
-
-```text
-docs/project/
-```
-
-Incluye:
-
-- ADN_ACADEMIA_GLORIA.md
-- MASTER_PLAN.md
-- PROJECT_MAP.md
-- ROADMAP.md
-- DECISION_LOG.md
-- MIGRACION_5TO.md
-
-## Estándares de desarrollo
-
-```text
-docs/standards/
-```
-
-Incluye:
-
-- GUIA_DESARROLLO_ULTRA_PRO.md
-- IA_SYSTEM_PROMPT.md
-- GLOSARIO.md
-
-La estructura y responsabilidad de cada documento se explica en:
+Su **punto único de entrada** es:
 
 ```text
 docs/README.md
 ```
 
+Ese documento explica:
+
+- cómo está organizada la documentación;
+- cuáles son las fuentes de verdad;
+- qué documento gobierna cada ámbito;
+- la ruta recomendada de lectura;
+- la documentación de producto, modelos, especificaciones, estándares, tecnología, proyecto, IA, manuales e histórico;
+- cómo incorporarse al proyecto sin depender de conversaciones anteriores.
+
+El `README.md` de la raíz describe **el producto y su estado general**.
+
+`docs/README.md` describe **la arquitectura y navegación de toda la documentación oficial**.
+
 ---
 
-# 🚀 Estado del proyecto
+# 🚀 Si eres nuevo en el proyecto
 
-## Arquitectura
+La ruta mínima recomendada es:
 
-- ✅ Reorganización completa del repositorio.
-- ✅ Migración de 5º de Primaria.
-- ✅ Nuevo portal principal.
-- ✅ Arquitectura modular.
+```text
+1. README.md
+2. docs/README.md
+3. docs/FOUNDATION.md
+4. docs/DOCUMENTATION_ARCHITECTURE.md
+5. docs/DOCUMENTATION_STANDARD.md
+6. docs/ai/AI_CHAT_BOOTSTRAP.md
+```
+
+Después de esa lectura inicial, `docs/README.md` indica qué documentación adicional debe consultarse según el módulo o cambio que se vaya a realizar.
+
+Una persona o una IA nueva **no debe asumir que una conversación anterior es fuente de verdad**. Antes de proponer o modificar debe revisar el repositorio actual y los documentos propietarios del ámbito afectado.
+
+---
+
+# 🚀 Estado actual
+
+Implementado y operativo:
+
 - ✅ Firebase Authentication.
+- ✅ login funcional separado del email técnico.
 - ✅ Cloud Firestore.
-- ✅ AcademiaAPI.
-- ✅ UID dinámico.
-- ✅ Calendarios 2025 y 2026 sincronizados.
-- ✅ Configuración de Visual Studio Code.
-- ✅ Documentación estratégica inicial.
+- ✅ Academia API compartida.
+- ✅ modelo USER / PERSON.
+- ✅ Roles y niveles de acceso.
+- ✅ Relaciones entre Personas.
+- ✅ Persona Activa.
+- ✅ acceso relacionado a Mi Camino y Calendario.
+- ✅ Gestión de Usuarios.
+- ✅ auditoría básica de entidades administrativas.
+- ✅ navegación central compartida.
+- ✅ funcionamiento local y GitHub Pages.
 
-## En desarrollo
+En evolución:
 
-- 🚧 Mi Universo.
-- 🚧 Gloria Escritora.
-- 🚧 Biblioteca Encantada.
-- 🚧 Preparación para 6º de Primaria.
-- 🚧 Sistema de logros.
-- 🚧 Panel de progreso.
-
----
-
-# 🌱 Evolución de la Academia
-
-La Academia crecerá junto con Gloria.
-
-Cada curso escolar incorporará nuevos contenidos, nuevas experiencias y nuevos recursos, manteniendo siempre el mismo objetivo:
-
-**hacer del aprendizaje una experiencia visual, motivadora y significativa.**
-
-Más que un proyecto tecnológico, la Academia es un proyecto familiar de acompañamiento al aprendizaje.
-
----
-
-# ❤️ Un proyecto familiar
-
-La Academia ha sido creada por la familia de Gloria con un único propósito:
-
-**ayudarla a aprender con confianza, autonomía y motivación.**
-
-Cada nueva página, actividad o recurso intenta responder siempre a la misma pregunta:
-
-> **¿Esto ayuda realmente a Gloria?**
-
-Si la respuesta es sí, probablemente merece formar parte de la Academia.
+- 🚧 consolidación y certificación del núcleo compartido;
+- 🚧 auditoría e historial de Tareas y Misiones;
+- 🚧 preparación de 6.º de Primaria;
+- 🚧 seguimiento basado en datos educativos reales;
+- 🚧 Logros y Constancia;
+- 🚧 evolución de colaboración familiar/profesional.
 
 ---
 
 # 🎯 Principios de desarrollo
 
-Antes de incorporar una nueva funcionalidad nos hacemos cuatro preguntas:
+Antes de incorporar una funcionalidad:
 
-- ¿Ayuda realmente a Gloria?
+- ¿Ayuda realmente al alumnado?
 - ¿Hace el aprendizaje más sencillo?
 - ¿Puede reutilizarse?
-- ¿Mantiene la Academia simple y fácil de usar?
+- ¿Mantiene la Academia clara y fácil de usar?
+- ¿Respeta el modelo de identidad, permisos y Persona Activa?
+- ¿Evita duplicar lógica ya existente?
 
-Si alguna respuesta es **no**, preferimos no incorporarla.
+Si una funcionalidad no aporta suficiente valor, se pospone.
 
 ---
 
 # 🌈 Nuestro lema
 
-> **"Aprender puede ser bonito."**
+> **“Aprender puede ser bonito.”**
 
-Y cuando tengamos que elegir entre añadir una nueva funcionalidad o hacer más sencillo el aprendizaje de Gloria, siempre elegiremos lo segundo.
+Cuando exista que elegir entre añadir complejidad o hacer más sencillo el aprendizaje, la Academia prioriza lo segundo.
 
 ---
 
-**Academia de Gloria Valentina**
-
-Versión pública **2.0 Cloud**
-
-Madrid · España
-
+**Academia de Gloria Valentina**  
+Madrid · España  
 © Juan Perdomo

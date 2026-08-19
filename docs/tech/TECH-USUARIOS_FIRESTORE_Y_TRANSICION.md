@@ -2,18 +2,19 @@
 
 **Academia Gloria Valentina**  
 **Diseño técnico Firestore de Personas, Usuarios, Roles, Relaciones y Gestión de Usuarios**  
-**Versión:** 0.2  
-**Fecha:** 2026-08-12  
+**Versión:** 0.3  
+**Fecha:** 2026-08-13  
 **Estado:** Implementación vigente consolidada
 
 ---
 
 ## Historial del Documento
 
-| Versión | Fecha | Descripción |
-|---|---|---|
-| 0.1 | 2026-08-10 | Primera propuesta técnica |
-| 0.2 | 2026-08-12 | Alinea el documento con la implementación real Multi-Persona, Gestión de Usuarios gratuita y Auditoría Fase A |
+| Versión | Fecha | Responsables | Cambios |
+|---|---|---|---|
+| 0.1 | 2026-08-10 | Product Owner + AI Collaborator | Primera propuesta técnica. |
+| 0.2 | 2026-08-12 | Product Owner + AI Collaborator | Alinea el documento con la implementación real Multi-Persona, Gestión de Usuarios gratuita y Auditoría Fase A. |
+| 0.3 | 2026-08-13 | Product Owner + AI Collaborator | Actualiza referencias documentales al prefijo `TECH-` y explicita la relación con el estándar transversal de atributos. |
 
 ---
 
@@ -32,7 +33,7 @@ accesosLogin
 
 y su uso por Gestión de Usuarios.
 
-La fuente conceptual es `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`; las reglas obligatorias están en `STD-USUARIOS_ROLES_Y_ACCESOS.md`; la estructura física vigente se contrasta con `DATOS-BASE-FIRESTORE-FASE1.md`.
+La fuente conceptual es `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`; las reglas obligatorias están en `STD-USUARIOS_ROLES_Y_ACCESOS.md`; la estructura física vigente se contrasta con `TECH-DATOS-BASE-FIRESTORE-FASE1.md`. Las convenciones transversales de nuevos atributos se rigen por `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md`.
 
 ---
 
@@ -329,4 +330,4 @@ administración del catálogo ROLE
 
 ---
 
-**Fin de TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md · v0.2**
+**Fin de TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md · v0.3**

@@ -200,7 +200,7 @@
     }
 
     .library-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-    .stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:18px 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
     .stat-card{padding:16px;border-radius:18px;border:2px solid #e7eaf8;background:white;text-align:center}
     .stat-card strong{display:block;font-size:30px;color:#7c3aed}
     .tools-panel{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 18px;border-radius:20px;border:2px solid #e7eaf8;background:#fafaff;margin-bottom:18px}
@@ -324,7 +324,6 @@
       font-weight:900;
     }
 
-    .status-registered{background:#f1f5f9;color:#475569}
     .status-reading{background:#e0f2fe;color:#0369a1}
     .status-finished{background:#dcfce7;color:#166534}
     .status-wish{background:#fef3c7;color:#92400e}
@@ -889,7 +888,7 @@
 
     <header class="card hero">
       <div>
-        <a class="back no-print" data-volver-modulo data-ruta-alternativa="../index.html" href="../index.html">← Volver</a>
+        <a class="back no-print" data-volver-modulo href="../index.html">← Volver</a>
 
         <h1 class="title">
           Biblioteca Encantada
@@ -960,17 +959,14 @@
           <button class="mission-book-filter active" type="button" data-mission-status-filter="">
             🌈 Todos
           </button>
-          <button class="mission-book-filter" type="button" data-mission-status-filter="Registrado">
-            📥 Registrados
-          </button>
-          <button class="mission-book-filter" type="button" data-mission-status-filter="Quiero leer">
-            🌟 Quiero leer
-          </button>
           <button class="mission-book-filter" type="button" data-mission-status-filter="Leyendo">
             📖 Leyendo
           </button>
           <button class="mission-book-filter" type="button" data-mission-status-filter="Terminado">
             ✅ Terminados
+          </button>
+          <button class="mission-book-filter" type="button" data-mission-status-filter="Quiero leer">
+            🌟 Quiero leer
           </button>
         </div>
 
@@ -992,21 +988,21 @@
       </p>
     </section>
 
+    <section id="missionSelectedBook" class="mission-selected-book hidden" aria-live="polite">
+      <div class="mission-selected-book__cover" id="missionSelectedBookCover">📘</div>
+
+      <div class="mission-selected-book__info">
+        <p class="library-mission__eyebrow">LIBRO ELEGIDO</p>
+        <h2 id="missionSelectedBookTitle">Libro</h2>
+        <p id="missionSelectedBookAuthor">Autor no indicado</p>
+      </div>
+
+      <button id="changeMissionBook" class="btn light" type="button">
+        🔄 Elegir otro libro
+      </button>
+    </section>
+
     <section id="new" class="panel hidden">
-      <section id="missionSelectedBook" class="mission-selected-book hidden" aria-live="polite">
-        <div class="mission-selected-book__cover" id="missionSelectedBookCover">📘</div>
-
-        <div class="mission-selected-book__info">
-          <p class="library-mission__eyebrow">LIBRO ELEGIDO</p>
-          <h2 id="missionSelectedBookTitle">Libro</h2>
-          <p id="missionSelectedBookAuthor">Autor no indicado</p>
-        </div>
-
-        <button id="changeMissionBook" class="btn light" type="button">
-          🔄 Elegir otro libro
-        </button>
-      </section>
-
       <div class="grid">
 
         <form id="bookForm" class="card">
@@ -1065,10 +1061,9 @@
             <div class="field amber-bg">
               <label>📌 Estado</label>
               <select id="readingStatus">
-                <option value="Registrado">Registrado</option>
-                <option value="Quiero leer">Quiero leer</option>
                 <option value="Leyendo">Estoy leyendo</option>
                 <option value="Terminado">Ya terminé</option>
+                <option value="Quiero leer">Quiero leer</option>
               </select>
             </div>
           </div>
@@ -1286,7 +1281,6 @@
 
         <div class="stats-grid">
           <div class="stat-card"><strong id="statTotal">0</strong><span>📚 Total</span></div>
-          <div class="stat-card"><strong id="statRegistered">0</strong><span>📥 Registrados</span></div>
           <div class="stat-card"><strong id="statReading">0</strong><span>📖 Leyendo</span></div>
           <div class="stat-card"><strong id="statFinished">0</strong><span>✅ Terminados</span></div>
           <div class="stat-card"><strong id="statWish">0</strong><span>🌟 Quiero leer</span></div>
@@ -1297,17 +1291,14 @@
           <button class="reading-filter active" type="button" data-status-filter="">
             🌈 Todos <span id="filterCountAll">0</span>
           </button>
-          <button class="reading-filter" type="button" data-status-filter="Registrado">
-            📥 Registrados <span id="filterCountRegistered">0</span>
-          </button>
-          <button class="reading-filter" type="button" data-status-filter="Quiero leer">
-            🌟 Quiero leer <span id="filterCountWish">0</span>
-          </button>
           <button class="reading-filter" type="button" data-status-filter="Leyendo">
             📖 Leyendo <span id="filterCountReading">0</span>
           </button>
           <button class="reading-filter" type="button" data-status-filter="Terminado">
             ✅ Terminados <span id="filterCountFinished">0</span>
+          </button>
+          <button class="reading-filter" type="button" data-status-filter="Quiero leer">
+            🌟 Quiero leer <span id="filterCountWish">0</span>
           </button>
         </div>
 
@@ -1319,7 +1310,7 @@
         <div class="tools-panel no-print">
           <div>
             <strong>⚙️ Herramientas</strong>
-            <div class="help">Crea una copia completa de libros, portadas y audios, o recupera una copia anterior.</div>
+            <div class="help">Crea una copia o recupera una biblioteca anterior.</div>
           </div>
 
           <div class="actions" style="margin:0">
@@ -1341,7 +1332,7 @@
         <div id="emptyLibrary" class="field violet" style="text-align:center">
           <div style="font-size:64px">📚</div>
           <h3>Tu primera estantería está esperando</h3>
-          <p>Empieza registrando un libro en tu estantería.</p>
+          <p>Empieza añadiendo un libro que hayas leído o estés leyendo.</p>
         </div>
       </div>
     </section>
@@ -1433,12 +1424,6 @@
 
           <div style="background:linear-gradient(90deg,#0284c7,#7c3aed,#f59e0b);color:white;text-align:center;border-radius:20px;padding:18px;font-weight:900;font-size:22px">
             Libro registrado por <span data-nombre-completo>la persona lectora</span> ✨
-          </div>
-
-          <div class="actions no-print" style="justify-content:center;margin-top:22px">
-            <button class="btn light" id="backToLibrary" type="button">
-              ← Volver a Mi Biblioteca
-            </button>
           </div>
         </div>
       </article>

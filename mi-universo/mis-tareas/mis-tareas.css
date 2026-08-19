@@ -28,11 +28,28 @@ button,input,textarea,select{font:inherit}
 }
 
 .barra-superior{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) minmax(240px,285px);
+  align-items:start;
   gap:14px;
   margin-bottom:16px;
+}
+
+.barra-superior__centro{
+  align-self:center;
+  justify-self:center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:46px;
+  padding:9px 16px;
+  border:2px solid #e9d5ff;
+  border-radius:16px;
+  background:rgba(255,255,255,.9);
+  color:#5b21b6;
+  font-weight:900;
+  white-space:nowrap;
 }
 
 .boton-regreso{
@@ -226,6 +243,67 @@ button,input,textarea,select{font:inherit}
   font-weight:850;
 }
 
+.tarea-meta--compacta{
+  min-width:0;
+}
+
+.tarea-meta--compacta span{
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.auditoria-mision{
+  margin-top:14px;
+  border:2px solid #e2e8f0;
+  border-radius:17px;
+  background:#f8fafc;
+}
+
+.auditoria-mision > summary{
+  padding:11px 13px;
+  cursor:pointer;
+  color:#475569;
+  font-weight:900;
+}
+
+.auditoria-mision dl{
+  display:grid;
+  gap:8px;
+  margin:0;
+  padding:0 13px 13px;
+}
+
+.auditoria-mision__fila{
+  display:grid;
+  grid-template-columns:minmax(145px,.8fr) minmax(0,1.2fr);
+  gap:10px;
+  align-items:start;
+}
+
+.auditoria-mision dt{
+  color:#64748b;
+  font-weight:800;
+}
+
+.auditoria-mision dd{
+  margin:0;
+  color:#334155;
+  font-weight:850;
+  overflow-wrap:anywhere;
+}
+
+.form-tarea.modo-consulta input:disabled,
+.form-tarea.modo-consulta textarea:disabled,
+.form-tarea.modo-consulta select:disabled{
+  opacity:1;
+  color:#334155;
+  background:#f8fafc;
+  cursor:default;
+}
+
 .tarea-acciones{
   display:flex;
   flex-wrap:wrap;
@@ -370,7 +448,16 @@ footer{
 }
 
 @media(max-width:760px){
-  .barra-superior,
+  .barra-superior{
+    display:flex;
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .barra-superior__centro{
+    align-self:stretch;
+  }
+
   .cabecera-seccion{
     align-items:stretch;
     flex-direction:column;
@@ -1067,7 +1154,13 @@ footer{
 .evidencia-item__contenido strong,.evidencia-item__contenido small{display:block}
 .evidencia-item__contenido small{margin-top:3px;color:#64748b;font-weight:700}
 .evidencia-item__enlace{text-decoration:none;white-space:nowrap}
-@media(max-width:680px){.evidencia-item{grid-template-columns:36px 1fr}.evidencia-item__enlace{grid-column:1/-1;width:100%}}
+.evidencias-mision__resumen-completo{display:flex;justify-content:flex-end;margin-top:2px}
+.evidencias-mision__resumen-enlace{text-decoration:none;white-space:nowrap}
+@media(max-width:680px){
+  .evidencia-item{grid-template-columns:36px 1fr}
+  .evidencia-item__enlace{grid-column:1/-1;width:100%}
+  .evidencias-mision__resumen-enlace{width:100%;text-align:center}
+}
 
 .gestion-familiar-aviso{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center;margin:20px 0 12px;padding:16px 18px;border-color:#bfdbfe;background:linear-gradient(135deg,#eff6ff,#fff)}
 .gestion-familiar-aviso>span{font-size:36px;text-align:center}
@@ -1170,6 +1263,27 @@ footer{
   display:flex;
   align-items:center;
   gap:10px;
+  min-width:0;
+}
+
+.tarea-card__estado-contenido{
+  display:flex;
+  min-width:0;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:5px;
+}
+
+.tarea-card__estado-meta{
+  display:block;
+  max-width:min(360px,40vw);
+  overflow:hidden;
+  color:#475569;
+  font-size:.72rem;
+  font-weight:850;
+  line-height:1.2;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .tarea-card__flecha{
@@ -1199,8 +1313,11 @@ footer{
   }
 
   .tarea-card__resumen-estado{
-    width:100%;
-    justify-content:space-between;
+    max-width:100%;
+  }
+
+  .tarea-card__estado-meta{
+    max-width:52vw;
   }
 }
 
@@ -1350,5 +1467,13 @@ footer{
 @media(max-width:760px){
   .tabs{
     width:100%;
+  }
+}
+
+
+@media(max-width:560px){
+  .auditoria-mision__fila{
+    grid-template-columns:1fr;
+    gap:2px;
   }
 }

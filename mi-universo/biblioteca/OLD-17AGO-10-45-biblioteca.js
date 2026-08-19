@@ -118,12 +118,7 @@ function renderLibroMisionSeleccionado() {
   const panel = $("missionSelectedBook");
   if (!panel) return;
 
-  const visible = Boolean(
-    misionActiva &&
-    misionId &&
-    libroMisionSeleccionado?.id &&
-    String(libroMisionSeleccionado?.title || "").trim()
-  );
+  const visible = Boolean(misionActiva && misionId && libroMisionSeleccionado);
   panel.classList.toggle("hidden", !visible);
   if (!visible) return;
 
@@ -200,9 +195,17 @@ function mostrarMensajeLiaTrasGrabacion() {
 
   if (estado.completa) {
     box.textContent =
-      "🦜 ¡Qué bien! Ya puedes pulsar Terminar y compartir.";
+      "🦜 ¡Qué bien! Ahora ya conozco un poquito mejor este libro gracias a ti.";
+  } else if (!estado.cumplePalabras) {
+    box.textContent =
+      `🦜 Cuéntame un poco más, ${perfilActual?.nombre || "exploradora"}. ` +
+      `He escuchado ${estado.palabras} de ${MISSION_MIN_WORDS} palabras.`;
+  } else if (!estado.cumpleDuracion) {
+    box.textContent =
+      `🦜 Me está encantando escucharte. Cuéntame un poquito más hasta llegar a ${MISSION_MIN_AUDIO_SECONDS} segundos.`;
   } else {
-    box.textContent = `🦜 ${motivoPendienteMisionBiblioteca(estado)}`;
+    box.textContent =
+      "🦜 Ya casi está. Revisa que el libro esté marcado como Terminado.";
   }
 }
 
@@ -210,6 +213,7 @@ function criteriosMisionBiblioteca() {
   const transcripcion = $("voiceTranscript")?.value?.trim() || "";
   const palabras = contarPalabras(transcripcion);
   const segundos = Number(recordedAudioDuration || 0);
+  const estadoTerminado = $("readingStatus")?.value === "Terminado";
   const tieneTitulo = Boolean($("title")?.value?.trim());
   const tieneAudio = Boolean(recordedAudioData);
   const tieneLibroSeleccionado =
@@ -218,6 +222,7 @@ function criteriosMisionBiblioteca() {
   return {
     tieneTitulo,
     tieneLibroSeleccionado,
+    estadoTerminado,
     tieneAudio,
     segundos,
     palabras,
@@ -226,36 +231,11 @@ function criteriosMisionBiblioteca() {
     completa:
       tieneTitulo &&
       tieneLibroSeleccionado &&
+      estadoTerminado &&
       tieneAudio &&
       segundos >= MISSION_MIN_AUDIO_SECONDS &&
       palabras >= MISSION_MIN_WORDS
   };
-}
-
-function motivoPendienteMisionBiblioteca(estado = criteriosMisionBiblioteca()) {
-  const faltas = [];
-
-  if (!estado.tieneLibroSeleccionado) {
-    faltas.push("elige primero un libro registrado en la Biblioteca");
-  }
-  if (!estado.tieneAudio) {
-    faltas.push("graba tu explicación del libro");
-  } else {
-    if (!estado.cumpleDuracion) {
-      faltas.push(
-        `la grabación tiene ${Math.floor(estado.segundos)} s y necesita al menos ${MISSION_MIN_AUDIO_SECONDS} s`
-      );
-    }
-    if (!estado.cumplePalabras) {
-      faltas.push(
-        `la transcripción tiene ${estado.palabras} palabras y necesita al menos ${MISSION_MIN_WORDS}`
-      );
-    }
-  }
-
-  return faltas.length
-    ? `Todavía no podemos terminar este libro porque ${faltas.join("; ")}.`
-    : "La actividad ya está preparada para terminar y compartir.";
 }
 
 function actualizarProgresoOralMision() {
@@ -269,7 +249,7 @@ function actualizarProgresoOralMision() {
   const estado = criteriosMisionBiblioteca();
   const duracion = Math.min(100, estado.segundos / MISSION_MIN_AUDIO_SECONDS * 100);
   const palabras = Math.min(100, estado.palabras / MISSION_MIN_WORDS * 100);
-  const libro = estado.tieneLibroSeleccionado ? 100 : 0;
+  const libro = estado.estadoTerminado ? 100 : 0;
   const total = Math.round((duracion + palabras + libro) / 3);
 
   $("oralMissionSeconds").textContent =
@@ -277,35 +257,41 @@ function actualizarProgresoOralMision() {
   $("oralMissionWords").textContent =
     `${estado.palabras} / ${MISSION_MIN_WORDS}`;
   $("oralMissionBookStatus").textContent =
-    estado.tieneLibroSeleccionado ? "Libro elegido ✅" : "Elige un libro";
+    estado.estadoTerminado ? "Terminado ✅" : "Debe estar terminado";
   $("oralMissionProgressBar").style.width = `${total}%`;
 
   panel.classList.toggle("oral-mission-progress--ready", estado.completa);
   $("oralMissionReady").textContent =
     estado.completa ? "¡Preparada! ✅" : "En preparación";
 
-  $("oralMissionMessage").textContent = estado.completa
-    ? "¡Qué bien! Ya puedes terminar y compartir este libro."
-    : motivoPendienteMisionBiblioteca(estado);
+  $("oralMissionMessage").textContent =
+    !estado.tieneLibroSeleccionado
+      ? "Elige primero un libro ya registrado en la Biblioteca."
+      : !estado.estadoTerminado
+        ? "Marca el libro como Terminado cuando hayas acabado de leerlo."
+        : !estado.tieneAudio
+        ? "Tengo muchas ganas de conocer este libro. Cuéntamelo con calma."
+        : !estado.cumpleDuracion || !estado.cumplePalabras
+          ? "Me está gustando mucho lo que me cuentas. ¿Podrías contarme un poquito más?"
+          : "¡Qué bien! Ya conozco un poquito mejor este libro gracias a ti.";
 
   const boton = $("saveBookButton");
   const aviso = $("missionSaveHint");
 
   if (boton) {
     boton.disabled = false;
-    boton.textContent = "✅ Terminar y compartir";
     boton.classList.toggle("mission-save-incomplete", !estado.completa);
     boton.setAttribute("aria-disabled", String(!estado.completa));
     boton.title = estado.completa
-      ? "Terminar el libro y enviar la misión a revisión"
-      : motivoPendienteMisionBiblioteca(estado);
+      ? "Guardar libro y enviar la misión a revisión"
+      : "Pulsa para saber qué falta antes de completar la misión";
   }
 
   if (aviso) {
     aviso.classList.toggle("hidden", estado.completa);
     aviso.textContent = estado.completa
       ? ""
-      : motivoPendienteMisionBiblioteca(estado);
+      : "Puedes pulsar Guardar libro para que Lía te indique qué falta.";
   }
 }
 
@@ -347,7 +333,6 @@ function actualizarBandaMisionBiblioteca() {
     $("missionSelectedBook")?.classList.add("hidden");
     $("liaMissionRecordingMessage")?.classList.add("hidden");
     $("saveBookButton").disabled = false;
-    $("saveBookButton").textContent = "💾 Guardar libro";
     $("missionSaveHint")?.classList.add("hidden");
     return;
   }
@@ -461,7 +446,7 @@ async function registrarEvidenciaBiblioteca(libro, audio) {
   const estado = criteriosMisionBiblioteca();
   if (!estado.completa) {
     throw new Error(
-      motivoPendienteMisionBiblioteca(estado)
+      "La misión necesita un libro terminado, 15 segundos de audio y 15 palabras escuchadas."
     );
   }
 
@@ -491,8 +476,7 @@ async function registrarEvidenciaBiblioteca(libro, audio) {
       observacionFamilia: audio.familyObservation || ""
     },
     destinoRevision:
-      `../biblioteca/?misionId=${encodeURIComponent(misionId)}` +
-      `&libroId=${encodeURIComponent(libro.id)}`
+      `mi-universo/biblioteca/?libroId=${encodeURIComponent(libro.id)}`
   });
 
   misionActiva.estado = resultado.estado;
@@ -929,25 +913,41 @@ $("deleteRecording").onclick = async () => {
       if (misionActiva && misionId) {
         const estado = criteriosMisionBiblioteca();
 
-        if (!estado.completa) {
-          const motivo = motivoPendienteMisionBiblioteca(estado);
-          $("oralMissionMessage").textContent = motivo;
+        if (!estado.tieneLibroSeleccionado) {
+          alert("Elige primero un libro ya registrado en la Biblioteca.");
+          openTab("library");
+          renderSelectorLibrosMision();
+          return false;
+        }
+
+        if (!estado.estadoTerminado) {
+          $("oralMissionMessage").textContent =
+            "Marca el libro como Terminado cuando hayas acabado de leerlo.";
+          alert("Para completar esta misión, marca el libro como Terminado.");
+          $("readingStatus").focus();
+          return false;
+        }
+
+        if (!estado.tieneAudio) {
           $("liaMissionRecordingMessage").classList.remove("hidden");
           $("liaMissionRecordingMessage").classList.remove(
             "lia-mission-recording-message--success"
           );
-          $("liaMissionRecordingMessage").textContent = `🦜 ${motivo}`;
-          alert(motivo);
+          $("liaMissionRecordingMessage").textContent =
+            `🦜 ${perfilActual?.nombre || "Exploradora"}, cuéntame este libro con tu voz para poder guardar la misión.`;
+          document.querySelector(".voice-box")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+          return false;
+        }
 
-          if (!estado.tieneLibroSeleccionado) {
-            openTab("library");
-            renderSelectorLibrosMision();
-          } else {
-            document.querySelector(".voice-box")?.scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-          }
+        if (!estado.cumpleDuracion || !estado.cumplePalabras) {
+          mostrarMensajeLiaTrasGrabacion();
+          document.querySelector(".voice-box")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
           return false;
         }
       }
@@ -974,10 +974,6 @@ $("deleteRecording").onclick = async () => {
     document.querySelectorAll(".tab").forEach(tab=>{
       tab.onclick=()=>openTab(tab.dataset.tab);
     });
-
-    $("backToLibrary").onclick = () => {
-      openTab("library");
-    };
 
 $("addBookFromLibrary").onclick = () => {
   $("newBook").click();
@@ -1024,12 +1020,6 @@ $("bookForm").onsubmit = async event => {
 
   if (!validateBook(book)) return;
 
-  if (misionActiva && misionId) {
-    // Terminado es consecuencia de una finalización explícita y válida, no de una prueba de audio.
-    book.readingStatus = "Terminado";
-    $("readingStatus").value = "Terminado";
-  }
-
   const button = event.submitter;
 
   try {
@@ -1046,7 +1036,7 @@ $("bookForm").onsubmit = async event => {
 
     const audio = await guardarAudioActual(book.id);
 
-    if (misionActiva && misionId && ["pendiente", "asignada", "en_curso", "necesita_ayuda"].includes(misionActiva.estado)) {
+    if (misionActiva && misionId) {
       await registrarEvidenciaBiblioteca(book, audio || {
         duration: recordedAudioDuration,
         transcript: $("voiceTranscript").value.trim(),
@@ -1085,7 +1075,6 @@ $("bookForm").onsubmit = async event => {
       $("bookForm").reset();
       $("bookId").value="";
       $("rating").value="0";
-      $("readingStatus").value="Registrado";
       $("coverImage").value="";
       $("coverFile").value="";
       mostrarVistaPreviaCaratula();
@@ -1144,8 +1133,7 @@ $("bookForm").onsubmit = async event => {
 
         const badgeClass=
           book.readingStatus==="Terminado"?"status-finished":
-          book.readingStatus==="Quiero leer"?"status-wish":
-          book.readingStatus==="Registrado"?"status-registered":"status-reading";
+          book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
 
         article.innerHTML=`
           ${
@@ -1216,8 +1204,7 @@ $("bookForm").onsubmit = async event => {
 
       const badgeClass=
         book.readingStatus==="Terminado"?"status-finished":
-        book.readingStatus==="Quiero leer"?"status-wish":
-        book.readingStatus==="Registrado"?"status-registered":"status-reading";
+        book.readingStatus==="Quiero leer"?"status-wish":"status-reading";
 
       if (book.coverImage) {
         $("detailCoverImage").src = book.coverImage;
@@ -1305,7 +1292,6 @@ $("bookForm").onsubmit = async event => {
 
 function updateCount(){
   const count = books.length;
-  const registered = books.filter(book => book.readingStatus === "Registrado").length;
   const reading = books.filter(book => book.readingStatus === "Leyendo").length;
   const finished = books.filter(book => book.readingStatus === "Terminado").length;
   const wish = books.filter(book => book.readingStatus === "Quiero leer").length;
@@ -1316,14 +1302,12 @@ function updateCount(){
 
   $("bookCount").textContent = count;
   $("statTotal").textContent = count;
-  $("statRegistered").textContent = registered;
   $("statReading").textContent = reading;
   $("statFinished").textContent = finished;
   $("statWish").textContent = wish;
   $("statRating").textContent = average.toFixed(1);
 
   $("filterCountAll").textContent = count;
-  $("filterCountRegistered").textContent = registered;
   $("filterCountReading").textContent = reading;
   $("filterCountFinished").textContent = finished;
   $("filterCountWish").textContent = wish;
@@ -1359,98 +1343,49 @@ function updateCount(){
       if("speechSynthesis" in window)speechSynthesis.cancel();
     };
 
-    $("exportBooks").onclick = async () => {
-      try {
-        $("exportBooks").disabled = true;
-        $("exportBooks").textContent = "Preparando copia…";
+    $("exportBooks").onclick=()=>{
+      const blob=new Blob(
+        [JSON.stringify(books, null, 2)],
+        {type:"application/json"}
+      );
 
-        const elementos = await Promise.all(
-          books.map(async book => ({
-            id: book.id,
-            libro: { ...book, id: undefined },
-            audio: book.hasAudio
-              ? await Academia.biblioteca.audio.leer(book.id)
-              : null
-          }))
-        );
-
-        const copia = {
-          formato: "academia-gloria-biblioteca",
-          version: 2,
-          exportadoEn: new Date().toISOString(),
-          libros: elementos
-        };
-
-        const blob = new Blob(
-          [JSON.stringify(copia, null, 2)],
-          { type: "application/json" }
-        );
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "mi-biblioteca-completa.json";
-        link.click();
-        URL.revokeObjectURL(link.href);
-      } catch (error) {
-        console.error(error);
-        alert(`No se pudo crear la copia de la Biblioteca.\n${error.message}`);
-      } finally {
-        $("exportBooks").disabled = false;
-        $("exportBooks").textContent = "💾 Exportar biblioteca";
-      }
+      const link=document.createElement("a");
+      link.href=URL.createObjectURL(blob);
+      link.download="mi-biblioteca.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
     };
 
-    $("importBooks").onchange = async event => {
-      const file = event.target.files[0];
-      if (!file) return;
+$("importBooks").onchange = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-      try {
-        const imported = JSON.parse(await file.text());
-        const esCopiaCompleta =
-          imported?.formato === "academia-gloria-biblioteca" &&
-          Number(imported?.version) >= 2 &&
-          Array.isArray(imported?.libros);
+  try {
+    const imported = JSON.parse(await file.text());
 
-        const elementos = esCopiaCompleta
-          ? imported.libros
-          : Array.isArray(imported)
-            ? imported.map(libro => ({ id: null, libro, audio: null }))
-            : null;
+    if (!Array.isArray(imported)) {
+      throw new Error("El archivo no contiene una lista de libros.");
+    }
 
-        if (!elementos) {
-          throw new Error("El archivo no contiene una copia válida de Biblioteca.");
-        }
+    if (!confirm(`Se importarán ${imported.length} libro(s). ¿Continuar?`)) {
+      return;
+    }
 
-        const conAudio = elementos.filter(item => Boolean(item?.audio?.audioData)).length;
-        const detalle = esCopiaCompleta
-          ? `${elementos.length} libro(s), ${conAudio} con audio. Los IDs coincidentes se actualizarán; los demás libros actuales se conservarán.`
-          : `${elementos.length} libro(s) de una copia antigua. Se importarán como registros nuevos y sin audio.`;
+    for (const book of imported) {
+      await Academia.biblioteca.guardar({
+        ...book,
+        id: undefined
+      });
+    }
 
-        if (!confirm(`Se recuperará la Biblioteca: ${detalle}\n\n¿Continuar?`)) return;
+    alert("Biblioteca importada correctamente ✨");
+  } catch (error) {
+    console.error(error);
+    alert(`El archivo no es válido.\n${error.message}`);
+  }
 
-        for (const item of elementos) {
-          const libro = item?.libro && typeof item.libro === "object"
-            ? item.libro
-            : {};
-          await Academia.biblioteca.restaurar(
-            esCopiaCompleta ? String(item.id || "").trim() || null : null,
-            {
-              ...libro,
-              readingStatus: libro.readingStatus || "Registrado",
-              hasAudio: Boolean(item?.audio?.audioData)
-            },
-            item?.audio || null
-          );
-        }
-
-        alert("Biblioteca recuperada correctamente ✨");
-      } catch (error) {
-        console.error(error);
-        alert(`No se pudo importar la Biblioteca.\n${error.message}`);
-      } finally {
-        event.target.value = "";
-      }
-    };
-
+  event.target.value = "";
+};
 
     function escapeHtml(value=""){
       return value.replace(/[&<>"']/g,char=>({
@@ -1548,11 +1483,6 @@ async function iniciarBiblioteca() {
         const solicitado = books.find(book => book.id === libroIdSolicitado);
         if (solicitado) {
           libroIdSolicitado = null;
-          if (misionActiva && misionId) {
-            libroMisionSeleccionado = solicitado;
-            renderLibroMisionSeleccionado();
-            renderSelectorLibrosMision();
-          }
           showBook(solicitado).then(() => openTab("detail"));
         }
       }

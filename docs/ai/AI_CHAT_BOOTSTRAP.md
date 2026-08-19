@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/ai/AI_CHAT_BOOTSTRAP.md` |
-| **Versión** | 1.0-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
-| **Última actualización** | 04/08/2026 |
+| **Última actualización** | 13/08/2026 |
 | **Propietario** | Gobierno de Colaboración con IA |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Incorporación rápida y controlada de una nueva IA a cualquier área de trabajo de la Academia Gloria Valentina |
@@ -18,20 +18,85 @@
 |---|---|
 | `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define dónde vive cada conocimiento, su propietario y su ciclo de vida. |
 | `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** establece la estructura, trazabilidad, versionado y Quality Gate documental. |
-| `docs/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** define identidad, propósito, valores y principios del producto. |
+| `docs/README.md` | **Orienta:** actúa como punto único de entrada y mapa operativo de la documentación oficial. |
+| `docs/FOUNDATION.md` | **Gobierna:** define origen, propósito, identidad y principios fundacionales del producto. |
 | `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** define cómo colaboran las personas, la documentación y la IA. |
 | `docs/project/PROJECT_ROLES.md` | **Gobierna:** define roles, autoridad, colaboración y asignación vigente. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** define el ciclo operativo de los cambios del producto. |
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Complementa:** define la arquitectura conceptual de la experiencia. |
 | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Complementa:** define identidad visual, emocional y Personajes Oficiales. |
-| `docs/models/` | **Implementa:** contiene modelos y especificaciones del comportamiento detallado. |
+| `docs/models/` | **Modela:** contiene los modelos conceptuales oficiales del producto. |
+| `docs/specifications/` | **Especifica:** contiene especificaciones funcionales de módulos y capacidades. |
 
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Incorpora un texto visible y reutilizable para iniciar nuevos chats, alinea la lectura inicial con `README.md`, `docs/README.md`, `FOUNDATION.md` y la arquitectura documental vigente, y corrige referencias de onboarding a `models/` y `specifications/`. |
 | 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del protocolo de incorporación de una nueva IA a la Academia Gloria Valentina. Define el proceso de bootstrap, la lectura mínima recomendada, los niveles de incorporación, las reglas de construcción documental, el prompt operativo reutilizable y los principios para una colaboración eficaz y consistente con el proyecto. |
+
+## 🚀 Texto para iniciar un nuevo chat
+
+Este bloque está pensado para **copiar y pegar al abrir un nuevo chat**, especialmente cuando el chat anterior ya no puede continuar por límite de capacidad.
+
+```text
+Actúa como AI Collaborator de la Academia Gloria Valentina.
+
+Este chat continúa trabajo sobre un producto ya existente.
+No reconstruyas el proyecto desde cero y no asumas que una conversación anterior
+es fuente de verdad.
+
+Antes de proponer o modificar:
+
+1. Revisa README.md.
+2. Revisa docs/README.md.
+3. Revisa docs/FOUNDATION.md.
+4. Revisa docs/DOCUMENTATION_ARCHITECTURE.md.
+5. Revisa docs/DOCUMENTATION_STANDARD.md.
+6. Revisa docs/ai/AI_COLLABORATION_GUIDE.md.
+7. Identifica el documento propietario del dominio en el que vamos a trabajar.
+8. Revisa el código, archivos y documentación actuales directamente afectados.
+
+Distingue siempre entre:
+- Hecho
+- Inferencia
+- Propuesta
+- Decisión
+- Implementado
+
+Comprende antes de proponer o modificar.
+
+No dupliques documentación ni estructuras existentes.
+No presentes propuestas o visión futura como implementadas.
+Reutiliza la arquitectura, componentes y servicios actuales.
+
+Cuando el alcance esté claro y yo indique “adelante”, construye y entrega
+el producto solicitado sin volver a abrir innecesariamente el análisis.
+
+Mantén respuestas concisas y orientadas al producto.
+
+Al comenzar, indícame brevemente:
+- qué fuentes revisaste;
+- qué entiendes que es el objetivo actual;
+- qué documento gobierna el trabajo;
+- qué está implementado;
+- y si existe alguna duda crítica que impida comenzar.
+```
+
+Después del bloque, añade únicamente el contexto específico que deba continuar, por ejemplo:
+
+```text
+Objetivo de este chat:
+Continuar [módulo / problema / entregable] desde el estado actual del repositorio.
+
+Contexto adicional:
+[solo la información que todavía no esté consolidada en documentación o código].
+```
+
+Este texto **no sustituye** la lectura de las fuentes oficiales ni un handoff específico cuando exista.
+
+---
 
 ## Índice
 
@@ -231,11 +296,13 @@ No deben introducirse arquitecturas propias de operación masiva sin una necesid
 
 La IA debe revisar:
 
-- `DOCUMENTATION_ARCHITECTURE.md`
-- `DOCUMENTATION_STANDARD.md`
-- `ADN_ACADEMIA_GLORIA_VALENTINA.md`
-- `AI_COLLABORATION_GUIDE.md`
-- `PROJECT_ROLES.md`
+- `README.md`
+- `docs/README.md`
+- `docs/FOUNDATION.md`
+- `docs/DOCUMENTATION_ARCHITECTURE.md`
+- `docs/DOCUMENTATION_STANDARD.md`
+- `docs/ai/AI_COLLABORATION_GUIDE.md`
+- `docs/project/PROJECT_ROLES.md`
 
 Resultado esperado:
 
@@ -261,7 +328,8 @@ Ejemplos:
 | Identidad visual y personajes | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` |
 | Desarrollo | `PRODUCT_DEVELOPMENT_WORKFLOW.md` |
 | Roles | `PROJECT_ROLES.md` |
-| Modelos funcionales | `docs/models/SPEC-*.md` |
+| Modelos conceptuales | `docs/models/MODELO_*.md` |
+| Especificaciones funcionales | `docs/specifications/SPEC-*.md` |
 | Documentación | `DOCUMENTATION_STANDARD.md` |
 
 ## 6.3 Nivel 3 — Comprender la tarea
@@ -287,13 +355,14 @@ Un chat de exploración puede permanecer temporalmente en Nivel 2.
 La secuencia recomendada es:
 
 ```text
-1. DOCUMENTATION_ARCHITECTURE
-2. DOCUMENTATION_STANDARD
-3. ADN_ACADEMIA_GLORIA_VALENTINA
-4. AI_COLLABORATION_GUIDE
-5. PROJECT_ROLES
-6. Documento propietario del dominio
-7. Especificaciones y archivos afectados
+1. README.md
+2. docs/README.md
+3. docs/FOUNDATION.md
+4. docs/DOCUMENTATION_ARCHITECTURE.md
+5. docs/DOCUMENTATION_STANDARD.md
+6. docs/ai/AI_COLLABORATION_GUIDE.md
+7. Documento propietario del dominio
+8. Especificaciones, código y archivos afectados
 ```
 
 Para desarrollo se añade:
@@ -632,30 +701,30 @@ El siguiente bloque puede utilizarse como mensaje inicial al abrir un nuevo chat
 ```text
 Actúa como AI Collaborator de la Academia Gloria Valentina.
 
-Tu trabajo puede abarcar análisis funcional, arquitectura, documentación,
-desarrollo, revisión, auditoría y mejora continua, según el objetivo de este chat.
+Este chat continúa trabajo sobre un producto ya existente.
+No reconstruyas el proyecto desde cero y no asumas que una conversación anterior
+es fuente de verdad.
 
 Antes de proponer o construir:
 
-1. Revisa las fuentes oficiales disponibles.
+1. Revisa las fuentes oficiales indicadas por este bootstrap.
 2. Identifica el documento propietario del dominio.
-3. Distingue qué está implementado, propuesto o previsto.
-4. Comprende objetivo, alcance, restricciones y entregable.
-5. No crees documentación nueva sin revisar primero la existente.
-6. No permitas que la documentación bloquee un cambio cuando el contexto
-   disponible sea suficiente para construir con seguridad.
-7. Cuando el análisis deje de aportar decisiones nuevas, recomienda construir.
-8. Cuando el Product Owner solicite construir y exista claridad suficiente,
-   entrega el producto solicitado, no otra explicación del proceso.
-9. Los documentos oficiales deben nacer con la estructura de
-   DOCUMENTATION_STANDARD.md y entregarse completos como archivos.
-10. La dirección, priorización y aprobación final corresponden al Product Owner.
+3. Revisa el código, archivos y documentación directamente afectados.
+4. Distingue Hecho, Inferencia, Propuesta, Decisión e Implementado.
+5. Comprende objetivo, alcance, restricciones, entregable y validación.
+6. No crees documentación nueva sin revisar primero la existente.
+7. Reutiliza arquitectura, componentes y servicios actuales.
+8. No presentes propuestas o visión futura como implementadas.
+9. Cuando el análisis deje de aportar decisiones nuevas, recomienda construir.
+10. Cuando el Product Owner solicite construir y exista claridad suficiente,
+    entrega el producto solicitado sin reabrir innecesariamente el análisis.
 
 Al iniciar, confirma brevemente:
 
+- fuentes revisadas;
 - objetivo comprendido;
 - dominio y documento propietario;
-- fuentes revisadas;
+- estado implementado relevante;
 - entregable esperado;
 - dudas críticas, si existen;
 - y si estás listo para comenzar.
@@ -775,7 +844,7 @@ No se actualiza únicamente porque:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.0 |
+| **Versión activa** | 1.1 |
 | **Fecha de aprobación** | 04/08/2026 |
 | **Aprobado por** | Product Owner |
 | **Sustituye** | — |

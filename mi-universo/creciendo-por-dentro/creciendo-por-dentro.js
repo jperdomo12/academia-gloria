@@ -686,11 +686,15 @@ async function saveSession({ withoutRecording = false } = {}) {
           nivelApoyo:Number(semilla.nivelApoyo || 1)
         },
         resultado:{
+          titulo:semilla.titulo,
           intentos:recordingAttempts,
           duracionAudio:withoutRecording ? 0 : audioDuration,
           grabacionConfirmada:!withoutRecording && Boolean(audioData)
         },
-        destinoRevision:`../creciendo-por-dentro/?vista=historial&sesionId=${encodeURIComponent(sessionId)}`
+        destinoRevision:
+          `../creciendo-por-dentro/?vista=historial` +
+          `&misionId=${encodeURIComponent(misionId)}` +
+          `&sesionId=${encodeURIComponent(sessionId)}`
       });
       misionActiva.progreso = {
         ...(misionActiva.progreso || {}),
@@ -791,19 +795,10 @@ async function toggleHelp() {
 
 async function loadSavedSessions() {
   /*
-   * Las sesiones históricas siguen físicamente bajo usuarios/{uid}/...
-   * durante la transición multi-Persona. No debemos confundir las sesiones
-   * del Usuario autenticado con las de otra Persona Activa.
-   *
-   * Para Persona propia conservamos exactamente el comportamiento actual.
-   * Para Persona relacionada dejamos el catálogo plenamente disponible y
-   * evitamos que una lectura legacy bloquee todo Creciendo por Dentro.
+   * Las sesiones se resuelven mediante Persona Activa en Academia.semillas.
+   * Así el alumno conserva su historial propio y la familia/profesional
+   * relacionado puede consultar el trabajo de la Persona Activa autorizada.
    */
-  if (!esPersonaPropia) {
-    sesiones = [];
-    return sesiones;
-  }
-
   try {
     sesiones = await Academia.semillas.leerSesiones();
   } catch (error) {
@@ -819,6 +814,106 @@ function formatDate(value) {
   const date = typeof value.toDate === "function" ? value.toDate() : new Date(value);
   return Number.isNaN(date.getTime()) ? "Fecha no disponible" :
     new Intl.DateTimeFormat("es-ES",{ dateStyle:"medium", timeStyle:"short" }).format(date);
+}
+
+
+function semillaDeSesion(item = {}) {
+  const id = String(item.semillaId || "").trim();
+  return catalogo.semillas.find(seed => String(seed.id) === id) || null;
+}
+
+function textosRespuestaPaso(step = {}, respuestasSesion = {}) {
+  const valor = respuestasSesion?.[step.id];
+  const seleccionados = Array.isArray(valor)
+    ? valor.map(String)
+    : valor
+      ? [String(valor)]
+      : [];
+
+  const textosSeleccionados = seleccionados
+    .map(id => step.opciones?.find(option => String(option.id) === id)?.texto || id)
+    .filter(Boolean);
+
+  const propia = String(respuestasSesion?.[`${step.id}__other`] || "").trim();
+
+  return {
+    seleccion: textosSeleccionados.join(" · "),
+    propia
+  };
+}
+
+function respuestasSesionHtml(item = {}) {
+  const seed = semillaDeSesion(item);
+  const respuestasSesion =
+    item.respuestas && typeof item.respuestas === "object"
+      ? item.respuestas
+      : {};
+
+  if (seed?.pasos?.length) {
+    const filas = seed.pasos.map((step, index) => {
+      const respuesta = textosRespuestaPaso(step, respuestasSesion);
+      const contenido = [
+        respuesta.seleccion
+          ? `<div><strong>Respuesta:</strong> ${escapeHtml(respuesta.seleccion)}</div>`
+          : "",
+        respuesta.propia
+          ? `<div><strong>Con sus palabras:</strong> ${escapeHtml(respuesta.propia)}</div>`
+          : ""
+      ].filter(Boolean).join("");
+
+      return `
+        <div class="history-answer">
+          <div><strong>${Number(step.orden || index + 1)}. ${escapeHtml(step.titulo || "Paso")}</strong></div>
+          ${contenido || '<div class="history-answer__empty">Sin respuesta guardada.</div>'}
+        </div>`;
+    }).join("");
+
+    return `
+      <section class="history-answers">
+        <h4>💭 Cómo construí mi respuesta</h4>
+        ${filas}
+      </section>`;
+  }
+
+  return "";
+}
+
+function datosPracticaSesionHtml(item = {}) {
+  const analisis =
+    item.analisisEducativo && typeof item.analisisEducativo === "object"
+      ? item.analisisEducativo
+      : {};
+
+  const datos = [
+    item.tipoSituacion
+      ? `<p><strong>🎯 Situación:</strong> ${escapeHtml(item.tipoSituacion)}</p>`
+      : "",
+    item.nivelApoyo
+      ? `<p><strong>🤝 Nivel de apoyo:</strong> ${escapeHtml(item.nivelApoyo)}</p>`
+      : "",
+    analisis.tipo
+      ? `<p><strong>🔎 Tipo de análisis:</strong> ${escapeHtml(analisis.tipo)}</p>`
+      : "",
+    Number.isFinite(Number(analisis.palabrasObjetivo))
+      ? `<p><strong>🗣️ Palabras objetivo:</strong> ${Number(analisis.palabrasObjetivo)}</p>`
+      : "",
+    Number.isFinite(Number(analisis.palabrasReconocidas))
+      ? `<p><strong>✅ Palabras reconocidas:</strong> ${Number(analisis.palabrasReconocidas)}</p>`
+      : "",
+    analisis.mensaje
+      ? `<p><strong>💡 Observación de la Academia:</strong> ${escapeHtml(analisis.mensaje)}</p>`
+      : ""
+  ].filter(Boolean);
+
+  if (!datos.length) return "";
+
+  return `
+    <details class="history-practice-data">
+      <summary><strong>🔎 Datos de la práctica</strong></summary>
+      <div class="history-practice-data__content">
+        ${datos.join("")}
+      </div>
+    </details>`;
 }
 
 async function showHistory() {
@@ -842,9 +937,11 @@ async function showHistory() {
         ${item.audioData ? `<audio controls src="${item.audioData}"></audio>` : "<p>Práctica guardada sin audio.</p>"}
         <details>
           <summary><strong>Ver detalles</strong></summary>
-          <p><strong>Mi frase:</strong> ${escapeHtml(item.respuestaConstruida || "")}</p>
-          <p><strong>Transcripción:</strong> ${escapeHtml(item.transcripcion || "Sin transcripción.")}</p>
-          <p><strong>Observación:</strong> ${escapeHtml(item.observacionFamilia || "Sin observación familiar.")}</p>
+          ${respuestasSesionHtml(item)}
+          ${datosPracticaSesionHtml(item)}
+          <p><strong>🗣️ Mi frase:</strong> ${escapeHtml(item.respuestaConstruida || "")}</p>
+          <p><strong>🎙️ Transcripción:</strong> ${escapeHtml(item.transcripcion || "Sin transcripción.")}</p>
+          <p><strong>👨‍👩‍👧 Observación familiar:</strong> ${escapeHtml(item.observacionFamilia || "Sin observación familiar.")}</p>
         </details>
       </article>
     `).join("");
@@ -861,13 +958,21 @@ async function initialize() {
   }
 
   /*
-   * El catálogo es contenido editorial local (semillas.json) y debe poder
-   * mostrarse aunque una lectura Firestore secundaria falle. Por eso se carga
-   * y renderiza primero, sin depender del historial ni de una misión.
+   * El catálogo es contenido editorial local (semillas.json).
+   *
+   * En exploración libre puede mostrarse inmediatamente.
+   * Cuando la entrada viene asociada a una misión, primero resolvemos la misión
+   * para no enseñar durante unos segundos Semillas que no forman parte de ella.
    */
   await loadCatalog();
-  renderFilters();
-  renderCatalog();
+
+  if (!misionId) {
+    renderFilters();
+    renderCatalog();
+  } else {
+    $("catalogEmpty").classList.remove("hidden");
+    $("catalogEmpty").textContent = "🌱 Preparando tu misión...";
+  }
 
   try {
     contextoUsuario = await ContextoUsuario.inicializar();
@@ -880,10 +985,11 @@ async function initialize() {
   }
 
   /*
-   * Misión e historial enriquecen la pantalla, pero ya no pueden impedir que
-   * aparezcan las Semillas.
+   * La misión define qué Semillas pueden mostrarse, por lo que se resuelve antes
+   * del primer render del catálogo contextual. El historial es secundario y se
+   * carga después para no retrasar la entrada a la actividad.
    */
-  await Promise.allSettled([loadMission(), loadSavedSessions()]);
+  await loadMission();
 
   configureRecognition();
   renderFilters();
@@ -910,6 +1016,20 @@ async function initialize() {
       startSeed(asignadas[0].id);
     }
   }
+
+  /*
+   * El historial actualiza únicamente marcas como "Practicada".
+   * No condiciona qué Semillas pertenecen a la misión.
+   */
+  loadSavedSessions()
+    .then(() => {
+      if (!$("catalogPanel").classList.contains("hidden")) {
+        renderCatalog();
+      }
+    })
+    .catch(error => {
+      console.warn("[CreciendoPorDentro] No se pudo actualizar el historial de Semillas.", error);
+    });
 }
 
 $("startRecommended").onclick = () => {

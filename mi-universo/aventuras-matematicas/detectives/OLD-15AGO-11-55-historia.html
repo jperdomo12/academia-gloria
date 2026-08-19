@@ -31,7 +31,7 @@
 <body>
 <main class="wrap">
   <div class="topbar">
-    <a class="back" data-volver-modulo data-ruta-alternativa="./historial.html" href="./historial.html">← Volver</a>
+    <a class="back" data-volver-modulo data-ruta-alternativa="./historial.html" href="./historial.html">← Volver al historial</a>
     <div data-panel-usuario></div>
   </div>
   <div id="content"><section class="card">Cargando historia…</section></div>
@@ -51,8 +51,6 @@
   const params=new URLSearchParams(location.search);
   const id=params.get("id");
   const sesionObjetivo=params.get("sesionId");
-  const misionId=params.get("misionId");
-  const modoRevisionMision=Boolean(misionId && sesionObjetivo);
   const content=document.getElementById("content");
   const escape=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
   const date=value=>value?new Date(value).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"}):"—";
@@ -139,18 +137,13 @@
         <section class="card">
           <div class="chips"><span class="chip">Nivel ${story.nivel}</span><span class="chip">${escape(story.tema)}</span><span class="chip">${escape(story.tipo)}</span></div>
           <h1 class="title">${escape(story.titulo)}</h1><p class="story">${escape(story.texto)}</p>
-          ${modoRevisionMision
-            ? `<p class="muted">🔒 Estás revisando una resolución conservada como trabajo realizado de la misión. Los datos del alumno son de solo lectura.</p>`
-            : `
-              <div class="actions">
-                <a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(story.id)}" data-conservar-retorno>Practicar otra vez</a>
-                <select id="stateSelect" class="btn btn-light">
-                  <option value="en_practica">En práctica</option><option value="reforzar">Reforzar</option><option value="dominada">Dominada</option>
-                </select>
-                <button id="resetButton" class="btn btn-danger">Reiniciar progreso</button>
-              </div>
-            `
-          }
+          <div class="actions">
+            <a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(story.id)}" data-conservar-retorno>Practicar otra vez</a>
+            <select id="stateSelect" class="btn btn-light">
+              <option value="en_practica">En práctica</option><option value="reforzar">Reforzar</option><option value="dominada">Dominada</option>
+            </select>
+            <button id="resetButton" class="btn btn-danger">Reiniciar progreso</button>
+          </div>
         </section>
         <section class="card"><h2>📈 Resumen de aprendizaje</h2>
           <div class="grid">
@@ -165,67 +158,31 @@
           <div id="sessions">${sessions.length?sessions.map((session,index)=>`
             <article class="session" data-session-id="${escape(session.id)}">
               <div class="session-head"><strong>Resolución ${sessions.length-index} · ${escape(date(session.completadaEn))}</strong>
-              ${modoRevisionMision
-                ? ""
-                : `<button class="btn btn-danger delete-session" data-session="${escape(session.id)}">Eliminar</button>`
-              }</div>
+              <button class="btn btn-danger delete-session" data-session="${escape(session.id)}">Eliminar</button></div>
               <div class="process">${sessionProcess(story,session)}</div>
             </article>`).join(""):'<p class="muted">Todavía no hay sesiones registradas.</p>'}
           </div>
         </section>`;
 
       window.Academia?.navegacion?.prepararEnlaces();
-
-      if(!modoRevisionMision){
-        const select=document.getElementById("stateSelect");
-        const resetButton=document.getElementById("resetButton");
-
-        if(select){
-          select.value=progress?.estado||"en_practica";
-          select.onchange=async()=>{
-            try{
-              await marcarEstadoHistoria(auth.currentUser.uid,id,select.value);
-            }catch(error){
-              console.error(error);
-              alert(`No se pudo cambiar el estado de la historia.\nRazón: ${error.message}`);
-            }
-          };
-        }
-
-        if(resetButton){
-          resetButton.onclick=async()=>{
-            if(!confirm("¿Reiniciar todo el progreso de esta historia?"))return;
-            try{
-              await reiniciarProgresoHistoria(auth.currentUser.uid,id);
-              location.href="./historial.html";
-            }catch(error){
-              console.error(error);
-              alert(`No se pudo reiniciar el progreso.\nRazón: ${error.message}`);
-            }
-          };
-        }
-
-        document.querySelectorAll(".delete-session").forEach(button=>button.onclick=async()=>{
-          if(!confirm("¿Eliminar esta resolución concreta?"))return;
-          button.disabled=true;
-          try{
-            await eliminarSesionHistoria(auth.currentUser.uid,id,button.dataset.session);
-            await load();
-          }catch(error){
-            console.error(error);
-            alert(`No se pudo eliminar la resolución.\nRazón: ${error.message}`);
-            button.disabled=false;
-          }
-        });
-      }
+      const select=document.getElementById("stateSelect");
+      select.value=progress?.estado||"en_practica";
+      select.onchange=()=>marcarEstadoHistoria(auth.currentUser.uid,id,select.value);
+      document.getElementById("resetButton").onclick=async()=>{
+        if(!confirm("¿Reiniciar todo el progreso de esta historia?"))return;
+        await reiniciarProgresoHistoria(auth.currentUser.uid,id);location.href="./historial.html";
+      };
+      document.querySelectorAll(".delete-session").forEach(button=>button.onclick=async()=>{
+        if(!confirm("¿Eliminar esta resolución concreta?"))return;
+        button.disabled=true;
+        await eliminarSesionHistoria(auth.currentUser.uid,id,button.dataset.session);
+        await load();
+      });
       if(sesionObjetivo){
         const target=document.querySelector(`[data-session-id="${CSS.escape(sesionObjetivo)}"]`);
         if(target)setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"center"}),100);
       }
-    }catch(error){
-      console.error(error);
-      content.innerHTML=`<section class="card error">No fue posible cargar el detalle.<br>Razón: ${escape(error.message || "Error no identificado")}</section>`;
-    }
+    }catch(error){console.error(error);content.innerHTML='<section class="card error">No fue posible cargar el detalle.</section>';}
   }
   await load();
 </script>

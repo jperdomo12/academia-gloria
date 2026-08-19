@@ -1,27 +1,36 @@
-# DATOS-BASE-FIRESTORE-FASE1.md
+# TECH-DATOS-BASE-FIRESTORE-FASE1.md
 
 # Academia Gloria Valentina
 ## Datos base de identidad · Fase 1
 
-**Versión:** 1.4  
-**Fecha:** 2026-08-10  
+**Versión:** 1.5  
+**Fecha:** 2026-08-13  
 **Estado:** Implementado y validado funcionalmente
 
 ---
 
 ## Historial del Documento
 
-| Versión | Fecha | Descripción |
-|---|---|---|
-| 1.0 | 2026-08-10 | Primera definición de datos base para Fase 1 |
-| 1.1 | 2026-08-10 | Incorpora `per_001`, `activo` booleano y timeout `0 = desactivado` |
-| 1.2 | 2026-08-10 | Consolida implementación real: rol `alumno`, USER_ROLE por UID, `estado` legacy conservado y reglas Firestore publicadas |
-| 1.3 | 2026-08-10 | Activa el nuevo modelo con Gloria, elimina redundancias de USER y retira `calendarioSlug` y estructura física legacy de calendarios |
-| 1.4 | 2026-08-12 | Consolida Gestión de Usuarios y Auditoría Fase A sin modificar el esquema mínimo de USER |
+| Versión | Fecha | Responsables | Cambios |
+|---|---|---|---|
+| 1.0 | 2026-08-10 | Product Owner + AI Collaborator | Primera definición de datos base para Fase 1. |
+| 1.1 | 2026-08-10 | Product Owner + AI Collaborator | Incorpora `per_001`, `activo` booleano y timeout `0 = desactivado`. |
+| 1.2 | 2026-08-10 | Product Owner + AI Collaborator | Consolida implementación real: rol `alumno`, USER_ROLE por UID, `estado` legacy conservado y reglas Firestore publicadas. |
+| 1.3 | 2026-08-10 | Product Owner + AI Collaborator | Activa el nuevo modelo con Gloria, elimina redundancias de USER y retira `calendarioSlug` y estructura física legacy de calendarios. |
+| 1.4 | 2026-08-12 | Product Owner + AI Collaborator | Consolida Gestión de Usuarios y Auditoría Fase A sin modificar el esquema mínimo de USER. |
+| 1.5 | 2026-08-13 | Product Owner + AI Collaborator | Distingue explícitamente estado vigente de hitos históricos de Fase 1/1.5, elimina contradicciones temporales y adopta prefijo `TECH-`. |
 
 ---
 
-# 1. Objetivo
+## Nota de vigencia
+
+Este documento conserva parte de la evolución de Fase 1 y Fase 1.5 por trazabilidad. Las secciones marcadas como **Histórico de fase** describen decisiones válidas en ese momento, pero **no deben interpretarse como estado vigente** cuando hayan sido superadas por la implementación Multi-Persona y Gestión de Usuarios.
+
+Para el detalle técnico vigente de Identidad y Usuarios, consultar `TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md`. Para convenciones transversales de atributos, consultar `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md`.
+
+---
+
+# 1. Objetivo original de Fase 1 · Histórico de fase
 
 Activar el mínimo modelo real:
 
@@ -44,9 +53,9 @@ se conserva durante esta fase.
 
 ---
 
-# 2. Resultado de la Fase 1
+# 2. Resultado de la Fase 1 · Histórico de fase
 
-La Fase 1 deja creadas y operativas las siguientes estructuras de primer nivel:
+En el cierre original de Fase 1 quedaron creadas y operativas las siguientes estructuras de primer nivel:
 
 ```text
 Firestore
@@ -65,7 +74,7 @@ Firestore
     └── {UID_GLORIA}
 ```
 
-`personaRelaciones` todavía no contiene datos y se incorporará en la siguiente fase.
+`personaRelaciones` todavía no contenía datos en el cierre original de Fase 1. Esta condición fue superada posteriormente por la implementación Multi-Persona y Gestión de Usuarios.
 
 ---
 
@@ -332,9 +341,9 @@ No se configurará por Usuario ni por Rol.
 
 ---
 
-# 11. Firestore Security Rules
+# 11. Firestore Security Rules · Histórico de Fase 1
 
-Las reglas publicadas mantienen:
+En la publicación original de Fase 1, las reglas mantenían:
 
 ```text
 rules_version = '2';
@@ -344,7 +353,7 @@ Esto representa la versión del lenguaje de reglas de Firestore, no la versión 
 
 ## 11.1 Regla legacy conservada
 
-Se mantiene el comportamiento actual:
+En Fase 1 se mantuvo el comportamiento:
 
 ```text
 usuarios/{userId}/{documento=**}
@@ -360,31 +369,29 @@ Esto preserva eventos, tareas, evidencias, biblioteca, sesionesLectura, sesiones
 
 ## 11.2 PERSON
 
-Se habilita lectura únicamente de la Persona propia.
+En Fase 1 se habilitó lectura únicamente de la Persona propia.
 
-La escritura desde cliente permanece cerrada en Fase 1.
+La escritura desde cliente permanecía cerrada en Fase 1.
 
 ## 11.3 ROLE
 
-Los Roles pueden ser consultados por usuarios autenticados.
+En Fase 1 los Roles podían ser consultados por usuarios autenticados.
 
 La escritura permanece cerrada desde cliente.
 
 ## 11.4 USER_ROLE
 
-Cada Usuario solo puede consultar su propia asignación de Rol.
+En Fase 1 cada Usuario solo podía consultar su propia asignación de Rol.
 
 La escritura permanece cerrada desde cliente.
 
 ## 11.5 PERSON_RELATION
 
-Permanece completamente cerrada en Fase 1.
-
-Se abrirá de forma controlada cuando se incorpore el primer Usuario adulto relacionado con Gloria.
+Permanecía completamente cerrada en Fase 1. Esta restricción fue posteriormente evolucionada para soportar relaciones Multi-Persona reales.
 
 ---
 
-# 12. Reglas Firestore publicadas
+# 12. Reglas Firestore publicadas · Histórico de Fase 1
 
 Las nuevas reglas de Fase 1 fueron publicadas en Firebase Console el:
 
@@ -402,7 +409,7 @@ La versión publicada conserva el modelo propietario existente y añade las nuev
 
 ---
 
-# 13. Activación real del nuevo modelo · Fase 1.5
+# 13. Activación real del nuevo modelo · Fase 1.5 · Histórico de fase
 
 Gloria ya ejecuta su identidad mediante:
 
@@ -452,7 +459,7 @@ No se migran en esta fase.
 
 ---
 
-# 14. Limpieza legacy realizada
+# 14. Limpieza legacy realizada · Histórico de fase
 
 Se eliminaron de USER de Gloria:
 
@@ -497,7 +504,7 @@ El código residual relacionado con `obtenerCalendarioSlug()` deberá retirarse 
 
 ---
 
-# 15. Prueba de aceptación de Fase 1 / 1.5
+# 15. Prueba de aceptación de Fase 1 / 1.5 · Histórico de fase
 
 Se ejecutaron satisfactoriamente pruebas funcionales con Gloria después de activar el nuevo modelo y después de cada bloque de limpieza.
 
@@ -532,7 +539,7 @@ La Academia continuó funcionando después de retirar los atributos redundantes 
 
 ---
 
-# 16. Criterio de cierre
+# 16. Criterio de cierre · Histórico de fase
 
 Fase 1 y su activación funcional Fase 1.5 quedan completadas:
 
@@ -560,9 +567,9 @@ pruebas funcionales satisfactorias
 
 ---
 
-# 17. Lo que NO se hace todavía
+# 17. Fuera de alcance en el cierre de Fase 1.5 · Histórico de fase
 
-No se realiza todavía:
+En el cierre de Fase 1.5 todavía no se realizaba:
 
 - crear Persona adulta;
 - crear Usuario adulto;
@@ -578,9 +585,9 @@ La limpieza del código residual de `calendarioSlug` queda como tarea técnica i
 
 ---
 
-# 18. Siguiente fase
+# 18. Siguiente fase prevista entonces · Histórico de fase
 
-La siguiente fase incorporará el primer caso multi-persona real, partiendo ya de Gloria completamente operativa sobre el nuevo modelo:
+La siguiente fase prevista en ese momento era incorporar el primer caso Multi-Persona real:
 
 ```text
 PERSON adulto
@@ -598,11 +605,22 @@ Objetivo:
 
 > Permitir que un adulto autenticado pueda acceder a Gloria desde su propia identidad, manteniendo siempre la trazabilidad de quién está realmente conectado.
 
-Todavía no será necesario migrar los históricos de Gloria.
+En esa previsión todavía no se consideraba necesario migrar los históricos de Gloria.
 
 ---
 
-# 13. Gestión de Usuarios y Auditoría Fase A
+# 19. Estado vigente · Gestión de Usuarios y Auditoría Fase A
+
+A 13/08/2026, el núcleo de identidad y acceso vigente incluye las colecciones de primer nivel:
+
+```text
+personas
+usuarios
+roles
+usuarioRoles
+personaRelaciones
+accesosLogin
+```
 
 La administración vigente mantiene desde la Academia:
 
@@ -616,7 +634,7 @@ accesosLogin
 
 Firebase Authentication continúa creándose manualmente en Firebase Console en la modalidad gratuita/Spark.
 
-## 13.1 USER permanece sin cambios
+## 19.1 USER permanece sin cambios
 
 El esquema físico de USER continúa siendo:
 
@@ -629,7 +647,7 @@ fechaAlta
 
 No se añaden campos de auditoría a USER.
 
-## 13.2 Entidades auditadas
+## 19.2 Entidades auditadas
 
 A partir de Gestión de Usuarios v0.3 incorporan auditoría básica:
 
@@ -653,7 +671,7 @@ updatedBy
 
 Los documentos existentes anteriores a esta fase no reciben una fecha o autor de creación inventados. La auditoría comienza con información histórica real disponible y con las modificaciones posteriores.
 
-## 13.3 Presentación
+## 19.3 Presentación
 
 Gestión de Usuarios incorpora el bloque de solo consulta:
 
@@ -665,6 +683,12 @@ La interfaz puede mostrar el nombre visible del administrador resolviendo el UID
 
 La Fase B de historial detallado de eventos queda pospuesta.
 
+## 19.4 Relación con los documentos técnicos vigentes
+
+- `TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` describe cómo opera técnicamente el modelo de Identidad, Usuarios, Roles y Relaciones.
+- `TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` mantiene el inventario transversal de entidades y variantes de nomenclatura.
+- `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` gobierna los nombres de nuevos atributos y la convergencia futura.
+
 ---
 
-**Fin de DATOS-BASE-FIRESTORE-FASE1.md · v1.4**
+**Fin de TECH-DATOS-BASE-FIRESTORE-FASE1.md · v1.5**

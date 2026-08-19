@@ -10,7 +10,7 @@ const MAX_RECORDING_SECONDS = 120;
 let historia = HISTORIAS[0];
 let perfil = null;
 let activeCategory = "Todas";
-let activeLanguage = "es-ES";
+let activeLanguage = "all";
 let activeLevel = "all";
 let activeReadStatus = "all";
 let mediaRecorder = null;
@@ -1251,7 +1251,6 @@ $("saveSession").onclick = async () => {
           idioma: historia.idioma || "es-ES"
         },
         resultado: {
-          titulo: historia.titulo,
           intentos: Math.max(1, recordingAttempts),
           duracion: audioDuration,
           preguntasRespondidas: historia.preguntas.length,
@@ -1894,23 +1893,14 @@ async function loadReadingHistory() {
             </div>
           </details>
 
-          ${parametrosPagina.get("misionId")
-            ? `
-              <p class="history-help">
-                🔒 Esta lectura forma parte del trabajo realizado de una misión y se conserva como historial.
-              </p>
-            `
-            : `
-              <button
-                type="button"
-                class="btn delete-session"
-                data-delete-story="${escapeHtml(session.id)}"
-                data-delete-title="${escapeHtml(session.titulo || "esta aventura")}"
-              >
-                🗑️ Eliminar lectura guardada
-              </button>
-            `
-          }
+          <button
+            type="button"
+            class="btn delete-session"
+            data-delete-story="${escapeHtml(session.id)}"
+            data-delete-title="${escapeHtml(session.titulo || "esta aventura")}"
+          >
+            🗑️ Eliminar lectura guardada
+          </button>
             </div>
           </details>
 

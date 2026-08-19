@@ -2,7 +2,7 @@
    Academia de Gloria Valentina
    academia.js
    API pública de acceso a datos
-   Persona Activa · Fase 1.8: eventos, tareas y evidencias resuelven el USER de datos.
+   Persona Activa · Fase 1.9: Tareas/Misiones alineadas con auditoría transversal y trazabilidad de estado.
    ========================================================== */
 
 /* import { db } from "../firebase/firebase-config.js"; */
@@ -218,39 +218,35 @@ async function eliminarEvento(id) {
 
 
 /* ==========================================================
-   Biblioteca
+   Biblioteca · Persona Activa
    usuarios/{uid}/biblioteca/{libroId}
+   usuarios/{uid}/bibliotecaAudios/{libroId}
    ========================================================== */
 
-function coleccionBiblioteca() {
-  return collection(db, "usuarios", obtenerUID(), "biblioteca");
+function coleccionBiblioteca(userId) {
+  const id = String(userId || "").trim();
+  if (!id) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return collection(db, "usuarios", id, "biblioteca");
 }
 
-function documentoLibro(id) {
-  if (!id) {
-    throw new Error("Falta el identificador del libro.");
-  }
-
-  return doc(db, "usuarios", obtenerUID(), "biblioteca", id);
+function documentoLibro(id, userId) {
+  if (!id) throw new Error("Falta el identificador del libro.");
+  const uid = String(userId || "").trim();
+  if (!uid) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return doc(db, "usuarios", uid, "biblioteca", id);
 }
 
 function normalizarLibro(libro = {}) {
   const title = String(libro.title ?? "").trim();
-
-  if (!title) {
-    throw new Error("El libro debe tener un título.");
-  }
+  if (!title) throw new Error("El libro debe tener un título.");
 
   const rating = Number(libro.rating ?? 0);
-
   return {
     title,
     author: String(libro.author ?? "").trim(),
-    readingStatus: String(libro.readingStatus ?? "Leyendo").trim(),
+    readingStatus: String(libro.readingStatus ?? "Registrado").trim() || "Registrado",
     favoriteCharacter: String(libro.favoriteCharacter ?? "").trim(),
-    rating: Number.isFinite(rating)
-      ? Math.max(0, Math.min(5, rating))
-      : 0,
+    rating: Number.isFinite(rating) ? Math.max(0, Math.min(5, rating)) : 0,
     favoritePart: String(libro.favoritePart ?? "").trim(),
     learning: String(libro.learning ?? "").trim(),
     newWords: String(libro.newWords ?? "").trim(),
@@ -262,152 +258,158 @@ function normalizarLibro(libro = {}) {
 
 async function guardarLibro(libro) {
   const datos = normalizarLibro(libro);
-
-  const referencia = await addDoc(coleccionBiblioteca(), {
+  const userId = await obtenerUIDPersonaActiva();
+  const referencia = await addDoc(coleccionBiblioteca(userId), {
     ...datos,
     creadoEn: serverTimestamp(),
     actualizadoEn: serverTimestamp()
   });
-
   return referencia.id;
 }
 
 async function leerLibros() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionBiblioteca(),
+    coleccionBiblioteca(userId),
     orderBy("actualizadoEn", "desc")
   );
-
   const resultado = await getDocs(consulta);
-
-  return resultado.docs.map((documento) => ({
-    id: documento.id,
-    ...documento.data()
-  }));
+  return resultado.docs.map(documento => ({ id: documento.id, ...documento.data() }));
 }
 
 function observarLibros(callback, onError = console.error) {
-  if (typeof callback !== "function") {
-    throw new Error("Se necesita una función callback.");
-  }
+  if (typeof callback !== "function") throw new Error("Se necesita una función callback.");
 
-  const consulta = query(
-    coleccionBiblioteca(),
-    orderBy("actualizadoEn", "desc")
-  );
+  let cancelarSnapshot = null;
+  let cancelado = false;
 
-  return onSnapshot(
-    consulta,
-    (resultado) => {
-      const libros = resultado.docs.map((documento) => ({
-        id: documento.id,
-        ...documento.data()
-      }));
+  (async () => {
+    try {
+      const userId = await obtenerUIDPersonaActiva();
+      if (cancelado) return;
+      const consulta = query(
+        coleccionBiblioteca(userId),
+        orderBy("actualizadoEn", "desc")
+      );
+      cancelarSnapshot = onSnapshot(
+        consulta,
+        resultado => callback(resultado.docs.map(documento => ({
+          id: documento.id,
+          ...documento.data()
+        }))),
+        onError
+      );
+    } catch (error) {
+      onError(error);
+    }
+  })();
 
-      callback(libros);
-    },
-    onError
-  );
+  return () => {
+    cancelado = true;
+    if (typeof cancelarSnapshot === "function") cancelarSnapshot();
+  };
 }
 
 async function actualizarLibro(id, cambios) {
   const datos = normalizarLibro(cambios);
-
-  await updateDoc(documentoLibro(id), {
+  const userId = await obtenerUIDPersonaActiva();
+  await updateDoc(documentoLibro(id, userId), {
     ...datos,
     actualizadoEn: serverTimestamp()
   });
 }
 
 async function eliminarLibro(id) {
-  await deleteDoc(documentoLibro(id));
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoLibro(id, userId));
 }
 
-
-
-
-/* ==========================================================
-   Audio de Biblioteca
-   usuarios/{uid}/bibliotecaAudios/{libroId}
-   ========================================================== */
-
-function documentoAudioLibro(libroId) {
-  if (!libroId) {
-    throw new Error("Falta el identificador del libro.");
-  }
-
-  return doc(
-    db,
-    "usuarios",
-    obtenerUID(),
-    "bibliotecaAudios",
-    libroId
-  );
+function documentoAudioLibro(libroId, userId) {
+  if (!libroId) throw new Error("Falta el identificador del libro.");
+  const uid = String(userId || "").trim();
+  if (!uid) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return doc(db, "usuarios", uid, "bibliotecaAudios", libroId);
 }
 
-async function guardarAudioLibro(libroId, audio = {}) {
+function normalizarAudioBiblioteca(audio = {}) {
   const audioData = String(audio.audioData ?? "").trim();
   const mimeType = String(audio.mimeType ?? "audio/webm").trim();
   const duration = Number(audio.duration ?? 0);
-  const transcript = String(audio.transcript ?? "").trim();
-  const language = String(audio.language ?? "es-ES").trim();
-  const transcriptEdited = Boolean(audio.transcriptEdited);
-
-  if (!audioData) {
-    throw new Error("No hay una grabación para guardar.");
-  }
-
+  if (!audioData) throw new Error("No hay una grabación para guardar.");
   if (audioData.length > 900000) {
-    throw new Error(
-      "La grabación es demasiado grande. Intenta grabar menos tiempo."
-    );
+    throw new Error("La grabación es demasiado grande. Intenta grabar menos tiempo.");
   }
+  return {
+    audioData,
+    mimeType,
+    duration: Number.isFinite(duration) ? duration : 0,
+    transcript: String(audio.transcript ?? "").trim(),
+    familyObservation: String(audio.familyObservation ?? "").trim(),
+    language: String(audio.language ?? "es-ES").trim(),
+    transcriptEdited: Boolean(audio.transcriptEdited)
+  };
+}
 
+async function guardarAudioLibro(libroId, audio = {}) {
+  const datos = normalizarAudioBiblioteca(audio);
+  const userId = await obtenerUIDPersonaActiva();
   await setDoc(
-    documentoAudioLibro(libroId),
-    {
-      audioData,
-      mimeType,
-      duration: Number.isFinite(duration) ? duration : 0,
-      transcript,
-      familyObservation: String(audio.familyObservation ?? "").trim(),
-      language,
-      transcriptEdited,
-      actualizadoEn: serverTimestamp()
-    },
+    documentoAudioLibro(libroId, userId),
+    { ...datos, actualizadoEn: serverTimestamp() },
     { merge: true }
   );
-
-  await updateDoc(documentoLibro(libroId), {
+  await updateDoc(documentoLibro(libroId, userId), {
     hasAudio: true,
     actualizadoEn: serverTimestamp()
   });
 }
 
 async function leerAudioLibro(libroId) {
-  const resultado = await getDoc(documentoAudioLibro(libroId));
-
-  if (!resultado.exists()) {
-    return null;
-  }
-
-  return {
-    id: resultado.id,
-    ...resultado.data()
-  };
+  const userId = await obtenerUIDPersonaActiva();
+  const resultado = await getDoc(documentoAudioLibro(libroId, userId));
+  return resultado.exists() ? { id: resultado.id, ...resultado.data() } : null;
 }
 
 async function eliminarAudioLibro(libroId) {
-  await deleteDoc(documentoAudioLibro(libroId));
-
-  await updateDoc(documentoLibro(libroId), {
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoAudioLibro(libroId, userId));
+  await updateDoc(documentoLibro(libroId, userId), {
     hasAudio: false,
     actualizadoEn: serverTimestamp()
   });
 }
 
+async function restaurarLibroBiblioteca(libroId, libro = {}, audio = null) {
+  const userId = await obtenerUIDPersonaActiva();
+  const datos = normalizarLibro({ ...libro, hasAudio: Boolean(audio?.audioData) });
+  const referencia = libroId
+    ? documentoLibro(libroId, userId)
+    : doc(coleccionBiblioteca(userId));
+  const existente = await getDoc(referencia);
 
+  await setDoc(
+    referencia,
+    {
+      ...datos,
+      creadoEn: existente.exists()
+        ? (existente.data().creadoEn || serverTimestamp())
+        : serverTimestamp(),
+      actualizadoEn: serverTimestamp()
+    },
+    { merge: true }
+  );
 
+  if (audio?.audioData) {
+    const audioDatos = normalizarAudioBiblioteca(audio);
+    await setDoc(
+      documentoAudioLibro(referencia.id, userId),
+      { ...audioDatos, actualizadoEn: serverTimestamp() },
+      { merge: true }
+    );
+  }
+
+  return referencia.id;
+}
 
 /* ==========================================================
    Perfil del usuario
@@ -430,11 +432,11 @@ async function leerPerfilUsuario() {
    usuarios/{uid}/sesionesLectura/{sesionId}
    ========================================================== */
 
-function coleccionSesionesLectura() {
+function coleccionSesionesLectura(userId = obtenerUID()) {
   return collection(
     db,
     "usuarios",
-    obtenerUID(),
+    userId,
     "sesionesLectura"
   );
 }
@@ -481,10 +483,11 @@ function normalizarSesionLectura(sesion = {}) {
 
 async function guardarSesionLectura(sesion) {
   const datos = normalizarSesionLectura(sesion);
+  const userId = await obtenerUIDPersonaActiva();
   const referencia = doc(
     db,
     "usuarios",
-    obtenerUID(),
+    userId,
     "sesionesLectura",
     datos.historiaId
   );
@@ -507,8 +510,9 @@ async function guardarSesionLectura(sesion) {
 }
 
 async function leerSesionesLectura() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionSesionesLectura(),
+    coleccionSesionesLectura(userId),
     orderBy("actualizadaEn", "desc")
   );
 
@@ -532,10 +536,11 @@ async function actualizarObservacionSesionLectura(
   }
 
   const observacion = String(observacionFamilia ?? "").trim();
+  const userId = await obtenerUIDPersonaActiva();
   const referencia = doc(
     db,
     "usuarios",
-    obtenerUID(),
+    userId,
     "sesionesLectura",
     id
   );
@@ -579,11 +584,13 @@ async function eliminarSesionLectura(historiaId) {
     throw new Error("Falta el identificador de la aventura.");
   }
 
+  const userId = await obtenerUIDPersonaActiva();
+
   await deleteDoc(
     doc(
       db,
       "usuarios",
-      obtenerUID(),
+      userId,
       "sesionesLectura",
       historiaId
     )
@@ -597,11 +604,17 @@ async function eliminarSesionLectura(historiaId) {
    usuarios/{uid}/sesionesSemillas/{sesionId}
    ========================================================== */
 
-function coleccionSesionesSemillas() {
+function coleccionSesionesSemillas(userId) {
+  const id = String(userId || "").trim();
+
+  if (!id) {
+    throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  }
+
   return collection(
     db,
     "usuarios",
-    obtenerUID(),
+    id,
     "sesionesSemillas"
   );
 }
@@ -651,13 +664,14 @@ function normalizarSesionSemilla(sesion = {}) {
 
 async function guardarSesionSemilla(sesion) {
   const datos = normalizarSesionSemilla(sesion);
+  const userId = await obtenerUIDPersonaActiva();
 
   /*
    * Cada práctica se conserva como una sesión independiente.
    * Así una misma Semilla puede repetirse sin sobrescribir el historial.
    */
   const referencia = await addDoc(
-    coleccionSesionesSemillas(),
+    coleccionSesionesSemillas(userId),
     {
       ...datos,
       creadaEn: serverTimestamp(),
@@ -669,8 +683,9 @@ async function guardarSesionSemilla(sesion) {
 }
 
 async function leerSesionesSemillas() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionSesionesSemillas(),
+    coleccionSesionesSemillas(userId),
     orderBy("actualizadaEn", "desc")
   );
 
@@ -853,8 +868,7 @@ function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}
 
   const resultado = {
     alumnoId: textoSeguro(tarea.alumnoId) || uidAlumno,
-    creadaPorUid: textoSeguro(tarea.creadaPorUid) || uidActual,
-    asignadaPorUid: textoSeguro(tarea.asignadaPorUid) || uidActual,
+    assignedBy: textoSeguro(tarea.assignedBy) || uidActual,
     titulo,
     descripcion: textoSeguro(tarea.descripcion),
     tipo: tiposValidos.has(tarea.tipo)
@@ -880,14 +894,6 @@ function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}
     visibleParaAlumno: tarea.visibleParaAlumno !== false,
     ordenMision: Math.max(0, numeroSeguro(tarea.ordenMision, 9999)),
     estado: normalizarEstadoTarea(tarea.estado),
-    asignadaPor:
-      tarea.asignadaPor && typeof tarea.asignadaPor === "object"
-        ? tarea.asignadaPor
-        : {
-            uid: uidActual,
-            rol: "familia",
-            nombreVisible: "Familia"
-          },
     presentacionAlumno: {
       tituloMision: textoSeguro(
         tarea.presentacionAlumno?.tituloMision ??
@@ -967,10 +973,15 @@ async function crearTarea(tarea) {
   const userId = await obtenerUIDPersonaActiva();
   const datos = normalizarTarea(tarea, { alumnoUserId: userId });
 
+  const actorUserId = obtenerUID();
   const referencia = await addDoc(coleccionTareas(userId), {
     ...datos,
-    creadaEn: serverTimestamp(),
-    actualizadaEn: serverTimestamp()
+    createdAt: serverTimestamp(),
+    createdBy: actorUserId,
+    updatedAt: serverTimestamp(),
+    updatedBy: actorUserId,
+    statusChangedAt: serverTimestamp(),
+    statusChangedBy: actorUserId
   });
 
   return referencia.id;
@@ -982,15 +993,39 @@ async function obtenerTarea(id) {
   return resultado.exists() ? normalizarTareaLeida(resultado) : null;
 }
 
+function valorFechaOrdenTarea(tarea = {}) {
+  const valor =
+    tarea.updatedAt ??
+    tarea.actualizadaEn ??
+    tarea.createdAt ??
+    tarea.creadaEn ??
+    null;
+
+  if (!valor) return 0;
+  if (typeof valor.toMillis === "function") return valor.toMillis();
+  if (valor instanceof Date) return valor.getTime();
+
+  const timestamp = Date.parse(valor);
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
+
+function ordenarTareasPorActualizacion(tareas = []) {
+  return [...tareas].sort(
+    (a, b) => valorFechaOrdenTarea(b) - valorFechaOrdenTarea(a)
+  );
+}
+
 async function leerTareas() {
   const userId = await obtenerUIDPersonaActiva();
-  const consulta = query(
-    coleccionTareas(userId),
-    orderBy("actualizadaEn", "desc")
-  );
 
-  const resultado = await getDocs(consulta);
-  return resultado.docs.map(normalizarTareaLeida);
+  // Compatibilidad: Firestore excluye de un orderBy los documentos que no
+  // contienen el campo ordenado. Se lee la colección completa para conservar
+  // misiones legacy sin updatedAt y se ordena en cliente usando la mejor fecha
+  // disponible, sin inventar metadatos ausentes.
+  const resultado = await getDocs(coleccionTareas(userId));
+  return ordenarTareasPorActualizacion(
+    resultado.docs.map(normalizarTareaLeida)
+  );
 }
 
 function observarTareas(callback, onError = console.error) {
@@ -1006,14 +1041,14 @@ function observarTareas(callback, onError = console.error) {
       const userId = await obtenerUIDPersonaActiva();
       if (cancelado) return;
 
-      const consulta = query(
-        coleccionTareas(userId),
-        orderBy("actualizadaEn", "desc")
-      );
-
       cancelarSnapshot = onSnapshot(
-        consulta,
-        (resultado) => callback(resultado.docs.map(normalizarTareaLeida)),
+        coleccionTareas(userId),
+        (resultado) =>
+          callback(
+            ordenarTareasPorActualizacion(
+              resultado.docs.map(normalizarTareaLeida)
+            )
+          ),
         onError
       );
     } catch (error) {
@@ -1030,8 +1065,7 @@ function observarTareas(callback, onError = console.error) {
 async function actualizarTarea(id, cambios = {}) {
   const permitidos = new Set([
     "alumnoId",
-    "creadaPorUid",
-    "asignadaPorUid",
+    "assignedBy",
     "titulo",
     "descripcion",
     "tipo",
@@ -1048,7 +1082,6 @@ async function actualizarTarea(id, cambios = {}) {
     "estado",
     "visibleParaAlumno",
     "ordenMision",
-    "asignadaPor",
     "presentacionAlumno",
     "progreso",
     "evidencia",
@@ -1099,6 +1132,19 @@ async function actualizarTarea(id, cambios = {}) {
     datos.ordenMision = Math.max(0, numeroSeguro(datos.ordenMision, 9999));
   }
 
+  const userId = await obtenerUIDPersonaActiva();
+  const actorUserId = obtenerUID();
+  const referencia = documentoTarea(id, userId);
+  let datosExistentes = null;
+
+  if ("estado" in datos || "progreso" in datos) {
+    const existente = await getDoc(referencia);
+    if (!existente.exists()) {
+      throw new Error("No se encontró la tarea.");
+    }
+    datosExistentes = existente.data();
+  }
+
   if ("criterioCumplimiento" in datos) {
     datos.criterioCumplimiento = normalizarCriterioCumplimiento(
       datos.criterioCumplimiento
@@ -1106,9 +1152,15 @@ async function actualizarTarea(id, cambios = {}) {
   }
 
   if ("progreso" in datos) {
+    const progresoActual = normalizarProgresoTarea(
+      datosExistentes?.progreso,
+      datosExistentes?.criterioCumplimiento || {}
+    );
     datos.progreso = normalizarProgresoTarea(
-      datos.progreso,
-      datos.criterioCumplimiento || {}
+      { ...progresoActual, ...datos.progreso },
+      datos.criterioCumplimiento ||
+        datosExistentes?.criterioCumplimiento ||
+        {}
     );
   }
 
@@ -1137,10 +1189,22 @@ async function actualizarTarea(id, cambios = {}) {
     };
   }
 
-  const userId = await obtenerUIDPersonaActiva();
-  await updateDoc(documentoTarea(id, userId), {
+  const cambiosAuditoria = {
+    updatedAt: serverTimestamp(),
+    updatedBy: actorUserId
+  };
+
+  if ("estado" in datos) {
+    const estadoAnterior = normalizarEstadoTarea(datosExistentes?.estado);
+    if (datos.estado !== estadoAnterior) {
+      cambiosAuditoria.statusChangedAt = serverTimestamp();
+      cambiosAuditoria.statusChangedBy = actorUserId;
+    }
+  }
+
+  await updateDoc(referencia, {
     ...datos,
-    actualizadaEn: serverTimestamp()
+    ...cambiosAuditoria
   });
 }
 
@@ -1151,18 +1215,41 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
     throw new Error("El estado indicado no es válido.");
   }
 
+  const userId = await obtenerUIDPersonaActiva();
+  const actorUserId = obtenerUID();
+  const referencia = documentoTarea(id, userId);
+  const existente = await getDoc(referencia);
+
+  if (!existente.exists()) {
+    throw new Error("No se encontró la tarea.");
+  }
+
+  const tareaActual = existente.data();
+  const estadoAnterior = normalizarEstadoTarea(tareaActual.estado);
+  const progresoActual = normalizarProgresoTarea(
+    tareaActual.progreso,
+    tareaActual.criterioCumplimiento || {}
+  );
+
   const cambios = {
     estado: estadoNormalizado,
-    actualizadaEn: serverTimestamp()
+    updatedAt: serverTimestamp(),
+    updatedBy: actorUserId
   };
 
-  if (estadoNormalizado === "en_curso") {
+  if (estadoNormalizado !== estadoAnterior) {
+    cambios.statusChangedAt = serverTimestamp();
+    cambios.statusChangedBy = actorUserId;
+  }
+
+  if (estadoNormalizado === "en_curso" && !progresoActual.iniciadaEn) {
     cambios["progreso.iniciadaEn"] = serverTimestamp();
   }
 
   if (
-    estadoNormalizado === "completada" ||
-    estadoNormalizado === "pendiente_validacion"
+    (estadoNormalizado === "completada" ||
+      estadoNormalizado === "pendiente_validacion") &&
+    !progresoActual.completadaEn
   ) {
     cambios["progreso.completadaEn"] = serverTimestamp();
   }
@@ -1171,8 +1258,7 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
     cambios[clave] = valor;
   });
 
-  const userId = await obtenerUIDPersonaActiva();
-  await updateDoc(documentoTarea(id, userId), cambios);
+  await updateDoc(referencia, cambios);
 }
 
 function normalizarEvidencia(evidencia = {}, { alumnoUserId = "" } = {}) {
@@ -1223,20 +1309,40 @@ function crearIdEvidencia(evidencia) {
   return base.slice(0, 240);
 }
 
-function evidenciaCumpleCriterio(evidencia, criterio) {
-  if (criterio.modulo && evidencia.modulo !== criterio.modulo) return false;
-  if (criterio.evidenciaTipo && evidencia.tipo !== criterio.evidenciaTipo) {
-    return false;
+function incumplimientosEvidenciaCriterio(evidencia, criterio) {
+  const incumplimientos = [];
+
+  if (criterio.modulo && evidencia.modulo !== criterio.modulo) {
+    incumplimientos.push(
+      `módulo requerido: ${criterio.modulo}; recibido: ${evidencia.modulo || "sin dato"}`
+    );
   }
 
-  return Object.entries(criterio.filtros || {}).every(
-    ([clave, valorEsperado]) =>
-      String(evidencia.atributos?.[clave] ?? "") === String(valorEsperado)
-  );
+  if (criterio.evidenciaTipo && evidencia.tipo !== criterio.evidenciaTipo) {
+    incumplimientos.push(
+      `tipo de evidencia requerido: ${criterio.evidenciaTipo}; recibido: ${evidencia.tipo || "sin dato"}`
+    );
+  }
+
+  Object.entries(criterio.filtros || {}).forEach(([clave, valorEsperado]) => {
+    const valorRecibido = evidencia.atributos?.[clave];
+    if (String(valorRecibido ?? "") !== String(valorEsperado)) {
+      incumplimientos.push(
+        `${clave} requerido: ${valorEsperado}; recibido: ${valorRecibido ?? "sin dato"}`
+      );
+    }
+  });
+
+  return incumplimientos;
+}
+
+function evidenciaCumpleCriterio(evidencia, criterio) {
+  return incumplimientosEvidenciaCriterio(evidencia, criterio).length === 0;
 }
 
 async function registrarEvidenciaMision(evidenciaEntrada) {
   const userId = await obtenerUIDPersonaActiva();
+  const actorUserId = obtenerUID();
   const evidencia = normalizarEvidencia(
     evidenciaEntrada,
     { alumnoUserId: userId }
@@ -1299,7 +1405,11 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
     );
 
     if (!evidenciaCumpleCriterio(evidencia, criterio)) {
-      throw new Error("La actividad no cumple el criterio de esta misión.");
+      const detalles = incumplimientosEvidenciaCriterio(evidencia, criterio);
+      throw new Error(
+        "La actividad no cumple el criterio de esta misión. " +
+        detalles.join(" · ")
+      );
     }
 
     const progresoActual = normalizarProgresoTarea(
@@ -1333,8 +1443,14 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       "progreso.cantidadActual": cantidadActual,
       "progreso.cantidadObjetivo": criterio.cantidadObjetivo,
       "progreso.evidenciaIds": evidenciaIds,
-      actualizadaEn: serverTimestamp()
+      updatedAt: serverTimestamp(),
+      updatedBy: actorUserId
     };
+
+    if (nuevoEstado !== estadoActual) {
+      cambiosTarea.statusChangedAt = serverTimestamp();
+      cambiosTarea.statusChangedBy = actorUserId;
+    }
 
     if (!progresoActual.iniciadaEn) {
       cambiosTarea["progreso.iniciadaEn"] = serverTimestamp();
@@ -1364,7 +1480,8 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       "progreso.cantidadActual": resultado.cantidadActual,
       "progreso.cantidadObjetivo": resultado.cantidadObjetivo,
       "progreso.completadaEn": serverTimestamp(),
-      actualizadaEn: serverTimestamp()
+      updatedAt: serverTimestamp(),
+      updatedBy: actorUserId
     });
   }
 
@@ -1419,7 +1536,8 @@ async function guardarObservacionTarea(id, texto) {
   await updateDoc(referencia, {
     observacionActual: observacion,
     historialObservaciones: nuevoHistorial,
-    actualizadaEn: serverTimestamp()
+    updatedAt: serverTimestamp(),
+    updatedBy: obtenerUID()
   });
 }
 
@@ -1851,6 +1969,7 @@ export const Academia = Object.freeze({
     observar: observarLibros,
     actualizar: actualizarLibro,
     eliminar: eliminarLibro,
+    restaurar: restaurarLibroBiblioteca,
     audio: Object.freeze({
       guardar: guardarAudioLibro,
       leer: leerAudioLibro,

@@ -1,6 +1,7 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
+import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
@@ -73,6 +74,8 @@ let recognition = null;
 let transcript = "";
 let activeFamily = "todas";
 let sesiones = [];
+let contextoUsuario = null;
+let esPersonaPropia = true;
 
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>"']/g, char => ({
@@ -626,6 +629,20 @@ function renderRecorder() {
   updateRecorderUI();
 }
 
+function friendlySaveError(error) {
+  const message = String(error?.message || "").trim();
+
+  if (message.startsWith("La actividad no cumple el criterio de esta misión.")) {
+    return "Esta Semilla no corresponde a la misión que estás realizando. Vuelve a la misión y elige una de las Semillas indicadas.";
+  }
+
+  if (message === "La misión no está activa para recibir evidencias.") {
+    return "Esta misión ya no está disponible para guardar nuevas prácticas.";
+  }
+
+  return message || "Ocurrió un problema inesperado al guardar la práctica.";
+}
+
 function basicAnalysis() {
   const target = String(respuestas.respuestaConstruida || "");
   const heard = String($("transcript")?.value || transcript || "").trim();
@@ -707,8 +724,10 @@ async function saveSession({ withoutRecording = false } = {}) {
       mostrarGuacamayas:true
     });
   } catch (error) {
-    console.error(error);
-    updateRecorderUI(`No pudimos guardar la práctica: ${error.message}`);
+    console.error("[CreciendoPorDentro] No se pudo completar el guardado.", error);
+    updateRecorderUI(
+      `No pudimos completar el guardado: ${friendlySaveError(error)}`
+    );
     if (button) button.disabled = false;
   }
 }
@@ -787,7 +806,28 @@ async function toggleHelp() {
 }
 
 async function loadSavedSessions() {
-  sesiones = await Academia.semillas.leerSesiones();
+  /*
+   * Las sesiones históricas siguen físicamente bajo usuarios/{uid}/...
+   * durante la transición multi-Persona. No debemos confundir las sesiones
+   * del Usuario autenticado con las de otra Persona Activa.
+   *
+   * Para Persona propia conservamos exactamente el comportamiento actual.
+   * Para Persona relacionada dejamos el catálogo plenamente disponible y
+   * evitamos que una lectura legacy bloquee todo Creciendo por Dentro.
+   */
+  if (!esPersonaPropia) {
+    sesiones = [];
+    return sesiones;
+  }
+
+  try {
+    sesiones = await Academia.semillas.leerSesiones();
+  } catch (error) {
+    console.warn("[CreciendoPorDentro] No se pudo cargar el historial de Semillas.", error);
+    sesiones = [];
+  }
+
+  return sesiones;
 }
 
 function formatDate(value) {
@@ -835,14 +875,57 @@ async function initialize() {
     window.location.replace("/academia-gloria/login.html");
     return;
   }
-  perfil = await Academia.usuario.leerPerfil();
-  await Promise.all([loadCatalog(), loadMission(), loadSavedSessions()]);
+
+  /*
+   * El catálogo es contenido editorial local (semillas.json) y debe poder
+   * mostrarse aunque una lectura Firestore secundaria falle. Por eso se carga
+   * y renderiza primero, sin depender del historial ni de una misión.
+   */
+  await loadCatalog();
+  renderFilters();
+  renderCatalog();
+
+  try {
+    contextoUsuario = await ContextoUsuario.inicializar();
+    perfil = contextoUsuario?.personaActiva || await Academia.usuario.leerPerfil();
+    esPersonaPropia = contextoUsuario?.esPersonaPropia !== false;
+  } catch (error) {
+    console.warn("[CreciendoPorDentro] No se pudo resolver Persona Activa; se mantiene compatibilidad.", error);
+    perfil = await Academia.usuario.leerPerfil();
+    esPersonaPropia = true;
+  }
+
+  /*
+   * Misión e historial enriquecen la pantalla, pero ya no pueden impedir que
+   * aparezcan las Semillas.
+   */
+  await Promise.allSettled([loadMission(), loadSavedSessions()]);
+
   configureRecognition();
   renderFilters();
   renderCatalog();
+
   $("liaMessage").textContent =
-    `Hola, ${String(perfil?.nombre || "exploradora").trim()} 😊 Puedes pensar, hablar y volver a intentarlo.`;
-  if (params.get("vista") === "historial") await showHistory();
+    `Hola, ${String(perfil?.nombreVisible || perfil?.nombre || "exploradora").trim()} 😊 Puedes pensar, hablar y volver a intentarlo.`;
+
+  if (params.get("vista") === "historial") {
+    await showHistory();
+    return;
+  }
+
+  /*
+   * Entrada contextual desde Mi Camino / Gestión de Misiones:
+   * - una sola Semilla asignada  -> abrirla directamente;
+   * - varias Semillas asignadas  -> mostrar únicamente esas;
+   * - sin Semillas específicas   -> mantener el catálogo normal.
+   */
+  if (misionActiva) {
+    const asignadas = filteredSeeds();
+
+    if (missionAllowedIds().length === 1 && asignadas.length === 1) {
+      startSeed(asignadas[0].id);
+    }
+  }
 }
 
 $("startRecommended").onclick = () => {

@@ -2153,6 +2153,41 @@
       }
     }
 
+
+    /* Mi Camino · Mi Constancia funcional */
+    .dia.hoy{
+      outline:2px solid #fb923c;
+      outline-offset:2px;
+    }
+
+    .dia.futuro{
+      opacity:.52;
+      background:#f8fafc;
+      color:#94a3b8;
+    }
+
+    .dia.futuro.hecho{
+      opacity:1;
+    }
+
+
+    /* ==========================================================
+       Mi Camino · Ajuste responsive del paisaje
+       Conserva más del lado derecho para mostrar la guacamaya roja.
+       La versión de escritorio permanece sin cambios.
+       ========================================================== */
+    @media(max-width:900px){
+      .hero-paisaje img{
+        object-position:62% 48% !important;
+      }
+    }
+
+    @media(max-width:680px){
+      .hero-paisaje img{
+        object-position:84% 48% !important;
+      }
+    }
+
   </style>
   <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
 </head>
@@ -2334,7 +2369,7 @@
           <div class="constancia__icono">🔥</div>
           <div>
             <h3>Esta semana</h3>
-            <p>Cada día con una aventura terminada deja una pequeña estrella en tu camino.</p>
+            <p>Cada día en que terminas al menos una Misión deja una pequeña estrella en tu camino.</p>
           </div>
         </div>
 
@@ -2436,6 +2471,37 @@
 
     const $ = id => document.getElementById(id);
 
+    function configurarBotonVolver(){
+      const boton = $("botonVolver");
+      if (!boton) return;
+
+      const fallback = boton.dataset.rutaAlternativa || boton.getAttribute("href") || "../";
+      const params = new URLSearchParams(window.location.search);
+      const volver = String(params.get("volver") || "").trim();
+
+      if (volver) {
+        try {
+          const destino = new URL(volver, window.location.origin);
+          if (destino.origin === window.location.origin) {
+            boton.href = `${destino.pathname}${destino.search}${destino.hash}`;
+            return;
+          }
+        } catch {}
+      }
+
+      boton.href = fallback;
+      boton.addEventListener("click", event => {
+        if (!document.referrer || window.history.length <= 1) return;
+
+        try {
+          const origen = new URL(document.referrer);
+          if (origen.origin !== window.location.origin) return;
+          event.preventDefault();
+          window.history.back();
+        } catch {}
+      });
+    }
+
     function escapar(valor=""){
       return String(valor)
         .replaceAll("&","&amp;")
@@ -2455,7 +2521,9 @@
 
       if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
         const fecha = new Date(`${valor}T12:00:00`);
-        return Number.isNaN(fecha.getTime()) ? null : fecha;
+        if (Number.isNaN(fecha.getTime())) return null;
+        fecha.__soloFechaAcademia = true;
+        return fecha;
       }
 
       const fecha = new Date(valor);
@@ -2465,7 +2533,6 @@
     function fechaInicio(tarea={}){
       return fechaDesdeValor(
         tarea.fechaInicio ||
-        tarea.creadaEn ||
         tarea.createdAt
       );
     }
@@ -2476,13 +2543,17 @@
           ? tarea.resultado
           : {};
 
+      const estadoTerminado =
+        tarea.estado === "completada" ||
+        ESTADOS_REVISION.has(tarea.estado);
+
       return fechaDesdeValor(
         resultado.fechaFinalizacion ||
         tarea.progreso?.completadaEn ||
         tarea.fechaFinalizacion ||
         (
-          tarea.estado === "completada"
-            ? tarea.fechaEstado
+          estadoTerminado
+            ? tarea.statusChangedAt
             : null
         )
       );
@@ -2490,8 +2561,7 @@
 
     function fechaEstado(tarea={}){
       return fechaDesdeValor(
-        tarea.fechaEstado ||
-        tarea.actualizadaEn ||
+        tarea.statusChangedAt ||
         (
           ["completada","pendiente_validacion","completada_pendiente_validacion"]
             .includes(tarea.estado)
@@ -2500,17 +2570,57 @@
         ) ||
         tarea.progreso?.iniciadaEn ||
         tarea.fechaInicio ||
-        tarea.creadaEn
+        tarea.createdAt
+      );
+    }
+
+    function fechaConstancia(tarea={}){
+      const resultado =
+        tarea.resultado && typeof tarea.resultado === "object"
+          ? tarea.resultado
+          : {};
+
+      /*
+       * Mi Constancia mide la actividad de Gloria, no la gestión familiar.
+       *
+       * Prioridad:
+       * 1) fechaFinalizacion registrada por la actividad;
+       * 2) progreso.completadaEn;
+       * 3) fechaFinalizacion de la Misión.
+       *
+       * Para una Misión en revisión, statusChangedAt representa el momento
+       * del último cambio de estado. La finalización educativa sigue teniendo
+       * prioridad mediante progreso.completadaEn.
+       */
+      return fechaDesdeValor(
+        resultado.fechaFinalizacion ||
+        tarea.progreso?.completadaEn ||
+        tarea.fechaFinalizacion ||
+        (
+          ESTADOS_REVISION.has(tarea.estado)
+            ? tarea.statusChangedAt
+            : null
+        )
       );
     }
 
     function fechaCorta(fecha){
       if (!fecha) return "Fecha no disponible";
-      return new Intl.DateTimeFormat("es-ES",{
+
+      const opciones = {
         day:"numeric",
         month:"short",
         year:"numeric"
-      }).format(fecha);
+      };
+
+      // Las fechas de calendario (YYYY-MM-DD) no tienen una hora real.
+      // No mostramos el 12:00 artificial usado únicamente para construir Date.
+      if (!fecha.__soloFechaAcademia) {
+        opciones.hour = "2-digit";
+        opciones.minute = "2-digit";
+      }
+
+      return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
     }
 
     function esVisible(tarea={}){
@@ -3064,9 +3174,14 @@
     function diasConActividad(){
       const conjunto = new Set();
 
-      [...pasadas(tareasActuales),...esperandoRevision(tareasActuales)]
+      /*
+       * Regla de Mi Constancia:
+       * un día cuenta una sola vez cuando Gloria termina al menos una Misión.
+       * La revisión/cierre posterior de la familia nunca genera una estrella.
+       */
+      [...pasadas(tareasActuales), ...esperandoRevision(tareasActuales)]
         .forEach(tarea=>{
-          const fecha = fechaFinal(tarea);
+          const fecha = fechaConstancia(tarea);
           if (fecha) conjunto.add(claveDia(fecha));
         });
 
@@ -3097,20 +3212,40 @@
     function renderConstancia(){
       const contenedor = $("semanaConstancia");
       const dias = diasConActividad();
-      const inicio = inicioSemana(new Date());
+      const ahora = new Date();
+      ahora.setHours(0,0,0,0);
+
+      const inicio = inicioSemana(ahora);
       const nombres = ["L","M","X","J","V","S","D"];
       let diasSemana = 0;
 
       contenedor.innerHTML = nombres.map((nombre,indice)=>{
         const fecha = new Date(inicio);
         fecha.setDate(inicio.getDate()+indice);
-        const hecho = dias.has(claveDia(fecha));
-        if (hecho) diasSemana++;
+        fecha.setHours(0,0,0,0);
+
+        const clave = claveDia(fecha);
+        const hecho = dias.has(clave);
+        const esHoy = clave === claveDia(ahora);
+        const esFuturo = fecha.getTime() > ahora.getTime();
+
+        if (hecho && !esFuturo) diasSemana++;
+
+        const fechaLegible = new Intl.DateTimeFormat("es-ES",{
+          weekday:"long",
+          day:"numeric",
+          month:"short"
+        }).format(fecha);
 
         return `
-          <div class="dia ${hecho ? "hecho" : ""}">
+          <div
+            class="dia ${hecho ? "hecho" : ""} ${esHoy ? "hoy" : ""} ${esFuturo ? "futuro" : ""}"
+            title="${escapar(fechaLegible)}"
+          >
             <span>${nombre}</span>
-            <span class="dia__marca">${hecho ? "⭐" : "○"}</span>
+            <span class="dia__marca">
+              ${hecho ? "⭐" : esFuturo ? "·" : "○"}
+            </span>
           </div>
         `;
       }).join("");
@@ -3216,6 +3351,7 @@
       );
     }
 
+    configurarBotonVolver();
     configurarFolders();
 
     protegerPagina({
