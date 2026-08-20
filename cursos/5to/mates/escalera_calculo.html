@@ -22,8 +22,10 @@
     .progress-bar{height:14px;border-radius:999px;overflow:hidden;background:#e2e8f0}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#4f46e5,#0ea5e9,#22c55e);transition:width .25s ease}
     .star-pop{position:fixed;pointer-events:none;font-size:24px;z-index:70;animation:floatUp 1.4s ease forwards;opacity:0}@keyframes floatUp{0%{transform:translateY(20px) scale(.7);opacity:0}18%{opacity:1}100%{transform:translateY(-95px) scale(1.2) rotate(18deg);opacity:0}}
   </style>
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=5">
 </head>
-<body>
+<body data-page-title="Escalera de Cálculo" data-page-icon="➗" data-nav-back="./index.html">
 <div id="stars-layer"></div>
 <main class="max-w-7xl mx-auto p-4 md:p-8">
   <header class="glass-card rounded-[2.6rem] px-6 py-8 md:px-10 md:py-10 mb-8">
@@ -167,5 +169,7 @@ function finishQuiz(){document.getElementById('quiz-progress').style.width='100%
 function resetQuiz(){activeQuestions=[...questions];currentQ=0;score=0;streak=0;document.getElementById('score-live').innerText='Puntos: 0';document.getElementById('streak-box').innerText='🔥 Racha: 0';document.getElementById('quiz-container').classList.remove('hidden');document.getElementById('score-container').classList.add('hidden');loadQuestion();}
 loadPractice();loadQuestion();
 </script>
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=5"></script>
 </body>
 </html>

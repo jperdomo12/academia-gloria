@@ -2,14 +2,11 @@
  * Academia Gloria Valentina
  * Cabecera global de navegación · v2.1 estable
  *
- * Estructura estable:
- * ACCIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
+ * Estructura:
+ * LOGO · PANTALLA ACTUAL · PANEL DEL ALUMNO
  *
- * Por compatibilidad, las páginas existentes conservan la marca Academia.
- * Las pantallas que declaran data-nav-back usan el estándar:
- * VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
- *
- * El panel del alumno permanece en la zona derecha y concentra la navegación.
+ * El menú global independiente se elimina. El panel del alumno se traslada
+ * automáticamente a la zona derecha de la cabecera y concentra la navegación.
  */
 
 import { UBICACIONES_ACADEMIA } from "../modelos/navegacion.js";
@@ -52,78 +49,6 @@ function buscarNodo(arbol, rutaActual) {
   }
 
   return null;
-}
-
-
-function tituloPantalla(actual) {
-  return String(
-    document.body?.dataset?.pageTitle ||
-    actual?.titulo ||
-    document.title ||
-    "Academia"
-  ).trim();
-}
-
-function iconoPantalla(actual) {
-  return String(
-    document.body?.dataset?.pageIcon ||
-    actual?.icono ||
-    "🌈"
-  ).trim();
-}
-
-function rutaAlternativaVolver() {
-  return String(document.body?.dataset?.navBack || "").trim();
-}
-
-function htmlAccionIzquierda() {
-  const rutaAlternativa = rutaAlternativaVolver();
-
-  if (!rutaAlternativa) {
-    return `
-      <a class="nav-global__marca"
-         href="${urlAcademia("")}"
-         aria-label="Ir al inicio de la Academia">
-        <span aria-hidden="true">🌈</span>
-        <span>Academia</span>
-      </a>
-    `;
-  }
-
-  return `
-    <a class="nav-global__volver"
-       href="${escaparHTML(rutaAlternativa)}"
-       data-nav-volver
-       data-ruta-alternativa="${escaparHTML(rutaAlternativa)}"
-       aria-label="Volver a la pantalla anterior">
-      <span class="nav-global__volver-icono" aria-hidden="true">←</span>
-      <span>Volver</span>
-    </a>
-  `;
-}
-
-function configurarVolverContextual(cabecera) {
-  const boton = cabecera.querySelector("[data-nav-volver]");
-  if (!boton) return;
-
-  const rutaAlternativa =
-    boton.dataset.rutaAlternativa ||
-    rutaAlternativaVolver() ||
-    "./";
-
-  const navegacion = window.Academia?.navegacion;
-
-  if (typeof navegacion?.configurarBotonVolver === "function") {
-    navegacion.configurarBotonVolver(boton, rutaAlternativa);
-    return;
-  }
-
-  // Fallback defensivo si una página carga la cabecera sin navegación.js.
-  try {
-    boton.href = new URL(rutaAlternativa, window.location.href).href;
-  } catch {
-    boton.href = rutaAlternativa;
-  }
 }
 
 function escaparHTML(valor = "") {
@@ -176,11 +101,14 @@ async function crearCabecera() {
 
   cabecera.innerHTML = `
     <div class="nav-global__barra">
-      ${htmlAccionIzquierda()}
+      <a class="nav-global__marca" href="${urlAcademia("")}" aria-label="Ir al inicio de la Academia">
+        <span aria-hidden="true">🌈</span>
+        <span>Academia</span>
+      </a>
 
       <div class="nav-global__ubicacion" aria-label="Pantalla actual">
-        <span aria-hidden="true">${escaparHTML(iconoPantalla(actual))}</span>
-        <span>${escaparHTML(tituloPantalla(actual))}</span>
+        <span aria-hidden="true">${escaparHTML(actual?.icono || "🌈")}</span>
+        <span>${escaparHTML(document.body?.dataset?.pageTitle || actual?.titulo || document.title || "Academia")}</span>
       </div>
 
       <div class="nav-global__usuario" data-nav-panel-usuario aria-label="Menú del alumno"></div>
@@ -188,7 +116,6 @@ async function crearCabecera() {
   `;
 
   document.body.prepend(cabecera);
-  configurarVolverContextual(cabecera);
   await trasladarPanelUsuario(cabecera);
 }
 

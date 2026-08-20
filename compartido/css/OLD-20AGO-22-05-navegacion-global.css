@@ -1,4 +1,4 @@
-/* Academia Gloria Valentina · Cabecera global v2.2 · modo estándar Volver | Pantalla | Menú */
+/* Academia Gloria Valentina · Cabecera global v2.0 */
 .nav-global,.nav-global *{box-sizing:border-box}
 .nav-global{position:relative;z-index:9000;width:100%;padding:10px 14px 0;font-family:"Outfit",system-ui,sans-serif}
 .nav-global__barra{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;width:min(1240px,100%);min-height:58px;margin:0 auto;padding:7px 9px 7px 13px;border:2px solid rgba(196,181,253,.68);border-radius:19px;background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(76,29,149,.10);backdrop-filter:blur(13px)}
@@ -20,49 +20,3 @@
   .nav-global__ubicacion{font-size:.72rem}
 }
 @media(prefers-reduced-motion:reduce){.nav-global *{animation:none!important;transition:none!important}}
-
-
-/* Modo estándar opt-in para pantallas con data-nav-back */
-.nav-global__volver{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  min-height:42px;
-  padding:8px 12px;
-  border:2px solid #ddd6fe;
-  border-radius:13px;
-  background:#fff;
-  color:#5b21b6;
-  text-decoration:none;
-  font-weight:900;
-  box-shadow:0 6px 16px rgba(76,29,149,.07);
-  transition:transform .16s ease,border-color .16s ease,background .16s ease;
-}
-
-.nav-global__volver:hover{
-  transform:translateY(-1px);
-  border-color:#a78bfa;
-  background:#faf5ff;
-}
-
-.nav-global__volver:focus-visible{
-  outline:3px solid rgba(124,58,237,.20);
-  outline-offset:2px;
-}
-
-.nav-global__volver-icono{
-  font-size:1.15rem;
-  line-height:1;
-}
-
-@media(max-width:480px){
-  .nav-global__volver{
-    min-width:38px;
-    padding:7px 9px;
-  }
-
-  .nav-global__volver span:last-child{
-    display:none;
-  }
-}

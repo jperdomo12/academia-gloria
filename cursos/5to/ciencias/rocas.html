@@ -83,10 +83,12 @@
         .flip-card-front { background: white; border: 2px solid #e2e8f0; color: #1e293b; }
         .flip-card-back { background: #6366f1; color: white; transform: rotateY(180deg); }
     </style>
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=5">
 </head>
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2490/2490354.png">
-<body class="pb-20">
+<body class="pb-20" data-page-title="Las Rocas" data-page-icon="🔬" data-nav-back="./index.html">
 
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 mb-8">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-20">
@@ -323,5 +325,7 @@
 
         init();
     </script>
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=5"></script>
 </body>
 </html>

@@ -21,8 +21,10 @@
         .correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
         .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
     </style>
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=5">
 </head>
-<body class="bg-rose-50 p-6 md:p-12">
+<body class="bg-rose-50 p-6 md:p-12" data-page-title="Listening" data-page-icon="🇬🇧" data-nav-back="./index.html">
     <div class="max-w-4xl mx-auto">
         <a href="index.html" class="text-rose-700 font-bold mb-8 inline-block hover:underline">← Back to Menu</a>
         
@@ -144,5 +146,7 @@
             else { btn.classList.add('incorrect'); }
         }
     </script>
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=5"></script>
 </body>
 </html>
