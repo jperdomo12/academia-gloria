@@ -2744,6 +2744,53 @@
         );
     }
 
+    const BASE_PRODUCCION_ACADEMIA =
+      new URL("https://jperdomo12.github.io/academia-gloria/");
+
+    function baseEntornoActualAcademia(){
+      return new URL("../../",window.location.href);
+    }
+
+    function rutaRelativaAcademia(destino){
+      if (!destino) return null;
+
+      try{
+        const url = new URL(destino,window.location.href);
+        const bases = [
+          baseEntornoActualAcademia(),
+          BASE_PRODUCCION_ACADEMIA
+        ];
+
+        for (const base of bases) {
+          if (
+            url.origin === base.origin &&
+            url.pathname.startsWith(base.pathname)
+          ) {
+            return (
+              url.pathname.slice(base.pathname.length) +
+              url.search +
+              url.hash
+            );
+          }
+        }
+
+        return null;
+      }catch{
+        return null;
+      }
+    }
+
+    function esDestinoInternoAcademia(destino){
+      return rutaRelativaAcademia(destino) !== null;
+    }
+
+    function destinoInternoEnEntornoActual(destino){
+      const ruta = rutaRelativaAcademia(destino);
+      if (ruta === null) return "";
+
+      return new URL(ruta,baseEntornoActualAcademia()).href;
+    }
+
     function destinoConContexto(tarea){
       const esAcademica = tarea.tipo === "repaso_academico";
       const destino =
@@ -2752,9 +2799,22 @@
 
       if (!destino) return "";
 
-      const url = new URL(destino,window.location.href);
+      const internoAcademia = esDestinoInternoAcademia(destino);
 
-      if (esAcademica && url.origin !== window.location.origin) {
+      /*
+       * Una URL canónica de producción de nuestra Academia se resuelve
+       * siempre en el entorno donde está ejecutándose Mi Camino:
+       *
+       * local      -> http://127.0.0.1:5500/...
+       * producción -> https://jperdomo12.github.io/academia-gloria/...
+       *
+       * Así preservamos Persona Activa, misma pestaña y retorno contextual.
+       */
+      const url = internoAcademia
+        ? new URL(destinoInternoEnEntornoActual(destino))
+        : new URL(destino,window.location.href);
+
+      if (esAcademica && !internoAcademia) {
         return url.href;
       }
 
@@ -3014,6 +3074,10 @@
       }
 
       const destino = destinoConContexto(tarea);
+      const recursoInternoAcademia =
+        esAcademica && destino
+          ? esDestinoInternoAcademia(destino)
+          : false;
 
       if (esAcademica) {
         const puedeIniciar = ["pendiente","asignada"].includes(tarea.estado);
@@ -3039,8 +3103,11 @@
                 <a
                   class="mision__accion mision__accion--academica"
                   href="${escapar(destino)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  ${
+                    recursoInternoAcademia
+                      ? ""
+                      : 'target="_blank" rel="noopener noreferrer"'
+                  }
                 >
                   Abrir recurso →
                 </a>
