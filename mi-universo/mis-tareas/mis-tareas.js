@@ -490,6 +490,8 @@ function renderTareas() {
             : ""
         }
 
+        ${contextoAcademicoHtml(tarea, "contexto-academico--preview")}
+
         ${
           tieneResultado(tarea)
             ? `<div class="resultado-resumen">
@@ -679,6 +681,69 @@ function urlResumenTrabajoDetectives(id) {
   return destino.href;
 }
 
+
+function urlRecursoTrabajoMision(tarea = {}) {
+  const valor = String(tarea.destinoUrl || "").trim();
+  if (!valor) return "";
+
+  try {
+    const url = new URL(valor, window.location.href);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      return "";
+    }
+
+    return url.href;
+  } catch {
+    return "";
+  }
+}
+
+function recursoTrabajoMisionHtml(tarea = {}) {
+  /*
+   * Fase 1 de Repaso Académico:
+   * el recurso original NO es una evidencia. Se muestra como acceso de consulta
+   * dentro de Trabajo realizado para que la familia pueda volver directamente
+   * a la actividad que se asignó.
+   */
+  if (tarea.tipo !== "repaso_academico") return "";
+
+  const url = urlRecursoTrabajoMision(tarea);
+  if (!url) return "";
+
+  const contexto = [
+    tarea.cursoReferencia ? `${tarea.cursoReferencia}.º de Primaria` : "",
+    String(tarea.materia || "").trim(),
+    String(tarea.tema || "").trim()
+  ].filter(Boolean);
+
+  return `
+    <article class="recurso-mision-trabajo">
+      <div class="recurso-mision-trabajo__icono" aria-hidden="true">📘</div>
+
+      <div class="recurso-mision-trabajo__contenido">
+        <strong>Actividad de la misión</strong>
+        <small>
+          ${
+            contexto.length
+              ? escapar(contexto.join(" · "))
+              : "Recurso original asignado para este repaso."
+          }
+        </small>
+      </div>
+
+      <a
+        class="btn secundaria recurso-mision-trabajo__enlace"
+        href="${escapar(url)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        🔗 Abrir actividad
+      </a>
+    </article>
+  `;
+}
+
 async function mostrarEvidenciasMision(id, button) {
   const contenedor = document.querySelector(
     `[data-evidencias-lista="${CSS.escape(id)}"]`
@@ -700,15 +765,25 @@ async function mostrarEvidenciasMision(id, button) {
   button.textContent = "Ocultar trabajo realizado";
 
   try {
+    const tarea = tareas.find(item => item.id === id);
+    const recursoHtml = recursoTrabajoMisionHtml(tarea);
     const evidencias = await Academia.tareas.leerEvidencias(id);
 
     if (!evidencias.length) {
+      const mensajeSinEvidencia =
+        tarea?.tipo === "repaso_academico"
+          ? (
+              "El alumno informó que realizó este repaso. " +
+              "En esta fase no se registra evidencia curricular específica."
+            )
+          : "Todavía no hay evidencias relacionadas con esta misión.";
+
       contenedor.innerHTML =
-        '<div class="evidencias-mision__vacia">Todavía no hay evidencias relacionadas con esta misión.</div>';
+        recursoHtml +
+        `<div class="evidencias-mision__vacia">${escapar(mensajeSinEvidencia)}</div>`;
       return;
     }
 
-    const tarea = tareas.find(item => item.id === id);
     const esDetectives = tarea?.modulo === "detectives";
 
     const actividadesHtml = evidencias.map((evidencia, indice) => {
@@ -846,7 +921,10 @@ async function mostrarEvidenciasMision(id, button) {
          </div>`
       : "";
 
-    contenedor.innerHTML = actividadesHtml + resumenCompletoHtml;
+    contenedor.innerHTML =
+      recursoHtml +
+      actividadesHtml +
+      resumenCompletoHtml;
   } catch (error) {
     console.error("No se pudieron cargar las evidencias.", error);
     evidenciasAbiertas.delete(id);
@@ -1482,8 +1560,129 @@ function actualizarResumenCriterioSemillas() {
     );
 }
 
+
+function esRepasoAcademicoFormulario() {
+  return $("tipo")?.value === "repaso_academico";
+}
+
+function cursoAcademicoTexto(valor = $("cursoReferencia")?.value) {
+  const curso = String(valor || "").trim();
+  return curso ? `${curso}.º de Primaria` : "Curso sin indicar";
+}
+
+function datosAcademicosFormulario() {
+  return {
+    cursoReferencia: String($("cursoReferencia")?.value || "").trim(),
+    materia: String($("materia")?.value || "").trim(),
+    tema: String($("tema")?.value || "").trim(),
+    recursoUrl: String($("recursoAcademicoUrl")?.value || "").trim()
+  };
+}
+
+function tituloRepasoAcademico() {
+  const { materia, tema } = datosAcademicosFormulario();
+
+  if (tema && materia) return `Repasar ${tema} · ${materia}`;
+  if (tema) return `Repasar ${tema}`;
+  if (materia) return `Repaso de ${materia}`;
+  return "Misión de repaso académico";
+}
+
+function actualizarResumenAcademico() {
+  const resumen = $("resumenAcademico");
+  if (!resumen) return;
+
+  const { cursoReferencia, materia, tema } = datosAcademicosFormulario();
+  resumen.textContent = [
+    cursoAcademicoTexto(cursoReferencia),
+    materia || "Materia por indicar",
+    tema || "Tema por indicar"
+  ].join(" · ");
+}
+
+function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
+  if (!esRepasoAcademicoFormulario()) return;
+
+  const { materia, tema } = datosAcademicosFormulario();
+  const titulo = tituloRepasoAcademico();
+
+  $("titulo").value = titulo;
+  $("tituloMision").value = titulo;
+
+  if (forzar || !String($("descripcionMision").value || "").trim() || !descripcionMisionPersonalizada) {
+    $("descripcionMision").value = tema
+      ? `Vamos a repasar ${tema}${materia ? ` de ${materia}` : ""} con calma.`
+      : "Vamos a repasar este tema con calma y paso a paso.";
+  }
+
+  if (forzar || !String($("objetivo").value || "").trim()) {
+    $("objetivo").value = tema
+      ? `Reforzar los conocimientos de ${tema}${materia ? ` en ${materia}` : ""}.`
+      : "Reforzar un contenido académico antes de avanzar al siguiente curso.";
+  }
+
+  if (forzar || !String($("criterio").value || "").trim()) {
+    $("criterio").value =
+      "Realizar el repaso propuesto. En esta fase la familia registra manualmente el cierre de la Misión.";
+  }
+
+  if (forzar || !String($("mensajeMision").value || "").trim()) {
+    $("mensajeMision").value =
+      "📘 Repasa a tu ritmo. Lo importante es recordar, practicar y preguntar cuando algo no esté claro.";
+  }
+
+  actualizarResumenAcademico();
+  actualizarVistaPrevia();
+}
+
+function actualizarTipoMision({ completarSugerencias = false } = {}) {
+  const academica = esRepasoAcademicoFormulario();
+  const modulo = $("modulo");
+  const bloque = $("configuracionAcademica");
+
+  bloque?.classList.toggle("hidden", !academica);
+  $("formTarea")?.classList.toggle("repaso-academico-activo", academica);
+
+  if (modulo) {
+    if (academica) {
+      modulo.value = "libre";
+      modulo.disabled = true;
+      seleccionarIcono("📘");
+      if (completarSugerencias) {
+        aplicarTextosAutomaticosAcademicos({ forzar: true });
+      } else {
+        actualizarResumenAcademico();
+      }
+    } else {
+      modulo.disabled = false;
+    }
+  }
+}
+
+function contextoAcademicoHtml(tarea = {}, claseExtra = "") {
+  if (tarea.tipo !== "repaso_academico") return "";
+
+  const items = [
+    tarea.cursoReferencia ? `📘 ${tarea.cursoReferencia}.º` : "",
+    tarea.materia ? `📚 ${tarea.materia}` : "",
+    tarea.tema ? `🎯 ${tarea.tema}` : ""
+  ].filter(Boolean);
+
+  if (!items.length) return "";
+
+  return `
+    <div class="contexto-academico ${claseExtra}">
+      ${items.map(item => `<span>${escapar(item)}</span>`).join("")}
+    </div>
+  `;
+}
+
 function tituloAutomaticoPorModulo() {
   const modulo = $("modulo").value;
+
+  if (esRepasoAcademicoFormulario()) {
+    return tituloRepasoAcademico();
+  }
 
   if (modulo === "creciendo-por-dentro") {
     return crearTextosSemillas(
@@ -1640,6 +1839,16 @@ function actualizarConfiguracionPorModulo({
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
   const esBiblioteca = modulo === "biblioteca";
+  const esAcademica = esRepasoAcademicoFormulario();
+
+  $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives || esAcademica);
+  $("configuracionLectura")?.classList.toggle("hidden", !esLectura || esAcademica);
+  $("configuracionSemillas")?.classList.toggle("hidden", !esSemillas || esAcademica);
+
+  if (esAcademica) {
+    actualizarResumenAcademico();
+    return;
+  }
 
   $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives);
   $("configuracionLectura")?.classList.toggle("hidden", !esLectura);
@@ -1834,6 +2043,11 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   $("cantidadLecturas").value = "2";
   $("nivelLectura").value = "todos";
   $("nivelDetectives").value = "1";
+  $("cursoReferencia").value = "5";
+  $("materia").value = "";
+  $("tema").value = "";
+  $("recursoAcademicoUrl").value = "";
+  $("modulo").disabled = false;
   $("fechaInicio").value = fechaLocalISO(0);
   $("fechaLimite").value = fechaLocalISO(1);
   $("fechaFinalizacion").value = "";
@@ -1857,6 +2071,7 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
 
   seleccionarIcono("📖");
   actualizarEstadoMision();
+  actualizarTipoMision();
   actualizarConfiguracionPorModulo({ completarSugerencias: true });
   actualizarResumenCriterioDetectives();
   actualizarResumenCriterioSemillas();
@@ -1873,6 +2088,12 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   $("descripcion").value = tarea.descripcion || "";
   $("tipo").value = tarea.tipo || "actividad_modulo";
   $("modulo").value = tarea.modulo || "libre";
+  $("cursoReferencia").value = tarea.cursoReferencia || "5";
+  $("materia").value = tarea.materia || "";
+  $("tema").value = tarea.tema || "";
+  $("recursoAcademicoUrl").value =
+    tarea.tipo === "repaso_academico" ? (tarea.destinoUrl || "") : "";
+  actualizarTipoMision();
   $("fechaInicio").value = tarea.fechaInicio || "";
   $("fechaLimite").value = tarea.fechaLimite || "";
   $("tiempoEstimado").value = Number(tarea.tiempoEstimadoMinutos || 0);
@@ -1995,7 +2216,9 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
 function recogerFormulario() {
   const modulo = $("modulo").value;
   const visible = $("visibleParaAlumno").checked;
-  const esDetectives = modulo === "detectives";
+  const esAcademica = esRepasoAcademicoFormulario();
+  const datosAcademicos = datosAcademicosFormulario();
+  const esDetectives = modulo === "detectives" && !esAcademica;
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
   const esBiblioteca = modulo === "biblioteca";
@@ -2028,8 +2251,13 @@ function recogerFormulario() {
     titulo: $("titulo").value,
     descripcion: $("descripcion").value,
     tipo: $("tipo").value,
+    cursoReferencia: esAcademica ? datosAcademicos.cursoReferencia : "",
+    materia: esAcademica ? datosAcademicos.materia : "",
+    tema: esAcademica ? datosAcademicos.tema : "",
     modulo,
-    destinoUrl: DESTINOS[modulo] || "",
+    destinoUrl: esAcademica
+      ? datosAcademicos.recursoUrl
+      : (DESTINOS[modulo] || ""),
     objetivo: $("objetivo").value,
     criterioFinalizacion: $("criterio").value,
     criterioCumplimiento: esDetectives
@@ -2168,6 +2396,31 @@ function configurarFormulario() {
     });
   });
 
+  $("tipo").addEventListener("change", () => {
+    const eraAcademica = esRepasoAcademicoFormulario();
+    actualizarTipoMision({ completarSugerencias: eraAcademica });
+    actualizarConfiguracionPorModulo({
+      completarSugerencias: !eraAcademica
+    });
+    actualizarTituloAutomatico();
+  });
+
+  ["cursoReferencia", "materia", "tema"].forEach(id => {
+    $(id)?.addEventListener("input", () => {
+      actualizarResumenAcademico();
+      if (esRepasoAcademicoFormulario()) {
+        aplicarTextosAutomaticosAcademicos();
+      }
+    });
+
+    $(id)?.addEventListener("change", () => {
+      actualizarResumenAcademico();
+      if (esRepasoAcademicoFormulario()) {
+        aplicarTextosAutomaticosAcademicos();
+      }
+    });
+  });
+
   $("modulo").addEventListener("change", () => {
     const modulo = $("modulo").value;
     seleccionarIcono(ICONOS[modulo] || "🌟");
@@ -2250,6 +2503,20 @@ function configurarFormulario() {
     const mensaje = $("mensajeFormulario");
     const id = $("tareaId").value.trim();
     const datos = recogerFormulario();
+
+    if (
+      datos.tipo === "repaso_academico" &&
+      (!datos.cursoReferencia || !datos.materia || !datos.tema)
+    ) {
+      $("mensajeFormulario").className = "mensaje-formulario error";
+      $("mensajeFormulario").textContent =
+        "Indica curso, materia y tema para la Misión de repaso académico.";
+
+      if (!datos.materia) $("materia").focus();
+      else if (!datos.tema) $("tema").focus();
+      else $("cursoReferencia").focus();
+      return;
+    }
 
     if (
       datos.modulo === "detectives" &&

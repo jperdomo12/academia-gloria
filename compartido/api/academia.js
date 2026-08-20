@@ -837,7 +837,8 @@ function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}
     "tiempo_practica",
     "cantidad_actividades",
     "tarea_libre",
-    "tarea_combinada"
+    "tarea_combinada",
+    "repaso_academico"
   ]);
 
   const modulosValidos = new Set([
@@ -874,6 +875,9 @@ function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}
     tipo: tiposValidos.has(tarea.tipo)
       ? tarea.tipo
       : "actividad_modulo",
+    cursoReferencia: textoSeguro(tarea.cursoReferencia),
+    materia: textoSeguro(tarea.materia),
+    tema: textoSeguro(tarea.tema),
     modulo: modulosValidos.has(tarea.modulo)
       ? tarea.modulo
       : "libre",
@@ -1069,6 +1073,9 @@ async function actualizarTarea(id, cambios = {}) {
     "titulo",
     "descripcion",
     "tipo",
+    "cursoReferencia",
+    "materia",
+    "tema",
     "modulo",
     "destinoUrl",
     "objetivo",
@@ -1103,7 +1110,15 @@ async function actualizarTarea(id, cambios = {}) {
     if (!datos.titulo) throw new Error("La tarea debe tener un título.");
   }
 
-  ["descripcion", "objetivo", "criterioFinalizacion", "destinoUrl"].forEach(
+  [
+    "descripcion",
+    "objetivo",
+    "criterioFinalizacion",
+    "destinoUrl",
+    "cursoReferencia",
+    "materia",
+    "tema"
+  ].forEach(
     clave => {
       if (clave in datos) datos[clave] = textoSeguro(datos[clave]);
     }

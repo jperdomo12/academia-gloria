@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../compartido/css/academia-base.css">
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="./mis-tareas.css">
+  <link rel="stylesheet" href="./refuerzos-pronunciacion.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -31,6 +32,11 @@
         <i data-lucide="arrow-left"></i>
         Volver
       </a>
+
+      <div class="barra-superior__centro" aria-label="Sección actual">
+        <span aria-hidden="true">🗺️</span>
+        <strong>Gestión de Misiones</strong>
+      </div>
 
       <div class="panel-tareas" data-panel-usuario></div>
     </div>
@@ -56,6 +62,10 @@
         📋 Misiones
       </button>
 
+      <button class="tab" type="button" data-tab="refuerzos">
+        🌱 Observaciones y refuerzos
+      </button>
+
       <button class="tab" type="button" data-tab="crear">
         ➕ Preparar misión
       </button>
@@ -76,6 +86,9 @@
           <button class="filtro active" type="button" data-filter="activas">
             Activas
           </button>
+          <button class="filtro" type="button" data-filter="espera">
+            En espera
+          </button>
           <button class="filtro" type="button" data-filter="completadas">
             Completadas
           </button>
@@ -90,6 +103,73 @@
       </div>
 
       <div id="listaTareas" class="lista-tareas"></div>
+    </section>
+
+
+    <section id="panelRefuerzos" class="panel-seccion hidden" aria-labelledby="tituloRefuerzos">
+      <div class="cabecera-seccion">
+        <div>
+          <span class="eyebrow">Acompañamiento</span>
+          <h2 id="tituloRefuerzos">🌱 Observaciones y refuerzos</h2>
+          <p>
+            La Academia reúne palabras detectadas en Misiones anteriores de
+            Mi Rincón de Lectura para preparar prácticas específicas de pronunciación.
+          </p>
+        </div>
+      </div>
+
+      <aside class="superficie refuerzo-info">
+        <span class="refuerzo-info__icono" aria-hidden="true">🦜</span>
+        <div>
+          <strong>La Academia propone y crea la Misión; la familia controla cuándo aparece en Mi Camino.</strong>
+          <p>
+            Toda nueva Misión de pronunciación se crea inicialmente con
+            <strong>Mostrar en Mi Camino = No</strong>.
+          </p>
+        </div>
+      </aside>
+
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloPalabrasSugeridas">
+        <div class="refuerzo-bloque__cabecera">
+          <div>
+            <h3 id="tituloPalabrasSugeridas">🗣️ Palabras sugeridas para reforzar</h3>
+            <p>
+              Se consideran las palabras no superadas y las superadas con más de un intento.
+              La señal más reciente determina si todavía conviene proponerla.
+            </p>
+          </div>
+          <button id="actualizarRefuerzos" class="btn secundaria" type="button">
+            ↻ Actualizar
+          </button>
+        </div>
+
+        <div id="estadoRefuerzos" class="estado-carga" aria-live="polite">
+          Abre esta sección para revisar las palabras disponibles.
+        </div>
+        <div id="listaRefuerzos" class="refuerzos-lista"></div>
+
+        <div id="accionesRefuerzos" class="refuerzos-acciones hidden">
+          <div>
+            <strong id="resumenSeleccionRefuerzos">0 palabras seleccionadas</strong>
+            <small>Se creará una única Misión con todas las palabras seleccionadas.</small>
+          </div>
+          <button id="crearMisionPronunciacion" class="btn primaria" type="button" disabled>
+            ✨ Crear misión de pronunciación
+          </button>
+        </div>
+      </section>
+
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloMisionesPronunciacion">
+        <div class="refuerzo-bloque__cabecera">
+          <div>
+            <h3 id="tituloMisionesPronunciacion">📋 Misiones de pronunciación preparadas</h3>
+            <p>
+              Revisa qué palabras contiene cada Misión y decide si debe mostrarse en Mi Camino.
+            </p>
+          </div>
+        </div>
+        <div id="listaMisionesPronunciacion" class="misiones-pronunciacion-lista"></div>
+      </section>
     </section>
 
     <section id="panelCrear" class="panel-seccion hidden">
@@ -686,5 +766,6 @@
   </script>
 
   <script type="module" src="./mis-tareas.js"></script>
+  <script type="module" src="./refuerzos-pronunciacion.js"></script>
 </body>
 </html>

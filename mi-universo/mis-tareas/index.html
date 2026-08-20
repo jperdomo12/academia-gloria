@@ -223,6 +223,7 @@
                   <option value="cantidad_actividades">Cantidad de actividades</option>
                   <option value="tarea_libre">Misión libre</option>
                   <option value="tarea_combinada">Misión combinada</option>
+                  <option value="repaso_academico">📘 Repaso académico</option>
                 </select>
               </label>
 
@@ -237,6 +238,91 @@
                 </select>
               </label>
             </div>
+
+            <section
+              id="configuracionAcademica"
+              class="configuracion-rapida configuracion-rapida--academica hidden"
+              aria-labelledby="tituloConfiguracionAcademica"
+            >
+              <div class="configuracion-rapida__cabecera">
+                <span aria-hidden="true">📘</span>
+                <div>
+                  <h3 id="tituloConfiguracionAcademica">
+                    Repaso académico
+                  </h3>
+                  <p>
+                    Asocia esta Misión a un curso, una materia y un tema.
+                    Esta primera versión sirve para organizar el repaso sin crear
+                    todavía seguimiento curricular específico.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-formulario">
+                <label>
+                  Curso de referencia
+                  <select id="cursoReferencia">
+                    <option value="1">1.º de Primaria</option>
+                    <option value="2">2.º de Primaria</option>
+                    <option value="3">3.º de Primaria</option>
+                    <option value="4">4.º de Primaria</option>
+                    <option value="5" selected>5.º de Primaria</option>
+                    <option value="6">6.º de Primaria</option>
+                  </select>
+                  <span class="ayuda-campo">
+                    Es una referencia curricular; no limita la evolución futura de la Misión.
+                  </span>
+                </label>
+
+                <label>
+                  Materia
+                  <input
+                    id="materia"
+                    type="text"
+                    maxlength="80"
+                    list="materiasSugeridas"
+                    placeholder="Ej. Matemáticas"
+                  >
+                  <datalist id="materiasSugeridas">
+                    <option value="Matemáticas"></option>
+                    <option value="Lengua"></option>
+                    <option value="Ciencias Naturales"></option>
+                    <option value="Ciencias Sociales"></option>
+                    <option value="Inglés"></option>
+                  </datalist>
+                </label>
+
+                <label>
+                  Tema
+                  <input
+                    id="tema"
+                    type="text"
+                    maxlength="140"
+                    placeholder="Ej. Fracciones y operaciones"
+                  >
+                </label>
+
+                <label>
+                  Recurso o actividad (URL, opcional)
+                  <input
+                    id="recursoAcademicoUrl"
+                    type="url"
+                    maxlength="500"
+                    placeholder="https://..."
+                  >
+                  <span class="ayuda-campo">
+                    Si queda vacío, la Misión funcionará como repaso guiado por sus indicaciones.
+                  </span>
+                </label>
+              </div>
+
+              <div class="configuracion-rapida__resumen">
+                <strong>Contexto del repaso:</strong>
+                <span id="resumenAcademico">
+                  5.º de Primaria · Indica materia y tema
+                </span>
+              </div>
+            </section>
 
             <section
               id="configuracionLectura"

@@ -712,17 +712,74 @@ async function mostrarEvidenciasMision(id, button) {
     const esDetectives = tarea?.modulo === "detectives";
 
     const actividadesHtml = evidencias.map((evidencia, indice) => {
-      const intentos = Number(evidencia.resultado?.intentos || 0);
+      const intentos = Number(
+        evidencia.resultado?.intentos ??
+        evidencia.resultado?.intentosRealizados ??
+        0
+      );
       const pistas = Number(evidencia.resultado?.pistas || 0);
       const nivel = evidencia.atributos?.nivel ?? "—";
+      const esBiblioteca = evidencia.modulo === "biblioteca";
+      const esLectura = evidencia.modulo === "rincon-lectura";
+      const esSemillas = evidencia.modulo === "creciendo-por-dentro";
+      const esDetectives = evidencia.modulo === "detectives";
+
       const titulo =
+        evidencia.resultado?.titulo ||
         evidencia.tituloActividad ||
         evidencia.actividadId ||
         `Actividad ${indice + 1}`;
 
+      const fecha = fechaEvidencia(evidencia.ocurridaEn);
+
+      const detalleActividad = esBiblioteca
+        ? [
+            Number(evidencia.resultado?.duracionAudio || 0) > 0
+              ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
+              : "",
+            Number(evidencia.resultado?.palabrasReconocidas || 0) > 0
+              ? `🗣️ ${Number(evidencia.resultado.palabrasReconocidas)} palabras`
+              : "",
+            fecha
+          ].filter(Boolean).join(" · ")
+        : esLectura
+          ? [
+              nivel !== "—" ? `Nivel ${nivel}` : "",
+              Number(evidencia.resultado?.duracion || 0) > 0
+                ? `🎙️ ${Math.round(Number(evidencia.resultado.duracion))} s`
+                : "",
+              Number(evidencia.resultado?.intentosComprension || 0) > 0
+                ? `🧠 ${Number(evidencia.resultado.intentosComprension)} intentos comprensión`
+                : "",
+              fecha
+            ].filter(Boolean).join(" · ")
+          : esSemillas
+            ? [
+                evidencia.atributos?.tipoSituacion
+                  ? `Situación: ${evidencia.atributos.tipoSituacion}`
+                  : "",
+                evidencia.atributos?.nivelApoyo
+                  ? `Apoyo: nivel ${evidencia.atributos.nivelApoyo}`
+                  : "",
+                intentos > 0
+                  ? `${intentos} ${intentos === 1 ? "intento" : "intentos"}`
+                  : "",
+                Number(evidencia.resultado?.duracionAudio || 0) > 0
+                  ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
+                  : "",
+                fecha
+              ].filter(Boolean).join(" · ")
+            : esDetectives
+              ? (
+                  `Nivel ${nivel} · ${intentos} intentos · ${pistas} pistas` +
+                  ` · ${fecha}`
+                )
+              : fecha;
+
       const parametros = new URLSearchParams({
         id: evidencia.actividadId || "",
         sesionId: evidencia.sesionId || "",
+        misionId: id,
         volver: `${window.location.pathname}${window.location.search}`
       });
 
@@ -746,19 +803,22 @@ async function mostrarEvidenciasMision(id, button) {
                 `&sesionId=${encodeURIComponent(evidencia.sesionId || "")}` +
                 `&volver=${volver}`
               )
-            : evidencia.modulo === "detectives"
-              ? `../aventuras-matematicas/detectives/historia.html?${parametros.toString()}`
-              : (evidencia.destinoRevision || "#");
+            : evidencia.modulo === "biblioteca"
+              ? (
+                  `../biblioteca/?misionId=${encodeURIComponent(id)}` +
+                  `&libroId=${encodeURIComponent(evidencia.actividadId || evidencia.resultado?.libroId || "")}` +
+                  `&volver=${volver}`
+                )
+              : evidencia.modulo === "detectives"
+                ? `../aventuras-matematicas/detectives/historia.html?${parametros.toString()}`
+                : (evidencia.destinoRevision || "#");
 
       return `
         <article class="evidencia-item">
           <div class="evidencia-item__icono">✅</div>
           <div class="evidencia-item__contenido">
             <strong>${escapar(titulo)}</strong>
-            <small>
-              Nivel ${escapar(nivel)} · ${intentos} intentos · ${pistas} pistas
-              · ${escapar(fechaEvidencia(evidencia.ocurridaEn))}
-            </small>
+            <small>${escapar(detalleActividad)}</small>
           </div>
           <a class="btn secundaria evidencia-item__enlace"
              href="${escapar(destinoCorrecto)}">
@@ -767,9 +827,11 @@ async function mostrarEvidenciasMision(id, button) {
                  ? "Ver lectura"
                  : evidencia.modulo === "creciendo-por-dentro"
                    ? "Ver práctica"
-                   : evidencia.modulo === "detectives"
-                     ? "Ver resolución"
-                     : "Ver detalle"
+                   : evidencia.modulo === "biblioteca"
+                     ? "Ver ficha"
+                     : evidencia.modulo === "detectives"
+                       ? "Ver resolución"
+                       : "Ver detalle"
              }
           </a>
         </article>`;
@@ -1548,6 +1610,28 @@ function actualizarResumenCriterioDetectives() {
   }
 }
 
+function aplicarTextosAutomaticosBiblioteca() {
+  const titulo = "Compartir un libro con Lía";
+  const descripcion =
+    "Elige un libro registrado en tu Biblioteca y cuéntaselo a Lía con tus propias palabras. " +
+    "La Academia lo marcará como Terminado cuando guardes una grabación de al menos 15 segundos " +
+    "y una transcripción de al menos 15 palabras.";
+
+  $("titulo").value = titulo;
+  $("tituloMision").value = titulo;
+
+  if (!descripcionMisionPersonalizada) {
+    $("descripcionMision").value = descripcion;
+  }
+
+  $("objetivo").value =
+    "Expresar con claridad las ideas principales de un libro y fortalecer la comunicación verbal.";
+  $("criterio").value =
+    "Compartir un libro con una grabación de al menos 15 segundos y una transcripción de al menos 15 palabras.";
+  $("mensajeMision").value =
+    "🦜 Cuéntame el libro con calma y con tus propias palabras. Yo te indicaré qué falta antes de terminar.";
+}
+
 function actualizarConfiguracionPorModulo({
   completarSugerencias = false
 } = {}) {
@@ -1555,6 +1639,7 @@ function actualizarConfiguracionPorModulo({
   const esDetectives = modulo === "detectives";
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
+  const esBiblioteca = modulo === "biblioteca";
 
   $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives);
   $("configuracionLectura")?.classList.toggle("hidden", !esLectura);
@@ -1584,6 +1669,14 @@ function actualizarConfiguracionPorModulo({
     reiniciarTextosAutomaticosLectura();
     actualizarResumenCriterioLectura();
     if (completarSugerencias) aplicarTextosAutomaticosLectura();
+    return;
+  }
+
+  if (esBiblioteca) {
+    reiniciarTextosAutomaticosDetectives();
+    reiniciarTextosAutomaticosLectura();
+    reiniciarTextosAutomaticosSemillas();
+    if (completarSugerencias) aplicarTextosAutomaticosBiblioteca();
     return;
   }
 
@@ -1905,6 +1998,7 @@ function recogerFormulario() {
   const esDetectives = modulo === "detectives";
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
+  const esBiblioteca = modulo === "biblioteca";
 
   const cantidadObjetivo = esDetectives
     ? normalizarCantidadHistorias($("cantidadHistorias").value, 5)
@@ -1968,7 +2062,15 @@ function recogerFormulario() {
                 ? { semillasIds }
                 : {}
             }
-          : null,
+          : esBiblioteca
+            ? {
+                tipo: "cantidad",
+                modulo: "biblioteca",
+                evidenciaTipo: "libro_compartido",
+                cantidadObjetivo: 1,
+                filtros: {}
+              }
+            : null,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -2002,7 +2104,11 @@ function recogerFormulario() {
           ? {
               cantidadObjetivo: cantidadSemillas
             }
-          : undefined,
+          : esBiblioteca
+            ? {
+                cantidadObjetivo: 1
+              }
+            : undefined,
     observacionActual: $("observacion").value,
     resultado: {
       fechaFinalizacion: $("fechaFinalizacion").value,

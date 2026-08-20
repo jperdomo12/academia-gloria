@@ -218,39 +218,35 @@ async function eliminarEvento(id) {
 
 
 /* ==========================================================
-   Biblioteca
+   Biblioteca · Persona Activa
    usuarios/{uid}/biblioteca/{libroId}
+   usuarios/{uid}/bibliotecaAudios/{libroId}
    ========================================================== */
 
-function coleccionBiblioteca() {
-  return collection(db, "usuarios", obtenerUID(), "biblioteca");
+function coleccionBiblioteca(userId) {
+  const id = String(userId || "").trim();
+  if (!id) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return collection(db, "usuarios", id, "biblioteca");
 }
 
-function documentoLibro(id) {
-  if (!id) {
-    throw new Error("Falta el identificador del libro.");
-  }
-
-  return doc(db, "usuarios", obtenerUID(), "biblioteca", id);
+function documentoLibro(id, userId) {
+  if (!id) throw new Error("Falta el identificador del libro.");
+  const uid = String(userId || "").trim();
+  if (!uid) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return doc(db, "usuarios", uid, "biblioteca", id);
 }
 
 function normalizarLibro(libro = {}) {
   const title = String(libro.title ?? "").trim();
-
-  if (!title) {
-    throw new Error("El libro debe tener un título.");
-  }
+  if (!title) throw new Error("El libro debe tener un título.");
 
   const rating = Number(libro.rating ?? 0);
-
   return {
     title,
     author: String(libro.author ?? "").trim(),
-    readingStatus: String(libro.readingStatus ?? "Leyendo").trim(),
+    readingStatus: String(libro.readingStatus ?? "Registrado").trim() || "Registrado",
     favoriteCharacter: String(libro.favoriteCharacter ?? "").trim(),
-    rating: Number.isFinite(rating)
-      ? Math.max(0, Math.min(5, rating))
-      : 0,
+    rating: Number.isFinite(rating) ? Math.max(0, Math.min(5, rating)) : 0,
     favoritePart: String(libro.favoritePart ?? "").trim(),
     learning: String(libro.learning ?? "").trim(),
     newWords: String(libro.newWords ?? "").trim(),
@@ -262,152 +258,158 @@ function normalizarLibro(libro = {}) {
 
 async function guardarLibro(libro) {
   const datos = normalizarLibro(libro);
-
-  const referencia = await addDoc(coleccionBiblioteca(), {
+  const userId = await obtenerUIDPersonaActiva();
+  const referencia = await addDoc(coleccionBiblioteca(userId), {
     ...datos,
     creadoEn: serverTimestamp(),
     actualizadoEn: serverTimestamp()
   });
-
   return referencia.id;
 }
 
 async function leerLibros() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionBiblioteca(),
+    coleccionBiblioteca(userId),
     orderBy("actualizadoEn", "desc")
   );
-
   const resultado = await getDocs(consulta);
-
-  return resultado.docs.map((documento) => ({
-    id: documento.id,
-    ...documento.data()
-  }));
+  return resultado.docs.map(documento => ({ id: documento.id, ...documento.data() }));
 }
 
 function observarLibros(callback, onError = console.error) {
-  if (typeof callback !== "function") {
-    throw new Error("Se necesita una función callback.");
-  }
+  if (typeof callback !== "function") throw new Error("Se necesita una función callback.");
 
-  const consulta = query(
-    coleccionBiblioteca(),
-    orderBy("actualizadoEn", "desc")
-  );
+  let cancelarSnapshot = null;
+  let cancelado = false;
 
-  return onSnapshot(
-    consulta,
-    (resultado) => {
-      const libros = resultado.docs.map((documento) => ({
-        id: documento.id,
-        ...documento.data()
-      }));
+  (async () => {
+    try {
+      const userId = await obtenerUIDPersonaActiva();
+      if (cancelado) return;
+      const consulta = query(
+        coleccionBiblioteca(userId),
+        orderBy("actualizadoEn", "desc")
+      );
+      cancelarSnapshot = onSnapshot(
+        consulta,
+        resultado => callback(resultado.docs.map(documento => ({
+          id: documento.id,
+          ...documento.data()
+        }))),
+        onError
+      );
+    } catch (error) {
+      onError(error);
+    }
+  })();
 
-      callback(libros);
-    },
-    onError
-  );
+  return () => {
+    cancelado = true;
+    if (typeof cancelarSnapshot === "function") cancelarSnapshot();
+  };
 }
 
 async function actualizarLibro(id, cambios) {
   const datos = normalizarLibro(cambios);
-
-  await updateDoc(documentoLibro(id), {
+  const userId = await obtenerUIDPersonaActiva();
+  await updateDoc(documentoLibro(id, userId), {
     ...datos,
     actualizadoEn: serverTimestamp()
   });
 }
 
 async function eliminarLibro(id) {
-  await deleteDoc(documentoLibro(id));
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoLibro(id, userId));
 }
 
-
-
-
-/* ==========================================================
-   Audio de Biblioteca
-   usuarios/{uid}/bibliotecaAudios/{libroId}
-   ========================================================== */
-
-function documentoAudioLibro(libroId) {
-  if (!libroId) {
-    throw new Error("Falta el identificador del libro.");
-  }
-
-  return doc(
-    db,
-    "usuarios",
-    obtenerUID(),
-    "bibliotecaAudios",
-    libroId
-  );
+function documentoAudioLibro(libroId, userId) {
+  if (!libroId) throw new Error("Falta el identificador del libro.");
+  const uid = String(userId || "").trim();
+  if (!uid) throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  return doc(db, "usuarios", uid, "bibliotecaAudios", libroId);
 }
 
-async function guardarAudioLibro(libroId, audio = {}) {
+function normalizarAudioBiblioteca(audio = {}) {
   const audioData = String(audio.audioData ?? "").trim();
   const mimeType = String(audio.mimeType ?? "audio/webm").trim();
   const duration = Number(audio.duration ?? 0);
-  const transcript = String(audio.transcript ?? "").trim();
-  const language = String(audio.language ?? "es-ES").trim();
-  const transcriptEdited = Boolean(audio.transcriptEdited);
-
-  if (!audioData) {
-    throw new Error("No hay una grabación para guardar.");
-  }
-
+  if (!audioData) throw new Error("No hay una grabación para guardar.");
   if (audioData.length > 900000) {
-    throw new Error(
-      "La grabación es demasiado grande. Intenta grabar menos tiempo."
-    );
+    throw new Error("La grabación es demasiado grande. Intenta grabar menos tiempo.");
   }
+  return {
+    audioData,
+    mimeType,
+    duration: Number.isFinite(duration) ? duration : 0,
+    transcript: String(audio.transcript ?? "").trim(),
+    familyObservation: String(audio.familyObservation ?? "").trim(),
+    language: String(audio.language ?? "es-ES").trim(),
+    transcriptEdited: Boolean(audio.transcriptEdited)
+  };
+}
 
+async function guardarAudioLibro(libroId, audio = {}) {
+  const datos = normalizarAudioBiblioteca(audio);
+  const userId = await obtenerUIDPersonaActiva();
   await setDoc(
-    documentoAudioLibro(libroId),
-    {
-      audioData,
-      mimeType,
-      duration: Number.isFinite(duration) ? duration : 0,
-      transcript,
-      familyObservation: String(audio.familyObservation ?? "").trim(),
-      language,
-      transcriptEdited,
-      actualizadoEn: serverTimestamp()
-    },
+    documentoAudioLibro(libroId, userId),
+    { ...datos, actualizadoEn: serverTimestamp() },
     { merge: true }
   );
-
-  await updateDoc(documentoLibro(libroId), {
+  await updateDoc(documentoLibro(libroId, userId), {
     hasAudio: true,
     actualizadoEn: serverTimestamp()
   });
 }
 
 async function leerAudioLibro(libroId) {
-  const resultado = await getDoc(documentoAudioLibro(libroId));
-
-  if (!resultado.exists()) {
-    return null;
-  }
-
-  return {
-    id: resultado.id,
-    ...resultado.data()
-  };
+  const userId = await obtenerUIDPersonaActiva();
+  const resultado = await getDoc(documentoAudioLibro(libroId, userId));
+  return resultado.exists() ? { id: resultado.id, ...resultado.data() } : null;
 }
 
 async function eliminarAudioLibro(libroId) {
-  await deleteDoc(documentoAudioLibro(libroId));
-
-  await updateDoc(documentoLibro(libroId), {
+  const userId = await obtenerUIDPersonaActiva();
+  await deleteDoc(documentoAudioLibro(libroId, userId));
+  await updateDoc(documentoLibro(libroId, userId), {
     hasAudio: false,
     actualizadoEn: serverTimestamp()
   });
 }
 
+async function restaurarLibroBiblioteca(libroId, libro = {}, audio = null) {
+  const userId = await obtenerUIDPersonaActiva();
+  const datos = normalizarLibro({ ...libro, hasAudio: Boolean(audio?.audioData) });
+  const referencia = libroId
+    ? documentoLibro(libroId, userId)
+    : doc(coleccionBiblioteca(userId));
+  const existente = await getDoc(referencia);
 
+  await setDoc(
+    referencia,
+    {
+      ...datos,
+      creadoEn: existente.exists()
+        ? (existente.data().creadoEn || serverTimestamp())
+        : serverTimestamp(),
+      actualizadoEn: serverTimestamp()
+    },
+    { merge: true }
+  );
 
+  if (audio?.audioData) {
+    const audioDatos = normalizarAudioBiblioteca(audio);
+    await setDoc(
+      documentoAudioLibro(referencia.id, userId),
+      { ...audioDatos, actualizadoEn: serverTimestamp() },
+      { merge: true }
+    );
+  }
+
+  return referencia.id;
+}
 
 /* ==========================================================
    Perfil del usuario
@@ -602,11 +604,17 @@ async function eliminarSesionLectura(historiaId) {
    usuarios/{uid}/sesionesSemillas/{sesionId}
    ========================================================== */
 
-function coleccionSesionesSemillas() {
+function coleccionSesionesSemillas(userId) {
+  const id = String(userId || "").trim();
+
+  if (!id) {
+    throw new Error("Falta el Usuario asociado a la Persona Activa.");
+  }
+
   return collection(
     db,
     "usuarios",
-    obtenerUID(),
+    id,
     "sesionesSemillas"
   );
 }
@@ -656,13 +664,14 @@ function normalizarSesionSemilla(sesion = {}) {
 
 async function guardarSesionSemilla(sesion) {
   const datos = normalizarSesionSemilla(sesion);
+  const userId = await obtenerUIDPersonaActiva();
 
   /*
    * Cada práctica se conserva como una sesión independiente.
    * Así una misma Semilla puede repetirse sin sobrescribir el historial.
    */
   const referencia = await addDoc(
-    coleccionSesionesSemillas(),
+    coleccionSesionesSemillas(userId),
     {
       ...datos,
       creadaEn: serverTimestamp(),
@@ -674,8 +683,9 @@ async function guardarSesionSemilla(sesion) {
 }
 
 async function leerSesionesSemillas() {
+  const userId = await obtenerUIDPersonaActiva();
   const consulta = query(
-    coleccionSesionesSemillas(),
+    coleccionSesionesSemillas(userId),
     orderBy("actualizadaEn", "desc")
   );
 
@@ -1959,6 +1969,7 @@ export const Academia = Object.freeze({
     observar: observarLibros,
     actualizar: actualizarLibro,
     eliminar: eliminarLibro,
+    restaurar: restaurarLibroBiblioteca,
     audio: Object.freeze({
       guardar: guardarAudioLibro,
       leer: leerAudioLibro,

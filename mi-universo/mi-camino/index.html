@@ -1863,6 +1863,42 @@
       color:#166534;
     }
 
+    .mision--academica{
+      border-color:#bfdbfe;
+      background:
+        radial-gradient(circle at 97% 15%,rgba(59,130,246,.08),transparent 24%),
+        #fff;
+    }
+
+    .mision--academica .mision__icono{
+      background:#eff6ff;
+    }
+
+    .mision__meta .meta-academica{
+      background:#eff6ff;
+      color:#1d4ed8;
+    }
+
+    .mision__accion--academica{
+      border:0;
+      background:#dbeafe;
+      color:#1d4ed8;
+      cursor:pointer;
+    }
+
+    .mision__accion--academica:hover:not(:disabled){
+      background:#bfdbfe;
+    }
+
+    .mision__accion--terminar{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .mision__accion--terminar:hover:not(:disabled){
+      background:#bbf7d0;
+    }
+
     .mision__accion:disabled{
       opacity:.58;
       cursor:wait;
@@ -2709,12 +2745,19 @@
     }
 
     function destinoConContexto(tarea){
+      const esAcademica = tarea.tipo === "repaso_academico";
       const destino =
         tarea.destinoUrl ||
-        DESTINOS_TAREA[tarea.modulo] ||
-        "../";
+        (esAcademica ? "" : (DESTINOS_TAREA[tarea.modulo] || "../"));
+
+      if (!destino) return "";
 
       const url = new URL(destino,window.location.href);
+
+      if (esAcademica && url.origin !== window.location.origin) {
+        return url.href;
+      }
+
       url.searchParams.set("misionId",tarea.id);
       url.searchParams.set(
         "volver",
@@ -2913,10 +2956,18 @@
       const icono = iconoTarea(tarea);
       const tiempo = Number(tarea.tiempoEstimadoMinutos || 0);
 
-      const meta = [
-        MODULOS[tarea.modulo]?.nombre,
-        tiempo ? `${tiempo} min` : ""
-      ].filter(Boolean);
+      const esAcademica = tarea.tipo === "repaso_academico";
+      const meta = esAcademica
+        ? [
+            tarea.cursoReferencia ? `📘 ${tarea.cursoReferencia}.º` : "",
+            tarea.materia ? `📚 ${tarea.materia}` : "",
+            tarea.tema ? `🎯 ${tarea.tema}` : "",
+            tiempo ? `${tiempo} min` : ""
+          ].filter(Boolean)
+        : [
+            MODULOS[tarea.modulo]?.nombre,
+            tiempo ? `${tiempo} min` : ""
+          ].filter(Boolean);
 
       const contenido = `
         <div class="mision__icono">${escapar(icono)}</div>
@@ -2925,7 +2976,7 @@
           <p>${escapar(descripcionTarea(tarea))}</p>
           ${mensajeLiaMarkup(tarea)}
           <div class="mision__meta">
-            ${meta.map(item=>`<span>${escapar(item)}</span>`).join("")}
+            ${meta.map(item=>`<span class="${esAcademica ? "meta-academica" : ""}">${escapar(item)}</span>`).join("")}
           </div>
         </div>
       `;
@@ -2962,10 +3013,57 @@
         `;
       }
 
+      const destino = destinoConContexto(tarea);
+
+      if (esAcademica) {
+        const puedeIniciar = ["pendiente","asignada"].includes(tarea.estado);
+        const enCurso = tarea.estado === "en_curso";
+
+        return `
+          <article class="mision mision--academica">
+            ${contenido}
+            <div class="mision__lateral">
+              ${estadoMarkup(tarea)}
+
+              ${puedeIniciar ? `
+                <button
+                  type="button"
+                  class="mision__accion mision__accion--academica"
+                  data-iniciar-repaso="${escapar(tarea.id)}"
+                >
+                  Empezar repaso →
+                </button>
+              ` : ""}
+
+              ${enCurso && destino ? `
+                <a
+                  class="mision__accion mision__accion--academica"
+                  href="${escapar(destino)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Abrir recurso →
+                </a>
+              ` : ""}
+
+              ${enCurso ? `
+                <button
+                  type="button"
+                  class="mision__accion mision__accion--academica mision__accion--terminar"
+                  data-terminar-repaso="${escapar(tarea.id)}"
+                >
+                  ✅ He terminado el repaso
+                </button>
+              ` : ""}
+            </div>
+          </article>
+        `;
+      }
+
       return `
         <a
           class="mision"
-          href="${escapar(destinoConContexto(tarea))}"
+          href="${escapar(destino)}"
           data-iniciar-mision="${escapar(tarea.id)}"
         >
           ${contenido}
@@ -3030,6 +3128,64 @@
       lista.innerHTML = pagina.items
         .map(tarea=>plantillaMision(tarea))
         .join("");
+
+      lista.querySelectorAll("[data-iniciar-repaso]").forEach(button=>{
+        button.addEventListener("click",async()=>{
+          const id = button.dataset.iniciarRepaso;
+          const tarea = tareasActuales.find(item=>item.id === id);
+
+          if (!tarea || !["pendiente","asignada"].includes(tarea.estado)) {
+            return;
+          }
+
+          button.disabled = true;
+          const texto = button.textContent;
+          button.textContent = "Iniciando...";
+
+          try{
+            await Academia.tareas.cambiarEstado(id,"en_curso");
+          }catch(error){
+            console.warn("No se pudo iniciar el repaso.",error);
+            button.disabled = false;
+            button.textContent = texto;
+          }
+        });
+      });
+
+      lista.querySelectorAll("[data-terminar-repaso]").forEach(button=>{
+        button.addEventListener("click",async()=>{
+          const id = button.dataset.terminarRepaso;
+          const tarea = tareasActuales.find(item=>item.id === id);
+
+          if (!tarea || tarea.tipo !== "repaso_academico" || tarea.estado !== "en_curso") {
+            return;
+          }
+
+          const tema = String(tarea.tema || tarea.titulo || "este repaso").trim();
+          const confirmado = window.confirm(
+            `¿Has terminado el repaso de ${tema}?\n\n` +
+            "Al confirmar, la Misión pasará a Esperando familia."
+          );
+
+          if (!confirmado) return;
+
+          button.disabled = true;
+          const texto = button.textContent;
+          button.textContent = "Guardando...";
+
+          try{
+            await Academia.tareas.cambiarEstado(id,"pendiente_validacion");
+          }catch(error){
+            console.warn("No se pudo enviar el repaso a revisión.",error);
+            button.disabled = false;
+            button.textContent = texto;
+            window.alert(
+              "No se pudo marcar el repaso como terminado.\n" +
+              `Razón: ${error.message || "Error no identificado"}`
+            );
+          }
+        });
+      });
 
       lista.querySelectorAll("[data-iniciar-mision]").forEach(enlace=>{
         enlace.addEventListener("click",async evento=>{
