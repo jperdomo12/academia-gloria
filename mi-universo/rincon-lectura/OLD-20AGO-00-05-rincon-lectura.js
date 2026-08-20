@@ -3,7 +3,6 @@ import { auth } from "../../compartido/firebase/firebase-config.js";
 import { HISTORIAS } from "./historias.js";
 import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
 import { crearPalabrasParaCrecer } from "../../compartido/js/palabras-para-crecer.js";
-import { iniciarMisionPronunciacion, iniciarHistorialPronunciacion } from "./refuerzo-pronunciacion.js";
 
 const $ = id => document.getElementById(id);
 const MAX_RECORDING_SECONDS = 120;
@@ -30,7 +29,6 @@ let palabrasParaCrecer = null;
 const parametrosPagina = new URLSearchParams(window.location.search);
 let misionId = parametrosPagina.get("misionId");
 let misionActiva = null;
-let misionPronunciacionActiva = false;
 let sesionesGuardadas = new Map();
 let questionAttempts = new Map();
 
@@ -373,27 +371,21 @@ async function cargarMisionLectura() {
     const tarea = await Academia.tareas.obtener(misionId);
     const criterio = tarea?.criterioCumplimiento || {};
 
-    const esLectura = criterio.evidenciaTipo === "lectura_completada";
-    const esPronunciacion =
-      criterio.evidenciaTipo === "pronunciacion_completada" &&
-      criterio.filtros?.practica === "pronunciacion";
-
-    if (!tarea || tarea.modulo !== "rincon-lectura" || (!esLectura && !esPronunciacion)) {
+    if (
+      !tarea ||
+      tarea.modulo !== "rincon-lectura" ||
+      criterio.evidenciaTipo !== "lectura_completada"
+    ) {
       throw new Error("La misión no corresponde a Mi Rincón de Lectura.");
     }
 
     misionActiva = tarea;
-    misionPronunciacionActiva = esPronunciacion;
-
-    if (esLectura) {
-      aplicarFiltrosMisionLectura();
-      actualizarBandaLectura();
-    }
+    aplicarFiltrosMisionLectura();
+    actualizarBandaLectura();
   } catch (error) {
     console.error("No se pudo cargar la misión de lectura.", error);
     misionId = null;
     misionActiva = null;
-    misionPronunciacionActiva = false;
     actualizarBandaLectura();
   }
 }
@@ -1976,34 +1968,6 @@ async function initialize() {
     cargarMisionLectura(),
     cargarMarcasLectura()
   ]);
-
-  if (parametrosPagina.get("vista") === "pronunciacion-historial") {
-    try {
-      await iniciarHistorialPronunciacion(parametrosPagina.get("misionId"));
-    } catch (error) {
-      console.error("No se pudo cargar la práctica de pronunciación.", error);
-      $("pronunciationMissionStatus").textContent =
-        `No se pudo cargar la práctica. Razón: ${error.message || "Error no identificado"}`;
-      document.querySelectorAll(".panel").forEach(panel => panel.classList.add("hidden"));
-      $("pronunciationMissionPanel").classList.remove("hidden");
-      $("savePronunciationMission").classList.add("hidden");
-    }
-    return;
-  }
-
-  if (misionPronunciacionActiva) {
-    try {
-      await iniciarMisionPronunciacion(misionActiva, misionId);
-    } catch (error) {
-      console.error("No se pudo iniciar la Misión de pronunciación.", error);
-      $("pronunciationMissionStatus").textContent =
-        `No se pudo iniciar la Misión. Razón: ${error.message || "Error no identificado"}`;
-      document.querySelectorAll(".panel").forEach(panel => panel.classList.add("hidden"));
-      $("pronunciationMissionPanel").classList.remove("hidden");
-      $("savePronunciationMission").classList.add("hidden");
-    }
-    return;
-  }
 
   const nombre = displayName(perfil.nombre);
   $("userAvatar").textContent = perfil.avatar || "🦉";
