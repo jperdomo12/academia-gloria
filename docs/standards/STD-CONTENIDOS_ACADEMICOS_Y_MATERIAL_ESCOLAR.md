@@ -1,0 +1,1106 @@
+# Estándar de Contenidos Académicos y Material Escolar
+## Academia Gloria Valentina
+
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
+| **Versión** | 1.0-rc1 |
+| **Estado** | Candidato para aprobación |
+| **Fecha** | 21/08/2026 |
+| **Última actualización** | 21/08/2026 |
+| **Propietario** | Estándares de Aprendizaje Académico |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
+
+## Documentos relacionados
+
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** propósito humano y principios fundacionales que ningún contenido académico puede contradecir. |
+| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` | **Gobierna:** principios pedagógicos de comprensión, autonomía, motivación, error y colaboración con colegio/familia. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** sitúa Mis Cursos, contenidos, experiencias, evidencias, acompañamiento y progreso dentro de la arquitectura del producto. |
+| `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` | **Gobierna conceptualmente:** separación Motor/Contenido/Experiencia/Registro/Integración y transformación Datos → Observaciones → Insumos → Acciones. |
+| `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | **Complementa:** reglas generales de calidad, arquitectura Cloud, UX y apoyo TEL. |
+| `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` | **Gobierna:** nomenclatura de nuevos atributos y contratos de datos. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Complementa:** reglas de asignación, seguimiento y relación entre actividad y Misión. |
+| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional vigente de Misiones y evidencias. |
+| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** presentación familiar de las actividades y evidencias realizadas. |
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.0-rc1 | 21/08/2026 | Product Owner + AI Collaborator | Primera consolidación de las pautas para aprendizaje académico estructurado: material escolar como fuente prioritaria, diseño TEL-friendly, estructura modular, selección de recursos, práctica formativa, evidencias, retroalimentación y proceso de incorporación ágil. Primera aplicación prevista: 6.º de Primaria. |
+
+---
+
+## 1. Propósito
+
+Este estándar responde a una pregunta principal:
+
+> **¿Cómo debe transformar la Academia un material escolar real en una experiencia académica clara, motivadora, adaptable y útil para aprender, practicar y generar retroalimentación?**
+
+Su objetivo es permitir que, durante 6.º de Primaria y cursos posteriores, incorporar un nuevo tema sea un proceso ágil y repetible sin convertir todas las páginas en copias idénticas.
+
+El resultado esperado es que, cuando la familia comparta material del colegio —PDF, fotografía, ficha, esquema, presentación, vídeo, enlace, apuntes o instrucciones—, la Academia disponga de criterios suficientes para:
+
+1. comprender el material;
+2. preservar lo que el colegio quiere enseñar;
+3. reorganizarlo cuando sea necesario;
+4. adaptar la experiencia para facilitar comprensión y autonomía;
+5. seleccionar los recursos pedagógicos adecuados;
+6. crear práctica progresiva y retroalimentación formativa;
+7. registrar datos útiles cuando corresponda;
+8. generar evidencias vinculables a Misiones;
+9. identificar oportunidades de refuerzo sin etiquetar al alumno;
+10. y mantener una experiencia visual coherente con la Academia.
+
+---
+
+## 2. Alcance
+
+### 2.1 Incluido
+
+Este estándar gobierna:
+
+- temas académicos de Mis Cursos;
+- contenidos de Matemáticas, Lengua, Ciencias, Sociales, Inglés y futuras materias;
+- material escolar aportado por el colegio;
+- materiales complementarios autorizados por la familia;
+- explicaciones, resúmenes, fichas, esquemas y ejemplos;
+- vídeos, mapas, gráficos, líneas del tiempo, música, simulaciones y otros recursos cuando aporten valor;
+- práctica guiada y autónoma;
+- pruebas de estudio y comprobaciones formativas;
+- criterios de accesibilidad cognitiva y lingüística;
+- evidencia de actividad y resultados observables;
+- retroalimentación educativa derivada de datos;
+- y el proceso de incorporación de nuevos temas.
+
+### 2.2 Fuera de alcance
+
+Este estándar no define:
+
+- el currículo oficial completo de un curso;
+- calificaciones escolares;
+- competencias oficiales, indicadores o boletines;
+- diagnóstico clínico, logopédico, psicológico o pedagógico;
+- un sistema de dominio o mastery obligatorio;
+- un historial académico oficial del colegio;
+- reglas de Firestore concretas;
+- el esquema técnico definitivo de una futura `sesionAcademica`;
+- ni la implementación específica de cada tema.
+
+El contrato técnico de persistencia se definirá cuando se implemente el primer tema piloto conectado a datos.
+
+---
+
+## 3. Primera aplicación: 6.º de Primaria
+
+6.º será la primera aplicación estructurada de este estándar.
+
+Esto significa:
+
+- **no reconstruir 5.º desde cero**;
+- reutilizar los patrones que demostraron valor;
+- no migrar masivamente las páginas existentes de 5.º;
+- y diseñar 6.º desde el inicio con una arquitectura de contenido, interacción y datos más consistente.
+
+Los temas de 5.º sirven como **casos de aprendizaje y referencia**, no como plantillas rígidas.
+
+Entre los patrones ya validados se encuentran:
+
+- representación interactiva de conceptos cuando el fenómeno se comprende mejor experimentándolo;
+- integración de vídeos del colegio dentro de una ruta de estudio;
+- mapas y orientación espacial para contenidos geográficos;
+- líneas del tiempo para secuencias históricas;
+- música o mnemotecnias cuando facilitan recordar;
+- flashcards para recuperación activa;
+- gráficos y esquemas para relaciones visuales;
+- práctica contextualizada;
+- y test de repaso.
+
+---
+
+## 4. Principio central: estándar no significa idéntico
+
+> **El estándar define qué experiencia debemos conseguir. No obliga a que todos los temas tengan las mismas pantallas ni los mismos recursos.**
+
+Todo tema debe responder a necesidades comunes de aprendizaje, pero su forma concreta depende de:
+
+- la materia;
+- el contenido;
+- el material recibido;
+- el tipo de razonamiento;
+- la dificultad lingüística;
+- la necesidad de memoria o aplicación;
+- y los recursos disponibles.
+
+Por ejemplo:
+
+```text
+Electricidad
+→ puede necesitar simulación o circuito interactivo.
+
+Geografía
+→ puede necesitar mapa y orientación espacial.
+
+Historia
+→ puede necesitar línea del tiempo, mapa y relaciones causa–consecuencia.
+
+Matemáticas
+→ puede necesitar representación visual, manipulación y resolución paso a paso.
+
+Lengua
+→ puede necesitar lectura, clasificación, análisis, construcción y producción propia.
+```
+
+La consistencia se obtiene mediante principios comunes, no mediante clonación visual.
+
+---
+
+## 5. Material escolar como fuente prioritaria
+
+### 5.1 Principio
+
+Cuando el colegio proporciona material para estudiar, ese material constituye la **fuente académica prioritaria para el alcance de la actividad**.
+
+La Academia debe:
+
+- respetar la terminología utilizada cuando sea importante para el colegio;
+- conservar procedimientos, reglas, ejemplos o formatos que el alumno deba reconocer;
+- identificar qué contenidos parecen centrales;
+- mantener vídeos, mapas, documentos o recursos proporcionados cuando aporten valor;
+- y construir apoyos alrededor del material.
+
+### 5.2 Enriquecer no es sustituir
+
+La Academia puede:
+
+- explicar con otras palabras;
+- crear ejemplos propios;
+- añadir apoyos visuales;
+- reorganizar información;
+- crear práctica adicional;
+- añadir comparaciones;
+- construir esquemas;
+- introducir mnemotecnias;
+- o contextualizar en situaciones reales.
+
+Pero no debe sustituir silenciosamente lo indicado por el colegio por otra explicación incompatible.
+
+### 5.3 Separación de procedencia
+
+Durante la construcción debe distinguirse entre:
+
+```text
+HECHO DEL MATERIAL ESCOLAR
+Contenido explícitamente aportado.
+
+INFERENCIA DE LA ACADEMIA
+Interpretación razonable pero no explícita.
+
+ENRIQUECIMIENTO DE LA ACADEMIA
+Explicación, ejemplo, visual o práctica añadida para ayudar.
+```
+
+Si una carencia del material impide construir correctamente el tema, deberá identificarse antes de inventar el dato.
+
+### 5.4 Material incompleto
+
+La ausencia de una pieza secundaria no debe bloquear innecesariamente el trabajo.
+
+Se solicitará aclaración únicamente cuando la carencia cambie de forma material:
+
+- el contenido que debe enseñarse;
+- el procedimiento esperado;
+- el nivel de dificultad;
+- el formato de evaluación;
+- o una respuesta que deba ser fiel al colegio.
+
+---
+
+## 6. Contrato de incorporación de material escolar
+
+El proceso estándar será:
+
+```text
+MATERIAL DEL COLEGIO
+        ↓
+ANÁLISIS DE FUENTE
+        ↓
+OBJETIVOS Y CONCEPTOS
+        ↓
+ADAPTACIÓN DE COMPRENSIÓN
+        ↓
+DISEÑO DE LA EXPERIENCIA
+        ↓
+SELECCIÓN DE RECURSOS
+        ↓
+PRÁCTICA PROGRESIVA
+        ↓
+COMPROBACIÓN FORMATIVA
+        ↓
+REGISTRO / EVIDENCIA
+        ↓
+RETROALIMENTACIÓN
+        ↓
+REFUERZO O CONTINUIDAD
+```
+
+### 6.1 Entrada admitida
+
+El proceso puede comenzar con:
+
+- PDF;
+- fotografía;
+- captura de pantalla;
+- documento;
+- ficha;
+- presentación;
+- enlace;
+- vídeo;
+- audio;
+- índice de libro;
+- instrucciones de profesor;
+- apuntes;
+- o combinación de varios insumos.
+
+### 6.2 Análisis de fuente
+
+Antes de generar la experiencia se identificará:
+
+- curso de referencia;
+- materia;
+- tema;
+- propósito aparente;
+- conceptos clave;
+- vocabulario académico;
+- procedimientos;
+- ejemplos aportados;
+- recursos proporcionados;
+- tipo de trabajo esperado;
+- posibles dificultades de comprensión;
+- y elementos que no deben perderse al adaptar.
+
+### 6.3 Diseño de la experiencia
+
+A continuación se decidirá:
+
+- qué debe explicarse;
+- qué debe verse;
+- qué debe practicarse;
+- qué debe recordarse;
+- qué conviene producir o resolver;
+- qué recursos aportan valor;
+- qué información merece persistirse;
+- y qué cierre resulta útil.
+
+### 6.4 Validación antes de publicar
+
+La experiencia debe contrastarse contra el material original para confirmar:
+
+- fidelidad académica;
+- cobertura suficiente;
+- ausencia de contradicciones;
+- instrucciones claras;
+- nivel adecuado;
+- y correspondencia entre práctica y contenido explicado.
+
+---
+
+## 7. Núcleo común de un Tema Académico
+
+Un Tema Académico debe conseguir, cuando corresponda, los siguientes resultados:
+
+### 7.1 Orientar
+
+El alumno debe saber:
+
+- qué va a aprender;
+- qué hará;
+- y por dónde empezar.
+
+### 7.2 Dar una fotografía mental
+
+Debe existir una síntesis rápida que permita ubicar el tema antes de profundizar.
+
+Puede adoptar formas como:
+
+- súper resumen;
+- mapa visual;
+- esquema;
+- comparación;
+- línea del tiempo;
+- gráfico;
+- fórmula visual;
+- o conjunto breve de ideas clave.
+
+### 7.3 Comprender
+
+La teoría debe dividirse en unidades manejables.
+
+La explicación debe priorizar:
+
+```text
+comprender → relacionar → aplicar → recordar
+```
+
+no:
+
+```text
+memorizar → repetir sin comprender
+```
+
+### 7.4 Verlo funcionar
+
+Cuando sea posible, el concepto debe mostrarse mediante:
+
+- ejemplo;
+- demostración;
+- animación;
+- diagrama;
+- simulación;
+- mapa;
+- vídeo;
+- manipulación;
+- o comparación concreta.
+
+### 7.5 Practicar con apoyo
+
+La primera práctica debe ofrecer suficiente ayuda para que el alumno pueda construir la estrategia.
+
+### 7.6 Practicar con mayor autonomía
+
+Después debe existir al menos una oportunidad de aplicar el aprendizaje con menos apoyo.
+
+### 7.7 Comprobar
+
+La comprobación final debe ayudar a estudiar, no limitarse a emitir una puntuación.
+
+### 7.8 Recordar y continuar
+
+El cierre puede incluir:
+
+- ideas clave;
+- mnemotecnia;
+- regla visual;
+- errores que conviene vigilar;
+- próximos pasos;
+- o propuesta de refuerzo.
+
+### 7.9 No son secciones obligatorias
+
+Estos resultados no implican ocho pestañas ni ocho bloques separados.
+
+Un buen diseño puede combinar varios dentro de una sola actividad.
+
+---
+
+## 8. Diseño para comprensión y apoyo TEL
+
+La adaptación TEL forma parte de la calidad de la experiencia. No debe reducir el nivel académico ni infantilizar al alumno.
+
+### 8.1 Lenguaje
+
+Preferir:
+
+- frases breves;
+- estructura directa;
+- voz activa;
+- una idea principal por bloque;
+- vocabulario concreto;
+- conectores explícitos;
+- instrucciones visibles junto a la acción;
+- ejemplos antes de abstracciones complejas;
+- definición clara del vocabulario académico nuevo.
+
+Evitar:
+
+- párrafos densos;
+- varias instrucciones simultáneas;
+- ambigüedad innecesaria;
+- saltos lógicos no explicados;
+- texto decorativo que compita con el contenido;
+- reformulaciones que eliminen términos que el alumno necesita aprender para el colegio.
+
+### 8.2 Carga cognitiva
+
+La página debe permitir concentrarse en una tarea cada vez.
+
+Aplicar:
+
+- jerarquía clara;
+- agrupación por significado;
+- espacio en blanco;
+- revelado progresivo cuando aporte valor;
+- navegación predecible;
+- repetición accesible;
+- y ausencia de presión temporal salvo que el tiempo sea parte real del objetivo.
+
+### 8.3 Apoyo visual
+
+El visual debe explicar, orientar o ayudar a recordar.
+
+No debe existir únicamente para decorar.
+
+Un apoyo visual puede:
+
+- hacer visible una relación;
+- mostrar una secuencia;
+- reducir texto;
+- destacar diferencias;
+- representar una cantidad;
+- ubicar espacialmente;
+- o servir como ancla de memoria.
+
+### 8.4 Edad y dignidad
+
+El tono debe ser:
+
+- cercano;
+- positivo;
+- respetuoso;
+- motivador;
+- propio de la edad.
+
+No debe resultar infantilizante.
+
+La adaptación debe estar integrada en el diseño; no necesita etiquetarse constantemente como “modo TEL” en la interfaz del alumno.
+
+### 8.5 Repetición útil
+
+El alumno debe poder:
+
+- volver a una explicación;
+- repetir un ejemplo;
+- volver a ver un vídeo;
+- consultar una ficha;
+- rehacer una práctica;
+- o pedir una pista.
+
+Repetir no es fracasar.
+
+---
+
+## 9. Selección inteligente de recursos
+
+El recurso se elige por su función pedagógica.
+
+| Necesidad | Recursos que pueden aportar valor |
+|---|---|
+| Ubicación espacial | Mapa, mapa interactivo, orientación, capas visuales |
+| Secuencia temporal | Línea del tiempo, tarjetas ordenables, animación |
+| Relación entre conceptos | Diagrama, esquema, tabla comparativa, mapa conceptual |
+| Cambio o proceso | Simulación, animación, demostración, vídeo |
+| Procedimiento | Ejemplo guiado, pasos numerados, manipulación interactiva |
+| Memorización | Fichas, recuperación activa, asociación visual, mnemotecnia, música cuando sea adecuada |
+| Clasificación | Tarjetas, agrupaciones, arrastrar/ordenar cuando sea accesible |
+| Aplicación | Problema, caso, juego, ejercicio contextualizado |
+| Expresión | Respuesta escrita, explicación oral, esquema, producción propia |
+| Material del profesor | Recurso integrado con orientación antes y después |
+| Revisión final | Test formativo, mini reto, síntesis, actividad de transferencia |
+
+### 9.1 Multimedia con propósito
+
+Vídeo, audio, música y animación deben responder a una necesidad concreta.
+
+Evitar añadir multimedia únicamente para hacer la página “más llamativa”.
+
+### 9.2 Antes y después de un vídeo
+
+Cuando un vídeo sea importante:
+
+**Antes:** indicar qué debe observar el alumno.
+
+**Después:** comprobar una o dos ideas clave, resumir o aplicar.
+
+No se considerará evidencia que el alumno “vio el 100 %” del vídeo si el sistema no puede comprobarlo de forma fiable.
+
+---
+
+## 10. Práctica progresiva
+
+La práctica debe evolucionar desde apoyo hacia autonomía.
+
+Patrón recomendado:
+
+```text
+VEO
+↓
+LO HACEMOS JUNTOS
+↓
+LO INTENTO
+↓
+RECIBO FEEDBACK
+↓
+CORRIJO / VUELVO A INTENTAR
+↓
+LO APLICO EN OTRA FORMA
+```
+
+### 10.1 Variedad con propósito
+
+No repetir diez veces la misma mecánica si tres ejercicios permiten observar lo mismo.
+
+La variedad debe permitir comprobar:
+
+- reconocimiento;
+- comprensión;
+- aplicación;
+- transferencia;
+- o producción.
+
+### 10.2 Ayudas
+
+Las ayudas deben ser graduales.
+
+Ejemplos:
+
+1. recordar la regla;
+2. señalar la parte relevante;
+3. mostrar un ejemplo similar;
+4. reducir opciones;
+5. resolver un paso junto al alumno.
+
+La ayuda no debe resolver silenciosamente toda la tarea.
+
+---
+
+## 11. Test y comprobación formativa
+
+### 11.1 Objetivo
+
+El test es una herramienta para estudiar.
+
+No es únicamente un mecanismo de puntuación.
+
+### 11.2 Ante una respuesta correcta
+
+La Academia puede:
+
+- confirmar;
+- reforzar la regla;
+- señalar por qué es correcta;
+- y continuar.
+
+### 11.3 Ante una respuesta incorrecta
+
+Debe, cuando sea razonable:
+
+- mostrar qué opción se eligió;
+- identificar la respuesta correcta;
+- explicar el razonamiento;
+- ofrecer un apoyo breve;
+- y permitir volver a practicar.
+
+### 11.4 Primer intento y resultado final
+
+Cuando se persistan datos, distinguir siempre que sea útil entre:
+
+- respuesta o resultado inicial;
+- corrección posterior;
+- y resultado final.
+
+Un alumno que necesitó una explicación y después resolvió correctamente produjo información educativa distinta de un simple “0” o “1”.
+
+### 11.5 Finalización no equivale a dominio
+
+> **Completar una actividad demuestra que la experiencia se realizó. No demuestra por sí sola que el contenido esté dominado.**
+
+Una actividad no exigirá perfección para poder finalizar, salvo que una regla académica específica aprobada lo requiera.
+
+La necesidad de refuerzo se representa mediante datos y retroalimentación, no bloqueando indefinidamente el cierre.
+
+---
+
+## 12. Evidencia académica
+
+### 12.1 Principio
+
+La evidencia debe demostrar **qué experiencia se realizó y qué ocurrió durante ella**.
+
+No debe convertirse en una etiqueta permanente sobre la capacidad del alumno.
+
+### 12.2 Reutilización de la arquitectura existente
+
+6.º no creará un sistema paralelo de evidencias.
+
+El aprendizaje académico deberá reutilizar el patrón conceptual existente:
+
+```text
+Tema
+  ↓
+Actividad
+  ↓
+Sesión / ejecución
+  ↓
+Evidencia cuando corresponda
+  ↓
+Datos
+  ↓
+Observaciones
+  ↓
+Insumos
+  ↓
+Acciones de refuerzo o continuidad
+```
+
+### 12.3 Sesión y evidencia
+
+Se distinguen dos conceptos:
+
+**Sesión académica**
+
+Conserva la ejecución y sus datos útiles, exista o no una Misión.
+
+**Evidencia de Misión**
+
+Cuando la actividad se realiza desde una Misión, puede registrar una evidencia vinculada a esa Misión y referenciar la sesión académica.
+
+Esta separación reutiliza el patrón ya empleado por otros Motores de Aprendizaje y evita obligar a que todo estudio libre sea una Misión.
+
+### 12.4 Datos útiles posibles
+
+Según la actividad, pueden resultar útiles:
+
+- `cursoReferencia`;
+- `materia`;
+- `tema`;
+- `actividadId`;
+- tipo de actividad;
+- conceptos trabajados;
+- fecha/hora;
+- inicio y finalización;
+- intentos;
+- respuestas;
+- primer resultado;
+- resultado final;
+- ayudas o pistas utilizadas;
+- pasos repetidos;
+- tiempo aproximado cuando sea fiable y significativo;
+- producción escrita u oral cuando esté autorizada;
+- y relación con `misionId` cuando exista.
+
+El esquema técnico definitivo se definirá durante el piloto.
+
+### 12.5 Datos que no deben guardarse por defecto
+
+No persistir:
+
+- movimientos de ratón sin valor educativo;
+- tiempo de pantalla como sustituto automático de aprendizaje;
+- métricas que el sistema no puede medir con fiabilidad;
+- inferencias emocionales no autorizadas;
+- diagnósticos;
+- etiquetas de inteligencia o capacidad;
+- ni información que no tenga una finalidad clara de acompañamiento.
+
+### 12.6 Regla de utilidad
+
+Antes de persistir un dato debe poder responderse:
+
+> **¿Qué decisión educativa, familiar o de producto podrá mejorar gracias a este dato?**
+
+Si no existe respuesta clara, el dato no es necesario.
+
+---
+
+## 13. Retroalimentación
+
+La retroalimentación ocurre en varios niveles.
+
+### 13.1 Inmediata para el alumno
+
+Debe ayudar a continuar en ese momento.
+
+Ejemplos:
+
+- explicación de una respuesta;
+- pista;
+- recordatorio de fórmula;
+- comparación visual;
+- siguiente paso.
+
+### 13.2 De cierre
+
+Al terminar una actividad puede resumir:
+
+- lo realizado;
+- lo que salió bien;
+- qué necesitó apoyo;
+- y qué conviene practicar después.
+
+### 13.3 Para la familia
+
+Debe ser breve, útil y comprensible.
+
+Ejemplos:
+
+```text
+Fortaleza observada
+Reconoció correctamente las ideas principales.
+
+Oportunidad de refuerzo
+Todavía confunde dos conceptos cuando la pregunta cambia de formato.
+
+Apoyo que pareció ayudar
+La comparación visual permitió corregir la respuesta.
+
+Siguiente paso sugerido
+Realizar una práctica breve con ejemplos diferentes.
+```
+
+### 13.4 Diferenciar dato e inferencia
+
+```text
+HECHO
+Usó dos pistas y corrigió la respuesta en el segundo intento.
+
+OBSERVACIÓN
+La ayuda visual permitió completar correctamente este ejercicio.
+
+INFERENCIA PRUDENTE
+Este tipo de apoyo parece útil en este contenido.
+```
+
+Una única actividad constituye una señal, no un patrón longitudinal.
+
+Los patrones requieren varias observaciones independientes y deben poder revisarse.
+
+### 13.5 Retroalimentación no diagnóstica
+
+Nunca transformar resultados en:
+
+- “no sabe”;
+- “es malo en”;
+- “tiene poca capacidad”;
+- etiquetas clínicas;
+- conclusiones psicológicas;
+- o valoraciones permanentes.
+
+---
+
+## 14. Refuerzo
+
+El refuerzo debe responder a una necesidad observada.
+
+Puede consistir en:
+
+- repetir una explicación de otra forma;
+- usar un apoyo visual distinto;
+- practicar solo el concepto que generó dificultad;
+- reducir temporalmente el nivel de apoyo;
+- aumentar apoyo cuando sea necesario;
+- ofrecer un ejemplo adicional;
+- realizar una lectura relacionada;
+- utilizar Detectives u otro motor existente;
+- o crear una nueva Misión corta.
+
+### 14.1 Refuerzo mínimo eficaz
+
+No volver a repetir un tema completo si la dificultad está localizada.
+
+Preferir:
+
+```text
+problema detectado
+↓
+refuerzo específico
+↓
+nueva oportunidad de aplicación
+```
+
+---
+
+## 15. Motivación
+
+La motivación debe acompañar el proceso sin ocultar el aprendizaje.
+
+### 15.1 Reconocer
+
+Celebrar:
+
+- empezar;
+- perseverar;
+- corregir;
+- pedir ayuda;
+- aplicar una estrategia;
+- completar;
+- y volver a intentarlo.
+
+### 15.2 Evitar
+
+- presión;
+- comparación;
+- exceso de premios;
+- celebraciones desproporcionadas;
+- lenguaje infantilizante;
+- o mensajes que hagan sentir el error como fracaso.
+
+### 15.3 Motivación visual
+
+La página puede ser atractiva mediante:
+
+- ilustración;
+- color;
+- iconografía;
+- microanimaciones;
+- personajes;
+- contexto narrativo;
+- y progresión visual.
+
+Siempre subordinados al objetivo académico.
+
+---
+
+## 16. Estructura lógica del contenido
+
+Aunque la implementación inicial pueda seguir utilizando HTML/JavaScript, cada nuevo Tema Académico debe poder entenderse conceptualmente como contenido separable de la mecánica.
+
+Ejemplo conceptual:
+
+```text
+Tema Académico
+├── identidad
+│   ├── cursoReferencia
+│   ├── materia
+│   └── tema
+├── objetivos
+├── conceptos
+├── explicación
+├── recursos
+├── actividades
+├── comprobación
+├── apoyos
+└── cierre
+```
+
+La estructura definitiva de archivos o configuración se decidirá durante el piloto, evitando crear prematuramente un framework o JSON universal.
+
+---
+
+## 17. Integración con Misiones
+
+Un Tema Académico puede utilizarse:
+
+### Acceso libre
+
+```text
+Mis Cursos
+→ Tema
+→ Estudio / práctica
+→ Sesión académica
+```
+
+### Desde Mi Camino
+
+```text
+Misión
+→ Tema / actividad
+→ Sesión académica
+→ Evidencia de Misión
+→ Esperando revisión cuando corresponda
+```
+
+La Misión orquesta.
+
+El Tema Académico enseña y practica.
+
+La evidencia registra lo realizado.
+
+La familia revisa cuando el flujo lo requiera.
+
+---
+
+## 18. Experiencia familiar y Trabajo realizado
+
+Cuando exista evidencia académica, la familia debería poder comprender sin inspeccionar datos técnicos:
+
+- qué tema se trabajó;
+- qué actividad se realizó;
+- cuándo;
+- qué resultado produjo;
+- si necesitó ayudas;
+- qué oportunidades de refuerzo aparecieron;
+- y cómo abrir el detalle cuando exista.
+
+El lenguaje visible será funcional y cercano.
+
+El término técnico **evidencia** puede permanecer interno cuando una expresión como **Trabajo realizado** resulte más comprensible.
+
+---
+
+## 19. Calidad visual
+
+Todo Tema Académico debe aspirar a una experiencia:
+
+- limpia;
+- respirable;
+- ordenada;
+- moderna;
+- motivadora;
+- accesible en móvil/tableta/escritorio;
+- y consistente con la identidad de la Academia.
+
+### 19.1 Evitar sobrecarga
+
+No acumular simultáneamente:
+
+- demasiados colores;
+- animaciones competidoras;
+- iconos sin significado;
+- largos bloques de texto;
+- múltiples llamadas a la acción equivalentes;
+- o recursos redundantes.
+
+### 19.2 Una acción principal clara
+
+En cada paso debe ser evidente qué puede hacer el alumno a continuación.
+
+---
+
+## 20. Criterios de conformidad de un Tema Académico
+
+Antes de considerar un tema preparado para uso debe comprobarse:
+
+### Fuente
+
+- [ ] El material escolar recibido fue revisado completo en el alcance necesario.
+- [ ] Se preservaron conceptos, procedimientos y recursos importantes.
+- [ ] Los enriquecimientos no contradicen la fuente.
+
+### Comprensión
+
+- [ ] El objetivo se entiende.
+- [ ] La teoría está segmentada.
+- [ ] El vocabulario importante está explicado.
+- [ ] Existe al menos una representación clara del concepto cuando aporta valor.
+
+### TEL y carga cognitiva
+
+- [ ] Las instrucciones son directas.
+- [ ] No existen varias órdenes ambiguas en el mismo paso.
+- [ ] La interfaz no infantiliza.
+- [ ] El alumno puede repetir o consultar ayudas.
+
+### Práctica
+
+- [ ] Existe práctica suficiente para el objetivo.
+- [ ] Hay progresión de apoyo a autonomía cuando aplica.
+- [ ] El error produce información útil.
+
+### Comprobación
+
+- [ ] El test o actividad final explica los errores cuando corresponde.
+- [ ] El cierre no depende de una puntuación perfecta por defecto.
+- [ ] Se diferencia finalización de dominio.
+
+### Datos
+
+- [ ] Solo se registran datos útiles y medibles.
+- [ ] Los datos pueden distinguir hechos de inferencias.
+- [ ] No existen métricas inventadas.
+- [ ] La relación con una Misión se conserva cuando corresponda.
+
+### Retroalimentación
+
+- [ ] Puede identificarse al menos qué ocurrió en la actividad.
+- [ ] La retroalimentación no etiqueta al alumno.
+- [ ] El refuerzo sugerido está relacionado con datos observables.
+
+### Integración
+
+- [ ] Funciona con navegación estándar.
+- [ ] Respeta el origen y retorno contextual cuando corresponde.
+- [ ] Reutiliza componentes/servicios existentes antes de crear otros.
+
+---
+
+## 21. Proceso ágil durante 6.º
+
+Una vez aprobado este estándar, el flujo deseado para incorporar nuevo material será:
+
+```text
+1. La familia comparte el material del colegio.
+2. La Academia identifica materia, tema y objetivos.
+3. Se decide qué patrones comunes y recursos específicos necesita.
+4. Se genera el Tema Académico.
+5. Se valida contra el material original.
+6. Se comprueba navegación, práctica y feedback.
+7. Si corresponde, se conecta con sesión/evidencia.
+8. Se entrega el incremental listo para instalar.
+9. El uso real aporta nuevas observaciones.
+10. Solo las lecciones generalizables actualizan este estándar.
+```
+
+El objetivo es reducir interacciones administrativas, no reducir la calidad del análisis.
+
+---
+
+## 22. Evolución y compatibilidad
+
+### 22.1 5.º de Primaria
+
+No se realizará una migración masiva de 5.º únicamente para cumplir este estándar.
+
+Las páginas existentes continuarán funcionando.
+
+Si un tema de 5.º vuelve a ser intervenido, podrán incorporarse progresivamente los principios que aporten valor.
+
+### 22.2 6.º de Primaria
+
+Los temas nuevos de 6.º aplicarán este estándar desde su nacimiento.
+
+### 22.3 Cursos posteriores
+
+El estándar se diseña para evolucionar más allá de 6.º.
+
+No se crearán estándares independientes por curso salvo que aparezca una necesidad pedagógica real que lo justifique.
+
+---
+
+## 23. Decisiones adoptadas
+
+| ID | Decisión | Estado |
+|---|---|---|
+| CA-001 | El material del colegio es la fuente prioritaria para el alcance académico de cada tema. | Aprobada conceptualmente |
+| CA-002 | Estandarizar significa asegurar una experiencia común de calidad, no crear páginas idénticas. | Aprobada conceptualmente |
+| CA-003 | Los recursos se seleccionan por función pedagógica; vídeo, música, mapas o juegos no son obligatorios. | Aprobada conceptualmente |
+| CA-004 | La adaptación TEL mantiene el nivel académico y evita infantilización. | Aprobada conceptualmente |
+| CA-005 | El test debe ayudar a estudiar mediante feedback, no limitarse a puntuar. | Aprobada conceptualmente |
+| CA-006 | Completar una actividad no equivale a dominar un contenido. | Aprobada conceptualmente |
+| CA-007 | 6.º reutilizará la arquitectura genérica de sesiones/evidencias; no creará un sistema paralelo por asignatura. | Aprobada conceptualmente |
+| CA-008 | Los datos se registran por utilidad educativa, no por disponibilidad técnica. | Aprobada conceptualmente |
+| CA-009 | La retroalimentación separará hechos, observaciones, inferencias prudentes y acciones. | Aprobada conceptualmente |
+| CA-010 | 5.º no se migrará masivamente; sus mejores experiencias sirven como referencia para 6.º. | Aprobada conceptualmente |
+
+---
+
+## 24. Trabajo pendiente antes de declarar implementación
+
+Este estándar define la solución de producto y las condiciones de calidad.
+
+Todavía queda por construir y validar:
+
+1. un Tema Académico piloto;
+2. el contrato técnico de `sesionAcademica` o equivalente;
+3. la persistencia mínima necesaria;
+4. la evidencia académica ligada a Misión;
+5. la revisión familiar del resultado;
+6. y la primera retroalimentación derivada de datos reales.
+
+Nada de lo anterior debe declararse implementado hasta existir en código y haber sido probado.
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Pregunta resuelta** | Cómo transformar material escolar en Temas Académicos consistentes, adaptados, medibles y reutilizables. |
+| **Primera aplicación** | 6.º de Primaria. |
+| **Reutilización** | Aprovechar patrones validados de 5.º y la arquitectura existente de Motores, Misiones y Evidencias. |
+| **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
+| **Persistencia** | Registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
+| **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
+| **Estado** | Candidato para aprobación; no implica todavía implementación técnica. |

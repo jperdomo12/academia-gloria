@@ -16,36 +16,40 @@
 
 ## Modelo conceptual de la Academia Gloria Valentina
 
-| Campo | Valor |
-|---|---|
-| **Ruta oficial** | `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` |
-| **Código documental** | `MODEL-MOTORES_DE_APRENDIZAJE` |
-| **Versión** | 0.3 |
-| **Estado** | Activo |
-| **Fecha** | 21/08/2026 |
-| **Última actualización** | 21/08/2026 |
-| **Propietario** | Modelos de Aprendizaje |
-| **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Modelo conceptual compartido de motores, contenido, experiencia, registro, evidencias e integración de experiencias de aprendizaje |
-
-## Documentos relacionados
-
-| Documento | Relación |
-|---|---|
-| `docs/FOUNDATION.md` | **Gobierna:** propósito y principios humanos del producto. |
-| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` | **Gobierna:** principios pedagógicos generales. |
-| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** dominios de contenido, experiencias, evidencias, acompañamiento y progreso. |
-| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Implementa el modelo en el dominio académico:** reglas para convertir material escolar en Temas Académicos, con primera aplicación en 6.º. |
-| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional de Misiones y evidencias. |
-| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** revisión familiar de experiencias/evidencias realizadas. |
+**Código documental:** `MODEL-MOTORES_DE_APRENDIZAJE`  
+**Versión:** 0.2  
+**Estado:** Modelo conceptual en evolución  
+**Ubicación:** `docs/models/MODEL-MOTORES_DE_APRENDIZAJE.md`
 
 ## Historial de versiones
 
-| Versión | Fecha | Responsables | Cambios |
-|---|---:|---|---|
-| 0.3 | 21/08/2026 | Product Owner + AI Collaborator | Incorpora conceptualmente el Motor de Estudio Académico para 6.º, la separación Sesión Académica / Evidencia de Misión, el principio “finalización no equivale a dominio” y un ejemplo académico del flujo Datos → Observaciones → Insumos → Acciones. No declara implementación técnica. |
-| 0.2 | 2026 | Product Owner + AI Collaborator | Revisión funcional y arquitectónica de Detectives/Lectura, principio del Motor de Semillas, flujos libre/Misión, Datos → Observaciones → Insumos → Acciones, contrato con Misiones, servicios comunes y criterios de evolución. |
-| 0.1 | 2026 | Product Owner + AI Collaborator | Primera identificación del concepto de Motor de Aprendizaje y de los casos Detectives, Lectura y Semillas. |
+### Versión 0.2
+
+Incorpora la revisión funcional y arquitectónica posterior a la lectura de la versión 0.1:
+
+- ubicación real de las historias de Mi Rincón de Lectura en `historias.js`;
+- comparación equilibrada entre Detectives y Mi Rincón de Lectura;
+- principio de construcción del Motor de Semillas a partir de lo mejor de ambos;
+- representación gráfica del flujo de acceso libre y del flujo desde una misión;
+- distinción entre Datos, Observaciones, Insumos y Acciones;
+- explicación conceptual del contrato de integración con Misiones;
+- reconocimiento explícito de que una Misión contiene una o más Tareas;
+- posible configuración administrable de la Academia, sin crearla prematuramente;
+- servicios comunes de grabación y análisis de voz;
+- principio de reutilización de Lía;
+- consideración pendiente de seguridad, autorización y datos sensibles;
+- criterio de promoción del modelo a versión 1.0;
+- observación de producto sobre la futura simplificación de Mi Camino.
+
+### Versión 0.1
+
+Primera identificación del concepto de Motor de Aprendizaje y de los casos Detectives, Lectura y Semillas.  
+**Documentos relacionados:**
+
+- `docs/FOUNDATION.md`
+- `docs/product/SPEC-CRECIENDO_POR_DENTRO.md`
+- Especificaciones funcionales de los módulos que utilicen este modelo
+- Estándares técnicos y documentales aplicables
 
 ---
 
@@ -58,7 +62,6 @@ Su propósito es identificar y describir un patrón que ya comienza a aparecer e
 - **Aventuras Matemáticas — Detectives**.
 - **Mi Rincón de Lectura**.
 - **Creciendo por dentro — Semillas**.
-- **Estudio Académico — Temas de Mis Cursos** (incorporado conceptualmente para 6.º; todavía no implementado como motor).
 - Otros módulos futuros que puedan reutilizar el mismo enfoque.
 
 El modelo busca responder a estas preguntas:
@@ -161,16 +164,6 @@ semillas.json
         =
 Experiencias concretas de Creciendo por dentro
 ```
-
-```text
-Motor de Estudio Académico
-        +
-Tema académico y recursos asociados
-        =
-Experiencia concreta de estudio, práctica y comprobación
-```
-
-En este último caso, “motor” no significa que todos los Temas deban verse iguales. El comportamiento común puede reutilizarse mientras cada Tema conserva los recursos específicos que necesita: mapa, gráfico, vídeo, línea del tiempo, simulación, música, práctica escrita u otros.
 
 ---
 
@@ -724,125 +717,6 @@ Presentar experiencias de crecimiento personal, emocional, comunicativo y social
 ### Principio de diseño
 
 El Motor de Semillas será el primer caso nuevo utilizado para validar este modelo conceptual.
-
-## 8.5 Motor de Estudio Académico
-
-### Estado de la capacidad
-
-**Decisión conceptual aprobada para el diseño de 6.º de Primaria.**
-
-No debe interpretarse todavía como funcionalidad implementada. Su contrato técnico se validará mediante un Tema Académico piloto.
-
-### Propósito
-
-Convertir un Tema Académico en una experiencia de estudio que permita:
-
-- comprender;
-- visualizar;
-- practicar;
-- recibir retroalimentación;
-- volver a intentar;
-- registrar una sesión útil;
-- generar evidencia cuando exista una Misión;
-- y producir información que permita orientar un refuerzo posterior.
-
-### Por qué puede considerarse un motor
-
-El patrón académico cumple las condiciones identificadas por este modelo:
-
-- existe una mecánica recurrente de orientación, comprensión, práctica, comprobación y cierre;
-- el contenido cambia por curso, materia y tema;
-- los recursos cambian según la naturaleza del contenido;
-- existe necesidad de historial y datos;
-- puede integrarse con Misiones;
-- y la reutilización de comportamiento aporta valor de mantenimiento.
-
-### Contenido variable
-
-Puede incluir:
-
-- `cursoReferencia`;
-- materia;
-- tema;
-- objetivos;
-- conceptos;
-- vocabulario;
-- explicaciones;
-- ejemplos;
-- preguntas;
-- ejercicios;
-- apoyos;
-- mapas;
-- gráficos;
-- vídeos;
-- audios;
-- música;
-- simulaciones;
-- líneas del tiempo;
-- fichas;
-- y otros recursos específicos.
-
-### Comportamiento común esperado
-
-El comportamiento compartido puede asumir, cuando corresponda:
-
-```text
-Orientar
-↓
-Presentar una síntesis
-↓
-Explicar / mostrar
-↓
-Practicar con apoyo
-↓
-Practicar con mayor autonomía
-↓
-Dar feedback
-↓
-Comprobar
-↓
-Registrar sesión
-↓
-Registrar evidencia si existe Misión
-↓
-Proponer continuidad o refuerzo
-```
-
-### Variación legítima
-
-El Motor de Estudio Académico no obliga a utilizar una secuencia visual idéntica en todos los Temas.
-
-Ejemplos:
-
-```text
-Geografía → mapa y orientación.
-Historia → línea del tiempo y relaciones causa–consecuencia.
-Ciencias → simulación o representación de procesos.
-Matemáticas → modelado, procedimiento y resolución paso a paso.
-Lengua → lectura, clasificación, análisis y producción.
-```
-
-### Sesión Académica y Evidencia
-
-El modelo distingue:
-
-```text
-Sesión Académica
-= registro de una ejecución de estudio/práctica.
-
-Evidencia de Misión
-= registro que vincula una actividad realizada con una Misión.
-```
-
-Una sesión puede existir en acceso libre.
-
-Cuando la experiencia se inicia desde una Misión, la sesión podrá generar además una evidencia que la referencie, reutilizando la arquitectura existente de Misiones y Evidencias.
-
-### Principio de resultado
-
-> **Finalizar una actividad significa que la experiencia se realizó. No significa automáticamente que el contenido esté dominado.**
-
-La calidad del resultado, los intentos y los apoyos utilizados son datos para retroalimentación y refuerzo; no deben bloquear por defecto la finalización.
 ---
 
 # 9. Contenido configurable
@@ -1402,20 +1276,6 @@ La utilidad deberá equilibrarse con:
 - retención;
 - seguridad.
 
-## 16.4 Finalización no equivale a dominio
-
-Una experiencia completada constituye un hecho de ejecución.
-
-El nivel de acierto, las correcciones, las ayudas y los intentos aportan información adicional sobre cómo ocurrió el aprendizaje.
-
-Por tanto:
-
-```text
-completada ≠ dominada
-```
-
-El modelo evita utilizar una única puntuación como conclusión total sobre el aprendizaje.
-
 ---
 
 # 17. De datos a acciones útiles
@@ -1515,26 +1375,7 @@ Acción:
 Recomendar otra situación de comunicación con el mismo nivel de apoyo.
 ```
 
-## 17.7 Ejemplo de Estudio Académico
-
-```text
-Dato:
-En una actividad de tres preguntas, la alumna acertó una al primer intento.
-Tras consultar una comparación visual, corrigió las otras dos.
-
-Observación:
-En esta sesión, el apoyo visual facilitó la corrección de los dos conceptos que inicialmente generaron dificultad.
-
-Insumo:
-Conviene ofrecer una práctica breve adicional con ejemplos diferentes y mantener disponible el apoyo visual.
-
-Acción:
-Proponer un refuerzo específico y volver a comprobar el concepto con una formulación distinta.
-```
-
-Una sola sesión constituye una señal. No debe presentarse como patrón permanente.
-
-## 17.8 Límites
+## 17.7 Límites
 
 Los datos, observaciones e insumos no deberán transformarse automáticamente en:
 
@@ -1797,24 +1638,6 @@ Puede requerir:
 - acompañamiento sensible;
 - práctica oral.
 
-## 24.4 Estudio Académico
-
-Puede requerir combinaciones distintas según materia y Tema:
-
-- mapas;
-- gráficos;
-- vídeos;
-- líneas del tiempo;
-- simulaciones;
-- fórmulas;
-- escritura;
-- producción oral;
-- música o mnemotecnias;
-- pruebas formativas;
-- y apoyos específicos de comprensión.
-
-La variación del recurso es parte del modelo y no una excepción al estándar.
-
 El modelo común no debe borrar estas diferencias.
 
 Debe compartir únicamente lo que realmente sea común.
@@ -1884,12 +1707,11 @@ Se reutilizará cuando:
 
 Reconocer patrones existentes.
 
-Motores observados o identificados conceptualmente:
+Motores observados:
 
 - Detectives;
 - Lectura;
-- Semillas;
-- Estudio Académico (conceptual para 6.º; pendiente de piloto técnico).
+- Semillas.
 
 ## Etapa 2 — Auditoría
 
@@ -2020,11 +1842,6 @@ Además:
 23. Seguridad y autorización deberán consolidarse como capacidad transversal.
 24. El modelo no pasará a versión 1.0 antes de validar el primer piloto de Semillas con Gloria.
 25. Mi Camino podrá evolucionar hacia un tablero más limpio de Misiones, sin decidirlo dentro de este modelo.
-26. El aprendizaje académico de 6.º reutilizará este modelo conceptual en lugar de crear una arquitectura paralela por asignatura.
-27. El Motor de Estudio Académico permitirá recursos distintos por Tema; la variación pedagógica no rompe el modelo común.
-28. Se distinguirá la Sesión Académica de la Evidencia de Misión: la sesión registra la ejecución; la evidencia vincula la actividad con una Misión cuando exista.
-29. Finalizar una actividad no equivale automáticamente a dominar el contenido.
-30. Los datos académicos deberán conservar utilidad educativa y alimentar retroalimentación prudente, no etiquetas permanentes.
 
 ---
 
@@ -2046,10 +1863,6 @@ Además:
 14. ¿Qué modelo transversal de permisos y seguridad se adoptará?
 15. ¿Qué configuraciones administrables aportan valor real?
 16. ¿Qué elementos merecerán convertirse en estándar después del piloto?
-17. ¿Cuál será el contrato técnico mínimo de una Sesión Académica?
-18. ¿Qué datos académicos aportan valor suficiente para persistirse desde el primer piloto?
-19. ¿Qué estructura de contenido permite reutilización sin forzar páginas idénticas?
-20. ¿Cómo deberá presentarse la retroalimentación académica a alumno y familia tras validar el piloto?
 
 Estas preguntas deberán resolverse mediante:
 
@@ -2126,14 +1939,6 @@ No constituye diagnóstico.
 ## Acción
 
 Continuidad concreta generada a partir de un insumo.
-
-## Motor de Estudio Académico
-
-Motor conceptual para Temas de Mis Cursos que comparte orientación, práctica, feedback, registro e integración, permitiendo recursos específicos por materia y Tema.
-
-## Sesión Académica
-
-Registro conceptual de una ejecución de estudio o práctica académica, exista o no una Misión asociada.
 
 ## Motor de Semillas
 
