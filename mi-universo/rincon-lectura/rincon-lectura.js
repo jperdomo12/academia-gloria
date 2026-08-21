@@ -504,6 +504,74 @@ function renderStoryCatalog() {
   });
 }
 
+function renderStoryVisualAid() {
+  const panel = $("storyVisualAid");
+  const visual = historia?.apoyoVisual;
+
+  if (
+    !panel ||
+    !visual ||
+    !Array.isArray(visual.items) ||
+    !visual.items.length
+  ) {
+    if (panel) {
+      panel.classList.add("hidden");
+      panel.innerHTML = "";
+    }
+    return;
+  }
+
+  const tonosPermitidos = new Set([
+    "sky",
+    "blue",
+    "green",
+    "amber",
+    "violet",
+    "rose"
+  ]);
+
+  const items = visual.items.map(item => {
+    const tono = tonosPermitidos.has(item?.tono)
+      ? item.tono
+      : "sky";
+
+    return `
+      <article class="story-visual-aid__item story-visual-aid__item--${tono}">
+        <span class="story-visual-aid__item-icon" aria-hidden="true">
+          ${escapeHtml(item?.icono || "✨")}
+        </span>
+        <strong>${escapeHtml(item?.etiqueta || "Idea")}</strong>
+        <p>${escapeHtml(item?.texto || "")}</p>
+      </article>
+    `;
+  }).join("");
+
+  panel.innerHTML = `
+    <div class="story-visual-aid__head">
+      <span class="story-visual-aid__head-icon" aria-hidden="true">🧠</span>
+      <div>
+        <strong>${escapeHtml(visual.titulo || "Ayuda visual")}</strong>
+        <p>${escapeHtml(
+          visual.subtitulo ||
+          "Usa estas imágenes para organizar las ideas principales."
+        )}</p>
+      </div>
+    </div>
+
+    <div class="story-visual-aid__grid">
+      ${items}
+    </div>
+
+    ${
+      visual.frase
+        ? `<p class="story-visual-aid__memory">✨ ${escapeHtml(visual.frase)}</p>`
+        : ""
+    }
+  `;
+
+  panel.classList.remove("hidden");
+}
+
 function renderSelectedStory() {
   $("storyPreviewIcon").textContent = historia.portada || "📖";
   $("storyPreviewTitle").textContent = historia.titulo;
@@ -524,7 +592,12 @@ function renderSelectedStory() {
   const sceneBackgrounds = {
     noche: "linear-gradient(180deg,#312e81,#4338ca 56%,#14532d 57%,#166534)",
     amanecer: "linear-gradient(180deg,#fbbf24,#fde68a 56%,#86efac 57%,#16a34a)",
-    laboratorio: "linear-gradient(180deg,#dbeafe,#bfdbfe 56%,#cbd5e1 57%,#64748b)"
+    laboratorio: "linear-gradient(180deg,#dbeafe,#bfdbfe 56%,#cbd5e1 57%,#64748b)",
+    mapa: "linear-gradient(180deg,#bae6fd,#dbeafe 54%,#bbf7d0 55%,#86efac)",
+    montana: "linear-gradient(180deg,#dbeafe,#bae6fd 48%,#cbd5e1 49%,#64748b 72%,#166534 73%)",
+    museo: "linear-gradient(180deg,#fef3c7,#fde68a 54%,#e7e5e4 55%,#a8a29e)",
+    castillo: "linear-gradient(180deg,#fde68a,#fed7aa 52%,#d6d3d1 53%,#78716c)",
+    biblioteca: "linear-gradient(180deg,#ede9fe,#ddd6fe 52%,#d6b98c 53%,#8b5e3c)"
   };
 
   $("storyScene").style.background =
@@ -535,6 +608,8 @@ function renderSelectedStory() {
       <div>${escapeHtml(parrafo.texto)}</div>
     </article>
   `).join("");
+
+  renderStoryVisualAid();
 
   $("reflectionText").textContent = historia.reflexion;
   $("dailyPhrase").textContent = `“${historia.fraseDelDia}”`;

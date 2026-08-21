@@ -1890,9 +1890,26 @@
       background:#bfdbfe;
     }
 
+    .mision__finalizacion{
+      display:grid;
+      justify-items:end;
+      gap:6px;
+      margin-top:3px;
+      padding-top:10px;
+      border-top:1px solid #dcfce7;
+    }
+
+    .mision__finalizacion-pregunta{
+      color:#64748b;
+      font-size:.76rem;
+      font-weight:850;
+      text-align:right;
+    }
+
     .mision__accion--terminar{
       background:#dcfce7;
       color:#166534;
+      box-shadow:0 5px 14px rgba(22,101,52,.08);
     }
 
     .mision__accion--terminar:hover:not(:disabled){
@@ -2089,6 +2106,23 @@
       .mision__estado-bloque{
         justify-items:start;
         text-align:left;
+      }
+
+      .mision--academica .mision__lateral{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .mision--academica .mision__finalizacion{
+        justify-items:stretch;
+      }
+
+      .mision--academica .mision__finalizacion-pregunta{
+        text-align:left;
+      }
+
+      .mision--academica .mision__accion{
+        text-align:center;
       }
 
       .paginacion-misiones{
@@ -2695,29 +2729,40 @@
       `;
     }
 
+    function ordenMision(tarea={}){
+      const valor = Number(tarea.ordenMision);
+      return Number.isFinite(valor) ? valor : 9999;
+    }
+
+    function compararOrdenMisiones(a,b){
+      const diferencia = ordenMision(a) - ordenMision(b);
+
+      if (diferencia !== 0) return diferencia;
+
+      /*
+       * Compatibilidad con Misiones antiguas que todavía no tengan ordenMision:
+       * mantenemos un desempate estable y predecible.
+       */
+      const fechaA = String(a.fechaLimite || "9999-12-31");
+      const fechaB = String(b.fechaLimite || "9999-12-31");
+
+      if (fechaA !== fechaB) {
+        return fechaA.localeCompare(fechaB);
+      }
+
+      return String(a.titulo || "").localeCompare(
+        String(b.titulo || ""),
+        "es"
+      );
+    }
+
     function activas(tareas=[]){
       return tareas
         .filter(tarea =>
           esVisible(tarea) &&
           ESTADOS_ACTIVOS.has(tarea.estado)
         )
-        .sort((a,b)=>{
-          const estado =
-            prioridadEstado(a.estado) -
-            prioridadEstado(b.estado);
-
-          if (estado !== 0) return estado;
-
-          const fa = fechaInicio(a)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-          const fb = fechaInicio(b)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-
-          if (fa !== fb) return fa - fb;
-
-          return String(a.titulo || "").localeCompare(
-            String(b.titulo || ""),
-            "es"
-          );
-        });
+        .sort(compararOrdenMisiones);
     }
 
     function esperandoRevision(tareas=[]){
@@ -3109,18 +3154,23 @@
                       : 'target="_blank" rel="noopener noreferrer"'
                   }
                 >
-                  Abrir recurso →
+                  ▶️ Abrir actividad →
                 </a>
               ` : ""}
 
               ${enCurso ? `
-                <button
-                  type="button"
-                  class="mision__accion mision__accion--academica mision__accion--terminar"
-                  data-terminar-repaso="${escapar(tarea.id)}"
-                >
-                  ✅ He terminado el repaso
-                </button>
+                <div class="mision__finalizacion">
+                  <span class="mision__finalizacion-pregunta">
+                    ¿Terminaste la actividad?
+                  </span>
+                  <button
+                    type="button"
+                    class="mision__accion mision__accion--academica mision__accion--terminar"
+                    data-terminar-repaso="${escapar(tarea.id)}"
+                  >
+                    ✅ Sí, ya terminé esta misión
+                  </button>
+                </div>
               ` : ""}
             </div>
           </article>
@@ -3228,10 +3278,15 @@
             return;
           }
 
-          const tema = String(tarea.tema || tarea.titulo || "este repaso").trim();
+          const tituloMision = String(
+            tarea.titulo ||
+            tarea.tema ||
+            "esta misión"
+          ).trim();
+
           const confirmado = window.confirm(
-            `¿Has terminado el repaso de ${tema}?\n\n` +
-            "Al confirmar, la Misión pasará a Esperando familia."
+            `¿Terminaste esta misión?\n\n${tituloMision}\n\n` +
+            "Al confirmar, la enviarás a tu familia para revisión."
           );
 
           if (!confirmado) return;
@@ -3247,7 +3302,7 @@
             button.disabled = false;
             button.textContent = texto;
             window.alert(
-              "No se pudo marcar el repaso como terminado.\n" +
+              "No se pudo marcar la misión como terminada.\n" +
               `Razón: ${error.message || "Error no identificado"}`
             );
           }

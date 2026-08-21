@@ -46,9 +46,7 @@
 
     <main class="max-w-3xl mx-auto px-6">
         
-        <a href="index.html" class="inline-flex items-center gap-2 bg-white px-5 py-2 rounded-full shadow-sm text-sky-600 font-bold hover:bg-sky-50 transition-all mb-8 border border-sky-100">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver al Menú Mates
-        </a>
+        
 
         <section id="teoria" class="tab-content active space-y-8">
             <div class="math-card p-8">
@@ -62,7 +60,7 @@
                     </div>
                     <div class="flex items-center gap-4 p-5 bg-orange-50 rounded-2xl border-l-4 border-orange-400">
                         <div class="bg-orange-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-black">2º</div>
-                        <div><p class="font-bold text-slate-800">MULTIS Y DIVISIONES × :</p><p class="text-sm text-slate-500">Si no hay paréntesis, ellas mandan.</p></div>
+                        <div><p class="font-bold text-slate-800">MULTIS Y DIVISIONES × ÷</p><p class="text-sm text-slate-500">Si no hay paréntesis, ellas mandan.</p></div>
                     </div>
                     <div class="flex items-center gap-4 p-5 bg-emerald-50 rounded-2xl border-l-4 border-emerald-400">
                         <div class="bg-emerald-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-black">3º</div>
@@ -74,7 +72,7 @@
             <div class="bg-sky-700 text-white p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden">
                 <h3 class="text-xl font-bold mb-4 italic">Ejemplo Real (del PDF):</h3>
                 <div class="bg-white/10 p-6 rounded-2xl font-mono text-center text-xl">
-                    36 : 4 - 3 × 2 + 8 <br>
+                    36 ÷ 4 - 3 × 2 + 8 <br>
                     <span class="text-sky-300">9 - 6 + 8</span> <br>
                     <span class="text-sky-200">3 + 8</span> <br>
                     <span class="text-yellow-400 font-black text-3xl">11</span>
@@ -97,13 +95,37 @@
                     </div>
                     <h2 id="q-text" class="text-2xl font-black text-slate-800 mb-10 text-center"></h2>
                     <div id="options" class="grid grid-cols-1 gap-4"></div>
+
+                    <div id="feedback" class="hidden mt-6 rounded-2xl border-2 p-5" aria-live="polite">
+                        <strong id="feedback-title" class="block text-lg font-black mb-2"></strong>
+                        <p id="feedback-answer" class="font-bold mb-2"></p>
+                        <p id="feedback-explanation" class="text-slate-600 font-semibold leading-relaxed"></p>
+                    </div>
+
+                    <div id="next-area" class="hidden mt-6 text-right">
+                        <button id="next-question"
+                                type="button"
+                                class="bg-sky-600 text-white px-7 py-3 rounded-2xl font-black shadow-lg hover:bg-sky-700 transition-all">
+                            SIGUIENTE PREGUNTA →
+                        </button>
+                    </div>
                 </div>
-                
+
                 <div id="result-area" class="hidden text-center py-10">
                     <div id="medal" class="text-7xl mb-6">🏆</div>
                     <h2 class="text-4xl font-black text-sky-900 mb-2">¡Misión Cumplida!</h2>
-                    <p id="score-text" class="text-xl text-slate-500 font-bold mb-8"></p>
-                    <button onclick="location.reload()" class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg hover:scale-105 transition-all">VOLVER A INTENTAR</button>
+                    <p id="score-text" class="text-xl text-slate-500 font-bold mb-6"></p>
+
+                    <div id="review-area" class="hidden text-left mb-8">
+                        <h3 class="text-xl font-black text-sky-900 mb-4">📚 Repasemos las que costaron un poco</h3>
+                        <div id="review-list" class="space-y-4"></div>
+                    </div>
+
+                    <button id="retry-quiz"
+                            type="button"
+                            class="bg-sky-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg hover:scale-105 transition-all">
+                        VOLVER A INTENTAR
+                    </button>
                 </div>
             </div>
         </section>
@@ -125,7 +147,7 @@
             { f: "¿Qué se resuelve SIEMPRE primero?", b: "Los paréntesis ( ) ¡Es obligatorio!", i: "🎯" },
             { f: "¿Qué es la Propiedad Conmutativa?", b: "Que el orden no cambia el resultado (solo en + y ×)", i: "🔄" },
             { f: "Si no hay paréntesis, ¿qué va antes?", b: "Las multiplicaciones y divisiones", i: "✖️" },
-            { f: "5 + 6 : (7 - 4)", b: "Primero (7-4)=3. Luego 6:3=2. Al final 5+2=7", i: "🧮" }
+            { f: "5 + 6 ÷ (7 - 4)", b: "Primero (7-4)=3. Luego 6÷3=2. Al final 5+2=7", i: "🧮" }
         ];
 
         const grid = document.getElementById('fichas-grid');
@@ -141,56 +163,259 @@
             grid.appendChild(d);
         });
 
-        // TEST INTERACTIVO
+        // TEST INTERACTIVO · modo repaso
+        // Cada respuesta ofrece feedback inmediato. Una respuesta incorrecta
+        // no se limita a marcar el fallo: muestra la correcta y explica el porqué.
         const questions = [
-            { q: "¿Cuál es el orden correcto?", a: ["Paréntesis -> Sumas -> Multis", "Paréntesis -> Multis/Div -> Sumas/Restas", "Sumas -> Multis -> Paréntesis"], c: 1 },
-            { q: "Resuelve: 3 + 2 × (5 - 1)", a: ["20", "11", "15"], c: 1 },
-            { q: "Resuelve: 10 - 6 : 2", a: ["2", "7", "4"], c: 1 },
-            { q: "¿En qué operaciones da igual el orden (conmutativa)?", a: ["Resta y División", "Suma y Multiplicación", "Todas"], c: 1 },
-            { q: "Resuelve el ejemplo del PDF: 36 : 4 - 3 × 2 + 8", a: ["11", "20", "9"], c: 0 }
+            {
+                q: "¿Cuál es el orden correcto?",
+                a: [
+                    "Paréntesis -> Sumas -> Multis",
+                    "Paréntesis -> Multis/Div -> Sumas/Restas",
+                    "Sumas -> Multis -> Paréntesis"
+                ],
+                c: 1,
+                e: "Primero resolvemos los paréntesis; después multiplicaciones y divisiones; y al final sumas y restas."
+            },
+            {
+                q: "Resuelve: 3 + 2 × (5 - 1)",
+                a: ["20", "11", "15"],
+                c: 1,
+                e: "Primero (5 - 1) = 4. Después 2 × 4 = 8. Finalmente 3 + 8 = 11."
+            },
+            {
+                q: "Resuelve: 10 - 6 ÷ 2",
+                a: ["2", "7", "4"],
+                c: 1,
+                e: "La división va antes que la resta: 6 ÷ 2 = 3. Después 10 - 3 = 7."
+            },
+            {
+                q: "¿En qué operaciones da igual el orden (conmutativa)?",
+                a: ["Resta y División", "Suma y Multiplicación", "Todas"],
+                c: 1,
+                e: "La suma y la multiplicación son conmutativas: cambiar el orden de los números no cambia el resultado."
+            },
+            {
+                q: "Resuelve el ejemplo del PDF: 36 ÷ 4 - 3 × 2 + 8",
+                a: ["11", "20", "9"],
+                c: 0,
+                e: "Primero 36 ÷ 4 = 9 y 3 × 2 = 6. Queda 9 - 6 + 8. De izquierda a derecha: 3 + 8 = 11."
+            }
         ];
 
         let currentQ = 0;
         let score = 0;
+        let answerLocked = false;
+        let answers = [];
 
         function startQuiz() {
-            currentQ = 0; score = 0;
+            currentQ = 0;
+            score = 0;
+            answerLocked = false;
+            answers = [];
+
             document.getElementById('quiz-area').classList.remove('hidden');
             document.getElementById('result-area').classList.add('hidden');
+            document.getElementById('review-area').classList.add('hidden');
+            document.getElementById('review-list').innerHTML = '';
             loadQuestion();
         }
 
         function loadQuestion() {
+            answerLocked = false;
+
             const q = questions[currentQ];
-            document.getElementById('q-progress').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+            document.getElementById('q-progress').innerText =
+                `Pregunta ${currentQ + 1} de ${questions.length}`;
             document.getElementById('q-text').innerText = q.q;
+
             const optDiv = document.getElementById('options');
+            const feedback = document.getElementById('feedback');
+            const nextArea = document.getElementById('next-area');
+            const nextButton = document.getElementById('next-question');
+
             optDiv.innerHTML = '';
-            
+            feedback.className = 'hidden mt-6 rounded-2xl border-2 p-5';
+            nextArea.classList.add('hidden');
+            nextButton.innerText =
+                currentQ === questions.length - 1
+                    ? 'VER RESULTADO →'
+                    : 'SIGUIENTE PREGUNTA →';
+
+            renderStars();
+
             q.a.forEach((opt, i) => {
                 const b = document.createElement('button');
-                b.className = "w-full p-5 bg-white border-2 border-sky-100 rounded-2xl text-lg font-bold text-slate-700 text-left hover:border-sky-500 hover:bg-sky-50 transition-all";
+                b.type = 'button';
+                b.className =
+                    "w-full p-5 bg-white border-2 border-sky-100 rounded-2xl " +
+                    "text-lg font-bold text-slate-700 text-left " +
+                    "hover:border-sky-500 hover:bg-sky-50 transition-all";
                 b.innerText = opt;
-                b.onclick = () => {
-                    if(i === q.c) score++;
-                    currentQ++;
-                    if(currentQ < questions.length) loadQuestion();
-                    else showResults();
-                };
+                b.onclick = () => answerQuestion(i);
                 optDiv.appendChild(b);
             });
         }
 
+        function answerQuestion(selectedIndex) {
+            if (answerLocked) return;
+            answerLocked = true;
+
+            const q = questions[currentQ];
+            const isCorrect = selectedIndex === q.c;
+            const optionButtons = [...document.querySelectorAll('#options button')];
+
+            if (isCorrect) score++;
+
+            answers.push({
+                question: q.q,
+                selected: q.a[selectedIndex],
+                correct: q.a[q.c],
+                explanation: q.e,
+                isCorrect
+            });
+
+            optionButtons.forEach((button, index) => {
+                button.disabled = true;
+                button.classList.remove(
+                    'hover:border-sky-500',
+                    'hover:bg-sky-50'
+                );
+
+                if (index === q.c) {
+                    button.classList.add(
+                        'border-emerald-500',
+                        'bg-emerald-50',
+                        'text-emerald-800'
+                    );
+                    button.innerText = `✅ ${q.a[index]}`;
+                } else if (index === selectedIndex) {
+                    button.classList.add(
+                        'border-rose-400',
+                        'bg-rose-50',
+                        'text-rose-700'
+                    );
+                    button.innerText = `❌ ${q.a[index]}`;
+                } else {
+                    button.classList.add('opacity-60');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackAnswer = document.getElementById('feedback-answer');
+            const feedbackExplanation =
+                document.getElementById('feedback-explanation');
+
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedback.classList.add(
+                    'border-emerald-300',
+                    'bg-emerald-50',
+                    'text-emerald-900'
+                );
+                feedbackTitle.innerText = '✅ ¡Correcta!';
+                feedbackAnswer.innerText =
+                    `Respuesta: ${q.a[q.c]}`;
+            } else {
+                feedback.classList.add(
+                    'border-amber-300',
+                    'bg-amber-50',
+                    'text-amber-900'
+                );
+                feedbackTitle.innerText =
+                    '💡 Esta vez no, pero aquí está la clave';
+                feedbackAnswer.innerText =
+                    `Respuesta correcta: ${q.a[q.c]}`;
+            }
+
+            feedbackExplanation.innerText = q.e;
+            document.getElementById('next-area').classList.remove('hidden');
+            renderStars();
+        }
+
+        function renderStars() {
+            const stars = document.getElementById('stars');
+            stars.innerHTML = questions.map((_, index) => {
+                if (index >= answers.length) {
+                    return '<span class="text-slate-200">★</span>';
+                }
+
+                return answers[index].isCorrect
+                    ? '<span class="text-yellow-400" title="Correcta">★</span>'
+                    : '<span class="text-sky-300" title="Para repasar">★</span>';
+            }).join('');
+        }
+
+        function nextQuestion() {
+            if (!answerLocked) return;
+
+            if (currentQ < questions.length - 1) {
+                currentQ++;
+                loadQuestion();
+                return;
+            }
+
+            showResults();
+        }
+
         function showResults() {
             document.getElementById('quiz-area').classList.add('hidden');
+
             const res = document.getElementById('result-area');
             res.classList.remove('hidden');
-            document.getElementById('score-text').innerText = `¡Genial Gloria! Has acertado ${score} de ${questions.length}.`;
+
+            document.getElementById('score-text').innerText =
+                `¡Genial Gloria! Has acertado ${score} de ${questions.length}.`;
+
             const medal = document.getElementById('medal');
-            if(score === 5) medal.innerText = "👑";
+            if(score === questions.length) medal.innerText = "👑";
             else if(score >= 3) medal.innerText = "⭐";
             else medal.innerText = "💪";
+
+            const incorrectAnswers = answers.filter(answer => !answer.isCorrect);
+            const reviewArea = document.getElementById('review-area');
+            const reviewList = document.getElementById('review-list');
+
+            reviewArea.classList.remove('hidden');
+
+            if (!incorrectAnswers.length) {
+                reviewList.innerHTML = `
+                    <div class="rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-5 text-emerald-900">
+                        <strong class="block text-lg font-black">🌟 ¡Todo correcto!</strong>
+                        <p class="mt-1 font-semibold">Has resuelto todas las preguntas correctamente.</p>
+                    </div>`;
+                return;
+            }
+
+            reviewList.innerHTML = incorrectAnswers.map((answer, index) => `
+                <article class="rounded-2xl border-2 border-sky-100 bg-sky-50/60 p-5">
+                    <strong class="block text-sky-900 mb-2">
+                        ${index + 1}. ${answer.question}
+                    </strong>
+                    <p class="text-rose-700 font-bold">
+                        Tu respuesta: ${answer.selected}
+                    </p>
+                    <p class="text-emerald-700 font-bold mt-1">
+                        ✅ Correcta: ${answer.correct}
+                    </p>
+                    <p class="text-slate-600 font-semibold mt-2 leading-relaxed">
+                        ${answer.explanation}
+                    </p>
+                </article>
+            `).join('');
         }
+
+        document.getElementById('next-question').addEventListener(
+            'click',
+            nextQuestion
+        );
+
+        document.getElementById('retry-quiz').addEventListener(
+            'click',
+            startQuiz
+        );
 
         lucide.createIcons();
     </script>

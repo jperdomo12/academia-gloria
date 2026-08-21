@@ -4116,5 +4116,727 @@
       }
     ],
     "activo": true
+  },
+  {
+    "id": "DP-0221",
+    "titulo": "Entradas para la exposición",
+    "texto": "Siete grupos de 6 alumnos llegan a una exposición. Cinco alumnos pasan después a otro taller. ¿Cuántos alumnos quedan en la exposición?",
+    "nivel": 3,
+    "tema": "viaje",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué cantidad debemos conocer antes de quitar a los 5 alumnos?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "🎟️ Cuántos alumnos llegaron en total."
+        },
+        {
+          "id": "taller",
+          "texto": "🎨 De qué color es el otro taller."
+        },
+        {
+          "id": "grupos",
+          "texto": "👥 El nombre de cada grupo."
+        }
+      ],
+      "correcta": "total"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué cálculo hacemos primero?",
+      "opciones": [
+        {
+          "id": "multiplicar",
+          "texto": "Calcular 7 grupos de 6 alumnos."
+        },
+        {
+          "id": "restar",
+          "texto": "Restar 5 antes de saber cuántos llegaron."
+        },
+        {
+          "id": "dividir",
+          "texto": "Repartir los grupos entre talleres."
+        }
+      ],
+      "correcta": "multiplicar"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos alumnos llegaron en los 7 grupos?",
+        "operacion": "multiplicar",
+        "a": 7,
+        "b": 6,
+        "resultado": 42,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 7,
+          "elementosPorGrupo": 6,
+          "grupoIcono": "🎟️",
+          "elementoIcono": "🧒"
+        }
+      },
+      {
+        "pregunta": "Si 5 pasan a otro taller, ¿cuántos quedan?",
+        "operacion": "restar",
+        "a": 42,
+        "b": 5,
+        "resultado": 37
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0222",
+    "titulo": "Postales del museo",
+    "texto": "El museo prepara 8 paquetes con 9 postales en cada uno. Después reparte todas las postales por igual entre 6 equipos. ¿Cuántas recibe cada equipo?",
+    "nivel": 3,
+    "tema": "biblioteca",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué ocurre después de preparar los paquetes?",
+      "opciones": [
+        {
+          "id": "reparto",
+          "texto": "🖼️ Todas las postales se reparten entre 6 equipos."
+        },
+        {
+          "id": "guardar",
+          "texto": "📦 Los paquetes se guardan sin abrir."
+        },
+        {
+          "id": "quitar",
+          "texto": "➖ Se eliminan 6 postales."
+        }
+      ],
+      "correcta": "reparto"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué necesitamos averiguar antes del reparto?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "El total de postales de los 8 paquetes."
+        },
+        {
+          "id": "cada",
+          "texto": "Las postales por equipo sin conocer el total."
+        },
+        {
+          "id": "color",
+          "texto": "El color de las postales."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas postales hay en total?",
+        "operacion": "multiplicar",
+        "a": 8,
+        "b": 9,
+        "resultado": 72,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 8,
+          "elementosPorGrupo": 9,
+          "grupoIcono": "📦",
+          "elementoIcono": "🖼️"
+        }
+      },
+      {
+        "pregunta": "¿Cuántas postales recibe cada uno de los 6 equipos?",
+        "operacion": "dividir",
+        "a": 72,
+        "b": 6,
+        "resultado": 12,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 72,
+          "grupos": 6,
+          "grupoIcono": "👥",
+          "elementoIcono": "🖼️"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0223",
+    "titulo": "La ruta de montaña",
+    "texto": "Una ruta tiene 6 tramos de 7 kilómetros cada uno. El primer día el grupo recorre 18 kilómetros. ¿Cuántos kilómetros le quedan?",
+    "nivel": 3,
+    "tema": "bosque",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué debemos saber para calcular lo que falta?",
+      "opciones": [
+        {
+          "id": "distancia",
+          "texto": "🥾 La distancia total de la ruta."
+        },
+        {
+          "id": "mochilas",
+          "texto": "🎒 El número de mochilas."
+        },
+        {
+          "id": "hora",
+          "texto": "🕒 La hora de salida."
+        }
+      ],
+      "correcta": "distancia"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Cuál es el primer cálculo útil?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "Calcular 6 tramos de 7 km."
+        },
+        {
+          "id": "restar",
+          "texto": "Restar 18 a 7."
+        },
+        {
+          "id": "dividir",
+          "texto": "Dividir 18 entre 6."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos kilómetros tiene la ruta completa?",
+        "operacion": "multiplicar",
+        "a": 6,
+        "b": 7,
+        "resultado": 42,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 6,
+          "elementosPorGrupo": 7,
+          "grupoIcono": "⛰️",
+          "elementoIcono": "•"
+        }
+      },
+      {
+        "pregunta": "Si ya recorrieron 18 km, ¿cuántos faltan?",
+        "operacion": "restar",
+        "a": 42,
+        "b": 18,
+        "resultado": 24
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0224",
+    "titulo": "El taller de mapas",
+    "texto": "En un taller hay 63 tarjetas de mapas para repartir por igual entre 7 mesas. Además, cada mesa recibe 4 brújulas. ¿Cuántos materiales recibe cada mesa en total?",
+    "nivel": 3,
+    "tema": "colegio",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué dos tipos de material recibe cada mesa?",
+      "opciones": [
+        {
+          "id": "dos",
+          "texto": "🗺️ Tarjetas de mapas y brújulas."
+        },
+        {
+          "id": "uno",
+          "texto": "🧭 Solo brújulas."
+        },
+        {
+          "id": "ninguno",
+          "texto": "🚫 Ningún material."
+        }
+      ],
+      "correcta": "dos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué necesitamos calcular primero?",
+      "opciones": [
+        {
+          "id": "tarjetas",
+          "texto": "Cuántas tarjetas recibe cada mesa."
+        },
+        {
+          "id": "sumar",
+          "texto": "Sumar 63 y 4 directamente."
+        },
+        {
+          "id": "quitar",
+          "texto": "Quitar 7 tarjetas."
+        }
+      ],
+      "correcta": "tarjetas"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas tarjetas recibe cada una de las 7 mesas?",
+        "operacion": "dividir",
+        "a": 63,
+        "b": 7,
+        "resultado": 9,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 63,
+          "grupos": 7,
+          "grupoIcono": "🟫",
+          "elementoIcono": "🗺️"
+        }
+      },
+      {
+        "pregunta": "Si cada mesa recibe también 4 brújulas, ¿cuántos materiales tiene?",
+        "operacion": "sumar",
+        "a": 9,
+        "b": 4,
+        "resultado": 13
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0225",
+    "titulo": "Libros de historia en cajas",
+    "texto": "Hay 9 estanterías con 8 libros de historia en cada una. Se prestan 24 libros y los restantes se guardan por igual en 6 cajas. ¿Cuántos libros van en cada caja?",
+    "nivel": 3,
+    "tema": "biblioteca",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Cuál es la pregunta final del problema?",
+      "opciones": [
+        {
+          "id": "caja",
+          "texto": "📚 Cuántos libros van en cada caja."
+        },
+        {
+          "id": "prestados",
+          "texto": "🤝 Cuántos libros se prestaron."
+        },
+        {
+          "id": "estanterias",
+          "texto": "🪵 De qué color son las estanterías."
+        }
+      ],
+      "correcta": "caja"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos calcular primero?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "El total inicial de libros."
+        },
+        {
+          "id": "caja",
+          "texto": "Los libros por caja sin conocer los que quedan."
+        },
+        {
+          "id": "color",
+          "texto": "El color de las cajas."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos libros había al principio?",
+        "operacion": "multiplicar",
+        "a": 9,
+        "b": 8,
+        "resultado": 72,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 9,
+          "elementosPorGrupo": 8,
+          "grupoIcono": "📚",
+          "elementoIcono": "📘"
+        }
+      },
+      {
+        "pregunta": "Después de prestar 24, ¿cuántos libros quedan?",
+        "operacion": "restar",
+        "a": 72,
+        "b": 24,
+        "resultado": 48
+      },
+      {
+        "pregunta": "Si los 48 restantes se reparten en 6 cajas, ¿cuántos van en cada una?",
+        "operacion": "dividir",
+        "a": 48,
+        "b": 6,
+        "resultado": 8,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 48,
+          "grupos": 6,
+          "grupoIcono": "📦",
+          "elementoIcono": "📘"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0226",
+    "titulo": "La maqueta de Europa",
+    "texto": "Para una maqueta se preparan 5 cajas con 12 piezas de cartón en cada una. Se utilizan 17 piezas para representar ríos y montañas. ¿Cuántas piezas quedan?",
+    "nivel": 3,
+    "tema": "colegio",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué debemos conocer antes de restar las piezas utilizadas?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "🗺️ Cuántas piezas había en total."
+        },
+        {
+          "id": "rios",
+          "texto": "🌊 Cuántos ríos aparecen en Europa."
+        },
+        {
+          "id": "color",
+          "texto": "🎨 El color del cartón."
+        }
+      ],
+      "correcta": "total"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué operación va primero?",
+      "opciones": [
+        {
+          "id": "multiplicar",
+          "texto": "Calcular 5 cajas de 12 piezas."
+        },
+        {
+          "id": "restar",
+          "texto": "Restar 17 a una sola caja."
+        },
+        {
+          "id": "dividir",
+          "texto": "Dividir las piezas entre montañas."
+        }
+      ],
+      "correcta": "multiplicar"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas piezas había en las 5 cajas?",
+        "operacion": "multiplicar",
+        "a": 5,
+        "b": 12,
+        "resultado": 60,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 5,
+          "elementosPorGrupo": 12,
+          "grupoIcono": "📦",
+          "elementoIcono": "🟨"
+        }
+      },
+      {
+        "pregunta": "Si se usan 17, ¿cuántas piezas quedan?",
+        "operacion": "restar",
+        "a": 60,
+        "b": 17,
+        "resultado": 43
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0227",
+    "titulo": "Carteles para el museo",
+    "texto": "Seis equipos preparan 7 carteles cada uno para una exposición. Antes de abrir, 9 carteles se retiran para corregirlos. ¿Cuántos carteles quedan expuestos?",
+    "nivel": 3,
+    "tema": "espectaculo",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué sucede con 9 de los carteles?",
+      "opciones": [
+        {
+          "id": "retiran",
+          "texto": "🛠️ Se retiran para corregirlos."
+        },
+        {
+          "id": "añaden",
+          "texto": "➕ Se añaden 9 carteles."
+        },
+        {
+          "id": "reparten",
+          "texto": "🤝 Se reparten entre visitantes."
+        }
+      ],
+      "correcta": "retiran"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué necesitamos saber antes de retirar los 9?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "Cuántos carteles hicieron los 6 equipos."
+        },
+        {
+          "id": "retirar",
+          "texto": "Cuántos quedan sin calcular el total."
+        },
+        {
+          "id": "visitantes",
+          "texto": "Cuántos visitantes habrá."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos carteles prepararon en total?",
+        "operacion": "multiplicar",
+        "a": 6,
+        "b": 7,
+        "resultado": 42,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 6,
+          "elementosPorGrupo": 7,
+          "grupoIcono": "👥",
+          "elementoIcono": "🖼️"
+        }
+      },
+      {
+        "pregunta": "Si se retiran 9, ¿cuántos quedan expuestos?",
+        "operacion": "restar",
+        "a": 42,
+        "b": 9,
+        "resultado": 33
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0228",
+    "titulo": "Botellas para la excursión",
+    "texto": "Hay 84 botellas de agua para repartir por igual entre 7 grupos. Durante la excursión cada grupo utiliza 5 botellas. ¿Cuántas le quedan a cada grupo?",
+    "nivel": 3,
+    "tema": "viaje",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué pregunta debemos responder al final?",
+      "opciones": [
+        {
+          "id": "quedan",
+          "texto": "💧 Cuántas botellas le quedan a cada grupo."
+        },
+        {
+          "id": "total",
+          "texto": "📦 Cuántas botellas había al principio."
+        },
+        {
+          "id": "ruta",
+          "texto": "🥾 Cómo se llama la ruta."
+        }
+      ],
+      "correcta": "quedan"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos hacer primero?",
+      "opciones": [
+        {
+          "id": "repartir",
+          "texto": "Repartir las 84 botellas entre 7 grupos."
+        },
+        {
+          "id": "restar",
+          "texto": "Restar 5 al total de 84."
+        },
+        {
+          "id": "sumar",
+          "texto": "Añadir 5 botellas a cada grupo."
+        }
+      ],
+      "correcta": "repartir"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántas botellas recibe cada grupo?",
+        "operacion": "dividir",
+        "a": 84,
+        "b": 7,
+        "resultado": 12,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 84,
+          "grupos": 7,
+          "grupoIcono": "👥",
+          "elementoIcono": "💧"
+        }
+      },
+      {
+        "pregunta": "Después de usar 5, ¿cuántas le quedan a cada grupo?",
+        "operacion": "restar",
+        "a": 12,
+        "b": 5,
+        "resultado": 7
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0229",
+    "titulo": "Cuadernos del taller",
+    "texto": "Cuatro clases llevan 18 cuadernos cada una a un taller. Se reservan 16 para los profesores y el resto se reparte por igual entre 7 mesas. ¿Cuántos cuadernos recibe cada mesa?",
+    "nivel": 3,
+    "tema": "colegio",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué ocurre después de reunir todos los cuadernos?",
+      "opciones": [
+        {
+          "id": "reservar",
+          "texto": "📒 Se reservan 16 y se reparte el resto."
+        },
+        {
+          "id": "perder",
+          "texto": "🗑️ Se pierden todos."
+        },
+        {
+          "id": "sumar",
+          "texto": "➕ Se añaden 16 a cada mesa."
+        }
+      ],
+      "correcta": "reservar"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué debemos calcular primero?",
+      "opciones": [
+        {
+          "id": "total",
+          "texto": "El total de cuadernos de las 4 clases."
+        },
+        {
+          "id": "mesas",
+          "texto": "Los cuadernos por mesa directamente."
+        },
+        {
+          "id": "profesores",
+          "texto": "El nombre de los profesores."
+        }
+      ],
+      "correcta": "total"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuántos cuadernos llevan las 4 clases?",
+        "operacion": "multiplicar",
+        "a": 4,
+        "b": 18,
+        "resultado": 72,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 4,
+          "elementosPorGrupo": 18,
+          "grupoIcono": "🏫",
+          "elementoIcono": "📒"
+        }
+      },
+      {
+        "pregunta": "Si se reservan 16, ¿cuántos quedan para las mesas?",
+        "operacion": "restar",
+        "a": 72,
+        "b": 16,
+        "resultado": 56
+      },
+      {
+        "pregunta": "Si se reparten 56 entre 7 mesas, ¿cuántos recibe cada una?",
+        "operacion": "dividir",
+        "a": 56,
+        "b": 7,
+        "resultado": 8,
+        "visual": {
+          "tipo": "reparto",
+          "totalElementos": 56,
+          "grupos": 7,
+          "grupoIcono": "🟫",
+          "elementoIcono": "📒"
+        }
+      }
+    ],
+    "activo": true
+  },
+  {
+    "id": "DP-0230",
+    "titulo": "Ahorro para visitar el museo",
+    "texto": "Una niña ahorra 8 euros por semana durante 6 semanas. La entrada al museo cuesta 17 euros y compra además un cuaderno de 9 euros. ¿Cuánto dinero le queda?",
+    "nivel": 3,
+    "tema": "dinero",
+    "tipo": "compuesto",
+    "comprension": {
+      "pregunta": "¿Qué gastos aparecen en la historia?",
+      "opciones": [
+        {
+          "id": "dos",
+          "texto": "🎟️ La entrada y un cuaderno."
+        },
+        {
+          "id": "uno",
+          "texto": "📒 Solo el cuaderno."
+        },
+        {
+          "id": "ninguno",
+          "texto": "🚫 No hay ningún gasto."
+        }
+      ],
+      "correcta": "dos"
+    },
+    "descubrimiento": {
+      "pregunta": "¿Qué conviene calcular primero?",
+      "opciones": [
+        {
+          "id": "ahorro",
+          "texto": "Cuánto dinero ahorra en 6 semanas."
+        },
+        {
+          "id": "restar",
+          "texto": "Restar 17 a 8."
+        },
+        {
+          "id": "cuaderno",
+          "texto": "El color del cuaderno."
+        }
+      ],
+      "correcta": "ahorro"
+    },
+    "pasos": [
+      {
+        "pregunta": "¿Cuánto ahorra en 6 semanas?",
+        "operacion": "multiplicar",
+        "a": 8,
+        "b": 6,
+        "resultado": 48,
+        "visual": {
+          "tipo": "grupos",
+          "grupos": 6,
+          "elementosPorGrupo": 8,
+          "grupoIcono": "📅",
+          "elementoIcono": "💶"
+        }
+      },
+      {
+        "pregunta": "¿Cuánto cuestan juntos la entrada y el cuaderno?",
+        "operacion": "sumar",
+        "a": 17,
+        "b": 9,
+        "resultado": 26
+      },
+      {
+        "pregunta": "Después de gastar 26 euros, ¿cuánto dinero le queda?",
+        "operacion": "restar",
+        "a": 48,
+        "b": 26,
+        "resultado": 22
+      }
+    ],
+    "activo": true
   }
 ]
