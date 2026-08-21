@@ -2298,7 +2298,7 @@ function recogerFormulario() {
                 cantidadObjetivo: 1,
                 filtros: {}
               }
-            : null,
+            : undefined,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,

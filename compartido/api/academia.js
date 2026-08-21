@@ -1161,9 +1161,18 @@ async function actualizarTarea(id, cambios = {}) {
   }
 
   if ("criterioCumplimiento" in datos) {
-    datos.criterioCumplimiento = normalizarCriterioCumplimiento(
-      datos.criterioCumplimiento
-    );
+    /*
+     * En una actualización parcial, null significa que el formulario no aporta
+     * un criterio nuevo. No sobrescribimos el criterio existente ni intentamos
+     * normalizar null como si fuese un objeto.
+     */
+    if (datos.criterioCumplimiento === null) {
+      delete datos.criterioCumplimiento;
+    } else {
+      datos.criterioCumplimiento = normalizarCriterioCumplimiento(
+        datos.criterioCumplimiento
+      );
+    }
   }
 
   if ("progreso" in datos) {
