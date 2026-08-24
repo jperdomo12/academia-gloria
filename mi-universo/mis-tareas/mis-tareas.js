@@ -340,7 +340,7 @@ function textoEstado(estado) {
     completada: "✅ Conseguida",
     necesita_ayuda: "🤝 Necesita ayuda",
     vencida: "🌿 Retomable",
-    cancelada: "Cancelada"
+    cancelada: "🚫 Cancelada"
   }[estado] || estado;
 }
 
@@ -530,9 +530,19 @@ function renderTareas() {
 
         ${auditoriaTareaHtml(tarea)}
 
+        <details class="auditoria-mision historial-mision">
+          <summary
+            data-action="history"
+            data-id="${escapar(tarea.id)}"
+          >🕘 Historial de cambios</summary>
+          <div data-historial-lista="${escapar(tarea.id)}">
+            <p>Abre este bloque para consultar la trazabilidad de la Misión.</p>
+          </div>
+        </details>
+
         <div class="tarea-acciones">
           ${
-            tarea.estado === "completada"
+            ["completada", "cancelada"].includes(tarea.estado)
               ? `<button class="btn accion-editar"
                     data-action="view"
                     data-id="${escapar(tarea.id)}">
@@ -634,13 +644,19 @@ function renderTareas() {
               ? `<span class="mision-conservada" title="Esta misión forma parte del historial">
                    🔒 Conservada en el historial
                  </span>`
-              : esEstadoEnEspera(tarea.estado)
-                ? ""
-                : `<button class="btn accion-eliminar"
-                    data-action="delete"
+              : tarea.estado === "cancelada"
+                ? `<button class="btn accion-reabrir"
+                    data-action="reopen"
                     data-id="${escapar(tarea.id)}">
-                   🗑️ Eliminar
+                   ↩️ Reabrir misión
                  </button>`
+                : esEstadoEnEspera(tarea.estado)
+                  ? ""
+                  : `<button class="btn accion-eliminar"
+                      data-action="cancel"
+                      data-id="${escapar(tarea.id)}">
+                     🚫 Cancelar misión
+                   </button>`
           }
         </div>
         </div>
@@ -934,6 +950,48 @@ async function mostrarEvidenciasMision(id, button) {
   }
 }
 
+async function mostrarHistorialMision(id) {
+  const contenedor = document.querySelector(
+    `[data-historial-lista="${CSS.escape(id)}"]`
+  );
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "<p>Cargando historial…</p>";
+
+  try {
+    const eventos = await Academia.tareas.leerHistorial(id);
+
+    if (!eventos.length) {
+      contenedor.innerHTML =
+        "<p>No hay eventos detallados anteriores. Los datos de auditoría de la Misión se conservan arriba.</p>";
+      return;
+    }
+
+    const etiquetas = {
+      creada: "Misión creada",
+      modificada: "Misión actualizada",
+      estado: "Cambio de estado",
+      evidencia: "Actividad registrada",
+      observacion: "Observación actualizada"
+    };
+
+    contenedor.innerHTML = `<dl>${eventos.map(evento => `
+      <div class="auditoria-mision__fila">
+        <dt>${escapar(etiquetas[evento.tipo] || evento.tipo || "Cambio")}</dt>
+        <dd>
+          ${escapar(fechaEvidencia(evento.creadoEn))} ·
+          ${escapar(etiquetaActor(evento.actorUserId))}
+          ${evento.resumen ? ` · ${escapar(evento.resumen)}` : ""}
+        </dd>
+      </div>
+    `).join("")}</dl>`;
+  } catch (error) {
+    console.error("No se pudo cargar el historial de la Misión.", error);
+    contenedor.innerHTML =
+      "<p>No fue posible cargar el historial en este momento.</p>";
+  }
+}
+
 async function normalizarOrdenMisiones() {
   const visibles = misionesOrdenables();
 
@@ -1038,6 +1096,12 @@ async function ejecutarAccion(button) {
       return;
     }
 
+    if (action === "history") {
+      await mostrarHistorialMision(id);
+      button.disabled = false;
+      return;
+    }
+
     if (action === "start") {
       const destino = new URL(url, window.location.href);
       destino.searchParams.set("misionId", id);
@@ -1110,47 +1174,39 @@ async function ejecutarAccion(button) {
       return;
     }
 
-    if (action === "delete") {
-      const estadoProtegido = [
-        "pendiente_validacion",
-        "completada_pendiente_validacion",
-        "completada"
-      ].includes(tarea.estado);
+    if (action === "cancel") {
+      const confirmado = confirm(
+        "¿Cancelar esta misión?\n\n" +
+        "La Misión dejará de aparecer entre las activas, pero se conservarán " +
+        "su información, sus evidencias y su historial."
+      );
 
-      if (estadoProtegido) {
-        alert(
-          "Esta misión ya fue terminada y forma parte del historial de aprendizaje. " +
-          "No puede eliminarse."
-        );
+      if (!confirmado) {
         button.disabled = false;
         return;
       }
 
+      await Academia.tareas.cancelar(id);
+      return;
+    }
+
+    if (action === "reopen") {
       const cantidadActual = Number(tarea.progreso?.cantidadActual || 0);
-      const tieneEvidencias =
-        cantidadActual > 0 ||
-        (Array.isArray(tarea.progreso?.evidenciaIds) &&
-          tarea.progreso.evidenciaIds.length > 0);
+      const estadoDestino = cantidadActual > 0 ? "en_curso" : "pendiente";
 
-      const mensaje = tieneEvidencias
-        ? (
-            `Esta misión tiene ${cantidadActual} ` +
-            `${cantidadActual === 1 ? "actividad realizada" : "actividades realizadas"}.\n\n` +
-            "La misión se eliminará, pero las evidencias de aprendizaje " +
-            "y el historial de Detectives se conservarán.\n\n" +
-            "¿Deseas continuar?"
-          )
-        : (
-            "Esta misión todavía no tiene actividades realizadas.\n\n" +
-            "¿Quieres eliminarla definitivamente?"
-          );
+      const confirmado = confirm(
+        "¿Reabrir esta misión?\n\n" +
+        "Volverá a estar disponible para continuar y conservará todo su historial."
+      );
 
-      if (!confirm(mensaje)) {
+      if (!confirmado) {
         button.disabled = false;
         return;
       }
 
-      await Academia.tareas.eliminar(id);
+      await Academia.tareas.cambiarEstado(id, estadoDestino, {
+        "progreso.completadaEn": null
+      });
     }
   } catch (error) {
     console.error(error);

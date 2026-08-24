@@ -765,6 +765,60 @@ function documentoEvidencia(id, userId) {
   return doc(db, "usuarios", userId, "evidencias", evidenciaId);
 }
 
+function coleccionHistorialTarea(tareaId, userId) {
+  const id = textoSeguro(tareaId);
+  if (!id) throw new Error("Falta el identificador de la tarea.");
+  return collection(db, "usuarios", userId, "tareas", id, "historial");
+}
+
+async function registrarEventoHistorialTarea(id, evento = {}) {
+  const tareaId = textoSeguro(id);
+  if (!tareaId) throw new Error("Falta el identificador de la tarea.");
+
+  const userId = await obtenerUIDPersonaActiva();
+  const actorUserId = textoSeguro(evento.actorUserId) || obtenerUID();
+  const referencia = await addDoc(
+    coleccionHistorialTarea(tareaId, userId),
+    {
+      tipo: textoSeguro(evento.tipo) || "modificada",
+      estadoAnterior: textoSeguro(evento.estadoAnterior) || null,
+      estadoNuevo: textoSeguro(evento.estadoNuevo) || null,
+      resumen: textoSeguro(evento.resumen),
+      actorUserId,
+      creadoEn: serverTimestamp()
+    }
+  );
+
+  return referencia.id;
+}
+
+async function registrarEventoHistorialTareaSeguro(id, evento = {}) {
+  try {
+    return await registrarEventoHistorialTarea(id, evento);
+  } catch (error) {
+    console.warn("No se pudo registrar el historial de la Misión.", error);
+    return null;
+  }
+}
+
+async function leerHistorialTarea(id) {
+  const tareaId = textoSeguro(id);
+  if (!tareaId) throw new Error("Falta el identificador de la tarea.");
+
+  const userId = await obtenerUIDPersonaActiva();
+  const resultado = await getDocs(
+    query(
+      coleccionHistorialTarea(tareaId, userId),
+      orderBy("creadoEn", "desc")
+    )
+  );
+
+  return resultado.docs.map(documento => ({
+    id: documento.id,
+    ...documento.data()
+  }));
+}
+
 function normalizarCriterioCumplimiento(criterio = {}) {
   const filtrosEntrada =
     criterio.filtros && typeof criterio.filtros === "object"
@@ -988,8 +1042,16 @@ async function crearTarea(tarea) {
     statusChangedBy: actorUserId
   });
 
+  await registrarEventoHistorialTareaSeguro(referencia.id, {
+    tipo: "creada",
+    estadoNuevo: datos.estado,
+    actorUserId,
+    resumen: "Misión creada."
+  });
+
   return referencia.id;
 }
+
 
 async function obtenerTarea(id) {
   const userId = await obtenerUIDPersonaActiva();
@@ -1230,6 +1292,22 @@ async function actualizarTarea(id, cambios = {}) {
     ...datos,
     ...cambiosAuditoria
   });
+
+  const camposHistorial = Object.keys(datos).filter(
+    clave => clave !== "ordenMision"
+  );
+
+  if (camposHistorial.length) {
+    await registrarEventoHistorialTareaSeguro(id, {
+      tipo: "modificada",
+      actorUserId,
+      estadoAnterior: datosExistentes
+        ? normalizarEstadoTarea(datosExistentes.estado)
+        : "",
+      estadoNuevo: "estado" in datos ? datos.estado : "",
+      resumen: "Misión actualizada."
+    });
+  }
 }
 
 async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
@@ -1283,6 +1361,16 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
   });
 
   await updateDoc(referencia, cambios);
+
+  if (estadoNormalizado !== estadoAnterior) {
+    await registrarEventoHistorialTareaSeguro(id, {
+      tipo: "estado",
+      actorUserId,
+      estadoAnterior,
+      estadoNuevo: estadoNormalizado,
+      resumen: `Estado cambiado de ${estadoAnterior} a ${estadoNormalizado}.`
+    });
+  }
 }
 
 function normalizarEvidencia(evidencia = {}, { alumnoUserId = "" } = {}) {
@@ -1509,6 +1597,17 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
     });
   }
 
+  if (!resultado.duplicada) {
+    await registrarEventoHistorialTareaSeguro(evidencia.misionId, {
+      tipo: "evidencia",
+      actorUserId,
+      estadoNuevo: resultado.estado,
+      resumen:
+        `Actividad registrada (${resultado.cantidadActual} de ` +
+        `${resultado.cantidadObjetivo}).`
+    });
+  }
+
   return resultado;
 }
 async function leerEvidenciasMision(misionId) {
@@ -1557,17 +1656,28 @@ async function guardarObservacionTarea(id, texto) {
         ]
       : historial;
 
+  const actorUserId = obtenerUID();
+
   await updateDoc(referencia, {
     observacionActual: observacion,
     historialObservaciones: nuevoHistorial,
     updatedAt: serverTimestamp(),
-    updatedBy: obtenerUID()
+    updatedBy: actorUserId
   });
+
+  if (observacion && observacion !== actual) {
+    await registrarEventoHistorialTareaSeguro(id, {
+      tipo: "observacion",
+      actorUserId,
+      resumen: "Observación familiar actualizada."
+    });
+  }
 }
 
 async function eliminarTarea(id) {
-  const userId = await obtenerUIDPersonaActiva();
-  await deleteDoc(documentoTarea(id, userId));
+  // Compatibilidad: eliminar ya no borra. Una misión nunca desaparece;
+  // la operación histórica se convierte en cancelación conservada.
+  return cambiarEstadoTarea(id, "cancelada");
 }
 
 
@@ -2022,7 +2132,9 @@ export const Academia = Object.freeze({
     cambiarEstado: cambiarEstadoTarea,
     registrarEvidencia: registrarEvidenciaMision,
     leerEvidencias: leerEvidenciasMision,
+    leerHistorial: leerHistorialTarea,
     guardarObservacion: guardarObservacionTarea,
+    cancelar: id => cambiarEstadoTarea(id, "cancelada"),
     eliminar: eliminarTarea
   }),
 
