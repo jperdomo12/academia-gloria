@@ -4,18 +4,19 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
-| **Fecha** | 13/08/2026 |
-| **Última actualización** | 13/08/2026 |
+| **Fecha** | 24/08/2026 |
+| **Última actualización** | 24/08/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel y comportamiento de retorno |
+| **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global y comportamiento de retorno |
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 24/08/2026 | Product Owner + AI Collaborator | Aprueba la cabecera global `Academia + Volver · Pantalla actual · Menú`, elimina la necesidad de un bloque independiente para Volver, consolida su implementación mediante componente compartido y define el comportamiento responsive y las excepciones operativas. |
 | 1.2 | 13/08/2026 | Product Owner + AI Collaborator | Consolida Persona Activa, visibilidad por nivel, ruta única de Mi Calendario, responsabilidades entre modelo central y panel, y regla estándar de Volver. |
 | 1.1 | 01/08/2026 | Proyecto Academia | Regla genérica de nodos navegables con hijos y centralización del árbol. |
 
@@ -26,6 +27,8 @@
 | `compartido/modelos/navegacion.js` | Fuente técnica central del árbol compartido. |
 | `compartido/js/panel-usuario.js` | Presenta el menú de usuario, Mi espacio personal, Persona Activa y filtra nodos por nivel de acceso. |
 | `compartido/js/navegacion.js` | Implementa navegación contextual y comportamiento de retorno. |
+| `compartido/componentes/navegacion-global.js` | Implementa la cabecera global compartida y compone Academia, Volver contextual, pantalla actual y Panel de Usuario. |
+| `compartido/css/navegacion-global.css` | Define la presentación responsive de la cabecera global. |
 | `docs/models/MODELO_ARBOL_NAVEGACION.md` | Representación humana del árbol funcional vigente. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | Gobierna roles, relaciones y niveles de acceso. |
 
@@ -50,6 +53,7 @@ El árbol concreto vigente se documenta en `MODELO_ARBOL_NAVEGACION.md` y su fue
 5. **Volver debe recuperar el origen real cuando exista.**
 6. **Las páginas no deben duplicar el árbol completo.**
 7. **La navegación debe funcionar tanto en desarrollo local como en GitHub Pages.**
+8. **La cabecera global es un componente compartido y no debe reconstruirse localmente en cada HTML.**
 
 ---
 
@@ -123,6 +127,22 @@ compartido/js/navegacion.js
 ```
 
 Gestiona el retorno contextual y la conservación del origen cuando una página abre otra.
+
+### 4.4 Cabecera global
+
+```text
+compartido/componentes/navegacion-global.js
+compartido/css/navegacion-global.css
+```
+
+La cabecera global compone de forma compartida:
+
+- acceso a Academia;
+- acción contextual Volver cuando corresponde;
+- identificación de la pantalla actual;
+- Panel de Usuario.
+
+Las páginas no deben reconstruir estos elementos mediante una segunda cabecera local.
 
 ---
 
@@ -230,9 +250,51 @@ La ruta alternativa es un mecanismo de seguridad.
 
 Solo se utiliza cuando no existe un origen válido o cuando el acceso fue directo.
 
-### 8.2 Consistencia visual
+Las páginas que necesitan una ruta alternativa declaran:
 
-Los módulos deben mantener un diseño y una etiqueta coherentes para la acción `Volver`, aunque la implementación técnica sea compartida.
+```html
+data-nav-back="..."
+```
+
+La presencia de `data-nav-back` permite además que la cabecera global muestre la acción `Volver`.
+
+### 8.2 Estándar visual de cabecera global
+
+La cabecera estándar de las pantallas funcionales internas de la Academia es:
+
+```text
+ACADEMIA + VOLVER    |    PANTALLA ACTUAL    |    MENÚ DEL USUARIO
+```
+
+Cuando la pantalla no necesita acción contextual de retorno:
+
+```text
+ACADEMIA             |    PANTALLA ACTUAL    |    MENÚ DEL USUARIO
+```
+
+Reglas:
+
+1. **Academia permanece visible** como acceso estable al inicio.
+2. **Volver aparece junto a Academia** cuando la página declara `data-nav-back`.
+3. **Volver no ocupa un bloque o fila independiente.**
+4. **La pantalla actual permanece en la zona central.**
+5. **El Panel de Usuario permanece en la zona derecha.**
+6. El comportamiento real de `Volver` continúa gobernado por la navegación contextual; `data-nav-back` sigue siendo fallback seguro.
+7. En pantallas pequeñas, la cabecera puede compactar etiquetas y conservar iconos para evitar desbordamiento.
+8. No deben implementarse copias locales de esta composición salvo piloto temporal explícitamente aprobado.
+9. Las nuevas pantallas funcionales deben consumir el componente y CSS compartidos.
+10. Las pantallas existentes que todavía no consuman la cabecera compartida deberán migrarse de manera controlada, sin reescrituras funcionales innecesarias.
+
+### 8.3 Alcance del estándar
+
+Este estándar se aplica a las **pantallas funcionales internas de la Academia**.
+
+Quedan fuera, salvo decisión posterior específica:
+
+- `login.html` y otras pantallas previas a autenticación;
+- archivos históricos;
+- páginas técnicas de prueba;
+- utilidades que no formen parte de la experiencia de navegación del producto.
 
 ---
 
@@ -245,7 +307,8 @@ No deben:
 - reconstruir el árbol completo localmente;
 - introducir rutas alternativas sin necesidad funcional;
 - decidir permisos por nombre de Persona;
-- crear estructuras paralelas a `NAVEGACION_ACADEMIA`.
+- crear estructuras paralelas a `NAVEGACION_ACADEMIA`;
+- duplicar localmente la cabecera global.
 
 Se admiten accesos locales complementarios cuando pertenecen específicamente a una pantalla y no sustituyen el modelo global.
 
@@ -262,7 +325,13 @@ La navegación se considera coherente cuando:
 - Mi Calendario usa `calendarios/`;
 - las rutas funcionan localmente y en GitHub Pages;
 - Volver recupera el origen real cuando existe;
-- las páginas siguen funcionando con acceso directo mediante una ruta alternativa segura.
+- las páginas siguen funcionando con acceso directo mediante una ruta alternativa segura;
+- Academia permanece accesible desde la cabecera;
+- Volver comparte el bloque izquierdo con Academia cuando corresponde;
+- la pantalla actual permanece identificada;
+- el Panel de Usuario permanece funcional;
+- la cabecera no produce desbordamientos relevantes en móvil;
+- y no existe una segunda cabecera global reconstruida localmente.
 
 ---
 
@@ -278,3 +347,5 @@ La navegación se considera coherente cuando:
 | NAV-006 | La visibilidad por nivel usa `consulta < gestion < administracion`. |
 | NAV-007 | Un nodo sin `nivelMinimo` es visible desde Consulta. |
 | NAV-008 | Volver prioriza el origen real y usa una ruta alternativa solo como fallback. |
+| NAV-009 | La cabecera estándar agrupa `Academia + Volver` en el bloque izquierdo, mantiene la pantalla actual al centro y el Panel de Usuario a la derecha. |
+| NAV-010 | Las pantallas funcionales internas deben reutilizar la cabecera global compartida y no reconstruirla localmente. |

@@ -1,13 +1,15 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v2.1 estable
+ * Cabecera global de navegación · v2.3 estable
  *
  * Estructura estable:
- * ACCIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
+ * NAVEGACIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
  *
- * Por compatibilidad, las páginas existentes conservan la marca Academia.
- * Las pantallas que declaran data-nav-back usan el estándar:
- * VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
+ * Pantallas sin data-nav-back:
+ * ACADEMIA · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
+ *
+ * Pantallas con data-nav-back:
+ * ACADEMIA + VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
  *
  * El panel del alumno permanece en la zona derecha y concentra la navegación.
  */
@@ -54,7 +56,6 @@ function buscarNodo(arbol, rutaActual) {
   return null;
 }
 
-
 function tituloPantalla(actual) {
   return String(
     document.body?.dataset?.pageTitle ||
@@ -76,20 +77,18 @@ function rutaAlternativaVolver() {
   return String(document.body?.dataset?.navBack || "").trim();
 }
 
-function htmlAccionIzquierda() {
-  const rutaAlternativa = rutaAlternativaVolver();
+function htmlMarcaAcademia() {
+  return `
+    <a class="nav-global__marca"
+       href="${urlAcademia("")}"
+       aria-label="Ir al inicio de la Academia">
+      <span aria-hidden="true">🌈</span>
+      <span>Academia</span>
+    </a>
+  `;
+}
 
-  if (!rutaAlternativa) {
-    return `
-      <a class="nav-global__marca"
-         href="${urlAcademia("")}"
-         aria-label="Ir al inicio de la Academia">
-        <span aria-hidden="true">🌈</span>
-        <span>Academia</span>
-      </a>
-    `;
-  }
-
+function htmlBotonVolver(rutaAlternativa) {
   return `
     <a class="nav-global__volver"
        href="${escaparHTML(rutaAlternativa)}"
@@ -99,6 +98,25 @@ function htmlAccionIzquierda() {
       <span class="nav-global__volver-icono" aria-hidden="true">←</span>
       <span>Volver</span>
     </a>
+  `;
+}
+
+function htmlNavegacionIzquierda() {
+  const rutaAlternativa = rutaAlternativaVolver();
+
+  if (!rutaAlternativa) {
+    return `
+      <div class="nav-global__izquierda">
+        ${htmlMarcaAcademia()}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="nav-global__izquierda nav-global__izquierda--con-volver">
+      ${htmlMarcaAcademia()}
+      ${htmlBotonVolver(rutaAlternativa)}
+    </div>
   `;
 }
 
@@ -176,7 +194,7 @@ async function crearCabecera() {
 
   cabecera.innerHTML = `
     <div class="nav-global__barra">
-      ${htmlAccionIzquierda()}
+      ${htmlNavegacionIzquierda()}
 
       <div class="nav-global__ubicacion" aria-label="Pantalla actual">
         <span aria-hidden="true">${escaparHTML(iconoPantalla(actual))}</span>
