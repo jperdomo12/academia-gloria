@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v3.0
+ * Cabecera global de navegación · v3.1
  *
  * Contrato visual:
  * ACADEMIA + VOLVER · PANTALLA ACTUAL · PANEL DE USUARIO
@@ -328,6 +328,21 @@ function limpiarNavegacionLegada(actual) {
       if (enlace.parentElement) padres.add(enlace.parentElement);
       enlace.remove();
     }
+  });
+
+  /*
+   * Algunas pantallas históricas usan un <button> Volver con lógica propia
+   * en lugar de un enlace o atributo declarativo. Solo se retira cuando está
+   * inequívocamente dentro de la zona superior de navegación heredada.
+   */
+  document.querySelectorAll("button").forEach((boton) => {
+    if (!esRetornoGlobalLegado(boton)) return;
+
+    const texto = String(boton.textContent || "").trim().toLowerCase();
+    if (!texto.includes("volver")) return;
+
+    if (boton.parentElement) padres.add(boton.parentElement);
+    boton.remove();
   });
 
   document.querySelectorAll('[aria-label="Sección actual"]').forEach((elemento) => {
