@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v1.3
+ * Modelo central de navegación · v1.4
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -12,12 +12,27 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
     titulo: "Mi Universo",
     icono: "🌈",
     ruta: "mi-universo/",
+    volver: "",
+    cabeceraGlobal: true,
+    limpiarNavegacionLegada: true,
     hijos: [
+      {
+        id: "mi-camino",
+        titulo: "Mi Camino",
+        icono: "🗺️",
+        ruta: "mi-universo/mi-camino/",
+        volver: "mi-universo/",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
+      },
       {
         id: "rincon-lectura",
         titulo: "Mi Rincón de Lectura",
         icono: "📖",
-        ruta: "mi-universo/rincon-lectura/"
+        ruta: "mi-universo/rincon-lectura/",
+        volver: "mi-universo/",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
       },
       {
         id: "biblioteca",
@@ -36,12 +51,18 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         titulo: "Aventuras Matemáticas",
         icono: "🧩",
         ruta: "mi-universo/aventuras-matematicas/",
+        volver: "mi-universo/",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true,
         hijos: [
           {
             id: "detectives",
             titulo: "Detectives",
             icono: "🕵️",
-            ruta: "mi-universo/aventuras-matematicas/detectives/"
+            ruta: "mi-universo/aventuras-matematicas/detectives/",
+            volver: "mi-universo/aventuras-matematicas/",
+            cabeceraGlobal: true,
+            limpiarNavegacionLegada: true
           },
           {
             id: "historial-detectives",
@@ -61,7 +82,10 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         id: "gestion-misiones",
         titulo: "Gestión de Misiones",
         icono: "⚙️",
-        ruta: "mi-universo/mis-tareas/"
+        ruta: "mi-universo/mis-tareas/",
+        volver: "mi-universo/mi-camino/",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
       }
     ]
   },
