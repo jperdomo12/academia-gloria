@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v3.2
+ * Cabecera global de navegación · v3.3
  *
  * Contrato visual:
  * ACADEMIA + VOLVER · PANTALLA ACTUAL · PANEL DE USUARIO
@@ -18,6 +18,7 @@ import { iniciarPanelUsuario } from "../js/panel-usuario.js";
 
 const BASE_ACADEMIA = new URL("../../", import.meta.url);
 const SELECTOR_PANEL_PRINCIPAL = "#nav-panel-usuario";
+const CLAVE_PROMESA_CABECERA = "__academiaNavegacionGlobalPromise";
 
 function urlAcademia(ruta = "") {
   return new URL(ruta, BASE_ACADEMIA).href;
@@ -476,11 +477,35 @@ async function crearCabecera() {
   await iniciarPanelCanonico(cabecera);
 }
 
+function solicitarCreacionCabecera() {
+  if (document.querySelector(".nav-global")) {
+    return Promise.resolve();
+  }
+
+  if (window[CLAVE_PROMESA_CABECERA]) {
+    return window[CLAVE_PROMESA_CABECERA];
+  }
+
+  const tarea = crearCabecera();
+
+  window[CLAVE_PROMESA_CABECERA] = tarea.finally(() => {
+    if (!document.querySelector(".nav-global")) {
+      window[CLAVE_PROMESA_CABECERA] = null;
+    }
+  });
+
+  return window[CLAVE_PROMESA_CABECERA];
+}
+
 function iniciarNavegacionGlobal() {
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", crearCabecera, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      solicitarCreacionCabecera,
+      { once: true }
+    );
   } else {
-    crearCabecera();
+    solicitarCreacionCabecera();
   }
 }
 
