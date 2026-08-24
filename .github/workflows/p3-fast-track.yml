@@ -1,0 +1,463 @@
+name: P3 Fast Track Patch
+
+on:
+  push:
+    branches:
+      - fast-track/p3-misiones-cierre-mvp
+    paths:
+      - .github/workflows/p3-fast-track.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fast-track/p3-misiones-cierre-mvp
+          fetch-depth: 0
+
+      - name: Aplicar cierre MVP de Misiones
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{label}: se esperaba 1 coincidencia y se encontraron {count}")
+              return text.replace(old, new, 1)
+
+          # ======================================================
+          # 1. API central: historial persistente + cancelación
+          # ======================================================
+          api_path = Path("compartido/api/academia.js")
+          api = api_path.read_text(encoding="utf-8")
+
+          marker = "function normalizarCriterioCumplimiento(criterio = {}) {"
+          history_helpers = r'''function coleccionHistorialTarea(tareaId, userId) {
+            const id = textoSeguro(tareaId);
+            if (!id) throw new Error("Falta el identificador de la tarea.");
+            return collection(db, "usuarios", userId, "tareas", id, "historial");
+          }
+
+          async function registrarEventoHistorialTarea(id, evento = {}) {
+            const tareaId = textoSeguro(id);
+            if (!tareaId) throw new Error("Falta el identificador de la tarea.");
+
+            const userId = await obtenerUIDPersonaActiva();
+            const actorUserId = textoSeguro(evento.actorUserId) || obtenerUID();
+            const referencia = await addDoc(
+              coleccionHistorialTarea(tareaId, userId),
+              {
+                tipo: textoSeguro(evento.tipo) || "modificada",
+                estadoAnterior: textoSeguro(evento.estadoAnterior) || null,
+                estadoNuevo: textoSeguro(evento.estadoNuevo) || null,
+                resumen: textoSeguro(evento.resumen),
+                actorUserId,
+                creadoEn: serverTimestamp()
+              }
+            );
+
+            return referencia.id;
+          }
+
+          async function leerHistorialTarea(id) {
+            const tareaId = textoSeguro(id);
+            if (!tareaId) throw new Error("Falta el identificador de la tarea.");
+
+            const userId = await obtenerUIDPersonaActiva();
+            const resultado = await getDocs(
+              query(
+                coleccionHistorialTarea(tareaId, userId),
+                orderBy("creadoEn", "desc")
+              )
+            );
+
+            return resultado.docs.map(documento => ({
+              id: documento.id,
+              ...documento.data()
+            }));
+          }
+
+          '''
+          api = replace_once(api, marker, history_helpers + marker, "API: helpers de historial")
+
+          old = '''  const referencia = await addDoc(coleccionTareas(userId), {
+            ...datos,
+            createdAt: serverTimestamp(),
+            createdBy: actorUserId,
+            updatedAt: serverTimestamp(),
+            updatedBy: actorUserId,
+            statusChangedAt: serverTimestamp(),
+            statusChangedBy: actorUserId
+          });
+
+          return referencia.id;
+          }
+
+          async function obtenerTarea'''
+          new = '''  const referencia = await addDoc(coleccionTareas(userId), {
+            ...datos,
+            createdAt: serverTimestamp(),
+            createdBy: actorUserId,
+            updatedAt: serverTimestamp(),
+            updatedBy: actorUserId,
+            statusChangedAt: serverTimestamp(),
+            statusChangedBy: actorUserId
+          });
+
+          await registrarEventoHistorialTarea(referencia.id, {
+            tipo: "creada",
+            estadoNuevo: datos.estado,
+            actorUserId,
+            resumen: "Misión creada."
+          });
+
+          return referencia.id;
+          }
+
+          async function obtenerTarea'''
+          api = replace_once(api, old, new, "API: historial al crear")
+
+          old = '''  await updateDoc(referencia, {
+            ...datos,
+            ...cambiosAuditoria
+          });
+          }
+
+          async function cambiarEstadoTarea'''
+          new = '''  await updateDoc(referencia, {
+            ...datos,
+            ...cambiosAuditoria
+          });
+
+          const camposHistorial = Object.keys(datos).filter(
+            clave => clave !== "ordenMision"
+          );
+
+          if (camposHistorial.length) {
+            await registrarEventoHistorialTarea(id, {
+              tipo: "modificada",
+              actorUserId,
+              estadoAnterior: datosExistentes
+                ? normalizarEstadoTarea(datosExistentes.estado)
+                : "",
+              estadoNuevo: "estado" in datos ? datos.estado : "",
+              resumen: "Misión actualizada."
+            });
+          }
+          }
+
+          async function cambiarEstadoTarea'''
+          api = replace_once(api, old, new, "API: historial al actualizar")
+
+          old = '''  await updateDoc(referencia, cambios);
+          }
+
+          function normalizarEvidencia'''
+          new = '''  await updateDoc(referencia, cambios);
+
+          if (estadoNormalizado !== estadoAnterior) {
+            await registrarEventoHistorialTarea(id, {
+              tipo: "estado",
+              actorUserId,
+              estadoAnterior,
+              estadoNuevo: estadoNormalizado,
+              resumen: `Estado cambiado de ${estadoAnterior} a ${estadoNormalizado}.`
+            });
+          }
+          }
+
+          function normalizarEvidencia'''
+          api = replace_once(api, old, new, "API: historial de estado")
+
+          old = '''  return resultado;
+          }
+          async function leerEvidenciasMision'''
+          new = '''  if (!resultado.duplicada) {
+            await registrarEventoHistorialTarea(evidencia.misionId, {
+              tipo: "evidencia",
+              actorUserId,
+              estadoNuevo: resultado.estado,
+              resumen:
+                `Actividad registrada (${resultado.cantidadActual} de ` +
+                `${resultado.cantidadObjetivo}).`
+            });
+          }
+
+          return resultado;
+          }
+          async function leerEvidenciasMision'''
+          api = replace_once(api, old, new, "API: historial de evidencia")
+
+          old = '''  await updateDoc(referencia, {
+            observacionActual: observacion,
+            historialObservaciones: nuevoHistorial,
+            updatedAt: serverTimestamp(),
+            updatedBy: obtenerUID()
+          });
+          }
+
+          async function eliminarTarea(id) {
+            const userId = await obtenerUIDPersonaActiva();
+            await deleteDoc(documentoTarea(id, userId));
+          }'''
+          new = '''  const actorUserId = obtenerUID();
+
+          await updateDoc(referencia, {
+            observacionActual: observacion,
+            historialObservaciones: nuevoHistorial,
+            updatedAt: serverTimestamp(),
+            updatedBy: actorUserId
+          });
+
+          if (observacion && observacion !== actual) {
+            await registrarEventoHistorialTarea(id, {
+              tipo: "observacion",
+              actorUserId,
+              resumen: "Observación familiar actualizada."
+            });
+          }
+          }
+
+          async function eliminarTarea(id) {
+            // Compatibilidad: eliminar ya no borra. Una misión nunca desaparece;
+            // la operación histórica se convierte en cancelación conservada.
+            return cambiarEstadoTarea(id, "cancelada");
+          }'''
+          api = replace_once(api, old, new, "API: observación y soft delete")
+
+          old = '''    registrarEvidencia: registrarEvidenciaMision,
+              leerEvidencias: leerEvidenciasMision,
+              guardarObservacion: guardarObservacionTarea,
+              eliminar: eliminarTarea
+            }),'''
+          new = '''    registrarEvidencia: registrarEvidenciaMision,
+              leerEvidencias: leerEvidenciasMision,
+              leerHistorial: leerHistorialTarea,
+              guardarObservacion: guardarObservacionTarea,
+              cancelar: id => cambiarEstadoTarea(id, "cancelada"),
+              eliminar: eliminarTarea
+            }),'''
+          api = replace_once(api, old, new, "API: export de historial/cancelar")
+
+          api_path.write_text(api, encoding="utf-8")
+
+          # ======================================================
+          # 2. UI Gestión de Misiones
+          # ======================================================
+          ui_path = Path("mi-universo/mis-tareas/mis-tareas.js")
+          ui = ui_path.read_text(encoding="utf-8")
+
+          ui = replace_once(
+              ui,
+              '    cancelada: "Cancelada"',
+              '    cancelada: "🚫 Cancelada"',
+              "UI: etiqueta cancelada"
+          )
+
+          old = '''        ${auditoriaTareaHtml(tarea)}
+
+                  <div class="tarea-acciones">'''
+          new = '''        ${auditoriaTareaHtml(tarea)}
+
+                  <details class="auditoria-mision historial-mision">
+                    <summary
+                      data-action="history"
+                      data-id="${escapar(tarea.id)}"
+                    >🕘 Historial de cambios</summary>
+                    <div data-historial-lista="${escapar(tarea.id)}">
+                      <p>Abre este bloque para consultar la trazabilidad de la Misión.</p>
+                    </div>
+                  </details>
+
+                  <div class="tarea-acciones">'''
+          ui = replace_once(ui, old, new, "UI: bloque historial")
+
+          old = '''          ${
+                    tarea.estado === "completada"
+                      ? `<button class="btn accion-editar"'''
+          new = '''          ${
+                    ["completada", "cancelada"].includes(tarea.estado)
+                      ? `<button class="btn accion-editar"'''
+          ui = replace_once(ui, old, new, "UI: cancelada solo lectura")
+
+          old = '''          ${
+                    tarea.estado === "completada"
+                      ? `<span class="mision-conservada" title="Esta misión forma parte del historial">
+                           🔒 Conservada en el historial
+                         </span>`
+                      : esEstadoEnEspera(tarea.estado)
+                        ? ""
+                        : `<button class="btn accion-eliminar"
+                            data-action="delete"
+                            data-id="${escapar(tarea.id)}">
+                           🗑️ Eliminar
+                         </button>`
+                  }'''
+          new = '''          ${
+                    tarea.estado === "completada"
+                      ? `<span class="mision-conservada" title="Esta misión forma parte del historial">
+                           🔒 Conservada en el historial
+                         </span>`
+                      : tarea.estado === "cancelada"
+                        ? `<button class="btn accion-reabrir"
+                            data-action="reopen"
+                            data-id="${escapar(tarea.id)}">
+                           ↩️ Reabrir misión
+                         </button>`
+                        : esEstadoEnEspera(tarea.estado)
+                          ? ""
+                          : `<button class="btn accion-eliminar"
+                              data-action="cancel"
+                              data-id="${escapar(tarea.id)}">
+                             🚫 Cancelar misión
+                           </button>`
+                  }'''
+          ui = replace_once(ui, old, new, "UI: cancelar/reabrir")
+
+          marker = "async function normalizarOrdenMisiones() {"
+          history_ui = r'''async function mostrarHistorialMision(id) {
+            const contenedor = document.querySelector(
+              `[data-historial-lista="${CSS.escape(id)}"]`
+            );
+            if (!contenedor) return;
+
+            contenedor.innerHTML = "<p>Cargando historial…</p>";
+
+            try {
+              const eventos = await Academia.tareas.leerHistorial(id);
+
+              if (!eventos.length) {
+                contenedor.innerHTML =
+                  "<p>No hay eventos detallados anteriores. Los datos de auditoría de la Misión se conservan arriba.</p>";
+                return;
+              }
+
+              const etiquetas = {
+                creada: "Misión creada",
+                modificada: "Misión actualizada",
+                estado: "Cambio de estado",
+                evidencia: "Actividad registrada",
+                observacion: "Observación actualizada"
+              };
+
+              contenedor.innerHTML = `<dl>${eventos.map(evento => `
+                <div class="auditoria-mision__fila">
+                  <dt>${escapar(etiquetas[evento.tipo] || evento.tipo || "Cambio")}</dt>
+                  <dd>
+                    ${escapar(fechaEvidencia(evento.creadoEn))} ·
+                    ${escapar(etiquetaActor(evento.actorUserId))}
+                    ${evento.resumen ? ` · ${escapar(evento.resumen)}` : ""}
+                  </dd>
+                </div>
+              `).join("")}</dl>`;
+            } catch (error) {
+              console.error("No se pudo cargar el historial de la Misión.", error);
+              contenedor.innerHTML =
+                "<p>No fue posible cargar el historial en este momento.</p>";
+            }
+          }
+
+          '''
+          ui = replace_once(ui, marker, history_ui + marker, "UI: función historial")
+
+          old = '''    if (action === "evidence") {
+                await mostrarEvidenciasMision(id, button);
+                button.disabled = false;
+                return;
+              }
+
+              if (action === "start") {'''
+          new = '''    if (action === "evidence") {
+                await mostrarEvidenciasMision(id, button);
+                button.disabled = false;
+                return;
+              }
+
+              if (action === "history") {
+                await mostrarHistorialMision(id);
+                button.disabled = false;
+                return;
+              }
+
+              if (action === "start") {'''
+          ui = replace_once(ui, old, new, "UI: acción historial")
+
+          start = ui.index('    if (action === "delete") {')
+          if start < 0:
+              raise SystemExit("UI: no se encontró handler delete")
+          end_marker = '''      await Academia.tareas.eliminar(id);
+              }
+            } catch (error) {'''
+          end = ui.index(end_marker, start)
+          old_block = ui[start:end + len('      await Academia.tareas.eliminar(id);\n      }')]
+          new_block = '''    if (action === "cancel") {
+                const confirmado = confirm(
+                  "¿Cancelar esta misión?\n\n" +
+                  "La Misión dejará de aparecer entre las activas, pero se conservarán " +
+                  "su información, sus evidencias y su historial."
+                );
+
+                if (!confirmado) {
+                  button.disabled = false;
+                  return;
+                }
+
+                await Academia.tareas.cancelar(id);
+                return;
+              }
+
+              if (action === "reopen") {
+                const cantidadActual = Number(tarea.progreso?.cantidadActual || 0);
+                const estadoDestino = cantidadActual > 0 ? "en_curso" : "pendiente";
+
+                const confirmado = confirm(
+                  "¿Reabrir esta misión?\n\n" +
+                  "Volverá a estar disponible para continuar y conservará todo su historial."
+                );
+
+                if (!confirmado) {
+                  button.disabled = false;
+                  return;
+                }
+
+                await Academia.tareas.cambiarEstado(id, estadoDestino, {
+                  "progreso.completadaEn": null
+                });
+              }'''
+          ui = ui[:start] + new_block + ui[end + len('      await Academia.tareas.eliminar(id);\n      }'):]
+
+          if 'data-action="delete"' in ui or 'Academia.tareas.eliminar(id)' in ui:
+              raise SystemExit("UI: quedaron referencias de eliminación dura")
+
+          ui_path.write_text(ui, encoding="utf-8")
+          PY
+
+      - name: Validaciones estáticas
+        shell: bash
+        run: |
+          node --check compartido/api/academia.js
+          node --check mi-universo/mis-tareas/mis-tareas.js
+          grep -q 'leerHistorial: leerHistorialTarea' compartido/api/academia.js
+          grep -q 'data-action="cancel"' mi-universo/mis-tareas/mis-tareas.js
+          grep -q 'data-action="reopen"' mi-universo/mis-tareas/mis-tareas.js
+          ! grep -q 'data-action="delete"' mi-universo/mis-tareas/mis-tareas.js
+          git diff --check
+
+      - name: Commit del bloque P3
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No hay cambios que guardar."
+            exit 0
+          fi
+          git config user.name "Academia Fast Track"
+          git config user.email "actions@users.noreply.github.com"
+          git add compartido/api/academia.js mi-universo/mis-tareas/mis-tareas.js
+          git commit -m "feat(misiones): cerrar cancelacion e historial MVP"
+          git push origin HEAD:fast-track/p3-misiones-cierre-mvp
