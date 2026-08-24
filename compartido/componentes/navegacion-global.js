@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v2.4 estable
+ * Cabecera global de navegación · v2.5 estable
  *
  * Estructura estable:
  * NAVEGACIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
@@ -8,7 +8,7 @@
  * Pantallas sin retorno declarado:
  * ACADEMIA · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
  *
- * Pantallas con data-nav-back o retorno en el modelo central:
+ * Pantallas con data-nav-back, ?volver o retorno en el modelo central:
  * ACADEMIA + VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
  *
  * El panel del alumno permanece en la zona derecha y concentra la navegación.
@@ -73,6 +73,41 @@ function iconoPantalla(actual) {
   ).trim();
 }
 
+function rutaVolverExplicita() {
+  const valor = String(
+    new URLSearchParams(window.location.search).get("volver") || ""
+  ).trim();
+
+  if (!valor) return "";
+
+  try {
+    const destino = new URL(valor, window.location.href);
+    if (destino.origin !== window.location.origin) return "";
+    return `${destino.pathname}${destino.search}${destino.hash}`;
+  } catch {
+    return "";
+  }
+}
+
+function elementoVolverLegado() {
+  return document.querySelector(
+    "[data-volver-modulo], [data-accion-volver]"
+  );
+}
+
+function rutaVolverLegada() {
+  const elemento = elementoVolverLegado();
+  if (!elemento) return "";
+
+  const alternativa = String(
+    elemento.dataset?.rutaAlternativa ||
+    elemento.getAttribute?.("href") ||
+    ""
+  ).trim();
+
+  return alternativa;
+}
+
 function rutaAlternativaVolver(actual) {
   const declaradaEnPagina = String(document.body?.dataset?.navBack || "").trim();
 
@@ -80,11 +115,16 @@ function rutaAlternativaVolver(actual) {
     return declaradaEnPagina;
   }
 
+  const explicita = rutaVolverExplicita();
+  if (explicita) {
+    return explicita;
+  }
+
   if (actual && Object.prototype.hasOwnProperty.call(actual, "volver")) {
     return urlAcademia(actual.volver || "");
   }
 
-  return "";
+  return rutaVolverLegada();
 }
 
 function htmlMarcaAcademia() {
@@ -216,31 +256,43 @@ function destinoNormalizado(valor) {
 function limpiarNavegacionLegada(actual) {
   const padres = new Set();
 
+  /*
+   * data-volver-modulo y data-accion-volver son señales explícitas de retorno
+   * global heredado. Si la cabecera compartida está presente, ese retorno pasa
+   * a vivir en la propia cabecera incluso aunque la pantalla no esté todavía
+   * declarada en el modelo central.
+   */
+  document
+    .querySelectorAll("[data-volver-modulo], [data-accion-volver]")
+    .forEach(elemento => {
+      if (elemento.closest(".nav-global")) return;
+      if (elemento.parentElement) padres.add(elemento.parentElement);
+      elemento.remove();
+    });
+
   if (!actual?.limpiarNavegacionLegada) {
     return padres;
   }
 
   const retornoGlobal = destinoNormalizado(rutaAlternativaVolver(actual));
 
-  document.querySelectorAll("[data-volver-modulo]").forEach(elemento => {
-    if (elemento.closest(".nav-global")) return;
-    if (elemento.parentElement) padres.add(elemento.parentElement);
-    elemento.remove();
-  });
+  document.querySelectorAll("a, button").forEach(control => {
+    if (control.closest(".nav-global")) return;
 
-  document.querySelectorAll("a").forEach(enlace => {
-    if (enlace.closest(".nav-global")) return;
+    const texto = String(control.textContent || "").trim().toLowerCase();
+    if (!texto.includes("volver")) return;
 
-    const texto = String(enlace.textContent || "").trim().toLowerCase();
-    const destino = destinoNormalizado(enlace.getAttribute("href"));
+    const destino =
+      control.tagName === "A"
+        ? destinoNormalizado(control.getAttribute("href"))
+        : "";
 
-    if (
-      retornoGlobal &&
-      texto.includes("volver") &&
-      destino === retornoGlobal
-    ) {
-      if (enlace.parentElement) padres.add(enlace.parentElement);
-      enlace.remove();
+    const esBotonLegado = control.tagName === "BUTTON";
+    const esEnlaceAlRetorno = retornoGlobal && destino === retornoGlobal;
+
+    if (esBotonLegado || esEnlaceAlRetorno) {
+      if (control.parentElement) padres.add(control.parentElement);
+      control.remove();
     }
   });
 
