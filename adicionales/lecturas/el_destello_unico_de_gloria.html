@@ -6,7 +6,10 @@
     <title>Lectura Mágica - Academia Gloria</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-violet-50 min-h-screen flex flex-col items-center justify-center p-6 font-sans">
+<body class="bg-violet-50 min-h-screen flex flex-col items-center justify-center p-6 font-sans"
+      data-page-title="El Destello Único de Gloria"
+      data-page-icon="📖"
+      data-nav-back="./">
 
     <div class="max-w-xl bg-white p-10 rounded-[40px] shadow-2xl border-b-8 border-violet-200 text-center">
         <div class="text-7xl mb-6">📖</div>
@@ -21,7 +24,10 @@
         </a>
 
         <div class="mt-8">
-            <a href="index.html" class="text-violet-400 hover:text-violet-600 font-medium transition-colors">
+            <a href="index.html"
+               data-volver-modulo
+               data-ruta-alternativa="./"
+               class="text-violet-400 hover:text-violet-600 font-medium transition-colors">
                 ← Volver a la biblioteca
             </a>
         </div>
@@ -31,5 +37,6 @@
         Nota: Al ser un archivo de 347MB, puede tardar unos segundos en aparecer.
     </p>
 
+    <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
 </body>
 </html>
