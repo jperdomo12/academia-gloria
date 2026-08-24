@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
 | **Última actualización** | 24/08/2026 |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 24/08/2026 | Product Owner + AI Collaborator | Cierra P2 de navegación de pantallas principales. El modelo central puede declarar adopción de cabecera global, fallback de retorno y limpieza controlada de navegación heredada. La carga de la cabecera puede activarse desde `navegacion.js` sin reescribir HTML grandes, preservando las acciones locales propias de cada módulo. |
 | 1.5 | 24/08/2026 | Product Owner + AI Collaborator | Separa el espaciado del contenido del espaciado de la página: la cabecera global queda fuera del padding local y el contenido conserva su separación en un contenedor interior. Aplica la corrección al conjunto de once páginas de 5.º de Primaria identificado en la validación visual. |
 | 1.4 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la tipografía e identidad visual de la cabecera, responsabiliza al recurso compartido de cargar Outfit, fija los tamaños responsive del nombre de pantalla y establece el favicon oficial local como obligatorio en páginas funcionales. Define 5.º de Primaria como conjunto inicial de validación y referencia, cuyo cierre queda condicionado a la superación de las pruebas. |
 | 1.3 | 24/08/2026 | Product Owner + AI Collaborator | Aprueba la cabecera global `Academia + Volver · Pantalla actual · Menú`, elimina la necesidad de un bloque independiente para Volver, consolida su implementación mediante componente compartido y define el comportamiento responsive y las excepciones operativas. |
@@ -26,10 +27,10 @@
 
 | Fuente | Relación |
 |---|---|
-| `compartido/modelos/navegacion.js` | Fuente técnica central del árbol compartido. |
+| `compartido/modelos/navegacion.js` | Fuente técnica central del árbol compartido y de las declaraciones de adopción de cabecera, retorno alternativo y limpieza legada. |
 | `compartido/js/panel-usuario.js` | Presenta el menú de usuario, Mi espacio personal, Persona Activa y filtra nodos por nivel de acceso. |
-| `compartido/js/navegacion.js` | Implementa navegación contextual y comportamiento de retorno. |
-| `compartido/componentes/navegacion-global.js` | Implementa la cabecera global compartida y compone Academia, Volver contextual, pantalla actual y Panel de Usuario. |
+| `compartido/js/navegacion.js` | Implementa navegación contextual, comportamiento de retorno y carga declarativa de la cabecera cuando el modelo lo indica. |
+| `compartido/componentes/navegacion-global.js` | Implementa la cabecera global compartida, compone Academia, Volver contextual, pantalla actual y Panel de Usuario, y retira navegación global heredada cuando el modelo lo autoriza. |
 | `compartido/css/navegacion-global.css` | Define la presentación responsive de la cabecera global. |
 | `docs/models/MODELO_ARBOL_NAVEGACION.md` | Representación humana del árbol funcional vigente. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | Gobierna roles, relaciones y niveles de acceso. |
@@ -56,6 +57,7 @@ El árbol concreto vigente se documenta en `MODELO_ARBOL_NAVEGACION.md` y su fue
 6. **Las páginas no deben duplicar el árbol completo.**
 7. **La navegación debe funcionar tanto en desarrollo local como en GitHub Pages.**
 8. **La cabecera global es un componente compartido y no debe reconstruirse localmente en cada HTML.**
+9. **La migración de pantallas existentes debe priorizar reutilización compartida antes que reescritura de páginas.**
 
 ---
 
@@ -98,7 +100,10 @@ Contiene los datos del árbol compartido:
 - ruta;
 - hijos;
 - estado próximo;
-- nivel mínimo cuando corresponda.
+- nivel mínimo cuando corresponda;
+- `volver`, cuando el nodo necesita una ruta alternativa centralizada;
+- `cabeceraGlobal`, cuando la pantalla puede adoptar declarativamente la cabecera compartida;
+- `limpiarNavegacionLegada`, cuando se autoriza retirar duplicados globales heredados de esa pantalla.
 
 No debe contener HTML ni comportamiento visual.
 
@@ -130,6 +135,8 @@ compartido/js/navegacion.js
 
 Gestiona el retorno contextual y la conservación del origen cuando una página abre otra.
 
+Además, puede consultar el modelo central y cargar la cabecera global de forma declarativa cuando el nodo actual define `cabeceraGlobal: true`. Esta capacidad evita modificar innecesariamente HTML grandes solo para conectar un componente ya existente.
+
 ### 4.4 Cabecera global
 
 ```text
@@ -145,6 +152,8 @@ La cabecera global compone de forma compartida:
 - Panel de Usuario.
 
 Las páginas no deben reconstruir estos elementos mediante una segunda cabecera local.
+
+Cuando un nodo declara `limpiarNavegacionLegada: true`, el componente puede retirar los elementos globales heredados equivalentes —por ejemplo, otro Volver o una identificación duplicada de pantalla—. Las acciones propias del módulo deben conservarse.
 
 ---
 
@@ -235,7 +244,7 @@ Prioridad:
 ```text
 1. origen explícito conservado por la navegación
 2. historial/referrer válido dentro de la Academia
-3. ruta alternativa segura definida por la página
+3. ruta alternativa segura definida por la página o por el modelo central
 ```
 
 No debe utilizarse como regla general:
@@ -252,13 +261,19 @@ La ruta alternativa es un mecanismo de seguridad.
 
 Solo se utiliza cuando no existe un origen válido o cuando el acceso fue directo.
 
-Las páginas que necesitan una ruta alternativa declaran:
+Puede declararse mediante:
 
 ```html
 data-nav-back="..."
 ```
 
-La presencia de `data-nav-back` permite además que la cabecera global muestre la acción `Volver`.
+o centralmente en el nodo correspondiente:
+
+```js
+volver: "ruta/segura/"
+```
+
+La declaración local `data-nav-back` tiene prioridad cuando existe. La declaración `volver` del modelo permite migrar pantallas existentes sin introducir otra modificación local exclusivamente para la cabecera.
 
 ### 8.2 Estándar visual de cabecera global
 
@@ -277,11 +292,11 @@ ACADEMIA             |    PANTALLA ACTUAL    |    MENÚ DEL USUARIO
 Reglas:
 
 1. **Academia permanece visible** como acceso estable al inicio.
-2. **Volver aparece junto a Academia** cuando la página declara `data-nav-back`.
+2. **Volver aparece junto a Academia** cuando existe retorno alternativo local o central.
 3. **Volver no ocupa un bloque o fila independiente.**
 4. **La pantalla actual permanece en la zona central.**
 5. **El Panel de Usuario permanece en la zona derecha.**
-6. El comportamiento real de `Volver` continúa gobernado por la navegación contextual; `data-nav-back` sigue siendo fallback seguro.
+6. El comportamiento real de `Volver` continúa gobernado por la navegación contextual; la ruta alternativa solo es fallback seguro.
 7. En pantallas pequeñas, la cabecera puede compactar etiquetas y conservar iconos para evitar desbordamiento.
 8. No deben implementarse copias locales de esta composición salvo piloto temporal explícitamente aprobado.
 9. Las nuevas pantallas funcionales deben consumir el componente y CSS compartidos.
@@ -292,9 +307,12 @@ Reglas:
 14. La pantalla actual ocupa una sola línea y aplica ellipsis cuando el espacio disponible no permite mostrar el nombre completo.
 15. `data-page-title` contiene un nombre funcional corto, sin identidad, nombres personales ni mensajes promocionales redundantes.
 16. Los estilos locales de una página no deben alterar la tipografía ni la presentación de la cabecera compartida.
-17. Toda página funcional debe declarar dentro de `<head>` el favicon oficial local de la Academia, incluyendo `icon`, `shortcut icon` y `apple-touch-icon`.
+17. Toda página funcional debe usar el favicon oficial local de la Academia; la cabecera compartida puede completar las relaciones estándar cuando la página todavía no las declara.
 18. No deben usarse favicons externos de terceros salvo una excepción explícitamente documentada.
 19. El espaciado propio del contenido debe aplicarse a un contenedor interior, no al `<body>`, para que el padding local no desplace ni estreche la cabecera global.
+20. Una pantalla existente puede adoptar la cabecera global mediante `cabeceraGlobal: true` en el modelo central cuando ya carga `navegacion.js`.
+21. La retirada automática de navegación heredada requiere `limpiarNavegacionLegada: true`; no debe aplicarse indiscriminadamente a todas las páginas.
+22. La limpieza legada solo elimina equivalentes de navegación global. Acciones funcionales propias —por ejemplo, `Gestión de Misiones` desde Mi Camino— permanecen visibles.
 
 ### 8.3 Alcance del estándar
 
@@ -306,6 +324,19 @@ Quedan fuera, salvo decisión posterior específica:
 - archivos históricos;
 - páginas técnicas de prueba;
 - utilidades que no formen parte de la experiencia de navegación del producto.
+
+### 8.4 Conjunto principal aprobado en P2
+
+El cierre visual de P2 valida el patrón compartido en las pantallas principales actualmente declaradas:
+
+- Mi Universo;
+- Mi Camino;
+- Gestión de Misiones;
+- Aventuras Matemáticas;
+- Detectives;
+- Mi Rincón de Lectura.
+
+La aprobación de P2 confirma el patrón de navegación; no implica congelación funcional de esos módulos.
 
 ---
 
@@ -346,6 +377,8 @@ La navegación se considera coherente cuando:
 - no existe una segunda cabecera global reconstruida localmente;
 - la tipografía del centro es idéntica aunque el contenido de la página utilice otra fuente;
 - no existen acciones globales `Volver` duplicadas;
+- la adopción declarativa solo se activa en nodos expresamente marcados;
+- la limpieza de navegación heredada no elimina acciones propias del módulo;
 - el favicon oficial local aparece y su ruta resuelve correctamente;
 - y no quedan favicons externos en el conjunto de referencia.
 
@@ -368,3 +401,6 @@ La navegación se considera coherente cuando:
 | NAV-011 | La cabecera carga y gobierna su propia tipografía; la pantalla no es responsable de cargar Outfit. |
 | NAV-012 | Las páginas funcionales usan el favicon oficial local de Academia salvo excepción documentada. |
 | NAV-013 | El padding local de cada pantalla se aplica al contenedor de contenido y no al `<body>`, para no afectar a la cabecera global. |
+| NAV-014 | El modelo central puede declarar `volver`, `cabeceraGlobal` y `limpiarNavegacionLegada` para migrar pantallas existentes sin reescrituras innecesarias. |
+| NAV-015 | `navegacion.js` puede cargar la cabecera global automáticamente únicamente cuando el nodo actual declara `cabeceraGlobal: true`. |
+| NAV-016 | La limpieza heredada es opt-in y conserva las acciones funcionales propias de cada módulo. |

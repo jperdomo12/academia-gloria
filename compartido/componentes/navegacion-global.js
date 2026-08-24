@@ -1,14 +1,14 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v2.3 estable
+ * Cabecera global de navegación · v2.4 estable
  *
  * Estructura estable:
  * NAVEGACIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
  *
- * Pantallas sin data-nav-back:
+ * Pantallas sin retorno declarado:
  * ACADEMIA · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
  *
- * Pantallas con data-nav-back:
+ * Pantallas con data-nav-back o retorno en el modelo central:
  * ACADEMIA + VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
  *
  * El panel del alumno permanece en la zona derecha y concentra la navegación.
@@ -73,8 +73,18 @@ function iconoPantalla(actual) {
   ).trim();
 }
 
-function rutaAlternativaVolver() {
-  return String(document.body?.dataset?.navBack || "").trim();
+function rutaAlternativaVolver(actual) {
+  const declaradaEnPagina = String(document.body?.dataset?.navBack || "").trim();
+
+  if (declaradaEnPagina) {
+    return declaradaEnPagina;
+  }
+
+  if (actual && Object.prototype.hasOwnProperty.call(actual, "volver")) {
+    return urlAcademia(actual.volver || "");
+  }
+
+  return "";
 }
 
 function htmlMarcaAcademia() {
@@ -101,8 +111,8 @@ function htmlBotonVolver(rutaAlternativa) {
   `;
 }
 
-function htmlNavegacionIzquierda() {
-  const rutaAlternativa = rutaAlternativaVolver();
+function htmlNavegacionIzquierda(actual) {
+  const rutaAlternativa = rutaAlternativaVolver(actual);
 
   if (!rutaAlternativa) {
     return `
@@ -120,13 +130,13 @@ function htmlNavegacionIzquierda() {
   `;
 }
 
-function configurarVolverContextual(cabecera) {
+function configurarVolverContextual(cabecera, actual) {
   const boton = cabecera.querySelector("[data-nav-volver]");
   if (!boton) return;
 
   const rutaAlternativa =
     boton.dataset.rutaAlternativa ||
-    rutaAlternativaVolver() ||
+    rutaAlternativaVolver(actual) ||
     "./";
 
   const navegacion = window.Academia?.navegacion;
@@ -151,6 +161,120 @@ function escaparHTML(valor = "") {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function asegurarEstilosCabecera() {
+  const existe = [...document.querySelectorAll('link[rel="stylesheet"]')]
+    .some(link => String(link.href || "").includes("/compartido/css/navegacion-global.css"));
+
+  if (existe) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = new URL("../css/navegacion-global.css?v=6", import.meta.url).href;
+  document.head.append(link);
+}
+
+function asegurarFaviconOficial() {
+  const href = urlAcademia("assets/iconos/icono-principal.png");
+  const definiciones = [
+    { rel: "icon", selector: 'link[rel="icon"]', type: "image/png" },
+    { rel: "shortcut icon", selector: 'link[rel="shortcut icon"]', type: "image/png" },
+    { rel: "apple-touch-icon", selector: 'link[rel="apple-touch-icon"]' }
+  ];
+
+  definiciones.forEach(definicion => {
+    let link = document.head.querySelector(definicion.selector);
+
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = definicion.rel;
+      document.head.append(link);
+    }
+
+    if (definicion.type) {
+      link.type = definicion.type;
+    }
+
+    link.href = href;
+  });
+}
+
+function destinoNormalizado(valor) {
+  if (!valor) return "";
+
+  try {
+    const url = new URL(valor, window.location.href);
+    return `${url.origin}${url.pathname}`
+      .replace(/index\.html$/, "")
+      .replace(/\/+$/, "");
+  } catch {
+    return "";
+  }
+}
+
+function limpiarNavegacionLegada(actual) {
+  const padres = new Set();
+
+  if (!actual?.limpiarNavegacionLegada) {
+    return padres;
+  }
+
+  const retornoGlobal = destinoNormalizado(rutaAlternativaVolver(actual));
+
+  document.querySelectorAll("[data-volver-modulo]").forEach(elemento => {
+    if (elemento.closest(".nav-global")) return;
+    if (elemento.parentElement) padres.add(elemento.parentElement);
+    elemento.remove();
+  });
+
+  document.querySelectorAll("a").forEach(enlace => {
+    if (enlace.closest(".nav-global")) return;
+
+    const texto = String(enlace.textContent || "").trim().toLowerCase();
+    const destino = destinoNormalizado(enlace.getAttribute("href"));
+
+    if (
+      retornoGlobal &&
+      texto.includes("volver") &&
+      destino === retornoGlobal
+    ) {
+      if (enlace.parentElement) padres.add(enlace.parentElement);
+      enlace.remove();
+    }
+  });
+
+  document.querySelectorAll('[aria-label="Sección actual"]').forEach(elemento => {
+    if (elemento.closest(".nav-global")) return;
+    if (elemento.parentElement) padres.add(elemento.parentElement);
+    elemento.remove();
+  });
+
+  return padres;
+}
+
+function normalizarContenedoresLegados(padres) {
+  padres.forEach(padre => {
+    if (!padre?.isConnected) return;
+
+    const hijos = [...padre.children];
+
+    if (!hijos.length) {
+      padre.remove();
+      return;
+    }
+
+    // Si solo queda una acción propia del módulo, la conservamos como acción
+    // local alineada a la derecha, separada de la navegación global.
+    if (hijos.length === 1) {
+      padre.style.display = "flex";
+      padre.style.justifyContent = "flex-end";
+      padre.style.alignItems = "center";
+      padre.style.gridTemplateColumns = "none";
+      padre.style.gap = "0";
+      padre.style.marginBottom = "16px";
+    }
+  });
 }
 
 async function trasladarPanelUsuario(cabecera) {
@@ -185,6 +309,9 @@ async function trasladarPanelUsuario(cabecera) {
 async function crearCabecera() {
   if (document.querySelector(".nav-global")) return;
 
+  asegurarEstilosCabecera();
+  asegurarFaviconOficial();
+
   const rutaActual = rutaRelativaActual();
   const actual = buscarNodo(UBICACIONES_ACADEMIA, rutaActual);
 
@@ -194,7 +321,7 @@ async function crearCabecera() {
 
   cabecera.innerHTML = `
     <div class="nav-global__barra">
-      ${htmlNavegacionIzquierda()}
+      ${htmlNavegacionIzquierda(actual)}
 
       <div class="nav-global__ubicacion" aria-label="Pantalla actual">
         <span aria-hidden="true">${escaparHTML(iconoPantalla(actual))}</span>
@@ -206,8 +333,11 @@ async function crearCabecera() {
   `;
 
   document.body.prepend(cabecera);
-  configurarVolverContextual(cabecera);
+  configurarVolverContextual(cabecera, actual);
+
+  const padresLegados = limpiarNavegacionLegada(actual);
   await trasladarPanelUsuario(cabecera);
+  normalizarContenedoresLegados(padresLegados);
 }
 
 function iniciarNavegacionGlobal() {
