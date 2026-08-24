@@ -1,10 +1,12 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.1
+   Versión 2.2
    ========================================================== */
 
 window.Academia = window.Academia || {};
+
+const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
 (function configurarNavegacionAcademia() {
   "use strict";
@@ -222,6 +224,69 @@ window.Academia = window.Academia || {};
   /* Compatibilidad con versiones anteriores. */
   Academia.volver = volver;
 
+  function rutaModeloActual() {
+    const baseAcademia = obtenerBaseAcademia();
+    let ruta = window.location.pathname;
+
+    if (baseAcademia && ruta.startsWith(baseAcademia)) {
+      ruta = ruta.slice(baseAcademia.length);
+    }
+
+    return ruta
+      .replace(/^\/+/, "")
+      .replace(/index\.html$/, "")
+      .replace(/\/+$/, "");
+  }
+
+  function buscarNodoModelo(arbol, rutaActual) {
+    for (const nodo of arbol || []) {
+      const rutaNodo = String(nodo.ruta || "")
+        .replace(/^\/+/, "")
+        .replace(/index\.html$/, "")
+        .replace(/\/+$/, "");
+
+      if (nodo.ruta && rutaNodo === rutaActual) {
+        return nodo;
+      }
+
+      if (Array.isArray(nodo.hijos)) {
+        const encontrado = buscarNodoModelo(nodo.hijos, rutaActual);
+        if (encontrado) return encontrado;
+      }
+    }
+
+    return null;
+  }
+
+  async function cargarCabeceraGlobalDeclarada() {
+    if (document.querySelector(".nav-global") || !NAVEGACION_SCRIPT_URL) {
+      return;
+    }
+
+    try {
+      const modeloUrl = new URL(
+        "../modelos/navegacion.js",
+        NAVEGACION_SCRIPT_URL
+      );
+      const { UBICACIONES_ACADEMIA } = await import(modeloUrl.href);
+      const actual = buscarNodoModelo(
+        UBICACIONES_ACADEMIA,
+        rutaModeloActual()
+      );
+
+      if (!actual?.cabeceraGlobal) return;
+
+      const componenteUrl = new URL(
+        "../componentes/navegacion-global.js",
+        NAVEGACION_SCRIPT_URL
+      );
+
+      await import(componenteUrl.href);
+    } catch (error) {
+      console.error("No se pudo cargar la cabecera global declarada.", error);
+    }
+  }
+
   function inicializarNavegacionDeclarativa() {
     document
       .querySelectorAll("[data-accion-volver]")
@@ -242,6 +307,7 @@ window.Academia = window.Academia || {};
       });
 
     prepararEnlaces();
+    cargarCabeceraGlobalDeclarada();
   }
 
   if (document.readyState === "loading") {
