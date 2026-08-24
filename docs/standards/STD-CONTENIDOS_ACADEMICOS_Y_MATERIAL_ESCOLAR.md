@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.0-rc1 |
-| **Estado** | Candidato para aprobación |
-| **Fecha** | 21/08/2026 |
-| **Última actualización** | 21/08/2026 |
+| **Versión** | 1.0 |
+| **Estado** | Activo |
+| **Fecha** | 22/08/2026 |
+| **Última actualización** | 22/08/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 22/08/2026 | Product Owner + AI Collaborator | Aprobación de la Base Académica de 6.º. Consolida tiempo cognitivo, exigencia sin presión emocional alta, reto primero con apoyo progresivo, reto productivo, foco en el paso actual, comprensión lingüística de problemas, separación entre métricas internas y visibles, pausa estratégica y valoración del proceso. No declara implementación técnica. |
 | 1.0-rc1 | 21/08/2026 | Product Owner + AI Collaborator | Primera consolidación de las pautas para aprendizaje académico estructurado: material escolar como fuente prioritaria, diseño TEL-friendly, estructura modular, selección de recursos, práctica formativa, evidencias, retroalimentación y proceso de incorporación ágil. Primera aplicación prevista: 6.º de Primaria. |
 
 ---
@@ -427,6 +428,10 @@ Evitar:
 
 La página debe permitir concentrarse en una tarea cada vez.
 
+> **Aprender bien tiene prioridad sobre terminar rápido.**
+
+El alumno puede necesitar más tiempo para procesar del que espontáneamente se concede a sí mismo. La Academia debe proteger el tiempo necesario para pensar y no convertir la velocidad en sinónimo de aprendizaje.
+
 Aplicar:
 
 - jerarquía clara;
@@ -436,6 +441,12 @@ Aplicar:
 - navegación predecible;
 - repetición accesible;
 - y ausencia de presión temporal salvo que el tiempo sea parte real del objetivo.
+
+No se utilizarán cronómetros, velocidad de respuesta o rapidez como presión o puntuación, salvo que el tiempo forme parte real y aprobada del objetivo académico.
+
+Cuando una actividad larga pueda generar urgencia por llegar al final, se considerarán microbloques o progresión gradual. No es obligatorio mostrar siempre indicadores como “pregunta X de 10” si no aportan valor pedagógico. La interfaz debe favorecer la concentración en la actividad actual:
+
+> **Ahora importa este paso.**
 
 ### 8.3 Apoyo visual
 
@@ -522,6 +533,10 @@ No se considerará evidencia que el alumno “vio el 100 %” del vídeo si el s
 
 La práctica debe evolucionar desde apoyo hacia autonomía.
 
+> **Exigencia académica alta no equivale a presión emocional alta.**
+
+La regla de diseño es: **máxima expectativa curricular razonable, mínima ayuda necesaria y presión emocional regulada**. La Academia no reducirá preventivamente el nivel académico solo porque un alumno pueda necesitar apoyos: primero ofrecerá una oportunidad razonable de resolver el reto y después observará qué apoyo necesita.
+
 Patrón recomendado:
 
 ```text
@@ -552,17 +567,65 @@ La variedad debe permitir comprobar:
 
 ### 10.2 Ayudas
 
-Las ayudas deben ser graduales.
+Las ayudas deben ser graduales y comenzar por el reto. La escalera conceptual es:
 
-Ejemplos:
+1. intento autónomo;
+2. pregunta orientadora;
+3. aclaración o segmentación lingüística;
+4. apoyo visual o representación;
+5. ejemplo similar;
+6. resolución parcialmente guiada;
+7. guía paso a paso cuando realmente sea necesaria.
 
-1. recordar la regla;
-2. señalar la parte relevante;
-3. mostrar un ejemplo similar;
-4. reducir opciones;
-5. resolver un paso junto al alumno.
+No es obligatorio utilizar todos los niveles ni seguirlos mecánicamente. Debe aplicarse el mínimo apoyo suficiente, sin resolver silenciosamente toda la tarea, y registrar cuando tenga utilidad educativa qué apoyo permitió continuar.
 
-La ayuda no debe resolver silenciosamente toda la tarea.
+### 10.3 Reto productivo y ajuste
+
+La dificultad, el error y cierta frustración pueden formar parte del aprendizaje. No se intervendrá simplemente porque exista un error.
+
+Existe reto productivo cuando el alumno:
+
+- piensa;
+- prueba;
+- acepta orientación;
+- modifica su estrategia;
+- y continúa procesando.
+
+Debe ajustarse el apoyo o la presión cuando el alumno:
+
+- responde cada vez más rápido sin analizar;
+- repite de forma improductiva buscando perfección;
+- deja de procesar las explicaciones;
+- o realiza nuevos intentos que ya no aportan aprendizaje.
+
+Ajustar no significa necesariamente hacer el contenido más fácil. Puede significar:
+
+```text
+parar → cambiar apoyo → volver después
+```
+
+La Academia debe normalizar guardar, parar y continuar posteriormente cuando repetir deje de aportar aprendizaje. Parar no debe presentarse como fracaso.
+
+### 10.4 Comprensión del lenguaje en problemas
+
+Especialmente en Matemáticas y problemas razonados, debe distinguirse:
+
+```text
+comprender el enunciado ≠ resolver matemáticamente el problema
+```
+
+Un patrón posible es:
+
+```text
+¿Qué está pasando?
+→ ¿Qué me preguntan?
+→ ¿Qué datos necesito?
+→ ¿Qué relación existe?
+→ ¿Qué operación o estrategia corresponde?
+→ ¿La respuesta tiene sentido?
+```
+
+Los apoyos pueden incluir escuchar, segmentar frases, reformular manteniendo el vocabulario académico, destacar datos, emplear una representación visual o construir un esquema. Una dificultad lingüística no debe interpretarse automáticamente como desconocimiento matemático.
 
 ---
 
@@ -708,6 +771,8 @@ Si no existe respuesta clara, el dato no es necesario.
 ## 13. Retroalimentación
 
 La retroalimentación ocurre en varios niveles.
+
+Debe valorar el proceso, no solo el resultado. Puede reconocer volver a leer, pensar antes de responder, pedir una pista, usar una representación, corregir, cambiar de estrategia y persistir de forma productiva. “Hacerlo bien” no se reducirá exclusivamente a obtener una puntuación perfecta.
 
 ### 13.1 Inmediata para el alumno
 
@@ -957,6 +1022,21 @@ No acumular simultáneamente:
 
 En cada paso debe ser evidente qué puede hacer el alumno a continuación.
 
+### 19.3 Métricas internas y métricas visibles
+
+La Academia puede registrar más información de la que necesita mostrar al alumno. Porcentaje, número de intentos, duración, ayudas, resultado inicial y resultado final pueden ser útiles para la familia, el análisis o el refuerzo.
+
+Estos datos no deben mostrarse automáticamente al alumno cuando:
+
+- no ayudan a aprender;
+- generan presión innecesaria;
+- convierten la experiencia en una búsqueda de perfección;
+- o hacen que una medida técnica se interprete como capacidad personal.
+
+> **La Academia puede medir mucho sin hacer sentir al alumno constantemente medido.**
+
+La interfaz del alumno puede priorizar avance, estrategia, comprensión, esfuerzo útil, corrección y siguiente paso.
+
 ---
 
 ## 20. Criterios de conformidad de un Tema Académico
@@ -982,12 +1062,18 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] No existen varias órdenes ambiguas en el mismo paso.
 - [ ] La interfaz no infantiliza.
 - [ ] El alumno puede repetir o consultar ayudas.
+- [ ] La experiencia protege el tiempo para pensar y no premia la rapidez salvo que sea un objetivo académico aprobado.
+- [ ] La interfaz mantiene el foco en el paso actual y evita indicadores de progreso que generen urgencia sin valor pedagógico.
 
 ### Práctica
 
 - [ ] Existe práctica suficiente para el objetivo.
 - [ ] Hay progresión de apoyo a autonomía cuando aplica.
+- [ ] Se ofrece una oportunidad razonable de intento autónomo antes de ajustar el apoyo.
+- [ ] Se utiliza el mínimo apoyo suficiente y puede identificarse cuál permitió continuar cuando resulte útil.
+- [ ] Se distingue el reto productivo de la repetición o presión improductivas.
 - [ ] El error produce información útil.
+- [ ] En problemas razonados se diferencia la comprensión del enunciado de la resolución del contenido.
 
 ### Comprobación
 
@@ -1001,12 +1087,15 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] Los datos pueden distinguir hechos de inferencias.
 - [ ] No existen métricas inventadas.
 - [ ] La relación con una Misión se conserva cuando corresponda.
+- [ ] Las métricas visibles para el alumno aportan valor pedagógico y no convierten medidas técnicas en juicios de capacidad.
 
 ### Retroalimentación
 
 - [ ] Puede identificarse al menos qué ocurrió en la actividad.
 - [ ] La retroalimentación no etiqueta al alumno.
 - [ ] El refuerzo sugerido está relacionado con datos observables.
+- [ ] Se reconoce el proceso y la estrategia, no solo la puntuación o el resultado final.
+- [ ] Guardar, parar y continuar después se presenta como una estrategia válida cuando repetir deja de aportar aprendizaje.
 
 ### Integración
 
@@ -1073,6 +1162,12 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-008 | Los datos se registran por utilidad educativa, no por disponibilidad técnica. | Aprobada conceptualmente |
 | CA-009 | La retroalimentación separará hechos, observaciones, inferencias prudentes y acciones. | Aprobada conceptualmente |
 | CA-010 | 5.º no se migrará masivamente; sus mejores experiencias sirven como referencia para 6.º. | Aprobada conceptualmente |
+| CA-011 | Aprender bien tiene prioridad sobre terminar rápido; la velocidad solo se medirá o puntuará cuando sea parte real y aprobada del objetivo. | Aprobada |
+| CA-012 | Se mantendrá la máxima expectativa curricular razonable con el mínimo apoyo suficiente y presión emocional regulada. | Aprobada |
+| CA-013 | El reto precederá al apoyo progresivo, sin intervenir automáticamente ante el error y ajustando cuando los intentos dejen de aportar aprendizaje. | Aprobada |
+| CA-014 | La comprensión lingüística del enunciado se distinguirá de la resolución matemática. | Aprobada |
+| CA-015 | Las métricas internas no se mostrarán automáticamente al alumno; la interfaz priorizará información útil para aprender. | Aprobada |
+| CA-016 | Parar y continuar después es una estrategia válida, y la retroalimentación reconocerá el proceso además del resultado. | Aprobada |
 
 ---
 
@@ -1103,4 +1198,4 @@ Nada de lo anterior debe declararse implementado hasta existir en código y habe
 | **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
 | **Persistencia** | Registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
 | **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
-| **Estado** | Candidato para aprobación; no implica todavía implementación técnica. |
+| **Estado** | Activo; estándar aprobado que no implica todavía implementación técnica. |
