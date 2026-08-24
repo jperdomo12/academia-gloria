@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
 | **Última actualización** | 24/08/2026 |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 24/08/2026 | Product Owner + AI Collaborator | Separa el espaciado del contenido del espaciado de la página: la cabecera global queda fuera del padding local y el contenido conserva su separación en un contenedor interior. Aplica la corrección al conjunto de once páginas de 5.º de Primaria identificado en la validación visual. |
 | 1.4 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la tipografía e identidad visual de la cabecera, responsabiliza al recurso compartido de cargar Outfit, fija los tamaños responsive del nombre de pantalla y establece el favicon oficial local como obligatorio en páginas funcionales. Define 5.º de Primaria como conjunto inicial de validación y referencia, cuyo cierre queda condicionado a la superación de las pruebas. |
 | 1.3 | 24/08/2026 | Product Owner + AI Collaborator | Aprueba la cabecera global `Academia + Volver · Pantalla actual · Menú`, elimina la necesidad de un bloque independiente para Volver, consolida su implementación mediante componente compartido y define el comportamiento responsive y las excepciones operativas. |
 | 1.2 | 13/08/2026 | Product Owner + AI Collaborator | Consolida Persona Activa, visibilidad por nivel, ruta única de Mi Calendario, responsabilidades entre modelo central y panel, y regla estándar de Volver. |
@@ -293,6 +294,7 @@ Reglas:
 16. Los estilos locales de una página no deben alterar la tipografía ni la presentación de la cabecera compartida.
 17. Toda página funcional debe declarar dentro de `<head>` el favicon oficial local de la Academia, incluyendo `icon`, `shortcut icon` y `apple-touch-icon`.
 18. No deben usarse favicons externos de terceros salvo una excepción explícitamente documentada.
+19. El espaciado propio del contenido debe aplicarse a un contenedor interior, no al `<body>`, para que el padding local no desplace ni estreche la cabecera global.
 
 ### 8.3 Alcance del estándar
 
@@ -340,6 +342,7 @@ La navegación se considera coherente cuando:
 - la pantalla actual permanece identificada;
 - el Panel de Usuario permanece funcional;
 - la cabecera no produce desbordamientos relevantes en móvil;
+- la cabecera queda fuera del padding propio del contenido;
 - no existe una segunda cabecera global reconstruida localmente;
 - la tipografía del centro es idéntica aunque el contenido de la página utilice otra fuente;
 - no existen acciones globales `Volver` duplicadas;
@@ -364,3 +367,4 @@ La navegación se considera coherente cuando:
 | NAV-010 | Las pantallas funcionales internas deben reutilizar la cabecera global compartida y no reconstruirla localmente. |
 | NAV-011 | La cabecera carga y gobierna su propia tipografía; la pantalla no es responsable de cargar Outfit. |
 | NAV-012 | Las páginas funcionales usan el favicon oficial local de Academia salvo excepción documentada. |
+| NAV-013 | El padding local de cada pantalla se aplica al contenedor de contenido y no al `<body>`, para no afectar a la cabecera global. |
