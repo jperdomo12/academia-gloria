@@ -16,10 +16,10 @@ Este documento explica la visión, los principios y la razón de ser del proyect
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
-| **Fecha** | 04/08/2026 |
-| **Última actualización** | 04/08/2026 |
+| **Fecha** | 22/08/2026 |
+| **Última actualización** | 22/08/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -34,6 +34,7 @@ Este documento explica la visión, los principios y la razón de ser del proyect
 | `docs/ai/AI_COLLABORATION_GUIDE.md` | **Complementa:** define el modelo general de colaboración con IA. |
 | `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** define la incorporación rápida de una nueva IA al proyecto. |
 | `docs/project/PROJECT_ROLES.md` | **Complementa:** define roles, responsabilidades y autoridad. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Estándar relevante:** gobierna la creación, adaptación, incorporación y validación de Temas Académicos. |
 
 ## Historial de versiones
 
@@ -41,6 +42,7 @@ Este documento explica la visión, los principios y la razón de ser del proyect
 |---|---:|---|---|
 | 1.0 | 27/07/2026 | Equipo del proyecto | Primera versión del índice y orientación general de la documentación. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Actualización integral para reflejar la arquitectura documental vigente. Incorpora `ai/`, `product/` y `history/`, actualiza la ruta de lectura, elimina referencias obsoletas, adopta la estructura de `DOCUMENTATION_STANDARD.md` y conserva los principios documentales y convenciones resumidas de la versión anterior. |
+| 1.2 | 22/08/2026 | Product Owner + AI Collaborator | Incorpora el estándar activo de Contenidos Académicos y Material Escolar y una ruta específica para diseñar o incorporar un Tema Académico. |
 
 ## 1. Propósito
 
@@ -163,6 +165,13 @@ Consultar únicamente los documentos relevantes dentro de:
 - y cualquier documento propietario identificado por la arquitectura.
 
 No es necesario leer todo el repositorio documental para realizar una tarea concreta.
+
+### 6.6 Diseñar o incorporar un Tema Académico
+
+1. `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
+2. `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md`
+3. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md`
+4. La especificación del módulo o de Misiones, cuando corresponda.
 
 ## 7. Principios de navegación
 
@@ -291,14 +300,15 @@ Los cambios internos de un documento que no afecten la navegación general no re
 | README-005 | Mantener este README como mapa, evitando duplicar el contenido de los documentos propietarios. | Aprobado | SSOT · Mantenibilidad |
 | README-006 | Conservar un resumen operativo de los principios documentales sin sustituir a `DOCUMENTATION_STANDARD.md`. | Aprobado | Continuidad · Eficacia |
 | README-007 | Evolucionar documentos existentes mediante cambios mínimos sobre la versión vigente. | Aprobado | Preservación del conocimiento |
+| README-008 | Incorporar una ruta específica y el estándar propietario para diseñar o incorporar Temas Académicos. | Aprobado | Navegación · Aprendizaje Académico |
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 04/08/2026 |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación** | 22/08/2026 |
 | **Aprobado por** | Product Owner |
 | **Sustituye** | Versión anterior de `docs/README.md` |
 | **Sustituido por** | — |
