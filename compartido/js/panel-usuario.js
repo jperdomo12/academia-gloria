@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 2.4
+ * Versión: 2.5
  ******************************************************************************/
 
 import {
@@ -46,6 +46,10 @@ let panelRaiz = null;
 let botonPrincipal = null;
 let menu = null;
 let manejadorDocumento = null;
+let manejadorResize = null;
+let manejadorScroll = null;
+let manejadorTeclado = null;
+let colaInicializacion = Promise.resolve();
 
 
 function obtenerBaseAcademia() {
@@ -65,7 +69,7 @@ function obtenerRutaActual() {
 }
 
 function asegurarEstilosPanelAvanzado() {
-  if (document.getElementById("panel-usuario-estilos-v14")) return;
+  if (document.getElementById("panel-usuario-estilos-v15")) return;
 
   const estilo = document.createElement("style");
   estilo.id = "panel-usuario-estilos-v15";
@@ -732,21 +736,24 @@ async function construirPanel(contenedor) {
     });
 
   manejadorDocumento = (evento) => {
-    if (!panelRaiz.contains(evento.target)) {
+    if (!panelRaiz?.contains(evento.target)) {
       cerrarMenu();
     }
   };
 
-  document.addEventListener("click", manejadorDocumento);
-  window.addEventListener("resize", cerrarMenu, { passive: true });
-  window.addEventListener("scroll", cerrarMenu, { passive: true });
-
-  document.addEventListener("keydown", (evento) => {
+  manejadorResize = () => cerrarMenu();
+  manejadorScroll = () => cerrarMenu();
+  manejadorTeclado = (evento) => {
     if (evento.key === "Escape") {
       cerrarMenu();
       botonPrincipal?.focus();
     }
-  });
+  };
+
+  document.addEventListener("click", manejadorDocumento);
+  window.addEventListener("resize", manejadorResize, { passive: true });
+  window.addEventListener("scroll", manejadorScroll, { passive: true });
+  document.addEventListener("keydown", manejadorTeclado);
 }
 
 function destruirPanel() {
@@ -755,36 +762,54 @@ function destruirPanel() {
     manejadorDocumento = null;
   }
 
+  if (manejadorResize) {
+    window.removeEventListener("resize", manejadorResize);
+    manejadorResize = null;
+  }
+
+  if (manejadorScroll) {
+    window.removeEventListener("scroll", manejadorScroll);
+    manejadorScroll = null;
+  }
+
+  if (manejadorTeclado) {
+    document.removeEventListener("keydown", manejadorTeclado);
+    manejadorTeclado = null;
+  }
+
   panelRaiz = null;
   botonPrincipal = null;
   menu = null;
 }
 
-async function iniciarPanelUsuario(opciones = {}) {
-  destruirPanel();
-
+async function iniciarPanelUsuarioInterno(opciones = {}) {
   const base = obtenerBaseAcademia();
-
-  configuracionActiva = {
+  const nuevaConfiguracion = {
     ...CONFIGURACION_PREDETERMINADA,
     loginUrl: `${base}/login.html`,
     perfilUrl: `${base}/perfil/`,
     ...opciones
   };
 
-  asegurarEstilosPanelAvanzado();
-
+  /*
+   * Primero resolvemos el destino. Una inicialización heredada cuyo host ya
+   * fue retirado por la cabecera global debe convertirse en un no-op y NUNCA
+   * destruir el Panel canónico que ya está funcionando.
+   */
   const contenedor = document.querySelector(
-    configuracionActiva.contenedor
+    nuevaConfiguracion.contenedor
   );
 
   if (!contenedor) {
     console.warn(
-      `No se encontró el contenedor del Panel de Usuario: ${configuracionActiva.contenedor}`
+      `No se encontró el contenedor del Panel de Usuario: ${nuevaConfiguracion.contenedor}`
     );
     return null;
   }
 
+  destruirPanel();
+  configuracionActiva = nuevaConfiguracion;
+  asegurarEstilosPanelAvanzado();
   renderizarEstadoCarga(contenedor);
 
   /*
@@ -812,6 +837,17 @@ async function iniciarPanelUsuario(opciones = {}) {
   }
 
   return contenedor;
+}
+
+function iniciarPanelUsuario(opciones = {}) {
+  const solicitud = { ...opciones };
+  const tarea = colaInicializacion.then(
+    () => iniciarPanelUsuarioInterno(solicitud)
+  );
+
+  // Una inicialización fallida no bloquea las posteriores.
+  colaInicializacion = tarea.catch(() => null);
+  return tarea;
 }
 
 export {
