@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v3.1
+ * Cabecera global de navegación · v3.2
  *
  * Contrato visual:
  * ACADEMIA + VOLVER · PANTALLA ACTUAL · PANEL DE USUARIO
@@ -201,21 +201,40 @@ function esperarHojaEstilo(link) {
   });
 }
 
-async function asegurarHojaEstilo(nombreArchivo, version) {
-  let link = buscarHojaEstilo(nombreArchivo);
+function urlHojaEstilo(nombreArchivo, version) {
+  return new URL(
+    `../css/${nombreArchivo}?v=${encodeURIComponent(version)}`,
+    import.meta.url
+  ).href;
+}
 
-  if (!link) {
-    link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = new URL(
-      `../css/${nombreArchivo}?v=${encodeURIComponent(version)}`,
-      import.meta.url
-    ).href;
-    document.head.append(link);
+async function asegurarHojaEstilo(nombreArchivo, version) {
+  const hrefObjetivo = urlHojaEstilo(nombreArchivo, version);
+  const existente = buscarHojaEstilo(nombreArchivo);
+
+  if (existente && existente.href === hrefObjetivo) {
+    await esperarHojaEstilo(existente);
+    return existente;
   }
 
-  await esperarHojaEstilo(link);
-  return link;
+  /*
+   * Si la página enlaza una versión antigua, cargamos primero la versión
+   * canónica y solo después retiramos la anterior. Así evitamos parpadeos y
+   * no dependemos del estado de caché de cada HTML heredado.
+   */
+  const nuevo = document.createElement("link");
+  nuevo.rel = "stylesheet";
+  nuevo.href = hrefObjetivo;
+
+  const carga = esperarHojaEstilo(nuevo);
+  document.head.append(nuevo);
+  await carga;
+
+  if (existente?.isConnected) {
+    existente.remove();
+  }
+
+  return nuevo;
 }
 
 async function asegurarEstilosCompartidos() {
