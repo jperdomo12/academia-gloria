@@ -276,25 +276,33 @@ function limpiarNavegacionLegada(actual) {
 
   const retornoGlobal = destinoNormalizado(rutaAlternativaVolver(actual));
 
-  document.querySelectorAll("a, button").forEach(control => {
-    if (control.closest(".nav-global")) return;
+  document.querySelectorAll("a").forEach(enlace => {
+    if (enlace.closest(".nav-global")) return;
 
-    const texto = String(control.textContent || "").trim().toLowerCase();
-    if (!texto.includes("volver")) return;
+    const texto = String(enlace.textContent || "").trim().toLowerCase();
+    const destino = destinoNormalizado(enlace.getAttribute("href"));
 
-    const destino =
-      control.tagName === "A"
-        ? destinoNormalizado(control.getAttribute("href"))
-        : "";
-
-    const esBotonLegado = control.tagName === "BUTTON";
-    const esEnlaceAlRetorno = retornoGlobal && destino === retornoGlobal;
-
-    if (esBotonLegado || esEnlaceAlRetorno) {
-      if (control.parentElement) padres.add(control.parentElement);
-      control.remove();
+    if (
+      retornoGlobal &&
+      texto.includes("volver") &&
+      destino === retornoGlobal
+    ) {
+      if (enlace.parentElement) padres.add(enlace.parentElement);
+      enlace.remove();
     }
   });
+
+  const botonVolverLegado = document.getElementById("backButton");
+  if (
+    botonVolverLegado &&
+    !botonVolverLegado.closest(".nav-global") &&
+    /^\s*←?\s*volver\s*$/i.test(String(botonVolverLegado.textContent || ""))
+  ) {
+    if (botonVolverLegado.parentElement) {
+      padres.add(botonVolverLegado.parentElement);
+    }
+    botonVolverLegado.remove();
+  }
 
   document.querySelectorAll('[aria-label="Sección actual"]').forEach(elemento => {
     if (elemento.closest(".nav-global")) return;
