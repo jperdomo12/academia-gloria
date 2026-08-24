@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap");
 
-/* Academia Gloria Valentina · Cabecera global · estilo v2.4 · Academia + Volver | Pantalla | Menú */
+/* Academia Gloria Valentina · Cabecera global · estilo v3.0 · Academia + Volver | Pantalla | Menú */
 .nav-global,.nav-global *{box-sizing:border-box}
 .nav-global{position:relative;z-index:9000;width:100%;padding:10px 14px 0;font-family:"Outfit",system-ui,sans-serif}
 .nav-global__barra{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;width:min(1240px,100%);min-height:58px;margin:0 auto;padding:7px 9px 7px 13px;border:2px solid rgba(196,181,253,.68);border-radius:19px;background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(76,29,149,.10);backdrop-filter:blur(13px)}
@@ -35,8 +35,10 @@
 .nav-global__ubicacion{justify-content:center;overflow:hidden;color:#475569;font-family:"Outfit",system-ui,sans-serif;font-size:14px;font-weight:800;line-height:1.2;letter-spacing:0;text-transform:none;text-align:center;white-space:nowrap;text-overflow:ellipsis}
 .nav-global__ubicacion span:first-child{font-size:16px;line-height:1;flex:0 0 auto}
 .nav-global__ubicacion span:last-child{overflow:hidden;text-overflow:ellipsis}
-.nav-global__usuario{display:flex;justify-content:flex-end;min-width:0}
-.nav-global__usuario [data-panel-usuario]{width:auto!important;justify-content:flex-end}
+
+/* El host canónico del Panel pertenece a la cabecera. No depende de wrappers locales. */
+.nav-global__usuario{position:relative;z-index:1000;display:flex;justify-content:flex-end;min-width:0}
+.nav-global__usuario>.panel-usuario{max-width:100%}
 
 /* Botón Volver contextual */
 .nav-global__volver{

@@ -1,23 +1,24 @@
 /**
  * Academia Gloria Valentina
- * Cabecera global de navegación · v2.4 estable
+ * Cabecera global de navegación · v3.3
  *
- * Estructura estable:
- * NAVEGACIÓN IZQUIERDA · PANTALLA ACTUAL · PANEL DEL ALUMNO
+ * Contrato visual:
+ * ACADEMIA + VOLVER · PANTALLA ACTUAL · PANEL DE USUARIO
  *
- * Pantallas sin retorno declarado:
- * ACADEMIA · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
- *
- * Pantallas con data-nav-back o retorno en el modelo central:
- * ACADEMIA + VOLVER · PANTALLA ACTUAL · MENÚ DESPLEGABLE.
- *
- * El panel del alumno permanece en la zona derecha y concentra la navegación.
+ * Principios de integración:
+ * - La cabecera es propietaria del único Panel de Usuario visible.
+ * - Nunca se mueve un Panel local heredado hacia la cabecera.
+ * - Los hosts locales heredados se desactivan sin tocar la lógica del módulo.
+ * - La limpieza de navegación heredada solo actúa sobre retornos globales.
+ * - Las acciones internas de cada módulo permanecen intactas.
  */
 
 import { UBICACIONES_ACADEMIA } from "../modelos/navegacion.js";
 import { iniciarPanelUsuario } from "../js/panel-usuario.js";
 
 const BASE_ACADEMIA = new URL("../../", import.meta.url);
+const SELECTOR_PANEL_PRINCIPAL = "#nav-panel-usuario";
+const CLAVE_PROMESA_CABECERA = "__academiaNavegacionGlobalPromise";
 
 function urlAcademia(ruta = "") {
   return new URL(ruta, BASE_ACADEMIA).href;
@@ -42,7 +43,7 @@ function rutaRelativaActual() {
 }
 
 function buscarNodo(arbol, rutaActual) {
-  for (const nodo of arbol) {
+  for (const nodo of arbol || []) {
     if (nodo.ruta && rutaNormalizada(nodo.ruta) === rutaActual) {
       return nodo;
     }
@@ -74,7 +75,9 @@ function iconoPantalla(actual) {
 }
 
 function rutaAlternativaVolver(actual) {
-  const declaradaEnPagina = String(document.body?.dataset?.navBack || "").trim();
+  const declaradaEnPagina = String(
+    document.body?.dataset?.navBack || ""
+  ).trim();
 
   if (declaradaEnPagina) {
     return declaradaEnPagina;
@@ -85,6 +88,15 @@ function rutaAlternativaVolver(actual) {
   }
 
   return "";
+}
+
+function escaparHTML(valor = "") {
+  return String(valor)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function htmlMarcaAcademia() {
@@ -146,7 +158,7 @@ function configurarVolverContextual(cabecera, actual) {
     return;
   }
 
-  // Fallback defensivo si una página carga la cabecera sin navegación.js.
+  // Fallback defensivo si una pantalla carga únicamente el componente.
   try {
     boton.href = new URL(rutaAlternativa, window.location.href).href;
   } catch {
@@ -154,36 +166,101 @@ function configurarVolverContextual(cabecera, actual) {
   }
 }
 
-function escaparHTML(valor = "") {
-  return String(valor)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+function buscarHojaEstilo(nombreArchivo) {
+  return [...document.querySelectorAll('link[rel~="stylesheet"]')]
+    .find((link) => {
+      try {
+        return new URL(link.href, document.baseURI).pathname
+          .endsWith(`/compartido/css/${nombreArchivo}`);
+      } catch {
+        return false;
+      }
+    }) || null;
 }
 
-function asegurarEstilosCabecera() {
-  const existe = [...document.querySelectorAll('link[rel="stylesheet"]')]
-    .some(link => String(link.href || "").includes("/compartido/css/navegacion-global.css"));
+function esperarHojaEstilo(link) {
+  if (link.sheet) return Promise.resolve(link);
 
-  if (existe) return;
+  return new Promise((resolve, reject) => {
+    const limpiar = () => {
+      link.removeEventListener("load", cargada);
+      link.removeEventListener("error", error);
+    };
 
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = new URL("../css/navegacion-global.css?v=6", import.meta.url).href;
-  document.head.append(link);
+    const cargada = () => {
+      limpiar();
+      resolve(link);
+    };
+
+    const error = () => {
+      limpiar();
+      reject(new Error(`No se pudo cargar ${link.href}`));
+    };
+
+    link.addEventListener("load", cargada, { once: true });
+    link.addEventListener("error", error, { once: true });
+  });
+}
+
+function urlHojaEstilo(nombreArchivo, version) {
+  return new URL(
+    `../css/${nombreArchivo}?v=${encodeURIComponent(version)}`,
+    import.meta.url
+  ).href;
+}
+
+async function asegurarHojaEstilo(nombreArchivo, version) {
+  const hrefObjetivo = urlHojaEstilo(nombreArchivo, version);
+  const existente = buscarHojaEstilo(nombreArchivo);
+
+  if (existente && existente.href === hrefObjetivo) {
+    await esperarHojaEstilo(existente);
+    return existente;
+  }
+
+  /*
+   * Si la página enlaza una versión antigua, cargamos primero la versión
+   * canónica y solo después retiramos la anterior. Así evitamos parpadeos y
+   * no dependemos del estado de caché de cada HTML heredado.
+   */
+  const nuevo = document.createElement("link");
+  nuevo.rel = "stylesheet";
+  nuevo.href = hrefObjetivo;
+
+  const carga = esperarHojaEstilo(nuevo);
+  document.head.append(nuevo);
+  await carga;
+
+  if (existente?.isConnected) {
+    existente.remove();
+  }
+
+  return nuevo;
+}
+
+async function asegurarEstilosCompartidos() {
+  await Promise.all([
+    asegurarHojaEstilo("navegacion-global.css", "7"),
+    asegurarHojaEstilo("panel-usuario.css", "2")
+  ]);
 }
 
 function asegurarFaviconOficial() {
   const href = urlAcademia("assets/iconos/icono-principal.png");
   const definiciones = [
     { rel: "icon", selector: 'link[rel="icon"]', type: "image/png" },
-    { rel: "shortcut icon", selector: 'link[rel="shortcut icon"]', type: "image/png" },
-    { rel: "apple-touch-icon", selector: 'link[rel="apple-touch-icon"]' }
+    {
+      rel: "shortcut icon",
+      selector: 'link[rel="shortcut icon"]',
+      type: "image/png"
+    },
+    {
+      rel: "apple-touch-icon",
+      selector: 'link[rel="apple-touch-icon"]'
+    }
   ];
 
-  definiciones.forEach(definicion => {
+  definiciones.forEach((definicion) => {
     let link = document.head.querySelector(definicion.selector);
 
     if (!link) {
@@ -213,6 +290,33 @@ function destinoNormalizado(valor) {
   }
 }
 
+function primerBloqueVisible(main) {
+  return [...(main?.children || [])]
+    .find((elemento) => !elemento.hidden) || null;
+}
+
+function esRetornoGlobalLegado(elemento) {
+  if (!elemento || elemento.closest(".nav-global")) return false;
+
+  if (
+    elemento.closest(
+      ".topbar, .barra-superior-universo, .barra-superior-camino, " +
+      ".module-backbar, .guide-topbar"
+    )
+  ) {
+    return true;
+  }
+
+  const main = elemento.closest("main");
+  if (!main) return false;
+
+  const primero = primerBloqueVisible(main);
+  if (primero?.contains(elemento)) return true;
+
+  const cabecera = elemento.closest("header");
+  return Boolean(cabecera && main.contains(cabecera));
+}
+
 function limpiarNavegacionLegada(actual) {
   const padres = new Set();
 
@@ -222,14 +326,16 @@ function limpiarNavegacionLegada(actual) {
 
   const retornoGlobal = destinoNormalizado(rutaAlternativaVolver(actual));
 
-  document.querySelectorAll("[data-volver-modulo]").forEach(elemento => {
-    if (elemento.closest(".nav-global")) return;
-    if (elemento.parentElement) padres.add(elemento.parentElement);
-    elemento.remove();
-  });
+  document
+    .querySelectorAll("[data-volver-modulo], [data-accion-volver]")
+    .forEach((elemento) => {
+      if (!esRetornoGlobalLegado(elemento)) return;
+      if (elemento.parentElement) padres.add(elemento.parentElement);
+      elemento.remove();
+    });
 
-  document.querySelectorAll("a").forEach(enlace => {
-    if (enlace.closest(".nav-global")) return;
+  document.querySelectorAll("a").forEach((enlace) => {
+    if (!esRetornoGlobalLegado(enlace)) return;
 
     const texto = String(enlace.textContent || "").trim().toLowerCase();
     const destino = destinoNormalizado(enlace.getAttribute("href"));
@@ -244,8 +350,23 @@ function limpiarNavegacionLegada(actual) {
     }
   });
 
-  document.querySelectorAll('[aria-label="Sección actual"]').forEach(elemento => {
-    if (elemento.closest(".nav-global")) return;
+  /*
+   * Algunas pantallas históricas usan un <button> Volver con lógica propia
+   * en lugar de un enlace o atributo declarativo. Solo se retira cuando está
+   * inequívocamente dentro de la zona superior de navegación heredada.
+   */
+  document.querySelectorAll("button").forEach((boton) => {
+    if (!esRetornoGlobalLegado(boton)) return;
+
+    const texto = String(boton.textContent || "").trim().toLowerCase();
+    if (!texto.includes("volver")) return;
+
+    if (boton.parentElement) padres.add(boton.parentElement);
+    boton.remove();
+  });
+
+  document.querySelectorAll('[aria-label="Sección actual"]').forEach((elemento) => {
+    if (!esRetornoGlobalLegado(elemento)) return;
     if (elemento.parentElement) padres.add(elemento.parentElement);
     elemento.remove();
   });
@@ -253,19 +374,38 @@ function limpiarNavegacionLegada(actual) {
   return padres;
 }
 
+function desactivarPanelesLocales(cabecera) {
+  document.querySelectorAll("[data-panel-usuario]").forEach((contenedor) => {
+    if (cabecera.contains(contenedor)) return;
+
+    contenedor.removeAttribute("data-panel-usuario");
+    contenedor.setAttribute("data-panel-usuario-legado", "inactivo");
+    contenedor.replaceChildren();
+    contenedor.hidden = true;
+  });
+}
+
+function hijosActivos(contenedor) {
+  return [...(contenedor?.children || [])].filter((hijo) => {
+    if (hijo.hidden) return false;
+    if (hijo.hasAttribute("data-panel-usuario-legado")) return false;
+    return true;
+  });
+}
+
 function normalizarContenedoresLegados(padres) {
-  padres.forEach(padre => {
+  padres.forEach((padre) => {
     if (!padre?.isConnected) return;
 
-    const hijos = [...padre.children];
+    const hijos = hijosActivos(padre);
 
     if (!hijos.length) {
       padre.remove();
       return;
     }
 
-    // Si solo queda una acción propia del módulo, la conservamos como acción
-    // local alineada a la derecha, separada de la navegación global.
+    // Si solo queda una acción propia del módulo, permanece visible y
+    // separada de la navegación global (por ejemplo, Gestión de Misiones).
     if (hijos.length === 1) {
       padre.style.display = "flex";
       padre.style.justifyContent = "flex-end";
@@ -277,39 +417,31 @@ function normalizarContenedoresLegados(padres) {
   });
 }
 
-async function trasladarPanelUsuario(cabecera) {
-  const destino = cabecera.querySelector("[data-nav-panel-usuario]");
+async function iniciarPanelCanonico(cabecera) {
+  const destino = cabecera.querySelector(SELECTOR_PANEL_PRINCIPAL);
   if (!destino) return;
-
-  destino.id = "nav-panel-usuario";
-
-  const candidatos = [...document.querySelectorAll("[data-panel-usuario]")];
-  const origen = candidatos.find(elemento => !destino.contains(elemento));
-
-  if (origen) {
-    destino.replaceChildren(origen);
-    origen.classList.add("panel-usuario--en-cabecera");
-    return;
-  }
-
-  // Las páginas que todavía no declaraban un Panel de Usuario reciben aquí
-  // el mismo menú unificado, sin tener que repetir inicialización en cada HTML.
-  destino.setAttribute("data-panel-usuario", "");
-  destino.classList.add("panel-usuario--en-cabecera");
 
   try {
     await iniciarPanelUsuario({
-      contenedor: "#nav-panel-usuario"
+      contenedor: SELECTOR_PANEL_PRINCIPAL
     });
   } catch (error) {
-    console.error("No se pudo iniciar el menú unificado del alumno.", error);
+    // La cabecera permanece funcional aunque el perfil no pueda cargarse.
+    console.error("No se pudo iniciar el Panel de Usuario global.", error);
   }
 }
 
 async function crearCabecera() {
   if (document.querySelector(".nav-global")) return;
 
-  asegurarEstilosCabecera();
+  try {
+    await asegurarEstilosCompartidos();
+  } catch (error) {
+    // No renderizamos una cabecera parcialmente estilizada.
+    console.error("No se pudieron cargar los estilos de navegación.", error);
+    return;
+  }
+
   asegurarFaviconOficial();
 
   const rutaActual = rutaRelativaActual();
@@ -328,23 +460,52 @@ async function crearCabecera() {
         <span>${escaparHTML(tituloPantalla(actual))}</span>
       </div>
 
-      <div class="nav-global__usuario" data-nav-panel-usuario aria-label="Menú del alumno"></div>
+      <div id="nav-panel-usuario"
+           class="nav-global__usuario"
+           data-panel-usuario-principal
+           aria-label="Menú del alumno"></div>
     </div>
   `;
 
+  // Los hosts heredados se desactivan antes de iniciar el único Panel visible.
+  desactivarPanelesLocales(cabecera);
   document.body.prepend(cabecera);
   configurarVolverContextual(cabecera, actual);
 
   const padresLegados = limpiarNavegacionLegada(actual);
-  await trasladarPanelUsuario(cabecera);
   normalizarContenedoresLegados(padresLegados);
+  await iniciarPanelCanonico(cabecera);
+}
+
+function solicitarCreacionCabecera() {
+  if (document.querySelector(".nav-global")) {
+    return Promise.resolve();
+  }
+
+  if (window[CLAVE_PROMESA_CABECERA]) {
+    return window[CLAVE_PROMESA_CABECERA];
+  }
+
+  const tarea = crearCabecera();
+
+  window[CLAVE_PROMESA_CABECERA] = tarea.finally(() => {
+    if (!document.querySelector(".nav-global")) {
+      window[CLAVE_PROMESA_CABECERA] = null;
+    }
+  });
+
+  return window[CLAVE_PROMESA_CABECERA];
 }
 
 function iniciarNavegacionGlobal() {
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", crearCabecera, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      solicitarCreacionCabecera,
+      { once: true }
+    );
   } else {
-    crearCabecera();
+    solicitarCreacionCabecera();
   }
 }
 

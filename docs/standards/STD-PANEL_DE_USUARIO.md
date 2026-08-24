@@ -1,11 +1,18 @@
 # STD-006 – PANEL DE USUARIO
-## Versión 1.0
+## Versión 1.1
 
 **Proyecto:** Academia Gloria
 **Ubicación:** `docs/standards/`
 **Estado:** Aprobado
-**Versión:** 1.0
+**Versión:** 1.1
 **Fecha:** Agosto 2026
+
+## Historial de versiones
+
+| Versión | Fecha | Cambio |
+|---|---:|---|
+| 1.1 | 24/08/2026 | Formaliza la integración del Panel con la cabecera global: host canónico único, neutralización compatible de hosts heredados, mismo CSS/JS/menú en todas las pantallas y reinicialización segura. Registra como deuda separada la discrepancia preexistente entre la arquitectura prevista de acceso a datos y las lecturas directas actuales de Firestore para Personas relacionadas. |
+| 1.0 | Agosto 2026 | Primera versión aprobada del estándar transversal del Panel de Usuario. |
 
 ---
 
@@ -69,6 +76,8 @@ Entre ellos:
 - Cualquier módulo futuro.
 
 La posición deberá ser siempre la misma para favorecer el aprendizaje visual y la familiaridad.
+
+**Decisión vigente desde v1.1:** en las pantallas que utilizan la cabecera global, esa posición pertenece al host canónico creado por `compartido/componentes/navegacion-global.js`. Un módulo no debe crear una segunda ubicación visible ni trasladar hacia la cabecera una instancia local del Panel.
 
 ---
 
@@ -172,6 +181,14 @@ Firebase Authentication
 
 Cloud Firestore
 
+### Estado de implementación observado en v1.1
+
+**HECHO:** la implementación actual de `panel-usuario.js` todavía realiza lecturas directas de Firestore para resolver Personas relacionadas y la Persona Activa.
+
+**DEUDA ARQUITECTÓNICA:** esa situación no cumple todavía completamente la arquitectura prevista en esta sección. La corrección pertenece a una evolución específica de la capa de datos/servicios y **no forma parte del ajuste de cabecera y navegación de v1.1**.
+
+Esta deuda no autoriza a duplicar dichas consultas en los módulos. El Panel compartido sigue siendo el único lugar actual donde existe ese comportamiento.
+
 ---
 
 # 8. Datos utilizados
@@ -219,6 +236,8 @@ Responsable de:
 - Abrir y cerrar el menú.
 - Ejecutar el cierre de sesión.
 - Redirigir al Login cuando sea necesario.
+- Garantizar que las reinicializaciones del componente sean seguras y no acumulen listeners globales.
+- Tratar una inicialización dirigida a un host heredado inexistente como un no-op, sin desmontar la instancia canónica activa.
 
 ## perfil-usuario.js
 
@@ -232,21 +251,44 @@ Responsable de:
 - Obtener las preferencias del usuario.
 - Gestionar futuras ampliaciones del perfil.
 
+## navegacion-global.js
+
+Cuando una pantalla adopta la cabecera global, es responsable de:
+
+- Crear el host canónico del Panel.
+- Garantizar la carga del CSS compartido del Panel antes de presentar la cabecera.
+- Neutralizar hosts locales heredados sin moverlos ni reutilizarlos.
+- Iniciar una única instancia visible del Panel en la zona derecha de la cabecera.
+
 ---
 
 # 10. Integración
 
 Todos los módulos privados deberán utilizar exactamente el mismo componente.
 
-Cada página únicamente deberá importar:
+Los recursos compartidos son:
 
+```text
 compartido/css/panel-usuario.css
-
 compartido/js/panel-usuario.js
+```
+
+En pantallas con cabecera global, la integración del Panel debe realizarse a través de:
+
+```text
+compartido/componentes/navegacion-global.js
+```
 
 Nunca se duplicará el código del Panel.
 
-Toda mejora deberá realizarse únicamente en estos componentes compartidos.
+Toda mejora deberá realizarse únicamente en los componentes compartidos correspondientes.
+
+Una página heredada puede conservar temporalmente en su HTML un antiguo host `[data-panel-usuario]` mientras se completa la migración, pero ese host:
+
+- no puede permanecer visible junto al Panel canónico;
+- no puede alterar la apariencia del Panel canónico;
+- no debe trasladarse físicamente hacia la cabecera;
+- debe quedar neutralizado por el componente global antes de iniciar el Panel canónico.
 
 ---
 
@@ -287,6 +329,12 @@ El Panel deberá cumplir siempre las siguientes normas:
 ✔ Mismo menú.
 
 ✔ Misma ubicación.
+
+✔ Un único Panel visible por pantalla.
+
+✔ El estado cerrado y el menú abierto conservan la misma identidad visual independientemente del módulo.
+
+✔ Los estilos locales de Biblioteca, Escritura, Matemáticas, Lectura u otros módulos no pueden modificar el Panel canónico.
 
 El usuario nunca deberá preguntarse dónde encontrar su perfil o cómo cerrar la sesión.
 
@@ -347,6 +395,24 @@ Desde él será posible acceder a:
 🔔 Notificaciones
 
 sin alterar la simplicidad que caracteriza a la Academia.
+
+---
+
+# 16. Contrato de integración con la cabecera global
+
+Para una pantalla que adopta la cabecera global se considera correcta la integración cuando:
+
+1. existe exactamente un Panel de Usuario visible;
+2. ese Panel está renderizado en el host canónico de la cabecera;
+3. no existe un segundo host local activo;
+4. el botón cerrado conserva el diseño oficial;
+5. al abrir el menú conserva el mismo CSS, anchura, jerarquía y opciones compartidas;
+6. el menú puede cerrarse por clic exterior, `Escape`, scroll y resize sin acumular listeners por reinicializaciones;
+7. una inicialización heredada posterior no sustituye ni desmonta el Panel canónico;
+8. el Panel no depende de wrappers, grid, estilos o layout propios del módulo;
+9. el comportamiento es equivalente en escritorio y móvil dentro de las reglas responsive compartidas.
+
+Estas reglas son parte del criterio de aceptación transversal de navegación y deben verificarse antes de declarar cerrada una migración de cabecera.
 
 ---
 
