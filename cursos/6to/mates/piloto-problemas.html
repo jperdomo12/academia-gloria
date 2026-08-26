@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#172554">
+  <meta name="theme-color" content="#596637">
   <title>Entender antes de calcular | Matemáticas 6.º</title>
   <meta
     name="description"
-    content="Piloto SIGNATURE de 6.º para comprender, practicar, comprobar y transferir estrategias de resolución de problemas."
+    content="Piloto SIGNATURE de 6.º para aprender una estrategia de resolución con un problema ancla y transferirla después a situaciones nuevas."
   >
 
   <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
@@ -35,15 +35,15 @@
       <div class="hero-main">
         <div class="chips">
           <span class="chip">🎓 Matemáticas · 6.º</span>
-          <span class="chip">✨ Piloto SIGNATURE</span>
+          <span class="chip">✨ SIGNATURE</span>
           <span class="chip">🧠 Pensar antes de calcular</span>
         </div>
 
-        <p class="eyebrow">Tu estrategia para problemas matemáticos</p>
+        <p class="eyebrow">Tu brújula para problemas matemáticos</p>
         <h1>Entender antes<br>de calcular</h1>
         <p class="hero-lead">
-          Un problema no empieza con una cuenta. Empieza entendiendo qué ocurre,
-          qué te preguntan y cómo se relacionan las cantidades.
+          Primero aprendemos una forma de pensar con una sola historia.
+          Después comprobamos si esa estrategia sigue funcionando cuando el problema cambia.
         </p>
 
         <div class="lia-note" id="liaWelcome">
@@ -53,7 +53,7 @@
 
       <aside class="hero-side" aria-live="polite">
         <div id="modeIcon" class="mode-icon">⏳</div>
-        <p class="eyebrow" style="color:#c7d2fe;margin-top:8px">Modo de esta sesión</p>
+        <p class="eyebrow mode-eyebrow">Modo de esta sesión</p>
         <h2 id="modeTitle">Preparando...</h2>
         <p id="modeDescription">
           Estamos comprobando el contexto de la Persona Activa.
@@ -65,43 +65,59 @@
     </header>
 
     <nav class="route" aria-label="Ruta de aprendizaje">
-      <div class="route-step current" data-route="comprender">
-        <strong>01</strong><span>Comprender</span>
+      <div class="route-step current" data-route="aprender">
+        <strong>01</strong><span>Aprender</span>
       </div>
-      <div class="route-step" data-route="practicar">
-        <strong>02</strong><span>Practicar</span>
+      <div class="route-step" data-route="comprender">
+        <strong>02</strong><span>Comprender</span>
+      </div>
+      <div class="route-step" data-route="relacionar">
+        <strong>03</strong><span>Relacionar</span>
       </div>
       <div class="route-step" data-route="comprobar">
-        <strong>03</strong><span>Comprobar</span>
+        <strong>04</strong><span>Comprobar</span>
       </div>
       <div class="route-step" data-route="transferir">
-        <strong>04</strong><span>Transferir</span>
+        <strong>05</strong><span>Transferir</span>
       </div>
     </nav>
 
     <section id="introPanel" class="panel intro-panel">
       <div class="intro-grid">
         <div>
-          <p class="eyebrow" style="color:#4f46e5">Objetivo de hoy</p>
-          <h2>Encontrar la estrategia antes de tocar los números.</h2>
+          <p class="eyebrow accent-violet">Objetivo de hoy</p>
+          <h2>Aprender una brújula y después llevarla a historias nuevas.</h2>
           <p>
-            Primero veremos una forma de pensar. Después practicarás con problemas
-            que cambian de historia y de números. El último reto será nuevo: ahí
-            comprobaremos si la estrategia viaja contigo.
+            La primera explicación usa un solo problema de principio a fin.
+            Después practicarás cada parte de la estrategia con un ejercicio distinto.
+            El cierre será un problema nuevo que resolverás con la brújula completa.
           </p>
-          <button id="startButton" class="primary-button" type="button" disabled>
-            🚀 Empezar mi reto
-          </button>
+          <div class="intro-actions">
+            <button id="startButton" class="primary-button" type="button" disabled>
+              🌿 Empezar mi reto
+            </button>
+            <a
+              class="tool-link"
+              href="../../../herramientas/matematicas/sentido-operaciones/"
+              data-conservar-retorno
+            >
+              🧰 Recordar qué significa cada operación
+            </a>
+          </div>
         </div>
 
         <aside class="strategy-card">
-          <h3>🧭 Tu brújula de 4 preguntas</h3>
+          <p class="eyebrow accent-olive">La brújula</p>
+          <h3>🧭 Primero la historia, después la cuenta</h3>
           <div class="strategy-list">
             <div class="strategy-item"><b>1</b><span>¿Qué sé?</span></div>
             <div class="strategy-item"><b>2</b><span>¿Qué me piden?</span></div>
             <div class="strategy-item"><b>3</b><span>¿Cómo se relacionan las cantidades?</span></div>
-            <div class="strategy-item"><b>4</b><span>¿Mi respuesta tiene sentido?</span></div>
+            <div class="strategy-item"><b>4</b><span>Elijo, calculo y compruebo si tiene sentido.</span></div>
           </div>
+          <p class="strategy-note">
+            Las palabras pueden dar pistas. La historia decide la operación.
+          </p>
         </aside>
       </div>
     </section>
@@ -109,8 +125,8 @@
     <section id="stagePanel" class="panel hidden" aria-live="polite">
       <div class="stage-head">
         <div>
-          <p id="stageKicker" class="eyebrow stage-kicker">Comprender</p>
-          <h2 id="stageTitle">La ruta de cuatro preguntas</h2>
+          <p id="stageKicker" class="eyebrow stage-kicker">Aprender</p>
+          <h2 id="stageTitle">Un problema. Toda la estrategia.</h2>
           <p id="stageLead" class="stage-lead"></p>
         </div>
         <div id="stageSymbol" class="stage-symbol">🧭</div>
@@ -129,11 +145,20 @@
 
     <section id="summaryPanel" class="panel summary hidden" aria-live="polite">
       <div class="summary-icon">🌟</div>
-      <p class="eyebrow" style="color:#7c3aed">Tu cierre de hoy</p>
-      <h2>Has entrenado una estrategia, no una respuesta.</h2>
+      <p class="eyebrow accent-violet">Tu cierre de hoy</p>
+      <h2>La historia cambió. Tu estrategia viajó contigo.</h2>
       <p id="summaryLead" class="summary-lead"></p>
 
       <div id="summaryBadges" class="summary-badges"></div>
+
+      <section id="personalRecord" class="personal-record hidden" aria-label="Progreso personal">
+        <div class="record-icon" aria-hidden="true">🌿</div>
+        <div>
+          <h3 id="personalRecordTitle">Tu referencia personal</h3>
+          <p id="personalRecordText"></p>
+          <p id="personalRecordLia" class="record-lia"></p>
+        </div>
+      </section>
 
       <div class="summary-grid">
         <article class="summary-card good">
@@ -152,7 +177,7 @@
 
       <div id="saveStatus" class="save-status"></div>
 
-      <div class="stage-actions" style="justify-content:center">
+      <div class="stage-actions summary-actions">
         <button id="restartButton" class="secondary-button" type="button">
           🔄 Probar otra variante
         </button>
@@ -167,7 +192,7 @@
     </section>
 
     <div class="footer-note">
-      Piloto SIGNATURE v0.3 · Comprensión → práctica → comprobación → transferencia ·
+      Piloto SIGNATURE v0.4 · problema ancla → afianzar por etapas → transferencia ·
       Vista previa nunca genera evidencia.
     </div>
   </main>
