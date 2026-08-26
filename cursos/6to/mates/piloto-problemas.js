@@ -489,20 +489,27 @@ function respuestaPersistible(pregunta) {
     Math.round((Date.now() - pregunta.iniciadaEn) / 1000)
   );
 
+  const esTransferencia = pregunta.clave === "transferir";
+  const correctaPrimerIntento = esTransferencia
+    ? pregunta.correcta &&
+      pregunta.intentosOperacion === 1 &&
+      pregunta.intentosResultado === 1
+    : pregunta.correcta && pregunta.intentos === 1;
+
   return {
     preguntaId: pregunta.clave,
     familiaId: pregunta.variante.familiaId,
     conceptoId: pregunta.variante.conceptoId,
     varianteId: pregunta.variante.id,
     fase: pregunta.fase,
-    formato: pregunta.clave === "transferir" ? "seleccion_y_respuesta" : "seleccion",
+    formato: esTransferencia ? "seleccion_y_respuesta" : "seleccion",
     respuesta: pregunta.respuesta,
     correcta: pregunta.correcta,
     intentos: pregunta.intentos,
     pistasUsadas: pregunta.pistas.size,
-    correctaPrimerIntento: pregunta.correcta && pregunta.intentos === 1,
+    correctaPrimerIntento,
     resolucionAutonoma:
-      pregunta.correcta && pregunta.intentos === 1 && pregunta.pistas.size === 0,
+      correctaPrimerIntento && pregunta.pistas.size === 0,
     tiempoSegundos
   };
 }
@@ -594,6 +601,7 @@ function renderPracticaA() {
 
   $$("[data-hint]").forEach(boton => {
     boton.addEventListener("click", () => {
+      if (pregunta.correcta) return;
       const indice = Number(boton.dataset.hint) - 1;
       const objetivo = $(`#practice-hint-${indice + 1}`);
       if (!objetivo || !variante.pistas[indice]) return;
@@ -712,7 +720,7 @@ function renderTransferencia() {
     opciones.appendChild(boton);
   });
 
-  comprobarResultado?.addEventListener("click", () => {
+  const verificarResultado = () => {
     if (!pregunta.operacionCorrecta || pregunta.correcta) return;
 
     pregunta.intentos += 1;
@@ -722,8 +730,9 @@ function renderTransferencia() {
     if (Number.isFinite(valor) && valor === variante.respuestaNumerica) {
       pregunta.correcta = true;
       pregunta.respuesta = `${variante.correcta} | ${valor}`;
-      entrada.disabled = true;
-      comprobarResultado.disabled = true;
+      if (entrada) entrada.disabled = true;
+      if (comprobarResultado) comprobarResultado.disabled = true;
+      if (apoyo) apoyo.hidden = true;
       feedback(
         cajaFeedback,
         "positive",
@@ -741,9 +750,18 @@ function renderTransferencia() {
         apoyo.hidden = false;
       }
     }
+  };
+
+  comprobarResultado?.addEventListener("click", verificarResultado);
+  entrada?.addEventListener("keydown", evento => {
+    if (evento.key === "Enter") {
+      evento.preventDefault();
+      verificarResultado();
+    }
   });
 
   apoyo?.addEventListener("click", () => {
+    if (pregunta.correcta) return;
     pregunta.pistas.add(1);
     feedback(
       cajaFeedback,
