@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172554">
   <title>Entender antes de calcular | Matemáticas 6.º</title>
-  <meta name="description" content="Piloto de 6.º sobre comprensión y resolución de problemas matemáticos.">
-  <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <meta name="description" content="Piloto SIGNATURE de 6.º sobre comprensión y resolución de problemas matemáticos.">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
   <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+
   <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
   <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
-  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=5">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     :root{
-      --ink:#0f172a;
+      --ink:#172033;
       --muted:#64748b;
-      --line:#dbe4ef;
+      --line:#dbe5f1;
+      --navy:#172554;
       --blue:#2563eb;
       --blue-soft:#eff6ff;
       --teal:#0f766e;
@@ -27,257 +33,450 @@
       --amber-soft:#fffbeb;
       --green:#15803d;
       --green-soft:#f0fdf4;
-      --red:#b91c1c;
-      --red-soft:#fef2f2;
+      --violet:#6d28d9;
+      --violet-soft:#f5f3ff;
+      --rose:#be123c;
+      --rose-soft:#fff1f2;
     }
+
     *{box-sizing:border-box}
-    body{font-family:'Outfit',sans-serif;color:var(--ink);background:#f8fafc}
-    .shell{max-width:1040px;margin:0 auto;padding:24px}
-    .panel{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 28px rgba(15,23,42,.05)}
-    .topic-head{background:#172554;color:#fff;border-radius:24px;padding:30px;box-shadow:0 18px 44px rgba(23,37,84,.15)}
-    .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
-    .route{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-    .route-item{padding:12px;border-radius:12px;background:#fff;border:1px solid #dbe4ef}
-    .route-item strong{display:block;font-size:.75rem;letter-spacing:.06em;color:#475569}
-    .route-item span{display:block;margin-top:3px;font-weight:800}
-    .section-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .section-number{width:36px;height:36px;border-radius:12px;background:#172554;color:white;display:grid;place-items:center;font-weight:800}
-    .problem{background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:18px;font-size:1.08rem;line-height:1.75}
-    .choice{
-      width:100%;text-align:left;background:#fff;border:1.5px solid #cbd5e1;border-radius:14px;
-      padding:14px 15px;font-weight:700;transition:.15s ease;
+
+    body{
+      margin:0;
+      font-family:'Outfit',sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%,rgba(37,99,235,.10),transparent 24%),
+        radial-gradient(circle at 88% 16%,rgba(124,58,237,.09),transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#ffffff 50%,#f8fafc 100%);
     }
-    .choice:hover{border-color:#60a5fa;transform:translateY(-1px)}
-    .choice.ok{background:var(--green-soft);border-color:#22c55e;color:#166534}
-    .choice.bad{background:var(--red-soft);border-color:#ef4444;color:#991b1b}
-    .feedback{display:none;margin-top:12px;padding:14px 15px;border-radius:14px;background:var(--blue-soft);border:1px solid #bfdbfe;color:#1e3a8a}
+
+    button,input{font:inherit}
+    button{touch-action:manipulation}
+
+    .shell{max-width:1120px;margin:0 auto;padding:22px 24px 48px}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      color:white;
+      background:
+        radial-gradient(circle at 92% 16%,rgba(96,165,250,.22),transparent 22%),
+        linear-gradient(135deg,#172554 0%,#1e3a8a 52%,#312e81 100%);
+      border-radius:28px;
+      padding:32px;
+      box-shadow:0 24px 55px rgba(23,37,84,.18);
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:330px;
+      height:330px;
+      right:-165px;
+      bottom:-210px;
+      border:44px solid rgba(255,255,255,.06);
+      border-radius:50%;
+    }
+
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 285px;gap:28px;align-items:end}
+    .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:900}
+    .hero h1{font-size:clamp(2.35rem,5vw,4.5rem);line-height:1.02;letter-spacing:-.04em;font-weight:900;margin:.35rem 0 1rem}
+    .hero p{font-size:1.08rem;line-height:1.7;color:#dbeafe;max-width:760px}
+
+    .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);border-radius:999px;font-size:.82rem;font-weight:800;color:#e0e7ff}
+    .hero-side{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);backdrop-filter:blur(8px);border-radius:20px;padding:18px}
+    .hero-side strong{display:block;font-size:1.08rem;margin-bottom:6px}
+    .hero-side span{display:block;color:#cbd5e1;line-height:1.5;font-size:.93rem}
+
+    .mode-card,.stage-card{
+      background:rgba(255,255,255,.97);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:0 14px 34px rgba(15,23,42,.055);
+    }
+
+    .mode-card{padding:18px;margin:18px 0}
+    .mode-card.locked{opacity:.9}
+    .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .mode-btn{border:2px solid #dbe4ef;background:#fff;border-radius:16px;padding:14px;text-align:left;transition:.18s ease;min-height:92px}
+    .mode-btn:hover:not(:disabled){transform:translateY(-1px);border-color:#93c5fd}
+    .mode-btn.selected{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 4px rgba(37,99,235,.08)}
+    .mode-btn:disabled{cursor:not-allowed;opacity:.48}
+    .mode-btn strong{display:block;font-weight:900;margin-bottom:4px}
+    .mode-btn span{display:block;color:#64748b;font-size:.9rem;line-height:1.4}
+    #mode-status{margin-top:12px;border-radius:13px;padding:11px 13px;background:#f8fafc;border:1px solid #e2e8f0;color:#475569;font-size:.91rem;line-height:1.5}
+
+    .route-wrap{position:sticky;top:8px;z-index:18;margin:0 0 18px;background:rgba(248,250,252,.88);backdrop-filter:blur(12px);border:1px solid rgba(203,213,225,.7);border-radius:18px;padding:11px 12px;box-shadow:0 8px 22px rgba(15,23,42,.045)}
+    .route-bar{height:5px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-bottom:10px}
+    .route-fill{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#7c3aed,#0f766e);transition:width .35s ease}
+    .route{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+    .route-item{display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 5px;border-radius:10px;color:#94a3b8;font-size:.73rem;font-weight:900;text-align:center;white-space:nowrap}
+    .route-item .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex:0 0 8px}
+    .route-item.current{background:#eef2ff;color:#3730a3}
+    .route-item.current .dot{background:#4f46e5;box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+    .route-item.done{color:#047857}
+    .route-item.done .dot{background:#10b981}
+
+    [data-stage][hidden]{display:none!important}
+    [data-stage].active{animation:stageIn .28s ease both}
+    @keyframes stageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .stage-card{padding:26px}
+    .stage-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+    .stage-number{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:#172554;color:white;font-weight:900;font-size:1.05rem;flex:0 0 46px;box-shadow:0 8px 18px rgba(23,37,84,.13)}
+    .stage-head h2{font-size:clamp(1.65rem,3vw,2.3rem);font-weight:900;letter-spacing:-.025em;margin:2px 0 4px}
+    .stage-head p{color:#64748b;line-height:1.55}
+
+    .welcome-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+    .promise{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #dbeafe;border-radius:20px;padding:20px}
+    .promise h3{font-size:1.35rem;font-weight:900;margin-bottom:9px}
+    .promise p{color:#475569;line-height:1.65}
+    .lia-card{background:#fffaf0;border:1px solid #fde7ba;border-radius:20px;padding:20px}
+    .lia-card .lia-name{font-weight:900;color:#92400e;margin-bottom:8px}
+    .lia-card p{color:#78350f;line-height:1.6}
+
+    .four-questions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+    .keyline{border-left:4px solid #93c5fd;background:#f8fafc;border-radius:0 15px 15px 0;padding:14px 15px}
+    .keyline strong{display:block;font-weight:900;margin-bottom:3px}
+    .keyline span{color:#64748b;line-height:1.45}
+
+    .problem{background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:18px;font-size:1.08rem;line-height:1.7;font-weight:600}
+    .guided-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    .guided{border:1px solid #dbe4ef;border-radius:15px;padding:14px;background:#fff}
+    .guided strong{font-weight:900;color:#1e3a8a}
+    .guided p{margin-top:4px;color:#64748b;line-height:1.5}
+
+    .practice-block{border:1px solid #e2e8f0;border-radius:20px;padding:18px;background:#fff}
+    .practice-block + .practice-block{margin-top:16px}
+    .practice-kicker{font-size:.74rem;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#64748b;margin-bottom:8px}
+    .question{font-size:1.04rem;font-weight:900;margin:14px 0 10px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .choice{width:100%;text-align:left;background:#fff;border:2px solid #cbd5e1;border-radius:14px;padding:13px 14px;font-weight:800;color:#334155;transition:.15s ease;min-height:56px}
+    .choice:hover:not(:disabled){border-color:#60a5fa;transform:translateY(-1px);box-shadow:0 8px 18px rgba(37,99,235,.06)}
+    .choice:disabled{cursor:default}
+    .choice.ok{background:#f0fdf4;border-color:#22c55e;color:#166534}
+    .choice.bad{background:#fff1f2;border-color:#fb7185;color:#9f1239}
+
+    .feedback{display:none;margin-top:12px;padding:12px 14px;border-radius:13px;line-height:1.55}
     .feedback.show{display:block}
-    .support-btn{background:#fff;border:1px solid #d5dde8;border-radius:12px;padding:10px 13px;font-weight:800;color:#475569}
-    .support-btn:hover{border-color:#f59e0b;color:#92400e}
-    .support{display:none;margin-top:10px;padding:13px 14px;border-radius:12px;background:var(--amber-soft);border:1px solid #fde68a;color:#78350f}
-    .support.open{display:block}
-    .keyline{border-left:4px solid #93c5fd;padding:14px 16px;background:#f8fafc;border-radius:0 14px 14px 0}
-    .dev-note{font-size:.82rem;color:#64748b}
-    @media(max-width:720px){
-      .shell{padding:16px}.topic-head{padding:24px 20px}.route{grid-template-columns:1fr 1fr}
+    .feedback.positive{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+    .feedback.gentle{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
+    .feedback.support{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}
+
+    .hint-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .hint-btn{border:1px solid #f4d38a;background:#fffbeb;color:#92400e;border-radius:12px;padding:9px 12px;font-weight:900}
+    .hint-text{margin-top:8px;border-radius:12px;padding:11px 13px;background:#fffbeb;border:1px solid #fde68a;color:#78350f;line-height:1.5}
+
+    .transfer-result{margin-top:16px;padding:16px;border:1px solid #c7d2fe;background:#eef2ff;border-radius:16px}
+    .answer-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+    .answer-input{width:170px;max-width:55%;border:2px solid #a5b4fc;border-radius:13px;padding:11px 13px;font-weight:900;outline:none;background:white}
+    .answer-input:focus{border-color:#4f46e5;box-shadow:0 0 0 4px rgba(79,70,229,.1)}
+
+    .actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+    .btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:12px 17px;font-weight:900;transition:.16s ease;min-height:48px}
+    .btn-primary{border:0;background:#1d4ed8;color:white;box-shadow:0 10px 22px rgba(37,99,235,.16)}
+    .btn-primary:hover:not(:disabled){background:#1e40af;transform:translateY(-1px)}
+    .btn-primary:disabled{opacity:.38;cursor:not-allowed;box-shadow:none}
+    .btn-secondary{border:1px solid #cbd5e1;background:white;color:#475569}
+    .btn-secondary:hover{border-color:#94a3b8;background:#f8fafc}
+
+    .summary-hero{background:linear-gradient(135deg,#ecfdf5,#eff6ff 55%,#f5f3ff);border:1px solid #d1fae5;border-radius:22px;padding:22px}
+    .summary-hero h2{font-size:clamp(2rem,4vw,3.4rem);font-weight:900;letter-spacing:-.035em;margin:4px 0 10px;color:#153e39}
+    .summary-hero p{color:#475569;line-height:1.65;max-width:800px}
+    .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+    .summary-stat{border:1px solid #dbe4ef;background:white;border-radius:16px;padding:15px;text-align:center}
+    .summary-stat strong{display:block;font-size:2rem;font-weight:900;color:#1e3a8a;line-height:1}
+    .summary-stat span{display:block;color:#64748b;font-size:.83rem;font-weight:800;margin-top:6px}
+    .observation-list{margin:12px 0 0;padding-left:20px;color:#475569;line-height:1.6}
+    .observation-list li + li{margin-top:7px}
+
+    .save-state{margin-top:16px;border-radius:14px;padding:13px 14px;line-height:1.5}
+    .save-state.preview{background:#f8fafc;border:1px solid #e2e8f0;color:#475569}
+    .save-state.saving{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
+    .save-state.saved{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+    .save-state.error{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239}
+
+    .principle-note{margin-top:14px;color:#64748b;font-size:.88rem;line-height:1.55}
+    #pilot-error{margin:16px 0;padding:14px;border-radius:14px;background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;font-weight:700}
+
+    @media(max-width:820px){
+      .hero-grid,.welcome-grid{grid-template-columns:1fr}
+      .hero-side{max-width:none}
+      .route{display:flex;overflow-x:auto;justify-content:flex-start;padding-bottom:2px}
+      .route-item{min-width:112px}
+      .route-wrap{top:5px}
+    }
+
+    @media(max-width:640px){
+      .shell{padding:14px 14px 36px}
+      .hero{padding:24px 20px;border-radius:22px}
+      .mode-grid,.four-questions,.guided-grid,.options,.summary-grid{grid-template-columns:1fr}
+      .stage-card{padding:19px}
+      .stage-head{gap:11px}
+      .stage-number{width:40px;height:40px;flex-basis:40px;border-radius:13px}
+      .answer-row{align-items:stretch;flex-wrap:wrap}
+      .answer-input{width:100%;max-width:none}
+      .actions .btn-primary,.actions .btn-secondary{width:100%}
     }
   </style>
 </head>
+
 <body data-page-title="Entender antes de calcular" data-page-icon="🧠" data-nav-back="./index.html">
   <main class="shell">
-    <header class="topic-head mb-5">
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span class="px-3 py-2 rounded-full bg-white/10 border border-white/10 text-blue-100 text-sm font-bold">Matemáticas · 6.º</span>
-        <span class="px-3 py-2 rounded-full bg-amber-400/10 border border-amber-300/20 text-amber-200 text-sm font-bold">Piloto académico</span>
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badges">
+            <span class="hero-badge">🎓 Matemáticas · 6.º</span>
+            <span class="hero-badge">✨ Piloto SIGNATURE</span>
+            <span class="hero-badge">🧠 Pensar antes de operar</span>
+          </div>
+          <p class="eyebrow text-blue-200">Problemas matemáticos</p>
+          <h1>Entender antes de calcular</h1>
+          <p>
+            Resolver un problema tiene dos trabajos: comprender lo que ocurre y elegir las matemáticas que lo representan. Vamos a separar ambos pasos para pensar con más claridad y necesitar cada vez menos ayuda.
+          </p>
+        </div>
+        <aside class="hero-side">
+          <strong id="hero-persona">Preparando tu experiencia…</strong>
+          <span>Reto primero · ayuda cuando aporta valor · una nueva oportunidad para comprobar lo aprendido.</span>
+        </aside>
       </div>
-      <p class="eyebrow text-blue-300 mb-2">Problemas matemáticos</p>
-      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Entender antes de calcular</h1>
-      <p class="text-blue-100 text-lg leading-relaxed max-w-3xl">
-        Resolver un problema tiene dos trabajos: comprender el lenguaje y resolver las matemáticas. Aquí los separamos para pensar con más claridad.
-      </p>
     </header>
 
-    <section class="panel p-5 md:p-6 mb-5">
-      <div class="grid md:grid-cols-[1fr_260px] gap-5 items-center">
+    <section id="mode-card" class="mode-card" aria-labelledby="mode-heading">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <p class="eyebrow text-blue-700 mb-2">Objetivo del tema</p>
-          <h2 class="text-2xl font-extrabold mb-2">Identificar datos, pregunta y relación matemática antes de operar.</h2>
-          <p class="text-slate-600">No buscamos rapidez. Buscamos una estrategia que tenga sentido.</p>
+          <p class="eyebrow text-violet-700">Cómo vamos a usar esta experiencia</p>
+          <h2 id="mode-heading" class="text-xl font-black mt-1">Elige si esta sesión cuenta como aprendizaje</h2>
         </div>
-        <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
-          <div class="text-xs uppercase tracking-widest font-extrabold text-slate-500">Cómo trabajaremos</div>
-          <div class="mt-2 font-extrabold">Reto → apoyo mínimo → nueva oportunidad</div>
+        <span class="text-sm font-bold text-slate-500">Puedes decidir antes de empezar</span>
+      </div>
+
+      <div class="mode-grid">
+        <button id="mode-learning" class="mode-btn" type="button">
+          <strong>🎓 Sesión de aprendizaje</strong>
+          <span>El alumno trabaja de verdad y la Academia guarda evidencia útil al terminar.</span>
+          <small id="mode-learning-note" class="block mt-2 text-xs text-slate-500"></small>
+        </button>
+        <button id="mode-preview" class="mode-btn" type="button">
+          <strong>👀 Vista previa</strong>
+          <span>Familia y profesionales pueden explorar sin modificar el historial académico.</span>
+        </button>
+      </div>
+      <div id="mode-status" aria-live="polite"></div>
+    </section>
+
+    <nav class="route-wrap" aria-label="Progreso de la experiencia">
+      <div class="route-bar"><div id="route-progress-fill" class="route-fill"></div></div>
+      <div class="route">
+        <div class="route-item" data-route-stage="0"><span class="dot"></span><span>Empezar</span></div>
+        <div class="route-item" data-route-stage="1"><span class="dot"></span><span>Comprender</span></div>
+        <div class="route-item" data-route-stage="2"><span class="dot"></span><span>Practicar</span></div>
+        <div class="route-item" data-route-stage="3"><span class="dot"></span><span>Comprobar</span></div>
+        <div class="route-item" data-route-stage="4"><span class="dot"></span><span>Transferir</span></div>
+        <div class="route-item" data-route-stage="5"><span class="dot"></span><span>Celebrar</span></div>
+      </div>
+    </nav>
+
+    <div id="pilot-error" hidden></div>
+
+    <section class="stage-card" data-stage="0">
+      <div class="stage-head">
+        <div class="stage-number">★</div>
+        <div>
+          <p class="eyebrow text-violet-700">Tu misión de hoy</p>
+          <h2 id="welcome-title">Hoy vamos a descubrir una estrategia que podrás reutilizar.</h2>
+          <p>No buscamos rapidez. Buscamos que entiendas qué hacer incluso cuando el problema cambie.</p>
         </div>
+      </div>
+
+      <div class="welcome-grid">
+        <div class="promise">
+          <p class="eyebrow text-blue-700">La promesa</p>
+          <h3>No tienes que saber la respuesta al empezar.</h3>
+          <p>Primero observarás un ejemplo. Después lo intentarás tú. Si necesitas una pista, estará ahí. Y al final aparecerá un problema nuevo para comprobar si la estrategia ya es tuya.</p>
+        </div>
+        <aside class="lia-card">
+          <div class="lia-name">✨ Lía te acompaña</div>
+          <p>“No voy a resolverlo por ti. Te ayudaré a encontrar el siguiente paso cuando lo necesites. Yo creo en ti.”</p>
+        </aside>
+      </div>
+
+      <div class="actions">
+        <span class="text-sm text-slate-500 font-semibold">Una etapa cada vez. Sin prisa.</span>
+        <button id="start-experience" class="btn-primary" type="button">
+          Empezar mi reto <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
       </div>
     </section>
 
-    <section class="route mb-5" aria-label="Ruta del tema">
-      <div class="route-item"><strong>01</strong><span>Comprender</span></div>
-      <div class="route-item"><strong>02</strong><span>Practicar</span></div>
-      <div class="route-item"><strong>03</strong><span>Comprobar</span></div>
-      <div class="route-item"><strong>04</strong><span>Recordar</span></div>
-    </section>
-
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">1</div>
+    <section class="stage-card" data-stage="1" hidden>
+      <div class="stage-head">
+        <div class="stage-number">1</div>
         <div>
           <p class="eyebrow text-blue-700">Comprender</p>
-          <h2 class="text-2xl font-extrabold">La ruta de cuatro preguntas</h2>
+          <h2>Antes de calcular, hazte cuatro preguntas.</h2>
+          <p>Estas preguntas sirven hoy y también cuando aparezca un problema diferente.</p>
         </div>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-3 mb-6">
-        <div class="keyline"><strong>¿Qué sé?</strong><div class="text-slate-600 mt-1">Localiza los datos importantes.</div></div>
-        <div class="keyline"><strong>¿Qué me piden?</strong><div class="text-slate-600 mt-1">Separa la pregunta del resto del texto.</div></div>
-        <div class="keyline"><strong>¿Cómo se relaciona?</strong><div class="text-slate-600 mt-1">Piensa qué ocurre con las cantidades.</div></div>
-        <div class="keyline"><strong>¿Tiene sentido?</strong><div class="text-slate-600 mt-1">Comprueba el resultado con la situación.</div></div>
+      <div class="four-questions">
+        <div class="keyline"><strong>¿Qué sé?</strong><span>Localiza los datos importantes.</span></div>
+        <div class="keyline"><strong>¿Qué me piden?</strong><span>Separa la pregunta del resto del texto.</span></div>
+        <div class="keyline"><strong>¿Cómo se relaciona?</strong><span>Piensa qué ocurre con las cantidades.</span></div>
+        <div class="keyline"><strong>¿Tiene sentido?</strong><span>Comprueba el resultado con la situación.</span></div>
       </div>
 
-      <p class="eyebrow text-violet-700 mb-2">Ejemplo guiado</p>
-      <h3 class="text-xl font-extrabold mb-3">Excursión del colegio</h3>
-      <div class="problem mb-5">
-        Para una excursión se apuntaron <strong>84 alumnos</strong>. Los autobuses tienen <strong>28 plazas</strong> cada uno.
-        <strong>¿Cuántos autobuses completos hacen falta para llevar a todos?</strong>
+      <p class="practice-kicker text-violet-700">Ejemplo guiado · Excursión del colegio</p>
+      <div class="problem">
+        Para una excursión se apuntaron <strong>84 alumnos</strong>. Los autobuses tienen <strong>28 plazas</strong> cada uno. <strong>¿Cuántos autobuses completos hacen falta para llevar a todos?</strong>
       </div>
 
-      <div class="space-y-3">
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>1 · ¿Qué sé?</strong>
-          <p class="text-slate-600 mt-1">84 alumnos y 28 plazas por autobús.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>2 · ¿Qué me piden?</strong>
-          <p class="text-slate-600 mt-1">Cuántos grupos de 28 necesitamos para incluir a 84 alumnos.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>3 · ¿Cómo se relaciona?</strong>
-          <p class="text-slate-600 mt-1">Estamos repartiendo 84 alumnos en grupos de 28: <strong>84 ÷ 28</strong>.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>4 · ¿Tiene sentido?</strong>
-          <p class="text-slate-600 mt-1">84 ÷ 28 = 3. Tres autobuses tienen 84 plazas, así que la respuesta encaja.</p>
-        </div>
+      <div class="guided-grid">
+        <div class="guided"><strong>1 · ¿Qué sé?</strong><p>84 alumnos y 28 plazas por autobús.</p></div>
+        <div class="guided"><strong>2 · ¿Qué me piden?</strong><p>Cuántos grupos de 28 necesitamos para incluir a 84 alumnos.</p></div>
+        <div class="guided"><strong>3 · ¿Cómo se relaciona?</strong><p>Estamos formando grupos iguales: 84 ÷ 28.</p></div>
+        <div class="guided"><strong>4 · ¿Tiene sentido?</strong><p>84 ÷ 28 = 3. Tres autobuses tienen exactamente 84 plazas.</p></div>
+      </div>
+
+      <div class="actions">
+        <span class="principle-note">No memorices “84 ÷ 28”. Memoriza la estrategia para descubrir qué operación necesitas.</span>
+        <button id="understand-next" class="btn-primary" type="button">Quiero intentarlo <i data-lucide="sparkles" class="w-5 h-5"></i></button>
       </div>
     </section>
 
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">2</div>
+    <section class="stage-card" data-stage="2" hidden>
+      <div class="stage-head">
+        <div class="stage-number">2</div>
         <div>
           <p class="eyebrow text-teal-700">Practicar</p>
-          <h2 class="text-2xl font-extrabold">Primero inténtalo. Después pide ayuda si la necesitas.</h2>
+          <h2>Primero inténtalo. La ayuda aparece solo si la necesitas.</h2>
+          <p>Las preguntas cambian entre sesiones para practicar el concepto, no una respuesta de memoria.</p>
         </div>
       </div>
 
-      <div class="mb-8">
-        <p class="eyebrow text-slate-500 mb-2">Práctica A · con apoyo progresivo</p>
-        <div class="problem mb-4">
-          Una biblioteca tiene <strong>360 libros</strong> y quiere colocarlos por igual en <strong>6 estanterías</strong>.
-          ¿Cuántos libros habrá en cada estantería?
-        </div>
-        <p class="font-extrabold mb-3">Antes de calcular, ¿qué relación describe mejor el problema?</p>
+      <div class="practice-block">
+        <p class="practice-kicker">Práctica A · apoyo progresivo</p>
+        <div id="practice-a-problem" class="problem"></div>
+        <div id="practice-a-question" class="question"></div>
+        <div id="practice-a-options" class="options"></div>
+        <div id="practice-a-feedback" class="feedback" aria-live="polite"></div>
 
-        <div class="grid sm:grid-cols-2 gap-3" data-question="q1">
-          <button class="choice" data-correct="false">Sumar 360 + 6</button>
-          <button class="choice" data-correct="true">Repartir 360 en 6 grupos iguales</button>
-          <button class="choice" data-correct="false">Multiplicar 360 × 6</button>
-          <button class="choice" data-correct="false">Restar 6 a 360 una sola vez</button>
+        <div class="hint-row">
+          <button class="hint-btn" type="button" data-hint="1" aria-expanded="false">💡 Pista 1</button>
+          <button class="hint-btn" type="button" data-hint="2" aria-expanded="false">🧭 Pista 2</button>
         </div>
-        <div id="q1-feedback" class="feedback"></div>
-
-        <div class="flex flex-wrap gap-2 mt-4">
-          <button class="support-btn" data-support-target="support1">Pista 1</button>
-          <button class="support-btn" data-support-target="support2">Pista 2</button>
-        </div>
-        <div id="support1" class="support"><strong>Pista 1:</strong> fíjate en las palabras “por igual”. ¿La cantidad aumenta o se reparte?</div>
-        <div id="support2" class="support"><strong>Pista 2:</strong> formar 6 grupos iguales a partir de 360 corresponde a una división.</div>
+        <div id="practice-hint-1" class="hint-text" hidden></div>
+        <div id="practice-hint-2" class="hint-text" hidden></div>
       </div>
 
-      <div>
-        <p class="eyebrow text-slate-500 mb-2">Práctica B · más autonomía</p>
-        <div class="problem mb-4">
-          En una carrera solidaria cada vuelta mide <strong>250 metros</strong>. Marta completa <strong>8 vueltas</strong>.
-          ¿Qué distancia recorre en total?
-        </div>
-        <p class="font-extrabold mb-3">¿Qué operación representa mejor la situación?</p>
-        <div class="grid sm:grid-cols-2 gap-3" data-question="q2">
-          <button class="choice" data-correct="true">250 × 8</button>
-          <button class="choice" data-correct="false">250 ÷ 8</button>
-          <button class="choice" data-correct="false">250 - 8</button>
-          <button class="choice" data-correct="false">250 + 8</button>
-        </div>
-        <div id="q2-feedback" class="feedback"></div>
+      <div class="practice-block">
+        <p class="practice-kicker">Práctica B · más autonomía</p>
+        <div id="practice-b-problem" class="problem"></div>
+        <div id="practice-b-question" class="question"></div>
+        <div id="practice-b-options" class="options"></div>
+        <div id="practice-b-feedback" class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="actions">
+        <span class="principle-note">Pedir una pista es una estrategia. Lo importante es qué puedes hacer después con menos ayuda.</span>
+        <button id="practice-next" class="btn-primary" type="button" disabled>Comprobar lo aprendido <i data-lucide="arrow-right" class="w-5 h-5"></i></button>
       </div>
     </section>
 
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">3</div>
+    <section class="stage-card" data-stage="3" hidden>
+      <div class="stage-head">
+        <div class="stage-number">3</div>
         <div>
           <p class="eyebrow text-amber-700">Comprobar</p>
-          <h2 class="text-2xl font-extrabold">Un problema de dos pasos</h2>
+          <h2>Ahora cambia el problema: piensa el plan antes de calcular.</h2>
+          <p>No aparecerán las mismas preguntas ni las opciones en el mismo orden.</p>
         </div>
       </div>
 
-      <div class="problem mb-4">
-        Un museo vende entradas a <strong>12 €</strong>. Una familia compra <strong>5 entradas</strong> y paga con <strong>70 €</strong>.
-        ¿Cuánto dinero le devuelven?
+      <div class="practice-block">
+        <p class="practice-kicker">Problema de dos pasos</p>
+        <div id="check-problem" class="problem"></div>
+        <div id="check-question" class="question"></div>
+        <div id="check-options" class="options"></div>
+        <div id="check-feedback" class="feedback" aria-live="polite"></div>
       </div>
-      <p class="font-extrabold mb-3">¿Qué plan de dos pasos es correcto?</p>
 
-      <div class="grid gap-3" data-question="q3">
-        <button class="choice" data-correct="false">70 ÷ 5 y después sumar 12</button>
-        <button class="choice" data-correct="true">12 × 5 para saber el coste; después 70 - coste</button>
-        <button class="choice" data-correct="false">70 - 12 y después multiplicar por 5</button>
+      <div class="actions">
+        <span class="principle-note">Una respuesta correcta ayuda. Un plan que funciona en problemas diferentes nos dice mucho más.</span>
+        <button id="check-next" class="btn-primary" type="button" disabled>Ir al reto nuevo <i data-lucide="move-right" class="w-5 h-5"></i></button>
       </div>
-      <div id="q3-feedback" class="feedback"></div>
     </section>
 
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">4</div>
+    <section class="stage-card" data-stage="4" hidden>
+      <div class="stage-head">
+        <div class="stage-number">4</div>
         <div>
-          <p class="eyebrow text-slate-600">Recordar</p>
-          <h2 class="text-2xl font-extrabold">Tres ideas para llevarte</h2>
+          <p class="eyebrow text-violet-700">Transferir</p>
+          <h2>Este problema no estaba en el ejemplo.</h2>
+          <p>Aquí comprobamos si puedes llevar la estrategia a un contexto nuevo. No buscamos que recuerdes dónde estaba una opción.</p>
         </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-3">
-        <div class="rounded-xl bg-blue-50 border border-blue-100 p-4">
-          <div class="font-extrabold">Lee la pregunta aparte</div>
-          <p class="text-slate-600 mt-1">Primero descubre qué debes encontrar.</p>
+      <div class="practice-block">
+        <p class="practice-kicker">Reto de transferencia · sin pistas al empezar</p>
+        <div id="transfer-problem" class="problem"></div>
+        <div id="transfer-question" class="question"></div>
+        <div id="transfer-options" class="options"></div>
+        <div id="transfer-feedback" class="feedback" aria-live="polite"></div>
+
+        <div id="transfer-result-block" class="transfer-result" hidden>
+          <strong>Ya elegiste la relación. Ahora calcula.</strong>
+          <p class="text-slate-600 mt-1">Escribe solo el resultado y comprueba si encaja con la situación.</p>
+          <div class="answer-row">
+            <input id="transfer-answer" class="answer-input" type="number" inputmode="decimal" aria-label="Resultado del problema">
+            <span id="transfer-unit" class="font-black text-indigo-800"></span>
+            <button id="transfer-check-answer" class="btn-primary" type="button">Comprobar resultado</button>
+          </div>
         </div>
-        <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
-          <div class="font-extrabold">Divide el problema</div>
-          <p class="text-slate-600 mt-1">Datos, relación, operación y comprobación.</p>
-        </div>
-        <div class="rounded-xl bg-emerald-50 border border-emerald-100 p-4">
-          <div class="font-extrabold">Parar también es estrategia</div>
-          <p class="text-slate-600 mt-1">Si hoy no sale, puedes volver con la mente más fresca.</p>
-        </div>
+
+        <button id="transfer-support" class="hint-btn mt-3" type="button" hidden>🧭 Necesito volver a la estrategia</button>
+      </div>
+
+      <div class="actions">
+        <span class="principle-note">Resolver una variante nueva nos da mejor evidencia de comprensión que repetir una pregunta conocida.</span>
+        <button id="transfer-next" class="btn-primary" type="button" disabled>Ver lo que conseguí <i data-lucide="party-popper" class="w-5 h-5"></i></button>
       </div>
     </section>
 
-    <footer class="dev-note px-1 pb-4">
-      Piloto v0.2 · Esta página todavía no guarda sesión académica ni evidencia en Firestore.
-    </footer>
+    <section class="stage-card" data-stage="5" hidden>
+      <div class="summary-hero">
+        <p class="eyebrow text-emerald-700">Tu cierre</p>
+        <h2 id="summary-title">¡Buen trabajo!</h2>
+        <p id="summary-message"></p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-stat"><strong id="summary-questions">0</strong><span>retos completados</span></div>
+        <div class="summary-stat"><strong id="summary-autonomy">0</strong><span>resueltos con autonomía</span></div>
+        <div class="summary-stat"><strong id="summary-hints">0</strong><span>pistas utilizadas</span></div>
+      </div>
+
+      <div class="practice-block">
+        <p class="practice-kicker text-emerald-700">Lo útil que observamos</p>
+        <ul id="summary-observations" class="observation-list"></ul>
+        <p class="principle-note"><strong>Importante:</strong> terminar una actividad no significa declarar que un concepto está dominado. Las próximas variantes y el paso del tiempo nos ayudarán a saber qué se está consolidando.</p>
+      </div>
+
+      <div id="save-status" class="save-state" aria-live="polite"></div>
+
+      <div class="actions">
+        <button id="try-another" class="btn-secondary" type="button"><i data-lucide="refresh-cw" class="w-5 h-5"></i> Otra variante</button>
+        <a class="btn-primary" href="./index.html">Volver a Matemáticas <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+      </div>
+    </section>
   </main>
 
-  <script>
-    document.querySelectorAll("[data-support-target]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const el = document.getElementById(btn.dataset.supportTarget);
-        el.classList.toggle("open");
-        btn.setAttribute("aria-expanded", el.classList.contains("open") ? "true" : "false");
-      });
-    });
-
-    document.querySelectorAll("[data-question]").forEach(group => {
-      const id = group.dataset.question;
-      const feedback = document.getElementById(id + "-feedback");
-
-      group.querySelectorAll(".choice").forEach(btn => {
-        btn.addEventListener("click", () => {
-          group.querySelectorAll(".choice").forEach(b => b.classList.remove("ok", "bad"));
-
-          const ok = btn.dataset.correct === "true";
-          btn.classList.add(ok ? "ok" : "bad");
-          feedback.classList.add("show");
-
-          if (ok) {
-            feedback.innerHTML = "<strong>Bien razonado.</strong> Identificaste la relación matemática antes de hacer la operación.";
-          } else {
-            feedback.innerHTML = "<strong>Revísalo sin prisa.</strong> Vuelve a la pregunta y piensa qué está ocurriendo con las cantidades. Puedes intentarlo otra vez.";
-          }
-        });
-      });
-    });
-
-    lucide.createIcons();
-  </script>
-
   <script src="../../../compartido/js/navegacion.js"></script>
-  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=5"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=8"></script>
+  <script type="module" src="./piloto-problemas.js?v=1"></script>
 </body>
 </html>
