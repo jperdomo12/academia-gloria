@@ -52,8 +52,8 @@
       kicker: "Herramienta 3 · Repetir",
       title: "La misma cantidad aparece varias veces",
       story: "Hay 4 mesas. En cada mesa colocan 3 fichas.",
-      visualHint: "Observa: 4 grupos y en todos hay 3.",
-      visual: { type: "groups", groups: 4, each: 3 },
+      visualHint: "Observa: 4 mesas y en todas hay 3 fichas.",
+      visual: { type: "tables", groups: 4, each: 3 },
       question: "¿Qué idea describe mejor esta historia?",
       options: [
         ["repeat", "La misma cantidad se repite en grupos iguales."],
@@ -62,7 +62,7 @@
         ["join", "Solo se añaden 4 fichas a 3."]
       ],
       correct: "repeat",
-      hint: "No mires primero el símbolo ×. Cuenta cuántas veces aparece el grupo de 3.",
+      hint: "No mires primero el símbolo ×. Mira las mesas: en cada una aparece el mismo grupo de 3 fichas.",
       concept: "MULTIPLICAR",
       explanation: "Multiplicar ayuda cuando una misma cantidad se repite varias veces en grupos iguales.",
       equations: ["4 × 3 = 12"],
@@ -128,10 +128,20 @@
   let currentStep = 0;
   let solved = false;
 
-  function token(className = "") {
+  function shuffled(items) {
+    const copy = [...items];
+    for (let index = copy.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+    }
+    return copy;
+  }
+
+  function token(number, className = "") {
     const span = document.createElement("span");
     span.className = `token ${className}`.trim();
-    span.setAttribute("aria-hidden", "true");
+    span.textContent = String(number);
+    span.setAttribute("aria-label", `Ficha ${number}`);
     return span;
   }
 
@@ -140,26 +150,58 @@
     els.objectsBoard.className = "objects-board";
 
     if (config.type === "sum") {
-      for (let i = 0; i < config.first; i += 1) els.objectsBoard.appendChild(token());
-      for (let i = 0; i < config.second; i += 1) els.objectsBoard.appendChild(token("alt"));
+      let number = 1;
+      for (let i = 0; i < config.first; i += 1) els.objectsBoard.appendChild(token(number++));
+      for (let i = 0; i < config.second; i += 1) els.objectsBoard.appendChild(token(number++, "alt"));
       return;
     }
 
     if (config.type === "subtract") {
       const kept = config.total - config.removed;
-      for (let i = 0; i < kept; i += 1) els.objectsBoard.appendChild(token());
-      for (let i = 0; i < config.removed; i += 1) els.objectsBoard.appendChild(token("removed"));
+      let number = 1;
+      for (let i = 0; i < kept; i += 1) els.objectsBoard.appendChild(token(number++));
+      for (let i = 0; i < config.removed; i += 1) els.objectsBoard.appendChild(token(number++, "removed"));
+      return;
+    }
+
+    if (config.type === "tables") {
+      els.objectsBoard.classList.add("tables");
+      let number = 1;
+      for (let groupIndex = 0; groupIndex < config.groups; groupIndex += 1) {
+        const table = document.createElement("div");
+        table.className = "table-group";
+        table.setAttribute("aria-label", `Mesa ${groupIndex + 1} con ${config.each} fichas`);
+
+        const top = document.createElement("div");
+        top.className = "table-top";
+        for (let itemIndex = 0; itemIndex < config.each; itemIndex += 1) {
+          top.appendChild(token(number++));
+        }
+
+        const legs = document.createElement("div");
+        legs.className = "table-legs";
+        legs.setAttribute("aria-hidden", "true");
+        legs.innerHTML = "<span></span><span></span>";
+
+        const label = document.createElement("span");
+        label.className = "table-label";
+        label.textContent = `Mesa ${groupIndex + 1}`;
+
+        table.append(top, legs, label);
+        els.objectsBoard.appendChild(table);
+      }
       return;
     }
 
     if (config.type === "groups") {
       els.objectsBoard.classList.add("grouped");
+      let number = 1;
       for (let groupIndex = 0; groupIndex < config.groups; groupIndex += 1) {
         const group = document.createElement("div");
         group.className = "group";
         group.setAttribute("aria-label", `Grupo ${groupIndex + 1} con ${config.each} elementos`);
         for (let itemIndex = 0; itemIndex < config.each; itemIndex += 1) {
-          group.appendChild(token(groupIndex % 2 ? "alt" : ""));
+          group.appendChild(token(number++, groupIndex % 2 ? "alt" : ""));
         }
         const label = document.createElement("span");
         label.className = "group-label";
@@ -222,7 +264,7 @@
 
   function renderOptions(step) {
     els.options.innerHTML = "";
-    step.options.forEach(([id, text]) => {
+    shuffled(step.options).forEach(([id, text]) => {
       const button = document.createElement("button");
       button.className = "option";
       button.type = "button";
@@ -246,6 +288,7 @@
     els.feedback.hidden = true;
     els.feedback.className = "feedback";
     els.hintButton.disabled = false;
+    els.hintButton.textContent = "💡 Ver una pista";
     els.nextButton.disabled = true;
     els.nextButton.textContent = currentStep === steps.length - 1 ? "Terminar ✓" : "Siguiente →";
     renderVisual(step.visual);
@@ -260,7 +303,8 @@
   }
 
   els.hintButton.addEventListener("click", () => {
-    showFeedback(`💡 ${steps[currentStep].hint}`, "try");
+    showFeedback(`💡 PISTA · ${steps[currentStep].hint}`, "hint");
+    els.hintButton.textContent = "💡 Pista mostrada";
   });
 
   els.nextButton.addEventListener("click", () => {
