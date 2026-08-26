@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172554">
   <title>Entender antes de calcular | Matemáticas 6.º</title>
-  <meta name="description" content="Piloto SIGNATURE de 6.º para comprender, practicar, comprobar y transferir estrategias de resolución de problemas.">
+  <meta
+    name="description"
+    content="Piloto SIGNATURE de 6.º para comprender, practicar, comprobar y transferir estrategias de resolución de problemas."
+  >
 
   <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
   <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
@@ -14,406 +17,19 @@
   <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
   <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
   <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --ink:#14213d;
-      --muted:#63708a;
-      --line:#dce4f2;
-      --navy:#172554;
-      --blue:#2563eb;
-      --violet:#7c3aed;
-      --pink:#db2777;
-      --teal:#0f766e;
-      --green:#15803d;
-      --amber:#b45309;
-      --red:#b91c1c;
-      --soft-blue:#eff6ff;
-      --soft-violet:#f5f3ff;
-      --soft-green:#f0fdf4;
-      --soft-amber:#fffbeb;
-      --soft-pink:#fdf2f8;
-    }
-
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:"Outfit",sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 7% 7%,rgba(56,189,248,.16),transparent 25%),
-        radial-gradient(circle at 93% 8%,rgba(216,180,254,.17),transparent 25%),
-        linear-gradient(160deg,#f8fbff 0%,#fffaf2 48%,#faf7ff 100%);
-    }
-
-    button,input{font:inherit}
-    button{touch-action:manipulation}
-
-    .signature-shell{
-      width:min(1080px,calc(100% - 30px));
-      margin:0 auto;
-      padding:26px 0 52px;
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 300px;
-      gap:24px;
-      align-items:center;
-      padding:32px;
-      color:#fff;
-      background:
-        radial-gradient(circle at 84% 22%,rgba(255,255,255,.16),transparent 22%),
-        linear-gradient(135deg,#172554,#3730a3 58%,#7c3aed);
-      border-radius:30px;
-      box-shadow:0 24px 58px rgba(23,37,84,.18);
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      width:290px;
-      height:290px;
-      right:-115px;
-      bottom:-160px;
-      border-radius:50%;
-      background:linear-gradient(135deg,#38bdf8,#f9a8d4,#fcd34d);
-      opacity:.3;
-    }
-
-    .hero-main,.hero-side{position:relative;z-index:1}
-
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:7px 11px;
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      font-size:.82rem;
-      font-weight:800;
-    }
-
-    .eyebrow{
-      margin:0 0 7px;
-      font-size:.76rem;
-      line-height:1.2;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:900;
-    }
-
-    .hero h1{
-      margin:0;
-      font-size:clamp(2.45rem,5.5vw,4.5rem);
-      line-height:.98;
-      letter-spacing:-.04em;
-    }
-
-    .hero-lead{
-      max-width:720px;
-      margin:17px 0 0;
-      color:#dbeafe;
-      font-size:1.12rem;
-      line-height:1.55;
-      font-weight:600;
-    }
-
-    .lia-note{
-      margin-top:20px;
-      padding:15px 17px;
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:18px;
-      background:rgba(255,255,255,.10);
-      color:#fff;
-      line-height:1.5;
-      font-weight:700;
-    }
-
-    .hero-side{
-      padding:19px;
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:23px;
-      background:rgba(255,255,255,.11);
-      backdrop-filter:blur(9px);
-    }
-
-    .mode-icon{font-size:2rem}
-    .hero-side h2{margin:7px 0 5px;font-size:1.25rem}
-    .hero-side p{margin:0;color:#dbeafe;line-height:1.45;font-weight:600}
-
-    .mode-button{
-      width:100%;
-      min-height:44px;
-      margin-top:13px;
-      border:1px solid rgba(255,255,255,.25);
-      border-radius:13px;
-      background:#fff;
-      color:#312e81;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .mode-button:disabled{opacity:.58;cursor:not-allowed}
-
-    .route{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin:18px 0;
-    }
-
-    .route-step{
-      min-height:74px;
-      padding:12px 14px;
-      border:2px solid #e5eaf3;
-      border-radius:17px;
-      background:rgba(255,255,255,.9);
-      color:#64748b;
-      box-shadow:0 8px 20px rgba(15,23,42,.04);
-    }
-    .route-step strong{display:block;font-size:.73rem;letter-spacing:.08em}
-    .route-step span{display:block;margin-top:4px;font-weight:900}
-    .route-step.current{border-color:#a5b4fc;background:#eef2ff;color:#3730a3}
-    .route-step.done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}
-
-    .panel{
-      padding:26px;
-      border:1px solid var(--line);
-      border-radius:25px;
-      background:rgba(255,255,255,.97);
-      box-shadow:0 18px 45px rgba(15,23,42,.07);
-    }
-
-    .hidden{display:none!important}
-
-    .intro-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 310px;
-      gap:22px;
-      align-items:start;
-    }
-
-    .intro-panel h2,.stage-head h2,.summary h2{
-      margin:0;
-      font-size:clamp(1.65rem,3vw,2.25rem);
-      line-height:1.12;
-    }
-
-    .intro-panel p{color:var(--muted);line-height:1.55}
-
-    .strategy-card{
-      padding:18px;
-      border:2px solid #dbeafe;
-      border-radius:20px;
-      background:linear-gradient(135deg,#f0f9ff,#fff);
-    }
-    .strategy-card h3{margin:0 0 11px;color:#1d4ed8}
-    .strategy-list{display:grid;gap:9px}
-    .strategy-item{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:start}
-    .strategy-item b{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#dbeafe;color:#1d4ed8}
-    .strategy-item span{line-height:1.4;font-weight:700;color:#475569}
-
-    .primary-button,.secondary-button{
-      min-height:52px;
-      padding:12px 20px;
-      border-radius:16px;
-      font-weight:900;
-      cursor:pointer;
-      transition:.16s ease;
-    }
-    .primary-button{
-      border:0;
-      color:#fff;
-      background:linear-gradient(90deg,#2563eb,#7c3aed,#db2777);
-      box-shadow:0 12px 26px rgba(99,102,241,.22);
-    }
-    .secondary-button{
-      border:2px solid #dbe4ef;
-      color:#475569;
-      background:#fff;
-    }
-    .primary-button:hover,.secondary-button:hover{transform:translateY(-1px)}
-    .primary-button:disabled,.secondary-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-
-    .stage-head{
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-      align-items:flex-start;
-      margin-bottom:19px;
-    }
-    .stage-kicker{color:#4f46e5}
-    .stage-lead{margin:8px 0 0;color:var(--muted);font-weight:600;line-height:1.5}
-    .stage-symbol{
-      flex:0 0 auto;
-      display:grid;
-      place-items:center;
-      width:58px;
-      height:58px;
-      border-radius:18px;
-      background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fdf2f8);
-      font-size:1.8rem;
-    }
-
-    .guided-example{
-      display:grid;
-      gap:13px;
-    }
-    .problem{
-      padding:19px;
-      border:2px solid #dbeafe;
-      border-radius:19px;
-      background:linear-gradient(135deg,#f8fbff,#fff);
-      font-size:1.08rem;
-      line-height:1.7;
-      font-weight:650;
-    }
-    .four-questions{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-    .question-card{
-      padding:14px 15px;
-      border:1px solid #e2e8f0;
-      border-radius:16px;
-      background:#fff;
-    }
-    .question-card strong{display:block;color:#312e81}
-    .question-card p{margin:5px 0 0;color:#64748b;line-height:1.45}
-
-    .activity-title{margin:0 0 7px;font-size:1.25rem}
-    .activity-question{margin:17px 0 11px;font-size:1.13rem;font-weight:900}
-
-    .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-    .choice,.operation{
-      min-height:72px;
-      padding:13px 14px;
-      border:2px solid #dfe5ef;
-      border-radius:18px;
-      background:#fff;
-      color:#27344d;
-      text-align:left;
-      font-weight:850;
-      cursor:pointer;
-      transition:.14s ease;
-    }
-    .choice:hover,.operation:hover{border-color:#a5b4fc;transform:translateY(-1px)}
-    .choice.selected,.operation.selected{border-color:#818cf8;background:#eef2ff;color:#3730a3}
-    .choice.correct,.operation.correct{border-color:#4ade80;background:#f0fdf4;color:#166534}
-    .choice.try,.operation.try{border-color:#fbbf24;background:#fffbeb;color:#92400e}
-
-    .operations{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .operation{text-align:center;min-height:96px}
-    .operation-symbol{display:block;font-size:2.1rem;line-height:1;font-weight:900}
-    .operation-name{display:block;margin-top:7px}
-
-    .support-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-    .support-button{
-      min-height:42px;
-      padding:9px 13px;
-      border:2px solid #fde68a;
-      border-radius:13px;
-      background:#fffdf5;
-      color:#92400e;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .support-box{
-      margin-top:10px;
-      padding:13px 15px;
-      border:1px solid #fde68a;
-      border-radius:14px;
-      background:#fffbeb;
-      color:#78350f;
-      line-height:1.45;
-      font-weight:700;
-    }
-
-    .feedback{
-      min-height:0;
-      margin-top:16px;
-      padding:0;
-      border-radius:16px;
-      line-height:1.48;
-      font-weight:800;
-    }
-    .feedback.show{padding:14px 15px}
-    .feedback.good{border:1px solid #86efac;background:#f0fdf4;color:#166534}
-    .feedback.try{border:1px solid #fde68a;background:#fffbeb;color:#92400e}
-    .feedback.info{border:1px solid #bfdbfe;background:#eff6ff;color:#1e40af}
-
-    .stage-actions{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      margin-top:20px;
-      flex-wrap:wrap;
-    }
-
-    .attempt-note{color:#64748b;font-size:.86rem;font-weight:700}
-
-    .transfer-grid{
-      display:grid;
-      grid-template-columns:1fr 180px;
-      gap:14px;
-      margin-top:16px;
-      align-items:end;
-    }
-    .answer-field label{display:block;margin-bottom:7px;font-weight:900}
-    .answer-field input{
-      width:100%;
-      min-height:56px;
-      padding:10px 13px;
-      border:2px solid #dbe4ef;
-      border-radius:15px;
-      background:#fff;
-      color:#172554;
-      font-size:1.25rem;
-      font-weight:900;
-    }
-
-    .summary{text-align:center}
-    .summary-icon{font-size:4.5rem}
-    .summary-lead{max-width:720px;margin:9px auto 21px;color:#64748b;font-size:1.04rem;line-height:1.55;font-weight:650}
-    .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left}
-    .summary-card{padding:17px;border:1px solid #e2e8f0;border-radius:18px;background:#fff}
-    .summary-card strong{display:block;margin-bottom:6px}
-    .summary-card p{margin:0;color:#64748b;line-height:1.45;font-weight:650}
-    .summary-card.good{background:#f0fdf4;border-color:#bbf7d0}
-    .summary-card.grow{background:#fffbeb;border-color:#fde68a}
-    .summary-card.next{background:#eff6ff;border-color:#bfdbfe}
-    .summary-badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0}
-    .summary-badge{padding:8px 11px;border-radius:999px;background:#f5f3ff;color:#5b21b6;font-size:.86rem;font-weight:900}
-    .save-status{margin:16px auto 0;max-width:680px;padding:12px 14px;border-radius:14px;background:#f8fafc;color:#64748b;font-weight:750}
-
-    .footer-note{padding:14px 4px 0;color:#94a3b8;font-size:.8rem;text-align:center}
-
-    @media(max-width:820px){
-      .hero{grid-template-columns:1fr}.hero-side{max-width:none}
-      .intro-grid{grid-template-columns:1fr}
-      .summary-grid{grid-template-columns:1fr}
-    }
-    @media(max-width:680px){
-      .signature-shell{width:min(100% - 20px,1080px);padding-top:16px}
-      .hero,.panel{padding:20px;border-radius:22px}
-      .route{grid-template-columns:1fr 1fr}
-      .four-questions,.choices{grid-template-columns:1fr}
-      .operations{grid-template-columns:1fr 1fr}
-      .transfer-grid{grid-template-columns:1fr}
-      .stage-actions .primary-button,.stage-actions .secondary-button{width:100%}
-    }
-    @media(prefers-reduced-motion:reduce){
-      *{animation-duration:.01ms!important;transition-duration:.01ms!important}
-    }
-  </style>
+  <link rel="stylesheet" href="../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./piloto-problemas.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
 </head>
 
-<body data-page-title="Entender antes de calcular" data-page-icon="🧠" data-nav-back="./index.html">
+<body
+  data-page-title="Entender antes de calcular"
+  data-page-icon="🧠"
+  data-nav-back="./index.html"
+>
   <main class="signature-shell">
     <header class="hero">
       <div class="hero-main">
@@ -422,14 +38,16 @@
           <span class="chip">✨ Piloto SIGNATURE</span>
           <span class="chip">🧠 Pensar antes de calcular</span>
         </div>
+
         <p class="eyebrow">Tu estrategia para problemas matemáticos</p>
         <h1>Entender antes<br>de calcular</h1>
         <p class="hero-lead">
           Un problema no empieza con una cuenta. Empieza entendiendo qué ocurre,
           qué te preguntan y cómo se relacionan las cantidades.
         </p>
+
         <div class="lia-note" id="liaWelcome">
-          ✨ Lía: Aquí no gana quien responde más rápido. Gana tu estrategia cuando cada vez necesitas menos ayuda.
+          ✨ Lía: Aquí no buscamos ir rápido. Buscamos una estrategia que puedas llevar contigo.
         </div>
       </div>
 
@@ -437,16 +55,28 @@
         <div id="modeIcon" class="mode-icon">⏳</div>
         <p class="eyebrow" style="color:#c7d2fe;margin-top:8px">Modo de esta sesión</p>
         <h2 id="modeTitle">Preparando...</h2>
-        <p id="modeDescription">Estamos comprobando el contexto de la Persona Activa.</p>
-        <button id="modeButton" class="mode-button" type="button" disabled>Cargando...</button>
+        <p id="modeDescription">
+          Estamos comprobando el contexto de la Persona Activa.
+        </p>
+        <button id="modeButton" class="mode-button" type="button" disabled>
+          Cargando...
+        </button>
       </aside>
     </header>
 
     <nav class="route" aria-label="Ruta de aprendizaje">
-      <div class="route-step current" data-route="comprender"><strong>01</strong><span>Comprender</span></div>
-      <div class="route-step" data-route="practicar"><strong>02</strong><span>Practicar</span></div>
-      <div class="route-step" data-route="comprobar"><strong>03</strong><span>Comprobar</span></div>
-      <div class="route-step" data-route="transferir"><strong>04</strong><span>Transferir</span></div>
+      <div class="route-step current" data-route="comprender">
+        <strong>01</strong><span>Comprender</span>
+      </div>
+      <div class="route-step" data-route="practicar">
+        <strong>02</strong><span>Practicar</span>
+      </div>
+      <div class="route-step" data-route="comprobar">
+        <strong>03</strong><span>Comprobar</span>
+      </div>
+      <div class="route-step" data-route="transferir">
+        <strong>04</strong><span>Transferir</span>
+      </div>
     </nav>
 
     <section id="introPanel" class="panel intro-panel">
@@ -491,14 +121,16 @@
 
       <div class="stage-actions">
         <span id="attemptNote" class="attempt-note"></span>
-        <button id="continueButton" class="primary-button" type="button">Continuar →</button>
+        <button id="continueButton" class="primary-button" type="button">
+          Continuar →
+        </button>
       </div>
     </section>
 
     <section id="summaryPanel" class="panel summary hidden" aria-live="polite">
       <div class="summary-icon">🌟</div>
       <p class="eyebrow" style="color:#7c3aed">Tu cierre de hoy</p>
-      <h2 id="summaryTitle">Has entrenado una estrategia, no una respuesta.</h2>
+      <h2>Has entrenado una estrategia, no una respuesta.</h2>
       <p id="summaryLead" class="summary-lead"></p>
 
       <div id="summaryBadges" class="summary-badges"></div>
@@ -521,644 +153,30 @@
       <div id="saveStatus" class="save-status"></div>
 
       <div class="stage-actions" style="justify-content:center">
-        <button id="restartButton" class="secondary-button" type="button">🔄 Probar otra variante</button>
-        <a class="primary-button" href="./index.html" style="text-decoration:none;display:inline-flex;align-items:center">Volver a Matemáticas →</a>
+        <button id="restartButton" class="secondary-button" type="button">
+          🔄 Probar otra variante
+        </button>
+        <a
+          class="primary-button"
+          href="./index.html"
+          style="text-decoration:none;display:inline-flex;align-items:center"
+        >
+          Volver a Matemáticas →
+        </a>
       </div>
     </section>
 
-    <div class="footer-note">Piloto SIGNATURE v0.3 · Comprensión → práctica → comprobación → transferencia · Vista previa nunca genera evidencia.</div>
+    <div class="footer-note">
+      Piloto SIGNATURE v0.3 · Comprensión → práctica → comprobación → transferencia ·
+      Vista previa nunca genera evidencia.
+    </div>
   </main>
 
   <script src="../../../compartido/js/navegacion.js"></script>
-  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
-
-  <script type="module">
-    import { auth } from "../../../compartido/firebase/firebase-config.js";
-    import { ContextoUsuario } from "../../../compartido/js/contexto-usuario.js";
-    import { crearTiempoActivo } from "../../../compartido/js/tiempo-activo.js";
-    import { mostrarCelebracion } from "../../../compartido/js/celebracion.js";
-    import {
-      guardarSesionAcademica,
-      obtenerVariantesRecientes,
-      MODOS_SESION_ACADEMICA
-    } from "../../../compartido/js/sesiones-academicas.js";
-    import {
-      PILOTO_META,
-      EJEMPLO_GUIADO,
-      BANCO_PILOTO,
-      OPERACIONES
-    } from "./piloto-problemas-data.js";
-
-    const $ = id => document.getElementById(id);
-
-    await auth.authStateReady();
-    if (!auth.currentUser) {
-      window.location.replace("/academia-gloria/login.html");
-      throw new Error("Sesión no disponible.");
-    }
-
-    const contexto = await ContextoUsuario.inicializar();
-    const esAdministrador = await ContextoUsuario.esAdministrador();
-    const nombreAlumno = String(
-      contexto.personaActiva?.nombreVisible ||
-      contexto.personaActiva?.nombre ||
-      "Explorador"
-    ).trim();
-
-    const cursoActivo = String(contexto.personaActiva?.curso || "").toLowerCase();
-    const pareceSexto = /(^|\D)6(?:\D|$)|sexto/.test(cursoActivo);
-    const puedeRegistrar = Boolean(contexto.esPersonaPropia || esAdministrador);
-    const parametros = new URLSearchParams(window.location.search);
-
-    let modo =
-      contexto.esPersonaPropia && pareceSexto
-        ? MODOS_SESION_ACADEMICA.APRENDIZAJE
-        : MODOS_SESION_ACADEMICA.VISTA_PREVIA;
-
-    if (parametros.get("modo") === "preview") {
-      modo = MODOS_SESION_ACADEMICA.VISTA_PREVIA;
-    }
-    if (parametros.get("modo") === "aprendizaje" && puedeRegistrar) {
-      modo = MODOS_SESION_ACADEMICA.APRENDIZAJE;
-    }
-
-    const state = {
-      iniciado: false,
-      etapa: 0,
-      variantes: {},
-      registros: [],
-      seleccion: null,
-      ordenOpciones: {},
-      inicioIso: null,
-      tiempo: crearTiempoActivo({ inactividadMs: 180000 }),
-      finalizado: false,
-      guardado: null
-    };
-
-    const etapas = [
-      { id:"comprender", ruta:"comprender", kicker:"Comprender", titulo:"La ruta de cuatro preguntas", simbolo:"🧭" },
-      { id:"practica", ruta:"practicar", kicker:"Practicar · con apoyo", titulo:"Primero piensa. Después pide la ayuda mínima que necesites.", simbolo:"🔎" },
-      { id:"autonomia", ruta:"practicar", kicker:"Practicar · más autonomía", titulo:"La historia cambia. La estrategia sigue siendo tuya.", simbolo:"🧠" },
-      { id:"comprobacion", ruta:"comprobar", kicker:"Comprobar", titulo:"Organiza un problema de dos pasos antes de calcular.", simbolo:"🧩" },
-      { id:"transferencia", ruta:"transferir", kicker:"Transferir", titulo:"Ahora sí: un problema nuevo y sin respuesta para memorizar.", simbolo:"🚀" }
-    ];
-
-    function escapeHtml(value = "") {
-      return String(value).replace(/[&<>"']/g, char => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      })[char]);
-    }
-
-    function barajar(items) {
-      const copia = [...items];
-      for (let i = copia.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copia[i], copia[j]] = [copia[j], copia[i]];
-      }
-      return copia;
-    }
-
-    function elegirVariante(banco, recientes) {
-      const disponibles = banco.filter(item => !recientes.has(item.id));
-      const fuente = disponibles.length ? disponibles : banco;
-      return fuente[Math.floor(Math.random() * fuente.length)];
-    }
-
-    async function prepararVariantes() {
-      let recientes = new Set();
-      if (modo === MODOS_SESION_ACADEMICA.APRENDIZAJE) {
-        try {
-          recientes = await obtenerVariantesRecientes({
-            actividadId: PILOTO_META.actividadId,
-            maximoSesiones: 4
-          });
-        } catch (error) {
-          console.warn("No se pudieron consultar variantes recientes.", error);
-        }
-      }
-
-      state.variantes = {
-        practica: elegirVariante(BANCO_PILOTO.practica, recientes),
-        autonomia: elegirVariante(BANCO_PILOTO.autonomia, recientes),
-        comprobacion: elegirVariante(BANCO_PILOTO.comprobacion, recientes),
-        transferencia: elegirVariante(BANCO_PILOTO.transferencia, recientes)
-      };
-      state.ordenOpciones = {};
-    }
-
-    function actualizarModo() {
-      const aprendizaje = modo === MODOS_SESION_ACADEMICA.APRENDIZAJE;
-      $("modeIcon").textContent = aprendizaje ? "🎓" : "👀";
-      $("modeTitle").textContent = aprendizaje ? "Sesión de aprendizaje" : "Vista previa";
-      $("modeDescription").textContent = aprendizaje
-        ? `Trabajamos sobre ${nombreAlumno}. Al terminar se guardará solo información útil para acompañar su aprendizaje.`
-        : "Puedes explorar, probar y equivocarte libremente. Nada de esta sesión se guardará como aprendizaje.";
-
-      if (state.iniciado) {
-        $("modeButton").disabled = true;
-        $("modeButton").textContent = "Modo fijado al comenzar";
-        return;
-      }
-
-      if (aprendizaje) {
-        $("modeButton").disabled = false;
-        $("modeButton").textContent = "Cambiar a Vista previa";
-      } else if (puedeRegistrar) {
-        $("modeButton").disabled = false;
-        $("modeButton").textContent = "Usar como sesión de aprendizaje";
-      } else {
-        $("modeButton").disabled = true;
-        $("modeButton").textContent = "Este acceso solo explora";
-      }
-    }
-
-    $("liaWelcome").textContent =
-      `✨ Lía: ${nombreAlumno}, aquí no buscamos ir rápido. ` +
-      "Quiero que descubras una estrategia que puedas usar incluso cuando cambie el problema.";
-
-    $("modeButton").addEventListener("click", async () => {
-      if (state.iniciado) return;
-      modo = modo === MODOS_SESION_ACADEMICA.APRENDIZAJE
-        ? MODOS_SESION_ACADEMICA.VISTA_PREVIA
-        : MODOS_SESION_ACADEMICA.APRENDIZAJE;
-      await prepararVariantes();
-      actualizarModo();
-    });
-
-    function actualizarRuta(rutaActual) {
-      const orden = ["comprender","practicar","comprobar","transferir"];
-      const actual = orden.indexOf(rutaActual);
-      document.querySelectorAll("[data-route]").forEach(item => {
-        const posicion = orden.indexOf(item.dataset.route);
-        item.classList.toggle("current", posicion === actual);
-        item.classList.toggle("done", posicion < actual);
-      });
-    }
-
-    function feedback(mensaje = "", tipo = "info") {
-      const box = $("feedback");
-      box.textContent = mensaje;
-      box.className = mensaje ? `feedback show ${tipo}` : "feedback";
-    }
-
-    function registro(etapaId, variante) {
-      let item = state.registros.find(reg => reg.etapa === etapaId);
-      if (!item) {
-        item = {
-          etapa: etapaId,
-          fase: variante?.fase || etapaId,
-          conceptoId: variante?.conceptoId || "comprender_enunciado",
-          varianteId: variante?.id || "ejemplo-guiado",
-          intentos: 0,
-          pistasUtilizadas: 0,
-          respuestaInicial: null,
-          respuestaFinal: null,
-          correctaPrimerIntento: false,
-          correctaFinal: false
-        };
-        state.registros.push(item);
-      }
-      return item;
-    }
-
-    function marcarPista(item) {
-      item.pistasUtilizadas += 1;
-    }
-
-    function ordenarOpciones(clave, opciones) {
-      if (!state.ordenOpciones[clave]) {
-        state.ordenOpciones[clave] = barajar(opciones);
-      }
-      return state.ordenOpciones[clave];
-    }
-
-    function renderComprender() {
-      const item = registro("comprender", null);
-      item.correctaFinal = true;
-      item.correctaPrimerIntento = true;
-
-      $("stageLead").textContent = "Primero construimos una fotografía mental del problema. No tienes que memorizar palabras mágicas.";
-      $("stageContent").innerHTML = `
-        <div class="guided-example">
-          <div>
-            <h3 class="activity-title">${escapeHtml(EJEMPLO_GUIADO.titulo)}</h3>
-            <div class="problem">${escapeHtml(EJEMPLO_GUIADO.enunciado)}</div>
-          </div>
-          <div class="four-questions">
-            <div class="question-card"><strong>1 · ¿Qué sé?</strong><p>${escapeHtml(EJEMPLO_GUIADO.datos)}</p></div>
-            <div class="question-card"><strong>2 · ¿Qué me piden?</strong><p>${escapeHtml(EJEMPLO_GUIADO.pregunta)}</p></div>
-            <div class="question-card"><strong>3 · ¿Cómo se relaciona?</strong><p>${escapeHtml(EJEMPLO_GUIADO.relacion)}</p></div>
-            <div class="question-card"><strong>4 · ¿Tiene sentido?</strong><p>${escapeHtml(EJEMPLO_GUIADO.comprobacion)}</p></div>
-          </div>
-        </div>
-      `;
-      $("attemptNote").textContent = "Aquí aprendemos la estrategia. Todavía no estamos comprobando nada.";
-      $("continueButton").disabled = false;
-      $("continueButton").textContent = "Quiero probarla →";
-    }
-
-    function renderOpciones(etapaId, variante, { conPistas = false, pistaTrasIntentos = 0 } = {}) {
-      const item = registro(etapaId, variante);
-      const opciones = ordenarOpciones(`${etapaId}:${variante.id}`, variante.opciones);
-      state.seleccion = null;
-
-      $("stageLead").textContent = etapaId === "practica"
-        ? "Intenta resolver primero con tu propia estrategia. Las pistas están ahí solo si las necesitas."
-        : "Esta vez la ayuda aparece después de intentarlo. Queremos observar cómo organizas el problema.";
-
-      const ayudas = conPistas
-        ? `<div class="support-row">${variante.pistas.map((_,i) => `<button class="support-button" type="button" data-hint="${i}">Pista ${i + 1}</button>`).join("")}</div><div id="supportBox"></div>`
-        : `<div id="supportBox"></div>`;
-
-      $("stageContent").innerHTML = `
-        <h3 class="activity-title">${escapeHtml(variante.titulo)}</h3>
-        <div class="problem">${escapeHtml(variante.enunciado)}</div>
-        <p class="activity-question">${escapeHtml(variante.pregunta)}</p>
-        <div id="choiceGrid" class="choices">
-          ${opciones.map(opcion => `<button class="choice" type="button" data-option="${escapeHtml(opcion.id)}">${escapeHtml(opcion.texto)}</button>`).join("")}
-        </div>
-        ${ayudas}
-      `;
-
-      $("choiceGrid").querySelectorAll("[data-option]").forEach(button => {
-        button.addEventListener("click", () => {
-          state.seleccion = button.dataset.option;
-          $("choiceGrid").querySelectorAll(".choice").forEach(el => el.classList.remove("selected","correct","try"));
-          button.classList.add("selected");
-          feedback();
-          $("continueButton").disabled = false;
-        });
-      });
-
-      document.querySelectorAll("[data-hint]").forEach(button => {
-        button.addEventListener("click", () => {
-          const indice = Number(button.dataset.hint);
-          const key = `pista-${indice}`;
-          item.pistasVistas ||= [];
-          if (!item.pistasVistas.includes(key)) {
-            item.pistasVistas.push(key);
-            marcarPista(item);
-          }
-          $("supportBox").innerHTML = `<div class="support-box">💡 ${escapeHtml(variante.pistas[indice])}</div>`;
-        });
-      });
-
-      $("continueButton").textContent = "Comprobar mi idea";
-      $("continueButton").disabled = true;
-      $("attemptNote").textContent = item.intentos ? "Ya has probado una idea. Puedes cambiarla y volver a comprobar." : "Primero elige la idea que mejor representa el problema.";
-
-      $("continueButton").onclick = () => {
-        if (!state.seleccion) return;
-        const opcion = variante.opciones.find(op => op.id === state.seleccion);
-        item.intentos += 1;
-        if (item.respuestaInicial === null) item.respuestaInicial = state.seleccion;
-        item.respuestaFinal = state.seleccion;
-        item.correctaPrimerIntento = item.intentos === 1 && Boolean(opcion?.correcta);
-        item.correctaFinal = Boolean(opcion?.correcta);
-
-        const boton = $("choiceGrid").querySelector(`[data-option="${CSS.escape(state.seleccion)}"]`);
-        $("choiceGrid").querySelectorAll(".choice").forEach(el => el.classList.remove("correct","try"));
-
-        if (!opcion?.correcta) {
-          boton?.classList.add("try");
-          feedback("Has probado una idea. Vuelve al significado de la historia y elige otra opción.", "try");
-          $("attemptNote").textContent = `Intentos en este reto: ${item.intentos}. No pasa nada: cada intento nos da información.`;
-
-          if (pistaTrasIntentos > 0 && item.intentos >= pistaTrasIntentos && !$("lateHint")) {
-            $("supportBox").innerHTML = `<button id="lateHint" class="support-button" type="button">💡 Quiero una pista breve</button><div id="lateHintText"></div>`;
-            $("lateHint").addEventListener("click", () => {
-              if (!item.pistaTardiaVista) {
-                item.pistaTardiaVista = true;
-                marcarPista(item);
-              }
-              $("lateHintText").innerHTML = `<div class="support-box">${escapeHtml(variante.pista)}</div>`;
-            });
-          }
-          return;
-        }
-
-        boton?.classList.add("correct");
-        feedback(`🌟 ${variante.feedbackCorrecto}`, "good");
-        $("continueButton").textContent = "Seguir →";
-        $("continueButton").onclick = siguienteEtapa;
-      };
-    }
-
-    function renderOperacion(etapaId, variante) {
-      const item = registro(etapaId, variante);
-      const operaciones = ordenarOpciones(`${etapaId}:${variante.id}:ops`, OPERACIONES);
-      state.seleccion = null;
-
-      $("stageLead").textContent = "No hay una frase exacta que memorizar. Imagina lo que está ocurriendo y elige la herramienta matemática.";
-      $("stageContent").innerHTML = `
-        <h3 class="activity-title">${escapeHtml(variante.titulo)}</h3>
-        <div class="problem">${escapeHtml(variante.enunciado)}</div>
-        <p class="activity-question">${escapeHtml(variante.pregunta)}</p>
-        <div id="operationGrid" class="operations">
-          ${operaciones.map(op => `<button class="operation" type="button" data-operation="${op.id}"><span class="operation-symbol">${op.simbolo}</span><span class="operation-name">${op.nombre}</span></button>`).join("")}
-        </div>
-      `;
-
-      $("operationGrid").querySelectorAll("[data-operation]").forEach(button => {
-        button.addEventListener("click", () => {
-          state.seleccion = button.dataset.operation;
-          $("operationGrid").querySelectorAll(".operation").forEach(el => el.classList.remove("selected","correct","try"));
-          button.classList.add("selected");
-          feedback();
-          $("continueButton").disabled = false;
-        });
-      });
-
-      $("continueButton").textContent = "Comprobar mi estrategia";
-      $("continueButton").disabled = true;
-      $("attemptNote").textContent = "Esta práctica tiene menos apoyo que la anterior.";
-
-      $("continueButton").onclick = () => {
-        if (!state.seleccion) return;
-        item.intentos += 1;
-        if (item.respuestaInicial === null) item.respuestaInicial = state.seleccion;
-        item.respuestaFinal = state.seleccion;
-        item.correctaPrimerIntento = item.intentos === 1 && state.seleccion === variante.operacionCorrecta;
-        item.correctaFinal = state.seleccion === variante.operacionCorrecta;
-        const boton = $("operationGrid").querySelector(`[data-operation="${CSS.escape(state.seleccion)}"]`);
-
-        if (!item.correctaFinal) {
-          boton?.classList.add("try");
-          feedback("Vuelve a la historia: ¿la cantidad se reparte, se repite, aumenta o disminuye?", "try");
-          $("attemptNote").textContent = `Intentos en este reto: ${item.intentos}. Tómate tu tiempo.`;
-          return;
-        }
-
-        boton?.classList.add("correct");
-        feedback(`✨ ${variante.feedbackCorrecto}`, "good");
-        $("continueButton").textContent = "Ir a la comprobación →";
-        $("continueButton").onclick = siguienteEtapa;
-      };
-    }
-
-    function renderTransferencia(variante) {
-      const item = registro("transferencia", variante);
-      const operaciones = ordenarOpciones(`transfer:${variante.id}:ops`, OPERACIONES);
-      state.seleccion = null;
-
-      $("stageLead").textContent = "Este problema no apareció antes. Cambiaron la historia y los números. Queremos ver si puedes llevar contigo la estrategia.";
-      $("stageContent").innerHTML = `
-        <h3 class="activity-title">${escapeHtml(variante.titulo)}</h3>
-        <div class="problem">${escapeHtml(variante.enunciado)}</div>
-        <p class="activity-question">${escapeHtml(variante.preguntaOperacion)}</p>
-        <div id="operationGrid" class="operations">
-          ${operaciones.map(op => `<button class="operation" type="button" data-operation="${op.id}"><span class="operation-symbol">${op.simbolo}</span><span class="operation-name">${op.nombre}</span></button>`).join("")}
-        </div>
-        <div class="transfer-grid">
-          <div class="answer-field"><label for="transferResult">Ahora calcula el resultado</label><input id="transferResult" inputmode="numeric" type="number" placeholder="Escribe tu resultado"></div>
-          <div id="supportBox"></div>
-        </div>
-      `;
-
-      $("operationGrid").querySelectorAll("[data-operation]").forEach(button => {
-        button.addEventListener("click", () => {
-          state.seleccion = button.dataset.operation;
-          $("operationGrid").querySelectorAll(".operation").forEach(el => el.classList.remove("selected","correct","try"));
-          button.classList.add("selected");
-          $("continueButton").disabled = $("transferResult").value.trim() === "";
-        });
-      });
-
-      $("transferResult").addEventListener("input", () => {
-        $("continueButton").disabled = !state.seleccion || $("transferResult").value.trim() === "";
-      });
-
-      $("continueButton").textContent = "Comprobar mi reto final";
-      $("continueButton").disabled = true;
-      $("attemptNote").textContent = "Aquí no buscamos reconocer una respuesta: eliges la operación y produces el resultado.";
-
-      $("continueButton").onclick = () => {
-        const resultado = Number($("transferResult").value);
-        if (!state.seleccion || !Number.isFinite(resultado)) return;
-
-        item.intentos += 1;
-        const respuesta = { operacion: state.seleccion, resultado };
-        if (item.respuestaInicial === null) item.respuestaInicial = respuesta;
-        item.respuestaFinal = respuesta;
-
-        const correcta =
-          state.seleccion === variante.operacionCorrecta &&
-          resultado === Number(variante.resultadoCorrecto);
-
-        item.correctaPrimerIntento = item.intentos === 1 && correcta;
-        item.correctaFinal = correcta;
-
-        if (!correcta) {
-          const operacionBien = state.seleccion === variante.operacionCorrecta;
-          feedback(
-            operacionBien
-              ? "La estrategia es buena. Revisa la cuenta con calma y vuelve a intentarlo."
-              : "Antes de calcular, vuelve a pensar qué ocurre con las cantidades. Después revisa el resultado.",
-            "try"
-          );
-          $("attemptNote").textContent = `Intentos en el reto nuevo: ${item.intentos}. Sigue siendo aprendizaje.`;
-
-          if (item.intentos >= 2 && !$("transferHint")) {
-            $("supportBox").innerHTML = `<button id="transferHint" class="support-button" type="button">💡 Pista</button><div id="transferHintText"></div>`;
-            $("transferHint").addEventListener("click", () => {
-              if (!item.pistaTardiaVista) {
-                item.pistaTardiaVista = true;
-                marcarPista(item);
-              }
-              $("transferHintText").innerHTML = `<div class="support-box">${escapeHtml(variante.pista)}</div>`;
-            });
-          }
-          return;
-        }
-
-        $("operationGrid").querySelector(`[data-operation="${CSS.escape(state.seleccion)}"]`)?.classList.add("correct");
-        feedback(`🌟 ${variante.feedbackCorrecto}`, "good");
-        $("transferResult").disabled = true;
-        $("continueButton").textContent = "Ver lo que he conseguido 🌟";
-        $("continueButton").onclick = finalizar;
-      };
-    }
-
-    function renderEtapa() {
-      const etapa = etapas[state.etapa];
-      actualizarRuta(etapa.ruta);
-      state.tiempo.cambiarSegmento(etapa.id);
-      $("stageKicker").textContent = etapa.kicker;
-      $("stageTitle").textContent = etapa.titulo;
-      $("stageSymbol").textContent = etapa.simbolo;
-      feedback();
-
-      if (etapa.id === "comprender") renderComprender();
-      if (etapa.id === "practica") renderOpciones("practica", state.variantes.practica, { conPistas:true });
-      if (etapa.id === "autonomia") renderOperacion("autonomia", state.variantes.autonomia);
-      if (etapa.id === "comprobacion") renderOpciones("comprobacion", state.variantes.comprobacion, { pistaTrasIntentos:2 });
-      if (etapa.id === "transferencia") renderTransferencia(state.variantes.transferencia);
-    }
-
-    function siguienteEtapa() {
-      if (state.etapa >= etapas.length - 1) return;
-      state.etapa += 1;
-      state.seleccion = null;
-      renderEtapa();
-      window.scrollTo({ top: Math.max(0, $("stagePanel").offsetTop - 86), behavior:"smooth" });
-    }
-
-    function construirRetroalimentacion() {
-      const transfer = state.registros.find(item => item.etapa === "transferencia");
-      const pistas = state.registros.reduce((total,item) => total + Number(item.pistasUtilizadas || 0), 0);
-      const intentosExtra = state.registros.reduce((total,item) => total + Math.max(0, Number(item.intentos || 0) - 1), 0);
-      const comprobacion = state.registros.find(item => item.etapa === "comprobacion");
-
-      let fortaleza;
-      let crecimiento;
-      let siguiente;
-      let senal;
-
-      if (transfer?.correctaPrimerIntento) {
-        fortaleza = "Aplicaste la estrategia en un problema nuevo sin necesitar una respuesta conocida. Esa es una señal útil de transferencia.";
-        senal = "transferencia_autonoma";
-      } else {
-        fortaleza = "Seguiste revisando tu estrategia hasta resolver un problema diferente. Corregir también forma parte de aprender.";
-        senal = "transferencia_con_reintento";
-      }
-
-      if (pistas > 0 || intentosExtra > 1) {
-        crecimiento = "Seguiremos practicando cómo reconocer la relación entre las cantidades con cada vez menos apoyo.";
-        siguiente = "Un reto breve con otra historia y números diferentes, buscando reducir la ayuda necesaria.";
-      } else if (!comprobacion?.correctaPrimerIntento) {
-        crecimiento = "Conviene seguir entrenando cómo ordenar los pasos antes de hacer las cuentas.";
-        siguiente = "Otro problema de dos pasos con un contexto diferente.";
-      } else {
-        crecimiento = "La estrategia está apareciendo con buena autonomía en esta sesión. Seguiremos comprobándola en contextos distintos.";
-        siguiente = "Continuar con un nuevo tipo de problema para comprobar que la estrategia se mantiene.";
-      }
-
-      return { fortaleza, crecimiento, siguiente, senal, pistas, intentosExtra };
-    }
-
-    async function finalizar() {
-      if (state.finalizado) return;
-      state.finalizado = true;
-      const tiempo = state.tiempo.detener();
-      const retro = construirRetroalimentacion();
-
-      $("stagePanel").classList.add("hidden");
-      $("summaryPanel").classList.remove("hidden");
-      actualizarRuta("transferir");
-      document.querySelector('[data-route="transferir"]')?.classList.add("done");
-      document.querySelector('[data-route="transferir"]')?.classList.remove("current");
-
-      $("summaryLead").textContent =
-        `${nombreAlumno}, hoy no repetiste una misma pregunta: trabajaste la estrategia con historias distintas y terminaste aplicándola en un reto nuevo.`;
-      $("summaryStrength").textContent = retro.fortaleza;
-      $("summaryGrow").textContent = retro.crecimiento;
-      $("summaryNext").textContent = retro.siguiente;
-
-      const badges = ["🧭 Pensé antes de calcular","🚀 Llegué a un contexto nuevo"];
-      if (retro.pistas > 0) badges.push("💡 Pedí ayuda cuando la necesité");
-      if (retro.intentosExtra > 0) badges.push("🌱 Volví a intentarlo");
-      $("summaryBadges").innerHTML = badges.map(texto => `<span class="summary-badge">${escapeHtml(texto)}</span>`).join("");
-
-      if (modo === MODOS_SESION_ACADEMICA.VISTA_PREVIA) {
-        $("saveStatus").textContent = "👀 Vista previa: tal como prometimos, nada de esta sesión se ha guardado como aprendizaje.";
-      } else {
-        $("saveStatus").textContent = "☁️ Guardando la sesión de aprendizaje...";
-        try {
-          state.guardado = await guardarSesionAcademica({
-            modo,
-            actividadId: PILOTO_META.actividadId,
-            tituloActividad: PILOTO_META.titulo,
-            versionActividad: PILOTO_META.version,
-            cursoReferencia: PILOTO_META.cursoReferencia,
-            materia: PILOTO_META.materia,
-            tema: PILOTO_META.tema,
-            origen: "curso",
-            inicioCliente: state.inicioIso,
-            finCliente: new Date().toISOString(),
-            tiempoActivoSegundos: tiempo.tiempoActivoSegundos,
-            tiempoActivoPorSegmento: tiempo.tiempoActivoPorSegmento,
-            conceptosTrabajados: [...PILOTO_META.conceptos],
-            variantes: Object.entries(state.variantes).map(([fase,variante]) => ({
-              fase,
-              varianteId: variante.id,
-              conceptoId: variante.conceptoId
-            })),
-            respuestas: state.registros.map(item => ({
-              etapa: item.etapa,
-              fase: item.fase,
-              conceptoId: item.conceptoId,
-              varianteId: item.varianteId,
-              intentos: Number(item.intentos || 0),
-              pistasUtilizadas: Number(item.pistasUtilizadas || 0),
-              respuestaInicial: item.respuestaInicial,
-              respuestaFinal: item.respuestaFinal,
-              correctaPrimerIntento: Boolean(item.correctaPrimerIntento),
-              correctaFinal: Boolean(item.correctaFinal)
-            })),
-            resumen: {
-              finalizada: true,
-              senalTransferencia: retro.senal,
-              pistasUtilizadas: retro.pistas,
-              intentosAdicionales: retro.intentosExtra,
-              transferenciaCorrectaPrimerIntento:
-                Boolean(state.registros.find(item => item.etapa === "transferencia")?.correctaPrimerIntento)
-            },
-            retroalimentacion: {
-              fortaleza: retro.fortaleza,
-              oportunidad: retro.crecimiento,
-              siguientePaso: retro.siguiente
-            }
-          });
-          $("saveStatus").textContent = "✅ Sesión guardada. La Academia recordará lo ocurrido para acompañar mejor el siguiente paso.";
-        } catch (error) {
-          console.error("No se pudo guardar la Sesión Académica.", error);
-          $("saveStatus").textContent = "⚠️ Terminaste el reto, pero no pudimos guardar la sesión. El aprendizaje realizado sigue contando; revisaremos la conexión antes de usar estos datos.";
-        }
-      }
-
-      mostrarCelebracion({
-        titulo:"¡Estrategia conseguida!",
-        mensaje:"Has llegado hasta un problema nuevo y lo has resuelto pensando paso a paso.",
-        duracion:3000,
-        mostrarGuacamayas:true
-      });
-
-      window.scrollTo({ top: Math.max(0, $("summaryPanel").offsetTop - 86), behavior:"smooth" });
-    }
-
-    $("startButton").addEventListener("click", () => {
-      state.iniciado = true;
-      state.etapa = 0;
-      state.registros = [];
-      state.inicioIso = new Date().toISOString();
-      state.finalizado = false;
-      state.guardado = null;
-      state.tiempo.reiniciar("comprender");
-      $("introPanel").classList.add("hidden");
-      $("stagePanel").classList.remove("hidden");
-      actualizarModo();
-      renderEtapa();
-      window.scrollTo({ top: Math.max(0, $("stagePanel").offsetTop - 86), behavior:"smooth" });
-    });
-
-    $("restartButton").addEventListener("click", async () => {
-      state.iniciado = false;
-      state.finalizado = false;
-      state.etapa = 0;
-      state.registros = [];
-      state.seleccion = null;
-      state.ordenOpciones = {};
-      await prepararVariantes();
-      $("summaryPanel").classList.add("hidden");
-      $("introPanel").classList.remove("hidden");
-      actualizarRuta("comprender");
-      actualizarModo();
-      window.scrollTo({ top: 0, behavior:"smooth" });
-    });
-
-    await prepararVariantes();
-    actualizarModo();
-    $("startButton").disabled = false;
-  </script>
+  <script
+    type="module"
+    src="../../../compartido/componentes/navegacion-global.js?v=7"
+  ></script>
+  <script type="module" src="./piloto-problemas.js"></script>
 </body>
 </html>
