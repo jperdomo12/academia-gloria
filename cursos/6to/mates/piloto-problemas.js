@@ -4,12 +4,12 @@ import { crearTiempoActivo } from "../../../compartido/js/tiempo-activo.js";
 import { mostrarCelebracion } from "../../../compartido/js/celebracion.js";
 import {
   guardarSesionAcademica,
-  obtenerVariantesRecientes,
+  leerSesionesAcademicas,
   MODOS_SESION_ACADEMICA
 } from "../../../compartido/js/sesiones-academicas.js";
 import {
   PILOTO_META,
-  EJEMPLO_GUIADO,
+  EJEMPLO_ANCLA,
   BANCO_PILOTO,
   OPERACIONES
 } from "./piloto-problemas-data.js";
@@ -57,43 +57,52 @@ const state = {
   inicioIso: null,
   tiempo: crearTiempoActivo({ inactividadMs: 180000 }),
   finalizado: false,
-  guardado: null
+  guardado: null,
+  sesionAnterior: null,
+  primeraSesion: true
 };
 
 const etapas = [
   {
-    id: "comprender",
-    ruta: "comprender",
-    kicker: "Comprender",
-    titulo: "La ruta de cuatro preguntas",
+    id: "ancla",
+    ruta: "aprender",
+    kicker: "Aprender · una sola historia",
+    titulo: "Un problema. Toda la estrategia.",
     simbolo: "🧭"
   },
   {
-    id: "practica",
-    ruta: "practicar",
-    kicker: "Practicar · con apoyo",
-    titulo: "Primero piensa. Después pide la ayuda mínima que necesites.",
+    id: "datos",
+    ruta: "comprender",
+    kicker: "Afianzar 1 de 4 · ¿Qué sé?",
+    titulo: "Separa lo que sirve de lo que distrae.",
     simbolo: "🔎"
   },
   {
-    id: "autonomia",
-    ruta: "practicar",
-    kicker: "Practicar · más autonomía",
-    titulo: "La historia cambia. La estrategia sigue siendo tuya.",
+    id: "pregunta",
+    ruta: "comprender",
+    kicker: "Afianzar 2 de 4 · ¿Qué me piden?",
+    titulo: "Antes de calcular, deja clara la meta.",
+    simbolo: "🎯"
+  },
+  {
+    id: "relacion",
+    ruta: "relacionar",
+    kicker: "Afianzar 3 de 4 · ¿Cómo se relaciona?",
+    titulo: "Elige la herramienta por la historia, no por una palabra.",
     simbolo: "🧠"
   },
   {
     id: "comprobacion",
     ruta: "comprobar",
-    kicker: "Comprobar",
-    titulo: "Organiza un problema de dos pasos antes de calcular.",
-    simbolo: "🧩"
+    kicker: "Afianzar 4 de 4 · ¿Tiene sentido?",
+    titulo: "Una respuesta también se puede mirar desde fuera.",
+    simbolo: "✅"
   },
   {
     id: "transferencia",
     ruta: "transferir",
-    kicker: "Transferir",
-    titulo: "Ahora sí: un problema nuevo y sin respuesta para memorizar.",
+    kicker: "Transferir · ahora tú",
+    titulo: "Una historia nueva. La misma brújula.",
     simbolo: "🚀"
   }
 ];
@@ -117,31 +126,70 @@ function barajar(items) {
   return copia;
 }
 
-function elegirVariante(banco, recientes) {
-  const disponibles = banco.filter(item => !recientes.has(item.id));
-  const fuente = disponibles.length ? disponibles : banco;
+function variantesRecientes(sesiones = []) {
+  return new Set(
+    sesiones.flatMap(sesion =>
+      Array.isArray(sesion.variantes)
+        ? sesion.variantes
+            .map(item => String(item?.varianteId || item?.id || "").trim())
+            .filter(Boolean)
+        : []
+    )
+  );
+}
+
+function elegirVariante(banco, recientes, usarEntrada) {
+  const candidatasEntrada = usarEntrada
+    ? banco.filter(item => item.entrada === true)
+    : banco;
+  const candidatas = candidatasEntrada.length ? candidatasEntrada : banco;
+  const noRecientes = candidatas.filter(item => !recientes.has(item.id));
+  const fuente = noRecientes.length ? noRecientes : candidatas;
   return fuente[Math.floor(Math.random() * fuente.length)];
 }
 
 async function prepararVariantes() {
+  let sesiones = [];
   let recientes = new Set();
+
+  state.sesionAnterior = null;
+  state.primeraSesion = true;
 
   if (modo === MODOS_SESION_ACADEMICA.APRENDIZAJE) {
     try {
-      recientes = await obtenerVariantesRecientes({
+      sesiones = await leerSesionesAcademicas({
         actividadId: PILOTO_META.actividadId,
-        maximoSesiones: 4
+        maximo: 8
       });
+      const sesionesComparables = sesiones.filter(
+        sesion => String(sesion.versionActividad || "") === PILOTO_META.version
+      );
+      recientes = variantesRecientes(sesionesComparables);
+      state.sesionAnterior = sesionesComparables[0] || null;
+      state.primeraSesion = sesionesComparables.length === 0;
     } catch (error) {
-      console.warn("No se pudieron consultar variantes recientes.", error);
+      console.warn("No se pudo consultar el historial reciente.", error);
     }
   }
 
+  const usarEntrada =
+    modo === MODOS_SESION_ACADEMICA.VISTA_PREVIA ||
+    state.primeraSesion;
+
   state.variantes = {
-    practica: elegirVariante(BANCO_PILOTO.practica, recientes),
-    autonomia: elegirVariante(BANCO_PILOTO.autonomia, recientes),
-    comprobacion: elegirVariante(BANCO_PILOTO.comprobacion, recientes),
-    transferencia: elegirVariante(BANCO_PILOTO.transferencia, recientes)
+    datos: elegirVariante(BANCO_PILOTO.datos, recientes, usarEntrada),
+    pregunta: elegirVariante(BANCO_PILOTO.pregunta, recientes, usarEntrada),
+    relacion: elegirVariante(BANCO_PILOTO.relacion, recientes, usarEntrada),
+    comprobacion: elegirVariante(
+      BANCO_PILOTO.comprobacion,
+      recientes,
+      usarEntrada
+    ),
+    transferencia: elegirVariante(
+      BANCO_PILOTO.transferencia,
+      recientes,
+      usarEntrada
+    )
   };
   state.ordenOpciones = {};
 }
@@ -154,7 +202,7 @@ function actualizarModo() {
     ? "Sesión de aprendizaje"
     : "Vista previa";
   $("modeDescription").textContent = aprendizaje
-    ? `Trabajamos sobre ${nombreAlumno}. Al terminar se guardará solo información útil para acompañar su aprendizaje.`
+    ? `Trabajamos sobre ${nombreAlumno}. Al terminar guardaremos solo información útil para acompañar su aprendizaje.`
     : "Puedes explorar, probar y equivocarte libremente. Nada de esta sesión se guardará como aprendizaje.";
 
   if (state.iniciado) {
@@ -176,8 +224,8 @@ function actualizarModo() {
 }
 
 $("liaWelcome").textContent =
-  `✨ Lía: ${nombreAlumno}, aquí no buscamos ir rápido. ` +
-  "Quiero que descubras una estrategia que puedas usar incluso cuando cambie el problema.";
+  `✨ Lía: ${nombreAlumno}, hoy primero conocerás una estrategia con una sola historia. ` +
+  "Después veremos si esa forma de pensar sigue contigo cuando el problema cambie.";
 
 $("modeButton").addEventListener("click", async () => {
   if (state.iniciado) return;
@@ -192,7 +240,7 @@ $("modeButton").addEventListener("click", async () => {
 });
 
 function actualizarRuta(rutaActual) {
-  const orden = ["comprender", "practicar", "comprobar", "transferir"];
+  const orden = ["aprender", "comprender", "relacionar", "comprobar", "transferir"];
   const actual = orden.indexOf(rutaActual);
 
   document.querySelectorAll("[data-route]").forEach(item => {
@@ -216,7 +264,7 @@ function registro(etapaId, variante) {
       etapa: etapaId,
       fase: variante?.fase || etapaId,
       conceptoId: variante?.conceptoId || "comprender_enunciado",
-      varianteId: variante?.id || "ejemplo-guiado",
+      varianteId: variante?.id || etapaId,
       intentos: 0,
       pistasUtilizadas: 0,
       respuestaInicial: null,
@@ -241,55 +289,64 @@ function ordenarOpciones(clave, opciones) {
   return state.ordenOpciones[clave];
 }
 
-function renderComprender() {
-  const item = registro("comprender", null);
-  item.correctaFinal = true;
-  item.correctaPrimerIntento = true;
-
+function renderAncla() {
   $("stageLead").textContent =
-    "Primero construimos una fotografía mental del problema. No tienes que memorizar palabras mágicas.";
+    "Aquí no cambiamos de ejercicio. Recorremos toda la brújula sobre la misma historia para que puedas concentrarte en el método.";
 
   $("stageContent").innerHTML = `
+    <div class="anchor-label">⚓ PROBLEMA ANCLA · SE MANTIENE DURANTE TODA LA EXPLICACIÓN</div>
     <div class="guided-example">
       <div>
-        <h3 class="activity-title">${escapeHtml(EJEMPLO_GUIADO.titulo)}</h3>
-        <div class="problem">${escapeHtml(EJEMPLO_GUIADO.enunciado)}</div>
+        <h3 class="activity-title">${escapeHtml(EJEMPLO_ANCLA.titulo)}</h3>
+        <div class="problem">${escapeHtml(EJEMPLO_ANCLA.enunciado)}</div>
       </div>
-      <div class="four-questions">
-        <div class="question-card"><strong>1 · ¿Qué sé?</strong><p>${escapeHtml(EJEMPLO_GUIADO.datos)}</p></div>
-        <div class="question-card"><strong>2 · ¿Qué me piden?</strong><p>${escapeHtml(EJEMPLO_GUIADO.pregunta)}</p></div>
-        <div class="question-card"><strong>3 · ¿Cómo se relaciona?</strong><p>${escapeHtml(EJEMPLO_GUIADO.relacion)}</p></div>
-        <div class="question-card"><strong>4 · ¿Tiene sentido?</strong><p>${escapeHtml(EJEMPLO_GUIADO.comprobacion)}</p></div>
+      <div class="anchor-flow">
+        <article class="anchor-step">
+          <b>1</b><div><strong>¿Qué sé?</strong><p>${escapeHtml(EJEMPLO_ANCLA.datos)}</p></div>
+        </article>
+        <article class="anchor-step">
+          <b>2</b><div><strong>¿Qué me piden?</strong><p>${escapeHtml(EJEMPLO_ANCLA.pregunta)}</p></div>
+        </article>
+        <article class="anchor-step">
+          <b>3</b><div><strong>¿Cómo se relaciona?</strong><p>${escapeHtml(EJEMPLO_ANCLA.relacion)}</p></div>
+        </article>
+        <article class="anchor-step">
+          <b>4</b><div><strong>Elijo y calculo</strong><p>${escapeHtml(EJEMPLO_ANCLA.operacion)} ${escapeHtml(EJEMPLO_ANCLA.calculo)}</p></div>
+        </article>
+        <article class="anchor-step anchor-step-check">
+          <b>5</b><div><strong>¿Tiene sentido?</strong><p>${escapeHtml(EJEMPLO_ANCLA.comprobacion)}</p></div>
+        </article>
       </div>
     </div>
   `;
 
   $("attemptNote").textContent =
-    "Aquí aprendemos la estrategia. Todavía no estamos comprobando nada.";
+    "Esta parte es explicación: no cuenta como acierto ni error.";
   $("continueButton").disabled = false;
-  $("continueButton").textContent = "Quiero probarla →";
+  $("continueButton").textContent = "Ahora quiero probar →";
   $("continueButton").onclick = siguienteEtapa;
 }
 
 function renderOpciones(
   etapaId,
   variante,
-  { conPistas = false, pistaTrasIntentos = 0 } = {}
+  {
+    lead = "Lee la historia con calma y responde solo a la pregunta de esta etapa.",
+    conPistas = false,
+    pistaTrasIntentos = 0
+  } = {}
 ) {
   const item = registro(etapaId, variante);
   const opciones = ordenarOpciones(`${etapaId}:${variante.id}`, variante.opciones);
   state.seleccion = null;
 
-  $("stageLead").textContent =
-    etapaId === "practica"
-      ? "Intenta resolver primero con tu propia estrategia. Las pistas están ahí solo si las necesitas."
-      : "Esta vez la ayuda aparece después de intentarlo. Queremos observar cómo organizas el problema.";
+  $("stageLead").textContent = lead;
 
   const ayudas = conPistas
-    ? `<div class="support-row">${variante.pistas
+    ? `<div class="support-row">${(variante.pistas || [])
         .map(
           (_, i) =>
-            `<button class="support-button" type="button" data-hint="${i}">Pista ${i + 1}</button>`
+            `<button class="support-button" type="button" data-hint="${i}">💡 Pista ${i + 1}</button>`
         )
         .join("")}</div><div id="supportBox"></div>`
     : `<div id="supportBox"></div>`;
@@ -345,8 +402,8 @@ function renderOpciones(
   $("continueButton").textContent = "Comprobar mi idea";
   $("continueButton").disabled = true;
   $("attemptNote").textContent = item.intentos
-    ? "Ya has probado una idea. Puedes cambiarla y volver a comprobar."
-    : "Primero elige la idea que mejor representa el problema.";
+    ? "Ya probaste una idea. Puedes cambiarla y volver a comprobar."
+    : "El objetivo es comprender esta etapa, no responder rápido.";
 
   $("continueButton").onclick = () => {
     if (!state.seleccion) return;
@@ -374,12 +431,12 @@ function renderOpciones(
     if (!opcion?.correcta) {
       boton?.classList.add("try");
       feedback(
-        "Has probado una idea. Vuelve al significado de la historia y elige otra opción.",
+        "Has probado una idea. Vuelve a la historia y mira exactamente qué pregunta esta etapa.",
         "try"
       );
       $("attemptNote").textContent =
         `Intentos en este reto: ${item.intentos}. ` +
-        "No pasa nada: cada intento nos da información.";
+        "Puedes cambiar de idea con calma.";
 
       if (
         pistaTrasIntentos > 0 &&
@@ -397,7 +454,7 @@ function renderOpciones(
             marcarPista(item);
           }
           $("lateHintText").innerHTML = `
-            <div class="support-box">${escapeHtml(variante.pista)}</div>
+            <div class="support-box">💡 ${escapeHtml(variante.pista)}</div>
           `;
         });
       }
@@ -405,22 +462,25 @@ function renderOpciones(
     }
 
     boton?.classList.add("correct");
+    $("choiceGrid")
+      .querySelectorAll(".choice")
+      .forEach(el => { el.disabled = true; });
     feedback(`🌟 ${variante.feedbackCorrecto}`, "good");
     $("continueButton").textContent = "Seguir →";
     $("continueButton").onclick = siguienteEtapa;
   };
 }
 
-function renderOperacion(etapaId, variante) {
-  const item = registro(etapaId, variante);
+function renderRelacion(variante) {
+  const item = registro("relacion", variante);
   const operaciones = ordenarOpciones(
-    `${etapaId}:${variante.id}:ops`,
+    `relacion:${variante.id}:ops`,
     OPERACIONES
   );
   state.seleccion = null;
 
   $("stageLead").textContent =
-    "No hay una frase exacta que memorizar. Imagina lo que está ocurriendo y elige la herramienta matemática.";
+    "Recuerda la herramienta que acabas de explorar: las palabras pueden dar pistas, pero la historia es la que decide.";
 
   $("stageContent").innerHTML = `
     <h3 class="activity-title">${escapeHtml(variante.titulo)}</h3>
@@ -437,6 +497,7 @@ function renderOperacion(etapaId, variante) {
         )
         .join("")}
     </div>
+    <div id="supportBox"></div>
   `;
 
   $("operationGrid")
@@ -456,7 +517,7 @@ function renderOperacion(etapaId, variante) {
   $("continueButton").textContent = "Comprobar mi estrategia";
   $("continueButton").disabled = true;
   $("attemptNote").textContent =
-    "Esta práctica tiene menos apoyo que la anterior.";
+    "No necesitas hacer la cuenta todavía: solo reconocer la relación.";
 
   $("continueButton").onclick = () => {
     if (!state.seleccion) return;
@@ -480,17 +541,36 @@ function renderOperacion(etapaId, variante) {
     if (!item.correctaFinal) {
       boton?.classList.add("try");
       feedback(
-        "Vuelve a la historia: ¿la cantidad se reparte, se repite, aumenta o disminuye?",
+        "No busques una palabra concreta. Imagina qué hacen las cantidades y vuelve a elegir.",
         "try"
       );
       $("attemptNote").textContent =
         `Intentos en este reto: ${item.intentos}. Tómate tu tiempo.`;
+
+      if (!$("relationHint")) {
+        $("supportBox").innerHTML = `
+          <button id="relationHint" class="support-button" type="button">💡 Quiero una pista</button>
+          <div id="relationHintText"></div>
+        `;
+        $("relationHint").addEventListener("click", () => {
+          if (!item.pistaTardiaVista) {
+            item.pistaTardiaVista = true;
+            marcarPista(item);
+          }
+          $("relationHintText").innerHTML = `
+            <div class="support-box">💡 ${escapeHtml(variante.pista)}</div>
+          `;
+        });
+      }
       return;
     }
 
     boton?.classList.add("correct");
+    $("operationGrid")
+      .querySelectorAll(".operation")
+      .forEach(el => { el.disabled = true; });
     feedback(`✨ ${variante.feedbackCorrecto}`, "good");
-    $("continueButton").textContent = "Ir a la comprobación →";
+    $("continueButton").textContent = "Seguir →";
     $("continueButton").onclick = siguienteEtapa;
   };
 }
@@ -504,7 +584,7 @@ function renderTransferencia(variante) {
   state.seleccion = null;
 
   $("stageLead").textContent =
-    "Este problema no apareció antes. Cambiaron la historia y los números. Queremos ver si puedes llevar contigo la estrategia.";
+    "Ahora recorres la brújula por tu cuenta: entiende qué ocurre, decide la operación, calcula y comprueba si tu respuesta encaja.";
 
   $("stageContent").innerHTML = `
     <h3 class="activity-title">${escapeHtml(variante.titulo)}</h3>
@@ -557,7 +637,7 @@ function renderTransferencia(variante) {
   $("continueButton").textContent = "Comprobar mi reto final";
   $("continueButton").disabled = true;
   $("attemptNote").textContent =
-    "Aquí no buscamos reconocer una respuesta: eliges la operación y produces el resultado.";
+    "Aquí eliges la operación y produces el resultado. Una pista estará disponible si la necesitas.";
 
   $("continueButton").onclick = () => {
     const resultado = Number($("transferResult").value);
@@ -588,18 +668,18 @@ function renderTransferencia(variante) {
 
       feedback(
         operacionBien
-          ? "La estrategia es buena. Revisa la cuenta con calma y vuelve a intentarlo."
-          : "Antes de calcular, vuelve a pensar qué ocurre con las cantidades. Después revisa el resultado.",
+          ? "La estrategia encaja. Revisa solamente la cuenta con calma."
+          : "Vuelve a la historia: primero decide qué está ocurriendo y después revisa el cálculo.",
         "try"
       );
 
       $("attemptNote").textContent =
         `Intentos en el reto nuevo: ${item.intentos}. ` +
-        "Sigue siendo aprendizaje.";
+        "Un intento no borra lo que ya entendiste.";
 
-      if (item.intentos >= 2 && !$("transferHint")) {
+      if (!$("transferHint")) {
         $("supportBox").innerHTML = `
-          <button id="transferHint" class="support-button" type="button">💡 Pista</button>
+          <button id="transferHint" class="support-button" type="button">💡 Quiero una pista</button>
           <div id="transferHintText"></div>
         `;
 
@@ -609,7 +689,7 @@ function renderTransferencia(variante) {
             marcarPista(item);
           }
           $("transferHintText").innerHTML = `
-            <div class="support-box">${escapeHtml(variante.pista)}</div>
+            <div class="support-box">💡 ${escapeHtml(variante.pista)}</div>
           `;
         });
       }
@@ -622,8 +702,12 @@ function renderTransferencia(variante) {
       )
       ?.classList.add("correct");
 
-    feedback(`🌟 ${variante.feedbackCorrecto}`, "good");
+    $("operationGrid")
+      .querySelectorAll(".operation")
+      .forEach(el => { el.disabled = true; });
     $("transferResult").disabled = true;
+
+    feedback(`🌟 ${variante.feedbackCorrecto}`, "good");
     $("continueButton").textContent = "Ver lo que he conseguido 🌟";
     $("continueButton").onclick = finalizar;
   };
@@ -639,17 +723,27 @@ function renderEtapa() {
   $("stageSymbol").textContent = etapa.simbolo;
   feedback();
 
-  if (etapa.id === "comprender") {
-    renderComprender();
-  } else if (etapa.id === "practica") {
-    renderOpciones("practica", state.variantes.practica, {
-      conPistas: true
+  if (etapa.id === "ancla") {
+    renderAncla();
+  } else if (etapa.id === "datos") {
+    renderOpciones("datos", state.variantes.datos, {
+      conPistas: true,
+      lead:
+        "Este problema es nuevo. Por ahora solo buscamos los datos que realmente ayudan a responder."
     });
-  } else if (etapa.id === "autonomia") {
-    renderOperacion("autonomia", state.variantes.autonomia);
+  } else if (etapa.id === "pregunta") {
+    renderOpciones("pregunta", state.variantes.pregunta, {
+      conPistas: true,
+      lead:
+        "Otra historia nueva. No resuelvas todavía: identifica exactamente qué cantidad necesita la respuesta."
+    });
+  } else if (etapa.id === "relacion") {
+    renderRelacion(state.variantes.relacion);
   } else if (etapa.id === "comprobacion") {
     renderOpciones("comprobacion", state.variantes.comprobacion, {
-      pistaTrasIntentos: 2
+      pistaTrasIntentos: 1,
+      lead:
+        "Aquí ya existe una respuesta propuesta. Tu tarea es decidir si realmente encaja con la historia."
     });
   } else if (etapa.id === "transferencia") {
     renderTransferencia(state.variantes.transferencia);
@@ -673,6 +767,9 @@ function construirRetroalimentacion() {
   const transferencia = state.registros.find(
     item => item.etapa === "transferencia"
   );
+  const relacion = state.registros.find(
+    item => item.etapa === "relacion"
+  );
   const comprobacion = state.registros.find(
     item => item.etapa === "comprobacion"
   );
@@ -695,29 +792,34 @@ function construirRetroalimentacion() {
 
   if (transferencia?.correctaPrimerIntento) {
     fortaleza =
-      "Aplicaste la estrategia en un problema nuevo sin necesitar una respuesta conocida. Esa es una señal útil de transferencia.";
+      "Aplicaste la brújula completa en una historia nueva y llegaste al resultado al primer intento.";
     senal = "transferencia_autonoma";
   } else {
     fortaleza =
-      "Seguiste revisando tu estrategia hasta resolver un problema diferente. Corregir también forma parte de aprender.";
+      "Seguiste revisando tu estrategia hasta resolver una historia distinta. Corregir una idea también forma parte de aprender.";
     senal = "transferencia_con_reintento";
   }
 
   if (pistas > 0 || intentosExtra > 1) {
     crecimiento =
-      "Seguiremos practicando cómo reconocer la relación entre las cantidades con cada vez menos apoyo.";
+      "Seguiremos buscando que cada etapa necesite un poco menos de ayuda, sin subir todavía la dificultad de todo a la vez.";
     siguiente =
-      "Un reto breve con otra historia y números diferentes, buscando reducir la ayuda necesaria.";
+      "Otra vuelta corta con historias distintas, manteniendo números manejables mientras consolidamos la estrategia.";
+  } else if (!relacion?.correctaPrimerIntento) {
+    crecimiento =
+      "Conviene seguir practicando cómo reconocer lo que hacen las cantidades antes de elegir una operación.";
+    siguiente =
+      "Un nuevo problema para distinguir juntar, quitar, repetir grupos y repartir.";
   } else if (!comprobacion?.correctaPrimerIntento) {
     crecimiento =
-      "Conviene seguir entrenando cómo ordenar los pasos antes de hacer las cuentas.";
+      "Seguiremos entrenando cómo comprobar una respuesta volviendo a la historia y usando la operación relacionada.";
     siguiente =
-      "Otro problema de dos pasos con un contexto diferente.";
+      "Un reto breve donde primero resolvemos y después comprobamos de otra manera.";
   } else {
     crecimiento =
-      "La estrategia está apareciendo con buena autonomía en esta sesión. Seguiremos comprobándola en contextos distintos.";
+      "La estrategia apareció con buena autonomía en esta sesión. Ahora necesitamos comprobar que se mantiene con el tiempo.";
     siguiente =
-      "Continuar con un nuevo tipo de problema para comprobar que la estrategia se mantiene.";
+      "Volver más adelante con nuevas variantes y, cuando corresponda, introducir una operación algo más exigente.";
   }
 
   return {
@@ -730,12 +832,92 @@ function construirRetroalimentacion() {
   };
 }
 
+function construirRecordPersonal(retro) {
+  if (modo !== MODOS_SESION_ACADEMICA.APRENDIZAJE) {
+    return null;
+  }
+
+  const anterior = state.sesionAnterior?.resumen;
+  const transferenciaActual = state.registros.find(
+    item => item.etapa === "transferencia"
+  );
+
+  if (!anterior) {
+    return {
+      tipo: "punto_partida",
+      titulo: "🌱 Tu punto de partida",
+      texto:
+        `Hoy usaste ${retro.pistas} pista${retro.pistas === 1 ? "" : "s"} y ` +
+        `${retro.intentosExtra} reintento${retro.intentosExtra === 1 ? "" : "s"} adicional${retro.intentosExtra === 1 ? "" : "es"}. ` +
+        "La próxima vez podremos comparar contigo misma.",
+      lia:
+        "Lía: No es una nota. Es una referencia para descubrir qué va necesitando menos ayuda con el tiempo."
+    };
+  }
+
+  const pistasAntes = Number(anterior.pistasUtilizadas ?? 0);
+  const intentosAntes = Number(anterior.intentosAdicionales ?? 0);
+  const transferenciaAntes = Boolean(
+    anterior.transferenciaCorrectaPrimerIntento
+  );
+
+  if (retro.pistas < pistasAntes) {
+    const diferencia = pistasAntes - retro.pistas;
+    return {
+      tipo: "nuevo_record_pistas",
+      titulo: "🌟 Nuevo récord personal",
+      texto:
+        `Esta vez utilizaste ${diferencia} pista${diferencia === 1 ? "" : "s"} menos que en tu sesión anterior.`,
+      lia:
+        "Lía: La estrategia está necesitando un poco menos de apoyo. Eso merece que lo notes."
+    };
+  }
+
+  if (retro.intentosExtra < intentosAntes) {
+    const diferencia = intentosAntes - retro.intentosExtra;
+    return {
+      tipo: "nuevo_record_intentos",
+      titulo: "🌟 Nuevo récord personal",
+      texto:
+        `Esta vez necesitaste ${diferencia} reintento${diferencia === 1 ? "" : "s"} menos que en tu sesión anterior.`,
+      lia:
+        "Lía: No se trata de correr. Hoy encontraste el camino con menos correcciones."
+    };
+  }
+
+  if (
+    transferenciaActual?.correctaPrimerIntento &&
+    !transferenciaAntes
+  ) {
+    return {
+      tipo: "nuevo_record_transferencia",
+      titulo: "🌟 Nuevo récord personal",
+      texto:
+        "Hoy resolviste el reto final al primer intento; en la sesión anterior necesitaste revisar tu respuesta.",
+      lia:
+        "Lía: La historia cambió y aun así pudiste llevarte la estrategia contigo."
+    };
+  }
+
+  return {
+    tipo: "referencia_personal",
+    titulo: "🌿 Tu referencia personal",
+    texto:
+      `Hoy: ${retro.pistas} pista${retro.pistas === 1 ? "" : "s"} y ` +
+      `${retro.intentosExtra} reintento${retro.intentosExtra === 1 ? "" : "s"} adicional${retro.intentosExtra === 1 ? "" : "es"}. ` +
+      "No hace falta superar una marca en cada sesión; seguiremos mirando la tendencia.",
+    lia:
+      "Lía: Tu comparación importante es contigo misma y a lo largo del tiempo."
+  };
+}
+
 async function finalizar() {
   if (state.finalizado) return;
 
   state.finalizado = true;
   const tiempo = state.tiempo.detener();
   const retro = construirRetroalimentacion();
+  const record = construirRecordPersonal(retro);
 
   $("stagePanel").classList.add("hidden");
   $("summaryPanel").classList.remove("hidden");
@@ -749,8 +931,8 @@ async function finalizar() {
     ?.classList.remove("current");
 
   $("summaryLead").textContent =
-    `${nombreAlumno}, hoy no repetiste una misma pregunta: ` +
-    "trabajaste la estrategia con historias distintas y terminaste aplicándola en un reto nuevo.";
+    `${nombreAlumno}, primero aprendiste toda la estrategia con un solo problema. ` +
+    "Después cada etapa cambió de historia y terminaste usando la brújula completa en un reto nuevo.";
 
   $("summaryStrength").textContent = retro.fortaleza;
   $("summaryGrow").textContent = retro.crecimiento;
@@ -758,13 +940,17 @@ async function finalizar() {
 
   const badges = [
     "🧭 Pensé antes de calcular",
-    "🚀 Llegué a un contexto nuevo"
+    "🧩 Practiqué cada etapa",
+    "🚀 Llevé la estrategia a otra historia"
   ];
   if (retro.pistas > 0) {
     badges.push("💡 Pedí ayuda cuando la necesité");
   }
   if (retro.intentosExtra > 0) {
     badges.push("🌱 Volví a intentarlo");
+  }
+  if (record?.tipo?.startsWith("nuevo_record")) {
+    badges.push("🌟 Nuevo récord personal");
   }
 
   $("summaryBadges").innerHTML = badges
@@ -773,6 +959,15 @@ async function finalizar() {
         `<span class="summary-badge">${escapeHtml(texto)}</span>`
     )
     .join("");
+
+  if (record) {
+    $("personalRecord").classList.remove("hidden");
+    $("personalRecordTitle").textContent = record.titulo;
+    $("personalRecordText").textContent = record.texto;
+    $("personalRecordLia").textContent = record.lia;
+  } else {
+    $("personalRecord").classList.add("hidden");
+  }
 
   if (modo === MODOS_SESION_ACADEMICA.VISTA_PREVIA) {
     $("saveStatus").textContent =
@@ -826,12 +1021,20 @@ async function finalizar() {
             state.registros.find(
               item => item.etapa === "transferencia"
             )?.correctaPrimerIntento
-          )
+          ),
+          recordPersonal: record?.tipo || null
         },
         retroalimentacion: {
           fortaleza: retro.fortaleza,
           oportunidad: retro.crecimiento,
-          siguientePaso: retro.siguiente
+          siguientePaso: retro.siguiente,
+          recordPersonal: record
+            ? {
+                tipo: record.tipo,
+                titulo: record.titulo,
+                texto: record.texto
+              }
+            : null
         }
       });
 
@@ -851,7 +1054,7 @@ async function finalizar() {
   mostrarCelebracion({
     titulo: "¡Reto completado!",
     mensaje:
-      "Has llegado hasta un problema nuevo y lo has resuelto pensando paso a paso.",
+      "Primero aprendiste la brújula; después la llevaste contigo cuando las historias cambiaron.",
     duracion: 3000,
     mostrarGuacamayas: true
   });
@@ -870,7 +1073,7 @@ $("startButton").addEventListener("click", () => {
   state.finalizado = false;
   state.guardado = null;
 
-  state.tiempo.reiniciar("comprender");
+  state.tiempo.reiniciar("ancla");
   $("introPanel").classList.add("hidden");
   $("stagePanel").classList.remove("hidden");
 
@@ -894,9 +1097,10 @@ $("restartButton").addEventListener("click", async () => {
   await prepararVariantes();
 
   $("summaryPanel").classList.add("hidden");
+  $("personalRecord").classList.add("hidden");
   $("introPanel").classList.remove("hidden");
 
-  actualizarRuta("comprender");
+  actualizarRuta("aprender");
   actualizarModo();
 
   window.scrollTo({
