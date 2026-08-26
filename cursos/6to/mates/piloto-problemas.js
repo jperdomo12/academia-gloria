@@ -636,7 +636,7 @@ function renderEtapa() {
   state.tiempo.cambiarSegmento(etapa.id);
   $("stageKicker").textContent = etapa.kicker;
   $("stageTitle").textContent = etapa.titulo;
-  $("stageSymbol").textContent = etapa.simolo;
+  $("stageSymbol").textContent = etapa.simbolo;
   feedback();
 
   if (etapa.id === "comprender") {
