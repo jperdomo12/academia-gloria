@@ -3,115 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#6f7b43">
   <title>6.º de Primaria | Academia Gloria Valentina</title>
   <meta name="description" content="Portal académico de 6.º de Primaria de Academia Gloria Valentina.">
   <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
   <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
   <link rel="stylesheet" href="../../compartido/css/academia-base.css">
-  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
-  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=5">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    :root{
-      --ink:#0f172a;
-      --muted:#64748b;
-      --line:#dbe4ef;
-      --surface:#ffffff;
-      --blue:#2563eb;
-      --blue-soft:#eff6ff;
-      --teal:#0f766e;
-      --teal-soft:#f0fdfa;
-      --amber:#b45309;
-      --amber-soft:#fffbeb;
-    }
+    :root{--olive:#6f7b43;--olive-dark:#46512c;--olive-soft:#eef2df;--lavender:#7d6aa8;--lavender-soft:#f0ebf8;--sky:#4e93a0;--sky-soft:#e9f5f6;--coral:#d87968;--ink:#273024;--muted:#687064;--line:#dde2d2}
     *{box-sizing:border-box}
-    body{
-      font-family:'Outfit',sans-serif;
-      color:var(--ink);
-      background:
-        linear-gradient(180deg,#f8fafc 0,#ffffff 52%,#f8fafc 100%);
-    }
+    body{font-family:'Outfit',sans-serif;color:var(--ink);background:radial-gradient(circle at 7% 4%,rgba(111,123,67,.15),transparent 24%),radial-gradient(circle at 94% 8%,rgba(125,106,168,.13),transparent 24%),radial-gradient(circle at 84% 92%,rgba(78,147,160,.11),transparent 27%),linear-gradient(155deg,#fffdf7,#f8faef 50%,#fbf7ff)}
     .shell{max-width:1180px;margin:0 auto;padding:24px}
-    .panel{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:0 12px 30px rgba(15,23,42,.055);
-    }
-    .course-hero{
-      position:relative;
-      overflow:hidden;
-      background:#0f172a;
-      color:white;
-      border-radius:26px;
-      padding:34px;
-      box-shadow:0 18px 44px rgba(15,23,42,.15);
-    }
-    .course-hero:after{
-      content:"";
-      position:absolute;
-      width:320px;height:320px;border-radius:50%;
-      right:-120px;top:-150px;
-      border:42px solid rgba(255,255,255,.05);
-    }
-    .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
-    .chip{
-      display:inline-flex;align-items:center;gap:.4rem;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.08);
-      color:#e2e8f0;
-      padding:.5rem .8rem;border-radius:999px;font-weight:700;font-size:.85rem;
-    }
-    .subject{
-      display:flex;gap:18px;align-items:flex-start;padding:22px;
-      transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
-    }
-    a.subject:hover{transform:translateY(-3px);border-color:#bfdbfe;box-shadow:0 16px 34px rgba(37,99,235,.09)}
-    .subject-icon{
-      width:54px;height:54px;flex:0 0 54px;border-radius:16px;
-      display:grid;place-items:center;font-size:28px;
-    }
-    .status{
-      display:inline-flex;align-items:center;gap:.35rem;
-      border-radius:999px;padding:.35rem .65rem;
-      font-size:.74rem;font-weight:800;letter-spacing:.02em;
-    }
-    .route-step{
-      min-height:126px;padding:18px;border-left:3px solid #cbd5e1;background:#fff;
-    }
-    @media (max-width:640px){
-      .shell{padding:16px}
-      .course-hero{padding:26px 22px}
-    }
+    .panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:23px;box-shadow:0 12px 30px rgba(58,68,40,.06)}
+    .course-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fbfced,#f1f4dc 48%,#f1ebf8);color:var(--ink);border:1px solid #d8dfbd;border-radius:30px;padding:36px;box-shadow:0 20px 52px rgba(70,81,44,.11)}
+    .course-hero:before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-120px;top:-170px;background:radial-gradient(circle,#d9dea8 0 30%,#b9a8d3 31% 58%,#9fcbd0 59% 100%);opacity:.28}
+    .course-hero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;left:-100px;bottom:-150px;background:#dfe8bd;opacity:.35}
+    .hero-inner{position:relative;z-index:1}
+    .hero-title{background:linear-gradient(90deg,var(--olive-dark),var(--olive),var(--lavender),var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:900}
+    .chip{display:inline-flex;align-items:center;gap:.4rem;border:1px solid #d9dfc7;background:rgba(255,255,255,.72);color:#526039;padding:.5rem .8rem;border-radius:999px;font-weight:800;font-size:.85rem}
+    .stage-card{border:1px solid #d9d1e5;background:rgba(255,255,255,.70);border-radius:22px;padding:20px;backdrop-filter:blur(8px)}
+    .subject{display:flex;gap:18px;align-items:flex-start;padding:22px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    a.subject:hover{transform:translateY(-3px);border-color:#b7c28d;box-shadow:0 17px 35px rgba(70,81,44,.10)}
+    .subject-icon{width:56px;height:56px;flex:0 0 56px;border-radius:18px;display:grid;place-items:center;font-size:29px}
+    .status{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.35rem .65rem;font-size:.74rem;font-weight:900;letter-spacing:.02em}
+    .route-step{min-height:126px;padding:18px;border-left:3px solid #c9d39f;background:#fff}.route-step:nth-child(2){border-left-color:#bba9d3}.route-step:nth-child(3){border-left-color:#9dcbd0}.route-step:nth-child(4){border-left-color:#ddb3a9}
+    @media(max-width:640px){.shell{padding:16px}.course-hero{padding:27px 21px}.subject-icon{width:52px;height:52px;flex-basis:52px}}
   </style>
 </head>
 <body data-page-title="6.º de Primaria" data-page-icon="🎒" data-nav-back="../../index.html">
   <main class="shell">
     <header class="course-hero mb-8">
-      <div class="relative z-10 grid lg:grid-cols-[1fr_340px] gap-8 items-end">
+      <div class="hero-inner grid lg:grid-cols-[1fr_340px] gap-8 items-end">
         <div>
-          <p class="eyebrow text-sky-300 mb-3">Curso académico · 6.º de Primaria</p>
-          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-4">
-            Un espacio para estudiar<br class="hidden md:block"> con más autonomía.
-          </h1>
-          <p class="text-slate-300 text-lg md:text-xl leading-relaxed max-w-3xl">
-            Los temas del colegio se convierten aquí en rutas claras para comprender, practicar, comprobar y recordar.
-          </p>
+          <p class="eyebrow text-[#65713f] mb-3">Curso académico · 6.º de Primaria</p>
+          <h1 class="hero-title text-4xl md:text-6xl font-black tracking-tight leading-[1.03] mb-4">Tu mapa para aprender, avanzar y llegar más lejos.</h1>
+          <p class="text-[#5f6858] text-lg md:text-xl leading-relaxed max-w-3xl font-medium">Cada asignatura crecerá con el material real del colegio. La Academia te ayuda a comprender, practicar, comprobar y volver sobre lo importante sin perder tu propio ritmo.</p>
           <div class="flex flex-wrap gap-2 mt-6">
-            <span class="chip"><i data-lucide="book-open-check" class="w-4 h-4"></i> Material del colegio primero</span>
-            <span class="chip"><i data-lucide="brain" class="w-4 h-4"></i> Reto antes de ayuda</span>
-            <span class="chip"><i data-lucide="timer-reset" class="w-4 h-4"></i> Tiempo para pensar</span>
+            <span class="chip"><i data-lucide="book-open-check" class="w-4 h-4"></i> Material real del colegio</span>
+            <span class="chip"><i data-lucide="sparkles" class="w-4 h-4"></i> Herramientas para pensar</span>
+            <span class="chip"><i data-lucide="leaf" class="w-4 h-4"></i> Cada vez más autonomía</span>
           </div>
         </div>
-        <aside class="border border-white/10 bg-white/[.06] rounded-2xl p-5">
-          <p class="eyebrow text-slate-400 mb-2">Etapa actual</p>
-          <p class="text-2xl font-extrabold">Construcción activa</p>
-          <p class="text-slate-300 mt-2 leading-relaxed">
-            Empezamos con Matemáticas y añadiremos materias a medida que llegue material real de 6.º.
-          </p>
+        <aside class="stage-card">
+          <p class="eyebrow text-[#74639a] mb-2">Ahora mismo</p>
+          <p class="text-2xl font-black">Matemáticas ya está despierta ✨</p>
+          <p class="text-[#666377] mt-2 leading-relaxed font-medium">Las demás asignaturas ya tienen su espacio y se irán activando con los materiales del curso.</p>
         </aside>
       </div>
     </header>
@@ -119,96 +62,43 @@
     <section class="grid lg:grid-cols-[1.1fr_.9fr] gap-6 mb-8">
       <div>
         <div class="flex items-end justify-between gap-4 mb-4">
-          <div>
-            <p class="eyebrow text-blue-700 mb-1">Mis asignaturas</p>
-            <h2 class="text-3xl font-extrabold">Panel del curso</h2>
-          </div>
-          <span class="text-sm text-slate-500 font-semibold">1 área activa</span>
+          <div><p class="eyebrow text-[#65713f] mb-1">Mis asignaturas</p><h2 class="text-3xl font-black">Mi 6.º</h2></div>
+          <span class="text-sm text-slate-500 font-semibold">5 espacios · 1 activo</span>
         </div>
-
         <div class="space-y-3">
           <a href="mates/" class="panel subject block">
-            <div class="subject-icon bg-blue-50 text-blue-700">➗</div>
-            <div class="flex-1 min-w-0">
-              <div class="flex flex-wrap items-center gap-2 mb-1">
-                <h3 class="text-xl font-extrabold">Matemáticas</h3>
-                <span class="status bg-blue-50 text-blue-700">● Activa</span>
-              </div>
-              <p class="text-slate-600 leading-relaxed">
-                Comprensión de problemas, razonamiento, cálculo y práctica progresiva.
-              </p>
-              <div class="mt-3 inline-flex items-center gap-2 font-extrabold text-blue-700">
-                Ver temas <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </div>
-            </div>
+            <div class="subject-icon bg-[#eef2df] text-[#526039]">➗</div>
+            <div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-2 mb-1"><h3 class="text-xl font-black">Matemáticas</h3><span class="status bg-[#eef2df] text-[#526039]">● Activa</span></div><p class="text-slate-600 leading-relaxed">Comprensión de problemas, herramientas matemáticas, razonamiento, cálculo y práctica progresiva.</p><div class="mt-3 inline-flex items-center gap-2 font-black text-[#596637]">Entrar <i data-lucide="arrow-right" class="w-4 h-4"></i></div></div>
           </a>
-
-          <div class="panel subject opacity-75">
-            <div class="subject-icon bg-pink-50 text-pink-700">✍️</div>
-            <div class="flex-1">
-              <div class="flex flex-wrap items-center gap-2 mb-1">
-                <h3 class="text-xl font-extrabold">Lengua</h3>
-                <span class="status bg-slate-100 text-slate-600">Próximamente</span>
-              </div>
-              <p class="text-slate-600">Se incorporará a partir del material real del curso.</p>
-            </div>
-          </div>
-
-          <div class="panel subject opacity-75">
-            <div class="subject-icon bg-emerald-50 text-emerald-700">🔬</div>
-            <div class="flex-1">
-              <div class="flex flex-wrap items-center gap-2 mb-1">
-                <h3 class="text-xl font-extrabold">Ciencias</h3>
-                <span class="status bg-slate-100 text-slate-600">Próximamente</span>
-              </div>
-              <p class="text-slate-600">Se incorporará a partir del material real del curso.</p>
-            </div>
-          </div>
+          <div class="panel subject opacity-80"><div class="subject-icon bg-rose-50 text-rose-700">✍️</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><h3 class="text-xl font-black">Lengua</h3><span class="status bg-slate-100 text-slate-600">Preparando aventuras</span></div><p class="text-slate-600">Comprensión, expresión, gramática y comunicación a partir del material real del curso.</p></div></div>
+          <div class="panel subject opacity-80"><div class="subject-icon bg-amber-50 text-amber-700">🌍</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><h3 class="text-xl font-black">Sociales</h3><span class="status bg-slate-100 text-slate-600">Preparando aventuras</span></div><p class="text-slate-600">Historia, geografía y sociedad conectadas con mapas, relaciones y contextos comprensibles.</p></div></div>
+          <div class="panel subject opacity-80"><div class="subject-icon bg-emerald-50 text-emerald-700">🔬</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><h3 class="text-xl font-black">Science</h3><span class="status bg-slate-100 text-slate-600">Preparing adventures</span></div><p class="text-slate-600">Science content with visual support, clear language and the vocabulary needed for class.</p></div></div>
+          <div class="panel subject opacity-80"><div class="subject-icon bg-sky-50 text-sky-700">🇬🇧</div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-1"><h3 class="text-xl font-black">Inglés</h3><span class="status bg-slate-100 text-slate-600">Preparing adventures</span></div><p class="text-slate-600">Vocabulary, reading, listening and communication with short, clear and useful practice.</p></div></div>
         </div>
       </div>
 
       <aside class="panel p-6 self-start">
-        <p class="eyebrow text-teal-700 mb-2">Cómo trabajaremos un tema</p>
-        <h2 class="text-2xl font-extrabold mb-5">Una ruta clara, no una plantilla rígida</h2>
+        <p class="eyebrow text-[#65713f] mb-2">Cómo crece un aprendizaje</p>
+        <h2 class="text-2xl font-black mb-5">Una ruta clara, con espacio para pensar</h2>
         <div class="space-y-3">
-          <div class="route-step rounded-xl">
-            <div class="text-sm font-extrabold text-blue-700 mb-1">01 · COMPRENDER</div>
-            <p class="text-slate-600">Ubicar el tema y entender qué significa.</p>
-          </div>
-          <div class="route-step rounded-xl">
-            <div class="text-sm font-extrabold text-teal-700 mb-1">02 · PRACTICAR</div>
-            <p class="text-slate-600">Resolver con apoyo y después con más autonomía.</p>
-          </div>
-          <div class="route-step rounded-xl">
-            <div class="text-sm font-extrabold text-amber-700 mb-1">03 · COMPROBAR</div>
-            <p class="text-slate-600">Recibir feedback que explique, no solo una nota.</p>
-          </div>
-          <div class="route-step rounded-xl">
-            <div class="text-sm font-extrabold text-slate-700 mb-1">04 · RECORDAR</div>
-            <p class="text-slate-600">Cerrar con ideas útiles para volver al tema.</p>
-          </div>
+          <div class="route-step rounded-xl"><div class="text-sm font-black text-[#596637] mb-1">01 · COMPRENDER</div><p class="text-slate-600">Entender la idea antes de memorizar una regla.</p></div>
+          <div class="route-step rounded-xl"><div class="text-sm font-black text-[#74639a] mb-1">02 · PRACTICAR</div><p class="text-slate-600">Empezar con apoyo y probar nuevas variantes.</p></div>
+          <div class="route-step rounded-xl"><div class="text-sm font-black text-[#467f89] mb-1">03 · COMPROBAR</div><p class="text-slate-600">Saber qué salió bien, qué costó y por qué.</p></div>
+          <div class="route-step rounded-xl"><div class="text-sm font-black text-[#a85d50] mb-1">04 · TRANSFERIR Y RECORDAR</div><p class="text-slate-600">Usar lo aprendido en otro contexto y recuperarlo más adelante.</p></div>
         </div>
       </aside>
     </section>
 
     <section class="panel p-6 md:p-7">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <p class="eyebrow text-amber-700 mb-1">Importante</p>
-          <h2 class="text-2xl font-extrabold">El contenido oficial vendrá del colegio</h2>
-          <p class="text-slate-600 mt-2 max-w-3xl">
-            Este piloto prueba estructura y experiencia. Los temas reales de 6.º se construirán a partir de los materiales escolares correspondientes.
-          </p>
-        </div>
-        <div class="shrink-0 px-4 py-3 rounded-xl bg-amber-50 border border-amber-100 text-amber-800 font-extrabold">
-          🧪 Piloto académico
-        </div>
+        <div><p class="eyebrow text-[#74639a] mb-1">Construcción activa</p><h2 class="text-2xl font-black">La Academia crecerá con el curso real</h2><p class="text-slate-600 mt-2 max-w-3xl">No llenaremos los espacios con contenido ficticio. Cada nueva ruta partirá de materiales, necesidades y experiencias reales de aprendizaje.</p></div>
+        <div class="shrink-0 px-4 py-3 rounded-xl bg-[#eef2df] border border-[#d9dfc1] text-[#526039] font-black">🌿 6.º SIGNATURE</div>
       </div>
     </section>
   </main>
 
   <script>lucide.createIcons();</script>
   <script src="../../compartido/js/navegacion.js"></script>
-  <script type="module" src="../../compartido/componentes/navegacion-global.js?v=5"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js?v=7"></script>
 </body>
 </html>

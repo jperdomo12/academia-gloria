@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 13/08/2026 |
-| **Última actualización** | 13/08/2026 |
+| **Última actualización** | 26/08/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Representación humana de la navegación funcional vigente |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 26/08/2026 | Product Owner + AI Collaborator | Activa 6.º de Primaria como destino navegable dentro de Mis Cursos. El portal queda disponible en construcción activa, con Matemáticas como primera área funcional. |
 | 1.2 | 13/08/2026 | Product Owner + AI Collaborator | Alinea el árbol con el modelo de navegación v1.2, aclara responsabilidades de Mi espacio personal y visibilidad por nivel. |
 | 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Actualización al árbol vigente, Persona Activa, Administración, Calendario único, regla Volver y normalización del nombre documental. |
 | 1.0 | Anterior | Proyecto Academia | Árbol inicial de Fase 1. |
@@ -61,7 +62,7 @@ Academia
 │
 ├── Mis Cursos
 │   ├── 5.º de Primaria
-│   └── 6.º de Primaria · próximo
+│   └── 6.º de Primaria
 │
 ├── Administración · nivel mínimo: administracion
 │   └── Gestión de Usuarios · nivel mínimo: administracion
@@ -227,4 +228,4 @@ y no `ARBOL_NAVEGACION.md`.
 | Gestión de Usuarios | Implementado |
 | Mis Logros | Próximo |
 | Configuración | Próximo |
-| 6.º de Primaria | Próximo / preparación |
+| 6.º de Primaria | Disponible / construcción activa |

@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.7 |
+| **Versión** | 1.8 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
-| **Última actualización** | 24/08/2026 |
+| **Última actualización** | 26/08/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global, Panel de Usuario y comportamiento de retorno |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8 | 26/08/2026 | Product Owner + AI Collaborator | Activa `6.º de Primaria` como nodo navegable real dentro de `Mis Cursos`, retirando su estado `proximo`. El acceso compartido y la página principal apuntan a `cursos/6to/`; el portal de 6.º permanece identificado como construcción activa mientras incorpora materias y temas reales. |
 | 1.7 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la arquitectura robusta de cabecera global: un único host canónico del Panel de Usuario, prohibición de trasladar Paneles locales a la cabecera, desactivación compatible de hosts heredados, inicialización repetible segura, carga de CSS compartido por el propio componente y separación entre árbol visible del menú y ubicaciones auxiliares de cabecera. Amplía la adopción controlada a Biblioteca, Escritura, Creciendo por Dentro, auxiliares de Detectives y Calendarios, y Adicionales. |
 | 1.6 | 24/08/2026 | Product Owner + AI Collaborator | Cierra P2 de navegación de pantallas principales. El modelo central puede declarar adopción de cabecera global, fallback de retorno y limpieza controlada de navegación heredada. La carga de la cabecera puede activarse desde `navegacion.js` sin reescribir HTML grandes, preservando las acciones locales propias de cada módulo. |
 | 1.5 | 24/08/2026 | Product Owner + AI Collaborator | Separa el espaciado del contenido del espaciado de la página: la cabecera global queda fuera del padding local y el contenido conserva su separación en un contenedor interior. Aplica la corrección al conjunto de once páginas de 5.º de Primaria identificado en la validación visual. |
@@ -343,7 +344,7 @@ Reglas:
 10. Las pantallas existentes que todavía no consuman la cabecera compartida deberán migrarse de manera controlada, sin reescrituras funcionales innecesarias.
 11. La fuente de la cabecera es Outfit y debe cargarse desde el recurso CSS compartido, sin depender de las fuentes de cada página.
 12. El nombre de la pantalla actual usa `14px`, peso `800` y `line-height: 1.2`; pasa a `13px` en tablet (anchuras de hasta 900px) y a `12px` en móvil (hasta 480px).
-13. El icono de la pantalla actual usa `16px` y no se contrae; puede ocultarse en pantallas pequeñas para evitar desbordamientos.
+13. El icono de la pantalla actual usa `16px` y no se contrae; puede ocultarse en pantallas pequeñas para evitar desbordamiento.
 14. La pantalla actual ocupa una sola línea y aplica ellipsis cuando el espacio disponible no permite mostrar el nombre completo.
 15. `data-page-title` contiene un nombre funcional corto, sin identidad, nombres personales ni mensajes promocionales redundantes.
 16. Los estilos locales de una página no deben alterar la tipografía ni la presentación de la cabecera compartida.
@@ -390,6 +391,8 @@ La arquitectura v1.7 amplía de forma declarativa o compatible la adopción a:
 - Música;
 - Juegos;
 - Lecturas y sus lecturas individuales registradas.
+
+La versión v1.8 activa además `6.º de Primaria` como destino navegable dentro de `Mis Cursos`. Su disponibilidad en navegación no significa que todas las materias estén terminadas: el portal puede estar disponible mientras el contenido académico continúa en construcción activa.
 
 La inclusión en este alcance significa **adopción arquitectónica**. El cierre definitivo de una familia de pantallas continúa condicionado a las pruebas visuales y funcionales correspondientes.
 
@@ -471,3 +474,4 @@ La navegación se considera coherente cuando:
 | NAV-019 | `panel-usuario.js` debe tolerar inicializaciones repetidas; una llamada sin destino válido no puede desmontar el Panel activo. |
 | NAV-020 | Las ubicaciones auxiliares de cabecera se mantienen fuera de `NAVEGACION_ACADEMIA` para no alterar el menú visible. |
 | NAV-021 | La cabecera garantiza la carga de sus estilos y de `panel-usuario.css` antes de renderizar la composición global. |
+| NAV-022 | `6.º de Primaria` es un destino navegable activo en `Mis Cursos`; la disponibilidad del portal es compatible con que sus materias continúen en construcción progresiva. |

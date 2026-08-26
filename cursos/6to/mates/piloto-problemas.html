@@ -3,281 +3,209 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#172554">
+  <meta name="theme-color" content="#596637">
   <title>Entender antes de calcular | Matemáticas 6.º</title>
-  <meta name="description" content="Piloto de 6.º sobre comprensión y resolución de problemas matemáticos.">
+  <meta
+    name="description"
+    content="Piloto SIGNATURE de 6.º para aprender una estrategia de resolución con un problema ancla y transferirla después a situaciones nuevas."
+  >
+
   <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
   <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+
   <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
-  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css">
-  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=5">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root{
-      --ink:#0f172a;
-      --muted:#64748b;
-      --line:#dbe4ef;
-      --blue:#2563eb;
-      --blue-soft:#eff6ff;
-      --teal:#0f766e;
-      --teal-soft:#f0fdfa;
-      --amber:#b45309;
-      --amber-soft:#fffbeb;
-      --green:#15803d;
-      --green-soft:#f0fdf4;
-      --red:#b91c1c;
-      --red-soft:#fef2f2;
-    }
-    *{box-sizing:border-box}
-    body{font-family:'Outfit',sans-serif;color:var(--ink);background:#f8fafc}
-    .shell{max-width:1040px;margin:0 auto;padding:24px}
-    .panel{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 28px rgba(15,23,42,.05)}
-    .topic-head{background:#172554;color:#fff;border-radius:24px;padding:30px;box-shadow:0 18px 44px rgba(23,37,84,.15)}
-    .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
-    .route{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-    .route-item{padding:12px;border-radius:12px;background:#fff;border:1px solid #dbe4ef}
-    .route-item strong{display:block;font-size:.75rem;letter-spacing:.06em;color:#475569}
-    .route-item span{display:block;margin-top:3px;font-weight:800}
-    .section-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .section-number{width:36px;height:36px;border-radius:12px;background:#172554;color:white;display:grid;place-items:center;font-weight:800}
-    .problem{background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:18px;font-size:1.08rem;line-height:1.75}
-    .choice{
-      width:100%;text-align:left;background:#fff;border:1.5px solid #cbd5e1;border-radius:14px;
-      padding:14px 15px;font-weight:700;transition:.15s ease;
-    }
-    .choice:hover{border-color:#60a5fa;transform:translateY(-1px)}
-    .choice.ok{background:var(--green-soft);border-color:#22c55e;color:#166534}
-    .choice.bad{background:var(--red-soft);border-color:#ef4444;color:#991b1b}
-    .feedback{display:none;margin-top:12px;padding:14px 15px;border-radius:14px;background:var(--blue-soft);border:1px solid #bfdbfe;color:#1e3a8a}
-    .feedback.show{display:block}
-    .support-btn{background:#fff;border:1px solid #d5dde8;border-radius:12px;padding:10px 13px;font-weight:800;color:#475569}
-    .support-btn:hover{border-color:#f59e0b;color:#92400e}
-    .support{display:none;margin-top:10px;padding:13px 14px;border-radius:12px;background:var(--amber-soft);border:1px solid #fde68a;color:#78350f}
-    .support.open{display:block}
-    .keyline{border-left:4px solid #93c5fd;padding:14px 16px;background:#f8fafc;border-radius:0 14px 14px 0}
-    .dev-note{font-size:.82rem;color:#64748b}
-    @media(max-width:720px){
-      .shell{padding:16px}.topic-head{padding:24px 20px}.route{grid-template-columns:1fr 1fr}
-    }
-  </style>
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./piloto-problemas.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
 </head>
-<body data-page-title="Entender antes de calcular" data-page-icon="🧠" data-nav-back="./index.html">
-  <main class="shell">
-    <header class="topic-head mb-5">
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span class="px-3 py-2 rounded-full bg-white/10 border border-white/10 text-blue-100 text-sm font-bold">Matemáticas · 6.º</span>
-        <span class="px-3 py-2 rounded-full bg-amber-400/10 border border-amber-300/20 text-amber-200 text-sm font-bold">Piloto académico</span>
+
+<body
+  data-page-title="Entender antes de calcular"
+  data-page-icon="🧠"
+  data-nav-back="./index.html"
+>
+  <main class="signature-shell">
+    <header class="hero">
+      <div class="hero-main">
+        <div class="chips">
+          <span class="chip">🎓 Matemáticas · 6.º</span>
+          <span class="chip">✨ SIGNATURE</span>
+          <span class="chip">🧠 Pensar antes de calcular</span>
+        </div>
+
+        <p class="eyebrow">Tu brújula para problemas matemáticos</p>
+        <h1>Entender antes<br>de calcular</h1>
+        <p class="hero-lead">
+          Primero aprendemos una forma de pensar con una sola historia.
+          Después comprobamos si esa estrategia sigue funcionando cuando el problema cambia.
+        </p>
+
+        <div class="lia-note" id="liaWelcome">
+          ✨ Lía: Aquí no buscamos ir rápido. Buscamos una estrategia que puedas llevar contigo.
+        </div>
       </div>
-      <p class="eyebrow text-blue-300 mb-2">Problemas matemáticos</p>
-      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Entender antes de calcular</h1>
-      <p class="text-blue-100 text-lg leading-relaxed max-w-3xl">
-        Resolver un problema tiene dos trabajos: comprender el lenguaje y resolver las matemáticas. Aquí los separamos para pensar con más claridad.
-      </p>
+
+      <aside class="hero-side" aria-live="polite">
+        <div id="modeIcon" class="mode-icon">⏳</div>
+        <p class="eyebrow mode-eyebrow">Modo de esta sesión</p>
+        <h2 id="modeTitle">Preparando...</h2>
+        <p id="modeDescription">
+          Estamos comprobando el contexto de la Persona Activa.
+        </p>
+        <button id="modeButton" class="mode-button" type="button" disabled>
+          Cargando...
+        </button>
+      </aside>
     </header>
 
-    <section class="panel p-5 md:p-6 mb-5">
-      <div class="grid md:grid-cols-[1fr_260px] gap-5 items-center">
+    <nav class="route" aria-label="Ruta de aprendizaje">
+      <div class="route-step current" data-route="aprender">
+        <strong>01</strong><span>Aprender</span>
+      </div>
+      <div class="route-step" data-route="comprender">
+        <strong>02</strong><span>Comprender</span>
+      </div>
+      <div class="route-step" data-route="relacionar">
+        <strong>03</strong><span>Relacionar</span>
+      </div>
+      <div class="route-step" data-route="comprobar">
+        <strong>04</strong><span>Comprobar</span>
+      </div>
+      <div class="route-step" data-route="transferir">
+        <strong>05</strong><span>Transferir</span>
+      </div>
+    </nav>
+
+    <section id="introPanel" class="panel intro-panel">
+      <div class="intro-grid">
         <div>
-          <p class="eyebrow text-blue-700 mb-2">Objetivo del tema</p>
-          <h2 class="text-2xl font-extrabold mb-2">Identificar datos, pregunta y relación matemática antes de operar.</h2>
-          <p class="text-slate-600">No buscamos rapidez. Buscamos una estrategia que tenga sentido.</p>
+          <p class="eyebrow accent-violet">Objetivo de hoy</p>
+          <h2>Aprender una brújula y después llevarla a historias nuevas.</h2>
+          <p>
+            La primera explicación usa un solo problema de principio a fin.
+            Después practicarás cada parte de la estrategia con un ejercicio distinto.
+            El cierre será un problema nuevo que resolverás con la brújula completa.
+          </p>
+          <div class="intro-actions">
+            <button id="startButton" class="primary-button" type="button" disabled>
+              🌿 Empezar mi reto
+            </button>
+            <a
+              class="tool-link"
+              href="../../../herramientas/matematicas/sentido-operaciones/"
+              data-conservar-retorno
+            >
+              🧰 Recordar qué significa cada operación
+            </a>
+          </div>
         </div>
-        <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
-          <div class="text-xs uppercase tracking-widest font-extrabold text-slate-500">Cómo trabajaremos</div>
-          <div class="mt-2 font-extrabold">Reto → apoyo mínimo → nueva oportunidad</div>
-        </div>
+
+        <aside class="strategy-card">
+          <p class="eyebrow accent-olive">La brújula</p>
+          <h3>🧭 Primero la historia, después la cuenta</h3>
+          <div class="strategy-list">
+            <div class="strategy-item"><b>1</b><span>¿Qué sé?</span></div>
+            <div class="strategy-item"><b>2</b><span>¿Qué me piden?</span></div>
+            <div class="strategy-item"><b>3</b><span>¿Cómo se relacionan las cantidades?</span></div>
+            <div class="strategy-item"><b>4</b><span>Elijo, calculo y compruebo si tiene sentido.</span></div>
+          </div>
+          <p class="strategy-note">
+            Las palabras pueden dar pistas. La historia decide la operación.
+          </p>
+        </aside>
       </div>
     </section>
 
-    <section class="route mb-5" aria-label="Ruta del tema">
-      <div class="route-item"><strong>01</strong><span>Comprender</span></div>
-      <div class="route-item"><strong>02</strong><span>Practicar</span></div>
-      <div class="route-item"><strong>03</strong><span>Comprobar</span></div>
-      <div class="route-item"><strong>04</strong><span>Recordar</span></div>
-    </section>
-
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">1</div>
+    <section id="stagePanel" class="panel hidden" aria-live="polite">
+      <div class="stage-head">
         <div>
-          <p class="eyebrow text-blue-700">Comprender</p>
-          <h2 class="text-2xl font-extrabold">La ruta de cuatro preguntas</h2>
+          <p id="stageKicker" class="eyebrow stage-kicker">Aprender</p>
+          <h2 id="stageTitle">Un problema. Toda la estrategia.</h2>
+          <p id="stageLead" class="stage-lead"></p>
         </div>
+        <div id="stageSymbol" class="stage-symbol">🧭</div>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-3 mb-6">
-        <div class="keyline"><strong>¿Qué sé?</strong><div class="text-slate-600 mt-1">Localiza los datos importantes.</div></div>
-        <div class="keyline"><strong>¿Qué me piden?</strong><div class="text-slate-600 mt-1">Separa la pregunta del resto del texto.</div></div>
-        <div class="keyline"><strong>¿Cómo se relaciona?</strong><div class="text-slate-600 mt-1">Piensa qué ocurre con las cantidades.</div></div>
-        <div class="keyline"><strong>¿Tiene sentido?</strong><div class="text-slate-600 mt-1">Comprueba el resultado con la situación.</div></div>
-      </div>
+      <div id="stageContent"></div>
+      <div id="feedback" class="feedback" role="status"></div>
 
-      <p class="eyebrow text-violet-700 mb-2">Ejemplo guiado</p>
-      <h3 class="text-xl font-extrabold mb-3">Excursión del colegio</h3>
-      <div class="problem mb-5">
-        Para una excursión se apuntaron <strong>84 alumnos</strong>. Los autobuses tienen <strong>28 plazas</strong> cada uno.
-        <strong>¿Cuántos autobuses completos hacen falta para llevar a todos?</strong>
-      </div>
-
-      <div class="space-y-3">
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>1 · ¿Qué sé?</strong>
-          <p class="text-slate-600 mt-1">84 alumnos y 28 plazas por autobús.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>2 · ¿Qué me piden?</strong>
-          <p class="text-slate-600 mt-1">Cuántos grupos de 28 necesitamos para incluir a 84 alumnos.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>3 · ¿Cómo se relaciona?</strong>
-          <p class="text-slate-600 mt-1">Estamos repartiendo 84 alumnos en grupos de 28: <strong>84 ÷ 28</strong>.</p>
-        </div>
-        <div class="rounded-xl border border-slate-200 p-4">
-          <strong>4 · ¿Tiene sentido?</strong>
-          <p class="text-slate-600 mt-1">84 ÷ 28 = 3. Tres autobuses tienen 84 plazas, así que la respuesta encaja.</p>
-        </div>
+      <div class="stage-actions">
+        <span id="attemptNote" class="attempt-note"></span>
+        <button id="listenButton" class="secondary-button" type="button">
+          🔊 Escuchar problema
+        </button>
+        <button id="continueButton" class="primary-button" type="button">
+          Continuar →
+        </button>
       </div>
     </section>
 
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">2</div>
+    <section id="summaryPanel" class="panel summary hidden" aria-live="polite">
+      <div class="summary-icon">🌟</div>
+      <p class="eyebrow accent-violet">Tu cierre de hoy</p>
+      <h2>La historia cambió. Tu estrategia viajó contigo.</h2>
+      <p id="summaryLead" class="summary-lead"></p>
+
+      <div id="summaryBadges" class="summary-badges"></div>
+
+      <section id="personalRecord" class="personal-record hidden" aria-label="Progreso personal">
+        <div class="record-icon" aria-hidden="true">🌿</div>
         <div>
-          <p class="eyebrow text-teal-700">Practicar</p>
-          <h2 class="text-2xl font-extrabold">Primero inténtalo. Después pide ayuda si la necesitas.</h2>
+          <h3 id="personalRecordTitle">Tu referencia personal</h3>
+          <p id="personalRecordText"></p>
+          <p id="personalRecordLia" class="record-lia"></p>
         </div>
+      </section>
+
+      <div class="summary-grid">
+        <article class="summary-card good">
+          <strong>💚 Fortaleza observada</strong>
+          <p id="summaryStrength"></p>
+        </article>
+        <article class="summary-card grow">
+          <strong>🌱 Lo que seguimos entrenando</strong>
+          <p id="summaryGrow"></p>
+        </article>
+        <article class="summary-card next">
+          <strong>🚀 Siguiente paso</strong>
+          <p id="summaryNext"></p>
+        </article>
       </div>
 
-      <div class="mb-8">
-        <p class="eyebrow text-slate-500 mb-2">Práctica A · con apoyo progresivo</p>
-        <div class="problem mb-4">
-          Una biblioteca tiene <strong>360 libros</strong> y quiere colocarlos por igual en <strong>6 estanterías</strong>.
-          ¿Cuántos libros habrá en cada estantería?
-        </div>
-        <p class="font-extrabold mb-3">Antes de calcular, ¿qué relación describe mejor el problema?</p>
+      <div id="saveStatus" class="save-status"></div>
 
-        <div class="grid sm:grid-cols-2 gap-3" data-question="q1">
-          <button class="choice" data-correct="false">Sumar 360 + 6</button>
-          <button class="choice" data-correct="true">Repartir 360 en 6 grupos iguales</button>
-          <button class="choice" data-correct="false">Multiplicar 360 × 6</button>
-          <button class="choice" data-correct="false">Restar 6 a 360 una sola vez</button>
-        </div>
-        <div id="q1-feedback" class="feedback"></div>
-
-        <div class="flex flex-wrap gap-2 mt-4">
-          <button class="support-btn" data-support-target="support1">Pista 1</button>
-          <button class="support-btn" data-support-target="support2">Pista 2</button>
-        </div>
-        <div id="support1" class="support"><strong>Pista 1:</strong> fíjate en las palabras “por igual”. ¿La cantidad aumenta o se reparte?</div>
-        <div id="support2" class="support"><strong>Pista 2:</strong> formar 6 grupos iguales a partir de 360 corresponde a una división.</div>
-      </div>
-
-      <div>
-        <p class="eyebrow text-slate-500 mb-2">Práctica B · más autonomía</p>
-        <div class="problem mb-4">
-          En una carrera solidaria cada vuelta mide <strong>250 metros</strong>. Marta completa <strong>8 vueltas</strong>.
-          ¿Qué distancia recorre en total?
-        </div>
-        <p class="font-extrabold mb-3">¿Qué operación representa mejor la situación?</p>
-        <div class="grid sm:grid-cols-2 gap-3" data-question="q2">
-          <button class="choice" data-correct="true">250 × 8</button>
-          <button class="choice" data-correct="false">250 ÷ 8</button>
-          <button class="choice" data-correct="false">250 - 8</button>
-          <button class="choice" data-correct="false">250 + 8</button>
-        </div>
-        <div id="q2-feedback" class="feedback"></div>
+      <div class="stage-actions summary-actions">
+        <button id="restartButton" class="secondary-button" type="button">
+          🔄 Probar otra variante
+        </button>
+        <a
+          class="primary-button"
+          href="./index.html"
+          style="text-decoration:none;display:inline-flex;align-items:center"
+        >
+          Volver a Matemáticas →
+        </a>
       </div>
     </section>
 
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">3</div>
-        <div>
-          <p class="eyebrow text-amber-700">Comprobar</p>
-          <h2 class="text-2xl font-extrabold">Un problema de dos pasos</h2>
-        </div>
-      </div>
-
-      <div class="problem mb-4">
-        Un museo vende entradas a <strong>12 €</strong>. Una familia compra <strong>5 entradas</strong> y paga con <strong>70 €</strong>.
-        ¿Cuánto dinero le devuelven?
-      </div>
-      <p class="font-extrabold mb-3">¿Qué plan de dos pasos es correcto?</p>
-
-      <div class="grid gap-3" data-question="q3">
-        <button class="choice" data-correct="false">70 ÷ 5 y después sumar 12</button>
-        <button class="choice" data-correct="true">12 × 5 para saber el coste; después 70 - coste</button>
-        <button class="choice" data-correct="false">70 - 12 y después multiplicar por 5</button>
-      </div>
-      <div id="q3-feedback" class="feedback"></div>
-    </section>
-
-    <section class="panel p-5 md:p-7 mb-5">
-      <div class="section-label">
-        <div class="section-number">4</div>
-        <div>
-          <p class="eyebrow text-slate-600">Recordar</p>
-          <h2 class="text-2xl font-extrabold">Tres ideas para llevarte</h2>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-3">
-        <div class="rounded-xl bg-blue-50 border border-blue-100 p-4">
-          <div class="font-extrabold">Lee la pregunta aparte</div>
-          <p class="text-slate-600 mt-1">Primero descubre qué debes encontrar.</p>
-        </div>
-        <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
-          <div class="font-extrabold">Divide el problema</div>
-          <p class="text-slate-600 mt-1">Datos, relación, operación y comprobación.</p>
-        </div>
-        <div class="rounded-xl bg-emerald-50 border border-emerald-100 p-4">
-          <div class="font-extrabold">Parar también es estrategia</div>
-          <p class="text-slate-600 mt-1">Si hoy no sale, puedes volver con la mente más fresca.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer class="dev-note px-1 pb-4">
-      Piloto v0.2 · Esta página todavía no guarda sesión académica ni evidencia en Firestore.
-    </footer>
+    <div class="footer-note">
+      Piloto SIGNATURE v0.4 · problema ancla → afianzar por etapas → transferencia ·
+      Vista previa nunca genera evidencia.
+    </div>
   </main>
 
-  <script>
-    document.querySelectorAll("[data-support-target]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const el = document.getElementById(btn.dataset.supportTarget);
-        el.classList.toggle("open");
-        btn.setAttribute("aria-expanded", el.classList.contains("open") ? "true" : "false");
-      });
-    });
-
-    document.querySelectorAll("[data-question]").forEach(group => {
-      const id = group.dataset.question;
-      const feedback = document.getElementById(id + "-feedback");
-
-      group.querySelectorAll(".choice").forEach(btn => {
-        btn.addEventListener("click", () => {
-          group.querySelectorAll(".choice").forEach(b => b.classList.remove("ok", "bad"));
-
-          const ok = btn.dataset.correct === "true";
-          btn.classList.add(ok ? "ok" : "bad");
-          feedback.classList.add("show");
-
-          if (ok) {
-            feedback.innerHTML = "<strong>Bien razonado.</strong> Identificaste la relación matemática antes de hacer la operación.";
-          } else {
-            feedback.innerHTML = "<strong>Revísalo sin prisa.</strong> Vuelve a la pregunta y piensa qué está ocurriendo con las cantidades. Puedes intentarlo otra vez.";
-          }
-        });
-      });
-    });
-
-    lucide.createIcons();
-  </script>
-
   <script src="../../../compartido/js/navegacion.js"></script>
-  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=5"></script>
+  <script
+    type="module"
+    src="../../../compartido/componentes/navegacion-global.js?v=7"
+  ></script>
+  <script type="module" src="./piloto-problemas.js"></script>
+  <script type="module" src="./piloto-problemas-lector.js"></script>
 </body>
 </html>

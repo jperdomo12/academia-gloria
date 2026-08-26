@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6f7b43">
+  <title>El sentido de las operaciones | Academia Gloria Valentina</title>
+  <meta name="description" content="Microexperiencia matemática para comprender qué significa sumar, restar, multiplicar y dividir antes de calcular.">
+  <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./sentido-operaciones.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page-title="El sentido de las operaciones" data-page-icon="🧰" data-nav-back="../../../index.html">
+  <main class="micro-shell">
+    <header class="micro-hero">
+      <div class="hero-copy">
+        <span class="micro-kicker">🧰 Herramienta matemática · microexperiencia</span>
+        <h1>El sentido de las operaciones</h1>
+        <p class="hero-lead">Antes de calcular, mira la historia. Descubre qué está pasando con las cantidades.</p>
+        <div class="idea-clave"><span aria-hidden="true">✨</span><strong>Las palabras dan pistas. La historia decide la operación.</strong></div>
+      </div>
+      <aside class="lia-card" aria-label="Mensaje de Lía">
+        <div class="lia-orbe" aria-hidden="true">L</div>
+        <div><span class="lia-nombre">Lía</span><p>No tienes que adivinar una palabra mágica. Vamos a mirar una misma idea desde varios ángulos.</p></div>
+      </aside>
+    </header>
+
+    <section class="micro-route" aria-label="Recorrido de la microexperiencia">
+      <div class="route-top">
+        <div><span class="route-kicker">Tu recorrido</span><h2>Primero comprender. Después nombrar.</h2></div>
+        <span id="routeStatus" class="route-status">1 de 5</span>
+      </div>
+      <div class="route-track" aria-hidden="true"><span id="routeFill"></span></div>
+      <div class="route-steps">
+        <span data-route-step="0">➕ Juntar</span><span data-route-step="1">➖ Quitar</span><span data-route-step="2">✖️ Repetir</span><span data-route-step="3">➗ Repartir</span><span data-route-step="4">🕵️ Pensar</span>
+      </div>
+    </section>
+
+    <section class="experience-card" aria-live="polite">
+      <div class="stage-heading">
+        <div><span id="stageKicker" class="stage-kicker">Herramienta 1</span><h2 id="stageTitle">Mira qué está pasando</h2></div>
+        <span id="stageSymbol" class="stage-symbol" aria-hidden="true">➕</span>
+      </div>
+      <div class="experience-grid">
+        <div class="story-column">
+          <article class="story-card"><span class="story-label">La historia</span><p id="storyText"></p></article>
+          <div class="visual-wrap">
+            <div class="visual-caption"><strong>Míralo sin hacer cuentas</strong><span id="visualHint">¿Qué cambia?</span></div>
+            <div id="objectsBoard" class="objects-board" aria-label="Representación visual de las cantidades"></div>
+          </div>
+          <article id="conceptReveal" class="concept-reveal" hidden>
+            <div class="concept-badge"><span id="conceptIcon" aria-hidden="true">➕</span><div><span>Esta idea se llama</span><strong id="conceptName">SUMAR</strong></div></div>
+            <p id="conceptExplanation"></p><div id="equationBox" class="equation-box"></div>
+          </article>
+        </div>
+        <div class="decision-column">
+          <div class="question-card"><span class="question-label">Ahora piensa tú</span><h3 id="questionText"></h3><div id="options" class="options"></div></div>
+          <div id="feedback" class="feedback" hidden></div>
+          <div class="micro-actions">
+            <button id="hintButton" class="button-secondary" type="button">💡 Ver una pista</button>
+            <button id="nextButton" class="button-primary" type="button" disabled>Siguiente →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="finishCard" class="finish-card" hidden>
+      <div class="finish-icon" aria-hidden="true">🌿</div>
+      <div>
+        <span class="finish-kicker">Herramienta descubierta</span>
+        <h2>Ya tienes una brújula para elegir operación.</h2>
+        <p>No necesitas cazar palabras. Primero identifica la historia matemática; después eliges la herramienta.</p>
+        <div class="finish-map"><span>➕ juntar</span><span>➖ quitar o comparar</span><span>✖️ repetir grupos iguales</span><span>➗ repartir o formar grupos</span></div>
+        <p class="finish-note">Y si una palabra parece señalar una operación, comprueba siempre si la historia realmente cuenta eso.</p>
+        <button id="restartButton" class="button-primary" type="button">↻ Volver a explorar</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script src="./sentido-operaciones.js?v=2"></script>
+</body>
+</html>
