@@ -6,8 +6,9 @@
 .pronunciation-mission__progress{flex:0 0 auto;padding:10px 14px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-weight:900}
 .pronunciation-mission__status{margin:14px 0;padding:13px 15px;border:2px solid #bfdbfe;border-radius:16px;background:#eff6ff;color:#1e3a8a;font-weight:850;line-height:1.45}
 .pronunciation-mission__list{display:grid;gap:15px;margin-top:17px}
-.pronunciation-word{padding:17px;border:2px solid #e9d5ff;border-radius:20px;background:#fff}
+.pronunciation-word{padding:17px;border:2px solid #e9d5ff;border-radius:20px;background:#fff;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}
 .pronunciation-word--practiced{border-color:#bbf7d0;background:#f0fdf4}
+.pronunciation-word--recording{border-color:#fca5a5;background:#fff7f7;box-shadow:0 0 0 4px rgba(248,113,113,.12)}
 .pronunciation-word__header{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:12px;align-items:start}
 .pronunciation-word__number{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:900}
 .pronunciation-word__content h3{margin:0;color:#4c1d95;font-size:1.65rem}
@@ -15,11 +16,15 @@
 .pronunciation-word__badge{text-align:right;color:#475569;font-weight:900}
 .pronunciation-word__badge small{display:block;margin-top:3px;color:#64748b;font-weight:700}
 .pronunciation-word__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.pronunciation-word__actions .btn:disabled{cursor:not-allowed;opacity:.48;transform:none!important}
+.pronunciation-word__actions .pronunciation-recording:disabled{opacity:1;background:#dc2626;color:#fff;animation:pronunciationRecordingPulse 1s ease-in-out infinite}
 .pronunciation-word__result{margin-top:11px;padding:11px 13px;border-radius:13px;background:#f8fafc;color:#475569;font-weight:750;line-height:1.45}
 .pronunciation-word__result--ok{background:#ecfdf5;color:#166534}
 .pronunciation-word__result--practice{background:#fff7ed;color:#9a3412}
 .pronunciation-mission__actions{justify-content:flex-end;margin-top:20px}
 .pronunciation-mission__notice{margin:15px 0 0;color:#64748b;font-size:.85rem;font-weight:700;line-height:1.5}
+@keyframes pronunciationRecordingPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.20)}50%{box-shadow:0 0 0 7px rgba(220,38,38,0)}}
+@media(prefers-reduced-motion:reduce){.pronunciation-word__actions .pronunciation-recording:disabled{animation:none}}
 @media(max-width:700px){
   .pronunciation-mission__header{flex-direction:column}
   .pronunciation-word__header{grid-template-columns:38px minmax(0,1fr)}
