@@ -2,15 +2,17 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/auth-guard.js
  * Protección de páginas autenticadas
- * Versión: 1.1
+ * Versión: 1.2
  *
- * Ajuste:
+ * Ajustes:
  * - Espera a que Firebase termine de restaurar la sesión antes de decidir
  *   si debe redirigir al login.
+ * - Activa el timeout global de sesión configurado por inactividad.
  ******************************************************************************/
 
 import { auth } from "../firebase/firebase-config.js";
 import { observarSesion } from "../firebase/firebase-auth.js";
+import { activarTimeoutSesion } from "./timeout-sesion.js";
 
 export async function protegerPagina({
   loginUrl = "/academia-gloria/login.html",
@@ -33,6 +35,7 @@ export async function protegerPagina({
     return null;
   }
 
+  activarTimeoutSesion({ loginUrl });
   document.documentElement.style.visibility = "visible";
 
   if (typeof onAuthenticated === "function") {
