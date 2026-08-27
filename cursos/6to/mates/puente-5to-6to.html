@@ -38,9 +38,9 @@
       <aside class="modo-sesion" aria-live="polite">
         <div id="iconoModo" class="modo-sesion__icono">⏳</div>
         <p class="tema-sobrelinea">Modo de esta sesión</p>
-        <h2 id="tituloModo">Preparando...</h2>
+        <h2 id="tituloModo">Preparando…</h2>
         <p id="descripcionModo">Estamos comprobando el contexto de la persona activa.</p>
-        <button id="botonModo" class="boton boton--secundario" type="button" disabled>Cargando...</button>
+        <button id="botonModo" class="boton boton--secundario" type="button" disabled>Cargando…</button>
       </aside>
     </header>
 
@@ -85,31 +85,46 @@
       </div>
 
       <div class="rejilla-bloques" aria-label="Mapas visuales de repaso">
-        <article class="bloque-resumen">
+        <article class="bloque-resumen mapa-visual">
           <div class="bloque-resumen__icono" aria-hidden="true">🧩</div>
           <h3>Orden de las operaciones</h3>
-          <p><strong>① ( )</strong> → <strong>② × y ÷</strong> → <strong>③ + y −</strong></p>
+          <div class="pasos-operaciones" aria-label="Primero paréntesis, después multiplicaciones y divisiones, al final sumas y restas">
+            <span><b>1</b>( )</span><i>→</i><span><b>2</b>× ÷</span><i>→</i><span><b>3</b>+ −</span>
+          </div>
           <p>Vamos por niveles: primero paréntesis, después multiplicaciones y divisiones, y al final sumas y restas.</p>
         </article>
 
-        <article class="bloque-resumen">
+        <article class="bloque-resumen mapa-visual">
           <div class="bloque-resumen__icono" aria-hidden="true">🍰</div>
           <h3>La misma cantidad, distintas formas</h3>
-          <p><strong>■■□□ = 1/2 = 0,5 = 50 %</strong></p>
+          <div class="barra-fraccion" role="img" aria-label="Dos de cuatro partes coloreadas, equivalente a un medio">
+            <span class="barra-fraccion__parte activa"></span>
+            <span class="barra-fraccion__parte activa"></span>
+            <span class="barra-fraccion__parte"></span>
+            <span class="barra-fraccion__parte"></span>
+          </div>
+          <div class="cadena-equivalencias" aria-label="Un medio es igual a cero coma cinco y a cincuenta por ciento">
+            <strong>1/2</strong><span>=</span><strong>0,5</strong><span>=</span><strong>50 %</strong>
+          </div>
           <p>La representación cambia, pero la cantidad puede seguir siendo exactamente la misma.</p>
         </article>
 
-        <article class="bloque-resumen">
+        <article class="bloque-resumen mapa-visual">
           <div class="bloque-resumen__icono" aria-hidden="true">🧭</div>
           <h3>Ruta para resolver un problema</h3>
-          <p><strong>📌 ¿Qué sé?</strong> → <strong>🎯 ¿Qué me preguntan?</strong> → <strong>🔗 ¿Cómo se relacionan?</strong></p>
+          <div class="ruta-problema" aria-label="Qué sé, qué me preguntan, cómo se relacionan">
+            <span>📌 ¿Qué sé?</span><i>→</i><span>🎯 ¿Qué me preguntan?</span><i>→</i><span>🔗 ¿Cómo se relacionan?</span>
+          </div>
           <p>Primero comprendemos la historia; la operación viene después.</p>
         </article>
 
-        <article class="bloque-resumen">
+        <article class="bloque-resumen mapa-visual">
           <div class="bloque-resumen__icono" aria-hidden="true">📐</div>
           <h3>Perímetro y área no son lo mismo</h3>
-          <p><strong>▭ Perímetro = contorno</strong><br><strong>▰ Área = superficie interior</strong></p>
+          <div class="comparacion-geometria">
+            <div><span class="figura-perimetro" aria-hidden="true"></span><strong>Perímetro</strong><small>contorno</small></div>
+            <div><span class="figura-area" aria-hidden="true"></span><strong>Área</strong><small>superficie</small></div>
+          </div>
           <p>El perímetro recorre el borde. El área mide cuánto espacio ocupa la figura por dentro.</p>
         </article>
       </div>
@@ -133,13 +148,13 @@
         <div>
           <p class="tema-sobrelinea">Aquí sí puedes probar y corregir</p>
           <h2>Práctica con apoyo</h2>
-          <p>Cuatro retos breves. Puedes pedir una pista, equivocarte y volver a intentarlo.</p>
+          <p>Retos breves para recuperar herramientas de 5.º. Puedes pedir una pista, equivocarte y volver a intentarlo.</p>
         </div>
       </div>
 
       <div class="practica-marco">
         <div class="progreso-lineal" aria-hidden="true"><div id="barraPractica" class="progreso-lineal__relleno"></div></div>
-        <p id="estadoPractica" class="estado-progreso">Reto 1 de 4</p>
+        <p id="estadoPractica" class="estado-progreso">Preparando práctica…</p>
         <div id="practicaContenido"></div>
         <div id="respuestaPractica" class="respuesta-mensaje" role="status"></div>
         <div id="pistaPractica" class="pista-caja" hidden></div>
@@ -157,8 +172,8 @@
         <p class="tema-sobrelinea">Punto de partida</p>
         <h2>Una prueba breve para saber por dónde seguir</h2>
         <p>
-          Son preguntas nuevas de los cuatro bloques. No hay pistas durante la prueba y no mostraremos una nota global.
-          Al final verás un mapa sencillo de lo que hoy parece sólido y de lo que conviene reforzar.
+          Son preguntas nuevas de las cuatro bases de 5.º. No incluimos todavía el contenido nuevo de 6.º.
+          No hay pistas durante la prueba ni una nota global: al final verás un mapa sencillo para elegir el siguiente paso.
         </p>
         <div class="prueba-reglas">
           <span>✓ Responde con calma</span>
