@@ -87,7 +87,19 @@ function bloquePorId(id) {
   return BLOQUES_PUENTE.find(bloque => bloque.id === id);
 }
 
+function pruebaEnCurso() {
+  return estado.pruebaIniciada && !estado.pruebaFinalizada;
+}
+
+function actualizarBloqueoPestanas() {
+  document.querySelectorAll("[data-pestana]").forEach(boton => {
+    boton.disabled = pruebaEnCurso() && boton.dataset.pestana !== "prueba";
+  });
+}
+
 function activarPestana(nombre) {
+  if (pruebaEnCurso() && nombre !== "prueba") return;
+
   detenerLecturaActual();
   estado.pestana = nombre;
   document.querySelectorAll("[data-pestana]").forEach(boton => {
@@ -308,6 +320,7 @@ function iniciarPrueba() {
   estado.inicioIso = new Date().toISOString();
   estado.tiempo.reiniciar("prueba");
   actualizarModo();
+  actualizarBloqueoPestanas();
   $("inicioPrueba").hidden = true;
   $("cierrePrueba").hidden = true;
   $("pruebaActiva").hidden = false;
@@ -416,6 +429,7 @@ async function finalizarPrueba() {
   detenerLecturaActual();
   estado.pruebaFinalizada = true;
   estado.tiempo.detener();
+  actualizarBloqueoPestanas();
   $("pruebaActiva").hidden = true;
   $("cierrePrueba").hidden = false;
 
@@ -435,7 +449,7 @@ async function finalizarPrueba() {
   }
 
   $("estadoGuardado").textContent = modo === MODOS_SESION_ACADEMICA.APRENDIZAJE
-    ? "Guardando tu punto de partida..."
+    ? "Guardando tu punto de partida…"
     : "Vista previa: este resultado no se guardará como aprendizaje.";
 
   const tiempo = estado.tiempo.obtenerResultado();
@@ -505,13 +519,17 @@ async function finalizarPrueba() {
 $("botonRepetirPrueba").addEventListener("click", () => {
   if (modo === MODOS_SESION_ACADEMICA.APRENDIZAJE) {
     estado.pruebaIniciada = false;
+    estado.pruebaFinalizada = false;
     actualizarModo();
+    actualizarBloqueoPestanas();
     activarPestana("resumen");
     return;
   }
 
   estado.pruebaIniciada = false;
+  estado.pruebaFinalizada = false;
   actualizarModo();
+  actualizarBloqueoPestanas();
   $("inicioPrueba").hidden = false;
   $("cierrePrueba").hidden = true;
   $("pruebaActiva").hidden = true;
@@ -521,6 +539,7 @@ let botonLeyendo = null;
 
 function textoParaVoz(texto = "") {
   return String(texto)
+    .replace(/(\d+)\s*\/\s*(\d+)/g, "$1 sobre $2")
     .replaceAll("×", " por ")
     .replaceAll("÷", " dividido entre ")
     .replaceAll("−", " menos ")
@@ -586,3 +605,4 @@ renderTeoria();
 renderFichas();
 renderPractica();
 actualizarModo();
+actualizarBloqueoPestanas();
