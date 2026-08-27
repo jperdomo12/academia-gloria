@@ -1,12 +1,33 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.2
+   Versión 2.3
    ========================================================== */
 
 window.Academia = window.Academia || {};
 
 const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
+
+(async function activarTimeoutSesionGlobal() {
+  if (!NAVEGACION_SCRIPT_URL) return;
+
+  try {
+    const timeoutUrl = new URL(
+      "./timeout-sesion.js",
+      NAVEGACION_SCRIPT_URL
+    );
+    const { activarTimeoutSesion } = await import(timeoutUrl.href);
+    const baseAcademia = window.location.hostname.endsWith("github.io")
+      ? "/academia-gloria"
+      : "";
+
+    await activarTimeoutSesion({
+      loginUrl: `${baseAcademia}/login.html`
+    });
+  } catch (error) {
+    console.error("No se pudo activar el timeout global de sesión.", error);
+  }
+})();
 
 (function configurarNavegacionAcademia() {
   "use strict";
