@@ -107,7 +107,16 @@ function reconocer(index, tipo) {
     return;
   }
 
-  if (recognitionActiva) return;
+  if (recognitionActiva) {
+    const esMismoReconocimiento =
+      reconocimientoEnCurso?.index === index &&
+      reconocimientoEnCurso?.tipo === tipo;
+
+    if (esMismoReconocimiento) {
+      try { recognitionActiva.stop(); } catch {}
+    }
+    return;
+  }
 
   const actual = resultado(index);
   const esFrase = tipo === "frase";
@@ -230,7 +239,15 @@ function render() {
       reconocimientoEnCurso?.index === index &&
       reconocimientoEnCurso?.tipo === "frase";
     const tarjetaGrabando = grabandoPalabra || grabandoFrase;
-    const deshabilitado = grabando ? " disabled" : "";
+    const deshabilitarEscucha = grabando ? " disabled" : "";
+    const deshabilitarPalabra = grabando && !grabandoPalabra ? " disabled" : "";
+    const deshabilitarFrase = grabando && !grabandoFrase ? " disabled" : "";
+    const ayudaDetenerPalabra = grabandoPalabra
+      ? ' title="Volver a pulsar para detener" aria-label="Grabando palabra. Pulsar para detener."'
+      : "";
+    const ayudaDetenerFrase = grabandoFrase
+      ? ' title="Volver a pulsar para detener" aria-label="Grabando frase. Pulsar para detener."'
+      : "";
 
     return `
       <article class="pronunciation-word ${practicada ? "pronunciation-word--practiced" : ""} ${tarjetaGrabando ? "pronunciation-word--recording" : ""}">
@@ -261,10 +278,10 @@ function render() {
           </div>
         ` : `
           <div class="pronunciation-word__actions">
-            <button class="btn light" type="button" data-escuchar-palabra="${index}"${deshabilitado}>🔊 Escuchar palabra</button>
-            <button class="btn primary ${grabandoPalabra ? "pronunciation-recording" : ""}" type="button" data-repetir-palabra="${index}"${deshabilitado}>${grabandoPalabra ? "🔴 Grabando…" : "🎤 Repetir palabra"}</button>
-            <button class="btn light" type="button" data-escuchar-frase="${index}"${deshabilitado}>🔊 Escuchar frase</button>
-            <button class="btn blue ${grabandoFrase ? "pronunciation-recording" : ""}" type="button" data-repetir-frase="${index}"${deshabilitado}>${grabandoFrase ? "🔴 Grabando…" : "🎤 Practicar frase"}</button>
+            <button class="btn light" type="button" data-escuchar-palabra="${index}"${deshabilitarEscucha}>🔊 Escuchar palabra</button>
+            <button class="btn primary ${grabandoPalabra ? "pronunciation-recording" : ""}" type="button" data-repetir-palabra="${index}"${deshabilitarPalabra}${ayudaDetenerPalabra}>${grabandoPalabra ? "🔴 Grabando…" : "🎤 Repetir palabra"}</button>
+            <button class="btn light" type="button" data-escuchar-frase="${index}"${deshabilitarEscucha}>🔊 Escuchar frase</button>
+            <button class="btn blue ${grabandoFrase ? "pronunciation-recording" : ""}" type="button" data-repetir-frase="${index}"${deshabilitarFrase}${ayudaDetenerFrase}>${grabandoFrase ? "🔴 Grabando…" : "🎤 Practicar frase"}</button>
           </div>
 
           ${practicada ? `
