@@ -88,6 +88,7 @@ function bloquePorId(id) {
 }
 
 function activarPestana(nombre) {
+  detenerLecturaActual();
   estado.pestana = nombre;
   document.querySelectorAll("[data-pestana]").forEach(boton => {
     boton.classList.toggle("activa", boton.dataset.pestana === nombre);
@@ -209,6 +210,9 @@ function htmlReto(item, opciones, prefijo) {
     <h3 class="reto-titulo">${escaparHTML(item.titulo)}</h3>
     <div class="reto-enunciado">${escaparHTML(item.enunciado)}</div>
     <p class="reto-pregunta">${escaparHTML(item.pregunta)}</p>
+    <div class="teoria-acciones">
+      <button id="${prefijo}Escuchar" class="boton-escuchar" type="button">🔊 Escuchar reto</button>
+    </div>
     <div class="opciones" id="${prefijo}Opciones">
       ${opciones.map(opcion => `
         <button class="opcion" type="button" data-opcion="${escaparHTML(opcion.id)}">${escaparHTML(opcion.texto)}</button>
@@ -218,6 +222,7 @@ function htmlReto(item, opciones, prefijo) {
 }
 
 function renderPractica() {
+  detenerLecturaActual();
   const reto = PRACTICA_PUENTE[estado.practicaIndice];
   const porcentaje = ((estado.practicaIndice + 1) / PRACTICA_PUENTE.length) * 100;
   $("barraPractica").style.width = `${porcentaje}%`;
@@ -243,6 +248,13 @@ function renderPractica() {
       boton.classList.add("seleccionada");
       $("botonComprobarPractica").disabled = false;
     });
+  });
+
+  $("practicaEscuchar")?.addEventListener("click", () => {
+    iniciarLectura(
+      $("practicaEscuchar"),
+      textoParaVoz(`${reto.enunciado}. ${reto.pregunta}`)
+    );
   });
 }
 
@@ -286,6 +298,7 @@ $("botonSiguientePractica").addEventListener("click", () => {
 });
 
 function iniciarPrueba() {
+  detenerLecturaActual();
   estado.pruebaIniciada = true;
   estado.pruebaFinalizada = false;
   estado.pruebaIndice = 0;
@@ -302,6 +315,7 @@ function iniciarPrueba() {
 }
 
 function renderPreguntaPrueba() {
+  detenerLecturaActual();
   const pregunta = PRUEBA_PUENTE[estado.pruebaIndice];
   const porcentaje = ((estado.pruebaIndice + 1) / PRUEBA_PUENTE.length) * 100;
   $("barraPrueba").style.width = `${porcentaje}%`;
@@ -318,6 +332,13 @@ function renderPreguntaPrueba() {
       boton.classList.add("seleccionada");
       $("botonResponderPrueba").disabled = false;
     });
+  });
+
+  $("pruebaEscuchar")?.addEventListener("click", () => {
+    iniciarLectura(
+      $("pruebaEscuchar"),
+      textoParaVoz(`${pregunta.enunciado}. ${pregunta.pregunta}`)
+    );
   });
 }
 
@@ -349,15 +370,16 @@ function construirMapaResultados() {
   return BLOQUES_PUENTE.map(bloque => {
     const respuestas = estado.respuestas.filter(item => item.bloqueId === bloque.id);
     const correctas = respuestas.filter(item => item.correcta).length;
+    const proporcion = respuestas.length ? correctas / respuestas.length : 0;
     let estadoId = "reforzar";
     let tituloEstado = "Conviene reforzar";
     let textoEstado = "Este bloque merece volver a verse con apoyo y práctica antes de aumentar la dificultad.";
 
-    if (correctas === respuestas.length) {
+    if (proporcion >= 0.8) {
       estadoId = "solido";
       tituloEstado = "Base sólida hoy";
       textoEstado = "Las respuestas de hoy muestran una base preparada para seguir construyendo.";
-    } else if (correctas >= Math.ceil(respuestas.length * 2 / 3)) {
+    } else if (proporcion >= 0.55) {
       estadoId = "camino";
       tituloEstado = "En camino";
       textoEstado = "La idea principal está presente y conviene consolidarla con algunas variantes más.";
@@ -391,6 +413,7 @@ function renderMapaResultados(mapa) {
 }
 
 async function finalizarPrueba() {
+  detenerLecturaActual();
   estado.pruebaFinalizada = true;
   estado.tiempo.detener();
   $("pruebaActiva").hidden = true;
@@ -400,10 +423,16 @@ async function finalizarPrueba() {
   renderMapaResultados(mapa);
 
   const solidos = mapa.filter(item => item.estado === "solido");
+  const enCamino = mapa.filter(item => item.estado === "camino");
   const reforzar = mapa.filter(item => item.estado === "reforzar");
-  $("textoCierrePrueba").textContent = reforzar.length
-    ? `${nombreAlumno}, ya tenemos una fotografía útil: hay bases que están contigo y otras que conviene reforzar antes de aumentar la dificultad.`
-    : `${nombreAlumno}, la fotografía de hoy muestra una base bastante preparada. Seguiremos comprobándola con situaciones nuevas mientras avanza 6.º.`;
+
+  if (reforzar.length) {
+    $("textoCierrePrueba").textContent = `${nombreAlumno}, ya tenemos una fotografía útil: hay bases que están contigo y otras que conviene reforzar antes de aumentar la dificultad.`;
+  } else if (enCamino.length) {
+    $("textoCierrePrueba").textContent = `${nombreAlumno}, las bases principales están presentes. Algunas necesitan un poco más de práctica para quedar firmes antes de seguir avanzando.`;
+  } else {
+    $("textoCierrePrueba").textContent = `${nombreAlumno}, la fotografía de hoy muestra una base bastante preparada. Seguiremos comprobándola con situaciones nuevas mientras avanza 6.º.`;
+  }
 
   $("estadoGuardado").textContent = modo === MODOS_SESION_ACADEMICA.APRENDIZAJE
     ? "Guardando tu punto de partida..."
@@ -445,6 +474,7 @@ async function finalizarPrueba() {
       },
       retroalimentacion: {
         bloquesSolidos: solidos.map(item => item.bloqueId),
+        bloquesEnCamino: enCamino.map(item => item.bloqueId),
         bloquesAReforzar: reforzar.map(item => item.bloqueId),
         mensajeVisible: "Fotografía de punto de partida; no es una etiqueta ni una calificación escolar."
       }
@@ -489,6 +519,15 @@ $("botonRepetirPrueba").addEventListener("click", () => {
 
 let botonLeyendo = null;
 
+function textoParaVoz(texto = "") {
+  return String(texto)
+    .replaceAll("×", " por ")
+    .replaceAll("÷", " dividido entre ")
+    .replaceAll("−", " menos ")
+    .replaceAll("+", " más ")
+    .replaceAll("=", " es igual a ");
+}
+
 function detenerLecturaActual() {
   detener();
   if (botonLeyendo) {
@@ -529,14 +568,14 @@ document.addEventListener("click", evento => {
   const botonSelector = evento.target.closest("[data-escuchar-selector]");
   if (botonSelector) {
     const elemento = document.querySelector(botonSelector.dataset.escucharSelector);
-    if (elemento) iniciarLectura(botonSelector, elemento.textContent);
+    if (elemento) iniciarLectura(botonSelector, textoParaVoz(elemento.textContent));
     return;
   }
 
   const botonBloque = evento.target.closest("[data-escuchar-bloque]");
   if (botonBloque) {
     const bloque = botonBloque.closest(".teoria-bloque")?.querySelector(".texto-escuchable");
-    if (bloque) iniciarLectura(botonBloque, bloque.textContent.replace("Escuchar este bloque", ""));
+    if (bloque) iniciarLectura(botonBloque, textoParaVoz(bloque.textContent.replace("Escuchar este bloque", "")));
   }
 });
 
