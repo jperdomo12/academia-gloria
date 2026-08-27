@@ -216,9 +216,9 @@ export const PRUEBA_FRACCIONES = Object.freeze([
     conceptoId:"conversion_denominador_comun",
     tipoEvidencia:"procedimiento",
     titulo:"Ajustar una fracción",
-    enunciado:"Queremos escribir 1/4 con denominador 12.",
+    enunciado:"Queremos escribir 1/6 con denominador 12.",
     pregunta:"¿Cuál es la fracción equivalente?",
-    opciones:[{id:"a",texto:"3/12"},{id:"b",texto:"4/12"},{id:"c",texto:"1/12"}],
+    opciones:[{id:"a",texto:"2/12"},{id:"b",texto:"6/12"},{id:"c",texto:"1/12"}],
     respuestaCorrecta:"a"
   },
   {
@@ -227,9 +227,9 @@ export const PRUEBA_FRACCIONES = Object.freeze([
     conceptoId:"suma_distinto_denominador",
     tipoEvidencia:"calculo",
     titulo:"Suma con distinto denominador",
-    enunciado:"Calcula 1/4 + 2/3.",
+    enunciado:"Calcula 1/3 + 1/4.",
     pregunta:"¿Cuál es el resultado?",
-    opciones:[{id:"a",texto:"3/7"},{id:"b",texto:"11/12"},{id:"c",texto:"9/12"}],
+    opciones:[{id:"a",texto:"2/7"},{id:"b",texto:"7/12"},{id:"c",texto:"5/12"}],
     respuestaCorrecta:"b"
   },
   {
@@ -238,9 +238,9 @@ export const PRUEBA_FRACCIONES = Object.freeze([
     conceptoId:"multiplicacion_fracciones",
     tipoEvidencia:"calculo",
     titulo:"Multiplicación",
-    enunciado:"Calcula 2/5 × 3/4 y simplifica.",
+    enunciado:"Calcula 3/5 × 2/3 y simplifica.",
     pregunta:"¿Cuál es el resultado?",
-    opciones:[{id:"a",texto:"3/10"},{id:"b",texto:"6/9"},{id:"c",texto:"5/20"}],
+    opciones:[{id:"a",texto:"2/5"},{id:"b",texto:"6/8"},{id:"c",texto:"5/6"}],
     respuestaCorrecta:"a"
   },
   {
@@ -249,9 +249,9 @@ export const PRUEBA_FRACCIONES = Object.freeze([
     conceptoId:"division_fracciones",
     tipoEvidencia:"calculo",
     titulo:"División",
-    enunciado:"Calcula 3/5 ÷ 2/7.",
+    enunciado:"Calcula 2/3 ÷ 4/5 y simplifica.",
     pregunta:"¿Cuál es el resultado?",
-    opciones:[{id:"a",texto:"6/35"},{id:"b",texto:"21/10"},{id:"c",texto:"15/14"}],
+    opciones:[{id:"a",texto:"8/15"},{id:"b",texto:"5/6"},{id:"c",texto:"6/20"}],
     respuestaCorrecta:"b"
   },
   {
@@ -271,9 +271,9 @@ export const PRUEBA_FRACCIONES = Object.freeze([
     conceptoId:"simplificacion_fracciones",
     tipoEvidencia:"procedimiento",
     titulo:"Simplificar",
-    enunciado:"Simplifica 6/20 dividiendo numerador y denominador entre 2.",
+    enunciado:"Simplifica 8/12 dividiendo numerador y denominador entre 4.",
     pregunta:"¿Qué fracción obtienes?",
-    opciones:[{id:"a",texto:"3/10"},{id:"b",texto:"4/18"},{id:"c",texto:"6/10"}],
+    opciones:[{id:"a",texto:"2/3"},{id:"b",texto:"4/8"},{id:"c",texto:"8/3"}],
     respuestaCorrecta:"a"
   }
 ]);
