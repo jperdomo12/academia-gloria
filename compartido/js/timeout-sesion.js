@@ -1,9 +1,10 @@
 /* ==========================================================
    Academia Gloria Valentina
    Timeout global de sesión por inactividad
-   Versión 1.0
+   Versión 1.1
    ========================================================== */
 
+import { auth } from "../firebase/firebase-config.js";
 import { AcademiaConfig } from "../config/academia-config.js";
 import { cerrarSesion } from "./perfil-usuario.js";
 
@@ -15,11 +16,17 @@ function minutosConfigurados() {
   return Number.isFinite(minutos) && minutos > 0 ? minutos : 0;
 }
 
-export function activarTimeoutSesion({ loginUrl = "" } = {}) {
+export async function activarTimeoutSesion({ loginUrl = "" } = {}) {
   const minutos = minutosConfigurados();
 
   if (!minutos) {
     return Object.freeze({ activo: false, minutos: 0 });
+  }
+
+  await auth.authStateReady();
+
+  if (!auth.currentUser) {
+    return Object.freeze({ activo: false, minutos });
   }
 
   if (window[CLAVE_GLOBAL]) {
@@ -89,7 +96,10 @@ export function activarTimeoutSesion({ loginUrl = "" } = {}) {
   const eventosActividad = ["pointerdown", "keydown", "touchstart", "scroll"];
 
   eventosActividad.forEach(evento => {
-    window.addEventListener(evento, registrarActividad, { passive: true, capture: true });
+    window.addEventListener(evento, registrarActividad, {
+      passive: true,
+      capture: true
+    });
   });
 
   window.addEventListener("mousemove", registrarMovimiento, { passive: true });
