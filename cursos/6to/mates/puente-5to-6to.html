@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6f7b43">
+  <title>Puente de 5.º a 6.º | Matemáticas</title>
+  <meta name="description" content="Repaso de transición de Matemáticas para consolidar aprendizajes de 5.º y comenzar 6.º con confianza.">
+
+  <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./puente-5to-6to.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page-title="Puente de 5.º a 6.º" data-page-icon="🌉" data-nav-back="./index.html">
+  <main class="tema-shell">
+    <header class="tema-hero">
+      <div class="tema-hero__principal">
+        <div class="tema-etiquetas">
+          <span class="tema-etiqueta">🎓 Matemáticas · 6.º</span>
+          <span class="tema-etiqueta">🌉 Repaso de transición</span>
+          <span class="tema-etiqueta">🌿 Sin prisas y sin vacíos</span>
+        </div>
+
+        <p class="tema-sobrelinea">Antes de avanzar, miramos qué herramientas ya están contigo</p>
+        <h1>Puente de 5.º a 6.º</h1>
+        <p class="tema-entrada">
+          Repasa lo esencial de 5.º, practica con apoyo y crea un punto de partida útil para comenzar 6.º con confianza.
+        </p>
+      </div>
+
+      <aside class="modo-sesion" aria-live="polite">
+        <div id="iconoModo" class="modo-sesion__icono">⏳</div>
+        <p class="tema-sobrelinea">Modo de esta sesión</p>
+        <h2 id="tituloModo">Preparando...</h2>
+        <p id="descripcionModo">Estamos comprobando el contexto de la persona activa.</p>
+        <button id="botonModo" class="boton boton--secundario" type="button" disabled>Cargando...</button>
+      </aside>
+    </header>
+
+    <nav class="pestanas" aria-label="Secciones del repaso">
+      <button class="pestana activa" type="button" data-pestana="resumen">🧭 Resumen</button>
+      <button class="pestana" type="button" data-pestana="teoria">📖 Teoría</button>
+      <button class="pestana" type="button" data-pestana="fichas">🃏 Fichas</button>
+      <button class="pestana" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="pestana" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section id="panel-resumen" class="panel-seccion activa" data-panel="resumen">
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Una fotografía mental antes de empezar</p>
+          <h2>Cuatro bases que vamos a comprobar</h2>
+          <p>No buscamos una nota. Queremos saber qué está sólido y qué merece un poco más de práctica.</p>
+        </div>
+        <button class="boton-escuchar" type="button" data-escuchar-selector="#panel-resumen .texto-escuchable">🔊 Escuchar resumen</button>
+      </div>
+
+      <div class="texto-escuchable">
+        <div id="tarjetasResumen" class="rejilla-bloques"></div>
+
+        <div class="regla-clave">
+          <div class="regla-clave__icono">🧠</div>
+          <div>
+            <strong>Una regla que nos acompaña</strong>
+            <p>En los problemas, las palabras pueden dar pistas. La historia y la relación entre las cantidades deciden qué hacer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-teoria" class="panel-seccion" data-panel="teoria" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Lo esencial, explicado de forma directa</p>
+          <h2>Teoría para recordar</h2>
+          <p>Una idea principal por bloque, con ejemplos sencillos antes de pasar a la práctica.</p>
+        </div>
+      </div>
+      <div id="teoriaContenido" class="teoria-contenido"></div>
+    </section>
+
+    <section id="panel-fichas" class="panel-seccion" data-panel="fichas" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Recuperación activa</p>
+          <h2>Fichas de repaso</h2>
+          <p>Intenta responder antes de girar cada ficha. Recordar activamente ayuda más que releer muchas veces.</p>
+        </div>
+      </div>
+      <div id="fichasContenido" class="rejilla-fichas"></div>
+    </section>
+
+    <section id="panel-practica" class="panel-seccion" data-panel="practica" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Aquí sí puedes probar y corregir</p>
+          <h2>Práctica con apoyo</h2>
+          <p>Cuatro retos breves. Puedes pedir una pista, equivocarte y volver a intentarlo.</p>
+        </div>
+      </div>
+
+      <div class="practica-marco">
+        <div class="progreso-lineal" aria-hidden="true"><div id="barraPractica" class="progreso-lineal__relleno"></div></div>
+        <p id="estadoPractica" class="estado-progreso">Reto 1 de 4</p>
+        <div id="practicaContenido"></div>
+        <div id="respuestaPractica" class="respuesta-mensaje" role="status"></div>
+        <div id="pistaPractica" class="pista-caja" hidden></div>
+        <div class="acciones-practica">
+          <button id="botonPistaPractica" class="boton boton--secundario" type="button">💡 Ver una pista</button>
+          <button id="botonComprobarPractica" class="boton boton--principal" type="button">Comprobar</button>
+          <button id="botonSiguientePractica" class="boton boton--principal" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-prueba" class="panel-seccion" data-panel="prueba" hidden>
+      <div id="inicioPrueba" class="prueba-inicio">
+        <div class="prueba-inicio__icono">🧭</div>
+        <p class="tema-sobrelinea">Punto de partida</p>
+        <h2>Una prueba breve para saber por dónde seguir</h2>
+        <p>
+          Son preguntas nuevas de los cuatro bloques. No hay pistas durante la prueba y no mostraremos una nota global.
+          Al final verás un mapa sencillo de lo que hoy parece sólido y de lo que conviene reforzar.
+        </p>
+        <div class="prueba-reglas">
+          <span>✓ Responde con calma</span>
+          <span>✓ Una pregunta cada vez</span>
+          <span>✓ Sin comparar con nadie</span>
+        </div>
+        <button id="botonIniciarPrueba" class="boton boton--principal" type="button">🌿 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="prueba-activa" hidden>
+        <div class="progreso-lineal" aria-hidden="true"><div id="barraPrueba" class="progreso-lineal__relleno"></div></div>
+        <div class="prueba-cabecera">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="etiqueta-bloque"></span>
+        </div>
+        <div id="pruebaContenido"></div>
+        <div class="acciones-practica">
+          <button id="botonResponderPrueba" class="boton boton--principal" type="button" disabled>Guardar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="cierre-prueba" hidden aria-live="polite">
+        <div class="cierre-prueba__icono">🌟</div>
+        <p class="tema-sobrelinea">Tu mapa de hoy</p>
+        <h2>Ya sabemos mejor por dónde empezar 6.º</h2>
+        <p id="textoCierrePrueba" class="cierre-prueba__entrada"></p>
+        <div id="mapaResultados" class="mapa-resultados"></div>
+        <div id="estadoGuardado" class="estado-guardado"></div>
+        <div class="lia-cierre">
+          ✨ <strong>Lía:</strong> Esto no es una etiqueta. Es una fotografía de hoy para elegir mejor el siguiente paso.
+        </div>
+        <div class="acciones-cierre">
+          <button id="botonRepetirPrueba" class="boton boton--secundario" type="button">🔄 Hacer otra prueba</button>
+          <a class="boton boton--principal enlace-boton" href="./index.html">Volver a Matemáticas →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="nota-pie">
+      Patrón de tema de 6.º · Resumen → Teoría → Fichas → Práctica → Prueba · La evidencia se guarda solo cuando corresponde.
+    </footer>
+  </main>
+
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./puente-5to-6to.js"></script>
+</body>
+</html>
