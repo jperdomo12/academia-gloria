@@ -1,7 +1,7 @@
 export const FRACCIONES_META = Object.freeze({
   actividadId: "6-mates-fracciones",
   tituloActividad: "Fracciones",
-  version: "0.2",
+  version: "0.3",
   cursoReferencia: "6.º de Primaria",
   materia: "Matemáticas",
   tema: "Fracciones"
@@ -153,3 +153,26 @@ export const FAMILIAS_PRUEBA_FRACCIONES = Object.freeze([
     ]
   }
 ]);
+
+export const EXPLICACIONES_PRUEBA_FRACCIONES = Object.freeze({
+  "prueba-representacion-a":"La barra tiene 5 partes iguales y 2 coloreadas: el numerador es 2 y el denominador 5, por eso representa 2/5.",
+  "prueba-representacion-b":"La barra tiene 8 partes iguales y 5 coloreadas: el numerador es 5 y el denominador 8, por eso representa 5/8.",
+  "prueba-equivalencia-a":"3/6 representa la mitad. Al dividir numerador y denominador entre 3 obtenemos 1/2, que representa la misma cantidad.",
+  "prueba-equivalencia-b":"2/8 se simplifica dividiendo numerador y denominador entre 2: obtenemos 1/4, sin cambiar la cantidad representada.",
+  "prueba-igual-denominador-a":"Las partes tienen el mismo tamaño, así que conservamos el denominador 9 y sumamos 2 + 4. El resultado es 6/9.",
+  "prueba-igual-denominador-b":"Las dos fracciones están en décimos. Conservamos el 10 y sumamos 3 + 5: el resultado es 8/10.",
+  "prueba-mcm-a":"Los múltiplos de 4 son 4, 8, 12… y los de 6 son 6, 12… El primer múltiplo que comparten es 12.",
+  "prueba-mcm-b":"Los múltiplos de 3 son 3, 6, 9, 12, 15… y los de 5 son 5, 10, 15… El primero que comparten es 15.",
+  "prueba-conversion-a":"Para pasar de denominador 6 a 12 multiplicamos por 2. Hacemos lo mismo arriba: 1 × 2 = 2. Por eso 1/6 = 2/12.",
+  "prueba-conversion-b":"Para pasar de 5 a 15 multiplicamos por 3. También multiplicamos el numerador: 2 × 3 = 6. Por eso 2/5 = 6/15.",
+  "prueba-suma-distinto-a":"El m.c.m. de 3 y 4 es 12. Entonces 1/3 = 4/12 y 1/4 = 3/12; 4/12 + 3/12 = 7/12.",
+  "prueba-suma-distinto-b":"Usamos sextos: 1/2 = 3/6 y 1/3 = 2/6. Al sumar 3/6 + 2/6 obtenemos 5/6.",
+  "prueba-multiplicacion-a":"Multiplicamos en línea recta: 3 × 2 = 6 y 5 × 3 = 15. Después simplificamos 6/15 entre 3 y obtenemos 2/5.",
+  "prueba-multiplicacion-b":"2 × 3 = 6 y 7 × 4 = 28. La fracción 6/28 se simplifica entre 2 y queda 3/14.",
+  "prueba-division-a":"En este tema cruzamos los productos: (2 × 5)/(3 × 4) = 10/12. Simplificando entre 2 obtenemos 5/6.",
+  "prueba-division-b":"Cruza los productos: (3 × 5)/(4 × 2) = 15/8. Esa es la fracción resultante.",
+  "prueba-problema-a":"2/5 equivale a 4/10. Se usa 3/10 + 4/10 = 7/10 de la botella; de 10/10 quedan 3/10.",
+  "prueba-problema-b":"1/4 equivale a 2/8. Se leen 2/8 + 3/8 = 5/8; del libro completo, 8/8 − 5/8 = 3/8 quedan por leer.",
+  "prueba-simplificacion-a":"Dividimos numerador y denominador entre 4: 8 ÷ 4 = 2 y 12 ÷ 4 = 3. El resultado es 2/3.",
+  "prueba-simplificacion-b":"Dividimos numerador y denominador entre 3: 9 ÷ 3 = 3 y 15 ÷ 3 = 5. El resultado es 3/5."
+});
