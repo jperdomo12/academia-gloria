@@ -99,6 +99,7 @@
   <script type="module">
     import { auth } from "../../../compartido/firebase/firebase-config.js";
     import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
+    import { ContextoUsuario } from "../../../compartido/js/contexto-usuario.js";
     import { Academia } from "../../../compartido/api/academia.js";
     import {
       obtenerSesionHistoria,
@@ -169,6 +170,8 @@
 
     await auth.authStateReady();
     if(!auth.currentUser){location.replace("/academia-gloria/login.html");throw new Error("Sesión no disponible");}
+    const contexto=await ContextoUsuario.inicializar();
+    const userIdDatos=contexto.userIdPersonaActiva||auth.currentUser.uid;
     await iniciarPanelUsuario({contenedor:"[data-panel-usuario]",loginUrl:"/academia-gloria/login.html",mostrarPerfil:false});
 
     async function loadStories(){
@@ -180,10 +183,10 @@
       const sessionId=String(evidence.sesionId||"").trim();
       if(!storyId) return null;
       if(sessionId){
-        const exact=await obtenerSesionHistoria(auth.currentUser.uid,storyId,sessionId);
+        const exact=await obtenerSesionHistoria(userIdDatos,storyId,sessionId);
         if(exact) return exact;
       }
-      const sessions=await obtenerSesionesHistoria(auth.currentUser.uid,storyId);
+      const sessions=await obtenerSesionesHistoria(userIdDatos,storyId);
       if(!sessions.length) return null;
       const evidenceDate=asDate(evidence.ocurridaEn);
       if(!evidenceDate) return sessions[0];
@@ -295,7 +298,7 @@
           const story=byId.get(evidence.actividadId)||null;
           const [session,progress]=await Promise.all([
             resolveSession(evidence),
-            obtenerProgresoHistoria(auth.currentUser.uid,evidence.actividadId)
+            obtenerProgresoHistoria(userIdDatos,evidence.actividadId)
           ]);
           return {evidence,story,session,progress};
         }));
@@ -330,7 +333,7 @@
             select.disabled=true;
             try{
               await marcarEstadoHistoria(
-                auth.currentUser.uid,
+                userIdDatos,
                 select.dataset.storyId,
                 select.value
               );
