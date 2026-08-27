@@ -35,7 +35,7 @@ export async function protegerPagina({
     return null;
   }
 
-  activarTimeoutSesion({ loginUrl });
+  await activarTimeoutSesion({ loginUrl });
   document.documentElement.style.visibility = "visible";
 
   if (typeof onAuthenticated === "function") {
