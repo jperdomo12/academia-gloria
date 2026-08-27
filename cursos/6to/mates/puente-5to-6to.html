@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6f7b43">
+  <title>Puente de 5.º a 6.º | Matemáticas</title>
+  <meta name="description" content="Repaso de transición de Matemáticas para consolidar aprendizajes de 5.º y comenzar 6.º con confianza.">
+
+  <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./puente-5to-6to.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .mapa-visual{display:flex;flex-direction:column;gap:10px}
+    .pasos-operaciones,.ruta-problema{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:4px 0 2px}
+    .pasos-operaciones span,.ruta-problema span{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #dfe4d3;border-radius:12px;background:#fff;font-weight:850;color:#4f5b3a}
+    .pasos-operaciones b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#eef2df;color:#526039;font-size:.76rem}
+    .pasos-operaciones i,.ruta-problema i{font-style:normal;color:#9aa48b;font-weight:900}
+    .barra-fraccion{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;height:44px;max-width:340px;padding:4px;border:2px solid #7d6aa8;border-radius:12px;background:#fff;overflow:hidden}
+    .barra-fraccion__parte{border-radius:7px;background:#f0ebf8}
+    .barra-fraccion__parte.activa{background:linear-gradient(135deg,#7d6aa8,#9b86c2)}
+    .cadena-equivalencias{display:flex;align-items:center;flex-wrap:wrap;gap:9px;color:#66538f}
+    .cadena-equivalencias strong{padding:6px 9px;border-radius:10px;background:#f7f3fb;font-size:1.02rem}
+    .comparacion-geometria{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:360px}
+    .comparacion-geometria>div{display:grid;grid-template-columns:54px 1fr;grid-template-rows:auto auto;gap:0 10px;align-items:center;padding:10px;border:1px solid #e1e5d8;border-radius:13px;background:#fff}
+    .comparacion-geometria span{grid-row:1/3;width:50px;height:36px;border-radius:7px}
+    .figura-perimetro{border:4px solid #d87968;background:#fff7f4}
+    .figura-area{border:2px solid #4e93a0;background:repeating-linear-gradient(45deg,#dff0f2,#dff0f2 6px,#c7e4e8 6px,#c7e4e8 12px)}
+    .comparacion-geometria strong{font-size:.92rem}.comparacion-geometria small{color:#747c70;font-weight:700}
+    @media(max-width:560px){.ruta-problema{align-items:stretch;flex-direction:column}.ruta-problema i{transform:rotate(90deg);align-self:center}.comparacion-geometria{grid-template-columns:1fr}}
+  </style>
+</head>
+<body data-page-title="Puente de 5.º a 6.º" data-page-icon="🌉" data-nav-back="./index.html">
+  <main class="tema-shell">
+    <header class="tema-hero">
+      <div class="tema-hero__principal">
+        <div class="tema-etiquetas">
+          <span class="tema-etiqueta">🎓 Matemáticas · 6.º</span>
+          <span class="tema-etiqueta">🌉 Repaso de transición</span>
+          <span class="tema-etiqueta">🌿 Sin prisas y sin vacíos</span>
+        </div>
+
+        <p class="tema-sobrelinea">Antes de avanzar, miramos qué herramientas ya están contigo</p>
+        <h1>Puente de 5.º a 6.º</h1>
+        <p class="tema-entrada">
+          Repasa lo esencial de 5.º, practica con apoyo y crea un punto de partida útil para comenzar 6.º con confianza.
+        </p>
+      </div>
+
+      <aside class="modo-sesion" aria-live="polite">
+        <div id="iconoModo" class="modo-sesion__icono">⏳</div>
+        <p class="tema-sobrelinea">Modo de esta sesión</p>
+        <h2 id="tituloModo">Preparando…</h2>
+        <p id="descripcionModo">Estamos comprobando el contexto de la persona activa.</p>
+        <button id="botonModo" class="boton boton--secundario" type="button" disabled>Cargando…</button>
+      </aside>
+    </header>
+
+    <nav class="pestanas" aria-label="Secciones del repaso">
+      <button class="pestana activa" type="button" data-pestana="resumen">🧭 Resumen</button>
+      <button class="pestana" type="button" data-pestana="teoria">📖 Teoría</button>
+      <button class="pestana" type="button" data-pestana="fichas">🃏 Fichas</button>
+      <button class="pestana" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="pestana" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section id="panel-resumen" class="panel-seccion activa" data-panel="resumen">
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Una fotografía mental antes de empezar</p>
+          <h2>Cuatro bases que vamos a comprobar</h2>
+          <p>No buscamos una nota. Queremos saber qué está sólido y qué merece un poco más de práctica.</p>
+        </div>
+        <button class="boton-escuchar" type="button" data-escuchar-selector="#panel-resumen .texto-escuchable">🔊 Escuchar resumen</button>
+      </div>
+
+      <div class="texto-escuchable">
+        <div id="tarjetasResumen" class="rejilla-bloques"></div>
+
+        <div class="regla-clave">
+          <div class="regla-clave__icono">🧠</div>
+          <div>
+            <strong>Una regla que nos acompaña</strong>
+            <p>En los problemas, las palabras pueden dar pistas. La historia y la relación entre las cantidades deciden qué hacer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-teoria" class="panel-seccion" data-panel="teoria" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Lo esencial, explicado de forma directa</p>
+          <h2>Teoría para recordar</h2>
+          <p>Una idea principal por bloque, con ejemplos sencillos antes de pasar a la práctica.</p>
+        </div>
+      </div>
+
+      <div class="rejilla-bloques" aria-label="Mapas visuales de repaso">
+        <article class="bloque-resumen mapa-visual">
+          <div class="bloque-resumen__icono" aria-hidden="true">🧩</div>
+          <h3>Orden de las operaciones</h3>
+          <div class="pasos-operaciones" aria-label="Primero paréntesis, después multiplicaciones y divisiones, al final sumas y restas">
+            <span><b>1</b>( )</span><i>→</i><span><b>2</b>× ÷</span><i>→</i><span><b>3</b>+ −</span>
+          </div>
+          <p>Vamos por niveles: primero paréntesis, después multiplicaciones y divisiones, y al final sumas y restas.</p>
+        </article>
+
+        <article class="bloque-resumen mapa-visual">
+          <div class="bloque-resumen__icono" aria-hidden="true">🍰</div>
+          <h3>La misma cantidad, distintas formas</h3>
+          <div class="barra-fraccion" role="img" aria-label="Dos de cuatro partes coloreadas, equivalente a un medio">
+            <span class="barra-fraccion__parte activa"></span>
+            <span class="barra-fraccion__parte activa"></span>
+            <span class="barra-fraccion__parte"></span>
+            <span class="barra-fraccion__parte"></span>
+          </div>
+          <div class="cadena-equivalencias" aria-label="Un medio es igual a cero coma cinco y a cincuenta por ciento">
+            <strong>1/2</strong><span>=</span><strong>0,5</strong><span>=</span><strong>50 %</strong>
+          </div>
+          <p>La representación cambia, pero la cantidad puede seguir siendo exactamente la misma.</p>
+        </article>
+
+        <article class="bloque-resumen mapa-visual">
+          <div class="bloque-resumen__icono" aria-hidden="true">🧭</div>
+          <h3>Ruta para resolver un problema</h3>
+          <div class="ruta-problema" aria-label="Qué sé, qué me preguntan, cómo se relacionan">
+            <span>📌 ¿Qué sé?</span><i>→</i><span>🎯 ¿Qué me preguntan?</span><i>→</i><span>🔗 ¿Cómo se relacionan?</span>
+          </div>
+          <p>Primero comprendemos la historia; la operación viene después.</p>
+        </article>
+
+        <article class="bloque-resumen mapa-visual">
+          <div class="bloque-resumen__icono" aria-hidden="true">📐</div>
+          <h3>Perímetro y área no son lo mismo</h3>
+          <div class="comparacion-geometria">
+            <div><span class="figura-perimetro" aria-hidden="true"></span><strong>Perímetro</strong><small>contorno</small></div>
+            <div><span class="figura-area" aria-hidden="true"></span><strong>Área</strong><small>superficie</small></div>
+          </div>
+          <p>El perímetro recorre el borde. El área mide cuánto espacio ocupa la figura por dentro.</p>
+        </article>
+      </div>
+
+      <div id="teoriaContenido" class="teoria-contenido" style="margin-top:16px"></div>
+    </section>
+
+    <section id="panel-fichas" class="panel-seccion" data-panel="fichas" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Recuperación activa</p>
+          <h2>Fichas de repaso</h2>
+          <p>Intenta responder antes de girar cada ficha. Recordar activamente ayuda más que releer muchas veces.</p>
+        </div>
+      </div>
+      <div id="fichasContenido" class="rejilla-fichas"></div>
+    </section>
+
+    <section id="panel-practica" class="panel-seccion" data-panel="practica" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="tema-sobrelinea">Aquí sí puedes probar y corregir</p>
+          <h2>Práctica con apoyo</h2>
+          <p>Retos breves para recuperar herramientas de 5.º. Puedes pedir una pista, equivocarte y volver a intentarlo.</p>
+        </div>
+      </div>
+
+      <div class="practica-marco">
+        <div class="progreso-lineal" aria-hidden="true"><div id="barraPractica" class="progreso-lineal__relleno"></div></div>
+        <p id="estadoPractica" class="estado-progreso">Preparando práctica…</p>
+        <div id="practicaContenido"></div>
+        <div id="respuestaPractica" class="respuesta-mensaje" role="status"></div>
+        <div id="pistaPractica" class="pista-caja" hidden></div>
+        <div class="acciones-practica">
+          <button id="botonPistaPractica" class="boton boton--secundario" type="button">💡 Ver una pista</button>
+          <button id="botonComprobarPractica" class="boton boton--principal" type="button">Comprobar</button>
+          <button id="botonSiguientePractica" class="boton boton--principal" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-prueba" class="panel-seccion" data-panel="prueba" hidden>
+      <div id="inicioPrueba" class="prueba-inicio">
+        <div class="prueba-inicio__icono">🧭</div>
+        <p class="tema-sobrelinea">Punto de partida</p>
+        <h2>Una prueba breve para saber por dónde seguir</h2>
+        <p>
+          Son preguntas nuevas de las cuatro bases de 5.º. No incluimos todavía el contenido nuevo de 6.º.
+          No hay pistas durante la prueba ni una nota global: al final verás un mapa sencillo para elegir el siguiente paso.
+        </p>
+        <div class="prueba-reglas">
+          <span>✓ Responde con calma</span>
+          <span>✓ Una pregunta cada vez</span>
+          <span>✓ Sin comparar con nadie</span>
+        </div>
+        <button id="botonIniciarPrueba" class="boton boton--principal" type="button">🌿 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="prueba-activa" hidden>
+        <div class="progreso-lineal" aria-hidden="true"><div id="barraPrueba" class="progreso-lineal__relleno"></div></div>
+        <div class="prueba-cabecera">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="etiqueta-bloque"></span>
+        </div>
+        <div id="pruebaContenido"></div>
+        <div class="acciones-practica">
+          <button id="botonResponderPrueba" class="boton boton--principal" type="button" disabled>Guardar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="cierre-prueba" hidden aria-live="polite">
+        <div class="cierre-prueba__icono">🌟</div>
+        <p class="tema-sobrelinea">Tu mapa de hoy</p>
+        <h2>Ya sabemos mejor por dónde empezar 6.º</h2>
+        <p id="textoCierrePrueba" class="cierre-prueba__entrada"></p>
+        <div id="mapaResultados" class="mapa-resultados"></div>
+        <div id="estadoGuardado" class="estado-guardado"></div>
+        <div class="lia-cierre">
+          ✨ <strong>Lía:</strong> Esto no es una etiqueta. Es una fotografía de hoy para elegir mejor el siguiente paso.
+        </div>
+        <div class="acciones-cierre">
+          <button id="botonRepetirPrueba" class="boton boton--secundario" type="button">🔄 Hacer otra prueba</button>
+          <a class="boton boton--principal enlace-boton" href="./index.html">Volver a Matemáticas →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="nota-pie">
+      Patrón de tema de 6.º · Resumen → Teoría → Fichas → Práctica → Prueba · La evidencia se guarda solo cuando corresponde.
+    </footer>
+  </main>
+
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./puente-5to-6to.js"></script>
+</body>
+</html>

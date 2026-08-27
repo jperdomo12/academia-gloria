@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6f7b43">
+  <title>Fracciones | Matemáticas 6.º</title>
+  <meta name="description" content="Tema visual de Fracciones de 6.º de Primaria: significado, equivalencias, denominador común, multiplicación, división y problemas.">
+
+  <link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../assets/iconos/icono-principal.png">
+
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./fracciones.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-page-title="Fracciones" data-page-icon="🍕" data-nav-back="../index.html">
+  <main class="tema-shell">
+    <header class="hero">
+      <div class="hero-main">
+        <div class="etiquetas">
+          <span class="etiqueta">🎓 Matemáticas · 6.º</span>
+          <span class="etiqueta">🍕 Fracciones</span>
+          <span class="etiqueta">👀 Ver → comprender → practicar</span>
+        </div>
+        <p class="sobrelinea">Un mismo todo puede contarse de muchas formas</p>
+        <h1>Fracciones</h1>
+        <p class="hero-entrada">
+          Primero hacemos visibles las partes. Después aprendemos a reconocer equivalencias, igualar denominadores y operar con seguridad.
+        </p>
+      </div>
+
+      <aside class="modo-sesion" aria-live="polite">
+        <div id="iconoModo" class="modo-sesion__icono">⏳</div>
+        <p class="sobrelinea">Modo de esta sesión</p>
+        <h2 id="tituloModo">Preparando…</h2>
+        <p id="descripcionModo">Estamos comprobando el contexto de la persona activa.</p>
+        <button id="botonModo" class="boton boton--secundario" type="button" disabled>Cargando…</button>
+      </aside>
+    </header>
+
+    <nav class="pestanas" aria-label="Secciones del tema Fracciones">
+      <button class="pestana activa" type="button" data-pestana="resumen">🧭 Resumen</button>
+      <button class="pestana" type="button" data-pestana="teoria">📖 Teoría</button>
+      <button class="pestana" type="button" data-pestana="fichas">🃏 Fichas</button>
+      <button class="pestana" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="pestana" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section id="panel-resumen" class="panel activo" data-panel="resumen">
+      <div class="cabecera-seccion">
+        <div>
+          <p class="sobrelinea">Tu mapa antes de empezar</p>
+          <h2>De las partes iguales a los problemas</h2>
+          <p>El tema empieza recordando la base de 5.º y luego incorpora los procedimientos nuevos de 6.º.</p>
+        </div>
+        <button class="boton-escuchar" type="button" data-escuchar-contenedor="#panel-resumen .texto-escuchable">🔊 Escuchar resumen</button>
+      </div>
+
+      <div class="texto-escuchable">
+        <div class="mapa-tema" aria-label="Ruta del tema Fracciones">
+          <div class="mapa-tema__paso base"><span>🍕</span><strong>Qué es</strong><small>Base de 5.º</small></div>
+          <div class="mapa-tema__paso base"><span>🔁</span><strong>Equivalentes</strong><small>Base de 5.º</small></div>
+          <div class="mapa-tema__paso base"><span>➕</span><strong>Mismo denominador</strong><small>Base de 5.º</small></div>
+          <div class="mapa-tema__paso nuevo"><span>🧩</span><strong>Denominador común</strong><small>Nuevo en 6.º</small></div>
+          <div class="mapa-tema__paso nuevo"><span>✖️</span><strong>Multiplicar</strong><small>Nuevo en 6.º</small></div>
+          <div class="mapa-tema__paso nuevo"><span>➗</span><strong>Dividir</strong><small>Nuevo en 6.º</small></div>
+          <div class="mapa-tema__paso nuevo"><span>🧠</span><strong>Problemas</strong><small>Aplicar</small></div>
+        </div>
+
+        <div class="resumen-grid">
+          <article class="resumen-card">
+            <div class="resumen-card__icono">🍕</div>
+            <h3>Una fracción habla de partes iguales</h3>
+            <p>El denominador dice cuántas partes iguales forman el todo. El numerador dice cuántas tomamos.</p>
+          </article>
+          <article class="resumen-card">
+            <div class="resumen-card__icono">🔁</div>
+            <h3>Distintos números pueden mostrar lo mismo</h3>
+            <p>1/2, 2/4 y 4/8 son formas diferentes de representar la misma cantidad.</p>
+          </article>
+          <article class="resumen-card">
+            <div class="resumen-card__icono">🧩</div>
+            <h3>Para sumar partes distintas, primero las hacemos comparables</h3>
+            <p>Con denominadores distintos usamos un denominador común; aquí trabajaremos con el m.c.m.</p>
+          </article>
+        </div>
+
+        <div class="regla-clave">
+          <div class="regla-clave__icono">🌿</div>
+          <div>
+            <strong>Idea guía</strong>
+            <p>No memorices una regla antes de ver qué significa. Primero mira las partes; después usa el procedimiento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-teoria" class="panel" data-panel="teoria" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="sobrelinea">Una idea cada vez</p>
+          <h2>Teoría visual</h2>
+          <p>Puedes recorrer los bloques en orden o volver al que necesites. Cada uno tiene una representación visual y un ejemplo.</p>
+        </div>
+      </div>
+
+      <div class="teoria-ruta">
+        <article class="bloque-teoria" id="teoria-significado">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">1</div>
+            <div><h3>¿Qué es una fracción?</h3><small>Recordamos la base</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Una fracción indica las partes que tomamos de un total dividido en partes iguales.</p>
+            <div class="visual-concepto">
+              <div>
+                <div class="barra barra--4" role="img" aria-label="Una de cuatro partes coloreada">
+                  <span class="activa"></span><span></span><span></span><span></span>
+                </div>
+                <div class="visual-etiqueta">1 de 4 partes = 1/4</div>
+              </div>
+              <div class="partes-explicacion">
+                <div class="parte-caja"><strong>Numerador · 1</strong><p>Partes que tomamos.</p></div>
+                <div class="fraccion-grande" aria-label="un cuarto"><span>1</span><span class="fraccion-grande__linea"></span><span>4</span></div>
+                <div class="parte-caja"><strong>Denominador · 4</strong><p>Partes iguales en las que dividimos la unidad.</p></div>
+              </div>
+            </div>
+            <p><strong>Ejemplo:</strong> si una pizza se corta en 4 partes iguales y comemos 1, hemos tomado 1/4 de la pizza.</p>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-significado .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-equivalencias">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">2</div>
+            <div><h3>Fracciones equivalentes</h3><small>La misma cantidad con números distintos</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Dos fracciones son equivalentes cuando representan la misma cantidad aunque sus números sean distintos.</p>
+            <div class="equivalencias-visual">
+              <div class="equivalencia-fila"><strong>1/2</strong><div class="barra barra--2"><span class="activa"></span><span></span></div></div>
+              <div class="equivalencia-fila"><strong>2/4</strong><div class="barra barra--4"><span class="activa"></span><span class="activa"></span><span></span><span></span></div></div>
+              <div class="equivalencia-fila"><strong>4/8</strong><div class="barra barra--8"><span class="activa"></span><span class="activa"></span><span class="activa"></span><span class="activa"></span><span></span><span></span><span></span><span></span></div></div>
+            </div>
+            <div class="proceso">
+              <div class="proceso__paso"><b>↗</b><strong>Amplificar</strong><p>Multiplica numerador y denominador por el mismo número. 1/2 × 2/2 = 2/4.</p></div>
+              <div class="proceso__paso"><b>↘</b><strong>Simplificar</strong><p>Divide numerador y denominador entre el mismo número. 4/8 ÷ 4/4 = 1/2.</p></div>
+              <div class="proceso__paso"><b>×</b><strong>Comprobar</strong><p>Producto cruzado: 2 × 6 = 12 y 3 × 4 = 12, así que 2/3 y 4/6 son equivalentes.</p></div>
+            </div>
+            <div class="nota-visual">La multiplicación cruzada es una comprobación rápida. La imagen de las barras nos ayuda a comprender primero por qué pueden representar lo mismo.</div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-equivalencias .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-igual-denominador">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">3</div>
+            <div><h3>Suma y resta con igual denominador</h3><small>Las partes ya tienen el mismo tamaño</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Si el denominador es el mismo, las partes tienen el mismo tamaño. Por eso conservamos el denominador y sumamos o restamos los numeradores.</p>
+            <div class="formula">
+              <span class="fraccion-grande"><span>3</span><span class="fraccion-grande__linea"></span><span>7</span></span>
+              <span>+</span>
+              <span class="fraccion-grande"><span>2</span><span class="fraccion-grande__linea"></span><span>7</span></span>
+              <span class="igual">=</span>
+              <span class="fraccion-grande"><span>5</span><span class="fraccion-grande__linea"></span><span>7</span></span>
+            </div>
+            <div class="visual-concepto">
+              <div><div class="barra barra--7"><span class="activa"></span><span class="activa"></span><span class="activa"></span><span></span><span></span><span></span><span></span></div><div class="visual-etiqueta">3/7</div></div>
+              <div><div class="barra barra--7"><span class="activa"></span><span class="activa"></span><span class="activa"></span><span class="activa"></span><span class="activa"></span><span></span><span></span></div><div class="visual-etiqueta">Después de añadir 2/7 → 5/7</div></div>
+            </div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-igual-denominador .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-comun-denominador">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">4</div>
+            <div><h3>Distinto denominador: usamos el m.c.m.</h3><small>Nuevo contenido de 6.º</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Para sumar, restar o comparar fracciones con distinto denominador, primero igualamos los denominadores. En este tema usamos el mínimo común múltiplo de los denominadores.</p>
+            <div class="mcm-visual">
+              <div class="mcm-columna"><strong>Múltiplos de 4</strong><div class="multiplos"><span class="multiplo">4</span><span class="multiplo">8</span><span class="multiplo comun">12</span><span class="multiplo">16</span></div></div>
+              <div class="mcm-columna"><strong>Múltiplos de 3</strong><div class="multiplos"><span class="multiplo">3</span><span class="multiplo">6</span><span class="multiplo">9</span><span class="multiplo comun">12</span></div></div>
+            </div>
+            <div class="mcm-destacado">El primer múltiplo que comparten es 12 → m.c.m.(4, 3) = 12</div>
+            <div class="proceso">
+              <div class="proceso__paso"><b>1</b><strong>1/4 → 3/12</strong><p>12 ÷ 4 = 3; entonces 1 × 3 = 3.</p></div>
+              <div class="proceso__paso"><b>2</b><strong>2/3 → 8/12</strong><p>12 ÷ 3 = 4; entonces 2 × 4 = 8.</p></div>
+              <div class="proceso__paso"><b>3</b><strong>Ahora sumamos</strong><p>3/12 + 8/12 = 11/12.</p></div>
+            </div>
+            <div class="conversion-visual">
+              <div class="conversion-fraccion"><strong>1/4</strong><small>× 3/3</small></div><div class="conversion-flecha">→</div><div class="conversion-fraccion"><strong>3/12</strong><small>misma cantidad</small></div>
+            </div>
+            <div class="conversion-visual">
+              <div class="conversion-fraccion"><strong>2/3</strong><small>× 4/4</small></div><div class="conversion-flecha">→</div><div class="conversion-fraccion"><strong>8/12</strong><small>misma cantidad</small></div>
+            </div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-comun-denominador .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-multiplicacion">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">5</div>
+            <div><h3>Multiplicación de fracciones</h3><small>Numerador por numerador · denominador por denominador</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Multiplicamos en línea recta: numerador por numerador y denominador por denominador. Después simplificamos si podemos.</p>
+            <div class="formula formula--lavanda"><strong>2/5 × 3/4</strong><span class="igual">→</span><strong>(2 × 3)/(5 × 4)</strong><span class="igual">→</span><strong>6/20</strong><span class="igual">→</span><strong>3/10</strong></div>
+            <div class="modelo-area" role="img" aria-label="Rejilla de veinte partes con seis zonas de solape destacadas">
+              <span class="solape"></span><span class="solape"></span><span class="vertical"></span><span class="vertical"></span><span class="vertical"></span>
+              <span class="solape"></span><span class="solape"></span><span class="vertical"></span><span class="vertical"></span><span class="vertical"></span>
+              <span class="solape"></span><span class="solape"></span><span class="vertical"></span><span class="vertical"></span><span class="vertical"></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="modelo-area-leyenda"><span>20 partes en total</span><span>6 partes de solape</span><span>6/20 = 3/10</span></div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-multiplicacion .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-division">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">6</div>
+            <div><h3>División de fracciones</h3><small>Multiplicación cruzada</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>En el procedimiento de este tema, la división de fracciones se resuelve cruzando los productos.</p>
+            <div class="cruz-visual">
+              <div class="cruz-fraccion">3/5</div><div class="cruz-centro">÷</div><div class="cruz-fraccion">2/7</div>
+            </div>
+            <div class="formula formula--lavanda"><strong>arriba: 3 × 7 = 21</strong><span class="igual">·</span><strong>abajo: 5 × 2 = 10</strong></div>
+            <div class="cruz-resultado">3/5 ÷ 2/7 = 21/10</div>
+            <div class="nota-visual">Regla general del material: a/b ÷ c/d = (a × d)/(b × c).</div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-division .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+
+        <article class="bloque-teoria" id="teoria-problema">
+          <header class="bloque-teoria__cabecera">
+            <div class="bloque-teoria__numero">7</div>
+            <div><h3>Problema de la pizza: varios pasos</h3><small>La estrategia completa</small></div>
+          </header>
+          <div class="bloque-teoria__cuerpo texto-escuchable">
+            <p>Una pizza tiene 8 porciones iguales. A mediodía se comen 3/8 y por la tarde 1/4. Queremos saber cuánto queda.</p>
+            <div class="pizza-visual" role="img" aria-label="Ocho porciones: tres de mediodía, dos de tarde y tres que quedan">
+              <span class="pizza-porcion mediodia">1</span><span class="pizza-porcion mediodia">2</span><span class="pizza-porcion mediodia">3</span><span class="pizza-porcion tarde">4</span>
+              <span class="pizza-porcion tarde">5</span><span class="pizza-porcion queda">6</span><span class="pizza-porcion queda">7</span><span class="pizza-porcion queda">8</span>
+            </div>
+            <div class="pizza-leyenda"><span class="mediodia">3/8 mediodía</span><span class="tarde">1/4 = 2/8 tarde</span><span class="queda">3/8 quedan</span></div>
+            <div class="proceso">
+              <div class="proceso__paso"><b>1</b><strong>Igualar</strong><p>1/4 = 2/8.</p></div>
+              <div class="proceso__paso"><b>2</b><strong>Sumar lo consumido</strong><p>3/8 + 2/8 = 5/8.</p></div>
+              <div class="proceso__paso"><b>3</b><strong>Restar al total</strong><p>8/8 − 5/8 = 3/8.</p></div>
+            </div>
+            <div class="bloque-teoria__acciones"><button class="boton-escuchar" type="button" data-escuchar-contenedor="#teoria-problema .texto-escuchable">🔊 Escuchar este bloque</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="panel-fichas" class="panel" data-panel="fichas" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="sobrelinea">Recuperación activa</p>
+          <h2>Fichas para recordar</h2>
+          <p>Intenta responder antes de girar. La idea es recuperar la información, no releerla de forma automática.</p>
+        </div>
+      </div>
+      <div id="fichasContenido" class="fichas-grid"></div>
+    </section>
+
+    <section id="panel-practica" class="panel" data-panel="practica" hidden>
+      <div class="cabecera-seccion">
+        <div>
+          <p class="sobrelinea">Construir la estrategia</p>
+          <h2>Práctica con apoyo</h2>
+          <p>Empieza mirando y comprendiendo. Después aparecen el denominador común, la multiplicación, la división y un problema de varios pasos.</p>
+        </div>
+      </div>
+      <div class="marco-actividad">
+        <div class="progreso" aria-hidden="true"><div id="barraPractica" class="progreso__relleno"></div></div>
+        <p id="estadoPractica" class="estado-paso">Preparando práctica…</p>
+        <div id="practicaContenido"></div>
+        <div id="mensajePractica" class="mensaje" role="status"></div>
+        <div id="pistaPractica" class="pista" hidden></div>
+        <div class="acciones">
+          <button id="botonPista" class="boton boton--secundario" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="boton boton--principal" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="boton boton--principal" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-prueba" class="panel" data-panel="prueba" hidden>
+      <div id="inicioPrueba" class="inicio-prueba">
+        <div class="inicio-prueba__icono">🧭</div>
+        <p class="sobrelinea">Comprobación formativa</p>
+        <h2>Una prueba para saber qué quedó firme hoy</h2>
+        <p>No hay pistas durante esta parte y no mostraremos una nota global. Las preguntas cambian de contexto para comprobar comprensión, procedimiento y aplicación.</p>
+        <div class="reglas-prueba"><span>✓ Una pregunta cada vez</span><span>✓ Sin prisa</span><span>✓ Sin comparaciones</span></div>
+        <button id="botonIniciarPrueba" class="boton boton--principal" type="button">🌿 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="marco-actividad" hidden>
+        <div class="progreso" aria-hidden="true"><div id="barraPrueba" class="progreso__relleno"></div></div>
+        <div class="prueba-cabecera"><span id="estadoPrueba">Pregunta 1</span><span id="bloquePrueba" class="etiqueta-bloque"></span></div>
+        <div id="pruebaContenido"></div>
+        <div class="acciones"><button id="botonResponderPrueba" class="boton boton--principal" type="button" disabled>Guardar respuesta →</button></div>
+      </div>
+
+      <div id="cierrePrueba" class="cierre-prueba" hidden aria-live="polite">
+        <div class="cierre-prueba__icono">🌟</div>
+        <p class="sobrelinea">Tu mapa de hoy</p>
+        <h2>Ya sabemos qué seguir practicando</h2>
+        <p id="textoCierre" class="cierre-prueba__entrada"></p>
+        <div id="mapaResultados" class="mapa-resultados"></div>
+        <div id="estadoGuardado" class="estado-guardado"></div>
+        <div class="lia">✨ <strong>Lía:</strong> Una respuesta de hoy no te define. Nos sirve para elegir una mejor práctica mañana.</div>
+        <div class="acciones">
+          <button id="botonVolverRepaso" class="boton boton--secundario" type="button">📖 Volver a repasar</button>
+          <a class="boton boton--principal" href="../index.html">Volver a Matemáticas →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="nota-pie">Fracciones · Resumen → Teoría → Fichas → Práctica → Prueba · Vista previa nunca genera evidencia.</footer>
+  </main>
+
+  <script src="../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./fracciones.js"></script>
+</body>
+</html>
