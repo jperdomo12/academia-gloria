@@ -140,7 +140,8 @@ service cloud.firestore {
     // - Propietario y Administración conservan su comportamiento existente.
     // - Un Usuario relacionado puede leer el USER mínimo de la Persona objetivo
     //   para resolver personaId -> userId.
-    // - El acceso relacionado se abre SOLO a eventos, tareas y evidencias.
+    // - El acceso relacionado se abre únicamente a las subcolecciones
+    //   funcionales declaradas explícitamente debajo.
     // - Escritura relacionada exige acceso efectivo de gestión.
     // - El resto de subcolecciones continúa restringido al propietario/admin.
     match /usuarios/{userId} {
@@ -195,6 +196,30 @@ service cloud.firestore {
         allow create, update, delete: if esPropietario(userId)
           || esAdministrador()
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      // DETECTIVES DE PROBLEMAS · Persona Activa
+      //
+      // La familia/profesional relacionado puede consultar el progreso y las
+      // resoluciones de la Persona Activa. La modificación exige gestión.
+      match /detectivesHistorias/{historiaId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+
+        match /sesiones/{sesionId} {
+          allow read: if esPropietario(userId)
+            || esAdministrador()
+            || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+          allow create, update, delete: if esPropietario(userId)
+            || esAdministrador()
+            || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+        }
       }
 
       match /{documento=**} {
