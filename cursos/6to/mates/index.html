@@ -29,12 +29,14 @@
     .topic-link,.tool-link,.bridge-link{transition:.18s ease}.topic-link:hover,.tool-link:hover,.bridge-link:hover{transform:translateY(-3px);box-shadow:0 17px 35px rgba(70,81,44,.10)}
     .tool-link{border-color:#d7ddb8;background:linear-gradient(145deg,#fff,#fbfced 60%,#f7f2fb)}
     .bridge-link{border-color:#cfdb9f;background:linear-gradient(145deg,#fff,#f8faea 55%,#f4effa)}
+    .topic-real{border-color:#d9d1e5;background:linear-gradient(145deg,#fff,#faf7fd 58%,#f2f8f7)}
     .tool-icon{width:66px;height:66px;flex:0 0 66px;border-radius:20px;background:linear-gradient(145deg,var(--olive-soft),var(--lavender-soft));display:grid;place-items:center;font-size:32px}
     .bridge-icon{width:70px;height:70px;flex:0 0 70px;border-radius:21px;background:linear-gradient(145deg,#e9efcc,#e9def5);display:grid;place-items:center;font-size:34px}
+    .topic-icon{width:70px;height:70px;flex:0 0 70px;border-radius:21px;background:linear-gradient(145deg,#fff0d8,#eadff5);display:grid;place-items:center;font-size:35px}
     .tool-map{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}.tool-map span{padding:7px 10px;border:1px solid #dce2cf;border-radius:999px;background:#fff;font-size:.82rem;font-weight:800;color:#59634c}
     .meta{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .65rem;border-radius:999px;font-size:.78rem;font-weight:800}
     .empty-topics{border-style:dashed;background:rgba(255,255,255,.72)}
-    @media(max-width:640px){.shell{padding:16px}.area-head{padding:25px 20px}.tool-icon,.bridge-icon{width:58px;height:58px;flex-basis:58px}}
+    @media(max-width:640px){.shell{padding:16px}.area-head{padding:25px 20px}.tool-icon,.bridge-icon,.topic-icon{width:58px;height:58px;flex-basis:58px}}
   </style>
 </head>
 <body data-page-title="Matemáticas 6.º" data-page-icon="➗" data-nav-back="../index.html">
@@ -110,12 +112,28 @@
 
         <div class="flex items-end justify-between gap-4 mb-4">
           <div><p class="eyebrow text-[#4e8994] mb-1">Temas de 6.º</p><h2 class="text-3xl font-black">Lo que trabajamos en el colegio</h2></div>
-          <span class="text-sm font-semibold text-slate-500">Crece con el curso real</span>
+          <span class="text-sm font-semibold text-slate-500">1 tema activo</span>
         </div>
 
-        <div class="panel empty-topics p-6 md:p-7">
-          <p class="text-slate-600 leading-relaxed mb-3">Aquí aparecerán los temas reales de Matemáticas de 6.º cuando llegue el material del colegio.</p>
-          <p class="font-black text-[#596637]">Patrón previsto: Resumen · Teoría · Fichas · Práctica · Prueba.</p>
+        <a href="fracciones/" data-conservar-retorno class="panel topic-link topic-real block p-6 md:p-7 mb-4">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <div class="topic-icon">🍕</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="meta bg-[#fff3db] text-[#94651f]">📘 Tema real de 6.º</span>
+                <span class="meta bg-[#f0ebf8] text-[#66538f]">Muy visual</span>
+                <span class="meta bg-[#e9f5f6] text-[#467f89]">Resumen · Teoría · Fichas · Práctica · Prueba</span>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-black mb-2">Fracciones</h3>
+              <p class="text-slate-600 leading-relaxed">De las partes iguales y las equivalencias al denominador común, la multiplicación, la división y los problemas de varios pasos.</p>
+              <div class="tool-map"><span>🍕 Representar</span><span>🔁 Equivalencias</span><span>🧩 m.c.m.</span><span>✖️ Multiplicar</span><span>➗ Dividir</span><span>🧠 Problemas</span></div>
+              <div class="mt-5 inline-flex items-center gap-2 text-[#66538f] font-black">Entrar en Fracciones <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </div>
+          </div>
+        </a>
+
+        <div class="panel empty-topics p-5">
+          <p class="text-slate-600 leading-relaxed">Los próximos temas aparecerán aquí cuando tengamos el material real del colegio. Mantendremos el patrón <strong>Resumen · Teoría · Fichas · Práctica · Prueba</strong>, adaptándolo cuando el contenido necesite otro recurso.</p>
         </div>
       </section>
 
