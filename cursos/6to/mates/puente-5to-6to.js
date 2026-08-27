@@ -18,6 +18,24 @@ import {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../../login.html", import.meta.url).href;
 
+const EXPLICACIONES_PRUEBA_PUENTE = Object.freeze({
+  "diag-suma": "Al sumar 2847 + 1356 obtenemos 4203.",
+  "diag-resta": "5000 − 1768 = 3232. Podemos comprobarlo sumando 3232 + 1768 y recuperando 5000.",
+  "diag-multiplicacion": "37 × 24 puede separarse en 37 × 20 = 740 y 37 × 4 = 148. Al sumar 740 + 148 obtenemos 888.",
+  "diag-division": "864 ÷ 8 = 108. La comprobación es 108 × 8 = 864.",
+  "diag-jerarquia": "Primero resolvemos la multiplicación: 6 × 4 = 24. Después sumamos 18 + 24 = 42.",
+  "diag-fraccion-cantidad": "Para hallar 2/3 de 15, dividimos 15 entre 3 y obtenemos 5. Después tomamos 2 partes: 5 × 2 = 10.",
+  "diag-equivalentes": "1/2 y 2/4 representan la misma cantidad: dos de cuatro partes equivalen a una de dos partes.",
+  "diag-suma-igual-denominador": "Como las partes tienen el mismo denominador, conservamos el 9 y sumamos 4 + 3. El resultado es 7/9.",
+  "diag-relacion-porcentaje": "La mitad puede escribirse de tres formas equivalentes: 1/2, 0,5 y 50 por ciento.",
+  "diag-datos-relevantes": "Queremos contar botellas. Necesitamos 5 mesas y 4 botellas por mesa; los 3 carteles no cambian esa cantidad.",
+  "diag-problema-dos-pasos": "Primero 18 + 7 = 25. Después 25 − 5 = 20. Lucía termina con 20 cromos.",
+  "diag-medidas": "Un metro tiene 100 centímetros. Por eso 3,4 metros × 100 = 340 centímetros.",
+  "diag-perimetro": "El perímetro recorre todo el contorno: 8 + 5 + 8 + 5 = 26 centímetros.",
+  "diag-area-triangulo": "El área de un triángulo es base × altura ÷ 2. Entonces 10 × 6 ÷ 2 = 30 centímetros cuadrados.",
+  "diag-triangulo": "Un triángulo con dos lados iguales es isósceles. Aquí los lados de 5 cm y 5 cm son iguales."
+});
+
 await auth.authStateReady();
 if (!auth.currentUser) {
   window.location.replace(rutaLogin);
@@ -57,6 +75,7 @@ const estado = {
   pruebaFinalizada: false,
   pruebaIndice: 0,
   pruebaSeleccion: null,
+  pruebaRespuestaConfirmada: false,
   respuestas: [],
   ordenOpcionesPrueba: new Map(),
   inicioIso: null,
@@ -85,6 +104,15 @@ function barajar(elementos) {
 
 function bloquePorId(id) {
   return BLOQUES_PUENTE.find(bloque => bloque.id === id);
+}
+
+function textoOpcion(pregunta, opcionId) {
+  return pregunta?.opciones?.find(opcion => opcion.id === opcionId)?.texto || "";
+}
+
+function explicacionPrueba(pregunta) {
+  return EXPLICACIONES_PRUEBA_PUENTE[pregunta?.id] ||
+    "Revisa qué pide la pregunta y aplica la herramienta correspondiente paso a paso.";
 }
 
 function pruebaEnCurso() {
@@ -153,11 +181,14 @@ $("botonModo").addEventListener("click", () => {
 
 function renderResumen() {
   $("tarjetasResumen").innerHTML = BLOQUES_PUENTE.map(bloque => `
-    <article class="bloque-resumen">
+    <article class="bloque-resumen" data-resumen-bloque="${escaparHTML(bloque.id)}">
       <div class="bloque-resumen__icono" aria-hidden="true">${escaparHTML(bloque.icono)}</div>
       <h3>${escaparHTML(bloque.titulo)}</h3>
       <p>${escaparHTML(bloque.resumen)}</p>
       <ul>${bloque.puntos.map(punto => `<li>${escaparHTML(punto)}</li>`).join("")}</ul>
+      <div class="teoria-acciones">
+        <button class="boton-escuchar" type="button" data-escuchar-resumen="${escaparHTML(bloque.id)}">🔊 Escuchar esta base</button>
+      </div>
     </article>
   `).join("");
 }
@@ -187,11 +218,13 @@ function renderFichas() {
         <div class="ficha__cara">
           <div class="ficha__icono" aria-hidden="true">${escaparHTML(ficha.icono)}</div>
           <h3>${escaparHTML(ficha.pregunta)}</h3>
+          <button class="boton-escuchar" type="button" data-escuchar-ficha="${indice}" data-cara-ficha="pregunta">🔊 Escuchar pregunta</button>
           <p class="ficha__pista">Piensa primero · toca para comprobar</p>
         </div>
         <div class="ficha__cara ficha__cara--trasera">
           <div class="ficha__icono" aria-hidden="true">🌿</div>
           <p>${escaparHTML(ficha.respuesta)}</p>
+          <button class="boton-escuchar" type="button" data-escuchar-ficha="${indice}" data-cara-ficha="respuesta">🔊 Escuchar respuesta</button>
           <p class="ficha__pista">Toca para volver</p>
         </div>
       </div>
@@ -199,13 +232,27 @@ function renderFichas() {
   `).join("");
 
   document.querySelectorAll(".ficha").forEach(ficha => {
-    const girar = () => ficha.classList.toggle("girada");
+    const girar = () => {
+      detenerLecturaActual();
+      ficha.classList.toggle("girada");
+    };
     ficha.addEventListener("click", girar);
     ficha.addEventListener("keydown", evento => {
       if (evento.key === "Enter" || evento.key === " ") {
         evento.preventDefault();
         girar();
       }
+    });
+  });
+
+  document.querySelectorAll("[data-escuchar-ficha]").forEach(boton => {
+    boton.addEventListener("click", evento => {
+      evento.stopPropagation();
+      const indice = Number(boton.dataset.escucharFicha);
+      const ficha = FICHAS_PUENTE[indice];
+      if (!ficha) return;
+      const texto = boton.dataset.caraFicha === "respuesta" ? ficha.respuesta : ficha.pregunta;
+      iniciarLectura(boton, textoParaVoz(texto));
     });
   });
 }
@@ -231,6 +278,10 @@ function htmlReto(item, opciones, prefijo) {
       `).join("")}
     </div>
   `;
+}
+
+function htmlEscuchaSelector(selector, etiqueta) {
+  return `<div class="teoria-acciones"><button class="boton-escuchar" type="button" data-escuchar-selector="${escaparHTML(selector)}">🔊 ${escaparHTML(etiqueta)}</button></div>`;
 }
 
 function renderPractica() {
@@ -272,7 +323,7 @@ function renderPractica() {
 
 $("botonPistaPractica").addEventListener("click", () => {
   const reto = PRACTICA_PUENTE[estado.practicaIndice];
-  $("pistaPractica").textContent = reto.pista;
+  $("pistaPractica").innerHTML = `<span class="texto-pista-practica">${escaparHTML(reto.pista)}</span>${htmlEscuchaSelector("#pistaPractica .texto-pista-practica", "Escuchar pista")}`;
   $("pistaPractica").hidden = false;
   $("botonPistaPractica").textContent = "💡 Pista mostrada";
 });
@@ -285,7 +336,7 @@ $("botonComprobarPractica").addEventListener("click", () => {
   if (correcta) {
     estado.practicaResuelta = true;
     botonElegido?.classList.add("correcta");
-    $("respuestaPractica").textContent = `✓ Muy bien. ${reto.explicacion}`;
+    $("respuestaPractica").innerHTML = `<span class="texto-respuesta-practica">✓ Muy bien. ${escaparHTML(reto.explicacion)}</span>${htmlEscuchaSelector("#respuestaPractica .texto-respuesta-practica", "Escuchar explicación")}`;
     $("respuestaPractica").className = "respuesta-mensaje bien";
     $("botonComprobarPractica").hidden = true;
     $("botonPistaPractica").hidden = true;
@@ -295,7 +346,7 @@ $("botonComprobarPractica").addEventListener("click", () => {
       : "Siguiente reto →";
   } else {
     botonElegido?.classList.add("incorrecta");
-    $("respuestaPractica").textContent = "Todavía no. Revisa la relación y vuelve a intentarlo; puedes usar la pista si la necesitas.";
+    $("respuestaPractica").innerHTML = `<span class="texto-respuesta-practica">Todavía no. Revisa la relación y vuelve a intentarlo; puedes usar la pista si la necesitas.</span>${htmlEscuchaSelector("#respuestaPractica .texto-respuesta-practica", "Escuchar indicación")}`;
     $("respuestaPractica").className = "respuesta-mensaje revisar";
   }
 });
@@ -315,6 +366,7 @@ function iniciarPrueba() {
   estado.pruebaFinalizada = false;
   estado.pruebaIndice = 0;
   estado.pruebaSeleccion = null;
+  estado.pruebaRespuestaConfirmada = false;
   estado.respuestas = [];
   estado.ordenOpcionesPrueba.clear();
   estado.inicioIso = new Date().toISOString();
@@ -334,12 +386,16 @@ function renderPreguntaPrueba() {
   $("barraPrueba").style.width = `${porcentaje}%`;
   $("estadoPrueba").textContent = `Pregunta ${estado.pruebaIndice + 1} de ${PRUEBA_PUENTE.length}`;
   $("bloquePrueba").textContent = bloquePorId(pregunta.bloqueId)?.titulo || "Matemáticas";
-  $("pruebaContenido").innerHTML = htmlReto(pregunta, ordenarOpcionesPrueba(pregunta), "prueba");
+  $("pruebaContenido").innerHTML = `${htmlReto(pregunta, ordenarOpcionesPrueba(pregunta), "prueba")}
+    <div id="explicacionPrueba" class="pista-caja" role="status" hidden></div>`;
   $("botonResponderPrueba").disabled = true;
+  $("botonResponderPrueba").textContent = "Comprobar respuesta →";
   estado.pruebaSeleccion = null;
+  estado.pruebaRespuestaConfirmada = false;
 
   document.querySelectorAll("#pruebaOpciones .opcion").forEach(boton => {
     boton.addEventListener("click", () => {
+      if (estado.pruebaRespuestaConfirmada) return;
       estado.pruebaSeleccion = boton.dataset.opcion;
       document.querySelectorAll("#pruebaOpciones .opcion").forEach(item => item.classList.remove("seleccionada"));
       boton.classList.add("seleccionada");
@@ -355,20 +411,68 @@ function renderPreguntaPrueba() {
   });
 }
 
+function mostrarExplicacionPrueba(pregunta, correcta) {
+  const seleccion = estado.pruebaSeleccion;
+  const respuestaElegida = textoOpcion(pregunta, seleccion);
+  const respuestaCorrecta = textoOpcion(pregunta, pregunta.respuestaCorrecta);
+  const explicacion = explicacionPrueba(pregunta);
+  const contenedor = $("explicacionPrueba");
+
+  document.querySelectorAll("#pruebaOpciones .opcion").forEach(boton => {
+    boton.disabled = true;
+    boton.classList.remove("seleccionada");
+    if (boton.dataset.opcion === pregunta.respuestaCorrecta) boton.classList.add("correcta");
+    if (!correcta && boton.dataset.opcion === seleccion) boton.classList.add("incorrecta");
+  });
+
+  contenedor.hidden = false;
+  contenedor.style.borderColor = correcta ? "#cbe5d1" : "#ead6d0";
+  contenedor.style.background = correcta ? "#f5fcf6" : "#fff8f6";
+  contenedor.innerHTML = `
+    <div class="texto-explicacion-prueba">
+      <strong>${correcta ? "✓ Buena elección." : "🌿 Vamos a revisarla."}</strong>
+      <div style="margin-top:8px"><b>Tu respuesta:</b> ${escaparHTML(respuestaElegida)}</div>
+      ${correcta ? "" : `<div style="margin-top:4px"><b>Respuesta correcta:</b> ${escaparHTML(respuestaCorrecta)}</div>`}
+      <div style="margin-top:8px;line-height:1.55"><b>Por qué:</b> ${escaparHTML(explicacion)}</div>
+    </div>
+    ${htmlEscuchaSelector("#explicacionPrueba .texto-explicacion-prueba", "Escuchar explicación")}
+  `;
+}
+
 $("botonIniciarPrueba").addEventListener("click", iniciarPrueba);
 
 $("botonResponderPrueba").addEventListener("click", async () => {
   const pregunta = PRUEBA_PUENTE[estado.pruebaIndice];
-  if (!estado.pruebaSeleccion) return;
 
-  estado.respuestas.push({
-    preguntaId: pregunta.id,
-    bloqueId: pregunta.bloqueId,
-    conceptoId: pregunta.conceptoId,
-    tipoEvidencia: pregunta.tipoEvidencia,
-    respuesta: estado.pruebaSeleccion,
-    correcta: estado.pruebaSeleccion === pregunta.respuestaCorrecta
-  });
+  if (!estado.pruebaRespuestaConfirmada) {
+    if (!estado.pruebaSeleccion) return;
+
+    const correcta = estado.pruebaSeleccion === pregunta.respuestaCorrecta;
+    const explicacion = explicacionPrueba(pregunta);
+
+    estado.respuestas.push({
+      preguntaId: pregunta.id,
+      bloqueId: pregunta.bloqueId,
+      conceptoId: pregunta.conceptoId,
+      tipoEvidencia: pregunta.tipoEvidencia,
+      titulo: pregunta.titulo,
+      enunciado: pregunta.enunciado,
+      pregunta: pregunta.pregunta,
+      respuesta: estado.pruebaSeleccion,
+      respuestaTexto: textoOpcion(pregunta, estado.pruebaSeleccion),
+      respuestaCorrecta: pregunta.respuestaCorrecta,
+      respuestaCorrectaTexto: textoOpcion(pregunta, pregunta.respuestaCorrecta),
+      explicacion,
+      correcta
+    });
+
+    estado.pruebaRespuestaConfirmada = true;
+    mostrarExplicacionPrueba(pregunta, correcta);
+    $("botonResponderPrueba").textContent = estado.pruebaIndice < PRUEBA_PUENTE.length - 1
+      ? "Siguiente pregunta →"
+      : "Ver resultado →";
+    return;
+  }
 
   if (estado.pruebaIndice < PRUEBA_PUENTE.length - 1) {
     estado.pruebaIndice += 1;
@@ -425,6 +529,54 @@ function renderMapaResultados(mapa) {
   `).join("");
 }
 
+function renderResultadoNumerico(totalCorrectas, totalPreguntas) {
+  $("resultadoPuenteResumen")?.remove();
+  $("revisionPuente")?.remove();
+
+  const porcentaje = totalPreguntas ? Math.round((totalCorrectas / totalPreguntas) * 100) : 0;
+  const resumen = document.createElement("section");
+  resumen.id = "resultadoPuenteResumen";
+  resumen.className = "regla-clave";
+  resumen.style.marginTop = "22px";
+  resumen.style.textAlign = "left";
+  resumen.innerHTML = `
+    <div class="regla-clave__icono" aria-hidden="true">📊</div>
+    <div style="flex:1">
+      <div id="resultadoPuenteTexto">
+        <strong>Resultado de la prueba</strong>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-top:6px">
+          <span style="font-size:2rem;font-weight:950;color:#526039">${totalCorrectas} de ${totalPreguntas}</span>
+          <span style="font-size:1.35rem;font-weight:900;color:#66538f">${porcentaje} %</span>
+        </div>
+        <p style="margin-top:6px">Es el resultado de este punto de partida de hoy, no una calificación escolar. El mapa ayuda a elegir qué reforzar antes de aumentar la dificultad.</p>
+      </div>
+      ${htmlEscuchaSelector("#resultadoPuenteTexto", "Escuchar resultado")}
+    </div>`;
+
+  const revision = document.createElement("details");
+  revision.id = "revisionPuente";
+  revision.style.marginTop = "20px";
+  revision.style.textAlign = "left";
+  revision.innerHTML = `
+    <summary style="cursor:pointer;font-weight:900;color:#526039;padding:12px 4px">🧾 Revisar mis ${totalPreguntas} respuestas</summary>
+    <div style="display:grid;gap:10px;margin-top:10px">
+      ${estado.respuestas.map((respuesta, indice) => `
+        <article class="resultado-bloque estado-${respuesta.correcta ? "solido" : "reforzar"}">
+          <div class="resultado-bloque__cabecera">
+            <div class="resultado-bloque__icono" aria-hidden="true">${respuesta.correcta ? "✓" : "🌿"}</div>
+            <div>
+              <h3>${indice + 1}. ${escaparHTML(respuesta.titulo)}</h3>
+              <p><b>Tu respuesta:</b> ${escaparHTML(respuesta.respuestaTexto)}</p>
+              ${respuesta.correcta ? "" : `<p style="margin-top:4px"><b>Respuesta correcta:</b> ${escaparHTML(respuesta.respuestaCorrectaTexto)}</p>`}
+              <p style="margin-top:6px"><b>Por qué:</b> ${escaparHTML(respuesta.explicacion)}</p>
+            </div>
+          </div>
+        </article>`).join("")}
+    </div>`;
+
+  $("mapaResultados").before(resumen, revision);
+}
+
 async function finalizarPrueba() {
   detenerLecturaActual();
   estado.pruebaFinalizada = true;
@@ -434,6 +586,8 @@ async function finalizarPrueba() {
   $("cierrePrueba").hidden = false;
 
   const mapa = construirMapaResultados();
+  const totalCorrectas = estado.respuestas.filter(item => item.correcta).length;
+  renderResultadoNumerico(totalCorrectas, estado.respuestas.length);
   renderMapaResultados(mapa);
 
   const solidos = mapa.filter(item => item.estado === "solido");
@@ -453,7 +607,6 @@ async function finalizarPrueba() {
     : "Vista previa: este resultado no se guardará como aprendizaje.";
 
   const tiempo = estado.tiempo.obtenerResultado();
-  const totalCorrectas = estado.respuestas.filter(item => item.correcta).length;
 
   try {
     estado.guardado = await guardarSesionAcademica({
@@ -479,6 +632,7 @@ async function finalizarPrueba() {
         diagnosticoTransicion: true,
         totalPreguntas: estado.respuestas.length,
         totalCorrectas,
+        porcentaje: estado.respuestas.length ? Math.round((totalCorrectas / estado.respuestas.length) * 100) : 0,
         porBloque: mapa.map(item => ({
           bloqueId: item.bloqueId,
           correctas: item.correctas,
@@ -490,7 +644,7 @@ async function finalizarPrueba() {
         bloquesSolidos: solidos.map(item => item.bloqueId),
         bloquesEnCamino: enCamino.map(item => item.bloqueId),
         bloquesAReforzar: reforzar.map(item => item.bloqueId),
-        mensajeVisible: "Fotografía de punto de partida; no es una etiqueta ni una calificación escolar."
+        mensajeVisible: "Resultado y fotografía de punto de partida; no son una etiqueta ni una calificación escolar."
       }
     });
 
@@ -517,6 +671,8 @@ async function finalizarPrueba() {
 }
 
 $("botonRepetirPrueba").addEventListener("click", () => {
+  estado.pruebaRespuestaConfirmada = false;
+
   if (modo === MODOS_SESION_ACADEMICA.APRENDIZAJE) {
     estado.pruebaIniciada = false;
     estado.pruebaFinalizada = false;
@@ -539,12 +695,17 @@ let botonLeyendo = null;
 
 function textoParaVoz(texto = "") {
   return String(texto)
+    .replace(/cm²/gi, " centímetros cuadrados ")
+    .replace(/m²/gi, " metros cuadrados ")
+    .replace(/(\d+)²/g, "$1 al cuadrado")
+    .replace(/(\d+)³/g, "$1 al cubo")
     .replace(/(\d+)\s*\/\s*(\d+)/g, "$1 sobre $2")
     .replaceAll("×", " por ")
     .replaceAll("÷", " dividido entre ")
     .replaceAll("−", " menos ")
     .replaceAll("+", " más ")
-    .replaceAll("=", " es igual a ");
+    .replaceAll("=", " es igual a ")
+    .replaceAll("%", " por ciento ");
 }
 
 function detenerLecturaActual() {
@@ -553,6 +714,12 @@ function detenerLecturaActual() {
     botonLeyendo.textContent = botonLeyendo.dataset.textoOriginal || "🔊 Escuchar";
     botonLeyendo = null;
   }
+}
+
+function textoLimpioElemento(elemento) {
+  const copia = elemento.cloneNode(true);
+  copia.querySelectorAll("button").forEach(boton => boton.remove());
+  return textoParaVoz(copia.textContent || "");
 }
 
 function iniciarLectura(boton, texto) {
@@ -583,26 +750,74 @@ function iniciarLectura(boton, texto) {
   if (!iniciado) detenerLecturaActual();
 }
 
+function prepararEscuchasVisualesTeoria() {
+  document.querySelectorAll("#panel-teoria > .rejilla-bloques .mapa-visual").forEach((tarjeta, indice) => {
+    if (tarjeta.querySelector("[data-escuchar-visual]")) return;
+    const acciones = document.createElement("div");
+    acciones.className = "teoria-acciones";
+    acciones.innerHTML = `<button class="boton-escuchar" type="button" data-escuchar-visual="${indice}">🔊 Escuchar mapa</button>`;
+    tarjeta.append(acciones);
+  });
+}
+
+function prepararEscuchaIntroduccion() {
+  const entrada = document.querySelector(".tema-hero__principal .tema-entrada");
+  if (!entrada || document.querySelector("[data-escuchar-introduccion]")) return;
+  const acciones = document.createElement("div");
+  acciones.className = "teoria-acciones";
+  acciones.style.justifyContent = "flex-start";
+  acciones.innerHTML = `<button class="boton-escuchar" type="button" data-escuchar-introduccion>🔊 Escuchar introducción</button>`;
+  entrada.after(acciones);
+}
+
 document.addEventListener("click", evento => {
   const botonSelector = evento.target.closest("[data-escuchar-selector]");
   if (botonSelector) {
     const elemento = document.querySelector(botonSelector.dataset.escucharSelector);
-    if (elemento) iniciarLectura(botonSelector, textoParaVoz(elemento.textContent));
+    if (elemento) iniciarLectura(botonSelector, textoLimpioElemento(elemento));
+    return;
+  }
+
+  const botonIntroduccion = evento.target.closest("[data-escuchar-introduccion]");
+  if (botonIntroduccion) {
+    const entrada = document.querySelector(".tema-hero__principal .tema-entrada");
+    if (entrada) iniciarLectura(botonIntroduccion, textoLimpioElemento(entrada));
+    return;
+  }
+
+  const botonResumen = evento.target.closest("[data-escuchar-resumen]");
+  if (botonResumen) {
+    const tarjeta = botonResumen.closest("[data-resumen-bloque]");
+    if (tarjeta) iniciarLectura(botonResumen, textoLimpioElemento(tarjeta));
+    return;
+  }
+
+  const botonVisual = evento.target.closest("[data-escuchar-visual]");
+  if (botonVisual) {
+    const tarjeta = botonVisual.closest(".mapa-visual");
+    if (tarjeta) iniciarLectura(botonVisual, textoLimpioElemento(tarjeta));
     return;
   }
 
   const botonBloque = evento.target.closest("[data-escuchar-bloque]");
   if (botonBloque) {
     const bloque = botonBloque.closest(".teoria-bloque")?.querySelector(".texto-escuchable");
-    if (bloque) iniciarLectura(botonBloque, textoParaVoz(bloque.textContent.replace("Escuchar este bloque", "")));
+    if (bloque) iniciarLectura(botonBloque, textoLimpioElemento(bloque));
   }
 });
 
 window.addEventListener("beforeunload", detenerLecturaActual, { once:true });
 
+const textoInicioPrueba = document.querySelector("#inicioPrueba > p:not(.tema-sobrelinea)");
+if (textoInicioPrueba) {
+  textoInicioPrueba.textContent = "Son preguntas nuevas de las cuatro bases de 5.º. No incluimos todavía el contenido nuevo de 6.º y no hay pistas durante la prueba. Después de cada respuesta verás una explicación breve; al final verás tu resultado total y un mapa para elegir el siguiente paso.";
+}
+
 renderResumen();
 renderTeoria();
 renderFichas();
 renderPractica();
+prepararEscuchasVisualesTeoria();
+prepararEscuchaIntroduccion();
 actualizarModo();
 actualizarBloqueoPestanas();
