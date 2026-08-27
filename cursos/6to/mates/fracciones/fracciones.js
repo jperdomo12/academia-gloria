@@ -13,7 +13,8 @@ import {
   BLOQUES_RESULTADO,
   FICHAS_FRACCIONES,
   PRACTICA_FRACCIONES,
-  FAMILIAS_PRUEBA_FRACCIONES
+  FAMILIAS_PRUEBA_FRACCIONES,
+  EXPLICACIONES_PRUEBA_FRACCIONES
 } from "./fracciones-data.js";
 
 const $ = id => document.getElementById(id);
@@ -59,6 +60,7 @@ const estado = {
   pruebaFinalizada: false,
   pruebaIndice: 0,
   pruebaSeleccion: null,
+  pruebaRespuestaConfirmada: false,
   preguntasPrueba: [],
   respuestas: [],
   ordenOpciones: new Map(),
@@ -92,6 +94,15 @@ function elegirUna(elementos) {
 
 function bloqueResultado(id) {
   return BLOQUES_RESULTADO.find(item => item.id === id);
+}
+
+function textoOpcion(pregunta, opcionId) {
+  return pregunta?.opciones?.find(opcion => opcion.id === opcionId)?.texto || "";
+}
+
+function explicacionPregunta(pregunta) {
+  return EXPLICACIONES_PRUEBA_FRACCIONES[pregunta?.id] ||
+    "Revisa qué representa cada cantidad y aplica el procedimiento del bloque paso a paso.";
 }
 
 function pruebaEnCurso() {
@@ -385,6 +396,7 @@ async function iniciarPrueba() {
   estado.pruebaFinalizada = false;
   estado.pruebaIndice = 0;
   estado.pruebaSeleccion = null;
+  estado.pruebaRespuestaConfirmada = false;
   estado.respuestas = [];
   estado.ordenOpciones.clear();
   estado.inicioIso = new Date().toISOString();
@@ -406,12 +418,16 @@ function renderPreguntaPrueba() {
   $("barraPrueba").style.width = `${porcentaje}%`;
   $("estadoPrueba").textContent = `Pregunta ${estado.pruebaIndice + 1} de ${estado.preguntasPrueba.length}`;
   $("bloquePrueba").textContent = bloqueResultado(pregunta.bloqueId)?.titulo || "Fracciones";
-  $("pruebaContenido").innerHTML = htmlReto(pregunta, opcionesPrueba(pregunta), "prueba");
+  $("pruebaContenido").innerHTML = `${htmlReto(pregunta, opcionesPrueba(pregunta), "prueba")}
+    <div id="explicacionPrueba" class="pista" role="status" hidden></div>`;
   $("botonResponderPrueba").disabled = true;
+  $("botonResponderPrueba").textContent = "Comprobar respuesta →";
   estado.pruebaSeleccion = null;
+  estado.pruebaRespuestaConfirmada = false;
 
   document.querySelectorAll("#pruebaOpciones .opcion").forEach(boton => {
     boton.addEventListener("click", () => {
+      if (estado.pruebaRespuestaConfirmada) return;
       estado.pruebaSeleccion = boton.dataset.opcion;
       document.querySelectorAll("#pruebaOpciones .opcion").forEach(item => item.classList.remove("seleccionada"));
       boton.classList.add("seleccionada");
@@ -424,20 +440,65 @@ function renderPreguntaPrueba() {
   });
 }
 
+function mostrarExplicacionPrueba(pregunta, correcta) {
+  const seleccion = estado.pruebaSeleccion;
+  const respuestaElegida = textoOpcion(pregunta, seleccion);
+  const respuestaCorrecta = textoOpcion(pregunta, pregunta.respuestaCorrecta);
+  const explicacion = explicacionPregunta(pregunta);
+  const contenedor = $("explicacionPrueba");
+
+  document.querySelectorAll("#pruebaOpciones .opcion").forEach(boton => {
+    boton.disabled = true;
+    boton.classList.remove("seleccionada");
+    if (boton.dataset.opcion === pregunta.respuestaCorrecta) boton.classList.add("correcta");
+    if (!correcta && boton.dataset.opcion === seleccion) boton.classList.add("incorrecta");
+  });
+
+  contenedor.hidden = false;
+  contenedor.style.borderColor = correcta ? "#cbe5d1" : "#ead6d0";
+  contenedor.style.background = correcta ? "#f5fcf6" : "#fff8f6";
+  contenedor.innerHTML = `
+    <strong>${correcta ? "✓ Buena elección." : "🌿 Vamos a revisarla."}</strong>
+    <div style="margin-top:8px"><b>Tu respuesta:</b> ${escaparHTML(respuestaElegida)}</div>
+    ${correcta ? "" : `<div style="margin-top:4px"><b>Respuesta correcta:</b> ${escaparHTML(respuestaCorrecta)}</div>`}
+    <div style="margin-top:8px;line-height:1.55"><b>Por qué:</b> ${escaparHTML(explicacion)}</div>
+  `;
+}
+
 $("botonIniciarPrueba").addEventListener("click", iniciarPrueba);
 
 $("botonResponderPrueba").addEventListener("click", async () => {
   const pregunta = estado.preguntasPrueba[estado.pruebaIndice];
-  if (!estado.pruebaSeleccion) return;
 
-  estado.respuestas.push({
-    preguntaId: pregunta.id,
-    bloqueId: pregunta.bloqueId,
-    conceptoId: pregunta.conceptoId,
-    tipoEvidencia: pregunta.tipoEvidencia,
-    respuesta: estado.pruebaSeleccion,
-    correcta: estado.pruebaSeleccion === pregunta.respuestaCorrecta
-  });
+  if (!estado.pruebaRespuestaConfirmada) {
+    if (!estado.pruebaSeleccion) return;
+
+    const correcta = estado.pruebaSeleccion === pregunta.respuestaCorrecta;
+    const explicacion = explicacionPregunta(pregunta);
+
+    estado.respuestas.push({
+      preguntaId: pregunta.id,
+      bloqueId: pregunta.bloqueId,
+      conceptoId: pregunta.conceptoId,
+      tipoEvidencia: pregunta.tipoEvidencia,
+      titulo: pregunta.titulo,
+      enunciado: pregunta.enunciado,
+      pregunta: pregunta.pregunta,
+      respuesta: estado.pruebaSeleccion,
+      respuestaTexto: textoOpcion(pregunta, estado.pruebaSeleccion),
+      respuestaCorrecta: pregunta.respuestaCorrecta,
+      respuestaCorrectaTexto: textoOpcion(pregunta, pregunta.respuestaCorrecta),
+      explicacion,
+      correcta
+    });
+
+    estado.pruebaRespuestaConfirmada = true;
+    mostrarExplicacionPrueba(pregunta, correcta);
+    $("botonResponderPrueba").textContent = estado.pruebaIndice < estado.preguntasPrueba.length - 1
+      ? "Siguiente pregunta →"
+      : "Ver resultado →";
+    return;
+  }
 
   if (estado.pruebaIndice < estado.preguntasPrueba.length - 1) {
     estado.pruebaIndice += 1;
@@ -482,6 +543,52 @@ function renderMapaResultados(mapa) {
   `).join("");
 }
 
+function renderResultadoNumerico(totalCorrectas, totalPreguntas) {
+  document.getElementById("resultadoPruebaResumen")?.remove();
+  document.getElementById("revisionPrueba")?.remove();
+
+  const porcentaje = totalPreguntas ? Math.round((totalCorrectas / totalPreguntas) * 100) : 0;
+  const resumen = document.createElement("section");
+  resumen.id = "resultadoPruebaResumen";
+  resumen.className = "regla-clave";
+  resumen.style.marginTop = "22px";
+  resumen.style.textAlign = "left";
+  resumen.innerHTML = `
+    <div class="regla-clave__icono" aria-hidden="true">📊</div>
+    <div style="flex:1">
+      <strong>Resultado de la prueba</strong>
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-top:6px">
+        <span style="font-size:2rem;font-weight:950;color:#526039">${totalCorrectas} de ${totalPreguntas}</span>
+        <span style="font-size:1.35rem;font-weight:900;color:#66538f">${porcentaje} %</span>
+      </div>
+      <p style="margin-top:6px">Este resultado describe esta prueba de hoy. El mapa de abajo ayuda a ver en qué contenidos conviene seguir practicando.</p>
+    </div>`;
+
+  const revision = document.createElement("section");
+  revision.id = "revisionPrueba";
+  revision.style.marginTop = "22px";
+  revision.style.textAlign = "left";
+  revision.innerHTML = `
+    <p class="sobrelinea">Revisión de respuestas</p>
+    <h3 style="margin:0 0 12px;font-size:1.45rem">Qué pasó en cada pregunta</h3>
+    <div style="display:grid;gap:10px">
+      ${estado.respuestas.map((respuesta, indice) => `
+        <article class="resultado ${respuesta.correcta ? "solido" : "reforzar"}">
+          <div class="resultado__cabecera">
+            <div class="resultado__icono" aria-hidden="true">${respuesta.correcta ? "✓" : "🌿"}</div>
+            <div>
+              <h3>${indice + 1}. ${escaparHTML(respuesta.titulo)}</h3>
+              <p><b>Tu respuesta:</b> ${escaparHTML(respuesta.respuestaTexto)}</p>
+              ${respuesta.correcta ? "" : `<p style="margin-top:4px"><b>Respuesta correcta:</b> ${escaparHTML(respuesta.respuestaCorrectaTexto)}</p>`}
+              <p style="margin-top:6px"><b>Por qué:</b> ${escaparHTML(respuesta.explicacion)}</p>
+            </div>
+          </div>
+        </article>`).join("")}
+    </div>`;
+
+  $("mapaResultados").before(resumen, revision);
+}
+
 async function finalizarPrueba() {
   detenerLecturaActual();
   estado.pruebaFinalizada = true;
@@ -491,7 +598,10 @@ async function finalizarPrueba() {
   $("cierrePrueba").hidden = false;
 
   const mapa = construirMapaResultados();
+  const totalCorrectas = estado.respuestas.filter(item => item.correcta).length;
+  renderResultadoNumerico(totalCorrectas, estado.respuestas.length);
   renderMapaResultados(mapa);
+
   const reforzar = mapa.filter(item => item.estado === "reforzar");
   const enCamino = mapa.filter(item => item.estado === "camino");
 
@@ -508,7 +618,6 @@ async function finalizarPrueba() {
     : "Vista previa: este resultado no se guardará como aprendizaje.";
 
   const tiempo = estado.tiempo.obtenerResultado();
-  const totalCorrectas = estado.respuestas.filter(item => item.correcta).length;
 
   try {
     estado.guardado = await guardarSesionAcademica({
@@ -530,13 +639,14 @@ async function finalizarPrueba() {
         temaCompleto: true,
         totalPreguntas: estado.respuestas.length,
         totalCorrectas,
+        porcentaje: estado.respuestas.length ? Math.round((totalCorrectas / estado.respuestas.length) * 100) : 0,
         porBloque: mapa.map(item => ({ bloqueId:item.id, correctas:item.correctas, total:item.total, estado:item.estado }))
       },
       retroalimentacion: {
         bloquesFirmes: mapa.filter(item => item.estado === "solido").map(item => item.id),
         bloquesEnCamino: mapa.filter(item => item.estado === "camino").map(item => item.id),
         bloquesAReforzar: mapa.filter(item => item.estado === "reforzar").map(item => item.id),
-        mensajeVisible: "Mapa formativo de la sesión; no es una calificación escolar."
+        mensajeVisible: "Resultado y mapa formativo de la sesión; no constituyen una calificación escolar."
       }
     });
 
@@ -556,6 +666,7 @@ async function finalizarPrueba() {
 $("botonVolverRepaso").addEventListener("click", () => {
   estado.pruebaIniciada = false;
   estado.pruebaFinalizada = false;
+  estado.pruebaRespuestaConfirmada = false;
   actualizarModo();
   actualizarBloqueoPestanas();
   $("inicioPrueba").hidden = false;
@@ -607,7 +718,7 @@ function iniciarLectura(boton, texto) {
   boton.textContent = "⏹ Detener lectura";
   const iniciado = escuchar(texto, {
     idioma:"es-ES",
-    velocidad:.84,
+    velocidad:.70,
     tono:1,
     alFinalizar:detenerLecturaActual,
     alError:detenerLecturaActual
@@ -623,6 +734,11 @@ document.addEventListener("click", evento => {
 });
 
 window.addEventListener("beforeunload", detenerLecturaActual, { once:true });
+
+const textoInicioPrueba = document.querySelector("#inicioPrueba > p:not(.sobrelinea)");
+if (textoInicioPrueba) {
+  textoInicioPrueba.textContent = "No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve y, al final, tu resultado junto con un mapa de lo que conviene seguir practicando.";
+}
 
 renderFichas();
 renderPractica();
