@@ -1,4 +1,4 @@
 export const AcademiaConfig = Object.freeze({
   // 0 = timeout desactivado; >0 = minutos máximos de inactividad.
-  sessionTimeoutMinutes: 0
+  sessionTimeoutMinutes: 30
 });
