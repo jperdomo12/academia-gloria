@@ -4,6 +4,7 @@ import { crearTiempoActivo } from "../../../../compartido/js/tiempo-activo.js";
 import { mostrarCelebracion } from "../../../../compartido/js/celebracion.js";
 import {
   guardarSesionAcademica,
+  obtenerVariantesRecientes,
   MODOS_SESION_ACADEMICA
 } from "../../../../compartido/js/sesiones-academicas.js";
 import { escuchar, detener, disponible } from "../../../../compartido/js/lector-texto.js";
@@ -12,7 +13,7 @@ import {
   BLOQUES_RESULTADO,
   FICHAS_FRACCIONES,
   PRACTICA_FRACCIONES,
-  PRUEBA_FRACCIONES
+  FAMILIAS_PRUEBA_FRACCIONES
 } from "./fracciones-data.js";
 
 const $ = id => document.getElementById(id);
@@ -58,6 +59,7 @@ const estado = {
   pruebaFinalizada: false,
   pruebaIndice: 0,
   pruebaSeleccion: null,
+  preguntasPrueba: [],
   respuestas: [],
   ordenOpciones: new Map(),
   inicioIso: null,
@@ -84,11 +86,27 @@ function barajar(elementos) {
   return copia;
 }
 
+function elegirUna(elementos) {
+  return elementos[Math.floor(Math.random() * elementos.length)];
+}
+
 function bloqueResultado(id) {
   return BLOQUES_RESULTADO.find(item => item.id === id);
 }
 
+function pruebaEnCurso() {
+  return estado.pruebaIniciada && !estado.pruebaFinalizada;
+}
+
+function actualizarBloqueoPestanas() {
+  document.querySelectorAll("[data-pestana]").forEach(boton => {
+    boton.disabled = pruebaEnCurso() && boton.dataset.pestana !== "prueba";
+  });
+}
+
 function activarPestana(nombre) {
+  if (pruebaEnCurso() && nombre !== "prueba") return;
+
   detenerLecturaActual();
   estado.pestana = nombre;
   document.querySelectorAll("[data-pestana]").forEach(boton => {
@@ -239,13 +257,13 @@ function htmlVisual(visual) {
   return "";
 }
 
-function htmlReto(item, opciones, prefijo, incluirEscucha = true) {
+function htmlReto(item, opciones, prefijo) {
   return `
     <h3 class="reto-titulo">${escaparHTML(item.titulo)}</h3>
     <div class="reto-enunciado">${escaparHTML(item.enunciado)}</div>
     ${htmlVisual(item.visual)}
     <p class="reto-pregunta">${escaparHTML(item.pregunta)}</p>
-    ${incluirEscucha ? `<div class="acciones" style="justify-content:flex-start;margin-top:0"><button id="${prefijo}Escuchar" class="boton-escuchar" type="button">🔊 Escuchar reto</button></div>` : ""}
+    <div class="acciones" style="justify-content:flex-start;margin-top:0"><button id="${prefijo}Escuchar" class="boton-escuchar" type="button">🔊 Escuchar reto</button></div>
     <div class="opciones" id="${prefijo}Opciones">
       ${opciones.map(opcion => `<button class="opcion" type="button" data-opcion="${escaparHTML(opcion.id)}">${escaparHTML(opcion.texto)}</button>`).join("")}
     </div>
@@ -335,8 +353,34 @@ function opcionesPrueba(pregunta) {
   return estado.ordenOpciones.get(pregunta.id);
 }
 
-function iniciarPrueba() {
+async function prepararPreguntasPrueba() {
+  let recientes = new Set();
+
+  if (modo === MODOS_SESION_ACADEMICA.APRENDIZAJE) {
+    try {
+      recientes = await obtenerVariantesRecientes({
+        actividadId: FRACCIONES_META.actividadId,
+        maximoSesiones: 3
+      });
+    } catch (error) {
+      console.warn("No se pudo consultar el historial de variantes de Fracciones.", error);
+    }
+  }
+
+  estado.preguntasPrueba = FAMILIAS_PRUEBA_FRACCIONES.map(familia => {
+    const noRecientes = familia.variantes.filter(variante => !recientes.has(variante.id));
+    return elegirUna(noRecientes.length ? noRecientes : familia.variantes);
+  });
+}
+
+async function iniciarPrueba() {
   detenerLecturaActual();
+  const botonInicio = $("botonIniciarPrueba");
+  botonInicio.disabled = true;
+  botonInicio.textContent = "Preparando preguntas…";
+
+  await prepararPreguntasPrueba();
+
   estado.pruebaIniciada = true;
   estado.pruebaFinalizada = false;
   estado.pruebaIndice = 0;
@@ -346,18 +390,21 @@ function iniciarPrueba() {
   estado.inicioIso = new Date().toISOString();
   estado.tiempo.reiniciar("prueba-fracciones");
   actualizarModo();
+  actualizarBloqueoPestanas();
   $("inicioPrueba").hidden = true;
   $("cierrePrueba").hidden = true;
   $("pruebaActiva").hidden = false;
+  botonInicio.disabled = false;
+  botonInicio.textContent = "🌿 Empezar mi prueba";
   renderPreguntaPrueba();
 }
 
 function renderPreguntaPrueba() {
   detenerLecturaActual();
-  const pregunta = PRUEBA_FRACCIONES[estado.pruebaIndice];
-  const porcentaje = ((estado.pruebaIndice + 1) / PRUEBA_FRACCIONES.length) * 100;
+  const pregunta = estado.preguntasPrueba[estado.pruebaIndice];
+  const porcentaje = ((estado.pruebaIndice + 1) / estado.preguntasPrueba.length) * 100;
   $("barraPrueba").style.width = `${porcentaje}%`;
-  $("estadoPrueba").textContent = `Pregunta ${estado.pruebaIndice + 1} de ${PRUEBA_FRACCIONES.length}`;
+  $("estadoPrueba").textContent = `Pregunta ${estado.pruebaIndice + 1} de ${estado.preguntasPrueba.length}`;
   $("bloquePrueba").textContent = bloqueResultado(pregunta.bloqueId)?.titulo || "Fracciones";
   $("pruebaContenido").innerHTML = htmlReto(pregunta, opcionesPrueba(pregunta), "prueba");
   $("botonResponderPrueba").disabled = true;
@@ -380,7 +427,7 @@ function renderPreguntaPrueba() {
 $("botonIniciarPrueba").addEventListener("click", iniciarPrueba);
 
 $("botonResponderPrueba").addEventListener("click", async () => {
-  const pregunta = PRUEBA_FRACCIONES[estado.pruebaIndice];
+  const pregunta = estado.preguntasPrueba[estado.pruebaIndice];
   if (!estado.pruebaSeleccion) return;
 
   estado.respuestas.push({
@@ -392,7 +439,7 @@ $("botonResponderPrueba").addEventListener("click", async () => {
     correcta: estado.pruebaSeleccion === pregunta.respuestaCorrecta
   });
 
-  if (estado.pruebaIndice < PRUEBA_FRACCIONES.length - 1) {
+  if (estado.pruebaIndice < estado.preguntasPrueba.length - 1) {
     estado.pruebaIndice += 1;
     renderPreguntaPrueba();
     return;
@@ -439,6 +486,7 @@ async function finalizarPrueba() {
   detenerLecturaActual();
   estado.pruebaFinalizada = true;
   estado.tiempo.detener();
+  actualizarBloqueoPestanas();
   $("pruebaActiva").hidden = true;
   $("cierrePrueba").hidden = false;
 
@@ -475,8 +523,8 @@ async function finalizarPrueba() {
       inicioCliente: estado.inicioIso,
       finCliente: new Date().toISOString(),
       ...tiempo,
-      conceptosTrabajados: PRUEBA_FRACCIONES.map(item => item.conceptoId),
-      variantes: PRUEBA_FRACCIONES.map(item => ({ varianteId:item.id, bloqueId:item.bloqueId, conceptoId:item.conceptoId })),
+      conceptosTrabajados: estado.preguntasPrueba.map(item => item.conceptoId),
+      variantes: estado.preguntasPrueba.map(item => ({ varianteId:item.id, bloqueId:item.bloqueId, conceptoId:item.conceptoId })),
       respuestas: estado.respuestas,
       resumen: {
         temaCompleto: true,
@@ -509,6 +557,7 @@ $("botonVolverRepaso").addEventListener("click", () => {
   estado.pruebaIniciada = false;
   estado.pruebaFinalizada = false;
   actualizarModo();
+  actualizarBloqueoPestanas();
   $("inicioPrueba").hidden = false;
   $("pruebaActiva").hidden = true;
   $("cierrePrueba").hidden = true;
@@ -578,3 +627,4 @@ window.addEventListener("beforeunload", detenerLecturaActual, { once:true });
 renderFichas();
 renderPractica();
 actualizarModo();
+actualizarBloqueoPestanas();
