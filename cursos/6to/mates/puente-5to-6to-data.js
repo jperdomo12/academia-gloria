@@ -1,7 +1,7 @@
 export const PUENTE_META = Object.freeze({
   actividadId: "6-mates-puente-5to-6to",
   tituloActividad: "Puente de 5.º a 6.º",
-  version: "0.1",
+  version: "0.2",
   cursoReferencia: "6.º de Primaria",
   materia: "Matemáticas",
   tema: "Puente de 5.º a 6.º"
@@ -29,18 +29,19 @@ export const BLOQUES_PUENTE = Object.freeze([
     id: "fracciones-decimales",
     icono: "🍰",
     titulo: "Fracciones y decimales",
-    resumen: "Fracciones equivalentes, fracción de una cantidad y relación con decimales y porcentajes sencillos.",
+    resumen: "Significado de una fracción, equivalencias, operaciones sencillas y relación con decimales y porcentajes.",
     puntos: [
       "Entender una fracción como partes iguales de un todo o de una cantidad.",
-      "Reconocer fracciones equivalentes.",
+      "Reconocer fracciones equivalentes y sumar o restar cuando el denominador es el mismo.",
       "Relacionar expresiones sencillas como 1/2, 0,5 y 50 %."
     ],
     teoria: [
       "El denominador indica en cuántas partes iguales se divide el todo. El numerador indica cuántas de esas partes tomamos.",
       "Dos fracciones son equivalentes cuando representan la misma cantidad, aunque sus números sean distintos.",
+      "Si dos fracciones tienen el mismo denominador, conservamos ese denominador y sumamos o restamos los numeradores.",
       "Para hallar una fracción de una cantidad podemos dividir primero entre el denominador y después multiplicar por el numerador."
     ],
-    ejemplo: "Ejemplo: 2/3 de 15 → 15 ÷ 3 = 5 y 5 × 2 = 10."
+    ejemplo: "Ejemplos: 3/7 + 2/7 = 5/7 · 2/3 de 15 → 15 ÷ 3 = 5 y 5 × 2 = 10."
   },
   {
     id: "problemas-medidas",
@@ -83,7 +84,9 @@ export const FICHAS_PUENTE = Object.freeze([
   { icono:"⚡", pregunta:"¿Qué significa 10³?", respuesta:"10 × 10 × 10 = 1000." },
   { icono:"➗", pregunta:"¿Cómo puedes comprobar una división exacta?", respuesta:"Multiplica el cociente por el divisor y comprueba que recuperas el dividendo." },
   { icono:"🍰", pregunta:"¿Qué indica el denominador?", respuesta:"En cuántas partes iguales se divide el todo." },
+  { icono:"🔢", pregunta:"¿Qué indica el numerador?", respuesta:"Cuántas partes iguales tomamos." },
   { icono:"🔁", pregunta:"¿Qué son fracciones equivalentes?", respuesta:"Fracciones distintas que representan la misma cantidad." },
+  { icono:"➕", pregunta:"¿Qué ocurre al sumar fracciones con igual denominador?", respuesta:"Se conserva el denominador y se suman los numeradores." },
   { icono:"💯", pregunta:"¿Qué relación sencilla conviene recordar?", respuesta:"1/2 = 0,5 = 50 %." },
   { icono:"🧭", pregunta:"¿Qué tres preguntas ayudan antes de calcular un problema?", respuesta:"¿Qué sé? ¿Qué me preguntan? ¿Cómo se relacionan las cantidades?" },
   { icono:"📏", pregunta:"¿Cuántos centímetros hay en 1 metro?", respuesta:"100 centímetros." },
@@ -110,7 +113,7 @@ export const PRACTICA_PUENTE = Object.freeze([
     explicacion:"8 × 3 = 24. Después: 24 + 24 = 48."
   },
   {
-    id:"practica-fracciones",
+    id:"practica-fracciones-cantidad",
     bloqueId:"fracciones-decimales",
     titulo:"Una parte de una cantidad",
     enunciado:"Queremos calcular 3/4 de 20.",
@@ -123,6 +126,21 @@ export const PRACTICA_PUENTE = Object.freeze([
     respuestaCorrecta:"a",
     pista:"Divide 20 entre 4 y después toma 3 de esas partes.",
     explicacion:"20 ÷ 4 = 5. Después: 5 × 3 = 15."
+  },
+  {
+    id:"practica-fracciones-igual-denominador",
+    bloqueId:"fracciones-decimales",
+    titulo:"Mismo denominador",
+    enunciado:"Calcula: 3/8 + 2/8.",
+    pregunta:"¿Cuál es el resultado?",
+    opciones:[
+      {id:"a",texto:"5/16"},
+      {id:"b",texto:"5/8"},
+      {id:"c",texto:"1/8"}
+    ],
+    respuestaCorrecta:"b",
+    pista:"Las partes tienen el mismo tamaño: conserva el 8 y suma 3 + 2.",
+    explicacion:"Como el denominador es igual, queda 3/8 + 2/8 = 5/8."
   },
   {
     id:"practica-problemas",
@@ -233,6 +251,17 @@ export const PRUEBA_PUENTE = Object.freeze([
     pregunta:"¿Cuál es equivalente?",
     opciones:[{id:"a",texto:"2/4"},{id:"b",texto:"2/3"},{id:"c",texto:"3/4"}],
     respuestaCorrecta:"a"
+  },
+  {
+    id:"diag-suma-igual-denominador",
+    bloqueId:"fracciones-decimales",
+    conceptoId:"suma_fracciones_igual_denominador",
+    tipoEvidencia:"calculo",
+    titulo:"Suma con igual denominador",
+    enunciado:"Calcula 4/9 + 3/9.",
+    pregunta:"¿Cuál es el resultado?",
+    opciones:[{id:"a",texto:"7/18"},{id:"b",texto:"7/9"},{id:"c",texto:"1/9"}],
+    respuestaCorrecta:"b"
   },
   {
     id:"diag-relacion-porcentaje",
