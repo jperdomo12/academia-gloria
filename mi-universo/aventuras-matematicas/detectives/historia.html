@@ -39,13 +39,16 @@
 <script type="module">
   import {auth} from "../../../compartido/firebase/firebase-config.js";
   import {iniciarPanelUsuario} from "../../../compartido/js/panel-usuario.js";
+  import {ContextoUsuario} from "../../../compartido/js/contexto-usuario.js";
   import {
-    obtenerProgresoHistoria,obtenerSesionesHistoria,reiniciarProgresoHistoria,
-    eliminarSesionHistoria,marcarEstadoHistoria
+    obtenerProgresoHistoria,obtenerSesionesHistoria,obtenerSesionHistoria,
+    reiniciarProgresoHistoria,eliminarSesionHistoria,marcarEstadoHistoria
   } from "../../../compartido/js/detectives-progreso.js";
 
   await auth.authStateReady();
   if(!auth.currentUser){location.replace("/academia-gloria/login.html");throw new Error("Sesión no disponible");}
+  const contexto=await ContextoUsuario.inicializar();
+  const userIdDatos=contexto.userIdPersonaActiva||auth.currentUser.uid;
   await iniciarPanelUsuario({contenedor:"[data-panel-usuario]",loginUrl:"/academia-gloria/login.html",mostrarPerfil:false});
 
   const params=new URLSearchParams(location.search);
@@ -124,14 +127,22 @@
       ${math}`;
   }
 
+  async function obtenerSesionesParaVista(){
+    if(modoRevisionMision){
+      const sesion=await obtenerSesionHistoria(userIdDatos,id,sesionObjetivo);
+      return sesion?[sesion]:[];
+    }
+    return obtenerSesionesHistoria(userIdDatos,id);
+  }
+
   async function load(){
     try{
       const response=await fetch("./historias.json",{cache:"no-store"});
       const stories=response.ok?await response.json():[];
       const story=stories.find(item=>item.id===id);
       const [progress,sessions]=await Promise.all([
-        obtenerProgresoHistoria(auth.currentUser.uid,id),
-        obtenerSesionesHistoria(auth.currentUser.uid,id)
+        obtenerProgresoHistoria(userIdDatos,id),
+        obtenerSesionesParaVista()
       ]);
       if(!story){content.innerHTML='<section class="card error">La historia ya no existe en historias.json.</section>';return;}
 
@@ -161,16 +172,16 @@
           <p class="muted">Primera resolución: ${escape(date(progress?.primeraResolucion))}<br>Última resolución: ${escape(date(progress?.ultimaResolucion))}</p>
         </section>
         <section class="card"><h2>🧠 Contenido correcto</h2><div class="process">${templateProcess(story)}</div></section>
-        <section class="card"><h2>🗂️ Sesiones registradas</h2>
+        <section class="card"><h2>${modoRevisionMision?"🗂️ Resolución de la misión":"🗂️ Sesiones registradas"}</h2>
           <div id="sessions">${sessions.length?sessions.map((session,index)=>`
             <article class="session" data-session-id="${escape(session.id)}">
-              <div class="session-head"><strong>Resolución ${sessions.length-index} · ${escape(date(session.completadaEn))}</strong>
+              <div class="session-head"><strong>${modoRevisionMision?"Resolución guardada":`Resolución ${sessions.length-index}`} · ${escape(date(session.completadaEn))}</strong>
               ${modoRevisionMision
                 ? ""
                 : `<button class="btn btn-danger delete-session" data-session="${escape(session.id)}">Eliminar</button>`
               }</div>
               <div class="process">${sessionProcess(story,session)}</div>
-            </article>`).join(""):'<p class="muted">Todavía no hay sesiones registradas.</p>'}
+            </article>`).join(""):`<p class="muted">${modoRevisionMision?"No se encontró la resolución guardada para esta misión.":"Todavía no hay sesiones registradas."}</p>`}
           </div>
         </section>`;
 
@@ -184,7 +195,7 @@
           select.value=progress?.estado||"en_practica";
           select.onchange=async()=>{
             try{
-              await marcarEstadoHistoria(auth.currentUser.uid,id,select.value);
+              await marcarEstadoHistoria(userIdDatos,id,select.value);
             }catch(error){
               console.error(error);
               alert(`No se pudo cambiar el estado de la historia.\nRazón: ${error.message}`);
@@ -196,7 +207,7 @@
           resetButton.onclick=async()=>{
             if(!confirm("¿Reiniciar todo el progreso de esta historia?"))return;
             try{
-              await reiniciarProgresoHistoria(auth.currentUser.uid,id);
+              await reiniciarProgresoHistoria(userIdDatos,id);
               location.href="./historial.html";
             }catch(error){
               console.error(error);
@@ -209,7 +220,7 @@
           if(!confirm("¿Eliminar esta resolución concreta?"))return;
           button.disabled=true;
           try{
-            await eliminarSesionHistoria(auth.currentUser.uid,id,button.dataset.session);
+            await eliminarSesionHistoria(userIdDatos,id,button.dataset.session);
             await load();
           }catch(error){
             console.error(error);
