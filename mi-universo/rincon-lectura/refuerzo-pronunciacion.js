@@ -7,6 +7,7 @@ let misionId = "";
 let palabras = [];
 let resultados = new Map();
 let recognitionActiva = null;
+let reconocimientoEnCurso = null;
 let modoSoloLectura = false;
 let sesionPronunciacionId = "";
 
@@ -78,7 +79,7 @@ function resultado(index) {
 
 function hablar(texto = "") {
   const valor = String(texto).trim();
-  if (!valor) return;
+  if (!valor || recognitionActiva) return;
 
   if (!("speechSynthesis" in window)) {
     alert(
@@ -106,6 +107,17 @@ function reconocer(index, tipo) {
     return;
   }
 
+  if (recognitionActiva) {
+    const esMismoReconocimiento =
+      reconocimientoEnCurso?.index === index &&
+      reconocimientoEnCurso?.tipo === tipo;
+
+    if (esMismoReconocimiento) {
+      try { recognitionActiva.stop(); } catch {}
+    }
+    return;
+  }
+
   const actual = resultado(index);
   const esFrase = tipo === "frase";
   const Recognition = reconocimientoDisponible();
@@ -126,12 +138,13 @@ function reconocer(index, tipo) {
     return;
   }
 
-  if (recognitionActiva) {
-    try { recognitionActiva.abort(); } catch {}
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
   }
 
   const recognition = new Recognition();
   recognitionActiva = recognition;
+  reconocimientoEnCurso = { index, tipo };
   recognition.lang = "es-ES";
   recognition.continuous = false;
   recognition.interimResults = false;
@@ -176,7 +189,11 @@ function reconocer(index, tipo) {
   };
 
   recognition.onend = () => {
-    if (recognitionActiva === recognition) recognitionActiva = null;
+    if (recognitionActiva === recognition) {
+      recognitionActiva = null;
+      reconocimientoEnCurso = null;
+      render();
+    }
   };
 
   try {
@@ -185,6 +202,7 @@ function reconocer(index, tipo) {
     if (esFrase) actual.errorFrase = String(error.message || "error-no-identificado");
     else actual.errorPalabra = String(error.message || "error-no-identificado");
     recognitionActiva = null;
+    reconocimientoEnCurso = null;
     render();
     alert(
       "No se pudo iniciar este intento de voz.\n" +
@@ -205,6 +223,7 @@ function render() {
   const realizadas = modoSoloLectura
     ? palabras.filter((_, index) => Number(resultado(index).intentosPalabra || 0) > 0).length
     : practicadas();
+  const grabando = Boolean(recognitionActiva);
 
   progreso.textContent = `${realizadas} de ${palabras.length} practicadas`;
 
@@ -213,9 +232,25 @@ function render() {
     const practicada = Number(actual.intentosPalabra || 0) > 0;
     const reconocida = Boolean(actual.superadaPalabra);
     const errorTecnico = String(actual.errorPalabra || "");
+    const grabandoPalabra =
+      reconocimientoEnCurso?.index === index &&
+      reconocimientoEnCurso?.tipo === "palabra";
+    const grabandoFrase =
+      reconocimientoEnCurso?.index === index &&
+      reconocimientoEnCurso?.tipo === "frase";
+    const tarjetaGrabando = grabandoPalabra || grabandoFrase;
+    const deshabilitarEscucha = grabando ? " disabled" : "";
+    const deshabilitarPalabra = grabando && !grabandoPalabra ? " disabled" : "";
+    const deshabilitarFrase = grabando && !grabandoFrase ? " disabled" : "";
+    const ayudaDetenerPalabra = grabandoPalabra
+      ? ' title="Volver a pulsar para detener" aria-label="Grabando palabra. Pulsar para detener."'
+      : "";
+    const ayudaDetenerFrase = grabandoFrase
+      ? ' title="Volver a pulsar para detener" aria-label="Grabando frase. Pulsar para detener."'
+      : "";
 
     return `
-      <article class="pronunciation-word ${practicada ? "pronunciation-word--practiced" : ""}">
+      <article class="pronunciation-word ${practicada ? "pronunciation-word--practiced" : ""} ${tarjetaGrabando ? "pronunciation-word--recording" : ""}">
         <div class="pronunciation-word__header">
           <span class="pronunciation-word__number">${index + 1}</span>
           <div class="pronunciation-word__content">
@@ -223,7 +258,11 @@ function render() {
             <p>${escapar(item.frasePractica || "")}</p>
           </div>
           <div class="pronunciation-word__badge">
-            ${practicada ? (reconocida ? "✅ Reconocida" : "🌱 Practicada") : "⏳ Pendiente"}
+            ${tarjetaGrabando
+              ? "🔴 Escuchando tu voz…"
+              : practicada
+                ? (reconocida ? "✅ Reconocida" : "🌱 Practicada")
+                : "⏳ Pendiente"}
             <small>${Number(actual.intentosPalabra || 0)} ${Number(actual.intentosPalabra || 0) === 1 ? "intento" : "intentos"}</small>
           </div>
         </div>
@@ -239,10 +278,10 @@ function render() {
           </div>
         ` : `
           <div class="pronunciation-word__actions">
-            <button class="btn light" type="button" data-escuchar-palabra="${index}">🔊 Escuchar palabra</button>
-            <button class="btn primary" type="button" data-repetir-palabra="${index}">🎤 Repetir palabra</button>
-            <button class="btn light" type="button" data-escuchar-frase="${index}">🔊 Escuchar frase</button>
-            <button class="btn blue" type="button" data-repetir-frase="${index}">🎤 Practicar frase</button>
+            <button class="btn light" type="button" data-escuchar-palabra="${index}"${deshabilitarEscucha}>🔊 Escuchar palabra</button>
+            <button class="btn primary ${grabandoPalabra ? "pronunciation-recording" : ""}" type="button" data-repetir-palabra="${index}"${deshabilitarPalabra}${ayudaDetenerPalabra}>${grabandoPalabra ? "🔴 Grabando…" : "🎤 Repetir palabra"}</button>
+            <button class="btn light" type="button" data-escuchar-frase="${index}"${deshabilitarEscucha}>🔊 Escuchar frase</button>
+            <button class="btn blue ${grabandoFrase ? "pronunciation-recording" : ""}" type="button" data-repetir-frase="${index}"${deshabilitarFrase}${ayudaDetenerFrase}>${grabandoFrase ? "🔴 Grabando…" : "🎤 Practicar frase"}</button>
           </div>
 
           ${practicada ? `
@@ -298,7 +337,7 @@ function render() {
     });
 
     $("savePronunciationMission").disabled =
-      !palabras.length || practicadas() < palabras.length;
+      grabando || !palabras.length || practicadas() < palabras.length;
   }
 }
 
@@ -398,6 +437,8 @@ export async function iniciarMisionPronunciacion(tarea, id) {
   modoSoloLectura = false;
   palabras = palabrasConfiguradas(tarea);
   resultados = new Map();
+  recognitionActiva = null;
+  reconocimientoEnCurso = null;
   sesionPronunciacionId = crearSesionPronunciacionId();
 
   if (!misionId) throw new Error("Falta el identificador de la Misión.");
@@ -451,6 +492,8 @@ export async function iniciarHistorialPronunciacion(id) {
       errorFrase: String(item.errorFrase || "")
     }])
   );
+  recognitionActiva = null;
+  reconocimientoEnCurso = null;
   modoSoloLectura = true;
 
   $("pronunciationMissionTitle").textContent =
