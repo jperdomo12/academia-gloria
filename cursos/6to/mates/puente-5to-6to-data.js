@@ -158,15 +158,26 @@ export const PRACTICA_PUENTE = Object.freeze([
 
 export const PRUEBA_PUENTE = Object.freeze([
   {
-    id:"diag-division",
+    id:"diag-suma",
     bloqueId:"numeros-operaciones",
-    conceptoId:"division",
+    conceptoId:"suma",
     tipoEvidencia:"calculo",
-    titulo:"División",
-    enunciado:"Calcula 864 ÷ 8.",
-    pregunta:"¿Cuál es el cociente?",
-    opciones:[{id:"a",texto:"108"},{id:"b",texto:"118"},{id:"c",texto:"98"}],
+    titulo:"Suma",
+    enunciado:"Calcula 2847 + 1356.",
+    pregunta:"¿Cuál es el resultado?",
+    opciones:[{id:"a",texto:"4203"},{id:"b",texto:"4103"},{id:"c",texto:"4303"}],
     respuestaCorrecta:"a"
+  },
+  {
+    id:"diag-resta",
+    bloqueId:"numeros-operaciones",
+    conceptoId:"resta",
+    tipoEvidencia:"calculo",
+    titulo:"Resta",
+    enunciado:"Calcula 5000 − 1768.",
+    pregunta:"¿Cuál es el resultado?",
+    opciones:[{id:"a",texto:"3332"},{id:"b",texto:"3232"},{id:"c",texto:"3222"}],
+    respuestaCorrecta:"b"
   },
   {
     id:"diag-multiplicacion",
@@ -178,6 +189,17 @@ export const PRUEBA_PUENTE = Object.freeze([
     pregunta:"¿Cuál es el resultado?",
     opciones:[{id:"a",texto:"788"},{id:"b",texto:"888"},{id:"c",texto:"948"}],
     respuestaCorrecta:"b"
+  },
+  {
+    id:"diag-division",
+    bloqueId:"numeros-operaciones",
+    conceptoId:"division",
+    tipoEvidencia:"calculo",
+    titulo:"División",
+    enunciado:"Calcula 864 ÷ 8.",
+    pregunta:"¿Cuál es el cociente?",
+    opciones:[{id:"a",texto:"108"},{id:"b",texto:"118"},{id:"c",texto:"98"}],
+    respuestaCorrecta:"a"
   },
   {
     id:"diag-jerarquia",
