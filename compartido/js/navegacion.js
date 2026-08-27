@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.3
+   Versión 2.4
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -31,6 +31,10 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
 (function configurarNavegacionAcademia() {
   "use strict";
+
+  const CLAVE_HISTORIAL = "academia.navegacion.historial.v1";
+  const CLAVE_RETROCESO = "academia.navegacion.retroceso.v1";
+  const MAXIMO_HISTORIAL = 30;
 
   function obtenerBaseAcademia() {
     return window.location.hostname.endsWith("github.io")
@@ -75,6 +79,25 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     }
   }
 
+  function normalizarRutaHistorial(valor) {
+    const ruta = normalizarRutaInterna(valor);
+    if (!ruta) return null;
+
+    try {
+      const destino = new URL(ruta, window.location.origin);
+      destino.searchParams.delete("volver");
+      return `${destino.pathname}${destino.search}${destino.hash}`;
+    } catch {
+      return ruta;
+    }
+  }
+
+  function rutasEquivalentes(a, b) {
+    const rutaA = normalizarRutaHistorial(a);
+    const rutaB = normalizarRutaHistorial(b);
+    return Boolean(rutaA && rutaB && rutaA === rutaB);
+  }
+
   function esPaginaActual(ruta) {
     const rutaSegura = normalizarRutaInterna(ruta);
 
@@ -103,12 +126,157 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     }
   }
 
+  function leerHistorial() {
+    try {
+      const guardado = JSON.parse(sessionStorage.getItem(CLAVE_HISTORIAL) || "[]");
+      if (!Array.isArray(guardado)) return [];
+
+      return guardado
+        .map(normalizarRutaHistorial)
+        .filter(Boolean)
+        .slice(-MAXIMO_HISTORIAL);
+    } catch {
+      return [];
+    }
+  }
+
+  function guardarHistorial(historial) {
+    try {
+      const seguro = Array.isArray(historial)
+        ? historial.map(normalizarRutaHistorial).filter(Boolean).slice(-MAXIMO_HISTORIAL)
+        : [];
+      sessionStorage.setItem(CLAVE_HISTORIAL, JSON.stringify(seguro));
+    } catch {
+      // La navegación sigue funcionando mediante volver/referrer/fallback.
+    }
+  }
+
+  function limpiarHistorial() {
+    try {
+      sessionStorage.removeItem(CLAVE_HISTORIAL);
+      sessionStorage.removeItem(CLAVE_RETROCESO);
+    } catch {
+      // sessionStorage puede no estar disponible en algún contexto restringido.
+    }
+  }
+
+  function marcarRetrocesoPendiente(destino) {
+    const ruta = normalizarRutaHistorial(destino);
+    if (!ruta) return;
+
+    try {
+      sessionStorage.setItem(CLAVE_RETROCESO, ruta);
+    } catch {
+      // El referrer y la ruta alternativa continúan disponibles como respaldo.
+    }
+  }
+
+  function consumirRetrocesoPendiente() {
+    try {
+      const ruta = normalizarRutaHistorial(
+        sessionStorage.getItem(CLAVE_RETROCESO)
+      );
+      sessionStorage.removeItem(CLAVE_RETROCESO);
+      return ruta;
+    } catch {
+      return null;
+    }
+  }
+
+  function tipoNavegacion() {
+    try {
+      return performance.getEntriesByType("navigation")?.[0]?.type || "navigate";
+    } catch {
+      return "navigate";
+    }
+  }
+
+  function ultimoIndiceRuta(historial, ruta) {
+    for (let indice = historial.length - 1; indice >= 0; indice -= 1) {
+      if (rutasEquivalentes(historial[indice], ruta)) return indice;
+    }
+    return -1;
+  }
+
+  function sincronizarHistorial() {
+    const actual = normalizarRutaHistorial(obtenerRutaActual());
+    if (!actual) return;
+
+    if (esLogin(actual)) {
+      limpiarHistorial();
+      return;
+    }
+
+    let historial = leerHistorial();
+    const retroceso = consumirRetrocesoPendiente();
+
+    if (retroceso && rutasEquivalentes(retroceso, actual)) {
+      const indice = ultimoIndiceRuta(historial, actual);
+      historial = indice >= 0
+        ? historial.slice(0, indice + 1)
+        : [...historial, actual];
+      guardarHistorial(historial);
+      return;
+    }
+
+    if (tipoNavegacion() === "back_forward") {
+      const indice = ultimoIndiceRuta(historial, actual);
+      historial = indice >= 0
+        ? historial.slice(0, indice + 1)
+        : [...historial, actual];
+      guardarHistorial(historial);
+      return;
+    }
+
+    if (rutasEquivalentes(historial.at(-1), actual)) {
+      guardarHistorial(historial);
+      return;
+    }
+
+    const referencia = normalizarRutaHistorial(document.referrer);
+
+    if (
+      referencia &&
+      !esLogin(referencia) &&
+      !rutasEquivalentes(referencia, actual) &&
+      !rutasEquivalentes(historial.at(-1), referencia)
+    ) {
+      const indiceReferencia = ultimoIndiceRuta(historial, referencia);
+      historial = indiceReferencia >= 0
+        ? historial.slice(0, indiceReferencia + 1)
+        : [...historial, referencia];
+    }
+
+    historial.push(actual);
+    guardarHistorial(historial);
+  }
+
+  function obtenerRutaAnteriorHistorial() {
+    const actual = normalizarRutaHistorial(obtenerRutaActual());
+    const historial = leerHistorial();
+
+    if (!actual || historial.length < 2) return null;
+
+    const indiceActual = ultimoIndiceRuta(historial, actual);
+    if (indiceActual <= 0) return null;
+
+    const anterior = historial[indiceActual - 1];
+    return anterior && !esLogin(anterior) ? anterior : null;
+  }
+
+  sincronizarHistorial();
+
   function obtenerRutaRetorno(rutaAlternativa = "./") {
     const parametros = new URLSearchParams(window.location.search);
     const volver = normalizarRutaInterna(parametros.get("volver"));
 
     if (volver && !esPaginaActual(volver)) {
       return volver;
+    }
+
+    const anteriorHistorial = obtenerRutaAnteriorHistorial();
+    if (anteriorHistorial && !esPaginaActual(anteriorHistorial)) {
+      return anteriorHistorial;
     }
 
     const referencia = normalizarRutaInterna(document.referrer);
@@ -170,7 +338,6 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
       if (elemento.tagName === "A") {
         elemento.href = destino;
-        return;
       }
 
       if (elemento.dataset.navegacionConfigurada === "true") {
@@ -179,8 +346,25 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
       elemento.dataset.navegacionConfigurada = "true";
 
-      elemento.addEventListener("click", () => {
-        window.location.href = destino;
+      elemento.addEventListener("click", (evento) => {
+        if (
+          elemento.tagName === "A" &&
+          (
+            elemento.target === "_blank" ||
+            evento.ctrlKey ||
+            evento.metaKey ||
+            evento.shiftKey ||
+            evento.altKey
+          )
+        ) {
+          return;
+        }
+
+        marcarRetrocesoPendiente(destino);
+
+        if (elemento.tagName !== "A") {
+          window.location.href = destino;
+        }
       });
     });
   }
@@ -228,7 +412,9 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
   }
 
   function volver(rutaAlternativa = "./") {
-    window.location.href = obtenerRutaRetorno(rutaAlternativa);
+    const destino = obtenerRutaRetorno(rutaAlternativa);
+    marcarRetrocesoPendiente(destino);
+    window.location.href = destino;
   }
 
   Academia.navegacion = Object.freeze({
