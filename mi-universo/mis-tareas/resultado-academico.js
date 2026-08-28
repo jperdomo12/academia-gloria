@@ -1,3 +1,4 @@
+import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import { leerSesionAcademica } from "../../compartido/js/sesiones-academicas.js";
@@ -9,7 +10,7 @@ import {
 
 const $ = id => document.getElementById(id);
 const parametros = new URLSearchParams(window.location.search);
-const sesionId = String(parametros.get("sesionId") || "").trim();
+const sesionIdParametro = String(parametros.get("sesionId") || "").trim();
 const misionId = String(parametros.get("misionId") || "").trim();
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -369,6 +370,25 @@ function mostrarError(mensaje) {
   $("textoError").textContent = mensaje;
 }
 
+function esEvidenciaAcademica(evidencia = {}) {
+  return (
+    String(evidencia.tipo || "") === "sesion_academica" ||
+    String(evidencia.origen || "") === "sesion_academica"
+  );
+}
+
+async function resolverSesionId() {
+  if (sesionIdParametro) return sesionIdParametro;
+  if (!misionId) return "";
+
+  const evidencias = await Academia.tareas.leerEvidencias(misionId);
+  const evidencia = evidencias.find(item =>
+    esEvidenciaAcademica(item) && String(item.sesionId || "").trim()
+  );
+
+  return String(evidencia?.sesionId || "").trim();
+}
+
 async function iniciar() {
   await auth.authStateReady();
 
@@ -380,15 +400,19 @@ async function iniciar() {
     return;
   }
 
-  if (!sesionId) {
-    mostrarError(
-      "Falta la referencia de la sesión académica. Regresa a Trabajo realizado y abre de nuevo el resultado."
-    );
-    return;
-  }
-
   try {
     const contexto = await ContextoUsuario.inicializar();
+    const sesionId = await resolverSesionId();
+
+    if (!sesionId) {
+      mostrarError(
+        misionId
+          ? "Esta Misión no tiene una sesión académica histórica disponible. Regresa a Trabajo realizado e inténtalo de nuevo."
+          : "Falta la referencia de la sesión académica. Regresa a Trabajo realizado y abre de nuevo el resultado."
+      );
+      return;
+    }
+
     const sesion = await leerSesionAcademica(sesionId);
 
     if (!sesion) {
