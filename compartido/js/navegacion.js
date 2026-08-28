@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.6
+   Versión 2.7
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -142,6 +142,47 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       console.warn("Ruta de navegación no válida.", error);
       return null;
     }
+  }
+
+  function redirigirResultadoAcademicoLegacy() {
+    const parametros = new URLSearchParams(window.location.search);
+    const misionId = String(parametros.get("misionId") || "").trim();
+    const modo = String(parametros.get("modo") || "").trim();
+    const volver = normalizarRutaInterna(parametros.get("volver"));
+    const baseAcademia = obtenerBaseAcademia();
+    const rutaCursos = `${baseAcademia}/cursos/`;
+
+    /*
+     * Compatibilidad con evidencias académicas creadas antes del visor
+     * histórico. Esas evidencias apuntaban al recurso con modo=vista_previa.
+     * Solo corregimos ese patrón cuando nació desde Mi Camino; una vista
+     * previa normal de Gestión de Misiones conserva su comportamiento.
+     */
+    if (
+      !misionId ||
+      modo !== "vista_previa" ||
+      !volver ||
+      !window.location.pathname.startsWith(rutaCursos) ||
+      !volver.includes("/mi-universo/mi-camino")
+    ) {
+      return false;
+    }
+
+    const destino = new URL(
+      `${baseAcademia}/mi-universo/mis-tareas/resultado-academico.html`,
+      window.location.origin
+    );
+    destino.searchParams.set("misionId", misionId);
+    destino.searchParams.set("volver", volver);
+
+    window.location.replace(
+      `${destino.pathname}${destino.search}${destino.hash}`
+    );
+    return true;
+  }
+
+  if (redirigirResultadoAcademicoLegacy()) {
+    return;
   }
 
   function normalizarRutaHistorial(valor) {
