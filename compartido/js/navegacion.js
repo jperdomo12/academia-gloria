@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.7
+   Versión 2.8
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -183,6 +183,78 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
   if (redirigirResultadoAcademicoLegacy()) {
     return;
+  }
+
+  function esRecursoAcademicoSexto(valor) {
+    const ruta = normalizarRutaInterna(valor);
+    if (!ruta) return false;
+
+    try {
+      const destino = new URL(ruta, window.location.origin);
+      const baseAcademia = obtenerBaseAcademia();
+      return destino.pathname.startsWith(`${baseAcademia}/cursos/6to/`);
+    } catch {
+      return false;
+    }
+  }
+
+  function ajustarCierreAcademicoAutomatico(raiz = document) {
+    const rutaActual = window.location.pathname;
+    if (!rutaActual.includes("/mi-universo/mi-camino")) return;
+
+    const botones = [];
+
+    if (raiz instanceof Element && raiz.matches("[data-terminar-repaso]")) {
+      botones.push(raiz);
+    }
+
+    if (typeof raiz.querySelectorAll === "function") {
+      botones.push(...raiz.querySelectorAll("[data-terminar-repaso]"));
+    }
+
+    botones.forEach(boton => {
+      if (boton.dataset.cierreAcademicoAutomatico === "true") return;
+
+      const tarjeta = boton.closest(".mision--academica");
+      const enlaceActividad = tarjeta?.querySelector(
+        'a.mision__accion--academica[href]'
+      );
+      const href = enlaceActividad?.getAttribute("href") || "";
+
+      if (!esRecursoAcademicoSexto(href)) return;
+
+      boton.dataset.cierreAcademicoAutomatico = "true";
+      boton.hidden = true;
+      boton.disabled = true;
+
+      const mensaje = tarjeta.querySelector(".mision__finalizacion-pregunta");
+      if (mensaje) {
+        mensaje.textContent =
+          "✅ Al terminar la prueba, esta misión se enviará automáticamente a tu familia.";
+      }
+    });
+  }
+
+  function observarCierreAcademicoAutomatico() {
+    if (!window.location.pathname.includes("/mi-universo/mi-camino")) return;
+
+    ajustarCierreAcademicoAutomatico(document);
+    if (!document.body) return;
+
+    const observador = new MutationObserver(registros => {
+      registros.forEach(registro => {
+        registro.addedNodes.forEach(nodo => {
+          if (nodo instanceof Element) {
+            ajustarCierreAcademicoAutomatico(nodo);
+          }
+        });
+      });
+    });
+
+    observador.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
 
   function normalizarRutaHistorial(valor) {
@@ -678,6 +750,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       });
 
     prepararEnlaces();
+    observarCierreAcademicoAutomatico();
     cargarCabeceraGlobalDeclarada();
   }
 
