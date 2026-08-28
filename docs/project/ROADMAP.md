@@ -1,515 +1,198 @@
-# 🌈 Academia Gloria Valentina
-# ROADMAP
+# ROADMAP — Academia Gloria Valentina
 
-| Campo | Valor |
-|---|---|
-| **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.1 |
-| **Estado** | Activo |
-| **Última actualización** | 12/08/2026 |
-| **Responsables** | Juan Perdomo + IA |
-| **Ámbito** | Evolución funcional y prioridades de producto |
+> Documento vivo de dirección del producto.  
+> Este roadmap no sustituye las especificaciones ni los estándares: ordena el trabajo y registra la dirección acordada.
 
----
+## Convenciones
 
-# Historial de versiones
-
-| Versión | Fecha | Responsables | Cambios |
-|---|---:|---|---|
-| 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
-| 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
+- **HECHO**: implementado y validado funcionalmente.
+- **EN CURSO**: trabajo abierto en rama activa.
+- **DECISIÓN**: dirección aprobada para próximos bloques.
+- **PROPUESTA**: idea todavía no aprobada como ejecución.
 
 ---
 
-# 1. Propósito
+# 1. Base transversal de la Academia
 
-Este documento define la evolución funcional de **Academia Gloria Valentina**.
+## HECHO
 
-El Roadmap:
-
-- orienta los grandes hitos del producto;
-- prioriza capacidades, no tareas técnicas aisladas;
-- distingue claramente lo implementado, lo inmediato y la visión futura;
-- debe actualizarse cuando el estado real del producto supere o modifique una fase prevista.
-
-No sustituye:
-
-- especificaciones funcionales;
-- estándares;
-- modelos;
-- planes de implementación;
-- `DECISION_LOG.md`;
-- `RELEASE_NOTES.md`.
+- Navegación global compartida.
+- Panel de usuario compartido.
+- Persona Activa y contexto de usuario.
+- Gestión de Misiones / Mis Tareas.
+- Evidencias y revisión de trabajo realizado en los módulos ya integrados.
+- Lector de texto compartido.
+- Sesiones académicas genéricas para experiencias de 6.º.
+- Cierre automático de sesión por inactividad.
+- Navegación **Volver multinivel** sin ciclos, conservando origen explícito, historial de navegación, referrer y fallback seguro.
 
 ---
 
-# 2. Principios de evolución
+# 2. 5.º de Primaria
 
-1. **Primero utilidad real.** La Academia evoluciona para acompañar el aprendizaje y crecimiento del alumno.
-2. **Uso real antes que métricas.** No construir estadísticas avanzadas sin datos suficientes.
-3. **Reutilizar antes de crear.** No duplicar arquitectura, servicios, modelos o componentes existentes.
-4. **Cerrar antes de ampliar.** Una fase estable debe certificarse antes de abrir una evolución de alto impacto.
-5. **Datos educativos vinculados a la Persona.** La evolución multi-persona debe continuar sin duplicar pantallas por alumno.
-6. **Auditoría proporcional.** Las entidades mutables relevantes deben poder identificar creación y modificación; las entidades sensibles podrán disponer además de historial completo.
-7. **Evolución incremental.** Mantener compatibilidad y evitar migraciones masivas sin necesidad observada.
-8. **Documentación sincronizada.** El roadmap describe futuro y prioridades; `RELEASE_NOTES.md` registra entregas reales.
+## HECHO
+
+- 5.º queda como ciclo cerrado y de referencia.
+- Sus contenidos y experiencias sirven como base para reutilizar patrones útiles, sin reabrir el curso salvo una corrección transversal realmente necesaria.
 
 ---
 
-# 3. Estado consolidado · Agosto 2026
+# 3. 6.º de Primaria — nueva dirección de producto
 
-La Academia ya ha superado varias previsiones del roadmap original.
+## DECISIÓN
 
-## 3.1 Base técnica y de producto consolidada
+6.º no será una simple copia visual de 5.º. El objetivo es evolucionar hacia una experiencia más madura, autónoma, visual y basada en evidencia real de aprendizaje.
 
-Estado actual:
+Principios de trabajo:
 
-- Firebase Authentication operativo;
-- Cloud Firestore operativo;
-- API `Academia` como fachada común;
-- panel de usuario reutilizable;
-- navegación compartida;
-- Mi Camino;
-- Mis Tareas / Misiones;
-- Biblioteca Encantada;
-- Mi Rincón de Lectura;
-- Detectives de Problemas;
-- Creciendo por Dentro;
-- calendarios personales y académicos;
-- identidad y contexto multi-persona.
+- **maduro + mágico**;
+- menos ambigüedad, no menos conocimiento;
+- textos más cortos y apoyos visuales abundantes;
+- audio contextual cuando reduzca carga de lectura;
+- explicar el porqué de respuestas correctas e incorrectas;
+- resultado numérico de cada prueba + mapa formativo, sin convertirlo en una etiqueta escolar;
+- práctica con ayudas y prueba sin pistas;
+- variantes controladas para evitar responder por memoria de pantalla;
+- Vista previa totalmente interactiva, pero sin contaminar historial académico;
+- Sesión de aprendizaje con evidencia útil y trazable.
 
-## 3.2 Identidad, acceso y colaboración
+Ciclo académico de referencia:
 
-Implementado durante agosto de 2026:
-
-- `PERSON`;
-- `USER`;
-- `ROLE`;
-- `USER_ROLE`;
-- `PERSON_RELATION`;
-- Persona Activa;
-- acceso profesional sobre otra Persona;
-- rol de Administración;
-- Gestión de Usuarios desde la Academia;
-- Firestore Rules adaptadas a administración;
-- auditoría básica Fase A para entidades administrativas;
-- primer manual operativo de Gestión de Usuarios.
-
-Esta evolución adelanta parcialmente la antigua fase de colaboración profesional y permisos.
+`Material colegio → Tema Academia → Aprendizaje → Práctica → Evaluación → Evidencia → Análisis → Refuerzo → Nueva evaluación`
 
 ---
 
-# 4. Prioridades inmediatas
+# 4. Matemáticas 6.º
 
-## P0 · Cierre de Identidad, Usuarios y Auditoría
+## EN CURSO — Puente 5.º → 6.º
 
-### Objetivo
+Patrón aprobado:
 
-Cerrar formalmente la evolución de identidad multi-persona antes de ampliar el producto.
+`Resumen → Teoría → Fichas → Práctica → Prueba`
 
-### Incluye
+Objetivo del Puente: obtener un **punto de partida real** antes de aumentar la dificultad de 6.º.
 
-1. Crear y validar un nuevo usuario real mediante el flujo completo:
-   - Firebase Authentication;
-   - Gestión de Usuarios;
-   - PERSON;
-   - USER;
-   - USER_ROLE;
-   - accesosLogin;
-   - PERSON_RELATION cuando corresponda;
-   - auditoría.
+Bases incluidas:
 
-2. Validar la consistencia de los usuarios iniciales.
+1. operaciones y jerarquía;
+2. fracciones y equivalencias básicas de 5.º;
+3. resolución de problemas;
+4. perímetro y área.
 
-3. Confirmar la auditoría Fase A en las entidades administrativas.
+Características ya validadas en la rama de producto:
 
-### Estado
+- apoyos visuales reales, no meramente decorativos;
+- lecturas contextuales en introducción, resumen, teoría, fichas, práctica, explicaciones y cierre;
+- prueba con respuesta correcta/incorrecta explicada;
+- resultado total `X/N + porcentaje`;
+- revisión de respuestas;
+- mapa de fortalezas y refuerzos;
+- guardado solo en Sesión de aprendizaje.
 
-🚧 En cierre
+### DECISIÓN
 
----
-
-## P0 · Revisión de auditoría de entidades educativas
-
-### Objetivo
-
-Alinear la auditoría de las entidades educativas relevantes con el modelo ya adoptado para identidad.
-
-### Primera entidad prioritaria
-
-```text
-TAREA / MISIÓN
-```
-
-### Revisión mínima
-
-Auditoría básica:
-
-```text
-createdAt
-createdBy
-updatedAt
-updatedBy
-```
-
-Campos funcionales ya existentes que deben conservar su significado propio:
-
-```text
-creadaPorUid
-asignadaPorUid
-alumnoId
-```
-
-Auditoría histórica a revisar:
-
-```text
-CREADA
-MODIFICADA
-INICIADA
-EVIDENCIA_REGISTRADA
-COMPLETADA
-VALIDADA
-REABIERTA
-CANCELADA
-```
-
-### Criterio
-
-No migrar colecciones únicamente por motivos de auditoría.
-
-Primero se revisará:
-
-- estándar vigente de Mis Tareas / Misiones;
-- contrato real en `Academia.tareas`;
-- estructura Firestore real;
-- historial existente;
-- compatibilidad con Persona Activa.
-
-### Estado
-
-🔜 Siguiente bloque técnico
+El Puente mide únicamente conocimientos de transición y **no debe diagnosticar como fallo contenidos nuevos de 6.º que todavía no se hayan enseñado**.
 
 ---
 
-## P0 · Actualización y certificación del núcleo
+# 5. Fracciones — primer tema real de Matemáticas 6.º
 
-### Objetivo
+## EN CURSO / VALIDADO EN RAMA DE PRODUCTO
 
-Establecer un punto técnico estable antes de comenzar 6.º de Primaria.
+Fracciones es el **primer tema académico real de 6.º** y el primer caso completo del nuevo patrón de tema.
 
-### Núcleo a certificar
+Fuente académica inicial: bosquejo de Fracciones 6.º aportado por la familia.
 
-```text
-Login
-ContextoUsuario
-Persona propia
-Persona Activa
-Panel de usuario
-Navegación
-API Academia
-Permisos
-Firestore Rules
-Gestión de Usuarios
-Rutas local / GitHub Pages
-Logout
-```
+Recorrido:
 
-### Resultado esperado
+`Resumen → Teoría → Fichas → Práctica → Prueba`
 
-Una lista corta y reutilizable de pruebas de regresión.
+Contenido actualmente incluido:
 
-### Estado
+1. significado de una fracción;
+2. numerador y denominador;
+3. fracciones equivalentes;
+4. amplificación y simplificación;
+5. suma/resta con igual denominador;
+6. denominador común mediante m.c.m.;
+7. suma con distinto denominador;
+8. multiplicación de fracciones;
+9. división de fracciones;
+10. problemas de varios pasos.
 
-🔜 Próximo
+Características del tema:
 
----
+- barras, porciones, equivalencias y otros apoyos visuales;
+- explicación antes de fórmula cuando sea posible;
+- fichas de memoria breve;
+- práctica progresiva con pistas y reintentos;
+- prueba con familias de preguntas y variantes controladas;
+- explicación inmediata de cada respuesta seleccionada, sea correcta o incorrecta;
+- resultado total `X/10 + porcentaje`;
+- revisión final de las respuestas;
+- mapa por bloques;
+- lector de texto a ritmo más lento que el estándar inicial del Puente;
+- Vista previa sin persistencia;
+- Sesión de aprendizaje con evidencia académica.
 
-# 5. Próxima etapa académica · Curso 2026–2027
+### DECISIÓN
 
-## P1 · Academia 6.º de Primaria
-
-### Objetivo
-
-Preparar la Academia para acompañar el nuevo curso escolar sin reconstruir los módulos existentes.
-
-### Alcance inicial
-
-```text
-6.º de Primaria
-├── Portal del curso
-├── Asignaturas
-├── Calendario académico 2026–2027
-├── Misiones / Tareas
-└── Contenidos incorporados según necesidad real
-```
-
-### Principio
-
-No generar grandes volúmenes de contenido por adelantado.
-
-La prioridad será adaptar progresivamente la Academia a:
-
-- contenidos reales del colegio;
-- necesidades observadas;
-- evaluaciones;
-- tareas;
-- refuerzos;
-- objetivos personales y educativos.
-
-### Estado
-
-🔜 Prioridad alta después del cierre del núcleo
+No incorporar todavía **operaciones combinadas con fracciones** solo porque aparezcan mencionadas en el material. Se añadirán cuando exista suficiente desarrollo académico para definir correctamente procedimiento, ejemplos y nivel de dificultad.
 
 ---
 
-# 6. Seguimiento educativo basado en datos reales
+# 6. Orden inmediato de trabajo aprobado
 
-## P1 · Historial mínimo de Detectives
+## DECISIÓN
 
-### Objetivo
-
-Conservar sesiones reales y permitir consultar evolución sin convertir todavía el módulo en un sistema estadístico complejo.
-
-### Incluye progresivamente
-
-- sesión;
-- nivel;
-- casos trabajados;
-- respuestas;
-- resultados;
-- fecha;
-- referencia a misión cuando corresponda.
-
-### Estado
-
-⏳ Pendiente prioritario
+1. **Cerrar técnicamente Puente + Fracciones** con revisión final, PR y merge a `main`.
+2. Publicar ambos productos como parte estable de Matemáticas 6.º.
+3. Crear una primera **Misión de repaso académico** asociada al nuevo contenido, usando la Gestión de Misiones existente.
+4. Realizar la primera ejecución real con Gloria en **Sesión de aprendizaje**.
+5. Verificar que la evidencia académica guardada sea útil para familia/profesionales y que no se mezcle con Vista previa.
+6. A partir de la evidencia del Puente, priorizar refuerzos antes de avanzar a más dificultad.
+7. Continuar Matemáticas 6.º con nuevos temas reales, manteniendo el mismo patrón solo donde demuestre ser útil.
 
 ---
 
-## P1 · Evidencias reales de Misiones / Tareas
+# 7. Integración con Misiones
 
-### Objetivo
+## DECISIÓN
 
-Conectar una Tarea/Misión con la experiencia educativa que realmente la completa.
+Los contenidos académicos nuevos de 6.º deben poder asignarse como **Misión de repaso académico** mediante el sistema actual de Gestión de Misiones, evitando crear un subsistema paralelo.
 
-### Relaciones previstas
+Campos de referencia:
 
-```text
-Tarea / Misión
-      ↓
-Sesión real
-      ↓
-Evidencia
-      ↓
-Resultado / validación
-```
+- Curso: `6.º de Primaria`
+- Materia: `Matemáticas`
+- Tema: el contenido correspondiente (`Puente 5.º → 6.º`, `Fracciones`, etc.)
+- Recurso académico: URL de la página estable publicada en `main`
 
-### Estado
+### Límite actual
 
-⏳ Pendiente prioritario
+La integración de `repaso_academico` organiza y abre el recurso asignado, pero todavía no convierte automáticamente una sesión académica genérica de 6.º en evidencia de Misión específica. Esa unión debe diseñarse después de validar el primer uso real, reutilizando el sistema de Misiones y `sesionesAcademicas` existente en lugar de duplicar datos.
 
 ---
 
-## P2 · Constancia basada en actividad significativa
+# 8. Líneas posteriores
 
-### Objetivo
+## DECISIÓN
 
-Medir continuidad educativa real, no accesos o logins.
-
-### Fuentes futuras
-
-- lectura;
-- Detectives;
-- Misiones;
-- Creciendo por Dentro;
-- otras experiencias educativas reales.
-
-### Estado
-
-⏳ Después de disponer de datos suficientes
+- Mantener las microherramientas matemáticas como herramientas transversales, no como propietarias de 6.º.
+- Introducir progresivamente variación, transferencia y retención.
+- Futuras capacidades de **Intercalar** y **Recordar** deberán apoyarse en evidencia real acumulada.
+- Las recompensas/guacamayas seguirán una dirección emocional y de esfuerzo, sin comparación pública ni economía de puntos.
+- Academia no declarará por sí sola que Gloria está “lista para ESO”; ofrecerá evidencia para que familia y profesionales puedan valorarlo.
 
 ---
 
-## P2 · Logros reales
+# 9. Regla de evolución
 
-### Objetivo
+Antes de crear una nueva pantalla, componente, motor o arquitectura:
 
-Generar hitos desde evidencias y progreso auténtico.
+1. revisar lo que ya existe;
+2. reutilizarlo cuando sea suficiente;
+3. crear algo nuevo solo cuando lo actual no permita resolver bien el problema;
+4. justificar por qué hace falta.
 
-### Principio
-
-Los logros no se generarán a partir de métricas ficticias ni de actividad superficial.
-
-### Estado
-
-⏳ Posterior a historial y evidencias
-
----
-
-# 7. Colaboración familiar y profesional
-
-La base técnica ya existe parcialmente:
-
-- Persona Activa;
-- Relaciones;
-- niveles de acceso;
-- acceso profesional;
-- Gestión de Usuarios.
-
-## Evoluciones futuras
-
-- ámbitos de acceso más granulares;
-- observaciones profesionales;
-- colaboración con familia, psicología, logopedia, PT o colegio;
-- vistas adultas/profesionales basadas en información autorizada.
-
-### Condición
-
-Seguridad, privacidad y permisos deberán definirse antes de ampliar cada ámbito.
-
-### Estado
-
-🟡 Base implementada · evolución progresiva
-
----
-
-# 8. Panel de evolución
-
-## P3 · Información para adultos y profesionales
-
-### Objetivo
-
-Mostrar evolución comprensible basada en históricos reales.
-
-### Posibles fuentes
-
-- Misiones;
-- lectura;
-- Detectives;
-- constancia;
-- logros;
-- observaciones autorizadas.
-
-### Condición de entrada
-
-Debe existir volumen suficiente de datos reales.
-
-### Estado
-
-🔮 Futuro
-
----
-
-# 9. Inteligencia Artificial educativa
-
-## P3 · Tutor y recomendaciones
-
-### Objetivo
-
-Incorporar capacidades de IA únicamente cuando existan:
-
-- datos suficientes;
-- objetivos pedagógicos claros;
-- supervisión familiar;
-- controles de privacidad;
-- límites funcionales definidos.
-
-### Capacidades posibles
-
-- recomendaciones;
-- acompañamiento;
-- resúmenes;
-- ayuda contextual;
-- análisis de evolución.
-
-### Estado
-
-🔮 Largo plazo
-
----
-
-# 10. Visión de largo alcance
-
-La Academia continuará evolucionando como un ecosistema educativo, personal y familiar capaz de acompañar:
-
-- distintas etapas académicas;
-- distintos alumnos;
-- aprendizaje;
-- lectura;
-- expresión;
-- bienestar;
-- recuerdos;
-- proyectos;
-- logros;
-- colaboración familiar y profesional.
-
-La visión permanece abierta, pero cada ampliación deberá demostrar valor real antes de aumentar complejidad.
-
----
-
-# 11. Secuencia recomendada
-
-```text
-AGOSTO 2026
-────────────────────────────────────────────
-P0  Cerrar Gestión de Usuarios
-P0  Revisar auditoría de Tareas / Misiones
-P0  Actualizar documentación estratégica
-P0  Certificar núcleo multi-persona
-
-FIN DE AGOSTO / SEPTIEMBRE 2026
-────────────────────────────────────────────
-P1  Preparar Academia 6.º de Primaria
-P1  Calendario académico 2026–2027
-P1  Incorporación progresiva de contenidos reales
-
-SEPTIEMBRE / OCTUBRE 2026
-────────────────────────────────────────────
-P1  Historial mínimo de Detectives
-P1  Evidencias reales de Misiones / Tareas
-P2  Constancia basada en actividad real
-
-DESPUÉS DE USO REAL SUFICIENTE
-────────────────────────────────────────────
-P2  Logros reales
-P3  Panel adulto / profesional
-P3  Históricos de evolución
-P3  IA educativa
-```
-
----
-
-# 12. Resumen de prioridades
-
-| Prioridad | Iniciativa | Estado |
-|---|---|---|
-| P0 | Cierre Gestión de Usuarios | 🚧 En cierre |
-| P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente |
-| P0 | Actualización documental estratégica | 🔜 Próximo |
-| P0 | Certificación del núcleo multi-persona | 🔜 Próximo |
-| P1 | Academia 6.º de Primaria | ⏳ Preparación |
-| P1 | Calendario 2026–2027 | ⏳ Preparación |
-| P1 | Historial mínimo de Detectives | ⏳ Pendiente |
-| P1 | Evidencias de Misiones / Tareas | ⏳ Pendiente |
-| P2 | Constancia real | ⏳ Posterior |
-| P2 | Logros reales | ⏳ Posterior |
-| P3 | Panel adulto / profesional | 🔮 Futuro |
-| P3 | IA educativa | 🔮 Largo plazo |
-
----
-
-# 13. Documentos relacionados
-
-- `docs/README.md`
-- `docs/project/MASTER_PLAN.md`
-- `docs/project/PROJECT_MAP.md`
-- `docs/project/DECISION_LOG.md`
-- `docs/project/RELEASE_NOTES.md`
-- `docs/models/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`
-- `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
-
----
-
-**Academia Gloria Valentina 🌈**
-
-*El Roadmap orienta el futuro; el uso real decide qué merece construirse.*
+El objetivo no es acumular funciones, sino conseguir que cada nuevo bloque haga la Academia más coherente, útil, autónoma y agradable de usar.
