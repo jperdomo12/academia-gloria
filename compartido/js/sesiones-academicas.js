@@ -5,6 +5,7 @@ import { ContextoUsuario } from "./contexto-usuario.js";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   serverTimestamp,
   setDoc
@@ -61,14 +62,19 @@ function resolverMisionId(registro = {}) {
   }
 }
 
-function destinoRevisionActual() {
-  if (typeof window === "undefined") return "";
-
+function destinoRevisionActual(sesionId, misionId = "") {
   try {
-    const destino = new URL(window.location.href);
-    destino.searchParams.set("modo", VISTA_PREVIA);
-    destino.searchParams.delete("misionId");
-    destino.searchParams.delete("volver");
+    const destino = new URL(
+      "../../mi-universo/mis-tareas/resultado-academico.html",
+      import.meta.url
+    );
+
+    const sesion = texto(sesionId);
+    const mision = texto(misionId);
+
+    if (sesion) destino.searchParams.set("sesionId", sesion);
+    if (mision) destino.searchParams.set("misionId", mision);
+
     return destino.href;
   } catch {
     return "";
@@ -127,7 +133,7 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
         titulo: datos.tituloActividad || datos.tema,
         resumen: datos.resumen || {}
       },
-      destinoRevision: destinoRevisionActual(),
+      destinoRevision: destinoRevisionActual(sesionId, datos.misionId),
       origen: "sesion_academica"
     });
 
@@ -229,6 +235,22 @@ export async function guardarSesionAcademica(registro = {}) {
     misionId: datos.misionId,
     evidenciaMision
   };
+}
+
+export async function leerSesionAcademica(sesionId) {
+  const id = texto(sesionId);
+  if (!id) return null;
+
+  const contexto = await ContextoUsuario.inicializar();
+  const referencia = doc(
+    coleccionSesiones(contexto.userIdPersonaActiva),
+    id
+  );
+  const resultado = await getDoc(referencia);
+
+  return resultado.exists()
+    ? { id: resultado.id, ...resultado.data() }
+    : null;
 }
 
 export async function leerSesionesAcademicas({ actividadId = "", maximo = 20 } = {}) {
