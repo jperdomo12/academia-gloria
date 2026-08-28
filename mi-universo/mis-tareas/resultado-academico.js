@@ -41,6 +41,23 @@ function numero(valor, alternativo = 0) {
   return Number.isFinite(resultado) ? resultado : alternativo;
 }
 
+function limitarPorcentaje(valor) {
+  return Math.max(0, Math.min(100, Math.round(numero(valor))));
+}
+
+function textoParaVoz(valor = "") {
+  return String(valor)
+    .replace(/m\.c\.m\./gi, " mínimo común múltiplo ")
+    .replace(/(\d+)\s*\/\s*(\d+)/g, "$1 sobre $2")
+    .replaceAll("×", " por ")
+    .replaceAll("÷", " dividido entre ")
+    .replaceAll("−", " menos ")
+    .replaceAll("+", " más ")
+    .replaceAll("=", " es igual a ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function fechaDesdeValor(valor) {
   if (!valor) return null;
   if (typeof valor?.toDate === "function") return valor.toDate();
@@ -135,7 +152,7 @@ function resumenSesion(sesion = {}) {
     Math.min(total || correctasCalculadas, numero(resumen.totalCorrectas, correctasCalculadas))
   );
   const porcentaje = total
-    ? Math.round(numero(resumen.porcentaje, (correctas / total) * 100))
+    ? limitarPorcentaje(numero(resumen.porcentaje, (correctas / total) * 100))
     : 0;
 
   return { respuestas, resumen, total, correctas, porcentaje };
@@ -191,7 +208,9 @@ function renderMapa(sesion, respuestas) {
   $("mapaBloques").innerHTML = mapa.map(item => {
     const correctas = Math.max(0, numero(item.correctas));
     const total = Math.max(0, numero(item.total));
-    const porcentaje = total ? Math.round((correctas / total) * 100) : 0;
+    const porcentaje = total
+      ? limitarPorcentaje((correctas / total) * 100)
+      : 0;
     const estado = estadoBloque(item);
 
     return `
@@ -211,7 +230,7 @@ function renderMapa(sesion, respuestas) {
           <span>${porcentaje} %</span>
         </div>
         <div class="resultado-bloque__barra" aria-label="${porcentaje} por ciento">
-          <span style="width:${Math.max(0, Math.min(100, porcentaje))}%"></span>
+          <span style="width:${porcentaje}%"></span>
         </div>
       </article>`;
   }).join("");
@@ -230,7 +249,7 @@ function textoEscuchaRespuesta(respuesta, indice) {
     respuesta.explicacion ? `Explicación: ${respuesta.explicacion}` : ""
   ];
 
-  return partes.filter(Boolean).join(" ");
+  return textoParaVoz(partes.filter(Boolean).join(" "));
 }
 
 function renderRevision(respuestas) {
@@ -316,7 +335,7 @@ function renderResultado(sesion, contexto) {
     sesion.tituloActividad || sesion.tema || "Resultado académico";
   $("descripcionSesion").textContent =
     `Resultado histórico de una sesión de ${sesion.materia || "aprendizaje"}. ` +
-    "Se conserva exactamente como quedó al finalizar la prueba.";
+    "La información se reconstruye exclusivamente a partir del registro guardado al finalizar la prueba.";
   $("nombreAlumno").textContent = nombre;
   $("fechaSesion").textContent = formatearFechaHora(
     sesion.completadaEn || sesion.updatedAt || sesion.finCliente
@@ -351,9 +370,11 @@ function renderResultado(sesion, contexto) {
       }).join(" ");
 
       escuchar(
-        `${sesion.tituloActividad || sesion.tema || "Resultado académico"}. ` +
-        `${correctas} respuestas correctas de ${total}, ${porcentaje} por ciento. ` +
-        textoMapa
+        textoParaVoz(
+          `${sesion.tituloActividad || sesion.tema || "Resultado académico"}. ` +
+          `${correctas} respuestas correctas de ${total}, ${porcentaje} por ciento. ` +
+          textoMapa
+        )
       );
     });
   }
