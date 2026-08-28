@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.4
+   Versión 2.5
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -35,6 +35,9 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
   const CLAVE_HISTORIAL = "academia.navegacion.historial.v1";
   const CLAVE_RETROCESO = "academia.navegacion.retroceso.v1";
   const MAXIMO_HISTORIAL = 30;
+  const BASE_PRODUCCION_ACADEMIA = new URL(
+    "https://jperdomo12.github.io/academia-gloria/"
+  );
 
   function obtenerBaseAcademia() {
     return window.location.hostname.endsWith("github.io")
@@ -46,11 +49,62 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     return `${window.location.pathname}${window.location.search}${window.location.hash}`;
   }
 
+  function convertirDestinoAcademiaAlEntornoActual(valor) {
+    if (!valor) return null;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      if (destino.origin === window.location.origin) {
+        return destino;
+      }
+
+      if (
+        destino.origin !== BASE_PRODUCCION_ACADEMIA.origin ||
+        !destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
+      ) {
+        return null;
+      }
+
+      const rutaRelativa = destino.pathname.slice(
+        BASE_PRODUCCION_ACADEMIA.pathname.length
+      );
+      const baseActual = new URL(
+        `${obtenerBaseAcademia()}/`,
+        window.location.origin
+      );
+      const convertido = new URL(rutaRelativa, baseActual);
+      convertido.search = destino.search;
+      convertido.hash = destino.hash;
+      return convertido;
+    } catch {
+      return null;
+    }
+  }
+
+  function esDestinoAcademiaCanonicoFueraEntorno(valor) {
+    if (!valor) return false;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      return (
+        destino.origin !== window.location.origin &&
+        destino.origin === BASE_PRODUCCION_ACADEMIA.origin &&
+        destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
+      );
+    } catch {
+      return false;
+    }
+  }
+
   function normalizarRutaInterna(valor) {
     if (!valor) return null;
 
     try {
-      const destino = new URL(valor, window.location.origin);
+      const destino =
+        convertirDestinoAcademiaAlEntornoActual(valor) ||
+        new URL(valor, window.location.origin);
       const baseAcademia = obtenerBaseAcademia();
 
       if (destino.origin !== window.location.origin) {
@@ -300,12 +354,14 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     rutaRetorno = obtenerRutaActual()
   ) {
     try {
-      const destino = new URL(url, window.location.href);
+      const rutaDestino = normalizarRutaInterna(url);
       const retornoSeguro = normalizarRutaInterna(rutaRetorno);
 
-      if (destino.origin !== window.location.origin) {
+      if (!rutaDestino) {
         return url;
       }
+
+      const destino = new URL(rutaDestino, window.location.origin);
 
       if (retornoSeguro) {
         destino.searchParams.set("volver", retornoSeguro);
@@ -390,6 +446,36 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       enlace.href = construirUrlConRetorno(href);
       enlace.dataset.retornoPreparado = "true";
     });
+  }
+
+  function prepararDestinoCanonicoDinamico(evento) {
+    const origen = evento.target;
+    if (!(origen instanceof Element)) return;
+
+    const control = origen.closest("a[href], [data-url]");
+    if (!control) return;
+
+    if (control.hasAttribute("data-url")) {
+      const valor = control.dataset.url;
+
+      if (esDestinoAcademiaCanonicoFueraEntorno(valor)) {
+        const ruta = normalizarRutaInterna(valor);
+        if (ruta) control.dataset.url = ruta;
+      }
+    }
+
+    if (control.tagName !== "A") return;
+
+    const href = control.getAttribute("href");
+    if (!esDestinoAcademiaCanonicoFueraEntorno(href)) return;
+
+    const ruta = normalizarRutaInterna(href);
+    if (!ruta) return;
+
+    control.setAttribute(
+      "href",
+      construirUrlConRetorno(ruta, obtenerRutaActual())
+    );
   }
 
   function abrirModulo(url, opciones = {}) {
@@ -516,6 +602,12 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     prepararEnlaces();
     cargarCabeceraGlobalDeclarada();
   }
+
+  document.addEventListener(
+    "click",
+    prepararDestinoCanonicoDinamico,
+    true
+  );
 
   if (document.readyState === "loading") {
     document.addEventListener(
