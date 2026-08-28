@@ -198,6 +198,21 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // SESIONES ACADÉMICAS · Persona Activa
+      //
+      // Sigue el mismo contrato de acceso funcional que las demás evidencias:
+      // familia/profesional relacionado puede consultar el resultado histórico;
+      // modificar exige nivel efectivo de gestión.
+      match /sesionesAcademicas/{sesionId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       // DETECTIVES DE PROBLEMAS · Persona Activa
       //
       // La familia/profesional relacionado puede consultar el progreso y las
