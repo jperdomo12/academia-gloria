@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.5
+   Versión 2.6
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -49,6 +49,21 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     return `${window.location.pathname}${window.location.search}${window.location.hash}`;
   }
 
+  function esDestinoAcademiaCanonico(valor) {
+    if (!valor) return false;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      return (
+        destino.origin === BASE_PRODUCCION_ACADEMIA.origin &&
+        destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
+      );
+    } catch {
+      return false;
+    }
+  }
+
   function convertirDestinoAcademiaAlEntornoActual(valor) {
     if (!valor) return null;
 
@@ -59,10 +74,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
         return destino;
       }
 
-      if (
-        destino.origin !== BASE_PRODUCCION_ACADEMIA.origin ||
-        !destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
-      ) {
+      if (!esDestinoAcademiaCanonico(destino.href)) {
         return null;
       }
 
@@ -90,8 +102,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
       return (
         destino.origin !== window.location.origin &&
-        destino.origin === BASE_PRODUCCION_ACADEMIA.origin &&
-        destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
+        esDestinoAcademiaCanonico(destino.href)
       );
     } catch {
       return false;
@@ -448,6 +459,24 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     });
   }
 
+  function convertirEnlaceAcademiaAMismaPestana(control) {
+    if (control.target !== "_blank") return;
+
+    control.removeAttribute("target");
+
+    const relRestante = String(control.getAttribute("rel") || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .filter(token => !["noopener", "noreferrer"].includes(token.toLowerCase()))
+      .join(" ");
+
+    if (relRestante) {
+      control.setAttribute("rel", relRestante);
+    } else {
+      control.removeAttribute("rel");
+    }
+  }
+
   function prepararDestinoCanonicoDinamico(evento) {
     const origen = evento.target;
     if (!(origen instanceof Element)) return;
@@ -467,10 +496,18 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     if (control.tagName !== "A") return;
 
     const href = control.getAttribute("href");
-    if (!esDestinoAcademiaCanonicoFueraEntorno(href)) return;
+    if (!esDestinoAcademiaCanonico(href)) return;
 
     const ruta = normalizarRutaInterna(href);
     if (!ruta) return;
+
+    /*
+     * Una URL absoluta de nuestra propia Academia sigue siendo navegación
+     * interna. Se mantiene en la misma pestaña para conservar sessionStorage,
+     * Persona Activa y la pila histórica de Volver. Los enlaces realmente
+     * externos conservan intacto su comportamiento.
+     */
+    convertirEnlaceAcademiaAMismaPestana(control);
 
     control.setAttribute(
       "href",
