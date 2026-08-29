@@ -18,7 +18,7 @@
 |---|---:|---|---|
 | 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
 | 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
-| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º; incorpora refuerzo desde Detectives y pruebas académicas como siguientes evoluciones. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
+| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; reconoce la persistencia existente de Detectives y mantiene como pendiente su uso para propuestas de refuerzo; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
 
 ---
 
@@ -109,6 +109,7 @@ El uso y validación posteriores a v1.1 permiten actualizar las siguientes capac
 - **Repaso de contenidos de 5.º mediante Misiones:** ✅ Disponible sin exigir migración masiva de las páginas heredadas.
 - **Persistencia de pruebas académicas:** ✅ Base implementada y validada con Puente y Fracciones.
 - **Resultado académico histórico:** ✅ Implementado y validado como consulta de solo lectura.
+- **Historial y sesiones de Detectives:** ✅ Base implementada en Firestore.
 - **Creación asistida de Misiones:** 🚧 En progreso; Mi Rincón de Lectura ya aporta una referencia real.
 - **Observaciones / Propuestas de refuerzo:** 🚧 En progreso.
 - **Estructura de 6.º de Primaria:** 🚧 En progreso avanzado.
@@ -360,19 +361,28 @@ La expansión continuará con nuevos temas de Matemáticas, **Science** y las de
 
 Conservar sesiones reales y permitir consultar evolución sin convertir todavía el módulo en un sistema estadístico complejo.
 
-### Incluye progresivamente
+### Incluye
 
-- sesión;
+La persistencia vigente conserva, según la sesión:
+
+- historia;
 - nivel;
-- casos trabajados;
-- respuestas;
-- resultados;
-- fecha;
-- referencia a misión cuando corresponda.
+- tema y tipo;
+- intentos totales y por etapa;
+- respuestas de comprensión y descubrimiento;
+- pistas utilizadas;
+- operación, operandos y resultado;
+- pasos;
+- tiempo activo;
+- fecha de finalización.
+
+También permite consultar el historial de historias y las sesiones de una historia concreta.
 
 ### Estado
 
-⏳ Pendiente prioritario
+✅ Base implementada.
+
+La evolución pendiente no es crear el historial, sino **utilizar sus datos para generar observaciones y propuestas de refuerzo**.
 
 ---
 
@@ -681,7 +691,7 @@ P3  IA educativa
 | P0 | Creación asistida de Misiones | 🚧 En progreso |
 | P1 | Academia 6.º de Primaria | 🚧 En progreso avanzado |
 | P1 | Calendario 2026–2027 | ⏳ Según necesidad del curso |
-| P1 | Historial mínimo de Detectives | ⏳ Pendiente |
+| P1 | Historial mínimo de Detectives | ✅ Base implementada |
 | P1 | Evidencias de Misiones / Tareas | ✅ Base implementada · evolución por motor |
 | P1 | Rincón de Lectura → Misiones de refuerzo | ✅ Base lista |
 | P1 | Detectives → propuestas/Misiones | ⏳ Pendiente prioritario |
