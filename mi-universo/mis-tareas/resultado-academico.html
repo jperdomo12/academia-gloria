@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6d28d9">
+  <title>Resultado académico | Academia Gloria Valentina</title>
+  <meta
+    name="description"
+    content="Consulta en modo solo lectura el resultado guardado de una sesión académica."
+  >
+
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./resultado-academico.css">
+</head>
+
+<body
+  data-page-title="Resultado académico"
+  data-page-icon="📊"
+  data-nav-back="./"
+>
+  <main class="resultado-pagina">
+    <section id="estadoCarga" class="resultado-estado resultado-estado--carga" aria-live="polite">
+      <span class="resultado-estado__icono" aria-hidden="true">🦜</span>
+      <div>
+        <strong>Lía está preparando el trabajo realizado…</strong>
+        <p>Estamos recuperando exactamente la sesión académica que quedó guardada.</p>
+      </div>
+    </section>
+
+    <section id="estadoError" class="resultado-estado resultado-estado--error" aria-live="polite" hidden>
+      <span class="resultado-estado__icono" aria-hidden="true">🌿</span>
+      <div>
+        <strong>No pudimos abrir este resultado.</strong>
+        <p id="textoError">Regresa a Trabajo realizado e inténtalo de nuevo.</p>
+      </div>
+    </section>
+
+    <div id="contenidoResultado" hidden>
+      <header class="resultado-hero">
+        <div class="resultado-hero__principal">
+          <span class="resultado-sobrelinea">📘 Trabajo realizado · Solo lectura</span>
+          <h1 id="tituloActividad">Resultado académico</h1>
+          <p id="descripcionSesion" class="resultado-hero__descripcion"></p>
+          <div id="contextoAcademico" class="resultado-chips" aria-label="Contexto académico"></div>
+        </div>
+
+        <aside class="resultado-identidad" aria-label="Información de la sesión">
+          <span class="resultado-identidad__icono" aria-hidden="true">🗂️</span>
+          <p class="resultado-sobrelinea">Sesión guardada</p>
+          <strong id="nombreAlumno">Alumno</strong>
+          <span id="fechaSesion">Fecha no disponible</span>
+          <small>Este registro es histórico. Consultarlo no crea ni modifica evidencias.</small>
+        </aside>
+      </header>
+
+      <section class="resultado-resumen" aria-labelledby="tituloResumen">
+        <div class="resultado-seccion-cabecera">
+          <div>
+            <span class="resultado-sobrelinea">Fotografía de esta sesión</span>
+            <h2 id="tituloResumen">Resultado total</h2>
+            <p>El resultado se muestra para comprender qué quedó firme y qué conviene seguir practicando.</p>
+          </div>
+          <button id="escucharResumen" class="resultado-escuchar" type="button">
+            🔊 Escuchar resumen
+          </button>
+        </div>
+
+        <div class="resultado-metricas">
+          <article class="resultado-metrica">
+            <span aria-hidden="true">✅</span>
+            <strong id="metricaCorrectas">0 / 0</strong>
+            <small>respuestas correctas</small>
+          </article>
+          <article class="resultado-metrica">
+            <span aria-hidden="true">📊</span>
+            <strong id="metricaPorcentaje">0 %</strong>
+            <small>porcentaje de esta prueba</small>
+          </article>
+          <article class="resultado-metrica">
+            <span aria-hidden="true">⏱️</span>
+            <strong id="metricaTiempo">—</strong>
+            <small>tiempo activo registrado</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="resultado-panel" aria-labelledby="tituloMapa">
+        <div class="resultado-seccion-cabecera">
+          <div>
+            <span class="resultado-sobrelinea">Mapa formativo</span>
+            <h2 id="tituloMapa">Cómo fue por bloques</h2>
+            <p>No es una etiqueta ni una calificación escolar: es una guía para elegir la siguiente práctica.</p>
+          </div>
+        </div>
+        <div id="mapaBloques" class="resultado-mapa"></div>
+      </section>
+
+      <section class="resultado-panel" aria-labelledby="tituloRevision">
+        <div class="resultado-seccion-cabecera">
+          <div>
+            <span class="resultado-sobrelinea">Pregunta por pregunta</span>
+            <h2 id="tituloRevision">Revisión de respuestas</h2>
+            <p>Conservamos la respuesta seleccionada, la corrección y la explicación que se mostró al finalizar.</p>
+          </div>
+        </div>
+        <div id="revisionRespuestas" class="resultado-revision"></div>
+      </section>
+
+      <aside id="mensajeFormativo" class="resultado-mensaje" hidden>
+        <span aria-hidden="true">✨</span>
+        <p></p>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./resultado-academico.js"></script>
+</body>
+</html>

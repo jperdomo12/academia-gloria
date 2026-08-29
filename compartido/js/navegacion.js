@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.4
+   Versión 2.8
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -35,6 +35,9 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
   const CLAVE_HISTORIAL = "academia.navegacion.historial.v1";
   const CLAVE_RETROCESO = "academia.navegacion.retroceso.v1";
   const MAXIMO_HISTORIAL = 30;
+  const BASE_PRODUCCION_ACADEMIA = new URL(
+    "https://jperdomo12.github.io/academia-gloria/"
+  );
 
   function obtenerBaseAcademia() {
     return window.location.hostname.endsWith("github.io")
@@ -46,11 +49,73 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     return `${window.location.pathname}${window.location.search}${window.location.hash}`;
   }
 
+  function esDestinoAcademiaCanonico(valor) {
+    if (!valor) return false;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      return (
+        destino.origin === BASE_PRODUCCION_ACADEMIA.origin &&
+        destino.pathname.startsWith(BASE_PRODUCCION_ACADEMIA.pathname)
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  function convertirDestinoAcademiaAlEntornoActual(valor) {
+    if (!valor) return null;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      if (destino.origin === window.location.origin) {
+        return destino;
+      }
+
+      if (!esDestinoAcademiaCanonico(destino.href)) {
+        return null;
+      }
+
+      const rutaRelativa = destino.pathname.slice(
+        BASE_PRODUCCION_ACADEMIA.pathname.length
+      );
+      const baseActual = new URL(
+        `${obtenerBaseAcademia()}/`,
+        window.location.origin
+      );
+      const convertido = new URL(rutaRelativa, baseActual);
+      convertido.search = destino.search;
+      convertido.hash = destino.hash;
+      return convertido;
+    } catch {
+      return null;
+    }
+  }
+
+  function esDestinoAcademiaCanonicoFueraEntorno(valor) {
+    if (!valor) return false;
+
+    try {
+      const destino = new URL(valor, window.location.href);
+
+      return (
+        destino.origin !== window.location.origin &&
+        esDestinoAcademiaCanonico(destino.href)
+      );
+    } catch {
+      return false;
+    }
+  }
+
   function normalizarRutaInterna(valor) {
     if (!valor) return null;
 
     try {
-      const destino = new URL(valor, window.location.origin);
+      const destino =
+        convertirDestinoAcademiaAlEntornoActual(valor) ||
+        new URL(valor, window.location.origin);
       const baseAcademia = obtenerBaseAcademia();
 
       if (destino.origin !== window.location.origin) {
@@ -77,6 +142,119 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       console.warn("Ruta de navegación no válida.", error);
       return null;
     }
+  }
+
+  function redirigirResultadoAcademicoLegacy() {
+    const parametros = new URLSearchParams(window.location.search);
+    const misionId = String(parametros.get("misionId") || "").trim();
+    const modo = String(parametros.get("modo") || "").trim();
+    const volver = normalizarRutaInterna(parametros.get("volver"));
+    const baseAcademia = obtenerBaseAcademia();
+    const rutaCursos = `${baseAcademia}/cursos/`;
+
+    /*
+     * Compatibilidad con evidencias académicas creadas antes del visor
+     * histórico. Esas evidencias apuntaban al recurso con modo=vista_previa.
+     * Solo corregimos ese patrón cuando nació desde Mi Camino; una vista
+     * previa normal de Gestión de Misiones conserva su comportamiento.
+     */
+    if (
+      !misionId ||
+      modo !== "vista_previa" ||
+      !volver ||
+      !window.location.pathname.startsWith(rutaCursos) ||
+      !volver.includes("/mi-universo/mi-camino")
+    ) {
+      return false;
+    }
+
+    const destino = new URL(
+      `${baseAcademia}/mi-universo/mis-tareas/resultado-academico.html`,
+      window.location.origin
+    );
+    destino.searchParams.set("misionId", misionId);
+    destino.searchParams.set("volver", volver);
+
+    window.location.replace(
+      `${destino.pathname}${destino.search}${destino.hash}`
+    );
+    return true;
+  }
+
+  if (redirigirResultadoAcademicoLegacy()) {
+    return;
+  }
+
+  function esRecursoAcademicoSexto(valor) {
+    const ruta = normalizarRutaInterna(valor);
+    if (!ruta) return false;
+
+    try {
+      const destino = new URL(ruta, window.location.origin);
+      const baseAcademia = obtenerBaseAcademia();
+      return destino.pathname.startsWith(`${baseAcademia}/cursos/6to/`);
+    } catch {
+      return false;
+    }
+  }
+
+  function ajustarCierreAcademicoAutomatico(raiz = document) {
+    const rutaActual = window.location.pathname;
+    if (!rutaActual.includes("/mi-universo/mi-camino")) return;
+
+    const botones = [];
+
+    if (raiz instanceof Element && raiz.matches("[data-terminar-repaso]")) {
+      botones.push(raiz);
+    }
+
+    if (typeof raiz.querySelectorAll === "function") {
+      botones.push(...raiz.querySelectorAll("[data-terminar-repaso]"));
+    }
+
+    botones.forEach(boton => {
+      if (boton.dataset.cierreAcademicoAutomatico === "true") return;
+
+      const tarjeta = boton.closest(".mision--academica");
+      const enlaceActividad = tarjeta?.querySelector(
+        'a.mision__accion--academica[href]'
+      );
+      const href = enlaceActividad?.getAttribute("href") || "";
+
+      if (!esRecursoAcademicoSexto(href)) return;
+
+      boton.dataset.cierreAcademicoAutomatico = "true";
+      boton.hidden = true;
+      boton.disabled = true;
+
+      const mensaje = tarjeta.querySelector(".mision__finalizacion-pregunta");
+      if (mensaje) {
+        mensaje.textContent =
+          "✅ Al terminar la prueba, esta misión se enviará automáticamente a tu familia.";
+      }
+    });
+  }
+
+  function observarCierreAcademicoAutomatico() {
+    if (!window.location.pathname.includes("/mi-universo/mi-camino")) return;
+
+    ajustarCierreAcademicoAutomatico(document);
+    if (!document.body) return;
+
+    const observador = new MutationObserver(registros => {
+      registros.forEach(registro => {
+        registro.addedNodes.forEach(nodo => {
+          if (nodo instanceof Element) {
+            ajustarCierreAcademicoAutomatico(nodo);
+          }
+        });
+      });
+    });
+
+    observador.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
 
   function normalizarRutaHistorial(valor) {
@@ -300,12 +478,14 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     rutaRetorno = obtenerRutaActual()
   ) {
     try {
-      const destino = new URL(url, window.location.href);
+      const rutaDestino = normalizarRutaInterna(url);
       const retornoSeguro = normalizarRutaInterna(rutaRetorno);
 
-      if (destino.origin !== window.location.origin) {
+      if (!rutaDestino) {
         return url;
       }
+
+      const destino = new URL(rutaDestino, window.location.origin);
 
       if (retornoSeguro) {
         destino.searchParams.set("volver", retornoSeguro);
@@ -390,6 +570,62 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       enlace.href = construirUrlConRetorno(href);
       enlace.dataset.retornoPreparado = "true";
     });
+  }
+
+  function convertirEnlaceAcademiaAMismaPestana(control) {
+    if (control.target !== "_blank") return;
+
+    control.removeAttribute("target");
+
+    const relRestante = String(control.getAttribute("rel") || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .filter(token => !["noopener", "noreferrer"].includes(token.toLowerCase()))
+      .join(" ");
+
+    if (relRestante) {
+      control.setAttribute("rel", relRestante);
+    } else {
+      control.removeAttribute("rel");
+    }
+  }
+
+  function prepararDestinoCanonicoDinamico(evento) {
+    const origen = evento.target;
+    if (!(origen instanceof Element)) return;
+
+    const control = origen.closest("a[href], [data-url]");
+    if (!control) return;
+
+    if (control.hasAttribute("data-url")) {
+      const valor = control.dataset.url;
+
+      if (esDestinoAcademiaCanonicoFueraEntorno(valor)) {
+        const ruta = normalizarRutaInterna(valor);
+        if (ruta) control.dataset.url = ruta;
+      }
+    }
+
+    if (control.tagName !== "A") return;
+
+    const href = control.getAttribute("href");
+    if (!esDestinoAcademiaCanonico(href)) return;
+
+    const ruta = normalizarRutaInterna(href);
+    if (!ruta) return;
+
+    /*
+     * Una URL absoluta de nuestra propia Academia sigue siendo navegación
+     * interna. Se mantiene en la misma pestaña para conservar sessionStorage,
+     * Persona Activa y la pila histórica de Volver. Los enlaces realmente
+     * externos conservan intacto su comportamiento.
+     */
+    convertirEnlaceAcademiaAMismaPestana(control);
+
+    control.setAttribute(
+      "href",
+      construirUrlConRetorno(ruta, obtenerRutaActual())
+    );
   }
 
   function abrirModulo(url, opciones = {}) {
@@ -514,8 +750,15 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       });
 
     prepararEnlaces();
+    observarCierreAcademicoAutomatico();
     cargarCabeceraGlobalDeclarada();
   }
+
+  document.addEventListener(
+    "click",
+    prepararDestinoCanonicoDinamico,
+    true
+  );
 
   if (document.readyState === "loading") {
     document.addEventListener(

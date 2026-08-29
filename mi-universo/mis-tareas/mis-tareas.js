@@ -122,7 +122,6 @@ function formatearFechaHoraEstado(tarea = {}) {
   return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
 }
 
-
 function fechaHoraLocalAhora() {
   const fecha = new Date();
   const corregida = new Date(
@@ -196,11 +195,6 @@ async function inicializarActoresAuditoria() {
     const nombrePropio = nombrePersona(contexto.personaUsuario);
     const nombreActivo = nombrePersona(contexto.personaActiva);
 
-    /*
-     * Un mismo USER puede aparecer en distintas versiones del contexto como
-     * userId, uid o id. Registramos todos los alias disponibles para resolver
-     * correctamente los UID históricos de auditoría.
-     */
     registrarActorAuditoria(
       [
         contexto.usuario?.userId,
@@ -222,11 +216,6 @@ async function inicializarActoresAuditoria() {
       nombreActivo
     );
 
-    /*
-     * Cuando el usuario tiene Administración, completamos el mapa con el
-     * catálogo oficial para resolver también actores históricos distintos de
-     * la Persona propia o de la Persona Activa.
-     */
     if (await ContextoUsuario.esAdministrador()) {
       const usuarios = await Academia.administracion.usuarios.listar();
 
@@ -257,10 +246,6 @@ function etiquetaActor(userId) {
   const id = String(userId || "").trim();
   if (!id) return "No disponible";
 
-  /*
-   * Si el actor no puede resolverse con los permisos del usuario actual,
-   * no exponemos identificadores técnicos de Firebase en la interfaz.
-   */
   return actoresAuditoria.get(id) || "Usuario autorizado";
 }
 
@@ -282,7 +267,11 @@ function formatearFechaHoraAuditoria(valor) {
   return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
 }
 
-function nombreModulo(modulo) {
+function nombreModulo(modulo, tarea = {}) {
+  if (tarea?.tipo === "repaso_academico") {
+    return "Repaso académico";
+  }
+
   return NOMBRES_MODULO[modulo] || String(modulo || "Actividad");
 }
 
@@ -465,7 +454,7 @@ function renderTareas() {
                 ${escapar(textoEstado(tarea.estado))}
               </span>
               <span class="tarea-card__estado-meta" title="Módulo · Último cambio de estado">
-                🎯 ${escapar(nombreModulo(tarea.modulo))} · ⏳ ${escapar(formatearFechaHoraEstado(tarea))}
+                🎯 ${escapar(nombreModulo(tarea.modulo, tarea))} · ⏳ ${escapar(formatearFechaHoraEstado(tarea))}
               </span>
             </div>
             <span class="tarea-card__flecha" aria-hidden="true">⌄</span>
@@ -657,7 +646,6 @@ function renderTareas() {
   });
 }
 
-
 function fechaEvidencia(valor) {
   if (!valor) return "Fecha no disponible";
   const fecha = typeof valor.toDate === "function" ? valor.toDate() : new Date(valor);
@@ -681,6 +669,26 @@ function urlResumenTrabajoDetectives(id) {
   return destino.href;
 }
 
+function urlResultadoAcademico(evidencia = {}, misionId = "") {
+  const sesionId = String(evidencia.sesionId || "").trim();
+  if (!sesionId) return "";
+
+  const destino = new URL("./resultado-academico.html", window.location.href);
+  destino.searchParams.set("sesionId", sesionId);
+  if (misionId) destino.searchParams.set("misionId", misionId);
+  destino.searchParams.set(
+    "volver",
+    `${window.location.pathname}${window.location.search}`
+  );
+  return destino.href;
+}
+
+function esEvidenciaAcademica(evidencia = {}) {
+  return (
+    String(evidencia.tipo || "") === "sesion_academica" ||
+    String(evidencia.origen || "") === "sesion_academica"
+  );
+}
 
 function urlRecursoTrabajoMision(tarea = {}) {
   const valor = String(tarea.destinoUrl || "").trim();
@@ -701,10 +709,9 @@ function urlRecursoTrabajoMision(tarea = {}) {
 
 function recursoTrabajoMisionHtml(tarea = {}) {
   /*
-   * Fase 1 de Repaso Académico:
-   * el recurso original NO es una evidencia. Se muestra como acceso de consulta
-   * dentro de Trabajo realizado para que la familia pueda volver directamente
-   * a la actividad que se asignó.
+   * El recurso original NO es la evidencia: la evidencia es la sesión
+   * académica guardada. Mantenemos este acceso para que la familia pueda
+   * consultar el material asignado sin alterar el resultado histórico.
    */
   if (tarea.tipo !== "repaso_academico") return "";
 
@@ -772,10 +779,7 @@ async function mostrarEvidenciasMision(id, button) {
     if (!evidencias.length) {
       const mensajeSinEvidencia =
         tarea?.tipo === "repaso_academico"
-          ? (
-              "El alumno informó que realizó este repaso. " +
-              "En esta fase no se registra evidencia curricular específica."
-            )
+          ? "Todavía no hay una sesión académica guardada para este repaso."
           : "Todavía no hay evidencias relacionadas con esta misión.";
 
       contenedor.innerHTML =
@@ -794,6 +798,7 @@ async function mostrarEvidenciasMision(id, button) {
       );
       const pistas = Number(evidencia.resultado?.pistas || 0);
       const nivel = evidencia.atributos?.nivel ?? "—";
+      const esAcademica = esEvidenciaAcademica(evidencia);
       const esBiblioteca = evidencia.modulo === "biblioteca";
       const esLectura = evidencia.modulo === "rincon-lectura";
       const esSemillas = evidencia.modulo === "creciendo-por-dentro";
@@ -806,50 +811,65 @@ async function mostrarEvidenciasMision(id, button) {
         `Actividad ${indice + 1}`;
 
       const fecha = fechaEvidencia(evidencia.ocurridaEn);
+      const resumenAcademico =
+        evidencia.resultado?.resumen &&
+        typeof evidencia.resultado.resumen === "object"
+          ? evidencia.resultado.resumen
+          : {};
 
-      const detalleActividad = esBiblioteca
+      const detalleActividad = esAcademica
         ? [
-            Number(evidencia.resultado?.duracionAudio || 0) > 0
-              ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
+            Number(resumenAcademico.totalPreguntas || 0) > 0
+              ? `${Number(resumenAcademico.totalCorrectas || 0)}/${Number(resumenAcademico.totalPreguntas)} correctas`
               : "",
-            Number(evidencia.resultado?.palabrasReconocidas || 0) > 0
-              ? `🗣️ ${Number(evidencia.resultado.palabrasReconocidas)} palabras`
+            Number.isFinite(Number(resumenAcademico.porcentaje))
+              ? `${Number(resumenAcademico.porcentaje)} %`
               : "",
             fecha
           ].filter(Boolean).join(" · ")
-        : esLectura
+        : esBiblioteca
           ? [
-              nivel !== "—" ? `Nivel ${nivel}` : "",
-              Number(evidencia.resultado?.duracion || 0) > 0
-                ? `🎙️ ${Math.round(Number(evidencia.resultado.duracion))} s`
+              Number(evidencia.resultado?.duracionAudio || 0) > 0
+                ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
                 : "",
-              Number(evidencia.resultado?.intentosComprension || 0) > 0
-                ? `🧠 ${Number(evidencia.resultado.intentosComprension)} intentos comprensión`
+              Number(evidencia.resultado?.palabrasReconocidas || 0) > 0
+                ? `🗣️ ${Number(evidencia.resultado.palabrasReconocidas)} palabras`
                 : "",
               fecha
             ].filter(Boolean).join(" · ")
-          : esSemillas
+          : esLectura
             ? [
-                evidencia.atributos?.tipoSituacion
-                  ? `Situación: ${evidencia.atributos.tipoSituacion}`
+                nivel !== "—" ? `Nivel ${nivel}` : "",
+                Number(evidencia.resultado?.duracion || 0) > 0
+                  ? `🎙️ ${Math.round(Number(evidencia.resultado.duracion))} s`
                   : "",
-                evidencia.atributos?.nivelApoyo
-                  ? `Apoyo: nivel ${evidencia.atributos.nivelApoyo}`
-                  : "",
-                intentos > 0
-                  ? `${intentos} ${intentos === 1 ? "intento" : "intentos"}`
-                  : "",
-                Number(evidencia.resultado?.duracionAudio || 0) > 0
-                  ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
+                Number(evidencia.resultado?.intentosComprension || 0) > 0
+                  ? `🧠 ${Number(evidencia.resultado.intentosComprension)} intentos comprensión`
                   : "",
                 fecha
               ].filter(Boolean).join(" · ")
-            : esDetectives
-              ? (
-                  `Nivel ${nivel} · ${intentos} intentos · ${pistas} pistas` +
-                  ` · ${fecha}`
-                )
-              : fecha;
+            : esSemillas
+              ? [
+                  evidencia.atributos?.tipoSituacion
+                    ? `Situación: ${evidencia.atributos.tipoSituacion}`
+                    : "",
+                  evidencia.atributos?.nivelApoyo
+                    ? `Apoyo: nivel ${evidencia.atributos.nivelApoyo}`
+                    : "",
+                  intentos > 0
+                    ? `${intentos} ${intentos === 1 ? "intento" : "intentos"}`
+                    : "",
+                  Number(evidencia.resultado?.duracionAudio || 0) > 0
+                    ? `🎙️ ${Math.round(Number(evidencia.resultado.duracionAudio))} s`
+                    : "",
+                  fecha
+                ].filter(Boolean).join(" · ")
+              : esDetectives
+                ? (
+                    `Nivel ${nivel} · ${intentos} intentos · ${pistas} pistas` +
+                    ` · ${fecha}`
+                  )
+                : fecha;
 
       const parametros = new URLSearchParams({
         id: evidencia.actividadId || "",
@@ -862,8 +882,9 @@ async function mostrarEvidenciasMision(id, button) {
         `${window.location.pathname}${window.location.search}`
       );
 
-      const destinoCorrecto =
-        evidencia.modulo === "rincon-lectura"
+      const destinoCorrecto = esAcademica
+        ? (urlResultadoAcademico(evidencia, id) || evidencia.destinoRevision || "#")
+        : evidencia.modulo === "rincon-lectura"
           ? (
               `../rincon-lectura/?vista=historial` +
               `&misionId=${encodeURIComponent(id)}` +
@@ -898,15 +919,17 @@ async function mostrarEvidenciasMision(id, button) {
           <a class="btn secundaria evidencia-item__enlace"
              href="${escapar(destinoCorrecto)}">
             ${
-               evidencia.modulo === "rincon-lectura"
-                 ? "Ver lectura"
-                 : evidencia.modulo === "creciendo-por-dentro"
-                   ? "Ver práctica"
-                   : evidencia.modulo === "biblioteca"
-                     ? "Ver ficha"
-                     : evidencia.modulo === "detectives"
-                       ? "Ver resolución"
-                       : "Ver detalle"
+               esAcademica
+                 ? "Ver resultado"
+                 : evidencia.modulo === "rincon-lectura"
+                   ? "Ver lectura"
+                   : evidencia.modulo === "creciendo-por-dentro"
+                     ? "Ver práctica"
+                     : evidencia.modulo === "biblioteca"
+                       ? "Ver ficha"
+                       : evidencia.modulo === "detectives"
+                         ? "Ver resolución"
+                         : "Ver detalle"
              }
           </a>
         </article>`;
@@ -976,7 +999,6 @@ async function moverMision(id, direccion) {
     })
   ]);
 }
-
 
 async function moverMisionAPosicion(id, posicionSolicitada) {
   const visibles = misionesOrdenables();
@@ -1054,9 +1076,6 @@ async function ejecutarAccion(button) {
         destino.searchParams.set("vista", "historial");
       }
 
-      // Gestión familiar solo consulta o revisa.
-      // El cambio a en_curso ocurre únicamente cuando el alumno inicia
-      // la misión desde Mi Camino.
       window.location.href = destino.href;
       return;
     }
@@ -1310,15 +1329,11 @@ function actualizarBloqueResultado(estado = "pendiente") {
     ?.classList.toggle("resultado-registrado", tieneDatos);
 }
 
-
-
 const textosAutomaticosDetectives = {
   titulo: "",
   descripcionMision: "",
   criterio: ""
 };
-
-
 
 const textosAutomaticosLectura = {
   descripcionMision: "",
@@ -1560,7 +1575,6 @@ function actualizarResumenCriterioSemillas() {
     );
 }
 
-
 function esRepasoAcademicoFormulario() {
   return $("tipo")?.value === "repaso_academico";
 }
@@ -1623,7 +1637,7 @@ function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
 
   if (forzar || !String($("criterio").value || "").trim()) {
     $("criterio").value =
-      "Realizar el repaso propuesto. En esta fase la familia registra manualmente el cierre de la Misión.";
+      "Completar la prueba final del repaso. La sesión guardada quedará como trabajo realizado y pasará a revisión familiar.";
   }
 
   if (forzar || !String($("mensajeMision").value || "").trim()) {
@@ -1894,7 +1908,6 @@ function actualizarConfiguracionPorModulo({
   reiniciarTextosAutomaticosSemillas();
   actualizarTituloAutomatico();
 }
-
 
 function fechaLocalISO(desplazamientoDias = 0) {
   const fecha = new Date();
@@ -2260,45 +2273,53 @@ function recogerFormulario() {
       : (DESTINOS[modulo] || ""),
     objetivo: $("objetivo").value,
     criterioFinalizacion: $("criterio").value,
-    criterioCumplimiento: esDetectives
+    criterioCumplimiento: esAcademica
       ? {
           tipo: "cantidad",
-          modulo: "detectives",
-          evidenciaTipo: "historia_resuelta",
-          cantidadObjetivo,
-          filtros: {
-            nivel: nivelDetectives
-          }
+          modulo: "libre",
+          evidenciaTipo: "sesion_academica",
+          cantidadObjetivo: 1,
+          filtros: {}
         }
-      : esLectura
+      : esDetectives
         ? {
             tipo: "cantidad",
-            modulo: "rincon-lectura",
-            evidenciaTipo: "lectura_completada",
-            cantidadObjetivo: cantidadLecturas,
-            filtros: nivelLectura
-              ? { nivel: nivelLectura }
-              : {}
+            modulo: "detectives",
+            evidenciaTipo: "historia_resuelta",
+            cantidadObjetivo,
+            filtros: {
+              nivel: nivelDetectives
+            }
           }
-        : esSemillas
+        : esLectura
           ? {
               tipo: "cantidad",
-              modulo: "creciendo-por-dentro",
-              evidenciaTipo: "semilla_completada",
-              cantidadObjetivo: cantidadSemillas,
-              filtros: semillasIds.length
-                ? { semillasIds }
+              modulo: "rincon-lectura",
+              evidenciaTipo: "lectura_completada",
+              cantidadObjetivo: cantidadLecturas,
+              filtros: nivelLectura
+                ? { nivel: nivelLectura }
                 : {}
             }
-          : esBiblioteca
+          : esSemillas
             ? {
                 tipo: "cantidad",
-                modulo: "biblioteca",
-                evidenciaTipo: "libro_compartido",
-                cantidadObjetivo: 1,
-                filtros: {}
+                modulo: "creciendo-por-dentro",
+                evidenciaTipo: "semilla_completada",
+                cantidadObjetivo: cantidadSemillas,
+                filtros: semillasIds.length
+                  ? { semillasIds }
+                  : {}
               }
-            : undefined,
+            : esBiblioteca
+              ? {
+                  tipo: "cantidad",
+                  modulo: "biblioteca",
+                  evidenciaTipo: "libro_compartido",
+                  cantidadObjetivo: 1,
+                  filtros: {}
+                }
+              : undefined,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -2320,23 +2341,27 @@ function recogerFormulario() {
       descripcionMision: visible ? $("descripcionMision").value : "",
       mensaje: visible ? $("mensajeMision").value : ""
     },
-    progreso: esDetectives
+    progreso: esAcademica
       ? {
-          cantidadObjetivo
+          cantidadObjetivo: 1
         }
-      : esLectura
+      : esDetectives
         ? {
-            cantidadObjetivo: cantidadLecturas
+            cantidadObjetivo
           }
-        : esSemillas
+        : esLectura
           ? {
-              cantidadObjetivo: cantidadSemillas
+              cantidadObjetivo: cantidadLecturas
             }
-          : esBiblioteca
+          : esSemillas
             ? {
-                cantidadObjetivo: 1
+                cantidadObjetivo: cantidadSemillas
               }
-            : undefined,
+            : esBiblioteca
+              ? {
+                  cantidadObjetivo: 1
+                }
+              : undefined,
     observacionActual: $("observacion").value,
     resultado: {
       fechaFinalizacion: $("fechaFinalizacion").value,
