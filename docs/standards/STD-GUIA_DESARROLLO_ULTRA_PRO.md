@@ -5,6 +5,13 @@
 **Estado:** Activo  
 **Última actualización:** 29/08/2026
 
+## Historial de versiones
+
+| Versión | Referencia | Cambio |
+|---|---|---|
+| 2.1 Cloud | 29/08/2026 | Formaliza como regla transversal que los fallos visibles expliquen la causa cuando sea conocida y segura de mostrar, e incorpora la comprobación correspondiente antes de publicar. |
+| 2.0 Cloud | Versión anterior | Base activa previa de la guía. Se conserva sin atribuir una fecha no declarada en la fuente original. |
+
 ---
 
 # Objetivo
