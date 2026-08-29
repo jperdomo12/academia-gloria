@@ -18,7 +18,7 @@
 |---|---:|---|---|
 | 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
 | 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
-| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º: registra como listas Creciendo por Dentro, Biblioteca, Misiones libres y consolidación de Trabajo realizado; reconoce persistencia académica validada en Puente/Fracciones; mantiene en progreso Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º; prioriza refuerzo desde Detectives y pruebas académicas. Conserva explícitamente las líneas técnicas previas de Identidad/Auditoría/Núcleo mientras no exista validación separada de su cierre. |
+| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º; incorpora refuerzo desde Detectives y pruebas académicas como siguientes evoluciones. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
 
 ---
 
@@ -69,8 +69,7 @@ Estado actual:
 - Cloud Firestore operativo;
 - API `Academia` como fachada común;
 - panel de usuario reutilizable;
-- Persona Activa y relaciones multi-persona;
-- navegación compartida con cabecera global y retorno contextual;
+- navegación compartida;
 - Mi Camino;
 - Mis Tareas / Misiones;
 - Biblioteca Encantada;
@@ -78,58 +77,93 @@ Estado actual:
 - Detectives de Problemas;
 - Creciendo por Dentro;
 - calendarios personales y académicos;
-- Gestión de Usuarios;
-- Firestore Rules adaptadas al modelo vigente.
+- identidad y contexto multi-persona.
 
-## 3.2 Misiones y Trabajo realizado
+## 3.2 Identidad, acceso y colaboración
 
-Estado consolidado:
+Implementado durante agosto de 2026:
+
+- `PERSON`;
+- `USER`;
+- `ROLE`;
+- `USER_ROLE`;
+- `PERSON_RELATION`;
+- Persona Activa;
+- acceso profesional sobre otra Persona;
+- rol de Administración;
+- Gestión de Usuarios desde la Academia;
+- Firestore Rules adaptadas a administración;
+- auditoría básica Fase A para entidades administrativas;
+- primer manual operativo de Gestión de Usuarios.
+
+Esta evolución adelanta parcialmente la antigua fase de colaboración profesional y permisos.
+
+## 3.3 Estado funcional actualizado al 29/08/2026
+
+El uso y validación posteriores a v1.1 permiten actualizar las siguientes capacidades:
 
 - **Creciendo por Dentro:** ✅ Listo.
 - **Biblioteca:** ✅ Listo.
 - **Trabajo realizado:** ✅ Consolidado para los motores integrados y ampliado a Repaso Académico.
 - **Misiones libres:** ✅ Listo.
-- **Repaso de contenidos de 5.º mediante Misiones:** ✅ Disponible sin exigir migración masiva de sus páginas heredadas.
-- **Repaso Académico de 6.º:** ✅ integrado con sesión académica, evidencia y revisión familiar cuando el tema soporta persistencia.
-- **Creación asistida de Misiones:** 🟡 En progreso; ya existe experiencia real desde Mi Rincón de Lectura, falta generalizar el patrón a nuevas fuentes de datos.
-- **Observaciones / propuestas de refuerzo:** 🟡 En progreso; siguiente eje de consolidación.
+- **Repaso de contenidos de 5.º mediante Misiones:** ✅ Disponible sin exigir migración masiva de las páginas heredadas.
+- **Persistencia de pruebas académicas:** ✅ Base implementada y validada con Puente y Fracciones.
+- **Resultado académico histórico:** ✅ Implementado y validado como consulta de solo lectura.
+- **Creación asistida de Misiones:** 🚧 En progreso; Mi Rincón de Lectura ya aporta una referencia real.
+- **Observaciones / Propuestas de refuerzo:** 🚧 En progreso.
+- **Estructura de 6.º de Primaria:** 🚧 En progreso avanzado.
+- **Detectives → propuestas/Misiones de refuerzo:** ⏳ Pendiente prioritario.
+- **Pruebas académicas → propuestas/Misiones de refuerzo:** ⏳ Pendiente prioritario.
 
-## 3.3 Primera base académica estructurada de 6.º
+La actualización de estos estados **no declara cerradas** las líneas técnicas P0 de Identidad, Auditoría y certificación del núcleo definidas a continuación. Esas líneas conservan su detalle y estado hasta una validación específica.
 
-Implementado y validado:
+---
 
-- portal de 6.º como destino navegable;
-- Matemáticas como primera asignatura en expansión;
-- **Puente de 5.º a 6.º**;
-- **Fracciones**;
-- patrón académico de Resumen → Teoría → Fichas → Práctica → Prueba cuando corresponde;
-- persistencia mediante `sesion-academica-v1`;
-- evidencia `sesion_academica` cuando la actividad se ejecuta desde una Misión;
-- resultado académico histórico de solo lectura;
-- integración con Persona Activa y `Volver` histórico;
-- reglas Firestore de `sesionesAcademicas` publicadas y validadas.
+# 4. Prioridades inmediatas
 
-La persistencia de pruebas/exámenes **ya no es una iniciativa pendiente de diseño**. Es una base implementada que deberá reutilizarse en los nuevos temas de 6.º cuando produzcan datos académicos útiles.
+## P0 · Cierre de Identidad, Usuarios y Auditoría
 
-## 3.4 Líneas técnicas previas que conservan vigencia
+### Objetivo
 
-La actualización v1.2 reorganiza las prioridades funcionales, pero **no declara cerradas** las siguientes líneas técnicas registradas en v1.1 porque su cierre no ha sido revalidado dentro de esta actualización documental:
+Cerrar formalmente la evolución de identidad multi-persona antes de ampliar el producto.
 
-### Cierre de Identidad, Usuarios y Auditoría
+### Incluye
 
-Estado heredado de v1.1:
+1. Crear y validar un nuevo usuario real mediante el flujo completo:
+   - Firebase Authentication;
+   - Gestión de Usuarios;
+   - PERSON;
+   - USER;
+   - USER_ROLE;
+   - accesosLogin;
+   - PERSON_RELATION cuando corresponda;
+   - auditoría.
+
+2. Validar la consistencia de los usuarios iniciales.
+
+3. Confirmar la auditoría Fase A en las entidades administrativas.
+
+### Estado
 
 🚧 En cierre
 
-Incluye la validación integral de usuarios, relaciones y auditoría administrativa.
+---
 
-### Revisión de auditoría de Tareas / Misiones
+## P0 · Revisión de auditoría de entidades educativas
 
-Estado heredado de v1.1:
+### Objetivo
 
-🔜 Siguiente bloque técnico
+Alinear la auditoría de las entidades educativas relevantes con el modelo ya adoptado para identidad.
 
-Debe revisar al menos:
+### Primera entidad prioritaria
+
+```text
+TAREA / MISIÓN
+```
+
+### Revisión mínima
+
+Auditoría básica:
 
 ```text
 createdAt
@@ -138,7 +172,7 @@ updatedAt
 updatedBy
 ```
 
-y conservar el significado funcional de:
+Campos funcionales ya existentes que deben conservar su significado propio:
 
 ```text
 creadaPorUid
@@ -146,15 +180,44 @@ asignadaPorUid
 alumnoId
 ```
 
-junto con el historial de eventos de la Misión cuando corresponda.
+Auditoría histórica a revisar:
 
-### Certificación del núcleo multi-persona
+```text
+CREADA
+MODIFICADA
+INICIADA
+EVIDENCIA_REGISTRADA
+COMPLETADA
+VALIDADA
+REABIERTA
+CANCELADA
+```
 
-Estado heredado de v1.1:
+### Criterio
 
-🔜 Próximo
+No migrar colecciones únicamente por motivos de auditoría.
 
-El núcleo a certificar continúa incluyendo:
+Primero se revisará:
+
+- estándar vigente de Mis Tareas / Misiones;
+- contrato real en `Academia.tareas`;
+- estructura Firestore real;
+- historial existente;
+- compatibilidad con Persona Activa.
+
+### Estado
+
+🔜 Siguiente bloque técnico
+
+---
+
+## P0 · Actualización y certificación del núcleo
+
+### Objetivo
+
+Establecer un punto técnico estable antes de continuar ampliaciones de alto impacto.
+
+### Núcleo a certificar
 
 ```text
 Login
@@ -171,19 +234,23 @@ Rutas local / GitHub Pages
 Logout
 ```
 
-Estas líneas deberán cerrarse mediante su propia validación; no deben desaparecer del roadmap por el avance de otros productos.
+### Resultado esperado
+
+Una lista corta y reutilizable de pruebas de regresión.
+
+### Estado
+
+🔜 Próximo
 
 ---
-
-# 4. Prioridades inmediatas
 
 ## P0 · Observaciones y Propuestas de Refuerzo
 
 ### Objetivo
 
-Consolidar un patrón común para transformar evidencia útil en acompañamiento accionable sin crear un sistema distinto por módulo.
+Consolidar un patrón común para transformar evidencia útil en acompañamiento accionable sin crear un sistema diferente por módulo.
 
-Flujo objetivo:
+Patrón objetivo:
 
 ```text
 Evidencia
@@ -203,7 +270,7 @@ Misión / acción
 
 🚧 En progreso
 
-### Referencia ya disponible
+### Referencia disponible
 
 Mi Rincón de Lectura ya demuestra que la Academia puede utilizar resultados reales para identificar necesidades concretas y preparar acciones/Misiones.
 
@@ -213,14 +280,9 @@ Mi Rincón de Lectura ya demuestra que la Academia puede utilizar resultados rea
 
 ### Objetivo
 
-Generalizar la capacidad de preparar una Misión desde una necesidad observada, manteniendo control humano sobre su creación/asignación.
+Generalizar la capacidad de preparar una Misión desde una necesidad observada, manteniendo control humano sobre su creación y asignación.
 
-La Academia debe evitar dos extremos:
-
-- obligar al adulto a reconstruir manualmente toda la Misión;
-- crear automáticamente Misiones sin revisión cuando la interpretación requiera criterio humano.
-
-### Patrón deseado
+Patrón deseado:
 
 ```text
 Dato / observación
@@ -235,15 +297,24 @@ Dato / observación
 
 ---
 
-## P1 · Continuar estructura de 6.º de Primaria
+# 5. Próxima etapa académica · Curso 2026–2027
+
+## P1 · Academia 6.º de Primaria
 
 ### Objetivo
 
-Ampliar progresivamente el curso con contenidos reales del colegio y necesidades observadas, reutilizando la arquitectura ya validada.
+Preparar y ampliar la Academia para acompañar el nuevo curso escolar sin reconstruir los módulos existentes.
 
-### Estado
+### Alcance inicial
 
-🚧 En progreso avanzado
+```text
+6.º de Primaria
+├── Portal del curso
+├── Asignaturas
+├── Calendario académico 2026–2027
+├── Misiones / Tareas
+└── Contenidos incorporados según necesidad real
+```
 
 ### Principio
 
@@ -258,57 +329,111 @@ La prioridad será adaptar progresivamente la Academia a:
 - refuerzos;
 - objetivos personales y educativos.
 
-### Base reutilizable
+### Base ya validada
 
-```text
-Material escolar
-→ Tema Académico
-→ Aprendizaje
-→ Práctica
-→ Prueba / comprobación
-→ Sesión
-→ Evidencia cuando corresponde
-→ Resultado histórico
-→ Análisis
-→ Refuerzo / continuidad
-```
+A 29/08/2026 existen como referencias estructuradas:
 
----
-
-# 5. Seguimiento y refuerzo basado en datos reales
-
-## P1 · Mi Rincón de Lectura → refuerzo / Misiones
+- portal navegable de 6.º;
+- Matemáticas como primera asignatura en expansión;
+- **Puente de 5.º a 6.º**;
+- **Fracciones**;
+- patrón Resumen → Teoría → Fichas → Práctica → Prueba cuando corresponde;
+- contrato compartido `sesion-academica-v1`;
+- evidencia `sesion_academica` cuando existe una Misión;
+- resultado académico histórico de solo lectura;
+- integración con Persona Activa y `Volver` histórico;
+- reglas Firestore de `sesionesAcademicas` publicadas y validadas.
 
 ### Estado
 
-✅ Base lista
+🚧 En progreso avanzado
 
-### Capacidad actual
-
-Los datos del Rincón permiten identificar, entre otros casos:
-
-- palabras sugeridas por Lía que no han sido superadas;
-- palabras que se superaron después de varios intentos;
-- necesidades concretas de pronunciación o práctica;
-- acciones que pueden convertirse en Misiones.
-
-Esta experiencia será referencia para otros motores, sin obligarlos a producir los mismos datos.
+La expansión continuará con nuevos temas de Matemáticas, **Science** y las demás asignaturas según material y necesidad real del colegio.
 
 ---
 
-## P1 · Detectives → observaciones / Misiones
+# 6. Seguimiento educativo basado en datos reales
+
+## P1 · Historial mínimo de Detectives
 
 ### Objetivo
 
-Utilizar fallos, intentos, pasos y resultados de Detectives para proponer acciones de refuerzo y, cuando corresponda, preparar nuevas Misiones.
+Conservar sesiones reales y permitir consultar evolución sin convertir todavía el módulo en un sistema estadístico complejo.
+
+### Incluye progresivamente
+
+- sesión;
+- nivel;
+- casos trabajados;
+- respuestas;
+- resultados;
+- fecha;
+- referencia a misión cuando corresponda.
 
 ### Estado
 
 ⏳ Pendiente prioritario
 
+---
+
+## P1 · Evidencias reales de Misiones / Tareas
+
+### Objetivo
+
+Conectar una Tarea/Misión con la experiencia educativa que realmente la completa.
+
+### Relaciones previstas
+
+```text
+Tarea / Misión
+      ↓
+Sesión real
+      ↓
+Evidencia
+      ↓
+Resultado / validación
+```
+
+### Estado
+
+✅ Base implementada y validada en los motores integrados; evolución progresiva por motor.
+
+Repaso Académico ya utiliza este patrón mediante `sesionId` y evidencia `sesion_academica`, sin duplicar la sesión dentro de la Misión.
+
+---
+
+## P1 · Mi Rincón de Lectura → refuerzo / Misiones
+
+### Objetivo
+
+Utilizar los datos reales del Rincón para identificar necesidades concretas y preparar acciones de práctica.
+
+### Estado
+
+✅ Base lista
+
+Entre los casos ya contemplados se encuentran:
+
+- palabras sugeridas por Lía y no superadas;
+- palabras superadas después de varios intentos;
+- necesidades concretas de pronunciación o práctica;
+- acciones que pueden convertirse en Misiones.
+
+---
+
+## P1 · Detectives → observaciones / Misiones de refuerzo
+
+### Objetivo
+
+Utilizar fallos, intentos, pasos y resultados de Detectives para proponer acciones de refuerzo y, cuando corresponda, preparar nuevas Misiones.
+
 ### Regla
 
 No inferir una dificultad global a partir de un único error. Las propuestas deben basarse en datos observables y expresarse como oportunidades concretas de práctica.
+
+### Estado
+
+⏳ Pendiente prioritario
 
 ---
 
@@ -318,7 +443,7 @@ No inferir una dificultad global a partir de un único error. Las propuestas deb
 
 Aprovechar la persistencia ya disponible en los Temas Académicos para transformar resultados de pruebas en propuestas de práctica específica.
 
-Datos ya disponibles en las referencias actuales:
+Datos disponibles en las referencias actuales:
 
 - resultado total;
 - porcentaje de la prueba;
@@ -328,11 +453,7 @@ Datos ya disponibles en las referencias actuales:
 - sesión histórica;
 - relación con Misión cuando existe.
 
-### Estado
-
-⏳ Pendiente prioritario
-
-### Próximo salto funcional
+### Flujo previsto
 
 ```text
 Prueba persistida
@@ -344,32 +465,60 @@ Prueba persistida
 → nueva oportunidad de aplicación
 ```
 
+### Estado
+
+⏳ Pendiente prioritario
+
 ---
 
-# 6. Compatibilidad de 5.º y evolución académica
+## P1 · Compatibilidad de 5.º y Misiones existentes
 
-## 6.1 Misiones de 5.º
+Los recursos existentes de 5.º pueden seguir utilizándose como Repaso Académico aunque no generen `sesionesAcademicas` ni evidencia académica automática.
 
-Los recursos existentes de 5.º siguen siendo utilizables como Repaso Académico aunque no generen `sesionesAcademicas` ni evidencia estructurada.
+No se realizará una migración masiva de 5.º únicamente para adoptar la persistencia nueva. Donde no exista evidencia automática puede mantenerse el cierre manual de la Misión.
+
+La incorporación de persistencia tampoco obliga a recrear Misiones académicas ya existentes. Una ejecución futura de un recurso que soporte el contrato vigente podrá generar su sesión/evidencia; una actividad realizada antes de existir persistencia no generará retrospectivamente datos que nunca fueron guardados.
 
 ### Estado
 
-✅ Disponible
+✅ Compatibilidad definida y validada en el modelo vigente.
 
-### Criterio
+---
 
-- no recrear páginas únicamente para cumplir el contrato nuevo;
-- no migrar masivamente 5.º;
-- mantener cierre manual de Misión donde no exista evidencia automática;
-- modernizar selectivamente un tema de 5.º solo cuando vuelva a ser relevante y exista beneficio claro.
+## P2 · Constancia basada en actividad significativa
 
-## 6.2 Misiones académicas existentes
+### Objetivo
 
-La incorporación de persistencia no obliga a recrear las Misiones creadas previamente.
+Medir continuidad educativa real, no accesos o logins.
 
-Una Misión existente puede aprovechar una ejecución futura de un recurso que ya soporte `sesion-academica-v1`.
+### Fuentes futuras
 
-Una actividad realizada antes de existir persistencia no generará retrospectivamente una sesión inexistente. Si se desea una nueva evaluación, se crea una nueva Misión conservando la anterior como historial.
+- lectura;
+- Detectives;
+- Misiones;
+- Creciendo por Dentro;
+- sesiones académicas;
+- otras experiencias educativas reales.
+
+### Estado
+
+⏳ Después de disponer de datos suficientes
+
+---
+
+## P2 · Logros reales
+
+### Objetivo
+
+Generar hitos desde evidencias y progreso auténtico.
+
+### Principio
+
+Los logros no se generarán a partir de métricas ficticias ni de actividad superficial.
+
+### Estado
+
+⏳ Posterior a historial y evidencias
 
 ---
 
@@ -402,7 +551,7 @@ Seguridad, privacidad y permisos deberán definirse antes de ampliar cada ámbit
 
 # 8. Panel de evolución
 
-## P2 · Información para adultos y profesionales
+## P3 · Información para adultos y profesionales
 
 ### Objetivo
 
@@ -428,44 +577,7 @@ Debe existir volumen suficiente de datos reales.
 
 ---
 
-# 9. Constancia y logros
-
-## P2 · Constancia basada en actividad significativa
-
-### Objetivo
-
-Medir continuidad educativa real, no accesos o logins.
-
-### Fuentes futuras
-
-- lectura;
-- Detectives;
-- Misiones;
-- Creciendo por Dentro;
-- sesiones académicas;
-- otras experiencias educativas reales.
-
-### Estado
-
-⏳ Después de disponer de datos suficientes
-
-## P2 · Logros reales
-
-### Objetivo
-
-Generar hitos desde evidencias y progreso auténtico.
-
-### Principio
-
-Los logros no se generarán a partir de métricas ficticias ni de actividad superficial.
-
-### Estado
-
-⏳ Posterior a historial y evidencias suficientes
-
----
-
-# 10. Inteligencia Artificial educativa
+# 9. Inteligencia Artificial educativa
 
 ## P3 · Tutor y recomendaciones
 
@@ -489,13 +601,13 @@ Incorporar capacidades de IA únicamente cuando existan:
 
 ### Estado
 
-🔮 Evolución progresiva
+🔮 Largo plazo
 
-La creación asistida basada en reglas y datos estructurados puede avanzar antes de depender de IA generativa.
+La creación asistida basada en datos estructurados y reglas puede avanzar antes de depender de IA generativa.
 
 ---
 
-# 11. Visión de largo alcance
+# 10. Visión de largo alcance
 
 La Academia continuará evolucionando como un ecosistema educativo, personal y familiar capaz de acompañar:
 
@@ -514,7 +626,7 @@ La visión permanece abierta, pero cada ampliación deberá demostrar valor real
 
 ---
 
-# 12. Secuencia recomendada
+# 11. Secuencia recomendada
 
 ```text
 AHORA
@@ -524,9 +636,9 @@ P0  Consolidar Creación asistida de Misiones
 
 LÍNEAS TÉCNICAS QUE CONSERVAN VIGENCIA
 ────────────────────────────────────────────
-P0  Cerrar Identidad, Usuarios y Auditoría · estado heredado: en cierre
-P0  Revisar auditoría de Tareas / Misiones · estado heredado: siguiente bloque técnico
-P0  Certificar núcleo multi-persona · estado heredado: próximo
+P0  Cerrar Identidad, Usuarios y Auditoría · en cierre
+P0  Revisar auditoría de Tareas / Misiones · siguiente bloque técnico
+P0  Certificar núcleo multi-persona · próximo
 
 SIGUIENTE
 ────────────────────────────────────────────
@@ -544,14 +656,14 @@ DESPUÉS DE USO REAL SUFICIENTE
 ────────────────────────────────────────────
 P2  Constancia basada en actividad real
 P2  Logros reales
-P2  Panel adulto / profesional
-P3  Históricos de evolución ampliados
-P3  IA educativa avanzada
+P3  Panel adulto / profesional
+P3  Históricos de evolución
+P3  IA educativa
 ```
 
 ---
 
-# 13. Resumen de prioridades
+# 12. Resumen de prioridades
 
 | Prioridad | Iniciativa | Estado |
 |---|---|---|
@@ -561,28 +673,32 @@ P3  IA educativa avanzada
 | Base | Misiones libres | ✅ Listo |
 | Base | Repasos/Misiones con contenidos de 5.º | ✅ Disponible |
 | Base | Persistencia de pruebas académicas | ✅ Implementada y validada en Puente/Fracciones |
+| P0 | Cierre Gestión de Usuarios / Identidad / Auditoría | 🚧 En cierre |
+| P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico |
+| P0 | Actualización documental estratégica | ✅ Actualizada al 29/08/2026 |
+| P0 | Certificación del núcleo multi-persona | 🔜 Próximo |
 | P0 | Observaciones / Propuestas de Refuerzo | 🚧 En progreso |
 | P0 | Creación asistida de Misiones | 🚧 En progreso |
-| P0 técnico | Cierre Identidad, Usuarios y Auditoría | 🚧 En cierre · estado heredado de v1.1 |
-| P0 técnico | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico · estado heredado de v1.1 |
-| P0 técnico | Certificación del núcleo multi-persona | 🔜 Próximo · estado heredado de v1.1 |
-| P1 | Estructura 6.º de Primaria | 🚧 En progreso avanzado |
+| P1 | Academia 6.º de Primaria | 🚧 En progreso avanzado |
+| P1 | Calendario 2026–2027 | ⏳ Según necesidad del curso |
+| P1 | Historial mínimo de Detectives | ⏳ Pendiente |
+| P1 | Evidencias de Misiones / Tareas | ✅ Base implementada · evolución por motor |
 | P1 | Rincón de Lectura → Misiones de refuerzo | ✅ Base lista |
 | P1 | Detectives → propuestas/Misiones | ⏳ Pendiente prioritario |
 | P1 | Pruebas académicas → propuestas/Misiones | ⏳ Pendiente prioritario |
 | P2 | Constancia real | ⏳ Posterior |
 | P2 | Logros reales | ⏳ Posterior |
-| P2 | Panel adulto / profesional | 🔮 Futuro |
-| P3 | IA educativa avanzada | 🔮 Evolución futura |
+| P3 | Panel adulto / profesional | 🔮 Futuro |
+| P3 | IA educativa | 🔮 Largo plazo |
 
 ---
 
-# 14. Recordatorios transversales
+# 13. Recordatorios transversales
 
-El Roadmap no es propietario de las reglas técnicas/UX siguientes, pero las referencia como condiciones de cualquier nueva evolución:
+El Roadmap no es propietario de las siguientes reglas, pero las referencia como condiciones de cualquier nueva evolución:
 
 - favicon oficial de la Academia en las páginas funcionales;
-- `Volver` gobernado por el modelo de navegación y su historial lógico;
+- `Volver` gobernado por el modelo compartido y su historial lógico;
 - conservación de Persona Activa durante navegación interna;
 - Vista previa sin persistencia educativa;
 - vistas históricas de resultados en solo lectura;
@@ -596,7 +712,7 @@ Las definiciones propietarias viven en:
 
 ---
 
-# 15. Documentos relacionados
+# 14. Documentos relacionados
 
 - `docs/README.md`
 - `docs/project/MASTER_PLAN.md`
