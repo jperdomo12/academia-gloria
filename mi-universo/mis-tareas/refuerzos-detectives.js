@@ -834,6 +834,58 @@ function configurarAcordeonExclusivo() {
   });
 }
 
+function crearSubgrupoRefuerzo({ id, icono, titulo, encabezadoId }) {
+  if ($(id)) return;
+
+  const seccion = $(encabezadoId)?.closest(".refuerzo-bloque");
+  if (!seccion) return;
+
+  const subgrupo = document.createElement("details");
+  subgrupo.id = id;
+  subgrupo.className = "subgrupo-refuerzo";
+  subgrupo.innerHTML = `
+    <summary class="subgrupo-refuerzo__summary">
+      <span class="subgrupo-refuerzo__icono" aria-hidden="true">${escapar(icono)}</span>
+      <strong>${escapar(titulo)}</strong>
+      <span class="subgrupo-refuerzo__flecha" aria-hidden="true">⌄</span>
+    </summary>
+    <div class="subgrupo-refuerzo__contenido"></div>
+  `;
+
+  seccion.parentElement.insertBefore(subgrupo, seccion);
+  subgrupo.querySelector(".subgrupo-refuerzo__contenido").appendChild(seccion);
+}
+
+function configurarSubgruposRefuerzo() {
+  crearSubgrupoRefuerzo({
+    id: "subgrupoMisionesDetectives",
+    icono: "📋",
+    titulo: "Misiones preparadas",
+    encabezadoId: "tituloMisionesRefuerzoDetectives"
+  });
+
+  crearSubgrupoRefuerzo({
+    id: "subgrupoSugeridasDetectives",
+    icono: "🌱",
+    titulo: "Misiones sugeridas",
+    encabezadoId: "tituloRefuerzosDetectives"
+  });
+
+  crearSubgrupoRefuerzo({
+    id: "subgrupoMisionesLectura",
+    icono: "📋",
+    titulo: "Misiones preparadas",
+    encabezadoId: "tituloMisionesPronunciacion"
+  });
+
+  crearSubgrupoRefuerzo({
+    id: "subgrupoSugeridasLectura",
+    icono: "🌱",
+    titulo: "Misiones sugeridas",
+    encabezadoId: "tituloPalabrasSugeridas"
+  });
+}
+
 function agruparPanelRefuerzos() {
   crearGrupoRefuerzo({
     id: "grupoRefuerzoDetectives",
@@ -857,6 +909,7 @@ function agruparPanelRefuerzos() {
     ]
   });
 
+  configurarSubgruposRefuerzo();
   configurarAcordeonExclusivo();
 }
 
