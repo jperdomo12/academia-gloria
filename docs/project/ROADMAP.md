@@ -18,7 +18,7 @@
 |---|---:|---|---|
 | 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
 | 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
-| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º: registra como listas Creciendo por Dentro, Biblioteca, Misiones libres y consolidación de Trabajo realizado; reconoce persistencia académica validada en Puente/Fracciones; mantiene en progreso Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º; prioriza refuerzo desde Detectives y pruebas académicas. |
+| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º: registra como listas Creciendo por Dentro, Biblioteca, Misiones libres y consolidación de Trabajo realizado; reconoce persistencia académica validada en Puente/Fracciones; mantiene en progreso Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º; prioriza refuerzo desde Detectives y pruebas académicas. Conserva explícitamente las líneas técnicas previas de Identidad/Auditoría/Núcleo mientras no exista validación separada de su cierre. |
 
 ---
 
@@ -110,6 +110,68 @@ Implementado y validado:
 - reglas Firestore de `sesionesAcademicas` publicadas y validadas.
 
 La persistencia de pruebas/exámenes **ya no es una iniciativa pendiente de diseño**. Es una base implementada que deberá reutilizarse en los nuevos temas de 6.º cuando produzcan datos académicos útiles.
+
+## 3.4 Líneas técnicas previas que conservan vigencia
+
+La actualización v1.2 reorganiza las prioridades funcionales, pero **no declara cerradas** las siguientes líneas técnicas registradas en v1.1 porque su cierre no ha sido revalidado dentro de esta actualización documental:
+
+### Cierre de Identidad, Usuarios y Auditoría
+
+Estado heredado de v1.1:
+
+🚧 En cierre
+
+Incluye la validación integral de usuarios, relaciones y auditoría administrativa.
+
+### Revisión de auditoría de Tareas / Misiones
+
+Estado heredado de v1.1:
+
+🔜 Siguiente bloque técnico
+
+Debe revisar al menos:
+
+```text
+createdAt
+createdBy
+updatedAt
+updatedBy
+```
+
+y conservar el significado funcional de:
+
+```text
+creadaPorUid
+asignadaPorUid
+alumnoId
+```
+
+junto con el historial de eventos de la Misión cuando corresponda.
+
+### Certificación del núcleo multi-persona
+
+Estado heredado de v1.1:
+
+🔜 Próximo
+
+El núcleo a certificar continúa incluyendo:
+
+```text
+Login
+ContextoUsuario
+Persona propia
+Persona Activa
+Panel de usuario
+Navegación
+API Academia
+Permisos
+Firestore Rules
+Gestión de Usuarios
+Rutas local / GitHub Pages
+Logout
+```
+
+Estas líneas deberán cerrarse mediante su propia validación; no deben desaparecer del roadmap por el avance de otros productos.
 
 ---
 
@@ -460,6 +522,12 @@ AHORA
 P0  Consolidar Observaciones / Propuestas de Refuerzo
 P0  Consolidar Creación asistida de Misiones
 
+LÍNEAS TÉCNICAS QUE CONSERVAN VIGENCIA
+────────────────────────────────────────────
+P0  Cerrar Identidad, Usuarios y Auditoría · estado heredado: en cierre
+P0  Revisar auditoría de Tareas / Misiones · estado heredado: siguiente bloque técnico
+P0  Certificar núcleo multi-persona · estado heredado: próximo
+
 SIGUIENTE
 ────────────────────────────────────────────
 P1  Detectives → observaciones y Misiones de refuerzo
@@ -495,6 +563,9 @@ P3  IA educativa avanzada
 | Base | Persistencia de pruebas académicas | ✅ Implementada y validada en Puente/Fracciones |
 | P0 | Observaciones / Propuestas de Refuerzo | 🚧 En progreso |
 | P0 | Creación asistida de Misiones | 🚧 En progreso |
+| P0 técnico | Cierre Identidad, Usuarios y Auditoría | 🚧 En cierre · estado heredado de v1.1 |
+| P0 técnico | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico · estado heredado de v1.1 |
+| P0 técnico | Certificación del núcleo multi-persona | 🔜 Próximo · estado heredado de v1.1 |
 | P1 | Estructura 6.º de Primaria | 🚧 En progreso avanzado |
 | P1 | Rincón de Lectura → Misiones de refuerzo | ✅ Base lista |
 | P1 | Detectives → propuestas/Misiones | ⏳ Pendiente prioritario |
