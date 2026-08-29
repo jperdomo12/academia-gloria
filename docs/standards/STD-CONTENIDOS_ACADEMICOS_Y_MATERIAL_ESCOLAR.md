@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 22/08/2026 |
+| **Última actualización** | 29/08/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -25,11 +25,13 @@
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Complementa:** reglas de asignación, seguimiento y relación entre actividad y Misión. |
 | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional vigente de Misiones y evidencias. |
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** presentación familiar de las actividades y evidencias realizadas. |
+| `compartido/js/sesiones-academicas.js` | **Implementa:** contrato compartido vigente de persistencia y consulta de sesiones académicas. |
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 29/08/2026 | Product Owner + AI Collaborator | Sincroniza el estándar con la implementación validada de Puente y Fracciones: `sesion-academica-v1`, persistencia de pruebas, evidencia de Misión `sesion_academica`, visor histórico de solo lectura, modo Vista previa sin escrituras y compatibilidad de Misiones/temas heredados de 5.º sin migración masiva. Mantiene como pendiente la generación de propuestas de refuerzo desde resultados académicos. |
 | 1.0 | 22/08/2026 | Product Owner + AI Collaborator | Aprobación de la Base Académica de 6.º. Consolida tiempo cognitivo, exigencia sin presión emocional alta, reto primero con apoyo progresivo, reto productivo, foco en el paso actual, comprensión lingüística de problemas, separación entre métricas internas y visibles, pausa estratégica y valoración del proceso. No declara implementación técnica. |
 | 1.0-rc1 | 21/08/2026 | Product Owner + AI Collaborator | Primera consolidación de las pautas para aprendizaje académico estructurado: material escolar como fuente prioritaria, diseño TEL-friendly, estructura modular, selección de recursos, práctica formativa, evidencias, retroalimentación y proceso de incorporación ágil. Primera aplicación prevista: 6.º de Primaria. |
 
@@ -88,16 +90,16 @@ Este estándar no define:
 - un sistema de dominio o mastery obligatorio;
 - un historial académico oficial del colegio;
 - reglas de Firestore concretas;
-- el esquema técnico definitivo de una futura `sesionAcademica`;
+- detalles físicos internos que pertenezcan a la implementación técnica de cada módulo;
 - ni la implementación específica de cada tema.
 
-El contrato técnico de persistencia se definirá cuando se implemente el primer tema piloto conectado a datos.
+El estándar define el contrato conceptual de persistencia y evidencia. Los detalles técnicos vigentes se materializan en los recursos compartidos correspondientes y pueden evolucionar sin duplicarse aquí.
 
 ---
 
 ## 3. Primera aplicación: 6.º de Primaria
 
-6.º será la primera aplicación estructurada de este estándar.
+6.º es la primera aplicación estructurada de este estándar.
 
 Esto significa:
 
@@ -119,6 +121,13 @@ Entre los patrones ya validados se encuentran:
 - gráficos y esquemas para relaciones visuales;
 - práctica contextualizada;
 - y test de repaso.
+
+A 29/08/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia y Misiones:
+
+- **Puente de 5.º a 6.º**;
+- **Fracciones**.
+
+Ambas utilizan el patrón aprobado de aprendizaje, práctica, prueba final, sesión académica, evidencia de Misión y revisión histórica.
 
 ---
 
@@ -744,7 +753,7 @@ Según la actividad, pueden resultar útiles:
 - producción escrita u oral cuando esté autorizada;
 - y relación con `misionId` cuando exista.
 
-El esquema técnico definitivo se definirá durante el piloto.
+La implementación compartida vigente utiliza el contrato `sesion-academica-v1`. El contrato técnico se centraliza en `compartido/js/sesiones-academicas.js`; este estándar conserva la semántica y no duplica cada detalle físico de almacenamiento.
 
 ### 12.5 Datos que no deben guardarse por defecto
 
@@ -765,6 +774,42 @@ Antes de persistir un dato debe poder responderse:
 > **¿Qué decisión educativa, familiar o de producto podrá mejorar gracias a este dato?**
 
 Si no existe respuesta clara, el dato no es necesario.
+
+### 12.7 Modos y persistencia
+
+Los Temas Académicos conectados al contrato compartido distinguen al menos dos modos funcionales:
+
+**Sesión de aprendizaje**
+
+Puede registrar una sesión académica y, cuando procede de una Misión de Repaso Académico, enlazarla como evidencia de esa Misión.
+
+**Vista previa**
+
+Permite consultar o probar el recurso sin alterar el historial educativo.
+
+Regla obligatoria:
+
+> **Vista previa no guarda sesión académica, evidencia, progreso ni cambio de estado de la Misión.**
+
+La revisión histórica de un resultado es también una operación de **solo lectura**. Debe consultar la sesión ya existente y no crear, reemplazar ni modificar sesiones, respuestas, evidencias o progreso.
+
+### 12.8 Estado de implementación validado
+
+A 29/08/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
+
+```text
+Tema Académico
+→ Prueba final
+→ sesión académica persistida
+→ evidencia `sesion_academica` cuando existe Misión
+→ Misión pendiente de revisión familiar
+→ Trabajo realizado
+→ Resultado académico histórico de solo lectura
+```
+
+La evidencia de Misión referencia la sesión mediante `sesionId`; no duplica dentro de la Misión todo el contenido de la ejecución.
+
+La persistencia puede existir también sin Misión cuando la actividad se realiza como aprendizaje libre.
 
 ---
 
@@ -875,6 +920,22 @@ refuerzo específico
 nueva oportunidad de aplicación
 ```
 
+### 14.2 Estado actual de propuestas desde pruebas
+
+La persistencia ya permite conservar resultados y mapa formativo de las pruebas académicas validadas.
+
+La **propuesta automática o asistida de nuevas Misiones de refuerzo a partir de esos resultados todavía está pendiente**. Cuando se implemente deberá reutilizar el ciclo común:
+
+```text
+Datos
+→ Observación
+→ Propuesta
+→ Revisión humana
+→ Misión
+```
+
+No se creará un sistema paralelo exclusivo para exámenes.
+
 ---
 
 ## 15. Motivación
@@ -940,7 +1001,7 @@ Tema Académico
 └── cierre
 ```
 
-La estructura definitiva de archivos o configuración se decidirá durante el piloto, evitando crear prematuramente un framework o JSON universal.
+La estructura definitiva de archivos o configuración evolucionará con los temas reales, evitando crear prematuramente un framework o JSON universal.
 
 ---
 
@@ -975,23 +1036,45 @@ La evidencia registra lo realizado.
 
 La familia revisa cuando el flujo lo requiera.
 
+### 17.1 Compatibilidad de Misiones existentes
+
+La incorporación de persistencia no obliga a recrear Misiones académicas existentes.
+
+Si una Misión previa apunta a un recurso que actualmente genera una sesión académica, una ejecución nueva puede vincularse al contrato vigente sin migrar el registro original de la Misión.
+
+Si la actividad fue realizada **antes** de que existiera persistencia, la Academia no inventará retrospectivamente una sesión que nunca se guardó. La Misión histórica sigue siendo válida; si se desea una nueva evaluación con datos persistidos, se creará una nueva Misión conservando la anterior como historial.
+
 ---
 
 ## 18. Experiencia familiar y Trabajo realizado
 
-Cuando exista evidencia académica, la familia debería poder comprender sin inspeccionar datos técnicos:
+Cuando exista evidencia académica, la familia debe poder comprender sin inspeccionar datos técnicos:
 
 - qué tema se trabajó;
 - qué actividad se realizó;
 - cuándo;
 - qué resultado produjo;
-- si necesitó ayudas;
 - qué oportunidades de refuerzo aparecieron;
-- y cómo abrir el detalle cuando exista.
+- y cómo abrir el detalle histórico.
 
 El lenguaje visible será funcional y cercano.
 
 El término técnico **evidencia** puede permanecer interno cuando una expresión como **Trabajo realizado** resulte más comprensible.
+
+### 18.1 Resultado académico histórico
+
+La implementación vigente permite abrir la sesión concreta referenciada por la evidencia y consultar, cuando el tema los registra:
+
+- correctas / total;
+- porcentaje de la prueba;
+- tiempo activo;
+- mapa formativo;
+- respuestas seleccionadas;
+- respuesta correcta;
+- explicación;
+- y otros datos útiles de la sesión.
+
+Este visor es histórico y de **solo lectura**. No reejecuta la prueba ni altera el registro original.
 
 ---
 
@@ -1087,6 +1170,8 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] Los datos pueden distinguir hechos de inferencias.
 - [ ] No existen métricas inventadas.
 - [ ] La relación con una Misión se conserva cuando corresponda.
+- [ ] Vista previa no crea sesión, evidencia, progreso ni cambio de estado.
+- [ ] La consulta histórica no modifica la sesión ni la evidencia original.
 - [ ] Las métricas visibles para el alumno aportan valor pedagógico y no convierten medidas técnicas en juicios de capacidad.
 
 ### Retroalimentación
@@ -1101,6 +1186,7 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 
 - [ ] Funciona con navegación estándar.
 - [ ] Respeta el origen y retorno contextual cuando corresponde.
+- [ ] Conserva Persona Activa durante la navegación interna cuando aplica.
 - [ ] Reutiliza componentes/servicios existentes antes de crear otros.
 
 ---
@@ -1132,13 +1218,17 @@ El objetivo es reducir interacciones administrativas, no reducir la calidad del 
 
 No se realizará una migración masiva de 5.º únicamente para cumplir este estándar.
 
-Las páginas existentes continuarán funcionando.
+Las páginas existentes continuarán funcionando y **pueden seguir utilizándose como recursos de Misiones de Repaso Académico aunque no generen `sesionesAcademicas` ni evidencia académica estructurada**.
 
-Si un tema de 5.º vuelve a ser intervenido, podrán incorporarse progresivamente los principios que aporten valor.
+En esos recursos heredados puede mantenerse el cierre manual de la Misión cuando no existe integración automática de evidencia. La familia conserva la validación posterior según el contrato general de Misiones.
+
+Si un tema de 5.º vuelve a ser intervenido, podrán incorporarse progresivamente los principios y la persistencia que aporten valor. Esta modernización será selectiva, no una migración obligatoria del curso completo.
 
 ### 22.2 6.º de Primaria
 
 Los temas nuevos de 6.º aplicarán este estándar desde su nacimiento.
+
+Cuando un Tema Académico incluya una prueba final diseñada para producir datos útiles, deberá reutilizar el contrato compartido de sesión/evidencia en lugar de crear persistencia propia.
 
 ### 22.3 Cursos posteriores
 
@@ -1158,33 +1248,47 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-004 | La adaptación TEL mantiene el nivel académico y evita infantilización. | Aprobada conceptualmente |
 | CA-005 | El test debe ayudar a estudiar mediante feedback, no limitarse a puntuar. | Aprobada conceptualmente |
 | CA-006 | Completar una actividad no equivale a dominar un contenido. | Aprobada conceptualmente |
-| CA-007 | 6.º reutilizará la arquitectura genérica de sesiones/evidencias; no creará un sistema paralelo por asignatura. | Aprobada conceptualmente |
+| CA-007 | 6.º reutilizará la arquitectura genérica de sesiones/evidencias; no creará un sistema paralelo por asignatura. | Aprobada y validada |
 | CA-008 | Los datos se registran por utilidad educativa, no por disponibilidad técnica. | Aprobada conceptualmente |
 | CA-009 | La retroalimentación separará hechos, observaciones, inferencias prudentes y acciones. | Aprobada conceptualmente |
-| CA-010 | 5.º no se migrará masivamente; sus mejores experiencias sirven como referencia para 6.º. | Aprobada conceptualmente |
+| CA-010 | 5.º no se migrará masivamente; sus mejores experiencias sirven como referencia para 6.º. | Aprobada |
 | CA-011 | Aprender bien tiene prioridad sobre terminar rápido; la velocidad solo se medirá o puntuará cuando sea parte real y aprobada del objetivo. | Aprobada |
 | CA-012 | Se mantendrá la máxima expectativa curricular razonable con el mínimo apoyo suficiente y presión emocional regulada. | Aprobada |
 | CA-013 | El reto precederá al apoyo progresivo, sin intervenir automáticamente ante el error y ajustando cuando los intentos dejen de aportar aprendizaje. | Aprobada |
 | CA-014 | La comprensión lingüística del enunciado se distinguirá de la resolución matemática. | Aprobada |
 | CA-015 | Las métricas internas no se mostrarán automáticamente al alumno; la interfaz priorizará información útil para aprender. | Aprobada |
 | CA-016 | Parar y continuar después es una estrategia válida, y la retroalimentación reconocerá el proceso además del resultado. | Aprobada |
+| CA-017 | `sesion-academica-v1` es el contrato compartido vigente para la persistencia académica validada; la evidencia de Misión referencia la sesión y no duplica su contenido. | Aprobada y validada |
+| CA-018 | Vista previa y revisión histórica son modos sin escritura sobre sesión, evidencia o progreso. | Aprobada y validada |
+| CA-019 | Las Misiones existentes no se recrean por incorporar persistencia; una ejecución futura puede usar el contrato vigente y no se inventan sesiones retrospectivas. | Aprobada y validada |
+| CA-020 | Los recursos heredados de 5.º pueden seguir asignándose como Misiones aunque no produzcan evidencia académica automática. | Aprobada |
 
 ---
 
-## 24. Trabajo pendiente antes de declarar implementación
+## 24. Estado de implementación y trabajo pendiente
 
-Este estándar define la solución de producto y las condiciones de calidad.
+### Implementado y validado
 
-Todavía queda por construir y validar:
+A 29/08/2026 están construidos y probados:
 
-1. un Tema Académico piloto;
-2. el contrato técnico de `sesionAcademica` o equivalente;
-3. la persistencia mínima necesaria;
-4. la evidencia académica ligada a Misión;
-5. la revisión familiar del resultado;
-6. y la primera retroalimentación derivada de datos reales.
+1. Temas Académicos de referencia: Puente y Fracciones.
+2. Contrato compartido `sesion-academica-v1`.
+3. Persistencia de pruebas académicas en sesión.
+4. Evidencia `sesion_academica` ligada a Misión cuando corresponde.
+5. Cambio automático de la Misión a revisión familiar tras una prueba válida.
+6. Trabajo realizado con acceso al resultado académico histórico.
+7. Vista previa sin persistencia.
+8. Resultado histórico de solo lectura.
+9. Compatibilidad con Misiones académicas creadas antes de esta persistencia.
+10. Reglas de acceso a `sesionesAcademicas` desplegadas y validadas para Persona Activa relacionada.
 
-Nada de lo anterior debe declararse implementado hasta existir en código y haber sido probado.
+### Pendiente de evolución
+
+1. Proponer acciones de refuerzo a partir de resultados académicos persistidos.
+2. Permitir que esas propuestas preparen o creen Misiones bajo revisión humana, reutilizando el modelo común de Misiones.
+3. Extender progresivamente el patrón a los nuevos temas y materias de 6.º cuando corresponda.
+
+La existencia de persistencia no obliga a modernizar de forma masiva los recursos de 5.º.
 
 ---
 
@@ -1196,6 +1300,6 @@ Nada de lo anterior debe declararse implementado hasta existir en código y habe
 | **Primera aplicación** | 6.º de Primaria. |
 | **Reutilización** | Aprovechar patrones validados de 5.º y la arquitectura existente de Motores, Misiones y Evidencias. |
 | **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
-| **Persistencia** | Registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
+| **Persistencia** | `sesion-academica-v1`: registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
 | **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
-| **Estado** | Activo; estándar aprobado que no implica todavía implementación técnica. |
+| **Estado** | Activo; implementación base validada con Puente y Fracciones y expansión progresiva hacia nuevos temas de 6.º. |
