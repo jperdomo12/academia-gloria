@@ -1,1 +1,1039 @@
-{"version":"1.5","modulo":"creciendo-por-dentro","familias":[{"id":"comunicacion","nombre":"Comunicación","icono":"💬"},{"id":"emociones","nombre":"Emociones","icono":"💜"},{"id":"autoestima","nombre":"Autoestima","icono":"✨"},{"id":"relaciones","nombre":"Relaciones","icono":"🤝"}],"semillas":[{"id":"aprendo-a-decir-lo-que-siento","titulo":"Aprendo a decir lo que siento","subtitulo":"Organizo mis ideas y hablo con claridad y respeto.","familia":"comunicacion","tipoSituacion":"colegio","emociones":["enfado","confusion","nervios","tristeza"],"nivelApoyo":2,"duracionEstimada":8,"activo":true,"recomendada":true,"portada":{"icono":"🌱","ilustracion":"✏️","fondo":"menta"},"bienvenida":{"titulo":"Hoy practicaremos cómo decir lo que sentimos","mensaje":"A veces algo nos molesta y sabemos lo que queremos decir, pero las palabras no salen enseguida. Lo pensaremos paso a paso.","lia":"No hay respuestas perfectas. Puedes tomarte tu tiempo y yo estaré contigo."},"situacion":{"titulo":"El lápiz","texto":"Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso.","ilustracion":"🧒🏽 ✏️ 🧒🏻","audioTexto":"Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso."},"pasos":[{"id":"describir","orden":1,"titulo":"¿Qué ocurrió?","ayuda":"Primero contamos solamente lo que pasó, como si fuéramos reporteras.","tipo":"opcion-unica","opciones":[{"id":"d1","texto":"Mi compañero cogió mi lápiz sin preguntarme.","recomendada":true},{"id":"d2","texto":"Mi compañero es malo.","recomendada":false},{"id":"d3","texto":"Todo salió fatal.","recomendada":false}],"otraRespuesta":true,"liaSiNecesitaApoyo":"Esa frase cuenta lo que piensas. ¿Buscamos también una frase que diga exactamente qué ocurrió?"},{"id":"expresar","orden":2,"titulo":"¿Cómo podrías sentirte?","ayuda":"Podemos sentir más de una emoción al mismo tiempo.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"enfadada","texto":"Enfadada","icono":"😠"},{"id":"confundida","texto":"Confundida","icono":"😕"},{"id":"nerviosa","texto":"Nerviosa","icono":"😟"},{"id":"triste","texto":"Triste","icono":"😢"},{"id":"no-segura","texto":"No estoy segura","icono":"🤔"}],"otraRespuesta":true},{"id":"solicitar","orden":3,"titulo":"¿Qué te gustaría pedir?","ayuda":"Una petición clara ayuda a la otra persona a comprender lo que necesitas.","tipo":"opcion-unica","opciones":[{"id":"s1","texto":"Que me devuelva el lápiz."},{"id":"s2","texto":"Que me pregunte antes de cogerlo."},{"id":"s3","texto":"Que espere a que termine."}],"otraRespuesta":true},{"id":"consecuencia","orden":4,"titulo":"¿Qué podría mejorar?","ayuda":"No podemos asegurar el resultado, pero sí explicar qué esperamos que ocurra.","tipo":"opcion-unica","opciones":[{"id":"c1","texto":"Podremos seguir trabajando tranquilos."},{"id":"c2","texto":"Nos entenderemos mejor."},{"id":"c3","texto":"Podrá saber qué necesito."}],"otraRespuesta":true}],"plantillaRespuesta":"Cuando {describir}, me siento {expresar}. Me gustaría {solicitar}. Así {consecuencia}.","desc":{"mostrarAAlumno":false,"nombre":"DESC","pasos":{"D":"Describir","E":"Expresar","S":"Solicitar o sugerir","C":"Consecuencia"}},"cierre":{"titulo":"Has plantado una Semilla","mensaje":"Has organizado lo que ocurrió, cómo te sentiste, qué querías pedir y qué podía mejorar.","lia":"No siempre es fácil decir lo que sentimos. Hoy lo has practicado con claridad y respeto.","frase":"Mi voz merece ser escuchada.","crecimiento":"brote"},"recursos":{"imagen":"semilla-001-lapiz.png"}},{"id":"nombro-lo-que-siento","titulo":"Nombro lo que siento","subtitulo":"Reconozco mis emociones y descubro qué pueden estar diciéndome.","familia":"emociones","tipoSituacion":"casa","emociones":["frustracion","tristeza","enfado","preocupacion"],"nivelApoyo":2,"duracionEstimada":7,"activo":true,"recomendada":false,"portada":{"icono":"💜","ilustracion":"😕","fondo":"lavanda"},"recursos":{"imagen":"semilla-002-nombro-lo-que-siento.png"},"bienvenida":{"titulo":"Hoy aprenderemos a reconocer lo que sentimos","mensaje":"Las emociones son mensajes importantes. Cuando las escuchamos, podemos comprender mejor qué necesitamos.","lia":"No tienes que encontrar una palabra perfecta. Vamos a descubrirla poco a poco."},"situacion":{"titulo":"Algo no me sale","texto":"Estás haciendo una actividad en casa. Lo intentas varias veces, pero no te sale como esperabas.","ilustracion":"📘 😕 ✏️","audioTexto":"Estás haciendo una actividad en casa. Lo intentas varias veces, pero no te sale como esperabas."},"pasos":[{"id":"notar","orden":1,"titulo":"¿Qué notas en ti?","ayuda":"El cuerpo muchas veces nos ayuda a descubrir cómo nos sentimos.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"n1","texto":"Tengo tensión o aprieto las manos.","icono":"✊"},{"id":"n2","texto":"Siento un nudo en la barriga.","icono":"🌀"},{"id":"n3","texto":"Me dan ganas de llorar.","icono":"😢"},{"id":"n4","texto":"Quiero dejarlo enseguida.","icono":"🛑"},{"id":"n5","texto":"No estoy segura de lo que noto.","icono":"🤔"}],"otraRespuesta":true},{"id":"nombrar","orden":2,"titulo":"¿Qué emoción podría ser?","ayuda":"Podemos sentir varias emociones al mismo tiempo.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"e1","texto":"Frustración","icono":"😣"},{"id":"e2","texto":"Tristeza","icono":"😢"},{"id":"e3","texto":"Enfado","icono":"😠"},{"id":"e4","texto":"Preocupación","icono":"😟"},{"id":"e5","texto":"No estoy segura todavía","icono":"🤔"}],"otraRespuesta":true},{"id":"mensaje","orden":3,"titulo":"¿Qué podría estar diciéndote esa emoción?","ayuda":"Una emoción puede avisarnos de que algo nos cuesta o de que necesitamos apoyo.","tipo":"opcion-unica","opciones":[{"id":"m1","texto":"Necesito hacer una pausa pequeña."},{"id":"m2","texto":"Necesito que alguien me explique otra vez."},{"id":"m3","texto":"Esto me importa y quiero seguir intentándolo."},{"id":"m4","texto":"Necesito ir más despacio."}],"otraRespuesta":true},{"id":"cuidarme","orden":4,"titulo":"¿Qué podría ayudarte ahora?","ayuda":"Elegir una acción pequeña puede ayudarnos a cuidar lo que sentimos.","tipo":"opcion-unica","opciones":[{"id":"a1","texto":"Respirar y volver a intentarlo con calma."},{"id":"a2","texto":"Pedir ayuda con una frase clara."},{"id":"a3","texto":"Descansar unos minutos y regresar."},{"id":"a4","texto":"Dividir la actividad en pasos pequeños."}],"otraRespuesta":true}],"plantillaRespuesta":"Noto {notar}. Creo que puedo sentir {nombrar}. Esta emoción quizá me dice que {mensaje}. Para cuidarme, puedo {cuidarme}.","cierre":{"titulo":"Has escuchado una emoción","mensaje":"Has observado lo que ocurre en tu cuerpo, has buscado un nombre y has elegido una forma de cuidarte.","lia":"Todas las emociones merecen ser escuchadas. Conocerlas nos ayuda a tratarnos mejor.","frase":"Puedo escuchar lo que siento.","crecimiento":"brote"}},{"id":"yo-si-puedo","titulo":"Yo sí puedo","subtitulo":"Reconozco mis fortalezas y valoro cada pequeño avance.","familia":"autoestima","tipoSituacion":"personal","emociones":["inseguridad","orgullo","confianza","alegria"],"nivelApoyo":2,"duracionEstimada":7,"activo":true,"recomendada":false,"portada":{"icono":"⭐","ilustracion":"🪞","fondo":"sol"},"recursos":{"imagen":"semilla-003-yo-si-puedo.png"},"bienvenida":{"titulo":"Hoy descubriremos algunas de nuestras fortalezas","mensaje":"Todos tenemos habilidades que crecen con la práctica. Reconocer nuestros avances nos ayuda a confiar más en nosotros.","lia":"No necesitas hacerlo todo perfecto. Cada pequeño paso también cuenta."},"situacion":{"titulo":"Mi trabajo también vale","texto":"Has terminado un dibujo. Al mirar el de otra compañera, piensas que el suyo es mejor y empiezas a dudar del tuyo.","ilustracion":"🎨 🪞 ⭐","audioTexto":"Has terminado un dibujo. Al mirar el de otra compañera, piensas que el suyo es mejor y empiezas a dudar del tuyo."},"pasos":[{"id":"logro","orden":1,"titulo":"¿Qué has conseguido?","ayuda":"Antes de compararnos, podemos mirar todo lo que sí hicimos.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"l1","texto":"Terminé mi dibujo.","icono":"✅"},{"id":"l2","texto":"Elegí mis propios colores.","icono":"🎨"},{"id":"l3","texto":"Intenté algo que me costaba.","icono":"🌱"},{"id":"l4","texto":"Pedí ayuda cuando la necesité.","icono":"🤝"}],"otraRespuesta":true},{"id":"fortaleza","orden":2,"titulo":"¿Qué fortaleza utilizaste?","ayuda":"Una fortaleza es algo bueno que ponemos en práctica.","tipo":"opcion-multiple","maximo":2,"opciones":[{"id":"f1","texto":"Creatividad","icono":"✨"},{"id":"f2","texto":"Paciencia","icono":"🧘"},{"id":"f3","texto":"Esfuerzo","icono":"💪"},{"id":"f4","texto":"Valentía para intentarlo","icono":"🌟"},{"id":"f5","texto":"Atención","icono":"👀"}],"otraRespuesta":true},{"id":"fraseAmable","orden":3,"titulo":"¿Qué podrías decirte con cariño?","ayuda":"Podemos hablarnos como hablaríamos a una buena amiga.","tipo":"opcion-unica","opciones":[{"id":"p1","texto":"Mi dibujo no tiene que ser igual al de nadie."},{"id":"p2","texto":"Estoy aprendiendo y puedo seguir mejorando."},{"id":"p3","texto":"Mi esfuerzo también tiene valor."},{"id":"p4","texto":"Hay cosas de mi dibujo que me gustan."}],"otraRespuesta":true},{"id":"siguientePaso","orden":4,"titulo":"¿Qué pequeño paso quieres dar ahora?","ayuda":"Crecer no significa hacerlo perfecto, sino seguir avanzando.","tipo":"opcion-unica","opciones":[{"id":"s1","texto":"Elegir una parte de mi dibujo que me guste."},{"id":"s2","texto":"Practicar una cosa concreta otro día."},{"id":"s3","texto":"Enseñarlo y explicar qué quise crear."},{"id":"s4","texto":"Guardar el dibujo para ver mi progreso después."}],"otraRespuesta":true}],"plantillaRespuesta":"He conseguido {logro}. Usé {fortaleza}. Puedo decirme: {fraseAmable}. Mi siguiente pequeño paso será {siguientePaso}.","cierre":{"titulo":"Has reconocido algo valioso en ti","mensaje":"Has mirado tus logros, tus fortalezas y una manera amable de seguir creciendo.","lia":"Compararte menos y conocerte más puede ayudarte a confiar en tu propio camino.","frase":"Mi esfuerzo y mis avances tienen valor.","crecimiento":"brote"}},{"id":"algo-que-consegui-esta-semana","titulo":"Algo que conseguí esta semana","subtitulo":"Miro una experiencia real y reconozco cómo avancé.","familia":"autoestima","tipoSituacion":"personal","emociones":["orgullo","alegria","confianza","alivio"],"nivelApoyo":2,"duracionEstimada":7,"activo":true,"recomendada":false,"portada":{"icono":"🌟","ilustracion":"🏅","fondo":"sol"},"bienvenida":{"titulo":"Hoy vamos a guardar algo que conseguiste","mensaje":"A veces conseguimos cosas importantes y seguimos adelante sin detenernos a mirarlas. Hoy vamos a recordar una experiencia real de esta semana y descubrir qué hiciste tú para avanzar.","lia":"No tiene que ser algo enorme. Un pequeño paso también puede ser un logro."},"situacion":{"titulo":"Una experiencia de mi semana","texto":"Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha.","ilustracion":"🌟 🧒🏽 🏅","audioTexto":"Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha."},"pasos":[{"id":"experiencia","orden":1,"titulo":"¿Qué conseguiste?","ayuda":"Puedes elegir una idea parecida o contarlo con tus propias palabras.","tipo":"opcion-unica","opciones":[{"id":"ex1","texto":"Terminé algo que me costaba.","icono":"✅"},{"id":"ex2","texto":"Me animé a hacer algo por mí misma.","icono":"🌟"},{"id":"ex3","texto":"Pedí ayuda y después pude continuar.","icono":"🤝"},{"id":"ex4","texto":"Encontré una manera de resolver algo que me preocupaba.","icono":"💡"}],"otraRespuesta":true},{"id":"sentimiento","orden":2,"titulo":"¿Cómo te sentiste cuando lo conseguiste?","ayuda":"Puedes sentir más de una cosa al mismo tiempo.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"se1","texto":"Orgullosa","icono":"🌟"},{"id":"se2","texto":"Contenta","icono":"😊"},{"id":"se3","texto":"Aliviada","icono":"😌"},{"id":"se4","texto":"Con más confianza","icono":"💛"},{"id":"se5","texto":"Un poco sorprendida de mí misma","icono":"✨"}],"otraRespuesta":true},{"id":"comoLoHice","orden":3,"titulo":"¿Qué hiciste para avanzar?","ayuda":"Los logros también nos enseñan qué estrategias nos ayudan.","tipo":"opcion-multiple","maximo":3,"opciones":[{"id":"ch1","texto":"Lo intenté más de una vez.","icono":"🔁"},{"id":"ch2","texto":"Fui paso a paso.","icono":"👣"},{"id":"ch3","texto":"Pedí ayuda cuando la necesité.","icono":"🤝"},{"id":"ch4","texto":"Me calmé y seguí intentándolo.","icono":"🌿"},{"id":"ch5","texto":"Busqué otra manera de hacerlo.","icono":"💡"}],"otraRespuesta":true},{"id":"reconozco","orden":4,"titulo":"¿Qué puedes reconocer de ti?","ayuda":"Reconocer algo bueno de ti no es presumir. Es aprender a valorar tus propios avances.","tipo":"opcion-multiple","maximo":2,"opciones":[{"id":"r1","texto":"No me rendí.","icono":"💪"},{"id":"r2","texto":"Fui valiente para intentarlo.","icono":"🌟"},{"id":"r3","texto":"Tuve paciencia.","icono":"🌿"},{"id":"r4","texto":"Supe pedir ayuda.","icono":"🤝"},{"id":"r5","texto":"Confié un poco más en mí.","icono":"💛"},{"id":"r6","texto":"Encontré mi propia manera de hacerlo.","icono":"✨"}],"otraRespuesta":true}],"plantillaRespuesta":"Esta semana conseguí {experiencia}. Me sentí {sentimiento}. Para avanzar, {comoLoHice}. Hoy reconozco de mí que {reconozco}.","cierre":{"titulo":"Has guardado un logro de tu semana","mensaje":"Has mirado una experiencia real, cómo te sentiste, qué hiciste para avanzar y algo valioso que puedes reconocer de ti.","lia":"Tus avances no tienen que ser enormes para importar. Mirarlos te ayuda a conocer todo lo que ya eres capaz de hacer.","frase":"Puedo reconocer mis avances y aprender de ellos.","crecimiento":"brote"}},{"id":"lo-que-descubri-de-mi","titulo":"Lo que descubrí de mí","subtitulo":"Miro una experiencia real y descubro algo nuevo sobre mí.","familia":"autoestima","tipoSituacion":"personal","emociones":["curiosidad","orgullo","confianza","alegria"],"nivelApoyo":2,"duracionEstimada":7,"activo":true,"recomendada":false,"portada":{"icono":"🔎","ilustracion":"🌟","fondo":"lavanda"},"bienvenida":{"titulo":"Hoy vamos a mirar un poco más adentro","mensaje":"Ya has pensado en algo que conseguiste. Ahora vamos a usar una experiencia real para descubrir qué aprendiste sobre ti.","lia":"No hay una respuesta correcta. Puedes elegir una idea parecida o decirlo con tus propias palabras."},"situacion":{"titulo":"Miro lo que aprendí","texto":"Recuerda un logro reciente, quizá el que guardaste en “Algo que conseguí esta semana”. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti.","ilustracion":"🔎 💜 🌱","audioTexto":"Recuerda un logro reciente, quizá el que guardaste en Algo que conseguí esta semana. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti."},"pasos":[{"id":"recordar","orden":1,"titulo":"¿Qué experiencia quieres recordar?","ayuda":"Solo necesitamos una idea breve para saber de qué logro hablamos.","tipo":"opcion-unica","opciones":[{"id":"re1","texto":"Algo que logré por mí misma.","icono":"🌟"},{"id":"re2","texto":"Algo que logré después de practicar.","icono":"🔁"},{"id":"re3","texto":"Algo que logré con ayuda.","icono":"🤝"},{"id":"re4","texto":"Algo que pensé que me costaría más.","icono":"💡"}],"otraRespuesta":true},{"id":"aprendi","orden":2,"titulo":"¿Qué aprendiste de ti?","ayuda":"Una experiencia puede mostrarnos capacidades que a veces no vemos enseguida.","tipo":"opcion-multiple","maximo":2,"opciones":[{"id":"ap1","texto":"Que puedo seguir aunque algo me cueste.","icono":"💪"},{"id":"ap2","texto":"Que puedo pedir ayuda y después continuar.","icono":"🤝"},{"id":"ap3","texto":"Que puedo aprender paso a paso.","icono":"👣"},{"id":"ap4","texto":"Que puedo encontrar mi propia manera.","icono":"✨"},{"id":"ap5","texto":"Que soy capaz de más cosas de las que a veces pienso.","icono":"🌟"}],"otraRespuesta":true},{"id":"sorpresa","orden":3,"titulo":"¿Qué te sorprendió de ti?","ayuda":"A veces descubrimos algo bueno de nosotros que no esperábamos.","tipo":"opcion-multiple","maximo":2,"opciones":[{"id":"so1","texto":"Tuve más paciencia de la que pensaba.","icono":"🌿"},{"id":"so2","texto":"Me atreví aunque tenía dudas.","icono":"🌟"},{"id":"so3","texto":"Pude explicarme mejor de lo que esperaba.","icono":"💬"},{"id":"so4","texto":"Seguí intentándolo sin rendirme.","icono":"💪"},{"id":"so5","texto":"Me sentí más segura cuando terminé.","icono":"💛"}],"otraRespuesta":true},{"id":"seguir","orden":4,"titulo":"¿Qué quieres seguir practicando?","ayuda":"Elegir una cosa pequeña ayuda a convertir un logro en aprendizaje.","tipo":"opcion-unica","opciones":[{"id":"sg1","texto":"Intentarlo antes de pensar que no puedo.","icono":"🌱"},{"id":"sg2","texto":"Pedir ayuda con una frase clara.","icono":"🤝"},{"id":"sg3","texto":"Ir paso a paso cuando algo me cuesta.","icono":"👣"},{"id":"sg4","texto":"Explicar con mis palabras lo que pienso o necesito.","icono":"💬"},{"id":"sg5","texto":"Reconocer algo que hice bien.","icono":"🌟"}],"otraRespuesta":true}],"plantillaRespuesta":"Quiero recordar {recordar}. Esta experiencia me enseñó {aprendi}. Me sorprendió {sorpresa}. Quiero seguir practicando {seguir}.","cierre":{"titulo":"Has descubierto algo nuevo de ti","mensaje":"Has usado una experiencia real para reconocer lo que aprendiste, qué te sorprendió y qué quieres seguir practicando.","lia":"Conocerte mejor te ayuda a confiar en tus recursos y a elegir cómo quieres seguir creciendo.","frase":"Puedo aprender de lo que vivo y seguir creciendo.","crecimiento":"brote"}},{"id":"nos-escuchamos-y-buscamos-un-acuerdo","titulo":"Nos escuchamos y buscamos un acuerdo","subtitulo":"Aprendo a escuchar, expresar lo que necesito y cuidar la amistad.","familia":"relaciones","tipoSituacion":"colegio","emociones":["ilusion","impaciencia","enfado","comprension"],"nivelApoyo":2,"duracionEstimada":8,"activo":true,"recomendada":false,"portada":{"icono":"🤝","ilustracion":"👧🏻 👧🏽","fondo":"cielo"},"recursos":{"imagen":"semilla-004-nos-escuchamos.png"},"bienvenida":{"titulo":"Hoy practicaremos cómo cuidarnos cuando queremos cosas diferentes","mensaje":"En una amistad no siempre queremos lo mismo al mismo tiempo. Escucharnos puede ayudarnos a encontrar una solución que tenga en cuenta a las dos personas.","lia":"Puedes decir lo que necesitas y también escuchar a la otra persona. Vamos a practicarlo paso a paso."},"situacion":{"titulo":"Las dos queremos jugar primero","texto":"En el recreo, tú y una amiga queréis usar el mismo juego primero. Las dos insistís y empezáis a molestaros.","ilustracion":"🎲 👧🏻 👧🏽","audioTexto":"En el recreo, tú y una amiga queréis usar el mismo juego primero. Las dos insistís y empezáis a molestaros."},"pasos":[{"id":"comprender","orden":1,"titulo":"¿Qué está ocurriendo?","ayuda":"Primero describimos el problema sin culpar a ninguna de las dos.","tipo":"opcion-unica","opciones":[{"id":"co1","texto":"Las dos queremos usar el mismo juego primero."},{"id":"co2","texto":"Mi amiga siempre quiere quitarme todo."},{"id":"co3","texto":"Ya no podemos ser amigas."}],"otraRespuesta":true,"liaSiNecesitaApoyo":"¿Podemos contar solamente qué quieren las dos, sin decidir todavía quién tiene la culpa?"},{"id":"perspectiva","orden":2,"titulo":"¿Qué podría estar sintiendo o queriendo tu amiga?","ayuda":"Comprender a otra persona no significa renunciar a lo que tú necesitas.","tipo":"opcion-multiple","maximo":2,"opciones":[{"id":"pe1","texto":"También tiene muchas ganas de jugar.","icono":"🎲"},{"id":"pe2","texto":"Puede estar impaciente.","icono":"⏳"},{"id":"pe3","texto":"Quizá piensa que no la estoy escuchando.","icono":"👂"},{"id":"pe4","texto":"No estoy segura de lo que siente.","icono":"🤔"}],"otraRespuesta":true},{"id":"hablar","orden":3,"titulo":"¿Qué podrías decir para que las dos os sintáis escuchadas?","ayuda":"Podemos hablar de lo que queremos y, al mismo tiempo, mostrar que hemos escuchado.","tipo":"opcion-unica","opciones":[{"id":"ha1","texto":"Yo también quiero jugar. ¿Me cuentas qué te gustaría hacer?"},{"id":"ha2","texto":"Entiendo que tú también quieres usarlo. Busquemos una solución."},{"id":"ha3","texto":"Me estoy molestando. Necesito que nos escuchemos."}],"otraRespuesta":true},{"id":"acuerdo","orden":4,"titulo":"¿Qué acuerdo podría cuidar a las dos?","ayuda":"Un buen acuerdo intenta respetar las necesidades de ambas personas.","tipo":"opcion-unica","opciones":[{"id":"ac1","texto":"Turnarnos durante el mismo tiempo."},{"id":"ac2","texto":"Jugar juntas si el juego lo permite."},{"id":"ac3","texto":"Elegir al azar quién empieza y cambiar después."},{"id":"ac4","texto":"Buscar otro juego mientras esperamos."}],"otraRespuesta":true}],"plantillaRespuesta":"Las dos queremos {comprender}. También puedo pensar que mi amiga {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos {acuerdo}.","cierre":{"titulo":"Has practicado cómo cuidar una relación","mensaje":"Has expresado lo que necesitas, has intentado comprender a la otra persona y has buscado un acuerdo que cuide a las dos.","lia":"Escuchar y llegar a acuerdos no significa que siempre pensemos igual. Significa que nuestra voz y la de la otra persona importan.","frase":"Puedo expresarme, escuchar y buscar acuerdos.","crecimiento":"brote"}}]}
+{
+  "version": "1.5",
+  "modulo": "creciendo-por-dentro",
+  "familias": [
+    {
+      "id": "comunicacion",
+      "nombre": "Comunicación",
+      "icono": "💬"
+    },
+    {
+      "id": "emociones",
+      "nombre": "Emociones",
+      "icono": "💜"
+    },
+    {
+      "id": "autoestima",
+      "nombre": "Autoestima",
+      "icono": "✨"
+    },
+    {
+      "id": "relaciones",
+      "nombre": "Relaciones",
+      "icono": "🤝"
+    }
+  ],
+  "semillas": [
+    {
+      "id": "aprendo-a-decir-lo-que-siento",
+      "titulo": "Aprendo a decir lo que siento",
+      "subtitulo": "Organizo mis ideas y hablo con claridad y respeto.",
+      "familia": "comunicacion",
+      "tipoSituacion": "colegio",
+      "emociones": [
+        "enfado",
+        "confusion",
+        "nervios",
+        "tristeza"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 8,
+      "activo": true,
+      "recomendada": true,
+      "portada": {
+        "icono": "🌱",
+        "ilustracion": "✏️",
+        "fondo": "menta"
+      },
+      "bienvenida": {
+        "titulo": "Hoy practicaremos cómo decir lo que sentimos",
+        "mensaje": "A veces algo nos molesta y sabemos lo que queremos decir, pero las palabras no salen enseguida. Lo pensaremos paso a paso.",
+        "lia": "No hay respuestas perfectas. Puedes tomarte tu tiempo y yo estaré contigo."
+      },
+      "situacion": {
+        "titulo": "El lápiz",
+        "texto": "Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso.",
+        "ilustracion": "🧒🏽 ✏️ 🧒🏻",
+        "audioTexto": "Estás trabajando en clase. Un compañero coge tu lápiz sin pedir permiso."
+      },
+      "pasos": [
+        {
+          "id": "describir",
+          "orden": 1,
+          "titulo": "¿Qué ocurrió?",
+          "ayuda": "Primero contamos solamente lo que pasó, como si fuéramos reporteras.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "d1",
+              "texto": "Mi compañero cogió mi lápiz sin preguntarme.",
+              "recomendada": true
+            },
+            {
+              "id": "d2",
+              "texto": "Mi compañero es malo.",
+              "recomendada": false
+            },
+            {
+              "id": "d3",
+              "texto": "Todo salió fatal.",
+              "recomendada": false
+            }
+          ],
+          "otraRespuesta": true,
+          "liaSiNecesitaApoyo": "Esa frase cuenta lo que piensas. ¿Buscamos también una frase que diga exactamente qué ocurrió?"
+        },
+        {
+          "id": "expresar",
+          "orden": 2,
+          "titulo": "¿Cómo podrías sentirte?",
+          "ayuda": "Podemos sentir más de una emoción al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "enfadada",
+              "texto": "Enfadada",
+              "icono": "😠"
+            },
+            {
+              "id": "confundida",
+              "texto": "Confundida",
+              "icono": "😕"
+            },
+            {
+              "id": "nerviosa",
+              "texto": "Nerviosa",
+              "icono": "😟"
+            },
+            {
+              "id": "triste",
+              "texto": "Triste",
+              "icono": "😢"
+            },
+            {
+              "id": "no-segura",
+              "texto": "No estoy segura",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "solicitar",
+          "orden": 3,
+          "titulo": "¿Qué te gustaría pedir?",
+          "ayuda": "Una petición clara ayuda a la otra persona a comprender lo que necesitas.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "s1",
+              "texto": "Que me devuelva el lápiz."
+            },
+            {
+              "id": "s2",
+              "texto": "Que me pregunte antes de cogerlo."
+            },
+            {
+              "id": "s3",
+              "texto": "Que espere a que termine."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "consecuencia",
+          "orden": 4,
+          "titulo": "¿Qué podría mejorar?",
+          "ayuda": "No podemos asegurar el resultado, pero sí explicar qué esperamos que ocurra.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "c1",
+              "texto": "Podremos seguir trabajando tranquilos."
+            },
+            {
+              "id": "c2",
+              "texto": "Nos entenderemos mejor."
+            },
+            {
+              "id": "c3",
+              "texto": "Podrá saber qué necesito."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Cuando {describir}, me siento {expresar}. Me gustaría {solicitar}. Así {consecuencia}.",
+      "desc": {
+        "mostrarAAlumno": false,
+        "nombre": "DESC",
+        "pasos": {
+          "D": "Describir",
+          "E": "Expresar",
+          "S": "Solicitar o sugerir",
+          "C": "Consecuencia"
+        }
+      },
+      "cierre": {
+        "titulo": "Has plantado una Semilla",
+        "mensaje": "Has organizado lo que ocurrió, cómo te sentiste, qué querías pedir y qué podía mejorar.",
+        "lia": "No siempre es fácil decir lo que sentimos. Hoy lo has practicado con claridad y respeto.",
+        "frase": "Mi voz merece ser escuchada.",
+        "crecimiento": "brote"
+      },
+      "recursos": {
+        "imagen": "semilla-001-lapiz.png"
+      }
+    },
+    {
+      "id": "nombro-lo-que-siento",
+      "titulo": "Nombro lo que siento",
+      "subtitulo": "Reconozco mis emociones y descubro qué pueden estar diciéndome.",
+      "familia": "emociones",
+      "tipoSituacion": "casa",
+      "emociones": [
+        "frustracion",
+        "tristeza",
+        "enfado",
+        "preocupacion"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "💜",
+        "ilustracion": "😕",
+        "fondo": "lavanda"
+      },
+      "recursos": {
+        "imagen": "semilla-002-nombro-lo-que-siento.png"
+      },
+      "bienvenida": {
+        "titulo": "Hoy aprenderemos a reconocer lo que sentimos",
+        "mensaje": "Las emociones son mensajes importantes. Cuando las escuchamos, podemos comprender mejor qué necesitamos.",
+        "lia": "No tienes que encontrar una palabra perfecta. Vamos a descubrirla poco a poco."
+      },
+      "situacion": {
+        "titulo": "Algo no me sale",
+        "texto": "Estás haciendo una actividad en casa. Lo intentas varias veces, pero no te sale como esperabas.",
+        "ilustracion": "📘 😕 ✏️",
+        "audioTexto": "Estás haciendo una actividad en casa. Lo intentas varias veces, pero no te sale como esperabas."
+      },
+      "pasos": [
+        {
+          "id": "notar",
+          "orden": 1,
+          "titulo": "¿Qué notas en ti?",
+          "ayuda": "El cuerpo muchas veces nos ayuda a descubrir cómo nos sentimos.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "n1",
+              "texto": "Tengo tensión o aprieto las manos.",
+              "icono": "✊"
+            },
+            {
+              "id": "n2",
+              "texto": "Siento un nudo en la barriga.",
+              "icono": "🌀"
+            },
+            {
+              "id": "n3",
+              "texto": "Me dan ganas de llorar.",
+              "icono": "😢"
+            },
+            {
+              "id": "n4",
+              "texto": "Quiero dejarlo enseguida.",
+              "icono": "🛑"
+            },
+            {
+              "id": "n5",
+              "texto": "No estoy segura de lo que noto.",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "nombrar",
+          "orden": 2,
+          "titulo": "¿Qué emoción podría ser?",
+          "ayuda": "Podemos sentir varias emociones al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "e1",
+              "texto": "Frustración",
+              "icono": "😣"
+            },
+            {
+              "id": "e2",
+              "texto": "Tristeza",
+              "icono": "😢"
+            },
+            {
+              "id": "e3",
+              "texto": "Enfado",
+              "icono": "😠"
+            },
+            {
+              "id": "e4",
+              "texto": "Preocupación",
+              "icono": "😟"
+            },
+            {
+              "id": "e5",
+              "texto": "No estoy segura todavía",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "mensaje",
+          "orden": 3,
+          "titulo": "¿Qué podría estar diciéndote esa emoción?",
+          "ayuda": "Una emoción puede avisarnos de que algo nos cuesta o de que necesitamos apoyo.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "m1",
+              "texto": "Necesito hacer una pausa pequeña."
+            },
+            {
+              "id": "m2",
+              "texto": "Necesito que alguien me explique otra vez."
+            },
+            {
+              "id": "m3",
+              "texto": "Esto me importa y quiero seguir intentándolo."
+            },
+            {
+              "id": "m4",
+              "texto": "Necesito ir más despacio."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "cuidarme",
+          "orden": 4,
+          "titulo": "¿Qué podría ayudarte ahora?",
+          "ayuda": "Elegir una acción pequeña puede ayudarnos a cuidar lo que sentimos.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "a1",
+              "texto": "Respirar y volver a intentarlo con calma."
+            },
+            {
+              "id": "a2",
+              "texto": "Pedir ayuda con una frase clara."
+            },
+            {
+              "id": "a3",
+              "texto": "Descansar unos minutos y regresar."
+            },
+            {
+              "id": "a4",
+              "texto": "Dividir la actividad en pasos pequeños."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Noto {notar}. Creo que puedo sentir {nombrar}. Esta emoción quizá me dice que {mensaje}. Para cuidarme, puedo {cuidarme}.",
+      "cierre": {
+        "titulo": "Has escuchado una emoción",
+        "mensaje": "Has observado lo que ocurre en tu cuerpo, has buscado un nombre y has elegido una forma de cuidarte.",
+        "lia": "Todas las emociones merecen ser escuchadas. Conocerlas nos ayuda a tratarnos mejor.",
+        "frase": "Puedo escuchar lo que siento.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "yo-si-puedo",
+      "titulo": "Yo sí puedo",
+      "subtitulo": "Reconozco mis fortalezas y valoro cada pequeño avance.",
+      "familia": "autoestima",
+      "tipoSituacion": "personal",
+      "emociones": [
+        "inseguridad",
+        "orgullo",
+        "confianza",
+        "alegria"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "⭐",
+        "ilustracion": "🪞",
+        "fondo": "sol"
+      },
+      "recursos": {
+        "imagen": "semilla-003-yo-si-puedo.png"
+      },
+      "bienvenida": {
+        "titulo": "Hoy descubriremos algunas de nuestras fortalezas",
+        "mensaje": "Todos tenemos habilidades que crecen con la práctica. Reconocer nuestros avances nos ayuda a confiar más en nosotros.",
+        "lia": "No necesitas hacerlo todo perfecto. Cada pequeño paso también cuenta."
+      },
+      "situacion": {
+        "titulo": "Mi trabajo también vale",
+        "texto": "Has terminado un dibujo. Al mirar el de otra compañera, piensas que el suyo es mejor y empiezas a dudar del tuyo.",
+        "ilustracion": "🎨 🪞 ⭐",
+        "audioTexto": "Has terminado un dibujo. Al mirar el de otra compañera, piensas que el suyo es mejor y empiezas a dudar del tuyo."
+      },
+      "pasos": [
+        {
+          "id": "logro",
+          "orden": 1,
+          "titulo": "¿Qué has conseguido?",
+          "ayuda": "Antes de compararnos, podemos mirar todo lo que sí hicimos.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "l1",
+              "texto": "Terminé mi dibujo.",
+              "icono": "✅"
+            },
+            {
+              "id": "l2",
+              "texto": "Elegí mis propios colores.",
+              "icono": "🎨"
+            },
+            {
+              "id": "l3",
+              "texto": "Intenté algo que me costaba.",
+              "icono": "🌱"
+            },
+            {
+              "id": "l4",
+              "texto": "Pedí ayuda cuando la necesité.",
+              "icono": "🤝"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "fortaleza",
+          "orden": 2,
+          "titulo": "¿Qué fortaleza utilizaste?",
+          "ayuda": "Una fortaleza es algo bueno que ponemos en práctica.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "f1",
+              "texto": "Creatividad",
+              "icono": "✨"
+            },
+            {
+              "id": "f2",
+              "texto": "Paciencia",
+              "icono": "🧘"
+            },
+            {
+              "id": "f3",
+              "texto": "Esfuerzo",
+              "icono": "💪"
+            },
+            {
+              "id": "f4",
+              "texto": "Valentía para intentarlo",
+              "icono": "🌟"
+            },
+            {
+              "id": "f5",
+              "texto": "Atención",
+              "icono": "👀"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "fraseAmable",
+          "orden": 3,
+          "titulo": "¿Qué podrías decirte con cariño?",
+          "ayuda": "Podemos hablarnos como hablaríamos a una buena amiga.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "p1",
+              "texto": "Mi dibujo no tiene que ser igual al de nadie."
+            },
+            {
+              "id": "p2",
+              "texto": "Estoy aprendiendo y puedo seguir mejorando."
+            },
+            {
+              "id": "p3",
+              "texto": "Mi esfuerzo también tiene valor."
+            },
+            {
+              "id": "p4",
+              "texto": "Hay cosas de mi dibujo que me gustan."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "siguientePaso",
+          "orden": 4,
+          "titulo": "¿Qué pequeño paso quieres dar ahora?",
+          "ayuda": "Crecer no significa hacerlo perfecto, sino seguir avanzando.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "s1",
+              "texto": "Elegir una parte de mi dibujo que me guste."
+            },
+            {
+              "id": "s2",
+              "texto": "Practicar una cosa concreta otro día."
+            },
+            {
+              "id": "s3",
+              "texto": "Enseñarlo y explicar qué quise crear."
+            },
+            {
+              "id": "s4",
+              "texto": "Guardar el dibujo para ver mi progreso después."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "He conseguido {logro}. Usé {fortaleza}. Puedo decirme: {fraseAmable}. Mi siguiente pequeño paso será {siguientePaso}.",
+      "cierre": {
+        "titulo": "Has reconocido algo valioso en ti",
+        "mensaje": "Has mirado tus logros, tus fortalezas y una manera amable de seguir creciendo.",
+        "lia": "Compararte menos y conocerte más puede ayudarte a confiar en tu propio camino.",
+        "frase": "Mi esfuerzo y mis avances tienen valor.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "algo-que-consegui-esta-semana",
+      "titulo": "Algo que conseguí esta semana",
+      "subtitulo": "Miro una experiencia real y reconozco cómo avancé.",
+      "familia": "autoestima",
+      "tipoSituacion": "personal",
+      "emociones": [
+        "orgullo",
+        "alegria",
+        "confianza",
+        "alivio"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🌟",
+        "ilustracion": "🏅",
+        "fondo": "sol"
+      },
+      "bienvenida": {
+        "titulo": "Hoy vamos a guardar algo que conseguiste",
+        "mensaje": "A veces conseguimos cosas importantes y seguimos adelante sin detenernos a mirarlas. Hoy vamos a recordar una experiencia real de esta semana y descubrir qué hiciste tú para avanzar.",
+        "lia": "No tiene que ser algo enorme. Un pequeño paso también puede ser un logro."
+      },
+      "situacion": {
+        "titulo": "Una experiencia de mi semana",
+        "texto": "Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha.",
+        "ilustracion": "🌟 🧒🏽 🏅",
+        "audioTexto": "Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha."
+      },
+      "pasos": [
+        {
+          "id": "experiencia",
+          "orden": 1,
+          "titulo": "¿Qué conseguiste?",
+          "ayuda": "Puedes elegir una idea parecida o contarlo con tus propias palabras.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "ex1",
+              "texto": "Terminé algo que me costaba.",
+              "icono": "✅"
+            },
+            {
+              "id": "ex2",
+              "texto": "Me animé a hacer algo por mí misma.",
+              "icono": "🌟"
+            },
+            {
+              "id": "ex3",
+              "texto": "Pedí ayuda y después pude continuar.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ex4",
+              "texto": "Encontré una manera de resolver algo que me preocupaba.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "sentimiento",
+          "orden": 2,
+          "titulo": "¿Cómo te sentiste cuando lo conseguiste?",
+          "ayuda": "Puedes sentir más de una cosa al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "se1",
+              "texto": "Orgullosa",
+              "icono": "🌟"
+            },
+            {
+              "id": "se2",
+              "texto": "Contenta",
+              "icono": "😊"
+            },
+            {
+              "id": "se3",
+              "texto": "Aliviada",
+              "icono": "😌"
+            },
+            {
+              "id": "se4",
+              "texto": "Con más confianza",
+              "icono": "💛"
+            },
+            {
+              "id": "se5",
+              "texto": "Un poco sorprendida de mí misma",
+              "icono": "✨"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "comoLoHice",
+          "orden": 3,
+          "titulo": "¿Qué hiciste para avanzar?",
+          "ayuda": "Los logros también nos enseñan qué estrategias nos ayudan.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "ch1",
+              "texto": "Lo intenté más de una vez.",
+              "icono": "🔁"
+            },
+            {
+              "id": "ch2",
+              "texto": "Fui paso a paso.",
+              "icono": "👣"
+            },
+            {
+              "id": "ch3",
+              "texto": "Pedí ayuda cuando la necesité.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ch4",
+              "texto": "Me calmé y seguí intentándolo.",
+              "icono": "🌿"
+            },
+            {
+              "id": "ch5",
+              "texto": "Busqué otra manera de hacerlo.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "reconozco",
+          "orden": 4,
+          "titulo": "¿Qué puedes reconocer de ti?",
+          "ayuda": "Reconocer algo bueno de ti no es presumir. Es aprender a valorar tus propios avances.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "r1",
+              "texto": "No me rendí.",
+              "icono": "💪"
+            },
+            {
+              "id": "r2",
+              "texto": "Fui valiente para intentarlo.",
+              "icono": "🌟"
+            },
+            {
+              "id": "r3",
+              "texto": "Tuve paciencia.",
+              "icono": "🌿"
+            },
+            {
+              "id": "r4",
+              "texto": "Supe pedir ayuda.",
+              "icono": "🤝"
+            },
+            {
+              "id": "r5",
+              "texto": "Confié un poco más en mí.",
+              "icono": "💛"
+            },
+            {
+              "id": "r6",
+              "texto": "Encontré mi propia manera de hacerlo.",
+              "icono": "✨"
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Esta semana conseguí {experiencia}. Me sentí {sentimiento}. Para avanzar, {comoLoHice}. Hoy reconozco de mí que {reconozco}.",
+      "cierre": {
+        "titulo": "Has guardado un logro de tu semana",
+        "mensaje": "Has mirado una experiencia real, cómo te sentiste, qué hiciste para avanzar y algo valioso que puedes reconocer de ti.",
+        "lia": "Tus avances no tienen que ser enormes para importar. Mirarlos te ayuda a conocer todo lo que ya eres capaz de hacer.",
+        "frase": "Puedo reconocer mis avances y aprender de ellos.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "lo-que-descubri-de-mi",
+      "titulo": "Lo que descubrí de mí",
+      "subtitulo": "Miro una experiencia real y descubro algo nuevo sobre mí.",
+      "familia": "autoestima",
+      "tipoSituacion": "personal",
+      "emociones": [
+        "curiosidad",
+        "orgullo",
+        "confianza",
+        "alegria"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🔎",
+        "ilustracion": "🌟",
+        "fondo": "lavanda"
+      },
+      "bienvenida": {
+        "titulo": "Hoy vamos a mirar un poco más adentro",
+        "mensaje": "Ya has pensado en algo que conseguiste. Ahora vamos a usar una experiencia real para descubrir qué aprendiste sobre ti.",
+        "lia": "No hay una respuesta correcta. Puedes elegir una idea parecida o decirlo con tus propias palabras."
+      },
+      "situacion": {
+        "titulo": "Miro lo que aprendí",
+        "texto": "Recuerda un logro reciente, quizá el que guardaste en “Algo que conseguí esta semana”. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti.",
+        "ilustracion": "🔎 💜 🌱",
+        "audioTexto": "Recuerda un logro reciente, quizá el que guardaste en Algo que conseguí esta semana. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti."
+      },
+      "pasos": [
+        {
+          "id": "recordar",
+          "orden": 1,
+          "titulo": "¿Qué experiencia quieres recordar?",
+          "ayuda": "Solo necesitamos una idea breve para saber de qué logro hablamos.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "re1",
+              "texto": "Algo que logré por mí misma.",
+              "icono": "🌟"
+            },
+            {
+              "id": "re2",
+              "texto": "Algo que logré después de practicar.",
+              "icono": "🔁"
+            },
+            {
+              "id": "re3",
+              "texto": "Algo que logré con ayuda.",
+              "icono": "🤝"
+            },
+            {
+              "id": "re4",
+              "texto": "Algo que pensé que me costaría más.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "aprendi",
+          "orden": 2,
+          "titulo": "¿Qué aprendiste de ti?",
+          "ayuda": "Una experiencia puede mostrarnos capacidades que a veces no vemos enseguida.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "ap1",
+              "texto": "Que puedo seguir aunque algo me cueste.",
+              "icono": "💪"
+            },
+            {
+              "id": "ap2",
+              "texto": "Que puedo pedir ayuda y después continuar.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ap3",
+              "texto": "Que puedo aprender paso a paso.",
+              "icono": "👣"
+            },
+            {
+              "id": "ap4",
+              "texto": "Que puedo encontrar mi propia manera.",
+              "icono": "✨"
+            },
+            {
+              "id": "ap5",
+              "texto": "Que soy capaz de más cosas de las que a veces pienso.",
+              "icono": "🌟"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "sorpresa",
+          "orden": 3,
+          "titulo": "¿Qué te sorprendió de ti?",
+          "ayuda": "A veces descubrimos algo bueno de nosotros que no esperábamos.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "so1",
+              "texto": "Tuve más paciencia de la que pensaba.",
+              "icono": "🌿"
+            },
+            {
+              "id": "so2",
+              "texto": "Me atreví aunque tenía dudas.",
+              "icono": "🌟"
+            },
+            {
+              "id": "so3",
+              "texto": "Pude explicarme mejor de lo que esperaba.",
+              "icono": "💬"
+            },
+            {
+              "id": "so4",
+              "texto": "Seguí intentándolo sin rendirme.",
+              "icono": "💪"
+            },
+            {
+              "id": "so5",
+              "texto": "Me sentí más segura cuando terminé.",
+              "icono": "💛"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "seguir",
+          "orden": 4,
+          "titulo": "¿Qué quieres seguir practicando?",
+          "ayuda": "Elegir una cosa pequeña ayuda a convertir un logro en aprendizaje.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "sg1",
+              "texto": "Intentarlo antes de pensar que no puedo.",
+              "icono": "🌱"
+            },
+            {
+              "id": "sg2",
+              "texto": "Pedir ayuda con una frase clara.",
+              "icono": "🤝"
+            },
+            {
+              "id": "sg3",
+              "texto": "Ir paso a paso cuando algo me cuesta.",
+              "icono": "👣"
+            },
+            {
+              "id": "sg4",
+              "texto": "Explicar con mis palabras lo que pienso o necesito.",
+              "icono": "💬"
+            },
+            {
+              "id": "sg5",
+              "texto": "Reconocer algo que hice bien.",
+              "icono": "🌟"
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Quiero recordar {recordar}. Esta experiencia me enseñó {aprendi}. Me sorprendió {sorpresa}. Quiero seguir practicando {seguir}.",
+      "cierre": {
+        "titulo": "Has descubierto algo nuevo de ti",
+        "mensaje": "Has usado una experiencia real para reconocer lo que aprendiste, qué te sorprendió y qué quieres seguir practicando.",
+        "lia": "Conocerte mejor te ayuda a confiar en tus recursos y a elegir cómo quieres seguir creciendo.",
+        "frase": "Puedo aprender de lo que vivo y seguir creciendo.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "nos-escuchamos-y-buscamos-un-acuerdo",
+      "titulo": "Nos escuchamos y buscamos un acuerdo",
+      "subtitulo": "Aprendo a escuchar, expresar lo que necesito y cuidar la amistad.",
+      "familia": "relaciones",
+      "tipoSituacion": "colegio",
+      "emociones": [
+        "ilusion",
+        "impaciencia",
+        "enfado",
+        "comprension"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 8,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🤝",
+        "ilustracion": "👧🏻 👧🏽",
+        "fondo": "cielo"
+      },
+      "recursos": {
+        "imagen": "semilla-004-nos-escuchamos.png"
+      },
+      "bienvenida": {
+        "titulo": "Hoy practicaremos cómo cuidarnos cuando queremos cosas diferentes",
+        "mensaje": "En una amistad no siempre queremos lo mismo al mismo tiempo. Escucharnos puede ayudarnos a encontrar una solución que tenga en cuenta a las dos personas.",
+        "lia": "Puedes decir lo que necesitas y también escuchar a la otra persona. Vamos a practicarlo paso a paso."
+      },
+      "situacion": {
+        "titulo": "Las dos queremos jugar primero",
+        "texto": "En el recreo, tú y una amiga queréis usar el mismo juego primero. Las dos insistís y empezáis a molestaros.",
+        "ilustracion": "🎲 👧🏻 👧🏽",
+        "audioTexto": "En el recreo, tú y una amiga queréis usar el mismo juego primero. Las dos insistís y empezáis a molestaros."
+      },
+      "pasos": [
+        {
+          "id": "comprender",
+          "orden": 1,
+          "titulo": "¿Qué está ocurriendo?",
+          "ayuda": "Primero describimos el problema sin culpar a ninguna de las dos.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "co1",
+              "texto": "Las dos queremos usar el mismo juego primero."
+            },
+            {
+              "id": "co2",
+              "texto": "Mi amiga siempre quiere quitarme todo."
+            },
+            {
+              "id": "co3",
+              "texto": "Ya no podemos ser amigas."
+            }
+          ],
+          "otraRespuesta": true,
+          "liaSiNecesitaApoyo": "¿Podemos contar solamente qué quieren las dos, sin decidir todavía quién tiene la culpa?"
+        },
+        {
+          "id": "perspectiva",
+          "orden": 2,
+          "titulo": "¿Qué podría estar sintiendo o queriendo tu amiga?",
+          "ayuda": "Comprender a otra persona no significa renunciar a lo que tú necesitas.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "pe1",
+              "texto": "También tiene muchas ganas de jugar.",
+              "icono": "🎲"
+            },
+            {
+              "id": "pe2",
+              "texto": "Puede estar impaciente.",
+              "icono": "⏳"
+            },
+            {
+              "id": "pe3",
+              "texto": "Quizá piensa que no la estoy escuchando.",
+              "icono": "👂"
+            },
+            {
+              "id": "pe4",
+              "texto": "No estoy segura de lo que siente.",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "hablar",
+          "orden": 3,
+          "titulo": "¿Qué podrías decir para que las dos os sintáis escuchadas?",
+          "ayuda": "Podemos hablar de lo que queremos y, al mismo tiempo, mostrar que hemos escuchado.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "ha1",
+              "texto": "Yo también quiero jugar. ¿Me cuentas qué te gustaría hacer?"
+            },
+            {
+              "id": "ha2",
+              "texto": "Entiendo que tú también quieres usarlo. Busquemos una solución."
+            },
+            {
+              "id": "ha3",
+              "texto": "Me estoy molestando. Necesito que nos escuchemos."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "acuerdo",
+          "orden": 4,
+          "titulo": "¿Qué acuerdo podría cuidar a las dos?",
+          "ayuda": "Un buen acuerdo intenta respetar las necesidades de ambas personas.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "ac1",
+              "texto": "Turnarnos durante el mismo tiempo."
+            },
+            {
+              "id": "ac2",
+              "texto": "Jugar juntas si el juego lo permite."
+            },
+            {
+              "id": "ac3",
+              "texto": "Elegir al azar quién empieza y cambiar después."
+            },
+            {
+              "id": "ac4",
+              "texto": "Buscar otro juego mientras esperamos."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Las dos queremos {comprender}. También puedo pensar que mi amiga {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos {acuerdo}.",
+      "cierre": {
+        "titulo": "Has practicado cómo cuidar una relación",
+        "mensaje": "Has expresado lo que necesitas, has intentado comprender a la otra persona y has buscado un acuerdo que cuide a las dos.",
+        "lia": "Escuchar y llegar a acuerdos no significa que siempre pensemos igual. Significa que nuestra voz y la de la otra persona importan.",
+        "frase": "Puedo expresarme, escuchar y buscar acuerdos.",
+        "crecimiento": "brote"
+      }
+    }
+  ]
+}
