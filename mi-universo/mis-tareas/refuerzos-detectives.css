@@ -1,0 +1,163 @@
+/* Academia Gloria Valentina · Observaciones y Refuerzos · Detectives */
+.refuerzos-detectives-lista,
+.misiones-refuerzo-detectives-lista{
+  display:grid;
+  gap:12px;
+}
+
+.refuerzo-detectives{
+  padding:17px;
+  border:2px solid #dbeafe;
+  border-radius:19px;
+  background:linear-gradient(135deg,#fff,#f8fbff);
+}
+
+.refuerzo-detectives--familia{
+  border-color:#c4b5fd;
+  background:linear-gradient(135deg,#faf5ff,#fff);
+}
+
+.refuerzo-detectives__cabecera,
+.mision-refuerzo-detectives__cabecera{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.refuerzo-detectives__cabecera{
+  justify-content:flex-start;
+}
+
+.refuerzo-detectives__icono{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:#eef2ff;
+  font-size:24px;
+}
+
+.refuerzo-detectives h4,
+.mision-refuerzo-detectives h4{
+  margin:0;
+  color:#312e81;
+  font-size:1.08rem;
+}
+
+.refuerzo-detectives__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:8px;
+}
+
+.refuerzo-detectives__meta span{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#f8fafc;
+  color:#475569;
+  font-size:.78rem;
+  font-weight:850;
+}
+
+.refuerzo-detectives__observacion{
+  margin:14px 0 0;
+  color:#334155;
+  font-weight:750;
+  line-height:1.55;
+}
+
+.refuerzo-detectives__fuentes{
+  margin-top:13px;
+  padding:12px 14px;
+  border-radius:15px;
+  background:#f8fafc;
+  color:#475569;
+}
+
+.refuerzo-detectives__fuentes strong{
+  color:#334155;
+}
+
+.refuerzo-detectives__fuentes ul{
+  margin:7px 0 0;
+  padding-left:20px;
+  font-weight:700;
+}
+
+.refuerzo-detectives__fuentes li+li{
+  margin-top:4px;
+}
+
+.refuerzo-detectives__acciones{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:15px;
+}
+
+.refuerzo-detectives__acciones small{
+  color:#64748b;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.mision-refuerzo-detectives{
+  padding:16px;
+  border:2px solid #dbeafe;
+  border-radius:18px;
+  background:#fff;
+}
+
+.mision-refuerzo-detectives p{
+  margin:12px 0 0;
+  color:#475569;
+  font-weight:700;
+  line-height:1.5;
+}
+
+.mision-refuerzo-detectives__estado{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#ede9fe;
+  color:#6d28d9;
+  font-size:.76rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.mision-refuerzo-detectives__visibilidad{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  width:max-content;
+  margin-top:13px;
+  color:#334155;
+  font-weight:900;
+}
+
+.mision-refuerzo-detectives__visibilidad input{
+  width:20px;
+  height:20px;
+  accent-color:#7c3aed;
+}
+
+@media(max-width:720px){
+  .refuerzo-detectives__acciones,
+  .mision-refuerzo-detectives__cabecera{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .refuerzo-detectives__acciones .btn{
+    width:100%;
+  }
+
+  .mision-refuerzo-detectives__visibilidad{
+    width:100%;
+  }
+}
