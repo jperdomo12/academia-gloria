@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
-| **Última actualización** | 26/08/2026 |
+| **Última actualización** | 29/08/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global, Panel de Usuario y comportamiento de retorno |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 29/08/2026 | Product Owner + AI Collaborator | Formaliza la continuidad de Persona Activa durante navegación interna, el tratamiento de URLs canónicas de Academia como destinos internos del entorno actual y el historial lógico de `Volver`, evitando rebotes del tipo A → B → C → B → C. |
 | 1.8 | 26/08/2026 | Product Owner + AI Collaborator | Activa `6.º de Primaria` como nodo navegable real dentro de `Mis Cursos`, retirando su estado `proximo`. El acceso compartido y la página principal apuntan a `cursos/6to/`; el portal de 6.º permanece identificado como construcción activa mientras incorpora materias y temas reales. |
 | 1.7 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la arquitectura robusta de cabecera global: un único host canónico del Panel de Usuario, prohibición de trasladar Paneles locales a la cabecera, desactivación compatible de hosts heredados, inicialización repetible segura, carga de CSS compartido por el propio componente y separación entre árbol visible del menú y ubicaciones auxiliares de cabecera. Amplía la adopción controlada a Biblioteca, Escritura, Creciendo por Dentro, auxiliares de Detectives y Calendarios, y Adicionales. |
 | 1.6 | 24/08/2026 | Product Owner + AI Collaborator | Cierra P2 de navegación de pantallas principales. El modelo central puede declarar adopción de cabecera global, fallback de retorno y limpieza controlada de navegación heredada. La carga de la cabecera puede activarse desde `navegacion.js` sin reescribir HTML grandes, preservando las acciones locales propias de cada módulo. |
@@ -65,6 +66,8 @@ El árbol concreto vigente se documenta en `MODELO_ARBOL_NAVEGACION.md` y su fue
 10. **La cabecera global es propietaria del único Panel de Usuario visible de la pantalla.**
 11. **Un Panel local heredado nunca se traslada físicamente a la cabecera.**
 12. **Las opciones visibles del menú y las ubicaciones auxiliares de cabecera son conceptos distintos.**
+13. **La navegación interna debe conservar la Persona Activa y el contexto de sesión.**
+14. **`Volver` representa una pila lógica de recorrido, no un rebote entre las dos últimas páginas visitadas.**
 
 ---
 
@@ -161,6 +164,10 @@ compartido/js/navegacion.js
 
 Gestiona el retorno contextual y la conservación del origen cuando una página abre otra.
 
+También es responsable de reconocer como navegación interna los destinos canónicos de la propia Academia, resolverlos en el entorno actual —desarrollo local o GitHub Pages— y preservar el contexto necesario para que Persona Activa y el historial lógico continúen siendo válidos.
+
+Una URL absoluta de producción que apunta a la propia Academia no debe tratarse como un sitio externo únicamente por su forma. Cuando corresponda, debe abrirse en la misma pestaña y en el entorno actual. Los enlaces realmente externos conservan su comportamiento propio.
+
 Además, puede consultar el modelo central y cargar la cabecera global de forma declarativa cuando el nodo actual define `cabeceraGlobal: true`. Esta capacidad evita modificar innecesariamente HTML grandes solo para conectar un componente ya existente.
 
 ### 4.5 Cabecera global
@@ -226,6 +233,10 @@ El cambio de Persona Activa puede afectar:
 - Mi Calendario;
 - módulos educativos con datos de la Persona;
 - tareas, misiones, eventos y evidencias cuando el módulo lo soporte.
+
+**Continuidad obligatoria:** una navegación entre pantallas internas de la Academia no debe restablecer silenciosamente Persona Activa a la Persona conectada. Si un adulto está `Viendo a` una Persona relacionada, ese contexto debe mantenerse al abrir recursos internos y al regresar mediante `Volver`, salvo que el propio usuario cambie expresamente la Persona Activa o finalice la sesión.
+
+Esta continuidad implica evitar aperturas internas que creen innecesariamente un nuevo contexto de pestaña cuando ello rompa el estado de sesión de la Academia.
 
 ---
 
@@ -295,6 +306,27 @@ Volver = carpeta padre
 ```
 
 porque una misma página puede abrirse desde distintos puntos del producto.
+
+El historial de `Volver` debe comportarse como una **pila lógica de navegación**. Cuando el usuario retrocede, la rama abandonada se elimina del recorrido lógico para evitar volver hacia delante accidentalmente.
+
+Ejemplo obligatorio:
+
+```text
+A → B → C
+
+Volver desde C → B
+Volver desde B → A
+```
+
+No debe producirse:
+
+```text
+A → B → C
+Volver → B
+Volver → C
+```
+
+Los parámetros contextuales como `volver` pueden participar en la resolución del retorno, pero no deben crear entradas artificialmente distintas dentro del historial cuando representan la misma pantalla funcional.
 
 ### 8.1 Ruta alternativa
 
@@ -394,6 +426,8 @@ La arquitectura v1.7 amplía de forma declarativa o compatible la adopción a:
 
 La versión v1.8 activa además `6.º de Primaria` como destino navegable dentro de `Mis Cursos`. Su disponibilidad en navegación no significa que todas las materias estén terminadas: el portal puede estar disponible mientras el contenido académico continúa en construcción activa.
 
+La versión v1.9 consolida como parte del contrato transversal la continuidad de Persona Activa y la pila histórica de retorno, validadas en el recorrido Gestión de Misiones ↔ recursos académicos ↔ resultado histórico.
+
 La inclusión en este alcance significa **adopción arquitectónica**. El cierre definitivo de una familia de pantallas continúa condicionado a las pruebas visuales y funcionales correspondientes.
 
 ---
@@ -424,10 +458,14 @@ La navegación se considera coherente cuando:
 - los nodos visibles corresponden al nivel efectivo;
 - las ubicaciones auxiliares no aparecen como opciones nuevas del menú;
 - Persona Activa no cambia la identidad de la Persona conectada;
+- Persona Activa se conserva al navegar entre recursos internos y al regresar, salvo cambio explícito del usuario;
 - el indicador contextual solo aparece cuando corresponde;
 - Mi Calendario usa `calendarios/`;
 - las rutas funcionan localmente y en GitHub Pages;
+- una URL canónica de la propia Academia se resuelve como navegación interna en el entorno actual cuando corresponde;
+- la navegación interna no abre una nueva pestaña cuando ello rompería el contexto de Persona Activa o el historial compartido;
 - Volver recupera el origen real cuando existe;
+- una secuencia A → B → C retrocede C → B → A sin rebote hacia C;
 - las páginas siguen funcionando con acceso directo mediante una ruta alternativa segura;
 - Academia permanece accesible desde la cabecera;
 - Volver comparte el bloque izquierdo con Academia cuando corresponde;
@@ -475,3 +513,6 @@ La navegación se considera coherente cuando:
 | NAV-020 | Las ubicaciones auxiliares de cabecera se mantienen fuera de `NAVEGACION_ACADEMIA` para no alterar el menú visible. |
 | NAV-021 | La cabecera garantiza la carga de sus estilos y de `panel-usuario.css` antes de renderizar la composición global. |
 | NAV-022 | `6.º de Primaria` es un destino navegable activo en `Mis Cursos`; la disponibilidad del portal es compatible con que sus materias continúen en construcción progresiva. |
+| NAV-023 | La navegación interna conserva Persona Activa hasta que el usuario la cambie explícitamente o finalice la sesión. |
+| NAV-024 | `Volver` utiliza un historial lógico que elimina la rama abandonada al retroceder; A → B → C debe regresar C → B → A. |
+| NAV-025 | Los destinos canónicos de la propia Academia se tratan como navegación interna y se resuelven en el entorno actual, evitando aperturas que rompan el contexto compartido. |

@@ -1,8 +1,16 @@
 # 🌈 Academia de Gloria Valentina
 # GUÍA DE DESARROLLO ULTRA PRO
 
-**Versión:** 2.0 Cloud  
-**Estado:** Activo
+**Versión:** 2.1 Cloud  
+**Estado:** Activo  
+**Última actualización:** 29/08/2026
+
+## Historial de versiones
+
+| Versión | Referencia | Cambio |
+|---|---|---|
+| 2.1 Cloud | 29/08/2026 | Formaliza como regla transversal que los fallos visibles expliquen la causa cuando sea conocida y segura de mostrar, e incorpora la comprobación correspondiente antes de publicar. |
+| 2.0 Cloud | Versión anterior | Base activa previa de la guía. Se conserva sin atribuir una fecha no declarada en la fuente original. |
 
 ---
 
@@ -88,6 +96,36 @@ Nunca:
 
 ---
 
+# Mensajes de error y fallos
+
+Todo fallo visible para el usuario debe indicar **la razón del fallo siempre que la aplicación pueda conocerla de forma segura**.
+
+No se utilizará como mensaje final una frase genérica como:
+
+```text
+Ha ocurrido un error.
+```
+
+cuando exista una causa útil que pueda comunicarse.
+
+El mensaje visible debe:
+
+- explicar qué no pudo realizarse;
+- indicar por qué, cuando la causa sea conocida y apropiada para el usuario;
+- ofrecer el siguiente paso cuando exista una acción razonable;
+- evitar códigos internos, trazas o datos técnicos sensibles.
+
+Ejemplo preferido:
+
+```text
+No pudimos guardar la sesión porque se perdió la conexión.
+Revisa tu conexión e inténtalo de nuevo.
+```
+
+La información técnica adicional puede registrarse en consola o en los mecanismos de diagnóstico correspondientes, sin sustituir la explicación útil mostrada al usuario.
+
+---
+
 # Reglas TEL
 
 Siempre:
@@ -125,6 +163,7 @@ Antes de publicar:
 - ¿Reutiliza componentes?
 - ¿Está documentado el cambio?
 - ¿Se probó en móvil y escritorio?
+- ¿Los fallos visibles explican la causa cuando es conocida y segura de mostrar?
 - ¿Se realizó commit?
 
 ---
