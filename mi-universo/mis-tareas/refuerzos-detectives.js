@@ -634,7 +634,62 @@ async function cargarTodo({ silencioso = false } = {}) {
   }
 }
 
+function crearGrupoRefuerzo({ id, icono, modulo, tema, encabezados = [] }) {
+  if ($(id)) return;
+
+  const secciones = encabezados
+    .map(encabezadoId => $(encabezadoId)?.closest(".refuerzo-bloque"))
+    .filter(Boolean);
+
+  if (!secciones.length) return;
+
+  const primera = secciones[0];
+  const grupo = document.createElement("details");
+  grupo.id = id;
+  grupo.className = "grupo-refuerzo superficie";
+  grupo.innerHTML = `
+    <summary class="grupo-refuerzo__summary">
+      <span class="grupo-refuerzo__icono" aria-hidden="true">${escapar(icono)}</span>
+      <span class="grupo-refuerzo__texto">
+        <strong>${escapar(modulo)}</strong>
+        <small>${escapar(tema)}</small>
+      </span>
+      <span class="grupo-refuerzo__flecha" aria-hidden="true">⌄</span>
+    </summary>
+    <div class="grupo-refuerzo__contenido"></div>
+  `;
+
+  primera.parentElement.insertBefore(grupo, primera);
+  const contenido = grupo.querySelector(".grupo-refuerzo__contenido");
+  secciones.forEach(seccion => contenido.appendChild(seccion));
+}
+
+function agruparPanelRefuerzos() {
+  crearGrupoRefuerzo({
+    id: "grupoRefuerzoDetectives",
+    icono: "🧩",
+    modulo: "Aventuras Matemáticas",
+    tema: "Detectives de Problemas · propuestas de refuerzo",
+    encabezados: [
+      "tituloRefuerzosDetectives",
+      "tituloMisionesRefuerzoDetectives"
+    ]
+  });
+
+  crearGrupoRefuerzo({
+    id: "grupoRefuerzoLectura",
+    icono: "📖",
+    modulo: "Mi Rincón de Lectura",
+    tema: "Pronunciación · palabras sugeridas para reforzar",
+    encabezados: [
+      "tituloPalabrasSugeridas",
+      "tituloMisionesPronunciacion"
+    ]
+  });
+}
+
 function inicializar() {
+  agruparPanelRefuerzos();
   $("actualizarRefuerzosDetectives")?.addEventListener("click", () => cargarTodo());
 
   document.querySelectorAll("[data-tab]").forEach(tab => {
