@@ -9,6 +9,7 @@ import {
 const $ = id => document.getElementById(id);
 const ESTADOS_CERRADOS = new Set(["completada", "cancelada"]);
 const CANTIDAD_REFUERZO = 3;
+const TAMANO_PAGINA_PROPUESTAS = 5;
 
 const FOCOS = Object.freeze({
   comprension: Object.freeze({
@@ -65,6 +66,8 @@ let propuestas = [];
 let misionesRefuerzo = [];
 let cargando = false;
 let historiasPorId = new Map();
+let paginaPropuestas = 1;
+let metaPropuestas = {};
 
 function escapar(valor = "") {
   return String(valor).replace(/[&<>"']/g, caracter => ({
@@ -309,6 +312,10 @@ async function leerDatosDetectives() {
   misionesRefuerzo = tareas.filter(esMisionRefuerzoDetectives);
   propuestas = crearPropuestas(registros, tareas);
 
+  const paginas = totalPaginasPropuestas();
+  if (paginaPropuestas > paginas) paginaPropuestas = paginas;
+  if (paginaPropuestas < 1) paginaPropuestas = 1;
+
   return {
     totalHistorias: historial.length,
     historiasAnalizadas: registros.length,
@@ -332,13 +339,153 @@ function textoObservacion(propuesta) {
   return `${prefijo} ${cantidad} ${plural(cantidad, "historia", "historias")} de nivel ${nivel}, la fase «${foco.fase}» necesitó más de un intento en la última resolución registrada de cada historia.`;
 }
 
+function totalPaginasPropuestas() {
+  return Math.max(1, Math.ceil(propuestas.length / TAMANO_PAGINA_PROPUESTAS));
+}
+
+function propuestasPaginaActual() {
+  const paginas = totalPaginasPropuestas();
+  if (paginaPropuestas > paginas) paginaPropuestas = paginas;
+  if (paginaPropuestas < 1) paginaPropuestas = 1;
+
+  const inicio = (paginaPropuestas - 1) * TAMANO_PAGINA_PROPUESTAS;
+  return propuestas.slice(inicio, inicio + TAMANO_PAGINA_PROPUESTAS);
+}
+
+function asegurarControlesPropuestas() {
+  const lista = $("listaRefuerzosDetectives");
+  if (!lista) return null;
+
+  let controles = $("controlesRefuerzosDetectives");
+  if (!controles) {
+    controles = document.createElement("div");
+    controles.id = "controlesRefuerzosDetectives";
+    controles.className = "refuerzo-controles";
+    controles.innerHTML = `
+      <div class="refuerzo-controles__principal">
+        <strong>Propuestas disponibles</strong>
+        <small>Se muestran en bloques de ${TAMANO_PAGINA_PROPUESTAS} para facilitar la revisión.</small>
+      </div>
+      <div class="refuerzo-controles__acciones">
+        <span id="contadorRefuerzosDetectives" class="refuerzo-contador"></span>
+      </div>
+    `;
+    lista.parentElement.insertBefore(controles, lista);
+  }
+
+  return controles;
+}
+
+function asegurarPaginadorPropuestas() {
+  const lista = $("listaRefuerzosDetectives");
+  if (!lista) return null;
+
+  let paginador = $("paginadorRefuerzosDetectives");
+  if (!paginador) {
+    paginador = document.createElement("nav");
+    paginador.id = "paginadorRefuerzosDetectives";
+    paginador.className = "refuerzo-paginador";
+    paginador.setAttribute("aria-label", "Paginación de propuestas de Detectives");
+    lista.insertAdjacentElement("afterend", paginador);
+  }
+
+  return paginador;
+}
+
+function actualizarContadorPropuestas() {
+  const contador = $("contadorRefuerzosDetectives");
+  if (!contador) return;
+
+  if (!propuestas.length) {
+    contador.textContent = "0 propuestas";
+    return;
+  }
+
+  const inicio = (paginaPropuestas - 1) * TAMANO_PAGINA_PROPUESTAS + 1;
+  const fin = Math.min(
+    paginaPropuestas * TAMANO_PAGINA_PROPUESTAS,
+    propuestas.length
+  );
+  contador.textContent = `${inicio}–${fin} de ${propuestas.length}`;
+}
+
+function renderPaginadorPropuestas() {
+  const paginador = asegurarPaginadorPropuestas();
+  if (!paginador) return;
+
+  if (!propuestas.length || propuestas.length <= TAMANO_PAGINA_PROPUESTAS) {
+    paginador.classList.add("hidden");
+    paginador.innerHTML = "";
+    return;
+  }
+
+  const paginas = totalPaginasPropuestas();
+  paginador.classList.remove("hidden");
+
+  const botones = Array.from({ length: paginas }, (_, indice) => indice + 1)
+    .map(numeroPagina => `
+      <button
+        type="button"
+        class="refuerzo-pagina ${numeroPagina === paginaPropuestas ? "active" : ""}"
+        data-pagina-refuerzo-detectives="${numeroPagina}"
+        aria-label="Página ${numeroPagina}"
+        ${numeroPagina === paginaPropuestas ? 'aria-current="page"' : ""}
+      >
+        ${numeroPagina}
+      </button>
+    `).join("");
+
+  paginador.innerHTML = `
+    <button
+      type="button"
+      class="refuerzo-pagina refuerzo-pagina--nav"
+      data-pagina-refuerzo-detectives="${Math.max(1, paginaPropuestas - 1)}"
+      ${paginaPropuestas <= 1 ? "disabled" : ""}
+    >
+      ← Anterior
+    </button>
+
+    <div class="refuerzo-paginador__numeros">${botones}</div>
+
+    <button
+      type="button"
+      class="refuerzo-pagina refuerzo-pagina--nav"
+      data-pagina-refuerzo-detectives="${Math.min(paginas, paginaPropuestas + 1)}"
+      ${paginaPropuestas >= paginas ? "disabled" : ""}
+    >
+      Siguiente →
+    </button>
+  `;
+
+  paginador.querySelectorAll("[data-pagina-refuerzo-detectives]").forEach(button => {
+    button.addEventListener("click", () => {
+      if (button.disabled) return;
+      paginaPropuestas = Number(button.dataset.paginaRefuerzoDetectives) || 1;
+      renderPropuestas(metaPropuestas);
+      $("tituloRefuerzosDetectives")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  });
+}
+
+function ocultarNavegacionPropuestas() {
+  $("controlesRefuerzosDetectives")?.classList.add("hidden");
+  const paginador = asegurarPaginadorPropuestas();
+  paginador?.classList.add("hidden");
+}
+
 function renderPropuestas(meta = {}) {
   const estado = $("estadoRefuerzosDetectives");
   const lista = $("listaRefuerzosDetectives");
   if (!estado || !lista) return;
 
+  metaPropuestas = meta;
+
   if (!meta.historiasAnalizadas) {
     estado.classList.add("hidden");
+    ocultarNavegacionPropuestas();
     lista.innerHTML = `
       <div class="refuerzo-vacio">
         Todavía no hay resoluciones de Detectives suficientes para preparar propuestas de refuerzo.
@@ -349,6 +496,7 @@ function renderPropuestas(meta = {}) {
 
   if (!propuestas.length) {
     estado.classList.add("hidden");
+    ocultarNavegacionPropuestas();
     lista.innerHTML = `
       <div class="refuerzo-vacio">
         No hay señales repetidas suficientes para proponer un refuerzo de Detectives ahora.
@@ -365,7 +513,12 @@ function renderPropuestas(meta = {}) {
   }
 
   estado.classList.add("hidden");
-  lista.innerHTML = propuestas.map(propuesta => {
+  asegurarControlesPropuestas()?.classList.remove("hidden");
+  actualizarContadorPropuestas();
+
+  const pagina = propuestasPaginaActual();
+
+  lista.innerHTML = pagina.map(propuesta => {
     const foco = FOCOS[propuesta.foco] || FOCOS.general;
     const fuentes = propuesta.soportes.slice(0, 3);
     const restantes = Math.max(0, propuesta.soportes.length - fuentes.length);
@@ -423,6 +576,8 @@ function renderPropuestas(meta = {}) {
       crearMisionRefuerzo(propuesta, button);
     });
   });
+
+  renderPaginadorPropuestas();
 }
 
 function ordenFinalVisible(tareas = []) {
@@ -617,8 +772,9 @@ async function cargarTodo({ silencioso = false } = {}) {
 
   try {
     const meta = await leerDatosDetectives();
-    renderPropuestas(meta);
+    metaPropuestas = meta;
     renderMisionesPreparadas();
+    renderPropuestas(meta);
   } catch (error) {
     if (estado) estado.classList.add("hidden");
     if (lista) {
@@ -664,6 +820,20 @@ function crearGrupoRefuerzo({ id, icono, modulo, tema, encabezados = [] }) {
   secciones.forEach(seccion => contenido.appendChild(seccion));
 }
 
+function configurarAcordeonExclusivo() {
+  document.querySelectorAll("#panelRefuerzos .grupo-refuerzo").forEach(grupo => {
+    if (grupo.dataset.acordeonExclusivo === "true") return;
+    grupo.dataset.acordeonExclusivo = "true";
+
+    grupo.addEventListener("toggle", () => {
+      if (!grupo.open) return;
+      document.querySelectorAll("#panelRefuerzos .grupo-refuerzo[open]").forEach(otro => {
+        if (otro !== grupo) otro.open = false;
+      });
+    });
+  });
+}
+
 function agruparPanelRefuerzos() {
   crearGrupoRefuerzo({
     id: "grupoRefuerzoDetectives",
@@ -671,8 +841,8 @@ function agruparPanelRefuerzos() {
     modulo: "Aventuras Matemáticas",
     tema: "Detectives de Problemas · propuestas de refuerzo",
     encabezados: [
-      "tituloRefuerzosDetectives",
-      "tituloMisionesRefuerzoDetectives"
+      "tituloMisionesRefuerzoDetectives",
+      "tituloRefuerzosDetectives"
     ]
   });
 
@@ -682,15 +852,20 @@ function agruparPanelRefuerzos() {
     modulo: "Mi Rincón de Lectura",
     tema: "Pronunciación · palabras sugeridas para reforzar",
     encabezados: [
-      "tituloPalabrasSugeridas",
-      "tituloMisionesPronunciacion"
+      "tituloMisionesPronunciacion",
+      "tituloPalabrasSugeridas"
     ]
   });
+
+  configurarAcordeonExclusivo();
 }
 
 function inicializar() {
   agruparPanelRefuerzos();
-  $("actualizarRefuerzosDetectives")?.addEventListener("click", () => cargarTodo());
+  $("actualizarRefuerzosDetectives")?.addEventListener("click", () => {
+    paginaPropuestas = 1;
+    cargarTodo();
+  });
 
   document.querySelectorAll("[data-tab]").forEach(tab => {
     tab.addEventListener("click", () => {
