@@ -1054,8 +1054,9 @@ Cuando exista evidencia académica, la familia debe poder comprender sin inspecc
 - qué actividad se realizó;
 - cuándo;
 - qué resultado produjo;
+- si necesitó ayudas;
 - qué oportunidades de refuerzo aparecieron;
-- y cómo abrir el detalle histórico.
+- y cómo abrir el detalle histórico cuando exista.
 
 El lenguaje visible será funcional y cercano.
 
@@ -1259,7 +1260,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-015 | Las métricas internas no se mostrarán automáticamente al alumno; la interfaz priorizará información útil para aprender. | Aprobada |
 | CA-016 | Parar y continuar después es una estrategia válida, y la retroalimentación reconocerá el proceso además del resultado. | Aprobada |
 | CA-017 | `sesion-academica-v1` es el contrato compartido vigente para la persistencia académica validada; la evidencia de Misión referencia la sesión y no duplica su contenido. | Aprobada y validada |
-| CA-018 | Vista previa y revisión histórica son modos sin escritura sobre sesión, evidencia o progreso. | Aprobada y validada |
+| CA-018 | Vista previa y revisión histórica son experiencias sin escritura sobre sesión, evidencia o progreso. | Aprobada y validada |
 | CA-019 | Las Misiones existentes no se recrean por incorporar persistencia; una ejecución futura puede usar el contrato vigente y no se inventan sesiones retrospectivas. | Aprobada y validada |
 | CA-020 | Los recursos heredados de 5.º pueden seguir asignándose como Misiones aunque no produzcan evidencia académica automática. | Aprobada |
 
