@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.5",
   "modulo": "creciendo-por-dentro",
   "familias": [
     {
@@ -518,6 +518,378 @@
         "mensaje": "Has mirado tus logros, tus fortalezas y una manera amable de seguir creciendo.",
         "lia": "Compararte menos y conocerte más puede ayudarte a confiar en tu propio camino.",
         "frase": "Mi esfuerzo y mis avances tienen valor.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "algo-que-consegui-esta-semana",
+      "titulo": "Algo que conseguí esta semana",
+      "subtitulo": "Miro una experiencia real y reconozco cómo avancé.",
+      "familia": "autoestima",
+      "tipoSituacion": "personal",
+      "emociones": [
+        "orgullo",
+        "alegria",
+        "confianza",
+        "alivio"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🌟",
+        "ilustracion": "🏅",
+        "fondo": "sol"
+      },
+      "recursos": {
+        "imagen": "semilla-005-algo-que-consegui.jpg"
+      },
+      "bienvenida": {
+        "titulo": "Hoy vamos a guardar algo que conseguiste",
+        "mensaje": "A veces conseguimos cosas importantes y seguimos adelante sin detenernos a mirarlas. Hoy vamos a recordar una experiencia real de esta semana y descubrir qué hiciste tú para avanzar.",
+        "lia": "No tiene que ser algo enorme. Un pequeño paso también puede ser un logro."
+      },
+      "situacion": {
+        "titulo": "Una experiencia de mi semana",
+        "texto": "Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha.",
+        "ilustracion": "🌟 🧒🏽 🏅",
+        "audioTexto": "Piensa en algo de esta semana que te costó un poco y que conseguiste hacer, mejorar o intentar de una manera de la que te sientas satisfecha."
+      },
+      "pasos": [
+        {
+          "id": "experiencia",
+          "orden": 1,
+          "titulo": "¿Qué conseguiste?",
+          "ayuda": "Puedes elegir una idea parecida o contarlo con tus propias palabras.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "ex1",
+              "texto": "Terminé algo que me costaba.",
+              "icono": "✅"
+            },
+            {
+              "id": "ex2",
+              "texto": "Me animé a hacer algo por mí misma.",
+              "icono": "🌟"
+            },
+            {
+              "id": "ex3",
+              "texto": "Pedí ayuda y después pude continuar.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ex4",
+              "texto": "Encontré una manera de resolver algo que me preocupaba.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "sentimiento",
+          "orden": 2,
+          "titulo": "¿Cómo te sentiste cuando lo conseguiste?",
+          "ayuda": "Puedes sentir más de una cosa al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "se1",
+              "texto": "Orgullosa",
+              "icono": "🌟"
+            },
+            {
+              "id": "se2",
+              "texto": "Contenta",
+              "icono": "😊"
+            },
+            {
+              "id": "se3",
+              "texto": "Aliviada",
+              "icono": "😌"
+            },
+            {
+              "id": "se4",
+              "texto": "Con más confianza",
+              "icono": "💛"
+            },
+            {
+              "id": "se5",
+              "texto": "Un poco sorprendida de mí misma",
+              "icono": "✨"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "comoLoHice",
+          "orden": 3,
+          "titulo": "¿Qué hiciste para avanzar?",
+          "ayuda": "Los logros también nos enseñan qué estrategias nos ayudan.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "ch1",
+              "texto": "Lo intenté más de una vez.",
+              "icono": "🔁"
+            },
+            {
+              "id": "ch2",
+              "texto": "Fui paso a paso.",
+              "icono": "👣"
+            },
+            {
+              "id": "ch3",
+              "texto": "Pedí ayuda cuando la necesité.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ch4",
+              "texto": "Me calmé y seguí intentándolo.",
+              "icono": "🌿"
+            },
+            {
+              "id": "ch5",
+              "texto": "Busqué otra manera de hacerlo.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "reconozco",
+          "orden": 4,
+          "titulo": "¿Qué puedes reconocer de ti?",
+          "ayuda": "Reconocer algo bueno de ti no es presumir. Es aprender a valorar tus propios avances.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "r1",
+              "texto": "No me rendí.",
+              "icono": "💪"
+            },
+            {
+              "id": "r2",
+              "texto": "Fui valiente para intentarlo.",
+              "icono": "🌟"
+            },
+            {
+              "id": "r3",
+              "texto": "Tuve paciencia.",
+              "icono": "🌿"
+            },
+            {
+              "id": "r4",
+              "texto": "Supe pedir ayuda.",
+              "icono": "🤝"
+            },
+            {
+              "id": "r5",
+              "texto": "Confié un poco más en mí.",
+              "icono": "💛"
+            },
+            {
+              "id": "r6",
+              "texto": "Encontré mi propia manera de hacerlo.",
+              "icono": "✨"
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Esta semana conseguí {experiencia}. Me sentí {sentimiento}. Para avanzar, {comoLoHice}. Hoy reconozco de mí que {reconozco}.",
+      "cierre": {
+        "titulo": "Has guardado un logro de tu semana",
+        "mensaje": "Has mirado una experiencia real, cómo te sentiste, qué hiciste para avanzar y algo valioso que puedes reconocer de ti.",
+        "lia": "Tus avances no tienen que ser enormes para importar. Mirarlos te ayuda a conocer todo lo que ya eres capaz de hacer.",
+        "frase": "Puedo reconocer mis avances y aprender de ellos.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "lo-que-descubri-de-mi",
+      "titulo": "Lo que descubrí de mí",
+      "subtitulo": "Miro una experiencia real y descubro algo nuevo sobre mí.",
+      "familia": "autoestima",
+      "tipoSituacion": "personal",
+      "emociones": [
+        "curiosidad",
+        "orgullo",
+        "confianza",
+        "alegria"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 7,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🔎",
+        "ilustracion": "🌟",
+        "fondo": "lavanda"
+      },
+      "recursos": {
+        "imagen": "semilla-006-lo-que-descubri-de-mi.jpg"
+      },
+      "bienvenida": {
+        "titulo": "Hoy vamos a mirar un poco más adentro",
+        "mensaje": "Ya has pensado en algo que conseguiste. Ahora vamos a usar una experiencia real para descubrir qué aprendiste sobre ti.",
+        "lia": "No hay una respuesta correcta. Puedes elegir una idea parecida o decirlo con tus propias palabras."
+      },
+      "situacion": {
+        "titulo": "Miro lo que aprendí",
+        "texto": "Recuerda un logro reciente, quizá el que guardaste en “Algo que conseguí esta semana”. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti.",
+        "ilustracion": "🔎 💜 🌱",
+        "audioTexto": "Recuerda un logro reciente, quizá el que guardaste en Algo que conseguí esta semana. Hoy no vamos a repetirlo: vamos a descubrir qué te enseñó sobre ti."
+      },
+      "pasos": [
+        {
+          "id": "recordar",
+          "orden": 1,
+          "titulo": "¿Qué experiencia quieres recordar?",
+          "ayuda": "Solo necesitamos una idea breve para saber de qué logro hablamos.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "re1",
+              "texto": "Algo que logré por mí misma.",
+              "icono": "🌟"
+            },
+            {
+              "id": "re2",
+              "texto": "Algo que logré después de practicar.",
+              "icono": "🔁"
+            },
+            {
+              "id": "re3",
+              "texto": "Algo que logré con ayuda.",
+              "icono": "🤝"
+            },
+            {
+              "id": "re4",
+              "texto": "Algo que pensé que me costaría más.",
+              "icono": "💡"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "aprendi",
+          "orden": 2,
+          "titulo": "¿Qué aprendiste de ti?",
+          "ayuda": "Una experiencia puede mostrarnos capacidades que a veces no vemos enseguida.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "ap1",
+              "texto": "Que puedo seguir aunque algo me cueste.",
+              "icono": "💪"
+            },
+            {
+              "id": "ap2",
+              "texto": "Que puedo pedir ayuda y después continuar.",
+              "icono": "🤝"
+            },
+            {
+              "id": "ap3",
+              "texto": "Que puedo aprender paso a paso.",
+              "icono": "👣"
+            },
+            {
+              "id": "ap4",
+              "texto": "Que puedo encontrar mi propia manera.",
+              "icono": "✨"
+            },
+            {
+              "id": "ap5",
+              "texto": "Que soy capaz de más cosas de las que a veces pienso.",
+              "icono": "🌟"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "sorpresa",
+          "orden": 3,
+          "titulo": "¿Qué te sorprendió de ti?",
+          "ayuda": "A veces descubrimos algo bueno de nosotros que no esperábamos.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "so1",
+              "texto": "Tuve más paciencia de la que pensaba.",
+              "icono": "🌿"
+            },
+            {
+              "id": "so2",
+              "texto": "Me atreví aunque tenía dudas.",
+              "icono": "🌟"
+            },
+            {
+              "id": "so3",
+              "texto": "Pude explicarme mejor de lo que esperaba.",
+              "icono": "💬"
+            },
+            {
+              "id": "so4",
+              "texto": "Seguí intentándolo sin rendirme.",
+              "icono": "💪"
+            },
+            {
+              "id": "so5",
+              "texto": "Me sentí más segura cuando terminé.",
+              "icono": "💛"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "seguir",
+          "orden": 4,
+          "titulo": "¿Qué quieres seguir practicando?",
+          "ayuda": "Elegir una cosa pequeña ayuda a convertir un logro en aprendizaje.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "sg1",
+              "texto": "Intentarlo antes de pensar que no puedo.",
+              "icono": "🌱"
+            },
+            {
+              "id": "sg2",
+              "texto": "Pedir ayuda con una frase clara.",
+              "icono": "🤝"
+            },
+            {
+              "id": "sg3",
+              "texto": "Ir paso a paso cuando algo me cuesta.",
+              "icono": "👣"
+            },
+            {
+              "id": "sg4",
+              "texto": "Explicar con mis palabras lo que pienso o necesito.",
+              "icono": "💬"
+            },
+            {
+              "id": "sg5",
+              "texto": "Reconocer algo que hice bien.",
+              "icono": "🌟"
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Quiero recordar {recordar}. Esta experiencia me enseñó {aprendi}. Me sorprendió {sorpresa}. Quiero seguir practicando {seguir}.",
+      "cierre": {
+        "titulo": "Has descubierto algo nuevo de ti",
+        "mensaje": "Has usado una experiencia real para reconocer lo que aprendiste, qué te sorprendió y qué quieres seguir practicando.",
+        "lia": "Conocerte mejor te ayuda a confiar en tus recursos y a elegir cómo quieres seguir creciendo.",
+        "frase": "Puedo aprender de lo que vivo y seguir creciendo.",
         "crecimiento": "brote"
       }
     },
