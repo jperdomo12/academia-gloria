@@ -198,6 +198,21 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // CRECIENDO POR DENTRO · Persona Activa
+      //
+      // Las respuestas y prácticas de una Semilla forman parte del historial
+      // personal. Un familiar/profesional relacionado puede consultarlas;
+      // modificarlas exige nivel efectivo de gestión.
+      match /sesionesSemillas/{sesionId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       // SESIONES ACADÉMICAS · Persona Activa
       //
       // Sigue el mismo contrato de acceso funcional que las demás evidencias:
