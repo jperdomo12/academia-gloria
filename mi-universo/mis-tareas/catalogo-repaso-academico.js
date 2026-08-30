@@ -47,6 +47,14 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
   let tokenCargaTemas = 0;
   let sincronizando = false;
 
+  function formularioSoloLectura() {
+    return $("formTarea")?.classList.contains("modo-consulta") === true;
+  }
+
+  function habilitarSelect(select, habilitado) {
+    select.disabled = !habilitado || formularioSoloLectura();
+  }
+
   function textoLimpio(valor = "") {
     return String(valor).replace(/\s+/g, " ").trim();
   }
@@ -328,7 +336,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
 
     temaSelect.hidden = false;
     prepararSelect(temaSelect, "Cargando temas…", { manual: false });
-    temaSelect.disabled = true;
+    habilitarSelect(temaSelect, false);
     temaInput.hidden = true;
     establecerRecurso("", { manual: false });
     estadoCatalogo.textContent = "Buscando los temas disponibles en la Academia…";
@@ -339,13 +347,13 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (token !== tokenCargaTemas) return;
 
       temas = extraerTemas(documento, baseMateria);
-      temaSelect.disabled = false;
+      habilitarSelect(temaSelect, true);
       poblarTemas(temaPreferido, recursoPreferido);
     } catch (error) {
       if (token !== tokenCargaTemas) return;
 
       prepararSelect(temaSelect, "No fue posible cargar los temas", { manual: true });
-      temaSelect.disabled = false;
+      habilitarSelect(temaSelect, true);
       mostrarTemaManual(temaPreferido, recursoPreferido);
       estadoCatalogo.textContent =
         `No se pudo cargar el catálogo de temas. Razón: ${error.message || "Error no identificado"}`;
@@ -362,14 +370,14 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     temas = [];
 
     prepararSelect(materiaSelect, "Cargando materias…", { manual: false });
-    materiaSelect.disabled = true;
+    habilitarSelect(materiaSelect, false);
     prepararSelect(temaSelect, "Selecciona primero una materia", { manual: true });
-    temaSelect.disabled = true;
+    habilitarSelect(temaSelect, false);
     estadoCatalogo.textContent = "Buscando las materias disponibles en la Academia…";
 
     const baseCurso = cursoBaseUrl();
     if (!baseCurso) {
-      materiaSelect.disabled = false;
+      habilitarSelect(materiaSelect, true);
       mostrarMateriaManual(materiaPreferida);
       return;
     }
@@ -379,7 +387,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (token !== tokenCargaMaterias) return;
 
       materias = extraerMaterias(documento, baseCurso);
-      materiaSelect.disabled = false;
+      habilitarSelect(materiaSelect, true);
 
       if (!materias.length) {
         prepararSelect(materiaSelect, "No hay materias catalogadas", { manual: true });
@@ -404,7 +412,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (token !== tokenCargaMaterias) return;
 
       prepararSelect(materiaSelect, "No fue posible cargar las materias", { manual: true });
-      materiaSelect.disabled = false;
+      habilitarSelect(materiaSelect, true);
       mostrarMateriaManual(materiaPreferida);
       temaInput.value = temaPreferido;
       establecerRecurso(recursoPreferido, { manual: true });
@@ -443,7 +451,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       establecerCampo(temaInput, "");
       establecerRecurso("", { manual: false });
       prepararSelect(temaSelect, "Selecciona primero una materia", { manual: true });
-      temaSelect.disabled = true;
+      habilitarSelect(temaSelect, false);
       temaInput.hidden = true;
       estadoCatalogo.textContent = "Selecciona una materia para ver sus temas.";
       return;
@@ -530,7 +538,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
 
   prepararSelect(materiaSelect, "Selecciona una materia", { manual: true });
   prepararSelect(temaSelect, "Selecciona primero una materia", { manual: true });
-  temaSelect.disabled = true;
+  habilitarSelect(temaSelect, false);
 
   cargarMaterias().catch(error => {
     console.error("No se pudo inicializar el catálogo de Repaso académico.", error);
