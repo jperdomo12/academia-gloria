@@ -445,6 +445,24 @@ function builtResponse() {
     }, me siento ${e}. Me gustaría ${s}. Así ${c}.`;
   }
 
+  if (semilla?.id === "algo-que-consegui-esta-semana") {
+    return [
+      `Esta semana quiero recordar esto: ${normalizePhrase(chosenText("experiencia"))}.`,
+      `Me sentí: ${normalizePhrase(chosenText("sentimiento"))}.`,
+      `Para avanzar hice esto: ${normalizePhrase(chosenText("comoLoHice"))}.`,
+      `Hoy reconozco algo importante de mí: ${normalizePhrase(chosenText("reconozco"))}.`
+    ].join(" ").replace(/\.\./g, ".");
+  }
+
+  if (semilla?.id === "lo-que-descubri-de-mi") {
+    return [
+      `Quiero recordar esto: ${normalizePhrase(chosenText("recordar"))}.`,
+      `Descubrí algo de mí: ${normalizePhrase(chosenText("aprendi"))}.`,
+      `Me sorprendió descubrir esto: ${normalizePhrase(chosenText("sorpresa"))}.`,
+      `Quiero seguir practicando esto: ${normalizePhrase(chosenText("seguir"))}.`
+    ].join(" ").replace(/\.\./g, ".");
+  }
+
   const template = String(
     semilla?.plantillaRespuesta ||
     semilla?.pasos?.map(step => `{${step.id}}`).join(". ") ||
@@ -519,7 +537,7 @@ function updateRecorderUI(message = "") {
     player.classList.toggle("hidden", !audioData);
     if (audioData) player.src = audioData;
   }
-  if (status) status.textContent = message || (audioData ? "Tu grabación está lista. Puedes escucharla o repetir." : "Cuando estés preparada, pulsa Grabar.");
+  if (status) status.textContent = message || (audioData ? "Tu grabación está lista. Puedes escucharla o repetir." : "Cuando estés preparada, puedes grabar o continuar sin grabación.");
   const next = $("finishRecording");
   if (next) next.disabled = !audioData;
 }
@@ -570,6 +588,15 @@ function stopRecording() {
 }
 
 function clearRecording() {
+  if (!audioData) {
+    updateRecorderUI("Todavía no hay una grabación guardada para borrar.");
+    return;
+  }
+
+  if (!window.confirm("¿Quieres borrar esta grabación y volver a intentarlo?")) {
+    return;
+  }
+
   audioData = "";
   audioDuration = 0;
   transcript = "";
@@ -584,7 +611,7 @@ function renderRecorder() {
       <h2>Practica tu frase</h2>
       <div class="recording">
         <div class="recorder">
-          <p><strong>No tiene que salir perfecta.</strong> Puedes escuchar, grabar y repetir.</p>
+          <p><strong>No tiene que salir perfecta.</strong> Grabar tu voz es una buena forma de practicar, pero tú decides si quieres hacerlo hoy.</p>
           <div id="recordingTime" class="recorder__time">00:00</div>
           <div class="actions">
             <button id="startRecording" class="btn btn--violet" type="button">🎤 Grabar</button>
@@ -592,7 +619,7 @@ function renderRecorder() {
             <button id="clearRecording" class="btn btn--danger" type="button">🗑️ Borrar</button>
           </div>
           <audio id="audioPlayer" class="hidden" controls></audio>
-          <div id="recordingStatus" class="status">Cuando estés preparada, pulsa Grabar.</div>
+          <div id="recordingStatus" class="status">Cuando estés preparada, puedes grabar o continuar sin grabación.</div>
         </div>
         <div>
           <h3>La frase que practicas</h3>
@@ -608,7 +635,7 @@ function renderRecorder() {
       <div class="actions">
         <button id="previousRecorder" class="btn btn--light" type="button">← Volver</button>
         <button id="finishRecording" class="btn btn--primary" type="button" disabled>Guardar mi práctica</button>
-        <button id="continueWithoutRecording" class="btn btn--light hidden" type="button">Continuar sin grabar</button>
+        <button id="continueWithoutRecording" class="btn btn--light" type="button">Continuar sin grabar</button>
       </div>
     </section>`;
   $("startRecording").onclick = () => startRecording().catch(error => updateRecorderUI(`No pudimos iniciar la grabación: ${error.message}`));
@@ -651,7 +678,18 @@ async function saveSession({ withoutRecording = false } = {}) {
   const button = $("finishRecording") || $("continueWithoutRecording");
   if (button) button.disabled = true;
   try {
-    const finalTranscript = String($("transcript")?.value || transcript || "").trim();
+    const allowedSeedIds = missionAllowedIds();
+    if (
+      misionActiva &&
+      allowedSeedIds.length &&
+      !allowedSeedIds.includes(String(semilla?.id || ""))
+    ) {
+      throw new Error("Esta Semilla no forma parte de la misión activa.");
+    }
+
+    const finalTranscript = withoutRecording
+      ? ""
+      : String($("transcript")?.value || transcript || "").trim();
     const sessionId = await Academia.semillas.guardarSesion({
       semillaId:semilla.id,
       titulo:semilla.titulo,
@@ -683,7 +721,8 @@ async function saveSession({ withoutRecording = false } = {}) {
         atributos:{
           familia:semilla.familia,
           tipoSituacion:semilla.tipoSituacion,
-          nivelApoyo:Number(semilla.nivelApoyo || 1)
+          nivelApoyo:Number(semilla.nivelApoyo || 1),
+          semillasIds:allowedSeedIds
         },
         resultado:{
           titulo:semilla.titulo,
@@ -709,7 +748,7 @@ async function saveSession({ withoutRecording = false } = {}) {
     renderExperience();
     mostrarCelebracion({
       titulo:missionResult?.objetivoAlcanzado ? "¡Misión terminada!" : "¡Semilla plantada!",
-      mensaje:"Hoy has practicado cómo expresar lo que sientes.",
+      mensaje:semilla.cierre?.frase || semilla.cierre?.mensaje || "Has completado una nueva práctica.",
       duracion:2800,
       mostrarGuacamayas:true
     });
