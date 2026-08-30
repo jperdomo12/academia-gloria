@@ -76,6 +76,8 @@ const ACTIVIDADES = Object.freeze([
 let propuestas = [];
 let misionesPreparadas = [];
 let cargando = false;
+let sincronizacionInicialCompleta = false;
+let timerProteccion = null;
 
 function escapar(valor = "") {
   return String(valor)
@@ -565,6 +567,46 @@ async function crearMision(propuesta, button) {
   }
 }
 
+function protegerAccionesGenericas() {
+  const porId = new Map(misionesPreparadas.map(tarea => [tarea.id, tarea]));
+
+  document.querySelectorAll("#listaTareas [data-id]").forEach(control => {
+    const tarea = porId.get(control.dataset.id);
+    if (!tarea) return;
+
+    const accion = control.dataset.action;
+
+    if (accion === "start") {
+      const oculta = tarea.visibleParaAlumno === false;
+      control.classList.toggle("hidden", oculta);
+      if (oculta) {
+        control.setAttribute(
+          "title",
+          "Activa Mostrar en Mi Camino antes de abrir la actividad."
+        );
+      } else {
+        control.removeAttribute("title");
+      }
+    }
+
+    if (
+      accion === "complete" &&
+      !["pendiente_validacion", "completada_pendiente_validacion"].includes(tarea.estado)
+    ) {
+      control.classList.add("hidden");
+      control.setAttribute(
+        "title",
+        "Esta Misión pasa a revisión desde la prueba y su evidencia académica."
+      );
+    }
+  });
+}
+
+function programarProteccion() {
+  window.clearTimeout(timerProteccion);
+  timerProteccion = window.setTimeout(protegerAccionesGenericas, 30);
+}
+
 async function cargarTodo({ silencioso = false } = {}) {
   if (cargando) return;
   cargando = true;
@@ -581,8 +623,10 @@ async function cargarTodo({ silencioso = false } = {}) {
 
   try {
     const meta = await leerDatos();
+    sincronizacionInicialCompleta = true;
     renderMisionesPreparadas();
     renderPropuestas(meta);
+    programarProteccion();
   } catch (error) {
     if (estado) estado.classList.add("hidden");
     if (lista) {
@@ -608,6 +652,21 @@ function inicializar() {
       window.setTimeout(() => cargarTodo(), 0);
     });
   });
+
+  const listaTareas = $("listaTareas");
+  if (listaTareas) {
+    new MutationObserver(() => {
+      programarProteccion();
+      if (!sincronizacionInicialCompleta && !cargando) {
+        window.setTimeout(() => cargarTodo({ silencioso: true }), 80);
+      }
+    }).observe(listaTareas, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  window.setTimeout(() => cargarTodo({ silencioso: true }), 700);
 }
 
 inicializar();
