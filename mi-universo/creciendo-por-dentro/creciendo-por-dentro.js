@@ -10,9 +10,17 @@ const SEED_IMAGE_BASE = new URL(
   "../../assets/imagenes/creciendo-por-dentro/semillas/",
   import.meta.url
 );
+const SEED_IMAGE_FALLBACKS = Object.freeze({
+  "algo-que-consegui-esta-semana": "semilla-005-algo-que-consegui.jpg",
+  "lo-que-descubri-de-mi": "semilla-006-lo-que-descubri-de-mi.jpg"
+});
 
 function seedImageUrl(seed) {
-  const resource = String(seed?.recursos?.imagen || "").trim();
+  const resource = String(
+    seed?.recursos?.imagen ||
+    SEED_IMAGE_FALLBACKS[String(seed?.id || "")] ||
+    ""
+  ).trim();
   if (!resource) return "";
 
   if (
@@ -427,6 +435,10 @@ function normalizePhrase(value = "") {
   return String(value).trim().replace(/[.]+$/,"").replace(/^que\s+/i,"");
 }
 
+function phraseForSummary(stepId) {
+  return normalizePhrase(chosenText(stepId));
+}
+
 function builtResponse() {
   const originalIds = ["describir","expresar","solicitar","consecuencia"];
   const usesOriginalTemplate = originalIds.every(id =>
@@ -444,6 +456,24 @@ function builtResponse() {
     return `Cuando ${
       d.charAt(0).toLowerCase() + d.slice(1)
     }, me siento ${e}. Me gustaría ${s}. Así ${c}.`;
+  }
+
+  if (semilla?.id === "algo-que-consegui-esta-semana") {
+    return [
+      `Esta semana quiero recordar esto: ${phraseForSummary("experiencia")}.`,
+      `Me sentí: ${phraseForSummary("sentimiento")}.`,
+      `Para avanzar hice esto: ${phraseForSummary("comoLoHice")}.`,
+      `Hoy reconozco algo importante de mí: ${phraseForSummary("reconozco")}.`
+    ].join(" ").replace(/\.\./g, ".");
+  }
+
+  if (semilla?.id === "lo-que-descubri-de-mi") {
+    return [
+      `Quiero recordar esto: ${phraseForSummary("recordar")}.`,
+      `Descubrí algo de mí: ${phraseForSummary("aprendi")}.`,
+      `Me sorprendió descubrir esto: ${phraseForSummary("sorpresa")}.`,
+      `Quiero seguir practicando esto: ${phraseForSummary("seguir")}.`
+    ].join(" ").replace(/\.\./g, ".");
   }
 
   const template = String(
@@ -841,7 +871,6 @@ function formatDate(value) {
     new Intl.DateTimeFormat("es-ES",{ dateStyle:"medium", timeStyle:"short" }).format(date);
 }
 
-
 function semillaDeSesion(item = {}) {
   const id = String(item.semillaId || "").trim();
   return catalogo.semillas.find(seed => String(seed.id) === id) || null;
@@ -947,8 +976,13 @@ async function showHistory() {
   $("historyStatus").textContent = "Cargando tu jardín...";
   try {
     await loadSavedSessions();
-    const sessionFilter = params.get("sesionId");
-    const list = sessionFilter ? sesiones.filter(item => item.id === sessionFilter) : sesiones;
+    const sessionFilter = String(params.get("sesionId") || "").trim();
+    const missionFilter = String(params.get("misionId") || "").trim();
+    const list = sessionFilter
+      ? sesiones.filter(item => item.id === sessionFilter)
+      : missionFilter
+        ? sesiones.filter(item => String(item.misionId || "") === missionFilter)
+        : sesiones;
     if (!list.length) {
       $("historyStatus").textContent = "Todavía no hay Semillas guardadas. Tu primer brote está esperando 🌱";
       $("historyList").innerHTML = "";
