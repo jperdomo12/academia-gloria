@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.2 |
+| **Versión del documento** | 1.3 |
 | **Estado** | Activo |
-| **Última actualización** | 29/08/2026 |
+| **Última actualización** | 30/08/2026 |
 | **Responsables** | Juan Perdomo + IA |
 | **Ámbito** | Evolución funcional y prioridades de producto |
 
@@ -19,6 +19,7 @@
 | 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
 | 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
 | 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; reconoce la persistencia existente de Detectives y mantiene como pendiente su uso para propuestas de refuerzo; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
+| 1.3 | 30/08/2026 | Juan Perdomo + IA | Registra como implementadas y validadas las propuestas de refuerzo de Detectives y de pruebas académicas de 6.º. Consolida el patrón Evidencia → Observación → Propuesta → Revisión humana → Misión, mantiene la activación familiar antes de mostrar la Misión en Mi Camino y desplaza el siguiente foco funcional hacia la expansión curricular progresiva de 6.º. |
 
 ---
 
@@ -98,9 +99,9 @@ Implementado durante agosto de 2026:
 
 Esta evolución adelanta parcialmente la antigua fase de colaboración profesional y permisos.
 
-## 3.3 Estado funcional actualizado al 29/08/2026
+## 3.3 Estado funcional actualizado al 30/08/2026
 
-El uso y validación posteriores a v1.1 permiten actualizar las siguientes capacidades:
+El uso y validación posteriores a v1.2 permiten actualizar las siguientes capacidades:
 
 - **Creciendo por Dentro:** ✅ Listo.
 - **Biblioteca:** ✅ Listo.
@@ -110,11 +111,11 @@ El uso y validación posteriores a v1.1 permiten actualizar las siguientes capac
 - **Persistencia de pruebas académicas:** ✅ Base implementada y validada con Puente y Fracciones.
 - **Resultado académico histórico:** ✅ Implementado y validado como consulta de solo lectura.
 - **Historial y sesiones de Detectives:** ✅ Base implementada en Firestore.
-- **Creación asistida de Misiones:** 🚧 En progreso; Mi Rincón de Lectura ya aporta una referencia real.
-- **Observaciones / Propuestas de refuerzo:** 🚧 En progreso.
+- **Detectives → propuestas/Misiones de refuerzo:** ✅ Base implementada y validada.
+- **Pruebas académicas → propuestas/Misiones de refuerzo:** ✅ Base implementada y validada para Puente y Fracciones de 6.º.
+- **Creación asistida de Misiones:** 🚧 En progreso; Mi Rincón de Lectura, Detectives y Repaso Académico ya aportan referencias reales.
+- **Observaciones / Propuestas de refuerzo:** 🚧 Patrón común ya validado en tres orígenes; evolución progresiva por motor.
 - **Estructura de 6.º de Primaria:** 🚧 En progreso avanzado.
-- **Detectives → propuestas/Misiones de refuerzo:** ⏳ Pendiente prioritario.
-- **Pruebas académicas → propuestas/Misiones de refuerzo:** ⏳ Pendiente prioritario.
 
 La actualización de estos estados **no declara cerradas** las líneas técnicas P0 de Identidad, Auditoría y certificación del núcleo definidas a continuación. Esas líneas conservan su detalle y estado hasta una validación específica.
 
@@ -269,11 +270,17 @@ Misión / acción
 
 ### Estado
 
-🚧 En progreso
+🚧 Patrón base validado · evolución progresiva
 
-### Referencia disponible
+### Referencias disponibles
 
-Mi Rincón de Lectura ya demuestra que la Academia puede utilizar resultados reales para identificar necesidades concretas y preparar acciones/Misiones.
+La Academia ya dispone de tres aplicaciones reales del patrón:
+
+- **Mi Rincón de Lectura:** palabras observadas → propuesta → Misión de pronunciación;
+- **Detectives de Problemas:** señales repetidas o decisión familiar → foco → Misión de refuerzo;
+- **Repaso Académico de 6.º:** mapa formativo de la prueba → bloque a reforzar → Misión académica preparada.
+
+En los tres casos la propuesta no sustituye la decisión humana: la familia conserva el control sobre cuándo la Misión se muestra en Mi Camino.
 
 ---
 
@@ -294,7 +301,7 @@ Dato / observación
 
 ### Estado
 
-🚧 En progreso
+🚧 Base aplicada en varios motores · evolución progresiva
 
 ---
 
@@ -332,7 +339,7 @@ La prioridad será adaptar progresivamente la Academia a:
 
 ### Base ya validada
 
-A 29/08/2026 existen como referencias estructuradas:
+A 30/08/2026 existen como referencias estructuradas:
 
 - portal navegable de 6.º;
 - Matemáticas como primera asignatura en expansión;
@@ -342,6 +349,8 @@ A 29/08/2026 existen como referencias estructuradas:
 - contrato compartido `sesion-academica-v1`;
 - evidencia `sesion_academica` cuando existe una Misión;
 - resultado académico histórico de solo lectura;
+- propuestas de refuerzo derivadas del mapa formativo de la sesión más reciente;
+- preparación de Misiones académicas de refuerzo con activación familiar;
 - integración con Persona Activa y `Volver` histórico;
 - reglas Firestore de `sesionesAcademicas` publicadas y validadas.
 
@@ -382,7 +391,7 @@ También permite consultar el historial de historias y las sesiones de una histo
 
 ✅ Base implementada.
 
-La evolución pendiente no es crear el historial, sino **utilizar sus datos para generar observaciones y propuestas de refuerzo**.
+Sus datos ya se utilizan para generar observaciones prudentes y propuestas de refuerzo sin convertir un único error en una conclusión global.
 
 ---
 
@@ -441,9 +450,11 @@ Utilizar fallos, intentos, pasos y resultados de Detectives para proponer accion
 
 No inferir una dificultad global a partir de un único error. Las propuestas deben basarse en datos observables y expresarse como oportunidades concretas de práctica.
 
+La primera versión implementada utiliza señales repetidas en historias distintas del mismo nivel y permite que una decisión familiar explícita de **Reforzar** actúe como señal suficiente para una historia concreta.
+
 ### Estado
 
-⏳ Pendiente prioritario
+✅ Base implementada y validada
 
 ---
 
@@ -463,7 +474,7 @@ Datos disponibles en las referencias actuales:
 - sesión histórica;
 - relación con Misión cuando existe.
 
-### Flujo previsto
+### Flujo vigente
 
 ```text
 Prueba persistida
@@ -475,9 +486,21 @@ Prueba persistida
 → nueva oportunidad de aplicación
 ```
 
+### Primera regla implementada
+
+En **Puente de 5.º a 6.º** y **Fracciones**:
+
+- se analiza únicamente la sesión de aprendizaje más reciente de cada actividad;
+- una Vista previa no participa porque no persiste sesión académica;
+- solo los bloques cuyo mapa formativo indica `reforzar` generan propuesta automática;
+- un bloque `camino` se conserva como observación, pero no crea propuesta automática en esta primera versión;
+- la clasificación conserva por separado la ruta donde ocurrió y el foco concreto a reforzar;
+- la Misión se prepara inicialmente oculta y la familia decide cuándo mostrarla en Mi Camino;
+- la nueva ejecución reutiliza el contrato normal de Repaso Académico y evidencia `sesion_academica`.
+
 ### Estado
 
-⏳ Pendiente prioritario
+✅ Base implementada y validada para Puente y Fracciones de 6.º
 
 ---
 
@@ -641,8 +664,9 @@ La visión permanece abierta, pero cada ampliación deberá demostrar valor real
 ```text
 AHORA
 ────────────────────────────────────────────
-P0  Consolidar Observaciones / Propuestas de Refuerzo
+P0  Consolidar el patrón común de Observaciones / Propuestas de Refuerzo
 P0  Consolidar Creación asistida de Misiones
+P1  Continuar incorporación progresiva de 6.º
 
 LÍNEAS TÉCNICAS QUE CONSERVAN VIGENCIA
 ────────────────────────────────────────────
@@ -650,15 +674,9 @@ P0  Cerrar Identidad, Usuarios y Auditoría · en cierre
 P0  Revisar auditoría de Tareas / Misiones · siguiente bloque técnico
 P0  Certificar núcleo multi-persona · próximo
 
-SIGUIENTE
+SIGUIENTE EXPANSIÓN CURRICULAR
 ────────────────────────────────────────────
-P1  Detectives → observaciones y Misiones de refuerzo
-P1  Pruebas académicas → propuestas de refuerzo
-P1  Continuar incorporación progresiva de 6.º
-
-EN PARALELO SEGÚN NECESIDAD REAL DEL COLEGIO
-────────────────────────────────────────────
-P1  Nuevos temas de Matemáticas
+P1  Nuevos temas de Matemáticas según necesidad real
 P1  Science y siguientes asignaturas
 P1  Calendario académico 2026–2027 cuando corresponda
 
@@ -685,17 +703,17 @@ P3  IA educativa
 | Base | Persistencia de pruebas académicas | ✅ Implementada y validada en Puente/Fracciones |
 | P0 | Cierre Gestión de Usuarios / Identidad / Auditoría | 🚧 En cierre |
 | P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico |
-| P0 | Actualización documental estratégica | ✅ Actualizada al 29/08/2026 |
+| P0 | Actualización documental estratégica | ✅ Actualizada al 30/08/2026 |
 | P0 | Certificación del núcleo multi-persona | 🔜 Próximo |
-| P0 | Observaciones / Propuestas de Refuerzo | 🚧 En progreso |
-| P0 | Creación asistida de Misiones | 🚧 En progreso |
+| P0 | Observaciones / Propuestas de Refuerzo | 🚧 Patrón base validado · evolución progresiva |
+| P0 | Creación asistida de Misiones | 🚧 Base aplicada · evolución progresiva |
 | P1 | Academia 6.º de Primaria | 🚧 En progreso avanzado |
 | P1 | Calendario 2026–2027 | ⏳ Según necesidad del curso |
 | P1 | Historial mínimo de Detectives | ✅ Base implementada |
 | P1 | Evidencias de Misiones / Tareas | ✅ Base implementada · evolución por motor |
 | P1 | Rincón de Lectura → Misiones de refuerzo | ✅ Base lista |
-| P1 | Detectives → propuestas/Misiones | ⏳ Pendiente prioritario |
-| P1 | Pruebas académicas → propuestas/Misiones | ⏳ Pendiente prioritario |
+| P1 | Detectives → propuestas/Misiones | ✅ Base implementada y validada |
+| P1 | Pruebas académicas → propuestas/Misiones | ✅ Base implementada y validada en Puente/Fracciones |
 | P2 | Constancia real | ⏳ Posterior |
 | P2 | Logros reales | ⏳ Posterior |
 | P3 | Panel adulto / profesional | 🔮 Futuro |
