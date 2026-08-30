@@ -1,0 +1,169 @@
+/* Academia Gloria Valentina · Observaciones y Refuerzos · Académicos 6.º */
+
+.refuerzos-academicos-lista{
+  display:grid;
+  gap:12px;
+}
+
+.refuerzo-academico,
+.mision-refuerzo-academico{
+  padding:17px;
+  border:2px solid #dbeafe;
+  border-radius:19px;
+  background:linear-gradient(135deg,#fff,#f8fbff);
+}
+
+.refuerzo-academico__cabecera,
+.mision-refuerzo-academico__cabecera{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.refuerzo-academico__cabecera{
+  justify-content:flex-start;
+}
+
+.refuerzo-academico__icono{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:#eff6ff;
+  font-size:24px;
+}
+
+.refuerzo-academico h4,
+.mision-refuerzo-academico h4{
+  margin:0;
+  color:#1e3a8a;
+  font-size:1.08rem;
+}
+
+.refuerzo-academico__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:8px;
+}
+
+.refuerzo-academico__meta span{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#f8fafc;
+  color:#475569;
+  font-size:.78rem;
+  font-weight:850;
+}
+
+.refuerzo-academico__ruta,
+.refuerzo-academico__foco{
+  display:grid;
+  gap:4px;
+  margin-top:13px;
+  padding:11px 13px;
+  border-radius:14px;
+}
+
+.refuerzo-academico__ruta{
+  background:#f8fafc;
+  color:#475569;
+}
+
+.refuerzo-academico__foco{
+  background:#eff6ff;
+  color:#1e3a8a;
+}
+
+.refuerzo-academico__ruta strong,
+.refuerzo-academico__foco strong{
+  font-size:.76rem;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+.refuerzo-academico__ruta span,
+.refuerzo-academico__foco span{
+  font-weight:800;
+  line-height:1.45;
+}
+
+.refuerzo-academico__observacion{
+  margin:14px 0 0;
+  color:#334155;
+  font-weight:760;
+  line-height:1.55;
+}
+
+.refuerzo-academico__descripcion{
+  margin:8px 0 0;
+  color:#64748b;
+  font-weight:680;
+  line-height:1.5;
+}
+
+.refuerzo-academico__acciones{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:15px;
+}
+
+.refuerzo-academico__acciones small{
+  max-width:62ch;
+  color:#64748b;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.mision-refuerzo-academico{
+  background:#fff;
+}
+
+.mision-refuerzo-academico__estado{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#eff6ff;
+  color:#1d4ed8;
+  font-size:.78rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.mision-refuerzo-academico__visibilidad{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:14px;
+  padding:11px 13px;
+  border-radius:14px;
+  background:#f8fafc;
+  color:#334155;
+  font-weight:850;
+}
+
+.mision-refuerzo-academico__visibilidad input{
+  width:19px;
+  height:19px;
+  accent-color:#2563eb;
+}
+
+@media (max-width:720px){
+  .refuerzo-academico__acciones,
+  .mision-refuerzo-academico__cabecera{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .refuerzo-academico__acciones .btn{
+    width:100%;
+  }
+
+  .mision-refuerzo-academico__estado{
+    align-self:flex-start;
+  }
+}
