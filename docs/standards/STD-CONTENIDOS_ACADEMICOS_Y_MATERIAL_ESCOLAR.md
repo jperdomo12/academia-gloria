@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 29/08/2026 |
+| **Última actualización** | 30/08/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 30/08/2026 | Product Owner + AI Collaborator | Formaliza el **Modo de Incorporación Curricular de una sola instrucción** para 6.º: material + curso/materia/tema como entrada suficiente, trabajo interno sin interacciones administrativas, aclaraciones solo ante bloqueos académicos materiales, entrega `YA PUEDES PROBAR` y cierre posterior a la aprobación mediante auditoría, documentación, PR y merge. Sincroniza además el estado ya implementado de propuestas de refuerzo académico de Puente y Fracciones. |
 | 1.1 | 29/08/2026 | Product Owner + AI Collaborator | Sincroniza el estándar con la implementación validada de Puente y Fracciones: `sesion-academica-v1`, persistencia de pruebas, evidencia de Misión `sesion_academica`, visor histórico de solo lectura, modo Vista previa sin escrituras y compatibilidad de Misiones/temas heredados de 5.º sin migración masiva. Mantiene como pendiente la generación de propuestas de refuerzo desde resultados académicos. |
 | 1.0 | 22/08/2026 | Product Owner + AI Collaborator | Aprobación de la Base Académica de 6.º. Consolida tiempo cognitivo, exigencia sin presión emocional alta, reto primero con apoyo progresivo, reto productivo, foco en el paso actual, comprensión lingüística de problemas, separación entre métricas internas y visibles, pausa estratégica y valoración del proceso. No declara implementación técnica. |
 | 1.0-rc1 | 21/08/2026 | Product Owner + AI Collaborator | Primera consolidación de las pautas para aprendizaje académico estructurado: material escolar como fuente prioritaria, diseño TEL-friendly, estructura modular, selección de recursos, práctica formativa, evidencias, retroalimentación y proceso de incorporación ágil. Primera aplicación prevista: 6.º de Primaria. |
@@ -122,12 +123,12 @@ Entre los patrones ya validados se encuentran:
 - práctica contextualizada;
 - y test de repaso.
 
-A 29/08/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia y Misiones:
+A 30/08/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia, Misiones y propuestas de refuerzo:
 
 - **Puente de 5.º a 6.º**;
 - **Fracciones**.
 
-Ambas utilizan el patrón aprobado de aprendizaje, práctica, prueba final, sesión académica, evidencia de Misión y revisión histórica.
+Ambas utilizan el patrón aprobado de aprendizaje, práctica, prueba final, sesión académica, evidencia de Misión, revisión histórica y continuidad/refuerzo bajo revisión familiar.
 
 ---
 
@@ -795,7 +796,7 @@ La revisión histórica de un resultado es también una operación de **solo lec
 
 ### 12.8 Estado de implementación validado
 
-A 29/08/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
+A 30/08/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
 
 ```text
 Tema Académico
@@ -805,6 +806,8 @@ Tema Académico
 → Misión pendiente de revisión familiar
 → Trabajo realizado
 → Resultado académico histórico de solo lectura
+→ propuesta de refuerzo cuando el mapa formativo lo justifica
+→ revisión/activación familiar
 ```
 
 La evidencia de Misión referencia la sesión mediante `sesionId`; no duplica dentro de la Misión todo el contenido de la ejecución.
@@ -922,9 +925,9 @@ nueva oportunidad de aplicación
 
 ### 14.2 Estado actual de propuestas desde pruebas
 
-La persistencia ya permite conservar resultados y mapa formativo de las pruebas académicas validadas.
+La propuesta asistida de Misiones de refuerzo a partir de resultados académicos está **implementada y validada** en **Puente de 5.º a 6.º** y **Fracciones**.
 
-La **propuesta automática o asistida de nuevas Misiones de refuerzo a partir de esos resultados todavía está pendiente**. Cuando se implemente deberá reutilizar el ciclo común:
+Reutiliza el ciclo común:
 
 ```text
 Datos
@@ -934,7 +937,17 @@ Datos
 → Misión
 ```
 
-No se creará un sistema paralelo exclusivo para exámenes.
+Primera regla vigente:
+
+- se analiza la sesión de aprendizaje más reciente de cada actividad;
+- una Vista previa no participa porque no persiste sesión académica;
+- solo un bloque marcado `reforzar` por el mapa formativo genera propuesta automática;
+- un bloque `camino` se conserva como observación y no genera propuesta automática en esta primera versión;
+- la propuesta separa la ruta curricular donde ocurrió del foco concreto a reforzar;
+- la Misión se prepara inicialmente con **Mostrar en Mi Camino = No**;
+- la familia decide cuándo hacerla visible;
+- la nueva ejecución reutiliza la sesión/evidencia académica normal;
+- y no existe un sistema paralelo exclusivo para exámenes.
 
 ---
 
@@ -1189,27 +1202,188 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] Respeta el origen y retorno contextual cuando corresponde.
 - [ ] Conserva Persona Activa durante la navegación interna cuando aplica.
 - [ ] Reutiliza componentes/servicios existentes antes de crear otros.
+- [ ] Usa el favicon oficial de la Academia en una nueva página funcional.
+- [ ] Los fallos visibles indican la razón cuando es conocida y segura de mostrar.
+- [ ] Las rutas funcionan tanto en validación local como en GitHub Pages.
 
 ---
 
-## 21. Proceso ágil durante 6.º
+## 21. Modo de Incorporación Curricular de una sola instrucción
 
-Una vez aprobado este estándar, el flujo deseado para incorporar nuevo material será:
+### 21.1 Objetivo operativo
+
+La expansión curricular de 6.º debe ser una operación repetible y de intervención mínima para la familia.
+
+En condiciones normales, incorporar un nuevo Tema Académico requiere **dos intervenciones humanas**:
 
 ```text
-1. La familia comparte el material del colegio.
-2. La Academia identifica materia, tema y objetivos.
-3. Se decide qué patrones comunes y recursos específicos necesita.
-4. Se genera el Tema Académico.
-5. Se valida contra el material original.
-6. Se comprueba navegación, práctica y feedback.
-7. Si corresponde, se conecta con sesión/evidencia.
-8. Se entrega el incremental listo para instalar.
-9. El uso real aporta nuevas observaciones.
-10. Solo las lecciones generalizables actualizan este estándar.
+INTERVENCIÓN 1
+Material del colegio + curso · materia · tema + “Incorporar a la Academia”
+
+        ↓
+
+TRABAJO INTERNO DE LA ACADEMIA
+Análisis → diseño → implementación → integración → validación → auditoría
+
+        ↓
+
+“YA PUEDES PROBAR”
+
+        ↓
+
+INTERVENCIÓN 2
+Validación familiar: “Aprobado” o incidencias observadas
+
+        ↓
+
+CIERRE
+Corrección si procede → auditoría final → documentación → PR → merge
 ```
 
-El objetivo es reducir interacciones administrativas, no reducir la calidad del análisis.
+El objetivo es reducir interacciones administrativas **sin reducir el análisis, la fidelidad académica ni la calidad del producto**.
+
+### 21.2 Entrada mínima suficiente
+
+Cuando se adjunta el material del colegio, una instrucción como la siguiente debe considerarse suficiente:
+
+```text
+6.º · Science · The circulatory system. Incorporar a la Academia.
+```
+
+O, por ejemplo:
+
+```text
+6.º · Matemáticas · Decimales. Incorporar a la Academia.
+```
+
+La familia no debe tener que especificar en cada incorporación:
+
+- rutas de archivos;
+- plantilla técnica;
+- estructura HTML/CSS/JavaScript;
+- documentación que debe revisarse;
+- estándares que deben aplicarse;
+- componentes compartidos que deben reutilizarse;
+- integración con Misiones;
+- persistencia;
+- favicon;
+- reglas de `Volver`;
+- Persona Activa;
+- Vista previa;
+- histórico;
+- tratamiento de errores;
+- rama Git;
+- validaciones técnicas;
+- PR o merge.
+
+Esas responsabilidades pertenecen al proceso de incorporación.
+
+### 21.3 Trabajo interno obligatorio
+
+Tras recibir la entrada mínima, antes de pedir cualquier aclaración o modificar código, se debe:
+
+1. revisar `AGENTS.md` y la documentación propietaria vigente;
+2. revisar la estructura, código, configuración y componentes reales de la materia/curso;
+3. buscar referencias existentes reutilizables antes de crear estructura nueva;
+4. analizar completamente el material escolar en el alcance necesario;
+5. identificar hechos del material, inferencias y enriquecimientos de la Academia;
+6. definir objetivos, conceptos, vocabulario, procedimientos y recursos que no deben perderse;
+7. diseñar la experiencia adecuada al contenido sin convertir el estándar en una plantilla visual rígida;
+8. implementar con los patrones compartidos vigentes;
+9. integrar, cuando corresponda, Sesión de aprendizaje, Vista previa, Misiones, evidencia, histórico y refuerzo;
+10. comprobar favicon, navegación, `Volver`, Persona Activa, rutas local/GitHub Pages y mensajes de error;
+11. validar fidelidad académica contra el material original;
+12. realizar las comprobaciones técnicas proporcionales;
+13. auditar el diff y confirmar que no se mezcló trabajo ajeno al Tema.
+
+La incorporación no debe delegar al usuario decisiones técnicas que puedan resolverse aplicando la documentación y la arquitectura vigentes.
+
+### 21.4 Regla de no interrupción
+
+No se pedirán aclaraciones por detalles secundarios que puedan resolverse de forma segura con el material y los estándares existentes.
+
+Solo se interrumpirá el flujo cuando falte información que pueda cambiar materialmente:
+
+- el contenido que debe enseñarse;
+- el procedimiento esperado por el colegio;
+- el nivel de dificultad;
+- el formato de evaluación;
+- una respuesta que deba ser fiel a la fuente;
+- o una decisión de producto/arquitectura que no esté ya aprobada.
+
+Si falta una imagen secundaria, un ejemplo complementario, una formulación de apoyo o un detalle visual no crítico, el trabajo debe continuar utilizando una solución proporcional y reversible.
+
+### 21.5 Resultado antes de la validación familiar
+
+No se solicitará al usuario revisar borradores técnicos intermedios cuando el alcance esté claro.
+
+La primera devolución operativa debe producirse cuando exista un Tema suficientemente completo para validar y debe ser breve:
+
+```text
+YA PUEDES PROBAR
+```
+
+La indicación de prueba señalará únicamente los puntos necesarios para validar el comportamiento y la experiencia.
+
+El usuario debe validar el producto, no descubrir defectos básicos que podían detectarse durante la construcción y auditoría interna.
+
+### 21.6 Cierre después de la aprobación
+
+Cuando la validación familiar sea positiva, el cierre normal será:
+
+```text
+Aprobado
+↓
+Auditoría final
+↓
+Actualización documental solo cuando corresponda
+↓
+PR
+↓
+Revisión del diff remoto
+↓
+Merge a main
+↓
+Cierre
+```
+
+No se solicitarán confirmaciones redundantes entre estos pasos cuando el bloque ya haya sido aprobado y el diff final permanezca dentro del alcance autorizado.
+
+### 21.7 Un Tema nuevo no es un proyecto de arquitectura
+
+> **La incorporación de un Tema Académico no debe convertirse, por defecto, en una reconstrucción de la Academia.**
+
+Si durante la incorporación aparece un defecto genérico del motor, navegación, persistencia, Misiones u otra infraestructura compartida:
+
+- primero se determinará si realmente bloquea el Tema;
+- si no lo bloquea, se registrará/tratará como trabajo técnico independiente;
+- si lo bloquea, se aplicará el cambio compartido mínimo necesario y se justificará explícitamente;
+- no se crearán arquitecturas, colecciones, servicios o estructuras paralelas solo para resolver un Tema concreto.
+
+La medida de éxito del proceso no es únicamente que el Tema actual funcione: también debe facilitar que **el siguiente Tema sea más rápido y seguro de incorporar**.
+
+### 21.8 Contrato de interacción esperado
+
+La interacción ideal es:
+
+```text
+FAMILIA
+“6.º · Materia · Tema. Incorporar a la Academia.”
++ material escolar
+
+ACADEMIA / AI COLLABORATOR
+[trabajo interno sin interacción administrativa]
+
+ACADEMIA / AI COLLABORATOR
+“YA PUEDES PROBAR”
+
+FAMILIA
+“Aprobado.”
+
+o comunica una incidencia concreta
+```
+
+Este es el procedimiento por defecto para la expansión curricular de 6.º y debe reutilizarse en cursos posteriores mientras continúe siendo válido.
 
 ---
 
@@ -1230,6 +1404,8 @@ Si un tema de 5.º vuelve a ser intervenido, podrán incorporarse progresivament
 Los temas nuevos de 6.º aplicarán este estándar desde su nacimiento.
 
 Cuando un Tema Académico incluya una prueba final diseñada para producir datos útiles, deberá reutilizar el contrato compartido de sesión/evidencia en lugar de crear persistencia propia.
+
+La incorporación seguirá por defecto el **Modo de Incorporación Curricular de una sola instrucción** definido en la sección 21.
 
 ### 22.3 Cursos posteriores
 
@@ -1263,6 +1439,10 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-018 | Vista previa y revisión histórica son experiencias sin escritura sobre sesión, evidencia o progreso. | Aprobada y validada |
 | CA-019 | Las Misiones existentes no se recrean por incorporar persistencia; una ejecución futura puede usar el contrato vigente y no se inventan sesiones retrospectivas. | Aprobada y validada |
 | CA-020 | Los recursos heredados de 5.º pueden seguir asignándose como Misiones aunque no produzcan evidencia académica automática. | Aprobada |
+| CA-021 | Para 6.º, material escolar + curso/materia/tema + la instrucción “Incorporar a la Academia” constituyen la entrada normal suficiente para iniciar una incorporación curricular. | Aprobada |
+| CA-022 | El proceso no interrumpirá por detalles secundarios; solo solicitará aclaración cuando falte información que cambie materialmente el contenido, procedimiento, nivel, evaluación, fidelidad a la fuente o una decisión de arquitectura no aprobada. | Aprobada |
+| CA-023 | Un nuevo Tema no justifica por sí solo nueva arquitectura; los defectos genéricos se separarán como trabajo técnico salvo que bloqueen el Tema. | Aprobada |
+| CA-024 | Tras la validación familiar positiva, auditoría final, documentación aplicable, PR y merge forman parte del cierre normal sin confirmaciones redundantes si el alcance no cambia. | Aprobada |
 
 ---
 
@@ -1270,7 +1450,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 
 ### Implementado y validado
 
-A 29/08/2026 están construidos y probados:
+A 30/08/2026 están construidos y probados:
 
 1. Temas Académicos de referencia: Puente y Fracciones.
 2. Contrato compartido `sesion-academica-v1`.
@@ -1282,12 +1462,16 @@ A 29/08/2026 están construidos y probados:
 8. Resultado histórico de solo lectura.
 9. Compatibilidad con Misiones académicas creadas antes de esta persistencia.
 10. Reglas de acceso a `sesionesAcademicas` desplegadas y validadas para Persona Activa relacionada.
+11. Propuestas de refuerzo a partir del mapa formativo de la sesión académica más reciente en Puente y Fracciones.
+12. Preparación de Misiones académicas de refuerzo bajo revisión/activación familiar, sin persistencia paralela.
+13. Protección para que una Misión académica de refuerzo oculta no se abra ni se cierre manualmente saltándose su sesión/evidencia.
+14. **Modo de Incorporación Curricular de una sola instrucción** aprobado como procedimiento operativo para nuevos temas de 6.º.
 
 ### Pendiente de evolución
 
-1. Proponer acciones de refuerzo a partir de resultados académicos persistidos.
-2. Permitir que esas propuestas preparen o creen Misiones bajo revisión humana, reutilizando el modelo común de Misiones.
-3. Extender progresivamente el patrón a los nuevos temas y materias de 6.º cuando corresponda.
+1. Aplicar el modo de incorporación a nuevos temas y materias reales de 6.º y aprender de su uso repetido.
+2. Extender progresivamente el patrón de sesión/evidencia/refuerzo cuando los nuevos temas produzcan datos útiles.
+3. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.
 
 La existencia de persistencia no obliga a modernizar de forma masiva los recursos de 5.º.
 
@@ -1297,10 +1481,11 @@ La existencia de persistencia no obliga a modernizar de forma masiva los recurso
 
 | Campo | Valor |
 |---|---|
-| **Pregunta resuelta** | Cómo transformar material escolar en Temas Académicos consistentes, adaptados, medibles y reutilizables. |
+| **Pregunta resuelta** | Cómo transformar material escolar en Temas Académicos consistentes, adaptados, medibles y reutilizables con mínima intervención administrativa de la familia. |
 | **Primera aplicación** | 6.º de Primaria. |
 | **Reutilización** | Aprovechar patrones validados de 5.º y la arquitectura existente de Motores, Misiones y Evidencias. |
 | **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
 | **Persistencia** | `sesion-academica-v1`: registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
 | **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
-| **Estado** | Activo; implementación base validada con Puente y Fracciones y expansión progresiva hacia nuevos temas de 6.º. |
+| **Operación curricular** | Material + curso/materia/tema + “Incorporar a la Academia” → trabajo interno → `YA PUEDES PROBAR` → aprobación/incidencia → cierre técnico. |
+| **Estado** | Activo; implementación base validada con Puente y Fracciones y procedimiento de incorporación de una sola instrucción aprobado para la expansión progresiva de 6.º. |
