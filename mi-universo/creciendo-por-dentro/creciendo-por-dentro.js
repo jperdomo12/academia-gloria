@@ -281,6 +281,7 @@ function progressCount() {
 function renderProgress() {
   const total = progressCount();
   const current = Math.max(0, stepIndex + 2);
+  $("stepProgress").style.gridTemplateColumns = `repeat(${Math.max(1, total)}, 1fr)`;
   $("stepProgress").innerHTML = Array.from({ length:total }, (_, index) =>
     `<span class="progress__item ${index < current ? "done" : index === current ? "active" : ""}"></span>`
   ).join("");
@@ -519,7 +520,7 @@ function updateRecorderUI(message = "") {
     player.classList.toggle("hidden", !audioData);
     if (audioData) player.src = audioData;
   }
-  if (status) status.textContent = message || (audioData ? "Tu grabación está lista. Puedes escucharla o repetir." : "Cuando estés preparada, pulsa Grabar.");
+  if (status) status.textContent = message || (audioData ? "Tu grabación está lista. Puedes escucharla o repetir." : "Cuando estés preparada, puedes grabar o continuar sin grabación.");
   const next = $("finishRecording");
   if (next) next.disabled = !audioData;
 }
@@ -527,7 +528,6 @@ function updateRecorderUI(message = "") {
 async function startRecording() {
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     updateRecorderUI("Este navegador no permite grabar. Puedes continuar sin grabación.");
-    $("continueWithoutRecording")?.classList.remove("hidden");
     return;
   }
   const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
@@ -570,6 +570,15 @@ function stopRecording() {
 }
 
 function clearRecording() {
+  if (!audioData) {
+    updateRecorderUI("Todavía no hay una grabación guardada para borrar.");
+    return;
+  }
+
+  if (!window.confirm("¿Quieres borrar esta grabación y volver a intentarlo?")) {
+    return;
+  }
+
   audioData = "";
   audioDuration = 0;
   transcript = "";
@@ -584,7 +593,7 @@ function renderRecorder() {
       <h2>Practica tu frase</h2>
       <div class="recording">
         <div class="recorder">
-          <p><strong>No tiene que salir perfecta.</strong> Puedes escuchar, grabar y repetir.</p>
+          <p><strong>No tiene que salir perfecta.</strong> Grabar tu voz es una buena forma de practicar, pero tú decides si quieres hacerlo hoy.</p>
           <div id="recordingTime" class="recorder__time">00:00</div>
           <div class="actions">
             <button id="startRecording" class="btn btn--violet" type="button">🎤 Grabar</button>
@@ -592,7 +601,7 @@ function renderRecorder() {
             <button id="clearRecording" class="btn btn--danger" type="button">🗑️ Borrar</button>
           </div>
           <audio id="audioPlayer" class="hidden" controls></audio>
-          <div id="recordingStatus" class="status">Cuando estés preparada, pulsa Grabar.</div>
+          <div id="recordingStatus" class="status">Cuando estés preparada, puedes grabar o continuar sin grabación.</div>
         </div>
         <div>
           <h3>La frase que practicas</h3>
@@ -608,7 +617,7 @@ function renderRecorder() {
       <div class="actions">
         <button id="previousRecorder" class="btn btn--light" type="button">← Volver</button>
         <button id="finishRecording" class="btn btn--primary" type="button" disabled>Guardar mi práctica</button>
-        <button id="continueWithoutRecording" class="btn btn--light hidden" type="button">Continuar sin grabar</button>
+        <button id="continueWithoutRecording" class="btn btn--light" type="button">Continuar sin grabar</button>
       </div>
     </section>`;
   $("startRecording").onclick = () => startRecording().catch(error => updateRecorderUI(`No pudimos iniciar la grabación: ${error.message}`));
@@ -648,10 +657,24 @@ function basicAnalysis() {
 }
 
 async function saveSession({ withoutRecording = false } = {}) {
-  const button = $("finishRecording") || $("continueWithoutRecording");
-  if (button) button.disabled = true;
+  const finishButton = $("finishRecording");
+  const continueButton = $("continueWithoutRecording");
+  if (finishButton) finishButton.disabled = true;
+  if (continueButton) continueButton.disabled = true;
+
   try {
-    const finalTranscript = String($("transcript")?.value || transcript || "").trim();
+    const allowedSeedIds = missionAllowedIds();
+    if (
+      misionActiva &&
+      allowedSeedIds.length &&
+      !allowedSeedIds.includes(String(semilla?.id || ""))
+    ) {
+      throw new Error("Esta Semilla no forma parte de la misión activa.");
+    }
+
+    const finalTranscript = withoutRecording
+      ? ""
+      : String($("transcript")?.value || transcript || "").trim();
     const sessionId = await Academia.semillas.guardarSesion({
       semillaId:semilla.id,
       titulo:semilla.titulo,
@@ -679,14 +702,15 @@ async function saveSession({ withoutRecording = false } = {}) {
         modulo:"creciendo-por-dentro",
         tipo:"semilla_completada",
         actividadId:semilla.id,
-        sesionId:sessionId,
         atributos:{
           familia:semilla.familia,
           tipoSituacion:semilla.tipoSituacion,
-          nivelApoyo:Number(semilla.nivelApoyo || 1)
+          nivelApoyo:Number(semilla.nivelApoyo || 1),
+          semillasIds:allowedSeedIds
         },
         resultado:{
           titulo:semilla.titulo,
+          sesionId:sessionId,
           intentos:recordingAttempts,
           duracionAudio:withoutRecording ? 0 : audioDuration,
           grabacionConfirmada:!withoutRecording && Boolean(audioData)
@@ -709,14 +733,15 @@ async function saveSession({ withoutRecording = false } = {}) {
     renderExperience();
     mostrarCelebracion({
       titulo:missionResult?.objetivoAlcanzado ? "¡Misión terminada!" : "¡Semilla plantada!",
-      mensaje:"Hoy has practicado cómo expresar lo que sientes.",
+      mensaje:semilla.cierre?.frase || semilla.cierre?.mensaje || "Has completado una nueva práctica.",
       duracion:2800,
       mostrarGuacamayas:true
     });
   } catch (error) {
     console.error(error);
     updateRecorderUI(`No pudimos guardar la práctica: ${error.message}`);
-    if (button) button.disabled = false;
+    if (finishButton) finishButton.disabled = !audioData;
+    if (continueButton) continueButton.disabled = false;
   }
 }
 
