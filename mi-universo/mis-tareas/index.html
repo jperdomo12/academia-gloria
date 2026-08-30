@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="./mis-tareas.css">
   <link rel="stylesheet" href="./refuerzos-pronunciacion.css">
+  <link rel="stylesheet" href="./refuerzos-detectives.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -112,8 +113,8 @@
           <span class="eyebrow">Acompañamiento</span>
           <h2 id="tituloRefuerzos">🌱 Observaciones y refuerzos</h2>
           <p>
-            La Academia reúne palabras detectadas en Misiones anteriores de
-            Mi Rincón de Lectura para preparar prácticas específicas de pronunciación.
+            La Academia reúne señales observables de actividades anteriores
+            para ayudarte a decidir qué conviene practicar de nuevo.
           </p>
         </div>
       </div>
@@ -121,13 +122,46 @@
       <aside class="superficie refuerzo-info">
         <span class="refuerzo-info__icono" aria-hidden="true">🦜</span>
         <div>
-          <strong>La Academia propone y crea la Misión; la familia controla cuándo aparece en Mi Camino.</strong>
+          <strong>La Academia propone y prepara la Misión; la familia controla cuándo aparece en Mi Camino.</strong>
           <p>
-            Toda nueva Misión de pronunciación se crea inicialmente con
+            Toda nueva Misión de refuerzo se crea inicialmente con
             <strong>Mostrar en Mi Camino = No</strong>.
           </p>
         </div>
       </aside>
+
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloRefuerzosDetectives">
+        <div class="refuerzo-bloque__cabecera">
+          <div>
+            <h3 id="tituloRefuerzosDetectives">🧩 Detectives · propuestas de refuerzo</h3>
+            <p>
+              Una propuesta automática necesita una señal repetida en al menos dos historias
+              distintas del mismo nivel. Una historia aislada solo puede proponer refuerzo
+              cuando la familia la haya marcado expresamente como “reforzar”.
+            </p>
+          </div>
+          <button id="actualizarRefuerzosDetectives" class="btn secundaria" type="button">
+            ↻ Actualizar
+          </button>
+        </div>
+
+        <div id="estadoRefuerzosDetectives" class="estado-carga" aria-live="polite">
+          Abre esta sección para revisar las propuestas de Detectives.
+        </div>
+        <div id="listaRefuerzosDetectives" class="refuerzos-detectives-lista"></div>
+      </section>
+
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloMisionesRefuerzoDetectives">
+        <div class="refuerzo-bloque__cabecera">
+          <div>
+            <h3 id="tituloMisionesRefuerzoDetectives">📋 Misiones de Detectives preparadas</h3>
+            <p>
+              Revisa el foco y decide cuándo debe mostrarse cada Misión en Mi Camino.
+            </p>
+          </div>
+        </div>
+        <div id="listaMisionesRefuerzoDetectives" class="misiones-refuerzo-detectives-lista"></div>
+      </section>
 
       <section class="superficie refuerzo-bloque" aria-labelledby="tituloPalabrasSugeridas">
         <div class="refuerzo-bloque__cabecera">
@@ -852,6 +886,7 @@
   </script>
 
   <script type="module" src="./mis-tareas.js"></script>
+  <script type="module" src="./refuerzos-detectives.js"></script>
   <script type="module" src="./refuerzos-pronunciacion.js"></script>
 </body>
 </html>
