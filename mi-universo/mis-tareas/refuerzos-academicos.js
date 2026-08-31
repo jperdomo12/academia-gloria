@@ -7,7 +7,7 @@ import "./mision-libre.js";
 
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
-const MINIMO_SESIONES_CONFIRMACION = 2;
+const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
   {
@@ -109,6 +109,10 @@ function porcentajeError(valor) {
   return Math.round(Math.max(0, Math.min(1, numero(valor))) * 100);
 }
 
+function plural(cantidad, singular, pluralTexto) {
+  return cantidad === 1 ? singular : pluralTexto;
+}
+
 function estadoCerrado(tarea = {}) {
   return ["completada", "cancelada"].includes(String(tarea.estado || ""));
 }
@@ -140,6 +144,14 @@ function rutaTexto(actividad) {
   return `Mis Cursos → ${actividad.curso} → ${actividad.materia} → ${actividad.titulo}`;
 }
 
+function respuestasBloqueSesion(sesion = {}, bloqueId = "") {
+  const respuestas = Array.isArray(sesion.respuestas) ? sesion.respuestas : [];
+  return respuestas.filter(respuesta =>
+    String(respuesta?.bloqueId || "").trim() === bloqueId &&
+    typeof respuesta?.correcta === "boolean"
+  );
+}
+
 function resumenBloqueSesion(sesion = {}, bloqueId = "") {
   const porBloque = Array.isArray(sesion?.resumen?.porBloque)
     ? sesion.resumen.porBloque
@@ -154,14 +166,11 @@ function resumenBloqueSesion(sesion = {}, bloqueId = "") {
   if (!total) return null;
 
   const correctas = Math.max(0, Math.min(total, numero(item.correctas)));
-  const incorrectas = Math.max(0, total - correctas);
 
   return {
     estado: String(item.estado || "").trim(),
     correctas,
-    incorrectas,
-    total,
-    proporcionError: incorrectas / total
+    total
   };
 }
 
@@ -225,9 +234,9 @@ function crearSeccionesBase() {
                 <h3 id="tituloRefuerzosAcademicos">📘 Propuestas desde pruebas académicas</h3>
                 <p>
                   La Academia revisa hasta las ${MAXIMO_SESIONES_ANALISIS} sesiones de aprendizaje más recientes por actividad.
-                  Una necesidad se confirma cuando el mismo bloque aparece como “Conviene reforzar”
-                  en al menos ${MINIMO_SESIONES_CONFIRMACION} sesiones y la sesión más reciente mantiene esa señal.
-                  La proporción media de respuestas incorrectas determina la prioridad.
+                  Una necesidad se confirma cuando el mismo bloque acumula al menos
+                  ${MINIMO_SENALES_CONFIRMACION} respuestas incorrectas y la sesión más reciente todavía muestra dificultad.
+                  La proporción de respuestas incorrectas determina la prioridad; la cantidad de repeticiones no la aumenta.
                 </p>
               </div>
               <button id="actualizarRefuerzosAcademicos" class="btn secundaria" type="button">
@@ -270,36 +279,42 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
 
     Object.entries(actividad.bloques).forEach(([bloqueId, bloque]) => {
       const reciente = resumenBloqueSesion(sesionReciente, bloqueId);
-      if (!reciente || reciente.estado !== "reforzar") return;
+      const respuestasRecientes = respuestasBloqueSesion(sesionReciente, bloqueId);
+      const erroresRecientes = respuestasRecientes.filter(respuesta => respuesta.correcta === false);
 
-      const soportes = sesiones
-        .map(sesion => {
-          const resumen = resumenBloqueSesion(sesion, bloqueId);
-          if (!resumen || resumen.estado !== "reforzar") return null;
+      if (
+        !reciente ||
+        !["camino", "reforzar"].includes(reciente.estado) ||
+        !erroresRecientes.length
+      ) {
+        return;
+      }
 
-          return {
-            sesionId: String(sesion.id || ""),
-            completadaEn: sesion.completadaEn || sesion.updatedAt || sesion.finCliente || null,
-            ...resumen
-          };
-        })
-        .filter(Boolean);
+      const observaciones = sesiones.flatMap(sesion => {
+        const completadaEn = sesion.completadaEn || sesion.updatedAt || sesion.finCliente || null;
+        return respuestasBloqueSesion(sesion, bloqueId).map(respuesta => ({
+          sesionId: String(sesion.id || ""),
+          completadaEn,
+          preguntaId: String(respuesta.preguntaId || ""),
+          conceptoId: String(respuesta.conceptoId || ""),
+          correcta: respuesta.correcta === true
+        }));
+      });
+      const senales = observaciones.filter(observacion => observacion.correcta === false);
 
-      if (soportes.length < MINIMO_SESIONES_CONFIRMACION) return;
+      if (senales.length < MINIMO_SENALES_CONFIRMACION || !observaciones.length) return;
 
       const clave = clavePropuesta(actividad.actividadId, bloqueId);
       const yaPreparada = activas.some(tarea => {
         const cfg = configuracionRefuerzo(tarea);
         return clavePropuesta(cfg.actividadId, cfg.bloqueId) === clave;
       });
-      const promedioError = soportes.reduce(
-        (total, soporte) => total + soporte.proporcionError,
-        0
-      ) / soportes.length;
-      const ultimaSenalEn = soportes.reduce(
-        (ultima, soporte) => Math.max(ultima, marcaTiempo(soporte.completadaEn)),
+      const proporcionError = senales.length / observaciones.length;
+      const ultimaSenalEn = senales.reduce(
+        (ultima, senal) => Math.max(ultima, marcaTiempo(senal.completadaEn)),
         0
       );
+      const sesionesConSenal = new Set(senales.map(senal => senal.sesionId)).size;
 
       resultado.push({
         clave,
@@ -307,10 +322,12 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
         bloqueId,
         bloque,
         sesionId: String(sesionReciente.id || ""),
+        estadoReciente: reciente.estado,
         correctas: reciente.correctas,
         total: reciente.total,
-        soportes,
-        promedioError,
+        senales,
+        sesionesConSenal,
+        proporcionError,
         ultimaSenalEn,
         yaPreparada
       });
@@ -318,7 +335,7 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
   });
 
   return resultado.sort((a, b) =>
-    b.promedioError - a.promedioError ||
+    b.proporcionError - a.proporcionError ||
     b.ultimaSenalEn - a.ultimaSenalEn ||
     a.actividad.titulo.localeCompare(b.actividad.titulo, "es") ||
     a.bloque.titulo.localeCompare(b.bloque.titulo, "es")
@@ -355,13 +372,15 @@ async function leerDatos() {
 }
 
 function textoSenal(propuesta) {
-  const cantidad = propuesta.soportes.length;
-  const porcentaje = porcentajeError(propuesta.promedioError);
+  const cantidad = propuesta.senales.length;
+  const sesiones = propuesta.sesionesConSenal;
+  const porcentaje = porcentajeError(propuesta.proporcionError);
 
   return (
-    `Este bloque apareció como “Conviene reforzar” en ${cantidad} sesiones de aprendizaje recientes. ` +
-    `En las sesiones que repitieron la señal, una media del ${porcentaje} % de las respuestas ` +
-    `del bloque fueron incorrectas.`
+    `En este bloque se observaron ${cantidad} ${plural(cantidad, "respuesta incorrecta", "respuestas incorrectas")} ` +
+    `en ${sesiones} ${plural(sesiones, "sesión reciente", "sesiones recientes")}. ` +
+    `Representan el ${porcentaje} % de las respuestas revisadas para este bloque. ` +
+    `La sesión más reciente todavía muestra dificultad.`
   );
 }
 
@@ -385,9 +404,8 @@ function renderPropuestas(meta = {}) {
   if (!propuestas.length) {
     lista.innerHTML = `
       <div class="refuerzo-vacio">
-        No hay bloques que mantengan una señal de “Conviene reforzar” en al menos
-        ${MINIMO_SESIONES_CONFIRMACION} sesiones de aprendizaje recientes.
-        Una sola prueba no genera automáticamente una Misión de refuerzo.
+        No hay bloques con una dificultad repetida y todavía vigente en la sesión más reciente.
+        Una sola respuesta incorrecta no genera automáticamente una Misión de refuerzo.
       </div>
     `;
     return;
@@ -402,8 +420,8 @@ function renderPropuestas(meta = {}) {
           <div class="refuerzo-academico__meta">
             <span>📘 ${escapar(propuesta.actividad.titulo)}</span>
             <span>6.º · Matemáticas</span>
-            <span>🎯 ${porcentajeError(propuesta.promedioError)} % incorrectas de media</span>
-            <span>${propuesta.soportes.length} sesiones con señal</span>
+            <span>🎯 ${porcentajeError(propuesta.proporcionError)} % incorrectas</span>
+            <span>${propuesta.senales.length} señales observadas</span>
             <span>Última: ${propuesta.correctas} de ${propuesta.total}</span>
           </div>
         </div>
@@ -568,7 +586,7 @@ async function crearMision(propuesta, button) {
     await Academia.tareas.crear({
       titulo,
       descripcion:
-        `Misión propuesta a partir de una señal académica repetida en sesiones recientes. ` +
+        `Misión propuesta a partir de una dificultad repetida en preguntas del mismo bloque académico. ` +
         `Foco: ${bloque.titulo}.`,
       tipo: "repaso_academico",
       cursoReferencia: "6",
@@ -615,15 +633,15 @@ async function crearMision(propuesta, button) {
           foco: bloque.titulo,
           ruta: ["Mis Cursos", actividad.curso, actividad.materia, actividad.titulo],
           sesionOrigenId: propuesta.sesionId,
-          estadoOrigen: "reforzar",
+          estadoOrigen: propuesta.estadoReciente,
           correctasOrigen: propuesta.correctas,
           totalOrigen: propuesta.total,
-          sesionesConfirmacion: propuesta.soportes.map(soporte => ({
-            sesionId: soporte.sesionId,
-            correctas: soporte.correctas,
-            total: soporte.total
+          senalesConfirmacion: propuesta.senales.map(senal => ({
+            sesionId: senal.sesionId,
+            preguntaId: senal.preguntaId,
+            conceptoId: senal.conceptoId
           })),
-          proporcionIncorrectasMedia: propuesta.promedioError
+          proporcionIncorrectas: propuesta.proporcionError
         }
       }
     });
