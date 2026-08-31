@@ -117,8 +117,8 @@ function clasificacionCandidato(item = {}) {
   const intentos = Math.max(0, Number(item.ultima?.intentos || 0));
 
   if (!superada) return "no_superadas";
+  if (intentos > 2) return "mas_dos_intentos";
   if (intentos === 2) return "dos_intentos";
-  if (intentos === 3) return "tres_intentos";
   return "otras";
 }
 
@@ -409,8 +409,8 @@ function asegurarControlesRefuerzo() {
         <div class="refuerzo-filtros" role="group" aria-label="Filtrar palabras sugeridas">
           <button type="button" class="refuerzo-filtro" data-filtro-refuerzo="todas">Todas</button>
           <button type="button" class="refuerzo-filtro" data-filtro-refuerzo="no_superadas">No superadas</button>
+          <button type="button" class="refuerzo-filtro" data-filtro-refuerzo="mas_dos_intentos">Superadas en +2 intentos</button>
           <button type="button" class="refuerzo-filtro" data-filtro-refuerzo="dos_intentos">Superadas en 2 intentos</button>
-          <button type="button" class="refuerzo-filtro" data-filtro-refuerzo="tres_intentos">Superadas en 3 intentos</button>
         </div>
       </div>
 
