@@ -10,52 +10,71 @@ function controles() {
   };
 }
 
-function sincronizarMisionLibre() {
+function esMisionLibre() {
+  return controles().tipo?.value === TIPO_MISION_LIBRE;
+}
+
+function aplicarContratoMisionLibre() {
   const { tipo, modulo } = controles();
   if (!tipo || !modulo) return;
 
-  const esLibre = tipo.value === TIPO_MISION_LIBRE;
+  const libre = tipo.value === TIPO_MISION_LIBRE;
 
-  if (esLibre && modulo.value !== MODULO_LIBRE) {
+  if (libre && modulo.value !== MODULO_LIBRE) {
     modulo.value = MODULO_LIBRE;
     modulo.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   /*
    * Una Misión libre no está asociada a un motor de la Academia.
-   * Dejamos visible "Actividad fuera de la Academia" para que el
-   * administrador entienda el contrato, pero evitamos asociaciones
-   * accidentales con Lectura, Detectives, Semillas o Biblioteca.
+   * Mostramos explícitamente "Actividad fuera de la Academia" y bloqueamos
+   * el selector para impedir que conserve por accidente Lectura, Detectives,
+   * Semillas o Biblioteca.
    */
-  modulo.disabled = esLibre;
-  modulo.setAttribute("aria-disabled", esLibre ? "true" : "false");
-  modulo.title = esLibre
+  modulo.disabled = libre;
+  modulo.setAttribute("aria-disabled", libre ? "true" : "false");
+  modulo.title = libre
     ? "Las Misiones libres se realizan sin una actividad asociada de la Academia."
     : "";
 }
 
-function sincronizarDespuesDeCarga() {
-  window.setTimeout(sincronizarMisionLibre, 0);
+function sincronizarTrasFormulario() {
+  /*
+   * El formulario principal también escucha cambios de Tipo y Módulo.
+   * Ejecutamos una segunda comprobación al final del ciclo para que el
+   * contrato de Misión libre no dependa del orden de los listeners.
+   */
+  aplicarContratoMisionLibre();
+  window.setTimeout(aplicarContratoMisionLibre, 0);
+  window.setTimeout(aplicarContratoMisionLibre, 50);
 }
 
 function iniciar() {
-  const { tipo } = controles();
-  if (!tipo) return;
+  const { tipo, modulo } = controles();
+  if (!tipo || !modulo) return;
 
-  tipo.addEventListener("change", sincronizarMisionLibre);
+  tipo.addEventListener("change", sincronizarTrasFormulario);
+  tipo.addEventListener("input", sincronizarTrasFormulario);
 
-  document.getElementById("formTarea")?.addEventListener(
-    "reset",
-    sincronizarDespuesDeCarga
-  );
-
-  document.addEventListener("click", event => {
-    if (event.target.closest?.('[data-action="edit"], [data-action="view"]')) {
-      sincronizarDespuesDeCarga();
+  /* Protección adicional: si otra lógica intenta cambiar el módulo mientras
+     el Tipo sigue siendo Misión libre, se restaura inmediatamente. */
+  modulo.addEventListener("change", () => {
+    if (esMisionLibre() && modulo.value !== MODULO_LIBRE) {
+      sincronizarTrasFormulario();
     }
   });
 
-  sincronizarMisionLibre();
+  document.getElementById("formTarea")?.addEventListener("reset", () => {
+    window.setTimeout(sincronizarTrasFormulario, 0);
+  });
+
+  document.addEventListener("click", event => {
+    if (event.target.closest?.('[data-action="edit"], [data-action="view"]')) {
+      window.setTimeout(sincronizarTrasFormulario, 80);
+    }
+  });
+
+  sincronizarTrasFormulario();
 }
 
 if (document.readyState === "loading") {
