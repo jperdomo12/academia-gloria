@@ -10,7 +10,7 @@ const TIPOS_OPERATIVOS = Object.freeze({
     orden: 1
   }),
   repaso_academico: Object.freeze({
-    etiqueta: "📘 Misión de Cursos",
+    etiqueta: "🎓 Misión de Cursos",
     orden: 2
   }),
   tarea_libre: Object.freeze({
