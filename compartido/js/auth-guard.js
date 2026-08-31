@@ -2,7 +2,7 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/auth-guard.js
  * Protección de páginas autenticadas
- * Versión: 1.3
+ * Versión: 1.4
  *
  * Ajustes:
  * - Espera a que Firebase termine de restaurar la sesión antes de decidir
@@ -10,6 +10,8 @@
  * - Activa el timeout global de sesión configurado por inactividad.
  * - Respeta nivelMinimo declarado en el modelo central de navegación antes
  *   de mostrar o inicializar una pantalla restringida.
+ * - Si el nivel es insuficiente, conserva un aviso temporal en sessionStorage
+ *   y lo muestra tras redirigir al destino seguro.
  ******************************************************************************/
 
 import { auth } from "../firebase/firebase-config.js";
@@ -22,6 +24,9 @@ const NIVELES_ACCESO = Object.freeze({
   gestion: 20,
   administracion: 30
 });
+
+const CLAVE_AVISO_ACCESO = "academia.aviso.acceso-denegado.v1";
+const MAX_EDAD_AVISO_MS = 15000;
 
 function obtenerBaseAcademia() {
   return window.location.hostname.endsWith("github.io")
@@ -69,7 +74,101 @@ function construirRutaAcademia(ruta = "") {
   return `${prefijo}${relativa}`;
 }
 
-async function obtenerDestinoPorAccesoInsuficiente() {
+function registrarAvisoAccesoDenegado(titulo = "esta sección") {
+  try {
+    sessionStorage.setItem(
+      CLAVE_AVISO_ACCESO,
+      JSON.stringify({
+        titulo: String(titulo || "esta sección").trim(),
+        creadoEn: Date.now()
+      })
+    );
+  } catch {
+    // La redirección segura sigue funcionando aunque sessionStorage no esté disponible.
+  }
+}
+
+function consumirAvisoAccesoDenegado() {
+  try {
+    const valor = sessionStorage.getItem(CLAVE_AVISO_ACCESO);
+    sessionStorage.removeItem(CLAVE_AVISO_ACCESO);
+
+    if (!valor) return null;
+
+    const aviso = JSON.parse(valor);
+    const creadoEn = Number(aviso?.creadoEn || 0);
+
+    if (!creadoEn || Date.now() - creadoEn > MAX_EDAD_AVISO_MS) {
+      return null;
+    }
+
+    return {
+      titulo: String(aviso?.titulo || "esta sección").trim()
+    };
+  } catch {
+    return null;
+  }
+}
+
+function mostrarAvisoAccesoDenegado(aviso) {
+  if (!aviso) return;
+
+  const contenedor = document.createElement("aside");
+  contenedor.setAttribute("role", "status");
+  contenedor.setAttribute("aria-live", "polite");
+  contenedor.style.cssText = [
+    "position:fixed",
+    "top:20px",
+    "left:50%",
+    "transform:translateX(-50%)",
+    "z-index:2147483647",
+    "width:min(520px,calc(100% - 28px))",
+    "padding:16px 48px 16px 18px",
+    "border:2px solid #fbbf24",
+    "border-radius:18px",
+    "background:#fffbeb",
+    "color:#78350f",
+    "box-shadow:0 18px 45px rgba(120,53,15,.18)",
+    "font-family:Outfit,system-ui,sans-serif"
+  ].join(";");
+
+  const titulo = document.createElement("strong");
+  titulo.textContent = "🔒 Usuario no autorizado";
+  titulo.style.cssText = "display:block;font-size:1rem;font-weight:900";
+
+  const detalle = document.createElement("div");
+  detalle.textContent = `No tienes permisos para acceder a ${aviso.titulo}.`;
+  detalle.style.cssText = "margin-top:3px;font-size:.92rem;font-weight:700;line-height:1.35";
+
+  const cerrar = document.createElement("button");
+  cerrar.type = "button";
+  cerrar.setAttribute("aria-label", "Cerrar aviso");
+  cerrar.textContent = "×";
+  cerrar.style.cssText = [
+    "position:absolute",
+    "top:9px",
+    "right:12px",
+    "width:32px",
+    "height:32px",
+    "border:0",
+    "border-radius:10px",
+    "background:transparent",
+    "color:#92400e",
+    "cursor:pointer",
+    "font-size:1.45rem",
+    "font-weight:900"
+  ].join(";");
+
+  cerrar.addEventListener("click", () => contenedor.remove());
+  contenedor.append(titulo, detalle, cerrar);
+  document.body?.appendChild(contenedor);
+
+  window.setTimeout(() => {
+    contenedor.remove();
+  }, 5000);
+}
+
+async function obtenerRestriccionPagina() {
   const actual = buscarNodo(
     UBICACIONES_ACADEMIA,
     rutaActualRelativa()
@@ -80,7 +179,7 @@ async function obtenerDestinoPorAccesoInsuficiente() {
     .toLowerCase();
 
   if (!Object.prototype.hasOwnProperty.call(NIVELES_ACCESO, nivelMinimo)) {
-    return "";
+    return null;
   }
 
   const { ContextoUsuario } = await import("./contexto-usuario.js");
@@ -92,10 +191,13 @@ async function obtenerDestinoPorAccesoInsuficiente() {
     (NIVELES_ACCESO[nivelActual] || 0) >=
     NIVELES_ACCESO[nivelMinimo]
   ) {
-    return "";
+    return null;
   }
 
-  return construirRutaAcademia(actual?.volver || "");
+  return {
+    titulo: String(actual?.titulo || "esta sección").trim(),
+    destino: construirRutaAcademia(actual?.volver || "")
+  };
 }
 
 export async function protegerPagina({
@@ -120,10 +222,11 @@ export async function protegerPagina({
   }
 
   try {
-    const destinoSinAcceso = await obtenerDestinoPorAccesoInsuficiente();
+    const restriccion = await obtenerRestriccionPagina();
 
-    if (destinoSinAcceso) {
-      window.location.replace(destinoSinAcceso);
+    if (restriccion) {
+      registrarAvisoAccesoDenegado(restriccion.titulo);
+      window.location.replace(restriccion.destino);
       return null;
     }
   } catch (error) {
@@ -134,6 +237,10 @@ export async function protegerPagina({
 
   await activarTimeoutSesion({ loginUrl });
   document.documentElement.style.visibility = "visible";
+
+  mostrarAvisoAccesoDenegado(
+    consumirAvisoAccesoDenegado()
+  );
 
   if (typeof onAuthenticated === "function") {
     await onAuthenticated(usuarioInicial);
