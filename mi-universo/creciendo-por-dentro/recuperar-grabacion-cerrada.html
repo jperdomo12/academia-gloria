@@ -94,6 +94,11 @@
       return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[char]);
     }
 
+    function numeroSeguro(value,fallback=0){
+      const number=Number(value);
+      return Number.isFinite(number)?number:fallback;
+    }
+
     function tituloMision(mision={}){
       return mision.presentacionAlumno?.tituloMision||mision.titulo||"Misión de Semillas";
     }
@@ -225,8 +230,8 @@
         const progreso=tarea.progreso&&typeof tarea.progreso==="object"?tarea.progreso:{};
         const evidenciaIds=Array.isArray(progreso.evidenciaIds)?[...new Set(progreso.evidenciaIds.map(String).filter(Boolean))]:[];
         if(!evidenciaIds.includes(evidenciaId))evidenciaIds.push(evidenciaId);
-        const objetivo=Math.max(1,Math.trunc(Number(criterio.cantidadObjetivo||progreso.cantidadObjetivo||1)));
-        const actualPrevio=Math.max(0,Math.trunc(Number(progreso.cantidadActual||0)));
+        const objetivo=Math.max(1,Math.trunc(numeroSeguro(criterio.cantidadObjetivo,numeroSeguro(progreso.cantidadObjetivo,1))));
+        const actualPrevio=Math.max(0,Math.trunc(numeroSeguro(progreso.cantidadActual,0)));
         const cantidadActual=Math.min(objetivo,Math.max(actualPrevio,evidenciaIds.length));
         const ocurridaEn=progreso.completadaEn||tarea.statusChangedAt||serverTimestamp();
 
