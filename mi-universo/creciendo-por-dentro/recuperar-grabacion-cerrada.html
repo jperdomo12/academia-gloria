@@ -3,400 +3,357 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Recuperar grabación en Misión cerrada · Academia Gloria</title>
+  <title>Asociar audio recuperado · Creciendo por Dentro</title>
   <link rel="icon" href="../../assets/iconos/icono-principal.png">
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17233f;background:#f6f8fc}
     *{box-sizing:border-box}body{margin:0;padding:24px}.wrap{max-width:900px;margin:auto}.card{background:#fff;border:1px solid #dce4f0;border-radius:22px;padding:24px;box-shadow:0 12px 34px rgba(23,35,63,.07)}
-    h1{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.25rem)}p{line-height:1.55}.muted{color:#60708c}.notice{padding:14px 16px;border-radius:14px;background:#f3f7ff;border:1px solid #d8e5ff}.notice--ok{background:#eefaf2;border-color:#cdebd7}.notice--warn{background:#fff8ea;border-color:#f2dfac}.notice--error{background:#fff0f0;border-color:#f0c6c6}
-    label{display:block;font-weight:750;margin:14px 0 7px}select,input,textarea{width:100%;padding:12px 13px;border:1px solid #cfd9e8;border-radius:12px;background:#fff;font:inherit}textarea{min-height:90px;resize:vertical}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.btn{border:0;border-radius:13px;padding:12px 16px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn:disabled{opacity:.5;cursor:not-allowed}.btn--primary{background:#244fbc;color:#fff}.btn--light{background:#edf2fb;color:#21395f}.summary,.mission{margin-top:12px;padding:14px;border-radius:14px;background:#fafbfe;border:1px solid #e2e7f0}.mission strong{display:block;margin-bottom:5px}.hidden{display:none!important}audio{width:100%;margin-top:12px}.small{font-size:.9rem}.state{display:inline-block;margin-top:8px;padding:5px 9px;border-radius:999px;background:#e9f8ef;color:#166534;font-size:.85rem;font-weight:800}
+    h1{margin:0 0 8px;font-size:clamp(1.55rem,4vw,2.2rem)}p{line-height:1.55}.muted{color:#60708c}.notice{padding:14px 16px;border-radius:14px;background:#f3f7ff;border:1px solid #d8e5ff}.ok{background:#eefaf2;border-color:#cdebd7}.warn{background:#fff8ea;border-color:#f2dfac}.error{background:#fff0f0;border-color:#f0c6c6}
+    label{display:block;font-weight:800;margin:16px 0 7px}select,input{width:100%;padding:12px 13px;border:1px solid #cfd9e8;border-radius:12px;background:#fff;font:inherit}.summary{margin-top:12px;padding:14px;border-radius:14px;background:#fafbfe;border:1px solid #e2e7f0}.summary strong{display:block;margin-bottom:5px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.btn{border:0;border-radius:13px;padding:12px 16px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn:disabled{opacity:.5;cursor:not-allowed}.primary{background:#244fbc;color:#fff}.light{background:#edf2fb;color:#21395f}.hidden{display:none!important}audio{width:100%;margin-top:12px}.small{font-size:.9rem}.state{display:inline-block;margin-top:7px;padding:5px 9px;border-radius:999px;background:#fff3cd;color:#7a5600;font-size:.84rem;font-weight:800}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="card">
-      <div class="muted">🌱 Academia Gloria Valentina · recuperación técnica excepcional y temporal</div>
-      <h1>Recuperar grabación en una Misión ya conseguida</h1>
-      <p>Esta herramienta incorpora una grabación real que no pudo guardarse por una incidencia técnica. <strong>No reabre la Misión, no crea otra Misión y no altera su estado de cierre.</strong></p>
+<main class="wrap">
+  <section class="card">
+    <div class="muted">🌱 Academia Gloria Valentina · recuperación técnica temporal</div>
+    <h1>Asociar el audio a la práctica ya guardada</h1>
+    <p>La práctica de Gloria ya contiene sus respuestas. Esta herramienta añade <strong>únicamente la grabación recuperada</strong> a esa misma sesión y actualiza su evidencia. No crea otra sesión y no cambia el estado de la Misión.</p>
 
-      <div class="notice notice--warn">
-        <strong>Protección de la evidencia:</strong> se conservarán el estado actual de la Misión, la fecha de cierre ya registrada y los datos de auditoría de su cambio de estado. Solo se añadirá la sesión recuperada, su evidencia y la referencia de progreso necesaria para que forme parte del trabajo realizado.
+    <div class="notice warn"><strong>Importante:</strong> deja la Misión en <em>Esperando a mi familia</em> hasta terminar esta recuperación.</div>
+    <div id="status" class="notice" style="margin-top:14px">Localizando la práctica guardada…</div>
+
+    <section id="formArea" class="hidden">
+      <label for="missionSelect">Misión</label>
+      <select id="missionSelect"></select>
+      <div id="missionSummary" class="summary"></div>
+
+      <div id="sessionSummary" class="summary"></div>
+
+      <label for="audioFile">Grabación original recuperada</label>
+      <input id="audioFile" type="file" accept="audio/webm,audio/*">
+      <audio id="audioPreview" class="hidden" controls></audio>
+      <div id="audioInfo" class="summary hidden"></div>
+
+      <div class="actions">
+        <button id="attachButton" class="btn primary" type="button" disabled>🎙️ Asociar este audio a la práctica</button>
+        <a class="btn light" href="../mi-camino/">← Volver a Mi Camino</a>
       </div>
-
-      <div id="status" class="notice" style="margin-top:16px">Preparando recuperación…</div>
-
-      <section id="formArea" class="hidden">
-        <label for="missionSelect">Misión cerrada de Creciendo por Dentro</label>
-        <select id="missionSelect"></select>
-        <div id="missionSummary" class="mission"></div>
-
-        <label for="seedSelect">Semilla</label>
-        <select id="seedSelect"></select>
-
-        <label for="audioFile">Grabación recuperada</label>
-        <input id="audioFile" type="file" accept="audio/webm,audio/*">
-        <p class="small muted">Selecciona la copia compatible de alta calidad. Conserva aparte el archivo original como copia maestra.</p>
-        <audio id="audioPreview" class="hidden" controls></audio>
-        <div id="audioInfo" class="summary hidden"></div>
-
-        <label for="transcript">Transcripción original conservada (opcional)</label>
-        <textarea id="transcript" placeholder="Déjalo vacío si la transcripción original no se conservó."></textarea>
-        <p class="small muted">No reconstruiremos respuestas, transcripciones ni intentos que no hayan quedado conservados.</p>
-
-        <div class="actions">
-          <button id="saveButton" class="btn btn--primary" type="button" disabled>🎙️ Asociar audio sin reabrir la Misión</button>
-          <a class="btn btn--light" href="../mi-camino/">← Volver a Mi Camino</a>
-        </div>
-      </section>
-
-      <section id="successArea" class="hidden">
-        <div class="notice notice--ok">
-          <strong>✅ Grabación recuperada.</strong>
-          <div id="successText" style="margin-top:6px"></div>
-        </div>
-        <div class="actions">
-          <a id="historyLink" class="btn btn--primary" href="#">🎧 Abrir la grabación recuperada</a>
-          <a class="btn btn--light" href="../mi-camino/">🌟 Volver a Mi Camino</a>
-        </div>
-      </section>
     </section>
-  </main>
 
-  <script type="module">
-    import { Academia } from "../../compartido/api/academia.js";
-    import { db, auth } from "../../compartido/firebase/firebase-config.js";
-    import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
-    import {
-      deleteDoc,
-      doc,
-      runTransaction,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+    <section id="successArea" class="hidden">
+      <div class="notice ok">
+        <strong>✅ Audio asociado correctamente.</strong>
+        <div id="successText" style="margin-top:6px"></div>
+      </div>
+      <div class="actions">
+        <a id="historyLink" class="btn primary" href="#">🎧 Ver mi trabajo con el audio</a>
+        <a class="btn light" href="../mi-camino/">🌟 Volver a Mi Camino</a>
+      </div>
+    </section>
+  </section>
+</main>
 
-    const $ = id => document.getElementById(id);
-    const MAX_AUDIO_DATA_LENGTH = 900000;
-    const ESTADOS_CERRADOS_RECUPERABLES = new Set(["pendiente_validacion","completada"]);
+<script type="module">
+  import { Academia } from "../../compartido/api/academia.js";
+  import { db, auth } from "../../compartido/firebase/firebase-config.js";
+  import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+  import {
+    doc,
+    runTransaction,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-    let catalogo = [];
-    let misiones = [];
-    let archivoActual = null;
-    let audioData = "";
-    let audioDuration = 0;
-    let personaActivaUserId = "";
+  const $ = id => document.getElementById(id);
+  const MAX_AUDIO_DATA_LENGTH = 900000;
 
-    function setStatus(message,type=""){
-      const node=$("status");
-      node.textContent=message;
-      node.className=`notice ${type?`notice--${type}`:""}`.trim();
+  let personaActivaUserId = "";
+  let missions = [];
+  let sessions = [];
+  let currentContext = null;
+  let selectedFile = null;
+  let audioData = "";
+  let audioDuration = 0;
+
+  function escapeHtml(value=""){
+    return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[char]);
+  }
+
+  function setStatus(text,kind=""){
+    const node=$("status");
+    node.textContent=text;
+    node.className=`notice ${kind}`.trim();
+  }
+
+  function missionTitle(mission={}){
+    return mission.presentacionAlumno?.tituloMision || mission.titulo || "Misión de Creciendo por Dentro";
+  }
+
+  function readAsDataUrl(file){
+    return new Promise((resolve,reject)=>{
+      const reader=new FileReader();
+      reader.onerror=()=>reject(new Error("No se pudo leer la grabación."));
+      reader.onloadend=()=>resolve(String(reader.result||""));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function readDuration(file){
+    return new Promise(resolve=>{
+      const url=URL.createObjectURL(file);
+      const audio=new Audio();
+      audio.preload="metadata";
+      audio.onloadedmetadata=()=>{
+        const value=Number.isFinite(audio.duration)?audio.duration:0;
+        URL.revokeObjectURL(url);
+        resolve(value);
+      };
+      audio.onerror=()=>{URL.revokeObjectURL(url);resolve(0);};
+      audio.src=url;
+    });
+  }
+
+  function countAnswers(session={}){
+    return Object.keys(session.respuestas && typeof session.respuestas==="object" ? session.respuestas : {}).length;
+  }
+
+  async function resolveMissionContext(mission){
+    const evidences=(await Academia.evidencias.leerPorMision(mission.id))
+      .filter(item=>item.modulo==="creciendo-por-dentro" && item.tipo==="semilla_completada");
+
+    if(!evidences.length){
+      throw new Error("La Misión no tiene la evidencia de la práctica recién guardada.");
     }
 
-    function escapeHtml(value=""){
-      return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[char]);
+    const evidence=evidences.find(item=>item.sesionId && sessions.some(session=>session.id===item.sesionId)) || evidences[0];
+    const session=sessions.find(item=>item.id===evidence.sesionId);
+
+    if(!session){
+      throw new Error("No se encontró la sesión asociada a la evidencia de esta Misión.");
+    }
+    if(String(session.misionId||"")!==String(mission.id)){
+      throw new Error("La sesión encontrada no pertenece a esta Misión.");
+    }
+    if(session.audioData){
+      throw new Error("Esta práctica ya tiene una grabación guardada. No se sobrescribirá.");
     }
 
-    function numeroSeguro(value,fallback=0){
-      const number=Number(value);
-      return Number.isFinite(number)?number:fallback;
-    }
+    return {mission,evidence,session};
+  }
 
-    function tituloMision(mision={}){
-      return mision.presentacionAlumno?.tituloMision||mision.titulo||"Misión de Semillas";
-    }
+  async function renderSelectedMission(){
+    const mission=missions.find(item=>item.id===$("missionSelect").value) || missions[0];
+    if(!mission)return;
 
-    function esMisionCerradaSemilla(mision={}){
-      const criterio=mision.criterioCumplimiento||{};
-      return mision.modulo==="creciendo-por-dentro"&&
-        criterio.evidenciaTipo==="semilla_completada"&&
-        ESTADOS_CERRADOS_RECUPERABLES.has(String(mision.estado||""));
-    }
+    $("attachButton").disabled=true;
+    currentContext=null;
+    setStatus("Comprobando la sesión y la evidencia de esta Misión…");
 
-    function idsSemillasMision(mision={}){
-      const filtros=mision.criterioCumplimiento?.filtros||{};
-      return Array.isArray(filtros.semillasIds)?filtros.semillasIds.map(String).filter(Boolean):[];
-    }
+    try{
+      const context=await resolveMissionContext(mission);
+      currentContext=context;
 
-    function semillaPorId(id){
-      return catalogo.find(item=>String(item.id)===String(id))||null;
-    }
-
-    function etiquetaEstado(estado=""){
-      return estado==="completada"?"✅ Conseguida":"⏳ Esperando revisión";
-    }
-
-    function renderMissionOptions(){
-      const select=$("missionSelect");
-      select.innerHTML=misiones.map(item=>`<option value="${escapeHtml(item.id)}">${escapeHtml(tituloMision(item))}</option>`).join("");
-      select.onchange=renderMissionContext;
-      renderMissionContext();
-    }
-
-    function renderMissionContext(){
-      const mission=misiones.find(item=>item.id===$("missionSelect").value)||misiones[0];
-      if(!mission)return;
       $("missionSummary").innerHTML=`
-        <strong>${escapeHtml(tituloMision(mission))}</strong>
-        <div>${escapeHtml(mission.presentacionAlumno?.descripcionMision||mission.descripcion||"")}</div>
-        <span class="state">${escapeHtml(etiquetaEstado(mission.estado))}</span>
-        <p class="small muted" style="margin-bottom:0">La recuperación conservará este estado, su fecha de cierre y la auditoría del cambio de estado.</p>`;
+        <strong>${escapeHtml(missionTitle(mission))}</strong>
+        <div>${escapeHtml(mission.presentacionAlumno?.descripcionMision || mission.descripcion || "")}</div>
+        <span class="state">⏳ Esperando a mi familia</span>`;
 
-      const allowed=idsSemillasMision(mission);
-      const disponibles=allowed.length?allowed.map(semillaPorId).filter(Boolean):catalogo;
-      $("seedSelect").innerHTML=disponibles.map(seed=>`<option value="${escapeHtml(seed.id)}">${escapeHtml(seed.titulo||seed.id)}</option>`).join("");
+      const answers=countAnswers(context.session);
+      $("sessionSummary").innerHTML=`
+        <strong>✅ Práctica ya guardada</strong>
+        <div>Sesión: ${escapeHtml(context.session.id)}</div>
+        <div>Respuestas conservadas: ${answers}</div>
+        ${context.session.respuestaConstruida ? `<div>Respuesta construida: ${escapeHtml(context.session.respuestaConstruida)}</div>` : ""}
+        <div>Audio actual: <strong>sin grabación</strong></div>`;
+
+      setStatus("La práctica correcta está localizada. Ahora selecciona y escucha el audio que vamos a incorporar.","ok");
       validateReady();
+    }catch(error){
+      setStatus(error.message,"error");
+      $("sessionSummary").innerHTML="";
     }
+  }
 
-    function readAsDataUrl(file){
-      return new Promise((resolve,reject)=>{
-        const reader=new FileReader();
-        reader.onerror=()=>reject(new Error("No se pudo leer la grabación seleccionada."));
-        reader.onloadend=()=>resolve(String(reader.result||""));
-        reader.readAsDataURL(file);
-      });
-    }
+  async function onAudioSelected(){
+    selectedFile=$("audioFile").files?.[0] || null;
+    audioData="";
+    audioDuration=0;
+    $("audioPreview").classList.add("hidden");
+    $("audioInfo").classList.add("hidden");
 
-    function readDuration(file){
-      return new Promise(resolve=>{
-        const url=URL.createObjectURL(file);
-        const audio=new Audio();
-        audio.preload="metadata";
-        audio.onloadedmetadata=()=>{const duration=Number.isFinite(audio.duration)?audio.duration:0;URL.revokeObjectURL(url);resolve(duration);};
-        audio.onerror=()=>{URL.revokeObjectURL(url);resolve(0);};
-        audio.src=url;
-      });
-    }
+    if(!selectedFile){validateReady();return;}
 
-    async function onAudioSelected(){
-      archivoActual=$("audioFile").files?.[0]||null;
-      audioData="";audioDuration=0;
-      $("audioPreview").classList.add("hidden");
-      $("audioInfo").classList.add("hidden");
-      if(!archivoActual)return validateReady();
+    try{
+      [audioData,audioDuration]=await Promise.all([
+        readAsDataUrl(selectedFile),
+        readDuration(selectedFile)
+      ]);
 
-      try{
-        [audioData,audioDuration]=await Promise.all([readAsDataUrl(archivoActual),readDuration(archivoActual)]);
-        const sizeOk=audioData.length<=MAX_AUDIO_DATA_LENGTH;
-        $("audioPreview").src=URL.createObjectURL(archivoActual);
-        $("audioPreview").classList.remove("hidden");
-        $("audioInfo").innerHTML=`<strong>${escapeHtml(archivoActual.name)}</strong><br>Duración: ${audioDuration?`${audioDuration.toFixed(1)} s`:"no disponible"} · Tamaño: ${(archivoActual.size/1024).toFixed(0)} KB · ${sizeOk?"✅ Compatible con la Academia":"❌ Demasiado grande"}`;
-        $("audioInfo").classList.remove("hidden");
-        setStatus(sizeOk?"Grabación preparada. Escúchala completa aquí antes de asociarla.":"Esta copia todavía excede el límite actual y no se guardará.",sizeOk?"ok":"error");
-      }catch(error){setStatus(error.message,"error");}
-      validateReady();
-    }
+      const compatible=audioData.length<=MAX_AUDIO_DATA_LENGTH;
+      $("audioPreview").src=URL.createObjectURL(selectedFile);
+      $("audioPreview").classList.remove("hidden");
+      $("audioInfo").innerHTML=`
+        <strong>${escapeHtml(selectedFile.name)}</strong>
+        <div>Duración: ${audioDuration?audioDuration.toFixed(1)+" s":"no disponible"}</div>
+        <div>Tamaño: ${(selectedFile.size/1024).toFixed(0)} KB</div>
+        <div>${compatible?"✅ Compatible con el almacenamiento actual":"❌ Esta copia todavía es demasiado grande"}</div>`;
+      $("audioInfo").classList.remove("hidden");
 
-    function validateReady(){
-      $("saveButton").disabled=!(
-        $("missionSelect").value&&$("seedSelect").value&&archivoActual&&audioData&&audioData.length<=MAX_AUDIO_DATA_LENGTH
+      setStatus(
+        compatible
+          ? "Audio preparado. Escúchalo completo antes de pulsar Asociar."
+          : "No se guardará esta copia porque supera el límite actual.",
+        compatible?"ok":"error"
       );
+    }catch(error){
+      setStatus(error.message,"error");
+    }
+    validateReady();
+  }
+
+  function validateReady(){
+    $("attachButton").disabled=!(
+      currentContext && selectedFile && audioData && audioData.length<=MAX_AUDIO_DATA_LENGTH
+    );
+  }
+
+  async function attachAudio(){
+    if(!currentContext || !audioData || !selectedFile){
+      throw new Error("Falta la práctica o la grabación.");
     }
 
-    function evidenciaIdPara(missionId,sessionId){
-      return [missionId,"creciendo-por-dentro",sessionId]
-        .join("__")
-        .replace(/[^a-zA-Z0-9_-]/g,"_")
-        .slice(0,240);
-    }
+    const {mission,evidence,session}=currentContext;
+    const missionRef=doc(db,"usuarios",personaActivaUserId,"tareas",mission.id);
+    const sessionRef=doc(db,"usuarios",personaActivaUserId,"sesionesSemillas",session.id);
+    const evidenceRef=doc(db,"usuarios",personaActivaUserId,"evidencias",evidence.id);
+    const actorUid=auth.currentUser.uid;
 
-    async function registrarEvidenciaEnMisionCerrada({mission,seed,sessionId}){
-      const evidenciaId=evidenciaIdPara(mission.id,sessionId);
-      const tareaRef=doc(db,"usuarios",personaActivaUserId,"tareas",mission.id);
-      const evidenciaRef=doc(db,"usuarios",personaActivaUserId,"evidencias",evidenciaId);
-      const actorUid=auth.currentUser.uid;
+    await runTransaction(db,async transaction=>{
+      const [missionSnap,sessionSnap,evidenceSnap]=await Promise.all([
+        transaction.get(missionRef),
+        transaction.get(sessionRef),
+        transaction.get(evidenceRef)
+      ]);
 
-      return runTransaction(db,async transaction=>{
-        const [tareaSnap,evidenciaSnap]=await Promise.all([
-          transaction.get(tareaRef),
-          transaction.get(evidenciaRef)
-        ]);
-        if(!tareaSnap.exists())throw new Error("No se encontró la Misión original.");
-        if(evidenciaSnap.exists())throw new Error("Esta evidencia recuperada ya fue registrada.");
+      if(!missionSnap.exists() || !sessionSnap.exists() || !evidenceSnap.exists()){
+        throw new Error("La Misión, sesión o evidencia cambió antes de guardar. No se modificó nada.");
+      }
 
-        const tarea=tareaSnap.data();
-        const estadoActual=String(tarea.estado||"");
-        if(!ESTADOS_CERRADOS_RECUPERABLES.has(estadoActual)){
-          throw new Error("La Misión cambió de estado durante la recuperación. No se modificó su cierre.");
-        }
+      const missionData=missionSnap.data();
+      const sessionData=sessionSnap.data();
+      const evidenceData=evidenceSnap.data();
 
-        const criterio=tarea.criterioCumplimiento||{};
-        if(String(criterio.modulo||tarea.modulo||"")!=="creciendo-por-dentro"||String(criterio.evidenciaTipo||"")!=="semilla_completada"){
-          throw new Error("La Misión ya no corresponde a una Semilla de Creciendo por Dentro.");
-        }
-        const filtros=criterio.filtros&&typeof criterio.filtros==="object"?criterio.filtros:{};
-        const permitidas=Array.isArray(filtros.semillasIds)?filtros.semillasIds.map(String):[];
-        if(permitidas.length&&!permitidas.includes(String(seed.id))){
-          throw new Error("La Semilla no pertenece a la Misión original.");
-        }
+      if(String(missionData.estado||"")!=="pendiente_validacion"){
+        throw new Error("La Misión ya no está en Esperando a mi familia. No se modificó nada.");
+      }
+      if(String(sessionData.misionId||"")!==String(mission.id)){
+        throw new Error("La sesión ya no pertenece a esta Misión.");
+      }
+      if(sessionData.audioData){
+        throw new Error("La sesión ya contiene audio. No se sobrescribió.");
+      }
+      if(String(evidenceData.sesionId||"")!==String(session.id)){
+        throw new Error("La evidencia ya no apunta a esta sesión.");
+      }
 
-        const progreso=tarea.progreso&&typeof tarea.progreso==="object"?tarea.progreso:{};
-        const evidenciaIds=Array.isArray(progreso.evidenciaIds)?[...new Set(progreso.evidenciaIds.map(String).filter(Boolean))]:[];
-        if(!evidenciaIds.includes(evidenciaId))evidenciaIds.push(evidenciaId);
-        const objetivo=Math.max(1,Math.trunc(numeroSeguro(criterio.cantidadObjetivo,numeroSeguro(progreso.cantidadObjetivo,1))));
-        const actualPrevio=Math.max(0,Math.trunc(numeroSeguro(progreso.cantidadActual,0)));
-        const cantidadActual=Math.min(objetivo,Math.max(actualPrevio,evidenciaIds.length));
-        const ocurridaEn=progreso.completadaEn||tarea.statusChangedAt||serverTimestamp();
-
-        transaction.set(evidenciaRef,{
-          alumnoId:String(tarea.alumnoId||personaActivaUserId),
-          misionId:mission.id,
-          modulo:"creciendo-por-dentro",
-          tipo:"semilla_completada",
-          actividadId:String(seed.id),
-          sesionId,
-          atributos:{
-            ...filtros,
-            familia:seed.familia||"",
-            tipoSituacion:seed.tipoSituacion||"",
-            nivelApoyo:Number(seed.nivelApoyo||1),
-            evidenciaRecuperada:true
-          },
-          resultado:{
-            titulo:seed.titulo||seed.id,
-            intentos:0,
-            duracionAudio:audioDuration,
-            grabacionConfirmada:true,
-            evidenciaRecuperada:true
-          },
-          destinoRevision:`../creciendo-por-dentro/?vista=historial&misionId=${encodeURIComponent(mission.id)}&sesionId=${encodeURIComponent(sessionId)}`,
-          origen:"recuperacion_tecnica",
-          creadaPorUid:actorUid,
-          evidenciaId,
-          contabilizada:true,
-          aplicadaEn:serverTimestamp(),
-          ocurridaEn,
-          creadaEn:serverTimestamp()
-        });
-
-        // Deliberadamente NO se escriben estado, statusChangedAt,
-        // statusChangedBy ni progreso.completadaEn.
-        transaction.update(tareaRef,{
-          "progreso.cantidadActual":cantidadActual,
-          "progreso.cantidadObjetivo":objetivo,
-          "progreso.evidenciaIds":evidenciaIds,
-          updatedAt:serverTimestamp(),
-          updatedBy:actorUid
-        });
-
-        return {evidenciaId,estadoConservado:estadoActual,cantidadActual,cantidadObjetivo:objetivo};
+      transaction.update(sessionRef,{
+        audioData,
+        mimeType:selectedFile.type || "audio/webm",
+        duracionAudio:audioDuration,
+        analisisEducativo:{
+          ...(sessionData.analisisEducativo && typeof sessionData.analisisEducativo==="object" ? sessionData.analisisEducativo : {}),
+          audioRecuperado:true,
+          audioRecuperadoEn:new Date().toISOString(),
+          audioArchivoOrigen:selectedFile.name,
+          audioRecuperacionNota:"Grabación real de la ejecución original recuperada tras incidencia técnica de tamaño. Las respuestas corresponden a la práctica guardada posteriormente sin volver a grabar el audio."
+        },
+        actualizadaEn:serverTimestamp()
       });
-    }
 
-    async function saveRecoveredEvidence(){
-      const mission=misiones.find(item=>item.id===$("missionSelect").value);
-      const seed=semillaPorId($("seedSelect").value);
-      if(!mission||!seed||!archivoActual||!audioData)throw new Error("Faltan datos para recuperar la grabación.");
-
-      const allowed=idsSemillasMision(mission);
-      if(allowed.length&&!allowed.includes(String(seed.id)))throw new Error("La Semilla seleccionada no pertenece a esta Misión.");
-
-      const sesiones=await Academia.semillas.leerSesiones();
-      const existente=sesiones.find(item=>String(item.misionId||"")===String(mission.id)&&String(item.semillaId||"")===String(seed.id)&&Boolean(item.audioData));
-      if(existente)throw new Error("Esta Misión ya tiene una grabación guardada para esa Semilla. No se creó un duplicado.");
-
-      const transcript=String($("transcript").value||"").trim();
-      const now=new Date().toISOString();
-      let sessionId="";
-
-      try{
-        sessionId=await Academia.semillas.guardarSesion({
-          semillaId:seed.id,
-          titulo:seed.titulo,
-          familia:seed.familia,
-          tipoSituacion:seed.tipoSituacion,
-          nivelApoyo:seed.nivelApoyo,
-          fechaInicio:"",
-          duracion:Math.round(audioDuration||0),
-          intentos:0,
-          respuestaConstruida:"",
-          audioData,
-          mimeType:archivoActual.type||"audio/webm",
+      transaction.update(evidenceRef,{
+        atributos:{
+          ...(evidenceData.atributos && typeof evidenceData.atributos==="object" ? evidenceData.atributos : {}),
+          audioRecuperado:true
+        },
+        resultado:{
+          ...(evidenceData.resultado && typeof evidenceData.resultado==="object" ? evidenceData.resultado : {}),
           duracionAudio:audioDuration,
-          transcripcion:transcript,
-          respuestas:{},
-          analisisEducativo:{
-            tipo:"recuperacion_evidencia_tecnica",
-            palabrasObjetivo:0,
-            palabrasReconocidas:0,
-            transcripcionDisponible:Boolean(transcript),
-            evidenciaRecuperada:true,
-            fechaRecuperacion:now,
-            archivoOrigen:archivoActual.name,
-            estadoMisionConservado:mission.estado,
-            mensaje:"Grabación recuperada de una práctica real que no pudo guardarse inicialmente por una incidencia técnica de tamaño. La Misión ya estaba cerrada y su estado, fecha de cierre y auditoría de cambio de estado se conservaron. No se reconstruyeron respuestas, transcripción ni intentos no conservados."
-          },
-          observacionFamilia:"",
-          misionId:mission.id
-        });
+          grabacionConfirmada:true,
+          audioRecuperado:true
+        },
+        audioRecuperadoEn:serverTimestamp(),
+        audioRecuperadoPorUid:actorUid
+      });
 
-        const result=await registrarEvidenciaEnMisionCerrada({mission,seed,sessionId});
-        return {mission,seed,sessionId,result};
-      }catch(error){
-        if(sessionId){
-          try{
-            await deleteDoc(doc(db,"usuarios",personaActivaUserId,"sesionesSemillas",sessionId));
-          }catch(rollbackError){
-            console.error("No se pudo revertir la sesión de recuperación.",rollbackError);
-          }
-        }
-        throw error;
-      }
-    }
-
-    async function initialize(){
-      await auth.authStateReady();
-      if(!auth.currentUser){window.location.replace("/academia-gloria/login.html");return;}
-      await ContextoUsuario.inicializar();
-      personaActivaUserId=await ContextoUsuario.obtenerUserIdPersonaActiva();
-      if(!personaActivaUserId)throw new Error("No se pudo resolver la Persona Activa.");
-
-      const catalogResponse=await fetch("./semillas.json",{cache:"no-store"});
-      if(!catalogResponse.ok)throw new Error("No se pudo cargar el catálogo de Semillas.");
-      const data=await catalogResponse.json();
-      catalogo=Array.isArray(data.semillas)?data.semillas.filter(item=>item.activo!==false):[];
-
-      const requestedMissionId=new URLSearchParams(location.search).get("misionId");
-      const all=await Academia.tareas.leer();
-      misiones=all.filter(esMisionCerradaSemilla);
-      if(requestedMissionId){
-        misiones.sort((a,b)=>Number(b.id===requestedMissionId)-Number(a.id===requestedMissionId));
-      }
-      if(!misiones.length){
-        setStatus("No se encontró una Misión cerrada de Creciendo por Dentro compatible con esta recuperación.","warn");
-        return;
-      }
-
-      $("formArea").classList.remove("hidden");
-      renderMissionOptions();
-      setStatus("Misión cerrada localizada. Selecciona y escucha la grabación; nada se modificará hasta la confirmación final.");
-    }
-
-    $("audioFile").addEventListener("change",onAudioSelected);
-    $("seedSelect").addEventListener("change",validateReady);
-    $("saveButton").addEventListener("click",async()=>{
-      const mission=misiones.find(item=>item.id===$("missionSelect").value);
-      const button=$("saveButton");
-      const mensaje=`La Misión “${tituloMision(mission||{})}” ya está ${mission?.estado==="completada"?"CONSEGUIDA":"cerrada"}.\n\n¿Confirmas que este es el audio real y que quieres incorporarlo SIN reabrir ni cambiar ese estado?`;
-      if(!window.confirm(mensaje))return;
-      button.disabled=true;
-      setStatus("Guardando la sesión y asociando la evidencia sin modificar el estado de la Misión…");
-
-      try{
-        const {mission:guardada,seed,sessionId,result}=await saveRecoveredEvidence();
-        $("formArea").classList.add("hidden");
-        $("successArea").classList.remove("hidden");
-        $("successText").textContent=`${seed.titulo} quedó asociada a “${tituloMision(guardada)}”. La Misión conserva su estado ${etiquetaEstado(result.estadoConservado)}, su fecha de cierre y la auditoría de ese cambio; ahora además incluye la grabación recuperada como trabajo realizado.`;
-        $("historyLink").href=`./?vista=historial&misionId=${encodeURIComponent(guardada.id)}&sesionId=${encodeURIComponent(sessionId)}`;
-        setStatus("Recuperación completada. La Misión no fue reabierta ni se cambió su cierre.","ok");
-      }catch(error){
-        console.error(error);
-        setStatus(`No pudimos completar la recuperación: ${error.message}`,"error");
-        button.disabled=false;
-      }
+      // Deliberadamente NO se actualiza la Misión.
     });
 
-    initialize().catch(error=>{
+    return {mission,session};
+  }
+
+  async function initialize(){
+    await auth.authStateReady();
+    if(!auth.currentUser){
+      window.location.replace("/academia-gloria/login.html");
+      return;
+    }
+
+    await ContextoUsuario.inicializar();
+    personaActivaUserId=await ContextoUsuario.obtenerUserIdPersonaActiva();
+    if(!personaActivaUserId)throw new Error("No se pudo resolver la Persona Activa.");
+
+    [sessions,missions]=await Promise.all([
+      Academia.semillas.leerSesiones(),
+      Academia.tareas.leer()
+    ]);
+
+    missions=missions.filter(mission=>
+      mission.modulo==="creciendo-por-dentro" &&
+      mission.estado==="pendiente_validacion"
+    );
+
+    if(!missions.length){
+      setStatus("No hay una Misión de Creciendo por Dentro en Esperando a mi familia.","warn");
+      return;
+    }
+
+    $("missionSelect").innerHTML=missions.map(mission=>
+      `<option value="${escapeHtml(mission.id)}">${escapeHtml(missionTitle(mission))}</option>`
+    ).join("");
+
+    $("formArea").classList.remove("hidden");
+    $("missionSelect").addEventListener("change",renderSelectedMission);
+    await renderSelectedMission();
+  }
+
+  $("audioFile").addEventListener("change",onAudioSelected);
+  $("attachButton").addEventListener("click",async()=>{
+    if(!currentContext)return;
+    const button=$("attachButton");
+    if(!window.confirm(
+      `¿Confirmas que esta es la grabación real que quieres asociar a “${missionTitle(currentContext.mission)}”?\n\nLas respuestas ya guardadas no serán modificadas.`
+    ))return;
+
+    button.disabled=true;
+    setStatus("Asociando el audio a la práctica existente…");
+
+    try{
+      const {mission,session}=await attachAudio();
+      $("formArea").classList.add("hidden");
+      $("successArea").classList.remove("hidden");
+      $("successText").textContent=`La sesión ${session.id} conserva sus respuestas y ahora incluye la grabación. La Misión continúa en Esperando a mi familia.`;
+      $("historyLink").href=`./?vista=historial&misionId=${encodeURIComponent(mission.id)}&sesionId=${encodeURIComponent(session.id)}`;
+      setStatus("Recuperación completada sin crear otra sesión ni cambiar la Misión.","ok");
+    }catch(error){
       console.error(error);
-      setStatus(`No pudimos iniciar la recuperación: ${error.message}`,"error");
-    });
-  </script>
+      setStatus(`No pudimos asociar el audio: ${error.message}`,"error");
+      button.disabled=false;
+    }
+  });
+
+  initialize().catch(error=>{
+    console.error(error);
+    setStatus(`No pudimos preparar la recuperación: ${error.message}`,"error");
+  });
+</script>
 </body>
 </html>
