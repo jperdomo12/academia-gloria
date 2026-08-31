@@ -100,6 +100,7 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         icono: "⚙️",
         ruta: "mi-universo/mis-tareas/",
         volver: "mi-universo/mi-camino/",
+        nivelMinimo: "gestion",
         cabeceraGlobal: true,
         limpiarNavegacionLegada: true
       }
