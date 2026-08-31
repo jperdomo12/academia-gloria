@@ -14,6 +14,7 @@ const TIPOS_LEGACY = new Set([
 
 let paginaActual = 1;
 let filtroTipoActual = "todos";
+let filtroTemaActual = "";
 let programado = false;
 
 function cargarEstilos() {
@@ -26,28 +27,61 @@ function cargarEstilos() {
   document.head.appendChild(enlace);
 }
 
-function ocultarTiposNoOperativos() {
+function normalizarTexto(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLocaleLowerCase("es-ES");
+}
+
+function ajustarTiposDisponibles() {
   const select = document.getElementById("tipo");
   if (!select) return;
 
+  const actual = String(select.value || "");
+
   [...select.options].forEach(option => {
     const esLegacy = TIPOS_LEGACY.has(option.value);
-    option.hidden = esLegacy;
+    const esLegacyActual = esLegacy && option.value === actual;
+
+    option.hidden = esLegacy && !esLegacyActual;
+
     if (esLegacy) {
       option.dataset.legacy = "true";
-      option.title = "Tipo conservado solo por compatibilidad con Misiones antiguas.";
+      option.title = esLegacyActual
+        ? "Tipo histórico conservado para poder consultar o editar esta Misión antigua."
+        : "Tipo histórico no disponible para nuevas Misiones.";
     }
   });
 }
 
-function crearFiltroTipo() {
+function crearBarraFiltros() {
   const filtrosEstado = document.querySelector("#panelLista .filtros");
-  if (!filtrosEstado || document.getElementById("filtroTipoMision")) return;
+  const cabecera = filtrosEstado?.closest(".cabecera-seccion");
 
-  const grupo = document.createElement("label");
-  grupo.className = "filtro-tipo-mision";
-  grupo.innerHTML = `
-    <span>Tipo de misión</span>
+  if (!filtrosEstado || !cabecera || document.getElementById("filtrosListadoMisiones")) {
+    return;
+  }
+
+  const barra = document.createElement("div");
+  barra.id = "filtrosListadoMisiones";
+  barra.className = "filtros-listado-misiones";
+
+  const grupoEstado = document.createElement("div");
+  grupoEstado.className = "filtro-listado-misiones filtro-listado-misiones--estado";
+
+  const etiquetaEstado = document.createElement("span");
+  etiquetaEstado.className = "filtro-listado-misiones__etiqueta";
+  etiquetaEstado.textContent = "Estado";
+
+  grupoEstado.append(etiquetaEstado, filtrosEstado);
+
+  const grupoTipo = document.createElement("label");
+  grupoTipo.className = "filtro-listado-misiones";
+  grupoTipo.innerHTML = `
+    <span class="filtro-listado-misiones__etiqueta">Tipo</span>
     <select id="filtroTipoMision" aria-label="Filtrar Misiones por tipo">
       <option value="todos">Todos los tipos</option>
       <option value="actividad_modulo">Actividad de un módulo</option>
@@ -56,10 +90,31 @@ function crearFiltroTipo() {
     </select>
   `;
 
-  filtrosEstado.insertAdjacentElement("afterend", grupo);
+  const grupoTema = document.createElement("label");
+  grupoTema.className = "filtro-listado-misiones filtro-listado-misiones--tema";
+  grupoTema.innerHTML = `
+    <span class="filtro-listado-misiones__etiqueta">🔎 Tema</span>
+    <input
+      id="filtroTemaMision"
+      type="search"
+      maxlength="80"
+      autocomplete="off"
+      placeholder="Buscar por tema"
+      aria-label="Buscar Misiones por tema"
+    >
+  `;
 
-  grupo.querySelector("select").addEventListener("change", event => {
+  barra.append(grupoEstado, grupoTipo, grupoTema);
+  cabecera.insertAdjacentElement("afterend", barra);
+
+  grupoTipo.querySelector("select")?.addEventListener("change", event => {
     filtroTipoActual = event.target.value;
+    paginaActual = 1;
+    aplicarListado();
+  });
+
+  grupoTema.querySelector("input")?.addEventListener("input", event => {
+    filtroTemaActual = normalizarTexto(event.target.value);
     paginaActual = 1;
     aplicarListado();
   });
@@ -84,6 +139,16 @@ function tipoOperativoTarjeta(card) {
   if (meta.includes("Repaso académico")) return "repaso_academico";
   if (meta.includes("Actividad externa")) return "tarea_libre";
   return "actividad_modulo";
+}
+
+function textoTemaTarjeta(card) {
+  const partes = [
+    card.querySelector(".tarea-card__resumen-principal h3")?.textContent,
+    card.querySelector(".tarea-card__resumen-principal p")?.textContent,
+    ...[...card.querySelectorAll(".contexto-academico span")].map(item => item.textContent)
+  ].filter(Boolean);
+
+  return normalizarTexto(partes.join(" "));
 }
 
 function tarjetasDelListado() {
@@ -131,15 +196,23 @@ function renderPaginacion(total) {
 function aplicarListado() {
   programado = false;
   const cards = tarjetasDelListado();
+
   if (!cards.length) {
     renderPaginacion(0);
     return;
   }
 
-  const coincidentes = cards.filter(card =>
-    filtroTipoActual === "todos" ||
-    tipoOperativoTarjeta(card) === filtroTipoActual
-  );
+  const coincidentes = cards.filter(card => {
+    const coincideTipo =
+      filtroTipoActual === "todos" ||
+      tipoOperativoTarjeta(card) === filtroTipoActual;
+
+    const coincideTema =
+      !filtroTemaActual ||
+      textoTemaTarjeta(card).includes(filtroTemaActual);
+
+    return coincideTipo && coincideTema;
+  });
 
   const total = coincidentes.length;
   const totalPaginas = Math.max(1, Math.ceil(total / TAMANO_PAGINA));
@@ -148,8 +221,7 @@ function aplicarListado() {
   const visibles = new Set(coincidentes.slice(inicio, inicio + TAMANO_PAGINA));
 
   cards.forEach(card => {
-    const coincideTipo = coincidentes.includes(card);
-    card.hidden = !coincideTipo || !visibles.has(card);
+    card.hidden = !visibles.has(card);
   });
 
   renderPaginacion(total);
@@ -157,7 +229,8 @@ function aplicarListado() {
   const estado = document.getElementById("estadoTareas");
   if (estado && cards.length && !total) {
     estado.classList.remove("hidden");
-    estado.textContent = "No hay Misiones de este tipo en el filtro seleccionado.";
+    estado.textContent =
+      "No hay Misiones que coincidan con el Tipo y Tema dentro del Estado seleccionado.";
   } else if (estado && total) {
     estado.classList.add("hidden");
   }
@@ -187,29 +260,33 @@ function observarListado() {
   });
 }
 
-function preservarLegacyEnEdicion() {
+function preservarCompatibilidadLegacy() {
   document.addEventListener("click", event => {
-    if (!event.target.closest?.('[data-action="edit"],[data-action="view"]')) return;
+    const accionEdicion = event.target.closest?.('[data-action="edit"],[data-action="view"]');
+    const tabCrear = event.target.closest?.('[data-tab="crear"]');
 
-    window.setTimeout(() => {
-      const select = document.getElementById("tipo");
-      if (!select) return;
-      const actual = select.value;
-      if (actual && !TIPOS_ACTIVOS.has(actual) && TIPOS_LEGACY.has(actual)) {
-        const option = [...select.options].find(item => item.value === actual);
-        if (option) option.hidden = false;
-      }
-    }, 80);
+    if (accionEdicion) {
+      window.setTimeout(ajustarTiposDisponibles, 80);
+      return;
+    }
+
+    if (tabCrear) {
+      window.setTimeout(ajustarTiposDisponibles, 0);
+    }
+  });
+
+  document.getElementById("formTarea")?.addEventListener("reset", () => {
+    window.setTimeout(ajustarTiposDisponibles, 0);
   });
 }
 
 function iniciar() {
   cargarEstilos();
-  ocultarTiposNoOperativos();
-  crearFiltroTipo();
+  ajustarTiposDisponibles();
+  crearBarraFiltros();
   crearPaginador();
   observarListado();
-  preservarLegacyEnEdicion();
+  preservarCompatibilidadLegacy();
   programarAplicacion();
 }
 
