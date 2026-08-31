@@ -1,0 +1,215 @@
+/* Academia Gloria Valentina · Análisis educativo */
+
+.analisis-filtros {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 14px;
+  align-items: end;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.analisis-filtros label,
+.analisis-fechas label {
+  display: grid;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.analisis-filtros label > span,
+.analisis-fechas label > span {
+  font-size: 0.82rem;
+  color: #5b6476;
+}
+
+.analisis-filtros select,
+.analisis-filtros input {
+  width: 100%;
+  min-height: 43px;
+  border: 1px solid #d9def0;
+  border-radius: 12px;
+  background: #fff;
+  color: #202538;
+  padding: 9px 11px;
+  font: inherit;
+}
+
+.analisis-filtros select:focus,
+.analisis-filtros input:focus {
+  outline: 3px solid rgba(124, 58, 237, 0.13);
+  border-color: #8b5cf6;
+}
+
+.analisis-filtros select:disabled {
+  background: #f5f6fa;
+  color: #858b9b;
+}
+
+.analisis-fechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  grid-column: span 2;
+}
+
+.analisis-aviso,
+.analisis-principio {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #faf7ff, #fff);
+  border: 1px solid #e8defa;
+}
+
+.analisis-aviso > span,
+.analisis-principio > span {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.analisis-aviso p,
+.analisis-principio p {
+  margin: 0;
+  color: #4d5568;
+}
+
+.analisis-resultado {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.analisis-seccion {
+  padding: 20px;
+  min-width: 0;
+}
+
+.analisis-seccion:first-child,
+.analisis-seccion--actuacion,
+.analisis-principio,
+.analisis-sin-datos {
+  grid-column: 1 / -1;
+}
+
+.analisis-seccion h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  color: #27243a;
+}
+
+.analisis-seccion ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.analisis-seccion li {
+  margin: 0 0 10px;
+  color: #444b5d;
+  line-height: 1.48;
+}
+
+.analisis-seccion li:last-child {
+  margin-bottom: 0;
+}
+
+.analisis-vacio {
+  margin: 0;
+  color: #707789;
+  line-height: 1.5;
+}
+
+.analisis-resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.analisis-resumen-grid article {
+  border: 1px solid #e6e8f0;
+  border-radius: 14px;
+  background: #fbfbfe;
+  padding: 15px;
+  display: grid;
+  gap: 4px;
+}
+
+.analisis-resumen-grid strong {
+  font-size: 1.65rem;
+  line-height: 1;
+  color: #6d28d9;
+}
+
+.analisis-resumen-grid span {
+  color: #60687a;
+  font-size: 0.86rem;
+}
+
+.analisis-periodo-resumen {
+  margin: 14px 0 0;
+  color: #60687a;
+}
+
+.analisis-seccion--actuacion {
+  border-color: #dcefe3;
+  background: linear-gradient(135deg, #fbfffc, #fff);
+}
+
+.analisis-sin-datos {
+  padding: 24px;
+  text-align: center;
+}
+
+.analisis-sin-datos strong {
+  display: block;
+  color: #31364a;
+  margin-bottom: 6px;
+}
+
+.analisis-sin-datos p {
+  margin: 0;
+  color: #747b8c;
+}
+
+#estadoAnalisisEducativo:not(.hidden) {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 980px) {
+  .analisis-filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .analisis-filtros > button {
+    justify-self: start;
+  }
+
+  .analisis-resumen-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .analisis-filtros,
+  .analisis-fechas,
+  .analisis-resultado,
+  .analisis-resumen-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analisis-fechas {
+    grid-column: auto;
+  }
+
+  .analisis-seccion,
+  .analisis-seccion:first-child,
+  .analisis-seccion--actuacion,
+  .analisis-principio,
+  .analisis-sin-datos {
+    grid-column: auto;
+  }
+}
