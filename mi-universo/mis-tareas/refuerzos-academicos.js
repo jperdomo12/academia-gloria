@@ -6,6 +6,8 @@ import "./catalogo-repaso-academico.js";
 import "./mision-libre.js";
 
 const $ = id => document.getElementById(id);
+const MAXIMO_SESIONES_ANALISIS = 5;
+const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
   {
@@ -95,6 +97,22 @@ function numero(valor, alternativo = 0) {
   return Number.isFinite(resultado) ? resultado : alternativo;
 }
 
+function marcaTiempo(valor) {
+  if (!valor) return 0;
+  if (typeof valor?.toMillis === "function") return valor.toMillis();
+  if (typeof valor?.toDate === "function") return valor.toDate().getTime();
+  const tiempo = Date.parse(valor);
+  return Number.isFinite(tiempo) ? tiempo : 0;
+}
+
+function porcentajeError(valor) {
+  return Math.round(Math.max(0, Math.min(1, numero(valor))) * 100);
+}
+
+function plural(cantidad, singular, pluralTexto) {
+  return cantidad === 1 ? singular : pluralTexto;
+}
+
 function estadoCerrado(tarea = {}) {
   return ["completada", "cancelada"].includes(String(tarea.estado || ""));
 }
@@ -124,6 +142,36 @@ function actividadPorId(id) {
 
 function rutaTexto(actividad) {
   return `Mis Cursos → ${actividad.curso} → ${actividad.materia} → ${actividad.titulo}`;
+}
+
+function respuestasBloqueSesion(sesion = {}, bloqueId = "") {
+  const respuestas = Array.isArray(sesion.respuestas) ? sesion.respuestas : [];
+  return respuestas.filter(respuesta =>
+    String(respuesta?.bloqueId || "").trim() === bloqueId &&
+    typeof respuesta?.correcta === "boolean"
+  );
+}
+
+function resumenBloqueSesion(sesion = {}, bloqueId = "") {
+  const porBloque = Array.isArray(sesion?.resumen?.porBloque)
+    ? sesion.resumen.porBloque
+    : [];
+  const item = porBloque.find(candidato =>
+    String(candidato?.bloqueId || candidato?.id || "").trim() === bloqueId
+  );
+
+  if (!item) return null;
+
+  const total = Math.max(0, numero(item.total));
+  if (!total) return null;
+
+  const correctas = Math.max(0, Math.min(total, numero(item.correctas)));
+
+  return {
+    estado: String(item.estado || "").trim(),
+    correctas,
+    total
+  };
 }
 
 function cargarEstilos() {
@@ -185,9 +233,10 @@ function crearSeccionesBase() {
               <div>
                 <h3 id="tituloRefuerzosAcademicos">📘 Propuestas desde pruebas académicas</h3>
                 <p>
-                  La Academia revisa únicamente la sesión de aprendizaje más reciente.
-                  Solo propone automáticamente los bloques que el propio mapa formativo marcó
-                  como “Conviene reforzar”.
+                  La Academia revisa hasta las ${MAXIMO_SESIONES_ANALISIS} sesiones de aprendizaje más recientes por actividad.
+                  Una necesidad se confirma cuando el mismo bloque acumula al menos
+                  ${MINIMO_SENALES_CONFIRMACION} respuestas incorrectas y la sesión más reciente todavía muestra dificultad.
+                  La proporción de respuestas incorrectas determina la prioridad; la cantidad de repeticiones no la aumenta.
                 </p>
               </div>
               <button id="actualizarRefuerzosAcademicos" class="btn secundaria" type="button">
@@ -225,41 +274,72 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
 
   ACTIVIDADES.forEach(actividad => {
     const sesiones = sesionesPorActividad.get(actividad.actividadId) || [];
-    const sesion = sesiones[0];
-    if (!sesion) return;
+    const sesionReciente = sesiones[0];
+    if (!sesionReciente) return;
 
-    const porBloque = Array.isArray(sesion?.resumen?.porBloque)
-      ? sesion.resumen.porBloque
-      : [];
+    Object.entries(actividad.bloques).forEach(([bloqueId, bloque]) => {
+      const reciente = resumenBloqueSesion(sesionReciente, bloqueId);
+      const respuestasRecientes = respuestasBloqueSesion(sesionReciente, bloqueId);
+      const erroresRecientes = respuestasRecientes.filter(respuesta => respuesta.correcta === false);
 
-    porBloque.forEach(item => {
-      const bloqueId = String(item?.bloqueId || item?.id || "").trim();
-      const bloque = actividad.bloques[bloqueId];
-      const total = numero(item?.total);
-      const estado = String(item?.estado || "").trim();
+      if (
+        !reciente ||
+        !["camino", "reforzar"].includes(reciente.estado) ||
+        !erroresRecientes.length
+      ) {
+        return;
+      }
 
-      if (!bloque || total <= 0 || estado !== "reforzar") return;
+      const observaciones = sesiones.flatMap(sesion => {
+        const completadaEn = sesion.completadaEn || sesion.updatedAt || sesion.finCliente || null;
+        return respuestasBloqueSesion(sesion, bloqueId).map(respuesta => ({
+          sesionId: String(sesion.id || ""),
+          completadaEn,
+          preguntaId: String(respuesta.preguntaId || ""),
+          conceptoId: String(respuesta.conceptoId || ""),
+          correcta: respuesta.correcta === true
+        }));
+      });
+      const senales = observaciones.filter(observacion => observacion.correcta === false);
+
+      if (senales.length < MINIMO_SENALES_CONFIRMACION || !observaciones.length) return;
 
       const clave = clavePropuesta(actividad.actividadId, bloqueId);
       const yaPreparada = activas.some(tarea => {
         const cfg = configuracionRefuerzo(tarea);
         return clavePropuesta(cfg.actividadId, cfg.bloqueId) === clave;
       });
+      const proporcionError = senales.length / observaciones.length;
+      const ultimaSenalEn = senales.reduce(
+        (ultima, senal) => Math.max(ultima, marcaTiempo(senal.completadaEn)),
+        0
+      );
+      const sesionesConSenal = new Set(senales.map(senal => senal.sesionId)).size;
 
       resultado.push({
         clave,
         actividad,
         bloqueId,
         bloque,
-        sesionId: sesion.id,
-        correctas: Math.max(0, numero(item?.correctas)),
-        total,
+        sesionId: String(sesionReciente.id || ""),
+        estadoReciente: reciente.estado,
+        correctas: reciente.correctas,
+        total: reciente.total,
+        senales,
+        sesionesConSenal,
+        proporcionError,
+        ultimaSenalEn,
         yaPreparada
       });
     });
   });
 
-  return resultado;
+  return resultado.sort((a, b) =>
+    b.proporcionError - a.proporcionError ||
+    b.ultimaSenalEn - a.ultimaSenalEn ||
+    a.actividad.titulo.localeCompare(b.actividad.titulo, "es") ||
+    a.bloque.titulo.localeCompare(b.bloque.titulo, "es")
+  );
 }
 
 async function leerDatos() {
@@ -268,7 +348,7 @@ async function leerDatos() {
     ...ACTIVIDADES.map(actividad =>
       leerSesionesAcademicas({
         actividadId: actividad.actividadId,
-        maximo: 5
+        maximo: MAXIMO_SESIONES_ANALISIS
       })
     )
   ]);
@@ -292,11 +372,16 @@ async function leerDatos() {
 }
 
 function textoSenal(propuesta) {
-  if (propuesta.correctas <= 0) {
-    return `En la prueba más reciente, este bloque quedó en ${propuesta.correctas} de ${propuesta.total} respuestas correctas y el mapa formativo indicó que conviene reforzarlo.`;
-  }
+  const cantidad = propuesta.senales.length;
+  const sesiones = propuesta.sesionesConSenal;
+  const porcentaje = porcentajeError(propuesta.proporcionError);
 
-  return `En la prueba más reciente, el mapa formativo indicó que conviene reforzar este bloque antes de aumentar la dificultad.`;
+  return (
+    `En este bloque se observaron ${cantidad} ${plural(cantidad, "respuesta incorrecta", "respuestas incorrectas")} ` +
+    `en ${sesiones} ${plural(sesiones, "sesión reciente", "sesiones recientes")}. ` +
+    `Representan el ${porcentaje} % de las respuestas revisadas para este bloque. ` +
+    `La sesión más reciente todavía muestra dificultad.`
+  );
 }
 
 function renderPropuestas(meta = {}) {
@@ -319,9 +404,8 @@ function renderPropuestas(meta = {}) {
   if (!propuestas.length) {
     lista.innerHTML = `
       <div class="refuerzo-vacio">
-        La sesión más reciente no contiene bloques marcados como “Conviene reforzar”.
-        Los bloques “En camino” se conservan como observación, pero esta primera versión
-        no crea una propuesta automática a partir de ellos.
+        No hay bloques con una dificultad repetida y todavía vigente en la sesión más reciente.
+        Una sola respuesta incorrecta no genera automáticamente una Misión de refuerzo.
       </div>
     `;
     return;
@@ -336,7 +420,9 @@ function renderPropuestas(meta = {}) {
           <div class="refuerzo-academico__meta">
             <span>📘 ${escapar(propuesta.actividad.titulo)}</span>
             <span>6.º · Matemáticas</span>
-            <span>${propuesta.correctas} de ${propuesta.total} en este bloque</span>
+            <span>🎯 ${porcentajeError(propuesta.proporcionError)} % incorrectas</span>
+            <span>${propuesta.senales.length} señales observadas</span>
+            <span>Última: ${propuesta.correctas} de ${propuesta.total}</span>
           </div>
         </div>
       </div>
@@ -500,7 +586,7 @@ async function crearMision(propuesta, button) {
     await Academia.tareas.crear({
       titulo,
       descripcion:
-        `Misión propuesta a partir de la prueba académica más reciente. ` +
+        `Misión propuesta a partir de una dificultad repetida en preguntas del mismo bloque académico. ` +
         `Foco: ${bloque.titulo}.`,
       tipo: "repaso_academico",
       cursoReferencia: "6",
@@ -547,9 +633,15 @@ async function crearMision(propuesta, button) {
           foco: bloque.titulo,
           ruta: ["Mis Cursos", actividad.curso, actividad.materia, actividad.titulo],
           sesionOrigenId: propuesta.sesionId,
-          estadoOrigen: "reforzar",
+          estadoOrigen: propuesta.estadoReciente,
           correctasOrigen: propuesta.correctas,
-          totalOrigen: propuesta.total
+          totalOrigen: propuesta.total,
+          senalesConfirmacion: propuesta.senales.map(senal => ({
+            sesionId: senal.sesionId,
+            preguntaId: senal.preguntaId,
+            conceptoId: senal.conceptoId
+          })),
+          proporcionIncorrectas: propuesta.proporcionError
         }
       }
     });
