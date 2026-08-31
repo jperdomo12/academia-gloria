@@ -84,6 +84,13 @@ function numero(valor) {
   return Number.isFinite(n) ? Math.max(0, n) : 0;
 }
 
+function marcaTiempo(valor) {
+  if (!valor) return 0;
+  const fecha = new Date(valor);
+  const tiempo = fecha.getTime();
+  return Number.isFinite(tiempo) ? tiempo : 0;
+}
+
 function plural(cantidad, singular, pluralTexto) {
   return cantidad === 1 ? singular : pluralTexto;
 }
@@ -221,33 +228,24 @@ function crearPropuestas(registros = [], tareas = []) {
         sesionId: registro.sesion?.id || "",
         titulo: tituloHistoria(registro.historiaId),
         extras: senal.extras,
+        completadaEn: registro.sesion?.completadaEn || "",
         decisionFamilia: false
       });
     });
 
     if (registro.estado === "reforzar") {
       const principal = senalMasFuerte(senales);
-      const foco = principal?.foco || "general";
-      const clave = clavePropuesta(registro.nivel, foco);
-      const grupo = grupos.get(clave) || {
-        clave,
-        nivel: Number(registro.nivel || 1),
-        foco,
-        soportes: []
-      };
-      const existente = grupo.soportes.find(item => item.historiaId === registro.historiaId);
+      if (!principal) return;
+
+      const clave = clavePropuesta(registro.nivel, principal.foco);
+      const grupo = grupos.get(clave);
+      const existente = grupo?.soportes.find(
+        item => item.historiaId === registro.historiaId
+      );
+
       if (existente) {
         existente.decisionFamilia = true;
-      } else {
-        grupo.soportes.push({
-          historiaId: registro.historiaId,
-          sesionId: registro.sesion?.id || "",
-          titulo: tituloHistoria(registro.historiaId),
-          extras: principal?.extras || 0,
-          decisionFamilia: true
-        });
       }
-      grupos.set(clave, grupo);
     }
   });
 
@@ -260,20 +258,21 @@ function crearPropuestas(registros = [], tareas = []) {
   );
 
   return [...grupos.values()]
-    .filter(grupo =>
-      grupo.soportes.length >= 2 ||
-      grupo.soportes.some(item => item.decisionFamilia)
-    )
+    .filter(grupo => grupo.soportes.length >= 2)
     .map(grupo => ({
       ...grupo,
       totalExtras: grupo.soportes.reduce((total, item) => total + numero(item.extras), 0),
+      ultimaSenalEn: grupo.soportes.reduce(
+        (ultima, item) => Math.max(ultima, marcaTiempo(item.completadaEn)),
+        0
+      ),
       decisionFamilia: grupo.soportes.some(item => item.decisionFamilia),
       yaPreparada: clavesActivas.has(grupo.clave)
     }))
     .sort((a, b) =>
-      Number(b.decisionFamilia) - Number(a.decisionFamilia) ||
-      b.soportes.length - a.soportes.length ||
       b.totalExtras - a.totalExtras ||
+      b.soportes.length - a.soportes.length ||
+      b.ultimaSenalEn - a.ultimaSenalEn ||
       a.nivel - b.nivel ||
       (FOCOS[a.foco]?.orden || 99) - (FOCOS[b.foco]?.orden || 99)
     );
@@ -327,16 +326,16 @@ function textoObservacion(propuesta) {
   const foco = FOCOS[propuesta.foco] || FOCOS.general;
   const cantidad = propuesta.soportes.length;
   const nivel = propuesta.nivel;
+  const extras = numero(propuesta.totalExtras);
 
-  if (propuesta.decisionFamilia && cantidad === 1) {
-    return `La familia marcó esta historia de nivel ${nivel} para reforzar. La propuesta se centra en «${foco.titulo.toLocaleLowerCase("es-ES")}».`;
-  }
+  const base =
+    `En ${cantidad} ${plural(cantidad, "historia", "historias")} de nivel ${nivel}, ` +
+    `la fase «${foco.fase}» repitió la misma señal y acumuló ${extras} ` +
+    `${plural(extras, "intento adicional", "intentos adicionales")}.`;
 
-  const prefijo = propuesta.decisionFamilia
-    ? "Además de una marca familiar de refuerzo,"
-    : "En";
-
-  return `${prefijo} ${cantidad} ${plural(cantidad, "historia", "historias")} de nivel ${nivel}, la fase «${foco.fase}» necesitó más de un intento en la última resolución registrada de cada historia.`;
+  return propuesta.decisionFamilia
+    ? `${base} Además, la familia marcó al menos una de esas historias para reforzar.`
+    : base;
 }
 
 function totalPaginasPropuestas() {
