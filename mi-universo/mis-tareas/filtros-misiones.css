@@ -1,0 +1,90 @@
+/* Academia Gloria Valentina · Gestión de Misiones · Filtros avanzados */
+
+.filtros-avanzados-misiones{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:10px;
+}
+
+.filtros-avanzados-misiones label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#475569;
+  font-size:.82rem;
+  font-weight:900;
+}
+
+.filtros-avanzados-misiones select{
+  min-width:180px;
+  padding:9px 34px 9px 11px;
+  border:1.5px solid #dbeafe;
+  border-radius:13px;
+  background:#fff;
+  color:#1e293b;
+  font:inherit;
+  font-size:.82rem;
+  cursor:pointer;
+}
+
+.paginacion-misiones{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+}
+
+.paginacion-misiones__boton{
+  padding:8px 11px;
+  border:1.5px solid #dbeafe;
+  border-radius:12px;
+  background:#fff;
+  color:#1d4ed8;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.paginacion-misiones__boton:disabled{
+  opacity:.38;
+  cursor:not-allowed;
+}
+
+.paginacion-misiones__contador{
+  min-width:180px;
+  text-align:center;
+  color:#64748b;
+  font-size:.82rem;
+  font-weight:900;
+}
+
+#estadoFiltrosMisiones{
+  margin:10px 0 0;
+}
+
+@media(max-width:760px){
+  .filtros-avanzados-misiones{
+    justify-content:stretch;
+  }
+
+  .filtros-avanzados-misiones label{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .filtros-avanzados-misiones select{
+    min-width:0;
+    width:min(68%,260px);
+  }
+
+  .paginacion-misiones{
+    flex-wrap:wrap;
+  }
+
+  .paginacion-misiones__contador{
+    order:-1;
+    width:100%;
+  }
+}
