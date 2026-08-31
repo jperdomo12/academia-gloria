@@ -1,0 +1,144 @@
+/* Academia Gloria Valentina · Gestión de Misiones · Filtros y paginación */
+
+.filtros-listado-misiones{
+  display:grid;
+  grid-template-columns:minmax(390px,1.55fr) minmax(220px,.72fr) minmax(250px,.9fr);
+  gap:12px;
+  align-items:end;
+  margin:14px 0 18px;
+  padding:14px 16px;
+  border:1.5px solid #dbeafe;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fbfdff,#fff);
+}
+
+.filtro-listado-misiones{
+  display:grid;
+  gap:6px;
+  color:#475569;
+  font-size:.84rem;
+  font-weight:850;
+}
+
+.filtro-listado-misiones__etiqueta{
+  min-height:18px;
+  color:#475569;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+
+.filtro-listado-misiones--estado .filtros{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:flex-start;
+}
+
+.filtro-listado-misiones select,
+.filtro-listado-misiones input{
+  width:100%;
+  min-height:42px;
+  padding:8px 12px;
+  border:2px solid #dbeafe;
+  border-radius:13px;
+  background:#fff;
+  color:#243047;
+  font-family:inherit;
+  font-size:.88rem;
+  font-weight:850;
+}
+
+.filtro-listado-misiones select{
+  padding-right:34px;
+}
+
+.filtro-listado-misiones input::placeholder{
+  color:#94a3b8;
+  font-weight:750;
+}
+
+.filtro-listado-misiones select:focus,
+.filtro-listado-misiones input:focus{
+  border-color:#93c5fd;
+  outline:3px solid rgba(59,130,246,.12);
+  outline-offset:1px;
+}
+
+.paginacion-gestion-misiones{
+  min-height:44px;
+  margin-top:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.paginacion-gestion-misiones button{
+  min-height:39px;
+  padding:8px 13px;
+  border:2px solid #dbeafe;
+  border-radius:13px;
+  background:#fff;
+  color:#243047;
+  cursor:pointer;
+  font-weight:900;
+}
+
+.paginacion-gestion-misiones button:hover:not(:disabled){
+  background:#eff6ff;
+  transform:translateY(-1px);
+}
+
+.paginacion-gestion-misiones button:disabled{
+  opacity:.38;
+  cursor:not-allowed;
+}
+
+.paginacion-gestion-misiones strong{
+  min-width:210px;
+  text-align:center;
+  color:#64748b;
+  font-size:.86rem;
+  font-weight:900;
+}
+
+@media(max-width:1000px){
+  .filtros-listado-misiones{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .filtro-listado-misiones--estado{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:700px){
+  .filtros-listado-misiones{
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+
+  .filtro-listado-misiones--estado{
+    grid-column:auto;
+  }
+
+  .filtro-listado-misiones--estado .filtros{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .filtro-listado-misiones--estado .filtro{
+    width:100%;
+  }
+
+  .paginacion-gestion-misiones{
+    gap:7px;
+  }
+
+  .paginacion-gestion-misiones strong{
+    order:-1;
+    width:100%;
+  }
+}
