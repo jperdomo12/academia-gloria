@@ -1,0 +1,101 @@
+/* Academia Gloria Valentina · Gestión de Misiones · Listado */
+
+.listado-misiones__herramientas{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:14px;
+  margin:16px 0 12px;
+  padding:12px 14px;
+  border:1.5px solid #e2e8f0;
+  border-radius:16px;
+  background:#fff;
+}
+
+.listado-misiones__filtro-tipo{
+  display:grid;
+  gap:6px;
+  min-width:min(320px,100%);
+}
+
+.listado-misiones__filtro-tipo span{
+  color:#334155;
+  font-size:.78rem;
+  font-weight:900;
+}
+
+.listado-misiones__filtro-tipo select{
+  min-height:42px;
+  padding:8px 12px;
+  border:1.5px solid #cbd5e1;
+  border-radius:12px;
+  background:#fff;
+  color:#172554;
+  font:inherit;
+  font-weight:800;
+}
+
+.listado-misiones__contador{
+  color:#64748b;
+  font-size:.8rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.listado-misiones__paginador{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:16px;
+}
+
+.listado-misiones__paginador button{
+  padding:8px 12px;
+  border:1.5px solid #cbd5e1;
+  border-radius:12px;
+  background:#fff;
+  color:#334155;
+  cursor:pointer;
+  font:inherit;
+  font-size:.8rem;
+  font-weight:900;
+}
+
+.listado-misiones__paginador button:hover:not(:disabled){
+  background:#f8fafc;
+}
+
+.listado-misiones__paginador button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.listado-misiones__paginador span{
+  color:#64748b;
+  font-size:.8rem;
+  font-weight:900;
+}
+
+.listado-misiones__vacio{
+  margin-top:12px;
+}
+
+@media(max-width:680px){
+  .listado-misiones__herramientas{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .listado-misiones__filtro-tipo{
+    min-width:0;
+  }
+
+  .listado-misiones__contador{
+    align-self:flex-end;
+  }
+
+  .listado-misiones__paginador{
+    flex-wrap:wrap;
+  }
+}
