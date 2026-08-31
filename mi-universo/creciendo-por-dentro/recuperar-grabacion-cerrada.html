@@ -20,7 +20,7 @@
       <p>Esta herramienta incorpora una grabación real que no pudo guardarse por una incidencia técnica. <strong>No reabre la Misión, no crea otra Misión y no altera su estado de cierre.</strong></p>
 
       <div class="notice notice--warn">
-        <strong>Protección de la evidencia:</strong> se conservarán el estado actual de la Misión y sus datos de cambio de estado. Solo se añadirá la sesión recuperada, su evidencia y la referencia de progreso necesaria para que aparezca como trabajo realizado.
+        <strong>Protección de la evidencia:</strong> se conservarán el estado actual de la Misión, la fecha de cierre ya registrada y los datos de auditoría de su cambio de estado. Solo se añadirá la sesión recuperada, su evidencia y la referencia de progreso necesaria para que forme parte del trabajo realizado.
       </div>
 
       <div id="status" class="notice" style="margin-top:16px">Preparando recuperación…</div>
@@ -132,7 +132,7 @@
         <strong>${escapeHtml(tituloMision(mission))}</strong>
         <div>${escapeHtml(mission.presentacionAlumno?.descripcionMision||mission.descripcion||"")}</div>
         <span class="state">${escapeHtml(etiquetaEstado(mission.estado))}</span>
-        <p class="small muted" style="margin-bottom:0">La recuperación conservará este estado. No se cambiarán los datos de auditoría del cambio de estado.</p>`;
+        <p class="small muted" style="margin-bottom:0">La recuperación conservará este estado, su fecha de cierre y la auditoría del cambio de estado.</p>`;
 
       const allowed=idsSemillasMision(mission);
       const disponibles=allowed.length?allowed.map(semillaPorId).filter(Boolean):catalogo;
@@ -316,7 +316,7 @@
             fechaRecuperacion:now,
             archivoOrigen:archivoActual.name,
             estadoMisionConservado:mission.estado,
-            mensaje:"Grabación recuperada de una práctica real que no pudo guardarse inicialmente por una incidencia técnica de tamaño. La Misión ya estaba cerrada y su estado de cierre se conservó. No se reconstruyeron respuestas, transcripción ni intentos no conservados."
+            mensaje:"Grabación recuperada de una práctica real que no pudo guardarse inicialmente por una incidencia técnica de tamaño. La Misión ya estaba cerrada y su estado, fecha de cierre y auditoría de cambio de estado se conservaron. No se reconstruyeron respuestas, transcripción ni intentos no conservados."
           },
           observacionFamilia:"",
           misionId:mission.id
@@ -325,8 +325,6 @@
         const result=await registrarEvidenciaEnMisionCerrada({mission,seed,sessionId});
         return {mission,seed,sessionId,result};
       }catch(error){
-        // Si la sesión llegó a crearse pero falla la asociación, se elimina
-        // para que un reintento no deje una evidencia huérfana.
         if(sessionId){
           try{
             await deleteDoc(doc(db,"usuarios",personaActivaUserId,"sesionesSemillas",sessionId));
@@ -380,7 +378,7 @@
         const {mission:guardada,seed,sessionId,result}=await saveRecoveredEvidence();
         $("formArea").classList.add("hidden");
         $("successArea").classList.remove("hidden");
-        $("successText").textContent=`${seed.titulo} quedó asociada a “${tituloMision(guardada)}”. La Misión conserva su estado ${etiquetaEstado(result.estadoConservado)} y ahora incluye la grabación recuperada como trabajo realizado.`;
+        $("successText").textContent=`${seed.titulo} quedó asociada a “${tituloMision(guardada)}”. La Misión conserva su estado ${etiquetaEstado(result.estadoConservado)}, su fecha de cierre y la auditoría de ese cambio; ahora además incluye la grabación recuperada como trabajo realizado.`;
         $("historyLink").href=`./?vista=historial&misionId=${encodeURIComponent(guardada.id)}&sesionId=${encodeURIComponent(sessionId)}`;
         setStatus("Recuperación completada. La Misión no fue reabierta ni se cambió su cierre.","ok");
       }catch(error){
