@@ -91,6 +91,14 @@ function marcaTiempo(valor) {
   return Number.isFinite(tiempo) ? tiempo : 0;
 }
 
+function textoDecimal(valor) {
+  const n = numero(valor);
+  return n.toLocaleString("es-ES", {
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 1,
+    maximumFractionDigits: 1
+  });
+}
+
 function plural(cantidad, singular, pluralTexto) {
   return cantidad === 1 ? singular : pluralTexto;
 }
@@ -259,19 +267,29 @@ function crearPropuestas(registros = [], tareas = []) {
 
   return [...grupos.values()]
     .filter(grupo => grupo.soportes.length >= 2)
-    .map(grupo => ({
-      ...grupo,
-      totalExtras: grupo.soportes.reduce((total, item) => total + numero(item.extras), 0),
-      ultimaSenalEn: grupo.soportes.reduce(
-        (ultima, item) => Math.max(ultima, marcaTiempo(item.completadaEn)),
+    .map(grupo => {
+      const totalExtras = grupo.soportes.reduce(
+        (total, item) => total + numero(item.extras),
         0
-      ),
-      decisionFamilia: grupo.soportes.some(item => item.decisionFamilia),
-      yaPreparada: clavesActivas.has(grupo.clave)
-    }))
+      );
+      const promedioExtras = grupo.soportes.length
+        ? totalExtras / grupo.soportes.length
+        : 0;
+
+      return {
+        ...grupo,
+        totalExtras,
+        promedioExtras,
+        ultimaSenalEn: grupo.soportes.reduce(
+          (ultima, item) => Math.max(ultima, marcaTiempo(item.completadaEn)),
+          0
+        ),
+        decisionFamilia: grupo.soportes.some(item => item.decisionFamilia),
+        yaPreparada: clavesActivas.has(grupo.clave)
+      };
+    })
     .sort((a, b) =>
-      b.totalExtras - a.totalExtras ||
-      b.soportes.length - a.soportes.length ||
+      b.promedioExtras - a.promedioExtras ||
       b.ultimaSenalEn - a.ultimaSenalEn ||
       a.nivel - b.nivel ||
       (FOCOS[a.foco]?.orden || 99) - (FOCOS[b.foco]?.orden || 99)
@@ -326,12 +344,12 @@ function textoObservacion(propuesta) {
   const foco = FOCOS[propuesta.foco] || FOCOS.general;
   const cantidad = propuesta.soportes.length;
   const nivel = propuesta.nivel;
-  const extras = numero(propuesta.totalExtras);
+  const promedio = textoDecimal(propuesta.promedioExtras);
 
   const base =
-    `En ${cantidad} ${plural(cantidad, "historia", "historias")} de nivel ${nivel}, ` +
-    `la fase «${foco.fase}» repitió la misma señal y acumuló ${extras} ` +
-    `${plural(extras, "intento adicional", "intentos adicionales")}.`;
+    `La misma señal apareció en ${cantidad} ${plural(cantidad, "historia", "historias")} ` +
+    `distintas de nivel ${nivel}. En la fase «${foco.fase}» necesitó una media de ${promedio} ` +
+    `${plural(numero(propuesta.promedioExtras), "intento adicional", "intentos adicionales")} por historia.`;
 
   return propuesta.decisionFamilia
     ? `${base} Además, la familia marcó al menos una de esas historias para reforzar.`
@@ -530,6 +548,7 @@ function renderPropuestas(meta = {}) {
             <h4>${escapar(foco.titulo)}</h4>
             <div class="refuerzo-detectives__meta">
               <span>🌱 Nivel ${propuesta.nivel}</span>
+              <span>🎯 ${textoDecimal(propuesta.promedioExtras)} intentos adicionales de media</span>
               <span>${propuesta.soportes.length} ${plural(propuesta.soportes.length, "historia observada", "historias observadas")}</span>
               ${propuesta.decisionFamilia ? "<span>👨‍👩‍👧 Señal familiar</span>" : ""}
             </div>
@@ -912,7 +931,16 @@ function agruparPanelRefuerzos() {
   configurarAcordeonExclusivo();
 }
 
+function actualizarTextoCriterioRefuerzo() {
+  const explicacion = document.querySelector("#tituloRefuerzosDetectives + p");
+  if (!explicacion) return;
+
+  explicacion.textContent =
+    "Una propuesta automática necesita que la misma dificultad aparezca en al menos dos historias distintas del mismo nivel. La repetición confirma la necesidad; la media de intentos adicionales determina su prioridad.";
+}
+
 function inicializar() {
+  actualizarTextoCriterioRefuerzo();
   agruparPanelRefuerzos();
   $("actualizarRefuerzosDetectives")?.addEventListener("click", () => {
     paginaPropuestas = 1;
