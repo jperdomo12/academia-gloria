@@ -1,24 +1,68 @@
-/* Academia Gloria Valentina · Gestión de Misiones · Filtro y paginación */
+/* Academia Gloria Valentina · Gestión de Misiones · Filtros y paginación */
 
-.filtro-tipo-mision{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:9px;
-  margin-top:10px;
+.filtros-listado-misiones{
+  display:grid;
+  grid-template-columns:minmax(390px,1.55fr) minmax(220px,.72fr) minmax(250px,.9fr);
+  gap:12px;
+  align-items:end;
+  margin:14px 0 18px;
+  padding:14px 16px;
+  border:1.5px solid #dbeafe;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fbfdff,#fff);
+}
+
+.filtro-listado-misiones{
+  display:grid;
+  gap:6px;
   color:#475569;
-  font-size:.85rem;
+  font-size:.84rem;
   font-weight:850;
 }
 
-.filtro-tipo-mision select{
-  min-height:40px;
-  padding:7px 34px 7px 12px;
+.filtro-listado-misiones__etiqueta{
+  min-height:18px;
+  color:#475569;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+
+.filtro-listado-misiones--estado .filtros{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:flex-start;
+}
+
+.filtro-listado-misiones select,
+.filtro-listado-misiones input{
+  width:100%;
+  min-height:42px;
+  padding:8px 12px;
   border:2px solid #dbeafe;
   border-radius:13px;
   background:#fff;
   color:#243047;
+  font-family:inherit;
+  font-size:.88rem;
   font-weight:850;
+}
+
+.filtro-listado-misiones select{
+  padding-right:34px;
+}
+
+.filtro-listado-misiones input::placeholder{
+  color:#94a3b8;
+  font-weight:750;
+}
+
+.filtro-listado-misiones select:focus,
+.filtro-listado-misiones input:focus{
+  border-color:#93c5fd;
+  outline:3px solid rgba(59,130,246,.12);
+  outline-offset:1px;
 }
 
 .paginacion-gestion-misiones{
@@ -60,13 +104,32 @@
   font-weight:900;
 }
 
-@media(max-width:700px){
-  .filtro-tipo-mision{
-    align-items:stretch;
-    flex-direction:column;
+@media(max-width:1000px){
+  .filtros-listado-misiones{
+    grid-template-columns:1fr 1fr;
   }
 
-  .filtro-tipo-mision select{
+  .filtro-listado-misiones--estado{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:700px){
+  .filtros-listado-misiones{
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+
+  .filtro-listado-misiones--estado{
+    grid-column:auto;
+  }
+
+  .filtro-listado-misiones--estado .filtros{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .filtro-listado-misiones--estado .filtro{
     width:100%;
   }
 
