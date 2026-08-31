@@ -1,7 +1,6 @@
 /* Academia Gloria Valentina · Mi Camino · Finalización manual de Misiones */
 
 import { Academia } from "../../compartido/api/academia.js";
-import "./paginacion-misiones.js";
 
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";
 const RUTA_FALLBACK_LIBRE = new URL("../", window.location.href).pathname;
