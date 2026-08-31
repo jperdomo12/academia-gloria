@@ -1,4 +1,4 @@
-# STD-011_MIS_TAREAS_Y_MISIONES_v1.0
+# STD-011_MIS_TAREAS_Y_MISIONES_v1.1
 
 # Academia Gloria Valentina
 
@@ -8,11 +8,11 @@
 
 **Código:** STD-011
 
-**Versión:** 1.0
+**Versión:** 1.1
 
 **Estado:** Aprobado para desarrollo
 
-**Última actualización:** Julio 2026
+**Última actualización:** Agosto 2026
 
 ---
 
@@ -96,7 +96,7 @@ Gloria realiza la misión
 
 ↓
 
-El módulo registra automáticamente la actividad
+La Academia registra automáticamente la actividad cuando dispone de una evidencia verificable, o permite que Gloria indique manualmente que ha terminado cuando no existe un mecanismo automático fiable
 
 ↓
 
@@ -139,6 +139,8 @@ Leer dos historias esta semana.
 Ejemplo
 
 Escribir en papel cinco frases sobre tus vacaciones.
+
+Una Misión libre no debe conservar accidentalmente un módulo de la Academia. Su módulo asociado será `libre` / actividad fuera de la Academia, salvo que exista una actividad digital concreta y explícitamente asociada.
 
 ---
 
@@ -206,6 +208,8 @@ Necesita ayuda
 
 Cancelada
 
+Cuando una Misión requiere revisión familiar, la finalización realizada por Gloria no equivale todavía al cierre definitivo. Debe pasar primero a un estado de espera o validación familiar.
+
 ---
 
 # 8. Vista para Gloria
@@ -268,9 +272,17 @@ Pendiente de revisar.
 
 ---
 
-# 10. Finalización automática
+# 10. Finalización de Misiones
 
-Cuando un módulo informa que la actividad ha sido realizada, la Academia podrá marcar automáticamente la tarea como completada.
+La Academia utilizará dos mecanismos de finalización: automática y manual.
+
+La regla general es:
+
+> Si la Academia puede verificar objetivamente que la actividad terminó, utilizará finalización automática. Si no puede verificarlo de forma fiable, utilizará finalización manual con confirmación del alumno y revisión familiar.
+
+## 10.1 Finalización automática
+
+Cuando un módulo informa que la actividad ha sido realizada y existe una evidencia verificable, la Academia podrá actualizar automáticamente la Misión de acuerdo con su criterio de cumplimiento.
 
 Ejemplo
 
@@ -282,7 +294,11 @@ Historia guardada
 
 ↓
 
-Misión completada
+Criterio cumplido
+
+↓
+
+Misión terminada / enviada al flujo de revisión correspondiente
 
 ↓
 
@@ -299,6 +315,68 @@ Actualizar Constancia
 ↓
 
 Registrar en Panel de Evolución
+
+No se debe mostrar un control manual redundante cuando la Academia dispone de un mecanismo automático fiable de finalización.
+
+## 10.2 Finalización manual estándar
+
+Se utilizará para Misiones que no producen una evidencia automática suficiente para determinar su cumplimiento, por ejemplo una actividad realizada en papel, fuera de la Academia o una futura actividad familiar que no pueda verificarse digitalmente.
+
+En Mi Camino, mientras la Misión esté en curso, se mostrará:
+
+**Texto de orientación:**
+
+`Cuando termines esta misión, indícalo aquí.`
+
+**Acción principal:**
+
+`✅ Ya terminé`
+
+El texto de orientación debe ser visualmente secundario. El botón debe ser claramente reconocible como la acción principal, con un estilo positivo y amable coherente con Mi Camino.
+
+Al pulsar `✅ Ya terminé`, siempre se solicitará confirmación antes de cambiar el estado.
+
+La confirmación estándar será conceptualmente:
+
+**¿Terminaste esta misión?**
+
+`Si confirmas, la enviaremos a tu familia para su revisión.`
+
+La confirmación positiva puede expresarse como `✅ Sí, ya terminé`; la alternativa debe permitir continuar trabajando, por ejemplo `Todavía no`.
+
+Después de confirmar:
+
+En curso
+
+↓
+
+Gloria confirma que terminó
+
+↓
+
+Pendiente de validación / Esperando a mi familia
+
+↓
+
+La familia revisa
+
+↓
+
+Misión conseguida / completada
+
+La confirmación de Gloria no debe fabricar una evidencia digital inexistente ni navegar a un módulo genérico como sustituto de dicha evidencia.
+
+Una Misión manual en revisión no debe ofrecer `Ver mi trabajo` cuando no existe un trabajo digital consultable. Debe mostrar su estado de revisión familiar.
+
+## 10.3 Criterio de selección del mecanismo
+
+Antes de implementar el cierre de una nueva clase de Misión debe definirse cuál de los dos mecanismos corresponde.
+
+Usar finalización automática cuando exista un criterio de cumplimiento observable y persistido por la Academia.
+
+Usar finalización manual cuando el sistema no pueda saber con suficiente fiabilidad que la actividad terminó.
+
+No se debe usar la finalización manual únicamente por comodidad técnica si ya existe una evidencia automática adecuada.
 
 ---
 
@@ -432,6 +510,8 @@ Las observaciones podrán actualizarse.
 
 Las versiones anteriores permanecerán disponibles.
 
+Las Misiones sin actividad verificable no deben navegar a un módulo de la Academia únicamente para simular un flujo de ejecución o revisión.
+
 ---
 
 # 17. Futuras versiones
@@ -460,6 +540,13 @@ Sincronización con profesionales externos.
 
 ---
 
+# Historial de versiones
+
+- **v1.0 · Julio 2026:** definición inicial del sistema de Tareas, Misiones y Seguimiento.
+- **v1.1 · Agosto 2026:** formaliza el estándar de finalización manual, la confirmación del alumno, la revisión familiar y la separación entre cierre automático y manual.
+
+---
+
 # Resumen
 
 Los adultos crean tareas.
@@ -474,7 +561,11 @@ Gloria vive aventuras.
 
 ↓
 
-Los módulos registran evidencias.
+La Academia registra evidencias automáticas cuando puede verificarlas; en caso contrario Gloria confirma manualmente que terminó
+
+↓
+
+La familia revisa cuando corresponde
 
 ↓
 

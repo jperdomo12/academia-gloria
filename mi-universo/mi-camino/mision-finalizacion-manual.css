@@ -1,0 +1,68 @@
+/* Academia Gloria Valentina · Mi Camino · Finalización manual de Misiones */
+
+.mision__cierre-manual{
+  display:grid;
+  justify-items:end;
+  gap:7px;
+  width:100%;
+  padding-top:9px;
+  border-top:1px solid #dcfce7;
+}
+
+.mision__cierre-manual-texto{
+  max-width:230px;
+  color:#64748b;
+  font-size:.78rem;
+  line-height:1.35;
+  font-weight:800;
+  text-align:right;
+}
+
+.mision__accion--finalizacion-manual{
+  min-height:46px;
+  padding:10px 17px;
+  border:2px solid #166534;
+  border-radius:15px;
+  background:#dcfce7;
+  color:#14532d;
+  box-shadow:0 7px 16px rgba(22,101,52,.10);
+  cursor:pointer;
+  font-size:.95rem;
+  font-weight:900;
+  transition:.16s ease;
+}
+
+.mision__accion--finalizacion-manual:hover:not(:disabled){
+  transform:translateY(-1px);
+  background:#bbf7d0;
+}
+
+.mision__accion--finalizacion-manual:focus-visible{
+  outline:3px solid rgba(22,163,74,.20);
+  outline-offset:2px;
+}
+
+.mision__accion--finalizacion-manual:disabled{
+  opacity:.58;
+  cursor:wait;
+}
+
+.mision__accion--libre-estado{
+  cursor:default;
+}
+
+@media(max-width:680px){
+  .mision__cierre-manual{
+    justify-items:stretch;
+  }
+
+  .mision__cierre-manual-texto{
+    max-width:none;
+    text-align:left;
+  }
+
+  .mision__accion--finalizacion-manual{
+    width:100%;
+    text-align:center;
+  }
+}
