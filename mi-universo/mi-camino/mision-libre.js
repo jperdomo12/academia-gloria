@@ -1,4 +1,4 @@
-/* Academia Gloria Valentina · Mi Camino · Flujo de Misión libre */
+/* Academia Gloria Valentina · Mi Camino · Finalización manual de Misiones */
 
 import { Academia } from "../../compartido/api/academia.js";
 
@@ -87,6 +87,25 @@ function convertirMisionActiva(enlace) {
   enlace.replaceWith(article);
 }
 
+function normalizarCierreAcademico(cierre) {
+  if (!(cierre instanceof HTMLElement)) return;
+  if (cierre.classList.contains("mision__cierre-manual")) return;
+
+  const ayuda = cierre.querySelector(".mision__finalizacion-pregunta");
+  const boton = cierre.querySelector("[data-terminar-repaso]");
+  if (!boton) return;
+
+  cierre.className = "mision__cierre-manual";
+
+  if (ayuda) {
+    ayuda.className = "mision__cierre-manual-texto";
+    ayuda.textContent = "Cuando termines esta misión, indícalo aquí.";
+  }
+
+  boton.className = "mision__accion mision__accion--finalizacion-manual";
+  boton.textContent = "✅ Ya terminé";
+}
+
 function esCardLibreSinEvidencia(card) {
   if (!(card instanceof HTMLElement)) return false;
   const meta = texto(card.querySelector(".mision__meta")?.textContent);
@@ -114,6 +133,10 @@ function aplicarProtecciones(contenedor = document) {
     .forEach(convertirMisionActiva);
 
   contenedor
+    .querySelectorAll?.(".mision--academica .mision__finalizacion")
+    .forEach(normalizarCierreAcademico);
+
+  contenedor
     .querySelectorAll?.(".mision--revision, .mision--completada")
     .forEach(protegerTrabajoNoDigital);
 }
@@ -125,6 +148,7 @@ async function cambiarEstado(id, estado, boton, mensajeError) {
 
   try {
     await Academia.tareas.cambiarEstado(id, estado);
+    return true;
   } catch (error) {
     console.error(mensajeError, error);
     boton.disabled = false;
@@ -132,6 +156,7 @@ async function cambiarEstado(id, estado, boton, mensajeError) {
     window.alert(
       `${mensajeError}\nRazón: ${error.message || "Error no identificado"}`
     );
+    return false;
   }
 }
 
@@ -166,6 +191,24 @@ async function ejecutarAccionLibre(boton) {
   }
 }
 
+async function ejecutarCierreAcademico(boton) {
+  const id = texto(boton.dataset.terminarRepaso);
+  if (!id) return;
+
+  const confirmado = window.confirm(
+    "¿Terminaste esta misión?\n\n" +
+    "Si confirmas, la enviaremos a tu familia para su revisión."
+  );
+  if (!confirmado) return;
+
+  await cambiarEstado(
+    id,
+    "pendiente_validacion",
+    boton,
+    "No se pudo enviar la Misión a revisión."
+  );
+}
+
 function observarListas() {
   cargarEstilosFinalizacionManual();
 
@@ -187,6 +230,15 @@ document.addEventListener("click", event => {
   event.preventDefault();
   ejecutarAccionLibre(boton);
 });
+
+document.addEventListener("click", event => {
+  const boton = event.target.closest?.("[data-terminar-repaso]");
+  if (!boton) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  ejecutarCierreAcademico(boton);
+}, true);
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", observarListas, { once: true });
