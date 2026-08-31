@@ -1,5 +1,7 @@
 /* Academia Gloria Valentina · Gestión de Misiones · Preparación de Misión libre */
 
+import "./listado-misiones.js";
+
 const TIPO_MISION_LIBRE = "tarea_libre";
 const MODULO_LIBRE = "libre";
 
