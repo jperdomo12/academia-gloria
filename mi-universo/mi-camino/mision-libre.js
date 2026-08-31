@@ -5,6 +5,16 @@ import { Academia } from "../../compartido/api/academia.js";
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";
 const RUTA_FALLBACK_LIBRE = new URL("../", window.location.href).pathname;
 
+function cargarEstilosFinalizacionManual() {
+  if (document.querySelector('link[data-finalizacion-manual-css="true"]')) return;
+
+  const enlace = document.createElement("link");
+  enlace.rel = "stylesheet";
+  enlace.href = new URL("./mision-finalizacion-manual.css", import.meta.url).href;
+  enlace.dataset.finalizacionManualCss = "true";
+  document.head.appendChild(enlace);
+}
+
 function texto(valor = "") {
   return String(valor || "").replace(/\s+/g, " ").trim();
 }
@@ -33,16 +43,30 @@ function estadoEnCurso(card) {
   );
 }
 
-function crearBotonAccion(original, id, enCurso) {
+function crearAccionManual(original, id, enCurso) {
   const boton = document.createElement("button");
   boton.type = "button";
-  boton.className = `${original?.className || "mision__accion"} mision__accion--libre`;
   boton.dataset.misionLibre = id;
   boton.dataset.accionLibre = enCurso ? "terminar" : "iniciar";
-  boton.textContent = enCurso
-    ? "✅ Ya terminé esta misión"
-    : "Comenzar misión →";
-  return boton;
+
+  if (!enCurso) {
+    boton.className = `${original?.className || "mision__accion"} mision__accion--libre`;
+    boton.textContent = "Comenzar misión →";
+    return boton;
+  }
+
+  boton.className = "mision__accion mision__accion--finalizacion-manual";
+  boton.textContent = "✅ Ya terminé";
+
+  const cierre = document.createElement("div");
+  cierre.className = "mision__cierre-manual";
+
+  const ayuda = document.createElement("span");
+  ayuda.className = "mision__cierre-manual-texto";
+  ayuda.textContent = "Cuando termines esta misión, indícalo aquí.";
+
+  cierre.append(ayuda, boton);
+  return cierre;
 }
 
 function convertirMisionActiva(enlace) {
@@ -57,8 +81,8 @@ function convertirMisionActiva(enlace) {
   article.innerHTML = enlace.innerHTML;
 
   const accionOriginal = article.querySelector(".mision__accion");
-  const boton = crearBotonAccion(accionOriginal, id, estadoEnCurso(article));
-  accionOriginal?.replaceWith(boton);
+  const accion = crearAccionManual(accionOriginal, id, estadoEnCurso(article));
+  accionOriginal?.replaceWith(accion);
 
   enlace.replaceWith(article);
 }
@@ -129,7 +153,7 @@ async function ejecutarAccionLibre(boton) {
   if (accion === "terminar") {
     const confirmado = window.confirm(
       "¿Terminaste esta misión?\n\n" +
-      "Al confirmar, la enviarás a tu familia para revisión."
+      "Si confirmas, la enviaremos a tu familia para su revisión."
     );
     if (!confirmado) return;
 
@@ -143,6 +167,8 @@ async function ejecutarAccionLibre(boton) {
 }
 
 function observarListas() {
+  cargarEstilosFinalizacionManual();
+
   document.querySelectorAll(SELECTOR_LISTAS).forEach(lista => {
     aplicarProtecciones(lista);
 
