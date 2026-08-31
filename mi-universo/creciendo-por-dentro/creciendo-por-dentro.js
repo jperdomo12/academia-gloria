@@ -6,6 +6,8 @@ import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
 const MAX_RECORDING_SECONDS = 90;
+const AUDIO_BITS_PER_SECOND = 48000;
+const MAX_AUDIO_DATA_LENGTH = 780000;
 const SEED_IMAGE_BASE = new URL(
   "../../assets/imagenes/creciendo-por-dentro/semillas/",
   import.meta.url
@@ -67,6 +69,7 @@ let audioChunks = [];
 let audioData = "";
 let audioMimeType = "audio/webm";
 let audioDuration = 0;
+let audioSaveWarning = "";
 let recordingStartedAt = 0;
 let recordingTimer = null;
 let recordingAttempts = 0;
@@ -261,6 +264,7 @@ function resetExperience() {
   inicioSesion = new Date();
   audioData = "";
   audioDuration = 0;
+  audioSaveWarning = "";
   transcript = "";
   recordingAttempts = 0;
   stopRecorderTracks();
@@ -552,18 +556,35 @@ async function startRecording() {
   const preferred = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
     ? "audio/webm;codecs=opus" : "audio/webm";
   audioChunks = [];
-  mediaRecorder = new MediaRecorder(stream, { mimeType:preferred });
+  try {
+    mediaRecorder = new MediaRecorder(stream, {
+      mimeType:preferred,
+      audioBitsPerSecond:AUDIO_BITS_PER_SECOND
+    });
+  } catch {
+    mediaRecorder = new MediaRecorder(stream, { mimeType:preferred });
+  }
   audioMimeType = mediaRecorder.mimeType || preferred;
   recordingStartedAt = Date.now();
   recordingAttempts++;
   transcript = "";
+  audioSaveWarning = "";
   if ($("transcript")) $("transcript").value = "";
   mediaRecorder.ondataavailable = event => { if (event.data.size) audioChunks.push(event.data); };
   mediaRecorder.onstop = () => {
     audioDuration = Math.max(1, Math.round((Date.now() - recordingStartedAt) / 1000));
     const blob = new Blob(audioChunks, { type:audioMimeType });
     const reader = new FileReader();
-    reader.onloadend = () => { audioData = String(reader.result || ""); updateRecorderUI(); };
+    reader.onloadend = () => {
+      audioData = String(reader.result || "");
+      if (audioData.length > MAX_AUDIO_DATA_LENGTH) {
+        updateRecorderUI(
+          "Tu grabación está completa, pero quedó demasiado grande para guardarla dentro de la Academia. Puedes guardar tu práctica: tus respuestas no se perderán y la Academia continuará sin incorporar este audio."
+        );
+      } else {
+        updateRecorderUI();
+      }
+    };
     reader.readAsDataURL(blob);
     stream.getTracks().forEach(track => track.stop());
     try { recognition?.stop(); } catch {}
@@ -599,9 +620,21 @@ function clearRecording() {
 
   audioData = "";
   audioDuration = 0;
+  audioSaveWarning = "";
   transcript = "";
   if ($("transcript")) $("transcript").value = "";
   updateRecorderUI("La grabación fue eliminada. Puedes volver a intentarlo.");
+}
+
+function downloadCurrentRecording() {
+  if (!audioData) return;
+  const link = document.createElement("a");
+  const extension = audioMimeType.includes("ogg") ? "ogg" : "webm";
+  link.href = audioData;
+  link.download = `creciendo-por-dentro-${semilla?.id || "grabacion"}.${extension}`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 
 function renderRecorder() {
@@ -674,6 +707,14 @@ function basicAnalysis() {
   };
 }
 
+function errorEsTamanoAudio(error) {
+  const mensaje = String(error?.message || error || "").toLowerCase();
+  return mensaje.includes("grabación es demasiado grande") ||
+    mensaje.includes("recording is too large") ||
+    mensaje.includes("maximum size") ||
+    mensaje.includes("too large");
+}
+
 async function saveSession({ withoutRecording = false } = {}) {
   const button = $("finishRecording") || $("continueWithoutRecording");
   if (button) button.disabled = true;
@@ -690,7 +731,14 @@ async function saveSession({ withoutRecording = false } = {}) {
     const finalTranscript = withoutRecording
       ? ""
       : String($("transcript")?.value || transcript || "").trim();
-    const sessionId = await Academia.semillas.guardarSesion({
+    const wantedAudio = !withoutRecording && Boolean(audioData);
+    let audioGuardable = wantedAudio && audioData.length <= MAX_AUDIO_DATA_LENGTH;
+    let audioOmitted = wantedAudio && !audioGuardable;
+    audioSaveWarning = audioOmitted
+      ? "Tus respuestas quedaron guardadas, pero esta grabación era demasiado grande para incorporarla a la Academia."
+      : "";
+
+    const payloadBase = {
       semillaId:semilla.id,
       titulo:semilla.titulo,
       familia:semilla.familia,
@@ -700,15 +748,39 @@ async function saveSession({ withoutRecording = false } = {}) {
       duracion:Math.max(0, Math.round((Date.now() - inicioSesion.getTime()) / 1000)),
       intentos:recordingAttempts,
       respuestaConstruida:respuestas.respuestaConstruida || builtResponse(),
-      audioData:withoutRecording ? "" : audioData,
       mimeType:audioMimeType,
-      duracionAudio:withoutRecording ? 0 : audioDuration,
       transcripcion:finalTranscript,
       respuestas,
       analisisEducativo:basicAnalysis(),
       observacionFamilia:"",
       misionId:misionId || ""
-    });
+    };
+
+    let sessionId = "";
+    try {
+      sessionId = await Academia.semillas.guardarSesion({
+        ...payloadBase,
+        audioData:audioGuardable ? audioData : "",
+        duracionAudio:audioGuardable ? audioDuration : 0
+      });
+    } catch (error) {
+      if (!audioGuardable || !errorEsTamanoAudio(error)) throw error;
+
+      console.warn(
+        "[CreciendoPorDentro] El audio no pudo guardarse por tamaño. Se conserva la práctica sin audio.",
+        error
+      );
+      audioGuardable = false;
+      audioOmitted = true;
+      audioSaveWarning =
+        "Tus respuestas quedaron guardadas, pero esta grabación no pudo incorporarse por su tamaño.";
+
+      sessionId = await Academia.semillas.guardarSesion({
+        ...payloadBase,
+        audioData:"",
+        duracionAudio:0
+      });
+    }
 
     let missionResult = null;
     if (misionActiva && misionId) {
@@ -727,8 +799,8 @@ async function saveSession({ withoutRecording = false } = {}) {
         resultado:{
           titulo:semilla.titulo,
           intentos:recordingAttempts,
-          duracionAudio:withoutRecording ? 0 : audioDuration,
-          grabacionConfirmada:!withoutRecording && Boolean(audioData)
+          duracionAudio:audioGuardable ? audioDuration : 0,
+          grabacionConfirmada:audioGuardable
         },
         destinoRevision:
           `../creciendo-por-dentro/?vista=historial` +
@@ -754,7 +826,9 @@ async function saveSession({ withoutRecording = false } = {}) {
     });
   } catch (error) {
     console.error(error);
-    updateRecorderUI(`No pudimos guardar la práctica: ${error.message}`);
+    updateRecorderUI(
+      `No pudimos terminar de guardar. Tus respuestas siguen en esta pantalla: no la cierres y pide ayuda a tu familia. Motivo: ${error.message}`
+    );
     if (button) button.disabled = false;
   }
 }
@@ -770,6 +844,14 @@ function renderClosing() {
       <p><strong>Lía:</strong> ${escapeHtml(close.lia || "")}</p>
       <p><strong>🦜 La guacamaya celebra contigo mientras nace un nuevo brote en tu jardín.</strong></p>
       <p class="closing__phrase">“${escapeHtml(close.frase || "Yo puedo volver a intentarlo.")}”</p>
+      ${audioSaveWarning ? `
+        <div class="status">
+          <strong>🎙️ Tu trabajo sí quedó guardado.</strong><br>
+          ${escapeHtml(audioSaveWarning)} Si quieres conservar también esta grabación, guarda una copia y pide ayuda a tu familia.
+        </div>
+        <div class="actions" style="justify-content:center">
+          <button id="downloadUnsavedRecording" class="btn btn--light" type="button">💾 Guardar copia de mi grabación</button>
+        </div>` : ""}
       <div class="actions" style="justify-content:center">
         <button id="repeatSeed" class="btn btn--violet" type="button">🔁 Practicar otra vez</button>
         <button id="finishSeed" class="btn btn--primary" type="button">🌿 Volver a mis Semillas</button>
@@ -779,6 +861,9 @@ function renderClosing() {
   $("repeatSeed").onclick = () => startSeed(semilla.id);
   $("finishSeed").onclick = () => { showPanel("catalogPanel"); renderCatalog(); };
   $("viewHistoryAfter").onclick = showHistory;
+  if ($("downloadUnsavedRecording")) {
+    $("downloadUnsavedRecording").onclick = downloadCurrentRecording;
+  }
 }
 
 async function loadMission() {
