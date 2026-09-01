@@ -47,6 +47,24 @@ function cargarEstilos() {
   document.head.appendChild(estilos);
 }
 
+function configurarVolverDetalleCompletada() {
+  const volver = document.querySelector("[data-volver-modulo]");
+  if (!volver || volver.dataset.volverDetalleMision === "true") return;
+
+  volver.dataset.volverDetalleMision = "true";
+  volver.addEventListener("click", event => {
+    const formulario = document.getElementById("formTarea");
+    if (!formulario?.classList.contains("modo-consulta")) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    /* Reutiliza el Volver interno del formulario, que ya limpia el modo
+       consulta y regresa a la lista de Misiones sin abandonar Gestión. */
+    document.getElementById("cancelarEdicion")?.click();
+  }, true);
+}
+
 function restaurarBoton(boton) {
   if (!boton) return;
   boton.disabled = false;
@@ -191,6 +209,7 @@ export function instalarEliminacionCompletadas() {
   if (instalada) return;
   instalada = true;
   cargarEstilos();
+  configurarVolverDetalleCompletada();
 
   const lista = document.getElementById("listaTareas");
   if (lista) {
