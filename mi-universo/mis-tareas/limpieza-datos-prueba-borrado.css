@@ -1,0 +1,125 @@
+/* Academia Gloria Valentina · Limpieza de datos de prueba · Fase 2 */
+
+.limpieza-borrado-controlado {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #f0caca;
+  border-radius: 18px;
+  background: #fffafa;
+}
+
+.limpieza-borrado-controlado.hidden {
+  display: none;
+}
+
+.limpieza-borrado-controlado__cabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.limpieza-borrado-controlado__cabecera h4 {
+  margin: 4px 0 6px;
+  color: #3c2e35;
+  font-size: 1.05rem;
+}
+
+.limpieza-borrado-controlado__cabecera p {
+  margin: 0;
+  color: #6b5961;
+  line-height: 1.45;
+}
+
+.limpieza-borrado-controlado__etiqueta {
+  display: inline-block;
+  font-size: .76rem;
+  font-weight: 800;
+  color: #9f3d4f;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.limpieza-borrado-controlado__seguridad {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: #fff1f2;
+  color: #9f3d4f;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.limpieza-borrado-confirmacion {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid #ead7da;
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.limpieza-borrado-confirmacion input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+
+.limpieza-borrado-confirmacion span {
+  display: grid;
+  gap: 4px;
+}
+
+.limpieza-borrado-confirmacion strong {
+  color: #49373f;
+}
+
+.limpieza-borrado-confirmacion small {
+  color: #78666d;
+  line-height: 1.4;
+}
+
+.limpieza-borrado-controlado__acciones {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.limpieza-boton-eliminar {
+  background: #a83f53;
+  color: #fff;
+  border-color: #a83f53;
+}
+
+.limpieza-boton-eliminar:hover:not(:disabled) {
+  background: #8f3345;
+  border-color: #8f3345;
+}
+
+.limpieza-boton-eliminar:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+#limpiezaBorradoEstado {
+  color: #6f6066;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  .limpieza-borrado-controlado__cabecera,
+  .limpieza-borrado-controlado__acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .limpieza-borrado-controlado__seguridad {
+    align-self: flex-start;
+  }
+}
