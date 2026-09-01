@@ -198,6 +198,20 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // CRECIENDO POR DENTRO · Sesiones de Semillas · Persona Activa
+      //
+      // Sigue el mismo contrato funcional que el resto de sesiones:
+      // consulta para relaciones activas y modificación solo con gestión.
+      match /sesionesSemillas/{sesionId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       // SESIONES ACADÉMICAS · Persona Activa
       //
       // Sigue el mismo contrato de acceso funcional que las demás evidencias:
