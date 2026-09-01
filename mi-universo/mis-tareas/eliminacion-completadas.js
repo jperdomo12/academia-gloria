@@ -47,6 +47,30 @@ function cargarEstilos() {
   document.head.appendChild(estilos);
 }
 
+function configurarVolverDetalleCompletada() {
+  if (document.documentElement.dataset.volverDetalleMision === "true") return;
+  document.documentElement.dataset.volverDetalleMision = "true";
+
+  document.addEventListener("click", event => {
+    const origen = event.target;
+    if (!(origen instanceof Element)) return;
+
+    const volver = origen.closest("[data-nav-volver]");
+    if (!volver) return;
+
+    const formulario = document.getElementById("formTarea");
+    if (!formulario?.classList.contains("modo-consulta")) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    /* La cabecera global se crea de forma asíncrona y sustituye el Volver
+       heredado. Delegamos el clic para capturar siempre el botón visible y
+       reutilizamos el Volver interno que ya regresa a la lista de Misiones. */
+    document.getElementById("cancelarEdicion")?.click();
+  }, true);
+}
+
 function restaurarBoton(boton) {
   if (!boton) return;
   boton.disabled = false;
@@ -191,6 +215,7 @@ export function instalarEliminacionCompletadas() {
   if (instalada) return;
   instalada = true;
   cargarEstilos();
+  configurarVolverDetalleCompletada();
 
   const lista = document.getElementById("listaTareas");
   if (lista) {
