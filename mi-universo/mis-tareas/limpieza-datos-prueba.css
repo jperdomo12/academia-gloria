@@ -1,0 +1,369 @@
+/* Academia Gloria Valentina · Limpieza de datos de prueba · Vista previa */
+
+.limpieza-pruebas {
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid #e7e0f4;
+}
+
+.limpieza-pruebas__summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 17px 19px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #fbf9ff, #fff);
+}
+
+.limpieza-pruebas__summary::-webkit-details-marker {
+  display: none;
+}
+
+.limpieza-pruebas__summary > span:nth-child(2) {
+  display: grid;
+  gap: 3px;
+}
+
+.limpieza-pruebas__summary strong {
+  color: #2f2940;
+}
+
+.limpieza-pruebas__summary small {
+  color: #757083;
+  font-weight: 600;
+}
+
+.limpieza-pruebas__icono {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.limpieza-solo-lectura {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #eef6ff;
+  color: #285b86;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.limpieza-pruebas__flecha {
+  font-size: 1.3rem;
+  transition: transform .2s ease;
+}
+
+.limpieza-pruebas[open] .limpieza-pruebas__flecha {
+  transform: rotate(180deg);
+}
+
+.limpieza-pruebas__contenido {
+  padding: 0 19px 20px;
+}
+
+.limpieza-alerta {
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 0 0 16px;
+  border: 1px solid #e4e6ee;
+}
+
+.limpieza-alerta strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.limpieza-alerta p {
+  margin: 0;
+  color: #5d6474;
+  line-height: 1.45;
+}
+
+.limpieza-alerta--informacion {
+  background: #fafcff;
+  border-color: #dce8f7;
+}
+
+.limpieza-alerta--advertencia {
+  background: #fffaf1;
+  border-color: #f0dfb6;
+}
+
+.limpieza-alerta--segura {
+  background: #f5fbf7;
+  border-color: #d8eadf;
+  margin-top: 16px;
+}
+
+.limpieza-inventario-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.limpieza-inventario-resumen:empty {
+  display: none;
+}
+
+.limpieza-inventario-resumen span {
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 13px;
+  background: #fbfbfd;
+  border: 1px solid #e7e8ee;
+  color: #676d7b;
+  font-size: 0.82rem;
+}
+
+.limpieza-inventario-resumen strong {
+  color: #4b3f62;
+  font-size: 1.25rem;
+}
+
+.limpieza-controles {
+  display: grid;
+  grid-template-columns: minmax(190px, .8fr) minmax(280px, 1.4fr) auto auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.limpieza-controles label {
+  display: grid;
+  gap: 6px;
+  font-weight: 750;
+}
+
+.limpieza-controles label > span {
+  color: #50576a;
+  font-size: .83rem;
+}
+
+.limpieza-controles input,
+.limpieza-controles select {
+  width: 100%;
+  min-height: 43px;
+  border: 1px solid #d9deea;
+  border-radius: 11px;
+  background: #fff;
+  padding: 9px 10px;
+  color: #252b3a;
+  font: inherit;
+}
+
+.limpieza-controles input:focus,
+.limpieza-controles select:focus {
+  outline: 3px solid rgba(124, 58, 237, .11);
+  border-color: #8b5cf6;
+}
+
+.limpieza-controles small {
+  color: #858a98;
+  font-weight: 600;
+}
+
+.limpieza-mision-resumen {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 15px 16px;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  background: #fcfbff;
+  border: 1px solid #e7e0f4;
+}
+
+.limpieza-mision-resumen h4 {
+  margin: 4px 0 4px;
+  color: #302b3f;
+}
+
+.limpieza-mision-resumen p {
+  margin: 0;
+  color: #707685;
+}
+
+.limpieza-mision-resumen code,
+.limpieza-alerta code,
+.limpieza-evidencia code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.limpieza-etiqueta {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eee9fb;
+  color: #5d4789;
+  font-size: .73rem;
+  font-weight: 850;
+}
+
+.limpieza-totales {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.limpieza-totales article {
+  display: grid;
+  gap: 4px;
+  padding: 13px;
+  border: 1px solid #e5e7ed;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.limpieza-totales strong {
+  font-size: 1.35rem;
+  color: #5f4b7e;
+}
+
+.limpieza-totales span {
+  font-size: .8rem;
+  color: #727887;
+}
+
+.limpieza-evidencias-lista {
+  display: grid;
+  gap: 12px;
+}
+
+.limpieza-evidencia {
+  border: 1px solid #e4e6ec;
+  border-radius: 15px;
+  padding: 15px 16px;
+  background: #fff;
+}
+
+.limpieza-evidencia__cabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.limpieza-evidencia__cabecera h4 {
+  margin: 4px 0 0;
+  color: #2c3140;
+}
+
+.limpieza-evidencia__motor {
+  color: #6c7281;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.limpieza-vinculo {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: .74rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.limpieza-vinculo--exacto {
+  background: #eaf8ef;
+  color: #277443;
+}
+
+.limpieza-vinculo--revisar {
+  background: #fff4dc;
+  color: #8a5b12;
+}
+
+.limpieza-vinculo--encontrado {
+  background: #eef6ff;
+  color: #2e638f;
+}
+
+.limpieza-vinculo--sin-vinculo {
+  background: #f1f2f5;
+  color: #6a6f7c;
+}
+
+.limpieza-evidencia__datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 14px;
+  padding: 11px 12px;
+  border-radius: 11px;
+  background: #fafbfc;
+  color: #626978;
+  font-size: .82rem;
+}
+
+.limpieza-evidencia__detalle {
+  margin: 11px 0 7px;
+  color: #545b6a;
+  line-height: 1.48;
+}
+
+.limpieza-impacto {
+  margin: 0;
+  font-size: .84rem;
+  font-weight: 750;
+}
+
+.limpieza-impacto--si {
+  color: #765515;
+}
+
+.limpieza-impacto--no {
+  color: #66707d;
+}
+
+@media (max-width: 1050px) {
+  .limpieza-controles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .limpieza-totales {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .limpieza-pruebas__summary {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .limpieza-solo-lectura {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .limpieza-pruebas__flecha {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  .limpieza-inventario-resumen,
+  .limpieza-controles,
+  .limpieza-totales,
+  .limpieza-evidencia__datos {
+    grid-template-columns: 1fr;
+  }
+
+  .limpieza-mision-resumen,
+  .limpieza-evidencia__cabecera {
+    flex-direction: column;
+  }
+
+  .limpieza-vinculo {
+    white-space: normal;
+  }
+}
