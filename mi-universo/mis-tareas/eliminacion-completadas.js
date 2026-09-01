@@ -64,12 +64,22 @@ function configurarVolverDetalleCompletada() {
     const formulario = document.getElementById("formTarea");
     if (!formulario?.classList.contains("modo-consulta")) return;
 
+    const parametros = new URLSearchParams(window.location.search);
+    if (
+      parametros.get("desde") === "reconocimiento" &&
+      parametros.get("volver")
+    ) {
+      /* Cuando el detalle se abrió desde Mi Camino, la cabecera global ya
+         conoce el retorno correcto mediante ?volver=. No interceptamos ese
+         caso; reutilizamos la navegación global existente. */
+      return;
+    }
+
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    /* La cabecera global se crea de forma asíncrona y sustituye el Volver
-       heredado. Delegamos el clic para capturar siempre el botón visible y
-       reutilizamos el Volver interno que ya regresa a la lista de Misiones. */
+    /* En el flujo normal de Gestión, el Volver visible debe regresar a la
+       lista interna de Misiones y no abandonar el módulo. */
     document.getElementById("cancelarEdicion")?.click();
   }, true);
 }
@@ -82,6 +92,7 @@ function restaurarBoton(boton) {
 
 function decidirReconocimiento(reconocimiento) {
   if (!reconocimiento || reconocimiento.origen !== "humano") return "ELIMINAR";
+  if (reconocimiento.tipo === "guacamaya") return "CONSERVAR";
 
   const decision = window.prompt([
     "💛 ESTA MISIÓN TIENE UN RECONOCIMIENTO FAMILIAR",
@@ -140,7 +151,9 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
       `• ${resumen.conservadas} registro(s) posterior(es) o reutilizado(s) que se conservarán`
     ];
 
-    if (reconocimiento) {
+    if (reconocimiento?.tipo === "guacamaya") {
+      lineas.push(`• 🦜 ${reconocimiento.guacamayaNombre || "Guacamaya"} se conservará en Mi Camino`);
+    } else if (reconocimiento) {
       lineas.push("• 💛 1 reconocimiento familiar vinculado requiere una decisión específica");
     }
 
@@ -190,7 +203,9 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
           await Reconocimientos.conservarMisionComoHistorico(id, {
             misionSnapshot: tarea
           });
-          notaReconocimiento = "\n• 💛 Reconocimiento conservado en Mi Camino como historia independiente";
+          notaReconocimiento = reconocimiento.tipo === "guacamaya"
+            ? `\n• 🦜 ${reconocimiento.guacamayaNombre || "Guacamaya"} conservada en Mi Camino`
+            : "\n• 💛 Reconocimiento conservado en Mi Camino como historia independiente";
         } else {
           await Reconocimientos.eliminarPorMision(id);
           notaReconocimiento = "\n• 💛 Reconocimiento familiar eliminado junto con la Misión";
