@@ -97,7 +97,8 @@ function aplicarFiltroPruebas() {
   tarjetas.forEach(tarjeta => {
     const tarea = tareasPorId.get(idTarjeta(tarjeta));
     const mostrar = esDatoPrueba(tarea);
-    if (tarjeta.hidden === mostrar) tarjeta.hidden = !mostrar;
+    const debeOcultarse = !mostrar;
+    if (tarjeta.hidden !== debeOcultarse) tarjeta.hidden = debeOcultarse;
     if (mostrar) visibles += 1;
   });
 
@@ -294,7 +295,12 @@ export function instalarMarcaDatosPrueba() {
   instalada = true;
   cargarEstilos();
 
-  const observadorDom = new MutationObserver(programarDecoracion);
+  const observadorDom = new MutationObserver(cambios => {
+    const hayCambioEstructural = cambios.some(cambio =>
+      cambio.addedNodes.length > 0 || cambio.removedNodes.length > 0
+    );
+    if (hayCambioEstructural) programarDecoracion();
+  });
   observadorDom.observe(document.body, {
     childList: true,
     subtree: true
