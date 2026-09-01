@@ -1,14 +1,19 @@
-/* Academia Gloria Valentina · Recompensas A1 · Reconocimiento humano de Misiones */
+/* Academia Gloria Valentina · Recompensas A1/A2 · Reconocimiento humano de Misiones */
 
 import { Academia } from "../../compartido/api/academia.js";
-import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
+import {
+  CATALOGO_GUACAMAYAS,
+  Reconocimientos
+} from "../../compartido/api/reconocimientos.js";
 
 let tareasPorId = new Map();
 let reconocimientosPorMision = new Map();
+let guacamayasPorTipo = new Map();
 let instalada = false;
 let decoracionPendiente = false;
 let detenerReconocimientos = null;
 let detenerTareas = null;
+let fuenteUrlAtendida = false;
 
 const CATEGORIAS = Object.freeze([
   ["perseverancia", "💪 Perseverancia / volver a intentarlo"],
@@ -52,7 +57,7 @@ async function obtenerTarea(misionId) {
     if (tarea) tareasPorId.set(id, tarea);
     return tarea || null;
   } catch (error) {
-    console.debug("No se pudo resolver la Misión para Recompensas A1.", error);
+    console.debug("No se pudo resolver la Misión para Recompensas.", error);
     return null;
   }
 }
@@ -69,6 +74,12 @@ function mensajeSugerido(tarea = {}) {
 function categoriaSugerida(tarea = {}) {
   if (texto(tarea.modulo) === "creciendo-por-dentro") return "crecimiento";
   return "otro";
+}
+
+function opcionesGuacamayas() {
+  return Object.entries(CATALOGO_GUACAMAYAS)
+    .map(([clave, item]) => `<option value="${clave}">🦜 ${item.nombre.replace("Guacamaya ", "")}</option>`)
+    .join("");
 }
 
 function asegurarDialogo() {
@@ -104,6 +115,23 @@ function asegurarDialogo() {
         <span class="reconocimiento-dialogo__ayuda">Cuenta qué ocurrió y por qué te pareció importante.</span>
       </label>
 
+      <section class="reconocimiento-guacamaya" data-bloque-guacamaya>
+        <label class="reconocimiento-guacamaya__activar">
+          <input type="checkbox" data-reconocimiento-guacamaya>
+          <span>
+            <strong>🦜 Este momento merece una Guacamaya</strong>
+            <small>Úsala solo para un hito especialmente significativo. Cada Guacamaya aparece una sola vez en Mi Camino.</small>
+          </span>
+        </label>
+        <div class="reconocimiento-guacamaya__detalle hidden" data-guacamaya-detalle>
+          <label>
+            ¿Cuál representa mejor este hito?
+            <select data-guacamaya-tipo>${opcionesGuacamayas()}</select>
+          </label>
+          <p data-guacamaya-descripcion></p>
+        </div>
+      </section>
+
       <div class="reconocimiento-dialogo__error" data-reconocimiento-error></div>
 
       <div class="reconocimiento-dialogo__acciones">
@@ -117,12 +145,49 @@ function asegurarDialogo() {
 
   dialogo.querySelector("[data-cerrar-reconocimiento]")?.addEventListener("click", () => dialogo.close());
   dialogo.querySelector("[data-cancelar-reconocimiento]")?.addEventListener("click", () => dialogo.close());
-
   dialogo.addEventListener("click", event => {
     if (event.target === dialogo) dialogo.close();
   });
 
+  const activar = dialogo.querySelector("[data-reconocimiento-guacamaya]");
+  const tipo = dialogo.querySelector("[data-guacamaya-tipo]");
+  activar?.addEventListener("change", () => actualizarPanelGuacamaya(dialogo));
+  tipo?.addEventListener("change", () => actualizarPanelGuacamaya(dialogo));
+
   return dialogo;
+}
+
+function actualizarPanelGuacamaya(dialogo) {
+  const activar = dialogo.querySelector("[data-reconocimiento-guacamaya]");
+  const detalle = dialogo.querySelector("[data-guacamaya-detalle]");
+  const tipo = dialogo.querySelector("[data-guacamaya-tipo]");
+  const descripcion = dialogo.querySelector("[data-guacamaya-descripcion]");
+  const categoria = dialogo.querySelector("[data-reconocimiento-categoria]");
+  const definicion = CATALOGO_GUACAMAYAS[tipo?.value];
+
+  detalle?.classList.toggle("hidden", !activar?.checked);
+  if (descripcion) descripcion.textContent = definicion?.descripcion || "";
+  if (activar?.checked && definicion && categoria) {
+    categoria.value = definicion.categoria;
+    categoria.disabled = true;
+  } else if (categoria) {
+    categoria.disabled = false;
+  }
+}
+
+function prepararOpcionesGuacamayas(dialogo, existente) {
+  const select = dialogo.querySelector("[data-guacamaya-tipo]");
+  if (!select) return;
+
+  const actual = texto(existente?.guacamayaTipo);
+  [...select.options].forEach(option => {
+    const ocupada = guacamayasPorTipo.get(option.value);
+    option.disabled = Boolean(ocupada && option.value !== actual);
+    const definicion = CATALOGO_GUACAMAYAS[option.value];
+    option.textContent = ocupada && option.value !== actual
+      ? `🦜 ${definicion.nombre.replace("Guacamaya ", "")} · ya forma parte de Mi Camino`
+      : `🦜 ${definicion.nombre.replace("Guacamaya ", "")}`;
+  });
 }
 
 async function abrirReconocimiento(misionId) {
@@ -152,14 +217,40 @@ async function abrirReconocimiento(misionId) {
   const error = dialogo.querySelector("[data-reconocimiento-error]");
   const guardar = dialogo.querySelector("[data-guardar-reconocimiento]");
   const form = dialogo.querySelector("[data-form-reconocimiento]");
+  const activarGuacamaya = dialogo.querySelector("[data-reconocimiento-guacamaya]");
+  const guacamayaTipo = dialogo.querySelector("[data-guacamaya-tipo]");
+
+  prepararOpcionesGuacamayas(dialogo, existente);
 
   dialogo.dataset.misionId = texto(misionId);
-  titulo.textContent = existente ? "Editar reconocimiento" : "Añadir reconocimiento";
+  titulo.textContent = existente?.tipo === "guacamaya"
+    ? "Editar Guacamaya"
+    : existente
+      ? "Editar reconocimiento"
+      : "Añadir reconocimiento";
   fuente.textContent = `Misión: ${texto(tarea.titulo) || "Misión completada"}`;
+  categoria.disabled = false;
   categoria.value = texto(existente?.categoria) || categoriaSugerida(tarea);
   mensaje.value = texto(existente?.mensaje) || mensajeSugerido(tarea);
   error.textContent = "";
-  guardar.textContent = existente ? "💛 Guardar cambios" : "💛 Guardar reconocimiento";
+
+  const yaEsGuacamaya = existente?.tipo === "guacamaya";
+  activarGuacamaya.checked = yaEsGuacamaya;
+  activarGuacamaya.disabled = yaEsGuacamaya;
+  if (yaEsGuacamaya && existente.guacamayaTipo) {
+    guacamayaTipo.value = existente.guacamayaTipo;
+  } else if (texto(tarea.modulo) === "creciendo-por-dentro") {
+    guacamayaTipo.value = "crecimiento";
+  } else {
+    guacamayaTipo.selectedIndex = [...guacamayaTipo.options].findIndex(option => !option.disabled);
+  }
+
+  actualizarPanelGuacamaya(dialogo);
+  guardar.textContent = yaEsGuacamaya
+    ? "🦜 Guardar cambios"
+    : existente
+      ? "💛 Guardar cambios"
+      : "💛 Guardar reconocimiento";
   guardar.disabled = false;
 
   form.onsubmit = async event => {
@@ -170,16 +261,37 @@ async function abrirReconocimiento(misionId) {
     guardar.textContent = "Guardando…";
 
     try {
-      await Reconocimientos.guardarMision({
+      const deseaGuacamaya = activarGuacamaya.checked;
+      const seleccion = deseaGuacamaya ? guacamayaTipo.value : "";
+      const eraGuacamaya = existente?.tipo === "guacamaya";
+
+      if (deseaGuacamaya && !eraGuacamaya) {
+        const definicion = CATALOGO_GUACAMAYAS[seleccion];
+        const confirmado = window.confirm(
+          `🦜 ${definicion?.nombre || "Guacamaya"}\n\n` +
+          "Una Guacamaya representa un hito especial y se obtiene una sola vez.\n\n" +
+          "¿Confirmas que este momento merece formar parte permanente de Mi Camino?"
+        );
+        if (!confirmado) {
+          guardar.disabled = false;
+          guardar.textContent = textoOriginal;
+          return;
+        }
+      }
+
+      const resultado = await Reconocimientos.guardarMision({
         misionId: dialogo.dataset.misionId,
         categoria: categoria.value,
-        mensaje: mensaje.value
+        mensaje: mensaje.value,
+        guacamayaTipo: seleccion
       });
       dialogo.close();
       window.alert(
-        existente
-          ? "💛 El reconocimiento se actualizó correctamente."
-          : "💛 Reconocimiento guardado. Ya forma parte de Mi Camino."
+        resultado.tipo === "guacamaya"
+          ? `🦜 ${resultado.guacamayaNombre} ya forma parte de Mi Camino.`
+          : existente
+            ? "💛 El reconocimiento se actualizó correctamente."
+            : "💛 Reconocimiento guardado. Ya forma parte de Mi Camino."
       );
     } catch (guardarError) {
       console.error("No se pudo guardar el reconocimiento.", guardarError);
@@ -228,12 +340,16 @@ function decorarTarjeta(tarjeta) {
     });
   }
 
-  const reconocido = reconocimientosPorMision.has(id);
+  const reconocimiento = reconocimientosPorMision.get(id);
+  const reconocido = Boolean(reconocimiento);
   boton.dataset.reconocerMision = id;
   boton.classList.toggle("reconocida", reconocido);
-  boton.textContent = reconocido
-    ? "💛 Editar reconocimiento"
-    : "🌟 Añadir reconocimiento";
+  boton.classList.toggle("guacamaya", reconocimiento?.tipo === "guacamaya");
+  boton.textContent = reconocimiento?.tipo === "guacamaya"
+    ? "🦜 Editar Guacamaya"
+    : reconocido
+      ? "💛 Editar reconocimiento"
+      : "🌟 Añadir reconocimiento";
 }
 
 function programarDecoracion() {
@@ -243,7 +359,51 @@ function programarDecoracion() {
   window.requestAnimationFrame(() => {
     decoracionPendiente = false;
     document.querySelectorAll("#listaTareas .tarea-card").forEach(decorarTarjeta);
+    atenderFuenteDesdeUrl();
   });
+}
+
+function limpiarParametrosFuente() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("misionId");
+  url.searchParams.delete("fuente");
+  url.searchParams.delete("desde");
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function atenderFuenteDesdeUrl() {
+  if (fuenteUrlAtendida) return;
+  const parametros = new URLSearchParams(window.location.search);
+  if (parametros.get("desde") !== "reconocimiento") return;
+
+  const misionId = texto(parametros.get("misionId"));
+  const fuente = texto(parametros.get("fuente"));
+  if (!misionId) return;
+
+  const filtroCompletadas = document.querySelector('[data-filter="completadas"]');
+  if (filtroCompletadas && !document.querySelector(`[data-id="${CSS.escape(misionId)}"]`)) {
+    filtroCompletadas.click();
+    window.requestAnimationFrame(programarDecoracion);
+    return;
+  }
+
+  const boton = document.querySelector(
+    fuente === "trabajo"
+      ? `button[data-action="evidence"][data-id="${CSS.escape(misionId)}"]`
+      : `button[data-action="view"][data-id="${CSS.escape(misionId)}"]`
+  );
+  if (!boton) return;
+
+  fuenteUrlAtendida = true;
+  if (fuente === "trabajo") {
+    boton.closest(".tarea-card")?.setAttribute("open", "");
+  }
+  boton.click();
+  if (fuente === "trabajo") {
+    boton.closest(".tarea-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (fuente === "trabajo") limpiarParametrosFuente();
 }
 
 export function instalarReconocimientosMisiones() {
@@ -262,7 +422,7 @@ export function instalarReconocimientosMisiones() {
       tareasPorId = new Map(items.map(item => [texto(item.id), item]));
       programarDecoracion();
     },
-    error => console.debug("No se pudieron observar las Misiones para Recompensas A1.", error)
+    error => console.debug("No se pudieron observar las Misiones para Recompensas.", error)
   );
 
   detenerReconocimientos = Reconocimientos.observar(
@@ -271,6 +431,11 @@ export function instalarReconocimientosMisiones() {
         items
           .filter(item => item.estado === "activo" && item.fuentePrincipal?.misionId)
           .map(item => [texto(item.fuentePrincipal.misionId), item])
+      );
+      guacamayasPorTipo = new Map(
+        items
+          .filter(item => item.estado === "activo" && item.tipo === "guacamaya" && item.guacamayaTipo)
+          .map(item => [texto(item.guacamayaTipo), item])
       );
       programarDecoracion();
     },
