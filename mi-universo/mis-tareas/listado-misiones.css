@@ -14,7 +14,9 @@
 
 .filtro-listado-misiones{
   display:grid;
+  grid-template-rows:18px auto;
   gap:6px;
+  margin:0;
   color:#475569;
   font-size:.84rem;
   font-weight:850;
