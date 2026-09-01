@@ -1,5 +1,7 @@
 /* Academia Gloria Valentina · Eliminación reforzada de Misiones completadas */
 
+import "./reconocimientos-misiones.js";
+
 let instalada = false;
 let decoracionPendiente = false;
 
