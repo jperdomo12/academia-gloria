@@ -40,6 +40,10 @@
 .nav-global__usuario{position:relative;z-index:1000;display:flex;justify-content:flex-end;min-width:0}
 .nav-global__usuario>.panel-usuario{max-width:100%}
 
+/* Un panel local que la cabecera global marque como heredado/inactivo nunca debe
+   reaparecer por reglas CSS antiguas de la pantalla (por ejemplo display:flex). */
+[data-panel-usuario-legado="inactivo"]{display:none!important}
+
 /* Botón Volver contextual */
 .nav-global__volver{
   display:inline-flex;
