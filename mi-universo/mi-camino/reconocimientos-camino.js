@@ -1,12 +1,35 @@
-/* Academia Gloria Valentina · Recompensas A1/A2 · Mi Camino */
+/* Academia Gloria Valentina · Recompensas A1/A2/B · Mi Camino */
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+import {
+  obtenerHistorialDetectives,
+  obtenerSesionesHistoria
+} from "../../compartido/js/detectives-progreso.js";
 
 const PASO_HISTORIA = 5;
+const DIAS_DESCANSO_REGLA_LIA = 7;
+const MAX_RECONOCIMIENTOS_LIA_DIA = 2;
+const MILISEGUNDOS_DIA = 24 * 60 * 60 * 1000;
+
+const REGLAS_LIA_DETECTIVES = Object.freeze({
+  ayuda_y_continuo: Object.freeze({
+    id: "lia.detectives.ayuda_y_continuo",
+    mensaje:
+      "Usaste pistas para seguir avanzando y continuaste hasta resolver el caso. " +
+      "La ayuda también puede formar parte de aprender."
+  }),
+  persistencia: Object.freeze({
+    id: "lia.detectives.persistencia",
+    mensaje:
+      "No salió al principio, pero seguiste probando hasta resolver el caso."
+  })
+});
 
 let instalada = false;
 let detenerObservacion = null;
+let reconocimientosPersistentes = [];
+let reconocimientosLiaDetectives = [];
 let reconocimientosActuales = [];
 let cantidadHistoriaVisible = PASO_HISTORIA;
 let puedeAbrirFuentesGestion = false;
@@ -32,6 +55,10 @@ function fechaJs(valor) {
   return Number.isNaN(fecha.getTime()) ? null : fecha;
 }
 
+function fechaMs(valor) {
+  return fechaJs(valor)?.getTime() || 0;
+}
+
 function formatearFecha(valor) {
   const fecha = fechaJs(valor);
   if (!fecha) return "Fecha no disponible";
@@ -40,6 +67,16 @@ function formatearFecha(valor) {
     month: "short",
     year: "numeric"
   }).format(fecha);
+}
+
+function claveDia(valor) {
+  const fecha = fechaJs(valor);
+  if (!fecha) return "";
+  return [
+    fecha.getFullYear(),
+    String(fecha.getMonth() + 1).padStart(2, "0"),
+    String(fecha.getDate()).padStart(2, "0")
+  ].join("-");
 }
 
 function cargarEstilos() {
@@ -104,6 +141,141 @@ function metaFuente(item = {}) {
     return texto(item.fuenteSnapshot?.titulo) || texto(item.titulo) || "Momento de mi camino";
   }
   return texto(item.titulo) || "Momento de mi camino";
+}
+
+function idVirtualRegla(reglaId, historiaId, sesionId) {
+  return ["auto", reglaId, historiaId, sesionId]
+    .join("__")
+    .replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+function reglaLiaParaSesion(sesion = {}) {
+  const pistas = Number(sesion.pistasUtilizadas || 0);
+  const intentosAdicionales = Number(sesion.intentosAdicionales || 0);
+
+  /* Ayuda y continuación tiene prioridad para evitar dos celebraciones
+     automáticas sobre una misma resolución. */
+  if (pistas >= 1) return REGLAS_LIA_DETECTIVES.ayuda_y_continuo;
+  if (intentosAdicionales >= 2) return REGLAS_LIA_DETECTIVES.persistencia;
+  return null;
+}
+
+function reconocimientoLiaDesdeSesion(historiaId, sesion, regla) {
+  const sesionId = texto(sesion.id);
+  const misionId = texto(sesion.misionId);
+  const fecha = sesion.completadaEn;
+
+  return {
+    id: idVirtualRegla(regla.id, historiaId, sesionId),
+    schemaVersion: 1,
+    tipo: "reconocimiento",
+    categoria: "perseverancia",
+    titulo: texto(sesion.tituloHistoria) || "Caso de Detectives",
+    mensaje: regla.mensaje,
+    origen: "observado",
+    reglaId: regla.id,
+    fuentePrincipal: {
+      tipo: "sesion_detectives",
+      id: sesionId,
+      modulo: "detectives",
+      misionId,
+      actividadId: historiaId,
+      sesionId
+    },
+    datosSoporte: {
+      pistasUtilizadas: Number(sesion.pistasUtilizadas || 0),
+      intentosAdicionales: Number(sesion.intentosAdicionales || 0),
+      intentosMinimos: Number(sesion.intentosMinimos || 0),
+      intentosTotales: Number(sesion.intentosTotales || 0)
+    },
+    fuenteEliminada: false,
+    estado: "activo",
+    visibleAlumno: true,
+    fechaHecho: fecha,
+    fechaReconocimiento: fecha,
+    virtual: true
+  };
+}
+
+async function cargarReconocimientosLiaDetectives() {
+  const userId = texto(await ContextoUsuario.obtenerUserIdPersonaActiva());
+  if (!userId) return [];
+
+  const historias = await obtenerHistorialDetectives(userId);
+  const grupos = await Promise.all(
+    historias.map(async item => {
+      const historiaId = texto(item.historiaId || item.id);
+      if (!historiaId) return [];
+
+      try {
+        const sesiones = await obtenerSesionesHistoria(userId, historiaId);
+        return sesiones.map(sesion => ({ historiaId, sesion }));
+      } catch (error) {
+        console.debug(
+          `[Recompensas B] No se pudieron leer sesiones de Detectives para ${historiaId}.`,
+          error
+        );
+        return [];
+      }
+    })
+  );
+
+  const sesiones = grupos
+    .flat()
+    .filter(({ sesion }) =>
+      sesion?.recompensasEligibleV1 === true &&
+      sesion?.esDatoPrueba !== true &&
+      fechaMs(sesion?.completadaEn) > 0
+    )
+    .sort(
+      (a, b) =>
+        fechaMs(a.sesion.completadaEn) - fechaMs(b.sesion.completadaEn)
+    );
+
+  const ultimaPorRegla = new Map();
+  const cantidadPorDia = new Map();
+  const resultado = [];
+
+  sesiones.forEach(({ historiaId, sesion }) => {
+    const regla = reglaLiaParaSesion(sesion);
+    if (!regla) return;
+
+    const momento = fechaMs(sesion.completadaEn);
+    const ultima = Number(ultimaPorRegla.get(regla.id) || 0);
+    if (
+      ultima &&
+      momento - ultima < DIAS_DESCANSO_REGLA_LIA * MILISEGUNDOS_DIA
+    ) {
+      return;
+    }
+
+    const dia = claveDia(sesion.completadaEn);
+    const cantidad = Number(cantidadPorDia.get(dia) || 0);
+    if (cantidad >= MAX_RECONOCIMIENTOS_LIA_DIA) return;
+
+    resultado.push(reconocimientoLiaDesdeSesion(historiaId, sesion, regla));
+    ultimaPorRegla.set(regla.id, momento);
+    cantidadPorDia.set(dia, cantidad + 1);
+  });
+
+  return resultado.sort(
+    (a, b) => fechaMs(b.fechaReconocimiento) - fechaMs(a.fechaReconocimiento)
+  );
+}
+
+function combinarReconocimientos() {
+  const porId = new Map();
+  [...reconocimientosPersistentes, ...reconocimientosLiaDetectives]
+    .forEach(item => {
+      const id = texto(item?.id);
+      if (id) porId.set(id, item);
+    });
+
+  return [...porId.values()].sort(
+    (a, b) =>
+      fechaMs(b.fechaReconocimiento || b.updatedAt || b.createdAt) -
+      fechaMs(a.fechaReconocimiento || a.updatedAt || a.createdAt)
+  );
 }
 
 function urlFuente(item, fuente) {
@@ -253,6 +425,10 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
   });
 }
 
+function renderCombinado({ reiniciarPaginacion = false } = {}) {
+  render(combinarReconocimientos(), { reiniciarPaginacion });
+}
+
 export async function instalarReconocimientosCamino() {
   if (instalada) return;
   instalada = true;
@@ -266,11 +442,30 @@ export async function instalarReconocimientosCamino() {
     console.debug("No se pudo resolver permiso para abrir fuentes de Recompensas.", error);
   }
 
+  try {
+    reconocimientosLiaDetectives = await cargarReconocimientosLiaDetectives();
+  } catch (error) {
+    reconocimientosLiaDetectives = [];
+    console.debug(
+      "No se pudieron derivar los Reconocimientos de Lía desde Detectives.",
+      error
+    );
+  }
+
+  /* Los automáticos de Fase B son derivados: no se escriben desde la cuenta
+     del alumno. Así la historia visible depende siempre de la sesión real que
+     la sustenta y desaparece naturalmente si esa sesión se elimina. */
+  renderCombinado({ reiniciarPaginacion: true });
+
   detenerObservacion = Reconocimientos.observar(
-    items => render(items, { reiniciarPaginacion: true }),
+    items => {
+      reconocimientosPersistentes = items;
+      renderCombinado({ reiniciarPaginacion: true });
+    },
     error => {
-      console.debug("No se pudieron cargar los reconocimientos de Mi Camino.", error);
-      render([], { reiniciarPaginacion: true });
+      console.debug("No se pudieron cargar los reconocimientos persistentes de Mi Camino.", error);
+      reconocimientosPersistentes = [];
+      renderCombinado({ reiniciarPaginacion: true });
     }
   );
 
