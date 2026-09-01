@@ -1,6 +1,7 @@
 /* Academia Gloria Valentina · Eliminación reforzada de Misiones completadas */
 
 import "./reconocimientos-misiones.js";
+import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
 
 let instalada = false;
 let decoracionPendiente = false;
@@ -79,6 +80,24 @@ function restaurarBoton(boton) {
   boton.textContent = "⚠️ Eliminar misión completada";
 }
 
+function decidirReconocimiento(reconocimiento) {
+  if (!reconocimiento || reconocimiento.origen !== "humano") return "ELIMINAR";
+
+  const decision = window.prompt([
+    "💛 ESTA MISIÓN TIENE UN RECONOCIMIENTO FAMILIAR",
+    "",
+    "Puedes conservar ese reconocimiento en Mi Camino aunque elimines la Misión administrativa, o eliminar ambos.",
+    "",
+    "Escribe CONSERVAR para mantener el reconocimiento como historia independiente.",
+    "Escribe ELIMINAR para borrar también el reconocimiento.",
+    "",
+    "Cualquier otro texto cancela la eliminación."
+  ].join("\n"));
+
+  const valor = texto(decision).toUpperCase();
+  return valor === "CONSERVAR" || valor === "ELIMINAR" ? valor : "CANCELAR";
+}
+
 async function eliminarMisionCompletada(misionId, tarjeta, boton) {
   const id = texto(misionId);
   if (!id || boton?.disabled) return;
@@ -93,7 +112,10 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
       textoResumenEliminacion
     } = await import("./eliminacion-misiones.js");
 
-    const preparacion = await prepararEliminacionMision(id);
+    const [preparacion, reconocimiento] = await Promise.all([
+      prepararEliminacionMision(id),
+      Reconocimientos.leerPorMision(id)
+    ]);
     const tarea = preparacion.tarea;
 
     if (!tarea) {
@@ -107,7 +129,7 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
     const resumen = textoResumenEliminacion(preparacion);
     const titulo = texto(tarea.titulo) || tituloTarjeta(tarjeta);
 
-    const primeraConfirmacion = window.confirm([
+    const lineas = [
       "⚠️ ELIMINACIÓN DE UNA MISIÓN COMPLETADA",
       "",
       "Esta acción modifica el historial educativo y no se puede deshacer.",
@@ -115,16 +137,32 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
       `Misión: ${titulo}`,
       `• ${resumen.evidencias} evidencia(s) vinculada(s) que se eliminarán`,
       `• ${resumen.sesiones} sesión(es)/registro(s) exclusivo(s) que se eliminarán`,
-      `• ${resumen.conservadas} registro(s) posterior(es) o reutilizado(s) que se conservarán`,
+      `• ${resumen.conservadas} registro(s) posterior(es) o reutilizado(s) que se conservarán`
+    ];
+
+    if (reconocimiento) {
+      lineas.push("• 💛 1 reconocimiento familiar vinculado requiere una decisión específica");
+    }
+
+    lineas.push(
       "",
       resumen.descripcionConservadas,
       "",
       "La Misión también será eliminada definitivamente.",
       "",
-      "¿Quieres continuar con la confirmación final?"
-    ].join("\n"));
+      "¿Quieres continuar?"
+    );
+
+    const primeraConfirmacion = window.confirm(lineas.join("\n"));
 
     if (!primeraConfirmacion) {
+      restaurarBoton(boton);
+      return;
+    }
+
+    const decisionReconocimiento = decidirReconocimiento(reconocimiento);
+    if (decisionReconocimiento === "CANCELAR") {
+      window.alert("Eliminación cancelada. No se modificó ningún dato.");
       restaurarBoton(boton);
       return;
     }
@@ -145,6 +183,28 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
       eliminarMision: true
     });
 
+    let notaReconocimiento = "";
+    if (reconocimiento) {
+      try {
+        if (decisionReconocimiento === "CONSERVAR") {
+          await Reconocimientos.conservarMisionComoHistorico(id, {
+            misionSnapshot: tarea
+          });
+          notaReconocimiento = "\n• 💛 Reconocimiento conservado en Mi Camino como historia independiente";
+        } else {
+          await Reconocimientos.eliminarPorMision(id);
+          notaReconocimiento = "\n• 💛 Reconocimiento familiar eliminado junto con la Misión";
+        }
+      } catch (errorReconocimiento) {
+        console.error(
+          "La Misión se eliminó, pero no se pudo completar la decisión sobre su reconocimiento.",
+          errorReconocimiento
+        );
+        notaReconocimiento =
+          "\n⚠️ La Misión se eliminó, pero revisa el reconocimiento asociado: no pudo actualizarse correctamente.";
+      }
+    }
+
     const conservadas = resultado.sesionesConservar?.length || 0;
     window.alert(
       `✅ Misión completada eliminada.\n\n` +
@@ -152,7 +212,8 @@ async function eliminarMisionCompletada(misionId, tarjeta, boton) {
       `• ${resultado.sesionesEliminadas} sesión(es)/registro(s) exclusivo(s) eliminado(s)` +
       (conservadas
         ? `\n• ${conservadas} registro(s) posterior(es) conservado(s) por seguridad`
-        : "")
+        : "") +
+      notaReconocimiento
     );
   } catch (error) {
     console.error("No se pudo eliminar la Misión completada.", error);
