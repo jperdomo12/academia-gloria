@@ -1,5 +1,6 @@
 /* Academia Gloria Valentina · Marca de Misiones para datos de prueba */
 
+import "./eliminacion-completadas.js";
 import { db } from "../../compartido/firebase/firebase-config.js";
 import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
