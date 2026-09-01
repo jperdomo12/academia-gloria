@@ -2,8 +2,12 @@
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
 
+const PASO_HISTORIA = 5;
+
 let instalada = false;
 let detenerObservacion = null;
+let reconocimientosActuales = [];
+let cantidadHistoriaVisible = PASO_HISTORIA;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -100,12 +104,31 @@ function metaFuente(item = {}) {
   return texto(item.titulo) || "Momento de mi camino";
 }
 
-function render(items = []) {
+function renderItemHistoria(item) {
+  return `
+    <article class="recompensas-a1__item">
+      <span class="recompensas-a1__item-icono" aria-hidden="true">${iconoVisible(item)}</span>
+      <div>
+        <strong>${escapar(metaFuente(item))}</strong>
+        <p>${escapar(item.mensaje || "")}</p>
+        <small>${escapar(origenVisible(item))} · ${escapar(formatearFecha(item.fechaReconocimiento))}</small>
+      </div>
+    </article>
+  `;
+}
+
+function render(items = [], { reiniciarPaginacion = false } = {}) {
   const host = asegurarHost();
   if (!host) return;
 
-  const visibles = items.filter(reconocimientoVisible);
-  const ultimo = visibles[0] || null;
+  const historiaAbierta = Boolean(
+    host.querySelector(".recompensas-a1__historia")?.open
+  );
+
+  reconocimientosActuales = items.filter(reconocimientoVisible);
+  if (reiniciarPaginacion) cantidadHistoriaVisible = PASO_HISTORIA;
+
+  const ultimo = reconocimientosActuales[0] || null;
 
   if (!ultimo) {
     host.innerHTML = `
@@ -117,16 +140,10 @@ function render(items = []) {
     return;
   }
 
-  const historia = visibles.map(item => `
-    <article class="recompensas-a1__item">
-      <span class="recompensas-a1__item-icono" aria-hidden="true">${iconoVisible(item)}</span>
-      <div>
-        <strong>${escapar(metaFuente(item))}</strong>
-        <p>${escapar(item.mensaje || "")}</p>
-        <small>${escapar(origenVisible(item))} · ${escapar(formatearFecha(item.fechaReconocimiento))}</small>
-      </div>
-    </article>
-  `).join("");
+  const visiblesHistoria = reconocimientosActuales.slice(0, cantidadHistoriaVisible);
+  const restantes = Math.max(0, reconocimientosActuales.length - visiblesHistoria.length);
+  const siguientePaso = Math.min(PASO_HISTORIA, restantes);
+  const historia = visiblesHistoria.map(renderItemHistoria).join("");
 
   host.innerHTML = `
     <article class="recompensas-a1__ultimo">
@@ -142,11 +159,25 @@ function render(items = []) {
       </div>
     </article>
 
-    <details class="recompensas-a1__historia">
+    <details class="recompensas-a1__historia" ${historiaAbierta ? "open" : ""}>
       <summary>🌈 Ver mi historia de crecimiento</summary>
-      <div class="recompensas-a1__lista">${historia}</div>
+      <div class="recompensas-a1__lista">
+        ${historia}
+        ${restantes > 0 ? `
+          <div class="recompensas-a1__mas">
+            <button type="button" data-ver-mas-historia>
+              Ver ${siguientePaso} más ↓
+            </button>
+          </div>
+        ` : ""}
+      </div>
     </details>
   `;
+
+  host.querySelector("[data-ver-mas-historia]")?.addEventListener("click", () => {
+    cantidadHistoriaVisible += PASO_HISTORIA;
+    render(reconocimientosActuales);
+  });
 }
 
 export function instalarReconocimientosCamino() {
@@ -156,10 +187,10 @@ export function instalarReconocimientosCamino() {
   asegurarHost();
 
   detenerObservacion = Reconocimientos.observar(
-    render,
+    items => render(items, { reiniciarPaginacion: true }),
     error => {
       console.debug("No se pudieron cargar los reconocimientos de Mi Camino.", error);
-      render([]);
+      render([], { reiniciarPaginacion: true });
     }
   );
 
