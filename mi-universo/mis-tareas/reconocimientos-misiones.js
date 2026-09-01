@@ -177,7 +177,8 @@ function actualizarPanelGuacamaya(dialogo) {
 
 function prepararOpcionesGuacamayas(dialogo, existente) {
   const select = dialogo.querySelector("[data-guacamaya-tipo]");
-  if (!select) return;
+  const activar = dialogo.querySelector("[data-reconocimiento-guacamaya]");
+  if (!select || !activar) return;
 
   const actual = texto(existente?.guacamayaTipo);
   [...select.options].forEach(option => {
@@ -188,6 +189,15 @@ function prepararOpcionesGuacamayas(dialogo, existente) {
       ? `🦜 ${definicion.nombre.replace("Guacamaya ", "")} · ya forma parte de Mi Camino`
       : `🦜 ${definicion.nombre.replace("Guacamaya ", "")}`;
   });
+
+  const disponibles = [...select.options].filter(option => !option.disabled);
+  if (!actual && !disponibles.length) {
+    activar.checked = false;
+    activar.disabled = true;
+    activar.title = "Las seis Guacamayas ya forman parte de Mi Camino.";
+  } else {
+    activar.title = "";
+  }
 }
 
 async function abrirReconocimiento(misionId) {
@@ -220,6 +230,7 @@ async function abrirReconocimiento(misionId) {
   const activarGuacamaya = dialogo.querySelector("[data-reconocimiento-guacamaya]");
   const guacamayaTipo = dialogo.querySelector("[data-guacamaya-tipo]");
 
+  activarGuacamaya.disabled = false;
   prepararOpcionesGuacamayas(dialogo, existente);
 
   dialogo.dataset.misionId = texto(misionId);
@@ -236,13 +247,19 @@ async function abrirReconocimiento(misionId) {
 
   const yaEsGuacamaya = existente?.tipo === "guacamaya";
   activarGuacamaya.checked = yaEsGuacamaya;
-  activarGuacamaya.disabled = yaEsGuacamaya;
+  if (yaEsGuacamaya) activarGuacamaya.disabled = true;
+
   if (yaEsGuacamaya && existente.guacamayaTipo) {
     guacamayaTipo.value = existente.guacamayaTipo;
-  } else if (texto(tarea.modulo) === "creciendo-por-dentro") {
-    guacamayaTipo.value = "crecimiento";
   } else {
-    guacamayaTipo.selectedIndex = [...guacamayaTipo.options].findIndex(option => !option.disabled);
+    const preferida = texto(tarea.modulo) === "creciendo-por-dentro"
+      ? "crecimiento"
+      : "";
+    const opcionPreferida = preferida
+      ? [...guacamayaTipo.options].find(option => option.value === preferida && !option.disabled)
+      : null;
+    const primeraDisponible = opcionPreferida || [...guacamayaTipo.options].find(option => !option.disabled);
+    if (primeraDisponible) guacamayaTipo.value = primeraDisponible.value;
   }
 
   actualizarPanelGuacamaya(dialogo);
@@ -262,8 +279,12 @@ async function abrirReconocimiento(misionId) {
 
     try {
       const deseaGuacamaya = activarGuacamaya.checked;
-      const seleccion = deseaGuacamaya ? guacamayaTipo.value : "";
+      const seleccion = deseaGuacamaya ? texto(guacamayaTipo.value) : "";
       const eraGuacamaya = existente?.tipo === "guacamaya";
+
+      if (deseaGuacamaya && !seleccion) {
+        throw new Error("No hay una Guacamaya disponible para seleccionar.");
+      }
 
       if (deseaGuacamaya && !eraGuacamaya) {
         const definicion = CATALOGO_GUACAMAYAS[seleccion];
@@ -273,6 +294,25 @@ async function abrirReconocimiento(misionId) {
           "¿Confirmas que este momento merece formar parte permanente de Mi Camino?"
         );
         if (!confirmado) {
+          guardar.disabled = false;
+          guardar.textContent = textoOriginal;
+          return;
+        }
+      }
+
+      if (
+        eraGuacamaya &&
+        seleccion &&
+        seleccion !== texto(existente.guacamayaTipo)
+      ) {
+        const definicion = CATALOGO_GUACAMAYAS[seleccion];
+        const corregir = window.confirm(
+          `⚠️ Corrección de Guacamaya\n\n` +
+          `Vas a cambiar este hito a ${definicion?.nombre || "otra Guacamaya"}.\n` +
+          "Hazlo solo para corregir una clasificación administrativa.\n\n" +
+          "¿Confirmas la corrección?"
+        );
+        if (!corregir) {
           guardar.disabled = false;
           guardar.textContent = textoOriginal;
           return;
@@ -401,9 +441,8 @@ function atenderFuenteDesdeUrl() {
   boton.click();
   if (fuente === "trabajo") {
     boton.closest(".tarea-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    limpiarParametrosFuente();
   }
-
-  if (fuente === "trabajo") limpiarParametrosFuente();
 }
 
 export function instalarReconocimientosMisiones() {
