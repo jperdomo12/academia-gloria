@@ -184,6 +184,21 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // MOTIVACIÓN Y RECONOCIMIENTO · Recompensas A1
+      //
+      // El alumno/propietario puede consultar su historia motivacional,
+      // pero la creación/edición humana de A1 requiere gestión adulta o admin.
+      // Las futuras escrituras automáticas B/C deberán tener reglas específicas
+      // antes de habilitarse; no se autorizan implícitamente aquí.
+      match /reconocimientos/{reconocimientoId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       // MI RINCÓN DE LECTURA · Persona Activa
       //
       // La familia/profesional relacionado puede consultar las sesiones

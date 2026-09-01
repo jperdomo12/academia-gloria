@@ -1,5 +1,6 @@
 /* Academia Gloria Valentina · Mi Camino · Finalización manual de Misiones */
 
+import "./reconocimientos-camino.js";
 import { Academia } from "../../compartido/api/academia.js";
 
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";

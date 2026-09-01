@@ -1,0 +1,163 @@
+.recompensas-a1 {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.recompensas-a1__ultimo,
+.recompensas-a1__historia {
+  border: 2px solid #fde68a;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #fffbeb, #fff 70%);
+  box-shadow: 0 16px 34px rgba(120, 53, 15, .07);
+}
+
+.recompensas-a1__ultimo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 22px;
+}
+
+.recompensas-a1__icono {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 19px;
+  background: #fff;
+  font-size: 30px;
+  box-shadow: 0 9px 20px rgba(15, 23, 42, .08);
+}
+
+.recompensas-a1__eyebrow {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #92400e;
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.recompensas-a1 h3 {
+  margin: 0 0 7px;
+  font-size: 1.45rem;
+}
+
+.recompensas-a1__mensaje {
+  margin: 0;
+  color: #374151;
+  font-size: 1.04rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.recompensas-a1__meta {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  color: #64748b;
+  font-size: .88rem;
+  font-weight: 750;
+}
+
+.recompensas-a1__vacio {
+  padding: 20px 22px;
+  border: 2px dashed #d1d5db;
+  border-radius: 23px;
+  background: rgba(255,255,255,.76);
+  color: #64748b;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.recompensas-a1__historia {
+  overflow: hidden;
+}
+
+.recompensas-a1__historia > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 17px 20px;
+  color: #166534;
+  font-weight: 900;
+}
+
+.recompensas-a1__historia > summary::-webkit-details-marker {
+  display: none;
+}
+
+.recompensas-a1__lista {
+  display: grid;
+  gap: 0;
+  padding: 0 20px 18px;
+}
+
+.recompensas-a1__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.recompensas-a1__item:first-child {
+  border-top: 0;
+}
+
+.recompensas-a1__item-icono {
+  font-size: 23px;
+}
+
+.recompensas-a1__item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.recompensas-a1__item p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.45;
+  font-weight: 650;
+}
+
+.recompensas-a1__item small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.recompensas-a1__mas {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 2px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.recompensas-a1__mas button {
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 2px solid #bbf7d0;
+  border-radius: 999px;
+  background: #f0fdf4;
+  color: #166534;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.recompensas-a1__mas button:hover,
+.recompensas-a1__mas button:focus-visible {
+  border-color: #86efac;
+  background: #dcfce7;
+}
+
+@media (max-width: 640px) {
+  .recompensas-a1__ultimo {
+    grid-template-columns: 1fr;
+  }
+}

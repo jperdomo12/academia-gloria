@@ -1,0 +1,130 @@
+.accion-reconocimiento-mision {
+  border-color: #f0c96f !important;
+  background: #fff9e8 !important;
+  color: #765306 !important;
+}
+
+.accion-reconocimiento-mision.reconocida {
+  border-color: #e9b949 !important;
+  background: #fff2c5 !important;
+  color: #654807 !important;
+}
+
+.reconocimiento-dialogo {
+  width: min(620px, calc(100vw - 28px));
+  max-height: min(760px, calc(100vh - 28px));
+  padding: 0;
+  border: 0;
+  border-radius: 26px;
+  background: #fff;
+  color: #26334a;
+  box-shadow: 0 28px 80px rgba(45, 35, 75, .28);
+}
+
+.reconocimiento-dialogo::backdrop {
+  background: rgba(30, 41, 59, .46);
+  backdrop-filter: blur(3px);
+}
+
+.reconocimiento-dialogo__form {
+  display: grid;
+  gap: 18px;
+  padding: 26px;
+}
+
+.reconocimiento-dialogo__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.reconocimiento-dialogo__cabecera h2 {
+  margin: 4px 0 5px;
+  font-size: 1.7rem;
+}
+
+.reconocimiento-dialogo__cabecera p,
+.reconocimiento-dialogo__ayuda,
+.reconocimiento-dialogo__fuente {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.reconocimiento-dialogo__cerrar {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.reconocimiento-dialogo__fuente {
+  padding: 12px 14px;
+  border: 1px solid #fde68a;
+  border-radius: 16px;
+  background: #fffbeb;
+  color: #713f12;
+}
+
+.reconocimiento-dialogo label {
+  display: grid;
+  gap: 7px;
+  font-weight: 850;
+}
+
+.reconocimiento-dialogo select,
+.reconocimiento-dialogo textarea {
+  width: 100%;
+  border: 2px solid #e2e8f0;
+  border-radius: 15px;
+  padding: 11px 13px;
+  background: #fff;
+  color: #26334a;
+  font: inherit;
+}
+
+.reconocimiento-dialogo textarea {
+  min-height: 132px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.reconocimiento-dialogo select:focus,
+.reconocimiento-dialogo textarea:focus {
+  outline: 3px solid rgba(245, 158, 11, .16);
+  border-color: #f59e0b;
+}
+
+.reconocimiento-dialogo__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reconocimiento-dialogo__error {
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: #fff1f2;
+  color: #9f1239;
+  font-weight: 800;
+}
+
+.reconocimiento-dialogo__error:empty {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .reconocimiento-dialogo__form {
+    padding: 20px;
+  }
+
+  .reconocimiento-dialogo__acciones .btn {
+    flex: 1 1 160px;
+  }
+}
