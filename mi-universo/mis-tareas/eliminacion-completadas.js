@@ -48,19 +48,25 @@ function cargarEstilos() {
 }
 
 function configurarVolverDetalleCompletada() {
-  const volver = document.querySelector("[data-volver-modulo]");
-  if (!volver || volver.dataset.volverDetalleMision === "true") return;
+  if (document.documentElement.dataset.volverDetalleMision === "true") return;
+  document.documentElement.dataset.volverDetalleMision = "true";
 
-  volver.dataset.volverDetalleMision = "true";
-  volver.addEventListener("click", event => {
+  document.addEventListener("click", event => {
+    const origen = event.target;
+    if (!(origen instanceof Element)) return;
+
+    const volver = origen.closest("[data-nav-volver]");
+    if (!volver) return;
+
     const formulario = document.getElementById("formTarea");
     if (!formulario?.classList.contains("modo-consulta")) return;
 
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    /* Reutiliza el Volver interno del formulario, que ya limpia el modo
-       consulta y regresa a la lista de Misiones sin abandonar Gestión. */
+    /* La cabecera global se crea de forma asíncrona y sustituye el Volver
+       heredado. Delegamos el clic para capturar siempre el botón visible y
+       reutilizamos el Volver interno que ya regresa a la lista de Misiones. */
     document.getElementById("cancelarEdicion")?.click();
   }, true);
 }
