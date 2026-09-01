@@ -265,11 +265,12 @@ export async function conservarReconocimientoMisionComoHistorico(
     modulo: texto(mision?.modulo || actual.fuentePrincipal?.modulo),
     fechaHecho: actual.fechaHecho || fechaHechoMision(mision || {})
   };
+  const { id: _idDerivado, ...datosActuales } = actual;
 
   await setDoc(
     referencia,
     {
-      ...actual,
+      ...datosActuales,
       fuenteEliminada: true,
       fuenteSnapshot,
       updatedAt: serverTimestamp(),
@@ -278,7 +279,7 @@ export async function conservarReconocimientoMisionComoHistorico(
     { merge: false }
   );
 
-  return { ...actual, fuenteEliminada: true, fuenteSnapshot };
+  return { ...datosActuales, id: referencia.id, fuenteEliminada: true, fuenteSnapshot };
 }
 
 export const Reconocimientos = Object.freeze({
