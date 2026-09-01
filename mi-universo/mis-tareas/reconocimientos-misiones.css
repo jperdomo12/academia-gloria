@@ -10,9 +10,15 @@
   color: #654807 !important;
 }
 
+.accion-reconocimiento-mision.guacamaya {
+  border-color: #86efac !important;
+  background: #ecfdf5 !important;
+  color: #166534 !important;
+}
+
 .reconocimiento-dialogo {
-  width: min(620px, calc(100vw - 28px));
-  max-height: min(760px, calc(100vh - 28px));
+  width: min(640px, calc(100vw - 28px));
+  max-height: min(820px, calc(100vh - 28px));
   padding: 0;
   border: 0;
   border-radius: 26px;
@@ -98,6 +104,55 @@
 .reconocimiento-dialogo textarea:focus {
   outline: 3px solid rgba(245, 158, 11, .16);
   border-color: #f59e0b;
+}
+
+.reconocimiento-guacamaya {
+  padding: 15px 16px;
+  border: 2px solid #bbf7d0;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #f0fdf4, #fff 72%);
+}
+
+.reconocimiento-guacamaya__activar {
+  grid-template-columns: auto 1fr !important;
+  align-items: start;
+  gap: 11px !important;
+  cursor: pointer;
+}
+
+.reconocimiento-guacamaya__activar input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: #16a34a;
+}
+
+.reconocimiento-guacamaya__activar span {
+  display: grid;
+  gap: 4px;
+}
+
+.reconocimiento-guacamaya__activar small,
+.reconocimiento-guacamaya__detalle p {
+  color: #64748b;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.reconocimiento-guacamaya__detalle {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #bbf7d0;
+}
+
+.reconocimiento-guacamaya__detalle.hidden {
+  display: none;
+}
+
+.reconocimiento-guacamaya__detalle p {
+  margin: 0;
 }
 
 .reconocimiento-dialogo__acciones {

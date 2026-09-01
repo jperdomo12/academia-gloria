@@ -5,7 +5,8 @@
 }
 
 .recompensas-a1__ultimo,
-.recompensas-a1__historia {
+.recompensas-a1__historia,
+.recompensas-a2__guacamayas {
   border: 2px solid #fde68a;
   border-radius: 26px;
   background: linear-gradient(145deg, #fffbeb, #fff 70%);
@@ -64,6 +65,33 @@
   font-weight: 750;
 }
 
+.recompensas-a1__fuentes {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 13px;
+}
+
+.recompensas-a1__fuentes a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  text-decoration: none;
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.recompensas-a1__fuentes a:hover,
+.recompensas-a1__fuentes a:focus-visible {
+  border-color: #93c5fd;
+  background: #dbeafe;
+}
+
 .recompensas-a1__vacio {
   padding: 20px 22px;
   border: 2px dashed #d1d5db;
@@ -72,6 +100,73 @@
   color: #64748b;
   font-weight: 750;
   line-height: 1.5;
+}
+
+.recompensas-a2__guacamayas {
+  padding: 20px 22px;
+  border-color: #bbf7d0;
+  background: linear-gradient(145deg, #f0fdf4, #fff 72%);
+}
+
+.recompensas-a2__guacamayas--vacio {
+  border-style: dashed;
+}
+
+.recompensas-a2__guacamayas-cabecera {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.recompensas-a2__titulo {
+  color: #166534;
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.recompensas-a2__guacamayas p,
+.recompensas-a2__guacamayas small {
+  color: #64748b;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.recompensas-a2__guacamayas--vacio p {
+  margin: 7px 0 0;
+}
+
+.recompensas-a2__guacamayas-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.recompensas-a2__guacamaya {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid #bbf7d0;
+  border-radius: 18px;
+  background: rgba(255,255,255,.9);
+}
+
+.recompensas-a2__guacamaya-icono {
+  font-size: 28px;
+}
+
+.recompensas-a2__guacamaya strong {
+  color: #14532d;
+}
+
+.recompensas-a2__guacamaya p {
+  margin: 5px 0 0;
+  color: #475569;
+}
+
+.recompensas-a2__guacamaya small {
+  display: block;
+  margin-top: 7px;
 }
 
 .recompensas-a1__historia {
@@ -157,7 +252,12 @@
 }
 
 @media (max-width: 640px) {
-  .recompensas-a1__ultimo {
+  .recompensas-a1__ultimo,
+  .recompensas-a2__guacamaya {
+    grid-template-columns: 1fr;
+  }
+
+  .recompensas-a2__guacamayas-lista {
     grid-template-columns: 1fr;
   }
 }

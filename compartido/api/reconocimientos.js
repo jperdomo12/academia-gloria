@@ -1,4 +1,4 @@
-/* Academia Gloria Valentina · Recompensas A1 · Reconocimientos humanos */
+/* Academia Gloria Valentina · Recompensas A1/A2 · Reconocimientos humanos y Guacamayas */
 
 import { db, auth } from "../firebase/firebase-config.js";
 import { ContextoUsuario } from "../js/contexto-usuario.js";
@@ -23,6 +23,39 @@ const CATEGORIAS = new Set([
   "progreso",
   "otro"
 ]);
+
+export const CATALOGO_GUACAMAYAS = Object.freeze({
+  valiente: Object.freeze({
+    nombre: "Guacamaya Valiente",
+    categoria: "perseverancia",
+    descripcion: "Recuperarse tras una dificultad real y volver a intentarlo."
+  }),
+  alas_propias: Object.freeze({
+    nombre: "Guacamaya Alas Propias",
+    categoria: "autonomia",
+    descripcion: "Un hito de autonomía, independencia o responsabilidad creciente."
+  }),
+  curiosa: Object.freeze({
+    nombre: "Guacamaya Curiosa",
+    categoria: "curiosidad",
+    descripcion: "Querer descubrir, leer o aprender algo con iniciativa y significado."
+  }),
+  pensadora: Object.freeze({
+    nombre: "Guacamaya Pensadora",
+    categoria: "pensamiento",
+    descripcion: "Analizar, revisar un error o probar una estrategia de forma significativa."
+  }),
+  equipo: Object.freeze({
+    nombre: "Guacamaya de Equipo",
+    categoria: "equipo",
+    descripcion: "Cooperar de verdad con la familia, aportando cada uno una parte distinta."
+  }),
+  crecimiento: Object.freeze({
+    nombre: "Guacamaya de Crecimiento",
+    categoria: "crecimiento",
+    descripcion: "Reconocer un descubrimiento importante sobre sí misma o una habilidad para la vida."
+  })
+});
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -102,10 +135,43 @@ function fechaHechoMision(mision = {}) {
   );
 }
 
+function guacamayaValida(tipo = "") {
+  const clave = texto(tipo);
+  return clave && CATALOGO_GUACAMAYAS[clave]
+    ? { clave, ...CATALOGO_GUACAMAYAS[clave] }
+    : null;
+}
+
 async function leerMisionDirecta(userId, misionId) {
   return normalizarDocumento(
     await getDoc(referenciaMision(userId, misionId))
   );
+}
+
+async function leerReconocimientosUsuario(userId) {
+  const snapshot = await getDocs(coleccionReconocimientos(userId));
+  return ordenarMasRecientes(
+    snapshot.docs.map(item => ({ id: item.id, ...item.data() }))
+  );
+}
+
+async function validarUnicidadGuacamaya(userId, guacamayaTipo, reconocimientoId) {
+  if (!guacamayaTipo) return;
+
+  const existente = (await leerReconocimientosUsuario(userId)).find(item =>
+    item.id !== reconocimientoId &&
+    item.estado === "activo" &&
+    item.tipo === "guacamaya" &&
+    texto(item.guacamayaTipo) === guacamayaTipo
+  );
+
+  if (existente) {
+    const definicion = guacamayaValida(guacamayaTipo);
+    throw new Error(
+      `${definicion?.nombre || "Esta Guacamaya"} ya forma parte de Mi Camino. ` +
+      "Una misma Guacamaya se concede una sola vez."
+    );
+  }
 }
 
 export async function leerReconocimientoMision(misionId) {
@@ -118,18 +184,15 @@ export async function leerReconocimientoMision(misionId) {
 export async function guardarReconocimientoMision({
   misionId,
   categoria,
-  mensaje
+  mensaje,
+  guacamayaTipo = ""
 } = {}) {
   const userId = await userIdPersonaActiva();
   const actorUserId = actorActual();
   const idMision = texto(misionId);
-  const categoriaNormalizada = texto(categoria).toLowerCase();
   const mensajeNormalizado = texto(mensaje);
 
   if (!idMision) throw new Error("Falta el identificador de la Misión.");
-  if (!CATEGORIAS.has(categoriaNormalizada)) {
-    throw new Error("La categoría de reconocimiento no es válida.");
-  }
   if (!mensajeNormalizado) {
     throw new Error("Escribe un mensaje que explique qué quieres reconocer.");
   }
@@ -154,10 +217,33 @@ export async function guardarReconocimientoMision({
     );
   }
 
+  const guacamayaSolicitada = texto(guacamayaTipo);
+  const guacamayaExistente = texto(existente?.guacamayaTipo);
+  const guacamayaEfectiva = guacamayaSolicitada || guacamayaExistente;
+  const definicionGuacamaya = guacamayaEfectiva
+    ? guacamayaValida(guacamayaEfectiva)
+    : null;
+
+  if (guacamayaEfectiva && !definicionGuacamaya) {
+    throw new Error("La Guacamaya seleccionada no pertenece al catálogo activo.");
+  }
+
+  const categoriaNormalizada = definicionGuacamaya
+    ? definicionGuacamaya.categoria
+    : texto(categoria).toLowerCase();
+
+  if (!CATEGORIAS.has(categoriaNormalizada)) {
+    throw new Error("La categoría de reconocimiento no es válida.");
+  }
+
+  if (definicionGuacamaya) {
+    await validarUnicidadGuacamaya(userId, definicionGuacamaya.clave, referencia.id);
+  }
+
   const datos = {
     schemaVersion: 1,
     userIdPersona: userId,
-    tipo: "reconocimiento",
+    tipo: definicionGuacamaya ? "guacamaya" : "reconocimiento",
     categoria: categoriaNormalizada,
     titulo: texto(mision.titulo) || "Misión completada",
     mensaje: mensajeNormalizado,
@@ -179,6 +265,13 @@ export async function guardarReconocimientoMision({
     updatedBy: actorUserId
   };
 
+  if (definicionGuacamaya) {
+    datos.guacamayaTipo = definicionGuacamaya.clave;
+    datos.guacamayaNombre = definicionGuacamaya.nombre;
+    datos.guacamayaDescripcion = definicionGuacamaya.descripcion;
+    datos.fechaGuacamaya = existente?.fechaGuacamaya || serverTimestamp();
+  }
+
   await setDoc(referencia, datos, { merge: false });
 
   return {
@@ -190,10 +283,7 @@ export async function guardarReconocimientoMision({
 
 export async function leerReconocimientos() {
   const userId = await userIdPersonaActiva();
-  const snapshot = await getDocs(coleccionReconocimientos(userId));
-  return ordenarMasRecientes(
-    snapshot.docs.map(item => ({ id: item.id, ...item.data() }))
-  );
+  return leerReconocimientosUsuario(userId);
 }
 
 export function observarReconocimientos(callback, onError = console.error) {
@@ -283,6 +373,7 @@ export async function conservarReconocimientoMisionComoHistorico(
 }
 
 export const Reconocimientos = Object.freeze({
+  catalogoGuacamayas: CATALOGO_GUACAMAYAS,
   guardarMision: guardarReconocimientoMision,
   leerPorMision: leerReconocimientoMision,
   leerTodos: leerReconocimientos,
