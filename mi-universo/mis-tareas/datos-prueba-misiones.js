@@ -81,36 +81,72 @@ function asegurarEstadoPruebas() {
   return estado;
 }
 
+function restaurarControlesListado() {
+  const paginacion = document.getElementById("paginacionTareas");
+  if (paginacion) paginacion.hidden = false;
+  asegurarEstadoPruebas()?.classList.add("hidden");
+}
+
+function salirFiltroPruebas() {
+  if (!soloPruebas) return;
+  soloPruebas = false;
+  document.querySelector("[data-filtro-datos-prueba]")?.classList.remove("active");
+  restaurarControlesListado();
+}
+
 function aplicarFiltroPruebas() {
-  const tarjetas = [...document.querySelectorAll("#listaTareas .tarea-card")];
-  const estado = asegurarEstadoPruebas();
+  if (!soloPruebas) return;
 
-  if (!soloPruebas) {
-    tarjetas.forEach(tarjeta => {
-      if (tarjeta.hidden) tarjeta.hidden = false;
-    });
-    estado?.classList.add("hidden");
-    return;
-  }
-
+  const tarjetas = [...document.querySelectorAll("#listaTareas > .tarea-card")];
   let visibles = 0;
+
   tarjetas.forEach(tarjeta => {
     const tarea = tareasPorId.get(idTarjeta(tarjeta));
     const mostrar = esDatoPrueba(tarea);
-    const debeOcultarse = !mostrar;
-    if (tarjeta.hidden !== debeOcultarse) tarjeta.hidden = debeOcultarse;
+    tarjeta.hidden = !mostrar;
     if (mostrar) visibles += 1;
   });
 
-  estado?.classList.toggle("hidden", visibles > 0);
+  const paginacion = document.getElementById("paginacionTareas");
+  if (paginacion) paginacion.hidden = true;
+
+  document.getElementById("estadoListadoMisiones")?.classList.add("hidden");
+  asegurarEstadoPruebas()?.classList.toggle("hidden", visibles > 0);
+}
+
+function limpiarFiltrosTipoTema() {
+  const tipo = document.getElementById("filtroTipoMision");
+  if (tipo && tipo.value) {
+    tipo.value = "";
+    tipo.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  const tema = document.getElementById("filtroTemaMision");
+  if (tema && tema.value) {
+    tema.value = "";
+    tema.dispatchEvent(new Event("change", { bubbles: true }));
+  }
 }
 
 function actualizarFiltroPruebas() {
   const boton = document.querySelector("[data-filtro-datos-prueba]");
   if (!boton) return;
+
   const cantidad = [...tareasPorId.values()].filter(esDatoPrueba).length;
   const etiqueta = `🧪 Pruebas${cantidad ? ` (${cantidad})` : ""}`;
   if (boton.textContent !== etiqueta) boton.textContent = etiqueta;
+}
+
+function asegurarIntegracionFiltrosEstandar() {
+  ["filtroTipoMision", "filtroTemaMision"].forEach(id => {
+    const control = document.getElementById(id);
+    if (!control || control.dataset.integradoDatosPrueba === "true") return;
+
+    control.dataset.integradoDatosPrueba = "true";
+    control.addEventListener("change", () => {
+      salirFiltroPruebas();
+    });
+  });
 }
 
 function asegurarFiltroPruebas() {
@@ -127,6 +163,8 @@ function asegurarFiltroPruebas() {
     filtros.appendChild(boton);
 
     boton.addEventListener("click", () => {
+      limpiarFiltrosTipoTema();
+
       const todas = filtros.querySelector('[data-filter="todas"]');
       todas?.click();
 
@@ -137,19 +175,18 @@ function asegurarFiltroPruebas() {
         });
         boton.classList.add("active");
         aplicarFiltroPruebas();
-      }, 0);
+      }, 20);
     });
 
     filtros.addEventListener("click", event => {
       const normal = event.target?.closest?.("[data-filter]");
       if (!normal) return;
-      soloPruebas = false;
-      boton.classList.remove("active");
-      window.setTimeout(aplicarFiltroPruebas, 0);
+      salirFiltroPruebas();
     }, true);
   }
 
   actualizarFiltroPruebas();
+  asegurarIntegracionFiltrosEstandar();
 }
 
 async function cambiarMarca(misionId, boton) {
@@ -286,7 +323,7 @@ function programarDecoracion() {
     asegurarFiltroPruebas();
     decorarTarjetas();
     decorarSelectorLimpieza();
-    aplicarFiltroPruebas();
+    if (soloPruebas) aplicarFiltroPruebas();
   });
 }
 
