@@ -4,6 +4,7 @@
  * Fuente central: compartido/firebase/firebase-config.js
  */
 import { db } from "../firebase/firebase-config.js";
+import { ContextoUsuario } from "./contexto-usuario.js";
 import {
   collection,
   deleteDoc,
@@ -63,13 +64,76 @@ function normalizeSession(snapshot){
   };
 }
 
+async function userIdPersonaActivaSeguro(uidFallback){
+  try{
+    const userId=String(await ContextoUsuario.obtenerUserIdPersonaActiva() || "").trim();
+    if(userId) return userId;
+  }catch(error){
+    console.debug(
+      "[Detectives] No se pudo resolver Persona Activa; se usa el usuario indicado.",
+      error
+    );
+  }
+  return requireUid(uidFallback);
+}
+
+function misionIdContextual(registro={}){
+  const explicito=String(registro.misionId || "").trim();
+  if(explicito) return explicito;
+
+  if(typeof window === "undefined") return "";
+
+  try{
+    return String(
+      new URLSearchParams(window.location.search).get("misionId") || ""
+    ).trim();
+  }catch{
+    return "";
+  }
+}
+
+async function contextoRecompensasResolucion(userId,registro={}){
+  const misionId=misionIdContextual(registro);
+  if(!misionId){
+    return {misionId:"",esDatoPrueba:false};
+  }
+
+  try{
+    const snapshot=await getDoc(
+      doc(db,ROOT_COLLECTION,userId,"tareas",misionId)
+    );
+
+    /* Si la Misión indicada no puede demostrarse, se conserva el vínculo
+       diagnóstico pero se bloquea cualquier reconocimiento automático. */
+    if(!snapshot.exists()){
+      return {misionId,esDatoPrueba:true};
+    }
+
+    return {
+      misionId,
+      esDatoPrueba:snapshot.data().esDatoPrueba === true
+    };
+  }catch(error){
+    console.debug(
+      "[Detectives] No se pudo validar si la Misión es dato de prueba.",
+      error
+    );
+    return {misionId,esDatoPrueba:true};
+  }
+}
+
 export async function registrarResolucionDetective(uid,registro){
   requireUid(uid);
   if(!registro?.historiaId) throw new Error("La resolución no contiene historiaId.");
 
+  /* La resolución pertenece a la Persona Activa, no necesariamente al usuario
+     autenticado que la acompaña. Esto alinea Detectives con el resto de la
+     Academia multi-Persona y con sus vistas históricas. */
+  const userId=await userIdPersonaActivaSeguro(uid);
+  const contextoRecompensas=await contextoRecompensasResolucion(userId,registro);
   const historiaId = String(registro.historiaId);
-  const summaryRef = progressRef(uid,historiaId);
-  const sessionRef = doc(sessionsRef(uid,historiaId));
+  const summaryRef = progressRef(userId,historiaId);
+  const sessionRef = doc(sessionsRef(userId,historiaId));
   const attempts = Number(registro.intentosTotales || 0);
 
   await runTransaction(db,async transaction => {
@@ -103,6 +167,7 @@ export async function registrarResolucionDetective(uid,registro){
 
     transaction.set(sessionRef,{
       historiaId,
+      tituloHistoria:String(registro.tituloHistoria || registro.titulo || "").trim(),
       nivel:Number(registro.nivel || 0),
       tema:String(registro.tema || ""),
       tipo:String(registro.tipo || "simple"),
@@ -137,11 +202,21 @@ export async function registrarResolucionDetective(uid,registro){
         typeof registro.tiempoActivoPorSegmento === "object"
           ? registro.tiempoActivoPorSegmento
           : {},
+      misionId:contextoRecompensas.misionId,
+      esDatoPrueba:contextoRecompensas.esDatoPrueba,
+      /* Marca explícita de activación: impide backfill de sesiones históricas
+         cuando Mi Camino deriva Reconocimientos automáticos de Lía. */
+      recompensasEligibleV1:true,
       completadaEn:serverTimestamp()
     });
   });
 
-  return {historiaId,sesionId:sessionRef.id,guardado:true};
+  return {
+    historiaId,
+    sesionId:sessionRef.id,
+    userId,
+    guardado:true
+  };
 }
 
 export async function obtenerHistorialDetectives(uid){
