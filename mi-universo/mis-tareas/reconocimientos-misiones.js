@@ -3,11 +3,12 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
 
-const tareasCache = new Map();
+let tareasPorId = new Map();
 let reconocimientosPorMision = new Map();
 let instalada = false;
 let decoracionPendiente = false;
 let detenerReconocimientos = null;
+let detenerTareas = null;
 
 const CATEGORIAS = Object.freeze([
   ["perseverancia", "💪 Perseverancia / volver a intentarlo"],
@@ -44,11 +45,11 @@ function esCompletada(tarjeta) {
 async function obtenerTarea(misionId) {
   const id = texto(misionId);
   if (!id) return null;
-  if (tareasCache.has(id)) return tareasCache.get(id);
+  if (tareasPorId.has(id)) return tareasPorId.get(id);
 
   try {
     const tarea = await Academia.tareas.obtener(id);
-    tareasCache.set(id, tarea || null);
+    if (tarea) tareasPorId.set(id, tarea);
     return tarea || null;
   } catch (error) {
     console.debug("No se pudo resolver la Misión para Recompensas A1.", error);
@@ -192,7 +193,7 @@ async function abrirReconocimiento(misionId) {
   window.setTimeout(() => mensaje.focus(), 40);
 }
 
-async function decorarTarjeta(tarjeta) {
+function decorarTarjeta(tarjeta) {
   if (!esCompletada(tarjeta)) {
     tarjeta.querySelector("[data-reconocer-mision]")?.remove();
     return;
@@ -201,7 +202,7 @@ async function decorarTarjeta(tarjeta) {
   const id = misionIdTarjeta(tarjeta);
   if (!id) return;
 
-  const tarea = await obtenerTarea(id);
+  const tarea = tareasPorId.get(id);
   if (!tarea || tarea.estado !== "completada" || tarea.esDatoPrueba === true) {
     tarjeta.querySelector("[data-reconocer-mision]")?.remove();
     return;
@@ -241,9 +242,7 @@ function programarDecoracion() {
 
   window.requestAnimationFrame(() => {
     decoracionPendiente = false;
-    document.querySelectorAll("#listaTareas .tarea-card").forEach(tarjeta => {
-      decorarTarjeta(tarjeta);
-    });
+    document.querySelectorAll("#listaTareas .tarea-card").forEach(decorarTarjeta);
   });
 }
 
@@ -257,6 +256,14 @@ export function instalarReconocimientosMisiones() {
 
   const observador = new MutationObserver(() => programarDecoracion());
   observador.observe(lista, { childList: true, subtree: true });
+
+  detenerTareas = Academia.tareas.observar(
+    items => {
+      tareasPorId = new Map(items.map(item => [texto(item.id), item]));
+      programarDecoracion();
+    },
+    error => console.debug("No se pudieron observar las Misiones para Recompensas A1.", error)
+  );
 
   detenerReconocimientos = Reconocimientos.observar(
     items => {
@@ -274,6 +281,7 @@ export function instalarReconocimientosMisiones() {
 
   window.addEventListener("beforeunload", () => {
     observador.disconnect();
+    detenerTareas?.();
     detenerReconocimientos?.();
   }, { once: true });
 }
