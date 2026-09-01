@@ -184,12 +184,12 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
-      // MOTIVACIÓN Y RECONOCIMIENTO · Recompensas A1
+      // MOTIVACIÓN Y RECONOCIMIENTO · Recompensas A1/A2
       //
       // El alumno/propietario puede consultar su historia motivacional,
-      // pero la creación/edición humana de A1 requiere gestión adulta o admin.
-      // Las futuras escrituras automáticas B/C deberán tener reglas específicas
-      // antes de habilitarse; no se autorizan implícitamente aquí.
+      // pero la creación/edición humana requiere gestión adulta o admin.
+      // Fase B deriva los reconocimientos automáticos desde sesiones reales;
+      // no abre una escritura automática del alumno sobre esta colección.
       match /reconocimientos/{reconocimientoId} {
         allow read: if esPropietario(userId)
           || esAdministrador()
@@ -266,8 +266,17 @@ service cloud.firestore {
         }
       }
 
-      match /{documento=**} {
-        allow read, write: if esPropietario(userId) || esAdministrador();
+      // Compatibilidad legacy de primer nivel.
+      //
+      // Antes este fallback era recursivo ({documento=**}); por lo tanto también
+      // coincidía con reconocimientos/{id} y, como los allow se acumulan,
+      // devolvía al propietario permiso genérico de escritura sobre Recompensas.
+      // Se limita a una sola subcolección/documento y se excluye explícitamente
+      // Reconocimientos. Esto conserva colecciones legacy de primer nivel como
+      // biblioteca/bibliotecaAudios sin crear una puerta recursiva paralela.
+      match /{coleccionLegacy}/{documentoLegacy} {
+        allow read, write: if coleccionLegacy != "reconocimientos"
+          && (esPropietario(userId) || esAdministrador());
       }
     }
 
