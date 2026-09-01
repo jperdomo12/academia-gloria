@@ -3,43 +3,104 @@
 
 | Campo | Valor |
 |---|---|
-| **Ruta oficial propuesta** | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` |
-| **Versión** | 1.0-draft |
-| **Estado** | Diseño fundacional · En revisión |
+| **Ruta oficial** | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` |
+| **Versión** | 1.0-rc1 |
+| **Estado** | Candidato a aprobación funcional · Sin implementación |
 | **Fecha** | 01/09/2026 |
 | **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
-| **Ámbito** | Motivación, reconocimiento, recompensas, Guacamayas, récord personal, Lía y retos cooperativos |
+| **Ámbito** | Motivación, reconocimiento, Guacamayas, Récord Personal, Lía, retos cooperativos y su integración con Mi Camino |
+
+---
+
+## 0. Resumen ejecutivo
+
+Recompensas v1 no se diseña como una capa decorativa ni como un sistema de premios.
+
+Es la primera versión de un **Sistema de Motivación y Reconocimiento** cuyo propósito es ayudar a que el alumno quiera aprender, perciba su progreso, pueda volver después de una dificultad, desarrolle autonomía y conserve una historia positiva y verdadera de su crecimiento.
+
+El sistema se apoya en cinco pilares:
+
+1. **QUIERO** — autonomía y sentido.
+2. **PUEDO** — competencia y progreso visible.
+3. **PERTENEZCO** — vínculo y acompañamiento.
+4. **ME SUPERO** — perseverancia y recuperación.
+5. **MI CAMINO IMPORTA** — identidad, memoria y significado.
+
+Recompensas v1 utilizará cuatro mecanismos:
+
+- ✨ **Reconocimiento** de Lía o de la familia.
+- 🏅 **Récord Personal** contra una marca propia comparable.
+- 🦜 **Guacamaya** como hito especial y permanente.
+- 🤝 **Reto cooperativo** Gloria + familia.
+
+Principios centrales:
+
+- actividad y progreso reales, no clics;
+- proceso antes que perfección;
+- comparación principal con uno mismo;
+- ayuda normalizada;
+- reconocimiento específico y explicable;
+- Guacamayas raras y significativas;
+- participación humana cuando el significado no puede inferirse de datos;
+- ninguna recompensa se pierde como castigo;
+- no rankings, puntos, monedas, tienda, rachas con amenaza ni “premios por entrar”;
+- no afirmaciones clínicas ni inferencias emocionales automáticas;
+- no backfill masivo de reconocimientos automáticos antiguos;
+- datos de prueba excluidos.
+
+El hogar visible será:
+
+```text
+Mi Camino
+   ↓
+Así voy creciendo
+```
+
+La implementación se propone incrementalmente:
+
+```text
+A1  Reconocimiento humano
+A2  Guacamayas humanas
+B   Reconocimientos automáticos de Lía
+C   Récord Personal en Detectives
+D   Retos cooperativos
+E   Evolución Semilla → Brote → Árbol
+```
+
+Este documento en estado `1.0-rc1` consolida las decisiones funcionales suficientes para revisar y aprobar A1/A2 antes de programar.
 
 ---
 
 ## 1. Propósito
 
-Definir el sistema de motivación y reconocimiento de la Academia Gloria Valentina antes de implementar sus reglas, datos o interfaces.
+Definir el sistema de motivación y reconocimiento de la Academia Gloria Valentina antes de implementar reglas, datos o interfaces.
 
-El objetivo no es construir un sistema de premios.
+El objetivo no es que el alumno “haga cosas para ganar premios”.
 
-El objetivo es ayudar a que el alumno:
+El objetivo es favorecer progresivamente que:
 
 - quiera comenzar;
 - quiera continuar;
 - pueda volver a intentarlo después de una dificultad;
-- reconozca su propio progreso;
+- perciba que puede mejorar;
 - desarrolle confianza y autonomía;
 - disfrute aprender;
 - descubra intereses propios;
-- aprenda a pedir ayuda sin vivirlo como fracaso;
+- pueda pedir ayuda sin vivirlo como fracaso;
+- acepte que equivocarse forma parte del aprendizaje;
 - se compare principalmente consigo mismo;
-- y quiera regresar a la Academia porque la experiencia tiene sentido para él.
+- afronte retos con ambición sana;
+- y quiera regresar a la Academia porque la experiencia tiene sentido.
 
 La motivación es una capacidad transversal del producto, no una pantalla aislada.
 
-> **La recompensa visible es solo una de las herramientas. La meta real es construir deseo de aprender, confianza para actuar y capacidad para levantarse después de caer.**
+> **La recompensa visible es una herramienta. La meta real es construir deseo de aprender, confianza para actuar y capacidad para levantarse después de caer.**
 
 ---
 
 ## 2. Posición dentro de la arquitectura existente
 
-Este documento NO crea una filosofía nueva. Desarrolla decisiones que ya existen en la Academia.
+Este documento desarrolla principios ya presentes en la Academia.
 
 Documentos que lo gobiernan:
 
@@ -51,110 +112,116 @@ Documentos que lo gobiernan:
 - `docs/vision/08_MI_CAMINO.md`
 - `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
 
-La arquitectura actual ya establece que:
+La arquitectura existente ya establece que:
 
-- motivación y reconocimiento constituyen un dominio propio;
-- las recompensas no deben sustituir la motivación interna;
-- no deben comparar alumnos;
-- no deben castigar;
-- no deben generar ansiedad;
-- las Guacamayas pueden formar parte del reconocimiento, pero no representan competición, presión, superioridad, perfección ni premio material;
-- Mi Camino debe mostrar el crecimiento personal;
-- y la IA no debe conceder recompensas relevantes sin supervisión cuando la decisión sea sensible.
+- Motivación y Reconocimiento constituyen un dominio propio.
+- Las recompensas no deben sustituir la motivación interna.
+- No deben comparar alumnos como mecanismo principal.
+- No deben castigar ni generar ansiedad.
+- Las Guacamayas representan identidad, crecimiento, raíces, familia y esperanza; no superioridad ni perfección.
+- Mi Camino debe hacer visible el crecimiento personal.
+- Lía acompaña y explica, pero no inventa progreso ni realiza inferencias clínicas.
+- Las decisiones de alto significado necesitan supervisión humana cuando el dato no basta.
 
-Este documento concreta esas reglas.
+Este documento concreta esas reglas para Recompensas v1.
 
 ---
 
-## 3. Base profesional que orienta el diseño
+## 3. Base profesional y nivel de evidencia
 
-### 3.1 Teoría de la Autodeterminación
+### 3.1 Self-Determination Theory
 
-La Self-Determination Theory (SDT) ofrece una base especialmente adecuada para la Academia porque diferencia motivación autónoma de motivación controlada y sitúa tres necesidades psicológicas como fundamentales:
+La Self-Determination Theory (SDT) distingue motivación autónoma de motivación controlada y sitúa tres necesidades psicológicas como fundamentales:
 
-1. **Autonomía** — sentir que puedo elegir, comprender el propósito y actuar con participación propia.
-2. **Competencia** — percibir que puedo progresar, desarrollar habilidades y superar retos alcanzables.
-3. **Relación / pertenencia** — sentir acompañamiento, vínculo y seguridad con las personas relevantes.
+- **Autonomía** — sentir participación y elección real.
+- **Competencia** — percibir que puedo desarrollar habilidades y progresar.
+- **Relación / pertenencia** — sentir vínculo, apoyo y seguridad.
 
-Revisiones y meta-análisis recientes en educación indican que intervenciones basadas en SDT pueden favorecer motivación intrínseca, autonomía y competencia, y que el apoyo a la autonomía se relaciona con compromiso, autorregulación, creencias positivas sobre uno mismo y resultados de aprendizaje.
+Una revisión sistemática y meta-análisis de 36 intervenciones educativas basadas en SDT encontró efectos favorables sobre autonomía y competencia, y evidencia parcial favorable sobre motivación intrínseca.
 
-**Implicación para la Academia:** el sistema de motivación debe apoyar `quiero / puedo / pertenezco`, no `debo hacerlo para ganar algo`.
+**Implicación para la Academia:**
 
-### 3.2 Elogio y reconocimiento
+```text
+quiero + puedo + pertenezco
+```
 
-La literatura sobre elogio infantil muestra que no todo elogio ayuda de la misma manera. Resulta más favorable cuando es:
+debe pesar más que:
+
+```text
+debo hacerlo para que me den algo
+```
+
+### 3.2 Elogio y feedback
+
+La investigación sobre elogio infantil muestra que su efecto depende del contenido y del contexto.
+
+El reconocimiento resulta más compatible con motivación cuando es:
 
 - sincero;
 - específico;
 - informativo;
-- relacionado con acciones o estrategias controlables;
-- compatible con autonomía;
-- y no basado en comparación social.
+- ligado a acciones, estrategias o causas controlables;
+- respetuoso de la autonomía;
+- y no dependiente de comparación social.
 
-**Preferir:**
+Preferir:
 
-> “Esta vez probaste otra estrategia cuando la primera no funcionó.”
+> “Esta vez volviste a leer la pregunta y seguiste pensando.”
 
-**Evitar como patrón habitual:**
+Evitar como patrón:
 
 > “Eres la mejor.”
 
 > “Eres súper inteligente.”
 
-> “Ganaste porque eres mejor que los demás.”
+> “Siempre lo haces perfecto.”
 
-El reconocimiento no debe inventar méritos. Si algo salió mal, puede reconocerse la perseverancia o la estrategia sin afirmar falsamente que la respuesta fue correcta.
+La Academia reconocerá **hechos y procesos**, evitando convertirlos en etiquetas fijas de personalidad.
 
 ### 3.3 Recompensas externas
 
-Existe evidencia de que recompensas tangibles o percibidas como controladoras pueden debilitar la motivación intrínseca en determinadas condiciones.
+Recompensas tangibles o percibidas como controladoras pueden reducir la motivación intrínseca en determinadas condiciones.
 
-**Implicación para la Academia:**
+Por ello, la Academia no creará una economía de puntos ni pagará cada conducta con un premio.
 
-- no crear una economía de puntos;
-- no pagar cada acción con una recompensa;
-- no convertir una Misión en una transacción;
-- usar símbolos principalmente como información emocional sobre progreso real;
-- y mantener las recompensas de alto significado escasas y explicables.
+Los símbolos de Recompensas v1 deben funcionar principalmente como:
 
-### 3.4 Metas de dominio y competición
+- información sobre progreso;
+- memoria de un hito;
+- señal de pertenencia;
+- y reconocimiento de un proceso valioso.
 
-La orientación hacia mejorar la propia competencia (mastery-approach) se asocia de forma más favorable con emociones positivas y, en meta-análisis recientes, con menor ansiedad que metas centradas en evitar quedar por debajo de otros.
+### 3.4 Metas de dominio y competitividad
 
-La Academia puede fomentar una **competitividad sana**, pero su forma primaria será:
+La Academia favorece metas centradas en desarrollar competencia y superar retos propios.
 
-> **Gloria hoy frente a Gloria anteriormente.**
+En v1 la comparación principal será:
 
-Los Récords Personales materializan esta idea.
+> **Yo ahora frente a yo antes, cuando la comparación sea válida.**
 
-No habrá rankings ni tablas comparativas entre alumnos.
+Esto no elimina la competitividad sana.
 
-### 3.5 Consideraciones DLD / TEL / TDL
+A largo plazo, competir sanamente también puede incluir afrontar un reto compartido, aceptar que no siempre se gana, respetar reglas y aprender del resultado. Sin embargo, **Recompensas v1 no utiliza ranking social ni comparación entre alumnos**.
 
-La literatura sobre Developmental Language Disorder (DLD) muestra heterogeneidad importante, pero también una mayor frecuencia de dificultades socioemocionales y ansiedad en algunos niños, junto con fortalezas reales en áreas como conductas prosociales, autonomía cotidiana, juego y afrontamiento.
+### 3.5 TEL / TDL / DLD
 
-Investigaciones recientes señalan especialmente:
+La literatura sobre Developmental Language Disorder (DLD/TDL) es heterogénea y no describe a cada niño de la misma manera.
 
-- relación entre DLD y mayores dificultades de regulación emocional en promedio;
-- presencia elevada de ansiedad en algunas muestras;
-- posible relevancia de intolerancia a la incertidumbre;
-- importancia de observar fortalezas funcionales y factores protectores, no únicamente déficits;
-- valor de la participación familiar y de contextos que favorezcan autonomía;
-- y evidencia de que la motivación autónoma también resulta relevante en jóvenes con DLD.
+La evidencia reciente sí justifica cautela ante diseños que aumenten presión o incertidumbre. Un meta-análisis de 2026 encontró, en promedio, mayores dificultades de regulación emocional en niños y adolescentes con DLD que en pares de desarrollo típico, con heterogeneidad importante y señales de que el tamaño del efecto puede estar sobreestimado. Otros estudios han descrito mayor presencia de ansiedad en algunas muestras y posible relevancia de la intolerancia a la incertidumbre.
 
-**Implicación para la Academia:**
+**Implicación de producto, no clínica:**
 
-El sistema no pretende tratar ansiedad ni sustituir intervención profesional. Debe, sin embargo, evitar diseños que añadan presión innecesaria y favorecer:
-
-- reglas previsibles;
-- mensajes breves y claros;
-- ayuda visible;
-- ausencia de pérdida o amenaza;
+- reglas comprensibles;
+- mensajes breves;
+- ayudas visibles;
+- ausencia de amenaza de pérdida;
 - posibilidad de repetir;
 - tiempo suficiente;
-- elección cuando sea posible;
-- reconocimiento de fortalezas;
+- elección cuando sea real;
+- fortalecimiento de capacidades;
 - y seguridad para equivocarse.
+
+La Academia no diagnostica ansiedad, regulación emocional, autoestima ni progreso clínico.
 
 ---
 
@@ -164,714 +231,1342 @@ La Academia aspira a reforzar progresivamente una persona:
 
 - **feliz**, para quien aprender no sea sinónimo de presión;
 - **independiente**, capaz de hacer cada vez más por sí misma;
-- **analítica**, que observe, piense y busque estrategias;
+- **analítica**, que observe, piense y pruebe estrategias;
 - **curiosa**, que quiera leer, descubrir y aprender;
-- **perseverante**, capaz de caer, recuperar confianza y volver a intentarlo;
-- **competitiva de forma sana**, buscando mejorar respecto a sí misma y afrontar retos;
+- **perseverante**, capaz de recuperarse y volver;
+- **competitiva de forma sana**, interesada en superarse y afrontar retos;
 - **capaz de pedir ayuda**, sin interpretarlo como derrota;
-- **capaz de reconocer sus fortalezas** sin negar aquello que necesita practicar;
-- **con sentido de pertenencia**, acompañada por familia y Academia sin sentirse controlada.
+- **capaz de reconocer fortalezas** sin negar aquello que necesita practicar;
+- **con sentido de pertenencia**, acompañada por familia y Academia sin sentirse vigilada.
 
-Estos resultados son direcciones de producto, no diagnósticos ni métricas psicológicas automáticas.
+Estos son **nortes de diseño**, no puntuaciones psicológicas.
 
 ---
 
-## 5. Modelo motivacional de la Academia
-
-El sistema se apoyará en cinco pilares.
+## 5. Modelo motivacional: cinco pilares
 
 ### 5.1 QUIERO — Autonomía y sentido
 
-El alumno comprende para qué sirve una actividad y dispone de elección cuando la elección sea realista.
+Favorecer que el alumno comprenda para qué sirve una actividad y pueda elegir cuando la elección sea realista.
 
 Ejemplos:
 
 - elegir entre historias compatibles con una Misión;
 - escoger por cuál reto comenzar;
 - conocer por qué conviene practicar algo;
-- decidir volver a intentar una actividad.
+- decidir volver a intentar.
 
 ### 5.2 PUEDO — Competencia y progreso visible
 
-El sistema hace visible la mejora sin exigir perfección.
+Hacer visible la mejora sin exigir perfección.
 
 Ejemplos:
 
-- menos pistas que en una experiencia comparable;
-- una estrategia nueva utilizada correctamente;
-- completar una actividad que antes quedó en curso;
-- realizar una parte con mayor autonomía.
+- necesitar menos pistas en una experiencia realmente comparable;
+- necesitar menos intentos adicionales;
+- completar algo que antes quedó en curso;
+- dominar progresivamente una habilidad.
 
 ### 5.3 PERTENEZCO — Relación y acompañamiento
 
-La familia y Lía acompañan sin convertir la experiencia en vigilancia.
+Familia y Lía acompañan sin convertir la experiencia en vigilancia.
 
 Ejemplos:
 
 - reconocimiento familiar;
-- retos cooperativos;
+- reto cooperativo;
 - mensaje breve de Lía basado en un hecho real;
-- celebrar juntos un hito importante.
+- celebrar juntos un hito.
 
-### 5.4 ME SUPERO — Resiliencia y dominio personal
+### 5.4 ME SUPERO — Perseverancia y recuperación
 
-El sistema reconoce el proceso de enfrentarse a una dificultad y volver a actuar.
+Reconocer el proceso de enfrentarse a una dificultad y continuar.
 
 Ejemplos:
 
-- regresar después de necesitar ayuda;
-- reintentar con una estrategia distinta;
+- pedir ayuda y continuar;
+- reintentar después de no acertar;
 - completar una práctica después de varios intentos;
-- mantener la calma suficiente para continuar paso a paso.
+- regresar a algo que había quedado pendiente.
 
 ### 5.5 MI CAMINO IMPORTA — Identidad, memoria y significado
 
-Los hitos importantes se conservan como historia personal.
+Los momentos importantes forman una historia personal.
 
 Una recompensa duradera debe poder responder:
 
-> “¿Qué ocurrió para que recibiera esto?”
+> “¿Qué ocurrió para que esto forme parte de mi camino?”
 
-La respuesta nunca será simplemente:
+La respuesta nunca será:
 
 > “Porque acumulaste 500 puntos.”
 
 ---
 
-## 6. Cuatro mecanismos principales de Recompensas v1
-
-### 6.1 ✨ Reconocimiento de Lía o de la familia
-
-**Propósito:** reconocer una acción concreta y valiosa.
-
-Puede ser relativamente frecuente, pero no automático por cada clic o cada finalización.
-
-Ejemplos:
-
-- “Volviste a intentarlo usando otra estrategia.”
-- “Hoy elegiste por ti misma qué lectura comenzar.”
-- “Terminaste algo que habías dejado pendiente.”
-
-#### Origen
-
-- automático cuando exista un hecho observable suficientemente claro;
-- manual por la familia cuando el significado humano no pueda deducirse del dato;
-- eventualmente propuesto por profesionales autorizados, según permisos futuros.
-
-#### Persistencia
-
-Puede conservarse en el historial de crecimiento, pero no necesita presentarse como un gran trofeo permanente.
-
----
-
-### 6.2 🏅 Récord Personal
-
-**Propósito:** hacer visible una mejora respecto a experiencias anteriores comparables.
-
-Regla central:
-
-> Un Récord Personal debe demostrarse con datos reales.
-
-No se asigna manualmente.
-
-Solo se genera cuando la comparación sea válida.
-
-Ejemplos potenciales:
-
-- misma familia de actividad y dificultad comparable;
-- menos pistas utilizadas;
-- menos intentos para resolver una etapa equivalente;
-- mayor autonomía observable cuando exista una métrica válida;
-- mejora en una prueba académica comparable cuando la estructura permita esa comparación.
-
-#### No se utilizará
-
-- para comparar actividades no equivalentes;
-- para pronunciación clínica inferida desde reconocimiento de voz;
-- para afirmar mejoras que el dato no pueda sostener;
-- para comparar con otros alumnos.
-
----
-
-### 6.3 🦜 Guacamaya / Hito significativo
-
-**Propósito:** conservar hitos verdaderamente especiales de crecimiento.
-
-La Guacamaya NO es moneda.
-
-No se entrega por cada Misión.
-
-No se acumula para comprar nada.
-
-No se pierde.
-
-No representa superioridad.
-
-Cada Guacamaya debe conservar:
-
-- nombre / significado;
-- fecha;
-- hecho que la originó;
-- fuente real;
-- mensaje breve;
-- y, cuando corresponda, Misión o experiencia asociada.
-
-#### Primera orientación
-
-Las Guacamayas pueden representar familias de significado, por ejemplo:
-
-- valentía / volver a intentarlo;
-- autonomía;
-- curiosidad / descubrimiento;
-- constancia significativa;
-- trabajo en equipo;
-- crecimiento personal.
-
-El catálogo final deberá ser pequeño al inicio.
-
-#### Autoridad v1
-
-Para un hito de alto significado, el sistema puede **proponer una Guacamaya**, pero la concesión deberá poder ser confirmada por la familia en la primera versión.
-
-La familia también podrá iniciar una concesión sobre una experiencia real ya completada.
-
----
-
-### 6.4 🤝 Reto cooperativo
-
-**Propósito:** reforzar pertenencia, acompañamiento y colaboración.
-
-Un reto cooperativo requiere aportes distintos, no duplicados.
-
-Ejemplo:
-
-```text
-Gloria realiza una Misión
-        +
-La familia revisa / conversa / acompaña
-        ↓
-Reto en equipo completado
-```
-
-No debe convertir la validación familiar en una obligación constante ni añadir presión innecesaria.
-
-Algunos retos cooperativos especiales podrán originar una Guacamaya de Equipo.
-
----
-
-## 7. Reconocimiento humano sobre Misiones completadas
-
-Requisito explícito de v1:
-
-> **La familia podrá reconocer una Misión ya completada, incluso si el sistema no generó automáticamente una recompensa en el momento de finalizarla.**
-
-Esto permite reconocer:
-
-- Misiones libres;
-- actividades de 5.º sin persistencia automática;
-- Semillas de Creciendo por Dentro;
-- logros cuyo valor depende del contexto familiar;
-- y actividades completadas antes de existir Recompensas v1.
-
-### 7.1 Integridad histórica
-
-No se fingirá que Lía detectó retrospectivamente algo que no detectó.
-
-Se diferenciarán:
-
-- fecha de la actividad;
-- fecha del reconocimiento;
-- quién concedió el reconocimiento;
-- y motivo.
-
-Ejemplo:
-
-```text
-✨ Reconocimiento de la familia
-Por: “Algo que conseguí esta semana”
-Misión completada: 31/08/2026
-Reconocimiento otorgado: 01/09/2026
-
-“Te detuviste a pensar en algo que has conseguido y reconociste tu propio esfuerzo. Eso también es crecer.”
-```
-
-### 7.2 Caso real de diseño
-
-La Misión:
-
-> **Algo que conseguí esta semana**
-
-se utilizará como uno de los primeros casos reales para validar el diseño manual de reconocimiento.
-
----
-
-## 8. Reglas no negociables
+## 6. Reglas no negociables
 
 Recompensas v1 NO tendrá:
 
-- rankings;
-- clasificación entre alumnos;
-- ganador / perdedor;
+- rankings entre alumnos;
+- ganador/perdedor como estructura motivacional;
 - pérdida de recompensas por errores;
-- pérdida de recompensas por inactividad;
+- pérdida por inactividad;
 - “racha perdida”;
 - castigos visuales;
 - monedas;
-- tienda de premios;
-- puntos como fin principal;
+- tienda;
+- XP como fin;
 - recompensa por login;
 - recompensa por navegar o hacer clic;
 - premio garantizado por cada actividad;
 - mensajes de culpa;
-- cuenta atrás artificial para generar presión;
-- afirmaciones clínicas sobre ansiedad, TEL/DLD, pronunciación o salud emocional;
-- ni recompensa automática basada en datos de prueba identificados como tales.
+- cuenta atrás artificial para presionar;
+- catálogo de premios bloqueados;
+- botón “reclamar premio”;
+- comparación pública;
+- afirmaciones clínicas;
+- ni recompensas basadas en datos marcados como prueba.
 
-Una recompensa concedida correctamente forma parte de la historia personal y no se retira como mecanismo disciplinario.
+Una recompensa correctamente concedida no se retira como disciplina.
 
-Los errores administrativos o duplicados podrán corregirse con trazabilidad; eso no equivale a “perder una recompensa”.
-
----
-
-## 9. Datos reales y trazabilidad
-
-Toda recompensa debe identificar su fundamento.
-
-### 9.1 Fuentes posibles
-
-- Misión real;
-- evidencia de Misión;
-- sesión de Detectives;
-- sesión académica;
-- sesión de lectura;
-- sesión de Creciendo por Dentro;
-- práctica de pronunciación como actividad, sin interpretación clínica;
-- Biblioteca;
-- observación familiar;
-- validación familiar;
-- decisión manual explícita sobre una Misión completada.
-
-### 9.2 Tres clases de origen
-
-**OBSERVADO**  
-El dato prueba directamente lo ocurrido.
-
-**DERIVADO**  
-Una regla compara datos observados y produce una conclusión limitada y explicable.
-
-**HUMANO**  
-La familia atribuye significado a una experiencia real.
-
-La interfaz y el modelo deben conservar esta diferencia.
-
-### 9.3 Datos de prueba
-
-Una Misión marcada `esDatoPrueba=true` no debe generar automáticamente reconocimientos duraderos, Récords Personales ni Guacamayas.
-
-La marca de prueba protege la integridad motivacional del historial.
+Errores administrativos o duplicados pueden corregirse con trazabilidad. Eso no equivale a “perder” una recompensa.
 
 ---
 
-## 10. Lenguaje de reconocimiento
+## 7. Los cuatro mecanismos
 
-Los mensajes deben ser:
+### 7.1 ✨ Reconocimiento
 
-- breves;
-- concretos;
-- comprensibles;
-- positivos sin exageración;
-- relacionados con el hecho observado;
-- orientados a estrategia, decisión, esfuerzo útil o progreso;
-- compatibles con el nivel de lenguaje del alumno.
+Reconoce una acción concreta y valiosa.
 
-### 10.1 Patrón recomendado
+Puede provenir de:
+
+- Lía, cuando un hecho observable cumple una regla de alta confianza;
+- familia, cuando el significado requiere contexto humano.
+
+Ejemplos:
+
+> “Una respuesta necesitó más de un intento y seguiste pensando hasta encontrarla.”
+
+> “Tu familia quiso guardar este momento porque vio algo importante en tu esfuerzo.”
+
+Un reconocimiento puede conservarse en la historia, pero no se presenta como gran trofeo.
+
+### 7.2 🏅 Récord Personal
+
+Hace visible una mejora respecto a experiencias anteriores **comparables**.
+
+Regla central:
+
+> **Un Récord Personal debe demostrarse con datos reales y una línea base válida.**
+
+No se asigna manualmente.
+
+No se utiliza para:
+
+- comparar actividades no equivalentes;
+- primera ejecución sin referencia anterior;
+- reconocimiento de voz;
+- “mejor respuesta emocional”;
+- velocidad en v1;
+- comparar con otros alumnos.
+
+### 7.3 🦜 Guacamaya
+
+Es un hito de alto significado.
+
+La Guacamaya:
+
+- no es moneda;
+- no se entrega por cada Misión;
+- no se compra;
+- no se pierde;
+- no representa perfección;
+- no representa superioridad;
+- no se “reclama”.
+
+Cada Guacamaya conserva:
+
+- categoría;
+- nombre;
+- fecha;
+- hecho real;
+- fuente;
+- mensaje;
+- y vínculo histórico cuando exista.
+
+### 7.4 🤝 Reto cooperativo
+
+Refuerza pertenencia y colaboración.
+
+Un reto cooperativo requiere aportes diferentes de Gloria y familia.
+
+La simple validación administrativa de una Misión no constituye por sí sola cooperación.
+
+La especificación detallada del primer reto se realizará en Fase D y no bloquea A1/A2.
+
+---
+
+## 8. Catálogo inicial de Guacamayas v1
+
+El catálogo comienza con seis categorías.
+
+| Guacamaya | Pilar principal | Qué representa | Criterio v1 |
+|---|---|---|---|
+| 🦜 **Valiente** | ME SUPERO | Recuperarse tras una dificultad real | Retomar, continuar o afrontar de nuevo algo que había supuesto una dificultad significativa. No basta un error aislado. |
+| 🦜 **Alas Propias** | QUIERO / PUEDO | Autonomía creciente | Hito cualitativo de independencia o responsabilidad con menos acompañamiento, cuando el hecho pueda demostrarse o ser confirmado por familia. |
+| 🦜 **Curiosa** | QUIERO | Deseo auténtico de descubrir | Iniciar o ampliar voluntariamente un aprendizaje, lectura o tema con significado. Una acción aislada asignada no basta. |
+| 🦜 **Pensadora** | PUEDO | Analizar, comprender y probar estrategias | Hito en el que exista evidencia/observación de razonamiento, revisión de error o estrategia significativa. No basta acertar. |
+| 🦜 **de Equipo** | PERTENEZCO | Cooperación real | Completar un reto cooperativo con aportes distintos de alumno y familia. |
+| 🦜 **de Crecimiento** | MI CAMINO IMPORTA | Descubrir algo importante sobre sí misma o una habilidad para la vida | Hito de significado humano. En v1 su concesión es humana. |
+
+### 8.1 Rareza
+
+Regla operativa v1:
+
+> **Cada categoría de Guacamaya puede estar activa una sola vez por Persona.**
+
+Un nuevo hecho de la misma categoría puede producir otro ✨ Reconocimiento o 🏅 Récord, pero no duplica la Guacamaya.
+
+Esta unicidad es una decisión de v1 para proteger significado, **no una ley permanente del producto**. Se revisará después de observar uso real.
+
+### 8.2 Autoridad
+
+- El sistema puede **proponer** una posible Guacamaya cuando exista señal suficiente.
+- La familia confirma o descarta.
+- La familia puede conceder directamente una Guacamaya sobre un hecho real.
+- `Guacamaya de Crecimiento` es humana en v1.
+
+### 8.3 Una sola celebración principal
+
+Si un mismo hecho cumple varios mecanismos:
+
+```text
+Guacamaya > Récord Personal > Reconocimiento
+```
+
+Los datos secundarios pueden mencionarse dentro del mensaje, pero no se mostrará una cascada de celebraciones.
+
+---
+
+## 9. Reconocimiento humano sobre Misiones completadas
+
+Requisito explícito:
+
+> **La familia podrá reconocer una Misión real ya completada aunque el sistema no generara automáticamente un reconocimiento al finalizarla.**
+
+Esto cubre:
+
+- Misiones libres;
+- actividades escolares sin evidencia automática;
+- Semillas de Creciendo por Dentro;
+- logros cuyo significado depende del contexto;
+- actividades históricas anteriores a Recompensas v1.
+
+### 9.1 Integridad histórica
+
+Se distinguirán:
+
+- fecha del hecho;
+- fecha del reconocimiento;
+- quién lo concedió;
+- motivo;
+- fuente.
+
+No se fingirá que Lía observó retrospectivamente algo que no observó.
+
+### 9.2 Caso de referencia
+
+Misión:
+
+> **Algo que conseguí esta semana**
+
+Flujo previsto:
+
+```text
+Gestión de Misiones
+→ Completadas
+→ Algo que conseguí esta semana
+→ 🌟 Añadir reconocimiento
+```
+
+Categoría sugerida:
+
+```text
+🌱 Crecimiento personal
+```
+
+Mensaje editable:
+
+> “Te detuviste a pensar en algo que has conseguido y supiste reconocer tu propio esfuerzo. Eso también es crecer.”
+
+La familia decide:
+
+- ✨ guardarlo como Reconocimiento; o
+- 🦜 convertirlo en Guacamaya de Crecimiento si el contenido real representa un hito especial.
+
+**Completar la Semilla por sí sola nunca concede automáticamente una Guacamaya.**
+
+---
+
+## 10. Reconocimientos automáticos de Lía v1
+
+### 10.1 Principio de alta confianza
+
+Lía automatiza poco y solo cuando el dato demuestra directamente lo que el mensaje afirma.
+
+No automatizará todavía:
+
+- “eres más autónoma” sin una medida explícita;
+- “cambiaste de estrategia” sin registro de estrategia;
+- “leíste por curiosidad” sin distinguir claramente voluntario/asignado;
+- “volviste voluntariamente” a una lectura con historial sobrescrito;
+- estados emocionales;
+- confianza;
+- ansiedad;
+- autoestima;
+- rasgos permanentes.
+
+### 10.2 Reglas iniciales aprobables
+
+| ID | Motor | Condición observable | Mensaje base |
+|---|---|---|---|
+| `lia.detectives.ayuda_y_continuo` | Detectives | Sesión completada con `pistasUtilizadas >= 1` | “Usaste ayuda cuando la necesitaste y seguiste hasta resolver el caso. Pedir ayuda también puede ayudarte a avanzar.” |
+| `lia.detectives.persistencia` | Detectives | Sesión completada con `intentosAdicionales >= 2`, sin celebración de mayor prioridad | “No salió al principio, pero seguiste probando hasta resolver el caso.” |
+| `lia.lectura.comprension_reintento` | Rincón | Alguna pregunta de opción termina correcta tras `>= 2` intentos | “Una respuesta necesitó más de un intento y seguiste pensando hasta encontrarla.” |
+| `lia.palabras.practica_persistente` | Palabras para Crecer | Palabra con `>= 2` intentos que termina `superada`; para `en_practica`, solo cuando los intentos fueron válidos y no un fallo técnico | Éxito: “Practicaste «{palabra}» varias veces hasta que Lía pudo reconocerla.” / En práctica: “Practicaste «{palabra}» varias veces. No tiene que salir hoy; puedes volver más adelante.” |
+
+### 10.3 Regla de Creciendo por Dentro retirada de automatización rc1
+
+El borrador incluía una regla basada en `recordingAttempts >= 2`.
+
+La auditoría rc1 la retira porque dos grabaciones pueden significar:
+
+- decisión consciente de repetir;
+- error de micrófono;
+- reintento técnico;
+- grabación demasiado grande;
+- u otra causa.
+
+Por tanto, **Creciendo por Dentro permanece predominantemente humano en v1**.
+
+Una regla automática de repetición solo podrá reabrirse cuando el motor registre de forma explícita una intención como:
+
+```text
+“Quiero volver a decirlo”
+```
+
+diferenciada de un reintento técnico.
+
+---
+
+## 11. Récord Personal v1 — Detectives
+
+Detectives es el primer motor aprobado para Récord Personal porque conserva sesiones independientes y métricas estructuradas.
+
+### 11.1 Comparabilidad
+
+Dos sesiones son comparables solo si coinciden en:
+
+- `nivel`;
+- `tipo`;
+- `plantillaId`;
+- `intentosMinimos`.
+
+Además, para reducir el efecto memoria, v1 preferirá y, para emitir un Récord, requerirá una sesión anterior de **otra historia** dentro del mismo grupo comparable.
+
+Debe existir al menos una sesión anterior real y no identificada como prueba.
+
+### 11.2 Récord A — Menos pistas
+
+Condición:
+
+```text
+pistasActuales < mejorPistasAnteriorComparable
+```
+
+Mensaje:
+
+> 🏅 **Nueva mejor marca personal**  
+> “Esta vez resolviste un caso comparable usando menos pistas que antes.”
+
+Dato secundario:
+
+> “Antes: 2 · Ahora: 1”
+
+No afirmar:
+
+> “Ya no necesitas ayuda.”
+
+### 11.3 Récord B — Menos intentos adicionales
+
+Se evalúa si la sesión no produjo Récord A.
+
+Condición:
+
+```text
+intentosAdicionalesActuales < mejorIntentosAdicionalesAnteriorComparable
+```
+
+Mensaje:
+
+> 🏅 **Nueva mejor marca personal**  
+> “Esta vez necesitaste menos intentos extra para resolver un caso comparable.”
+
+### 11.4 Categoría semántica
+
+Un Récord de menos pistas o menos intentos se clasifica como **progreso personal**.
+
+No se etiquetará automáticamente como “autonomía” ni “pensamiento” salvo que otro dato permita sostener esa interpretación.
+
+### 11.5 Baseline histórico
+
+Los datos reales anteriores a activar Recompensas pueden servir como línea base.
+
+No se crean retrospectivamente récords antiguos.
+
+Ejemplo:
+
+```text
+Agosto: 2 pistas
+Activación de Recompensas
+Septiembre: 1 pista
+```
+
+Septiembre puede generar un Récord verdadero:
+
+> “Antes: 2 · Ahora: 1.”
+
+---
+
+## 12. Frecuencia, deduplicación y riesgo de dependencia
+
+### 12.1 Una celebración por experiencia
+
+Máximo un Reconocimiento automático de Lía por experiencia/sesión.
+
+### 12.2 Idempotencia
+
+Identidad lógica mínima:
+
+```text
+persona + reglaId + fuentePrincipal
+```
+
+Refrescar, reabrir o repetir una llamada no puede duplicar el mismo reconocimiento.
+
+### 12.3 Parámetros iniciales de experiencia
+
+Valores de partida para piloto:
+
+- descanso de **7 días** antes de volver a destacar la misma regla;
+- máximo **2 Reconocimientos automáticos de Lía al día**.
+
+Estos valores:
+
+- NO son umbrales pedagógicos;
+- NO son puntuaciones;
+- NO significan que lo demás “no cuente”;
+- deben ser configurables;
+- se revisarán con uso real.
+
+Guacamayas y Récords válidos tienen prioridad y no se invalidan por estos límites.
+
+Los reconocimientos humanos no están sujetos al límite automático.
+
+### 12.4 Señales de sobre-recompensa
+
+El sistema debe vigilar cualitativamente si la capa motivacional empieza a desplazar el interés por aprender.
+
+Señales para revisar el diseño, no para etiquetar al alumno:
+
+- pregunta sistemáticamente “¿qué me dan?” antes de comenzar;
+- deja de querer hacer actividades si no hay recompensa visible;
+- muestra decepción frecuente cuando una actividad correcta no produce reconocimiento;
+- se interesa más por acumular símbolos que por la actividad;
+- aumenta la negociación externa alrededor de cada Misión.
+
+Si estas señales aparecen de forma sostenida, la respuesta de producto será:
+
+- reducir frecuencia/intensidad;
+- hacer más informativo el feedback;
+- aumentar elección y sentido;
+- reforzar curiosidad;
+- revisar si estamos premiando demasiado.
+
+**Nunca se responderá creando más premios para mantener el mismo nivel de interés.**
+
+---
+
+## 13. Mi Camino → Así voy creciendo
+
+`Así voy creciendo` será el hogar visible de Recompensas v1.
+
+No será una vitrina de premios.
+
+Debe responder:
+
+1. ¿Qué he conseguido últimamente?
+2. ¿Qué cosas especiales forman parte de mi historia?
+3. ¿En qué noto que estoy mejorando respecto a mí misma?
+
+### 13.1 Orden visual
+
+```text
+🌱 ASÍ VOY CRECIENDO
+
+✨ Lo último que reconocimos
+
+🦜 Mis Guacamayas     🏅 Mi mejor marca reciente
+
+🤝 Nuestro reto en familia     [solo si existe]
+
+🌱 Mi etapa de crecimiento
+Semilla → Brote → Árbol
+
+🌈 Ver mi historia de crecimiento
+```
+
+En móvil, una columna.
+
+### 13.2 Lo último que reconocimos
+
+Variantes:
+
+- `✨ Lía observó...`
+- `💛 Mi familia reconoce...`
+- `🏅 Nueva mejor marca`
+- `🦜 Un hito especial`
+
+Puede mostrar `✨ Nuevo` hasta la primera visualización, sin alarma ni presión.
+
+### 13.3 Mis Guacamayas
+
+Gloria verá **solo las Guacamayas obtenidas**.
+
+No verá:
+
+- seis siluetas grises;
+- `2/6`;
+- porcentaje;
+- “te faltan 4”;
+- progreso hacia la siguiente;
+- requisito para “desbloquear”.
+
+Si todavía no tiene ninguna:
+
+> “Las Guacamayas aparecen en momentos especiales de tu camino. No tienes que buscarlas: llegan cuando algo importante merece ser recordado.”
+
+Cada Guacamaya mostrará:
+
+- nombre;
+- ilustración;
+- fecha;
+- frase corta;
+- `Ver mi historia`.
+
+### 13.4 Mi mejor marca reciente
+
+Solo aparece cuando existe un Récord válido.
+
+No usa:
+
+- podio;
+- puesto;
+- ranking;
+- cronómetro;
+- presión por volver a superar la marca.
+
+Una sesión sin récord no se presenta como retroceso.
+
+### 13.5 Historia de crecimiento
+
+Acceso:
+
+```text
+🌈 Ver mi historia de crecimiento
+```
+
+Orden cronológico.
+
+Puede contener:
+
+- reconocimientos de Lía;
+- reconocimientos familiares;
+- Récords;
+- Guacamayas;
+- retos cooperativos completados.
+
+Filtros avanzados son opcionales mientras el historial sea pequeño.
+
+### 13.6 Celebración de Guacamaya
+
+Flujo:
+
+```text
+Existe Guacamaya nueva no vista
+→ aparición suave
+→ “Esta Guacamaya llegó por...”
+→ explicación real
+→ [Entendido]
+```
+
+No:
+
+- cofres;
+- ruletas;
+- azar;
+- sonido obligatorio;
+- confeti prolongado;
+- “reclamar”.
+
+La Guacamaya ya forma parte de su historia antes de ser vista.
+
+---
+
+## 14. Flujo familiar — Añadir reconocimiento
+
+En Gestión de Misiones → Completadas se añadirá:
+
+```text
+🌟 Añadir reconocimiento
+```
+
+junto a las acciones existentes y solo para roles con gestión.
+
+### 14.1 Formulario v1
+
+#### Campo 1 — Qué quieres reconocer
+
+- 💪 Perseverancia / volver a intentarlo
+- 🪽 Autonomía / hacer más por sí misma
+- 🔎 Curiosidad / querer descubrir
+- 🧠 Pensamiento / estrategia
+- 🤝 Trabajo en equipo
+- 🌱 Crecimiento personal
+- 📈 Progreso personal
+- ✨ Otro
+
+#### Campo 2 — Mensaje para el alumno
+
+Editable por la familia.
+
+Ayuda:
+
+> “Cuenta qué ocurrió y por qué te pareció importante.”
+
+Sin escalas numéricas obligatorias.
+
+#### Campo 3 — ¿Fue un hito especialmente importante?
+
+Desactivado por defecto:
+
+```text
+🦜 Convertir este reconocimiento en Guacamaya
+```
+
+Al activarlo:
+
+- se propone la categoría compatible;
+- se explica que es un hito especial;
+- se comprueba unicidad;
+- la familia confirma.
+
+### 14.2 Una Misión, un reconocimiento humano principal en v1
+
+Para evitar cascadas y complejidad inicial:
+
+> una Misión tendrá como máximo un Reconocimiento humano principal activo.
+
+La familia puede editarlo o elevarlo a Guacamaya.
+
+Esta es una simplificación operativa v1, revisable si el uso real exige varios reconocimientos independientes.
+
+### 14.3 Propuestas automáticas de Guacamaya
+
+Las posibles Guacamayas detectadas por el sistema:
+
+- no aparecen como “pendientes” ante Gloria;
+- aparecen solo en Gestión como `🦜 Posible hito para revisar`;
+- pueden confirmarse, convertirse en reconocimiento normal o descartarse;
+- descartarlas no produce mensaje negativo al alumno.
+
+---
+
+## 15. Modelo funcional de datos
+
+### 15.1 Entidad central
+
+Conceptualmente se utilizará:
+
+```text
+RECONOCIMIENTO
+```
+
+No se crean dominios separados de puntos, premios, insignias y récords.
+
+Ruta física candidata, a validar contra API y reglas existentes:
+
+```text
+usuarios/{userIdPersonaActiva}/reconocimientos/{reconocimientoId}
+```
+
+La ruta se alinea con las subcolecciones educativas actuales.
+
+**Importante:** `userIdPersonaActiva` es el identificador técnico del documento `usuarios/{uid}` asociado a la Persona Activa. Si el modelo de Persona ya proporciona un `personaId` de negocio estable, podrá conservarse dentro del reconocimiento; no se duplicará identidad sin necesidad.
+
+### 15.2 Modelo conceptual rc1
+
+```text
+RECONOCIMIENTO
+- id
+- schemaVersion
+
+- personaId?                  // identidad de negocio, si aplica
+- userIdPersona               // propietario técnico de la subcolección
+
+- tipo
+    reconocimiento
+    record_personal
+    guacamaya
+    reto_cooperativo
+
+- categoria
+    progreso
+    perseverancia
+    autonomia
+    curiosidad
+    pensamiento
+    equipo
+    crecimiento
+    otro
+
+- titulo
+- mensaje
+
+- origen
+    observado
+    derivado
+    humano
+
+- reglaId?                    // automático/derivado
+
+- fuentePrincipal
+    tipo
+    id
+    modulo?
+    misionId?
+    actividadId?
+    sesionId?
+
+- dependencias?[]             // fuentes adicionales necesarias para demostrar la afirmación
+    tipo
+    id
+    modulo?
+    misionId?
+    actividadId?
+    sesionId?
+
+- fuenteSnapshot?             // solo preservación humana tras eliminar fuente
+    titulo
+    modulo
+    fechaHecho
+
+- fuenteEliminada
+- datosSoporte?
+    comparacion?
+    valorAnterior?
+    valorActual?
+    unidad?
+
+- guacamaya?
+    categoriaId
+    confirmadaPor
+    confirmadaEn
+
+- estado
+    propuesta
+    activo
+    descartado
+    anulado
+
+- visibleAlumno
+- vistoPorAlumnoEn?
+
+- fechaHecho
+- fechaReconocimiento
+
+- createdAt
+- createdBy
+- updatedAt
+- updatedBy
+```
+
+### 15.3 Dependencias múltiples
+
+Un Récord necesita demostrar:
+
+- sesión actual;
+- referencia anterior o conjunto de comparación.
+
+Por ello `fuentePrincipal` no es suficiente.
+
+`dependencias[]` permite saber qué datos sostienen la afirmación y qué debe revisarse si una fuente se elimina.
+
+### 15.4 Estados
+
+**propuesta**  
+Pendiente de decisión adulta. No visible al alumno.
+
+**activo**  
+Forma parte del camino.
+
+**descartado**  
+Propuesta no aceptada. No visible; puede conservarse mínimamente para evitar reproponer el mismo hecho.
+
+**anulado**  
+Corrección administrativa auditada. No es pérdida educativa.
+
+`vistoPorAlumnoEn` es presentación, no estado de logro.
+
+---
+
+## 16. Autoridad, permisos y frontera de seguridad
+
+### 16.1 Alumno
+
+Puede:
+
+- leer reconocimientos `activo` + `visibleAlumno=true`;
+- marcar como visto;
+- realizar actividades que originan hechos candidatos.
+
+No puede:
+
+- concederse Guacamayas;
+- crear reconocimiento humano;
+- confirmar propuestas;
+- modificar mensajes familiares;
+- anular reconocimientos.
+
+### 16.2 Familia / rol de gestión relacionado
+
+Puede:
+
+- leer reconocimientos y propuestas;
+- crear/editar Reconocimiento humano;
+- confirmar/descartar Guacamaya;
+- conceder una Guacamaya válida;
+- anular errores con trazabilidad;
+- decidir qué ocurre al eliminar una Misión fuente.
+
+### 16.3 Consulta relacionada
+
+Lectura según permisos, sin conceder ni modificar.
+
+### 16.4 Administrador
+
+Gestión completa y corrección auditada.
+
+### 16.5 La interfaz no es una frontera de seguridad
+
+Una regla crítica de implementación:
+
+> **Ocultar un botón al alumno no demuestra que una escritura Firestore sea legítima.**
+
+Antes de implementar Fase B/C deberá decidirse cómo validar escrituras automáticas.
+
+Opciones aceptables:
+
+1. Firestore Rules que validen estrictamente tipo, origen, autor y fuente verificable; o
+2. un flujo de procesamiento con autoridad de gestión/trusted workflow.
+
+Si no puede demostrarse que una escritura automática es suficientemente validable, **se pospone esa automatización**.
+
+A1/A2 no dependen de resolver todavía este problema porque son acciones adultas explícitas.
+
+---
+
+## 17. Datos de prueba
+
+Regla:
+
+> Una Misión `esDatoPrueba=true` no puede originar Recompensas v1, ni automática ni manualmente.
+
+Si una Misión fue marcada como prueba por error, el adulto debe retirar conscientemente la marca antes de reconocerla.
+
+Para fuentes no ligadas a Misión, futuras herramientas de prueba deberán disponer de una señal equivalente o ejecutarse con un contexto de prueba que no contamine el historial.
+
+---
+
+## 18. Retroactividad y activación
+
+### 18.1 Reconocimiento humano histórico
+
+Permitido sobre una actividad real.
+
+Se guarda:
+
+- `fechaHecho`;
+- `fechaReconocimiento`.
+
+### 18.2 Guacamaya humana histórica
+
+Permitida si existe un hecho real identificable y la familia confirma el significado.
+
+### 18.3 Automáticos
+
+No hay backfill masivo.
+
+Al activar Recompensas, no se escanea todo el pasado para fabricar mensajes antiguos de Lía.
+
+### 18.4 Récord Personal
+
+El pasado real puede ser baseline.
+
+No produce retrospectivamente récords antiguos.
+
+### 18.5 Fecha de activación
+
+La implementación tendrá una referencia explícita, por ejemplo:
+
+```text
+recompensasActivadasEn
+```
+
+La ubicación se decidirá reutilizando configuración existente antes de crear estructura nueva.
+
+---
+
+## 19. Eliminación de Misiones y fuentes
+
+Antes de borrar una Misión, el inventario de eliminación deberá incluir reconocimientos vinculados.
+
+### 19.1 Automático / Récord
+
+Si una fuente o dependencia necesaria para demostrar el reconocimiento se elimina:
+
+- el reconocimiento derivado no puede seguir afirmando el hecho como verificable;
+- deberá eliminarse o anularse según la política técnica aprobada;
+- no puede independizarse solo mediante texto.
+
+Un Récord cuya referencia anterior fue eliminada también debe revisarse porque su comparación pierde trazabilidad.
+
+### 19.2 Humano / Guacamaya
+
+Si una Misión con reconocimiento humano se elimina, la confirmación reforzada ofrecerá:
+
+1. eliminar también reconocimiento/hito; o
+2. conservarlo como historia humana independiente.
+
+Al conservar:
+
+```text
+fuenteEliminada = true
+fuenteSnapshot = {
+  titulo,
+  modulo,
+  fechaHecho
+}
+```
+
+El sistema no fingirá que la Misión continúa existiendo.
+
+### 19.3 Integración con el motor actual
+
+La implementación deberá reutilizar el motor actual de eliminación completa de Misiones y ampliar su inventario; no crear un segundo mecanismo de borrado paralelo.
+
+---
+
+## 20. Lenguaje y salvaguardas TEL/TDL
+
+### 20.1 Patrón de mensaje
 
 ```text
 QUÉ OCURRIÓ
 + POR QUÉ IMPORTA
-+ INVITACIÓN SUAVE A CONTINUAR (opcional)
++ próximo paso suave, solo si aporta
 ```
 
-Ejemplo:
+### 20.2 Mensajes principales
 
-> “Esta vez pediste una pista y después continuaste tú sola. Supiste usar la ayuda para seguir avanzando.”
+Deben:
 
-### 10.2 Evitar
+- contener una idea central;
+- ser breves;
+- evitar subordinadas innecesarias;
+- usar iconos consistentes;
+- separar detalle opcional;
+- permitir lectura visual rápida.
 
-- etiquetas globales de personalidad;
-- superioridad;
-- falsa precisión;
-- elogio automático repetitivo;
-- mensajes demasiado largos;
-- lenguaje que convierta pedir ayuda en debilidad;
-- minimizar una dificultad real;
-- afirmar “perfecto” cuando no lo fue.
+### 20.3 Ayuda normalizada
 
----
-
-## 11. Salvaguardas de ansiedad, accesibilidad y TEL/DLD
-
-El sistema motivacional debe aumentar seguridad, no incertidumbre.
-
-### 11.1 Previsibilidad
-
-El alumno debe poder entender:
-
-- qué está haciendo;
-- qué cuenta como avance;
-- por qué recibió un reconocimiento;
-- y qué puede hacer después.
-
-### 11.2 Sin amenaza de pérdida
-
-Nada relevante desaparece por no entrar mañana.
-
-### 11.3 Ritmo propio
-
-No se premiará sistemáticamente “hacerlo más rápido”.
-
-El tiempo solo será una métrica cuando la propia actividad lo justifique y no genere presión perjudicial.
-
-### 11.4 Ayuda normalizada
-
-Pedir ayuda puede coexistir con progreso y reconocimiento.
+Pedir ayuda puede coexistir con progreso.
 
 El objetivo no es “no usar nunca pistas”.
 
-El objetivo puede ser aprender a utilizarlas y necesitar progresivamente menos apoyo cuando realmente ocurra.
+El sistema puede reconocer que la ayuda permitió continuar sin inferir que pedir ayuda es fracaso ni prometer que nunca volverá a necesitarla.
 
-### 11.5 Carga lingüística
+### 20.4 Ritmo propio
 
-Los mensajes principales deberán:
+No se premia sistemáticamente rapidez.
 
-- contener una idea central;
-- evitar frases innecesariamente complejas;
-- utilizar iconos consistentes;
-- separar explicación de detalle;
-- permitir lectura visual rápida.
+El tiempo no será Récord en v1.
 
-### 11.6 Fortalezas antes que etiquetas
+### 20.5 Fortalezas antes que etiquetas
 
-La Academia no construirá perfiles motivacionales del tipo:
+No:
 
 > “Gloria es ansiosa.”
 
 > “Gloria tiene poca perseverancia.”
 
-Podrá registrar hechos como:
+Sí:
 
-> “En esta actividad pidió ayuda dos veces y después continuó.”
+> “En esta actividad necesitaste varios intentos y continuaste hasta terminar.”
 
-El dato observable no se convertirá automáticamente en una etiqueta permanente.
+El hecho no se transforma en perfil psicológico.
 
----
+### 20.6 Previsibilidad sin transacción
 
-## 12. Integración principal: Mi Camino → Así voy creciendo
+El alumno debe comprender:
 
-El hogar principal del reconocimiento será:
+- qué está haciendo;
+- por qué un reconocimiento aparece;
+- qué significa una Guacamaya.
 
-```text
-Mi Camino
-   ↓
-Así voy creciendo
-```
+Pero el sistema no promete:
 
-El bloque actual `Semilla → Brote → Árbol` se conserva conceptualmente.
+> “si haces X, ganarás Y”
 
-La primera evolución puede mostrar:
-
-### ✨ Lo último que Lía o mi familia reconoció
-
-Un reconocimiento reciente y explicable.
-
-### 🦜 Mis Guacamayas
-
-Hitos especiales conservados.
-
-### 🏅 Mi mejor marca reciente
-
-Solo cuando exista un Récord Personal válido.
-
-### 🤝 Nuestro reto en familia
-
-Un único reto cooperativo activo, si existe.
-
-### 🌱 Mi etapa de crecimiento
-
-Semilla / Brote / Árbol continúa como metáfora de largo plazo.
-
-**No se definirá todavía el paso de etapa mediante un umbral simple de puntos.**
-
-Su significado y reglas requieren una decisión posterior dentro de este mismo diseño.
+como contrato habitual.
 
 ---
 
-## 13. Frecuencia e intensidad
+## 21. Lectura, curiosidad y aprendizaje
 
-No todo merece la misma celebración.
+Recompensas debe favorecer lectura sin convertir volumen en competición.
 
-### Nivel 1 — Reconocimiento suave
-
-Frecuente cuando existe un hecho real que merece hacerse visible.
-
-Ejemplo: mensaje de Lía.
-
-### Nivel 2 — Récord o logro concreto
-
-Menos frecuente.
-
-Requiere comparación válida o condición definida.
-
-### Nivel 3 — Guacamaya / hito
-
-Especial y poco frecuente.
-
-Debe conservar significado con el paso del tiempo.
-
-> **Si todo es extraordinario, nada lo es.**
-
-Como regla inicial, una experiencia puede producir varios datos útiles, pero no debe desencadenar una cascada de celebraciones simultáneas.
-
----
-
-## 14. Competitividad sana
-
-La Academia no elimina el reto ni la ambición.
-
-Los orienta.
-
-Formas aceptables:
-
-- superar una mejor marca propia;
-- intentar un nivel más complejo voluntariamente;
-- completar un desafío personal;
-- cooperar con familia;
-- plantearse una meta elegida;
-- celebrar una mejora de estrategia.
-
-Formas no aceptables en v1:
-
-- “eres número 1”;
-- ranking de compañeros;
-- tablas de posiciones;
-- premio por superar a otro niño;
-- pérdida pública;
-- presión por mantener una posición.
-
----
-
-## 15. Lectura y curiosidad
-
-Recompensas v1 debe poder favorecer lectura y aprendizaje sin convertir cantidad en competición.
-
-Ejemplos de hechos potencialmente reconocibles:
+Hechos potencialmente reconocibles:
 
 - elegir voluntariamente una lectura;
-- regresar a una historia para comprenderla mejor;
+- regresar para comprender mejor;
 - compartir un libro;
-- mantener una práctica de lectura significativa;
-- descubrir una temática nueva;
-- expresar una reflexión personal sobre lo leído.
+- mantener una práctica significativa;
+- descubrir un tema;
+- expresar una reflexión.
 
-No se premiará automáticamente “leer más páginas que antes” si la comparación no aporta valor educativo.
+En v1 muchos de estos hechos serán **humanos**, porque el sistema todavía no distingue con suficiente certeza intención, obligación y curiosidad.
+
+No se premiará por “más páginas” como regla automática.
 
 ---
 
-## 16. Papel de Lía
+## 22. Limitaciones conocidas de los motores actuales
 
-Lía puede:
+### 22.1 Detectives
 
-- reconocer hechos observables;
-- explicar por qué un progreso importa;
-- proponer un próximo paso;
-- presentar un Récord Personal calculado por una regla válida;
-- proponer a la familia una posible Guacamaya;
-- acompañar un reto cooperativo.
+Fortaleza:
 
-Lía no puede:
+- sesiones independientes;
+- datos comparables;
+- intentos y pistas.
+
+Es el primer motor de Récord Personal.
+
+### 22.2 Rincón de Lectura
+
+La sesión principal de una historia utiliza `historiaId` y puede actualizar/reutilizar el mismo documento.
+
+Consecuencia:
+
+- no construir Récords de lectura en v1;
+- no afirmar automáticamente “releíste voluntariamente”;
+- reconocimientos de comprensión pueden generarse al guardar el hecho actual, no reconstruirse desde un histórico inmutable inexistente.
+
+### 22.3 Palabras para Crecer
+
+Permite observar intentos y estado de práctica.
+
+Nunca se utiliza como diagnóstico de pronunciación.
+
+Los errores técnicos del navegador no deben convertirse en afirmaciones de desempeño.
+
+### 22.4 Creciendo por Dentro
+
+Conserva sesiones independientes, pero su contenido tiene significado personal.
+
+Predominio humano en v1.
+
+No inferir:
+
+- ansiedad;
+- autoestima;
+- valentía;
+- autoconocimiento;
+- “mejor respuesta emocional”.
+
+---
+
+## 23. Papel de Lía y de la familia
+
+### 23.1 Lía puede
+
+- reconocer un hecho observable;
+- explicar por qué puede importar;
+- presentar un Récord determinista;
+- proponer un próximo paso suave;
+- proponer a adultos una posible Guacamaya;
+- acompañar un reto.
+
+### 23.2 Lía no puede
 
 - inventar progreso;
 - diagnosticar;
-- otorgar automáticamente recompensas de alto significado cuando la regla requiera revisión humana;
-- presionar para mantener una racha;
+- atribuir intención no registrada;
 - comparar con otros alumnos;
-- retirar reconocimientos.
+- retirar recompensas;
+- presionar con rachas;
+- convertir toda actividad en celebración.
+
+### 23.3 La familia puede
+
+- reconocer una Misión;
+- aportar contexto humano;
+- escribir un mensaje;
+- confirmar/conceder Guacamaya;
+- proponer retos;
+- revisar historia.
+
+El sistema debe facilitar acompañar y celebrar, no convertir a la familia en evaluador permanente.
 
 ---
 
-## 17. Papel de la familia
+## 24. Plan de implementación
 
-La familia puede:
+### Fase A1 — Fundamento humano
 
-- reconocer una Misión completada;
-- escribir un mensaje personal;
-- confirmar una Guacamaya propuesta;
-- conceder una Guacamaya cuando exista un hecho real y una categoría válida;
-- proponer retos cooperativos;
-- revisar el historial de reconocimientos.
+- revisar API/modelos/reglas existentes antes de crear estructura;
+- colección/API mínima de Reconocimiento;
+- permisos adultos;
+- `🌟 Añadir reconocimiento` en Misión completada;
+- caso “Algo que conseguí esta semana”;
+- último reconocimiento en `Así voy creciendo`;
+- historia básica;
+- exclusión de datos de prueba;
+- integración con eliminación de Misión.
 
-La familia no necesita convertir cada actividad en una evaluación.
+**Valor:** motivación real sin depender de algoritmos.
 
-El sistema debe facilitar acompañar y celebrar, no vigilar permanentemente.
+### Fase A2 — Guacamayas humanas
 
----
+- seis categorías;
+- elevar Reconocimiento a Guacamaya;
+- unicidad por categoría;
+- `Mis Guacamayas` solo obtenidas;
+- celebración suave;
+- propuestas visibles solo a familia.
 
-## 18. Modelo conceptual mínimo
+### Fase B — Lía automática
 
-Antes de decidir Firestore, el dominio necesita al menos la entidad conceptual:
+Implementar las **cuatro** reglas rc1:
 
-```text
-RECONOCIMIENTO
-- id
-- personaId
-- tipo
-- categoria
-- titulo
-- mensaje
-- origen: observado | derivado | humano
-- fuenteTipo
-- fuenteId
-- misionId? 
-- concedidoPor
-- fechaHecho
-- fechaReconocimiento
-- datosSoporte? 
-- estado
-```
+- ayuda y continuación en Detectives;
+- perseverancia en Detectives;
+- reintento de comprensión;
+- práctica persistente de Palabras para Crecer.
 
-Para Récord Personal deberá conservar además la comparación que permite explicar la mejora.
+Incluye:
 
-Para Guacamaya deberá conservar el significado del hito y su categoría.
+- idempotencia;
+- cooldown configurable;
+- límite diario configurable;
+- control de fuente;
+- seguridad de escritura.
 
-No se aprueba todavía una colección Firestore concreta.
+La regla automática de Semillas queda fuera hasta disponer de señal explícita de repetición consciente.
 
-Primero se revisarán modelos y APIs existentes antes de crear estructura nueva.
+### Fase C — Récord Personal Detectives
 
----
+- comparabilidad formal;
+- referencia de otra historia;
+- menos pistas;
+- menos intentos adicionales;
+- baseline histórico;
+- `antes → ahora`;
+- dependencias trazables.
 
-## 19. Recompensas y eliminación de Misiones
+### Fase D — Reto cooperativo
 
-Debe definirse antes de implementar cómo se comporta un reconocimiento cuando una Misión fuente se elimina.
+- diseñar primer reto concreto;
+- aporte del alumno;
+- aporte de familia;
+- cierre cooperativo;
+- Guacamaya de Equipo cuando corresponda.
 
-Principio propuesto:
+### Fase E — Semilla / Brote / Árbol
 
-- si la Misión se elimina porque era prueba o dato erróneo, no debe quedar una recompensa automática huérfana que afirme un hecho inexistente;
-- si existe un reconocimiento humano con significado independiente, el sistema deberá advertir antes de eliminar la Misión y permitir una decisión explícita según reglas futuras;
-- el borrado nunca debe ocurrir silenciosamente.
+Solo después de observar uso real:
 
-Esta relación deberá integrarse con el motor actual de eliminación completa de Misiones.
+- definir qué significa cambiar de etapa;
+- usar señales multidimensionales;
+- no `X puntos = siguiente nivel`.
 
----
+### 24.1 Criterio incremental
 
-## 20. Recompensas retroactivas
+Cada fase debe aportar valor sin depender de la siguiente.
 
-La familia podrá reconocer actividades históricas reales.
-
-Reglas:
-
-1. No inventar métricas que no fueron almacenadas.
-2. No generar retrospectivamente Récords Personales sin datos comparables.
-3. Sí permitir reconocimiento humano sobre una Misión completada.
-4. Sí permitir Guacamaya humana cuando el hecho real pueda identificarse y la categoría sea válida.
-5. Mostrar por separado fecha del hecho y fecha de concesión.
-
----
-
-## 21. Alcance de implementación recomendado para v1
-
-El diseño completo puede crecer incrementalmente.
-
-### Fase A — Base visible y humana
-
-- entidad de Reconocimiento;
-- `🌟 Añadir reconocimiento` desde Misión completada;
-- reconocimiento de familia;
-- primeras Guacamayas curadas / confirmadas por familia;
-- visualización en `Así voy creciendo`;
-- historial sencillo;
-- exclusión de datos de prueba.
-
-### Fase B — Reconocimiento automático explicable
-
-- primeros eventos automáticos de Lía;
-- deduplicación;
-- reglas de frecuencia;
-- trazabilidad de fuente.
-
-### Fase C — Récord Personal
-
-- comenzar por un motor con comparabilidad sólida, previsiblemente Detectives;
-- validar reglas con datos reales antes de ampliar.
-
-### Fase D — Retos cooperativos
-
-- modelo de reto;
-- acciones diferenciadas alumno / familia;
-- cierre y reconocimiento.
-
-### Fase E — Evolución de Semilla / Brote / Árbol
-
-- definir significado real de las etapas;
-- evitar equivalencia directa con puntos acumulados;
-- utilizar suficiente historia antes de aprobar reglas.
+A1 debe funcionar aunque nunca se implemente B.
 
 ---
 
-## 22. Criterios de éxito de Recompensas v1
+## 25. Criterios de éxito
 
-El sistema será exitoso si observamos que:
+No se considerará éxito simplemente aumentar:
 
-- el alumno comprende por qué recibe un reconocimiento;
-- los reconocimientos se sienten relacionados con hechos reales;
+- clics;
+- sesiones abiertas;
+- tiempo de pantalla;
+- cantidad de premios.
+
+Se buscará observar cualitativamente que:
+
+- entiende por qué recibe un reconocimiento;
+- relaciona reconocimientos con hechos reales;
 - una Guacamaya conserva valor emocional;
-- el alumno habla de su progreso sin necesitar compararse con otros;
-- pedir ayuda no se percibe como perder;
-- los errores no producen miedo a perder recompensas;
-- la familia puede reconocer logros que el sistema no sabe interpretar;
-- el alumno muestra interés por volver y descubrir qué sigue;
-- y la capa motivacional no distrae del aprendizaje.
+- puede hablar de progreso propio;
+- pedir ayuda no se vive como derrota;
+- los errores no generan miedo a perder;
+- la familia puede reconocer lo que el sistema no sabe interpretar;
+- existe interés por volver;
+- la capa motivacional no distrae del aprendizaje;
+- y la motivación no se vuelve dependiente de recibir algo en cada actividad.
 
-No se considerará éxito simplemente aumentar clics, sesiones abiertas o tiempo de pantalla.
+### 25.1 Revisión de piloto
 
----
+Después de un periodo suficiente de uso real, revisar:
 
-## 23. Decisiones abiertas antes de implementar
-
-1. Catálogo inicial exacto de Guacamayas (4–6 como máximo recomendado para comenzar).
-2. Primera lista de reglas automáticas de Reconocimiento de Lía.
-3. Primer conjunto de Récords Personales técnicamente comparables.
-4. Regla de deduplicación y frecuencia.
-5. Comportamiento exacto al eliminar una Misión con reconocimiento asociado.
-6. Permisos de familia / profesionales para conceder o proponer reconocimientos.
-7. Significado futuro de Semilla / Brote / Árbol.
-8. Diseño visual de `Así voy creciendo`.
-9. Primer Reto Cooperativo real.
+- frecuencia de reconocimientos;
+- reacción ante sesiones sin recompensa;
+- comprensión de mensajes;
+- valor percibido de Guacamayas;
+- uso de `Añadir reconocimiento`;
+- señales de sobre-recompensa;
+- necesidad real de más de un reconocimiento humano por Misión;
+- idoneidad de 7 días / 2 al día.
 
 ---
 
-## 24. Referencias profesionales iniciales
+## 26. Decisiones cerradas en rc1
 
-Estas referencias orientan decisiones de diseño. No convierten a la Academia en una herramienta clínica.
+Quedan funcionalmente resueltas para aprobación:
 
-1. Wang, Y. et al. (2024). *A systematic review and meta-analysis of self-determination-theory-based interventions in the education context*. Learning and Motivation, 87, 102015. DOI: https://doi.org/10.1016/j.lmot.2024.102015
+1. Cinco pilares motivacionales.
+2. Cuatro mecanismos.
+3. Seis Guacamayas iniciales.
+4. Unicidad por categoría en v1.
+5. No mostrar catálogo bloqueado al alumno.
+6. Reconocimiento humano retroactivo.
+7. Caso “Algo que conseguí esta semana”.
+8. Cuatro reglas automáticas de Lía aprobables.
+9. Creciendo automático retirado hasta señal más fuerte.
+10. Detectives como único motor de Récord v1 inicial.
+11. Récord de menos pistas y menos intentos adicionales.
+12. Comparabilidad conservadora.
+13. Frecuencia automática como parámetro configurable.
+14. Mi Camino → Así voy creciendo como hogar visible.
+15. Historia cronológica, no ranking.
+16. Modelo conceptual único RECONOCIMIENTO.
+17. Dependencias múltiples para trazabilidad.
+18. Datos de prueba excluidos.
+19. No backfill automático masivo.
+20. Integración con eliminación completa de Misiones.
+21. Despliegue incremental A1–E.
+
+---
+
+## 27. Decisiones deliberadamente abiertas
+
+No bloquean la aprobación funcional de A1/A2:
+
+1. ruta Firestore exacta después de revisar API/modelos/rules existentes;
+2. reglas Firestore exactas;
+3. diseño gráfico final de cada Guacamaya;
+4. textos finales de celebración después de prueba visual;
+5. ubicación técnica de `recompensasActivadasEn`;
+6. primer Reto cooperativo concreto;
+7. significado de Semilla/Brote/Árbol;
+8. ajuste de cooldown/límite diario después de uso real;
+9. ampliación futura a profesionales que propongan reconocimientos;
+10. ampliación futura de Récords a otros motores cuando tengan datos comparables.
+
+Estas decisiones deben resolverse en la fase donde sean necesarias, evitando sobrearquitectura anticipada.
+
+---
+
+## 28. Referencias profesionales
+
+Estas referencias orientan decisiones de diseño. No convierten la Academia en una herramienta clínica.
+
+1. Wang, Y., Wang, H., Wang, S., Wind, S. A., & Gill, C. (2024). *A systematic review and meta-analysis of self-determination-theory-based interventions in the education context*. Learning and Motivation, 87, 102015. DOI: https://doi.org/10.1016/j.lmot.2024.102015
 2. Ryan, R. M., & Deci, E. L. (2020). *Intrinsic and extrinsic motivation from a self-determination theory perspective: Definitions, theory, practices, and future directions*. Contemporary Educational Psychology, 61, 101860. DOI: https://doi.org/10.1016/j.cedpsych.2020.101860
 3. Henderlong, J., & Lepper, M. R. (2002). *The effects of praise on children's intrinsic motivation: A review and synthesis*. Psychological Bulletin, 128(5), 774–795. DOI: https://doi.org/10.1037/0033-2909.128.5.774
 4. Deci, E. L., Koestner, R., & Ryan, R. M. (2001). *Extrinsic Rewards and Intrinsic Motivation in Education: Reconsidered Once Again*. Review of Educational Research, 71(1). DOI: https://doi.org/10.3102/00346543071001001
 5. Diaconu-Gherasim, L. R. et al. (2024). *A Meta-Analysis of the Relations Between Achievement Goals and Internalizing Problems*. Educational Psychology Review, 36, 109. DOI: https://doi.org/10.1007/s10648-024-09943-5
-6. *Understanding the prevalence and manifestation of anxiety and other socio-emotional and behavioural difficulties in children with Developmental Language Disorder*. PubMed PMID 37322422: https://pubmed.ncbi.nlm.nih.gov/37322422/
-7. Mateus-Moreno, A. et al. (2026). *Emotion regulation in children and adolescents with developmental language disorder: A systematic review and meta-analysis*. Child Development. PubMed PMID 42560654: https://pubmed.ncbi.nlm.nih.gov/42560654/
+6. Burnley, A., St Clair, M., Bedford, R., Wren, Y., & Dack, C. (2023). *Understanding the prevalence and manifestation of anxiety and other socio-emotional and behavioural difficulties in children with Developmental Language Disorder*. Journal of Neurodevelopmental Disorders, 15, 17. DOI: https://doi.org/10.1186/s11689-023-09486-w
+7. Mateus-Moreno, A., Guirado-Moreno, J.-L., López-Penadés, R., Aguilar-Mediavilla, E., & Adrover-Roig, D. (2026). *Emotion regulation in children and adolescents with developmental language disorder: A systematic review and meta-analysis*. Child Development. DOI: https://doi.org/10.1093/chidev/aacag141
 8. McGregor, K. K. et al. (2023). *Abilities and Disabilities Among Children With Developmental Language Disorder*. Language, Speech, and Hearing Services in Schools, 54(3), 927–951. DOI: https://doi.org/10.1044/2023_LSHSS-22-00070
 9. *Examining the contribution of motivation in the job search of youth with developmental language disorder*. PubMed PMID 36762259: https://pubmed.ncbi.nlm.nih.gov/36762259/
-10. Lloyd-Esenkaya, V., Russell, A. J., & St Clair, M. C. (2020). *What Are the Peer Interaction Strengths and Difficulties in Children with Developmental Language Disorder? A Systematic Review*. DOI: https://doi.org/10.3390/ijerph17093140
+10. Lloyd-Esenkaya, V., Russell, A. J., & St Clair, M. C. (2020). *What Are the Peer Interaction Strengths and Difficulties in Children with Developmental Language Disorder? A Systematic Review*. International Journal of Environmental Research and Public Health, 17(9), 3140. DOI: https://doi.org/10.3390/ijerph17093140
 
 ---
 
-## 25. Declaración de diseño
+## 29. Auditoría de coherencia rc1
+
+La consolidación rc1 realizó explícitamente las siguientes correcciones sobre el borrador y los bloques de análisis:
+
+### 29.1 Se evita automatizar significado humano débil
+
+Se retira la regla automática de Creciendo basada solo en cantidad de grabaciones.
+
+### 29.2 Se separa dato de interpretación
+
+“Menos pistas” se registra como **progreso personal**, no como prueba automática de autonomía.
+
+### 29.3 Se fortalece comparabilidad
+
+Récord Detectives requiere estructura equivalente y una referencia de otra historia para reducir efecto memoria.
+
+### 29.4 Frecuencia deja de ser dogma
+
+`7 días / 2 diarios` pasa a ser configuración inicial revisable.
+
+### 29.5 Se incorpora dependencia de fuentes
+
+Un Récord puede depender de más de un registro; su trazabilidad no se reduce a una sola sesión.
+
+### 29.6 Se explicita la frontera de seguridad
+
+La UI no autoriza por sí sola una escritura automática.
+
+### 29.7 Se añade protección frente a dependencia de recompensas
+
+El sistema debe poder disminuir intensidad si la recompensa comienza a desplazar la motivación.
+
+### 29.8 Se diferencia lo aprobado de lo futuro
+
+Reto cooperativo y Semilla/Brote/Árbol permanecen como fases posteriores sin bloquear A1/A2.
+
+---
+
+## 30. Declaración de diseño
 
 > **Recompensas v1 no premiará obediencia ni perfección. Hará visible el crecimiento real.**
 >
-> Reconocerá decisiones, estrategias, esfuerzo útil, autonomía, perseverancia, curiosidad y vínculos significativos.
+> Reconocerá decisiones, estrategias, esfuerzo útil, progreso, autonomía cuando pueda sostenerse, perseverancia, curiosidad y vínculos significativos.
 >
-> Las Guacamayas conservarán momentos especiales. Los Récords Personales mostrarán que uno puede superarse a sí mismo. Lía pondrá palabras breves a progresos observables. La familia aportará el significado humano que ningún algoritmo puede conocer por completo.
+> Las Guacamayas conservarán momentos especiales. Los Récords Personales mostrarán que uno puede superarse a sí mismo. Lía pondrá palabras breves a hechos observables. La familia aportará el significado humano que ningún algoritmo puede conocer por completo.
 >
-> Y ninguna recompensa deberá hacer que aprender deje de ser la verdadera aventura.
+> La recompensa nunca será la razón principal para aprender.
+>
+> **Aprender, descubrir, poder hacer más y construir una vida propia siguen siendo la verdadera aventura.**
