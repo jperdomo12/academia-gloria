@@ -14,7 +14,9 @@
 
 .filtro-listado-misiones{
   display:grid;
+  grid-template-rows:18px auto;
   gap:6px;
+  margin:0;
   color:#475569;
   font-size:.84rem;
   font-weight:850;
@@ -28,11 +30,24 @@
   letter-spacing:.01em;
 }
 
+.filtro-listado-misiones--estado > .filtro-listado-misiones__etiqueta{
+  text-align:center;
+}
+
 .filtro-listado-misiones--estado .filtros{
   display:flex;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   gap:8px;
-  justify-content:flex-start;
+  min-height:42px;
+  align-items:stretch;
+  justify-content:center;
+}
+
+.filtro-listado-misiones--estado .filtro{
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .filtro-listado-misiones select,
