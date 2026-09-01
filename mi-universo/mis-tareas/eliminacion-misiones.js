@@ -1,5 +1,6 @@
 /* Academia Gloria Valentina · Eliminación completa y controlada de Misiones */
 
+import "./datos-prueba-misiones.js";
 import { db } from "../../compartido/firebase/firebase-config.js";
 import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
