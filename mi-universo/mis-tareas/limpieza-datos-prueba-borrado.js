@@ -1,18 +1,14 @@
-/* Academia Gloria Valentina · Limpieza de datos de prueba · Fase 2 controlada */
+/* Academia Gloria Valentina · Limpieza y eliminación completa de Misiones */
 
-import { db } from "../../compartido/firebase/firebase-config.js";
-import { Academia } from "../../compartido/api/academia.js";
-import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import {
-  eliminarSesionHistoria,
-  obtenerSesionHistoria
-} from "../../compartido/js/detectives-progreso.js";
-import {
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+  ejecutarEliminacionPreparada,
+  instalarEliminacionMisionCompleta,
+  prepararEliminacionMision,
+  textoResumenEliminacion
+} from "./eliminacion-misiones.js";
 
 const $ = id => document.getElementById(id);
+let modoActual = "prueba";
 
 function texto(valor = "") {
   return String(valor ?? "").trim();
@@ -27,6 +23,26 @@ function cargarEstilos() {
   document.head.appendChild(enlace);
 }
 
+function actualizarTextosGenerales() {
+  const bloque = $("limpiezaDatosPrueba");
+  if (!bloque) return;
+
+  const subtitulo = bloque.querySelector(".limpieza-pruebas__summary small");
+  if (subtitulo) {
+    subtitulo.textContent = "Identificar primero · eliminar después de forma controlada";
+  }
+
+  const insignia = bloque.querySelector(".limpieza-solo-lectura");
+  if (insignia) insignia.textContent = "🛡️ Controlado";
+
+  const info = bloque.querySelector(".limpieza-alerta--informacion p");
+  if (info) {
+    info.textContent =
+      "La herramienta permite completar eliminaciones antiguas que dejaron evidencias sin Misión. " +
+      "Solo se borran sesiones que puedan atribuirse a esa Misión; cualquier actividad posterior o reutilizada se conserva.";
+  }
+}
+
 function crearInterfaz() {
   if ($("limpiezaBorradoControlado")) return;
   const detalle = $("limpiezaDetalle");
@@ -38,11 +54,10 @@ function crearInterfaz() {
   bloque.innerHTML = `
     <div class="limpieza-borrado-controlado__cabecera">
       <div>
-        <span class="limpieza-borrado-controlado__etiqueta">Fase 2 · Eliminación controlada</span>
-        <h4>🗑️ Eliminar una prueba confirmada</h4>
-        <p>
-          Esta primera versión solo permite borrar Misiones de <strong>Detectives</strong>
-          cuando todas sus evidencias apuntan a sesiones exactas localizables.
+        <span class="limpieza-borrado-controlado__etiqueta">Eliminación completa · Controlada</span>
+        <h4 id="limpiezaBorradoTitulo">🗑️ Eliminar una prueba confirmada</h4>
+        <p id="limpiezaBorradoExplicacion">
+          Se eliminarán la Misión, sus evidencias y únicamente los registros que puedan atribuirse de forma segura a ella.
         </p>
       </div>
       <span class="limpieza-borrado-controlado__seguridad">🛡️ Validación doble</span>
@@ -51,8 +66,8 @@ function crearInterfaz() {
     <label class="limpieza-borrado-confirmacion">
       <input id="limpiezaConfirmarPrueba" type="checkbox">
       <span>
-        <strong>Confirmo que la Misión seleccionada fue creada únicamente para pruebas.</strong>
-        <small>La eliminación será permanente e incluirá la Misión, sus evidencias y sus sesiones exactas de Detectives.</small>
+        <strong id="limpiezaConfirmarTexto">Confirmo que la Misión seleccionada fue creada únicamente para pruebas.</strong>
+        <small id="limpiezaConfirmarAyuda">La eliminación será permanente.</small>
       </span>
     </label>
 
@@ -70,7 +85,7 @@ function crearInterfaz() {
 
   $("limpiezaConfirmarPrueba")?.addEventListener("change", actualizarBoton);
   $("limpiezaMision")?.addEventListener("change", reiniciarBorrado);
-  $("limpiezaEliminarPrueba")?.addEventListener("click", eliminarPruebaSeleccionada);
+  $("limpiezaEliminarPrueba")?.addEventListener("click", eliminarSeleccionada);
 
   const observador = new MutationObserver(() => {
     if (detalle.children.length) prepararBorrado();
@@ -94,11 +109,69 @@ function prepararBorrado() {
   const bloque = $("limpiezaBorradoControlado");
   if (!misionId || !detalle?.children.length || !bloque) return;
 
+  const misionAusente = Boolean(
+    detalle.querySelector(".limpieza-alerta--advertencia")
+  );
+  modoActual = misionAusente ? "restos" : "prueba";
+
   bloque.classList.remove("hidden");
+
+  const titulo = $("limpiezaBorradoTitulo");
+  const explicacion = $("limpiezaBorradoExplicacion");
+  const confirmarTexto = $("limpiezaConfirmarTexto");
+  const confirmarAyuda = $("limpiezaConfirmarAyuda");
+  const boton = $("limpiezaEliminarPrueba");
   const estado = $("limpiezaBorradoEstado");
-  if (estado) {
-    estado.textContent = "Si reconoces esta Misión como prueba, confírmalo. Antes de borrar volveremos a validar todos los vínculos contra Firestore.";
+  const confirmar = $("limpiezaConfirmarPrueba");
+
+  if (confirmar) confirmar.checked = false;
+
+  if (misionAusente) {
+    if (titulo) titulo.textContent = "🧹 Completar eliminación de una Misión antigua";
+    if (explicacion) {
+      explicacion.textContent =
+        "La Misión ya fue borrada anteriormente. Ahora podemos eliminar sus evidencias restantes y las sesiones que todavía puedan atribuirse exclusivamente a ella.";
+    }
+    if (confirmarTexto) {
+      confirmarTexto.textContent =
+        "Confirmo que quiero completar la eliminación de esta Misión que ya fue borrada.";
+    }
+    if (confirmarAyuda) {
+      confirmarAyuda.textContent =
+        "Una lectura de Rincón actualizada posteriormente se conservará automáticamente.";
+    }
+    if (boton) boton.textContent = "🧹 Completar eliminación antigua";
+    if (estado) {
+      estado.textContent =
+        "La Misión ya no existe. Se volverán a comprobar todos los restos antes de eliminarlos.";
+    }
+  } else {
+    if (titulo) titulo.textContent = "🗑️ Eliminar una prueba confirmada";
+    if (explicacion) {
+      explicacion.textContent =
+        "Si reconoces esta Misión como una prueba, puedes eliminarla completamente: Misión, evidencias y registros exclusivos.";
+    }
+    if (confirmarTexto) {
+      confirmarTexto.textContent =
+        "Confirmo que la Misión seleccionada fue creada únicamente para pruebas.";
+    }
+    if (confirmarAyuda) {
+      confirmarAyuda.textContent =
+        "Los registros posteriores o reutilizados se protegerán automáticamente.";
+    }
+    if (boton) boton.textContent = "🗑️ Eliminar datos de esta prueba";
+    if (estado) {
+      estado.textContent =
+        "Antes de borrar se repetirá la validación contra Firestore.";
+    }
   }
+
+  const avisoVista = detalle.querySelector(".limpieza-alerta--segura p");
+  if (avisoVista) {
+    avisoVista.textContent =
+      "La revisión anterior no modificó datos. La eliminación solo se ejecutará después de esta confirmación y de una segunda validación inmediata.";
+  }
+
   actualizarBoton();
 }
 
@@ -109,68 +182,7 @@ function actualizarBoton() {
   if (boton) boton.disabled = !(confirmar?.checked && misionId);
 }
 
-async function validarGrupoDetectives(misionId) {
-  const contexto = await ContextoUsuario.inicializar();
-  const userId = texto(contexto.userIdPersonaActiva);
-  if (!userId) throw new Error("No se pudo resolver el alumno activo.");
-
-  const [tarea, evidencias] = await Promise.all([
-    Academia.tareas.obtener(misionId),
-    Academia.evidencias.leerPorMision(misionId)
-  ]);
-
-  if (!tarea) {
-    throw new Error(
-      "La Misión ya no existe. Esta primera fase de borrado no elimina evidencias huérfanas automáticamente."
-    );
-  }
-  if (!evidencias.length) {
-    throw new Error("La Misión no tiene evidencias vinculadas para limpiar.");
-  }
-
-  const noDetectives = evidencias.filter(evidencia =>
-    texto(evidencia.modulo) !== "detectives"
-  );
-  if (noDetectives.length) {
-    throw new Error(
-      "Esta Misión contiene evidencias que no son de Detectives. Por seguridad, el borrado automático queda bloqueado."
-    );
-  }
-
-  const sesionesPorClave = new Map();
-
-  for (const evidencia of evidencias) {
-    const historiaId = texto(evidencia.actividadId);
-    const sesionId = texto(evidencia.sesionId);
-    if (!historiaId || !sesionId) {
-      throw new Error(
-        "Una de las evidencias no tiene historiaId/sesionId suficientes. No se eliminará nada."
-      );
-    }
-
-    const sesion = await obtenerSesionHistoria(userId, historiaId, sesionId);
-    if (!sesion) {
-      throw new Error(
-        `No se localizó la sesión exacta ${sesionId}. No se eliminará nada.`
-      );
-    }
-
-    sesionesPorClave.set(`${historiaId}::${sesionId}`, {
-      historiaId,
-      sesionId,
-      sesion
-    });
-  }
-
-  return {
-    userId,
-    tarea,
-    evidencias,
-    sesiones: [...sesionesPorClave.values()]
-  };
-}
-
-async function eliminarPruebaSeleccionada() {
+async function eliminarSeleccionada() {
   const misionId = texto($("limpiezaMision")?.value);
   const boton = $("limpiezaEliminarPrueba");
   const confirmar = $("limpiezaConfirmarPrueba");
@@ -179,27 +191,45 @@ async function eliminarPruebaSeleccionada() {
   if (!misionId || !confirmar?.checked || !boton) return;
 
   boton.disabled = true;
-  if (estado) estado.textContent = "🔎 Validando nuevamente la Misión y sus sesiones exactas…";
+  if (estado) estado.textContent = "🔎 Validando nuevamente evidencias y sesiones…";
 
-  let validacion;
+  let preparacion;
   try {
-    validacion = await validarGrupoDetectives(misionId);
+    preparacion = await prepararEliminacionMision(
+      misionId,
+      { permitirMisionAusente: modoActual === "restos" }
+    );
+
+    if (modoActual === "restos" && preparacion.tarea) {
+      throw new Error("La Misión vuelve a estar disponible. Actualiza el inventario antes de continuar.");
+    }
+    if (modoActual === "prueba" && !preparacion.tarea) {
+      throw new Error("La Misión acaba de desaparecer. Actualiza el inventario antes de continuar.");
+    }
   } catch (error) {
     if (estado) {
-      estado.textContent = `⛔ Borrado bloqueado: ${error.message || "No fue posible validar los datos."}`;
+      estado.textContent = `⛔ Eliminación bloqueada: ${error.message || "No fue posible validar los datos."}`;
     }
     actualizarBoton();
     return;
   }
 
-  const titulo = texto(validacion.tarea.titulo) || "Misión sin título";
-  const mensaje =
-    `Vas a eliminar permanentemente:\n\n` +
-    `• Misión: ${titulo}\n` +
-    `• ${validacion.evidencias.length} evidencia(s)\n` +
-    `• ${validacion.sesiones.length} sesión(es) exacta(s) de Detectives\n\n` +
-    `Las estadísticas de Detectives se recalcularán después de retirar estas sesiones.\n\n` +
-    `¿Confirmas que todo corresponde a una prueba?`;
+  const resumen = textoResumenEliminacion(preparacion);
+  const tituloMision = texto(preparacion.tarea?.titulo) || `Misión eliminada ${misionId}`;
+  const mensaje = [
+    modoActual === "restos"
+      ? "Vas a completar una eliminación antigua:"
+      : "Vas a eliminar completamente una Misión de prueba:",
+    "",
+    `• ${tituloMision}`,
+    `• ${resumen.evidencias} evidencia(s) que se eliminarán`,
+    `• ${resumen.sesiones} sesión(es)/registro(s) exclusivo(s) que se eliminarán`,
+    `• ${resumen.conservadas} registro(s) posterior(es) o reutilizado(s) que se conservarán`,
+    "",
+    resumen.descripcionConservadas,
+    "",
+    "¿Confirmas la eliminación?"
+  ].join("\n");
 
   if (!window.confirm(mensaje)) {
     if (estado) estado.textContent = "Eliminación cancelada. No se modificó ningún dato.";
@@ -207,43 +237,22 @@ async function eliminarPruebaSeleccionada() {
     return;
   }
 
-  let sesionesEliminadas = 0;
-  let evidenciasEliminadas = 0;
-
   try {
-    if (estado) estado.textContent = "🧹 Eliminando sesiones de prueba y recalculando Detectives…";
+    if (estado) estado.textContent = "🧹 Eliminando únicamente los datos atribuibles a esa Misión…";
 
-    for (const sesion of validacion.sesiones) {
-      await eliminarSesionHistoria(
-        validacion.userId,
-        sesion.historiaId,
-        sesion.sesionId
-      );
-      sesionesEliminadas += 1;
-    }
-
-    if (estado) estado.textContent = "🧹 Eliminando evidencias de la Misión de prueba…";
-    for (const evidencia of validacion.evidencias) {
-      await deleteDoc(
-        doc(
-          db,
-          "usuarios",
-          validacion.userId,
-          "evidencias",
-          evidencia.id
-        )
-      );
-      evidenciasEliminadas += 1;
-    }
-
-    if (estado) estado.textContent = "🧹 Eliminando la Misión de prueba…";
-    await Academia.tareas.eliminar(misionId);
+    const resultado = await ejecutarEliminacionPreparada(preparacion, {
+      eliminarMision: modoActual === "prueba"
+    });
 
     confirmar.checked = false;
     boton.disabled = true;
+
     if (estado) {
       estado.textContent =
-        `✅ Prueba eliminada: ${sesionesEliminadas} sesión(es), ${evidenciasEliminadas} evidencia(s) y la Misión. Actualizando inventario…`;
+        `✅ Eliminación completada: ${resultado.sesionesEliminadas} sesión(es)/registro(s) y ` +
+        `${resultado.evidenciasEliminadas} evidencia(s) eliminadas` +
+        (resultado.misionEliminada ? ", además de la Misión." : ".") +
+        " Actualizando inventario…";
     }
 
     window.setTimeout(() => {
@@ -253,16 +262,20 @@ async function eliminarPruebaSeleccionada() {
   } catch (error) {
     if (estado) {
       estado.textContent =
-        `⚠️ La limpieza quedó incompleta (${sesionesEliminadas} sesión(es) y ${evidenciasEliminadas} evidencia(s) eliminadas). ` +
-        `Actualiza el inventario antes de continuar. Razón: ${error.message || "Error no identificado"}`;
+        `⚠️ La limpieza no pudo completarse. Actualiza el inventario antes de continuar. Razón: ${error.message || "Error no identificado"}`;
     }
     boton.disabled = true;
   }
 }
 
 function iniciar() {
+  instalarEliminacionMisionCompleta();
   cargarEstilos();
-  window.setTimeout(crearInterfaz, 0);
+  actualizarTextosGenerales();
+  window.setTimeout(() => {
+    actualizarTextosGenerales();
+    crearInterfaz();
+  }, 0);
 }
 
 if (document.readyState === "loading") {
