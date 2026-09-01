@@ -534,7 +534,7 @@ async function revisarGrupo() {
 
         <aside class="limpieza-alerta limpieza-alerta--segura">
           <strong>🔒 Vista previa únicamente</strong>
-          <p>No se ha eliminado ni modificado ningún documento. La fase de borrado seguirá deshabilitada hasta que confirmemos qué grupos corresponden realmente a pruebas.</p>
+          <p>No se ha eliminado ni modificado ningún documento. La eliminación controlada solo se habilita para Misiones de Detectives que vuelvan a superar una validación exacta inmediatamente antes del borrado.</p>
         </aside>
       `;
     }
@@ -563,16 +563,16 @@ function crearInterfaz() {
       <span class="limpieza-pruebas__icono" aria-hidden="true">🧹</span>
       <span>
         <strong>Limpieza de datos de prueba</strong>
-        <small>Fase 1 · identificar evidencias y sesiones antes de borrar</small>
+        <small>Identificar primero · eliminar solo vínculos exactos confirmados</small>
       </span>
-      <span class="limpieza-solo-lectura">🔒 Solo lectura</span>
+      <span class="limpieza-solo-lectura">🛡️ Controlado</span>
       <span class="limpieza-pruebas__flecha" aria-hidden="true">⌄</span>
     </summary>
 
     <div class="limpieza-pruebas__contenido">
       <aside class="limpieza-alerta limpieza-alerta--informacion">
         <strong>Primero identificamos; después decidimos.</strong>
-        <p>Esta herramienta busca también evidencias cuya Misión ya fue eliminada. No realiza ningún borrado y no modifica el progreso.</p>
+        <p>La vista previa busca también evidencias cuya Misión ya fue eliminada. El borrado automático inicial queda limitado a Misiones existentes de Detectives con sesiones exactas.</p>
       </aside>
 
       <div id="limpiezaInventarioResumen" class="limpieza-inventario-resumen"></div>
@@ -627,3 +627,5 @@ if (document.readyState === "loading") {
 } else {
   iniciar();
 }
+
+import "./limpieza-datos-prueba-borrado.js";
