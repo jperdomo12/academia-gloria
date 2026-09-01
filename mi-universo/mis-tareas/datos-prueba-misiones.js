@@ -86,7 +86,9 @@ function aplicarFiltroPruebas() {
   const estado = asegurarEstadoPruebas();
 
   if (!soloPruebas) {
-    tarjetas.forEach(tarjeta => { tarjeta.hidden = false; });
+    tarjetas.forEach(tarjeta => {
+      if (tarjeta.hidden) tarjeta.hidden = false;
+    });
     estado?.classList.add("hidden");
     return;
   }
@@ -95,7 +97,7 @@ function aplicarFiltroPruebas() {
   tarjetas.forEach(tarjeta => {
     const tarea = tareasPorId.get(idTarjeta(tarjeta));
     const mostrar = esDatoPrueba(tarea);
-    tarjeta.hidden = !mostrar;
+    if (tarjeta.hidden === mostrar) tarjeta.hidden = !mostrar;
     if (mostrar) visibles += 1;
   });
 
@@ -106,7 +108,8 @@ function actualizarFiltroPruebas() {
   const boton = document.querySelector("[data-filtro-datos-prueba]");
   if (!boton) return;
   const cantidad = [...tareasPorId.values()].filter(esDatoPrueba).length;
-  boton.textContent = `🧪 Pruebas${cantidad ? ` (${cantidad})` : ""}`;
+  const etiqueta = `🧪 Pruebas${cantidad ? ` (${cantidad})` : ""}`;
+  if (boton.textContent !== etiqueta) boton.textContent = etiqueta;
 }
 
 function asegurarFiltroPruebas() {
@@ -189,6 +192,12 @@ async function cambiarMarca(misionId, boton) {
       doc(db, "usuarios", userId, "tareas", id),
       cambios
     );
+
+    tareasPorId.set(id, {
+      ...tarea,
+      esDatoPrueba: nuevaMarca
+    });
+    programarDecoracion();
   } catch (error) {
     console.error("No se pudo actualizar la marca de prueba.", error);
     window.alert(
@@ -239,9 +248,10 @@ function decorarTarjetas() {
 
     boton.dataset.marcarDatosPrueba = id;
     boton.classList.toggle("marcada", esDatoPrueba(tarea));
-    boton.textContent = esDatoPrueba(tarea)
+    const etiqueta = esDatoPrueba(tarea)
       ? "🧪 Quitar marca de prueba"
       : "🧪 Marcar como prueba";
+    if (boton.textContent !== etiqueta) boton.textContent = etiqueta;
     boton.disabled = false;
   });
 }
@@ -259,9 +269,10 @@ function decorarSelectorLimpieza() {
     }
 
     const base = opcion.dataset.textoSinMarcaPrueba;
-    opcion.textContent = esDatoPrueba(tareasPorId.get(id))
+    const etiqueta = esDatoPrueba(tareasPorId.get(id))
       ? `🧪 ${base}`
       : base;
+    if (opcion.textContent !== etiqueta) opcion.textContent = etiqueta;
   });
 }
 
