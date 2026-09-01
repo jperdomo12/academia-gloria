@@ -250,11 +250,27 @@ async function clasificarEvidencia(evidencia, userId, misionId) {
   };
 }
 
-async function agregarSesionesLigadasDirectamente(userId, misionId, operaciones) {
-  const colecciones = [
-    { nombre: "sesionesAcademicas", motor: "Pruebas académicas" },
-    { nombre: "sesionesSemillas", motor: "Creciendo por Dentro" }
-  ];
+async function agregarSesionesLigadasDirectamente(
+  userId,
+  misionId,
+  operaciones,
+  tarea,
+  evidencias
+) {
+  const necesitaAcademicas =
+    tarea?.tipo === "repaso_academico" ||
+    evidencias.some(esAcademica);
+  const necesitaSemillas =
+    texto(tarea?.modulo) === "creciendo-por-dentro" ||
+    evidencias.some(evidencia => texto(evidencia.modulo) === "creciendo-por-dentro");
+
+  const colecciones = [];
+  if (necesitaAcademicas) {
+    colecciones.push({ nombre: "sesionesAcademicas", motor: "Pruebas académicas" });
+  }
+  if (necesitaSemillas) {
+    colecciones.push({ nombre: "sesionesSemillas", motor: "Creciendo por Dentro" });
+  }
 
   for (const item of colecciones) {
     const resultado = await getDocs(
@@ -309,7 +325,13 @@ export async function prepararEliminacionMision(
     if (resultado.nota) notas.push(resultado.nota);
   }
 
-  await agregarSesionesLigadasDirectamente(userId, misionId, operaciones);
+  await agregarSesionesLigadasDirectamente(
+    userId,
+    misionId,
+    operaciones,
+    tarea,
+    evidencias
+  );
 
   return {
     userId,
