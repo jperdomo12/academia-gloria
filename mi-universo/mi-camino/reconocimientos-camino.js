@@ -1,6 +1,7 @@
 /* Academia Gloria Valentina · Recompensas A1/A2 · Mi Camino */
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
+import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 
 const PASO_HISTORIA = 5;
 
@@ -8,6 +9,7 @@ let instalada = false;
 let detenerObservacion = null;
 let reconocimientosActuales = [];
 let cantidadHistoriaVisible = PASO_HISTORIA;
+let puedeAbrirFuentesGestion = false;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -105,7 +107,7 @@ function metaFuente(item = {}) {
 }
 
 function urlFuente(item, fuente) {
-  if (item.fuenteEliminada === true) return "";
+  if (!puedeAbrirFuentesGestion || item.fuenteEliminada === true) return "";
   const misionId = texto(item.fuentePrincipal?.misionId);
   if (!misionId) return "";
 
@@ -251,11 +253,18 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
   });
 }
 
-export function instalarReconocimientosCamino() {
+export async function instalarReconocimientosCamino() {
   if (instalada) return;
   instalada = true;
   cargarEstilos();
   asegurarHost();
+
+  try {
+    puedeAbrirFuentesGestion = await ContextoUsuario.puedeGestionar();
+  } catch (error) {
+    puedeAbrirFuentesGestion = false;
+    console.debug("No se pudo resolver permiso para abrir fuentes de Recompensas.", error);
+  }
 
   detenerObservacion = Reconocimientos.observar(
     items => render(items, { reiniciarPaginacion: true }),
