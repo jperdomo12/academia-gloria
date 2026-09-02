@@ -63,8 +63,6 @@
     .learning-state{display:flex;align-items:center;justify-content:space-between;gap:12px;
       flex-wrap:wrap;margin:14px 0;padding:13px 15px;border-radius:17px;background:#f0fdf4}
     .learning-state label{font-weight:900;color:#166534}
-    .learning-state select{min-height:42px;border:2px solid #86efac;border-radius:13px;
-      padding:8px 11px;background:white;font:inherit;font-weight:850;color:#166534}
     .learning-state__value{padding:8px 11px;border-radius:13px;background:#fff;color:#166534;font-weight:900}
     .process-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:#475569;font-weight:750}
     .resolution{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
@@ -105,14 +103,12 @@
     import {
       obtenerSesionHistoria,
       obtenerSesionesHistoria,
-      obtenerProgresoHistoria,
-      marcarEstadoHistoria
+      obtenerProgresoHistoria
     } from "../../../compartido/js/detectives-progreso.js";
 
     const params=new URLSearchParams(location.search);
     const misionId=params.get("misionId");
     const volver=params.get("volver");
-    const modoConsulta=params.get("modo")==="consulta";
     const summary=document.getElementById("missionSummary");
     const list=document.getElementById("activityList");
     const status=document.getElementById("activityStatus");
@@ -261,23 +257,6 @@
       const active=Number(session?.tiempoActivoSegundos||evidence.resultado?.tiempoActivoSegundos||0);
       const level=evidence.atributos?.nivel??session?.nivel??story?.nivel??"—";
       const estadoAprendizaje=learningStateText(progress?.estado);
-      const acompanamiento=modoConsulta
-        ? `
-            <div class="learning-state">
-              <label>Acompañamiento de esta historia</label>
-              <span class="learning-state__value">${escape(estadoAprendizaje)}</span>
-            </div>`
-        : `
-            <div class="learning-state">
-              <label for="state-${escape(evidence.actividadId)}">Acompañamiento de esta historia</label>
-              <select class="learning-state-select"
-                      id="state-${escape(evidence.actividadId)}"
-                      data-story-id="${escape(evidence.actividadId)}">
-                <option value="en_practica" ${progress?.estado==="en_practica"||!progress?.estado?"selected":""}>En práctica</option>
-                <option value="reforzar" ${progress?.estado==="reforzar"?"selected":""}>Reforzar</option>
-                <option value="dominada" ${progress?.estado==="dominada"?"selected":""}>Dominada</option>
-              </select>
-            </div>`;
 
       return `
         <details class="activity">
@@ -296,7 +275,10 @@
               <div class="metric"><strong>${actual||"—"}</strong><span>🌱 Intentos realizados</span></div>
             </div>
             ${extra>0?`<div class="status">${extra} intento${extra===1?"":"s"} adicional${extra===1?"":"es"} durante la actividad.</div>`:""}
-            ${acompanamiento}
+            <div class="learning-state">
+              <label>Acompañamiento de esta historia</label>
+              <span class="learning-state__value">${escape(estadoAprendizaje)}</span>
+            </div>
             <div class="process">${processHtml(story,session||{})}</div>
             ${!session?'<div class="status">La actividad está registrada, pero su detalle completo no está disponible.</div>':""}
           </div>
@@ -330,7 +312,7 @@
         summary.innerHTML=`
           <div class="eyebrow">Resumen de la Misión</div>
           <h1>📖 Trabajo realizado</h1>
-          <p class="lead">${modoConsulta ? "Consulta histórica de solo lectura." : "La familia puede ver qué se realizó y cómo avanzó cada historia."}</p>
+          <p class="lead">Consulta histórica de solo lectura.</p>
           <h2>${escape(mission?.titulo||mission?.presentacionAlumno?.tituloMision||"Misión de Detectives")}</h2>
           <div class="summary-grid">
             <div class="stat"><strong>${items.length}/${target}</strong><span>Historias realizadas</span></div>
@@ -346,30 +328,6 @@
         }
         status.classList.add("hidden");
         list.innerHTML=items.map(renderActivity).join("");
-
-        if(!modoConsulta){
-          document.querySelectorAll(".learning-state-select").forEach(select=>{
-            select.addEventListener("change",async()=>{
-              const previous=select.dataset.previousValue || "";
-              select.disabled=true;
-              try{
-                await marcarEstadoHistoria(
-                  userIdDatos,
-                  select.dataset.storyId,
-                  select.value
-                );
-                select.dataset.previousValue=select.value;
-              }catch(error){
-                console.error(error);
-                if(previous) select.value=previous;
-                alert("No pudimos actualizar el estado de aprendizaje.");
-              }finally{
-                select.disabled=false;
-              }
-            });
-            select.dataset.previousValue=select.value;
-          });
-        }
       }catch(error){
         console.error(error);
         summary.innerHTML='<div class="status error">No pudimos cargar el resumen de la Misión.</div>';
