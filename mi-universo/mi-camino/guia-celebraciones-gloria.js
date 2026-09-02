@@ -140,7 +140,6 @@ function mostrarPagina(dialogo, indice) {
     const activo = posicion === pagina;
     punto.classList.toggle("activo", activo);
     punto.setAttribute("aria-current", activo ? "page" : "false");
-    punto.tabIndex = activo ? 0 : -1;
   });
 
   dialogo.dataset.guiaPagina = String(pagina);
@@ -149,7 +148,7 @@ function mostrarPagina(dialogo, indice) {
     pagina === 0 ? "guiaCelebracionesGloriaTitulo" : "guiaRecompensasTitulo"
   );
 
-  dialogo.querySelector(".guia-celebraciones__viewport")?.scrollTo?.({ top: 0, behavior: "instant" });
+  dialogo.querySelector(".guia-celebraciones__viewport")?.scrollTo?.({ top: 0, behavior: "auto" });
 }
 
 function mejorarGuia() {
@@ -196,7 +195,6 @@ function mejorarGuia() {
         data-guia-celebraciones-punto="1"
         aria-label="Ver explicación detallada"
         aria-current="false"
-        tabindex="-1"
       ></button>
     </nav>
   `;
