@@ -4,8 +4,9 @@
  * - un único acceso "Ver trabajo" desde cualquier caller;
  * - el caller aporta la Misión y la ruta de retorno;
  * - la Persona Activa se resuelve dentro de las APIs/visores existentes;
- * - los visores se abren en modo de consulta y nunca deben crear evidencia;
- * - se reutiliza el visor especializado de cada módulo cuando existe.
+ * - todo acceso se abre en modo de consulta y nunca debe crear evidencia;
+ * - se conserva un visor especializado solo cuando aporta una lectura
+ *   histórica más rica sin duplicar el contrato de acceso.
  */
 
 import { Academia } from "../api/academia.js";
@@ -52,18 +53,6 @@ function esRepasoAcademico(tarea = {}, evidencias = []) {
   );
 }
 
-function evidenciaModulo(evidencias = [], modulo = "") {
-  return evidencias.find(item => texto(item.modulo) === modulo) || null;
-}
-
-function idBibliotecaDesdeEvidencia(evidencia = {}) {
-  return texto(
-    evidencia.actividadId ||
-    evidencia.libroId ||
-    evidencia.atributos?.libroId
-  );
-}
-
 async function resolverUrlTrabajoRealizado(
   misionId,
   {
@@ -82,28 +71,29 @@ async function resolverUrlTrabajoRealizado(
     throw new Error("No se encontró la Misión para la Persona Activa.");
   }
 
-  const modulo = texto(mision.modulo);
-
-  // Las rutas por módulo no necesitan inspeccionar evidencias para abrir
-  // el visor de la Misión completa.
-  if (modulo === "detectives") {
+  /*
+   * Los repasos académicos nuevos se reconocen sin una lectura adicional.
+   * Para datos históricos, conservamos la detección por evidencia más abajo.
+   */
+  if (texto(mision.tipo) === "repaso_academico") {
     return completarConsulta(
-      urlAcademia("mi-universo/aventuras-matematicas/detectives/trabajo-realizado.html"),
+      urlAcademia("mi-universo/mis-tareas/resultado-academico.html"),
       id,
       volver
     );
   }
 
-  if (modulo === "rincon-lectura") {
-    const url = urlAcademia("mi-universo/rincon-lectura/");
-    url.searchParams.set("vista", "historial");
-    return completarConsulta(url, id, volver);
-  }
-
-  if (modulo === "creciendo-por-dentro") {
-    const url = urlAcademia("mi-universo/creciendo-por-dentro/");
-    url.searchParams.set("vista", "historial");
-    return completarConsulta(url, id, volver);
+  /*
+   * Detectives ya dispone de un visor de Misión completo que reconstruye el
+   * proceso matemático historia por historia. Se conserva como visor rico,
+   * pero recibe el mismo contrato modo=consulta + misionId + volver.
+   */
+  if (texto(mision.modulo) === "detectives") {
+    return completarConsulta(
+      urlAcademia("mi-universo/aventuras-matematicas/detectives/trabajo-realizado.html"),
+      id,
+      volver
+    );
   }
 
   const evidencias = await Academia.tareas.leerEvidencias(id);
@@ -116,24 +106,17 @@ async function resolverUrlTrabajoRealizado(
     );
   }
 
-  if (modulo === "biblioteca") {
-    const evidencia = evidenciaModulo(evidencias, "biblioteca");
-    const libroId = idBibliotecaDesdeEvidencia(evidencia || {});
-    const url = urlAcademia("mi-universo/biblioteca/");
-    if (libroId) url.searchParams.set("libroId", libroId);
-    return completarConsulta(url, id, volver);
-  }
-
-  // Compatibilidad con motores que ya registran un destino histórico propio.
-  // Se usa únicamente como último recurso; los módulos con múltiples evidencias
-  // deben declarar una ruta de Misión completa arriba, no escoger una evidencia.
-  const evidenciaConDestino = evidencias.find(item => texto(item.destinoRevision));
-  if (evidenciaConDestino) {
-    const url = new URL(evidenciaConDestino.destinoRevision, window.location.href);
-    return completarConsulta(url, id, volver);
-  }
-
-  throw new Error("Esta Misión todavía no dispone de un visor de trabajo realizado.");
+  /*
+   * Visor canónico para Lectura, Pronunciación, Semillas, Biblioteca y
+   * cualquier evidencia futura que no requiera todavía un visor especializado.
+   * La selección se realiza por Misión completa, nunca escogiendo la primera
+   * evidencia ni navegando a un editor del módulo.
+   */
+  return completarConsulta(
+    urlAcademia("mi-universo/mis-tareas/trabajo-realizado.html"),
+    id,
+    volver
+  );
 }
 
 async function abrirTrabajoRealizado(misionId, opciones = {}) {
