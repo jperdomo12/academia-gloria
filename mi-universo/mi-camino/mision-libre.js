@@ -2,7 +2,6 @@
 
 import "./reconocimientos-camino.js";
 import { Academia } from "../../compartido/api/academia.js";
-import { abrirTrabajoRealizado } from "../../compartido/js/trabajo-realizado.js";
 
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";
 const RUTA_FALLBACK_LIBRE = new URL("../", window.location.href).pathname;
@@ -136,6 +135,15 @@ function normalizarAccesoTrabajo(card) {
   const boton = card.querySelector("[data-ver-trabajo]");
   if (!boton) return;
 
+  /*
+   * El MutationObserver de Mi Camino observa childList + subtree. Cambiar
+   * textContent genera una nueva mutación incluso cuando el texto ya coincide.
+   * Marcamos cada botón una sola vez para que esta normalización sea idempotente
+   * y nunca pueda retroalimentar al propio observador.
+   */
+  if (boton.dataset.trabajoConsultaNormalizado === "true") return;
+
+  boton.dataset.trabajoConsultaNormalizado = "true";
   boton.textContent = "👁️ Ver trabajo";
   boton.setAttribute("aria-label", "Ver trabajo realizado de esta Misión");
 }
@@ -234,6 +242,15 @@ async function ejecutarVerTrabajo(boton) {
   boton.textContent = "Abriendo…";
 
   try {
+    /*
+     * Carga bajo demanda: Mi Camino no depende del resolver de Trabajo
+     * realizado durante su arranque. El nuevo producto se carga únicamente
+     * cuando el usuario solicita abrirlo.
+     */
+    const { abrirTrabajoRealizado } = await import(
+      "../../compartido/js/trabajo-realizado.js"
+    );
+
     await abrirTrabajoRealizado(id, {
       volver: `${window.location.pathname}${window.location.search}${window.location.hash}`
     });
