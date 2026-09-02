@@ -7,6 +7,7 @@ let soloRecompensas = false;
 let recompensasPorMision = new Set();
 let detenerReconocimientos = null;
 let decoracionPendiente = false;
+let observadorLista = null;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -63,7 +64,8 @@ function aplicarFiltroRecompensas() {
 
   tarjetas.forEach(tarjeta => {
     const mostrar = tieneRecompensa(tarjeta);
-    tarjeta.hidden = !mostrar;
+    const ocultar = !mostrar;
+    if (tarjeta.hidden !== ocultar) tarjeta.hidden = ocultar;
     if (mostrar) visibles += 1;
   });
 
@@ -195,6 +197,18 @@ function instalar() {
     subtree: true
   });
 
+  const lista = document.getElementById("listaTareas");
+  if (lista) {
+    observadorLista = new MutationObserver(() => {
+      if (soloRecompensas) programarDecoracion();
+    });
+    observadorLista.observe(lista, {
+      attributes: true,
+      attributeFilter: ["hidden"],
+      subtree: true
+    });
+  }
+
   detenerReconocimientos = Reconocimientos.observar(
     items => {
       recompensasPorMision = new Set(
@@ -221,6 +235,7 @@ function instalar() {
     "beforeunload",
     () => {
       detenerReconocimientos?.();
+      observadorLista?.disconnect();
       observadorDom.disconnect();
     },
     { once: true }
