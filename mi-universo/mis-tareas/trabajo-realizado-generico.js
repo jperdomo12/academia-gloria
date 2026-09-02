@@ -1,9 +1,15 @@
 import { Academia } from "../../compartido/api/academia.js";
-import { auth } from "../../compartido/firebase/firebase-config.js";
+import { auth, db } from "../../compartido/firebase/firebase-config.js";
+import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const $ = id => document.getElementById(id);
 const parametros = new URLSearchParams(window.location.search);
 const misionId = String(parametros.get("misionId") || "").trim();
+let userIdPersonaActivaPromise = null;
 
 const MODULOS = Object.freeze({
   "rincon-lectura": { nombre:"Mi Rincón de Lectura", icono:"📚" },
@@ -78,7 +84,7 @@ function valorFechaEvidencia(evidencia = {}) {
 }
 
 function fechaSesion(sesion = {}) {
-  return sesion.completadaEn || sesion.updatedAt || sesion.creadaEn || sesion.createdAt || null;
+  return sesion.completadaEn || sesion.actualizadaEn || sesion.updatedAt || sesion.creadaEn || sesion.createdAt || null;
 }
 
 function ordenarEvidencias(evidencias = []) {
@@ -241,6 +247,66 @@ function renderMision(tarea, perfil, evidencias) {
     : '<div class="trabajo-vacio trabajo-dato--ancho">La Misión no necesita información adicional para interpretar su trabajo.</div>';
 }
 
+async function obtenerUserIdPersonaActiva() {
+  if (!userIdPersonaActivaPromise) {
+    userIdPersonaActivaPromise = ContextoUsuario.obtenerUserIdPersonaActiva();
+  }
+  const userId = await userIdPersonaActivaPromise;
+  if (!userId) throw new Error("No se pudo resolver la Persona Activa.");
+  return userId;
+}
+
+async function leerDocumentoSesion(coleccion, sesionId) {
+  const id = texto(sesionId);
+  if (!id) return null;
+
+  const userId = await obtenerUserIdPersonaActiva();
+  const resultado = await getDoc(doc(db, "usuarios", userId, coleccion, id));
+  return resultado.exists() ? { id:resultado.id, ...resultado.data() } : null;
+}
+
+async function leerSesionesReferenciadas(
+  evidencias,
+  coleccion,
+  leerCompatibilidad
+) {
+  const ids = [...new Set(
+    evidencias.map(item => texto(item.sesionId)).filter(Boolean)
+  )];
+
+  const exactas = await Promise.all(ids.map(async id => {
+    try {
+      return await leerDocumentoSesion(coleccion, id);
+    } catch (error) {
+      console.debug(`No se pudo leer la sesión exacta ${coleccion}/${id}.`, error);
+      return null;
+    }
+  }));
+
+  const porId = new Map(
+    exactas.filter(Boolean).map(item => [String(item.id), item])
+  );
+
+  const necesitaCompatibilidad = evidencias.some(evidencia => {
+    const id = texto(evidencia.sesionId);
+    return !id || !porId.has(id);
+  });
+
+  if (!necesitaCompatibilidad) return [...porId.values()];
+
+  try {
+    const historicas = await leerCompatibilidad();
+    historicas.forEach(item => {
+      const id = texto(item.id);
+      if (id && !porId.has(id)) porId.set(id, item);
+    });
+  } catch (error) {
+    console.debug(`No se pudo cargar la compatibilidad histórica de ${coleccion}.`, error);
+  }
+
+  return [...porId.values()];
+}
+
 function detallePronunciacionHtml(evidencia = {}) {
   const resultado = evidencia.resultado || {};
   const palabras = Array.isArray(resultado.palabras) ? resultado.palabras : [];
@@ -335,19 +401,204 @@ function respuestasLecturaHtml(sesion = {}, historia = null) {
         const pregunta = historia?.preguntas?.find(item => String(item.id) === String(preguntaId));
         const textoPregunta = pregunta?.texto || `Pregunta ${index + 1}`;
         const textoRespuesta = respuestaLecturaTexto(historia, preguntaId, respuesta.respuesta);
+        const opciones = Array.isArray(respuesta.opcionesElegidas)
+          ? respuesta.opcionesElegidas
+              .map(id => respuestaLecturaTexto(historia, preguntaId, id))
+              .filter(Boolean)
+          : [];
         const tieneCorrecta = Object.prototype.hasOwnProperty.call(respuesta,"correcta");
         return `
           <article class="evidencia-respuesta">
             <strong>${escapar(textoPregunta)}</strong>
             <span>${escapar(textoRespuesta || "Sin respuesta guardada")}</span>
+            ${opciones.length ? `<span>Opciones elegidas: ${escapar(opciones.join(" → "))}</span>` : ""}
             <small>
               ${Number(respuesta.intentos || 0) ? `${Number(respuesta.intentos)} intento(s)` : "Respuesta guardada"}
-              ${tieneCorrecta ? (respuesta.correcta ? " · ✅ correcta" : " · 🌱 para revisar") : ""}
+              ${tieneCorrecta ? (respuesta.correcta ? " · ✅ correcta" : " · 🌱 para revisar") : " · 💬 respuesta abierta"}
             </small>
           </article>
         `;
       }).join("")}
     </div>
+  `;
+}
+
+function normalizarComparacion(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(/[^\p{L}\p{N}'’]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function tokenizarConOriginal(valor = "") {
+  return String(valor)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(original => ({ original, normalizada:normalizarComparacion(original) }));
+}
+
+function construirComparacionPalabras(textoOriginal, textoReconocido) {
+  const esperado = tokenizarConOriginal(textoOriginal);
+  const reconocido = tokenizarConOriginal(textoReconocido);
+  const filas = esperado.length + 1;
+  const columnas = reconocido.length + 1;
+  const dp = Array.from({ length:filas }, () => new Array(columnas).fill(0));
+
+  for (let i = esperado.length - 1; i >= 0; i -= 1) {
+    for (let j = reconocido.length - 1; j >= 0; j -= 1) {
+      dp[i][j] = esperado[i].normalizada === reconocido[j].normalizada
+        ? dp[i + 1][j + 1] + 1
+        : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+
+  const resultado = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < esperado.length && j < reconocido.length) {
+    if (esperado[i].normalizada === reconocido[j].normalizada) {
+      resultado.push({ tipo:"coincide", esperado:esperado[i].original, reconocido:reconocido[j].original });
+      i += 1;
+      j += 1;
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) {
+      resultado.push({ tipo:"falta", esperado:esperado[i].original, reconocido:"" });
+      i += 1;
+    } else {
+      resultado.push({ tipo:"diferente", esperado:"", reconocido:reconocido[j].original });
+      j += 1;
+    }
+  }
+
+  while (i < esperado.length) {
+    resultado.push({ tipo:"falta", esperado:esperado[i].original, reconocido:"" });
+    i += 1;
+  }
+  while (j < reconocido.length) {
+    resultado.push({ tipo:"diferente", esperado:"", reconocido:reconocido[j].original });
+    j += 1;
+  }
+
+  return resultado;
+}
+
+function mapaPalabrasHtml(textoOriginal, textoReconocido) {
+  return construirComparacionPalabras(textoOriginal, textoReconocido)
+    .map(item => {
+      if (item.tipo === "coincide") {
+        return `<span class="lectura-palabra lectura-palabra--coincide" title="Palabra reconocida">${escapar(item.esperado)}</span>`;
+      }
+      if (item.tipo === "falta") {
+        return `<span class="lectura-palabra lectura-palabra--falta" title="Palabra del texto que no apareció en la transcripción">${escapar(item.esperado)}</span>`;
+      }
+      return `<span class="lectura-palabra lectura-palabra--diferente" title="Palabra diferente reconocida por Lía">+ ${escapar(item.reconocido)}</span>`;
+    })
+    .join(" ");
+}
+
+function comparacionLecturaHtml(sesion = {}) {
+  const original = texto(sesion.textoOriginal);
+  const reconocido = texto(sesion.transcripcion);
+  if (!original && !reconocido) return "";
+
+  const mapa = original && reconocido
+    ? `
+      <div class="lectura-leyenda" aria-label="Leyenda del mapa de palabras">
+        <span><i class="lectura-palabra lectura-palabra--coincide">Verde</i> aparece en ambos textos</span>
+        <span><i class="lectura-palabra lectura-palabra--falta">Amarillo</i> no apareció en la transcripción</span>
+        <span><i class="lectura-palabra lectura-palabra--diferente">Azul</i> palabra diferente reconocida</span>
+      </div>
+      <div class="lectura-mapa-palabras">${mapaPalabrasHtml(original, reconocido)}</div>
+    `
+    : "";
+
+  return `
+    ${mapa}
+    <div class="lectura-comparacion-textos">
+      <article>
+        <strong>📖 Texto original</strong>
+        <p>${escapar(original || "No quedó guardado el texto original.")}</p>
+      </article>
+      <article>
+        <strong>🦜 Lo que entendió Lía</strong>
+        <p>${escapar(reconocido || "No quedó guardada una transcripción.")}</p>
+      </article>
+    </div>
+  `;
+}
+
+function palabrasParaCrecerHtml(analisis = {}) {
+  const palabras = Array.isArray(analisis.palabrasParaCrecer)
+    ? analisis.palabrasParaCrecer
+    : [];
+  if (!palabras.length) return "";
+
+  const etiquetaEstado = estado => ({
+    superada:"✅ Superada",
+    success:"✅ Superada",
+    en_practica:"🌱 En práctica",
+    practice:"🌱 En práctica",
+    reintentar:"🔁 Para repetir",
+    retry:"🔁 Para repetir",
+    pendiente:"⏳ Pendiente",
+    listening:"🎙️ En proceso"
+  })[estado] || "⏳ Pendiente";
+
+  return `
+    <div class="lectura-palabras-crecer">
+      ${palabras.map((palabra,index) => {
+        const inicial = texto(
+          palabra.palabraReconocidaInicialmente ||
+          palabra.palabraReconocidaEnLectura
+        );
+        const ultima = texto(palabra.ultimaPalabraReconocida);
+        const intentos = Math.max(0, Number(palabra.intentos || 0));
+        const estado = texto(palabra.estado) || "pendiente";
+        return `
+          <article class="lectura-palabra-crecer">
+            <span class="lectura-palabra-crecer__numero">${index + 1}</span>
+            <div>
+              <strong>${escapar(palabra.palabra || "Palabra")}</strong>
+              <small>${inicial
+                ? `En la lectura, Lía entendió «${escapar(inicial)}».`
+                : "No apareció con claridad en la transcripción inicial."}</small>
+              ${ultima && ultima !== inicial
+                ? `<small>Último intento reconocido: «${escapar(ultima)}».</small>`
+                : ""}
+            </div>
+            <div class="lectura-palabra-crecer__estado">
+              <span>${escapar(etiquetaEstado(estado))}</span>
+              <small>${intentos} ${intentos === 1 ? "intento" : "intentos"}</small>
+            </div>
+          </article>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function historialObservacionesHtml(sesion = {}) {
+  const historial = Array.isArray(sesion.historialObservacionesFamilia)
+    ? sesion.historialObservacionesFamilia
+    : [];
+  if (!historial.length) return "";
+
+  return `
+    <details class="lectura-observaciones-historial">
+      <summary>📅 Ver historial de observaciones</summary>
+      <div>
+        ${[...historial].reverse().map(item => `
+          <article>
+            <small>${escapar(fechaTexto(item.fecha))}</small>
+            <p>${escapar(item.texto || "")}</p>
+          </article>
+        `).join("")}
+      </div>
+    </details>
   `;
 }
 
@@ -367,33 +618,62 @@ function tarjetaLectura(evidencia, sesion, historia) {
     ? sesion.analisisLectura
     : {};
   const titulo = sesion?.titulo || historia?.titulo || evidencia.resultado?.titulo || evidencia.actividadId || "Lectura";
-  const metricas = (Number(analisis.coincidencia || 0) || Number(analisis.palabrasTexto || 0) || Number(sesion?.intentos || 0))
+  const coincidencia = Number(analisis.coincidencia || 0);
+  const coincidentes = Number(analisis.palabrasCoincidentes || 0);
+  const palabrasTexto = Number(analisis.palabrasTexto || 0);
+  const ppm = Number(analisis.palabrasPorMinuto || 0);
+  const intentos = Number(sesion?.intentos || evidencia.resultado?.intentos || 0);
+  const tieneAnalisis = coincidencia || coincidentes || palabrasTexto || ppm || intentos;
+  const metricas = tieneAnalisis
     ? `
       <div class="evidencia-grid">
-        <div class="evidencia-metrica"><strong>${Number(analisis.coincidencia || 0)}%</strong><span>coincidencia</span></div>
-        <div class="evidencia-metrica"><strong>${Number(sesion?.intentos || evidencia.resultado?.intentos || 0) || "—"}</strong><span>intentos</span></div>
-        <div class="evidencia-metrica"><strong>${Number(analisis.palabrasPorMinuto || 0) || "—"}</strong><span>palabras/minuto</span></div>
-      </div>`
+        <div class="evidencia-metrica"><strong>${coincidencia}%</strong><span>coincidencia</span></div>
+        <div class="evidencia-metrica"><strong>${coincidentes || "—"}</strong><span>palabras coincidentes</span></div>
+        <div class="evidencia-metrica"><strong>${palabrasTexto || "—"}</strong><span>palabras del texto</span></div>
+        <div class="evidencia-metrica"><strong>${intentos || "—"}</strong><span>intentos</span></div>
+        <div class="evidencia-metrica"><strong>${ppm || "—"}</strong><span>palabras/minuto</span></div>
+      </div>
+      ${texto(analisis.mensaje) ? `<p class="lectura-analisis-mensaje">${escapar(analisis.mensaje)}</p>` : ""}
+    `
     : "";
   const comprension = respuestasLecturaHtml(sesion || {}, historia);
+  const comparacion = sesion ? comparacionLecturaHtml(sesion) : "";
+  const palabrasCrecer = palabrasParaCrecerHtml(analisis);
+  const observacionActual = texto(sesion?.observacionFamilia);
+  const historialObservaciones = sesion ? historialObservacionesHtml(sesion) : "";
+  const subtitulo = [
+    fechaTexto(valorFechaEvidencia(evidencia)),
+    Number(sesion?.duracion || 0) > 0 ? duracionTexto(sesion.duracion) : ""
+  ].filter(Boolean).join(" · ");
 
   const contenido = [
-    metricas ? bloque("🔎 Resultado de la lectura", metricas, "evidencia-bloque--resultado") : "",
+    metricas ? bloque("🔎 Análisis guardado de la lectura", metricas, "evidencia-bloque--resultado") : "",
+    comparacion ? bloque("🎨 Texto original, mapa y comparación", comparacion) : "",
+    palabrasCrecer ? bloque("🦜 Palabras que Lía sugirió repetir", palabrasCrecer, "evidencia-bloque--resultado") : "",
     sesion?.audioData ? bloque("🎙️ Grabación", audioHtml(sesion.audioData, sesion.duracion), "evidencia-bloque--audio") : "",
-    texto(sesion?.transcripcion) ? bloque("🦜 Lo que entendió Lía", `<p>${escapar(sesion.transcripcion)}</p>`) : "",
     comprension ? bloque("🧠 Comprensión", comprension) : "",
     texto(sesion?.reflexion) ? bloque("🌟 Reflexión", `<p>${escapar(sesion.reflexion)}</p>`) : "",
     texto(sesion?.fraseDelDia) ? bloque("🌈 Frase del día", `<p>${escapar(sesion.fraseDelDia)}</p>`) : "",
-    texto(sesion?.observacionFamilia) ? bloque("👨‍👩‍👧 Observación familiar", `<p>${escapar(sesion.observacionFamilia)}</p>`, "evidencia-bloque--familia") : "",
+    observacionActual || historialObservaciones
+      ? bloque(
+          "👨‍👩‍👧 Observación familiar",
+          `${observacionActual ? `<p>${escapar(observacionActual)}</p>` : ""}${historialObservaciones}`,
+          "evidencia-bloque--familia"
+        )
+      : "",
     !sesion ? bloque("🗂️ Registro disponible", listaDatosHtml(evidencia.resultado || {})) : ""
   ].filter(Boolean).join("");
 
-  return tarjetaHtml({ evidencia, titulo, subtitulo:fechaTexto(valorFechaEvidencia(evidencia)), contenido });
+  return tarjetaHtml({ evidencia, titulo, subtitulo, contenido });
 }
 
 async function renderLectura(evidencias) {
   const [sesiones, historias] = await Promise.all([
-    Academia.rinconLectura.leerSesiones(),
+    leerSesionesReferenciadas(
+      evidencias,
+      "sesionesLectura",
+      () => Academia.rinconLectura.leerSesiones()
+    ),
     historiasLectura()
   ]);
 
@@ -479,7 +759,11 @@ function tarjetaSemilla(evidencia, sesion, semilla) {
 
 async function renderSemillas(evidencias) {
   const [sesiones, catalogo] = await Promise.all([
-    Academia.semillas.leerSesiones(),
+    leerSesionesReferenciadas(
+      evidencias,
+      "sesionesSemillas",
+      () => Academia.semillas.leerSesiones()
+    ),
     catalogoSemillas()
   ]);
 
@@ -558,6 +842,15 @@ function renderEvidenciaGenerica(evidencia) {
 
 async function renderTrabajo(tarea, evidencias) {
   if (!evidencias.length) {
+    if (tarea.tipo === "repaso_academico") {
+      return `
+        <div class="trabajo-vacio">
+          <strong>📘 Esta Misión no genera un resultado digital guardado.</strong><br>
+          La actividad se realizó fuera del motor de ejercicios de la Academia. Aquí se conserva la Misión,
+          su estado y la información de cierre disponible, sin inventar una evidencia que no existe.
+        </div>
+      `;
+    }
     return '<div class="trabajo-vacio">Todavía no hay trabajo registrado para esta Misión.</div>';
   }
 
@@ -605,11 +898,17 @@ async function iniciar() {
     const ordenadas = ordenarEvidencias(evidencias);
     renderMision(tarea, perfil, ordenadas);
 
-    $("contadorEvidencias").textContent =
-      `${ordenadas.length} ${ordenadas.length === 1 ? "actividad" : "actividades"}`;
-    $("textoEvidencias").textContent = ordenadas.length
-      ? "Cada actividad pertenece a esta Misión y conserva su resultado histórico. Abre solo la que quieras revisar."
-      : "Todavía no hay trabajo registrado para esta Misión.";
+    if (!ordenadas.length && tarea.tipo === "repaso_academico") {
+      $("contadorEvidencias").textContent = "Sin resultado digital";
+      $("textoEvidencias").textContent =
+        "Esta actividad no genera una sesión académica guardada. La Misión se conserva como contexto de lo realizado.";
+    } else {
+      $("contadorEvidencias").textContent =
+        `${ordenadas.length} ${ordenadas.length === 1 ? "actividad" : "actividades"}`;
+      $("textoEvidencias").textContent = ordenadas.length
+        ? "Cada actividad pertenece a esta Misión y conserva su resultado histórico. Abre solo la que quieras revisar."
+        : "Todavía no hay trabajo registrado para esta Misión.";
+    }
 
     $("listaEvidencias").innerHTML = await renderTrabajo(tarea, ordenadas);
 
