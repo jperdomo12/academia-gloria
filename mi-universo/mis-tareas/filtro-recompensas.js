@@ -1,48 +1,28 @@
 /* Academia Gloria Valentina · Gestión de Misiones · Filtro por Recompensas */
 
+import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
+
 let instalada = false;
-let filtroActivo = false;
-let actualizacionPendiente = false;
+let soloRecompensas = false;
+let recompensasPorMision = new Set();
+let detenerReconocimientos = null;
+let decoracionPendiente = false;
 let observadorLista = null;
-let observadorFiltros = null;
 
-function cargarEstilos() {
-  if (document.getElementById("estilosFiltroRecompensas")) return;
-
-  const estilos = document.createElement("style");
-  estilos.id = "estilosFiltroRecompensas";
-  estilos.textContent = `
-    #listaTareas.filtro-recompensas-activo > .tarea-card:not(:has(.accion-reconocimiento-mision.reconocida)) {
-      display: none !important;
-    }
-
-    .estado-filtro-recompensas {
-      margin-top: 1rem;
-    }
-  `;
-  document.head.appendChild(estilos);
+function texto(valor = "") {
+  return String(valor ?? "").replace(/\s+/g, " ").trim();
 }
 
-function tarjetasListado() {
-  return [...document.querySelectorAll("#listaTareas > .tarea-card")];
+function idTarjeta(tarjeta) {
+  return texto(tarjeta?.querySelector("[data-id]")?.dataset?.id);
 }
 
 function tieneRecompensa(tarjeta) {
-  return Boolean(
-    tarjeta?.querySelector(".accion-reconocimiento-mision.reconocida")
-  );
+  const id = idTarjeta(tarjeta);
+  return Boolean(id && recompensasPorMision.has(id));
 }
 
-function tarjetasDelConjuntoActual() {
-  /*
-   * La marca hidden pertenece a otros filtros complementarios, actualmente
-   * 🧪 Pruebas. No la modificamos: solo la respetamos para que ambos filtros
-   * puedan combinarse sin sobrescribirse.
-   */
-  return tarjetasListado().filter(tarjeta => !tarjeta.hidden);
-}
-
-function asegurarEstadoVacio() {
+function asegurarEstadoRecompensas() {
   const lista = document.getElementById("listaTareas");
   if (!lista?.parentElement) return null;
 
@@ -51,121 +31,215 @@ function asegurarEstadoVacio() {
     estado = document.createElement("div");
     estado.id = "estadoFiltroRecompensas";
     estado.className = "estado-carga estado-filtro-recompensas hidden";
-    estado.textContent = "No hay Misiones con 🏅 Recompensa en este filtro.";
+    estado.textContent = "No hay Misiones con 🏅 Recompensa.";
     lista.parentElement.insertBefore(estado, lista);
   }
+
   return estado;
 }
 
-function asegurarBotonFiltro() {
+function restaurarControlesListado() {
+  const paginacion = document.getElementById("paginacionTareas");
+  if (paginacion) paginacion.hidden = false;
+  asegurarEstadoRecompensas()?.classList.add("hidden");
+}
+
+function salirFiltroRecompensas() {
+  if (!soloRecompensas) return;
+
+  soloRecompensas = false;
+  document
+    .querySelector("[data-filtro-recompensas]")
+    ?.classList.remove("active");
+  restaurarControlesListado();
+}
+
+function aplicarFiltroRecompensas() {
+  if (!soloRecompensas) return;
+
+  const tarjetas = [
+    ...document.querySelectorAll("#listaTareas > .tarea-card")
+  ];
+  let visibles = 0;
+
+  tarjetas.forEach(tarjeta => {
+    const mostrar = tieneRecompensa(tarjeta);
+    const ocultar = !mostrar;
+    if (tarjeta.hidden !== ocultar) tarjeta.hidden = ocultar;
+    if (mostrar) visibles += 1;
+  });
+
+  const paginacion = document.getElementById("paginacionTareas");
+  if (paginacion) paginacion.hidden = true;
+
+  document.getElementById("estadoListadoMisiones")?.classList.add("hidden");
+  document.getElementById("estadoDatosPrueba")?.classList.add("hidden");
+  asegurarEstadoRecompensas()?.classList.toggle("hidden", visibles > 0);
+}
+
+function limpiarFiltrosTipoTema() {
+  ["filtroTipoMision", "filtroTemaMision"].forEach(id => {
+    const control = document.getElementById(id);
+    if (!control || !control.value) return;
+
+    control.value = "";
+    control.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+}
+
+function actualizarFiltroRecompensas() {
+  const boton = document.querySelector("[data-filtro-recompensas]");
+  if (!boton) return;
+
+  const cantidad = recompensasPorMision.size;
+  const etiqueta = `🏅 Recompensa${cantidad ? ` (${cantidad})` : ""}`;
+  if (boton.textContent !== etiqueta) boton.textContent = etiqueta;
+}
+
+function asegurarIntegracionFiltrosEstandar() {
+  ["filtroTipoMision", "filtroTemaMision"].forEach(id => {
+    const control = document.getElementById(id);
+    if (!control || control.dataset.integradoRecompensas === "true") return;
+
+    control.dataset.integradoRecompensas = "true";
+    control.addEventListener("change", salirFiltroRecompensas);
+  });
+}
+
+function asegurarFiltroRecompensas() {
   const filtros = document.querySelector("#panelLista .filtros");
-  if (!filtros) return null;
+  if (!filtros) return;
 
   let boton = filtros.querySelector("[data-filtro-recompensas]");
+
   if (!boton) {
     boton = document.createElement("button");
     boton.type = "button";
     boton.className = "filtro";
     boton.dataset.filtroRecompensas = "true";
-    boton.setAttribute("aria-pressed", "false");
+    boton.textContent = "🏅 Recompensa";
+
+    const pruebas = filtros.querySelector("[data-filtro-datos-prueba]");
+    if (pruebas) pruebas.after(boton);
+    else filtros.appendChild(boton);
+
     boton.addEventListener("click", () => {
-      filtroActivo = !filtroActivo;
-      programarActualizacion();
+      if (soloRecompensas) {
+        const todas = filtros.querySelector('[data-filter="todas"]');
+        todas?.click();
+        return;
+      }
+
+      limpiarFiltrosTipoTema();
+
+      /* Igual que 🧪 Pruebas: partimos de Todas para no depender de la página
+         actual ni del filtro de Estado. El click también desactiva Pruebas. */
+      const todas = filtros.querySelector('[data-filter="todas"]');
+      todas?.click();
+
+      window.setTimeout(() => {
+        soloRecompensas = true;
+        filtros.querySelectorAll("[data-filter]").forEach(item => {
+          item.classList.remove("active");
+        });
+        filtros
+          .querySelector("[data-filtro-datos-prueba]")
+          ?.classList.remove("active");
+        boton.classList.add("active");
+        aplicarFiltroRecompensas();
+      }, 30);
     });
+
+    filtros.addEventListener(
+      "click",
+      event => {
+        const normal = event.target?.closest?.("[data-filter]");
+        const pruebas = event.target?.closest?.("[data-filtro-datos-prueba]");
+        if (!normal && !pruebas) return;
+        salirFiltroRecompensas();
+      },
+      true
+    );
   }
 
-  /* Mantenerlo junto al filtro especial de Pruebas cuando este exista. */
+  /* Pruebas se crea dinámicamente; mantener Recompensa inmediatamente después. */
   const pruebas = filtros.querySelector("[data-filtro-datos-prueba]");
-  if (pruebas) {
-    if (pruebas.nextElementSibling !== boton) pruebas.after(boton);
-  } else if (boton.parentElement !== filtros) {
-    filtros.appendChild(boton);
-  }
+  if (pruebas && pruebas.nextElementSibling !== boton) pruebas.after(boton);
 
-  return boton;
+  actualizarFiltroRecompensas();
+  asegurarIntegracionFiltrosEstandar();
 }
 
-function aplicarFiltro() {
-  const lista = document.getElementById("listaTareas");
-  const boton = asegurarBotonFiltro();
-  if (!lista || !boton) return;
-
-  lista.classList.toggle("filtro-recompensas-activo", filtroActivo);
-  boton.classList.toggle("active", filtroActivo);
-  boton.setAttribute("aria-pressed", filtroActivo ? "true" : "false");
-
-  const actuales = tarjetasDelConjuntoActual();
-  const conRecompensa = actuales.filter(tieneRecompensa);
-  boton.textContent = `🏅 Recompensa (${conRecompensa.length})`;
-
-  /*
-   * Si el filtro está activo debe poder desactivarse aunque el contador quede
-   * en cero por combinarlo con otro filtro. Solo se deshabilita cuando está
-   * inactivo y el conjunto actual no contiene Recompensas.
-   */
-  boton.disabled = !filtroActivo && conRecompensa.length === 0;
-
-  const estado = asegurarEstadoVacio();
-  const listadoTieneTarjetas = tarjetasListado().length > 0;
-  const estadoPruebas = document.getElementById("estadoDatosPrueba");
-  const pruebasYaExplicanVacio = Boolean(
-    estadoPruebas && !estadoPruebas.classList.contains("hidden")
-  );
-
-  estado?.classList.toggle(
-    "hidden",
-    !(
-      filtroActivo &&
-      listadoTieneTarjetas &&
-      conRecompensa.length === 0 &&
-      !pruebasYaExplicanVacio
-    )
-  );
-}
-
-function programarActualizacion() {
-  if (actualizacionPendiente) return;
-  actualizacionPendiente = true;
+function programarDecoracion() {
+  if (decoracionPendiente) return;
+  decoracionPendiente = true;
 
   window.requestAnimationFrame(() => {
-    actualizacionPendiente = false;
-    aplicarFiltro();
+    decoracionPendiente = false;
+    asegurarFiltroRecompensas();
+    if (soloRecompensas) aplicarFiltroRecompensas();
   });
 }
 
 function instalar() {
   if (instalada) return;
   instalada = true;
-  cargarEstilos();
 
-  const lista = document.getElementById("listaTareas");
-  const filtros = document.querySelector("#panelLista .filtros");
-  if (!lista || !filtros) return;
-
-  /*
-   * Observamos solo cambios que pueden modificar el conjunto visible o el
-   * estado reconocido de una tarjeta. El guard de requestAnimationFrame evita
-   * cascadas de actualizaciones y no se reescribe contenido observado.
-   */
-  observadorLista = new MutationObserver(programarActualizacion);
-  observadorLista.observe(lista, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ["class", "hidden"]
+  const observadorDom = new MutationObserver(cambios => {
+    const hayCambioEstructural = cambios.some(cambio =>
+      cambio.addedNodes.length > 0 || cambio.removedNodes.length > 0
+    );
+    if (hayCambioEstructural) programarDecoracion();
   });
 
-  /* Pruebas crea su filtro dinámicamente; este observador solo mantiene el
-     orden visual Recompensa después de Pruebas cuando aparezca. */
-  observadorFiltros = new MutationObserver(programarActualizacion);
-  observadorFiltros.observe(filtros, { childList: true });
+  observadorDom.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 
-  programarActualizacion();
+  const lista = document.getElementById("listaTareas");
+  if (lista) {
+    observadorLista = new MutationObserver(() => {
+      if (soloRecompensas) programarDecoracion();
+    });
+    observadorLista.observe(lista, {
+      attributes: true,
+      attributeFilter: ["hidden"],
+      subtree: true
+    });
+  }
 
-  window.addEventListener("beforeunload", () => {
-    observadorLista?.disconnect();
-    observadorFiltros?.disconnect();
-  }, { once: true });
+  detenerReconocimientos = Reconocimientos.observar(
+    items => {
+      recompensasPorMision = new Set(
+        items
+          .filter(
+            item =>
+              item.estado === "activo" &&
+              texto(item.fuentePrincipal?.misionId)
+          )
+          .map(item => texto(item.fuentePrincipal.misionId))
+      );
+      programarDecoracion();
+    },
+    error =>
+      console.debug(
+        "No se pudieron observar las Recompensas de Misiones.",
+        error
+      )
+  );
+
+  programarDecoracion();
+
+  window.addEventListener(
+    "beforeunload",
+    () => {
+      detenerReconocimientos?.();
+      observadorLista?.disconnect();
+      observadorDom.disconnect();
+    },
+    { once: true }
+  );
 }
 
 if (document.readyState === "loading") {
