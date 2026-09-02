@@ -490,10 +490,21 @@ function fechaConstanciaTarea(tarea = {}) {
     tarea.resultado && typeof tarea.resultado === "object"
       ? tarea.resultado
       : {};
+  const progreso =
+    tarea.progreso && typeof tarea.progreso === "object"
+      ? tarea.progreso
+      : {};
+  const tieneEvidencias =
+    Array.isArray(progreso.evidenciaIds) && progreso.evidenciaIds.length > 0;
 
+  /* En Misiones respaldadas por evidencias, completadaEn representa el momento
+     real en que Gloria alcanzó el objetivo. Una aprobación familiar posterior
+     no debe mover ese día en Mi constancia. En Misiones manuales se conserva
+     como prioridad la fecha de finalización registrada por la familia. */
   return fechaJs(
+    (tieneEvidencias ? progreso.completadaEn : null) ||
     resultado.fechaFinalizacion ||
-    tarea.progreso?.completadaEn ||
+    progreso.completadaEn ||
     tarea.fechaFinalizacion ||
     (
       ESTADOS_REVISION_CONSTANCIA.has(tarea.estado)
