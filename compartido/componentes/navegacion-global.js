@@ -431,6 +431,20 @@ async function iniciarPanelCanonico(cabecera) {
   }
 }
 
+async function iniciarRecordatoriosInicio(rutaActual) {
+  if (rutaActual !== "") return;
+
+  try {
+    const { iniciarRecordatoriosCalendarioIngreso } = await import(
+      "../js/recordatorios-calendario-ingreso.js"
+    );
+    await iniciarRecordatoriosCalendarioIngreso();
+  } catch (error) {
+    // Los recordatorios son una mejora opcional y nunca bloquean la Academia.
+    console.debug("No se pudieron iniciar los recordatorios del calendario.", error);
+  }
+}
+
 async function crearCabecera() {
   if (document.querySelector(".nav-global")) return;
 
@@ -475,6 +489,7 @@ async function crearCabecera() {
   const padresLegados = limpiarNavegacionLegada(actual);
   normalizarContenedoresLegados(padresLegados);
   await iniciarPanelCanonico(cabecera);
+  await iniciarRecordatoriosInicio(rutaActual);
 }
 
 function solicitarCreacionCabecera() {
