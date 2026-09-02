@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6d28d9">
+  <title>Trabajo realizado | Academia Gloria Valentina</title>
+  <meta
+    name="description"
+    content="Consulta en modo solo lectura la Misión y las evidencias guardadas de la Persona Activa."
+  >
+
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./trabajo-realizado.css">
+</head>
+
+<body
+  data-page-title="Trabajo realizado"
+  data-page-icon="📖"
+  data-nav-back="../mi-camino/"
+>
+  <main class="trabajo-pagina">
+    <section id="estadoCarga" class="trabajo-estado trabajo-estado--carga" aria-live="polite">
+      <span class="trabajo-estado__icono" aria-hidden="true">🦜</span>
+      <div>
+        <strong>Lía está preparando el trabajo realizado…</strong>
+        <p>Estamos reuniendo la Misión y únicamente las evidencias que pertenecen a ella.</p>
+      </div>
+    </section>
+
+    <section id="estadoError" class="trabajo-estado trabajo-estado--error" aria-live="polite" hidden>
+      <span class="trabajo-estado__icono" aria-hidden="true">🌿</span>
+      <div>
+        <strong>No pudimos abrir este trabajo.</strong>
+        <p id="textoError">Regresa a la pantalla anterior e inténtalo de nuevo.</p>
+      </div>
+    </section>
+
+    <div id="contenidoTrabajo" hidden>
+      <header class="trabajo-hero">
+        <div class="trabajo-hero__principal">
+          <span class="trabajo-sobrelinea">📖 Trabajo realizado · Solo lectura</span>
+          <h1 id="tituloMision">Misión</h1>
+          <p id="descripcionMision" class="trabajo-hero__descripcion"></p>
+          <div id="chipsMision" class="trabajo-chips" aria-label="Contexto de la Misión"></div>
+        </div>
+
+        <aside class="trabajo-identidad" aria-label="Persona y progreso de la Misión">
+          <span class="trabajo-identidad__icono" aria-hidden="true">🗂️</span>
+          <p class="trabajo-sobrelinea">Persona Activa</p>
+          <strong id="nombrePersona">Alumno</strong>
+          <span id="progresoMision">Progreso no disponible</span>
+          <small>Consultar este visor no crea, modifica ni elimina evidencias.</small>
+        </aside>
+      </header>
+
+      <section id="resumenMision" class="trabajo-panel trabajo-resumen" aria-labelledby="tituloResumenMision">
+        <div class="trabajo-seccion-cabecera">
+          <div>
+            <span class="trabajo-sobrelinea">Contexto de la experiencia</span>
+            <h2 id="tituloResumenMision">La Misión</h2>
+            <p>El trabajo se interpreta dentro de la Misión que le dio origen.</p>
+          </div>
+        </div>
+        <div id="datosMision" class="trabajo-datos-mision"></div>
+      </section>
+
+      <section class="trabajo-panel" aria-labelledby="tituloEvidencias">
+        <div class="trabajo-seccion-cabecera">
+          <div>
+            <span class="trabajo-sobrelinea">Registro histórico</span>
+            <h2 id="tituloEvidencias">Evidencias de la Misión</h2>
+            <p id="textoEvidencias">Aquí aparece exactamente lo que quedó guardado para esta Misión.</p>
+          </div>
+          <span id="contadorEvidencias" class="trabajo-contador">0 evidencias</span>
+        </div>
+
+        <div id="listaEvidencias" class="trabajo-evidencias"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./trabajo-realizado-generico.js"></script>
+</body>
+</html>
