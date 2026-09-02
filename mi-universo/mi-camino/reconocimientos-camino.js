@@ -83,6 +83,10 @@ function formatearFecha(valor) {
 }
 
 function formatearFechaHora(valor) {
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    return formatearFecha(valor);
+  }
+
   const fecha = fechaJs(valor);
   if (!fecha) return "Fecha no disponible";
   return new Intl.DateTimeFormat("es-ES", {
@@ -95,9 +99,7 @@ function formatearFechaHora(valor) {
 }
 
 function formatearFechaReconocimiento(item = {}) {
-  return item.origen === "observado"
-    ? formatearFechaHora(item.fechaReconocimiento)
-    : formatearFecha(item.fechaReconocimiento);
+  return formatearFechaHora(item.fechaReconocimiento);
 }
 
 function claveDia(valor) {
@@ -402,7 +404,7 @@ function renderGuacamayas(items = []) {
             <div>
               <strong>${escapar(texto(item.guacamayaNombre) || "Guacamaya")}</strong>
               <p>${escapar(item.mensaje || item.guacamayaDescripcion || "")}</p>
-              <small>📅 ${escapar(formatearFecha(item.fechaGuacamaya || item.fechaReconocimiento))}</small>
+              <small>📅 ${escapar(formatearFechaHora(item.fechaGuacamaya || item.fechaReconocimiento))}</small>
               ${accionesFuente(item)}
             </div>
           </article>
