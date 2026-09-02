@@ -266,6 +266,25 @@ service cloud.firestore {
         }
       }
 
+      // BIBLIOTECA ENCANTADA · consulta relacionada para Trabajo realizado
+      //
+      // Biblioteca y sus audios continúan usando las colecciones legacy
+      // usuarios/{uid}/biblioteca y usuarios/{uid}/bibliotecaAudios.
+      // Se amplía únicamente la LECTURA a una relación activa con permiso de
+      // consulta. La escritura conserva exactamente el comportamiento legacy
+      // propietario/admin del fallback inferior.
+      match /biblioteca/{libroId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      match /bibliotecaAudios/{libroId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       // Compatibilidad legacy de primer nivel.
       //
       // Antes este fallback era recursivo ({documento=**}); por lo tanto también
