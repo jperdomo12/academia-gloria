@@ -2,7 +2,7 @@
 
 .filtros-listado-misiones{
   display:grid;
-  grid-template-columns:minmax(390px,1.55fr) minmax(220px,.72fr) minmax(250px,.9fr);
+  grid-template-columns:minmax(560px,1.8fr) minmax(170px,.55fr) minmax(220px,.7fr);
   gap:12px;
   align-items:end;
   margin:14px 0 18px;
@@ -37,7 +37,7 @@
 .filtro-listado-misiones--estado .filtros{
   display:flex;
   flex-wrap:nowrap;
-  gap:8px;
+  gap:7px;
   min-height:42px;
   align-items:stretch;
   justify-content:center;
@@ -48,6 +48,9 @@
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  padding-left:12px;
+  padding-right:12px;
+  white-space:nowrap;
 }
 
 .filtro-listado-misiones select,
@@ -78,6 +81,10 @@
   border-color:#93c5fd;
   outline:3px solid rgba(59,130,246,.12);
   outline-offset:1px;
+}
+
+.estado-filtro-recompensas{
+  margin-top:1rem;
 }
 
 .paginacion-gestion-misiones{
@@ -119,7 +126,7 @@
   font-weight:900;
 }
 
-@media(max-width:1000px){
+@media(max-width:1100px){
   .filtros-listado-misiones{
     grid-template-columns:1fr 1fr;
   }
