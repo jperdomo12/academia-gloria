@@ -78,7 +78,10 @@
   background:rgba(255,255,255,.16);
   color:#fff;
   cursor:pointer;
-  font:800 1.55rem/1 inherit;
+  font-family:inherit;
+  font-size:1.55rem;
+  font-weight:800;
+  line-height:1;
 }
 
 .recordatorio-calendario__cerrar:hover,
