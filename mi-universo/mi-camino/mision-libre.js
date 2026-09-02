@@ -3,6 +3,12 @@
 import "./reconocimientos-camino.js";
 import { Academia } from "../../compartido/api/academia.js";
 
+/* La guía visual es una mejora de presentación y nunca debe bloquear la lógica
+   de Misiones si su recurso opcional no pudiera cargarse. */
+import("./guia-celebraciones-gloria.js").catch(error => {
+  console.debug("No se pudo cargar la guía visual de celebraciones.", error);
+});
+
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";
 const RUTA_FALLBACK_LIBRE = new URL("../", window.location.href).pathname;
 

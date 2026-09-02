@@ -1,3 +1,20 @@
+#listaTareas .tarea-card:has(.accion-reconocimiento-mision.reconocida) .tarea-card__resumen-principal h3::after {
+  content: "🏅 Recompensa";
+  display: inline-flex;
+  align-items: center;
+  margin-left: .55rem;
+  padding: .2rem .55rem;
+  border: 1px solid #c4b5fd;
+  border-radius: 999px;
+  background: #f5f3ff;
+  color: #6d28d9;
+  font-size: .73rem;
+  font-weight: 850;
+  line-height: 1.2;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
 .accion-reconocimiento-mision {
   border-color: #f0c96f !important;
   background: #fff9e8 !important;

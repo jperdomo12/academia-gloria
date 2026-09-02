@@ -1,5 +1,6 @@
 /* Academia Gloria Valentina · Gestión de Misiones · Acceso común a Trabajo realizado */
 
+import "./filtro-recompensas.js";
 import { abrirTrabajoRealizado } from "../../compartido/js/trabajo-realizado.js";
 
 function normalizarBotones(raiz = document) {
