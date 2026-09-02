@@ -44,9 +44,7 @@ function completarConsulta(url, misionId, volver = "") {
   return url.href;
 }
 
-function esRepasoAcademico(tarea = {}, evidencias = []) {
-  if (texto(tarea.tipo) === "repaso_academico") return true;
-
+function tieneSesionAcademica(evidencias = []) {
   return evidencias.some(evidencia =>
     texto(evidencia.tipo) === "sesion_academica" ||
     texto(evidencia.origen) === "sesion_academica"
@@ -72,18 +70,6 @@ async function resolverUrlTrabajoRealizado(
   }
 
   /*
-   * Los repasos académicos nuevos se reconocen sin una lectura adicional.
-   * Para datos históricos, conservamos la detección por evidencia más abajo.
-   */
-  if (texto(mision.tipo) === "repaso_academico") {
-    return completarConsulta(
-      urlAcademia("mi-universo/mis-tareas/resultado-academico.html"),
-      id,
-      volver
-    );
-  }
-
-  /*
    * Detectives ya dispone de un visor de Misión completo que reconstruye el
    * proceso matemático historia por historia. Se conserva como visor rico,
    * pero recibe el mismo contrato modo=consulta + misionId + volver.
@@ -98,7 +84,14 @@ async function resolverUrlTrabajoRealizado(
 
   const evidencias = await Academia.tareas.leerEvidencias(id);
 
-  if (esRepasoAcademico(mision, evidencias)) {
+  /*
+   * Un Repaso académico solo utiliza el visor de Resultado académico cuando
+   * existe realmente una sesión académica histórica. Algunas actividades
+   * externas (por ejemplo, ciertos repasos de 5.º) completan la Misión pero no
+   * generan evidencia digital; esas Misiones se muestran en el visor general,
+   * igual que cualquier Misión sin resultado digital guardado.
+   */
+  if (tieneSesionAcademica(evidencias)) {
     return completarConsulta(
       urlAcademia("mi-universo/mis-tareas/resultado-academico.html"),
       id,
@@ -107,10 +100,10 @@ async function resolverUrlTrabajoRealizado(
   }
 
   /*
-   * Visor canónico para Lectura, Pronunciación, Semillas, Biblioteca y
-   * cualquier evidencia futura que no requiera todavía un visor especializado.
-   * La selección se realiza por Misión completa, nunca escogiendo la primera
-   * evidencia ni navegando a un editor del módulo.
+   * Visor canónico para Lectura, Pronunciación, Semillas, Biblioteca,
+   * Repasos sin sesión digital y cualquier evidencia futura que no requiera
+   * todavía un visor especializado. La selección se realiza por Misión
+   * completa, nunca escogiendo arbitrariamente la primera evidencia.
    */
   return completarConsulta(
     urlAcademia("mi-universo/mis-tareas/trabajo-realizado.html"),
