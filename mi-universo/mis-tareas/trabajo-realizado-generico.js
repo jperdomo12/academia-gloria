@@ -196,6 +196,14 @@ function indicadoresResultado(tarea = {}) {
   ].filter(Boolean);
 }
 
+function esEstadoCompletado(estado = "") {
+  return [
+    "pendiente_validacion",
+    "completada_pendiente_validacion",
+    "completada"
+  ].includes(texto(estado));
+}
+
 function renderMision(tarea, perfil, evidencias) {
   const presentacion = tarea.presentacionAlumno || {};
   const resultado = tarea.resultado && typeof tarea.resultado === "object"
@@ -203,13 +211,18 @@ function renderMision(tarea, perfil, evidencias) {
     : {};
   const modulo = MODULOS[tarea.modulo] || { nombre:tarea.modulo || "Misión", icono:"🌟" };
   const { actual, objetivo } = progresoMision(tarea);
+  const repasoSinResultadoDigital = tarea.tipo === "repaso_academico" && !evidencias.length;
 
   $("tituloMision").textContent = presentacion.tituloMision || tarea.titulo || "Misión";
   $("descripcionMision").textContent = presentacion.descripcionMision || tarea.descripcion || "";
   $("nombrePersona").textContent = perfil?.nombreVisible || perfil?.nombre || "Alumno";
-  $("progresoMision").textContent = objetivo > 0
-    ? `${actual} de ${objetivo} actividades registradas`
-    : `${evidencias.length} ${evidencias.length === 1 ? "actividad guardada" : "actividades guardadas"}`;
+  $("progresoMision").textContent = repasoSinResultadoDigital
+    ? (esEstadoCompletado(tarea.estado)
+        ? "Misión completada · sin resultado digital"
+        : "Sin resultado digital guardado")
+    : objetivo > 0
+      ? `${actual} de ${objetivo} actividades registradas`
+      : `${evidencias.length} ${evidencias.length === 1 ? "actividad guardada" : "actividades guardadas"}`;
 
   $("chipsMision").innerHTML = [
     `${modulo.icono} ${modulo.nombre}`,
@@ -668,9 +681,19 @@ function tarjetaLectura(evidencia, sesion, historia) {
 }
 
 async function renderLectura(evidencias) {
+  /*
+   * Las evidencias de pronunciación ya contienen todo su resultado y no
+   * necesitan abrir una sesión de lectura. Excluirlas evita que una evidencia
+   * sin sesionId active innecesariamente la compatibilidad que recorre todo el
+   * historial de Rincón de Lectura.
+   */
+  const evidenciasConSesion = evidencias.filter(
+    evidencia => texto(evidencia.tipo) !== "pronunciacion_completada"
+  );
+
   const [sesiones, historias] = await Promise.all([
     leerSesionesReferenciadas(
-      evidencias,
+      evidenciasConSesion,
       "sesionesLectura",
       () => Academia.rinconLectura.leerSesiones()
     ),
@@ -678,11 +701,14 @@ async function renderLectura(evidencias) {
   ]);
 
   return evidencias.map(evidencia => {
-    const sesion = seleccionarSesion(
-      sesiones,
-      evidencia,
-      item => item.historiaId || item.id
-    );
+    const esPronunciacion = texto(evidencia.tipo) === "pronunciacion_completada";
+    const sesion = esPronunciacion
+      ? null
+      : seleccionarSesion(
+          sesiones,
+          evidencia,
+          item => item.historiaId || item.id
+        );
     const historia = historias.get(String(evidencia.actividadId || sesion?.historiaId || "")) || null;
     return tarjetaLectura(evidencia, sesion, historia);
   }).join("");
@@ -910,11 +936,19 @@ async function iniciar() {
         : "Todavía no hay trabajo registrado para esta Misión.";
     }
 
-    $("listaEvidencias").innerHTML = await renderTrabajo(tarea, ordenadas);
-
+    /*
+     * La cabecera de la Misión ya está disponible: se muestra de inmediato y
+     * el detalle rico se completa después. Así una lectura grande de Firestore
+     * no mantiene toda la pantalla bloqueada mientras se reconstruye el trabajo.
+     */
     $("estadoCarga").hidden = true;
     $("estadoError").hidden = true;
     $("contenidoTrabajo").hidden = false;
+    $("listaEvidencias").innerHTML = ordenadas.length
+      ? '<div class="trabajo-vacio">🦜 Preparando el detalle del trabajo guardado…</div>'
+      : "";
+
+    $("listaEvidencias").innerHTML = await renderTrabajo(tarea, ordenadas);
   } catch (error) {
     console.error("No se pudo cargar Trabajo realizado.", error);
     mostrarError(
