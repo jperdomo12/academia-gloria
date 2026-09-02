@@ -39,9 +39,9 @@ let reconocimientosPersistentes = [];
 let reconocimientosLiaDetectives = [];
 let reconocimientosActuales = [];
 let tareasConstancia = [];
+let tareasConstanciaCargadas = false;
 let cantidadHistoriaVisible = PASO_HISTORIA;
 let puedeAbrirFuentesGestion = false;
-let incluirDatosPruebaConstancia = false;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -276,9 +276,32 @@ async function cargarReconocimientosLiaDetectives() {
   );
 }
 
+function tareaFuenteActual(misionId = "") {
+  const id = texto(misionId);
+  if (!id) return null;
+  return tareasConstancia.find(item => texto(item?.id) === id) || null;
+}
+
+function reconocimientoAutomaticoVigente(item = {}) {
+  if (item.virtual !== true || item.origen !== "observado") return true;
+
+  const misionId = texto(item.fuentePrincipal?.misionId);
+  if (!misionId) return true;
+
+  /* Una sesión ligada a Misión solo puede producir reconocimiento mientras
+     esa Misión siga existiendo y siga siendo un dato real. Esto permite usar
+     una Misión controlada para validar B1, marcarla después como 🧪 y retirar
+     inmediatamente el efecto motivacional antes incluso de eliminarla. */
+  if (!tareasConstanciaCargadas) return false;
+
+  const tarea = tareaFuenteActual(misionId);
+  return Boolean(tarea) && tarea.esDatoPrueba !== true;
+}
+
 function combinarReconocimientos() {
   const porId = new Map();
   [...reconocimientosPersistentes, ...reconocimientosLiaDetectives]
+    .filter(reconocimientoAutomaticoVigente)
     .forEach(item => {
       const id = texto(item?.id);
       if (id) porId.set(id, item);
@@ -470,10 +493,7 @@ function diasConstanciaFiltrados() {
         tarea?.estado === "completada" ||
         ESTADOS_REVISION_CONSTANCIA.has(tarea?.estado)
       ) &&
-      (
-        incluirDatosPruebaConstancia ||
-        tarea?.esDatoPrueba !== true
-      )
+      tarea?.esDatoPrueba !== true
     )
     .forEach(tarea => {
       const fecha = fechaConstanciaTarea(tarea);
@@ -544,43 +564,9 @@ function aplicarConstanciaFiltrada() {
   const rachaElemento = document.getElementById("rachaDias");
   if (diasSemanaElemento) diasSemanaElemento.textContent = String(diasSemana);
   if (rachaElemento) rachaElemento.textContent = String(calcularRachaConstancia(dias));
-
-  const boton = document.querySelector("[data-constancia-incluir-pruebas]");
-  if (boton) {
-    boton.classList.toggle("active", incluirDatosPruebaConstancia);
-    boton.textContent = incluirDatosPruebaConstancia
-      ? "🧪 Incluyendo datos de prueba"
-      : "🧪 Incluir datos de prueba";
-    boton.setAttribute("aria-pressed", String(incluirDatosPruebaConstancia));
-  }
-}
-
-function asegurarControlConstanciaPruebas() {
-  if (!puedeAbrirFuentesGestion) return;
-  if (document.querySelector("[data-constancia-incluir-pruebas]")) return;
-
-  const titulo = document.querySelector(".constancia__titulo > div:last-child");
-  if (!titulo) return;
-
-  const boton = document.createElement("button");
-  boton.type = "button";
-  boton.className = "filtro";
-  boton.dataset.constanciaIncluirPruebas = "true";
-  boton.setAttribute("aria-pressed", "false");
-  boton.style.marginTop = "8px";
-  boton.textContent = "🧪 Incluir datos de prueba";
-  boton.title = "Vista temporal para validar pruebas. No modifica los datos reales.";
-  boton.addEventListener("click", () => {
-    incluirDatosPruebaConstancia = !incluirDatosPruebaConstancia;
-    aplicarConstanciaFiltrada();
-  });
-
-  titulo.appendChild(boton);
 }
 
 function instalarConstanciaSinDatosPrueba() {
-  asegurarControlConstanciaPruebas();
-
   const semana = document.getElementById("semanaConstancia");
   if (semana && !observadorDomConstancia) {
     observadorDomConstancia = new MutationObserver(() => {
@@ -592,7 +578,11 @@ function instalarConstanciaSinDatosPrueba() {
   detenerObservacionConstancia = Academia.tareas.observar(
     tareas => {
       tareasConstancia = Array.isArray(tareas) ? tareas : [];
-      requestAnimationFrame(aplicarConstanciaFiltrada);
+      tareasConstanciaCargadas = true;
+      requestAnimationFrame(() => {
+        aplicarConstanciaFiltrada();
+        renderCombinado();
+      });
     },
     error => {
       console.debug("No se pudo aplicar el filtro de datos de prueba a Mi constancia.", error);
