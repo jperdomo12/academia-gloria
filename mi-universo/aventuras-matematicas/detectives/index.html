@@ -618,9 +618,9 @@
 
     .summary-stats{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,1fr);
       gap:13px;
-      max-width:720px;
+      max-width:920px;
       margin:22px auto;
     }
 
@@ -1127,12 +1127,17 @@
       <div class="summary-stats">
         <div class="summary-stat">
           <strong id="summaryChallenges">0</strong>
-          <span>Historias resueltas</span>
+          <span>Historias completadas</span>
         </div>
 
         <div class="summary-stat">
           <strong id="summaryOperations">0</strong>
-          <span>Operaciones resueltas</span>
+          <span>Operaciones realizadas</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong id="summaryMinimumAttempts">0</strong>
+          <span>Intentos mínimos</span>
         </div>
 
         <div class="summary-stat">
@@ -1561,7 +1566,8 @@
       respuestasPorCaso:{},
       respuestaSeleccionada:null,
       operacionSeleccionada:null,
-      caseStats:null
+      caseStats:null,
+      missionSaveError:false
     };
 
     const $ = id => document.getElementById(id);
@@ -1787,6 +1793,7 @@
       state.operandosValidados = false;
       state.operandosIndicados = [];
       state.respuestasPorCaso = {};
+      state.missionSaveError = false;
       iniciarEstadisticasCaso();
       iniciarTiempoCaso();
 
@@ -2488,7 +2495,6 @@
 
         if (misionActiva && misionId) {
           const aplicacion = await Academia.tareas.registrarEvidencia({
-            alumnoId: auth.currentUser.uid,
             misionId,
             modulo: "detectives",
             tipo: "historia_resuelta",
@@ -2548,6 +2554,7 @@
         }
       }catch(error){
         console.error("No se pudo guardar el progreso en Firestore.",error);
+        if (misionActiva && misionId) state.missionSaveError = true;
         setFeedback("La historia está resuelta, pero no pudimos guardar el historial. Comprueba la conexión.","try");
       }
 
@@ -2598,23 +2605,33 @@
       const { actual, objetivo } = progresoMision();
       const misionTerminada =
         Boolean(misionActiva) && objetivo > 0 && actual >= objetivo;
+      const intentosMinimosAventura = state.challenges.reduce(
+        (total, historia) => total + intentosMinimosHistoria(historia),
+        0
+      );
 
-      $("summaryTitle").textContent = misionTerminada
-        ? "🎉 ¡Misión terminada!"
-        : "🌈 ¡Aventura completada!";
+      $("summaryTitle").textContent = state.missionSaveError && misionActiva
+        ? "⚠️ Aventura completada"
+        : misionTerminada
+          ? "🎉 ¡Misión terminada!"
+          : "🌈 ¡Aventura completada!";
 
       $("summaryChallenges").textContent = state.challenges.length;
       $("summaryOperations").textContent = state.completedOperations;
+      $("summaryMinimumAttempts").textContent = intentosMinimosAventura;
       $("summaryAttempts").textContent = state.attempts;
 
-      $("summaryMessage").textContent = misionTerminada
-        ? `${nombreVisible}, has resuelto ${actual} de ${objetivo} historias. ` +
-          "¡Excelente trabajo! Tu familia ya puede revisar y celebrar lo que has conseguido."
-        : misionActiva
-          ? `${nombreVisible}, has completado esta aventura y tu misión continúa. ` +
-            `Llevas ${actual} de ${objetivo} historias.`
-          : `${nombreVisible}, has completado una aventura libre de nivel ${state.selectedLevel}. ` +
-            "Hoy practicaste cómo comprender, dividir los problemas en pasos y elegir las operaciones.";
+      $("summaryMessage").textContent = state.missionSaveError && misionActiva
+        ? `${nombreVisible}, completaste la aventura, pero no pudimos registrar todo el progreso de la misión. ` +
+          "No la daremos por completada hasta confirmar el guardado."
+        : misionTerminada
+          ? `${nombreVisible}, has resuelto ${actual} de ${objetivo} historias. ` +
+            "¡Excelente trabajo! Tu familia ya puede revisar y celebrar lo que has conseguido."
+          : misionActiva
+            ? `${nombreVisible}, has completado esta aventura y tu misión continúa. ` +
+              `Llevas ${actual} de ${objetivo} historias.`
+            : `${nombreVisible}, has completado una aventura libre de nivel ${state.selectedLevel}. ` +
+              "Hoy practicaste cómo comprender, dividir los problemas en pasos y elegir las operaciones.";
 
       $("restartButton").textContent = "🌈 Seguir practicando";
 
@@ -2628,6 +2645,7 @@
         theme:state.selectedTheme || "todos",
         challenges:state.challenges.length,
         operations:state.completedOperations,
+        minimumAttempts:intentosMinimosAventura,
         simpleCompleted:state.simpleCompleted,
         compoundCompleted:state.compoundCompleted,
         attempts:state.attempts
@@ -2644,7 +2662,7 @@
       state.challengeIndex=0; state.stage=1; state.stepIndex=0;
       state.attempts=0; state.completedOperations=0;
       state.simpleCompleted=0; state.compoundCompleted=0;
-      state.awaitingManualNext=false; state.operandosValidados=false; state.operandosIndicados=[]; state.respuestasPorCaso={}; state.selectedTheme=""; state.selectedQuantity=5; state.displayedOptions={};
+      state.awaitingManualNext=false; state.operandosValidados=false; state.operandosIndicados=[]; state.respuestasPorCaso={}; state.selectedTheme=""; state.selectedQuantity=5; state.displayedOptions={}; state.missionSaveError=false;
       $("themeFilter").value=""; populateThemes(); updateCaseCount();
       window.scrollTo({top:0,behavior:"smooth"});
     }
@@ -2681,6 +2699,7 @@
         state.operandosValidados = false;
         state.operandosIndicados = [];
         state.respuestasPorCaso = {};
+        state.missionSaveError = false;
         iniciarEstadisticasCaso();
         iniciarTiempoCaso();
         $("caseSelector").classList.add("hidden");

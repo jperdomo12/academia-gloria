@@ -1,13 +1,45 @@
-/* Academia Gloria Valentina · Recompensas A1/A2 · Mi Camino */
+/* Academia Gloria Valentina · Recompensas A1/A2/B · Mi Camino */
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
+import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+import {
+  obtenerHistorialDetectives,
+  obtenerSesionesHistoria
+} from "../../compartido/js/detectives-progreso.js";
 
 const PASO_HISTORIA = 5;
+const DIAS_DESCANSO_REGLA_LIA = 7;
+const MAX_RECONOCIMIENTOS_LIA_DIA = 2;
+const MILISEGUNDOS_DIA = 24 * 60 * 60 * 1000;
+const ESTADOS_REVISION_CONSTANCIA = new Set([
+  "pendiente_validacion",
+  "completada_pendiente_validacion"
+]);
+
+const REGLAS_LIA_DETECTIVES = Object.freeze({
+  ayuda_y_continuo: Object.freeze({
+    id: "lia.detectives.ayuda_y_continuo",
+    mensaje:
+      "Usaste pistas para seguir avanzando y continuaste hasta resolver el caso. " +
+      "La ayuda también puede formar parte de aprender."
+  }),
+  persistencia: Object.freeze({
+    id: "lia.detectives.persistencia",
+    mensaje:
+      "No salió al principio, pero seguiste probando hasta resolver el caso."
+  })
+});
 
 let instalada = false;
 let detenerObservacion = null;
+let detenerObservacionConstancia = null;
+let observadorDomConstancia = null;
+let reconocimientosPersistentes = [];
+let reconocimientosLiaDetectives = [];
 let reconocimientosActuales = [];
+let tareasConstancia = [];
+let tareasConstanciaCargadas = false;
 let cantidadHistoriaVisible = PASO_HISTORIA;
 let puedeAbrirFuentesGestion = false;
 
@@ -28,8 +60,16 @@ function escapar(valor = "") {
 function fechaJs(valor) {
   if (!valor) return null;
   if (typeof valor?.toDate === "function") return valor.toDate();
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    const fechaLocal = new Date(`${valor}T12:00:00`);
+    return Number.isNaN(fechaLocal.getTime()) ? null : fechaLocal;
+  }
   const fecha = new Date(valor);
   return Number.isNaN(fecha.getTime()) ? null : fecha;
+}
+
+function fechaMs(valor) {
+  return fechaJs(valor)?.getTime() || 0;
 }
 
 function formatearFecha(valor) {
@@ -40,6 +80,36 @@ function formatearFecha(valor) {
     month: "short",
     year: "numeric"
   }).format(fecha);
+}
+
+function formatearFechaHora(valor) {
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    return formatearFecha(valor);
+  }
+
+  const fecha = fechaJs(valor);
+  if (!fecha) return "Fecha no disponible";
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(fecha);
+}
+
+function formatearFechaReconocimiento(item = {}) {
+  return formatearFechaHora(item.fechaReconocimiento);
+}
+
+function claveDia(valor) {
+  const fecha = fechaJs(valor);
+  if (!fecha) return "";
+  return [
+    fecha.getFullYear(),
+    String(fecha.getMonth() + 1).padStart(2, "0"),
+    String(fecha.getDate()).padStart(2, "0")
+  ].join("-");
 }
 
 function cargarEstilos() {
@@ -106,6 +176,164 @@ function metaFuente(item = {}) {
   return texto(item.titulo) || "Momento de mi camino";
 }
 
+function idVirtualRegla(reglaId, historiaId, sesionId) {
+  return ["auto", reglaId, historiaId, sesionId]
+    .join("__")
+    .replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+function reglaLiaParaSesion(sesion = {}) {
+  const pistas = Number(sesion.pistasUtilizadas || 0);
+  const intentosAdicionales = Number(sesion.intentosAdicionales || 0);
+
+  /* Ayuda y continuación tiene prioridad para evitar dos celebraciones
+     automáticas sobre una misma resolución. */
+  if (pistas >= 1) return REGLAS_LIA_DETECTIVES.ayuda_y_continuo;
+  if (intentosAdicionales >= 2) return REGLAS_LIA_DETECTIVES.persistencia;
+  return null;
+}
+
+function reconocimientoLiaDesdeSesion(historiaId, sesion, regla) {
+  const sesionId = texto(sesion.id);
+  const misionId = texto(sesion.misionId);
+  const fecha = sesion.completadaEn;
+
+  return {
+    id: idVirtualRegla(regla.id, historiaId, sesionId),
+    schemaVersion: 1,
+    tipo: "reconocimiento",
+    categoria: "perseverancia",
+    titulo: texto(sesion.tituloHistoria) || "Caso de Detectives",
+    mensaje: regla.mensaje,
+    origen: "observado",
+    reglaId: regla.id,
+    fuentePrincipal: {
+      tipo: "sesion_detectives",
+      id: sesionId,
+      modulo: "detectives",
+      misionId,
+      actividadId: historiaId,
+      sesionId
+    },
+    datosSoporte: {
+      pistasUtilizadas: Number(sesion.pistasUtilizadas || 0),
+      intentosAdicionales: Number(sesion.intentosAdicionales || 0),
+      intentosMinimos: Number(sesion.intentosMinimos || 0),
+      intentosTotales: Number(sesion.intentosTotales || 0)
+    },
+    fuenteEliminada: false,
+    estado: "activo",
+    visibleAlumno: true,
+    fechaHecho: fecha,
+    fechaReconocimiento: fecha,
+    virtual: true
+  };
+}
+
+async function cargarReconocimientosLiaDetectives() {
+  const userId = texto(await ContextoUsuario.obtenerUserIdPersonaActiva());
+  if (!userId) return [];
+
+  const historias = await obtenerHistorialDetectives(userId);
+  const grupos = await Promise.all(
+    historias.map(async item => {
+      const historiaId = texto(item.historiaId || item.id);
+      if (!historiaId) return [];
+
+      try {
+        const sesiones = await obtenerSesionesHistoria(userId, historiaId);
+        return sesiones.map(sesion => ({ historiaId, sesion }));
+      } catch (error) {
+        console.debug(
+          `[Recompensas B] No se pudieron leer sesiones de Detectives para ${historiaId}.`,
+          error
+        );
+        return [];
+      }
+    })
+  );
+
+  const sesiones = grupos
+    .flat()
+    .filter(({ sesion }) =>
+      sesion?.recompensasEligibleV1 === true &&
+      sesion?.esDatoPrueba !== true &&
+      fechaMs(sesion?.completadaEn) > 0
+    )
+    .sort(
+      (a, b) =>
+        fechaMs(a.sesion.completadaEn) - fechaMs(b.sesion.completadaEn)
+    );
+
+  const ultimaPorRegla = new Map();
+  const cantidadPorDia = new Map();
+  const resultado = [];
+
+  sesiones.forEach(({ historiaId, sesion }) => {
+    const regla = reglaLiaParaSesion(sesion);
+    if (!regla) return;
+
+    const momento = fechaMs(sesion.completadaEn);
+    const ultima = Number(ultimaPorRegla.get(regla.id) || 0);
+    if (
+      ultima &&
+      momento - ultima < DIAS_DESCANSO_REGLA_LIA * MILISEGUNDOS_DIA
+    ) {
+      return;
+    }
+
+    const dia = claveDia(sesion.completadaEn);
+    const cantidad = Number(cantidadPorDia.get(dia) || 0);
+    if (cantidad >= MAX_RECONOCIMIENTOS_LIA_DIA) return;
+
+    resultado.push(reconocimientoLiaDesdeSesion(historiaId, sesion, regla));
+    ultimaPorRegla.set(regla.id, momento);
+    cantidadPorDia.set(dia, cantidad + 1);
+  });
+
+  return resultado.sort(
+    (a, b) => fechaMs(b.fechaReconocimiento) - fechaMs(a.fechaReconocimiento)
+  );
+}
+
+function tareaFuenteActual(misionId = "") {
+  const id = texto(misionId);
+  if (!id) return null;
+  return tareasConstancia.find(item => texto(item?.id) === id) || null;
+}
+
+function reconocimientoAutomaticoVigente(item = {}) {
+  if (item.virtual !== true || item.origen !== "observado") return true;
+
+  const misionId = texto(item.fuentePrincipal?.misionId);
+  if (!misionId) return true;
+
+  /* Una sesión ligada a Misión solo puede producir reconocimiento mientras
+     esa Misión siga existiendo y siga siendo un dato real. Esto permite usar
+     una Misión controlada para validar B1, marcarla después como 🧪 y retirar
+     inmediatamente el efecto motivacional antes incluso de eliminarla. */
+  if (!tareasConstanciaCargadas) return false;
+
+  const tarea = tareaFuenteActual(misionId);
+  return Boolean(tarea) && tarea.esDatoPrueba !== true;
+}
+
+function combinarReconocimientos() {
+  const porId = new Map();
+  [...reconocimientosPersistentes, ...reconocimientosLiaDetectives]
+    .filter(reconocimientoAutomaticoVigente)
+    .forEach(item => {
+      const id = texto(item?.id);
+      if (id) porId.set(id, item);
+    });
+
+  return [...porId.values()].sort(
+    (a, b) =>
+      fechaMs(b.fechaReconocimiento || b.updatedAt || b.createdAt) -
+      fechaMs(a.fechaReconocimiento || a.updatedAt || a.createdAt)
+  );
+}
+
 function urlFuente(item, fuente) {
   if (!puedeAbrirFuentesGestion || item.fuenteEliminada === true) return "";
   const misionId = texto(item.fuentePrincipal?.misionId);
@@ -142,7 +370,7 @@ function renderItemHistoria(item) {
       <div>
         <strong>${escapar(metaFuente(item))}</strong>
         <p>${escapar(item.mensaje || "")}</p>
-        <small>${escapar(origenVisible(item))} · ${escapar(formatearFecha(item.fechaReconocimiento))}</small>
+        <small>${escapar(origenVisible(item))} · ${escapar(formatearFechaReconocimiento(item))}</small>
         ${accionesFuente(item)}
       </div>
     </article>
@@ -176,7 +404,7 @@ function renderGuacamayas(items = []) {
             <div>
               <strong>${escapar(texto(item.guacamayaNombre) || "Guacamaya")}</strong>
               <p>${escapar(item.mensaje || item.guacamayaDescripcion || "")}</p>
-              <small>📅 ${escapar(formatearFecha(item.fechaGuacamaya || item.fechaReconocimiento))}</small>
+              <small>📅 ${escapar(formatearFechaHora(item.fechaGuacamaya || item.fechaReconocimiento))}</small>
               ${accionesFuente(item)}
             </div>
           </article>
@@ -223,7 +451,7 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
         <h3>${escapar(metaFuente(ultimo))}</h3>
         <p class="recompensas-a1__mensaje">${escapar(ultimo.mensaje || "")}</p>
         <div class="recompensas-a1__meta">
-          <span>📅 ${escapar(formatearFecha(ultimo.fechaReconocimiento))}</span>
+          <span>📅 ${escapar(formatearFechaReconocimiento(ultimo))}</span>
           ${ultimo.fuenteEliminada ? "<span>🌈 Conservado en mi historia</span>" : ""}
         </div>
         ${accionesFuente(ultimo)}
@@ -253,6 +481,146 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
   });
 }
 
+function renderCombinado({ reiniciarPaginacion = false } = {}) {
+  render(combinarReconocimientos(), { reiniciarPaginacion });
+}
+
+function fechaConstanciaTarea(tarea = {}) {
+  const resultado =
+    tarea.resultado && typeof tarea.resultado === "object"
+      ? tarea.resultado
+      : {};
+  const progreso =
+    tarea.progreso && typeof tarea.progreso === "object"
+      ? tarea.progreso
+      : {};
+  const tieneEvidencias =
+    Array.isArray(progreso.evidenciaIds) && progreso.evidenciaIds.length > 0;
+
+  /* En Misiones respaldadas por evidencias, completadaEn representa el momento
+     real en que Gloria alcanzó el objetivo. Una aprobación familiar posterior
+     no debe mover ese día en Mi constancia. En Misiones manuales se conserva
+     como prioridad la fecha de finalización registrada por la familia. */
+  return fechaJs(
+    (tieneEvidencias ? progreso.completadaEn : null) ||
+    resultado.fechaFinalizacion ||
+    progreso.completadaEn ||
+    tarea.fechaFinalizacion ||
+    (
+      ESTADOS_REVISION_CONSTANCIA.has(tarea.estado)
+        ? tarea.statusChangedAt
+        : null
+    )
+  );
+}
+
+function diasConstanciaFiltrados() {
+  const dias = new Set();
+
+  tareasConstancia
+    .filter(tarea =>
+      tarea?.visibleParaAlumno !== false &&
+      (
+        tarea?.estado === "completada" ||
+        ESTADOS_REVISION_CONSTANCIA.has(tarea?.estado)
+      ) &&
+      tarea?.esDatoPrueba !== true
+    )
+    .forEach(tarea => {
+      const fecha = fechaConstanciaTarea(tarea);
+      const clave = claveDia(fecha);
+      if (clave) dias.add(clave);
+    });
+
+  return dias;
+}
+
+function inicioSemana(fecha = new Date()) {
+  const base = new Date(fecha);
+  base.setHours(0, 0, 0, 0);
+  const dia = base.getDay();
+  base.setDate(base.getDate() + (dia === 0 ? -6 : 1 - dia));
+  return base;
+}
+
+function calcularRachaConstancia(dias) {
+  if (!dias.size) return 0;
+
+  const fecha = new Date();
+  fecha.setHours(0, 0, 0, 0);
+
+  if (!dias.has(claveDia(fecha))) {
+    fecha.setDate(fecha.getDate() - 1);
+  }
+
+  let racha = 0;
+  while (dias.has(claveDia(fecha))) {
+    racha += 1;
+    fecha.setDate(fecha.getDate() - 1);
+  }
+  return racha;
+}
+
+function aplicarConstanciaFiltrada() {
+  const semana = document.getElementById("semanaConstancia");
+  const diasVisuales = [...(semana?.querySelectorAll(".dia") || [])];
+  if (!semana || diasVisuales.length !== 7) return;
+
+  const dias = diasConstanciaFiltrados();
+  const ahora = new Date();
+  ahora.setHours(0, 0, 0, 0);
+  const inicio = inicioSemana(ahora);
+  let diasSemana = 0;
+
+  diasVisuales.forEach((elemento, indice) => {
+    const fecha = new Date(inicio);
+    fecha.setDate(inicio.getDate() + indice);
+    fecha.setHours(0, 0, 0, 0);
+
+    const hecho = dias.has(claveDia(fecha));
+    const esHoy = claveDia(fecha) === claveDia(ahora);
+    const esFuturo = fecha.getTime() > ahora.getTime();
+
+    elemento.classList.toggle("hecho", hecho);
+    elemento.classList.toggle("hoy", esHoy);
+    elemento.classList.toggle("futuro", esFuturo);
+
+    const marca = elemento.querySelector(".dia__marca");
+    if (marca) marca.textContent = hecho ? "⭐" : esFuturo ? "·" : "○";
+
+    if (hecho && !esFuturo) diasSemana += 1;
+  });
+
+  const diasSemanaElemento = document.getElementById("diasSemana");
+  const rachaElemento = document.getElementById("rachaDias");
+  if (diasSemanaElemento) diasSemanaElemento.textContent = String(diasSemana);
+  if (rachaElemento) rachaElemento.textContent = String(calcularRachaConstancia(dias));
+}
+
+function instalarConstanciaSinDatosPrueba() {
+  const semana = document.getElementById("semanaConstancia");
+  if (semana && !observadorDomConstancia) {
+    observadorDomConstancia = new MutationObserver(() => {
+      requestAnimationFrame(aplicarConstanciaFiltrada);
+    });
+    observadorDomConstancia.observe(semana, { childList: true });
+  }
+
+  detenerObservacionConstancia = Academia.tareas.observar(
+    tareas => {
+      tareasConstancia = Array.isArray(tareas) ? tareas : [];
+      tareasConstanciaCargadas = true;
+      requestAnimationFrame(() => {
+        aplicarConstanciaFiltrada();
+        renderCombinado();
+      });
+    },
+    error => {
+      console.debug("No se pudo aplicar el filtro de datos de prueba a Mi constancia.", error);
+    }
+  );
+}
+
 export async function instalarReconocimientosCamino() {
   if (instalada) return;
   instalada = true;
@@ -266,15 +634,40 @@ export async function instalarReconocimientosCamino() {
     console.debug("No se pudo resolver permiso para abrir fuentes de Recompensas.", error);
   }
 
+  instalarConstanciaSinDatosPrueba();
+
+  try {
+    reconocimientosLiaDetectives = await cargarReconocimientosLiaDetectives();
+  } catch (error) {
+    reconocimientosLiaDetectives = [];
+    console.debug(
+      "No se pudieron derivar los Reconocimientos de Lía desde Detectives.",
+      error
+    );
+  }
+
+  /* Los automáticos de Fase B son derivados: no se escriben desde la cuenta
+     del alumno. Así la historia visible depende siempre de la sesión real que
+     la sustenta y desaparece naturalmente si esa sesión se elimina. */
+  renderCombinado({ reiniciarPaginacion: true });
+
   detenerObservacion = Reconocimientos.observar(
-    items => render(items, { reiniciarPaginacion: true }),
+    items => {
+      reconocimientosPersistentes = items;
+      renderCombinado({ reiniciarPaginacion: true });
+    },
     error => {
-      console.debug("No se pudieron cargar los reconocimientos de Mi Camino.", error);
-      render([], { reiniciarPaginacion: true });
+      console.debug("No se pudieron cargar los reconocimientos persistentes de Mi Camino.", error);
+      reconocimientosPersistentes = [];
+      renderCombinado({ reiniciarPaginacion: true });
     }
   );
 
-  window.addEventListener("beforeunload", () => detenerObservacion?.(), { once: true });
+  window.addEventListener("beforeunload", () => {
+    detenerObservacion?.();
+    detenerObservacionConstancia?.();
+    observadorDomConstancia?.disconnect();
+  }, { once: true });
 }
 
 if (document.readyState === "loading") {

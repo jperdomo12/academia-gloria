@@ -6,7 +6,9 @@ import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import {
   eliminarSesionHistoria,
-  obtenerSesionHistoria
+  obtenerHistorialDetectives,
+  obtenerSesionHistoria,
+  obtenerSesionesHistoria
 } from "../../compartido/js/detectives-progreso.js";
 import {
   collection,
@@ -251,6 +253,34 @@ async function clasificarEvidencia(evidencia, userId, misionId) {
   };
 }
 
+async function agregarSesionesDetectivesLigadasDirectamente(
+  userId,
+  misionId,
+  operaciones
+) {
+  /* Detectives guarda una sesión independiente por resolución. El misionId
+     explícito permite recuperar también sesiones cuya evidencia no llegó a
+     escribirse (por ejemplo, un fallo entre ambos guardados) sin usar fechas
+     ni heurísticas. */
+  const historias = await obtenerHistorialDetectives(userId);
+
+  for (const historia of historias) {
+    const historiaId = texto(historia.historiaId || historia.id);
+    if (!historiaId) continue;
+
+    const sesiones = await obtenerSesionesHistoria(userId, historiaId);
+    sesiones
+      .filter(sesion => texto(sesion.misionId) === misionId)
+      .forEach(sesion => {
+        const operacion = operacionDetectives({
+          historiaId,
+          sesionId: sesion.id
+        });
+        operaciones.set(operacion.clave, operacion);
+      });
+  }
+}
+
 async function agregarSesionesLigadasDirectamente(
   userId,
   misionId,
@@ -264,6 +294,15 @@ async function agregarSesionesLigadasDirectamente(
   const necesitaSemillas =
     texto(tarea?.modulo) === "creciendo-por-dentro" ||
     evidencias.some(evidencia => texto(evidencia.modulo) === "creciendo-por-dentro");
+
+  /* Se revisa siempre Detectives porque el vínculo misionId vive en cada
+     sesión y sigue siendo demostrable incluso si la Misión o su evidencia
+     faltan durante una limpieza de restos. */
+  await agregarSesionesDetectivesLigadasDirectamente(
+    userId,
+    misionId,
+    operaciones
+  );
 
   const colecciones = [];
   if (necesitaAcademicas) {
