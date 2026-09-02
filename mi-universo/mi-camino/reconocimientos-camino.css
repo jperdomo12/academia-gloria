@@ -251,6 +251,174 @@
   background: #dcfce7;
 }
 
+.recompensas-guia__acceso {
+  margin-left: auto;
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: #15803d;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: #86efac;
+  text-underline-offset: 3px;
+}
+
+.recompensas-guia__acceso:hover,
+.recompensas-guia__acceso:focus-visible {
+  color: #166534;
+  text-decoration-color: #16a34a;
+}
+
+.recompensas-guia {
+  width: min(760px, calc(100% - 28px));
+  max-height: min(82vh, 760px);
+  padding: 0;
+  border: 0;
+  border-radius: 26px;
+  background: #fff;
+  color: #243047;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, .24);
+}
+
+.recompensas-guia::backdrop {
+  background: rgba(15, 23, 42, .42);
+  backdrop-filter: blur(3px);
+}
+
+.recompensas-guia__contenido {
+  padding: 24px;
+}
+
+.recompensas-guia__cabecera {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: start;
+}
+
+.recompensas-guia__eyebrow {
+  display: inline-block;
+  color: #15803d;
+  font-size: .73rem;
+  font-weight: 950;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.recompensas-guia h2 {
+  margin: 5px 0 6px;
+  color: #166534;
+  font-size: clamp(1.55rem, 4vw, 2rem);
+}
+
+.recompensas-guia__cabecera p {
+  max-width: 640px;
+  margin: 0;
+  color: #64748b;
+  line-height: 1.48;
+  font-weight: 700;
+}
+
+.recompensas-guia__cerrar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.recompensas-guia__progreso {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 11px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1.5px solid #fed7aa;
+  border-radius: 16px;
+  background: #fff7ed;
+}
+
+.recompensas-guia__progreso > span {
+  font-size: 25px;
+}
+
+.recompensas-guia__progreso strong,
+.recompensas-guia__progreso small {
+  display: block;
+}
+
+.recompensas-guia__progreso strong {
+  color: #9a3412;
+}
+
+.recompensas-guia__progreso small {
+  margin-top: 2px;
+  color: #7c2d12;
+  font-weight: 700;
+}
+
+.recompensas-guia__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.recompensas-guia__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 13px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.recompensas-guia__item--destacado {
+  border-color: #fed7aa;
+  background: #fffaf5;
+}
+
+.recompensas-guia__item > span {
+  font-size: 24px;
+}
+
+.recompensas-guia__item strong {
+  color: #334155;
+  font-size: .94rem;
+}
+
+.recompensas-guia__item p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: .84rem;
+  line-height: 1.4;
+  font-weight: 650;
+}
+
+.recompensas-guia__nota {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: .84rem;
+  font-weight: 750;
+  text-align: center;
+}
+
 @media (max-width: 640px) {
   .recompensas-a1__ultimo,
   .recompensas-a2__guacamaya {
@@ -258,6 +426,21 @@
   }
 
   .recompensas-a2__guacamayas-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .recompensas-guia__acceso {
+    width: 100%;
+    margin-left: 65px;
+    text-align: left;
+    font-size: .95rem;
+  }
+
+  .recompensas-guia__contenido {
+    padding: 19px;
+  }
+
+  .recompensas-guia__lista {
     grid-template-columns: 1fr;
   }
 }
