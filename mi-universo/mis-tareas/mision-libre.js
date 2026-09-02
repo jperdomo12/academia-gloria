@@ -1,6 +1,7 @@
 /* Academia Gloria Valentina · Gestión de Misiones · Preparación de Misión libre */
 
 import "./listado-misiones.js";
+import { abrirTrabajoRealizado } from "../../compartido/js/trabajo-realizado.js";
 
 const TIPO_MISION_LIBRE = "tarea_libre";
 const MODULO_LIBRE = "libre";
@@ -51,6 +52,81 @@ function sincronizarTrasFormulario() {
   window.setTimeout(aplicarContratoMisionLibre, 50);
 }
 
+function normalizarBotonesTrabajo(raiz = document) {
+  const botones = [];
+
+  if (raiz instanceof Element && raiz.matches('[data-action="evidence"]')) {
+    botones.push(raiz);
+  }
+
+  raiz.querySelectorAll?.('[data-action="evidence"]').forEach(boton => {
+    botones.push(boton);
+  });
+
+  botones.forEach(boton => {
+    boton.textContent = "👁️ Ver trabajo";
+    boton.setAttribute("aria-label", "Abrir trabajo realizado en modo consulta");
+  });
+}
+
+async function abrirTrabajoDesdeGestion(boton) {
+  const misionId = String(boton.dataset.id || "").trim();
+  if (!misionId) return;
+
+  const textoOriginal = boton.textContent;
+  boton.disabled = true;
+  boton.textContent = "Abriendo…";
+
+  try {
+    await abrirTrabajoRealizado(misionId, {
+      volver: `${window.location.pathname}${window.location.search}${window.location.hash}`
+    });
+  } catch (error) {
+    console.error("No se pudo abrir Trabajo realizado desde Gestión de Misiones.", error);
+    window.alert(
+      "No pudimos abrir el trabajo realizado en este momento.\n" +
+      `Razón: ${error.message || "Error no identificado"}`
+    );
+  } finally {
+    if (boton.isConnected) {
+      boton.disabled = false;
+      boton.textContent = textoOriginal;
+    }
+  }
+}
+
+function instalarAccesoComunTrabajo() {
+  normalizarBotonesTrabajo(document);
+
+  const lista = document.getElementById("listaTareas");
+  if (lista) {
+    new MutationObserver(registros => {
+      registros.forEach(registro => {
+        registro.addedNodes.forEach(nodo => {
+          if (nodo instanceof Element) normalizarBotonesTrabajo(nodo);
+        });
+      });
+    }).observe(lista, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  /*
+   * Captura antes del listener legacy de mis-tareas.js. El comportamiento
+   * anterior de desplegar evidencias dentro de la tarjeta permanece intacto
+   * en el código base, pero este producto usa un único visor reutilizable.
+   */
+  document.addEventListener("click", event => {
+    const boton = event.target.closest?.('[data-action="evidence"]');
+    if (!boton) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    abrirTrabajoDesdeGestion(boton);
+  }, true);
+}
+
 function iniciar() {
   const { tipo, modulo } = controles();
   if (!tipo || !modulo) return;
@@ -76,6 +152,7 @@ function iniciar() {
     }
   });
 
+  instalarAccesoComunTrabajo();
   sincronizarTrasFormulario();
 }
 
