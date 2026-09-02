@@ -107,9 +107,19 @@ function aplicarFiltro() {
 
   const estado = asegurarEstadoVacio();
   const listadoTieneTarjetas = tarjetasListado().length > 0;
+  const estadoPruebas = document.getElementById("estadoDatosPrueba");
+  const pruebasYaExplicanVacio = Boolean(
+    estadoPruebas && !estadoPruebas.classList.contains("hidden")
+  );
+
   estado?.classList.toggle(
     "hidden",
-    !(filtroActivo && listadoTieneTarjetas && conRecompensa.length === 0)
+    !(
+      filtroActivo &&
+      listadoTieneTarjetas &&
+      conRecompensa.length === 0 &&
+      !pruebasYaExplicanVacio
+    )
   );
 }
 
