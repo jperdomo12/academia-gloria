@@ -12,6 +12,7 @@ const PASO_HISTORIA = 5;
 const DIAS_DESCANSO_REGLA_LIA = 7;
 const MAX_RECONOCIMIENTOS_LIA_DIA = 2;
 const MILISEGUNDOS_DIA = 24 * 60 * 60 * 1000;
+const FECHA_INICIO_REGLA_CONSTANCIA = new Date("2026-09-02T00:00:00");
 const ESTADOS_REVISION_CONSTANCIA = new Set([
   "pendiente_validacion",
   "completada_pendiente_validacion"
@@ -31,12 +32,21 @@ const REGLAS_LIA_DETECTIVES = Object.freeze({
   })
 });
 
+const REGLA_LIA_CONSTANCIA = Object.freeze({
+  id: "lia.constancia.7_dias",
+  titulo: "Una semana construyendo tu camino",
+  mensaje:
+    "Durante 7 días seguidos encontraste un momento para aprender o avanzar. " +
+    "Lo importante no es hacerlo perfecto, sino seguir construyendo tu camino."
+});
+
 let instalada = false;
 let detenerObservacion = null;
 let detenerObservacionConstancia = null;
 let observadorDomConstancia = null;
 let reconocimientosPersistentes = [];
 let reconocimientosLiaDetectives = [];
+let reconocimientosLiaConstancia = [];
 let reconocimientosActuales = [];
 let tareasConstancia = [];
 let tareasConstanciaCargadas = false;
@@ -121,12 +131,14 @@ function cargarEstilos() {
   document.head.appendChild(enlace);
 }
 
-function localizarBloqueCrecimiento() {
+function localizarCabeceraCrecimiento() {
   const titulo = [...document.querySelectorAll(".seccion-titulo h2")]
     .find(item => texto(item.textContent) === "Así voy creciendo");
-  if (!titulo) return null;
+  return titulo?.closest(".seccion-titulo") || null;
+}
 
-  const cabecera = titulo.closest(".seccion-titulo");
+function localizarBloqueCrecimiento() {
+  const cabecera = localizarCabeceraCrecimiento();
   if (!cabecera) return null;
 
   let siguiente = cabecera.nextElementSibling;
@@ -150,6 +162,114 @@ function asegurarHost() {
   host.setAttribute("aria-label", "Reconocimientos de Mi Camino");
   crecimiento.parentElement.insertBefore(host, crecimiento);
   return host;
+}
+
+function asegurarGuiaMotivacional() {
+  const cabecera = localizarCabeceraCrecimiento();
+  if (!cabecera) return null;
+
+  let acceso = cabecera.querySelector("[data-abrir-guia-recompensas]");
+  if (!acceso) {
+    acceso = document.createElement("button");
+    acceso.type = "button";
+    acceso.className = "recompensas-guia__acceso";
+    acceso.dataset.abrirGuiaRecompensas = "true";
+    acceso.textContent = "🌈 ¿Qué cosas celebra la Academia?";
+    cabecera.appendChild(acceso);
+  }
+
+  let dialogo = document.getElementById("guiaRecompensasCamino");
+  if (!dialogo) {
+    dialogo = document.createElement("dialog");
+    dialogo.id = "guiaRecompensasCamino";
+    dialogo.className = "recompensas-guia";
+    dialogo.setAttribute("aria-labelledby", "guiaRecompensasTitulo");
+    dialogo.innerHTML = `
+      <div class="recompensas-guia__contenido">
+        <header class="recompensas-guia__cabecera">
+          <div>
+            <span class="recompensas-guia__eyebrow">🌈 Cómo hago crecer mi camino</span>
+            <h2 id="guiaRecompensasTitulo">¿Qué cosas celebra la Academia?</h2>
+            <p>
+              No tienes que hacerlo perfecto. La Academia se fija en muchas formas de aprender,
+              seguir adelante y crecer. Algunas las observa Lía y otras las reconoce tu familia.
+            </p>
+          </div>
+          <button type="button" class="recompensas-guia__cerrar" data-cerrar-guia-recompensas aria-label="Cerrar">×</button>
+        </header>
+
+        <div class="recompensas-guia__progreso" data-guia-constancia></div>
+
+        <div class="recompensas-guia__lista">
+          <article class="recompensas-guia__item recompensas-guia__item--destacado">
+            <span aria-hidden="true">🔥</span>
+            <div>
+              <strong>Ser constante</strong>
+              <p>Cuando completas al menos una Misión real durante 7 días seguidos, Lía celebra esa semana contigo.</p>
+            </div>
+          </article>
+
+          <article class="recompensas-guia__item">
+            <span aria-hidden="true">✨</span>
+            <div>
+              <strong>Seguir intentando</strong>
+              <p>Si un caso de Detectives no sale al principio y sigues probando hasta resolverlo, Lía puede reconocerlo.</p>
+            </div>
+          </article>
+
+          <article class="recompensas-guia__item">
+            <span aria-hidden="true">🤝</span>
+            <div>
+              <strong>Usar ayuda y continuar</strong>
+              <p>Una pista no es perder. Pedir ayuda y después seguir pensando también forma parte de aprender.</p>
+            </div>
+          </article>
+
+          <article class="recompensas-guia__item">
+            <span aria-hidden="true">💛</span>
+            <div>
+              <strong>Un momento que mi familia quiere recordar</strong>
+              <p>Tu familia puede guardar un reconocimiento cuando ve algo importante en una Misión que completaste.</p>
+            </div>
+          </article>
+
+          <article class="recompensas-guia__item">
+            <span aria-hidden="true">🦜</span>
+            <div>
+              <strong>Vivir algo realmente especial</strong>
+              <p>Algunos momentos importantes pueden convertirse en una Guacamaya. No hay una lista de puntos: llegan cuando un hito merece ser recordado.</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="recompensas-guia__nota">
+          🌱 Poco a poco aparecerán nuevas maneras de ver cómo creces y cómo te superas a ti misma.
+        </p>
+      </div>
+    `;
+    document.body.appendChild(dialogo);
+
+    dialogo.querySelector("[data-cerrar-guia-recompensas]")?.addEventListener("click", () => {
+      dialogo.close?.();
+    });
+    dialogo.addEventListener("click", evento => {
+      if (evento.target === dialogo) dialogo.close?.();
+    });
+  }
+
+  if (!acceso.dataset.guiaInstalada) {
+    acceso.dataset.guiaInstalada = "true";
+    acceso.addEventListener("click", () => {
+      actualizarGuiaMotivacional();
+      if (typeof dialogo.showModal === "function") {
+        dialogo.showModal();
+      } else {
+        dialogo.setAttribute("open", "");
+      }
+    });
+  }
+
+  return dialogo;
 }
 
 function reconocimientoVisible(item = {}) {
@@ -320,7 +440,11 @@ function reconocimientoAutomaticoVigente(item = {}) {
 
 function combinarReconocimientos() {
   const porId = new Map();
-  [...reconocimientosPersistentes, ...reconocimientosLiaDetectives]
+  [
+    ...reconocimientosPersistentes,
+    ...reconocimientosLiaDetectives,
+    ...reconocimientosLiaConstancia
+  ]
     .filter(reconocimientoAutomaticoVigente)
     .forEach(item => {
       const id = texto(item?.id);
@@ -485,7 +609,7 @@ function renderCombinado({ reiniciarPaginacion = false } = {}) {
   render(combinarReconocimientos(), { reiniciarPaginacion });
 }
 
-function fechaConstanciaTarea(tarea = {}) {
+function valorFechaConstanciaTarea(tarea = {}) {
   const resultado =
     tarea.resultado && typeof tarea.resultado === "object"
       ? tarea.resultado
@@ -501,7 +625,7 @@ function fechaConstanciaTarea(tarea = {}) {
      real en que Gloria alcanzó el objetivo. Una aprobación familiar posterior
      no debe mover ese día en Mi constancia. En Misiones manuales se conserva
      como prioridad la fecha de finalización registrada por la familia. */
-  return fechaJs(
+  return (
     (tieneEvidencias ? progreso.completadaEn : null) ||
     resultado.fechaFinalizacion ||
     progreso.completadaEn ||
@@ -514,25 +638,107 @@ function fechaConstanciaTarea(tarea = {}) {
   );
 }
 
-function diasConstanciaFiltrados() {
-  const dias = new Set();
+function fechaConstanciaTarea(tarea = {}) {
+  return fechaJs(valorFechaConstanciaTarea(tarea));
+}
+
+function tareaCuentaParaConstancia(tarea = {}) {
+  return Boolean(
+    tarea?.visibleParaAlumno !== false &&
+    (
+      tarea?.estado === "completada" ||
+      ESTADOS_REVISION_CONSTANCIA.has(tarea?.estado)
+    ) &&
+    tarea?.esDatoPrueba !== true
+  );
+}
+
+function actividadesConstanciaPorDia() {
+  const porDia = new Map();
 
   tareasConstancia
-    .filter(tarea =>
-      tarea?.visibleParaAlumno !== false &&
-      (
-        tarea?.estado === "completada" ||
-        ESTADOS_REVISION_CONSTANCIA.has(tarea?.estado)
-      ) &&
-      tarea?.esDatoPrueba !== true
-    )
+    .filter(tareaCuentaParaConstancia)
     .forEach(tarea => {
-      const fecha = fechaConstanciaTarea(tarea);
+      const valorFecha = valorFechaConstanciaTarea(tarea);
+      const fecha = fechaJs(valorFecha);
       const clave = claveDia(fecha);
-      if (clave) dias.add(clave);
+      if (!clave || !fecha) return;
+
+      const actual = porDia.get(clave);
+      if (!actual || fecha.getTime() < actual.fecha.getTime()) {
+        porDia.set(clave, {
+          clave,
+          fecha,
+          valorFecha,
+          misionId: texto(tarea.id)
+        });
+      }
     });
 
-  return dias;
+  return porDia;
+}
+
+function diasConstanciaFiltrados() {
+  return new Set(actividadesConstanciaPorDia().keys());
+}
+
+function esDiaConsecutivo(anterior, actual) {
+  if (!anterior?.fecha || !actual?.fecha) return false;
+  const siguiente = new Date(anterior.fecha);
+  siguiente.setHours(12, 0, 0, 0);
+  siguiente.setDate(siguiente.getDate() + 1);
+  return claveDia(siguiente) === actual.clave;
+}
+
+function cargarReconocimientosLiaConstancia() {
+  const actividades = [...actividadesConstanciaPorDia().values()]
+    .sort((a, b) => a.fecha.getTime() - b.fecha.getTime());
+  const resultado = [];
+  let racha = [];
+
+  actividades.forEach(actividad => {
+    if (!racha.length || esDiaConsecutivo(racha[racha.length - 1], actividad)) {
+      racha.push(actividad);
+    } else {
+      racha = [actividad];
+    }
+
+    if (racha.length !== 7) return;
+
+    const hito = racha[6];
+    if (hito.fecha.getTime() < FECHA_INICIO_REGLA_CONSTANCIA.getTime()) return;
+
+    resultado.push({
+      id: idVirtualRegla(REGLA_LIA_CONSTANCIA.id, "racha", hito.clave),
+      schemaVersion: 1,
+      tipo: "reconocimiento",
+      categoria: "constancia",
+      titulo: REGLA_LIA_CONSTANCIA.titulo,
+      mensaje: REGLA_LIA_CONSTANCIA.mensaje,
+      origen: "observado",
+      reglaId: REGLA_LIA_CONSTANCIA.id,
+      fuentePrincipal: {
+        tipo: "constancia",
+        id: hito.clave,
+        modulo: "mi-camino"
+      },
+      datosSoporte: {
+        rachaDias: 7,
+        desde: racha[0].clave,
+        hasta: hito.clave
+      },
+      fuenteEliminada: false,
+      estado: "activo",
+      visibleAlumno: true,
+      fechaHecho: hito.valorFecha,
+      fechaReconocimiento: hito.valorFecha,
+      virtual: true
+    });
+  });
+
+  return resultado.sort(
+    (a, b) => fechaMs(b.fechaReconocimiento) - fechaMs(a.fechaReconocimiento)
+  );
 }
 
 function inicioSemana(fecha = new Date()) {
@@ -559,6 +765,30 @@ function calcularRachaConstancia(dias) {
     fecha.setDate(fecha.getDate() - 1);
   }
   return racha;
+}
+
+function actualizarGuiaMotivacional() {
+  const dialogo = asegurarGuiaMotivacional();
+  const progreso = dialogo?.querySelector("[data-guia-constancia]");
+  if (!progreso) return;
+
+  const racha = calcularRachaConstancia(diasConstanciaFiltrados());
+  if (racha >= 7) {
+    progreso.innerHTML = `
+      <span aria-hidden="true">🔥</span>
+      <div><strong>¡Ya llegaste a 7 días seguidos!</strong><small>Ese momento puede formar parte de tu historia de crecimiento.</small></div>
+    `;
+    return;
+  }
+
+  const faltan = 7 - racha;
+  progreso.innerHTML = `
+    <span aria-hidden="true">🔥</span>
+    <div>
+      <strong>${racha ? `Llevas ${racha} ${racha === 1 ? "día" : "días"} seguidos` : "Tu próxima semana empieza con un solo día"}</strong>
+      <small>${racha ? `Te faltan ${faltan} ${faltan === 1 ? "día" : "días"} para llegar a 7.` : "Cuando hagas una Misión real, ese día empezará a contar."}</small>
+    </div>
+  `;
 }
 
 function aplicarConstanciaFiltrada() {
@@ -595,6 +825,7 @@ function aplicarConstanciaFiltrada() {
   const rachaElemento = document.getElementById("rachaDias");
   if (diasSemanaElemento) diasSemanaElemento.textContent = String(diasSemana);
   if (rachaElemento) rachaElemento.textContent = String(calcularRachaConstancia(dias));
+  actualizarGuiaMotivacional();
 }
 
 function instalarConstanciaSinDatosPrueba() {
@@ -610,6 +841,7 @@ function instalarConstanciaSinDatosPrueba() {
     tareas => {
       tareasConstancia = Array.isArray(tareas) ? tareas : [];
       tareasConstanciaCargadas = true;
+      reconocimientosLiaConstancia = cargarReconocimientosLiaConstancia();
       requestAnimationFrame(() => {
         aplicarConstanciaFiltrada();
         renderCombinado();
@@ -626,6 +858,7 @@ export async function instalarReconocimientosCamino() {
   instalada = true;
   cargarEstilos();
   asegurarHost();
+  asegurarGuiaMotivacional();
 
   try {
     puedeAbrirFuentesGestion = await ContextoUsuario.puedeGestionar();
@@ -647,8 +880,8 @@ export async function instalarReconocimientosCamino() {
   }
 
   /* Los automáticos de Fase B son derivados: no se escriben desde la cuenta
-     del alumno. Así la historia visible depende siempre de la sesión real que
-     la sustenta y desaparece naturalmente si esa sesión se elimina. */
+     del alumno. Así la historia visible depende siempre de la actividad real
+     que la sustenta y desaparece si esa fuente deja de formar parte del camino. */
   renderCombinado({ reiniciarPaginacion: true });
 
   detenerObservacion = Reconocimientos.observar(
