@@ -1,0 +1,238 @@
+/* Academia Gloria Valentina · Recordatorios de calendario al ingresar */
+
+.recordatorio-calendario{
+  width:min(680px,calc(100% - 28px));
+  max-height:min(82vh,760px);
+  margin:auto;
+  padding:0;
+  overflow:auto;
+  border:0;
+  border-radius:28px;
+  color:#202a40;
+  background:#fff;
+  box-shadow:0 28px 80px rgba(67,56,202,.25);
+  font-family:"Outfit",system-ui,sans-serif;
+}
+
+.recordatorio-calendario::backdrop{
+  background:rgba(30,41,59,.48);
+  backdrop-filter:blur(3px);
+}
+
+.recordatorio-calendario__cabecera{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:16px;
+  align-items:center;
+  padding:24px 68px 22px 24px;
+  background:
+    radial-gradient(circle at 92% 8%,rgba(255,255,255,.34),transparent 24%),
+    linear-gradient(135deg,#7860f5,#a855f7 55%,#ec4899);
+  color:#fff;
+}
+
+.recordatorio-calendario__simbolo{
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  border-radius:19px;
+  background:rgba(255,255,255,.18);
+  font-size:30px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);
+}
+
+.recordatorio-calendario__cabecera span{
+  display:block;
+  margin-bottom:5px;
+  font-size:.74rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  opacity:.88;
+}
+
+.recordatorio-calendario__cabecera h2{
+  margin:0;
+  color:#fff;
+  font-size:clamp(1.45rem,4vw,2rem);
+  line-height:1.1;
+}
+
+.recordatorio-calendario__cabecera p{
+  margin:6px 0 0;
+  color:rgba(255,255,255,.9);
+  font-weight:650;
+}
+
+.recordatorio-calendario__cerrar{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:13px;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:1.55rem;
+  font-weight:800;
+  line-height:1;
+}
+
+.recordatorio-calendario__cerrar:hover,
+.recordatorio-calendario__cerrar:focus-visible{
+  background:rgba(255,255,255,.25);
+  outline:3px solid rgba(255,255,255,.28);
+  outline-offset:2px;
+}
+
+.recordatorio-calendario__cuerpo{
+  display:grid;
+  gap:14px;
+  padding:22px 24px 10px;
+}
+
+.recordatorio-calendario__seccion{
+  padding:17px;
+  border:2px solid #e2e8f0;
+  border-radius:20px;
+}
+
+.recordatorio-calendario__seccion--hoy{
+  border-color:#f6cc73;
+  background:linear-gradient(135deg,#fffaf0,#fff);
+}
+
+.recordatorio-calendario__seccion--manana{
+  border-color:#bfdbfe;
+  background:linear-gradient(135deg,#f5f9ff,#fff);
+}
+
+.recordatorio-calendario__seccion h3{
+  margin:0 0 11px;
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:#475569;
+}
+
+.recordatorio-calendario__eventos{
+  display:grid;
+  gap:9px;
+}
+
+.recordatorio-calendario__evento{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:10px;
+  align-items:start;
+  padding:10px 12px;
+  border-radius:15px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 5px 15px rgba(15,23,42,.05);
+}
+
+.recordatorio-calendario__evento-icono{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#f8fafc;
+  font-size:22px;
+}
+
+.recordatorio-calendario__evento strong{
+  display:block;
+  padding-top:1px;
+  font-size:1rem;
+  color:#243047;
+}
+
+.recordatorio-calendario__evento p{
+  margin:3px 0 0;
+  color:#64748b;
+  font-size:.88rem;
+  line-height:1.4;
+  font-weight:650;
+}
+
+.recordatorio-calendario__acciones{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  padding:16px 24px 24px;
+}
+
+.recordatorio-calendario__boton{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 16px;
+  border-radius:14px;
+  text-decoration:none;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:.92rem;
+  font-weight:900;
+}
+
+.recordatorio-calendario__boton--principal{
+  border:0;
+  color:#fff;
+  background:linear-gradient(90deg,#7557f6,#e957aa);
+  box-shadow:0 10px 24px rgba(124,58,237,.2);
+}
+
+.recordatorio-calendario__boton--secundario{
+  border:2px solid #cfe2ff;
+  color:#2563eb;
+  background:#fff;
+}
+
+.recordatorio-calendario__boton:hover{
+  transform:translateY(-1px);
+}
+
+.recordatorio-calendario__boton:focus-visible{
+  outline:3px solid rgba(124,58,237,.2);
+  outline-offset:2px;
+}
+
+@media(max-width:600px){
+  .recordatorio-calendario{
+    width:min(100% - 16px,680px);
+    border-radius:22px;
+  }
+
+  .recordatorio-calendario__cabecera{
+    grid-template-columns:1fr;
+    padding:22px 58px 20px 20px;
+  }
+
+  .recordatorio-calendario__simbolo{
+    width:50px;
+    height:50px;
+    border-radius:16px;
+    font-size:26px;
+  }
+
+  .recordatorio-calendario__cuerpo{
+    padding:16px 16px 8px;
+  }
+
+  .recordatorio-calendario__acciones{
+    flex-direction:column;
+    padding:14px 16px 18px;
+  }
+
+  .recordatorio-calendario__boton{
+    width:100%;
+  }
+}
