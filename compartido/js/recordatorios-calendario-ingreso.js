@@ -50,14 +50,47 @@ function marcarMostrado(clave) {
   }
 }
 
-function asegurarEstilos() {
-  if (document.querySelector('link[data-recordatorios-calendario="true"]')) return;
+function esperarEstilos(enlace) {
+  if (enlace.sheet) return Promise.resolve(enlace);
+
+  return new Promise((resolve, reject) => {
+    const limpiar = () => {
+      enlace.removeEventListener("load", cargado);
+      enlace.removeEventListener("error", error);
+    };
+
+    const cargado = () => {
+      limpiar();
+      resolve(enlace);
+    };
+
+    const error = () => {
+      limpiar();
+      reject(new Error("No se pudieron cargar los estilos de recordatorios."));
+    };
+
+    enlace.addEventListener("load", cargado, { once: true });
+    enlace.addEventListener("error", error, { once: true });
+  });
+}
+
+async function asegurarEstilos() {
+  const existente = document.querySelector(
+    'link[data-recordatorios-calendario="true"]'
+  );
+  if (existente) {
+    await esperarEstilos(existente);
+    return;
+  }
 
   const enlace = document.createElement("link");
   enlace.rel = "stylesheet";
   enlace.href = new URL("../css/recordatorios-calendario.css", import.meta.url).href;
   enlace.dataset.recordatoriosCalendario = "true";
+
+  const carga = esperarEstilos(enlace);
   document.head.appendChild(enlace);
+  await carga;
 }
 
 async function leerEventosHoyYManana(hoy, manana) {
@@ -214,7 +247,7 @@ export async function iniciarRecordatoriosCalendarioIngreso() {
 
     if (!eventosHoy.length && !eventosManana.length) return false;
 
-    asegurarEstilos();
+    await asegurarEstilos();
 
     const persona = contexto.personaActiva || {};
     const nombre = texto(persona.nombreVisible || persona.nombre) || "Gloria";
