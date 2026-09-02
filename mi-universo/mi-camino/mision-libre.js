@@ -128,26 +128,6 @@ function protegerTrabajoNoDigital(card) {
   boton.replaceWith(estado);
 }
 
-function normalizarAccesoTrabajo(card) {
-  if (!(card instanceof HTMLElement)) return;
-  if (esCardLibreSinEvidencia(card)) return;
-
-  const boton = card.querySelector("[data-ver-trabajo]");
-  if (!boton) return;
-
-  /*
-   * El MutationObserver de Mi Camino observa childList + subtree. Cambiar
-   * textContent genera una nueva mutación incluso cuando el texto ya coincide.
-   * Marcamos cada botón una sola vez para que esta normalización sea idempotente
-   * y nunca pueda retroalimentar al propio observador.
-   */
-  if (boton.dataset.trabajoConsultaNormalizado === "true") return;
-
-  boton.dataset.trabajoConsultaNormalizado = "true";
-  boton.textContent = "👁️ Ver trabajo";
-  boton.setAttribute("aria-label", "Ver trabajo realizado de esta Misión");
-}
-
 function aplicarProtecciones(contenedor = document) {
   contenedor
     .querySelectorAll?.("a.mision[data-iniciar-mision]")
@@ -159,10 +139,7 @@ function aplicarProtecciones(contenedor = document) {
 
   contenedor
     .querySelectorAll?.(".mision--revision, .mision--completada")
-    .forEach(card => {
-      protegerTrabajoNoDigital(card);
-      normalizarAccesoTrabajo(card);
-    });
+    .forEach(protegerTrabajoNoDigital);
 }
 
 async function cambiarEstado(id, estado, boton, mensajeError) {
@@ -233,41 +210,6 @@ async function ejecutarCierreAcademico(boton) {
   );
 }
 
-async function ejecutarVerTrabajo(boton) {
-  const id = texto(boton.dataset.verTrabajo);
-  if (!id) return;
-
-  const textoOriginal = boton.textContent;
-  boton.disabled = true;
-  boton.textContent = "Abriendo…";
-
-  try {
-    /*
-     * Carga bajo demanda: Mi Camino no depende del resolver de Trabajo
-     * realizado durante su arranque. El nuevo producto se carga únicamente
-     * cuando el usuario solicita abrirlo.
-     */
-    const { abrirTrabajoRealizado } = await import(
-      "../../compartido/js/trabajo-realizado.js"
-    );
-
-    await abrirTrabajoRealizado(id, {
-      volver: `${window.location.pathname}${window.location.search}${window.location.hash}`
-    });
-  } catch (error) {
-    console.error("No se pudo abrir el trabajo realizado.", error);
-    window.alert(
-      "No pudimos abrir el trabajo realizado en este momento.\n" +
-      `Razón: ${error.message || "Error no identificado"}`
-    );
-  } finally {
-    if (boton.isConnected) {
-      boton.disabled = false;
-      boton.textContent = textoOriginal;
-    }
-  }
-}
-
 function observarListas() {
   cargarEstilosFinalizacionManual();
 
@@ -289,15 +231,6 @@ document.addEventListener("click", event => {
   event.preventDefault();
   ejecutarAccionLibre(boton);
 });
-
-document.addEventListener("click", event => {
-  const boton = event.target.closest?.("[data-ver-trabajo]");
-  if (!boton) return;
-
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  ejecutarVerTrabajo(boton);
-}, true);
 
 document.addEventListener("click", event => {
   const boton = event.target.closest?.("[data-terminar-repaso]");
