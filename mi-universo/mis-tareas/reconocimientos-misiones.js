@@ -135,6 +135,7 @@ function asegurarDialogo() {
       <div class="reconocimiento-dialogo__error" data-reconocimiento-error></div>
 
       <div class="reconocimiento-dialogo__acciones">
+        <button class="btn secundaria hidden" type="button" data-eliminar-guacamaya>🧹 Eliminar Guacamaya</button>
         <button class="btn secundaria" type="button" data-cancelar-reconocimiento>Cancelar</button>
         <button class="btn primaria" type="submit" data-guardar-reconocimiento>💛 Guardar reconocimiento</button>
       </div>
@@ -226,6 +227,7 @@ async function abrirReconocimiento(misionId) {
   const fuente = dialogo.querySelector("[data-reconocimiento-fuente]");
   const error = dialogo.querySelector("[data-reconocimiento-error]");
   const guardar = dialogo.querySelector("[data-guardar-reconocimiento]");
+  const eliminarGuacamaya = dialogo.querySelector("[data-eliminar-guacamaya]");
   const form = dialogo.querySelector("[data-form-reconocimiento]");
   const activarGuacamaya = dialogo.querySelector("[data-reconocimiento-guacamaya]");
   const guacamayaTipo = dialogo.querySelector("[data-guacamaya-tipo]");
@@ -248,6 +250,39 @@ async function abrirReconocimiento(misionId) {
   const yaEsGuacamaya = existente?.tipo === "guacamaya";
   activarGuacamaya.checked = yaEsGuacamaya;
   if (yaEsGuacamaya) activarGuacamaya.disabled = true;
+  eliminarGuacamaya?.classList.toggle("hidden", !yaEsGuacamaya);
+
+  if (eliminarGuacamaya) {
+    eliminarGuacamaya.disabled = false;
+    eliminarGuacamaya.onclick = async () => {
+      const confirmacion = window.prompt(
+        `🧹 ELIMINAR GUACAMAYA\n\n` +
+        `${existente?.guacamayaNombre || "Esta Guacamaya"} se quitará de Mi Camino.\n` +
+        "La Misión y su trabajo realizado NO se eliminarán.\n\n" +
+        "Usa esta acción solo para corregir una asignación de prueba o un error administrativo.\n\n" +
+        "Escribe ELIMINAR para confirmar."
+      );
+      if (texto(confirmacion).toUpperCase() !== "ELIMINAR") return;
+
+      eliminarGuacamaya.disabled = true;
+      eliminarGuacamaya.textContent = "🧹 Eliminando…";
+      error.textContent = "";
+
+      try {
+        await Reconocimientos.eliminarPorMision(dialogo.dataset.misionId);
+        dialogo.close();
+        window.alert(
+          "✅ Guacamaya eliminada de Mi Camino.\n\n" +
+          "La Misión y sus evidencias permanecen intactas. La categoría queda disponible para un hito futuro."
+        );
+      } catch (eliminarError) {
+        console.error("No se pudo eliminar la Guacamaya.", eliminarError);
+        error.textContent = eliminarError.message || "No se pudo eliminar la Guacamaya.";
+        eliminarGuacamaya.disabled = false;
+        eliminarGuacamaya.textContent = "🧹 Eliminar Guacamaya";
+      }
+    };
+  }
 
   if (yaEsGuacamaya && existente.guacamayaTipo) {
     guacamayaTipo.value = existente.guacamayaTipo;
