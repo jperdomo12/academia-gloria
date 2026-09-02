@@ -251,6 +251,12 @@
   background: #dcfce7;
 }
 
+/* Los datos marcados como prueba nunca forman parte de Mi constancia oficial.
+   El control temporal de preview no se expone como funcionalidad de producto. */
+[data-constancia-incluir-pruebas] {
+  display: none !important;
+}
+
 @media (max-width: 640px) {
   .recompensas-a1__ultimo,
   .recompensas-a2__guacamaya {
