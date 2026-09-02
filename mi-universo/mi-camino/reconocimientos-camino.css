@@ -251,12 +251,6 @@
   background: #dcfce7;
 }
 
-/* Regla de producto: las Misiones marcadas como prueba nunca forman parte
-   de Mi constancia. No se expone ningún modo de inclusión temporal. */
-[data-constancia-incluir-pruebas] {
-  display: none !important;
-}
-
 @media (max-width: 640px) {
   .recompensas-a1__ultimo,
   .recompensas-a2__guacamaya {
