@@ -30,6 +30,10 @@ function texto(valor = "") {
 function fechaJs(valor) {
   if (!valor) return null;
   if (typeof valor?.toDate === "function") return valor.toDate();
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    const fechaLocal = new Date(`${valor}T12:00:00`);
+    return Number.isNaN(fechaLocal.getTime()) ? null : fechaLocal;
+  }
   const fecha = new Date(valor);
   return Number.isNaN(fecha.getTime()) ? null : fecha;
 }
@@ -37,18 +41,23 @@ function fechaJs(valor) {
 function fechaTexto(valor) {
   const fecha = fechaJs(valor);
   if (!fecha) return "Fecha no disponible";
-  return new Intl.DateTimeFormat("es-ES", {
-    dateStyle:"medium",
-    timeStyle:"short"
-  }).format(fecha);
+
+  const soloFecha = typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor);
+  return new Intl.DateTimeFormat(
+    "es-ES",
+    soloFecha
+      ? { dateStyle:"medium" }
+      : { dateStyle:"medium", timeStyle:"short" }
+  ).format(fecha);
 }
 
 function duracionTexto(segundos = 0) {
   const total = Math.max(0, Math.round(Number(segundos) || 0));
+  if (!total) return "—";
   const minutos = Math.floor(total / 60);
   const resto = total % 60;
   if (!minutos) return `${resto} s`;
-  return `${minutos} min ${String(resto).padStart(2,"0")} s`;
+  return resto ? `${minutos} min ${resto} s` : `${minutos} min`;
 }
 
 function estadoTexto(estado = "") {
@@ -65,12 +74,11 @@ function estadoTexto(estado = "") {
 }
 
 function valorFechaEvidencia(evidencia = {}) {
-  return (
-    evidencia.ocurridaEn ||
-    evidencia.aplicadaEn ||
-    evidencia.creadaEn ||
-    null
-  );
+  return evidencia.ocurridaEn || evidencia.aplicadaEn || evidencia.creadaEn || null;
+}
+
+function fechaSesion(sesion = {}) {
+  return sesion.completadaEn || sesion.updatedAt || sesion.creadaEn || sesion.createdAt || null;
 }
 
 function ordenarEvidencias(evidencias = []) {
@@ -96,14 +104,13 @@ function valorLegible(valor) {
 
 function listaDatosHtml(datos = {}, { excluir = [] } = {}) {
   const omitidas = new Set(excluir);
-  const filas = Object.entries(datos || {})
-    .filter(([clave, valor]) =>
-      !omitidas.has(clave) &&
-      valor !== undefined &&
-      valor !== null &&
-      valor !== "" &&
-      typeof valor !== "object"
-    );
+  const filas = Object.entries(datos || {}).filter(([clave, valor]) =>
+    !omitidas.has(clave) &&
+    valor !== undefined &&
+    valor !== null &&
+    valor !== "" &&
+    typeof valor !== "object"
+  );
 
   if (!filas.length) return "";
 
@@ -139,26 +146,28 @@ function audioHtml(audioData, duracion = 0) {
 
 function tarjetaHtml({ evidencia, titulo, subtitulo = "", contenido = "" }) {
   const fecha = fechaTexto(valorFechaEvidencia(evidencia));
-  const tipo = texto(evidencia.tipo) || "evidencia";
-  const modulo = MODULOS[texto(evidencia.modulo)] || { nombre:texto(evidencia.modulo) || "Módulo", icono:"🗂️" };
+  const modulo = MODULOS[texto(evidencia.modulo)] || {
+    nombre:texto(evidencia.modulo) || "Actividad",
+    icono:"🗂️"
+  };
 
   return `
-    <article class="evidencia-card">
-      <header class="evidencia-card__cabecera">
+    <details class="evidencia-card">
+      <summary class="evidencia-card__cabecera" style="cursor:pointer">
         <div class="evidencia-card__titulo">
           <span class="trabajo-sobrelinea">${escapar(modulo.icono)} ${escapar(modulo.nombre)}</span>
           <h3>${escapar(titulo || "Actividad guardada")}</h3>
           <p>${escapar(subtitulo || fecha)}</p>
         </div>
         <div class="evidencia-card__badges">
-          <span class="evidencia-badge">✅ Evidencia guardada</span>
-          <span class="evidencia-badge">${escapar(tipo)}</span>
+          <span class="evidencia-badge">✅ Actividad guardada</span>
+          <span class="evidencia-badge">Ver detalle ↓</span>
         </div>
-      </header>
+      </summary>
       <div class="evidencia-card__cuerpo">
         ${contenido || '<div class="trabajo-vacio">El registro existe, pero no contiene más detalle visualizable.</div>'}
       </div>
-    </article>
+    </details>
   `;
 }
 
@@ -166,28 +175,35 @@ function progresoMision(tarea = {}) {
   const criterio = tarea.criterioCumplimiento || {};
   const progreso = tarea.progreso || {};
   const actual = Number(progreso.cantidadActual || 0);
-  const objetivo = Number(
-    criterio.cantidadObjetivo ??
-    progreso.cantidadObjetivo ??
-    0
-  );
+  const objetivo = Number(criterio.cantidadObjetivo ?? progreso.cantidadObjetivo ?? 0);
   return { actual, objetivo };
+}
+
+function indicadoresResultado(tarea = {}) {
+  const resultado = tarea.resultado && typeof tarea.resultado === "object"
+    ? tarea.resultado
+    : {};
+  return [
+    resultado.masDeLoEsperado ? "🚀 Hizo más de lo esperado" : "",
+    resultado.necesitoAyuda ? "🤝 Necesitó ayuda" : "",
+    resultado.convieneRepetir ? "🌱 Conviene volver a practicar" : ""
+  ].filter(Boolean);
 }
 
 function renderMision(tarea, perfil, evidencias) {
   const presentacion = tarea.presentacionAlumno || {};
+  const resultado = tarea.resultado && typeof tarea.resultado === "object"
+    ? tarea.resultado
+    : {};
   const modulo = MODULOS[tarea.modulo] || { nombre:tarea.modulo || "Misión", icono:"🌟" };
   const { actual, objetivo } = progresoMision(tarea);
 
-  $("tituloMision").textContent =
-    presentacion.tituloMision || tarea.titulo || "Misión";
-  $("descripcionMision").textContent =
-    presentacion.descripcionMision || tarea.descripcion || "";
-  $("nombrePersona").textContent =
-    perfil?.nombreVisible || perfil?.nombre || "Alumno";
+  $("tituloMision").textContent = presentacion.tituloMision || tarea.titulo || "Misión";
+  $("descripcionMision").textContent = presentacion.descripcionMision || tarea.descripcion || "";
+  $("nombrePersona").textContent = perfil?.nombreVisible || perfil?.nombre || "Alumno";
   $("progresoMision").textContent = objetivo > 0
-    ? `${actual} de ${objetivo} evidencias objetivo`
-    : `${evidencias.length} ${evidencias.length === 1 ? "evidencia" : "evidencias"} guardadas`;
+    ? `${actual} de ${objetivo} actividades registradas`
+    : `${evidencias.length} ${evidencias.length === 1 ? "actividad guardada" : "actividades guardadas"}`;
 
   $("chipsMision").innerHTML = [
     `${modulo.icono} ${modulo.nombre}`,
@@ -201,14 +217,19 @@ function renderMision(tarea, perfil, evidencias) {
   const objetivoTexto = texto(tarea.objetivo);
   const criterioFinal = texto(tarea.criterioFinalizacion);
   const mensajeLia = texto(presentacion.mensaje);
+  const observaciones = texto(resultado.observaciones);
+  const finalizacion = resultado.fechaFinalizacion || tarea.progreso?.completadaEn;
+  const indicadores = indicadoresResultado(tarea);
 
   if (objetivoTexto) datos.push({ titulo:"🎯 Objetivo", valor:objetivoTexto, ancho:true });
   if (criterioFinal) datos.push({ titulo:"✅ Criterio de finalización", valor:criterioFinal, ancho:true });
   if (mensajeLia) datos.push({ titulo:"🦜 Mensaje de Lía", valor:mensajeLia, ancho:true });
+  if (observaciones) datos.push({ titulo:"💛 Observaciones del resultado", valor:observaciones, ancho:true });
+  if (indicadores.length) datos.push({ titulo:"🌱 Indicadores del resultado", valor:indicadores.join(" · "), ancho:true });
   if (tarea.fechaInicio) datos.push({ titulo:"Fecha de inicio", valor:fechaTexto(tarea.fechaInicio) });
   if (tarea.fechaLimite) datos.push({ titulo:"Fecha límite", valor:fechaTexto(tarea.fechaLimite) });
   if (tarea.progreso?.iniciadaEn) datos.push({ titulo:"Comenzada", valor:fechaTexto(tarea.progreso.iniciadaEn) });
-  if (tarea.progreso?.completadaEn) datos.push({ titulo:"Terminada por el alumno", valor:fechaTexto(tarea.progreso.completadaEn) });
+  if (finalizacion) datos.push({ titulo:"Finalizada", valor:fechaTexto(finalizacion) });
 
   $("datosMision").innerHTML = datos.length
     ? datos.map(item => `
@@ -217,7 +238,7 @@ function renderMision(tarea, perfil, evidencias) {
           <p>${escapar(item.valor)}</p>
         </article>
       `).join("")
-    : '<div class="trabajo-vacio trabajo-dato--ancho">La Misión no necesita información adicional para interpretar sus evidencias.</div>';
+    : '<div class="trabajo-vacio trabajo-dato--ancho">La Misión no necesita información adicional para interpretar su trabajo.</div>';
 }
 
 function detallePronunciacionHtml(evidencia = {}) {
@@ -226,7 +247,6 @@ function detallePronunciacionHtml(evidencia = {}) {
   if (!palabras.length) return "";
 
   const reconocidas = palabras.filter(item => item.superadaPalabra).length;
-
   return `
     <div class="evidencia-grid">
       <div class="evidencia-metrica"><strong>${palabras.length}</strong><span>palabras practicadas</span></div>
@@ -254,6 +274,32 @@ function detallePronunciacionHtml(evidencia = {}) {
       `).join("")}
     </div>
   `;
+}
+
+function seleccionarSesion(sesiones = [], evidencia = {}, obtenerActividadId = () => "") {
+  const sesionId = texto(evidencia.sesionId);
+  if (sesionId) {
+    const exacta = sesiones.find(item => String(item.id) === sesionId);
+    if (exacta) return exacta;
+  }
+
+  const actividadId = texto(evidencia.actividadId);
+  if (!actividadId) return null;
+
+  const candidatas = sesiones.filter(item => texto(obtenerActividadId(item)) === actividadId);
+  if (!candidatas.length) return null;
+  if (candidatas.length === 1) return candidatas[0];
+
+  const fechaEvidencia = fechaJs(valorFechaEvidencia(evidencia));
+  if (!fechaEvidencia) return candidatas[0];
+
+  return [...candidatas].sort((a,b) => {
+    const fechaA = fechaJs(fechaSesion(a));
+    const fechaB = fechaJs(fechaSesion(b));
+    const distanciaA = fechaA ? Math.abs(fechaA.getTime() - fechaEvidencia.getTime()) : Number.MAX_SAFE_INTEGER;
+    const distanciaB = fechaB ? Math.abs(fechaB.getTime() - fechaEvidencia.getTime()) : Number.MAX_SAFE_INTEGER;
+    return distanciaA - distanciaB;
+  })[0] || null;
 }
 
 async function historiasLectura() {
@@ -311,8 +357,9 @@ function tarjetaLectura(evidencia, sesion, historia) {
       evidencia,
       titulo:evidencia.resultado?.titulo || "Refuerzo de pronunciación",
       subtitulo:fechaTexto(valorFechaEvidencia(evidencia)),
-      contenido:bloque("🗣️ Práctica de pronunciación", detallePronunciacionHtml(evidencia), "evidencia-bloque--resultado") +
-        bloque("🗂️ Datos de la evidencia", listaDatosHtml(evidencia.atributos || {}))
+      contenido:
+        bloque("🗣️ Práctica de pronunciación", detallePronunciacionHtml(evidencia), "evidencia-bloque--resultado") +
+        bloque("🗂️ Datos de la actividad", listaDatosHtml(evidencia.atributos || {}))
     });
   }
 
@@ -328,16 +375,17 @@ function tarjetaLectura(evidencia, sesion, historia) {
         <div class="evidencia-metrica"><strong>${Number(analisis.palabrasPorMinuto || 0) || "—"}</strong><span>palabras/minuto</span></div>
       </div>`
     : "";
+  const comprension = respuestasLecturaHtml(sesion || {}, historia);
 
   const contenido = [
     metricas ? bloque("🔎 Resultado de la lectura", metricas, "evidencia-bloque--resultado") : "",
     sesion?.audioData ? bloque("🎙️ Grabación", audioHtml(sesion.audioData, sesion.duracion), "evidencia-bloque--audio") : "",
     texto(sesion?.transcripcion) ? bloque("🦜 Lo que entendió Lía", `<p>${escapar(sesion.transcripcion)}</p>`) : "",
-    respuestasLecturaHtml(sesion || {}, historia) ? bloque("🧠 Comprensión", respuestasLecturaHtml(sesion || {}, historia)) : "",
+    comprension ? bloque("🧠 Comprensión", comprension) : "",
     texto(sesion?.reflexion) ? bloque("🌟 Reflexión", `<p>${escapar(sesion.reflexion)}</p>`) : "",
     texto(sesion?.fraseDelDia) ? bloque("🌈 Frase del día", `<p>${escapar(sesion.fraseDelDia)}</p>`) : "",
     texto(sesion?.observacionFamilia) ? bloque("👨‍👩‍👧 Observación familiar", `<p>${escapar(sesion.observacionFamilia)}</p>`, "evidencia-bloque--familia") : "",
-    !sesion ? bloque("🗂️ Evidencia disponible", listaDatosHtml(evidencia.resultado || {})) : ""
+    !sesion ? bloque("🗂️ Registro disponible", listaDatosHtml(evidencia.resultado || {})) : ""
   ].filter(Boolean).join("");
 
   return tarjetaHtml({ evidencia, titulo, subtitulo:fechaTexto(valorFechaEvidencia(evidencia)), contenido });
@@ -350,10 +398,11 @@ async function renderLectura(evidencias) {
   ]);
 
   return evidencias.map(evidencia => {
-    const sesion = sesiones.find(item =>
-      (evidencia.sesionId && String(item.id) === String(evidencia.sesionId)) ||
-      String(item.historiaId || item.id) === String(evidencia.actividadId || "")
-    ) || null;
+    const sesion = seleccionarSesion(
+      sesiones,
+      evidencia,
+      item => item.historiaId || item.id
+    );
     const historia = historias.get(String(evidencia.actividadId || sesion?.historiaId || "")) || null;
     return tarjetaLectura(evidencia, sesion, historia);
   }).join("");
@@ -390,7 +439,11 @@ function respuestasSemillaHtml(sesion = {}, semilla = null) {
       })
     : Object.entries(respuestas)
         .filter(([clave]) => !clave.endsWith("__other"))
-        .map(([clave,valor]) => ({ titulo:clave, seleccion:Array.isArray(valor) ? valor : [valor], propia:texto(respuestas[`${clave}__other`]) }));
+        .map(([clave,valor]) => ({
+          titulo:clave,
+          seleccion:Array.isArray(valor) ? valor : [valor],
+          propia:texto(respuestas[`${clave}__other`])
+        }));
 
   return `
     <div class="evidencia-respuestas">
@@ -418,7 +471,7 @@ function tarjetaSemilla(evidencia, sesion, semilla) {
     texto(sesion?.transcripcion) ? bloque("🦜 Transcripción", `<p>${escapar(sesion.transcripcion)}</p>`) : "",
     Object.keys(analisis).length ? bloque("🔎 Datos de la práctica", listaDatosHtml(analisis)) : "",
     texto(sesion?.observacionFamilia) ? bloque("👨‍👩‍👧 Observación familiar", `<p>${escapar(sesion.observacionFamilia)}</p>`, "evidencia-bloque--familia") : "",
-    !sesion ? bloque("🗂️ Evidencia disponible", listaDatosHtml(evidencia.resultado || {})) : ""
+    !sesion ? bloque("🗂️ Registro disponible", listaDatosHtml(evidencia.resultado || {})) : ""
   ].filter(Boolean).join("");
 
   return tarjetaHtml({ evidencia, titulo, subtitulo:fechaTexto(valorFechaEvidencia(evidencia)), contenido });
@@ -431,10 +484,11 @@ async function renderSemillas(evidencias) {
   ]);
 
   return evidencias.map(evidencia => {
-    const sesion = sesiones.find(item =>
-      (evidencia.sesionId && String(item.id) === String(evidencia.sesionId)) ||
-      String(item.semillaId || "") === String(evidencia.actividadId || "")
-    ) || null;
+    const sesion = seleccionarSesion(
+      sesiones,
+      evidencia,
+      item => item.semillaId
+    );
     const semilla = catalogo.get(String(evidencia.actividadId || sesion?.semillaId || "")) || null;
     return tarjetaSemilla(evidencia, sesion, semilla);
   }).join("");
@@ -464,7 +518,7 @@ function tarjetaBiblioteca(evidencia, libro, audio) {
     audio?.audioData ? bloque("🎙️ Explicación oral", audioHtml(audio.audioData, audio.duration), "evidencia-bloque--audio") : "",
     texto(audio?.transcript) ? bloque("🦜 Transcripción", `<p>${escapar(audio.transcript)}</p>`) : "",
     texto(audio?.familyObservation) ? bloque("👨‍👩‍👧 Observación familiar", `<p>${escapar(audio.familyObservation)}</p>`, "evidencia-bloque--familia") : "",
-    !libro ? bloque("🗂️ Evidencia disponible", listaDatosHtml(evidencia.resultado || {})) : ""
+    !libro ? bloque("🗂️ Registro disponible", listaDatosHtml(evidencia.resultado || {})) : ""
   ].filter(Boolean).join("");
 
   return tarjetaHtml({ evidencia, titulo, subtitulo:fechaTexto(valorFechaEvidencia(evidencia)), contenido });
@@ -476,6 +530,7 @@ async function renderBiblioteca(evidencias) {
     const id = String(evidencia.actividadId || evidencia.sesionId || "");
     const libro = libros.find(item => String(item.id) === id) || null;
     let audio = null;
+
     if (libro?.id) {
       try {
         audio = await Academia.biblioteca.audio.leer(libro.id);
@@ -483,6 +538,7 @@ async function renderBiblioteca(evidencias) {
         console.debug(`No se pudo leer el audio del libro ${libro.id}.`, error);
       }
     }
+
     return tarjetaBiblioteca(evidencia, libro, audio);
   }));
   return items.join("");
@@ -490,48 +546,49 @@ async function renderBiblioteca(evidencias) {
 
 function renderEvidenciaGenerica(evidencia) {
   const titulo = evidencia.resultado?.titulo || evidencia.actividadId || "Actividad guardada";
+  const atributos = listaDatosHtml(evidencia.atributos || {});
+  const resultado = listaDatosHtml(evidencia.resultado || {}, { excluir:["audioData"] });
   const contenido = [
-    listaDatosHtml(evidencia.atributos || {}) ? bloque("🏷️ Atributos", listaDatosHtml(evidencia.atributos || {})) : "",
-    listaDatosHtml(evidencia.resultado || {}, { excluir:["audioData"] }) ? bloque("✅ Resultado", listaDatosHtml(evidencia.resultado || {}, { excluir:["audioData"] }), "evidencia-bloque--resultado") : ""
+    atributos ? bloque("🏷️ Datos de la actividad", atributos) : "",
+    resultado ? bloque("✅ Resultado", resultado, "evidencia-bloque--resultado") : ""
   ].filter(Boolean).join("");
+
   return tarjetaHtml({ evidencia, titulo, subtitulo:fechaTexto(valorFechaEvidencia(evidencia)), contenido });
 }
 
-async function renderEvidencias(tarea, evidencias) {
+async function renderTrabajo(tarea, evidencias) {
   if (!evidencias.length) {
-    return '<div class="trabajo-vacio">Esta Misión todavía no tiene evidencias guardadas.</div>';
+    return '<div class="trabajo-vacio">Todavía no hay trabajo registrado para esta Misión.</div>';
   }
 
-  if (tarea.modulo === "rincon-lectura") {
-    return renderLectura(evidencias);
-  }
-  if (tarea.modulo === "creciendo-por-dentro") {
-    return renderSemillas(evidencias);
-  }
-  if (tarea.modulo === "biblioteca") {
-    return renderBiblioteca(evidencias);
-  }
+  if (tarea.modulo === "rincon-lectura") return renderLectura(evidencias);
+  if (tarea.modulo === "creciendo-por-dentro") return renderSemillas(evidencias);
+  if (tarea.modulo === "biblioteca") return renderBiblioteca(evidencias);
 
   return evidencias.map(renderEvidenciaGenerica).join("");
 }
 
-function mostrarError(error) {
+function mostrarError(mensaje) {
   $("estadoCarga").hidden = true;
   $("contenidoTrabajo").hidden = true;
   $("estadoError").hidden = false;
-  $("textoError").textContent = error?.message || "Error no identificado.";
+  $("textoError").textContent = mensaje;
 }
 
 async function iniciar() {
   try {
     await auth.authStateReady();
     if (!auth.currentUser) {
-      window.location.replace("../../login.html");
+      const volver = encodeURIComponent(
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+      );
+      window.location.replace(`../../login.html?volver=${volver}`);
       return;
     }
 
     if (!misionId) {
-      throw new Error("Falta el identificador de la Misión.");
+      mostrarError("No encontramos la Misión que querías consultar. Regresa e inténtalo de nuevo.");
+      return;
     }
 
     const [tarea, evidencias, perfil] = await Promise.all([
@@ -541,26 +598,29 @@ async function iniciar() {
     ]);
 
     if (!tarea) {
-      throw new Error("No se encontró la Misión para la Persona Activa.");
+      mostrarError("No encontramos esta Misión para la Persona Activa.");
+      return;
     }
 
     const ordenadas = ordenarEvidencias(evidencias);
     renderMision(tarea, perfil, ordenadas);
 
     $("contadorEvidencias").textContent =
-      `${ordenadas.length} ${ordenadas.length === 1 ? "evidencia" : "evidencias"}`;
+      `${ordenadas.length} ${ordenadas.length === 1 ? "actividad" : "actividades"}`;
     $("textoEvidencias").textContent = ordenadas.length
-      ? "Cada bloque pertenece a esta Misión y conserva el resultado histórico de la actividad."
-      : "La Misión existe, pero todavía no tiene evidencias guardadas.";
+      ? "Cada actividad pertenece a esta Misión y conserva su resultado histórico. Abre solo la que quieras revisar."
+      : "Todavía no hay trabajo registrado para esta Misión.";
 
-    $("listaEvidencias").innerHTML = await renderEvidencias(tarea, ordenadas);
+    $("listaEvidencias").innerHTML = await renderTrabajo(tarea, ordenadas);
 
     $("estadoCarga").hidden = true;
     $("estadoError").hidden = true;
     $("contenidoTrabajo").hidden = false;
   } catch (error) {
     console.error("No se pudo cargar Trabajo realizado.", error);
-    mostrarError(error);
+    mostrarError(
+      "No pudimos recuperar el trabajo guardado. Revisa la conexión o los permisos de la Persona Activa."
+    );
   }
 }
 
