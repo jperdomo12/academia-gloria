@@ -1,6 +1,7 @@
 /* Academia Gloria Valentina · Recompensas A1/A2/B · Mi Camino */
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
+import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import {
   obtenerHistorialDetectives,
@@ -11,6 +12,10 @@ const PASO_HISTORIA = 5;
 const DIAS_DESCANSO_REGLA_LIA = 7;
 const MAX_RECONOCIMIENTOS_LIA_DIA = 2;
 const MILISEGUNDOS_DIA = 24 * 60 * 60 * 1000;
+const ESTADOS_REVISION_CONSTANCIA = new Set([
+  "pendiente_validacion",
+  "completada_pendiente_validacion"
+]);
 
 const REGLAS_LIA_DETECTIVES = Object.freeze({
   ayuda_y_continuo: Object.freeze({
@@ -28,11 +33,15 @@ const REGLAS_LIA_DETECTIVES = Object.freeze({
 
 let instalada = false;
 let detenerObservacion = null;
+let detenerObservacionConstancia = null;
+let observadorDomConstancia = null;
 let reconocimientosPersistentes = [];
 let reconocimientosLiaDetectives = [];
 let reconocimientosActuales = [];
+let tareasConstancia = [];
 let cantidadHistoriaVisible = PASO_HISTORIA;
 let puedeAbrirFuentesGestion = false;
+let incluirDatosPruebaConstancia = false;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -51,6 +60,10 @@ function escapar(valor = "") {
 function fechaJs(valor) {
   if (!valor) return null;
   if (typeof valor?.toDate === "function") return valor.toDate();
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    const fechaLocal = new Date(`${valor}T12:00:00`);
+    return Number.isNaN(fechaLocal.getTime()) ? null : fechaLocal;
+  }
   const fecha = new Date(valor);
   return Number.isNaN(fecha.getTime()) ? null : fecha;
 }
@@ -429,6 +442,164 @@ function renderCombinado({ reiniciarPaginacion = false } = {}) {
   render(combinarReconocimientos(), { reiniciarPaginacion });
 }
 
+function fechaConstanciaTarea(tarea = {}) {
+  const resultado =
+    tarea.resultado && typeof tarea.resultado === "object"
+      ? tarea.resultado
+      : {};
+
+  return fechaJs(
+    resultado.fechaFinalizacion ||
+    tarea.progreso?.completadaEn ||
+    tarea.fechaFinalizacion ||
+    (
+      ESTADOS_REVISION_CONSTANCIA.has(tarea.estado)
+        ? tarea.statusChangedAt
+        : null
+    )
+  );
+}
+
+function diasConstanciaFiltrados() {
+  const dias = new Set();
+
+  tareasConstancia
+    .filter(tarea =>
+      tarea?.visibleParaAlumno !== false &&
+      (
+        tarea?.estado === "completada" ||
+        ESTADOS_REVISION_CONSTANCIA.has(tarea?.estado)
+      ) &&
+      (
+        incluirDatosPruebaConstancia ||
+        tarea?.esDatoPrueba !== true
+      )
+    )
+    .forEach(tarea => {
+      const fecha = fechaConstanciaTarea(tarea);
+      const clave = claveDia(fecha);
+      if (clave) dias.add(clave);
+    });
+
+  return dias;
+}
+
+function inicioSemana(fecha = new Date()) {
+  const base = new Date(fecha);
+  base.setHours(0, 0, 0, 0);
+  const dia = base.getDay();
+  base.setDate(base.getDate() + (dia === 0 ? -6 : 1 - dia));
+  return base;
+}
+
+function calcularRachaConstancia(dias) {
+  if (!dias.size) return 0;
+
+  const fecha = new Date();
+  fecha.setHours(0, 0, 0, 0);
+
+  if (!dias.has(claveDia(fecha))) {
+    fecha.setDate(fecha.getDate() - 1);
+  }
+
+  let racha = 0;
+  while (dias.has(claveDia(fecha))) {
+    racha += 1;
+    fecha.setDate(fecha.getDate() - 1);
+  }
+  return racha;
+}
+
+function aplicarConstanciaFiltrada() {
+  const semana = document.getElementById("semanaConstancia");
+  const diasVisuales = [...(semana?.querySelectorAll(".dia") || [])];
+  if (!semana || diasVisuales.length !== 7) return;
+
+  const dias = diasConstanciaFiltrados();
+  const ahora = new Date();
+  ahora.setHours(0, 0, 0, 0);
+  const inicio = inicioSemana(ahora);
+  let diasSemana = 0;
+
+  diasVisuales.forEach((elemento, indice) => {
+    const fecha = new Date(inicio);
+    fecha.setDate(inicio.getDate() + indice);
+    fecha.setHours(0, 0, 0, 0);
+
+    const hecho = dias.has(claveDia(fecha));
+    const esHoy = claveDia(fecha) === claveDia(ahora);
+    const esFuturo = fecha.getTime() > ahora.getTime();
+
+    elemento.classList.toggle("hecho", hecho);
+    elemento.classList.toggle("hoy", esHoy);
+    elemento.classList.toggle("futuro", esFuturo);
+
+    const marca = elemento.querySelector(".dia__marca");
+    if (marca) marca.textContent = hecho ? "⭐" : esFuturo ? "·" : "○";
+
+    if (hecho && !esFuturo) diasSemana += 1;
+  });
+
+  const diasSemanaElemento = document.getElementById("diasSemana");
+  const rachaElemento = document.getElementById("rachaDias");
+  if (diasSemanaElemento) diasSemanaElemento.textContent = String(diasSemana);
+  if (rachaElemento) rachaElemento.textContent = String(calcularRachaConstancia(dias));
+
+  const boton = document.querySelector("[data-constancia-incluir-pruebas]");
+  if (boton) {
+    boton.classList.toggle("active", incluirDatosPruebaConstancia);
+    boton.textContent = incluirDatosPruebaConstancia
+      ? "🧪 Incluyendo datos de prueba"
+      : "🧪 Incluir datos de prueba";
+    boton.setAttribute("aria-pressed", String(incluirDatosPruebaConstancia));
+  }
+}
+
+function asegurarControlConstanciaPruebas() {
+  if (!puedeAbrirFuentesGestion) return;
+  if (document.querySelector("[data-constancia-incluir-pruebas]")) return;
+
+  const titulo = document.querySelector(".constancia__titulo > div:last-child");
+  if (!titulo) return;
+
+  const boton = document.createElement("button");
+  boton.type = "button";
+  boton.className = "filtro";
+  boton.dataset.constanciaIncluirPruebas = "true";
+  boton.setAttribute("aria-pressed", "false");
+  boton.style.marginTop = "8px";
+  boton.textContent = "🧪 Incluir datos de prueba";
+  boton.title = "Vista temporal para validar pruebas. No modifica los datos reales.";
+  boton.addEventListener("click", () => {
+    incluirDatosPruebaConstancia = !incluirDatosPruebaConstancia;
+    aplicarConstanciaFiltrada();
+  });
+
+  titulo.appendChild(boton);
+}
+
+function instalarConstanciaSinDatosPrueba() {
+  asegurarControlConstanciaPruebas();
+
+  const semana = document.getElementById("semanaConstancia");
+  if (semana && !observadorDomConstancia) {
+    observadorDomConstancia = new MutationObserver(() => {
+      requestAnimationFrame(aplicarConstanciaFiltrada);
+    });
+    observadorDomConstancia.observe(semana, { childList: true });
+  }
+
+  detenerObservacionConstancia = Academia.tareas.observar(
+    tareas => {
+      tareasConstancia = Array.isArray(tareas) ? tareas : [];
+      requestAnimationFrame(aplicarConstanciaFiltrada);
+    },
+    error => {
+      console.debug("No se pudo aplicar el filtro de datos de prueba a Mi constancia.", error);
+    }
+  );
+}
+
 export async function instalarReconocimientosCamino() {
   if (instalada) return;
   instalada = true;
@@ -441,6 +612,8 @@ export async function instalarReconocimientosCamino() {
     puedeAbrirFuentesGestion = false;
     console.debug("No se pudo resolver permiso para abrir fuentes de Recompensas.", error);
   }
+
+  instalarConstanciaSinDatosPrueba();
 
   try {
     reconocimientosLiaDetectives = await cargarReconocimientosLiaDetectives();
@@ -469,7 +642,11 @@ export async function instalarReconocimientosCamino() {
     }
   );
 
-  window.addEventListener("beforeunload", () => detenerObservacion?.(), { once: true });
+  window.addEventListener("beforeunload", () => {
+    detenerObservacion?.();
+    detenerObservacionConstancia?.();
+    observadorDomConstancia?.disconnect();
+  }, { once: true });
 }
 
 if (document.readyState === "loading") {
