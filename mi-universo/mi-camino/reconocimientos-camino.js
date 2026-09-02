@@ -82,6 +82,24 @@ function formatearFecha(valor) {
   }).format(fecha);
 }
 
+function formatearFechaHora(valor) {
+  const fecha = fechaJs(valor);
+  if (!fecha) return "Fecha no disponible";
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(fecha);
+}
+
+function formatearFechaReconocimiento(item = {}) {
+  return item.origen === "observado"
+    ? formatearFechaHora(item.fechaReconocimiento)
+    : formatearFecha(item.fechaReconocimiento);
+}
+
 function claveDia(valor) {
   const fecha = fechaJs(valor);
   if (!fecha) return "";
@@ -350,7 +368,7 @@ function renderItemHistoria(item) {
       <div>
         <strong>${escapar(metaFuente(item))}</strong>
         <p>${escapar(item.mensaje || "")}</p>
-        <small>${escapar(origenVisible(item))} · ${escapar(formatearFecha(item.fechaReconocimiento))}</small>
+        <small>${escapar(origenVisible(item))} · ${escapar(formatearFechaReconocimiento(item))}</small>
         ${accionesFuente(item)}
       </div>
     </article>
@@ -431,7 +449,7 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
         <h3>${escapar(metaFuente(ultimo))}</h3>
         <p class="recompensas-a1__mensaje">${escapar(ultimo.mensaje || "")}</p>
         <div class="recompensas-a1__meta">
-          <span>📅 ${escapar(formatearFecha(ultimo.fechaReconocimiento))}</span>
+          <span>📅 ${escapar(formatearFechaReconocimiento(ultimo))}</span>
           ${ultimo.fuenteEliminada ? "<span>🌈 Conservado en mi historia</span>" : ""}
         </div>
         ${accionesFuente(ultimo)}
