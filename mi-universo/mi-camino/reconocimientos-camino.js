@@ -51,7 +51,6 @@ let reconocimientosActuales = [];
 let tareasConstancia = [];
 let tareasConstanciaCargadas = false;
 let cantidadHistoriaVisible = PASO_HISTORIA;
-let puedeAbrirFuentesGestion = false;
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();
@@ -458,31 +457,39 @@ function combinarReconocimientos() {
   );
 }
 
-function urlFuente(item, fuente) {
-  if (!puedeAbrirFuentesGestion || item.fuenteEliminada === true) return "";
+function urlTrabajoFuente(item = {}) {
+  if (item.fuenteEliminada === true) return "";
+
   const misionId = texto(item.fuentePrincipal?.misionId);
   if (!misionId) return "";
 
-  const volver = `${window.location.pathname}${window.location.search}`;
-  const parametros = new URLSearchParams({
-    misionId,
-    fuente,
-    desde: "reconocimiento",
-    volver
-  });
-
-  return `../mis-tareas/?${parametros.toString()}`;
+  const url = new URL("../mis-tareas/trabajo-realizado.html", window.location.href);
+  url.searchParams.set("misionId", misionId);
+  url.searchParams.set("modo", "consulta");
+  url.searchParams.set(
+    "volver",
+    `${window.location.pathname}${window.location.search}${window.location.hash}`
+  );
+  return url.href;
 }
 
 function accionesFuente(item = {}) {
-  const verMision = urlFuente(item, "detalle");
-  const verTrabajo = urlFuente(item, "trabajo");
-  if (!verMision && !verTrabajo) return "";
+  const misionId = texto(item.fuentePrincipal?.misionId);
+  const destino = urlTrabajoFuente(item);
+  if (!misionId || !destino) return "";
 
+  /*
+   * Único acceso de consulta. mision-libre.js intercepta data-ver-trabajo y
+   * usa el resolver canónico; href queda como fallback progresivo seguro si
+   * el manejador común no pudiera instalarse.
+   */
   return `
     <div class="recompensas-a1__fuentes">
-      ${verMision ? `<a href="${escapar(verMision)}">👁️ Ver misión</a>` : ""}
-      ${verTrabajo ? `<a href="${escapar(verTrabajo)}">📖 Ver trabajo realizado</a>` : ""}
+      <a
+        href="${escapar(destino)}"
+        data-ver-trabajo="${escapar(misionId)}"
+        aria-label="Ver trabajo de la Misión relacionada"
+      >👁️ Ver trabajo</a>
     </div>
   `;
 }
@@ -860,13 +867,12 @@ export async function instalarReconocimientosCamino() {
   asegurarHost();
   asegurarGuiaMotivacional();
 
-  try {
-    puedeAbrirFuentesGestion = await ContextoUsuario.puedeGestionar();
-  } catch (error) {
-    puedeAbrirFuentesGestion = false;
-    console.debug("No se pudo resolver permiso para abrir fuentes de Recompensas.", error);
-  }
-
+  /*
+   * Ver trabajo es una operación de consulta. No se condiciona a permiso de
+   * gestión: la autorización real la resuelven Persona Activa + reglas de
+   * Firestore para cada fuente. Así familia y profesionales con acceso de
+   * consulta pueden abrir el mismo historial sin recibir controles de edición.
+   */
   instalarConstanciaSinDatosPrueba();
 
   try {
