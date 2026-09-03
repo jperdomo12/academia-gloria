@@ -27,10 +27,24 @@ function recursosTexto(recursos = []) {
   return `${total} ${total === 1 ? "recurso" : "recursos"}`;
 }
 
+function rutaConRetorno(ruta = "") {
+  try {
+    const destino = new URL(ruta, window.location.href);
+    destino.searchParams.set(
+      "volver",
+      `${window.location.pathname}${window.location.search}${window.location.hash}`
+    );
+    return `${destino.pathname}${destino.search}${destino.hash}`;
+  } catch {
+    return ruta;
+  }
+}
+
 function crearTarjetaTema(tema = {}) {
   const enlace = document.createElement("a");
+  const ruta = texto(tema.ruta, "#");
   enlace.className = "portal-tema";
-  enlace.href = texto(tema.ruta, "#");
+  enlace.href = tema.conservarRetorno ? rutaConRetorno(ruta) : ruta;
   enlace.dataset.temaId = texto(tema.id);
   enlace.style.setProperty("--tema-acento", texto(tema.acento, "#b39fcf"));
   enlace.style.setProperty("--tema-acento-suave", texto(tema.acentoSuave, "#f3eefb"));
