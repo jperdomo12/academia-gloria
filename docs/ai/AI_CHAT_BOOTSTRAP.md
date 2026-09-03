@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/ai/AI_CHAT_BOOTSTRAP.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
-| **Última actualización** | 13/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Gobierno de Colaboración con IA |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Incorporación rápida y controlada de una nueva IA a cualquier área de trabajo de la Academia Gloria Valentina |
@@ -21,6 +21,7 @@
 | `docs/README.md` | **Orienta:** actúa como punto único de entrada y mapa operativo de la documentación oficial. |
 | `docs/FOUNDATION.md` | **Gobierna:** define origen, propósito, identidad y principios fundacionales del producto. |
 | `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** define cómo colaboran las personas, la documentación y la IA. |
+| `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Complementa:** conserva el punto operativo reciente y el bloque `On going` para continuar trabajo entre chats. |
 | `docs/project/PROJECT_ROLES.md` | **Gobierna:** define roles, autoridad, colaboración y asignación vigente. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** define el ciclo operativo de los cambios del producto. |
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Complementa:** define la arquitectura conceptual de la experiencia. |
@@ -33,12 +34,29 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Vincula el bootstrap con la plantilla viva oficial de HandOff y formaliza el procedimiento preferido para continuar un chat existente: último HandOff disponible + instrucción breve, usando luego las fuentes oficiales para verificar el estado real. |
 | 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Incorpora un texto visible y reutilizable para iniciar nuevos chats, alinea la lectura inicial con `README.md`, `docs/README.md`, `FOUNDATION.md` y la arquitectura documental vigente, y corrige referencias de onboarding a `models/` y `specifications/`. |
 | 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del protocolo de incorporación de una nueva IA a la Academia Gloria Valentina. Define el proceso de bootstrap, la lectura mínima recomendada, los niveles de incorporación, las reglas de construcción documental, el prompt operativo reutilizable y los principios para una colaboración eficaz y consistente con el proyecto. |
 
 ## 🚀 Texto para iniciar un nuevo chat
 
-Este bloque está pensado para **copiar y pegar al abrir un nuevo chat**, especialmente cuando el chat anterior ya no puede continuar por límite de capacidad.
+### Continuar un chat existente
+
+Cuando existe una versión reciente de `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`, el procedimiento preferido es más simple:
+
+1. adjuntar o proporcionar **el último HandOff disponible**;
+2. escribir una instrucción breve, por ejemplo:
+
+```text
+Continuamos Academia Gloria Valentina de acuerdo con lo indicado en el HandOff adjunto.
+Revísalo y dime si está claro para continuar.
+```
+
+Eso debe ser suficiente para orientarse. El nuevo chat verificará después en repositorio y fuentes oficiales aquello que necesite antes de modificar o declarar algo implementado.
+
+### Incorporación sin HandOff reciente
+
+El siguiente bloque está pensado para **copiar y pegar al abrir un nuevo chat** cuando no existe un HandOff reciente suficiente o se necesita una incorporación más general.
 
 ```text
 Actúa como AI Collaborator de la Academia Gloria Valentina.
@@ -94,7 +112,7 @@ Contexto adicional:
 [solo la información que todavía no esté consolidada en documentación o código].
 ```
 
-Este texto **no sustituye** la lectura de las fuentes oficiales ni un handoff específico cuando exista.
+Este texto **no sustituye** la lectura de las fuentes oficiales ni un HandOff específico cuando exista.
 
 ---
 
@@ -304,6 +322,8 @@ La IA debe revisar:
 - `docs/ai/AI_COLLABORATION_GUIDE.md`
 - `docs/project/PROJECT_ROLES.md`
 
+Si está continuando un trabajo reciente, debe revisar primero el último `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` disponible.
+
 Resultado esperado:
 
 - comprender qué es el producto;
@@ -364,6 +384,8 @@ La secuencia recomendada es:
 7. Documento propietario del dominio
 8. Especificaciones, código y archivos afectados
 ```
+
+Cuando se continúa un chat previo, `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` se consulta **antes de esta secuencia** para conocer el punto operativo actual.
 
 Para desarrollo se añade:
 
@@ -696,7 +718,7 @@ Puede utilizarse como validación interna o como respuesta breve cuando el Produ
 
 ## 14. Prompt operativo de inicio
 
-El siguiente bloque puede utilizarse como mensaje inicial al abrir un nuevo chat:
+El siguiente bloque puede utilizarse como mensaje inicial al abrir un nuevo chat cuando no se dispone de un HandOff reciente suficiente:
 
 ```text
 Actúa como AI Collaborator de la Academia Gloria Valentina.
@@ -739,6 +761,8 @@ El prompt operativo:
 - no debe copiarse dentro de cada documento;
 - y puede adaptarse al objetivo concreto del chat.
 
+Cuando exista un HandOff reciente suficiente, se prefiere el procedimiento más corto definido al inicio de este documento.
+
 ### 14.2 Contexto específico
 
 Después del prompt deben añadirse:
@@ -753,7 +777,11 @@ Después del prompt deben añadirse:
 
 ## 15. Handoff y cierre
 
-Cuando otro chat continúe el trabajo, el handoff debe incluir:
+La fuente oficial para continuidad operativa entre chats es:
+
+`docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`
+
+Cuando otro chat continúe el trabajo, el HandOff debe incluir:
 
 - objetivo;
 - estado actual;
@@ -763,13 +791,15 @@ Cuando otro chat continúe el trabajo, el handoff debe incluir:
 - cambios realizados;
 - pendientes;
 - riesgos;
-- y siguiente entregable.
+- siguiente entregable;
+- y un bloque final actualizado de **Última actualización / On going**.
 
 Un chat puede cerrarse cuando:
 
 - el objetivo está cumplido;
 - los productos están entregados;
 - las decisiones relevantes están documentadas;
+- el HandOff refleja el punto de continuidad cuando resulte necesario;
 - y otro colaborador puede continuar sin reconstruir la conversación.
 
 ---
@@ -802,6 +832,7 @@ Este documento debe revisarse cuando:
 - cambie el conjunto mínimo de fuentes;
 - cambie el modelo de colaboración;
 - se incorporen nuevos tipos de chat;
+- cambie el mecanismo oficial de HandOff;
 - aparezcan antipatrones recurrentes;
 - cambie el estado operativo del producto;
 - o el bootstrap deje de permitir una incorporación rápida.
@@ -830,6 +861,7 @@ No se actualiza únicamente porque:
 | ACB-010 | Exigir producto cuando el Product Owner solicita construir y existe claridad suficiente. | Propuesta | Colaboración |
 | ACB-011 | Incorporar un prompt operativo reutilizable sin sustituir las fuentes oficiales. | Propuesta | Onboarding |
 | ACB-012 | Mantener el bootstrap independiente de proveedores y modelos de IA. | Propuesta | Longevidad |
+| ACB-013 | Usar la plantilla viva de HandOff como mecanismo preferido para continuar un chat existente. | Aprobada | Continuidad · Velocidad de incorporación |
 
 ---
 
@@ -837,16 +869,18 @@ No se actualiza únicamente porque:
 
 > **Una nueva IA no necesita reconstruir la historia completa de la Academia. Necesita acceder a las fuentes correctas, comprender la tarea y respetar el modelo de colaboración.**
 
-> **La documentación orienta. El contexto permite decidir. La IA amplía la capacidad del equipo. El Product Owner mantiene la dirección. Y cuando existe claridad suficiente, se construye.**
+> **La documentación orienta. El HandOff ubica el punto operativo. El contexto permite decidir. La IA amplía la capacidad del equipo. El Product Owner mantiene la dirección. Y cuando existe claridad suficiente, se construye.**
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
+| **Versión activa** | 1.2 |
 | **Fecha de aprobación** | 04/08/2026 |
+| **Última actualización aprobada** | 03/09/2026 |
 | **Aprobado por** | Product Owner |
+| **HandOff oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
 | **Sustituye** | — |
 | **Sustituido por** | — |
 
