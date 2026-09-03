@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_ARCHITECTURE.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
-| **Fecha de aprobación** | 04/08/2026 |
-| **Última actualización** | 04/08/2026 |
+| **Fecha de aprobación** | 03/09/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Organización y gobierno del conocimiento oficial del producto |
@@ -18,14 +18,16 @@
 |---|---|
 | `docs/README.md` | Portal de entrada, inventario operativo y rutas de lectura. |
 | `docs/DOCUMENTATION_STANDARD.md` | Reglas para crear, revisar, versionar y mantener documentos. |
+| `docs/FOUNDATION.md` | Fundamento humano y propósito estable de la Academia. |
 | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | Fuente fundacional de identidad, misión y principios del producto. |
 | `docs/ai/AI_COLLABORATION_GUIDE.md` | Modelo oficial de colaboración entre personas, documentación e IA. |
 | `docs/ai/AI_CHAT_BOOTSTRAP.md` | Protocolo de incorporación rápida de una nueva IA al proyecto. |
+| `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | Continuidad operativa entre chats y registro del punto de trabajo vigente. |
 | `docs/project/PROJECT_ROLES.md` | Roles, responsabilidades, autoridad y asignación vigente. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | Ciclo operativo oficial de los cambios del producto. |
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | Arquitectura conceptual de la experiencia del producto. |
 | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | Identidad visual, emocional y Personajes Oficiales. |
-| `docs/project/PROJECT_MAP_v1.1.md` | Organización física del repositorio. |
+| `docs/project/PROJECT_MAP.md` | Organización física del repositorio y fuentes propietarias. |
 | `docs/project/DECISION_LOG.md` | Registro transversal de decisiones relevantes. |
 | `docs/project/ROADMAP.md` | Evolución prevista del producto. |
 
@@ -37,6 +39,8 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Versión aprobada de la sincronización P1. Incorpora `manuales/`, `specifications/` y `tech/` como dominios activos; actualiza la responsabilidad de `models/`; formaliza el HandOff operativo en `project/`; corrige la ruta canónica de `PROJECT_MAP.md`; y reconoce `FOUNDATION.md` y `CARTA_A_GLORIA.md` como fuentes raíz intencionales. |
+| 1.2-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Candidato revisado y aprobado como base de la versión 1.2. Sincroniza la arquitectura con la estructura documental real y preserva los principios, gobierno, ciclo de vida y criterios arquitectónicos de v1.1. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Evolución menor de la versión 1.0. Incorpora oficialmente los dominios `ai/`, `product/` y `history/`; actualiza documentos relacionados, responsabilidades y gobierno; y alinea la arquitectura con la estructura documental vigente. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Primera versión aprobada. Consolida principios, tipos, dominios, propiedad, relaciones, ciclo de vida, adopción incremental y tratamiento del conocimiento histórico. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta consolidada construida a partir de la documentación y estructura real del producto. |
@@ -268,7 +272,7 @@ Describe con precisión el comportamiento esperado de una funcionalidad o compon
 
 **Pregunta:** ¿Qué debe hacer esta solución y cómo sabremos que está completa?
 
-Las futuras especificaciones podrán identificarse mediante `SPEC-*`.
+Las especificaciones funcionales se identifican mediante `SPEC-*` y, cuando son fuentes activas del producto, residen en `docs/specifications/`.
 
 ### 5.9. Operativo y continuidad
 
@@ -287,14 +291,19 @@ La estructura física vigente es:
 ```text
 docs/
 ├── README.md
+├── FOUNDATION.md
 ├── DOCUMENTATION_ARCHITECTURE.md
 ├── DOCUMENTATION_STANDARD.md
+├── CARTA_A_GLORIA.md
 ├── ai/
 ├── history/
+├── manuales/
 ├── models/
 ├── product/
 ├── project/
+├── specifications/
 ├── standards/
+├── tech/
 └── vision/
 ```
 
@@ -302,13 +311,15 @@ La estructura se ampliará solo cuando exista una necesidad real y sostenida que
 
 ### 6.1. Raíz de `docs/`
 
-Contiene únicamente documentos transversales que gobiernan o permiten navegar todo el sistema documental:
+La raíz se reserva para fuentes de entrada o alcance transversal y para unas pocas fuentes humanas/fundacionales cuya ubicación directa facilita su descubrimiento:
 
-- portal de entrada;
-- arquitectura documental;
-- estándar documental.
+- `README.md`, portal de entrada;
+- `DOCUMENTATION_ARCHITECTURE.md`, arquitectura documental;
+- `DOCUMENTATION_STANDARD.md`, estándar documental;
+- `FOUNDATION.md`, propósito humano y principios base;
+- `CARTA_A_GLORIA.md`, referencia humana directa del producto.
 
-No debe convertirse en una colección general de archivos.
+No debe convertirse en una colección general de archivos. Los nuevos documentos deben ubicarse en un dominio salvo decisión arquitectónica explícita.
 
 ### 6.2. `ai/`
 
@@ -317,7 +328,9 @@ Contiene la documentación propietaria de la colaboración con IA:
 - modelo de colaboración;
 - incorporación de nuevos chats o modelos;
 - reglas transversales de actuación;
-- continuidad y handoff relacionados con IA.
+- protocolos generales de bootstrap.
+
+La continuidad operativa de un trabajo concreto mediante HandOff pertenece a `project/`, porque describe el estado vigente del proyecto y no una regla general de IA.
 
 No contiene especificaciones funcionales del producto ni documentación propia de un proveedor concreto.
 
@@ -336,11 +349,19 @@ Cada documento histórico debe indicar, cuando sea posible:
 
 `history/` no es una papelera documental.
 
-### 6.4. `models/`
+### 6.4. `manuales/`
 
-Contiene representaciones funcionales y conceptuales: estados, reglas, relaciones y estructuras de dominio.
+Contiene guías y procedimientos operativos orientados al uso o administración de capacidades ya existentes.
 
-### 6.5. `product/`
+Un manual explica **cómo operar** una capacidad; no sustituye su estándar, modelo, especificación ni documentación técnica propietaria.
+
+### 6.5. `models/`
+
+Contiene representaciones conceptuales de entidades, estados, relaciones y comportamiento de dominio.
+
+Los modelos explican **cómo se representa o comprende un dominio** y deben evitar convertirse en una segunda fuente normativa cuando exista un estándar o especificación propietaria.
+
+### 6.6. `product/`
 
 Contiene arquitectura y conocimiento estructural propio del producto:
 
@@ -348,11 +369,12 @@ Contiene arquitectura y conocimiento estructural propio del producto:
 - identidad;
 - recursos;
 - personajes;
+- diseños de producto;
 - relaciones estables entre componentes o capacidades.
 
 No contiene planificación operativa ni gobierno del proyecto.
 
-### 6.6. `project/`
+### 6.7. `project/`
 
 Contiene gobierno, planificación, continuidad y operación transversal del proyecto.
 
@@ -363,17 +385,32 @@ Aquí pertenecen documentos que responden, entre otras, a estas preguntas:
 - ¿qué decisiones se han tomado?;
 - ¿qué roles existen?;
 - ¿cómo se ejecuta el ciclo de desarrollo?;
-- ¿cómo puede continuarlo otra persona o IA?
+- ¿cómo puede continuarlo otra persona o IA?;
+- ¿cuál es el punto operativo vigente para retomar el trabajo?
+
+Por ello, los HandOff de continuidad del proyecto pertenecen a este dominio.
 
 Un documento fundacional puede residir aquí sin que su ubicación física cambie su tipo documental.
 
-### 6.7. `standards/`
+### 6.8. `specifications/`
+
+Contiene especificaciones funcionales de capacidades o módulos concretos.
+
+Una especificación define **qué debe hacer una solución y cómo verificar que está completa**. Las fuentes canónicas usan nombres estables `SPEC-*` y no deben duplicar normas transversales pertenecientes a `standards/`.
+
+### 6.9. `standards/`
 
 Contiene estándares, guías, glosario e instrucciones generales de construcción y colaboración.
 
-Las especificaciones podrán residir inicialmente en `models/` cuando describan un dominio concreto. Si crecen de forma sostenida, se evaluará un dominio propio sin crear estructuras anticipadamente.
+Los estándares establecen reglas reutilizables, contratos y criterios de conformidad que pueden aplicar a múltiples capacidades.
 
-### 6.8. `vision/`
+### 6.10. `tech/`
+
+Contiene referencias, auditorías, transiciones y decisiones técnicas específicas que no constituyen por sí mismas un estándar funcional o una especificación de producto.
+
+Debe separar con claridad fotografía técnica, transición y contrato vigente para evitar que una auditoría histórica se interprete como norma permanente.
+
+### 6.11. `vision/`
 
 Contiene visión pedagógica, funcional, emocional, narrativa y de experiencia.
 
@@ -625,6 +662,8 @@ Toda evolución conservará:
 | DA-006 | Aplicar el estándar de forma inmediata a documentos nuevos e incrementalmente a documentos existentes revisados. | Aprobada | Adopción sostenible |
 | DA-007 | Referenciar roles estables en lugar de nombres personales, manteniendo la asignación vigente en `PROJECT_ROLES.md`. | Aprobada | Continuidad y mantenibilidad |
 | DA-008 | Evolucionar los documentos aprobados mediante cambios mínimos sobre la versión vigente, evitando reescrituras sin justificación. | Aprobada | Preservación del conocimiento |
+| DA-009 | Reconocer `manuales/`, `specifications/` y `tech/` como dominios documentales activos con responsabilidades diferenciadas. | Aprobada | Organización y propiedad documental |
+| DA-010 | Mantener `FOUNDATION.md` y `CARTA_A_GLORIA.md` en la raíz como excepciones fundacionales intencionales, sin convertir la raíz en un dominio general. | Aprobada | Descubrimiento y simplicidad |
 
 ---
 
@@ -633,10 +672,10 @@ Toda evolución conservará:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 04/08/2026 |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación** | 03/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.0 |
+| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.1 |
 | **Sustituido por** | — |
 
 **Impacto:** Arquitectura Documental · Gobierno del Conocimiento · Continuidad del Producto · SSOT · Navegación
