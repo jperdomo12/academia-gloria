@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` |
-| **Versión** | 1.1-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
 | **Fecha** | 03/08/2026 |
 | **Última actualización** | 04/09/2026 |
 | **Propietario** | Arquitectura del Producto |
@@ -40,6 +40,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 de la arquitectura de experiencia. |
 | 1.1-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con la experiencia real: incorpora Persona Activa y acceso multi-persona; reconoce la separación ya implementada entre Mi Camino y Gestión de Misiones; actualiza Recompensas V1, evidencia/Análisis Educativo, expansión curricular de 6.º y Mi Baúl; corrige rutas documentales y elimina formulaciones futuras ya superadas sin alterar los principios centrales de la arquitectura. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Versión aprobada. Adopta conformidad completa con el estándar documental: metadatos, relaciones, historial, alcance, jerarquía, índice, decisiones y cierre. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta integral de la arquitectura de experiencia del producto. |
@@ -1734,11 +1735,11 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.1 |
-| **Fecha** | 04/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` v1.0 |
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.1 |
+| **Fecha de aprobación** | 04/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` v1.0 |
 | **Sustituido por** | — |
 
 **Impacto:** Arquitectura del Producto · Experiencia del Alumno · Persona Activa · Mi Camino · Gestión de Misiones · Familia · IA · Evidencias · Motivación · Evolución Responsable
