@@ -38,21 +38,20 @@ export const MAX_ADJUNTO_BAUL_BYTES = 600 * 1024;
 const IDS_TIPO = new Set(TIPOS_BAUL.map(item => item.id));
 const IDS_TEMA = new Set(TEMAS_BAUL.map(item => item.id));
 
-const MIME_PERMITIDOS = new Set([
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/rtf",
-  "application/vnd.oasis.opendocument.text",
-  "text/plain",
-  "image/jpeg",
-  "image/png",
-  "image/webp"
-]);
-
-const EXTENSIONES_PERMITIDAS = new Set([
-  "pdf", "doc", "docx", "rtf", "odt", "txt", "jpg", "jpeg", "png", "webp"
-]);
+const MIME_POR_EXTENSION = Object.freeze({
+  pdf: new Set(["application/pdf"]),
+  doc: new Set(["application/msword"]),
+  docx: new Set([
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ]),
+  rtf: new Set(["application/rtf", "text/rtf"]),
+  odt: new Set(["application/vnd.oasis.opendocument.text"]),
+  txt: new Set(["text/plain"]),
+  jpg: new Set(["image/jpeg"]),
+  jpeg: new Set(["image/jpeg"]),
+  png: new Set(["image/png"]),
+  webp: new Set(["image/webp"])
+});
 
 function texto(valor = "", maximo = 0) {
   const normalizado = String(valor ?? "").replace(/\r\n/g, "\n").trim();
@@ -141,21 +140,26 @@ export function crearAdjuntoBaul(datos = {}) {
   }
 
   const extension = extensionArchivo(nombre);
-  if (
-    !MIME_PERMITIDOS.has(mimeType) &&
-    !EXTENSIONES_PERMITIDAS.has(extension)
-  ) {
-    throw new Error("Ese tipo de archivo no está permitido en el Baúl.");
+  const mimeEsperados = MIME_POR_EXTENSION[extension];
+
+  if (!mimeEsperados || !mimeEsperados.has(mimeType)) {
+    throw new Error(
+      "El tipo real del archivo no coincide con una extensión permitida en el Baúl."
+    );
   }
 
-  if (!dataUrl.startsWith("data:") || dataUrl.length > 900000) {
+  const prefijoDataUrl = `data:${mimeType}`;
+  if (
+    !dataUrl.startsWith(prefijoDataUrl) ||
+    dataUrl.length > 900000
+  ) {
     throw new Error("El documento adjunto no puede guardarse de forma segura.");
   }
 
   return {
     schemaVersion: 1,
     nombre,
-    mimeType: mimeType || "application/octet-stream",
+    mimeType,
     tamano,
     dataUrl
   };
