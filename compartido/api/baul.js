@@ -239,9 +239,13 @@ export async function leerAdjuntoBaul(elementoId) {
     documentoAdjunto(contexto.userIdPersonaActiva, elementoId)
   );
 
-  return resultado.exists()
-    ? { id: resultado.id, ...resultado.data() }
-    : null;
+  if (!resultado.exists()) return null;
+
+  const validado = crearAdjuntoBaul(resultado.data());
+  return {
+    id: resultado.id,
+    ...validado
+  };
 }
 
 export async function eliminarElementoBaul(elementoId) {
