@@ -177,41 +177,51 @@ img { max-width: 100%; height: auto; }
 
 .oculto { display: none !important; }
 
-/* Explora más · una única familia visual para Calendarios, Mi Baúl y Adicionales. */
+/* Explora más · iconos simples, compactos y consistentes. */
 .zona-secundaria .modulo .modulo-icono {
   position: relative;
-  width: min(150px, 100%);
-  height: auto;
-  aspect-ratio: 170 / 149;
-  display: block;
-  margin: 0 0 14px;
-  overflow: visible;
-  border-radius: 0;
-  font-size: 0;
-  background: transparent;
-  box-shadow: none;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 17px;
+  overflow: hidden;
+  border-radius: 22px;
+  font-size: 37px;
+  box-shadow: 0 10px 22px rgba(30, 41, 59, 0.08);
 }
 
 .zona-secundaria .modulo .modulo-icono::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  filter: drop-shadow(0 8px 12px rgba(92, 67, 34, 0.10));
+  content: none;
 }
 
-.zona-secundaria .modulo.calendarios .modulo-icono::before {
-  background-image: url("../../assets/iconos/icono-calendarios-home.webp");
+.zona-secundaria .modulo.calendarios .modulo-icono {
+  background: #fff6d8;
+}
+
+.zona-secundaria .modulo.baul .modulo-icono {
+  font-size: 0;
+  background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
 }
 
 .zona-secundaria .modulo.baul .modulo-icono::before {
-  background-image: url("../../assets/iconos/icono-baul-home-v2.webp");
+  content: "";
+  position: absolute;
+  inset: 7px;
+  background: url("../../assets/iconos/icono-baul-home.webp") center / contain no-repeat;
+}
+
+.zona-secundaria .modulo.adicionales .modulo-icono {
+  font-size: 0;
+  background: #fff0f7;
 }
 
 .zona-secundaria .modulo.adicionales .modulo-icono::before {
-  background-image: url("../../assets/iconos/icono-adicionales-home.webp");
+  content: "";
+  position: absolute;
+  inset: 7px;
+  background: url("../../assets/iconos/icono-adicionales-home-v2.webp") center / contain no-repeat;
 }
 
 @media (max-width: 720px) {
