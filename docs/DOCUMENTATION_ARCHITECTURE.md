@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_ARCHITECTURE.md` |
-| **Versión** | 1.2-rc1 |
-| **Estado** | Candidato para aprobación |
-| **Fecha de aprobación** | — |
+| **Versión** | 1.2 |
+| **Estado** | Activo |
+| **Fecha de aprobación** | 03/09/2026 |
 | **Última actualización** | 03/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -39,7 +39,8 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.2-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza la arquitectura con la estructura documental real: incorpora `manuales/`, `specifications/` y `tech/`; actualiza la responsabilidad de `models/`, formaliza el HandOff operativo en `project/`, corrige la ruta canónica de `PROJECT_MAP.md` y reconoce `FOUNDATION.md` y `CARTA_A_GLORIA.md` como fuentes raíz intencionales. |
+| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Versión aprobada de la sincronización P1. Incorpora `manuales/`, `specifications/` y `tech/` como dominios activos; actualiza la responsabilidad de `models/`; formaliza el HandOff operativo en `project/`; corrige la ruta canónica de `PROJECT_MAP.md`; y reconoce `FOUNDATION.md` y `CARTA_A_GLORIA.md` como fuentes raíz intencionales. |
+| 1.2-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Candidato revisado y aprobado como base de la versión 1.2. Sincroniza la arquitectura con la estructura documental real y preserva los principios, gobierno, ciclo de vida y criterios arquitectónicos de v1.1. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Evolución menor de la versión 1.0. Incorpora oficialmente los dominios `ai/`, `product/` y `history/`; actualiza documentos relacionados, responsabilidades y gobierno; y alinea la arquitectura con la estructura documental vigente. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Primera versión aprobada. Consolida principios, tipos, dominios, propiedad, relaciones, ciclo de vida, adopción incremental y tratamiento del conocimiento histórico. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta consolidada construida a partir de la documentación y estructura real del producto. |
@@ -661,8 +662,8 @@ Toda evolución conservará:
 | DA-006 | Aplicar el estándar de forma inmediata a documentos nuevos e incrementalmente a documentos existentes revisados. | Aprobada | Adopción sostenible |
 | DA-007 | Referenciar roles estables en lugar de nombres personales, manteniendo la asignación vigente en `PROJECT_ROLES.md`. | Aprobada | Continuidad y mantenibilidad |
 | DA-008 | Evolucionar los documentos aprobados mediante cambios mínimos sobre la versión vigente, evitando reescrituras sin justificación. | Aprobada | Preservación del conocimiento |
-| DA-009 | Reconocer `manuales/`, `specifications/` y `tech/` como dominios documentales activos con responsabilidades diferenciadas. | Propuesta v1.2 | Organización y propiedad documental |
-| DA-010 | Mantener `FOUNDATION.md` y `CARTA_A_GLORIA.md` en la raíz como excepciones fundacionales intencionales, sin convertir la raíz en un dominio general. | Propuesta v1.2 | Descubrimiento y simplicidad |
+| DA-009 | Reconocer `manuales/`, `specifications/` y `tech/` como dominios documentales activos con responsabilidades diferenciadas. | Aprobada | Organización y propiedad documental |
+| DA-010 | Mantener `FOUNDATION.md` y `CARTA_A_GLORIA.md` en la raíz como excepciones fundacionales intencionales, sin convertir la raíz en un dominio general. | Aprobada | Descubrimiento y simplicidad |
 
 ---
 
@@ -670,11 +671,11 @@ Toda evolución conservará:
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión candidata** | 1.2-rc1 |
-| **Fecha de aprobación** | — |
-| **Aprobado por** | — |
-| **Sustituirá al aprobarse** | `DOCUMENTATION_ARCHITECTURE.md` v1.1 |
+| **Estado** | ✅ Aprobado |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación** | 03/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.1 |
 | **Sustituido por** | — |
 
 **Impacto:** Arquitectura Documental · Gobierno del Conocimiento · Continuidad del Producto · SSOT · Navegación
