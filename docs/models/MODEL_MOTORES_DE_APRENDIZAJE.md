@@ -1,237 +1,157 @@
-###############################################################################
-#
-# Academia Gloria Valentina
-#
-# MODEL-MOTORES_DE_APRENDIZAJE.md
-#
-# Modelo conceptual
-#
-# "Un motor aporta la experiencia.
-# El contenido le da vida.
-# La Academia conecta ambos con el camino del alumno."
-#
-###############################################################################
-
 # ⚙️ Motores de Aprendizaje
+## 🌈 Modelo conceptual de Academia Gloria Valentina
 
-## Modelo conceptual de la Academia Gloria Valentina
+> **Un motor aporta la experiencia. El contenido le da vida. La Academia conecta ambos con el camino del alumno.**
 
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` |
 | **Código documental** | `MODEL-MOTORES_DE_APRENDIZAJE` |
-| **Versión** | 0.3 |
+| **Versión** | 0.4 |
 | **Estado** | Activo |
 | **Fecha** | 21/08/2026 |
-| **Última actualización** | 21/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Modelos de Aprendizaje |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Modelo conceptual compartido de motores, contenido, experiencia, registro, evidencias e integración de experiencias de aprendizaje |
+| **Ámbito** | Modelo conceptual compartido de motores, contenido, experiencia, sesiones, evidencia, análisis e integración de experiencias de aprendizaje |
 
-## Documentos relacionados
+## 🔗 Documentos relacionados
 
 | Documento | Relación |
 |---|---|
-| `docs/FOUNDATION.md` | **Gobierna:** propósito y principios humanos del producto. |
+| `docs/FOUNDATION.md` | **Gobierna:** propósito y principios humanos. |
 | `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` | **Gobierna:** principios pedagógicos generales. |
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** dominios de contenido, experiencias, evidencias, acompañamiento y progreso. |
-| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Implementa el modelo en el dominio académico:** reglas para convertir material escolar en Temas Académicos, con primera aplicación en 6.º. |
-| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional de Misiones y evidencias. |
-| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** revisión familiar de experiencias/evidencias realizadas. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Norma el dominio académico:** incorporación de Temas, sesiones y evidencia. |
+| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** relación funcional con Misiones/evidencias. |
+| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** consulta histórica de experiencias. |
+| `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Complementa:** consumo transversal de evidencias para análisis y fortalecimiento. |
+| `compartido/js/sesiones-academicas.js` | **Implementa:** contrato compartido `sesion-academica-v1` para el dominio académico actual. |
 
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 0.3 | 21/08/2026 | Product Owner + AI Collaborator | Incorpora conceptualmente el Motor de Estudio Académico para 6.º, la separación Sesión Académica / Evidencia de Misión, el principio “finalización no equivale a dominio” y un ejemplo académico del flujo Datos → Observaciones → Insumos → Acciones. No declara implementación técnica. |
-| 0.2 | 2026 | Product Owner + AI Collaborator | Revisión funcional y arquitectónica de Detectives/Lectura, principio del Motor de Semillas, flujos libre/Misión, Datos → Observaciones → Insumos → Acciones, contrato con Misiones, servicios comunes y criterios de evolución. |
-| 0.1 | 2026 | Product Owner + AI Collaborator | Primera identificación del concepto de Motor de Aprendizaje y de los casos Detectives, Lectura y Semillas. |
+| 0.4 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza el modelo con el producto real: el Estudio Académico deja de ser solo conceptual y dispone de contrato compartido `sesion-academica-v1`, evidencia por referencia, histórico de solo lectura, refuerzo académico y consumo por Análisis Educativo. Formaliza que todo nuevo Tema de 6.º debe producir evidencia reutilizable aun en acceso libre. Incorpora Persona Activa, Vista previa sin escritura, separación `Sesión → Evidencia de Misión`, y ciclo `Evidencia → Análisis → Fortalecimiento`. Actualiza el estado de Semillas/Creciendo por Dentro como experiencia real sin forzar una abstracción técnica única. |
+| 0.3 | 21/08/2026 | Product Owner + AI Collaborator | Incorpora conceptualmente el Motor de Estudio Académico para 6.º, la separación Sesión Académica / Evidencia de Misión, “finalización no equivale a dominio” y Datos → Observaciones → Insumos → Acciones. |
+| 0.2 | 2026 | Product Owner + AI Collaborator | Revisión de Detectives/Lectura, principio de Semillas, flujos libre/Misión, evidencias, servicios comunes y criterios de evolución. |
+| 0.1 | 2026 | Product Owner + AI Collaborator | Primera identificación del concepto de Motor de Aprendizaje. |
 
 ---
 
-# 1. Propósito
+## 🎯 1. Propósito
 
-Este documento define el modelo conceptual de **Motores de Aprendizaje** de la Academia Gloria Valentina.
+Este documento define el **lenguaje conceptual común** utilizado para comprender experiencias de aprendizaje repetibles de la Academia.
 
-Su propósito es identificar y describir un patrón que ya comienza a aparecer en distintos espacios de la Academia:
+Busca responder:
 
-- **Aventuras Matemáticas — Detectives**.
-- **Mi Rincón de Lectura**.
-- **Creciendo por dentro — Semillas**.
-- **Estudio Académico — Temas de Mis Cursos** (incorporado conceptualmente para 6.º; todavía no implementado como motor).
-- Otros módulos futuros que puedan reutilizar el mismo enfoque.
+1. ¿Qué es un Motor de Aprendizaje?
+2. ¿Qué pertenece al motor y qué pertenece al contenido?
+3. ¿Qué debe poder compartirse?
+4. ¿Qué diferencias deben preservarse?
+5. ¿Cómo se registra una experiencia?
+6. ¿Cómo se relaciona con Persona Activa y Misiones?
+7. ¿Cómo se revisa históricamente sin reejecutar?
+8. ¿Cómo se transforma la evidencia en acompañamiento?
+9. ¿Cómo evitar una arquitectura diferente por cada Tema?
+10. ¿Cómo permitir que nuevos contenidos se incorporen con cada vez menos intervención técnica?
 
-El modelo busca responder a estas preguntas:
+Este documento sigue siendo **modelo**, no estándar obligatorio.
 
-1. ¿Qué entendemos por Motor de Aprendizaje?
-2. ¿Qué responsabilidades debe asumir?
-3. ¿Qué elementos deben ser configurables?
-4. ¿Qué elementos pueden compartirse entre módulos?
-5. ¿Cómo se integra con Misiones, Mi Camino, Mis Tareas y Mis Logros?
-6. ¿Cómo se registra el historial?
-7. ¿Cómo pueden utilizarse los datos para acompañar mejor al alumno?
-8. ¿Cómo evitar duplicar código y decisiones?
-9. ¿Qué diferencias legítimas deben conservarse entre motores?
-10. ¿Cómo se relacionan una Misión, sus Tareas y las experiencias ejecutadas?
-11. ¿Cómo se transforman los datos registrados en acciones útiles?
-12. ¿Qué configuraciones podrán administrarse sin modificar el código?
-
-Este documento **no constituye todavía un estándar obligatorio**.
-
-Describe un modelo conceptual que deberá validarse y evolucionar a partir de la experiencia real del producto.
+Las reglas normativas pertenecen a los estándares/especificaciones propietarias.
 
 ---
 
-# 2. Relación con la arquitectura documental
+## 🧱 2. Definición
 
-La ubicación conceptual de este documento es:
+Un **Motor de Aprendizaje** es un conjunto reutilizable de comportamientos capaz de presentar, acompañar, registrar y cerrar una familia de experiencias cuyo contenido concreto puede variar.
 
 ```text
-FOUNDATION
-¿Por qué existe la Academia?
+MOTOR
+= comportamiento repetible
 
-        ↓
+CONTENIDO
+= qué se aprende / practica / vive
 
-VISIÓN
-¿Hacia dónde quiere evolucionar?
+EXPERIENCIA
+= ejecución concreta por una Persona
 
-        ↓
+REGISTRO
+= qué ocurrió realmente
 
-PRODUCTO
-¿Qué experiencias y comportamientos debe ofrecer?
-
-        ↓
-
-MODELOS
-¿Cómo entendemos y organizamos los conceptos comunes?
-
-        ↓
-
-ESTÁNDARES
-¿Qué reglas deben cumplirse?
-
-        ↓
-
-IMPLEMENTACIÓN
-¿Cómo se construye en código?
+INTEGRACIÓN
+= relación con Academia, Misiones, histórico y acompañamiento
 ```
 
-`MODEL-MOTORES_DE_APRENDIZAJE.md` pertenece a **Modelos**.
+Ejemplos conceptuales:
 
-No define por sí solo una implementación técnica obligatoria.
-
-No sustituye las especificaciones funcionales de cada módulo.
-
-No debe convertirse prematuramente en una arquitectura rígida.
-
-Su función es ofrecer un lenguaje común y una estructura conceptual compartida.
+```text
+Detectives + historias       → Aventuras Matemáticas
+Lectura + historias          → Sesiones de lectura
+Creciendo + Semillas         → Experiencias personales
+Estudio Académico + Tema     → Comprensión/práctica/comprobación curricular
+```
 
 ---
 
-# 3. Definición
+## 🧭 3. Principio central
 
-Un **Motor de Aprendizaje** es un conjunto reutilizable de comportamientos que permite presentar, ejecutar, acompañar, registrar y completar experiencias educativas o de crecimiento sin depender de un único contenido específico.
+> **Compartir comportamiento cuando es realmente común. Preservar contenido y variación pedagógica cuando son específicos.**
 
-El motor proporciona la forma.
+El objetivo no es que todas las experiencias se vean iguales.
 
-El contenido proporciona la experiencia concreta.
+El objetivo es evitar que cada contenido vuelva a resolver por su cuenta:
 
-Ejemplo:
+- identidad;
+- Persona Activa;
+- contexto de Misión;
+- navegación/retorno;
+- persistencia;
+- evidencia;
+- histórico;
+- modos de consulta;
+- permisos;
+- análisis compartido.
 
-```text
-Motor Detectives
-        +
-historias.json
-        =
-Aventuras Matemáticas concretas
-```
+No todo tiene que resolverse mediante JSON ni mediante una sola clase/librería.
 
-```text
-Motor de Lectura
-        +
-lecturas, configuraciones y recursos
-        =
-Sesiones concretas de Mi Rincón de Lectura
-```
+La reutilización puede estar en:
 
-```text
-Motor de Semillas
-        +
-semillas.json
-        =
-Experiencias concretas de Creciendo por dentro
-```
-
-```text
-Motor de Estudio Académico
-        +
-Tema académico y recursos asociados
-        =
-Experiencia concreta de estudio, práctica y comprobación
-```
-
-En este último caso, “motor” no significa que todos los Temas deban verse iguales. El comportamiento común puede reutilizarse mientras cada Tema conserva los recursos específicos que necesita: mapa, gráfico, vídeo, línea del tiempo, simulación, música, práctica escrita u otros.
+- datos;
+- servicios;
+- contratos;
+- componentes;
+- patrones;
+- comportamiento.
 
 ---
 
-# 4. Principio central
+## 🚫 4. Qué no es un Motor
 
-> **El comportamiento común debe estar en el motor.**
->
-> **El contenido variable debe estar en configuración.**
+No es automáticamente:
 
-El objetivo es que una nueva historia, lectura, situación o Semilla pueda incorporarse, cuando sea razonable, sin modificar:
+- una pantalla;
+- un archivo JS grande;
+- un JSON;
+- una colección Firestore;
+- un módulo completo;
+- una abstracción obligatoria para todas las páginas;
+- una excusa para generalizar antes de disponer de casos reales.
 
-- el HTML;
-- el flujo principal;
-- la navegación;
-- la integración con Misiones;
-- el registro de progreso;
-- los componentes compartidos.
+Un motor tiene sentido cuando existe suficiente combinación de:
 
-Esto no significa que todo deba resolverse mediante JSON.
-
-Significa que debemos distinguir conscientemente entre:
-
-- comportamiento;
-- contenido;
-- configuración;
-- datos generados;
-- integración;
-- presentación.
-
----
-
-# 5. Qué no es un Motor de Aprendizaje
-
-Un Motor de Aprendizaje no es:
-
-- una pantalla aislada;
-- un archivo JavaScript grande;
-- un conjunto de textos;
-- un módulo completo por sí solo;
-- una configuración JSON sin lógica;
-- una librería genérica obligatoria para toda la Academia;
-- un sustituto de la especificación funcional;
-- una excusa para sobrearquitectura.
-
-Tampoco todos los módulos de la Academia tienen que convertirse en motores.
-
-Un motor tiene sentido cuando existe:
-
-- repetición de una misma mecánica;
+- mecánica repetible;
 - contenido variable;
-- posibilidad real de crecimiento;
-- necesidad de historial;
-- integración con Misiones;
-- reutilización funcional;
-- beneficio de mantenimiento.
+- crecimiento esperado;
+- necesidad de historial/evidencia;
+- integración transversal;
+- beneficio real de mantenimiento.
 
 ---
 
-# 6. Componentes conceptuales
+## 🧩 5. Componentes conceptuales
 
-Un Motor de Aprendizaje puede entenderse mediante seis componentes principales:
+El modelo utiliza seis componentes:
 
 ```text
 1. Motor
@@ -242,1906 +162,1143 @@ Un Motor de Aprendizaje puede entenderse mediante seis componentes principales:
 6. Integración
 ```
 
-## 6.1 Motor
+### 5.1 Motor
 
-Contiene la lógica común.
+Puede encargarse de:
 
-Ejemplos:
-
-- cargar contenido;
-- validar estructura;
-- iniciar experiencia;
+- cargar/validar contenido;
+- iniciar estado;
 - navegar entre pasos;
-- gestionar estado;
-- mostrar apoyos;
-- registrar avance;
-- finalizar;
-- repetir;
-- integrarse con una misión.
+- gestionar interacción;
+- proporcionar apoyos;
+- recopilar resultados;
+- cerrar;
+- producir registro;
+- conectarse con servicios comunes.
 
-## 6.2 Contenido
+### 5.2 Contenido
 
-Define qué vive el alumno.
+Describe la experiencia específica:
 
-Ejemplos:
-
-- historia matemática;
-- texto de lectura;
-- situación emocional;
+- historia;
+- Tema;
+- situación;
+- textos;
 - preguntas;
-- opciones;
-- ilustraciones;
-- audios;
-- ayudas;
+- ejemplos;
+- respuestas;
+- apoyos;
+- imágenes;
+- audio/vídeo;
+- recursos;
 - cierre.
 
-## 6.3 Configuración
+### 5.3 Configuración
 
-Define variaciones de comportamiento sin cambiar el motor.
-
-Ejemplos:
+Permite variaciones sin reescribir lógica cuando tenga sentido:
 
 - nivel;
 - duración;
-- tipo de apoyo;
-- filtros;
-- número de intentos;
-- uso de grabación;
-- forma de cierre;
-- asociación con una familia o categoría.
-
-La configuración puede existir en dos niveles:
-
-### Configuración propia del contenido
-
-Pertenece a una experiencia o catálogo concreto.
-
-Ejemplos:
-
-- nivel de una historia;
-- emociones asociadas a una Semilla;
-- idioma de una lectura;
-- apoyos visuales;
-- duración estimada.
-
-### Configuración administrable de la Academia
-
-Permite que un administrador autorizado modifique opciones permitidas sin editar el código.
-
-Ejemplos futuros:
-
-- duración máxima de grabación;
-- filtros habilitados;
-- niveles de apoyo disponibles;
-- comportamiento configurable de Lía;
-- límites de intentos;
-- preferencias del alumno;
-- visibilidad familiar;
-- recursos audiovisuales habilitados.
-
-La Academia no creará una nueva carpeta o mecanismo general de configuración hasta que exista una necesidad real y aprobada.
-
-La idea previamente evaluada de configurar guacamayas por emociones fue descartada por falta de valor actual.
-
-Esa decisión no elimina la utilidad futura de una configuración administrable para otras necesidades justificadas.
-
-## 6.4 Experiencia
-
-Es la ejecución concreta que vive el alumno.
-
-Ejemplo:
-
-```text
-Motor: Detectives
-Contenido: El misterio del jardín
-Alumno: Gloria
-Origen: Misión asignada
-Fecha: 05/08/2026
-```
-
-## 6.5 Registro
-
-Conserva información útil sobre lo ocurrido.
-
-Ejemplos:
-
-- inicio;
-- finalización;
-- intentos;
-- respuestas;
-- apoyos utilizados;
-- grabaciones;
-- palabras a practicar;
-- resultados;
-- observaciones derivadas;
-- relación con una misión.
-
-## 6.6 Integración
-
-Conecta la experiencia con el resto de la Academia.
-
-Ejemplos:
-
-- Mi Universo;
-- Mi Camino;
-- Mis Tareas;
-- Misiones;
-- Mis Logros;
-- perfil del alumno;
-- historial;
-- familia;
-- Lía;
-- futuras capacidades de IA.
-
----
-
-# 7. Modelo general
-
-El modelo distingue dos formas principales de entrada:
-
-1. acceso contextual desde Mi Camino, Mis Tareas o una Misión;
-2. acceso libre desde el menú o desde Mi Universo.
-
-## 7.1 Flujo desde una Misión
-
-```text
-Mi Camino / Mis Tareas
-          │
-          ▼
-Misión asignada
-          │
-          ├── Tarea 1
-          ├── Tarea 2
-          └── Tarea n
-                  │
-                  ▼
-        Tarea asociada al motor
-                  │
-                  ▼
-      Contexto de misión y tarea
-  misionId · tareaId · criterios · filtros
-                  │
-                  ▼
-         Motor de Aprendizaje
-                  │
-                  ▼
- Experiencia asignada o catálogo filtrado
-                  │
-                  ▼
-       Ejecución de la experiencia
-                  │
-                  ▼
-   Grabación de sesión y resultados
-                  │
-       ┌──────────┼──────────┐
-       ▼          ▼          ▼
-   Evidencia   Progreso    Historial
-   de tarea    de misión
-                  │
-                  ▼
-                Datos
-                  │
-                  ▼
-      Observaciones / análisis
-                  │
-                  ▼
-               Insumos
-                  │
-        ┌─────────┼─────────┐
-        ▼         ▼         ▼
-    Mi Camino   Familia   Próxima acción
-```
-
-## 7.2 Flujo desde acceso libre
-
-```text
-Mi Universo / Menú / Acceso directo
-                  │
-                  ▼
-         Motor de Aprendizaje
-                  │
-                  ▼
-               Catálogo
-                  │
-                  ▼
-          Filtros opcionales
-                  │
-                  ▼
-      Selección de experiencia
-                  │
-                  ▼
-       Ejecución de la experiencia
-                  │
-                  ▼
-   Grabación de sesión y resultados
-                  │
-       ┌──────────┼──────────┐
-       ▼          ▼          ▼
-   Historial     Datos    Logro personal
-                  │
-                  ▼
-      Observaciones / análisis
-                  │
-                  ▼
-               Insumos
-                  │
-                  ▼
-    Recomendación o continuidad
-```
-
-## 7.3 Capas comunes
-
-```text
-┌─────────────────────────────────────────────┐
-│            ACADEMIA GLORIA VALENTINA        │
-└─────────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────┐
-│          SERVICIOS COMPARTIDOS              │
-│                                             │
-│  Autenticación y autorización               │
-│  Perfil del alumno                          │
-│  Mi Camino                                  │
-│  Mis Tareas y Misiones                      │
-│  Mis Logros                                 │
-│  Historial                                  │
-│  Lía                                        │
-│  Grabación                                  │
-│  Persistencia                               │
-└─────────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────┐
-│          MOTOR DE APRENDIZAJE               │
-│                                             │
-│  Carga · Flujo · Interacción · Apoyos       │
-│  Evaluación funcional · Cierre              │
-└─────────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────┐
-│          CONTENIDO CONFIGURABLE             │
-│                                             │
-│  JSON o JavaScript de datos                 │
-│  Recursos visuales · Audio · Textos         │
-│  Variantes · Filtros · Niveles              │
-└─────────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────┐
-│          EXPERIENCIA DEL ALUMNO             │
-└─────────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────┐
-│  DATOS → OBSERVACIONES → INSUMOS → ACCIONES │
-└─────────────────────────────────────────────┘
-```
----
-
-# 8. Motores identificados
-
-## 8.1 Motor Detectives
-
-### Propósito
-
-Presentar aventuras matemáticas basadas en historias y retos.
-
-### Contenido variable
-
-- historias;
-- nivel;
-- tema;
-- preguntas;
-- pistas;
-- apoyos visuales;
-- soluciones;
-- criterios de filtrado.
-
-### Capacidades observadas
-
-- historias configurables;
-- contenido externo en JSON;
-- apoyo visual;
-- filtros;
-- flujo estructurado;
-- integración con Misiones;
-- apertura contextual cuando se accede desde una misión;
-- registro de avance;
-- historial.
-
-### Archivo de contenido de referencia
-
-```text
-historias.json
-```
-
-### Fortalezas principales
-
-- separación clara entre contenido y comportamiento;
-- facilidad para añadir historias;
-- catálogo y filtros;
-- estructura repetible;
-- mecánica especialmente adecuada para problemas matemáticos.
-
-## 8.2 Motor de Lectura
-
-### Propósito
-
-Acompañar la lectura, grabar, analizar y proponer práctica.
-
-### Ubicación real del contenido
-
-Las lecturas se encuentran actualmente en:
-
-```text
-mi-universo/rincon-lectura/historias.js
-```
-
-El módulo importa:
-
-```javascript
-import { HISTORIAS } from "./historias.js";
-```
-
-Esto confirma que también existe separación entre contenido e interfaz, aunque se utiliza JavaScript en lugar de JSON.
-
-### Contenido variable
-
-- textos;
-- párrafos;
-- nivel;
-- categoría;
 - dificultad;
-- valores;
-- preguntas;
 - apoyos;
-- palabras;
-- imágenes;
-- instrucciones;
-- reflexión;
-- frase del día.
-
-### Capacidades observadas
-
-- catálogo visual cuidadosamente presentado;
 - filtros;
+- intentos;
 - grabación;
-- reproducción;
-- varios intentos;
-- transcripción;
-- análisis de la lectura;
-- identificación de palabras a repetir;
-- registro de palabras superadas;
-- registro de palabras no superadas;
-- comprensión y respuestas;
-- observaciones familiares;
-- integración real con Misiones;
-- evidencias asociadas;
-- historial detallado;
-- generación de datos de alto valor.
+- visibilidad;
+- recursos habilitados;
+- preferencias por Persona.
 
-### Valor especial
+No se crea un sistema general de configuración antes de una necesidad real.
 
-El Motor de Lectura no solo registra que una actividad fue completada.
+### 5.4 Experiencia
 
-Genera información sobre el aprendizaje real.
-
-Ejemplos:
-
-- palabras identificadas para repetir;
-- palabras superadas antes del límite de intentos;
-- palabras no superadas;
-- evolución entre sesiones;
-- número de intentos;
-- grabación;
-- transcripción;
-- respuestas;
-- apoyos que resultaron útiles.
-
-Estos datos constituyen un insumo valioso para acompañar el crecimiento del alumno.
-
-### Fortalezas principales
-
-- experiencia visual madura;
-- práctica oral;
-- grabación y análisis;
-- persistencia rica;
-- historial;
-- participación familiar;
-- integración profunda con Misiones y evidencias.
-
-## 8.3 ¿Qué motor es mejor?
-
-Ninguno es globalmente mejor.
-
-Cada uno resuelve una necesidad distinta y está más maduro en capacidades diferentes.
+Es una ejecución concreta:
 
 ```text
-Detectives
-Destaca en:
-- contenido externo;
-- catálogo;
-- filtros;
-- estructura repetible;
-- separación motor/contenido.
-
-Mi Rincón de Lectura
-Destaca en:
-- experiencia visual;
-- voz;
-- análisis;
-- historial;
-- datos;
-- familia;
-- integración con Misiones.
+Persona: Gloria
+Motor: Detectives
+Contenido: historia X
+Origen: Misión / acceso libre
+Fecha: ...
 ```
 
-La conclusión para Semillas es:
+### 5.5 Registro
 
-> **Tomar de Detectives la arquitectura de contenidos y catálogo.**
->
-> **Tomar de Mi Rincón de Lectura la riqueza de interacción, grabación, historial e integración.**
+Conserva únicamente datos que puedan ayudar a:
 
-No se copiará por completo ninguno de los dos motores.
-
-## 8.4 Motor de Semillas
-
-### Propósito
-
-Presentar experiencias de crecimiento personal, emocional, comunicativo y social.
-
-### Contenido variable
-
-- situaciones;
-- emociones;
-- tipos de situación;
-- niveles de apoyo;
-- pasos;
-- preguntas;
-- respuestas;
-- grabaciones;
-- apoyos visuales;
-- cierres;
-- familias de Semillas.
-
-### Capacidades previstas
-
-- contenido configurable mediante `semillas.json` o equivalente;
-- catálogo visual;
-- filtros;
-- grabación;
-- análisis educativo de la práctica oral;
-- integración con Misiones;
-- historial;
-- observaciones;
-- insumos;
-- acompañamiento de Lía;
-- crecimiento visual;
-- posible Jardín Personal.
-
-### Principio de diseño
-
-El Motor de Semillas será el primer caso nuevo utilizado para validar este modelo conceptual.
-
-## 8.5 Motor de Estudio Académico
-
-### Estado de la capacidad
-
-**Decisión conceptual aprobada para el diseño de 6.º de Primaria.**
-
-No debe interpretarse todavía como funcionalidad implementada. Su contrato técnico se validará mediante un Tema Académico piloto.
-
-### Propósito
-
-Convertir un Tema Académico en una experiencia de estudio que permita:
-
+- revisar;
 - comprender;
-- visualizar;
-- practicar;
-- recibir retroalimentación;
-- volver a intentar;
-- registrar una sesión útil;
-- generar evidencia cuando exista una Misión;
-- y producir información que permita orientar un refuerzo posterior.
-
-### Por qué puede considerarse un motor
-
-El patrón académico cumple las condiciones identificadas por este modelo:
-
-- existe una mecánica recurrente de orientación, comprensión, práctica, comprobación y cierre;
-- el contenido cambia por curso, materia y tema;
-- los recursos cambian según la naturaleza del contenido;
-- existe necesidad de historial y datos;
-- puede integrarse con Misiones;
-- y la reutilización de comportamiento aporta valor de mantenimiento.
-
-### Contenido variable
-
-Puede incluir:
-
-- `cursoReferencia`;
-- materia;
-- tema;
-- objetivos;
-- conceptos;
-- vocabulario;
-- explicaciones;
-- ejemplos;
-- preguntas;
-- ejercicios;
-- apoyos;
-- mapas;
-- gráficos;
-- vídeos;
-- audios;
-- música;
-- simulaciones;
-- líneas del tiempo;
-- fichas;
-- y otros recursos específicos.
-
-### Comportamiento común esperado
-
-El comportamiento compartido puede asumir, cuando corresponda:
-
-```text
-Orientar
-↓
-Presentar una síntesis
-↓
-Explicar / mostrar
-↓
-Practicar con apoyo
-↓
-Practicar con mayor autonomía
-↓
-Dar feedback
-↓
-Comprobar
-↓
-Registrar sesión
-↓
-Registrar evidencia si existe Misión
-↓
-Proponer continuidad o refuerzo
-```
-
-### Variación legítima
-
-El Motor de Estudio Académico no obliga a utilizar una secuencia visual idéntica en todos los Temas.
-
-Ejemplos:
-
-```text
-Geografía → mapa y orientación.
-Historia → línea del tiempo y relaciones causa–consecuencia.
-Ciencias → simulación o representación de procesos.
-Matemáticas → modelado, procedimiento y resolución paso a paso.
-Lengua → lectura, clasificación, análisis y producción.
-```
-
-### Sesión Académica y Evidencia
-
-El modelo distingue:
-
-```text
-Sesión Académica
-= registro de una ejecución de estudio/práctica.
-
-Evidencia de Misión
-= registro que vincula una actividad realizada con una Misión.
-```
-
-Una sesión puede existir en acceso libre.
-
-Cuando la experiencia se inicia desde una Misión, la sesión podrá generar además una evidencia que la referencie, reutilizando la arquitectura existente de Misiones y Evidencias.
-
-### Principio de resultado
-
-> **Finalizar una actividad significa que la experiencia se realizó. No significa automáticamente que el contenido esté dominado.**
-
-La calidad del resultado, los intentos y los apoyos utilizados son datos para retroalimentación y refuerzo; no deben bloquear por defecto la finalización.
----
-
-# 9. Contenido configurable
-
-El contenido configurable deberá permitir incorporar nuevas experiencias sin modificar el motor cuando el comportamiento sea equivalente.
-
-## 9.1 Ejemplo conceptual
-
-```json
-{
-  "id": "semilla-decir-lo-que-siento-001",
-  "titulo": "Aprendo a decir lo que siento",
-  "familia": "comunicacion",
-  "emociones": ["enfado", "confusion", "nervios"],
-  "tipoSituacion": "colegio",
-  "nivelApoyo": 2,
-  "duracionEstimada": 7,
-  "situacion": {},
-  "pasos": [],
-  "recursos": {},
-  "cierre": {},
-  "integracion": {}
-}
-```
-
-Este ejemplo no define todavía el esquema definitivo.
-
-El esquema deberá surgir de la validación de la primera implementación.
-
-## 9.2 Principios
-
-El contenido deberá ser:
-
-- identificable;
-- validable;
-- versionable;
-- legible;
-- mantenible;
-- separable de la lógica;
-- reutilizable cuando corresponda;
-- suficientemente expresivo;
-- no más complejo de lo necesario.
-
-## 9.3 Encabezado descriptivo
-
-Cuando el formato lo permita, la finalidad del archivo deberá documentarse en el README de su carpeta.
-
-Los archivos JSON deberán contener únicamente información compatible con JSON válido.
-
-No deberán utilizarse comentarios no soportados por el formato.
-
----
-
-# 10. Responsabilidades del motor
-
-Un motor podrá asumir las siguientes responsabilidades:
-
-## 10.1 Inicialización
-
-- cargar configuración;
-- determinar contexto;
-- identificar alumno;
-- identificar misión;
-- validar contenido;
-- preparar estado.
-
-## 10.2 Presentación
-
-- construir pantalla inicial;
-- mostrar contenido;
-- aplicar recursos;
-- adaptar nivel de apoyo;
-- respetar accesibilidad.
-
-## 10.3 Navegación
-
-- avanzar;
-- retroceder;
-- pausar;
 - continuar;
-- repetir;
-- salir de forma segura.
+- fortalecer;
+- auditar;
+- medir evolución con prudencia.
 
-## 10.4 Interacción
+### 5.6 Integración
 
-- recibir selecciones;
-- recibir texto;
-- recibir voz;
-- mostrar ayudas;
-- permitir revisión;
-- gestionar intentos.
+Conecta la experiencia con:
 
-## 10.5 Acompañamiento
-
-- activar mensajes de Lía;
-- mostrar ayudas oportunas;
-- reforzar el esfuerzo;
-- evitar mensajes inadecuados.
-
-## 10.6 Registro
-
-- guardar estado;
-- guardar avance;
-- asociar misión;
-- generar historial;
-- conservar datos útiles;
-- evitar almacenar información innecesaria.
-
-## 10.7 Cierre
-
-- sintetizar;
-- registrar finalización;
-- actualizar misión;
-- actualizar Mi Camino;
-- generar logro cuando corresponda;
-- mostrar continuidad.
-
----
-
-# 11. Responsabilidades del contenido
-
-El contenido deberá definir:
-
-- objetivo de la experiencia;
-- instrucciones;
-- historia o situación;
-- preguntas;
-- respuestas;
-- pistas;
-- apoyos;
-- recursos;
-- criterios propios;
-- mensajes de cierre;
-- categorías;
-- filtros;
-- metadatos.
-
-El contenido no debería contener lógica técnica compleja.
-
-No debería decidir directamente:
-
-- autenticación;
-- persistencia;
-- navegación global;
-- seguridad;
-- resolución de rutas;
-- gestión de sesión;
-- reglas generales de Misiones.
-
----
-
-# 12. Servicios compartidos
-
-Los motores no deberían implementar repetidamente capacidades que pertenecen a la Academia.
-
-## 12.1 Autenticación
-
-Identificar usuario y sesión.
-
-## 12.2 Perfil del alumno
-
-Proporcionar:
-
-- identidad;
-- preferencias;
-- contexto;
-- nivel;
-- apoyos configurados;
-- datos autorizados.
-
-## 12.3 Mis Tareas y Misiones
-
-Una **Misión puede contener una o más Tareas**.
-
-La relación conceptual es:
-
-```text
-Misión
-├── Tarea 1
-├── Tarea 2
-└── Tarea n
-```
-
-Cada Tarea podrá:
-
-- estar asociada a un motor;
-- identificar una experiencia concreta;
-- definir filtros o criterios;
-- requerir una o varias ejecuciones;
-- generar una o más evidencias;
-- contribuir al progreso global de la Misión.
-
-El servicio deberá permitir:
-
-- asignación;
-- apertura contextual;
-- seguimiento por tarea;
-- cálculo del progreso de la misión;
-- finalización de tareas;
-- finalización de misión;
-- relación con experiencias concretas;
+- Persona Activa;
+- Mi Camino;
+- Gestión de Misiones;
 - evidencias;
-- reapertura cuando corresponda.
-
-## 12.4 Mi Camino
-
-Mostrar:
-
-- siguiente paso;
-- continuidad;
-- recomendaciones;
-- actividades pendientes;
-- experiencias recientes.
-
-## 12.5 Mis Logros
-
-Registrar avances significativos sin convertirlos en competición.
-
-## 12.6 Historial
-
-Conservar eventos útiles y consultables.
-
-## 12.7 Lía
-
-La mayor parte posible de Lía deberá ser común.
-
-Se considerará común:
-
-- identidad;
-- voz;
-- tono;
-- reglas de lenguaje;
-- componentes visuales;
-- reproducción de mensajes;
-- accesibilidad;
-- mensajes de ayuda;
-- tratamiento de errores;
-- principios de acompañamiento.
-
-Cada motor definirá únicamente lo que necesite ser específico:
-
-- diálogos;
-- contenido pedagógico;
-- ayudas contextuales;
-- reacción a resultados;
-- cierre propio.
-
-La pregunta de diseño será:
-
-> **¿Qué parte de Lía necesita ser diferente en este motor?**
-
-y no:
-
-> ¿Qué pequeña parte puede reutilizarse?
-
-## 12.8 Persistencia
-
-Guardar datos con reglas compartidas.
-
-## 12.9 Recursos
-
-Resolver imágenes, audio, vídeo y otros assets cuando se consolide un mecanismo común.
+- histórico;
+- Análisis Educativo;
+- Reconocimientos cuando aplique;
+- familia/profesionales autorizados.
 
 ---
 
-# 13. Integración con Misiones
+## 👤 6. Persona Activa
 
-La integración con Misiones será una capacidad transversal.
+Una experiencia pertenece a la **Persona Activa**, no necesariamente al UID autenticado que la acompaña.
 
-## 13.1 Relación Misión–Tareas
-
-Una Misión agrupa uno o más objetivos operativos representados como Tareas.
+Conceptualmente:
 
 ```text
-Misión
-    │
-    ├── Tarea de Lectura
-    ├── Tarea de Detectives
-    └── Tarea de Semillas
+usuario autenticado
+→ ContextoUsuario
+→ Persona Activa
+→ experiencia
+→ sesión/evidencia
 ```
 
-Una misma Misión podrá combinar varios motores.
+Los motores no deben inventar su propia resolución de identidad.
 
-Ejemplo:
+Campos conceptuales útiles:
+
+- Persona/alumno propietario;
+- actor que acompañó o ejecutó la acción técnica;
+- Misión de origen cuando existe.
+
+---
+
+## ▶️ 7. Dos formas de entrada
+
+### 7.1 Acceso libre
 
 ```text
-Misión:
-“Me preparo para explicar una situación”
-
-Tarea 1:
-Leer una historia relacionada.
-
-Tarea 2:
-Completar una Semilla de comunicación.
-
-Tarea 3:
-Grabar una respuesta final.
+Curso / Mi Universo / menú
+→ experiencia
+→ sesión
+→ histórico/análisis posible
 ```
 
-La Misión se completa según sus criterios y el estado de las Tareas relacionadas.
+**Importante:** acceso libre no significa “sin evidencia”.
 
-## 13.2 Acceso libre
+En el dominio académico de 6.º, una ejecución normal debe producir sesión académica reutilizable aunque no exista Misión.
 
-El alumno entra directamente al módulo.
+### 7.2 Acceso desde Misión
 
 ```text
-Mi Universo
-    ↓
-Motor
-    ↓
-Catálogo
-    ↓
-Experiencia elegida
+Mi Camino
+→ Misión
+→ experiencia
+→ sesión propietaria
+→ evidencia de Misión por referencia
+→ revisión familiar
 ```
 
-No existe contexto de misión ni tarea.
+La Misión no debe obligar al Motor a duplicar su sesión completa.
 
-## 13.3 Acceso desde una tarea de misión
+---
 
-El alumno entra desde Mi Camino o Mis Tareas.
+## 📎 8. Sesión y Evidencia de Misión
 
-```text
-Misión
-    ↓
-Tarea seleccionada
-    ↓
-Contexto de misión y tarea
-    ↓
-Motor
-    ↓
-Experiencia asignada o filtrada
-    ↓
-Resultado asociado a la tarea
-    ↓
-Progreso agregado en la misión
-```
+### 8.1 Sesión
 
-## 13.4 Qué significa “contrato”
+Registra **qué ocurrió en la experiencia**.
 
-El contrato no implica necesariamente una interfaz técnica compleja.
+Puede existir sin Misión.
 
-Representa el conjunto mínimo y estable de información que intercambian:
+### 8.2 Evidencia de Misión
 
-- Misiones y Tareas;
-- el Motor de Aprendizaje;
-- el servicio de evidencias;
-- el historial.
+Registra **que una experiencia concreta está vinculada a una Misión**.
 
-### La Misión o Tarea entrega al motor
+Debe preferir:
 
 ```text
 misionId
-tareaId
-modulo
-actividadId o filtros
-criterio de cumplimiento
-cantidad objetivo
-ruta de retorno
-parámetros permitidos
++ sesionId
++ resumen mínimo
++ destino de revisión
 ```
 
-### El motor devuelve o registra
+antes que copiar toda la sesión.
+
+### 8.3 Relación
+
+```text
+Experiencia
+→ Sesión
+
+Misión ─────────────┐
+                    ↓
+             Evidencia de Misión
+                    ↓
+              referencia Sesión
+```
+
+### 8.4 Beneficio
+
+Esta separación permite:
+
+- acceso libre con histórico;
+- Misión sin duplicación;
+- borrado/control más seguro;
+- análisis transversal;
+- múltiples vistas del mismo hecho.
+
+---
+
+## 👁️ 9. Vista previa e histórico
+
+### Vista previa
+
+> **No persiste sesión, evidencia, progreso ni reconocimiento.**
+
+Sirve para revisar contenido/experiencia antes de una ejecución real.
+
+### Histórico / Ver trabajo
+
+> **Solo lectura.**
+
+No:
+
+- reinicia actividad;
+- registra otra sesión;
+- cambia intentos;
+- altera estadísticas;
+- completa una Misión.
+
+La resolución histórica reutiliza visores especializados cuando existen y un visor general en el resto.
+
+---
+
+## ⚙️ 10. Motores/experiencias identificadas
+
+### 10.1 Detectives
+
+Fortalezas observadas:
+
+- catálogo de historias;
+- contenido externo;
+- nivel/tema/tipo;
+- pistas;
+- pasos;
+- intentos;
+- sesión independiente;
+- historial;
+- integración con Misiones;
+- refuerzo por señales repetidas;
+- fuente de Reconocimientos de Lía de alta confianza.
+
+Especialmente útil como referencia de:
+
+```text
+contenido configurable + comportamiento repetible + datos comparables
+```
+
+### 10.2 Mi Rincón de Lectura
+
+Fortalezas:
+
+- catálogo;
+- lectura;
+- grabación;
+- reproducción;
+- transcripción/análisis;
+- Palabras para Crecer;
+- comprensión;
+- observación familiar;
+- evidencias;
+- visor histórico rico;
+- refuerzo de pronunciación.
+
+Limitación relevante actual:
+
+- parte del histórico se organiza por historia y no constituye siempre una secuencia inmutable de sesiones comparable a Detectives.
+
+Por eso no deben generalizarse automáticamente Récords o conclusiones que el dato no puede sostener.
+
+### 10.3 Creciendo por Dentro / Semillas
+
+La experiencia ya existe y se utiliza realmente.
+
+Incluye:
+
+- catálogo de Semillas;
+- situaciones;
+- preguntas/reflexiones;
+- frase/cierre;
+- grabación opcional;
+- persistencia de sesión;
+- integración con Misiones;
+- consulta histórica.
+
+El concepto **Motor de Semillas** continúa siendo útil para separar contenido de comportamiento, pero el modelo no exige reconstruir el módulo únicamente para demostrar una abstracción común.
+
+Particularidad:
+
+> sus datos pueden tener significado personal sensible y no deben transformarse automáticamente en inferencias psicológicas.
+
+### 10.4 Estudio Académico
+
+#### Estado actual
+
+✅ **Patrón materialmente implementado y validado en 6.º de Primaria.**
+
+No existe todavía obligación de que todos los futuros Temas utilicen un único renderer universal.
+
+Lo común actualmente validado está principalmente en:
+
+- jerarquía `Curso → Asignatura → Tema`;
+- contrato `sesion-academica-v1`;
+- Persona Activa;
+- modos aprendizaje / Vista previa;
+- evidencia de Misión por referencia;
+- visor histórico;
+- mapa/resumen formativo;
+- refuerzo desde resultados;
+- Análisis Educativo.
+
+#### Primeros casos reales
+
+- Puente de 5.º a 6.º;
+- Fracciones.
+
+#### Propósito
+
+Transformar un Tema escolar real en una experiencia que pueda:
+
+```text
+Comprender
+→ practicar
+→ comprobar
+→ registrar
+→ revisar
+→ analizar
+→ fortalecer
+```
+
+#### Variación legítima
+
+Un Tema puede necesitar:
+
+- mapa;
+- gráfico;
+- línea del tiempo;
+- simulación;
+- vídeo;
+- audio;
+- fórmula;
+- escritura;
+- producción oral;
+- práctica paso a paso.
+
+El modelo común **no obliga a páginas idénticas**.
+
+---
+
+## 📘 11. Contrato académico actual · `sesion-academica-v1`
+
+El contrato compartido actual permite registrar, entre otros:
+
+```text
+contrato = sesion-academica-v1
+modo = aprendizaje
+personaId
+alumnoUserId
+actorUserId
+actividadId
+tituloActividad
+versionActividad
+cursoReferencia
+materia
+tema
+origen
+misionId?
+inicio/fin
+tiempoActivoSegundos
+tiempoActivoPorSegmento
+conceptosTrabajados[]
+variantes[]
+respuestas[]
+resumen{}
+retroalimentacion{}
+```
+
+El modelo exacto puede evolucionar; estos campos describen el contrato real al 03/09/2026.
+
+### Requisitos mínimos
+
+Una sesión académica exige actualmente:
+
+- actividad;
+- curso;
+- materia;
+- Tema.
+
+### Vista previa
+
+`modo = vista_previa` devuelve sin guardar.
+
+### Misión
+
+Si existe `misionId` y la Misión es `repaso_academico`, se registra evidencia utilizando la API normal de Misiones.
+
+Si el enlace de evidencia falla pero la sesión ya fue persistida, no se falsea que la sesión no existió.
+
+---
+
+## 🌱 12. Todo nuevo Tema de 6.º nace con evidencia
+
+Esta es una decisión transversal consolidada.
+
+> **Todo Tema nuevo de 6.º debe producir una sesión académica estructurada durante una ejecución normal de aprendizaje, exista o no una Misión.**
+
+La evidencia debe permitir, al menos, responder razonablemente:
+
+- qué Tema/actividad se trabajó;
+- qué conceptos/focos participaron;
+- qué respuestas/resultados se observaron;
+- qué apoyos/variantes fueron relevantes cuando el motor los registra;
+- qué resumen produjo la experiencia;
+- cómo puede revisarse después.
+
+No significa guardar cada clic.
+
+Significa producir **señales educativas reutilizables**.
+
+### Reutilización obligatoria antes de un esquema privado
+
+Un Tema no debe inventar:
+
+```text
+miPropiaColeccionDeResultados
+miPropioFormatoDeEvidencia
+miPropioVisorHistorico
+```
+
+si el contrato académico compartido puede representarlo.
+
+Si un nuevo Tema necesita datos que el contrato no expresa, primero se analiza una **evolución compatible del contrato común**.
+
+---
+
+## 🧠 13. Identificadores estables de aprendizaje
+
+Para que varias sesiones sean analizables, las señales deben evitar depender únicamente de texto libre.
+
+Cuando la actividad tenga múltiples objetivos, conviene utilizar identificadores estables como:
+
+```text
+bloqueId
+conceptoId
+focoId
+preguntaId
+varianteId
+```
+
+según corresponda.
+
+Esto permite relacionar ejecuciones sin obligar a que todas las actividades tengan la misma estructura.
+
+Principio:
+
+> **Persistir significado suficiente para poder comparar, no acoplar todos los Temas a una interfaz idéntica.**
+
+---
+
+## 📊 14. Evidencia → Análisis → Fortalecimiento
+
+El modelo actual ya no termina en “guardar historial”.
+
+Ciclo consolidado:
+
+```text
+EXPERIENCIA
+    ↓
+SESIÓN / EVIDENCIA
+    ↓
+DATOS OBSERVABLES
+    ↓
+ANÁLISIS PRUDENTE
+    ↓
+FORTALEZAS / ASPECTOS A REFORZAR
+    ↓
+PROPUESTA DE ACTUACIÓN
+    ↓
+DECISIÓN FAMILIAR
+    ↓
+MISIÓN / PRÁCTICA / CONTINUIDAD
+    ↓
+NUEVA EXPERIENCIA
+    ↓
+NUEVA EVIDENCIA
+```
+
+### Separación de responsabilidades
+
+```text
+Motor
+→ produce datos fiables
+
+Análisis Educativo
+→ interpreta varias evidencias con reglas prudentes
+
+Familia
+→ decide acciones sensibles
+
+Misión
+→ orquesta una nueva oportunidad
+```
+
+El Motor no necesita incorporar todo el algoritmo longitudinal dentro de su propia página.
+
+---
+
+## 🔎 15. Datos → Observaciones → Insumos → Acciones
+
+Se conserva el modelo original de cuatro niveles:
+
+### Datos
+
+Hechos registrados.
+
+Ejemplos:
+
+- respuesta;
+- intento;
+- pista;
+- palabra practicada;
+- concepto;
+- tiempo activo;
+- grabación autorizada.
+
+### Observaciones
+
+Interpretación limitada por una regla definida.
+
+Ejemplo:
+
+> En esta sesión, dos preguntas del mismo bloque fueron incorrectas.
+
+### Insumos
+
+Información útil para acompañar.
+
+Ejemplo:
+
+> Conviene volver a practicar ese bloque con otros ejemplos.
+
+### Acciones
+
+Continuidad concreta.
+
+Ejemplo:
+
+> Preparar una Misión breve de refuerzo.
+
+Una observación aislada no se convierte en diagnóstico ni atributo permanente.
+
+---
+
+## 🧪 16. Ejemplos actuales
+
+### Detectives
+
+```text
+Dato:
+misma dificultad aparece en varias historias.
+
+Observación:
+la señal se repite en contextos distintos.
+
+Insumo:
+conviene practicar ese foco.
+
+Acción:
+propuesta de Misión de Detectives.
+```
+
+La prioridad puede utilizar intentos adicionales sin confundirlos con pistas.
+
+### Estudio Académico
+
+```text
+Dato:
+varias respuestas de un bloque resultan incorrectas.
+
+Observación:
+la señal se mantiene en la ventana de sesiones relevante.
+
+Insumo:
+el bloque puede beneficiarse de práctica adicional.
+
+Acción:
+preparar Repaso Académico sobre ese foco.
+```
+
+### Lectura / pronunciación
+
+```text
+Dato:
+palabra queda en práctica o necesita varios intentos válidos.
+
+Observación:
+conviene seguir practicando esa palabra.
+
+Acción:
+proponer Misión de pronunciación.
+```
+
+---
+
+## 🗂️ 17. Responsabilidades del Motor
+
+Un Motor puede asumir:
+
+### Inicialización
+
+- resolver contexto;
+- Persona Activa;
+- origen;
+- Misión;
+- contenido/configuración;
+- modo.
+
+### Presentación
+
+- experiencia inicial;
+- contenido;
+- recursos;
+- apoyos;
+- accesibilidad.
+
+### Interacción
+
+- selecciones;
+- texto;
+- voz cuando aplica;
+- intentos;
+- ayudas;
+- feedback.
+
+### Registro
+
+- sesión;
+- datos útiles;
+- resultado;
+- relación con Misión;
+- revisión histórica.
+
+### Cierre
+
+- resumen;
+- continuidad;
+- evidencia cuando corresponde;
+- estado de Misión según contrato.
+
+No es obligatorio que una única clase JS ejecute todas estas responsabilidades.
+
+---
+
+## 📚 18. Responsabilidades del contenido
+
+El contenido puede definir:
+
+- objetivos;
+- texto/situación/Tema;
+- explicaciones;
+- preguntas;
+- opciones;
+- ejemplos;
+- recursos;
+- ayudas;
+- criterios específicos;
+- metadatos;
+- bloques/conceptos;
+- mensajes pedagógicos.
+
+No debería resolver directamente:
+
+- autenticación;
+- Persona Activa;
+- permisos;
+- Firestore Rules;
+- navegación global;
+- APIs de Misiones;
+- histórico común.
+
+---
+
+## 🧰 19. Servicios compartidos
+
+Los motores deben reutilizar, cuando aplique:
+
+- autenticación;
+- `ContextoUsuario`;
+- navegación global;
+- panel de usuario;
+- Misiones/evidencias;
+- sesiones académicas;
+- histórico/Ver trabajo;
+- Lía;
+- lectores/reproductores compartidos;
+- Firestore Rules canónicas;
+- identidad visual/componentes.
+
+La pregunta correcta es:
+
+> **¿Qué necesita ser específico de esta experiencia?**
+
+no:
+
+> **¿Qué puedo volver a construir localmente?**
+
+---
+
+## 🗣️ 20. Voz
+
+La voz puede ser una capacidad transversal para Lectura, Creciendo y futuros Temas.
+
+Posibles servicios comunes:
+
+- permisos;
+- grabar/detener;
+- duración;
+- reproducción;
+- almacenamiento;
+- transcripción;
+- gestión de fallos.
+
+La extracción de un servicio compartido debe basarse en reutilización real, no en previsión.
+
+Uso educativo permitido:
+
+- practicar lectura/expresión;
+- comparar intentos válidos;
+- apoyar pronunciación;
+- revisar fluidez;
+- ofrecer práctica.
+
+Requiere especial cautela:
+
+- inferencia emocional;
+- diagnóstico;
+- biometría;
+- clasificación psicológica.
+
+> La Academia puede analizar la voz para apoyar una habilidad; no para diagnosticar a la Persona.
+
+---
+
+## 🪜 21. Nivel de apoyo
+
+El nivel de apoyo representa **cuánta ayuda ofrece una experiencia**.
+
+No significa inteligencia ni capacidad.
+
+Puede incluir:
+
+```text
+más guía
+→ ayudas visibles
+→ pistas opcionales
+→ mayor autonomía
+```
+
+Debe poder variar según experiencia y contexto sin convertirse en una etiqueta del alumno.
+
+---
+
+## 🧭 22. Integración con Misiones
+
+Conceptualmente la Misión orquesta una intención y el Motor ejecuta la experiencia.
+
+El producto actual utiliza principalmente una Misión como unidad operativa visible, aunque el modelo conserva la posibilidad de estructuras compuestas cuando exista una necesidad real.
+
+Contrato mínimo conceptual:
+
+### Hacia la experiencia
+
+```text
+misionId?
+actividadId / filtros
+criterio aplicable
+modo
+ruta de retorno
+Persona Activa
+```
+
+### Desde la experiencia
 
 ```text
 sesionId
 actividad realizada
-estado
 resultado
-evidencia
-progreso de la tarea
-progreso de la misión
+resumen/evidencia
+estado de cumplimiento
 destino de revisión
 ```
 
-El contrato técnico exacto deberá extraerse de una auditoría del código existente antes de formalizarse como estándar.
+No se formaliza aquí una interfaz técnica universal; las APIs propietarias son la fuente de implementación.
 
-## 13.5 Comportamiento contextual
+---
 
-Cuando la experiencia se abra desde una tarea de misión:
+## 🏅 23. Relación con Reconocimientos
 
-- deberá reconocerse la misión;
-- deberá reconocerse la tarea;
-- el avance se asociará a ambas;
-- la evidencia se registrará para la tarea;
-- el progreso de la misión se recalculará;
-- la navegación de salida respetará el origen;
-- el historial conservará las relaciones;
-- una tarea completada no implicará necesariamente una misión completada.
-
-## 13.6 Evidencias
-
-Una ejecución podrá producir una evidencia.
+Un Motor puede producir **hechos candidatos**, pero no todo hecho debe generar recompensa.
 
 Ejemplos:
 
-```text
-Lectura completada
-Historia de Detectives resuelta
-Semilla practicada
-Grabación final guardada
-```
+- Detectives produce datos suficientes para algunas reglas de Lía;
+- una Misión completada puede recibir Reconocimiento humano;
+- un futuro Récord Personal exige comparabilidad real;
+- experiencias sensibles pueden requerir significado humano.
 
-Una Tarea podrá requerir:
-
-- una evidencia;
-- varias evidencias;
-- una cantidad objetivo;
-- condiciones adicionales.
-
-## 13.7 Reutilización
-
-Este patrón deberá reutilizar lo ya validado en:
-
-- Aventuras Matemáticas;
-- Mi Rincón de Lectura;
-- Mis Tareas;
-- servicio de evidencias;
-- navegación contextual.
-
-No deberá reconstruirse desde cero sin una razón funcional.
----
-
-# 14. Integración con Mi Camino
-
-Mi Camino podrá utilizar información de los motores para mostrar:
-
-- experiencia pendiente;
-- experiencia recomendada;
-- continuación;
-- repetición útil;
-- actividad completada;
-- siguiente paso.
-
-Mi Camino no deberá interpretar por sí solo el significado pedagógico de los datos.
-
-Los motores o servicios especializados deberán proporcionar información comprensible.
-
-### Observación de producto
-
-A futuro, Mi Camino podría simplificarse para funcionar principalmente como un tablero personal de:
-
-- Misiones asignadas;
-- siguiente paso;
-- progreso;
-- necesidad de ayuda;
-- continuidad recomendada.
-
-Las Tareas detalladas podrían permanecer en **Mis Tareas**.
-
-Esta posibilidad pertenece al diseño de producto y no se resuelve dentro de este modelo.
-
-Ejemplo:
-
-```text
-Motor de Lectura:
-“Hay tres palabras que conviene seguir practicando.”
-
-Mi Camino:
-“Continúa practicando estas palabras.”
-```
+La capa de Reconocimientos debe consumir evidencia sin obligar al Motor a convertirse en sistema de premios.
 
 ---
 
-# 15. Integración con Mis Logros
+## 🤖 24. Rol de IA
 
-Los motores podrán generar logros personales.
+La IA puede tener dos papeles diferentes.
 
-Ejemplos:
+### 24.1 AI Collaborator de desarrollo/contenido
 
-```text
-Lectura:
-“Superé una palabra que me costaba.”
-
-Detectives:
-“Encontré una estrategia para resolver el reto.”
-
-Semillas:
-“Practiqué cómo decir lo que siento.”
-```
-
-Los logros deberán:
-
-- estar vinculados al crecimiento;
-- evitar superioridad;
-- evitar comparación;
-- reconocer esfuerzo, práctica o avance;
-- poder relacionarse con evidencia real.
-
----
-
-# 16. Historial
-
-El historial es una capacidad esencial del modelo.
-
-No debe limitarse a registrar:
+Especialmente relevante para 6.º:
 
 ```text
-Actividad completada: sí/no
+material escolar
++ curso
++ materia
++ Tema
++ notas opcionales
+→ analizar
+→ decidir ubicación
+→ reutilizar arquitectura
+→ construir contenido
+→ integrar evidencia
+→ validar
+→ entregar para prueba
 ```
 
-Debe poder conservar información útil para comprender el recorrido.
+Este papel **ya está aprobado como procedimiento de incorporación curricular**.
 
-## 16.1 Tipos de datos
+No significa que una IA autónoma modifique producción sin revisión.
 
-### Datos de ejecución
+### 24.2 IA visible dentro del producto
 
-- inicio;
-- finalización;
-- duración;
-- pausas;
-- repeticiones;
-- origen;
-- misión.
+Puede, en el futuro:
 
-### Datos de interacción
-
-- intentos;
-- ayudas utilizadas;
-- pasos repetidos;
-- opciones elegidas;
-- grabaciones autorizadas.
-
-### Datos de aprendizaje
-
-- elementos superados;
-- elementos pendientes;
-- errores recurrentes;
-- apoyos efectivos;
-- evolución;
-- nuevas oportunidades.
-
-### Datos de crecimiento
-
-- habilidades practicadas;
-- Semillas completadas;
-- situaciones trabajadas;
-- repeticiones;
-- reflexiones autorizadas.
-
-## 16.2 Principio de utilidad
-
-No se guardarán datos por el simple hecho de poder hacerlo.
-
-Todo dato persistido deberá responder:
-
-> **¿Cómo puede ayudar a acompañar mejor al alumno?**
-
-## 16.3 Principio de proporcionalidad
-
-La utilidad deberá equilibrarse con:
-
-- privacidad;
-- sensibilidad;
-- edad;
-- consentimiento;
-- acceso;
-- retención;
-- seguridad.
-
-## 16.4 Finalización no equivale a dominio
-
-Una experiencia completada constituye un hecho de ejecución.
-
-El nivel de acierto, las correcciones, las ayudas y los intentos aportan información adicional sobre cómo ocurrió el aprendizaje.
-
-Por tanto:
-
-```text
-completada ≠ dominada
-```
-
-El modelo evita utilizar una única puntuación como conclusión total sobre el aprendizaje.
-
----
-
-# 17. De datos a acciones útiles
-
-El modelo incorpora cuatro niveles diferenciados:
-
-```text
-Datos
-  ↓
-Observaciones / análisis
-  ↓
-Insumos
-  ↓
-Acciones
-```
-
-## 17.1 Datos
-
-Son hechos registrados por el sistema.
-
-Ejemplos:
-
-- palabra pronunciada;
-- número de intentos;
-- duración;
-- respuesta elegida;
-- nivel de apoyo;
-- Semilla repetida;
-- grabación guardada.
-
-## 17.2 Observaciones o análisis
-
-Interpretan los datos dentro de una regla educativa definida.
-
-Ejemplos:
-
-- la palabra no se reconoció en tres intentos;
-- la fluidez mejoró entre el primer y el tercer intento;
-- se utilizó el nivel máximo de apoyo;
-- la experiencia fue repetida voluntariamente.
-
-Una observación no debe presentarse como diagnóstico.
-
-## 17.3 Insumos
-
-Transforman la observación en información útil para acompañar.
-
-Ejemplos:
-
-- conviene continuar practicando esta palabra;
-- esta habilidad merece otra experiencia;
-- este apoyo parece facilitar la participación;
-- sería útil revisar la sesión en familia.
-
-## 17.4 Acciones
-
-Convierten el insumo en continuidad concreta.
-
-Ejemplos:
-
-- recomendar una nueva lectura;
-- crear una Tarea;
-- asignar una Semilla;
-- mostrar una sugerencia en Mi Camino;
-- preparar un resumen familiar;
-- generar material para una futura revisión profesional.
-
-## 17.5 Ejemplo de Lectura
-
-```text
-Dato:
-“extraordinario” no fue reconocida correctamente en tres intentos.
-
-Observación:
-La palabra continúa presentando dificultad.
-
-Insumo:
-Conviene seguir practicándola.
-
-Acción:
-Proponer una lectura o actividad donde aparezca nuevamente.
-```
-
-## 17.6 Ejemplo de Semillas
-
-```text
-Dato:
-La alumna grabó tres intentos y repitió voluntariamente.
-
-Observación:
-La práctica oral necesitó repetición, pero se mantuvo la motivación.
-
-Insumo:
-Puede ser útil continuar con un nivel de apoyo similar.
-
-Acción:
-Recomendar otra situación de comunicación con el mismo nivel de apoyo.
-```
-
-## 17.7 Ejemplo de Estudio Académico
-
-```text
-Dato:
-En una actividad de tres preguntas, la alumna acertó una al primer intento.
-Tras consultar una comparación visual, corrigió las otras dos.
-
-Observación:
-En esta sesión, el apoyo visual facilitó la corrección de los dos conceptos que inicialmente generaron dificultad.
-
-Insumo:
-Conviene ofrecer una práctica breve adicional con ejemplos diferentes y mantener disponible el apoyo visual.
-
-Acción:
-Proponer un refuerzo específico y volver a comprobar el concepto con una formulación distinta.
-```
-
-Una sola sesión constituye una señal. No debe presentarse como patrón permanente.
-
-## 17.8 Límites
-
-Los datos, observaciones e insumos no deberán transformarse automáticamente en:
-
-- diagnósticos;
-- etiquetas;
-- valoraciones de personalidad;
-- conclusiones clínicas;
-- juicios sobre el alumno.
-
-Toda acción sensible deberá permanecer bajo control familiar o profesional.
----
-
-# 18. Grabación y análisis de voz
-
-La voz puede ser una capacidad importante para varios motores.
-
-## 18.1 Servicio común de grabación
-
-Existe una alta probabilidad de que convenga un servicio reutilizable para:
-
-- solicitar permisos del micrófono;
-- iniciar y detener;
-- controlar duración;
-- reproducir;
-- repetir;
-- eliminar;
-- guardar;
-- asociar a alumno, sesión, tarea y misión;
-- aplicar reglas comunes de seguridad.
-
-La reutilización deberá evaluarse mediante auditoría de Mi Rincón de Lectura antes de extraer el servicio.
-
-## 18.2 Servicio común de análisis
-
-También puede convenir una infraestructura compartida para:
-
-- transcripción;
-- segmentación;
-- comparación;
-- almacenamiento de resultados;
-- gestión de errores;
-- generación de observaciones.
-
-La interpretación educativa continuará siendo específica del motor.
-
-## 18.3 Usos educativos permitidos
-
-- grabar;
-- reproducir;
-- comparar intentos;
-- identificar palabras;
-- revisar fluidez;
-- revisar pronunciación;
-- proponer práctica;
-- observar progreso;
-- apoyar expresión oral.
-
-## 18.4 Usos que requieren especial revisión
-
-- análisis emocional;
-- clasificación de ánimo;
-- detección de vergüenza;
-- inferencias psicológicas;
-- evaluación clínica;
-- identificación biométrica.
-
-## 18.5 Principio
-
-> **La Academia podrá analizar la voz para apoyar una habilidad.**
->
-> **No deberá utilizarla para diagnosticar a la persona.**
-
----
-
-# 19. Filtros y descubrimiento
-
-Los motores con catálogos deberán permitir descubrir contenido mediante filtros útiles.
-
-## 19.1 Detectives
-
-Posibles filtros:
-
-- nivel;
-- tema;
-- operación;
-- dificultad;
-- estado.
-
-## 19.2 Lectura
-
-Posibles filtros:
-
-- nivel;
-- extensión;
-- tema;
-- dificultad;
-- estado;
-- categoría.
-
-## 19.3 Semillas
-
-Posibles filtros:
-
-- emoción;
-- familia;
-- tipo de situación;
-- nivel de apoyo;
-- duración;
-- contexto;
-- estado;
-- recomendada;
-- asignada.
-
-## 19.4 Reglas
-
-Los filtros deberán:
-
-- ayudar a elegir;
-- evitar etiquetar al alumno;
-- ser comprensibles;
-- poder combinarse cuando aporte valor;
-- ocultar complejidad innecesaria.
-
----
-
-# 20. Nivel de apoyo
-
-El nivel de apoyo es una dimensión transversal.
-
-No equivale a nivel de inteligencia ni capacidad.
-
-Representa cuánta ayuda ofrece la experiencia.
-
-Ejemplo conceptual:
-
-```text
-Apoyo 1
-Opciones directas y guía completa.
-
-Apoyo 2
-Frases incompletas y ayudas visibles.
-
-Apoyo 3
-Respuesta propia con ayudas disponibles.
-
-Apoyo 4
-Experiencia abierta y mayor autonomía.
-```
-
-Los niveles de apoyo:
-
-- podrán variar por experiencia;
-- podrán adaptarse;
-- no se mostrarán como clasificación;
-- podrán basarse en configuración;
-- podrán utilizar datos previos cuando exista autorización.
-
----
-
-# 21. Seguridad, autorización y datos sensibles
-
-La seguridad y la autenticación existen actualmente en la Academia, pero todavía no se han consolidado con el nivel de detalle necesario para todos los escenarios de Motores de Aprendizaje.
-
-Los motores dependerán de un modelo transversal que deberá definir:
-
-- autenticación;
-- autorización;
-- roles;
-- acceso familiar;
-- acceso del alumno;
-- datos sensibles;
-- grabaciones;
-- retención;
-- eliminación;
-- trazabilidad;
-- protección de datos.
-
-Este tema tiene prioridad importante, especialmente antes de ampliar:
-
-- grabaciones;
-- respuestas personales;
-- análisis;
-- participación de más alumnos;
-- acceso profesional.
-
-No se resolverá mediante reglas aisladas dentro de cada motor.
-
----
-
-# 22. Rol de la IA
-
-La IA podrá apoyar a los motores, pero no será el motor completo ni el centro de la experiencia.
-
-## 24.1 Posibles capacidades
-
-- analizar lectura;
-- identificar palabras a practicar;
-- generar variantes controladas;
 - reformular;
-- adaptar apoyo;
-- resumir historial;
-- sugerir contenido;
-- ayudar a Lía;
-- detectar patrones educativos;
-- preparar insumos para familia.
+- adaptar apoyos;
+- resumir;
+- sugerir continuidad;
+- apoyar a Lía.
 
-## 24.2 Límites
+Solo con límites, privacidad, fuentes confiables y control adecuado.
 
-La IA no deberá:
+La IA no debe:
 
-- sustituir el contenido aprobado sin control;
-- diagnosticar;
-- decidir autónomamente intervenciones sensibles;
-- exponer datos;
 - inventar historial;
-- presentar inferencias como hechos;
-- actuar fuera de las reglas de `FOUNDATION.md`.
-
-## 24.3 Principio
-
-> **La IA amplía la capacidad de acompañar.**
->
-> **No reemplaza el criterio de la familia, del producto ni de los profesionales.**
+- convertir inferencias en hechos;
+- diagnosticar;
+- decidir autónomamente intervenciones sensibles.
 
 ---
 
-# 23. Variaciones legítimas
+## 📘 25. Incorporación de nuevos Temas académicos
 
-No todos los motores deben ser idénticos.
+El Motor Académico debe hacer posible que añadir contenido sea cada vez menos técnico.
 
-## 24.1 Detectives
+Entrada familiar deseada:
 
-Puede requerir:
+```text
+Documento oficial del colegio
++ Curso
++ Materia
++ nombre del Tema
++ notas/comentarios opcionales
+```
 
-- solución;
-- pistas;
-- razonamiento;
-- validación de respuesta;
-- dificultad matemática.
+La AI Collaborator debe resolver internamente:
 
-## 24.2 Lectura
+```text
+analizar fuente
+→ localizar Curso / Asignatura / Tema
+→ crear carpetas solo si son necesarias
+→ reutilizar portales/componentes/contratos
+→ preparar contenido académico
+→ preparar práctica/comprobación
+→ integrar sesion-academica-v1
+→ garantizar histórico
+→ garantizar señales para Análisis Educativo
+→ garantizar capacidad de fortalecimiento
+→ auditar
+→ YA PUEDES PROBAR
+```
 
-Puede requerir:
+Tras observaciones opcionales:
 
-- audio;
-- grabación;
-- transcripción;
-- palabras;
-- intentos;
-- análisis oral.
+```text
+ajustar
+→ validar
+→ aprobación
+→ cierre definitivo
+```
 
-## 24.3 Semillas
-
-Puede requerir:
-
-- emociones;
-- situaciones;
-- privacidad reforzada;
-- ausencia de respuestas correctas;
-- acompañamiento sensible;
-- práctica oral.
-
-## 24.4 Estudio Académico
-
-Puede requerir combinaciones distintas según materia y Tema:
-
-- mapas;
-- gráficos;
-- vídeos;
-- líneas del tiempo;
-- simulaciones;
-- fórmulas;
-- escritura;
-- producción oral;
-- música o mnemotecnias;
-- pruebas formativas;
-- y apoyos específicos de comprensión.
-
-La variación del recurso es parte del modelo y no una excepción al estándar.
-
-El modelo común no debe borrar estas diferencias.
-
-Debe compartir únicamente lo que realmente sea común.
+Este ciclo pertenece normativamente a `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`; aquí se documenta su encaje conceptual con los Motores.
 
 ---
 
-# 24. Reutilización
+## 🔄 26. Reutilización
 
-La reutilización puede ocurrir en varios niveles.
+Puede existir en cuatro niveles:
 
-## 24.1 Reutilización funcional
+### Funcional
 
-- navegación;
-- estados;
-- historial;
-- Misiones;
-- filtros;
-- carga;
-- finalización.
+- abrir;
+- continuar;
+- finalizar;
+- revisar;
+- filtrar;
+- registrar.
 
-## 24.2 Reutilización visual
+### Visual
 
 - tarjetas;
 - paneles;
 - filtros;
-- reproductores;
-- grabación;
-- ayudas;
-- estados vacíos.
+- estados vacíos;
+- grabación/reproductores;
+- layouts académicos.
 
-## 24.3 Reutilización de servicios
+### Servicios
 
-- autenticación;
-- perfil;
+- identidad;
+- navegación;
 - persistencia;
-- Lía;
-- análisis de voz;
-- assets;
-- misiones.
+- Misiones;
+- evidencia;
+- histórico;
+- análisis.
 
-## 24.4 Reutilización de patrones
+### Patrones
 
-- abrir desde misión;
-- continuar;
-- repetir;
-- revisar;
-- mostrar logro;
-- generar historial.
+- acceso libre;
+- acceso por Misión;
+- Vista previa;
+- consulta histórica;
+- refuerzo;
+- errores comprensibles.
 
-## 24.5 Criterio
-
-No se reutilizará por obligación.
-
-Se reutilizará cuando:
-
-- reduzca duplicidad;
-- mantenga claridad;
-- preserve flexibilidad;
-- mejore consistencia;
-- no fuerce necesidades diferentes.
+No reutilizar por obligación cuando las necesidades sean realmente diferentes.
 
 ---
 
-# 25. Evolución del modelo
+## 🔐 27. Seguridad y sensibilidad
 
-## Etapa 1 — Identificación
+Seguridad es transversal.
 
-Reconocer patrones existentes.
+Un Motor no debe definir reglas aisladas que contradigan:
 
-Motores observados o identificados conceptualmente:
+- Persona Activa;
+- roles;
+- relaciones;
+- nivel efectivo;
+- Firestore Rules canónicas.
 
-- Detectives;
-- Lectura;
-- Semillas;
-- Estudio Académico (conceptual para 6.º; pendiente de piloto técnico).
+Especial atención para:
 
-## Etapa 2 — Auditoría
+- grabaciones;
+- respuestas personales;
+- observaciones;
+- datos académicos;
+- acceso profesional.
 
-Revisar técnicamente Detectives y Mi Rincón de Lectura para identificar:
+La UI no constituye frontera de seguridad.
 
-- componentes;
-- flujo;
-- contenido;
-- integración con Misiones;
-- historial;
-- grabación;
-- análisis;
-- datos;
-- diferencias.
-
-La auditoría será un insumo de implementación.
-
-No requiere necesariamente un documento independiente.
-
-## Etapa 3 — Validación
-
-Implementar el primer ejemplo funcional de Semillas:
-
-> “Un niño me quitó el lápiz.”
-
-Observar:
-
-- qué se pudo reutilizar;
-- qué no;
-- qué faltaba;
-- qué era específico;
-- cómo se integró con una Tarea y una Misión;
-- qué datos e insumos se generaron;
-- cómo reaccionó Gloria.
-
-## Etapa 4 — Consolidación
-
-Ajustar:
-
-- servicios comunes;
-- contratos;
-- modelos de datos;
-- componentes;
-- integración;
-- seguridad;
-- configuración.
-
-## Etapa 5 — Versión 1.0
-
-El modelo no deberá pasar a versión 1.0 antes de:
-
-1. implementar el primer piloto de Semillas;
-2. validarlo técnicamente;
-3. validarlo con Gloria;
-4. revisar su integración con Misiones y Tareas;
-5. confirmar qué elementos son realmente comunes;
-6. actualizar el modelo según lo aprendido.
-
-## Etapa 6 — Estandarización
-
-Solo después de validación suficiente, considerar qué elementos merecen convertirse en estándares formales.
 ---
 
-# 26. Criterios para crear un nuevo motor
+## 📈 28. Estado de validación del modelo al 03/09/2026
 
-Antes de crear un nuevo Motor de Aprendizaje, deberá comprobarse:
+| Capacidad conceptual | Evidencia de producto | Estado |
+|---|---|:---:|
+| Separar contenido/comportamiento | Detectives, Lectura, Semillas, catálogos académicos | ✅ Validado |
+| Acceso libre y desde Misión | Varios motores | ✅ Validado |
+| Persona Activa | Misiones, Detectives, académico, Reconocimientos | ✅ Validado |
+| Sesión propietaria | Detectives, académico, Creciendo, Lectura según motor | ✅ Validado |
+| Evidencia por referencia | Repaso Académico y otros motores integrados | ✅ Validado |
+| Vista previa sin persistencia | Estudio Académico | ✅ Validado |
+| Histórico solo lectura | `👁️ Ver trabajo`, Resultado Académico, Detectives | ✅ Validado |
+| Evidencia → refuerzo | Detectives, académico, pronunciación | ✅ V1 validado |
+| Análisis transversal de evidencias | Análisis Educativo | ✅ V1 validado |
+| Incorporación curricular de mínima intervención | Estándar aprobado | 🟡 Procedimiento listo; validar repetidamente con nuevos Temas |
+| Motor universal único para todos los Temas | — | ⛔ No requerido |
+| Servicio común único de voz | — | ⏳ Solo si reutilización real lo justifica |
+
+---
+
+## 🚦 29. Evolución del modelo
+
+La versión 0.4 ya dispone de más validación real que la 0.3, pero **no necesita convertirse todavía en 1.0**.
+
+Para una futura 1.0 convendría observar varios Temas reales de 6.º de distintas materias y confirmar qué partes del patrón académico son verdaderamente comunes.
+
+Candidatos a validación:
+
+- otro Tema de Matemáticas;
+- Science;
+- Lengua;
+- contenido con recursos visuales diferentes;
+- Tema donde la evaluación no sea de selección simple.
+
+Solo entonces decidir si alguna parte del modelo merece elevarse a estándar técnico más rígido.
+
+---
+
+## ✅ 30. Criterios para un nuevo Motor
+
+Antes de crear un Motor separado:
 
 1. ¿Existe una mecánica repetible?
 2. ¿Habrá múltiples contenidos?
-3. ¿Se espera crecimiento?
-4. ¿Necesita filtros?
-5. ¿Necesita historial?
-6. ¿Se integrará con Misiones?
-7. ¿Generará datos útiles?
-8. ¿Puede reutilizar servicios existentes?
-9. ¿Un motor aporta más valor que páginas independientes?
-10. ¿Se está evitando sobrearquitectura?
+3. ¿Se espera crecimiento real?
+4. ¿Necesita historial/evidencia?
+5. ¿Se integrará con Misiones?
+6. ¿Genera datos con utilidad?
+7. ¿Los servicios existentes no bastan?
+8. ¿La abstracción reduce realmente duplicación?
+9. ¿Preserva diferencias pedagógicas?
+10. ¿Estamos evitando sobrearquitectura?
 
-Si la respuesta general no justifica un motor, deberá utilizarse una solución más simple.
-
----
-
-# 27. Principios de diseño
-
-1. Primero necesidad real.
-2. Después experiencia.
-3. Después modelo.
-4. Después reutilización.
-5. Por último arquitectura técnica.
-
-Además:
-
-- no construir abstracciones prematuras;
-- no duplicar sin necesidad;
-- no generalizar a partir de un único caso;
-- no sacrificar claridad;
-- validar con el alumno;
-- aprender de los datos;
-- preservar privacidad;
-- mantener alineación con `FOUNDATION.md`.
+Si no se justifica, usar una solución más simple dentro de la arquitectura existente.
 
 ---
 
-# 28. Decisiones conceptuales aprobadas
+## 📌 31. Decisiones conceptuales consolidadas
 
-1. La Academia reconoce el concepto de **Motor de Aprendizaje**.
-2. Un motor separa comportamiento común de contenido variable.
-3. Detectives, Lectura y Semillas son los primeros casos de referencia.
-4. Los motores pueden utilizar contenido configurable.
-5. La integración con Misiones será transversal.
-6. El historial debe conservar datos útiles, no solo finalización.
-7. Los datos deben transformarse en insumos para acompañar.
-8. El análisis de voz puede aportar valor educativo.
-9. La IA podrá apoyar, pero no sustituir el criterio humano.
-10. Las diferencias entre motores deben preservarse.
-11. Este modelo no es todavía un estándar obligatorio.
-12. El Motor de Semillas servirá como siguiente caso de validación.
-13. Mi Rincón de Lectura utiliza actualmente `historias.js`.
-14. Semillas tomará patrones de Detectives y de Mi Rincón de Lectura.
-15. Una Misión puede contener una o más Tareas.
-16. Una Misión puede combinar Tareas de distintos motores.
-17. La integración deberá reconocer `misionId` y `tareaId`.
-18. El flujo conceptual será Datos → Observaciones → Insumos → Acciones.
-19. Se evaluará un servicio común de grabación.
-20. Se evaluará infraestructura común de análisis de voz con interpretación específica por motor.
-21. La mayor parte posible de Lía será común.
-22. La configuración administrable se creará solo cuando exista una necesidad real.
-23. Seguridad y autorización deberán consolidarse como capacidad transversal.
-24. El modelo no pasará a versión 1.0 antes de validar el primer piloto de Semillas con Gloria.
-25. Mi Camino podrá evolucionar hacia un tablero más limpio de Misiones, sin decidirlo dentro de este modelo.
-26. El aprendizaje académico de 6.º reutilizará este modelo conceptual en lugar de crear una arquitectura paralela por asignatura.
-27. El Motor de Estudio Académico permitirá recursos distintos por Tema; la variación pedagógica no rompe el modelo común.
-28. Se distinguirá la Sesión Académica de la Evidencia de Misión: la sesión registra la ejecución; la evidencia vincula la actividad con una Misión cuando exista.
-29. Finalizar una actividad no equivale automáticamente a dominar el contenido.
-30. Los datos académicos deberán conservar utilidad educativa y alimentar retroalimentación prudente, no etiquetas permanentes.
+1. La Academia reconoce el concepto Motor de Aprendizaje.
+2. El motor separa comportamiento común de contenido variable.
+3. Detectives, Lectura, Creciendo/Semillas y Estudio Académico son casos principales de referencia.
+4. No todo módulo debe convertirse en un Motor abstraído.
+5. Persona Activa es transversal.
+6. Acceso libre puede producir historial/evidencia.
+7. Sesión y Evidencia de Misión son conceptos diferentes.
+8. Una Misión referencia la sesión antes de duplicarla.
+9. Vista previa no persiste.
+10. Histórico es solo lectura.
+11. Finalizar no equivale a dominar.
+12. Datos persistidos deben tener utilidad educativa/familiar.
+13. Datos → Observaciones → Insumos → Acciones sigue siendo el ciclo conceptual.
+14. El Análisis Educativo puede consumir varias fuentes sin mudarse dentro de cada Motor.
+15. Las acciones sensibles permanecen bajo control humano.
+16. El Motor Académico está materialmente validado en Puente/Fracciones mediante contratos compartidos, sin obligar a un renderer universal.
+17. Todo nuevo Tema de 6.º debe producir evidencia académica reutilizable.
+18. Los Temas deben utilizar identificadores estables de concepto/foco cuando sean necesarios para análisis longitudinal.
+19. El contrato `sesion-academica-v1` se reutiliza antes de crear esquemas privados.
+20. Si el contrato queda corto, se estudia evolución compatible antes de crear persistencia paralela.
+21. El ciclo académico incluye evidencia → análisis → fortalecimiento.
+22. La incorporación curricular debe requerir intervención mínima de la familia.
+23. La AI Collaborator resuelve complejidad técnica repetitiva bajo estándares aprobados.
+24. Reutilización visual/funcional no debe borrar las diferencias legítimas entre materias y Motores.
+25. La voz puede apoyar habilidades; no debe usarse para diagnosticar.
+26. Reconocimientos consumen hechos/evidencia; no deben contaminar la lógica pedagógica del Motor.
+27. El modelo permanece conceptual y evolutivo en v0.4.
 
 ---
 
-# 29. Preguntas abiertas
+## ❓ 32. Preguntas abiertas reales
 
-1. ¿Qué capacidades comunes ya existen en componentes compartidos?
-2. ¿Cuál es el flujo técnico real completo de Detectives?
-3. ¿Cuál es el flujo técnico real completo de Mi Rincón de Lectura?
-4. ¿Cuál es el contrato actual de integración con Misiones, Tareas y evidencias?
-5. ¿Cómo se calcula actualmente el progreso de una Misión con varias Tareas?
-6. ¿Qué estructura de historial utilizan Detectives y Lectura?
-7. ¿Qué historial existente puede convertirse ya en insumos?
-8. ¿Qué datos maestros deben normalizarse?
-9. ¿Qué servicio común de grabación puede extraerse sin sobrearquitectura?
-10. ¿Qué infraestructura de análisis de voz puede compartirse?
-11. ¿Cómo se resolverán los assets configurables?
-12. ¿Qué filtros podrán reutilizarse?
-13. ¿Qué parte de Lía necesita realmente ser específica?
-14. ¿Qué modelo transversal de permisos y seguridad se adoptará?
-15. ¿Qué configuraciones administrables aportan valor real?
-16. ¿Qué elementos merecerán convertirse en estándar después del piloto?
-17. ¿Cuál será el contrato técnico mínimo de una Sesión Académica?
-18. ¿Qué datos académicos aportan valor suficiente para persistirse desde el primer piloto?
-19. ¿Qué estructura de contenido permite reutilización sin forzar páginas idénticas?
-20. ¿Cómo deberá presentarse la retroalimentación académica a alumno y familia tras validar el piloto?
+Se eliminan preguntas que ya fueron resueltas por implementación.
 
-Estas preguntas deberán resolverse mediante:
+Permanecen abiertas:
 
-- análisis de los módulos existentes;
-- implementación del primer Motor de Semillas;
-- validación con Gloria;
-- uso real de los datos.
+1. ¿Qué campos adicionales necesitará `sesion-academica-v1` al incorporar Science/Lengua y recursos diferentes?
+2. ¿Qué taxonomía mínima de `bloque/concepto/foco` puede compartirse sin rigidizar materias distintas?
+3. ¿Cuándo conviene extraer componentes académicos adicionales a infraestructura compartida?
+4. ¿Qué futuros Motores requieren comparación longitudinal válida?
+5. ¿Qué servicio de voz merece compartirse después de observar más casos?
+6. ¿Qué preferencias por Persona deben influir en los motores (p. ej. velocidad de voz)?
+7. ¿Qué permisos profesionales adicionales serán necesarios cuando exista uso real?
+8. ¿Qué comportamiento de Lía puede consolidarse como verdaderamente común?
 
-No deberán provocar una generación excesiva de documentos.
-
-Cuando sea suficiente, las respuestas se incorporarán directamente a:
-
-- este modelo;
-- el SPEC propietario;
-- el código;
-- el backlog;
-- el estándar correspondiente, solo si realmente se consolida una regla.
----
-
-# 30. Glosario
-
-## Motor de Aprendizaje
-
-Comportamiento reutilizable para ejecutar una familia de experiencias.
-
-## Contenido configurable
-
-Información que define una experiencia concreta sin alterar la lógica principal.
-
-## Experiencia
-
-Ejecución concreta de un contenido por un alumno y en un contexto determinado.
-
-## Contexto de misión
-
-Información que vincula una experiencia con una tarea o misión.
-
-## Historial
-
-Registro de eventos, interacciones y resultados útiles.
-
-## Insumo
-
-Información derivada que puede ayudar a acompañar al alumno.
-
-## Nivel de apoyo
-
-Cantidad y tipo de ayuda ofrecida durante una experiencia.
-
-## Servicio compartido
-
-Capacidad común proporcionada por la Academia a varios módulos.
-
-## Misión
-
-Objetivo o recorrido asignado al alumno que contiene una o más Tareas.
-
-## Tarea
-
-Unidad operativa de una Misión.
-
-Puede estar asociada a un motor, una experiencia, un criterio y una o más evidencias.
-
-## Contrato de integración
-
-Conjunto mínimo de información intercambiada entre Misiones, Tareas, motores, evidencias e historial.
-
-## Observación
-
-Interpretación educativa controlada de uno o varios datos.
-
-No constituye diagnóstico.
-
-## Acción
-
-Continuidad concreta generada a partir de un insumo.
-
-## Motor de Estudio Académico
-
-Motor conceptual para Temas de Mis Cursos que comparte orientación, práctica, feedback, registro e integración, permitiendo recursos específicos por materia y Tema.
-
-## Sesión Académica
-
-Registro conceptual de una ejecución de estudio o práctica académica, exista o no una Misión asociada.
-
-## Motor de Semillas
-
-Motor previsto para las experiencias de Creciendo por dentro.
+Las respuestas deben venir de producto real, no de documentos hipotéticos.
 
 ---
 
-# Declaración final
+## 📖 33. Glosario
+
+### Motor de Aprendizaje
+
+Comportamiento reutilizable para una familia de experiencias.
+
+### Contenido configurable
+
+Información que define la experiencia concreta sin duplicar comportamiento compartido.
+
+### Experiencia
+
+Ejecución concreta por una Persona en un contexto determinado.
+
+### Sesión
+
+Registro propietario de una ejecución real.
+
+### Sesión Académica
+
+Registro `sesion-academica-v1` (o evolución compatible) de una ejecución de estudio/práctica curricular.
+
+### Evidencia de Misión
+
+Registro que vincula una Misión con una sesión/resultado sin necesidad de duplicarlo.
+
+### Vista previa
+
+Modo no persistente utilizado para revisar la experiencia sin contaminar historial.
+
+### Histórico / consulta
+
+Visualización de solo lectura de una ejecución ya registrada.
+
+### Observación
+
+Interpretación educativa limitada y sustentada en datos; no diagnóstico.
+
+### Insumo
+
+Información que puede ayudar a decidir continuidad.
+
+### Acción
+
+Próximo paso concreto: práctica, Misión, revisión u otro acompañamiento.
+
+### Nivel de apoyo
+
+Cantidad/tipo de ayuda de una experiencia; no representa inteligencia.
+
+### Persona Activa
+
+Persona sobre la que opera el contexto educativo aunque el usuario autenticado sea otro autorizado.
+
+---
+
+## ✅ DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Motor Académico** | Patrón real y validado en 6.º; no renderer universal obligatorio. |
+| **Evidencia** | Todo Tema nuevo de 6.º genera sesión estructurada incluso en acceso libre. |
+| **Misión** | Añade evidencia por referencia; no sustituye la sesión del Motor. |
+| **Consulta** | Vista previa sin escritura; histórico de solo lectura. |
+| **Análisis** | Evidencia puede alimentar Análisis Educativo y fortalecimiento transversal. |
+| **Escalado curricular** | Material + curso + materia + Tema + notas opcionales → AI Collaborator resuelve integración conforme a estándares. |
+| **Arquitectura** | Reutilizar lo común y preservar variación pedagógica legítima. |
+| **Estado** | Modelo conceptual activo · v0.4 · sincronizado al 03/09/2026. |
+
+---
 
 Un Motor de Aprendizaje no existe para demostrar una arquitectura.
 
@@ -2151,28 +1308,8 @@ El motor aporta la experiencia.
 
 El contenido le da vida.
 
-Los servicios compartidos lo conectan con el camino del alumno.
-
-Las Misiones organizan objetivos.
-
-Las Tareas convierten esos objetivos en acciones concretas.
-
 El historial permite aprender de lo ocurrido.
 
-Y la Academia utiliza ese aprendizaje para acompañar cada vez mejor.
+Y la Academia utiliza ese aprendizaje para acompañar cada vez mejor:
 
-No para juzgar.
-
-No para comparar.
-
-No para etiquetar.
-
-Sino para reconocer oportunidades y ayudar al alumno a continuar.
-
-Porque cada nueva experiencia debe apoyarse en lo que ya hemos aprendido.
-
-Y cada nuevo motor debe conservar el mismo propósito con el que comenzó todo:
-
-> **Ayudar a un niño a descubrir todo lo que puede llegar a hacer.**
-
-🌱💜
+**no para juzgar, comparar ni etiquetar, sino para ayudar al alumno a continuar.** 🌱💜
