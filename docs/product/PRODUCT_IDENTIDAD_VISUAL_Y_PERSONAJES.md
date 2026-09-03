@@ -4,35 +4,43 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` |
-| **Versión** | 1.0-rc2 |
-| **Estado** | Candidato para aprobación |
-| **Fecha** | 03/08/2026 |
-| **Última actualización** | 03/08/2026 |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
+| **Fecha de origen** | 03/08/2026 |
+| **Última actualización** | 04/09/2026 |
 | **Propietario** | Identidad del Producto |
-| **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
+| **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Identidad visual y emocional, momentos de experiencia, Personajes Oficiales, assets de identidad y reglas de evolución |
 
 ## Documentos relacionados
 
 | Documento | Relación |
 |---|---|
-| `docs/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** define la identidad, los valores y los principios que este documento debe expresar visual y emocionalmente. |
-| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** define los actores, dominios y momentos de experiencia que la identidad debe acompañar. |
-| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define la propiedad, ubicación y evolución del conocimiento documental. |
-| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** establece la estructura, trazabilidad y mantenimiento de este documento. |
-| `docs/vision/06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA_v1.0.md` | **Sustituye progresivamente:** conserva y evoluciona sus principios de identidad visual. |
-| `docs/vision/07_IDENTIDAD_GUACAMAYAS_v1.0.md` | **Sustituye progresivamente:** conserva y amplía el origen, simbolismo y personalidad de las guacamayas. |
-| `docs/vision/00_MANIFIESTO_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** aporta la visión emocional y fundacional de la Academia. |
-| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS_v1.0.md` | **Complementa:** aporta los principios pedagógicos que limitan y orientan el lenguaje visual. |
-| `assets/identidad/guacamayas/` | **Implementa:** contiene los archivos gráficos actualmente asociados a las guacamayas. |
-| `assets/identidad/identity-catalog.json` | **Implementará:** relacionará momentos, emociones, personajes y archivos cuando el catálogo operativo sea aprobado. |
+| `docs/FOUNDATION.md` | **Fundamenta:** propósito humano estable de la Academia. |
+| `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** identidad, valores y principios que este documento expresa visual y emocionalmente. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** actores, dominios y momentos de experiencia que la identidad acompaña. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Propietario de mecánica:** reglas, concesión y evolución del Sistema de Motivación y Reconocimiento. |
+| `docs/project/DECISION_LOG.md` | **Gobierna/complementa:** decisiones transversales vigentes, incluida la decisión de no implantar por ahora un catálogo desacoplado de assets. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** propiedad, ubicación y evolución del conocimiento documental. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** estructura, trazabilidad y mantenimiento del documento. |
+| `docs/vision/06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA.md` | **Fundamenta/complementa:** conserva la visión previa de identidad visual. |
+| `docs/vision/07_IDENTIDAD_GUACAMAYAS.md` | **Fundamenta/complementa:** conserva origen y simbolismo previo de las guacamayas. |
+| `assets/identidad/guacamayas/` | **Implementa parcialmente:** familia gráfica de guacamayas disponible en el repositorio. |
+| `assets/imagenes/personajes/` | **Implementa parcialmente:** recursos gráficos asociados a personajes. |
+| `assets/imagenes/mi-camino/` | **Implementa parcialmente:** escenas e ilustraciones de identidad usadas por Mi Camino. |
+| `assets/iconos/` | **Implementa:** activos institucionales e ilustraciones compactas de módulos. |
+
+---
 
 ## Historial de versiones
 
-| Versión | Fecha      | Responsables      | Cambios                                                                                                             |
-| ------- | ---------- | ----------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **1.0** | 03/08/2026 | Juan Perdomo + IA | Documento aprobado. Se declara versión activa del modelo de Identidad Visual y Personajes Oficiales de la Academia. |
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Versión aprobada y activa tras sincronización P1. Resuelve la incoherencia de estado de v1.0; actualiza Lía, Guacamayas y Recompensas contra el producto real; mantiene el modelo semántico como lenguaje conceptual pero pospone catálogo/resolver técnico; elimina conteos no verificados de assets; incorpora reglas de familia visual, peso óptico y validación a tamaño real derivadas de la portada actual. |
+| 1.0 | 03/08/2026 | Juan Perdomo + IA | Documento aprobado como primera versión activa del modelo de Identidad Visual y Personajes Oficiales. |
+| 1.0-rc2 | 03/08/2026 | Juan Perdomo + IA | Candidato previo cuya cabecera quedó sin sincronizar después de la aprobación de v1.0. |
 
+---
 
 ## Índice
 
@@ -51,9 +59,9 @@
 13. Activos institucionales
 14. Sistema de reconocimiento
 15. Assets oficiales
-16. Catálogo semántico de identidad
+16. Semántica de identidad y catálogo técnico
 17. Auditoría del inventario existente
-18. Migración progresiva de los HTML
+18. Evolución de referencias gráficas
 19. Generación y evolución mediante IA
 20. Accesibilidad y experiencia multidispositivo
 21. Gobierno y mantenimiento
@@ -74,11 +82,11 @@ Este documento establece:
 - cómo se relacionan emociones y momentos de experiencia;
 - qué es un Personaje Oficial;
 - qué papel cumplen Lía y las guacamayas;
-- cómo se seleccionan y utilizan los assets;
-- cómo se desacopla la intención del producto del archivo gráfico;
+- cómo se seleccionan, reutilizan y validan los assets;
+- cómo se conserva la intención aunque cambie una ilustración concreta;
 - y cómo puede evolucionar la identidad sin perder su esencia.
 
-No es un catálogo de dibujos.
+No es un catálogo de dibujos ni una obligación de crear infraestructura para cada recurso visual.
 
 Es el documento propietario del **lenguaje visual y emocional del producto**.
 
@@ -94,8 +102,8 @@ Este documento gobierna:
 - momentos de experiencia;
 - categoría de Personajes Oficiales;
 - funciones de Lía y las guacamayas;
-- reglas de selección y uso;
-- modelo conceptual de assets;
+- reglas de selección, reutilización y uso;
+- criterios visuales comunes entre módulos;
 - reglas de sustitución;
 - y evolución de la identidad.
 
@@ -103,15 +111,15 @@ Quedan fuera de su alcance:
 
 - diseño detallado de componentes;
 - tokens CSS;
-- tamaños exactos;
-- implementación técnica;
-- prompts completos de generación de imágenes;
-- contratos definitivos del archivo JSON;
+- tamaños exactos de cada pantalla;
+- contratos de API;
+- implementación técnica de carga de assets;
+- prompts completos de generación;
 - animaciones específicas;
 - derechos y licencias de cada recurso;
-- y lógica completa de recompensas.
+- y mecánica completa de Recompensas/Reconocimientos.
 
-Estos aspectos pertenecerán a estándares, especificaciones o registros operativos cuando exista una necesidad real.
+La mecánica de Motivación y Reconocimiento pertenece a su documento de diseño propietario. Este documento gobierna únicamente su **expresión visual y emocional**.
 
 ---
 
@@ -132,7 +140,7 @@ Comienza identificando:
 1. el momento que vive el alumno;
 2. la emoción que necesita acompañarse;
 3. la intención del producto;
-4. el personaje o símbolo más adecuado;
+4. el personaje, símbolo o familia visual más adecuada;
 5. y, finalmente, el asset que lo representa.
 
 ```text
@@ -142,22 +150,22 @@ MOMENTO DE EXPERIENCIA
     ↓
 EMOCIÓN E INTENCIÓN
     ↓
-PERSONAJE O SÍMBOLO
+PERSONAJE / SÍMBOLO / FAMILIA VISUAL
     ↓
-ASSET OFICIAL
+ASSET ADECUADO
     ↓
 ARCHIVO ACTUAL
 ```
 
-El archivo es sustituible.
+El archivo puede cambiar.
 
-La intención debe permanecer estable.
+La intención debe permanecer reconocible.
 
 ---
 
 ## 5. Modelo de identidad
 
-La identidad se organiza en seis capas.
+La identidad se organiza en seis capas:
 
 ```text
 ADN DEL PRODUCTO
@@ -188,7 +196,7 @@ Definen qué sensaciones y valores deben reconocerse en toda experiencia.
 
 ### 5.3 Lenguaje emocional
 
-Define qué emoción necesita acompañarse y con qué tono.
+Define qué emoción necesita acompañarse y con qué intensidad.
 
 ### 5.4 Momentos de experiencia
 
@@ -200,7 +208,9 @@ Representan la intención de forma cercana, reconocible y coherente.
 
 ### 5.6 Assets y archivos
 
-Materializan temporalmente esa representación en PNG, SVG, audio, animación u otros formatos.
+Materializan temporalmente esa representación en PNG, WebP, SVG, audio, animación u otros formatos.
+
+La existencia de esta jerarquía conceptual **no obliga** a introducir una capa técnica adicional cuando una referencia directa sea más simple y mantenible.
 
 ---
 
@@ -232,15 +242,17 @@ Nunca debe sentirse:
 
 Los colores pueden ser vivos, pero deben conservar suavidad y equilibrio.
 
+La alegría visual no exige saturación permanente.
+
 ### 6.2 Claridad
 
-La identidad nunca debe dificultar la lectura, la navegación o la comprensión.
+La identidad nunca debe dificultar lectura, navegación o comprensión.
 
 ### 6.3 Espacio
 
 La composición debe respirar.
 
-Los personajes no deben llenar todos los espacios vacíos.
+Los personajes e ilustraciones no deben llenar todo espacio disponible.
 
 ### 6.4 Cercanía
 
@@ -248,11 +260,11 @@ La comunicación debe sentirse personal sin convertirse en invasiva.
 
 ### 6.5 Coherencia
 
-Cada módulo debe ser reconocible como parte de la misma Academia, incluso cuando cambie su contenido.
+Cada módulo debe reconocerse como parte de la misma Academia, incluso cuando cambie su contenido.
 
 ### 6.6 Legibilidad
 
-La tipografía será moderna, redondeada y fácil de leer.
+La tipografía debe ser moderna, amable y fácil de leer.
 
 La legibilidad tiene prioridad sobre la originalidad gráfica.
 
@@ -268,15 +280,38 @@ Las ilustraciones deben favorecer:
 
 No se mezclarán estilos gráficos sin una decisión justificada.
 
+### 6.8 Familia visual y peso óptico
+
+Cuando varias ilustraciones aparecen como un conjunto —por ejemplo, tarjetas equivalentes de navegación— deben compartir:
+
+- lenguaje de ilustración;
+- alineación;
+- espacio reservado comparable;
+- nivel de detalle compatible con el tamaño final;
+- y **peso óptico equivalente**.
+
+Esto no significa forzar el mismo ancho o alto de archivo.
+
+Dos assets con dimensiones idénticas pueden sentirse muy diferentes si uno tiene mucho espacio vacío o demasiados elementos internos. La normalización debe hacerse por **percepción en contexto**, no solo por píxeles.
+
+Una ilustración compleja puede necesitar mostrarse ligeramente más pequeña que otra sencilla para evitar dominar el conjunto.
+
+### 6.9 Nivel de detalle según tamaño final
+
+Un asset que funciona como ilustración grande puede fallar como icono de tarjeta.
+
+Antes de aprobarlo debe comprobarse que, al tamaño real:
+
+- la idea principal siga siendo reconocible;
+- el detalle secundario no genere ruido;
+- el texto incluido en la propia imagen no sea necesario para comprenderla;
+- y no compita con el título o descripción de la interfaz.
+
 ---
 
 ## 7. Lenguaje emocional
 
-El lenguaje emocional es el conjunto de emociones que la Academia decide transmitir de forma consciente.
-
-No pretende definir todas las emociones humanas.
-
-Define las que el producto necesita acompañar.
+El lenguaje emocional es el conjunto de emociones que la Academia decide transmitir conscientemente.
 
 | Emoción | Intención del producto | Evitar |
 |---|---|---|
@@ -296,7 +331,7 @@ Define las que el producto necesita acompañar.
 
 No todos los momentos requieren la misma intensidad.
 
-La identidad distinguirá entre:
+La identidad distingue entre:
 
 - **presencia suave:** acompañamiento discreto;
 - **presencia media:** orientación o motivación;
@@ -310,16 +345,18 @@ La celebración permanente pierde significado.
 
 Un momento de experiencia es una situación reconocible del recorrido del alumno que puede necesitar acompañamiento visual o emocional.
 
-### 8.1 Catálogo inicial de momentos
+### 8.1 Vocabulario semántico inicial
+
+Los siguientes identificadores se conservan como **vocabulario conceptual**, útil para razonar y documentar la intención. No constituyen un contrato de software ni obligan a crear un archivo JSON.
 
 | ID semántico | Momento | Emoción principal | Intención |
 |---|---|---|---|
 | `academy.discovery.primary` | Descubrir la Academia | Curiosidad · Confianza | Invitar a conocer el producto |
 | `academy.welcome.primary` | Bienvenida | Alegría · Pertenencia | Hacer sentir al alumno esperado |
 | `journey.continue.primary` | Continuar la aventura | Motivación · Movimiento | Ayudar a retomar el camino |
-| `mission.start.primary` | Iniciar una misión | Curiosidad · Confianza | Reducir la fricción de comenzar |
-| `mission.progress.primary` | Avanzar en una misión | Perseverancia | Mostrar que cada paso cuenta |
-| `mission.complete.primary` | Completar una misión | Celebración | Reconocer esfuerzo y finalización |
+| `mission.start.primary` | Iniciar una Misión | Curiosidad · Confianza | Reducir la fricción de comenzar |
+| `mission.progress.primary` | Avanzar en una Misión | Perseverancia | Mostrar que cada paso cuenta |
+| `mission.complete.primary` | Completar una Misión | Celebración | Reconocer esfuerzo y finalización |
 | `learning.thinking.primary` | Pensar o resolver | Calma · Curiosidad | Dar espacio al razonamiento |
 | `learning.help.primary` | Pedir ayuda | Seguridad · Confianza | Normalizar la solicitud de apoyo |
 | `learning.retry.primary` | Volver a intentarlo | Calma · Perseverancia | Animar sin juzgar |
@@ -329,9 +366,7 @@ Un momento de experiencia es una situación reconocible del recorrido del alumno
 | `rest.primary` | Pausa o descanso | Calma | Evitar saturación |
 | `adventure.discovery.primary` | Descubrir una aventura | Curiosidad · Libertad | Abrir una experiencia contextual |
 
-Este catálogo es inicial.
-
-No obliga a crear un asset para cada momento de inmediato.
+Este vocabulario no obliga a crear un asset diferente para cada momento.
 
 ### 8.2 Principio de necesidad
 
@@ -340,11 +375,11 @@ Solo se incorpora un asset cuando:
 - el momento es real;
 - la emoción necesita apoyo;
 - el recurso aporta valor;
-- y no existe otro asset adecuado.
+- y no existe otro recurso adecuado.
 
 ### 8.3 Ubicación frente a intención
 
-Los identificadores no deben depender de una pantalla.
+Cuando se utilicen identificadores conceptuales, deben describir intención y no coordenadas de pantalla.
 
 Evitar:
 
@@ -362,9 +397,7 @@ mission.complete.primary
 learning.retry.primary
 ```
 
-La ubicación puede cambiar.
-
-La intención permanece.
+La ubicación puede cambiar. La intención permanece.
 
 ---
 
@@ -380,12 +413,12 @@ Para ser oficial debe:
 - cumplir una función definida;
 - tener momentos de uso coherentes;
 - respetar el lenguaje emocional;
-- mantener una identidad visual consistente;
-- y haber sido aprobado por Arquitectura del Producto.
+- mantener una identidad reconocible;
+- y haber sido aprobado por el Product Owner/Arquitectura del Producto.
 
 ### 9.1 Funciones permitidas
 
-Un Personaje Oficial puede:
+Puede:
 
 - acompañar;
 - orientar;
@@ -411,26 +444,13 @@ No debe:
 
 ### 9.3 Categoría abierta
 
-Los personajes vigentes no son una restricción permanente.
-
-La Academia puede:
-
-- incorporar nuevos personajes;
-- evolucionar los actuales;
-- retirar alguno;
-- o cambiar una familia visual,
-
-siempre que la decisión:
-
-- responda a una necesidad real;
-- preserve la identidad;
-- y tenga trazabilidad.
+La Academia puede incorporar, evolucionar o retirar personajes si existe una necesidad real, se preserva la identidad y la decisión tiene trazabilidad.
 
 ---
 
 ## 10. Lía
 
-Lía es el Personaje Oficial de acompañamiento inteligente.
+Lía es el **Personaje Oficial de acompañamiento inteligente**.
 
 Representa:
 
@@ -446,7 +466,8 @@ Lía puede aparecer cuando el alumno necesita:
 - conocer el siguiente paso;
 - recibir una pista;
 - practicar;
-- o interpretar su progreso.
+- interpretar su progreso;
+- o recibir un reconocimiento automático sustentado por una regla suficientemente fiable.
 
 Lía no debe convertirse en:
 
@@ -455,46 +476,36 @@ Lía no debe convertirse en:
 - una autoridad punitiva;
 - ni la representación de toda la IA del sistema.
 
-La IA es una capacidad.
+La IA es una capacidad transversal.
 
-Lía es una de sus expresiones humanas y comprensibles dentro del producto.
+Lía es una de sus expresiones cercanas dentro del producto.
 
-Su identidad visual, voz, gestos y variantes deberán consolidarse posteriormente con el mismo modelo semántico definido para el resto de assets.
+### 10.1 Estado visual actual
 
----
+La **función de Lía está consolidada**, pero su representación visual todavía no está unificada en toda la Academia.
 
+El repositorio dispone de:
 
-### 10.1 Representación visual actual pendiente de decisión
+```text
+assets/imagenes/personajes/lia.png
+```
 
-En algunos HTML se utiliza una pequeña guacamaya roja que, por asociación de uso, ha empezado a percibirse como Lía.
+Sin embargo, existen experiencias que presentan mensajes explícitos de Lía mediante otros recursos visuales; por ejemplo, Mi Rincón de Lectura muestra `✨ Lía dice...` mientras actualmente acompaña ese bloque con un avatar `🦉`.
 
-Esta asociación es relevante, pero todavía no se formaliza como identidad oficial.
+Por tanto:
 
-Se deberá auditar:
+- no se declara todavía una única silueta/animal/imagen como representación universal de Lía;
+- no se presupone que una guacamaya roja represente a Lía;
+- las variantes existentes deben evaluarse por contexto antes de unificarlas;
+- una futura consolidación visual debe reutilizar lo existente cuando sea suficiente y evitar una migración masiva sin beneficio real.
 
-- en qué páginas aparece;
-- qué mensajes acompaña;
-- si su estilo coincide con las guacamayas actuales;
-- si resulta reconocible a tamaño pequeño;
-- y si debe evolucionar hacia la representación visual oficial de Lía.
-
-Hasta aprobar esa decisión:
-
-- Lía sigue siendo un Personaje Oficial de acompañamiento;
-- la pequeña guacamaya roja se considera una representación candidata;
-- y no se asumirá automáticamente que toda guacamaya roja representa a Lía.
-
-### 10.2 Variantes cromáticas y origen
-
-En el entorno de Caracas predominan visualmente las guacamayas azules y amarillas, aunque también pueden observarse guacamayas rojas con menor frecuencia.
-
-La Academia puede utilizar distintas variantes cromáticas cuando:
-
-- conserven coherencia natural y visual;
-- ayuden a diferenciar funciones o personajes;
-- y la decisión no convierta el color en una regla arbitraria.
+### 10.2 Color y personaje
 
 El color por sí solo no define la personalidad ni la responsabilidad de un personaje.
+
+Una variante cromática puede ayudar a diferenciar usos, pero no debe convertirse en una regla arbitraria.
+
+---
 
 ## 11. Las guacamayas
 
@@ -517,7 +528,7 @@ La Academia convierte ese recuerdo en parte de su identidad.
 
 ### 11.2 Significado
 
-Las guacamayas representan:
+Representan:
 
 - curiosidad;
 - alegría;
@@ -541,9 +552,7 @@ No representan:
 
 > **Pequeñas compañeras de viaje.**
 
-Inspiradas en las guacamayas azules y amarillas de los bosques tropicales, aparecen en momentos especiales para acompañar, animar y celebrar.
-
-Representan curiosidad, alegría, libertad y crecimiento.
+Aparecen en momentos especiales para acompañar, animar y celebrar.
 
 No ofrecen respuestas: recuerdan que cada persona puede descubrir sus propias alas.
 
@@ -562,27 +571,32 @@ Las guacamayas:
 
 ### 11.5 Estado actual
 
-Las guacamayas son hoy la principal familia visual de acompañamiento emocional de la Academia.
+Las guacamayas siguen siendo una de las principales familias visuales de acompañamiento emocional de la Academia y, desde Recompensas V1, también representan **hitos especiales** dentro de `Mi Camino → Así voy creciendo`.
 
-No se documentan como una implementación inmutable.
+El repositorio conserva varias representaciones activas y otras explícitamente separadas bajo `No usadas/`. La mera existencia física de un archivo no significa que esté aprobado para cualquier contexto.
 
-Podrán evolucionar si el producto identifica una necesidad clara y una alternativa más coherente.
+### 11.6 Guacamayas de Reconocimiento V1
 
-### 11.6 Uso actual validado
+El sistema actual contempla seis categorías humanas de Guacamaya:
 
-La página principal ya demuestra dos usos semánticos diferentes:
+- Valiente;
+- Alas Propias;
+- Curiosa;
+- Pensadora;
+- de Equipo;
+- de Crecimiento.
 
-| Momento | Representación actual | Intención |
-|---|---|---|
-| Descubrir la Academia | Pareja de guacamayas | Bienvenida, identidad y curiosidad |
-| Continuar la aventura | Guacamaya en vuelo | Movimiento, progreso y motivación |
+Este documento gobierna su **significado y representación visual**.
 
-Estos usos se consideran referencias de calidad porque existe coherencia entre:
+Las reglas de concesión, unicidad, confirmación humana y persistencia pertenecen a `DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` y a la implementación vigente.
 
-- mensaje;
-- composición;
-- movimiento;
-- y emoción.
+Las categorías no deben presentarse como:
+
+- ranking;
+- colección obligatoria;
+- `x/6`;
+- requisito para “subir de nivel”;
+- ni comparación entre alumnos.
 
 ---
 
@@ -592,42 +606,21 @@ Los personajes conviven con símbolos visuales.
 
 ### 12.1 Arcoíris
 
-Representa:
-
-- esperanza;
-- diversidad;
-- aprendizaje;
-- nuevos comienzos;
-- y continuidad de la identidad.
+Representa esperanza, diversidad, aprendizaje, nuevos comienzos y continuidad de identidad.
 
 ### 12.2 Estrellas
 
-Representan:
-
-- pequeños logros;
-- ilusión;
-- reconocimiento;
-- y celebración.
+Representan pequeños logros, ilusión, reconocimiento y celebración.
 
 Nunca deben expresar superioridad frente a otros alumnos.
 
 ### 12.3 Libros
 
-Representan:
-
-- imaginación;
-- conocimiento;
-- lectura;
-- y descubrimiento.
+Representan imaginación, conocimiento, lectura y descubrimiento.
 
 ### 12.4 Piezas
 
-Representan:
-
-- comprender;
-- relacionar;
-- descubrir;
-- y resolver.
+Representan comprender, relacionar, descubrir y resolver.
 
 ### 12.5 Raíces familiares
 
@@ -635,131 +628,122 @@ España representa el presente y el futuro.
 
 Venezuela representa las raíces.
 
-La Academia puede incorporar homenajes sutiles, como:
-
-- guacamayas;
-- referencias naturales;
-- o la silueta del Ávila,
-
-siempre que tengan sentido y no se utilicen como decoración arbitraria.
+La Academia puede incorporar homenajes sutiles —guacamayas, referencias naturales o siluetas reconocibles— cuando tengan sentido y no como decoración arbitraria.
 
 ---
-
 
 ## 13. Activos institucionales
 
 Los activos institucionales identifican a la Academia como producto.
 
-No son Personajes Oficiales y no necesariamente participan en el lenguaje emocional de una experiencia concreta.
+No son necesariamente Personajes Oficiales ni participan siempre en el lenguaje emocional de una experiencia.
 
-Incluyen, entre otros:
+Incluyen:
 
 - icono principal;
 - favicon;
 - iconos para accesos directos;
-- iconos de manifest o PWA, si se incorporan;
-- logotipo;
-- y futuras variantes institucionales.
+- futuros iconos de manifest/PWA;
+- logotipo, si se consolida;
+- y variantes institucionales justificadas.
 
 ### 13.1 Icono principal y favicon
 
-Actualmente existe:
+El activo oficial actual es:
 
 ```text
 assets/iconos/icono-principal.png
 ```
 
-Este archivo se utiliza como favicon en las páginas HTML de la Academia y permite reconocer el producto en:
+Debe seguir siendo la referencia institucional por defecto salvo decisión explícita posterior.
 
-- la pestaña del navegador;
-- favoritos;
-- historial;
-- accesos directos;
-- y otros contextos compatibles.
+### 13.2 Ilustraciones compactas de módulos
 
-### 13.2 Responsabilidad
+`assets/iconos/` también contiene ilustraciones compactas de acceso, como las utilizadas actualmente por Calendarios, Mi Baúl y Adicionales en la portada.
+
+Aunque se almacenen junto a iconos institucionales, su función puede ser **experiencial/navegacional** y por tanto deben respetar las reglas de familia visual y peso óptico de este documento.
+
+### 13.3 Responsabilidad
 
 Los activos institucionales deben:
 
 - ser reconocibles a tamaños pequeños;
-- mantener coherencia con la identidad global;
-- conservar rutas estables;
-- utilizarse de manera uniforme;
-- y estar inventariados.
+- mantener coherencia global;
+- conservar rutas suficientemente estables;
+- utilizarse uniformemente cuando cumplen la misma función;
+- y evitar duplicados activos sin necesidad.
 
-No deben pasar por el catálogo de momentos emocionales cuando su función sea exclusivamente institucional.
+### 13.4 Alcance del inventario
 
-### 13.3 Configuración técnica
+Una revisión de identidad no debe limitarse a `assets/identidad/guacamayas/`.
 
-El favicon normalmente se declara directamente en el `<head>` del HTML:
-
-```html
-<link rel="icon" href="/assets/iconos/icono-principal.png">
-```
-
-La futura normalización técnica deberá comprobar:
-
-- que todos los HTML utilicen el mismo archivo oficial;
-- que las rutas relativas sean correctas;
-- que no existan favicons duplicados o diferentes sin justificación;
-- y que el icono se visualice correctamente en los navegadores principales.
-
-### 13.4 Inventario ampliado
-
-La auditoría visual no se limitará a:
+Debe considerar, según el caso:
 
 ```text
 assets/identidad/guacamayas/
-```
-
-También incluirá:
-
-```text
+assets/imagenes/personajes/
+assets/imagenes/mi-camino/
 assets/iconos/
 ```
 
-y cualquier otro directorio donde existan:
+además de referencias visuales embebidas en HTML/CSS.
 
-- pequeñas guacamayas;
-- representaciones de Lía;
-- iconos de navegación;
-- símbolos;
-- recompensas;
-- o recursos de identidad utilizados por los HTML.
+---
 
 ## 14. Sistema de reconocimiento
 
-Las guacamayas y otros símbolos podrán formar parte del futuro sistema de reconocimiento.
+El Sistema de Motivación y Reconocimiento **ya no es una posibilidad futura**: su V1 está operativa.
 
-El reconocimiento debe celebrar:
+Este documento no redefine su mecánica.
+
+Su responsabilidad es proteger la identidad visual y emocional con la que se presenta.
+
+### 14.1 Qué debe expresar
+
+Los Reconocimientos pueden celebrar:
 
 - esfuerzo;
 - constancia;
 - curiosidad;
 - autonomía;
 - perseverancia;
-- y progreso.
+- cooperación;
+- uso constructivo de ayuda;
+- y progreso personal.
 
-No debe generar:
+### 14.2 Qué debe evitar
+
+No deben generar:
 
 - comparación;
 - presión;
 - miedo a perder;
-- o dependencia exclusiva de recompensas.
+- perfeccionismo;
+- colección compulsiva;
+- ni dependencia exclusiva de premios.
 
-### 13.1 Escala futura
+### 14.3 Jerarquía visual
 
-Podrá existir una escala representada mediante guacamayas u otros símbolos según el nivel de logro.
+Una celebración debe ser proporcional al significado del momento.
 
-La mecánica concreta no queda aprobada en este documento.
+No todo reconocimiento necesita la misma intensidad visual que una Guacamaya.
 
-Antes de implementarla deberá definirse:
+La identidad debe permitir distinguir, sin convertirlo en una escala competitiva:
 
-- qué se reconoce;
-- cómo se obtiene;
-- qué significado tiene cada nivel;
-- cómo se evita la competición;
-- y cómo se integra con el progreso real.
+- reconocimiento cotidiano o moderado;
+- hito especial;
+- mensaje de constancia o crecimiento;
+- celebración excepcional cuando realmente corresponda.
+
+### 14.4 Propiedad separada
+
+```text
+Este documento
+→ significado, tono, representación y coherencia visual
+
+Diseño de Motivación y Reconocimiento
+→ reglas, concesión, frecuencia, unicidad y evolución funcional
+```
 
 ---
 
@@ -767,349 +751,242 @@ Antes de implementarla deberá definirse:
 
 Un asset oficial es un recurso aprobado que materializa una intención de identidad.
 
-Puede ser:
+Puede ser PNG, WebP, SVG, animación, audio, voz, icono, ilustración u otro recurso equivalente.
 
-- PNG;
-- SVG;
-- animación;
-- audio;
-- voz;
-- icono;
-- ilustración;
-- o recurso equivalente.
+### 15.1 Intención frente a archivo
 
-### 14.1 Archivo frente a asset
+Conceptualmente:
 
 ```text
-ASSET SEMÁNTICO
+INTENCIÓN
 mission.complete.primary
         ↓
-PERSONAJE ACTUAL
+FAMILIA / PERSONAJE ADECUADO
 guacamaya
         ↓
-ARCHIVO ACTUAL
-guacamaya-...png
+ARCHIVO VIGENTE
+ruta concreta aprobada
 ```
 
-El código debe depender del asset semántico.
+La intención no debe depender de un nombre de archivo accidental.
 
-No del nombre físico del archivo.
+Sin embargo, **no es obligatorio introducir un resolver técnico** para lograr esa separación conceptual.
 
-### 14.2 Nombres físicos
+### 15.2 Referencias directas válidas
 
-No es necesario renombrar ahora los PNG existentes.
+Las rutas físicas directas son válidas cuando:
 
-Los nombres actuales pueden conservarse como inventario técnico.
+- el recurso tiene una responsabilidad clara;
+- el nombre/ruta son suficientemente estables;
+- la referencia no crea duplicación problemática;
+- y sustituirla más adelante sería simple y controlable.
 
-La estabilidad se obtiene mediante el catálogo semántico.
+### 15.3 Reutilización
 
-### 14.3 Reutilización
+Un asset puede utilizarse en más de un lugar cuando la intención y el contexto sean compatibles.
 
-Un asset podrá utilizarse en más de un lugar cuando la intención sea equivalente.
+No se reutiliza únicamente porque “queda bonito”.
 
-No se reutilizará únicamente porque “queda bonito”.
+### 15.4 Texto alternativo
 
-### 14.4 Texto alternativo
+Todo asset visible y significativo debe declarar una alternativa accesible adecuada.
 
-Todo asset visible y significativo deberá declarar texto alternativo adecuado.
-
-Si es puramente decorativo, deberá marcarse de forma que no añada ruido a tecnologías de asistencia.
+Si es puramente decorativo, debe marcarse de forma que no añada ruido a tecnologías de asistencia.
 
 ---
 
-## 16. Catálogo semántico de identidad
+## 16. Semántica de identidad y catálogo técnico
 
-### 16.1 Propósito
+### 16.1 Decisión actual
 
-Centralizar la relación entre:
+La **semántica de identidad sigue vigente como herramienta conceptual**.
 
-- momento;
-- emoción;
-- intención;
-- Personaje Oficial;
-- archivo;
-- accesibilidad;
-- y estado.
-
-### 16.2 Ubicación propuesta
+La propuesta técnica de crear:
 
 ```text
 assets/identidad/identity-catalog.json
+IdentityAssets.get(...)
 ```
 
-La ubicación definitiva deberá validarse durante la implementación.
+queda **pospuesta**.
 
-### 16.3 Estructura conceptual
+No existe actualmente una necesidad observada que compense la complejidad adicional de un catálogo/resolver global.
 
-```json
-{
-  "version": "1.0",
-  "assets": {
-    "academy.discovery.primary": {
-      "moment": "academy-discovery",
-      "emotion": ["curiosity", "confidence"],
-      "purpose": "Invitar a conocer la Academia",
-      "character": "macaws",
-      "file": "assets/identidad/guacamayas/archivo-actual.png",
-      "alt": "Dos guacamayas dando la bienvenida a la Academia",
-      "status": "active"
-    }
-  }
-}
+Esta decisión se alinea con `DECISION-015 · Catálogo de Assets desacoplado`, actualmente pospuesta.
+
+### 16.2 Qué sí conservamos
+
+Podemos seguir usando identificadores conceptuales como:
+
+```text
+academy.discovery.primary
+journey.continue.primary
+mission.complete.primary
 ```
 
-Este ejemplo expresa el modelo.
+para describir intención, comparar alternativas o documentar un uso.
 
-No constituye todavía un contrato técnico definitivo.
+No tienen que existir en código.
 
-### 16.4 Campos conceptuales
+### 16.3 Cuándo reconsiderarlo
 
-| Campo | Responsabilidad |
-|---|---|
-| `id` | Identificador semántico estable |
-| `moment` | Momento de experiencia |
-| `emotion` | Emoción o emociones principales |
-| `purpose` | Intención del producto |
-| `character` | Personaje o familia visual actual |
-| `file` | Archivo asociado vigente |
-| `alt` | Texto alternativo |
-| `status` | Estado operativo |
-| `variant` | Variante, cuando sea necesaria |
-| `notes` | Restricciones o contexto |
+Un catálogo/resolver técnico solo se reabrirá si aparece una necesidad real, por ejemplo:
 
-### 16.5 Estados operativos propuestos
+- volumen de assets difícil de mantener;
+- sustituciones frecuentes en muchas pantallas;
+- variantes dinámicas por contexto;
+- accesibilidad centralizada que aporte beneficio tangible;
+- o duplicación efectiva imposible de controlar con referencias simples.
 
-- `candidate`
-- `active`
-- `deprecated`
-- `historical`
-
-Estos estados pertenecen al catálogo operativo, no sustituyen los estados documentales.
-
-### 16.6 Resolución centralizada
-
-La aplicación deberá consumir los assets mediante una única capacidad reutilizable.
-
-Ejemplo conceptual:
-
-```javascript
-const asset = await IdentityAssets.get("mission.complete.primary");
-```
-
-No se recomienda que cada página lea y resuelva el catálogo de forma independiente.
+Hasta entonces se favorece la solución más sencilla.
 
 ---
 
 ## 17. Auditoría del inventario existente
 
-La colección actual contiene aproximadamente quince archivos de guacamayas, de los cuales se utilizan alrededor de cuatro.
+No se mantiene un conteo aproximado de archivos como dato normativo.
 
-Antes de generar nuevas ilustraciones se realizará una auditoría.
+El repositorio cambia y un número sin auditoría específica queda obsoleto rápidamente.
 
-### 17.1 Objetivos
+### 17.1 Objetivos cuando se realice una auditoría
 
-- inventariar todos los archivos;
-- identificar duplicados;
-- identificar variantes;
-- registrar dimensiones y transparencia;
+- inventariar recursos relevantes;
+- identificar duplicados y variantes;
+- diferenciar activos de `No usadas` o históricos;
+- registrar dimensiones, formato y transparencia cuando importe;
 - localizar usos actuales;
-- asignar momento y emoción;
+- relacionar uso con intención;
 - valorar coherencia visual;
-- detectar assets sin uso;
-- detectar momentos sin asset;
-- y decidir qué conservar, mejorar, sustituir o retirar.
+- detectar recursos sin uso;
+- y decidir mantener, mejorar, sustituir, archivar o retirar del uso activo.
 
 ### 17.2 Matriz de auditoría
 
-| Archivo | Uso actual | Momento | Emoción | Calidad | Coherencia | Acción |
+| Archivo | Uso real | Intención | Calidad | Coherencia | Estado | Acción |
 |---|---|---|---|---|---|---|
-| Por inventariar | Por localizar | Por asignar | Por asignar | Por evaluar | Por evaluar | Mantener / Mejorar / Sustituir / Retirar |
+| Por inventariar | Por localizar | Por definir | Por evaluar | Por evaluar | Activo / No usado / Histórico | Mantener / Mejorar / Sustituir / Archivar |
 
-### 17.3 Criterios
+### 17.3 Criterio
 
-Un archivo puede mantenerse cuando:
+Un archivo puede mantenerse cuando cumple una función clara, tiene calidad suficiente, funciona en contexto y no duplica innecesariamente otro recurso.
 
-- cumple una función clara;
-- tiene calidad suficiente;
-- es coherente con la familia;
-- funciona en su contexto;
-- y no duplica innecesariamente otro recurso.
+Un archivo puede retirarse del **uso activo** sin ser eliminado físicamente. Los originales y variantes pueden conservar valor histórico o de trabajo.
 
-Puede retirarse del uso activo cuando:
+### 17.4 Auditoría proporcional
 
-- no tiene responsabilidad;
-- contradice el estilo;
-- presenta baja calidad;
-- es redundante;
-- o existe una alternativa superior.
+No es necesario abrir una auditoría completa para incorporar o ajustar una sola ilustración cuando:
 
-Los archivos retirados no deben eliminarse automáticamente.
+- el alcance es claro;
+- la familia visual ya existe;
+- la modificación es reversible;
+- y se ha verificado el contexto real.
 
-Podrán conservarse como fuentes históricas o de trabajo.
+La reciente armonización de los accesos de `Explora más` es un ejemplo de mejora visual pequeña que no justificaba construir antes una infraestructura global de assets.
 
 ---
 
+## 18. Evolución de referencias gráficas
 
-## 18. Migración progresiva de los HTML
+### 18.1 Principio
 
-La adopción del catálogo semántico no exige una sustitución masiva e inmediata de todas las referencias gráficas.
+No existe una migración obligatoria de todos los HTML hacia un catálogo semántico.
 
-La migración será gradual, verificable y reversible.
+Las referencias gráficas evolucionarán **solo cuando exista beneficio**.
 
-### 18.1 Estado actual
+### 18.2 Referencias actuales
 
-Hoy algunos HTML incluyen rutas físicas directamente:
+La Academia utiliza una combinación legítima de:
 
-```html
-<img src="assets/identidad/guacamayas/guacamaya-azul-volando-02.png">
-```
+- rutas directas en HTML;
+- imágenes desde CSS;
+- emojis/iconografía;
+- recursos compartidos;
+- y assets específicos de módulo.
 
-También pueden existir recursos de identidad en otras ubicaciones, especialmente:
+### 18.3 Cuándo normalizar
 
-```text
-assets/iconos/
-```
+Conviene normalizar una referencia cuando:
 
-### 18.2 Estado objetivo
+- existe duplicidad;
+- varias pantallas deben compartir exactamente el mismo recurso;
+- un activo institucional debe ser uniforme;
+- una ruta heredada causa fallos;
+- o una nueva familia visual requiere coherencia común.
 
-Las ilustraciones de experiencia se solicitarán mediante identificadores semánticos:
+### 18.4 No reemplazos ciegos
 
-```javascript
-const asset = await IdentityAssets.get("journey.continue.primary");
-```
+No se realizará un reemplazo global de rutas sin revisar cada contexto.
 
-El catálogo resolverá:
+La misma imagen puede estar cumpliendo funciones distintas o ser adecuada en una pantalla y no en otra.
 
-- archivo vigente;
-- texto alternativo;
-- Personaje Oficial;
-- variante;
-- y estado.
+### 18.5 Reversibilidad
 
-Los activos institucionales, como el favicon, conservarán una referencia directa y centralizada cuando el navegador lo requiera.
+Los cambios visuales importantes deben poder revertirse sin afectar lógica, datos o navegación cuando su alcance es puramente visual.
 
-### 18.3 Fases de migración
-
-#### Fase 1 — Inventario
-
-- localizar referencias `<img>`;
-- localizar favicons;
-- localizar imágenes CSS;
-- identificar recursos fuera de las carpetas esperadas;
-- y relacionar cada recurso con su uso actual.
-
-#### Fase 2 — Catálogo inicial
-
-- registrar únicamente assets validados;
-- asignar identificadores semánticos;
-- conservar los nombres físicos;
-- y definir fallbacks.
-
-#### Fase 3 — Componente reutilizable
-
-Crear una capacidad única para obtener o representar assets.
-
-No se permitirá que cada página implemente su propio lector del catálogo.
-
-#### Fase 4 — Migración por pantalla
-
-Migrar de forma gradual, empezando por:
-
-1. página principal;
-2. Mi Camino;
-3. Rincón de Lectura;
-4. Mis Aventuras;
-5. y el resto según prioridad y uso real.
-
-Cada migración deberá revisar:
-
-- intención;
-- momento;
-- tamaño;
-- posición;
-- accesibilidad;
-- comportamiento táctil;
-- y prueba en contexto.
-
-#### Fase 5 — Eliminación del acoplamiento directo
-
-Solo cuando la migración esté validada se retirarán referencias directas innecesarias.
-
-### 18.4 No realizar reemplazos ciegos
-
-No se recomienda un reemplazo global de rutas sin revisar cada contexto.
-
-Una misma imagen puede estar cumpliendo funciones diferentes o no ser adecuada en todas sus ubicaciones.
-
-### 18.5 Criterio de finalización
-
-La migración estará completa cuando:
-
-- los assets de experiencia se consuman mediante identificadores semánticos;
-- los activos institucionales estén normalizados;
-- no existan rutas duplicadas o huérfanas;
-- y el inventario represente el producto real.
+---
 
 ## 19. Generación y evolución mediante IA
 
 La IA puede ayudar a crear, adaptar y mejorar recursos.
 
-No debe generar personajes sin una necesidad previa.
+No debe generar personajes o colecciones de variantes sin una necesidad previa.
 
-### 19.1 Flujo
+### 19.1 Flujo recomendado
 
 ```text
-MOMENTO SIN COBERTURA
+NECESIDAD REAL
         ↓
-EMOCIÓN NECESARIA
+MOMENTO Y EMOCIÓN
         ↓
-INTENCIÓN DEL PRODUCTO
+INTENCIÓN
         ↓
-PERSONAJE ADECUADO
+FAMILIA / PERSONAJE ADECUADO
         ↓
-PROMPT Y GENERACIÓN
+GENERACIÓN O REUTILIZACIÓN
         ↓
 REVISIÓN VISUAL
         ↓
-PRUEBA EN CONTEXTO
+PRUEBA EN CONTEXTO Y TAMAÑO REAL
         ↓
 APROBACIÓN
         ↓
-CATÁLOGO
+INCORPORACIÓN
 ```
 
 ### 19.2 Criterios de aprobación
 
-Una ilustración generada debe revisarse por:
+Una ilustración generada se revisa por:
 
 - coherencia con el ADN;
 - estilo;
 - expresión;
 - postura;
 - calidad;
-- fondo y transparencia;
-- lectura a distintos tamaños;
+- fondo/transparencia cuando corresponda;
+- lectura a tamaño real;
 - integración con la interfaz;
+- peso óptico frente a elementos hermanos;
 - accesibilidad;
+- rendimiento razonable;
 - y reacción real del alumno cuando sea posible.
 
-### 19.3 La prueba en contexto es obligatoria
+### 19.3 Prueba en contexto obligatoria
 
 Una imagen aislada puede parecer excelente y fallar dentro de una pantalla.
 
 Debe probarse:
 
-- con el texto real;
-- en su tamaño real;
+- con texto real;
+- al tamaño real;
+- dentro de la composición definitiva;
 - en escritorio;
-- en iPad;
-- y en la composición definitiva.
+- y, cuando aplique, en tablet/iPad/móvil.
 
 ### 19.4 Variantes
 
-Se crearán variantes solo cuando cubran una necesidad diferente.
+Solo se crean variantes cuando cubren una necesidad diferente.
 
-No se generarán colecciones numerosas únicamente por disponibilidad tecnológica.
+No se generan colecciones numerosas únicamente porque la tecnología lo permita.
 
 ---
 
@@ -1117,21 +994,19 @@ No se generarán colecciones numerosas únicamente por disponibilidad tecnológi
 
 La identidad debe acompañar sin dificultar.
 
-Los assets deberán considerar:
+Los assets deben considerar:
 
 - contraste;
 - texto alternativo;
 - escalabilidad;
 - tamaño táctil cuando sean interactivos;
 - carga y rendimiento;
-- fondos transparentes correctos;
-- y comportamiento en iPad.
+- fondos correctos;
+- y comportamiento en dispositivos táctiles.
 
 Un personaje interactivo debe dejar claro que puede pulsarse.
 
-No debe depender únicamente de una instrucción textual distante.
-
-La interacción mediante personaje nunca debe ser la única forma de acceder a una capacidad esencial sin una alternativa accesible.
+La interacción mediante personaje nunca debe ser la única forma de acceder a una capacidad esencial sin alternativa accesible.
 
 ---
 
@@ -1139,13 +1014,14 @@ La interacción mediante personaje nunca debe ser la única forma de acceder a u
 
 ### 21.1 Propiedad
 
-Arquitectura del Producto gobierna:
+Identidad/Arquitectura del Producto gobierna:
 
 - principios;
 - lenguaje emocional;
 - momentos;
 - personajes;
-- y decisiones de evolución.
+- familias visuales;
+- y decisiones relevantes de evolución.
 
 ### 21.2 Operación
 
@@ -1153,27 +1029,24 @@ Desarrollo mantiene:
 
 - archivos;
 - rutas;
-- catálogo;
-- carga;
 - optimización;
-- y consumo técnico.
+- carga;
+- accesibilidad técnica;
+- y reutilización de recursos.
+
+No existe actualmente obligación de mantener un catálogo semántico técnico.
 
 ### 21.3 Aprobación
 
 El **Product Owner** mantiene la decisión final sobre:
 
-- incorporación;
-- sustitución;
-- retiro;
-- y cambios relevantes de identidad.
+- incorporación de un Personaje Oficial;
+- sustitución relevante;
+- retiro del uso activo;
+- nuevas familias visuales;
+- y cambios de identidad de alto impacto.
 
-La asignación vigente de personas a roles se mantendrá en un documento operativo independiente, propuesto como:
-
-```text
-docs/project/PROJECT_ROLES.md
-```
-
-Los documentos de producto referencian roles estables y no nombres personales.
+La asignación de personas a roles se mantiene en `docs/project/PROJECT_ROLES.md`.
 
 ### 21.4 Eventos de revisión
 
@@ -1182,11 +1055,11 @@ Este documento se revisa cuando:
 - cambia el ADN;
 - nace una nueva familia de personajes;
 - cambia significativamente el lenguaje visual;
-- aparece un nuevo sistema de reconocimiento;
-- el catálogo operativo cambia de modelo;
+- evoluciona materialmente el sistema de reconocimiento;
+- se decide reabrir la arquitectura técnica de assets;
 - o el producto demuestra que un principio ya no funciona.
 
-No requiere revisión por cada nuevo PNG compatible.
+No requiere nueva versión por cada PNG/WebP compatible.
 
 ---
 
@@ -1194,45 +1067,48 @@ No requiere revisión por cada nuevo PNG compatible.
 
 ### 22.1 Convertir personajes en decoración
 
-**Riesgo:** saturación y pérdida de significado.
-
+**Riesgo:** saturación y pérdida de significado.  
 **Mitigación:** exigir momento, emoción e intención.
 
 ### 22.2 Crear demasiados assets
 
-**Riesgo:** inconsistencia, duplicidad y mantenimiento alto.
+**Riesgo:** inconsistencia, duplicidad y mantenimiento alto.  
+**Mitigación:** reutilizar, auditar proporcionalmente y generar solo ante necesidad real.
 
-**Mitigación:** auditar antes de generar.
+### 22.3 Acoplar demasiadas pantallas a un recurso inestable
 
-### 22.3 Acoplar el código a un archivo
+**Riesgo:** sustituciones costosas.  
+**Mitigación:** nombres/rutas estables, reutilización compartida cuando aporte valor y reconsiderar un resolver solo si el problema aparece de verdad.
 
-**Riesgo:** cambios costosos en múltiples páginas.
+### 22.4 Añadir infraestructura de assets antes de necesitarla
 
-**Mitigación:** catálogo semántico y resolución centralizada.
+**Riesgo:** complejidad sin beneficio.  
+**Mitigación:** mantener pospuesto el catálogo/resolver hasta que exista un caso real que lo justifique.
 
-### 22.4 Mezclar estilos
+### 22.5 Mezclar estilos o pesos visuales
 
-**Riesgo:** pérdida de identidad.
+**Riesgo:** pérdida de identidad o tarjetas visualmente desequilibradas.  
+**Mitigación:** familias coherentes, peso óptico comparable y prueba en contexto.
 
-**Mitigación:** familias visuales aprobadas y prueba en contexto.
+### 22.6 Sobreutilizar Recompensas
 
-### 22.5 Sobreutilizar recompensas
+**Riesgo:** motivación exclusivamente externa.  
+**Mitigación:** reconocimiento proporcional, no transaccional y ligado a progreso real.
 
-**Riesgo:** motivación exclusivamente externa.
+### 22.7 Confundir Lía con toda la IA
 
-**Mitigación:** reconocimiento proporcional y vinculado al esfuerzo.
-
-### 22.6 Confundir Lía con toda la IA
-
-**Riesgo:** límites poco claros.
-
+**Riesgo:** límites poco claros.  
 **Mitigación:** separar capacidad técnica y representación del personaje.
 
-### 22.7 Sustituir la identidad por tendencias
+### 22.8 Forzar una identidad visual de Lía antes de validarla
 
-**Riesgo:** rediseños continuos.
+**Riesgo:** migración innecesaria e inconsistencia posterior.  
+**Mitigación:** conservar su función estable, auditar usos reales y unificar solo cuando exista una representación claramente superior y útil.
 
-**Mitigación:** cambios justificados por beneficio real.
+### 22.9 Sustituir la identidad por tendencias
+
+**Riesgo:** rediseños continuos.  
+**Mitigación:** cambios justificados por beneficio real y reversibilidad.
 
 ---
 
@@ -1244,43 +1120,50 @@ La identidad cumple su propósito cuando:
 - acompaña sin distraer;
 - refuerza el momento;
 - transmite una emoción coherente;
-- funciona en contexto;
+- funciona a su tamaño real;
+- mantiene equilibrio con elementos hermanos;
 - es accesible;
-- puede sustituirse sin romper el producto;
-- y provoca una respuesta positiva real.
+- tiene un coste técnico razonable;
+- puede evolucionar sin romper el producto;
+- y provoca una respuesta positiva real cuando puede observarse.
 
 Un asset no se aprueba únicamente porque sea bonito.
 
-Debe ser útil, coherente y oportuno.
+Debe ser **útil, coherente, oportuno y adecuado a su contexto**.
 
 ---
 
 ## 24. Hoja de evolución
 
+Esta sección expresa direcciones posibles; no sustituye `ROADMAP.md` ni crea automáticamente trabajo prioritario.
+
 ### Corto plazo
 
-1. Auditar la colección actual de guacamayas.
-2. Identificar los cuatro assets actualmente utilizados.
-3. Localizar todas sus referencias en el producto.
-4. Aprobar el catálogo inicial de momentos.
-5. Crear la primera versión operativa de `identity-catalog.json`.
-6. Centralizar el consumo de assets.
-7. Detectar momentos prioritarios sin representación.
+- mantener coherencia de las familias visuales que ya están activas;
+- consolidar nuevas ilustraciones solo mediante prueba a tamaño real;
+- corregir usos claramente inconsistentes cuando aparezcan durante trabajo funcional;
+- conservar la identidad de Recompensas/Guacamayas alineada con su diseño no transaccional;
+- revisar la representación visual de Lía cuando exista una necesidad concreta que justifique unificarla.
 
 ### Medio plazo
 
-- consolidar la identidad visual de Lía;
-- definir variantes de ayuda, lectura y celebración;
-- formalizar el sistema de reconocimiento;
-- mejorar accesibilidad;
-- y retirar gradualmente usos directos de rutas físicas.
+- auditar inventarios de identidad si el volumen o la duplicación empiezan a dificultar mantenimiento;
+- mejorar accesibilidad y rendimiento de assets pesados cuando sean prioritarios;
+- retirar del uso activo variantes redundantes sin destruir fuentes históricas;
+- documentar nuevas familias solo cuando realmente se incorporen al producto.
 
 ### Largo plazo
 
-- incorporar nuevos personajes solo cuando exista una necesidad real;
-- admitir variantes temáticas sin romper identificadores;
+- incorporar nuevos personajes solo ante necesidad real;
+- admitir variantes temáticas sin perder identidad;
 - evolucionar hacia animaciones o audio cuando aporten valor;
 - y mantener la identidad preparada para múltiples alumnos y etapas educativas.
+
+### Decisión explícita sobre el catálogo técnico
+
+`identity-catalog.json` y un resolver global **no forman parte de la hoja activa**.
+
+Solo se reabrirán si una necesidad futura demuestra que su beneficio supera la complejidad.
 
 ---
 
@@ -1288,40 +1171,48 @@ Debe ser útil, coherente y oportuno.
 
 > **La Academia Gloria Valentina utiliza su identidad visual para acompañar, no para decorar.**
 
-> **Cada personaje, símbolo y asset existe porque ayuda a expresar una intención del producto en un momento real del alumno.**
+> **Cada personaje, símbolo e ilustración existe porque ayuda a expresar una intención del producto en un momento real del alumno.**
 
-> **Hoy las guacamayas representan de forma especial la curiosidad, la alegría, la libertad, las raíces y el crecimiento. Mañana podrán evolucionar los personajes o las ilustraciones, pero la Academia deberá conservar el mismo compromiso: aparecer con cercanía, belleza y sentido exactamente cuando el alumno lo necesita.**
+> **Las guacamayas conservan de forma especial la curiosidad, la alegría, la libertad, las raíces y el crecimiento; Lía conserva el papel de guía cercana aunque su representación gráfica todavía pueda evolucionar.**
+
+> **La coherencia no exige que todas las imágenes sean iguales: exige que pertenezcan al mismo mundo, tengan un peso visual equilibrado y funcionen en el contexto real donde el alumno las ve.**
 
 ---
 
-## Decisiones adoptadas
+## Decisiones adoptadas y vigencia
 
-| ID | Decisión | Estado | Impacto |
+| ID | Decisión | Vigencia 04/09/2026 | Impacto |
 |---|---|---|---|
-| PIVP-001 | Definir este documento como propietario del lenguaje visual y emocional del producto. | Propuesta | Identidad del Producto |
-| PIVP-002 | Diseñar la identidad desde momentos y emociones, no desde ilustraciones o ubicaciones. | Propuesta | Experiencia · UX |
-| PIVP-003 | Utilizar Personajes Oficiales como categoría abierta, no limitada a las guacamayas actuales. | Propuesta | Evolución de Personajes |
-| PIVP-004 | Reconocer a Lía como personaje de acompañamiento inteligente y diferenciarla de la capacidad técnica de IA. | Propuesta | IA · Acompañamiento |
-| PIVP-005 | Mantener las guacamayas como principal familia visual actual y conservar su origen familiar y venezolano. | Propuesta | Identidad · Raíces |
-| PIVP-006 | Mantener los nombres físicos actuales y desacoplarlos mediante identificadores semánticos. | Propuesta | Arquitectura Técnica |
-| PIVP-007 | Crear un catálogo operativo que relacione momento, emoción, personaje y archivo. | Propuesta | Assets · Mantenibilidad |
-| PIVP-008 | Auditar la colección existente antes de generar nuevas guacamayas. | Propuesta | Calidad · Eficiencia |
-| PIVP-009 | Exigir prueba en contexto, incluyendo iPad, antes de aprobar un asset. | Propuesta | UX · Multidispositivo |
-| PIVP-010 | Sustituir progresivamente la responsabilidad de los documentos de visión `06` y `07` mediante este documento. | Propuesta | Gobierno Documental |
-| PIVP-011 | Referenciar roles estables en la documentación de producto y mantener la asignación nominal en `PROJECT_ROLES.md`. | Propuesta | Gobierno del Producto |
-| PIVP-012 | Clasificar favicon, icono principal y futuros logos como activos institucionales. | Propuesta | Identidad Institucional |
-| PIVP-013 | Auditar assets de identidad en todas las carpetas, no únicamente en `assets/identidad/guacamayas/`. | Propuesta | Inventario · Trazabilidad |
-| PIVP-014 | Mantener como candidata, no aprobada, la asociación de la pequeña guacamaya roja con Lía. | Propuesta | Lía · Personajes Oficiales |
-| PIVP-015 | Migrar los HTML gradualmente hacia el catálogo semántico, sin reemplazos ciegos. | Propuesta | Implementación · Riesgo |
+| PIVP-001 | Este documento es propietario del lenguaje visual y emocional del producto. | **Vigente** | Identidad del Producto |
+| PIVP-002 | Diseñar identidad desde momentos y emociones, no desde decoración o ubicación. | **Vigente** | Experiencia · UX |
+| PIVP-003 | Mantener Personajes Oficiales como categoría abierta. | **Vigente** | Evolución de Personajes |
+| PIVP-004 | Reconocer a Lía como personaje de acompañamiento y diferenciarla de la IA técnica. | **Vigente** | IA · Acompañamiento |
+| PIVP-005 | Mantener las guacamayas como familia visual relevante y conservar su origen familiar/venezolano. | **Vigente** | Identidad · Raíces |
+| PIVP-006 | Separar conceptualmente intención y archivo físico. | **Vigente, sin exigir resolver técnico** | Arquitectura Visual |
+| PIVP-007 | Crear un catálogo operativo global de assets. | **Pospuesta** | Assets · Mantenibilidad |
+| PIVP-008 | Auditar antes de generar colecciones amplias de nuevas guacamayas. | **Vigente** | Calidad · Eficiencia |
+| PIVP-009 | Exigir prueba en contexto y tamaño real, incluyendo tablet/iPad cuando aplique. | **Vigente** | UX · Multidispositivo |
+| PIVP-010 | Este documento concentra la propiedad activa de identidad; los documentos de visión 06/07 permanecen como fundamento complementario. | **Vigente / evolucionada** | Gobierno Documental |
+| PIVP-011 | Referenciar roles estables y mantener asignación nominal en `PROJECT_ROLES.md`. | **Vigente** | Gobierno del Producto |
+| PIVP-012 | Clasificar favicon/icono principal y equivalentes como activos institucionales. | **Vigente** | Identidad Institucional |
+| PIVP-013 | Auditar identidad en todas las ubicaciones reales, no solo en `assets/identidad/guacamayas/`. | **Vigente** | Inventario · Trazabilidad |
+| PIVP-014 | Asociación automática “guacamaya roja = Lía”. | **No vigente**: no se adopta como identidad oficial. | Lía · Personajes |
+| PIVP-015 | Migración progresiva obligatoria de HTML a un catálogo semántico. | **Pospuesta / no requerida** | Implementación |
+| PIVP-016 | Normalizar conjuntos de ilustraciones por familia, alineación y peso óptico, no solo por dimensiones físicas. | **Vigente** | UX · Coherencia Visual |
+| PIVP-017 | Separar identidad visual de Recompensas de sus reglas funcionales; no usar iconografía para crear ranking o colección obligatoria. | **Vigente** | Motivación · Identidad |
+| PIVP-018 | Mantener Lía funcionalmente consolidada, pero no declarar una representación gráfica universal hasta que el producto la unifique y valide. | **Vigente** | Lía · Evolución Responsable |
 
+---
 
-## DECISIÓN
+## DECISIÓN DEL DOCUMENTO
 
-Estado:
-🟢 Aprobado
+| Campo | Valor |
+|---|---|
+| **Estado** | 🟢 Activo |
+| **Versión vigente** | 1.1 |
+| **Fecha** | 04/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` v1.0 |
+| **Sustituido por** | — |
 
-Próximo paso:
-Auditoría del inventario de assets de identidad.
-
-Impacto:
-Identidad del Producto · Personajes Oficiales · Activos Institucionales · Catálogo de Assets · Evolución Responsable.
+**Impacto:** Identidad del Producto · Personajes Oficiales · Lía · Guacamayas · Recompensas · Activos Institucionales · Accesibilidad · Evolución Responsable
