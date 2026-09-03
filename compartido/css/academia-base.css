@@ -177,20 +177,41 @@ img { max-width: 100%; height: auto; }
 
 .oculto { display: none !important; }
 
-/* Acceso visual de Mi Baúl en la página principal. */
-.modulo.baul .modulo-icono {
+/* Explora más · una única familia visual para Calendarios, Mi Baúl y Adicionales. */
+.zona-secundaria .modulo .modulo-icono {
   position: relative;
-  overflow: hidden;
+  width: min(150px, 100%);
+  height: auto;
+  aspect-ratio: 170 / 149;
+  display: block;
+  margin: 0 0 14px;
+  overflow: visible;
+  border-radius: 0;
   font-size: 0;
-  background: #fff;
+  background: transparent;
+  box-shadow: none;
 }
 
-.modulo.baul .modulo-icono::before {
+.zona-secundaria .modulo .modulo-icono::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: #fff url("../../assets/iconos/icono-baul-home.webp") center / cover no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 8px 12px rgba(92, 67, 34, 0.10));
+}
+
+.zona-secundaria .modulo.calendarios .modulo-icono::before {
+  background-image: url("../../assets/iconos/icono-calendarios-home.webp");
+}
+
+.zona-secundaria .modulo.baul .modulo-icono::before {
+  background-image: url("../../assets/iconos/icono-baul-home-v2.webp");
+}
+
+.zona-secundaria .modulo.adicionales .modulo-icono::before {
+  background-image: url("../../assets/iconos/icono-adicionales-home.webp");
 }
 
 @media (max-width: 720px) {
