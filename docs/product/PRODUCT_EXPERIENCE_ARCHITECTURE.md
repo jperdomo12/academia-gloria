@@ -4,37 +4,45 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` |
-| **Versión** | 1.0 |
-| **Estado** | Activo |
+| **Versión** | 1.1-rc1 |
+| **Estado** | Candidato para aprobación |
 | **Fecha** | 03/08/2026 |
-| **Última actualización** | 03/08/2026 |
+| **Última actualización** | 04/09/2026 |
 | **Propietario** | Arquitectura del Producto |
-| **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
+| **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Arquitectura conceptual de la experiencia del producto, sus actores, dominios, relaciones y evolución |
 
 ## Documentos relacionados
 
 | Documento | Relación |
 |---|---|
-| `docs/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** define la identidad, valores y principios que esta arquitectura debe respetar. |
-| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** establece la organización y propiedad del conocimiento documental. |
-| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** define la estructura, trazabilidad y mantenimiento de este documento. |
-| `docs/project/RELEASE_NOTES.md` | **Complementa:** registra la evolución publicada del producto. |
-| `docs/vision/00_MANIFIESTO_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** aporta la visión fundacional de la Academia. |
-| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS_v1.0.md` | **Complementa:** desarrolla los principios pedagógicos aplicados a las experiencias. |
-| `docs/vision/02_VISION_DEL_RINCON_DE_LECTURA_v1.0.md` | **Implementa:** desarrolla la visión de una experiencia específica de lectura. |
-| `docs/vision/03_PERFIL_INTELIGENTE_DEL_USUARIO_v1.0.md` | **Complementa:** desarrolla capacidades futuras de perfil y personalización. |
-| `docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** desarrolla capacidades futuras de memoria del producto. |
-| `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS_v1.0.md` | **Implementa:** concreta principios de experiencias matemáticas contextualizadas. |
-| `docs/vision/08_MI_CAMINO_v1.0.md` | **Implementa:** desarrolla la visión funcional de Mi Camino. |
-| `docs/modelos/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** especifica el comportamiento de tareas, misiones y gestión familiar. |
+| `docs/FOUNDATION.md` | **Fundamenta:** propósito humano estable de la Academia. |
+| `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** identidad, misión y principios que esta arquitectura debe respetar. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** organización y propiedad del conocimiento documental. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** estructura, trazabilidad y mantenimiento de este documento. |
+| `docs/project/DECISION_LOG.md` | **Gobierna/complementa:** decisiones transversales que condicionan la experiencia. |
+| `docs/project/ROADMAP.md` | **Complementa:** prioridades y evolución prevista del producto. |
+| `docs/project/RELEASE_NOTES.md` | **Evidencia:** evolución consolidada del producto real. |
+| `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Complementa:** identidad visual, emocional y Personajes Oficiales. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Implementa:** diseño específico de Motivación y Reconocimientos. |
+| `docs/models/MODELO_NAVEGACION.md` | **Implementa:** modelo conceptual de navegación. |
+| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional de Misiones y Gestión de Misiones. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** reglas normativas del dominio de Misiones. |
+| `docs/vision/00_MANIFIESTO_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** visión fundacional de la Academia. |
+| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS_v1.0.md` | **Complementa:** principios pedagógicos aplicados a las experiencias. |
+| `docs/vision/02_VISION_DEL_RINCON_DE_LECTURA_v1.0.md` | **Implementa:** visión de una experiencia específica de lectura. |
+| `docs/vision/03_PERFIL_INTELIGENTE_DEL_USUARIO_v1.0.md` | **Complementa:** visión futura de perfil y personalización. |
+| `docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** visión futura de memoria del producto. |
+| `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS_v1.0.md` | **Implementa:** experiencias matemáticas contextualizadas. |
+| `docs/vision/08_MI_CAMINO_v1.0.md` | **Implementa:** visión funcional de Mi Camino. |
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta integral de la arquitectura de experiencia del producto. |
+| 1.1-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con la experiencia real: incorpora Persona Activa y acceso multi-persona; reconoce la separación ya implementada entre Mi Camino y Gestión de Misiones; actualiza Recompensas V1, evidencia/Análisis Educativo, expansión curricular de 6.º y Mi Baúl; corrige rutas documentales y elimina formulaciones futuras ya superadas sin alterar los principios centrales de la arquitectura. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Versión aprobada. Adopta conformidad completa con el estándar documental: metadatos, relaciones, historial, alcance, jerarquía, índice, decisiones y cierre. |
+| 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta integral de la arquitectura de experiencia del producto. |
 
 ## Propósito
 
@@ -72,13 +80,13 @@ Este documento gobierna:
 - los actores y sus responsabilidades;
 - los dominios del producto;
 - las relaciones entre contenidos, experiencias, acompañamiento, motivación, progreso, colaboración, IA y administración;
-- la interpretación arquitectónica de Mi Camino, Mis Cursos, Misiones y Mis Aventuras;
+- la interpretación arquitectónica de Mi Camino, Mis Cursos, Gestión de Misiones, Mis Aventuras, Mi Baúl y otros espacios transversales;
 - y los criterios para evaluar la evolución de nuevas capacidades.
 
 Quedan fuera de su alcance:
 
 - diseño detallado de pantallas;
-- navegación definitiva;
+- navegación física definitiva;
 - componentes de interfaz;
 - contratos de API;
 - modelos de datos detallados;
@@ -86,8 +94,7 @@ Quedan fuera de su alcance:
 - implementación técnica;
 - y definición gráfica de los Personajes Oficiales.
 
-Esos elementos pertenecen a estándares, modelos, especificaciones y documentos de identidad especializados.
-
+Esos elementos pertenecen a estándares, modelos, especificaciones, código y documentos de identidad especializados.
 
 ## Índice
 
@@ -164,7 +171,7 @@ La familia identificó necesidades concretas, entre ellas:
 - resolución de problemas;
 - y habilidades útiles para la vida diaria.
 
-De esa reflexión nacieron nuevas experiencias que posteriormente se agruparon bajo **Mis Aventuras**.
+De esa reflexión nacieron nuevas experiencias que posteriormente se agruparon bajo **Mis Aventuras** y otros espacios de Mi Universo.
 
 Más adelante apareció otra necesidad:
 
@@ -174,26 +181,38 @@ De ahí nació **Mi Camino**, inicialmente como un tablón personal de asignacio
 
 Con el crecimiento del uso se añadieron capacidades para la familia:
 
-- crear tareas;
+- crear Misiones;
 - asignarlas;
 - hacer seguimiento;
 - revisar evidencias;
 - añadir observaciones;
 - validar su finalización;
 - reabrirlas;
+- analizarlas;
 - y cerrarlas.
 
-Esta evolución fue válida y eficiente: permitió construir pronto, observar el uso real y aprender antes de consolidar.
+Durante agosto y septiembre de 2026 la Academia dio un nuevo salto:
+
+- identidad multi-persona y **Persona Activa**;
+- Gestión de Usuarios y niveles de acceso;
+- **Gestión de Misiones** separada de la experiencia normal del alumno;
+- evidencia académica e histórico de solo lectura;
+- propuestas de refuerzo y Análisis Educativo basados en datos reales;
+- Recompensas/Reconocimientos V1 dentro de Mi Camino;
+- nueva base curricular `Curso → Asignatura → Tema` para 6.º;
+- y **Mi Baúl** como espacio personal para conservar contenidos e ideas de valor sin convertirlos en evaluación.
+
+Esta evolución mantiene el principio que permitió crecer desde el inicio:
 
 > **Construimos pronto para aprender antes; consolidamos después para crecer mejor.**
 
-La arquitectura actual reconoce ese origen y, al mismo tiempo, prepara una evolución organizada para los próximos años.
+La arquitectura actual reconoce ese origen y prepara una evolución organizada para los próximos años sin exigir rehacer lo que ya funciona.
 
 ---
 
 ## 3. Las dos formas de crecer
 
-El ADN del producto establece que la Academia acompaña dos dimensiones complementarias:
+El ADN del producto establece que la Academia acompaña dos dimensiones complementarias.
 
 ### 3.1 Crecer en conocimiento académico
 
@@ -259,7 +278,7 @@ y especialistas      │               guía y apoya
 
 ### 4.1 Alumno
 
-Es el actor principal.
+Es el actor principal de la experiencia educativa.
 
 Necesita:
 
@@ -271,18 +290,18 @@ Necesita:
 - reconocer sus logros;
 - y sentir deseo de regresar.
 
-El término oficial del producto es **alumno**.
+El término **alumno** describe su rol educativo. No debe confundirse con `USER` o con la identidad técnica de autenticación.
 
-No se utiliza “usuario” como término principal porque describe una relación técnica y no educativa.
+La Persona sobre la que opera la experiencia puede ser la **Persona Activa**, que no siempre coincide con el usuario autenticado cuando un adulto o profesional autorizado acompaña a otra Persona.
 
 ### 4.2 Familia
 
 La familia acompaña el proceso.
 
-Puede:
+Puede, según permisos:
 
 - identificar necesidades;
-- seleccionar o crear asignaciones;
+- seleccionar o crear Misiones;
 - proponer objetivos;
 - observar el progreso;
 - revisar evidencias;
@@ -296,9 +315,7 @@ Su papel es acompañar, facilitar y validar cuando corresponda.
 
 ### 4.3 Tutor, docente y profesionales
 
-Podrán participar progresivamente en el ecosistema mediante permisos y responsabilidades definidos.
-
-Entre ellos:
+La arquitectura de identidad y relaciones permite incorporar progresivamente:
 
 - tutor o docente;
 - PT;
@@ -306,6 +323,8 @@ Entre ellos:
 - psicólogo;
 - orientador;
 - y otros profesionales autorizados.
+
+La base multi-persona y los niveles de acceso ya existen; la colaboración profesional concreta debe abrirse solo con permisos y casos de uso explícitos.
 
 El producto complementa su trabajo y nunca pretende sustituirlo.
 
@@ -324,16 +343,18 @@ La IA puede:
 - recordar pasos;
 - ayudar a practicar;
 - resumir evidencias;
-- y proponer apoyos.
+- proponer apoyos;
+- y derivar reconocimientos automáticos cuando una regla de alta confianza se sustenta en datos reales suficientes.
 
 No debe:
 
 - sustituir a la familia o al profesional;
 - emitir diagnósticos;
+- etiquetar al alumno;
 - presionar;
 - castigar;
 - juzgar;
-- ni realizar acciones relevantes sin trazabilidad.
+- ni tomar decisiones humanas sensibles sin trazabilidad y el nivel de revisión requerido.
 
 ### 4.5 Arquitectos y responsables de producto
 
@@ -363,7 +384,7 @@ Gestionan:
 - mantenimiento;
 - y operación del producto.
 
-Su experiencia debe mantenerse separada de la experiencia educativa del alumno.
+Su experiencia debe mantenerse separada de la experiencia educativa del alumno y protegida por permisos reales, no solo por visibilidad de interfaz.
 
 ---
 
@@ -388,12 +409,12 @@ Un dominio reúne necesidades y responsabilidades coherentes. No equivale necesa
                       MOTIVACIÓN Y PROGRESO
                             │
                             ├─ Reconocimiento
-                            ├─ Recompensas
-                            ├─ Logros
+                            ├─ Progreso personal
+                            ├─ Constancia
                             └─ Memoria de progreso
 ```
 
-La primera versión de esta arquitectura reconoce siete dominios principales.
+Esta arquitectura reconoce **nueve dominios principales**, desarrollados en las secciones 6 a 14.
 
 ---
 
@@ -401,7 +422,7 @@ La primera versión de esta arquitectura reconoce siete dominios principales.
 
 ### 6.1 Propósito
 
-Organizar aquello que el alumno puede aprender, consultar, practicar o explorar.
+Organizar aquello que el alumno puede aprender, consultar, practicar, conservar o explorar.
 
 ### 6.2 Incluye
 
@@ -417,6 +438,7 @@ Organizar aquello que el alumno puede aprender, consultar, practicar o explorar.
 - canciones;
 - juegos educativos;
 - tests;
+- Mi Baúl como espacio personal curado;
 - y futuros contenidos.
 
 ### 6.3 Principios
@@ -436,20 +458,40 @@ No debe:
 
 - decidir por sí mismo qué debe realizar hoy el alumno;
 - gestionar asignaciones familiares;
-- controlar estados de tareas;
+- controlar estados de Misiones;
 - ni definir recompensas.
 
 Esas responsabilidades pertenecen a otros dominios.
 
 ### 6.5 Mis Cursos
 
-**Mis Cursos** es la materialización actual del aprendizaje académico organizado por curso y asignatura.
+**Mis Cursos** es la materialización del aprendizaje académico organizado por curso y asignatura.
+
+Para la expansión actual de 6.º, la jerarquía estable es:
+
+```text
+Curso
+→ Asignatura
+→ Tema
+```
 
 Su responsabilidad principal es:
 
 > ofrecer contenidos escolares adaptados para comprender, practicar y preparar aprendizajes concretos.
 
+Los nuevos Temas de 6.º deben nacer preparados para generar evidencia académica estructurada cuando exista una actividad evaluable o práctica que lo justifique.
+
 Mis Cursos no representa toda la Academia ni todas las formas de aprender.
+
+### 6.6 Mi Baúl
+
+**Mi Baúl** conserva contenidos e ideas de valor para la Persona Activa: vídeos, artículos, audios, documentos, imágenes, libros, ideas, frases y recursos web, entre otros.
+
+Su contrato es deliberadamente distinto del de Misiones y Evidencias:
+
+> **Guardar algo en Mi Baúl no genera Misión, evidencia, estadística ni recompensa.**
+
+El Baúl sirve para conservar, volver a encontrar y compartir significado; no convierte todo lo que interesa al alumno en una actividad evaluable.
 
 ---
 
@@ -470,15 +512,18 @@ Una experiencia incluye, según corresponda:
 - cierre;
 - y reconocimiento.
 
+No todas las experiencias deben producir todos esos elementos. La evidencia y el reconocimiento se incorporan solo cuando tienen sentido para el propósito real.
+
 ### 7.2 Ejemplos actuales
 
 - lectura y grabación;
-- aventuras matemáticas;
+- Aventuras Matemáticas;
 - casos de Detectives;
-- prácticas;
+- prácticas académicas de 6.º;
 - juegos;
 - retos;
-- tareas libres;
+- Misiones libres;
+- Creciendo por Dentro;
 - y actividades combinadas.
 
 ### 7.3 Mis Aventuras
@@ -517,9 +562,20 @@ Se habilita la grabación
 El alumno escucha y guarda la evidencia
 ```
 
-Este principio surge directamente del uso real: Gloria indicó que no realizó una práctica porque el sistema no le dijo que debía hacerla.
-
 > **Una acción pedagógicamente necesaria debe estar integrada en el flujo y no depender de una instrucción implícita.**
+
+### 7.5 Vista previa e histórico
+
+Cuando una experiencia dispone de **Vista previa**, esta sirve para inspeccionar o validar sin contaminar el trabajo real.
+
+Por tanto, la Vista previa no debe escribir:
+
+- sesiones;
+- evidencias;
+- progreso;
+- ni resultados reales.
+
+Cuando existe consulta histórica, esta debe ser de **solo lectura** y reutilizar las fuentes reales del motor en lugar de crear una segunda persistencia.
 
 ---
 
@@ -533,15 +589,16 @@ Ayudar al alumno a saber:
 - cómo empezar;
 - qué paso sigue;
 - dónde pedir ayuda;
-- y cómo continuar.
+- cómo continuar;
+- y cómo reconocer lo que va construyendo.
 
 ### 8.2 Mi Camino
 
-Mi Camino nació como un tablón personal de asignaciones.
+Mi Camino nació como un tablón personal de asignaciones y hoy es el principal espacio de acompañamiento personal.
 
-Su responsabilidad principal es:
+Su responsabilidad es:
 
-> presentar al alumno, de forma clara y motivadora, las misiones que le han sido asignadas y permitirle avanzar con autonomía.
+> presentar al alumno sus Misiones de forma clara y motivadora, facilitar su avance y hacer visible parte de su camino de crecimiento sin convertirlo en una pantalla administrativa.
 
 Mi Camino:
 
@@ -549,27 +606,29 @@ Mi Camino:
 - prioriza;
 - orienta;
 - conecta con otros espacios;
-- muestra progreso;
+- muestra Misiones;
+- muestra señales de progreso y constancia;
+- integra `Así voy creciendo` y Reconocimientos;
 - y acompaña.
 
 Mi Camino no es:
 
 - un curso;
 - un repositorio general de contenidos;
-- el sistema administrativo completo;
-- ni una herramienta de evaluación.
+- el sistema administrativo de Misiones;
+- ni una herramienta diagnóstica.
 
 ### 8.3 Mi Camino como orquestador
 
-Una misión mostrada en Mi Camino puede conducir a:
+Una Misión mostrada en Mi Camino puede conducir a:
 
-- un contenido de Mis Cursos;
+- un Tema de Mis Cursos;
 - una lectura;
 - una aventura;
 - un juego;
-- una tarea libre;
+- una Misión libre;
 - una actividad física fuera de la pantalla;
-- o una combinación de varias acciones.
+- o una combinación de acciones.
 
 ```text
                      MI CAMINO
@@ -592,7 +651,7 @@ Los referencia y los convierte en una experiencia personal asignada.
 
 ### 9.1 Propósito
 
-Permitir que adultos autorizados creen, asignen, revisen y cierren actividades para un alumno.
+Permitir que adultos autorizados creen, asignen, revisen, analicen y cierren actividades para una Persona.
 
 ### 9.2 Responsabilidades
 
@@ -609,74 +668,52 @@ Incluye:
 - validación;
 - reapertura;
 - cancelación;
+- análisis;
+- propuestas de refuerzo;
+- limpieza controlada de datos de prueba;
 - e historial.
 
-### 9.3 Relación actual con Mi Camino
+### 9.3 Separación actual respecto a Mi Camino
 
-En la implementación actual, la experiencia del alumno y la gestión familiar conviven en el mismo entorno funcional.
+La separación que en v1.0 se describía como dirección evolutiva ya está **materialmente implementada**.
 
-Esta decisión fue válida para:
-
-- construir rápidamente;
-- validar la idea;
-- reducir el coste inicial;
-- y obtener evidencia real de uso.
-
-### 9.4 Evolución recomendada
-
-A medida que aumenten:
-
-- el número de alumnos;
-- los roles;
-- las asignaciones;
-- las reglas;
-- y las necesidades de seguimiento,
-
-se recomienda separar progresivamente:
+Actualmente:
 
 ```text
 EXPERIENCIA DEL ALUMNO
 Mi Camino
-- ver misiones
-- empezar
-- pedir ayuda
-- continuar
-- completar
-- celebrar
+- ver Misiones
+- empezar / continuar
+- finalizar cuando corresponda
+- ver crecimiento y Reconocimientos
 
-EXPERIENCIA DEL ADULTO
-Gestión de Asignaciones
+EXPERIENCIA FAMILIAR / DE GESTIÓN
+Gestión de Misiones
 - crear
 - asignar
 - editar
 - revisar
 - validar
 - analizar
-- cerrar
+- preparar refuerzos
+- limpiar datos de prueba
+- cerrar / reabrir / eliminar cuando corresponda
 ```
 
-### Beneficios
+`Gestión de Misiones` requiere nivel mínimo `gestion`; un alumno con nivel `consulta` no debe verla en su menú ni acceder directamente a ella.
 
-- menor carga cognitiva para el alumno;
-- experiencia más limpia;
-- permisos más claros;
-- mejor escalabilidad multi-alumno;
-- mayor seguridad;
-- y evolución independiente.
+La separación no implica duplicar modelos, visores o persistencia: ambos espacios consumen los mismos contratos y fuentes propietarias según su responsabilidad.
 
-### Costes
+### 9.4 Criterio de evolución
 
-- nuevas rutas o pantallas;
-- separación de componentes;
-- revisión de permisos;
-- posible migración de navegación;
-- y más pruebas.
+La separación puede seguir refinándose si el crecimiento de roles, análisis o colaboración lo exige, pero **no se debe crear una segunda arquitectura de Misiones**.
 
-### Recomendación
+La prioridad es mantener:
 
-No es obligatorio separar inmediatamente ambas experiencias.
-
-Debe realizarse cuando el coste de mantenerlas juntas supere el beneficio de la simplicidad actual.
+- experiencia simple para el alumno;
+- permisos claros;
+- reutilización de contratos;
+- y coherencia multi-persona.
 
 ---
 
@@ -696,7 +733,22 @@ Permitir que las personas que acompañan al alumno compartan información útil 
 - psicólogo;
 - y futuros profesionales autorizados.
 
-### 10.3 Capacidades posibles
+### 10.3 Base actual
+
+La Academia ya dispone de una base transversal para colaboración controlada:
+
+- `PERSON` y `USER` separados conceptualmente;
+- roles y niveles de acceso;
+- relaciones entre Personas;
+- Persona Activa;
+- acceso a otra Persona según relación y nivel;
+- y Gestión de Usuarios para administración.
+
+Esto no significa que todos los flujos profesionales estén ya construidos. Significa que deben reutilizar esta identidad y permisos antes de crear mecanismos paralelos.
+
+### 10.4 Capacidades de colaboración
+
+Pueden incluir:
 
 - observaciones;
 - objetivos;
@@ -706,14 +758,15 @@ Permitir que las personas que acompañan al alumno compartan información útil 
 - validaciones;
 - y coordinación.
 
-### 10.4 Principios
+### 10.5 Principios
 
 - acceso mínimo necesario;
 - consentimiento y privacidad;
 - separación de observaciones adultas y mensajes al alumno;
 - trazabilidad;
 - lenguaje respetuoso;
-- y ausencia de comparaciones entre alumnos.
+- ausencia de comparaciones entre alumnos;
+- y uso de Persona Activa para atribuir correctamente la información.
 
 ---
 
@@ -735,33 +788,45 @@ Favorecer que el alumno:
 
 La Academia no busca que el alumno aprenda únicamente para obtener un premio.
 
-Las recompensas deben:
+El sistema debe:
 
-- celebrar el esfuerzo;
-- reconocer la constancia;
-- hacer visible el progreso;
+- celebrar esfuerzo y crecimiento;
+- reconocer constancia;
+- hacer visible progreso personal;
+- valorar autonomía y cooperación;
+- reconocer el uso constructivo de ayuda;
 - y reforzar una experiencia positiva.
 
-No deben:
+No debe:
 
 - sustituir la motivación interna;
 - comparar alumnos;
 - castigar;
 - generar ansiedad;
-- ni convertir todo aprendizaje en una transacción.
+- convertir el aprendizaje en puntos o monedas;
+- premiar por abrir/clicar/iniciar sesión;
+- ni convertir los hitos en un checklist de colección.
 
-### 11.3 Guacamayas y futuras recompensas
+### 11.3 Recompensas / Reconocimientos V1
 
-La Academia puede utilizar recompensas representadas por guacamayas u otros elementos definidos en la identidad oficial del producto.
+La primera capacidad operativa ya está integrada principalmente en:
 
-La escala concreta, sus niveles y reglas no pertenecen a este documento.
+```text
+Mi Camino
+→ Así voy creciendo
+```
 
-Deberán definirse en documentación específica, alineada con:
+Incluye, según las fases ya consolidadas:
 
-- el ADN;
-- la identidad visual;
-- los personajes oficiales;
-- y el sistema de progreso.
+- Reconocimientos humanos asociados a momentos reales;
+- Guacamayas como hitos especiales con control humano;
+- Reconocimientos automáticos de Lía únicamente sobre señales de alta confianza;
+- reconocimiento de constancia basado en días reales;
+- transparencia motivacional sobre qué comportamientos celebra la Academia.
+
+Los datos `🧪` no cuentan como logros reales y no deben contaminar constancia o Reconocimientos.
+
+Las fases futuras, como Récord Personal o retos cooperativos, no se consideran implementadas hasta que exista producto real y suficiente justificación.
 
 ### 11.4 Personajes Oficiales
 
@@ -780,11 +845,7 @@ No deben:
 - presionar;
 - ni competir con la comprensión.
 
-La definición concreta de Lía, las guacamayas y futuros personajes pertenece a:
-
-```text
-PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md
-```
+La definición concreta de Lía, Guacamayas y otros personajes pertenece a `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`.
 
 ---
 
@@ -792,9 +853,29 @@ PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md
 
 ### 12.1 Propósito
 
-Conservar señales útiles de aprendizaje y crecimiento.
+Conservar señales útiles de aprendizaje y crecimiento sin confundir dato observado con interpretación.
 
-### 12.2 Evidencias
+### 12.2 Responsabilidades separadas
+
+La arquitectura actual distingue:
+
+```text
+Misión
+→ intención / asignación
+
+Sesión o resultado del motor
+→ ejecución real
+
+Evidencia
+→ vínculo auditable entre la Misión y el trabajo realizado
+
+Ver trabajo / resultado histórico
+→ consulta de solo lectura
+```
+
+Esta separación evita duplicar resultados y permite que diferentes motores mantengan sus fuentes especializadas.
+
+### 12.3 Evidencias
 
 Pueden incluir:
 
@@ -804,17 +885,20 @@ Pueden incluir:
 - lecturas;
 - tiempos;
 - intentos;
+- pistas o ayudas;
 - textos;
 - producciones;
 - observaciones;
 - solicitudes de ayuda;
 - y validaciones.
 
-### 12.3 Progreso
+No se inventan métricas que un motor no registra.
+
+### 12.4 Progreso
 
 El progreso no se reduce a una calificación.
 
-Debe reconocer:
+Debe poder reconocer, cuando exista evidencia suficiente:
 
 - comprensión;
 - autonomía;
@@ -825,7 +909,47 @@ Debe reconocer:
 - expresión;
 - y habilidades para la vida.
 
-### 12.4 Perfil y memoria
+Completar una actividad no equivale automáticamente a dominarla.
+
+### 12.5 Análisis Educativo y refuerzo
+
+La Academia ya utiliza el patrón:
+
+```text
+Evidencia real
+↓
+Datos observables
+↓
+Observación / tendencia prudente
+↓
+Propuesta de actuación o refuerzo
+↓
+Revisión humana
+↓
+Misión / acción cuando aporta valor
+↓
+Nueva evidencia
+```
+
+El Análisis Educativo:
+
+- describe evidencia y tendencias;
+- no etiqueta al alumno;
+- separa las métricas propias de cada motor;
+- y mantiene la decisión familiar/humana antes de convertir una propuesta en acción visible cuando corresponda.
+
+### 12.6 Datos de prueba
+
+Una Misión o sesión `🧪` puede recorrer el flujo real para validar funcionalidad, pero no debe contar como historia educativa real del alumno en:
+
+- estadísticas;
+- constancia;
+- propuestas de progreso;
+- ni Recompensas.
+
+Su eliminación solo debe realizarse cuando el vínculo con la Misión o sesión sea suficientemente exacto y seguro.
+
+### 12.7 Perfil y memoria
 
 El producto podrá construir progresivamente un perfil de aprendizaje que permita adaptar la experiencia.
 
@@ -835,9 +959,10 @@ La memoria debe:
 - ser comprensible para la familia;
 - respetar permisos;
 - diferenciar datos observados de inferencias;
-- y evitar etiquetas permanentes.
+- evitar etiquetas permanentes;
+- y preservar trazabilidad suficiente.
 
-El perfil y la memoria son capacidades transversales; sus modelos detallados pertenecen a documentos específicos.
+El perfil y la memoria siguen siendo capacidades transversales cuya ampliación debe apoyarse en datos reales y utilidad observada.
 
 ---
 
@@ -853,11 +978,12 @@ La IA puede ayudar a:
 
 - adaptar explicaciones;
 - generar pistas;
-- ajustar dificultad;
+- ajustar dificultad cuando exista un contrato seguro;
 - proponer pasos;
 - resumir progreso;
 - detectar acciones incompletas;
-- y sugerir próximas experiencias.
+- sugerir próximas experiencias;
+- y derivar señales motivacionales verificables.
 
 ### 13.3 Principios
 
@@ -873,14 +999,16 @@ La IA debe ser:
 
 ### 13.4 Acciones sensibles
 
-La IA no debe modificar automáticamente sin autorización:
+La IA no debe modificar automáticamente sin el contrato y autorización adecuados:
 
-- objetivos;
 - diagnósticos;
 - permisos;
-- estados finales;
-- recompensas relevantes;
-- o decisiones adultas.
+- relaciones entre Personas;
+- decisiones finales de adultos;
+- Guacamayas u otros hitos que requieran control humano;
+- ni estados cuya modificación no pueda verificarse de forma fiable.
+
+La existencia de automatización no elimina la necesidad de límites. Los Reconocimientos automáticos ya implementados son un ejemplo de automatización acotada: se derivan de fuentes reales, con reglas explícitas, deduplicación y exclusión de datos de prueba.
 
 ### 13.5 Personalización progresiva
 
@@ -904,7 +1032,9 @@ Sostener el producto sin contaminar la experiencia educativa.
 Incluye:
 
 - usuarios;
+- Personas;
 - roles;
+- relaciones;
 - permisos;
 - configuración;
 - auditoría;
@@ -917,7 +1047,9 @@ Incluye:
 
 La administración no debe formar parte de la navegación habitual del alumno.
 
-Los adultos solo deben ver las capacidades que correspondan a su rol.
+Los adultos solo deben ver las capacidades que correspondan a su rol y nivel de acceso.
+
+La Academia ya aplica esta separación, por ejemplo, a Gestión de Usuarios y Gestión de Misiones mediante niveles mínimos de acceso.
 
 ---
 
@@ -929,34 +1061,40 @@ No sustituyen a los dominios.
 
 | Espacio actual | Responsabilidad principal | Dominios relacionados |
 |---|---|---|
-| Mis Cursos | Aprendizaje académico organizado | Contenidos · Práctica |
-| Mi Universo | Acceso personal a recursos y experiencias | Contenidos · Experiencias |
-| Mi Camino | Tablón y acompañamiento personal | Acompañamiento · Asignaciones · Progreso |
-| Misiones | Unidad asignable de acción | Experiencias · Acompañamiento |
-| Mis Aventuras | Aprendizaje contextual y habilidades para la vida | Experiencias · Motivación |
+| Mis Cursos | Aprendizaje académico organizado por Curso → Asignatura → Tema | Contenidos · Experiencias · Evidencias |
+| Mi Universo | Acceso personal a experiencias y recursos del alumno | Contenidos · Experiencias · Acompañamiento |
+| Mi Camino | Misiones, acompañamiento y crecimiento visible | Acompañamiento · Asignaciones · Progreso · Motivación |
+| Gestión de Misiones | Gestión familiar/administrativa de Misiones y análisis asociado | Asignaciones · Colaboración · Evidencias · Progreso |
+| Análisis Educativo | Lectura prudente de evidencia real y propuestas de actuación | Progreso · Evidencias · Acompañamiento |
+| Mis Aventuras / Aventuras Matemáticas | Aprendizaje contextual y habilidades para la vida | Experiencias · Motivación |
 | Biblioteca / Rincón de Lectura | Lectura, comprensión, dicción y expresión | Contenidos · Experiencias · Evidencias |
-| Detectives | Resolución contextual de problemas | Experiencias · Práctica |
-| Gestión familiar de tareas | Crear y revisar asignaciones | Asignaciones · Colaboración |
-| Lía | Guía contextual | IA · Acompañamiento · Motivación |
-| Guacamayas | Identidad y celebración | Motivación · Identidad |
+| Detectives | Resolución contextual de problemas | Experiencias · Práctica · Evidencias |
+| Creciendo por Dentro | Reflexión, expresión y crecimiento personal | Experiencias · Acompañamiento · Evidencias cuando corresponde |
+| Mi Baúl | Conservar contenidos e ideas de valor para la Persona Activa | Contenidos · Acompañamiento personal |
+| Calendarios | Organización temporal personal y escolar | Acompañamiento · Organización |
+| Lía | Guía contextual y automatización acotada | IA · Acompañamiento · Motivación |
+| Guacamayas / Reconocimientos | Celebración de progreso real | Motivación · Identidad · Progreso |
+| Gestión de Usuarios | Administración de identidad, roles y relaciones | Administración · Seguridad · Colaboración |
 
 ### 15.1 Sobre Mi Universo
 
-El conocimiento disponible no permite afirmar todavía que Mi Universo deba convertirse en el contenedor único de Mis Cursos y de todas las experiencias.
+Mi Universo es actualmente una agrupación importante de experiencias personales: Mi Camino, Rincón de Lectura, Biblioteca, Escritura, Aventuras Matemáticas, Creciendo por Dentro y, para usuarios autorizados, Gestión de Misiones.
 
-Por ello, esta versión no establece una jerarquía rígida entre:
+No es el contenedor único de toda la Academia.
 
-- Mi Universo;
-- Mis Cursos;
-- Mi Camino;
-- y otros espacios.
+**Mis Cursos**, **Administración** y **Explorar más** mantienen responsabilidades y rutas propias en la navegación actual.
 
-Esa decisión deberá tomarse al revisar:
+Por tanto, la arquitectura no fuerza que todo deba vivir dentro de Mi Universo. Su función es agrupar experiencias personales coherentes, mientras otros dominios conservan sus propios puntos de entrada.
 
-- la navegación real;
-- el uso por Gloria;
-- el crecimiento multi-alumno;
-- y la visión futura del producto.
+### 15.2 Explorar más
+
+`Explorar más` agrupa actualmente:
+
+- Calendarios;
+- Mi Baúl;
+- Adicionales.
+
+Es una agrupación de acceso, no un dominio arquitectónico nuevo.
 
 ---
 
@@ -977,32 +1115,76 @@ Practica
   ↓
 Obtiene retroalimentación
   ↓
-Puede conservar evidencia
+Se conserva evidencia solo cuando el contrato de la experiencia lo requiere
 ```
 
 ### 16.2 Misión asignada
 
 ```text
-Adulto crea una asignación
+Adulto autorizado crea o prepara una Misión
         ↓
-La asignación aparece como misión
+La Misión aparece en Mi Camino cuando corresponde
         ↓
 Mi Camino explica qué debe hacerse
         ↓
 El alumno inicia
         ↓
-La experiencia guía todos los pasos necesarios
+La experiencia guía los pasos necesarios
         ↓
-Se registra evidencia
+Se registra sesión/resultado y evidencia cuando aplica
         ↓
-El alumno completa
+El cierre es automático solo si puede verificarse de forma fiable
         ↓
-El adulto revisa o valida cuando corresponde
+En otros casos el alumno confirma que terminó
         ↓
-La Academia reconoce el progreso
+La familia revisa o valida cuando corresponde
+        ↓
+La Academia puede reconocer el progreso real
 ```
 
-### 16.3 Solicitud de ayuda
+### 16.3 Evidencia, análisis y refuerzo
+
+```text
+Actividad real
+  ↓
+Sesión / evidencia
+  ↓
+Datos observables
+  ↓
+Tendencia prudente
+  ↓
+Propuesta
+  ↓
+Revisión familiar
+  ↓
+Misión / actuación
+  ↓
+Nueva evidencia
+```
+
+### 16.4 Incorporación curricular
+
+```text
+Material oficial del colegio
++ Curso
++ Asignatura
++ Tema
++ notas opcionales
+        ↓
+Análisis y ubicación
+        ↓
+Construcción / reutilización
+        ↓
+Actividad + evidencia cuando corresponde
+        ↓
+Validación
+        ↓
+Tema disponible en la Academia
+```
+
+La familia no necesita conocer ni copiar rutas técnicas para incorporar un Tema al catálogo cuando la Academia puede resolverlas desde la estructura real.
+
+### 16.5 Solicitud de ayuda
 
 ```text
 Alumno encuentra una dificultad
@@ -1013,27 +1195,41 @@ La Academia ofrece una pista gradual
         ↓
 El alumno vuelve a intentar
         ↓
-Si persiste la dificultad, se informa al adulto autorizado
+La señal puede conservarse como dato observable cuando el motor lo registra
+        ↓
+Solo patrones suficientemente fiables alimentan análisis o propuestas
 ```
 
-### 16.4 Evolución del producto
+### 16.6 Guardar en Mi Baúl
+
+```text
+Persona encuentra algo de valor
+        ↓
+Lo guarda / describe / clasifica en Mi Baúl
+        ↓
+Puede volver a consultarlo o compartir significado
+```
+
+Este flujo termina allí: **no crea Misión, evidencia, estadística ni recompensa**.
+
+### 16.7 Evolución del producto
 
 ```text
 Idea
   ↓
 Análisis suficiente
   ↓
-Construcción temprana
+Revisión de capacidades existentes
+  ↓
+Construcción temprana cuando el alcance está claro
   ↓
 Uso real
   ↓
 Observación
   ↓
-Aprendizaje
+Ajuste
   ↓
-Consolidación
-  ↓
-Documentación
+Consolidación documental
   ↓
 Evolución responsable
 ```
@@ -1068,7 +1264,15 @@ La ayuda debe aparecer cuando sea necesaria, pero no hacer el trabajo por el alu
 
 La vista del alumno debe ser más simple que la vista del adulto.
 
-### 17.5 Continuidad entre dispositivos
+Las funciones de gestión deben protegerse mediante permisos y no solo mediante ocultación visual.
+
+### 17.5 Persona Activa coherente
+
+Cuando un adulto autorizado acompaña a otra Persona, la navegación y las operaciones deben conservar la **Persona Activa** y atribuir correctamente sesiones, evidencias y progreso.
+
+La identidad autenticada y la Persona sobre la que se trabaja no deben confundirse.
+
+### 17.6 Continuidad entre dispositivos
 
 La experiencia debe funcionar en:
 
@@ -1086,9 +1290,9 @@ No debe depender de:
 
 > **La tecnología se adapta al alumno; el alumno no debe adaptarse a la tecnología.**
 
-### 17.6 Evidencia antes que opinión
+### 17.7 Evidencia antes que opinión
 
-Las mejoras deben apoyarse en:
+Las mejoras y conclusiones sobre progreso deben apoyarse en:
 
 - uso real;
 - observaciones;
@@ -1096,7 +1300,17 @@ Las mejoras deben apoyarse en:
 - comentarios de Gloria;
 - y aportaciones de la familia y profesionales.
 
-### 17.7 Mejora justificada
+Una señal aislada no se convierte en una etiqueta personal.
+
+### 17.8 Datos de prueba fuera de la historia real
+
+Las pruebas funcionales pueden utilizar el flujo real, pero no deben contaminar métricas, constancia, análisis o Recompensas del alumno.
+
+### 17.9 Reutilizar antes de crear
+
+Antes de crear una pantalla, visor, persistencia o motor nuevo, debe comprobarse si una capacidad existente puede evolucionar o reutilizarse.
+
+### 17.10 Mejora justificada
 
 > **La Academia evoluciona mediante mejoras justificadas, no mediante rediseños continuos.**
 
@@ -1115,39 +1329,37 @@ Toda propuesta relevante debe analizar:
 
 ### 18.1 Arquitectura actual
 
-La Academia ha crecido de forma incremental.
+La Academia ha crecido de forma incremental, pero varios límites que en v1.0 eran todavía aspiracionales ya existen.
 
-Algunos dominios están materializados en páginas separadas.
+Actualmente:
 
-Otros comparten una misma pantalla o módulo.
+- Mi Camino concentra la experiencia del alumno respecto a Misiones y crecimiento visible;
+- Gestión de Misiones concentra la gestión adulta/familiar y exige acceso de gestión;
+- Gestión de Usuarios está separada en Administración;
+- Persona Activa permite operar sobre otra Persona autorizada sin duplicar pantallas;
+- Mis Cursos crece mediante Curso → Asignatura → Tema;
+- evidencia, sesiones y visores históricos mantienen responsabilidades diferenciadas;
+- Análisis Educativo consume datos reales sin persistir un diagnóstico paralelo;
+- Recompensas V1 vive dentro del camino personal, no como un sistema de puntos separado;
+- y Mi Baúl conserva contenido personal sin convertirlo en actividad evaluable.
 
-El caso más representativo es Mi Camino, que hoy reúne:
-
-- experiencia del alumno;
-- presentación de misiones;
-- y gestión familiar de tareas.
-
-Esta convivencia es válida mientras mantenga:
-
-- claridad;
-- seguridad;
-- facilidad de mantenimiento;
-- y utilidad.
+Esta arquitectura sigue siendo incremental y admite componentes heredados, pero la dirección de responsabilidades es hoy más clara que en agosto.
 
 ### 18.2 Arquitectura objetivo
 
 La arquitectura objetivo no exige rehacer el producto.
 
-Busca que cada dominio pueda evolucionar con límites más claros.
+Busca que cada dominio pueda evolucionar con límites claros:
 
 ```text
 EXPERIENCIA DEL ALUMNO
 ├── Explorar
 ├── Aprender
 ├── Practicar
-├── Ver misiones
+├── Ver Misiones
 ├── Pedir ayuda
 ├── Completar
+├── Conservar contenidos personales
 └── Celebrar
 
 ACOMPAÑAMIENTO ADULTO
@@ -1155,19 +1367,21 @@ ACOMPAÑAMIENTO ADULTO
 ├── Asignar
 ├── Revisar
 ├── Observar
+├── Analizar
 ├── Validar
 └── Ajustar
 
 CAPACIDADES TRANSVERSALES
-├── Identidad
+├── Identidad / Persona Activa
 ├── IA
 ├── Progreso
 ├── Evidencias
 ├── Seguridad
+├── Permisos
 └── Datos
 ```
 
-La evolución hacia esta separación será gradual y basada en necesidad real.
+La evolución hacia mayor separación será gradual, reutilizará contratos existentes y se basará en necesidad real.
 
 ---
 
@@ -1187,6 +1401,8 @@ Toda nueva idea relevante deberá responder:
 10. ¿Cómo se comprobará su valor?
 11. ¿Qué documentación deberá actualizarse?
 12. ¿Puede implementarse de forma reversible?
+13. ¿Genera datos? Si los genera, ¿quién es su propietario y para qué se usarán?
+14. ¿Requiere intervención humana o puede verificarse de forma fiable?
 
 ### 19.1 Criterio de decisión
 
@@ -1196,6 +1412,7 @@ Una nueva capacidad se incorpora cuando:
 - aporta valor comprobable;
 - es coherente con el ADN;
 - tiene un dominio propietario;
+- reutiliza lo existente cuando resulta razonable;
 - y su beneficio justifica el coste.
 
 ---
@@ -1204,7 +1421,7 @@ Una nueva capacidad se incorpora cuando:
 
 ### 20.1 ADN del Producto
 
-Define:
+`docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` define:
 
 - quién es la Academia;
 - sus valores;
@@ -1213,57 +1430,51 @@ Define:
 
 Este documento debe respetarlo.
 
-### 20.2 Documentos de Visión
+### 20.2 Decision Log
+
+`docs/project/DECISION_LOG.md` conserva las decisiones transversales y su vigencia.
+
+Esta arquitectura implementa esas decisiones en términos de actores, dominios y experiencia, sin duplicar su justificación histórica.
+
+### 20.3 Documentos de Visión
 
 Explican aspiraciones y principios de dominios específicos.
 
-No deben duplicar la arquitectura global.
+No deben duplicar la arquitectura global ni declararse como estado implementado cuando describen futuro.
 
-### 20.3 Modelos
+### 20.4 Modelos
 
 Definen entidades, estados y relaciones conceptuales o de datos.
 
-### 20.4 Especificaciones
+### 20.5 Especificaciones
 
 Definen el comportamiento concreto de una capacidad.
 
 Ejemplo:
 
 ```text
-SPEC-MIS_TAREAS_Y_MISIONES.md
+docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md
 ```
 
-### 20.5 Estándares
+### 20.6 Estándares
 
 Definen cómo debe realizarse una práctica de forma repetible.
 
-### 20.6 Identidad Visual y Personajes
+### 20.7 Identidad Visual y Personajes
 
-El futuro documento:
-
-```text
-PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md
-```
-
-será propietario de:
+`docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` es propietario de:
 
 - lenguaje visual;
 - iconografía;
 - personajes oficiales;
 - Lía;
-- guacamayas;
+- Guacamayas;
 - reglas de representación;
 - y coherencia emocional.
 
-### 20.7 AI Collaboration Guide
+### 20.8 AI Collaboration Guide
 
-El futuro:
-
-```text
-docs/ai/AI_COLLABORATION_GUIDE.md
-```
-
-enseñará a una IA cómo colaborar con el producto y deberá referenciar esta arquitectura.
+`docs/ai/AI_COLLABORATION_GUIDE.md` define cómo colabora la IA con el desarrollo y mantenimiento del producto y debe respetar esta arquitectura.
 
 ---
 
@@ -1281,11 +1492,11 @@ No debe actualizarse por:
 - cambios menores de interfaz;
 - nuevas páginas que encajen en dominios existentes;
 - correcciones;
-- o detalles de implementación.
+- ni detalles de implementación.
 
 ### 21.1 Cambios de versión
 
-### Versión menor
+#### Versión menor
 
 Cuando:
 
@@ -1293,7 +1504,7 @@ Cuando:
 - se añade una relación;
 - o se incorpora una evolución compatible.
 
-### Versión mayor
+#### Versión mayor
 
 Cuando:
 
@@ -1315,19 +1526,22 @@ Riesgo:
 
 Mitigación:
 
-- mantener Mi Camino como orquestador;
-- y delegar los contenidos y la gestión avanzada en dominios propios.
+- mantener Mi Camino como orquestador y espacio de acompañamiento;
+- delegar contenidos y gestión avanzada en dominios propios.
 
 ### 22.2 Confundir recompensas con aprendizaje
 
 Riesgo:
 
-- motivación exclusivamente externa.
+- motivación exclusivamente externa;
+- aprendizaje transaccional.
 
 Mitigación:
 
-- celebrar el esfuerzo y la autonomía;
-- no premiar cada acción de forma automática.
+- celebrar esfuerzo, autonomía, constancia y crecimiento;
+- no premiar cada acción;
+- evitar puntos, rankings y pérdida de recompensas;
+- derivar automatizaciones solo desde evidencia fiable.
 
 ### 22.3 Introducir IA sin límites
 
@@ -1335,25 +1549,29 @@ Riesgo:
 
 - decisiones opacas;
 - dependencia;
-- o pérdida de supervisión.
+- pérdida de supervisión;
+- o afirmaciones no sustentadas.
 
 Mitigación:
 
 - trazabilidad;
 - límites;
 - permisos;
-- y revisión humana.
+- reglas verificables;
+- y revisión humana cuando corresponda.
 
-### 22.4 Duplicar experiencias
+### 22.4 Duplicar experiencias o visores
 
 Riesgo:
 
-- distintas páginas resolviendo la misma necesidad.
+- distintas páginas resolviendo la misma necesidad;
+- duplicidad de datos o contratos.
 
 Mitigación:
 
 - identificar primero el dominio;
-- evolucionar capacidades existentes antes de crear nuevas.
+- evolucionar capacidades existentes;
+- reutilizar visores especializados y fuentes reales antes de crear nuevos.
 
 ### 22.5 Diseñar solo para escritorio
 
@@ -1379,32 +1597,71 @@ Mitigación:
 
 > **Consolidar los fundamentos antes de ampliar los dominios principales.**
 
+### 22.7 Sobreinterpretar evidencia educativa
+
+Riesgo:
+
+- convertir una observación aislada en una etiqueta;
+- proponer acciones desde señales débiles;
+- confundir finalización con dominio.
+
+Mitigación:
+
+- datos observables primero;
+- repetición o confianza suficiente según el motor;
+- lenguaje prudente;
+- revisión humana;
+- y Análisis Educativo no diagnóstico.
+
+### 22.8 Contaminar la historia real con pruebas
+
+Riesgo:
+
+- estadísticas, constancia o Recompensas incorrectas.
+
+Mitigación:
+
+- marca `🧪`;
+- exclusión transversal de métricas reales;
+- limpieza únicamente mediante vínculos exactos y seguros.
+
+### 22.9 Convertir todo contenido valioso en actividad evaluable
+
+Riesgo:
+
+- presión innecesaria;
+- pérdida de espacios personales de curiosidad e inspiración.
+
+Mitigación:
+
+- mantener contratos como Mi Baúl, donde conservar contenido no genera Misiones, evidencia, estadísticas ni Recompensas.
+
 ---
 
 ## 23. Hoja de evolución recomendada
 
-Esta sección no constituye un compromiso de entrega.
+Esta sección no sustituye `ROADMAP.md` ni constituye un compromiso de entrega.
 
-## Corto plazo
+La arquitectura recomienda mantener estas direcciones:
 
-- consolidar la experiencia actual de Mi Camino;
-- mejorar flujos obligatorios dentro de misiones;
-- separar visualmente acciones del alumno y del adulto;
-- formalizar reconocimiento y recompensas;
-- consolidar identidad visual y personajes;
-- y completar documentación fundacional.
+### Corto plazo
 
-## Medio plazo
+- continuar la expansión curricular real de 6.º mediante `Curso → Asignatura → Tema`;
+- preservar evidencia estructurada desde los nuevos Temas cuando corresponda;
+- completar la revisión técnica pendiente de identidad, auditoría y regresión del núcleo;
+- seguir refinando Mi Camino y Gestión de Misiones sin volver a mezclar sus responsabilidades;
+- mejorar la calidad de fuentes antes de ampliar automatizaciones educativas o motivacionales.
 
-- separar funcionalmente la gestión adulta cuando la complejidad lo justifique;
-- mejorar perfiles y memoria;
-- incorporar permisos de tutores y profesionales;
-- ampliar evidencias;
-- y reforzar personalización.
+### Medio plazo
 
-## Largo plazo
+- ampliar colaboración profesional sobre la base multi-persona existente cuando existan casos reales;
+- mejorar perfiles y memoria solo con datos suficientes;
+- ampliar Análisis Educativo y refuerzos a nuevos motores sin inventar métricas;
+- continuar las fases futuras de Motivación únicamente cuando la evidencia y el valor lo justifiquen.
 
-- soporte multi-alumno completo;
+### Largo plazo
+
+- soporte multi-alumno más amplio;
 - colaboración controlada con profesionales;
 - recomendaciones adaptativas;
 - experiencias longitudinales;
@@ -1423,19 +1680,23 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 
 1. El alumno es el centro del ecosistema.
 2. La Academia diseña experiencias, no colecciones de funcionalidades.
-3. Contenido, acompañamiento, asignación y reconocimiento son responsabilidades diferentes.
+3. Contenido, acompañamiento, asignación, evidencia y reconocimiento son responsabilidades diferentes.
 4. Mi Camino organiza y acompaña; no debe poseer todo el producto.
-5. Las experiencias del alumno y del adulto pueden evolucionar por separado.
-6. La IA acompaña, pero no sustituye ni decide sin límites.
-7. El progreso incluye conocimiento y habilidades para la vida.
-8. Las acciones necesarias deben estar guiadas de forma explícita.
-9. La identidad y los personajes apoyan la experiencia, pero no la dominan.
-10. La tecnología se adapta al alumno.
-11. Se construye pronto para aprender y se consolida para crecer.
-12. Las mejoras deben justificar su coste.
-13. Se evoluciona antes que duplicar.
-14. Cada conocimiento y capacidad debe tener un propietario claro.
-15. El producto debe poder crecer durante años sin perder su ADN.
+5. La gestión adulta se mantiene separada de la experiencia normal del alumno y protegida por permisos.
+6. Persona Activa determina de quién son los datos cuando el contexto difiere del usuario autenticado.
+7. La IA acompaña y puede automatizar solo dentro de contratos explícitos y verificables.
+8. El progreso incluye conocimiento y habilidades para la vida, pero no debe inferirse más de lo que la evidencia permite.
+9. Las acciones necesarias deben estar guiadas de forma explícita.
+10. La identidad y los personajes apoyan la experiencia, pero no la dominan.
+11. La tecnología se adapta al alumno.
+12. La Vista previa no escribe y el histórico es de solo lectura.
+13. Los datos de prueba validan funcionalidad, no forman parte de la historia educativa real.
+14. Se construye pronto para aprender y se consolida para crecer.
+15. Las mejoras deben justificar su coste.
+16. Se reutiliza y evoluciona antes de duplicar.
+17. Cada conocimiento, dato y capacidad debe tener un propietario claro.
+18. No todo contenido valioso debe convertirse en Misión o evidencia.
+19. El producto debe poder crecer durante años sin perder su ADN.
 
 ---
 
@@ -1445,7 +1706,9 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 
 > **Su arquitectura no se organiza alrededor de pantallas inmutables, sino de dominios con responsabilidades claras, capaces de evolucionar de forma independiente y coherente.**
 
-> **Cada nueva capacidad deberá demostrar que mejora una experiencia real, respeta el ADN del producto y aporta un beneficio suficiente para justificar su coste.**
+> **Cada nueva capacidad deberá demostrar que mejora una experiencia real, respeta el ADN del producto, reutiliza adecuadamente lo existente y aporta un beneficio suficiente para justificar su coste.**
+
+> **Los datos y automatizaciones deben servir al aprendizaje sin convertir observaciones en etiquetas, pruebas en historia real ni curiosidad personal en evaluación obligatoria.**
 
 ---
 
@@ -1454,15 +1717,28 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 | ID | Decisión | Estado | Impacto |
 |---|---|---|---|
 | PEA-001 | Organizar la experiencia del producto mediante dominios conceptuales y no mediante pantallas. | Aprobada | Arquitectura del Producto |
-| PEA-002 | Definir Mi Camino como orquestador de asignaciones y acompañamiento, sin convertirlo en contenedor universal. | Aprobada | Mi Camino · Escalabilidad |
-| PEA-003 | Separar progresivamente la experiencia del alumno y la gestión adulta cuando el beneficio justifique el coste. | Aprobada como dirección evolutiva | Alumno · Familia · Permisos |
+| PEA-002 | Definir Mi Camino como orquestador de Misiones y acompañamiento, sin convertirlo en contenedor universal. | Aprobada | Mi Camino · Escalabilidad |
+| PEA-003 | Separar la experiencia del alumno y la gestión adulta, reutilizando los mismos contratos y protegiendo Gestión de Misiones por nivel de acceso. | Aprobada · implementada en su base actual | Alumno · Familia · Permisos |
 | PEA-004 | Integrar explícitamente en el flujo toda acción imprescindible para el objetivo pedagógico. | Aprobada | UX · Aprendizaje |
-| PEA-005 | Utilizar reconocimiento y recompensas para celebrar progreso, esfuerzo y constancia, sin sustituir la motivación interna. | Aprobada | Motivación · Recompensas |
+| PEA-005 | Utilizar Reconocimientos para celebrar progreso, esfuerzo, constancia, autonomía y crecimiento sin convertir el aprendizaje en una transacción. | Aprobada · V1 implementada | Motivación · Recompensas |
 | PEA-006 | Considerar iPad y otros dispositivos táctiles como parte habitual de la experiencia. | Aprobada | Accesibilidad · Multidispositivo |
 | PEA-007 | Evaluar las mejoras arquitectónicas mediante beneficio, coste, impacto, riesgo y reversibilidad. | Aprobada | Evolución Responsable |
+| PEA-008 | Adoptar Persona Activa como contexto funcional transversal cuando la Persona sobre la que se trabaja difiere del usuario autenticado. | Aprobada · implementada | Identidad · Multi-persona |
+| PEA-009 | Separar Misión, sesión/resultado, evidencia y consulta histórica; Vista previa no escribe e histórico es solo lectura. | Aprobada · implementada en motores integrados | Misiones · Evidencias · Trazabilidad |
+| PEA-010 | Convertir evidencia en análisis o refuerzo mediante observaciones prudentes y revisión humana, sin etiquetar al alumno ni inventar métricas. | Aprobada · V1 implementada | Análisis Educativo · Refuerzo |
+| PEA-011 | Mantener datos `🧪` fuera de estadísticas, constancia y Reconocimientos reales. | Aprobada · implementada | Calidad de datos |
+| PEA-012 | Estructurar la expansión curricular mediante Curso → Asignatura → Tema y generar evidencia desde el nacimiento de nuevos Temas cuando corresponda. | Aprobada · base implementada | Mis Cursos · 6.º |
+| PEA-013 | Mantener Mi Baúl como espacio personal curado que no genera Misiones, evidencias, estadísticas ni Recompensas. | Aprobada · implementada | Contenidos · Acompañamiento |
 
 ## DECISIÓN
 
-**Estado:** 🟢 Aprobado  
-**Próximo paso:** Consolidar `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` a partir de la documentación existente de identidad visual y guacamayas.  
-**Impacto:** Arquitectura del Producto · Experiencia del Alumno · Mi Camino · Familia · IA · Evolución Responsable
+| Campo | Valor |
+|---|---|
+| **Estado** | 🟡 Candidato para aprobación |
+| **Versión propuesta** | 1.1 |
+| **Fecha** | 04/09/2026 |
+| **Aprobado por** | Pendiente Product Owner |
+| **Sustituye al aprobarse** | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` v1.0 |
+| **Sustituido por** | — |
+
+**Impacto:** Arquitectura del Producto · Experiencia del Alumno · Persona Activa · Mi Camino · Gestión de Misiones · Familia · IA · Evidencias · Motivación · Evolución Responsable
