@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/DECISION_LOG.md` |
-| **Versión** | 1.1-rc1 |
-| **Estado** | Candidato para aprobación |
-| **Última actualización** | 03/09/2026 |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
+| **Última actualización** | 04/09/2026 |
 | **Propietario** | Gobierno del Producto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Decisiones transversales de arquitectura, producto, experiencia y gobierno que explican por qué la Academia evoluciona de una determinada manera |
@@ -34,6 +34,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 del Decision Log. |
 | 1.1-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Conserva DECISION-001…015 como memoria histórica, añade una lectura explícita de su vigencia actual, incorpora decisiones transversales consolidadas durante agosto/septiembre y sustituye la antigua lista de “próximas decisiones” por asuntos abiertos que todavía no son decisiones. Corrige además la regla antigua que obligaba a modificar siempre el código ante cualquier divergencia documental. |
 | 1.0 | Julio 2026 | Juan Perdomo + IA | Primera versión activa del registro de decisiones; consolida DECISION-001…015 y las primeras decisiones de arquitectura, organización, Cloud y Git. |
 
@@ -1073,11 +1074,11 @@ Y cada decisión importante debe poder explicar de qué manera nos acerca a ese 
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.1 |
-| **Fecha** | 03/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `DECISION_LOG.md` v1.0 |
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.1 |
+| **Fecha de aprobación** | 04/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `DECISION_LOG.md` v1.0 |
 | **Sustituido por** | — |
 
 **Impacto:** Gobierno del Producto · Trazabilidad · Arquitectura · Continuidad · SSOT
