@@ -651,13 +651,27 @@ body.portal-6to{
   .portal-tema__descripcion{font-size:.80rem}
   .portal-tema__pista{font-size:.63rem}
   .portal-tema__recursos{display:none}
+  .portal-catalogo__crecimiento{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    padding:15px;
+  }
+  .portal-catalogo__crecimiento-icono{
+    width:47px;
+    height:47px;
+    flex-basis:47px;
+    border-radius:15px;
+    font-size:1.45rem;
+  }
+  .portal-catalogo__crecimiento p{font-size:.80rem}
   .portal-ayuda{min-height:175px;padding:15px}
   .portal-idea{align-items:flex-start;flex-direction:column}
   .portal-idea__frase{white-space:normal}
 }
 
 /* Dos columnas permanecen en móvil normal para reducir verticalidad. */
-@media(max-width:390px){
+@media(max-width:350px){
   .portal-temas-grid,.portal-ayudas-grid{grid-template-columns:1fr}
   .portal-catalogo__crecimiento{grid-column:auto;min-height:0}
 }
