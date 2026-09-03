@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.4 |
+| **Versión del documento** | 1.5 |
 | **Estado** | Activo |
 | **Última actualización** | 03/09/2026 |
 | **Responsables** | Juan Perdomo + IA |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 03/09/2026 | Juan Perdomo + IA | Cierra formalmente la jornada P0 de sincronización documental del 03Sep2026 después de la aprobación del bloque. Mantiene los P1/P2 fuera de alcance y deja como siguiente frente funcional la expansión curricular progresiva de 6.º, conservando vigentes las líneas técnicas específicas de Identidad, Auditoría y certificación del núcleo. |
 | 1.4 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el Roadmap con el estado real al 03Sep: consolida Gestión de Misiones V1, creación asistida de Repaso Académico, Misiones libres, refuerzos, Análisis Educativo V1, limpieza de datos de prueba, eliminación controlada de Misiones completadas, Recompensas/Reconocimientos V1, recordatorios de calendario y nueva base visual/navegacional de 6.º. Formaliza la expansión curricular de mínima intervención y evidencia obligatoria para nuevos Temas de 6.º. Reubica como evolución futura únicamente las ampliaciones todavía no implementadas. |
 | 1.3 | 30/08/2026 | Juan Perdomo + IA | Registra como implementadas y validadas las propuestas de refuerzo de Detectives y de pruebas académicas de 6.º. Consolida el patrón Evidencia → Observación → Propuesta → Revisión humana → Misión, mantiene la activación familiar antes de mostrar la Misión en Mi Camino y desplaza el siguiente foco funcional hacia la expansión curricular progresiva de 6.º. |
 | 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; reconoce la persistencia existente de Detectives y mantiene como pendiente su uso para propuestas de refuerzo; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
@@ -138,9 +139,9 @@ La actualización de estos estados **no declara cerradas** las líneas técnicas
 
 Alinear las fuentes documentales principales con el producto real y eliminar estados ya superados antes de continuar la expansión curricular.
 
-### Alcance
+### Alcance completado
 
-Priorizar documentación propietaria y estratégica, comenzando por:
+Se sincronizaron las fuentes estratégicas y propietarias P0 identificadas en el inventario, incluyendo:
 
 - `DOCUMENTATION_STANDARD.md`;
 - `SPEC-ANALISIS_EDUCATIVO.md`;
@@ -149,11 +150,13 @@ Priorizar documentación propietaria y estratégica, comenzando por:
 - `PROJECT_MAP.md`;
 - `README.md`;
 - `MASTER_PLAN.md`;
-- estándares, especificaciones y modelos P0 identificados en el inventario documental.
+- estándares, especificaciones y modelos P0 directamente afectados por el producto real al 03Sep2026.
+
+Los documentos P1/P2 permanecen fuera de esta jornada y se revisarán únicamente cuando corresponda.
 
 ### Estado
 
-🚧 En progreso · iniciado 03/09/2026
+✅ **Completado · 03/09/2026**
 
 ---
 
@@ -797,16 +800,19 @@ La visión permanece abierta, pero cada ampliación deberá demostrar valor real
 # 🗺️ 12. Secuencia recomendada
 
 ```text
-AHORA · 03Sep2026
+CIERRE DOCUMENTAL · 03Sep2026
 ────────────────────────────────────────────
-P0  Completar sincronización documental estratégica
+✅  Sincronización documental estratégica P0 completada
+
+AHORA
+────────────────────────────────────────────
 P1  Continuar incorporación progresiva de contenido real de 6.º
 P1  Validar el Modo de Incorporación Curricular con nuevos Temas reales
 
 LÍNEAS TÉCNICAS QUE CONSERVAN VIGENCIA
 ────────────────────────────────────────────
 P0  Cerrar Identidad, Usuarios y Auditoría · en cierre
-P0  Revisar auditoría de Tareas / Misiones · después de sincronización documental
+P0  Revisar auditoría de Tareas / Misiones · siguiente bloque técnico específico
 P0  Certificar núcleo multi-persona · pendiente de certificación específica
 
 SIGUIENTE EXPANSIÓN CURRICULAR
@@ -848,9 +854,9 @@ P3  IA educativa visible para el usuario
 | Base | Recompensas / Reconocimientos V1 | ✅ Implementadas |
 | Base | Recordatorios de Calendario | ✅ Implementados |
 | Base | Portal 6.º + Matemáticas | ✅ Base visual validada |
-| P0 | Sincronización documental 03Sep2026 | 🚧 En progreso |
+| P0 | Sincronización documental 03Sep2026 | ✅ Completada |
 | P0 | Cierre Gestión de Usuarios / Identidad / Auditoría | 🚧 En cierre |
-| P0 | Auditoría de Tareas / Misiones | 🔜 Después de documentación |
+| P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico específico |
 | P0 | Certificación del núcleo multi-persona | 🔜 Pendiente |
 | P1 | Academia 6.º de Primaria | 🚧 Expansión curricular progresiva |
 | P1 | Modo de Incorporación Curricular | ✅ Aprobado · validar con nuevos Temas |
