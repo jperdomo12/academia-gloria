@@ -66,10 +66,13 @@ function formatearFecha(valor) {
   const milisegundos = fechaMs(valor);
   if (!milisegundos) return "Fecha pendiente de sincronización";
 
-  return new Date(milisegundos).toLocaleDateString("es-ES", {
+  return new Date(milisegundos).toLocaleString("es-ES", {
     day: "numeric",
     month: "short",
-    year: "numeric"
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
   });
 }
 
