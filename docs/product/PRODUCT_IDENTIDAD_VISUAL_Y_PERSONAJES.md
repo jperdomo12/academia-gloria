@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` |
-| **Versión** | 1.1-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
 | **Fecha de origen** | 03/08/2026 |
 | **Última actualización** | 04/09/2026 |
 | **Propietario** | Identidad del Producto |
@@ -36,7 +36,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.1-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Resuelve la incoherencia de estado de v1.0; actualiza Lía, Guacamayas y Recompensas contra el producto real; mantiene el modelo semántico como lenguaje conceptual pero pospone catálogo/resolver técnico; elimina conteos no verificados de assets; incorpora reglas de familia visual, peso óptico y validación a tamaño real derivadas de la portada actual. |
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Versión aprobada y activa tras sincronización P1. Resuelve la incoherencia de estado de v1.0; actualiza Lía, Guacamayas y Recompensas contra el producto real; mantiene el modelo semántico como lenguaje conceptual pero pospone catálogo/resolver técnico; elimina conteos no verificados de assets; incorpora reglas de familia visual, peso óptico y validación a tamaño real derivadas de la portada actual. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Documento aprobado como primera versión activa del modelo de Identidad Visual y Personajes Oficiales. |
 | 1.0-rc2 | 03/08/2026 | Juan Perdomo + IA | Candidato previo cuya cabecera quedó sin sincronizar después de la aprobación de v1.0. |
 
@@ -1208,11 +1208,11 @@ Solo se reabrirán si una necesidad futura demuestra que su beneficio supera la 
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.1 |
+| **Estado** | 🟢 Activo |
+| **Versión vigente** | 1.1 |
 | **Fecha** | 04/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` v1.0 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` v1.0 |
 | **Sustituido por** | — |
 
 **Impacto:** Identidad del Producto · Personajes Oficiales · Lía · Guacamayas · Recompensas · Activos Institucionales · Accesibilidad · Evolución Responsable
