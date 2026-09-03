@@ -23,6 +23,39 @@
   <link rel="stylesheet" href="../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="../compartido/css/navegacion-global.css">
   <link rel="stylesheet" href="./baul.css">
+
+  <style>
+    /* Ajustes locales de presentación · Mi Baúl */
+    .baul-boton--crear{
+      min-width:178px;
+      min-height:52px;
+      padding:13px 21px;
+      border:2px solid rgba(255,255,255,.62);
+      font-size:1rem;
+      box-shadow:0 14px 30px rgba(124,58,237,.28);
+    }
+
+    .baul-card__descripcion{
+      min-height:3.1em;
+    }
+
+    .baul-card__mensaje{
+      display:block;
+      margin:6px 0 0;
+      padding:8px 11px 10px;
+      max-height:6.1rem;
+      overflow-y:auto;
+      -webkit-line-clamp:unset;
+      scrollbar-width:thin;
+      scrollbar-color:#e9a6c8 transparent;
+    }
+
+    .baul-card__mensaje::-webkit-scrollbar{width:6px}
+    .baul-card__mensaje::-webkit-scrollbar-thumb{
+      border-radius:999px;
+      background:#e9a6c8;
+    }
+  </style>
 </head>
 
 <body data-page-title="Mi Baúl | Academia Gloria Valentina">
@@ -52,10 +85,10 @@
         </span>
         <button
           id="nuevoElemento"
-          class="baul-boton baul-boton--primario"
+          class="baul-boton baul-boton--primario baul-boton--crear"
           type="button"
           hidden>
-          ➕ Guardar algo
+          + Crear algo
         </button>
       </div>
     </header>
