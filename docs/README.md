@@ -1,50 +1,46 @@
-# Documentación Oficial
+# 📚 Documentación Oficial
+## 🌈 Academia Gloria Valentina
 
-
-## Antes de comenzar...
-
-Si quieres comprender el propósito y la filosofía de la Academia Gloria Valentina, te recomendamos comenzar leyendo:
-
-📖 `docs/FOUNDATION.md`
-
-Este documento explica la visión, los principios y la razón de ser del proyecto.
-##
-
-
-## Academia Gloria Valentina
+> **¿Primera vez en el proyecto?** Empieza por `docs/FOUNDATION.md`: explica por qué existe la Academia y qué principios humanos no deben perderse al evolucionarla.
 
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 22/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
 
-## Documentos relacionados
+## 🔗 Documentos relacionados
 
 | Documento | Relación |
 |---|---|
-| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define la arquitectura, dominios, propiedad y ciclo de vida del conocimiento. |
-| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** define cómo se crean, estructuran, versionan y mantienen los documentos oficiales. |
-| `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta:** define propósito, identidad y principios del producto. |
-| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Complementa:** define el modelo general de colaboración con IA. |
-| `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** define la incorporación rápida de una nueva IA al proyecto. |
-| `docs/project/PROJECT_ROLES.md` | **Complementa:** define roles, responsabilidades y autoridad. |
-| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Estándar relevante:** gobierna la creación, adaptación, incorporación y validación de Temas Académicos. |
+| `docs/FOUNDATION.md` | **Fundamenta:** propósito humano y principios que gobiernan toda la Academia. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** arquitectura, dominios, propiedad y ciclo de vida del conocimiento. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** cómo crear, estructurar, versionar y mantener documentación oficial. |
+| `docs/project/PROJECT_MAP.md` | **Orienta:** dónde vive cada parte del repositorio y qué fuente es propietaria. |
+| `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta:** identidad y principios del producto/proyecto. |
+| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Complementa:** modelo general de colaboración con IA. |
+| `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** incorporación rápida de una nueva IA al proyecto. |
+| `docs/project/PROJECT_ROLES.md` | **Complementa:** roles, responsabilidades y autoridad. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia y expansión curricular. |
+| `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Implementa/documenta:** consumo de evidencias para análisis y fortalecimiento. |
 
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.0 | 27/07/2026 | Equipo del proyecto | Primera versión del índice y orientación general de la documentación. |
-| 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Actualización integral para reflejar la arquitectura documental vigente. Incorpora `ai/`, `product/` y `history/`, actualiza la ruta de lectura, elimina referencias obsoletas, adopta la estructura de `DOCUMENTATION_STANDARD.md` y conserva los principios documentales y convenciones resumidas de la versión anterior. |
+| 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal con la estructura documental real. Incorpora `manuales/`, `specifications/` y `tech/`, corrige la responsabilidad de `models/`, añade `PROJECT_MAP.md` como mapa operativo y amplía la ruta para nuevos Temas de 6.º con evidencia y Análisis Educativo. Registra la jornada de sincronización documental P0 del 03Sep2026. |
 | 1.2 | 22/08/2026 | Product Owner + AI Collaborator | Incorpora el estándar activo de Contenidos Académicos y Material Escolar y una ruta específica para diseñar o incorporar un Tema Académico. |
+| 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Actualización integral para reflejar la arquitectura documental vigente. Incorpora `ai/`, `product/` y `history/`, actualiza la ruta de lectura, elimina referencias obsoletas, adopta la estructura de `DOCUMENTATION_STANDARD.md` y conserva los principios documentales y convenciones resumidas de la versión anterior. |
+| 1.0 | 27/07/2026 | Equipo del proyecto | Primera versión del índice y orientación general de la documentación. |
 
-## 1. Propósito
+---
+
+## 🎯 1. Propósito
 
 Ser el **punto único de entrada** a la documentación oficial de la Academia Gloria Valentina.
 
@@ -52,265 +48,334 @@ Este documento permite:
 
 - comprender cómo está organizada `docs/`;
 - localizar rápidamente las fuentes oficiales;
-- conocer la ruta recomendada de lectura;
+- conocer una ruta de lectura proporcional a la tarea;
 - distinguir documentación activa de histórica;
-- y orientar a personas e IA sin depender de conversaciones anteriores.
+- orientar a personas e IA sin depender de conversaciones anteriores;
+- y evitar que una nueva necesidad termine documentada en el lugar equivocado.
 
-## 2. Alcance
+---
+
+## 📐 2. Alcance
 
 Este README describe la estructura documental de alto nivel y facilita su navegación.
 
 No sustituye:
 
 - `DOCUMENTATION_ARCHITECTURE.md`, que gobierna la arquitectura documental;
-- `DOCUMENTATION_STANDARD.md`, que gobierna la construcción y mantenimiento de documentos;
+- `DOCUMENTATION_STANDARD.md`, que gobierna construcción y mantenimiento;
+- `PROJECT_MAP.md`, que mapea el repositorio físico y propietarios;
 - ni los documentos propietarios de cada dominio.
 
-## 3. Principios documentales
+---
 
-### 3.1 Fuente única de verdad — SSOT
+## 🧭 3. Principios documentales rápidos
 
-Cada conocimiento importante debe tener un único documento propietario.
+### 3.1 Una verdad importante, un propietario
 
-Los demás documentos pueden enlazarlo, resumirlo brevemente o explicar su relación con otros componentes, pero no deben mantener una segunda definición completa que pueda evolucionar de forma independiente.
+Cada conocimiento estable debe tener una fuente propietaria reconocible.
 
-> **Una verdad importante, un propietario documental.**
+Otros documentos pueden enlazarla o resumirla, pero no mantener una segunda definición normativa que evolucione de forma independiente.
 
 ### 3.2 Una pregunta principal por documento
 
-Cada documento debe responder principalmente a una pregunta y mantener una responsabilidad claramente delimitada.
+Un documento debe tener responsabilidad clara y delimitada.
 
 ### 3.3 Actualizar antes que crear
 
-Antes de crear un documento nuevo debe comprobarse:
+Antes de crear un archivo nuevo:
 
-1. si el conocimiento ya tiene propietario;
-2. si puede actualizarse un documento existente;
-3. si el nuevo documento responde a una pregunta realmente distinta;
-4. y si aporta valor suficiente para justificar su mantenimiento.
+1. buscar el conocimiento existente;
+2. identificar su propietario;
+3. comprobar si el propietario puede evolucionar;
+4. crear solo cuando exista una pregunta distinta y un hueco real.
 
-### 3.4 La documentación acompaña al producto
+### 3.4 Producto real antes que afirmación documental
 
-La documentación debe preservar conocimiento, facilitar decisiones y acompañar el desarrollo sin convertirse en un bloqueador.
+Cuando un documento declara una capacidad como implementada debe haberse contrastado con las fuentes reales suficientes: código, comportamiento, datos o entregas fusionadas según corresponda.
 
-Cuando el análisis deja de aportar decisiones nuevas, se construye, se valida y después se consolida el conocimiento estable.
+### 3.5 Conversación no es SSOT
 
-### 3.5 Evolucionar, no desechar
+Un chat puede originar un acuerdo, pero el conocimiento estable debe consolidarse en su fuente propietaria:
 
-Los documentos existentes deben evolucionarse con cambios mínimos sobre la versión aprobada:
+```text
+Conversación / desarrollo
+→ acuerdo validado
+→ identificar propietario
+→ consolidar conocimiento estable
+→ historial de versión
+```
 
-- conservar lo que sigue siendo válido;
-- actualizar lo que quedó desfasado;
-- mover lo que pertenece a otro propietario;
-- y eliminar únicamente duplicidades u obsolescencia confirmada.
+### 3.6 Evolucionar, no desechar
 
-## 4. Estructura documental
+Preservar lo válido, actualizar lo desfasado y eliminar solo duplicidad/obsolescencia confirmada.
+
+---
+
+## 🗂️ 4. Estructura documental actual
 
 ```text
 docs/
-├── ai/            Colaboración e incorporación de IA
-├── history/       Documentos históricos o sustituidos
-├── models/        Modelos funcionales y especificaciones
-├── product/       Arquitectura e identidad del producto
-├── project/       Gobierno, planificación y operación
-├── standards/     Estándares funcionales y técnicos
-├── vision/        Visión estratégica y evolución
+├── README.md
+├── FOUNDATION.md
 ├── DOCUMENTATION_ARCHITECTURE.md
 ├── DOCUMENTATION_STANDARD.md
-└── README.md
+├── CARTA_A_GLORIA.md
+│
+├── ai/              Colaboración e incorporación de IA
+├── history/         Documentación histórica/sustituida
+├── manuales/        Guías operativas para uso/administración
+├── models/          Modelos conceptuales
+├── product/         Arquitectura, identidad y diseños de producto
+├── project/         Gobierno, planificación, releases y operación
+├── specifications/  Especificaciones funcionales de capacidades
+├── standards/       Reglas y estándares reutilizables
+├── tech/            Referencias y auditorías técnicas
+└── vision/          Visión estratégica y evoluciones conceptuales
 ```
 
-## 5. Descripción de dominios
+---
+
+## 📚 5. Responsabilidad por dominio
 
 | Carpeta | Responsabilidad |
 |---|---|
 | `ai/` | Modelo de colaboración con IA y protocolos de incorporación. |
-| `history/` | Documentos sustituidos o históricos. No constituyen fuente oficial activa. |
-| `models/` | Modelos conceptuales y especificaciones funcionales del producto. |
-| `product/` | Arquitectura de experiencia, identidad y otros elementos estructurales del producto. |
-| `project/` | Gobierno, ADN, planificación, workflow, roles, decisiones y evolución del proyecto. |
-| `standards/` | Estándares reutilizables y reglas transversales. |
-| `vision/` | Visiones de producto, módulos y evolución futura. |
+| `history/` | Documentos sustituidos/históricos; no son fuente activa cuando existe sucesor. |
+| `manuales/` | Procedimientos operativos orientados a uso o administración. |
+| `models/` | Representación conceptual de entidades, relaciones y comportamiento; evita convertirse en segunda norma. |
+| `product/` | Arquitectura de experiencia, identidad, personajes y diseños de producto. |
+| `project/` | Gobierno, planificación, roles, decisiones, releases, workflow y mapa del proyecto. |
+| `specifications/` | Comportamiento funcional específico y verificable de capacidades/módulos. |
+| `standards/` | Reglas normativas reutilizables y contratos transversales. |
+| `tech/` | Auditorías, transiciones y decisiones técnicas específicas que no pertenecen a un estándar funcional. |
+| `vision/` | Visiones y modelos futuros/estratégicos que no deben confundirse con implementación actual. |
 
-## 6. Ruta recomendada de lectura
+---
 
-### 6.1 Comprender el proyecto
+## 🛣️ 6. Rutas recomendadas de lectura
+
+### 6.1 Comprender la esencia del proyecto
+
+1. `docs/FOUNDATION.md`
+2. `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md`
+3. `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md`
+
+### 6.2 Comprender la documentación
 
 1. `docs/DOCUMENTATION_ARCHITECTURE.md`
 2. `docs/DOCUMENTATION_STANDARD.md`
-3. `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md`
+3. `docs/project/PROJECT_MAP.md`
 
-### 6.2 Comprender la colaboración
+### 6.3 Incorporar una nueva IA o retomar el proyecto
 
-4. `docs/ai/AI_COLLABORATION_GUIDE.md`
-5. `docs/ai/AI_CHAT_BOOTSTRAP.md`
-6. `docs/project/PROJECT_ROLES.md`
+1. `AGENTS.md`
+2. `docs/ai/AI_CHAT_BOOTSTRAP.md`
+3. `docs/ai/AI_COLLABORATION_GUIDE.md`
+4. `docs/project/PROJECT_ROLES.md`
+5. los documentos propietarios de la tarea concreta.
 
-### 6.3 Comprender cómo se construye
+### 6.4 Comprender cómo se desarrolla producto
 
-7. `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md`
+1. `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md`
+2. `docs/project/ROADMAP.md`
+3. `docs/project/RELEASE_NOTES.md`
+4. especificación/estándar del bloque que se vaya a tocar.
 
-### 6.4 Comprender el producto
+### 6.5 Comprender la experiencia del producto
 
-8. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md`
-9. `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`
+1. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md`
+2. `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`
+3. el estándar/especificación del módulo concreto.
 
-### 6.5 Profundizar en un dominio
+### 6.6 Incorporar un nuevo Tema Académico de 6.º
 
-Consultar únicamente los documentos relevantes dentro de:
+Ruta mínima recomendada:
 
-- `models/`;
-- `standards/`;
-- `vision/`;
-- y cualquier documento propietario identificado por la arquitectura.
+1. `AGENTS.md`
+2. `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
+3. `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md`
+4. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md`
+5. `docs/project/PROJECT_MAP.md`
+6. especificación del módulo/Misiones cuando aplique;
+7. `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` para confirmar que la evidencia producida será reutilizable.
 
-No es necesario leer todo el repositorio documental para realizar una tarea concreta.
+Entrada normal suficiente para la familia:
 
-### 6.6 Diseñar o incorporar un Tema Académico
+```text
+material oficial del colegio
++ curso
++ materia
++ nombre del Tema
++ notas opcionales
+```
 
-1. `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
-2. `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md`
-3. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md`
-4. La especificación del módulo o de Misiones, cuando corresponda.
+La AI Collaborator debe resolver la ubicación `Curso → Asignatura → Tema`, estructura técnica, reutilización, evidencia, histórico, análisis y fortalecimiento aplicando los estándares vigentes.
 
-## 7. Principios de navegación
+### 6.7 Trabajar con Misiones
 
-### 7.1 Fuente oficial antes que conversación
+1. `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
+2. `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md`
+3. `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` si interviene consulta de evidencia;
+4. `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` si intervienen análisis/refuerzos.
 
-Cuando exista una fuente oficial, prevalece sobre:
+### 6.8 Recompensas / Reconocimientos
 
-- conversaciones anteriores;
+1. `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md`
+2. `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md`
+3. estándares de Misiones/evidencias cuando el reconocimiento dependa de actividad real.
+
+---
+
+## 🔎 7. Principios de navegación documental
+
+### Fuente oficial antes que conversación
+
+Cuando existe fuente activa, prevalece sobre:
+
+- conversaciones;
 - borradores;
 - copias;
-- documentos históricos.
+- documentación histórica.
 
-### 7.2 Documento propietario antes que duplicación
+### Documento propietario antes que duplicación
 
-Antes de crear conocimiento nuevo debe identificarse dónde vive oficialmente.
+Antes de añadir una regla, identificar quién debe poseerla.
 
-### 7.3 Documentación activa antes que histórica
+### Documentación activa antes que histórica
 
-Los documentos de `history/` se conservan por trazabilidad.
+`docs/history/` conserva contexto; no gobierna cuando existe sucesor activo.
 
-No deben utilizarse como fuente vigente cuando exista un documento activo que los sustituya.
+### Lectura proporcional
 
-### 7.4 Lectura proporcional
+No es necesario leer todo `docs/` para cada tarea. Leer:
 
-Cada colaborador debe consultar:
+- reglas generales necesarias;
+- propietario del dominio;
+- fuentes directamente relacionadas.
 
-- el núcleo mínimo necesario;
-- el documento propietario;
-- y las fuentes directamente relacionadas con su tarea.
+---
 
-## 8. Estado general
+## 📊 8. Estado documental al 03/09/2026
 
-### 8.1 Base fundacional
-
-La arquitectura fundacional incluye actualmente:
+### Base consolidada
 
 - arquitectura documental;
-- estándar documental;
-- ADN;
-- arquitectura de experiencia;
-- identidad visual y personajes;
+- estándar documental v1.2;
+- Foundation/ADN;
 - colaboración con IA;
-- bootstrap de IA;
-- workflow de desarrollo;
-- y roles del proyecto.
+- workflow;
+- roles del proyecto;
+- arquitectura de experiencia;
+- identidad visual;
+- estándar académico de 6.º y material escolar.
 
-### 8.2 Documentación en consolidación
+### Nuevas fuentes propietarias relevantes
 
-Continúan evolucionando progresivamente:
+- `SPEC-ANALISIS_EDUCATIVO.md` — V1 implementada y contrato de consumo de evidencias;
+- `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` v1.3 — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º.
 
-- modelos;
-- estándares heredados;
-- visiones;
-- planificación;
-- documentos históricos;
-- y documentación específica de módulos.
+### Jornada P0 de sincronización
 
-La consolidación documental no debe bloquear la evolución del producto.
+El 03/09/2026 se inició una revisión priorizada de las fuentes principales para alinear documentación con el producto real.
 
-### 8.3 Panorama ejecutivo
+Orden operativo:
 
-| Área | Estado |
-|---|---|
-| Arquitectura y gobierno documental | Consolidado |
-| Documentos fundacionales | Consolidado |
-| Colaboración con IA y workflow | Consolidado |
-| Modelos y especificaciones | En revisión progresiva |
-| Estándares heredados | En revisión progresiva |
-| Visiones de módulos | En clasificación |
-| Documentos históricos | Organizados en `history/` |
-| Arquitectura de recursos e identidad técnica | Pendiente de evolución con el producto |
+```text
+Inventario
+→ P0 / P1 / P2
+→ propietario
+→ contraste con producto real
+→ actualización mínima suficiente
+→ Quality Gate
+```
 
+La jornada no busca reescribir todos los documentos ni bloquear el desarrollo.
 
-## 9. Carpeta `history/`
+---
 
-`docs/history/` contiene documentos que:
+## 🗃️ 9. `docs/history/`
+
+Contiene documentos que:
 
 - fueron sustituidos;
 - dejaron de ser fuente oficial;
 - representan una fotografía histórica;
 - o se conservan por trazabilidad.
 
-Un documento histórico debe indicar, cuando sea posible:
+Cuando sea posible, un histórico debe indicar:
 
-- su estado;
+- estado;
 - motivo de sustitución;
 - fecha;
-- y documento vigente que lo reemplaza.
+- documento vigente sucesor.
 
-Los documentos de `history/` no forman parte de la ruta normal de lectura.
+No forma parte de la ruta normal de lectura.
 
-## 10. Convenciones documentales resumidas
+---
 
-Las reglas completas se mantienen en `docs/DOCUMENTATION_STANDARD.md`.
+## ✅ 10. Convenciones resumidas
 
-Como orientación rápida:
+Las reglas completas viven en `DOCUMENTATION_STANDARD.md`.
 
-- todo documento oficial debe incluir metadatos, historial y estado;
-- los documentos aprobados mantienen un nombre estable y la versión dentro de su cabecera;
-- deben utilizarse rutas claras y referencias al documento propietario;
-- no deben crearse copias denominadas `final`, `nuevo`, `corregido` o equivalentes;
-- los documentos oficiales deben construirse desde el inicio con la estructura aplicable del estándar;
-- y deben entregarse completos como archivos listos para revisión.
+Recordatorio rápido:
 
-No todos los cambios del producto requieren actualizar toda la documentación. Solo se actualizan las fuentes afectadas.
+- metadatos coherentes;
+- 🕘 historial obligatorio y preservado;
+- estado canónico;
+- nombre estable para documentos activos;
+- una pregunta principal;
+- propietario claro;
+- referencias a fuentes relacionadas;
+- distinguir `Implementado / En desarrollo / Propuesto / Visión futura`;
+- no usar copias `final`, `nuevo`, `corregido` como estrategia de versionado;
+- iconos pueden mejorar escaneabilidad, pero **el texto es normativo**;
+- antes de declarar “Implementado”, contrastar producto real;
+- actualizar solo las fuentes afectadas.
 
-## 11. Mantenimiento
+---
 
-Este README debe actualizarse cuando:
+## 🔄 11. Mantenimiento
+
+Actualizar este README cuando:
 
 - cambie la estructura de `docs/`;
-- se incorpore o elimine un dominio documental;
-- cambie significativamente la ruta recomendada de lectura;
-- o aparezca una nueva fuente fundacional.
+- aparezca/elimine una familia documental;
+- cambie de forma significativa la ruta de lectura;
+- se incorpore una fuente propietaria de alto impacto que deba ser visible desde el portal;
+- cambie el procedimiento general de incorporación de IA o contenido académico.
 
-Los cambios internos de un documento que no afecten la navegación general no requieren actualizar este README.
+No requiere actualización por cada cambio interno de un documento.
 
-## Decisiones adoptadas
+---
 
-| ID | Decisión | Estado | Impacto |
-|---|---|---|---|
-| README-001 | Establecer `docs/README.md` como portal único de entrada a la documentación. | Aprobado | Navegación · Onboarding |
-| README-002 | Incorporar formalmente `ai/`, `product/` y `history/` a la estructura visible. | Aprobado | Arquitectura Documental |
-| README-003 | Definir `history/` como dominio no activo y fuera de la ruta normal de lectura. | Aprobado | Trazabilidad |
-| README-004 | Utilizar una ruta de lectura progresiva en lugar de exigir lectura completa de `docs/`. | Aprobado | Eficacia |
-| README-005 | Mantener este README como mapa, evitando duplicar el contenido de los documentos propietarios. | Aprobado | SSOT · Mantenibilidad |
-| README-006 | Conservar un resumen operativo de los principios documentales sin sustituir a `DOCUMENTATION_STANDARD.md`. | Aprobado | Continuidad · Eficacia |
-| README-007 | Evolucionar documentos existentes mediante cambios mínimos sobre la versión vigente. | Aprobado | Preservación del conocimiento |
-| README-008 | Incorporar una ruta específica y el estándar propietario para diseñar o incorporar Temas Académicos. | Aprobado | Navegación · Aprendizaje Académico |
+## 📌 12. Decisiones adoptadas
 
-## DECISIÓN
+| ID | Decisión | Estado |
+|---|---|---|
+| README-001 | `docs/README.md` es el portal único de entrada a la documentación oficial. | Aprobada |
+| README-002 | La estructura visible debe reflejar todas las familias documentales activas reales. | Aprobada |
+| README-003 | `history/` es dominio no activo y queda fuera de la ruta normal de lectura. | Aprobada |
+| README-004 | Utilizar rutas de lectura proporcionales en lugar de exigir leer todo `docs/`. | Aprobada |
+| README-005 | Este README funciona como mapa y no duplica normativa de propietarios. | Aprobada |
+| README-006 | Mantener un resumen operativo de principios sin sustituir `DOCUMENTATION_STANDARD.md`. | Aprobada |
+| README-007 | Evolucionar documentos mediante cambios mínimos y preservar conocimiento válido. | Aprobada |
+| README-008 | Mantener una ruta específica para incorporación de Temas Académicos. | Aprobada |
+| README-009 | Los nuevos Temas de 6.º deben considerar desde su incorporación evidencia reutilizable por Análisis Educativo/fortalecimiento. | Aprobada |
+| README-010 | `PROJECT_MAP.md` forma parte de la ruta de orientación para localizar propietarios físicos/documentales. | Aprobada |
+
+---
+
+## ✅ DECISIÓN
 
 | Campo | Valor |
 |---|---|
-| **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.2 |
-| **Fecha de aprobación** | 22/08/2026 |
-| **Aprobado por** | Product Owner |
-| **Sustituye** | Versión anterior de `docs/README.md` |
-| **Sustituido por** | — |
+| **Estado** | Activo |
+| **Versión activa** | 1.3 |
+| **Última sincronización** | 03/09/2026 |
+| **Portal documental** | `docs/README.md` |
+| **Gobierno de estructura** | `DOCUMENTATION_ARCHITECTURE.md` |
+| **Gobierno de calidad/formato** | `DOCUMENTATION_STANDARD.md` |
+| **Mapa físico/propietarios** | `project/PROJECT_MAP.md` |
+| **Principio** | Leer proporcionalmente, localizar propietario, reutilizar y consolidar solo conocimiento estable. |
 
-**Impacto:** Navegación · Arquitectura Documental · Onboarding · Trazabilidad
+**Impacto:** Navegación · Arquitectura Documental · Onboarding · Trazabilidad · Incorporación Académica

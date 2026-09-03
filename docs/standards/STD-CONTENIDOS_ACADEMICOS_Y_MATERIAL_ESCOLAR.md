@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 30/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -25,12 +25,14 @@
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Complementa:** reglas de asignación, seguimiento y relación entre actividad y Misión. |
 | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional vigente de Misiones y evidencias. |
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Complementa:** presentación familiar de las actividades y evidencias realizadas. |
+| `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Complementa e implementa:** consumo de evidencias para reportes descriptivos, tendencias y propuestas de fortalecimiento. |
 | `compartido/js/sesiones-academicas.js` | **Implementa:** contrato compartido vigente de persistencia y consulta de sesiones académicas. |
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Refuerza el **Modo de Incorporación Curricular de una sola instrucción** como ciclo de mínima intervención: material + curso/materia/tema + notas opcionales → análisis → ubicación `Curso → Asignatura → Tema` → creación de estructura solo si hace falta → construcción aplicando todos los estándares vigentes → evidencia/analítica/refuerzo → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. Establece como requisito que **todo nuevo Tema de 6.º genere evidencia académica estructurada y reutilizable** por Trabajo realizado, Análisis Educativo, estadísticas y propuestas de fortalecimiento, sin crear persistencias privadas por Tema. |
 | 1.2 | 30/08/2026 | Product Owner + AI Collaborator | Formaliza el **Modo de Incorporación Curricular de una sola instrucción** para 6.º: material + curso/materia/tema como entrada suficiente, trabajo interno sin interacciones administrativas, aclaraciones solo ante bloqueos académicos materiales, entrega `YA PUEDES PROBAR` y cierre posterior a la aprobación mediante auditoría, documentación, PR y merge. Sincroniza además el estado ya implementado de propuestas de refuerzo académico de Puente y Fracciones. |
 | 1.1 | 29/08/2026 | Product Owner + AI Collaborator | Sincroniza el estándar con la implementación validada de Puente y Fracciones: `sesion-academica-v1`, persistencia de pruebas, evidencia de Misión `sesion_academica`, visor histórico de solo lectura, modo Vista previa sin escrituras y compatibilidad de Misiones/temas heredados de 5.º sin migración masiva. Mantiene como pendiente la generación de propuestas de refuerzo desde resultados académicos. |
 | 1.0 | 22/08/2026 | Product Owner + AI Collaborator | Aprobación de la Base Académica de 6.º. Consolida tiempo cognitivo, exigencia sin presión emocional alta, reto primero con apoyo progresivo, reto productivo, foco en el paso actual, comprensión lingüística de problemas, separación entre métricas internas y visibles, pausa estratégica y valoración del proceso. No declara implementación técnica. |
@@ -54,10 +56,12 @@ El resultado esperado es que, cuando la familia comparta material del colegio �
 4. adaptar la experiencia para facilitar comprensión y autonomía;
 5. seleccionar los recursos pedagógicos adecuados;
 6. crear práctica progresiva y retroalimentación formativa;
-7. registrar datos útiles cuando corresponda;
-8. generar evidencias vinculables a Misiones;
-9. identificar oportunidades de refuerzo sin etiquetar al alumno;
-10. y mantener una experiencia visual coherente con la Academia.
+7. generar evidencia académica estructurada y útil en todo nuevo Tema de 6.º;
+8. hacer esa evidencia reutilizable por Trabajo realizado, análisis estadístico/educativo y evolución;
+9. generar evidencias vinculables a Misiones cuando la ejecución procede de una Misión;
+10. identificar oportunidades de refuerzo sin etiquetar al alumno;
+11. proponer acciones de fortalecimiento cuando exista evidencia suficiente;
+12. y mantener una experiencia visual coherente con la Academia.
 
 ---
 
@@ -77,7 +81,9 @@ Este estándar gobierna:
 - pruebas de estudio y comprobaciones formativas;
 - criterios de accesibilidad cognitiva y lingüística;
 - evidencia de actividad y resultados observables;
+- capacidad de reutilizar la evidencia en análisis estadístico/educativo;
 - retroalimentación educativa derivada de datos;
+- propuestas de fortalecimiento derivadas de señales observables suficientes;
 - y el proceso de incorporación de nuevos temas.
 
 ### 2.2 Fuera de alcance
@@ -123,7 +129,7 @@ Entre los patrones ya validados se encuentran:
 - práctica contextualizada;
 - y test de repaso.
 
-A 30/08/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia, Misiones y propuestas de refuerzo:
+A 03/09/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia, Misiones y propuestas de refuerzo:
 
 - **Puente de 5.º a 6.º**;
 - **Fracciones**.
@@ -253,6 +259,8 @@ COMPROBACIÓN FORMATIVA
         ↓
 REGISTRO / EVIDENCIA
         ↓
+ANÁLISIS EDUCATIVO
+        ↓
 RETROALIMENTACIÓN
         ↓
 REFUERZO O CONTINUIDAD
@@ -303,6 +311,8 @@ A continuación se decidirá:
 - qué debe recordarse;
 - qué conviene producir o resolver;
 - qué recursos aportan valor;
+- qué evidencia académica útil debe producir el Tema;
+- qué focos/bloques deben identificarse para permitir análisis posterior;
 - qué información merece persistirse;
 - y qué cierre resulta útil.
 
@@ -315,7 +325,8 @@ La experiencia debe contrastarse contra el material original para confirmar:
 - ausencia de contradicciones;
 - instrucciones claras;
 - nivel adecuado;
-- y correspondencia entre práctica y contenido explicado.
+- correspondencia entre práctica y contenido explicado;
+- y capacidad real de producir evidencia interpretable durante una ejecución normal.
 
 ---
 
@@ -384,9 +395,13 @@ La primera práctica debe ofrecer suficiente ayuda para que el alumno pueda cons
 
 Después debe existir al menos una oportunidad de aplicar el aprendizaje con menos apoyo.
 
-### 7.7 Comprobar
+### 7.7 Comprobar y producir evidencia
 
 La comprobación final debe ayudar a estudiar, no limitarse a emitir una puntuación.
+
+En todo nuevo Tema de 6.º debe existir además al menos una interacción o comprobación observable que permita producir evidencia académica útil y estructurada durante la ejecución normal.
+
+La evidencia será proporcional a la naturaleza del Tema: no todos requieren porcentaje, intentos o respuesta correcta/incorrecta, pero ninguno debe quedar sin una señal educativa reutilizable.
 
 ### 7.8 Recordar y continuar
 
@@ -694,6 +709,12 @@ La evidencia debe demostrar **qué experiencia se realizó y qué ocurrió duran
 
 No debe convertirse en una etiqueta permanente sobre la capacidad del alumno.
 
+Para los nuevos Temas de 6.º la evidencia académica deja de ser opcional:
+
+> **Todo nuevo Tema debe producir al menos una evidencia académica estructurada durante una ejecución normal de aprendizaje.**
+
+Esto no significa medir cada clic. Significa diseñar desde el inicio al menos una interacción o comprobación observable que tenga utilidad educativa real.
+
 ### 12.2 Reutilización de la arquitectura existente
 
 6.º no creará un sistema paralelo de evidencias.
@@ -703,34 +724,46 @@ El aprendizaje académico deberá reutilizar el patrón conceptual existente:
 ```text
 Tema
   ↓
-Actividad
+Actividad / comprobación observable
   ↓
-Sesión / ejecución
+Sesión académica / evidencia estructurada
   ↓
-Evidencia cuando corresponda
+Evidencia de Misión si existe Misión
   ↓
 Datos
+  ↓
+Análisis Educativo
   ↓
 Observaciones
   ↓
 Insumos
   ↓
-Acciones de refuerzo o continuidad
+Acciones de fortalecimiento o continuidad
 ```
 
-### 12.3 Sesión y evidencia
+### 12.3 Evidencia académica y evidencia de Misión
 
 Se distinguen dos conceptos:
 
-**Sesión académica**
+**Evidencia académica / sesión académica**
 
-Conserva la ejecución y sus datos útiles, exista o no una Misión.
+Conserva la ejecución y sus datos útiles, exista o no una Misión. En los nuevos Temas de 6.º debe generarse durante una ejecución normal de aprendizaje.
 
 **Evidencia de Misión**
 
-Cuando la actividad se realiza desde una Misión, puede registrar una evidencia vinculada a esa Misión y referenciar la sesión académica.
+Cuando la actividad se realiza desde una Misión, registra además una evidencia vinculada a esa Misión y referencia la sesión académica.
 
 Esta separación reutiliza el patrón ya empleado por otros Motores de Aprendizaje y evita obligar a que todo estudio libre sea una Misión.
+
+Por tanto:
+
+```text
+ACCESO LIBRE
+Tema → sesión académica → evidencia analizable
+
+DESDE MISIÓN
+Misión → Tema → sesión académica → evidencia de Misión que referencia la sesión
+```
 
 ### 12.4 Datos útiles posibles
 
@@ -739,12 +772,13 @@ Según la actividad, pueden resultar útiles:
 - `cursoReferencia`;
 - `materia`;
 - `tema`;
-- `actividadId`;
+- `actividadId` estable;
 - tipo de actividad;
 - conceptos trabajados;
+- `bloqueId`, foco u otro identificador conceptual estable cuando existan varios objetivos;
 - fecha/hora;
 - inicio y finalización;
-- intentos;
+- intentos reales;
 - respuestas;
 - primer resultado;
 - resultado final;
@@ -756,7 +790,23 @@ Según la actividad, pueden resultar útiles:
 
 La implementación compartida vigente utiliza el contrato `sesion-academica-v1`. El contrato técnico se centraliza en `compartido/js/sesiones-academicas.js`; este estándar conserva la semántica y no duplica cada detalle físico de almacenamiento.
 
-### 12.5 Datos que no deben guardarse por defecto
+### 12.5 Identidad mínima analizable
+
+Para que una evidencia pueda reutilizarse por reportes y fortalecimiento, todo nuevo Tema debe conservar una identidad suficientemente estable de:
+
+```text
+Persona Activa
++ curso
++ materia
++ tema
++ actividadId
++ fecha
++ resultado/señal observable
+```
+
+Cuando una actividad mida más de un objetivo, debe incluir un `bloqueId`, foco, concepto u otra clave estable equivalente que permita agrupar posteriormente las observaciones sin interpretar texto libre.
+
+### 12.6 Datos que no deben guardarse por defecto
 
 No persistir:
 
@@ -768,21 +818,25 @@ No persistir:
 - etiquetas de inteligencia o capacidad;
 - ni información que no tenga una finalidad clara de acompañamiento.
 
-### 12.6 Regla de utilidad
+### 12.7 Regla de utilidad y reutilización
 
-Antes de persistir un dato debe poder responderse:
+Antes de persistir un dato deben poder responderse estas preguntas:
 
 > **¿Qué decisión educativa, familiar o de producto podrá mejorar gracias a este dato?**
 
-Si no existe respuesta clara, el dato no es necesario.
+> **¿Podrá interpretarse después sin conocer una implementación privada del Tema?**
 
-### 12.7 Modos y persistencia
+Si no existe una utilidad clara, el dato no es necesario.
+
+Si el dato sí es útil pero el contrato compartido no puede representarlo, debe estudiarse una evolución del contrato común antes de crear una persistencia aislada por Tema.
+
+### 12.8 Modos y persistencia
 
 Los Temas Académicos conectados al contrato compartido distinguen al menos dos modos funcionales:
 
 **Sesión de aprendizaje**
 
-Puede registrar una sesión académica y, cuando procede de una Misión de Repaso Académico, enlazarla como evidencia de esa Misión.
+Registra la evidencia académica estructurada y, cuando procede de una Misión de Repaso Académico, enlaza la sesión como evidencia de esa Misión.
 
 **Vista previa**
 
@@ -794,9 +848,24 @@ Regla obligatoria:
 
 La revisión histórica de un resultado es también una operación de **solo lectura**. Debe consultar la sesión ya existente y no crear, reemplazar ni modificar sesiones, respuestas, evidencias o progreso.
 
-### 12.8 Estado de implementación validado
+### 12.9 Capacidad de análisis y fortalecimiento
 
-A 30/08/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
+La evidencia de cada nuevo Tema debe diseñarse para que pueda, cuando exista suficiente información real:
+
+- participar en reportes estadísticos/educativos;
+- permitir reconocer fortalezas observadas;
+- permitir identificar aspectos a reforzar;
+- mostrar evolución entre ejecuciones comparables;
+- destacar mejoras personales;
+- y originar propuestas de actuación o fortalecimiento.
+
+Esto no obliga a que toda evidencia produzca automáticamente una propuesta. **La ausencia de una señal repetida suficiente debe poder resultar en “seguir observando”.**
+
+El consumidor principal de este contrato se documenta en `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`.
+
+### 12.10 Estado de implementación validado
+
+A 03/09/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
 
 ```text
 Tema Académico
@@ -806,13 +875,14 @@ Tema Académico
 → Misión pendiente de revisión familiar
 → Trabajo realizado
 → Resultado académico histórico de solo lectura
+→ Análisis Educativo / observaciones
 → propuesta de refuerzo cuando el mapa formativo lo justifica
 → revisión/activación familiar
 ```
 
 La evidencia de Misión referencia la sesión mediante `sesionId`; no duplica dentro de la Misión todo el contenido de la ejecución.
 
-La persistencia puede existir también sin Misión cuando la actividad se realiza como aprendizaje libre.
+La persistencia existe también sin Misión cuando la actividad se realiza como aprendizaje libre.
 
 ---
 
@@ -921,6 +991,8 @@ problema detectado
 refuerzo específico
 ↓
 nueva oportunidad de aplicación
+↓
+nueva evidencia
 ```
 
 ### 14.2 Estado actual de propuestas desde pruebas
@@ -935,6 +1007,7 @@ Datos
 → Propuesta
 → Revisión humana
 → Misión
+→ Nueva evidencia
 ```
 
 Primera regla vigente:
@@ -948,6 +1021,17 @@ Primera regla vigente:
 - la familia decide cuándo hacerla visible;
 - la nueva ejecución reutiliza la sesión/evidencia académica normal;
 - y no existe un sistema paralelo exclusivo para exámenes.
+
+### 14.3 Relación con Análisis Educativo
+
+El reporte de Análisis Educativo puede producir propuestas descriptivas de actuación a partir de múltiples fuentes.
+
+Una propuesta del reporte:
+
+- no equivale automáticamente a una Misión;
+- debe estar apoyada por evidencia observable;
+- debe priorizar el foco específico en lugar de repetir todo el Tema;
+- y, si se materializa como actividad de fortalecimiento, debe poder producir nueva evidencia para cerrar el ciclo de observación.
 
 ---
 
@@ -1011,6 +1095,10 @@ Tema Académico
 ├── actividades
 ├── comprobación
 ├── apoyos
+├── evidencia
+│   ├── actividadId
+│   ├── focos / bloques observables
+│   └── datos útiles
 └── cierre
 ```
 
@@ -1028,7 +1116,7 @@ Un Tema Académico puede utilizarse:
 Mis Cursos
 → Tema
 → Estudio / práctica
-→ Sesión académica
+→ Sesión académica / evidencia analizable
 ```
 
 ### Desde Mi Camino
@@ -1043,7 +1131,7 @@ Misión
 
 La Misión orquesta.
 
-El Tema Académico enseña y practica.
+El Tema Académico enseña, practica y produce evidencia académica.
 
 La evidencia registra lo realizado.
 
@@ -1177,12 +1265,19 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] El test o actividad final explica los errores cuando corresponde.
 - [ ] El cierre no depende de una puntuación perfecta por defecto.
 - [ ] Se diferencia finalización de dominio.
+- [ ] Existe una interacción o comprobación observable capaz de producir evidencia académica útil en una ejecución normal.
 
-### Datos
+### Datos y evidencia
 
+- [ ] Todo nuevo Tema de 6.º genera evidencia académica estructurada en ejecución normal.
+- [ ] Reutiliza `sesion-academica-v1` y servicios compartidos antes de crear persistencia propia.
+- [ ] Conserva identidad estable de curso, materia, tema y `actividadId`.
+- [ ] Conserva focos/bloques estables cuando existen varios objetivos analizables.
 - [ ] Solo se registran datos útiles y medibles.
 - [ ] Los datos pueden distinguir hechos de inferencias.
 - [ ] No existen métricas inventadas.
+- [ ] La evidencia puede ser consumida por reportes/análisis sin conocer detalles privados del Tema.
+- [ ] La evidencia puede apoyar propuestas de fortalecimiento cuando exista señal suficiente.
 - [ ] La relación con una Misión se conserva cuando corresponda.
 - [ ] Vista previa no crea sesión, evidencia, progreso ni cambio de estado.
 - [ ] La consulta histórica no modifica la sesión ni la evidencia original.
@@ -1212,18 +1307,31 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 
 ### 21.1 Objetivo operativo
 
-La expansión curricular de 6.º debe ser una operación repetible y de intervención mínima para la familia.
+La expansión curricular de 6.º debe ser una operación repetible y de **intervención humana mínima** para la familia.
 
-En condiciones normales, incorporar un nuevo Tema Académico requiere **dos intervenciones humanas**:
+En condiciones normales, incorporar un nuevo Tema Académico requiere solo dos momentos de decisión humana, con observaciones intermedias únicamente si la familia desea ajustar el producto:
 
 ```text
 INTERVENCIÓN 1
-Material del colegio + curso · materia · tema + “Incorporar a la Academia”
+Material del colegio
++ curso
++ materia
++ nombre del tema
++ notas/comentarios opcionales
++ “Incorporar a la Academia”
 
         ↓
 
-TRABAJO INTERNO DE LA ACADEMIA
-Análisis → diseño → implementación → integración → validación → auditoría
+TRABAJO INTERNO DE LA ACADEMIA / IA
+Analizar material
+→ decidir ubicación `Curso → Asignatura → Tema`
+→ revisar estándares y estructura existentes
+→ crear carpetas/archivos solo si hacen falta
+→ diseñar experiencia
+→ implementar contenido
+→ integrar evidencia, histórico, análisis y fortalecimiento
+→ validar fidelidad y funcionamiento
+→ auditar
 
         ↓
 
@@ -1232,15 +1340,26 @@ Análisis → diseño → implementación → integración → validación → a
         ↓
 
 INTERVENCIÓN 2
-Validación familiar: “Aprobado” o incidencias observadas
+Validación familiar:
+“Aprobado”
+o observaciones concretas opcionales
 
         ↓
 
-CIERRE
-Corrección si procede → auditoría final → documentación → PR → merge
+SI HAY OBSERVACIONES
+Ajuste → nueva prueba
+
+        ↓
+
+APROBACIÓN
+
+        ↓
+
+CIERRE DEFINITIVO
+Auditoría final → documentación → PR → revisión remota → merge a main
 ```
 
-El objetivo es reducir interacciones administrativas **sin reducir el análisis, la fidelidad académica ni la calidad del producto**.
+El objetivo es reducir interacciones administrativas **sin reducir el análisis, la fidelidad académica, la calidad del producto ni la capacidad futura de aprender de sus evidencias**.
 
 ### 21.2 Entrada mínima suficiente
 
@@ -1256,14 +1375,20 @@ O, por ejemplo:
 6.º · Matemáticas · Decimales. Incorporar a la Academia.
 ```
 
+Las notas o comentarios de interés son **opcionales**. Si se incluyen, forman parte del contexto funcional/pedagógico que debe considerarse durante la construcción.
+
 La familia no debe tener que especificar en cada incorporación:
 
-- rutas de archivos;
+- la ruta exacta dentro del repositorio;
+- si hay que crear carpetas;
 - plantilla técnica;
 - estructura HTML/CSS/JavaScript;
 - documentación que debe revisarse;
 - estándares que deben aplicarse;
 - componentes compartidos que deben reutilizarse;
+- contrato de evidencia;
+- integración con Análisis Educativo;
+- capacidad de fortalecimiento;
 - integración con Misiones;
 - persistencia;
 - favicon;
@@ -1283,18 +1408,25 @@ Esas responsabilidades pertenecen al proceso de incorporación.
 Tras recibir la entrada mínima, antes de pedir cualquier aclaración o modificar código, se debe:
 
 1. revisar `AGENTS.md` y la documentación propietaria vigente;
-2. revisar la estructura, código, configuración y componentes reales de la materia/curso;
-3. buscar referencias existentes reutilizables antes de crear estructura nueva;
-4. analizar completamente el material escolar en el alcance necesario;
-5. identificar hechos del material, inferencias y enriquecimientos de la Academia;
-6. definir objetivos, conceptos, vocabulario, procedimientos y recursos que no deben perderse;
-7. diseñar la experiencia adecuada al contenido sin convertir el estándar en una plantilla visual rígida;
-8. implementar con los patrones compartidos vigentes;
-9. integrar, cuando corresponda, Sesión de aprendizaje, Vista previa, Misiones, evidencia, histórico y refuerzo;
-10. comprobar favicon, navegación, `Volver`, Persona Activa, rutas local/GitHub Pages y mensajes de error;
-11. validar fidelidad académica contra el material original;
-12. realizar las comprobaciones técnicas proporcionales;
-13. auditar el diff y confirmar que no se mezcló trabajo ajeno al Tema.
+2. revisar **todos los estándares aprobados que apliquen** al nuevo Tema;
+3. revisar la estructura, código, configuración y componentes reales del curso y la materia;
+4. decidir la ubicación correcta dentro de la jerarquía `Curso → Asignatura → Tema`;
+5. buscar referencias existentes reutilizables antes de crear estructura nueva;
+6. crear carpetas/archivos únicamente cuando la estructura existente no sea suficiente;
+7. analizar completamente el material escolar en el alcance necesario;
+8. identificar hechos del material, inferencias y enriquecimientos de la Academia;
+9. definir objetivos, conceptos, vocabulario, procedimientos y recursos que no deben perderse;
+10. diseñar la experiencia adecuada al contenido sin convertir el estándar en una plantilla visual rígida;
+11. definir desde el diseño **qué evidencia académica producirá** y qué focos/bloques permitirán analizarla;
+12. implementar con los patrones compartidos vigentes;
+13. integrar Sesión de aprendizaje/evidencia académica en todo Tema nuevo de 6.º;
+14. integrar, cuando corresponda, Vista previa, Misiones, evidencia de Misión, histórico y refuerzo;
+15. confirmar que la evidencia puede ser utilizada por Trabajo realizado y Análisis Educativo sin conocer un esquema privado del Tema;
+16. comprobar que una señal suficiente pueda traducirse en una propuesta de fortalecimiento sin obligar a repetir todo el Tema;
+17. comprobar favicon, navegación, `Volver`, Persona Activa, rutas local/GitHub Pages y mensajes de error;
+18. validar fidelidad académica contra el material original;
+19. realizar las comprobaciones técnicas proporcionales;
+20. auditar el diff y confirmar que no se mezcló trabajo ajeno al Tema.
 
 La incorporación no debe delegar al usuario decisiones técnicas que puedan resolverse aplicando la documentación y la arquitectura vigentes.
 
@@ -1323,13 +1455,28 @@ La primera devolución operativa debe producirse cuando exista un Tema suficient
 YA PUEDES PROBAR
 ```
 
-La indicación de prueba señalará únicamente los puntos necesarios para validar el comportamiento y la experiencia.
+La indicación de prueba señalará únicamente:
+
+- la ruta o punto de entrada necesario;
+- los puntos funcionales/pedagógicos que realmente conviene validar;
+- y cualquier limitación conocida que pueda afectar la prueba.
 
 El usuario debe validar el producto, no descubrir defectos básicos que podían detectarse durante la construcción y auditoría interna.
 
-### 21.6 Cierre después de la aprobación
+### 21.6 Observaciones opcionales y ajuste
 
-Cuando la validación familiar sea positiva, el cierre normal será:
+Después de probar, la familia puede:
+
+- aprobar directamente;
+- o comunicar observaciones concretas de contenido, experiencia o funcionamiento.
+
+Las observaciones no reinician el proceso desde cero.
+
+Se aplica el **menor ajuste suficiente**, se repiten las validaciones afectadas y se devuelve nuevamente el Tema para prueba cuando sea necesario.
+
+### 21.7 Cierre después de la aprobación
+
+Cuando la validación familiar sea positiva, el producto pasa de candidato probado a definitivo mediante:
 
 ```text
 Aprobado
@@ -1344,12 +1491,14 @@ Revisión del diff remoto
 ↓
 Merge a main
 ↓
+Tema definitivo
+↓
 Cierre
 ```
 
 No se solicitarán confirmaciones redundantes entre estos pasos cuando el bloque ya haya sido aprobado y el diff final permanezca dentro del alcance autorizado.
 
-### 21.7 Un Tema nuevo no es un proyecto de arquitectura
+### 21.8 Un Tema nuevo no es un proyecto de arquitectura
 
 > **La incorporación de un Tema Académico no debe convertirse, por defecto, en una reconstrucción de la Academia.**
 
@@ -1362,7 +1511,7 @@ Si durante la incorporación aparece un defecto genérico del motor, navegación
 
 La medida de éxito del proceso no es únicamente que el Tema actual funcione: también debe facilitar que **el siguiente Tema sea más rápido y seguro de incorporar**.
 
-### 21.8 Contrato de interacción esperado
+### 21.9 Contrato de interacción esperado
 
 La interacción ideal es:
 
@@ -1370,6 +1519,7 @@ La interacción ideal es:
 FAMILIA
 “6.º · Materia · Tema. Incorporar a la Academia.”
 + material escolar
++ notas opcionales
 
 ACADEMIA / AI COLLABORATOR
 [trabajo interno sin interacción administrativa]
@@ -1380,7 +1530,10 @@ ACADEMIA / AI COLLABORATOR
 FAMILIA
 “Aprobado.”
 
-o comunica una incidencia concreta
+o comunica una incidencia/observación concreta
+
+ACADEMIA / AI COLLABORATOR
+[ajusta solo si hace falta y cierra tras aprobación]
 ```
 
 Este es el procedimiento por defecto para la expansión curricular de 6.º y debe reutilizarse en cursos posteriores mientras continúe siendo válido.
@@ -1403,7 +1556,19 @@ Si un tema de 5.º vuelve a ser intervenido, podrán incorporarse progresivament
 
 Los temas nuevos de 6.º aplicarán este estándar desde su nacimiento.
 
-Cuando un Tema Académico incluya una prueba final diseñada para producir datos útiles, deberá reutilizar el contrato compartido de sesión/evidencia en lugar de crear persistencia propia.
+> **Todo nuevo Tema de 6.º debe producir evidencia académica estructurada en una ejecución normal de aprendizaje.**
+
+La evidencia debe:
+
+- reutilizar el contrato compartido de sesión/evidencia antes de crear persistencia propia;
+- conservar identidad estable del Tema/actividad;
+- representar al menos una señal educativa útil;
+- poder ser consumida por Trabajo realizado y Análisis Educativo;
+- y permitir propuestas de fortalecimiento cuando aparezcan señales suficientes.
+
+Cuando el Tema se ejecuta desde una Misión, la evidencia de Misión referencia la sesión académica; no se duplica el contenido completo de la ejecución.
+
+Vista previa e histórico conservan su comportamiento sin escrituras.
 
 La incorporación seguirá por defecto el **Modo de Incorporación Curricular de una sola instrucción** definido en la sección 21.
 
@@ -1439,10 +1604,14 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-018 | Vista previa y revisión histórica son experiencias sin escritura sobre sesión, evidencia o progreso. | Aprobada y validada |
 | CA-019 | Las Misiones existentes no se recrean por incorporar persistencia; una ejecución futura puede usar el contrato vigente y no se inventan sesiones retrospectivas. | Aprobada y validada |
 | CA-020 | Los recursos heredados de 5.º pueden seguir asignándose como Misiones aunque no produzcan evidencia académica automática. | Aprobada |
-| CA-021 | Para 6.º, material escolar + curso/materia/tema + la instrucción “Incorporar a la Academia” constituyen la entrada normal suficiente para iniciar una incorporación curricular. | Aprobada |
+| CA-021 | Para 6.º, material escolar + curso/materia/tema + la instrucción “Incorporar a la Academia” constituyen la entrada normal suficiente para iniciar una incorporación curricular; las notas adicionales son opcionales. | Aprobada |
 | CA-022 | El proceso no interrumpirá por detalles secundarios; solo solicitará aclaración cuando falte información que cambie materialmente el contenido, procedimiento, nivel, evaluación, fidelidad a la fuente o una decisión de arquitectura no aprobada. | Aprobada |
 | CA-023 | Un nuevo Tema no justifica por sí solo nueva arquitectura; los defectos genéricos se separarán como trabajo técnico salvo que bloqueen el Tema. | Aprobada |
 | CA-024 | Tras la validación familiar positiva, auditoría final, documentación aplicable, PR y merge forman parte del cierre normal sin confirmaciones redundantes si el alcance no cambia. | Aprobada |
+| CA-025 | Todo nuevo Tema Académico de 6.º debe producir evidencia académica estructurada durante una ejecución normal, incluso cuando el acceso no procede de una Misión. | Aprobada |
+| CA-026 | La evidencia de nuevos Temas debe poder alimentar Trabajo realizado, Análisis Educativo, estadísticas/evolución y propuestas de fortalecimiento sin depender de un esquema privado por Tema. | Aprobada |
+| CA-027 | La AI Collaborator decide la ubicación `Curso → Asignatura → Tema`, reutiliza estructura existente y crea carpetas/archivos solo cuando sean necesarios; la familia no administra rutas técnicas. | Aprobada |
+| CA-028 | El ciclo normal es entrada mínima → trabajo interno → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. | Aprobada |
 
 ---
 
@@ -1450,7 +1619,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 
 ### Implementado y validado
 
-A 30/08/2026 están construidos y probados:
+A 03/09/2026 están construidos y probados:
 
 1. Temas Académicos de referencia: Puente y Fracciones.
 2. Contrato compartido `sesion-academica-v1`.
@@ -1466,12 +1635,15 @@ A 30/08/2026 están construidos y probados:
 12. Preparación de Misiones académicas de refuerzo bajo revisión/activación familiar, sin persistencia paralela.
 13. Protección para que una Misión académica de refuerzo oculta no se abra ni se cierre manualmente saltándose su sesión/evidencia.
 14. **Modo de Incorporación Curricular de una sola instrucción** aprobado como procedimiento operativo para nuevos temas de 6.º.
+15. Reporte de **Análisis Educativo V1** que consume Detectives, Pruebas Académicas y Rincón de Lectura para describir fortalezas, aspectos a reforzar, evolución, intentos, pistas/ayudas, mejoras personales y propuestas de actuación.
+16. Contrato documental que exige evidencia académica analizable para cada nuevo Tema de 6.º.
 
 ### Pendiente de evolución
 
-1. Aplicar el modo de incorporación a nuevos temas y materias reales de 6.º y aprender de su uso repetido.
-2. Extender progresivamente el patrón de sesión/evidencia/refuerzo cuando los nuevos temas produzcan datos útiles.
-3. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.
+1. Aplicar el modo de incorporación completo al siguiente tema/materia real de 6.º y aprender de su uso repetido.
+2. Aplicar sistemáticamente el contrato de evidencia analizable a cada nuevo Tema de 6.º.
+3. Extender los tipos de señales compartidas solo cuando nuevos contenidos reales lo requieran.
+4. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.
 
 La existencia de persistencia no obliga a modernizar de forma masiva los recursos de 5.º.
 
@@ -1485,7 +1657,9 @@ La existencia de persistencia no obliga a modernizar de forma masiva los recurso
 | **Primera aplicación** | 6.º de Primaria. |
 | **Reutilización** | Aprovechar patrones validados de 5.º y la arquitectura existente de Motores, Misiones y Evidencias. |
 | **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
-| **Persistencia** | `sesion-academica-v1`: registrar solo datos útiles; separar sesión académica de evidencia de Misión. |
+| **Persistencia** | `sesion-academica-v1`: todo nuevo Tema de 6.º produce evidencia académica estructurada; la evidencia de Misión referencia la sesión cuando existe Misión. |
+| **Análisis** | La evidencia debe poder alimentar Trabajo realizado, Análisis Educativo, estadísticas/evolución y propuestas de fortalecimiento. |
 | **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
-| **Operación curricular** | Material + curso/materia/tema + “Incorporar a la Academia” → trabajo interno → `YA PUEDES PROBAR` → aprobación/incidencia → cierre técnico. |
-| **Estado** | Activo; implementación base validada con Puente y Fracciones y procedimiento de incorporación de una sola instrucción aprobado para la expansión progresiva de 6.º. |
+| **Operación curricular** | Material + curso/materia/tema + notas opcionales + “Incorporar a la Academia” → análisis/ubicación/construcción/integración → `YA PUEDES PROBAR` → aprobación u observaciones → cierre definitivo. |
+| **Intervención familiar** | La familia aporta contenido y contexto, valida el producto y controla las acciones de fortalecimiento; no administra rutas, carpetas ni contratos técnicos. |
+| **Estado** | Activo; implementación base validada con Puente y Fracciones, Análisis Educativo V1 disponible y procedimiento de incorporación de mínima intervención aprobado para la expansión progresiva de 6.º. |

@@ -1,18 +1,18 @@
-# Estándar de Documentación
+# 🌈 Estándar de Documentación
 ## Academia Gloria Valentina
 
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_STANDARD.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
-| **Última actualización** | 04/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Creación, revisión, aprobación, versionado y mantenimiento de documentación oficial |
+| **Ámbito** | Creación, revisión, aprobación, versionado, sincronización y mantenimiento de documentación oficial |
 
-## Documentos relacionados
+## 🔗 Documentos relacionados
 
 | Documento | Relación |
 |---|---|
@@ -27,19 +27,22 @@
 
 ---
 
-## Historial de versiones
+## 🕘 Historial de versiones
+
+> **El historial es obligatorio y no debe eliminarse al actualizar un documento.** Es la memoria mínima de cómo evolucionó su conocimiento.
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Evoluciona el estándar para la jornada de sincronización documental de septiembre: formaliza nombres canónicos estables para `STD-*` y `SPEC-*`, incorpora sincronización explícita contra producto real, prueba de necesidad antes de crear documentos, método P0/P1/P2 para jornadas documentales, consolidación de acuerdos provenientes de conversaciones, lenguaje visual mediante iconos no normativos y refuerzo del Quality Gate e historial. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Versión oficial. Consolida la metodología documental: evolución incremental de documentos, revisión obligatoria de la fuente existente, estructura desde el inicio, entrega completa de archivos y normalización de la sección `DECISIÓN`. |
 | 1.0 | 03/08/2026 | Arquitectura del Producto | Primera versión activa, validada mediante documentos reales. Incorpora roles estables, Quality Gate documental y nombre canónico estable para documentos activos. |
-| 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta del estándar documental del producto. Define conformidad, estructura, metadatos, relaciones, estados, versionado, decisiones, nombres, revisión, aprobación y adopción incremental. |
+| 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta del estándar documental del producto. Define conformidad, metadatos, estados, versionado, decisiones, nombres, revisión, aprobación y adopción incremental. |
 
 ---
 
-## 1. Propósito
+## 🎯 1. Propósito
 
-Este estándar define **cómo deben crearse, redactarse, relacionarse, aprobarse, versionarse y mantenerse los documentos oficiales de Academia Gloria Valentina**.
+Este estándar define **cómo deben crearse, redactarse, relacionarse, aprobarse, versionarse, sincronizarse y mantenerse los documentos oficiales de Academia Gloria Valentina**.
 
 No es únicamente una guía de Markdown. Es el contrato mínimo que permite que la documentación:
 
@@ -47,22 +50,29 @@ No es únicamente una guía de Markdown. Es el contrato mínimo que permite que 
 - tenga propietario y alcance claros;
 - preserve decisiones y evolución;
 - evite duplicidades;
-- se mantenga alineada con el producto;
+- se mantenga alineada con el producto real;
 - pueda ser utilizada por personas y herramientas de IA;
-- crezca sin convertirse en burocracia.
+- y crezca sin convertirse en burocracia.
 
-> Un documento oficial no es solo contenido escrito: es conocimiento con propósito, propiedad, estado y trazabilidad.
+> **Un documento oficial no es solo contenido escrito: es conocimiento con propósito, propiedad, estado y trazabilidad.**
 
 ---
 
-## 2. Alcance
+## 📐 2. Alcance
 
 Este estándar se aplica a:
 
 - documentos nuevos incorporados a `docs/`;
 - documentos existentes cuando sean revisados o evolucionados;
-- documentos externos que se integren como fuente oficial del producto;
-- estándares `STD-*`, futuras especificaciones `SPEC-*`, modelos, visiones, arquitecturas y documentos de gobierno.
+- documentos externos que se integren como fuente oficial;
+- estándares `STD-*`;
+- especificaciones `SPEC-*`;
+- modelos;
+- visiones;
+- arquitecturas;
+- documentación técnica;
+- manuales oficiales;
+- y documentos de gobierno del proyecto.
 
 No se exige su aplicación completa a:
 
@@ -72,35 +82,48 @@ No se exige su aplicación completa a:
 - archivos generados automáticamente;
 - documentos históricos que no estén siendo revisados.
 
-Cuando uno de estos elementos pase a ser documentación oficial, deberá adaptarse al estándar.
+Cuando uno de estos elementos pase a ser documentación oficial activa, deberá adaptarse al estándar.
 
 ---
 
-## 3. Principios del estándar
+## 🧭 3. Principios del estándar
 
 ### 3.1. Claridad antes que formalismo
 
 La estructura debe ayudar a comprender. Ninguna sección se añade solo para completar una plantilla.
 
-### 3.2. Una pregunta principal
+### 3.2. Una pregunta principal por documento
 
-Todo documento debe declarar qué pregunta responde y evitar asumir responsabilidades de otros documentos.
+Todo documento debe responder principalmente a una pregunta y evitar asumir responsabilidades de otras fuentes.
 
-### 3.3. Fuente única de verdad
+### 3.3. Fuente única de verdad — SSOT
 
-El documento debe identificar su relación con las fuentes propietarias y no duplicar definiciones completas.
+Cada conocimiento importante debe tener un único documento propietario.
+
+Otros documentos pueden enlazarlo, resumirlo brevemente o explicar su relación, pero no mantener una segunda definición completa que pueda evolucionar de forma independiente.
+
+> **Una verdad importante, un propietario documental.**
 
 ### 3.4. Trazabilidad proporcional
 
-Los cambios relevantes deben reconstruirse. Los cambios ortográficos o de formato no requieren el mismo nivel de detalle que una decisión de arquitectura.
+Los cambios relevantes deben poder reconstruirse. Correcciones ortográficas o de formato no requieren el mismo nivel de detalle que una decisión funcional o arquitectónica.
 
 ### 3.5. Conformidad incremental
 
-Los documentos nuevos cumplen el estándar desde su nacimiento. Los existentes se adaptan cuando vuelven a estar activos o mediante una jornada planificada.
+Los documentos nuevos cumplen el estándar desde su nacimiento. Los existentes se adaptan cuando vuelven a estar activos o mediante una jornada documental planificada.
 
 ### 3.6. Producto real como referencia
 
-Cuando un documento describe el estado actual, debe validarse contra el código, datos, reglas y comportamiento desplegado.
+Cuando un documento describa estado actual, debe contrastarse con las fuentes reales suficientes para verificarlo, según corresponda:
+
+- código vigente;
+- estructura del repositorio;
+- reglas y contratos;
+- datos o modelos persistidos;
+- comportamiento validado;
+- documentos propietarios relacionados.
+
+No debe declararse `Implementado` únicamente porque una conversación o un plan diga que lo está.
 
 ### 3.7. Lenguaje humano e interpretable por IA
 
@@ -110,9 +133,9 @@ Los documentos deben ser claros, explícitos y estructurados, evitando depender 
 
 Antes de crear o actualizar un documento debe revisarse la fuente existente completa.
 
-Un documento aprobado se evoluciona mediante el menor conjunto de cambios que permita reflejar la nueva realidad.
+Un documento aprobado se evoluciona mediante el **menor conjunto de cambios que permita reflejar la nueva realidad**.
 
-La reescritura integral solo se justifica cuando cambia su responsabilidad principal, su estructura dejó de ser adecuada, contiene contradicciones imposibles de resolver incrementalmente o una decisión arquitectónica explícita aprueba su sustitución.
+La reescritura integral solo se justifica cuando cambia su responsabilidad principal, su estructura dejó de ser adecuada, contiene contradicciones imposibles de resolver incrementalmente o existe una decisión explícita de sustitución.
 
 ### 3.9. La documentación facilita; no bloquea
 
@@ -124,19 +147,45 @@ Cuando el conocimiento existente sea suficiente para desarrollar con seguridad y
 
 Todo documento oficial debe nacer desde su primera versión con la estructura aplicable de este estándar.
 
-La estructura precede al contenido; no se añade al final como corrección formal.
-
 ### 3.11. Entregables completos
 
-Los documentos oficiales se entregan completos, autocontenidos, en un único archivo y listos para revisión.
+Los documentos oficiales se entregan completos, autocontenidos y listos para revisión. Una respuesta conversacional no sustituye al archivo cuando el producto solicitado es un documento oficial.
 
-No deben fragmentarse en varias respuestas salvo solicitud expresa o limitación técnica insalvable.
+### 3.12. Actualizar antes que crear
+
+Antes de proponer un documento nuevo debe comprobarse:
+
+1. si el conocimiento ya tiene propietario;
+2. si existe un documento que pueda evolucionarse;
+3. si la nueva fuente responde a una pregunta realmente distinta;
+4. si tendrá responsabilidad estable;
+5. si su valor futuro justifica mantenerla.
+
+Si estas condiciones no se cumplen, **no se crea un documento nuevo**.
+
+### 3.13. Acuerdos de conversación: consolidar, no copiar
+
+Los chats son espacios de trabajo, no fuentes permanentes de verdad.
+
+Cuando una conversación produzca un acuerdo estable:
+
+```text
+Conversación / desarrollo
+        ↓
+Acuerdo validado
+        ↓
+Identificar propietario documental
+        ↓
+Consolidar solo conocimiento estable
+        ↓
+Historial de la nueva versión
+```
+
+No se copia la conversación completa ni se documentan decisiones accidentales de implementación como si fueran principios permanentes.
 
 ---
 
-## 4. Niveles de conformidad
-
-Para facilitar la adopción progresiva se establecen tres niveles.
+## ✅ 4. Niveles de conformidad
 
 ### 4.1. Conformidad mínima
 
@@ -148,7 +197,7 @@ Obligatoria para cualquier documento oficial nuevo:
 - estado;
 - fecha o última actualización;
 - propietario o responsable;
-- historial de versiones;
+- **historial de versiones**;
 - contenido estructurado;
 - documentos relacionados cuando existan;
 - ausencia de duplicidad conocida.
@@ -165,7 +214,8 @@ Obligatoria para documentos fundacionales, arquitecturas, estándares, modelos c
 - relaciones y dependencias;
 - criterios de calidad o aceptación;
 - decisiones adoptadas cuando corresponda;
-- regla de mantenimiento o revisión.
+- regla de mantenimiento o revisión;
+- `DECISIÓN` de cierre cuando aplique.
 
 ### 4.3. Conformidad histórica
 
@@ -174,12 +224,12 @@ Aplicable a documentos cerrados, sustituidos o históricos:
 - estado histórico o sustituido;
 - fecha de cierre o sustitución;
 - motivo;
-- referencia al documento vigente, cuando exista;
+- referencia al documento vigente cuando exista;
 - preservación del contenido original salvo correcciones indispensables.
 
 ---
 
-## 5. Cabecera documental
+## 🪪 5. Cabecera documental
 
 ### 5.1. Orden recomendado
 
@@ -193,7 +243,7 @@ Los documentos de conformidad completa comenzarán con:
 6. propósito;
 7. alcance.
 
-Este orden permite comprender desde el inicio qué documento se está leyendo, si está vigente, quién lo gobierna y con qué fuentes se relaciona.
+El historial debe permanecer **cerca del inicio** para que la evolución del documento sea visible y difícil de olvidar.
 
 ### 5.2. Metadatos obligatorios
 
@@ -212,201 +262,110 @@ Este orden permite comprender desde el inicio qué documento se está leyendo, s
 - **Propietario** identifica el rol o dominio que gobierna el conocimiento.
 - **Responsables** identifica quiénes construyen, revisan o mantienen el documento.
 
-Ejemplo:
-
-```text
-Propietario: Arquitectura Documental
-Responsables: Juan Perdomo + Arquitectura colaborativa con IA
-```
-
 La propiedad no debe depender innecesariamente de una herramienta o versión concreta de IA.
-
 
 ### 5.4. Roles estables y asignaciones nominales
 
-Los documentos estructurales y de producto expresarán responsabilidades mediante roles o dominios estables.
-
-Ejemplo:
-
-```text
-Propietario: Arquitectura del Producto
-Aprobación final: Product Owner
-```
-
-No se repetirá innecesariamente el nombre de la persona que ocupa un rol en múltiples documentos.
-
-La asignación vigente entre roles y personas deberá mantenerse en una fuente operativa única, por ejemplo:
-
-```text
-docs/project/PROJECT_ROLES.md
-```
-
-Los responsables de elaboración pueden incluir personas o agentes cuando resulte útil para la trazabilidad, pero la autoridad del documento debe depender del rol y no de una persona concreta.
-
+Los documentos estructurales expresarán autoridad mediante roles o dominios estables. La asignación vigente entre roles y personas deberá mantenerse en una fuente operativa única, actualmente `docs/project/PROJECT_ROLES.md`.
 
 ---
 
-## 6. Documentos relacionados y dependencias
+## 🔗 6. Documentos relacionados y dependencias
 
 ### 6.1. Ubicación
 
-La sección `Documentos relacionados` debe aparecer al inicio, después de los metadatos, en documentos de conformidad completa y en cualquier documento cuya interpretación dependa de otras fuentes.
+La sección `Documentos relacionados` aparece al inicio, después de los metadatos, en documentos de conformidad completa y en cualquier fuente cuya interpretación dependa de otras.
 
 ### 6.2. Contenido
 
-Debe indicar la relación, no solo enumerar archivos.
+Debe indicar la relación y no limitarse a enumerar archivos.
 
 ```markdown
 | Documento | Relación |
 |---|---|
-| `DOCUMENTATION_ARCHITECTURE.md` | Define dónde encaja este estándar. |
-| `GLOSARIO.md` | Proporciona la terminología oficial. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define dónde encaja este documento. |
+| `docs/standards/STD-GLOSARIO.md` | **Complementa:** proporciona terminología oficial. |
 ```
 
-### 6.3. Tipos de relación
+### 6.3. Relaciones recomendadas
 
-Cuando aporte claridad pueden utilizarse:
-
-- **Depende de:** fuente necesaria para interpretar el documento.
+- **Gobierna:** establece reglas que el documento debe respetar.
 - **Complementa:** desarrolla una perspectiva diferente.
-- **Gobierna:** establece reglas que este documento debe cumplir.
 - **Implementa:** materializa una visión, modelo o estándar.
-- **Sustituye a:** asume la responsabilidad de una fuente anterior.
+- **Depende de:** fuente necesaria para interpretarlo.
+- **Sustituye a:** asume responsabilidad de una fuente anterior.
 - **Sustituido por:** identifica la fuente vigente.
 
-No es obligatorio crear subsecciones separadas si una tabla única resulta más clara.
+---
+
+## 🚦 7. Estados documentales
+
+Los estados canónicos son:
+
+- 📝 **Borrador**
+- 🟡 **Candidato para aprobación**
+- ✅ **Activo**
+- 🔄 **En revisión**
+- ↪️ **Sustituido**
+- 🗃️ **Histórico**
+- ⚠️ **Obsoleto**
+
+> **El icono es visual; el texto es normativo.** El valor canónico es `Activo`, `Borrador`, etc. Los iconos pueden cambiar sin alterar el significado.
+
+No deben inventarse estados ambiguos como `terminado`, `casi final`, `aprobado provisionalmente` o `estable por ahora`.
+
+Cuando sea necesario explicar una condición adicional se utiliza una nota separada, no un nuevo estado documental.
 
 ---
 
-## 7. Estados documentales
-
-Solo se utilizarán los siguientes estados oficiales.
-
-### 7.1. Borrador
-
-Contenido inicial sujeto a cambios importantes. No gobierna el producto.
-
-### 7.2. Candidato para aprobación
-
-Documento completo preparado para revisión arquitectónica y decisión.
-
-Puede identificarse mediante una versión `-rcN`, por ejemplo:
-
-```text
-1.0-rc1
-```
-
-### 7.3. Activo
-
-Documento aprobado y vigente como fuente oficial.
-
-### 7.4. En revisión
-
-Documento activo en proceso de actualización. La versión activa anterior mantiene autoridad hasta la aprobación de la nueva, salvo declaración explícita.
-
-### 7.5. Sustituido
-
-Otro documento o versión asumió formalmente su responsabilidad. Debe indicar cuál.
-
-### 7.6. Histórico
-
-No gobierna el producto actual, pero conserva valor de contexto, trazabilidad o aprendizaje.
-
-### 7.7. Obsoleto
-
-No representa el producto y no conserva valor operativo suficiente. Antes de eliminarlo debe confirmarse que no contiene conocimiento único.
-
-### 7.8. Estados no permitidos
-
-No deben inventarse variantes ambiguas como:
-
-- terminado;
-- casi final;
-- estable por ahora;
-- pendiente parcial;
-- aprobado provisionalmente.
-
-Cuando sea necesario añadir contexto, se explica en el contenido sin crear otro estado.
-
----
-
-## 8. Versionado
+## 🔢 8. Versionado
 
 ### 8.1. Formato
-
-Se utilizará:
 
 ```text
 MAYOR.MENOR
 ```
 
-Y para candidatos:
+Para candidatos:
 
 ```text
 MAYOR.MENOR-rcN
 ```
 
-Ejemplos:
-
-- `1.0-rc1`
-- `1.0`
-- `1.1`
-- `2.0`
-
 ### 8.2. Cambio mayor
 
-Incrementa `MAYOR` cuando:
-
-- cambia la responsabilidad del documento;
-- se modifica sustancialmente su estructura o alcance;
-- se redefine una regla o contrato central;
-- la nueva versión puede afectar a múltiples documentos o componentes.
+Incrementa `MAYOR` cuando cambia sustancialmente responsabilidad, alcance, estructura o contrato central.
 
 ### 8.3. Cambio menor
 
-Incrementa `MENOR` cuando:
-
-- se amplía contenido sin romper su contrato;
-- se añade una regla compatible;
-- se aclara una sección relevante;
-- se actualiza para reflejar una evolución consolidada.
+Incrementa `MENOR` cuando se amplía o aclara contenido de forma compatible o se sincroniza una evolución consolidada.
 
 ### 8.4. Correcciones menores
 
-No se exige un tercer número para correcciones ortográficas, enlaces o formato sin impacto en el conocimiento. Estas pueden registrarse dentro de la misma versión si no alteran decisiones ni significado.
-
-Cuando una corrección cambie el sentido, deberá generar una nueva versión menor.
+No se exige un tercer número para correcciones ortográficas, enlaces o formato sin impacto en el conocimiento.
 
 ### 8.5. Versión del documento y versión del producto
 
 Son independientes.
 
-Un documento `1.0` puede describir el producto `2.3`. Ambos datos deben identificarse por separado cuando sea relevante.
+### 8.6. Nombre canónico estable
 
+La versión y el estado viven dentro del documento y en Git. El archivo activo utiliza un nombre estable y **no incorpora normalmente la versión en su nombre**.
 
-### 8.6. Nombre temporal y nombre canónico
-
-Durante elaboración o intercambio pueden utilizarse nombres que hagan visible el candidato:
-
-```text
-PRODUCT_DOCUMENT_v1.0-rc1.md
-PRODUCT_DOCUMENT_v1.0-rc2.md
-```
-
-Una vez aprobado e incorporado como fuente oficial, el documento activo utilizará su nombre canónico estable:
+Ejemplos:
 
 ```text
-PRODUCT_DOCUMENT.md
+DOCUMENTATION_STANDARD.md
+STD-MIS_TAREAS_Y_MISIONES.md
+SPEC-REVISION_TRABAJO_REALIZADO.md
+MODEL_MOTORES_DE_APRENDIZAJE.md
 ```
 
-La versión y el estado viven dentro del documento y en Git.
-
-Esta regla general no modifica convenciones específicas aprobadas para familias como `STD-*`.
-
+Los nombres temporales con `-rc` pueden utilizarse fuera del repositorio durante elaboración, pero una fuente oficial activa mantiene su ruta canónica estable.
 
 ---
 
-## 9. Historial de versiones
+## 🕘 9. Historial de versiones
 
 ### 9.1. Obligación
 
@@ -417,44 +376,42 @@ Todo documento oficial nuevo debe incluir historial desde su primera versión ca
 ```markdown
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.0 | 03/08/2026 | Juan Perdomo + IA | Primera versión aprobada. |
+| 1.0 | 03/09/2026 | Product Owner + IA | Primera versión aprobada. |
 ```
 
 ### 9.3. Nivel de detalle
 
-El historial debe explicar cambios de conocimiento, alcance, decisión o responsabilidad.
-
-No necesita enumerar cada corrección tipográfica.
+El historial explica cambios de conocimiento, alcance, decisión o responsabilidad. No necesita enumerar correcciones tipográficas.
 
 ### 9.4. Documentos existentes
 
-Cuando un documento antiguo se adapte al estándar:
+Al adaptar una fuente antigua:
 
-- se conserva el historial existente;
-- no se inventan versiones históricas desconocidas;
-- puede añadirse una entrada que indique `Adopción del estándar documental`;
-- las fechas desconocidas se declaran como tales, no se estiman silenciosamente.
+- se conserva el historial disponible;
+- no se inventan versiones desconocidas;
+- puede añadirse una entrada de adopción del estándar;
+- las fechas desconocidas se declaran como tales.
 
 ### 9.5. Evolución de documentos aprobados
 
-Al evolucionar un documento aprobado:
+Al evolucionar un documento:
 
-1. se utiliza la versión activa como base;
-2. se conserva el contenido todavía válido;
-3. se identifican los cambios estrictamente necesarios;
-4. se mantiene íntegro el historial anterior;
-5. se añade la nueva versión al inicio del historial;
-6. y se comprueba que no se haya perdido conocimiento único.
+1. usar la versión activa como base;
+2. conservar contenido todavía válido;
+3. introducir únicamente cambios necesarios;
+4. mantener íntegro el historial previo;
+5. añadir la nueva versión al inicio;
+6. comprobar que no se perdió conocimiento único.
 
-No debe sustituirse silenciosamente un documento completo por un resumen.
+> **No debe sustituirse silenciosamente un documento completo por un resumen.**
 
 ---
 
-## 10. Estructura del contenido
+## 🧱 10. Estructura, legibilidad e identidad documental
 
 ### 10.1. Secciones recomendadas
 
-Un documento de conformidad completa utilizará, cuando sean pertinentes:
+Según el tipo documental pueden utilizarse:
 
 1. Propósito.
 2. Alcance.
@@ -466,81 +423,68 @@ Un documento de conformidad completa utilizará, cuando sean pertinentes:
 8. Criterios de calidad o aceptación.
 9. Mantenimiento y evolución.
 10. Decisiones adoptadas.
-11. Decisión de cierre del entregable, cuando aplique.
+11. `DECISIÓN`.
 
-No todas las secciones son obligatorias para todos los tipos. La estructura debe adaptarse a la pregunta principal.
+No se crean secciones vacías únicamente para cumplir una plantilla.
 
 ### 10.2. Índice
 
-Se recomienda cuando:
-
-- el documento sea extenso;
-- tenga más de diez secciones principales;
-- sea una referencia recurrente;
-- facilite claramente la navegación.
-
-No es obligatorio en documentos breves.
+Se recomienda para documentos extensos, de referencia frecuente o con más de diez secciones principales.
 
 ### 10.3. Encabezados
 
 - Un único `#` para el título.
 - `##` para secciones principales.
 - `###` y `####` para niveles internos.
-- Evitar saltos de nivel.
-- Utilizar títulos descriptivos, no genéricos como `Otros` o `Varios`.
+- No saltar niveles.
+- Utilizar títulos descriptivos.
 
-### 10.4. Párrafos y listas
+### 10.4. Párrafos, listas y tablas
 
-- Párrafos breves y directos.
-- Listas cuando mejoren la exploración.
-- Tablas para comparar elementos estructurados.
-- Bloques de código solo para rutas, ejemplos, estructuras o contratos.
-- Evitar grandes bloques de texto sin jerarquía.
+- párrafos breves;
+- listas cuando mejoren exploración;
+- tablas para información comparable;
+- bloques de código solo para rutas, contratos, estructuras o ejemplos;
+- evitar grandes paredes de texto.
 
-### 10.5. Construcción y entrega
+### 10.5. Lenguaje
 
-Antes de redactar:
+La documentación oficial se redacta principalmente en español. Se conservan términos técnicos establecidos cuando aporten precisión.
 
-1. revisar el documento existente o confirmar que no existe;
-2. identificar el documento propietario;
-3. aplicar desde el inicio la estructura pertinente;
-4. construir el contenido completo;
-5. validar integridad y trazabilidad;
-6. entregar el archivo listo para revisión.
+### 10.6. Identidad visual ligera
 
-La respuesta conversacional no sustituye al archivo cuando el entregable solicitado es un documento oficial.
+La documentación puede utilizar iconos y emojis para facilitar navegación y expresar la identidad de la Academia, especialmente en títulos de secciones.
 
-### 10.6. Lenguaje
+Ejemplos recomendados:
 
-La documentación oficial se redacta principalmente en español.
+- 🎯 Propósito
+- 📐 Alcance
+- 🧭 Principios
+- 🔗 Documentos relacionados
+- 🕘 Historial de versiones
+- 📘 Reglas
+- ✅ Criterios de calidad
+- 🔄 Mantenimiento
+- 📌 Decisiones
 
-Se conservarán términos técnicos en inglés cuando sean nombres establecidos, por ejemplo:
+Reglas:
 
-- Single Source of Truth;
-- roadmap;
-- handoff;
-- release notes;
-- commit.
-
-La primera aparición puede incluir explicación en español si mejora la comprensión.
+- los iconos **no sustituyen texto**;
+- no alteran el significado normativo;
+- deben mejorar exploración, no decorar cada línea;
+- documentación técnica puede ser más sobria cuando corresponda.
 
 ---
 
-## 11. Convenciones de nombres y rutas
+## 🗂️ 11. Convenciones de nombres y rutas
 
 ### 11.1. Principios
 
-Los nombres deben ser:
+Los nombres deben ser descriptivos, estables, localizables y coherentes con el tipo documental.
 
-- descriptivos;
-- estables;
-- coherentes con el tipo documental;
-- fáciles de localizar;
-- independientes de una fecha salvo que la fecha sea parte del propósito.
+### 11.2. Documentos estructurales
 
-### 11.2. Convención general
-
-Para documentos estructurales se recomienda mayúsculas y guion bajo:
+Se recomienda mayúsculas y guion bajo cuando la familia ya esté consolidada:
 
 ```text
 DOCUMENTATION_ARCHITECTURE.md
@@ -548,156 +492,114 @@ ADN_ACADEMIA_GLORIA_VALENTINA.md
 MODELO_MISIONES.md
 ```
 
-### 11.3. Estándares
+### 11.3. Estándares `STD-*`
+
+Familia oficial:
 
 ```text
-STD-NNN_NOMBRE_DESCRIPTIVO_vM.m.md
+STD-NOMBRE_DESCRIPTIVO.md
 ```
 
 Ejemplo:
 
 ```text
-STD-010_LIA_2_0_v1.1.md
+STD-MIS_TAREAS_Y_MISIONES.md
 ```
 
-El número identifica el estándar; la versión del nombre debe mantenerse sincronizada con la versión interna durante la transición. A futuro podrá evaluarse eliminar la versión del nombre para reducir renombrados, pero no se cambia esta convención sin una decisión específica.
+No se exige renombrar de forma masiva documentos heredados únicamente para adoptar esta convención. Se normalizan cuando sean intervenidos y el coste sea proporcional.
 
-### 11.4. Especificaciones futuras
+### 11.4. Especificaciones `SPEC-*`
 
-Convención candidata:
+La familia `SPEC-*` queda formalmente adoptada:
 
 ```text
-SPEC-NNN_NOMBRE_DESCRIPTIVO_vM.m.md
+SPEC-NOMBRE_DESCRIPTIVO.md
 ```
 
-No se utilizará formalmente hasta que se apruebe la primera especificación y su necesidad sea real.
+Ejemplos vigentes:
+
+```text
+SPEC-MIS_TAREAS_Y_MISIONES.md
+SPEC-REVISION_TRABAJO_REALIZADO.md
+```
 
 ### 11.5. Rutas oficiales
 
-Todo documento de conformidad completa declara su ruta canónica. Los enlaces internos usarán rutas relativas cuando sea práctico y se mantendrán sincronizados al renombrar archivos.
+Todo documento de conformidad completa declara ruta canónica. Las referencias deben mantenerse sincronizadas cuando una fuente se mueva o renombre.
 
 ### 11.6. Renombrados
 
 Un renombrado exige:
 
 1. actualizar enlaces internos;
-2. actualizar `docs/README.md`;
+2. actualizar `docs/README.md` cuando aplique;
 3. actualizar documentos relacionados críticos;
-4. preservar la trazabilidad en Git;
-5. indicar el cambio en el historial del documento.
+4. preservar trazabilidad en Git;
+5. indicar el cambio en el historial.
 
 ---
 
-## 12. Terminología y referencias
+## 🗣️ 12. Terminología y afirmaciones de estado
 
 ### 12.1. Terminología oficial
 
-Debe utilizarse el vocabulario del producto y consultar `docs/standards/STD-GLOSARIO.md` cuando exista un término definido.
+Consultar `docs/standards/STD-GLOSARIO.md` cuando exista definición aplicable.
 
-### 12.2. Nombres del producto
+### 12.2. Nombre del producto
 
-Utilizar:
-
-> **Academia Gloria Valentina**
-
-Las referencias abreviadas como `la Academia` son válidas después de la primera mención.
+Utilizar **Academia Gloria Valentina** en la primera referencia; `la Academia` es válido posteriormente.
 
 ### 12.3. Personas, roles y personajes
 
-Deben diferenciarse:
+Deben diferenciarse claramente personas reales, roles del producto, alumnos, herramientas de IA y Personajes Oficiales.
 
-- personas reales;
-- roles del producto;
-- alumnos;
-- herramientas de IA;
-- Personajes Oficiales de la Academia.
+### 12.4. Afirmaciones de estado funcional
 
-La terminología definitiva de personajes se consolidará en el ADN y documentos específicos de identidad.
+Distinguir:
 
-### 12.4. Afirmaciones de estado
-
-Distinguir claramente:
-
-- **Implementado:** existe y está disponible.
+- **Implementado:** existe y está disponible/validado en el alcance declarado.
 - **En desarrollo:** existe trabajo activo, pero no está completo.
-- **Propuesto:** idea todavía no aprobada.
+- **Propuesto:** idea todavía no aprobada o no construida.
 - **Visión futura:** dirección deseada sin compromiso inmediato.
 
-No presentar una visión como funcionalidad existente.
+No presentar una visión o propuesta como funcionalidad existente.
 
 ---
 
-## 13. Decisiones adoptadas
+## 📌 13. Decisiones adoptadas
 
 ### 13.1. Cuándo incluirlas
 
-La sección es obligatoria cuando el documento:
+La sección es obligatoria cuando el documento establece un estándar, consolida arquitectura, aprueba un modelo crítico, define un contrato funcional, resuelve una controversia relevante o sustituye una decisión anterior.
 
-- consolida arquitectura;
-- establece un estándar;
-- aprueba un modelo crítico;
-- define un contrato funcional;
-- resuelve una controversia relevante;
-- sustituye una decisión anterior.
-
-Puede omitirse en guías informativas, inventarios o documentos que no adopten decisiones.
-
-### 13.2. Ubicación
-
-Se ubica cerca del final, antes de la decisión de cierre del entregable.
-
-### 13.3. Formato
+### 13.2. Formato
 
 ```markdown
 | ID | Decisión | Estado | Impacto |
 |---|---|---|---|
-| DD-001 | Aplicar el estándar a documentos nuevos desde su aprobación. | Aprobada | Gobierno documental |
+| DD-001 | Aplicar el estándar a documentos nuevos. | Aprobada | Gobierno documental |
 ```
 
-### 13.4. Identificadores
+### 13.3. Relación con `DECISION_LOG.md`
 
-El prefijo puede reflejar el documento:
+Una decisión vive en su documento propietario. También se registra en `DECISION_LOG.md` cuando afecta varios dominios, tiene impacto arquitectónico transversal, sustituye una decisión relevante o necesita localizarse cronológicamente.
 
-- `DA-*`: Arquitectura Documental.
-- `DD-*`: Estándar de Documentación.
-- `ADN-*`: ADN del producto.
-- `STD010-*`: decisiones propias de un estándar específico.
-
-La numeración es local al documento, salvo que la decisión se registre también en `DECISION_LOG.md`.
-
-### 13.5. Relación con `DECISION_LOG.md`
-
-Una decisión vive en el documento propietario. También se registra en `DECISION_LOG.md` cuando:
-
-- afecta a varios dominios;
-- tiene impacto arquitectónico transversal;
-- sustituye una decisión relevante;
-- necesita localizarse cronológicamente desde el gobierno del producto.
-
-El log enlaza la decisión; no duplica toda su explicación.
+El log enlaza o resume; no duplica toda la explicación.
 
 ---
 
-## 14. Decisión de cierre del entregable
+## ✅ 14. Decisión de cierre del entregable
 
-### 14.1. Propósito
+La sección `DECISIÓN` identifica el resultado administrativo del documento y debe ser coherente con cabecera e historial.
 
-La sección `DECISIÓN` permite identificar de forma inmediata el estado administrativo, la versión activa o propuesta, la fecha de aprobación, la autoridad que aprueba y la relación con versiones anteriores.
-
-### 14.2. Uso
-
-Es obligatoria en documentos fundacionales, arquitecturas, estándares, modelos críticos, especificaciones y entregables sujetos a aprobación formal.
-
-Puede omitirse en inventarios, notas operativas o documentos históricos cuando no aporte valor.
-
-### 14.3. Formato normalizado
+Formato recomendado:
 
 ```markdown
-## DECISIÓN
+## ✅ DECISIÓN
 
 | Campo | Valor |
 |---|---|
-| **Estado** | Borrador · Candidato para aprobación · Aprobado · Activo · Sustituido · Histórico |
+| **Estado** | Aprobado |
 | **Versión activa o propuesta** | 1.0 |
 | **Fecha de aprobación** | DD/MM/AAAA o — |
 | **Aprobado por** | Product Owner o — |
@@ -707,19 +609,11 @@ Puede omitirse en inventarios, notas operativas o documentos históricos cuando 
 **Impacto:** ...
 ```
 
-### 14.4. Coherencia obligatoria
-
-La cabecera, el historial y la sección `DECISIÓN` deben expresar el mismo estado y versión.
-
-No deben coexistir en un mismo documento una cabecera candidata y una decisión aprobada.
-
-### 14.5. Diferencia con el estado documental
-
-El estado documental indica vigencia y madurez. La sección `DECISIÓN` registra el resultado administrativo y la relación con versiones anteriores.
+La cabecera puede declarar `Estado: Activo` mientras la decisión de cierre declara `Estado: Aprobado`; representan conceptos diferentes y deben ser compatibles.
 
 ---
 
-## 15. Revisión y aprobación
+## 🔍 15. Revisión y Quality Gate
 
 ### 15.1. Revisión mínima
 
@@ -728,186 +622,143 @@ Antes de aprobar se valida:
 - propósito y pregunta principal;
 - propietario;
 - exactitud;
-- coherencia con el producto;
+- coherencia con producto real;
 - ausencia de duplicidad;
 - documentos relacionados;
 - terminología;
 - enlaces y rutas;
 - estado y versión;
-- historial;
-- decisiones adoptadas, cuando proceda.
+- **historial de versiones**;
+- decisiones adoptadas cuando proceda.
 
-### 15.2. Auditoría de conformidad documental
+### 15.2. Auditoría de conformidad
 
-Antes de pasar a estado `Activo`, todo documento de conformidad completa deberá superar una revisión explícita contra este estándar.
+Antes de pasar a `Activo`, todo documento de conformidad completa debe superar revisión explícita contra este estándar.
 
-La revisión verificará, como mínimo:
-
-- metadatos;
-- propósito y alcance;
-- documentos relacionados;
-- terminología;
-- historial;
-- decisiones;
-- rutas;
-- versión;
-- estado;
-- y mantenimiento.
-
-Según la criticidad, puede documentarse mediante:
-
-- checklist completado;
-- revisión arquitectónica;
-- informe breve;
-- o auditoría formal.
-
-No se exige crear un documento de auditoría independiente para cada entrega.
-
-La finalidad es asegurar conformidad, no añadir burocracia.
-
+No se exige crear un informe independiente para cada caso. La finalidad es asegurar conformidad, no burocracia.
 
 ### 15.3. Aprobación
 
-La aprobación la realizan los arquitectos del producto.
+El Product Owner mantiene la decisión final. La aprobación debe quedar visible en:
 
-El Product Owner mantiene la decisión final como responsable de producto.
-
-La persona que desempeña actualmente cada rol se identifica en `docs/project/PROJECT_ROLES.md`.
-
-La aprobación debe quedar visible en:
-
-- estado `Activo`;
-- versión sin sufijo `-rc`;
-- historial de versiones;
-- decisión de cierre cuando corresponda.
-
-### 15.4. Rechazo o devolución
-
-Un candidato puede volver a `Borrador` o generar `rc2` cuando necesite cambios relevantes.
-
-No se publica como activo únicamente por haber sido entregado.
+- estado documental;
+- versión sin `-rc`;
+- historial;
+- `DECISIÓN` cuando corresponda.
 
 ---
 
-## 16. Mantenimiento y revisión
+## 🔄 16. Sincronización documental con el producto real
 
-### 16.1. Eventos de revisión
+### 16.1. Cuándo aplica
 
-Un documento se revisa cuando:
+Aplica cuando:
 
-- cambia el conocimiento que gobierna;
-- aparece una contradicción;
-- se modifica una decisión dependiente;
-- el producto implementado diverge;
-- se renombra o mueve una fuente relacionada;
-- se prepara una versión relevante del producto;
-- vuelve a estar activo en una fase de trabajo.
+- el producto implementado supera lo descrito;
+- una capacidad marcada pendiente ya fue cerrada;
+- una propuesta se convirtió en comportamiento real;
+- una arquitectura o patrón validado se volvió reutilizable;
+- nuevas entidades o contratos hacen incompleta una fuente técnica;
+- existen rutas o relaciones documentales obsoletas.
 
-### 16.2. No establecer revisiones artificiales
+### 16.2. Método
 
-No se exige una revisión periódica fija para todos los documentos.
+```text
+1. Identificar el desfase
+2. Leer la fuente propietaria completa
+3. Contrastar producto / código / reglas / comportamiento
+4. Separar hechos de acuerdos y visión
+5. Actualizar solo conocimiento estable
+6. Añadir historial
+7. Validar rutas y relaciones
+8. Ejecutar Quality Gate
+```
 
-Puede definirse una periodicidad para documentos que cambien frecuentemente, pero la revisión debe responder a valor real.
+### 16.3. Evidencia suficiente
 
-### 16.3. Documentos antiguos
+El nivel de comprobación debe ser proporcional. Una afirmación de estado puede apoyarse en código vigente, PR integrado, datos, reglas, comportamiento validado o una combinación de fuentes según el dominio.
 
-Se actualizarán progresivamente al ser utilizados, salvo prioridad crítica o jornada de actualización documental.
+---
 
-### 16.4. Jornada de actualización documental
+## 🧹 17. Jornadas de actualización documental
 
-Debe planificarse con:
+Una jornada documental debe tener:
 
-- alcance;
+- alcance explícito;
 - inventario;
 - prioridad;
 - criterios de validación;
 - resultado esperado;
 - límite temporal.
 
+### 17.1. Priorización recomendada
+
+- 🔴 **P0:** documento claramente desfasado, propietario de conocimiento recién consolidado o necesario para gobernar el resto de la jornada.
+- 🟠 **P1:** revisión importante pero no bloqueante; probable actualización selectiva.
+- 🟡 **P2:** comprobación dirigida; puede terminar sin cambios.
+
+### 17.2. Orden de trabajo
+
+```text
+Inventario
+   ↓
+Prioridad P0 / P1 / P2
+   ↓
+Documento propietario
+   ↓
+Revisión completa
+   ↓
+Actualizar / Mantener / Sustituir / Archivar
+   ↓
+Quality Gate
+```
+
 No se debe intentar modernizar todo el repositorio sin priorización.
 
 ---
 
-## 17. Sustitución, histórico y eliminación
+## 🗃️ 18. Sustitución, histórico y eliminación
 
-### 17.1. Sustitución
+### 18.1. Sustitución
 
-Un documento sustituido debe indicar:
+Un documento sustituido indica estado, fecha, motivo y fuente que asumió su responsabilidad.
 
-- estado `Sustituido`;
-- fecha;
-- motivo;
-- documento que asumió la responsabilidad.
+### 18.2. Histórico
 
-### 17.2. Histórico
+`docs/history/` preserva contexto y trazabilidad; no es una papelera ni una fuente vigente cuando existe un propietario activo.
 
-Un documento histórico conserva valor, pero no debe interpretarse como norma vigente.
+### 18.3. Eliminación
 
-Los documentos históricos o sustituidos pueden trasladarse a `docs/history/` conforme a `DOCUMENTATION_ARCHITECTURE.md`.
+Solo se elimina cuando no contiene conocimiento único, no aporta contexto histórico, no es necesario para trazabilidad y su eliminación no rompe continuidad.
 
-La carpeta `history/` no es una papelera: cada documento debe conservar contexto, estado y sustituto vigente cuando exista.
-
-### 17.3. Eliminación
-
-Solo se elimina cuando:
-
-- no contiene conocimiento único;
-- no aporta contexto histórico;
-- no es necesario para trazabilidad;
-- su eliminación no rompe enlaces o continuidad.
-
-Git preserva el historial técnico, pero no sustituye una clasificación documental clara.
+Git preserva historial técnico, pero no sustituye una clasificación documental clara.
 
 ---
 
-## 18. Uso de IA en documentación
-
-### 18.1. Principios
+## 🤖 19. Uso de IA y conversaciones
 
 Una IA puede analizar, proponer, redactar, validar y actualizar documentos, pero debe:
 
-- trabajar con las fuentes reales disponibles;
+- trabajar con fuentes reales;
 - respetar el documento propietario;
 - no inventar decisiones;
 - señalar incertidumbres;
-- distinguir hechos, inferencias y propuestas;
-- preservar terminología y contexto;
-- construir solo después de acordar el alcance.
+- distinguir hechos, inferencias, propuestas y decisiones;
+- preservar terminología e historial;
+- construir después de acordar el alcance.
 
-### 18.2. Conversaciones
+Cuando exista un archivo previo, debe leerse antes de modificarlo. No debe reconstruirse únicamente desde memoria o resúmenes.
 
-Los chats son espacios de trabajo, no fuentes permanentes de verdad.
-
-Toda decisión relevante debe consolidarse en:
-
-- el documento propietario;
-- `DECISION_LOG.md`, cuando sea transversal;
-- el historial de la versión correspondiente.
-
-### 18.3. Handoff
-
-Cuando el trabajo pase a otra IA o conversación, el entregable debe permitir continuar sin depender de memoria implícita.
-
-### 18.4. Señal de construcción
-
-Cuando el Product Owner solicite construir y exista claridad suficiente, la IA debe entregar el producto solicitado.
-
-No debe responder con nuevas explicaciones del proceso, promesas de construcción o análisis repetidos.
-
-### 18.5. Revisión de archivos reales
-
-Cuando exista un archivo previo, la IA debe leerlo antes de modificarlo.
-
-No debe reconstruirlo a partir de resúmenes, memoria conversacional o una interpretación parcial.
+Cuando el Product Owner solicite construir y exista claridad suficiente, la IA debe entregar el producto solicitado sin repetir innecesariamente el análisis.
 
 ---
 
-## 19. Plantillas
+## 🧩 20. Plantillas
 
-### 19.1. Plantilla mínima
+### 20.1. Plantilla mínima
 
 ```markdown
-# Título
+# 🌈 Título
 
 | Campo | Valor |
 |---|---|
@@ -916,21 +767,21 @@ No debe reconstruirlo a partir de resúmenes, memoria conversacional o una inter
 | **Última actualización** | DD/MM/AAAA |
 | **Propietario** | ... |
 
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
 | 1.0 | DD/MM/AAAA | ... | Primera versión. |
 
-## Propósito
+## 🎯 Propósito
 
 ...
 ```
 
-### 19.2. Plantilla completa
+### 20.2. Plantilla completa
 
 ```markdown
-# Título
+# 🌈 Título
 ## Academia Gloria Valentina
 
 | Campo | Valor |
@@ -944,63 +795,40 @@ No debe reconstruirlo a partir de resúmenes, memoria conversacional o una inter
 | **Responsables** | ... |
 | **Ámbito** | ... |
 
-## Documentos relacionados
+## 🔗 Documentos relacionados
 
 | Documento | Relación |
 |---|---|
 | `...` | ... |
 
----
-
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
 | 1.0-rc1 | DD/MM/AAAA | ... | Primera propuesta. |
 
----
-
-## 1. Propósito
+## 🎯 1. Propósito
 
 ...
 
-## 2. Alcance
+## 📐 2. Alcance
 
 ...
 
-## 3. Contenido
+## 📌 Decisiones adoptadas
 
 ...
 
-## Decisiones adoptadas
+## ✅ DECISIÓN
 
-| ID | Decisión | Estado | Impacto |
-|---|---|---|---|
-| XX-001 | ... | Aprobada | ... |
-
-## DECISIÓN
-
-| Campo | Valor |
-|---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.0 |
-| **Fecha de aprobación** | — |
-| **Aprobado por** | — |
-| **Sustituye** | — |
-| **Sustituido por** | — |
-
-**Impacto:** ...
+...
 ```
 
-### 19.3. Adaptación por tipo
-
-Las plantillas son una base, no una obligación de crear secciones vacías. Cada tipo documental debe conservar su propósito y claridad.
+Las plantillas son una base; cada tipo documental conserva su propósito y claridad.
 
 ---
 
-## 20. Lista de comprobación
-
-Antes de entregar un documento oficial:
+## ☑️ 21. Lista de comprobación
 
 ### Identidad
 
@@ -1014,17 +842,20 @@ Antes de entregar un documento oficial:
 - [ ] No duplica otro documento propietario.
 - [ ] Está ubicado en el dominio correcto.
 - [ ] Incluye documentos relacionados.
+- [ ] Si es nuevo, superó la prueba de necesidad documental.
 
 ### Contenido
 
-- [ ] Refleja correctamente el producto o identifica claramente la visión futura.
+- [ ] Refleja correctamente el producto o identifica explícitamente la visión futura.
+- [ ] Las afirmaciones de estado fueron contrastadas con fuentes reales suficientes.
 - [ ] Utiliza terminología oficial.
 - [ ] Distingue hechos, propuestas y decisiones.
 - [ ] Es comprensible para una nueva persona o IA.
 
 ### Trazabilidad
 
-- [ ] Incluye historial.
+- [ ] **Incluye historial de versiones.**
+- [ ] Conserva el historial previo si evolucionó una fuente existente.
 - [ ] Registra decisiones relevantes.
 - [ ] Identifica sustituciones y dependencias.
 - [ ] Los enlaces y rutas son válidos.
@@ -1032,41 +863,46 @@ Antes de entregar un documento oficial:
 ### Aprobación
 
 - [ ] Fue revisado por los roles responsables.
-- [ ] Su estado y versión coinciden en cabecera, historial y `DECISIÓN`.
-- [ ] El documento fue entregado completo como archivo.
-- [ ] Si evolucionó una versión existente, se preservó todo el conocimiento todavía válido.
+- [ ] Estado, versión, historial y `DECISIÓN` son coherentes.
+- [ ] Se preservó conocimiento todavía válido.
 - [ ] El siguiente paso está claro cuando forma parte de un entregable.
 
 ---
 
-## 21. Criterios de calidad
+## ✅ 22. Criterios de calidad
 
 Un documento cumple este estándar cuando:
 
 - puede entenderse sin reconstruir conversaciones anteriores;
-- permite localizar sus fuentes y dependencias;
+- permite localizar fuentes y dependencias;
 - deja claro si describe presente, propuesta o visión;
-- posee un responsable y una vigencia identificables;
+- posee responsable y vigencia identificables;
+- mantiene historial útil;
+- refleja el producto real cuando declara estado actual;
 - registra cambios relevantes sin burocracia excesiva;
 - ayuda a tomar decisiones o construir el producto;
 - puede mantenerse de forma sostenible.
 
 ---
 
-## 22. Adopción
+## 🌱 23. Adopción
 
-Tras la aprobación de la versión 1.1:
+Tras la aprobación de la versión 1.2:
 
 1. todo documento nuevo aplicará este estándar desde el inicio;
 2. todo documento aprobado se evolucionará desde su versión vigente;
-3. los documentos oficiales se entregarán completos como archivos;
-4. `README.md` y `DOCUMENTATION_ARCHITECTURE.md` mantendrán sincronizada la estructura;
-5. los documentos heredados se alinearán progresivamente al ser revisados;
-6. la consolidación documental no bloqueará el desarrollo del producto.
+3. `STD-*` y `SPEC-*` utilizarán nombres canónicos estables sin versión en el nombre para nuevas fuentes y normalizaciones oportunas;
+4. no se realizarán renombrados masivos solo por adoptar la convención;
+5. toda afirmación de estado actual se contrastará con producto real en nivel proporcional;
+6. los acuerdos estables de conversaciones se consolidarán en su propietario documental;
+7. las jornadas documentales podrán priorizar mediante P0/P1/P2;
+8. el historial de versiones será parte explícita del Quality Gate;
+9. los iconos podrán mejorar legibilidad sin convertirse en significado normativo;
+10. la consolidación documental continuará sin bloquear el desarrollo del producto.
 
 ---
 
-## Decisiones adoptadas
+## 📌 Decisiones adoptadas
 
 | ID | Decisión | Estado | Impacto |
 |---|---|---|---|
@@ -1076,30 +912,36 @@ Tras la aprobación de la versión 1.1:
 | DD-004 | Utilizar adopción incremental: documentos nuevos de inmediato y existentes al ser revisados. | Aprobada | Sostenibilidad |
 | DD-005 | Usar versionado `MAYOR.MENOR` y sufijo `-rcN` para candidatos. | Aprobada | Trazabilidad |
 | DD-006 | No inventar historial previo al adaptar documentos antiguos. | Aprobada | Integridad histórica |
-| DD-007 | Mantener la versión en nombres `STD-*` durante la transición y evaluar su simplificación solo mediante decisión futura. | Aprobada | Compatibilidad del repositorio |
+| DD-007 | Usar nombre canónico estable para documentos activos, incluida la familia `STD-*`; no ejecutar renombrados masivos únicamente por esta convención. | Aprobada | Rutas · Git · Enlaces |
 | DD-008 | Incorporar una lista de comprobación de conformidad antes de aprobar documentos oficiales. | Aprobada | Calidad documental |
 | DD-009 | Utilizar roles estables en documentos estructurales y mantener asignaciones nominales en `PROJECT_ROLES.md`. | Aprobada | Continuidad y gobierno |
 | DD-010 | Exigir una revisión de conformidad antes de activar documentos de conformidad completa. | Aprobada | Quality Gate documental |
-| DD-011 | Utilizar un nombre canónico estable para documentos activos, salvo convenciones específicas. | Aprobada | Rutas · Git · Enlaces |
-| DD-012 | Revisar el documento existente completo antes de crear o actualizar una fuente oficial. | Aprobada | Preservación del conocimiento |
-| DD-013 | Evolucionar documentos aprobados mediante el menor conjunto de cambios necesario. | Aprobada | Continuidad · Eficacia |
-| DD-014 | Construir documentos oficiales con la estructura estándar desde el inicio. | Aprobada | Calidad Documental |
-| DD-015 | Entregar documentos oficiales completos como archivos listos para revisión. | Aprobada | Flujo de Trabajo |
-| DD-016 | Establecer que la documentación facilita el producto y no debe bloquearlo. | Aprobada | Entrega de Valor |
-| DD-017 | Normalizar la sección `DECISIÓN` y exigir coherencia con cabecera e historial. | Aprobada | Gobierno · Trazabilidad |
-| DD-018 | Cuando exista claridad y el Product Owner solicite construir, entregar el producto sin repetir el proceso. | Aprobada | Colaboración con IA |
+| DD-011 | Revisar el documento existente completo antes de crear o actualizar una fuente oficial. | Aprobada | Preservación del conocimiento |
+| DD-012 | Evolucionar documentos aprobados mediante el menor conjunto de cambios necesario. | Aprobada | Continuidad · Eficacia |
+| DD-013 | Construir documentos oficiales con la estructura estándar desde el inicio. | Aprobada | Calidad documental |
+| DD-014 | Entregar documentos oficiales completos cuando el entregable solicitado sea un documento. | Aprobada | Flujo de trabajo |
+| DD-015 | Establecer que la documentación facilita el producto y no debe bloquearlo. | Aprobada | Entrega de valor |
+| DD-016 | Normalizar la sección `DECISIÓN` y exigir coherencia con cabecera e historial. | Aprobada | Gobierno · Trazabilidad |
+| DD-017 | Cuando exista claridad y el Product Owner solicite construir, entregar el producto sin repetir innecesariamente el proceso. | Aprobada | Colaboración con IA |
+| DD-018 | Adoptar formalmente `SPEC-*` como familia documental con nombre canónico estable. | Aprobada | Arquitectura documental |
+| DD-019 | Exigir una prueba de necesidad antes de crear una nueva fuente oficial. | Aprobada | SSOT · Sostenibilidad |
+| DD-020 | Contrastar las afirmaciones de estado actual con fuentes reales suficientes y proporcionales. | Aprobada | Exactitud documental |
+| DD-021 | Consolidar acuerdos estables de conversaciones en el documento propietario, no tratar el chat como SSOT. | Aprobada | Continuidad del conocimiento |
+| DD-022 | Utilizar P0/P1/P2 como método recomendado de priorización en jornadas documentales. | Aprobada | Eficacia documental |
+| DD-023 | Permitir iconos para mejorar exploración, manteniendo el texto como significado normativo. | Aprobada | Legibilidad · Identidad |
+| DD-024 | Reforzar el historial de versiones como elemento explícito e ineludible del Quality Gate. | Aprobada | Trazabilidad |
 
 ---
 
-## DECISIÓN
+## ✅ DECISIÓN
 
 | Campo | Valor |
 |---|---|
-| **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 04/08/2026 |
+| **Estado** | Aprobado |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación** | 03/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `DOCUMENTATION_STANDARD.md` v1.0 |
+| **Sustituye** | `DOCUMENTATION_STANDARD.md` v1.1 |
 | **Sustituido por** | — |
 
-**Impacto:** Documentación Oficial · Gobierno del Conocimiento · Calidad Documental · Continuidad del Producto · Colaboración con IA
+**Impacto:** Documentación Oficial · Gobierno del Conocimiento · Calidad Documental · Sincronización con Producto Real · Continuidad · Colaboración con IA

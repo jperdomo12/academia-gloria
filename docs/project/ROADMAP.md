@@ -4,26 +4,28 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.3 |
+| **Versión del documento** | 1.5 |
 | **Estado** | Activo |
-| **Última actualización** | 30/08/2026 |
+| **Última actualización** | 03/09/2026 |
 | **Responsables** | Juan Perdomo + IA |
 | **Ámbito** | Evolución funcional y prioridades de producto |
 
 ---
 
-# Historial de versiones
+# 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
-| 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
-| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; reconoce la persistencia existente de Detectives y mantiene como pendiente su uso para propuestas de refuerzo; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
+| 1.5 | 03/09/2026 | Juan Perdomo + IA | Cierra formalmente la jornada P0 de sincronización documental del 03Sep2026 después de la aprobación del bloque. Mantiene los P1/P2 fuera de alcance y deja como siguiente frente funcional la expansión curricular progresiva de 6.º, conservando vigentes las líneas técnicas específicas de Identidad, Auditoría y certificación del núcleo. |
+| 1.4 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el Roadmap con el estado real al 03Sep: consolida Gestión de Misiones V1, creación asistida de Repaso Académico, Misiones libres, refuerzos, Análisis Educativo V1, limpieza de datos de prueba, eliminación controlada de Misiones completadas, Recompensas/Reconocimientos V1, recordatorios de calendario y nueva base visual/navegacional de 6.º. Formaliza la expansión curricular de mínima intervención y evidencia obligatoria para nuevos Temas de 6.º. Reubica como evolución futura únicamente las ampliaciones todavía no implementadas. |
 | 1.3 | 30/08/2026 | Juan Perdomo + IA | Registra como implementadas y validadas las propuestas de refuerzo de Detectives y de pruebas académicas de 6.º. Consolida el patrón Evidencia → Observación → Propuesta → Revisión humana → Misión, mantiene la activación familiar antes de mostrar la Misión en Mi Camino y desplaza el siguiente foco funcional hacia la expansión curricular progresiva de 6.º. |
+| 1.2 | 29/08/2026 | Juan Perdomo + IA | Sincroniza el roadmap con el estado real de Misiones, Trabajo realizado y 6.º. Registra la persistencia académica como base implementada y validada en Puente/Fracciones; reconoce la persistencia existente de Detectives y mantiene como pendiente su uso para propuestas de refuerzo; mantiene como frentes activos Observaciones/Refuerzo, Creación asistida de Misiones y estructura de 6.º. Conserva sin declarar cerradas las líneas técnicas previas de Identidad, Auditoría y certificación del núcleo. |
+| 1.1 | 12/08/2026 | Juan Perdomo + IA | Actualiza el estado real del producto, incorpora Identidad Multi-Persona, Gestión de Usuarios, auditoría y reorganiza las prioridades inmediatas hacia cierre de núcleo, 6.º de Primaria y seguimiento basado en datos reales. |
+| 1.0 | 22/07/2026 | Juan Perdomo | Primera versión del roadmap funcional de la Academia. |
 
 ---
 
-# 1. Propósito
+# 🎯 1. Propósito
 
 Este documento define la evolución funcional de **Academia Gloria Valentina**.
 
@@ -45,7 +47,7 @@ No sustituye:
 
 ---
 
-# 2. Principios de evolución
+# 🧭 2. Principios de evolución
 
 1. **Primero utilidad real.** La Academia evoluciona para acompañar el aprendizaje y crecimiento del alumno.
 2. **Uso real antes que métricas.** No construir estadísticas avanzadas sin datos suficientes.
@@ -55,10 +57,12 @@ No sustituye:
 6. **Auditoría proporcional.** Las entidades mutables relevantes deben poder identificar creación y modificación; las entidades sensibles podrán disponer además de historial completo.
 7. **Evolución incremental.** Mantener compatibilidad y evitar migraciones masivas sin necesidad observada.
 8. **Documentación sincronizada.** El roadmap describe futuro y prioridades; `RELEASE_NOTES.md` registra entregas reales.
+9. **Contenido académico con mínima intervención.** Un nuevo Tema de 6.º debe poder incorporarse a partir de material escolar + curso/materia/tema + notas opcionales, delegando en la AI Collaborator la ubicación, estructura e integración técnica.
+10. **Evidencia desde el nacimiento.** Todo nuevo Tema de 6.º debe producir evidencia académica útil y reutilizable por revisión, análisis y fortalecimiento.
 
 ---
 
-# 3. Estado consolidado · Agosto 2026
+# ✅ 3. Estado consolidado · 03Sep2026
 
 La Academia ya ha superado varias previsiones del roadmap original.
 
@@ -99,35 +103,68 @@ Implementado durante agosto de 2026:
 
 Esta evolución adelanta parcialmente la antigua fase de colaboración profesional y permisos.
 
-## 3.3 Estado funcional actualizado al 30/08/2026
-
-El uso y validación posteriores a v1.2 permiten actualizar las siguientes capacidades:
+## 3.3 Capacidades funcionales consolidadas al 03/09/2026
 
 - **Creciendo por Dentro:** ✅ Listo.
 - **Biblioteca:** ✅ Listo.
 - **Trabajo realizado:** ✅ Consolidado para los motores integrados y ampliado a Repaso Académico.
-- **Misiones libres:** ✅ Listo.
+- **Misiones libres:** ✅ Comportamiento funcional corregido y validado.
+- **Gestión de Misiones:** ✅ V1 consolidada con filtrado, presentación paginada por bloques y acceso restringido al espacio familiar/administrativo.
+- **Repaso Académico desde Gestión de Misiones:** ✅ Curso + Materia cargan Temas reales; Tema completa automáticamente la ruta de actividad cuando existe catálogo compatible.
 - **Repaso de contenidos de 5.º mediante Misiones:** ✅ Disponible sin exigir migración masiva de las páginas heredadas.
 - **Persistencia de pruebas académicas:** ✅ Base implementada y validada con Puente y Fracciones.
 - **Resultado académico histórico:** ✅ Implementado y validado como consulta de solo lectura.
 - **Historial y sesiones de Detectives:** ✅ Base implementada en Firestore.
 - **Detectives → propuestas/Misiones de refuerzo:** ✅ Base implementada y validada.
 - **Pruebas académicas → propuestas/Misiones de refuerzo:** ✅ Base implementada y validada para Puente y Fracciones de 6.º.
-- **Creación asistida de Misiones:** 🚧 En progreso; Mi Rincón de Lectura, Detectives y Repaso Académico ya aportan referencias reales.
-- **Observaciones / Propuestas de refuerzo:** 🚧 Patrón común ya validado en tres orígenes; evolución progresiva por motor.
-- **Estructura de 6.º de Primaria:** 🚧 En progreso avanzado.
+- **Rincón de Lectura → propuestas/Misiones de pronunciación:** ✅ Base implementada.
+- **Análisis Educativo V1:** ✅ Implementado con período, Motor/Área, Tema/Foco, fortalezas, aspectos a reforzar, evolución, intentos, pistas/ayudas, mejoras personales y propuestas de actuación.
+- **Limpieza de evidencias/datos de prueba:** ✅ Herramientas disponibles para evitar contaminación de estadísticas educativas.
+- **Eliminación controlada de Misiones completadas:** ✅ Disponible desde Gestión de Misiones para casos puntuales autorizados.
+- **Recompensas / Reconocimientos V1:** ✅ Integrados principalmente en Mi Camino → Así voy creciendo, basados en actividad y progreso reales, sin ranking ni pérdida de recompensas.
+- **Recordatorios de Calendario al ingreso:** ✅ Recordatorio del día y del día previo integrado.
+- **Portal de 6.º + Matemáticas:** ✅ Base visual/navegacional renovada y validada.
+- **Fracciones:** ✅ Tema académico real y maduro dentro de `6.º → Matemáticas → Tema`.
+- **Modo de Incorporación Curricular de mínima intervención:** ✅ Aprobado documentalmente como procedimiento para nuevos Temas de 6.º.
 
 La actualización de estos estados **no declara cerradas** las líneas técnicas P0 de Identidad, Auditoría y certificación del núcleo definidas a continuación. Esas líneas conservan su detalle y estado hasta una validación específica.
 
 ---
 
-# 4. Prioridades inmediatas
+# 🚩 4. Prioridades inmediatas
+
+## P0 · Sincronización documental estratégica · jornada 03Sep2026
+
+### Objetivo
+
+Alinear las fuentes documentales principales con el producto real y eliminar estados ya superados antes de continuar la expansión curricular.
+
+### Alcance completado
+
+Se sincronizaron las fuentes estratégicas y propietarias P0 identificadas en el inventario, incluyendo:
+
+- `DOCUMENTATION_STANDARD.md`;
+- `SPEC-ANALISIS_EDUCATIVO.md`;
+- `ROADMAP.md`;
+- `RELEASE_NOTES.md`;
+- `PROJECT_MAP.md`;
+- `README.md`;
+- `MASTER_PLAN.md`;
+- estándares, especificaciones y modelos P0 directamente afectados por el producto real al 03Sep2026.
+
+Los documentos P1/P2 permanecen fuera de esta jornada y se revisarán únicamente cuando corresponda.
+
+### Estado
+
+✅ **Completado · 03/09/2026**
+
+---
 
 ## P0 · Cierre de Identidad, Usuarios y Auditoría
 
 ### Objetivo
 
-Cerrar formalmente la evolución de identidad multi-persona antes de ampliar el producto.
+Cerrar formalmente la evolución de identidad multi-persona antes de ampliaciones técnicas de alto impacto.
 
 ### Incluye
 
@@ -209,7 +246,7 @@ Primero se revisará:
 
 ### Estado
 
-🔜 Siguiente bloque técnico
+🔜 Siguiente bloque técnico después de la sincronización documental
 
 ---
 
@@ -242,45 +279,46 @@ Una lista corta y reutilizable de pruebas de regresión.
 
 ### Estado
 
-🔜 Próximo
+🔜 Pendiente de certificación específica
 
 ---
 
-## P0 · Observaciones y Propuestas de Refuerzo
+## P0 · Observaciones, Análisis y Propuestas de Refuerzo
 
 ### Objetivo
 
-Consolidar un patrón común para transformar evidencia útil en acompañamiento accionable sin crear un sistema diferente por módulo.
+Conservar un patrón común para transformar evidencia útil en acompañamiento accionable sin crear un sistema diferente por módulo.
 
-Patrón objetivo:
+Patrón vigente:
 
 ```text
 Evidencia
    ↓
 Datos observables
    ↓
-Observación
+Observación / tendencia prudente
    ↓
-Propuesta de refuerzo
+Propuesta de actuación o refuerzo
    ↓
 Revisión humana
    ↓
-Misión / acción
+Misión / acción cuando aporta valor
+   ↓
+Nueva evidencia
 ```
 
 ### Estado
 
-🚧 Patrón base validado · evolución progresiva
+✅ V1 consolidada · evolución futura guiada por evidencia real
 
-### Referencias disponibles
-
-La Academia ya dispone de tres aplicaciones reales del patrón:
+### Aplicaciones reales
 
 - **Mi Rincón de Lectura:** palabras observadas → propuesta → Misión de pronunciación;
 - **Detectives de Problemas:** señales repetidas o decisión familiar → foco → Misión de refuerzo;
-- **Repaso Académico de 6.º:** mapa formativo de la prueba → bloque a reforzar → Misión académica preparada.
+- **Repaso Académico de 6.º:** mapa formativo de la prueba → bloque a reforzar → Misión académica preparada;
+- **Análisis Educativo:** varias fuentes → fortalezas/aspectos/evolución → propuestas descriptivas de actuación.
 
-En los tres casos la propuesta no sustituye la decisión humana: la familia conserva el control sobre cuándo la Misión se muestra en Mi Camino.
+La propuesta no sustituye la decisión humana: la familia conserva el control sobre cuándo una Misión se muestra en Mi Camino.
 
 ---
 
@@ -288,81 +326,145 @@ En los tres casos la propuesta no sustituye la decisión humana: la familia cons
 
 ### Objetivo
 
-Generalizar la capacidad de preparar una Misión desde una necesidad observada, manteniendo control humano sobre su creación y asignación.
+Generalizar la capacidad de preparar una Misión desde referencias o necesidades reales, manteniendo control humano sobre su creación y asignación.
 
-Patrón deseado:
+Patrón vigente:
 
 ```text
-Dato / observación
-→ propuesta de Lía
+Dato / observación / contexto académico
+→ propuesta o selección asistida
 → revisar / ajustar
 → crear Misión
 ```
 
 ### Estado
 
-🚧 Base aplicada en varios motores · evolución progresiva
+✅ V1 consolidada para los casos actuales · evolución progresiva al aparecer nuevos motores
+
+La preparación de **Repaso Académico** ya evita que el administrador tenga que conocer/copiar rutas técnicas cuando el Tema pertenece al catálogo académico disponible.
 
 ---
 
-# 5. Próxima etapa académica · Curso 2026–2027
+# 📘 5. Próxima etapa académica · Curso 2026–2027
 
 ## P1 · Academia 6.º de Primaria
 
 ### Objetivo
 
-Preparar y ampliar la Academia para acompañar el nuevo curso escolar sin reconstruir los módulos existentes.
+Ampliar la Academia durante el curso real sin construir contenido ficticio por adelantado y con mínima intervención manual de la familia.
 
-### Alcance inicial
+### Arquitectura de navegación
 
 ```text
-6.º de Primaria
-├── Portal del curso
-├── Asignaturas
-├── Calendario académico 2026–2027
-├── Misiones / Tareas
-└── Contenidos incorporados según necesidad real
+Academia
+→ 6.º de Primaria
+→ Asignatura
+→ Tema
 ```
 
-### Principio
+### Base visual aprobada
 
-No generar grandes volúmenes de contenido por adelantado.
+El portal de 6.º y el portal de Matemáticas constituyen la primera referencia visual del curso:
 
-La prioridad será adaptar progresivamente la Academia a:
+- jerarquía visible sin necesidad de leer largos textos;
+- experiencia clara, luminosa, tranquila y motivadora;
+- tarjetas académicas como patrón de organización;
+- cuadrícula de referencia: **3 columnas en escritorio → 2 en tablet/móvil → 1 solo en móviles muy estrechos**;
+- crecimiento mediante contenido real, no mediante tarjetas ficticias;
+- separación visual entre navegación curricular, apoyos y mensajes pedagógicos.
 
-- contenidos reales del colegio;
-- necesidades observadas;
-- evaluaciones;
-- tareas;
-- refuerzos;
-- objetivos personales y educativos.
+El detalle normativo debe residir en los estándares/arquitectura visual correspondientes, no en este Roadmap.
+
+### Modo de expansión curricular aprobado
+
+El ciclo objetivo es:
+
+```text
+Material oficial del colegio
++ curso
++ materia
++ nombre del Tema
++ notas opcionales
+        ↓
+AI Collaborator analiza
+        ↓
+Decide `Curso → Asignatura → Tema`
+        ↓
+Reutiliza estructura o crea la mínima necesaria
+        ↓
+Construye aplicando todos los estándares vigentes
+        ↓
+Integra evidencia, histórico, análisis y fortalecimiento
+        ↓
+YA PUEDES PROBAR
+        ↓
+Aprobación u observaciones concretas
+        ↓
+Cierre definitivo
+```
+
+### Regla de evidencia
+
+Todo nuevo Tema de 6.º debe producir evidencia académica estructurada durante una ejecución normal, de modo que pueda alimentar:
+
+- Trabajo realizado;
+- Análisis Educativo;
+- estadísticas/evolución;
+- fortalezas y aspectos a reforzar;
+- propuestas de fortalecimiento.
+
+No se creará persistencia privada por Tema si el contrato compartido puede representar la experiencia.
 
 ### Base ya validada
 
-A 30/08/2026 existen como referencias estructuradas:
+A 03/09/2026 existen como referencias:
 
-- portal navegable de 6.º;
+- portal renovado y navegable de 6.º;
 - Matemáticas como primera asignatura en expansión;
+- portal de Matemáticas preparado para crecer con muchos Temas;
 - **Puente de 5.º a 6.º**;
 - **Fracciones**;
 - patrón Resumen → Teoría → Fichas → Práctica → Prueba cuando corresponde;
 - contrato compartido `sesion-academica-v1`;
+- evidencia académica en ejecución normal;
 - evidencia `sesion_academica` cuando existe una Misión;
 - resultado académico histórico de solo lectura;
-- propuestas de refuerzo derivadas del mapa formativo de la sesión más reciente;
+- propuestas de refuerzo derivadas del mapa formativo;
 - preparación de Misiones académicas de refuerzo con activación familiar;
 - integración con Persona Activa y `Volver` histórico;
 - reglas Firestore de `sesionesAcademicas` publicadas y validadas.
 
 ### Estado
 
-🚧 En progreso avanzado
+🚧 Base de curso consolidada · expansión curricular progresiva
 
-La expansión continuará con nuevos temas de Matemáticas, **Science** y las demás asignaturas según material y necesidad real del colegio.
+La expansión continuará con nuevos Temas reales de Matemáticas, **Science** y las demás asignaturas según material y necesidad del colegio.
 
 ---
 
-# 6. Seguimiento educativo basado en datos reales
+## P1 · Preferencias personales de accesibilidad/experiencia
+
+### Siguiente candidata concreta
+
+**Velocidad de voz configurable por Persona**, administrable por adulto/administrador.
+
+Interfaz conceptual:
+
+```text
+Normal
+Pausada
+Muy pausada
+```
+
+Los valores técnicos permanecen internos.
+
+### Estado
+
+⏳ Pendiente
+
+---
+
+# 📊 6. Seguimiento educativo basado en datos reales
 
 ## P1 · Historial mínimo de Detectives
 
@@ -389,9 +491,7 @@ También permite consultar el historial de historias y las sesiones de una histo
 
 ### Estado
 
-✅ Base implementada.
-
-Sus datos ya se utilizan para generar observaciones prudentes y propuestas de refuerzo sin convertir un único error en una conclusión global.
+✅ Base implementada y ya consumida por refuerzo y Análisis Educativo.
 
 ---
 
@@ -401,7 +501,7 @@ Sus datos ya se utilizan para generar observaciones prudentes y propuestas de re
 
 Conectar una Tarea/Misión con la experiencia educativa que realmente la completa.
 
-### Relaciones previstas
+### Relaciones vigentes
 
 ```text
 Tarea / Misión
@@ -417,21 +517,17 @@ Resultado / validación
 
 ✅ Base implementada y validada en los motores integrados; evolución progresiva por motor.
 
-Repaso Académico ya utiliza este patrón mediante `sesionId` y evidencia `sesion_academica`, sin duplicar la sesión dentro de la Misión.
+Repaso Académico utiliza este patrón mediante `sesionId` y evidencia `sesion_academica`, sin duplicar la sesión dentro de la Misión.
 
 ---
 
 ## P1 · Mi Rincón de Lectura → refuerzo / Misiones
 
-### Objetivo
-
-Utilizar los datos reales del Rincón para identificar necesidades concretas y preparar acciones de práctica.
-
 ### Estado
 
 ✅ Base lista
 
-Entre los casos ya contemplados se encuentran:
+Entre los casos contemplados:
 
 - palabras sugeridas por Lía y no superadas;
 - palabras superadas después de varios intentos;
@@ -442,15 +538,11 @@ Entre los casos ya contemplados se encuentran:
 
 ## P1 · Detectives → observaciones / Misiones de refuerzo
 
-### Objetivo
-
-Utilizar fallos, intentos, pasos y resultados de Detectives para proponer acciones de refuerzo y, cuando corresponda, preparar nuevas Misiones.
-
 ### Regla
 
 No inferir una dificultad global a partir de un único error. Las propuestas deben basarse en datos observables y expresarse como oportunidades concretas de práctica.
 
-La primera versión implementada utiliza señales repetidas en historias distintas del mismo nivel y permite que una decisión familiar explícita de **Reforzar** actúe como señal suficiente para una historia concreta.
+La primera versión utiliza señales repetidas en historias distintas del mismo nivel y permite que una decisión familiar explícita de **Reforzar** actúe como señal suficiente para una historia concreta.
 
 ### Estado
 
@@ -459,20 +551,6 @@ La primera versión implementada utiliza señales repetidas en historias distint
 ---
 
 ## P1 · Pruebas académicas → propuestas de refuerzo
-
-### Objetivo
-
-Aprovechar la persistencia ya disponible en los Temas Académicos para transformar resultados de pruebas en propuestas de práctica específica.
-
-Datos disponibles en las referencias actuales:
-
-- resultado total;
-- porcentaje de la prueba;
-- respuestas;
-- explicaciones;
-- mapa formativo por bloques;
-- sesión histórica;
-- relación con Misión cuando existe.
 
 ### Flujo vigente
 
@@ -484,13 +562,14 @@ Prueba persistida
 → revisión familiar
 → Misión de refuerzo
 → nueva oportunidad de aplicación
+→ nueva evidencia
 ```
 
 ### Primera regla implementada
 
 En **Puente de 5.º a 6.º** y **Fracciones**:
 
-- se analiza únicamente la sesión de aprendizaje más reciente de cada actividad;
+- se analiza la sesión de aprendizaje más reciente de cada actividad;
 - una Vista previa no participa porque no persiste sesión académica;
 - solo los bloques cuyo mapa formativo indica `reforzar` generan propuesta automática;
 - un bloque `camino` se conserva como observación, pero no crea propuesta automática en esta primera versión;
@@ -501,6 +580,37 @@ En **Puente de 5.º a 6.º** y **Fracciones**:
 ### Estado
 
 ✅ Base implementada y validada para Puente y Fracciones de 6.º
+
+---
+
+## P1 · Análisis Educativo V1
+
+### Objetivo
+
+Permitir a la familia revisar evidencias reales sin etiquetar al alumno.
+
+### Fuentes actuales
+
+- Detectives;
+- Pruebas Académicas;
+- Rincón de Lectura.
+
+### Capacidades actuales
+
+- Desde / Hasta y períodos predefinidos;
+- Motor / Área;
+- Tema / Foco;
+- fortalezas observadas;
+- aspectos a reforzar;
+- evolución;
+- intentos;
+- pistas/ayudas cuando existen;
+- mejoras personales observables;
+- propuestas de actuación.
+
+### Estado
+
+✅ V1 implementada y documentada en `SPEC-ANALISIS_EDUCATIVO.md`.
 
 ---
 
@@ -539,23 +649,41 @@ Medir continuidad educativa real, no accesos o logins.
 
 ---
 
-## P2 · Logros reales
+# 🏅 7. Motivación, reconocimientos y crecimiento
+
+## Base · Recompensas / Reconocimientos V1
 
 ### Objetivo
 
-Generar hitos desde evidencias y progreso auténtico.
+Reconocer actividad y progreso reales sin comparación con otros y sin convertir la Academia en una economía de premios.
 
-### Principio
+### Tipos iniciales
 
-Los logros no se generarán a partir de métricas ficticias ni de actividad superficial.
+- 🦜 Guacamaya / hito significativo;
+- 🏅 Récord personal;
+- ✨ Reconocimiento de Lía;
+- 🤝 Reto cooperativo Gloria + familia.
+
+### Principios
+
+- nacen de actividad/progreso real;
+- no de clics ni perfección;
+- no rankings;
+- no comparación entre alumnos;
+- no pérdida de recompensas;
+- pueden reconocer mejoras concretas como utilizar una pista menos.
 
 ### Estado
 
-⏳ Posterior a historial y evidencias
+✅ V1 implementada e integrada principalmente en **Mi Camino → Así voy creciendo**.
+
+### Evolución futura
+
+Ampliar únicamente cuando existan nuevos hitos reales y suficientes datos para justificarlo.
 
 ---
 
-# 7. Colaboración familiar y profesional
+# 👨‍👩‍👧 8. Colaboración familiar y profesional
 
 La base técnica ya existe parcialmente:
 
@@ -582,13 +710,13 @@ Seguridad, privacidad y permisos deberán definirse antes de ampliar cada ámbit
 
 ---
 
-# 8. Panel de evolución
+# 📈 9. Paneles e históricos de evolución
 
-## P3 · Información para adultos y profesionales
+## P3 · Información ampliada para adultos y profesionales
 
 ### Objetivo
 
-Mostrar evolución comprensible basada en históricos reales.
+Evolucionar desde el Análisis Educativo V1 hacia vistas longitudinales más amplias cuando exista suficiente volumen de datos reales.
 
 ### Posibles fuentes
 
@@ -597,12 +725,12 @@ Mostrar evolución comprensible basada en históricos reales.
 - Detectives;
 - sesiones académicas;
 - constancia;
-- logros;
+- reconocimientos;
 - observaciones autorizadas.
 
 ### Condición de entrada
 
-Debe existir volumen suficiente de datos reales.
+Debe existir volumen suficiente de datos reales y una necesidad concreta no resuelta por el reporte V1.
 
 ### Estado
 
@@ -610,13 +738,23 @@ Debe existir volumen suficiente de datos reales.
 
 ---
 
-# 9. Inteligencia Artificial educativa
+# 🤖 10. Inteligencia Artificial educativa
 
-## P3 · Tutor y recomendaciones
+## 10.1 AI Collaborator para incorporación curricular
+
+La IA ya forma parte del **proceso de desarrollo** de nuevos Temas de 6.º mediante el Modo de Incorporación Curricular de mínima intervención.
+
+No es una funcionalidad autónoma visible para el alumno: es un procedimiento gobernado por estándares para transformar material real del colegio en contenido integrado, probado y documentado.
+
+### Estado
+
+✅ Procedimiento aprobado · se validará mediante uso repetido con nuevos Temas reales
+
+## 10.2 Tutor/recomendaciones de IA dentro del producto
 
 ### Objetivo
 
-Incorporar capacidades de IA únicamente cuando existan:
+Incorporar capacidades generativas para el usuario solo cuando existan:
 
 - datos suficientes;
 - objetivos pedagógicos claros;
@@ -636,11 +774,11 @@ Incorporar capacidades de IA únicamente cuando existan:
 
 🔮 Largo plazo
 
-La creación asistida basada en datos estructurados y reglas puede avanzar antes de depender de IA generativa.
+La creación asistida basada en datos estructurados y reglas puede avanzar antes de depender de IA generativa visible para el alumno.
 
 ---
 
-# 10. Visión de largo alcance
+# 🌱 11. Visión de largo alcance
 
 La Academia continuará evolucionando como un ecosistema educativo, personal y familiar capaz de acompañar:
 
@@ -652,46 +790,54 @@ La Academia continuará evolucionando como un ecosistema educativo, personal y f
 - bienestar;
 - recuerdos;
 - proyectos;
-- logros;
+- reconocimientos;
 - colaboración familiar y profesional.
 
 La visión permanece abierta, pero cada ampliación deberá demostrar valor real antes de aumentar complejidad.
 
 ---
 
-# 11. Secuencia recomendada
+# 🗺️ 12. Secuencia recomendada
 
 ```text
+CIERRE DOCUMENTAL · 03Sep2026
+────────────────────────────────────────────
+✅  Sincronización documental estratégica P0 completada
+
 AHORA
 ────────────────────────────────────────────
-P0  Consolidar el patrón común de Observaciones / Propuestas de Refuerzo
-P0  Consolidar Creación asistida de Misiones
-P1  Continuar incorporación progresiva de 6.º
+P1  Continuar incorporación progresiva de contenido real de 6.º
+P1  Validar el Modo de Incorporación Curricular con nuevos Temas reales
 
 LÍNEAS TÉCNICAS QUE CONSERVAN VIGENCIA
 ────────────────────────────────────────────
 P0  Cerrar Identidad, Usuarios y Auditoría · en cierre
-P0  Revisar auditoría de Tareas / Misiones · siguiente bloque técnico
-P0  Certificar núcleo multi-persona · próximo
+P0  Revisar auditoría de Tareas / Misiones · siguiente bloque técnico específico
+P0  Certificar núcleo multi-persona · pendiente de certificación específica
 
 SIGUIENTE EXPANSIÓN CURRICULAR
 ────────────────────────────────────────────
-P1  Nuevos temas de Matemáticas según necesidad real
+P1  Nuevos Temas de Matemáticas según material real
 P1  Science y siguientes asignaturas
-P1  Calendario académico 2026–2027 cuando corresponda
+P1  Todo nuevo Tema: contenido + evidencia + análisis + fortalecimiento
+P1  Calendario académico 2026–2027 según necesidad del curso
+
+OTROS PENDIENTES CONCRETOS
+────────────────────────────────────────────
+P1  Preferencia de velocidad de voz por Persona
+P1  Nuevas experiencias de Mi Universo guiadas por necesidades reales
 
 DESPUÉS DE USO REAL SUFICIENTE
 ────────────────────────────────────────────
 P2  Constancia basada en actividad real
-P2  Logros reales
-P3  Panel adulto / profesional
-P3  Históricos de evolución
-P3  IA educativa
+P3  Panel adulto / profesional ampliado
+P3  Históricos longitudinales avanzados
+P3  IA educativa visible para el usuario
 ```
 
 ---
 
-# 12. Resumen de prioridades
+# 📋 13. Resumen de prioridades
 
 | Prioridad | Iniciativa | Estado |
 |---|---|---|
@@ -699,29 +845,36 @@ P3  IA educativa
 | Base | Biblioteca | ✅ Listo |
 | Base | Trabajo realizado | ✅ Consolidado |
 | Base | Misiones libres | ✅ Listo |
+| Base | Gestión de Misiones V1 | ✅ Consolidada |
 | Base | Repasos/Misiones con contenidos de 5.º | ✅ Disponible |
 | Base | Persistencia de pruebas académicas | ✅ Implementada y validada en Puente/Fracciones |
+| Base | Observaciones / Propuestas de Refuerzo V1 | ✅ Consolidada |
+| Base | Creación asistida de Misiones V1 | ✅ Consolidada para casos actuales |
+| Base | Análisis Educativo V1 | ✅ Implementado |
+| Base | Recompensas / Reconocimientos V1 | ✅ Implementadas |
+| Base | Recordatorios de Calendario | ✅ Implementados |
+| Base | Portal 6.º + Matemáticas | ✅ Base visual validada |
+| P0 | Sincronización documental 03Sep2026 | ✅ Completada |
 | P0 | Cierre Gestión de Usuarios / Identidad / Auditoría | 🚧 En cierre |
-| P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico |
-| P0 | Actualización documental estratégica | ✅ Actualizada al 30/08/2026 |
-| P0 | Certificación del núcleo multi-persona | 🔜 Próximo |
-| P0 | Observaciones / Propuestas de Refuerzo | 🚧 Patrón base validado · evolución progresiva |
-| P0 | Creación asistida de Misiones | 🚧 Base aplicada · evolución progresiva |
-| P1 | Academia 6.º de Primaria | 🚧 En progreso avanzado |
+| P0 | Auditoría de Tareas / Misiones | 🔜 Siguiente bloque técnico específico |
+| P0 | Certificación del núcleo multi-persona | 🔜 Pendiente |
+| P1 | Academia 6.º de Primaria | 🚧 Expansión curricular progresiva |
+| P1 | Modo de Incorporación Curricular | ✅ Aprobado · validar con nuevos Temas |
+| P1 | Evidencia obligatoria en nuevos Temas de 6.º | ✅ Contrato aprobado · aplicar en cada Tema |
 | P1 | Calendario 2026–2027 | ⏳ Según necesidad del curso |
+| P1 | Preferencia de velocidad de voz por Persona | ⏳ Pendiente |
 | P1 | Historial mínimo de Detectives | ✅ Base implementada |
 | P1 | Evidencias de Misiones / Tareas | ✅ Base implementada · evolución por motor |
 | P1 | Rincón de Lectura → Misiones de refuerzo | ✅ Base lista |
 | P1 | Detectives → propuestas/Misiones | ✅ Base implementada y validada |
 | P1 | Pruebas académicas → propuestas/Misiones | ✅ Base implementada y validada en Puente/Fracciones |
 | P2 | Constancia real | ⏳ Posterior |
-| P2 | Logros reales | ⏳ Posterior |
-| P3 | Panel adulto / profesional | 🔮 Futuro |
-| P3 | IA educativa | 🔮 Largo plazo |
+| P3 | Panel adulto / profesional ampliado | 🔮 Futuro |
+| P3 | IA educativa visible para el usuario | 🔮 Largo plazo |
 
 ---
 
-# 13. Recordatorios transversales
+# 🔗 14. Recordatorios transversales
 
 El Roadmap no es propietario de las siguientes reglas, pero las referencia como condiciones de cualquier nueva evolución:
 
@@ -730,17 +883,20 @@ El Roadmap no es propietario de las siguientes reglas, pero las referencia como 
 - conservación de Persona Activa durante navegación interna;
 - Vista previa sin persistencia educativa;
 - vistas históricas de resultados en solo lectura;
+- todo nuevo Tema de 6.º produce evidencia académica analizable;
+- el contenido académico se incorpora con mínima intervención administrativa;
 - mensajes de fallo que expliquen la causa cuando sea conocida y segura de mostrar.
 
-Las definiciones propietarias viven en:
+Las definiciones propietarias viven principalmente en:
 
 - `docs/models/MODELO_NAVEGACION.md`;
 - `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`;
+- `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`;
 - `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md`.
 
 ---
 
-# 14. Documentos relacionados
+# 📚 15. Documentos relacionados
 
 - `docs/README.md`
 - `docs/project/MASTER_PLAN.md`
@@ -748,9 +904,10 @@ Las definiciones propietarias viven en:
 - `docs/project/DECISION_LOG.md`
 - `docs/project/RELEASE_NOTES.md`
 - `docs/models/MODELO_NAVEGACION.md`
-- `docs/models/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`
+- `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md`
 - `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
 - `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
+- `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`
 
 ---
 
