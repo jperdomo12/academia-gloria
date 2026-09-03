@@ -164,6 +164,42 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // BAÚL DEL ALUMNO · Persona Activa
+      //
+      // Mismo contrato funcional que Calendario:
+      // - propietario/admin/relación de consulta pueden leer;
+      // - propietario/admin/relación con gestión pueden modificar.
+      match /baul/{elementoId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update, delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      // Los adjuntos del Baúl se separan para que listar registros no cargue
+      // documentos. La interfaz limita V1 a 600 KB; la regla añade además una
+      // barrera física sobre el Data URL persistido.
+      match /baulAdjuntos/{elementoId} {
+        allow read: if esPropietario(userId)
+          || esAdministrador()
+          || puedeConsultarPersona(personaIdUsuarioObjetivo(userId));
+
+        allow create, update: if (
+            esPropietario(userId)
+            || esAdministrador()
+            || puedeGestionarPersona(personaIdUsuarioObjetivo(userId))
+          )
+          && request.resource.data.dataUrl is string
+          && request.resource.data.dataUrl.size() <= 900000;
+
+        allow delete: if esPropietario(userId)
+          || esAdministrador()
+          || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
       match /tareas/{tareaId} {
         allow read: if esPropietario(userId)
           || esAdministrador()
