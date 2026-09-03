@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.0-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.0 |
+| **Estado** | Activo |
 | **Fecha** | 03/09/2026 |
 | **Última actualización** | 03/09/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
@@ -28,6 +28,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Versión aprobada. Activa la plantilla como mecanismo oficial de continuidad, confirma el uso simple de último HandOff + instrucción breve y actualiza el bloque `On going` al siguiente trabajo vigente. |
 | 1.0-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Primera plantilla viva de HandOff. Formaliza el procedimiento mínimo para continuar en un nuevo chat, la regla de mantenimiento continuo y el bloque final obligatorio `Última actualización / On going`. |
 
 ---
@@ -138,6 +139,7 @@ Mantener aquí únicamente cierres recientes que ayuden a comprender la situaci�
 | 03/09/2026 | 6.º de Primaria · Matemáticas | ✅ Listo |
 | 03/09/2026 | Visor `Ver trabajo` | ✅ Cerrado |
 | 03/09/2026 | Mi Baúl V1 | ✅ Cerrado · PR #51 fusionado a `main` |
+| 03/09/2026 | Plantilla viva de HandOff | ✅ Aprobada · PR #52 para cierre documental |
 
 ---
 
@@ -172,6 +174,7 @@ Mantener solo los pendientes que condicionan el orden de trabajo inmediato.
 - Baúl toma como referencia funcional el patrón de Calendarios, manteniendo Persona Activa y permisos coherentes.
 - Mi Baúl V1 quedó cerrado e integrado en `main` el 03/09/2026.
 - Los HandOff anteriores guardados fuera del repositorio pueden conservarse como histórico personal, pero esta plantilla pasa a ser la referencia oficial para continuidad futura.
+- Para abrir un nuevo chat, el procedimiento normal es **último HandOff + instrucción breve**; no se exige copiar un prompt largo.
 
 ---
 
@@ -181,9 +184,9 @@ Actualizar siempre que exista una rama activa relevante.
 
 | Campo | Valor actual |
 |---|---|
-| **Rama** | `docs/handoff-plantilla` |
-| **Objetivo** | Crear y formalizar esta plantilla viva de continuidad |
-| **PR** | Pendiente de creación |
+| **Rama** | `main` tras el cierre del PR #52 |
+| **Objetivo actual** | Ajustes/bugs existentes |
+| **PR reciente** | `#52` — Plantilla viva de HandOff |
 | **Base** | `main` |
 
 ---
@@ -214,30 +217,28 @@ Al retomar desde este documento:
 
 **Mi Baúl V1** quedó completado y fusionado a `main` mediante el **PR #51**.
 
+La **Plantilla viva de HandOff** fue aprobada por el Product Owner y queda como mecanismo oficial de continuidad a partir del **PR #52**.
+
 ## Qué estamos trabajando ahora
 
-**HandOff:** creación de `ACADEMIA_GLORIA_HANDOFF_PLANTILLA` como documento oficial vivo de continuidad del proyecto.
+**Ajustes / bugs existentes.**
 
-Rama actual:
+Orden inmediato:
 
-```text
-docs/handoff-plantilla
-```
+1. revisar en `Mi Camino` la **Guacamaya Valiente duplicada**;
+2. conservar el segundo bloque de `Así voy creciendo` como historial y mostrarlo **inicialmente comprimido**;
+3. ampliar los recordatorios del calendario a **3, 2 y 1 días antes + día del evento (3/2/1/0)**.
 
-Objetivo inmediato:
+Siguiente paso exacto:
 
-> disponer de un único HandOff mantenible que permita abrir un nuevo chat adjuntando solamente la última versión del documento y una instrucción breve para continuar.
+> Revisar primero el código actual de `Mi Camino / Así voy creciendo`, confirmar por qué aparece la Guacamaya duplicada y resolver conjuntamente la duplicidad y la presentación comprimida del historial sin alterar la lógica de reconocimientos ya aprobada.
 
 ## Después de cerrar este bloque
 
 Continuar con:
 
-1. **Ajustes/bugs existentes**
-   - Guacamaya duplicada.
-   - Historial `Así voy creciendo` inicialmente comprimido.
-   - Recordatorios de calendario 3/2/1/0.
-2. **Documentación P1**.
-3. Después: velocidad de voz y nuevas ideas de `Mi Universo`.
+1. **Documentación P1**.
+2. Después: velocidad de voz y nuevas ideas de `Mi Universo`.
 
 ---
 
@@ -245,9 +246,9 @@ Continuar con:
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.0 |
-| **Fecha** | 03/09/2026 |
-| **Aprobación** | Pendiente de revisión del Product Owner |
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.0 |
+| **Fecha de aprobación** | 03/09/2026 |
+| **Aprobado por** | Product Owner |
 | **Sustituye** | HandOff externos no canónicos como mecanismo principal de continuidad futura |
 | **Sustituido por** | — |
