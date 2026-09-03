@@ -26,12 +26,29 @@
 
   <style>
     /* Ajustes locales de presentación · Mi Baúl */
+    .baul-hero__acciones{
+      align-items:center;
+      min-width:214px;
+    }
+
+    .baul-boton--crear,
+    .baul-acceso{
+      min-width:214px;
+      justify-content:center;
+    }
+
     .baul-boton--crear{
       min-height:48px;
       padding:11px 18px;
-      border:0;
+      border:1px solid #d8c8fa;
+      color:#6d28d9;
+      background:linear-gradient(90deg,#ede9fe,#fce7f3);
       font-size:.95rem;
-      box-shadow:0 9px 20px rgba(124,58,237,.18);
+      box-shadow:0 7px 16px rgba(124,58,237,.12);
+    }
+
+    .baul-card{
+      background:linear-gradient(145deg,#ffffff,#fffafd);
     }
 
     .baul-card__descripcion{
@@ -53,6 +70,19 @@
     .baul-card__mensaje::-webkit-scrollbar-thumb{
       border-radius:999px;
       background:#e9a6c8;
+    }
+
+    @media(max-width:720px){
+      .baul-hero__acciones{
+        align-items:stretch;
+        min-width:0;
+      }
+
+      .baul-boton--crear,
+      .baul-acceso{
+        width:100%;
+        min-width:0;
+      }
     }
   </style>
 </head>
@@ -79,9 +109,6 @@
       </div>
 
       <div class="baul-hero__acciones">
-        <span id="baulAcceso" class="baul-acceso baul-acceso--consulta">
-          🔎 Comprobando acceso…
-        </span>
         <button
           id="nuevoElemento"
           class="baul-boton baul-boton--primario baul-boton--crear"
@@ -89,6 +116,9 @@
           hidden>
           ➕ Añadir al Baúl
         </button>
+        <span id="baulAcceso" class="baul-acceso baul-acceso--consulta">
+          🔎 Comprobando acceso…
+        </span>
       </div>
     </header>
 
