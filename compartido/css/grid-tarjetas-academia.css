@@ -1,0 +1,36 @@
+/* ========================================================================
+   Academia Gloria Valentina
+   Rejilla estándar de tarjetas
+
+   Patrón de navegación visual:
+   - Escritorio: 3 columnas
+   - Tablet y móvil normal: 2 columnas
+   - Pantallas extremadamente estrechas: 1 columna
+
+   Uso:
+   <div class="academia-grid-tarjetas">...</div>
+   --academia-grid-gap permite ajustar el espacio sin cambiar el patrón.
+   ======================================================================== */
+
+.academia-grid-tarjetas{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--academia-grid-gap,14px);
+  align-items:stretch;
+}
+
+@media(max-width:900px){
+  .academia-grid-tarjetas{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+/*
+ * Dos columnas permanecen en el móvil habitual para reducir verticalidad.
+ * Solo pantallas excepcionalmente estrechas bajan a una columna.
+ */
+@media(max-width:350px){
+  .academia-grid-tarjetas{
+    grid-template-columns:1fr;
+  }
+}
