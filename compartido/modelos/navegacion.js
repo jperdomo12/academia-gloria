@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v1.8
+ * Modelo central de navegación · v1.9
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -150,6 +150,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         titulo: "Calendarios",
         icono: "🗓️",
         ruta: "calendarios/",
+        volver: "",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
+      },
+      {
+        id: "baul",
+        titulo: "Mi Baúl",
+        icono: "🧰",
+        ruta: "baul/",
         volver: "",
         cabeceraGlobal: true,
         limpiarNavegacionLegada: true

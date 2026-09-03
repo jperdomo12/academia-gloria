@@ -813,7 +813,7 @@
 
     .zona-secundaria{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:20px;
     }
 
@@ -834,6 +834,9 @@
 
     .calendarios{border-color:#f8dc8c}
     .calendarios .modulo-icono{background:#fff6d8}
+
+    .baul{border-color:#e7d8fb}
+    .baul .modulo-icono{background:linear-gradient(135deg,#f5f3ff,#fdf2f8)}
 
     .adicionales{border-color:#f7cde5}
     .adicionales .modulo-icono{background:#fff0f7}
@@ -1030,7 +1033,7 @@
       .mi-camino-principal__visual{min-height:110px}
       .mi-camino-principal__visual img{max-height:120px}
       .paso{justify-content:flex-start}
-      .metodo,.zona-secundaria,.atajos{grid-template-columns:1fr}
+      .metodo,.atajos{grid-template-columns:1fr}
       .hero-acciones{flex-direction:column}
       .cta{width:100%}
       .gran-titulo{font-size:clamp(2.75rem,14vw,4.15rem)}
@@ -1038,6 +1041,10 @@
       .curso-tarjeta{grid-template-columns:56px 1fr}
       .curso-icono{width:52px;height:52px;font-size:27px}
       .curso-flecha,.curso-sello{grid-column:2;justify-self:start}
+    }
+
+    @media(max-width:350px){
+      .zona-secundaria{grid-template-columns:1fr}
     }
   </style>
   <link rel="stylesheet" href="compartido/css/navegacion-global.css">
@@ -1235,7 +1242,7 @@
       <div class="icono-seccion">🧭</div>
       <div>
         <h2>Explora más</h2>
-        <p>Calendarios y recursos para disfrutar aprendiendo.</p>
+        <p>Calendarios, tu Baúl y recursos para disfrutar aprendiendo.</p>
       </div>
     </div>
 
@@ -1257,6 +1264,17 @@
           Ver calendarios
           <i data-lucide="arrow-right" width="20"></i>
         </span>
+      </a>
+
+      <a class="superficie tarjeta modulo baul" href="baul/">
+        <div class="modulo-icono">🧰</div>
+        <span class="etiqueta-estado estado-verde">Para conservar</span>
+        <h3>Mi Baúl</h3>
+        <p>
+          Guarda vídeos, artículos, ideas, mensajes, enlaces y documentos
+          que merezca la pena conservar para <strong><span data-nombre-completo>el alumno</span></strong>.
+        </p>
+        <span class="accion">Abrir mi Baúl <i data-lucide="arrow-right" width="20"></i></span>
       </a>
 
       <a class="superficie tarjeta modulo adicionales" href="adicionales/">

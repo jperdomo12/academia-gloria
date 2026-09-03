@@ -177,6 +177,22 @@ img { max-width: 100%; height: auto; }
 
 .oculto { display: none !important; }
 
+/* Acceso visual de Mi Baúl en la página principal. */
+.modulo.baul .modulo-icono {
+  position: relative;
+  overflow: hidden;
+  font-size: 0;
+  background: #fff;
+}
+
+.modulo.baul .modulo-icono::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #fff url("../../assets/iconos/icono-baul-home.webp") center / cover no-repeat;
+}
+
 @media (max-width: 720px) {
   .contenedor-academia { width: min(100% - 20px, 1200px); padding: 12px 0; }
   .tarjeta-academia { padding: 18px; }

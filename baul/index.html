@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi Baúl | Academia Gloria Valentina</title>
+  <meta
+    name="description"
+    content="Baúl personal del alumno para conservar vídeos, artículos, ideas, enlaces y documentos importantes."
+  >
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="icon" type="image/png" href="../assets/iconos/icono-principal.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../assets/iconos/icono-principal.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/iconos/icono-principal.png?v=2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../compartido/css/navegacion-global.css">
+  <link rel="stylesheet" href="./baul.css">
+
+  <style>
+    /* Ajustes locales de presentación · Mi Baúl */
+    .baul-hero__acciones{
+      align-items:center;
+      min-width:214px;
+    }
+
+    .baul-boton--crear,
+    .baul-acceso{
+      min-width:214px;
+      justify-content:center;
+    }
+
+    .baul-boton--crear{
+      min-height:48px;
+      padding:11px 18px;
+      border:1px solid #d8c8fa;
+      color:#6d28d9;
+      background:linear-gradient(90deg,#ede9fe,#fce7f3);
+      font-size:.95rem;
+      box-shadow:0 7px 16px rgba(124,58,237,.12);
+    }
+
+    .baul-card{
+      background:linear-gradient(145deg,#fff8fb,#fceff6);
+    }
+
+    .baul-card__descripcion{
+      min-height:3.1em;
+    }
+
+    .baul-card__mensaje{
+      display:block;
+      margin:6px 0 0;
+      padding:8px 11px 10px;
+      max-height:6.1rem;
+      overflow-y:auto;
+      -webkit-line-clamp:unset;
+      scrollbar-width:thin;
+      scrollbar-color:#e9a6c8 transparent;
+    }
+
+    .baul-card__mensaje::-webkit-scrollbar{width:6px}
+    .baul-card__mensaje::-webkit-scrollbar-thumb{
+      border-radius:999px;
+      background:#e9a6c8;
+    }
+
+    @media(max-width:720px){
+      .baul-hero__acciones{
+        align-items:stretch;
+        min-width:0;
+      }
+
+      .baul-boton--crear,
+      .baul-acceso{
+        width:100%;
+        min-width:0;
+      }
+    }
+  </style>
+</head>
+
+<body data-page-title="Mi Baúl | Academia Gloria Valentina">
+  <main class="baul-pagina">
+
+    <header class="baul-superficie baul-hero">
+      <div class="baul-hero__contenido">
+        <button
+          type="button"
+          class="boton-volver"
+          data-accion-volver
+          data-ruta-alternativa="../">
+          ← Volver
+        </button>
+
+        <span class="baul-eyebrow">🧰 Un espacio para conservar</span>
+        <h1>Mi Baúl</h1>
+        <p id="baulSubtitulo">
+          Aquí guardamos cosas que merece la pena conservar para ti:
+          vídeos, artículos, ideas, mensajes, enlaces y documentos.
+        </p>
+      </div>
+
+      <div class="baul-hero__acciones">
+        <button
+          id="nuevoElemento"
+          class="baul-boton baul-boton--primario baul-boton--crear"
+          type="button"
+          hidden>
+          ➕ Añadir al Baúl
+        </button>
+        <span id="baulAcceso" class="baul-acceso baul-acceso--consulta">
+          🔎 Comprobando acceso…
+        </span>
+      </div>
+    </header>
+
+    <section class="baul-superficie baul-filtros" aria-label="Buscar y filtrar el Baúl">
+      <div class="baul-filtros__cabecera">
+        <div>
+          <strong>🔎 ¿Qué quieres encontrar en tu Baúl?</strong>
+          <small>Busca por título, descripción o mensaje.</small>
+        </div>
+        <small id="baulSincronizacion">☁️ Conectando con tu Baúl…</small>
+      </div>
+
+      <div class="baul-filtros__grid">
+        <div class="baul-campo">
+          <label for="filtroBuscar">Buscar</label>
+          <input
+            id="filtroBuscar"
+            type="search"
+            autocomplete="off"
+            placeholder="Ej.: confianza, un vídeo, una frase…">
+        </div>
+
+        <div class="baul-campo">
+          <label for="filtroTipo">Tipo</label>
+          <select id="filtroTipo">
+            <option value="">Todos los tipos</option>
+          </select>
+        </div>
+
+        <div class="baul-campo">
+          <label for="filtroTema">Tema</label>
+          <select id="filtroTema">
+            <option value="">Todos los temas</option>
+          </select>
+        </div>
+
+        <div class="baul-campo">
+          <label for="filtroOrden">Ordenar</label>
+          <select id="filtroOrden">
+            <option value="recientes">Más recientes</option>
+            <option value="antiguos">Más antiguos</option>
+          </select>
+        </div>
+
+        <button
+          id="filtroFavoritos"
+          class="baul-boton baul-favoritos-filtro"
+          type="button"
+          aria-pressed="false">
+          ♡ Favoritos
+        </button>
+      </div>
+
+      <button id="limpiarFiltros" class="baul-limpiar" type="button">
+        ✕ Limpiar filtros
+      </button>
+    </section>
+
+    <div class="baul-estado">
+      <h2>Lo que hemos guardado</h2>
+      <span id="contadorResultados">Cargando…</span>
+    </div>
+
+    <section id="baulGrid" class="baul-grid" aria-live="polite">
+      <div class="baul-vacio">
+        <span class="baul-vacio__icono">🧰</span>
+        Abriendo tu Baúl…
+      </div>
+    </section>
+
+    <footer>
+      Academia Gloria Valentina · Mi Baúl ☁️
+    </footer>
+  </main>
+
+  <div
+    id="modalEditor"
+    class="baul-modal-fondo"
+    aria-hidden="true">
+    <div class="baul-modal" role="dialog" aria-modal="true" aria-labelledby="editorTitulo">
+      <div class="baul-modal__cabecera">
+        <div>
+          <h2 id="editorTitulo">Guardar algo en el Baúl</h2>
+        </div>
+        <button id="cerrarEditor" class="baul-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <form id="formBaul" class="baul-form">
+        <input id="elementoId" type="hidden">
+
+        <div class="baul-form-grid">
+          <div class="baul-campo baul-campo--completo">
+            <label for="elementoTitulo">Título *</label>
+            <input
+              id="elementoTitulo"
+              maxlength="180"
+              placeholder="¿Qué queremos guardar?"
+              required>
+          </div>
+
+          <div class="baul-campo">
+            <label for="elementoTipo">Tipo *</label>
+            <select id="elementoTipo" required></select>
+          </div>
+
+          <label class="baul-favorito-editor">
+            <input id="elementoFavorito" type="checkbox">
+            <span aria-hidden="true">♥</span>
+            <strong>Marcar como favorito</strong>
+          </label>
+
+          <div class="baul-campo baul-campo--completo">
+            <span>Temas</span>
+            <div id="selectorTemas" class="baul-temas-selector"></div>
+          </div>
+
+          <div class="baul-campo baul-campo--completo">
+            <label for="elementoDescripcion">Descripción / resumen *</label>
+            <textarea
+              id="elementoDescripcion"
+              maxlength="5000"
+              placeholder="¿De qué trata y qué queremos conservar de este contenido?"
+              required></textarea>
+          </div>
+
+          <div class="baul-campo baul-campo--completo">
+            <label for="elementoMensaje">💌 Mensaje para <span id="nombreAlumnoEditor">el alumno</span></label>
+            <textarea
+              id="elementoMensaje"
+              maxlength="4000"
+              placeholder="¿Por qué quisimos guardar esto para ti?"></textarea>
+          </div>
+
+          <div class="baul-campo baul-campo--completo">
+            <label for="elementoEnlace">🔗 Enlace asociado</label>
+            <input
+              id="elementoEnlace"
+              type="url"
+              maxlength="2000"
+              placeholder="https://…">
+          </div>
+
+          <div class="baul-campo baul-campo--completo">
+            <label for="elementoAdjunto">📎 Documento adjunto</label>
+            <input
+              id="elementoAdjunto"
+              type="file"
+              accept=".pdf,.doc,.docx,.rtf,.odt,.txt,.jpg,.jpeg,.png,.webp">
+            <p class="baul-adjunto-ayuda">
+              PDF, Word, texto o imagen · máximo 600 KB en esta primera versión.
+            </p>
+
+            <div id="adjuntoActual" class="baul-adjunto-actual">
+              <span id="adjuntoActualTexto">📎 Documento actual</span>
+              <button
+                id="quitarAdjunto"
+                class="baul-boton baul-boton--suave"
+                type="button">
+                Quitar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="baul-form__acciones">
+          <button id="cancelarEditor" class="baul-boton baul-boton--suave" type="button">
+            Cancelar
+          </button>
+          <button id="guardarElemento" class="baul-boton baul-boton--primario" type="submit">
+            💾 Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div
+    id="modalDetalle"
+    class="baul-modal-fondo"
+    aria-hidden="true">
+    <div class="baul-modal baul-modal--detalle" role="dialog" aria-modal="true" aria-labelledby="detalleTitulo">
+      <div class="baul-modal__cabecera">
+        <h2 id="detalleTitulo">Detalle del Baúl</h2>
+        <button id="cerrarDetalle" class="baul-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <article id="detalleContenido" class="baul-detalle"></article>
+    </div>
+  </div>
+
+  <div id="baulToast" class="baul-toast" role="status" aria-live="polite"></div>
+
+  <script src="../compartido/js/navegacion.js"></script>
+  <script type="module" src="../compartido/componentes/navegacion-global.js"></script>
+  <script type="module" src="./baul.js"></script>
+</body>
+</html>
