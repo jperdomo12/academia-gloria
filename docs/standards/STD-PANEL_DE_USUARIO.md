@@ -5,8 +5,8 @@
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-PANEL_DE_USUARIO.md` |
 | **Código** | STD-006 |
-| **Versión** | 1.2-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.2 |
+| **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
 | **Última actualización** | 04/09/2026 |
 | **Propietario** | Identidad visible y navegación personal |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 del Panel de Usuario. |
 | 1.2-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Formaliza que el Panel representa a la Persona propia del Usuario autenticado y que Persona Activa es un contexto separado; documenta selector de Persona Activa, menú derivado de la navegación central y filtrado por nivel; actualiza fuentes de identidad hacia ContextoUsuario/PERSON; mantiene el host canónico único de cabecera; conserva como excepción técnica controlada las lecturas directas actuales de relaciones/Personas realizadas por el propio Panel. |
 | 1.1 | 24/08/2026 | Equipo del proyecto | Formalizó host canónico único en cabecera global, neutralización compatible de hosts heredados, mismo CSS/JS/menú y reinicialización segura. |
 | 1.0 | Agosto 2026 | Equipo del proyecto | Primera versión aprobada del estándar transversal del Panel de Usuario. |
@@ -589,7 +590,7 @@ Antes de modificar el Panel o integrar una nueva pantalla:
 | PU-005 | El Panel puede seleccionar Persona Activa entre Personas relacionadas válidas. | Aprobada · implementada |
 | PU-006 | La navegación principal del Panel procede de `NAVEGACION_ACADEMIA` y se filtra por nivel. | Aprobada · implementada |
 | PU-007 | El filtrado del menú mejora UX pero no sustituye seguridad de módulo/API/Firestore. | Aprobada |
-| PU-008 | Las lecturas directas de relaciones/Personas permanecen como excepción localizada, no como patrón reusable. | Candidato v1.2 |
+| PU-008 | Las lecturas directas de relaciones/Personas permanecen como excepción localizada, no como patrón reusable. | Aprobada |
 | PU-009 | Opciones futuras no se declaran operativas hasta existir producto real. | Aprobada |
 
 ---
@@ -598,11 +599,11 @@ Antes de modificar el Panel o integrar una nueva pantalla:
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.2 |
-| **Fecha** | 04/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `STD-PANEL_DE_USUARIO.md` v1.1 |
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación** | 04/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `STD-PANEL_DE_USUARIO.md` v1.1 |
 | **Principio central** | El Panel identifica a quien inició sesión; Persona Activa indica con quién se trabaja. |
 
 **Impacto:** Panel de Usuario · Persona Activa · Navegación · Identidad · Seguridad · Cabecera global · Multi-persona
