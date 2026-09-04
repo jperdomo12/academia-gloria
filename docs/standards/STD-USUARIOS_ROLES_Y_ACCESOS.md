@@ -1,781 +1,322 @@
-# STD-USUARIOS_ROLES_Y_ACCESOS.md
+# 👥 Usuarios, Roles y Accesos
+## 🌈 Academia Gloria Valentina
 
-**Academia Gloria Valentina**\
-**Estándar de Usuarios, Roles y Accesos**\
-**Versión:** 0.3\
-**Estado:** Estándar vigente · Identidad Multi-Persona estabilizada
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
+| **Versión** | 1.0-rc1 |
+| **Estado** | Candidato para aprobación |
+| **Fecha de origen** | 10/08/2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Identidad, Accesos y Seguridad |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Identidad USER/PERSON, Roles, niveles de acceso, Relaciones, Persona Activa, Gestión de Usuarios, auditoría básica, compatibilidad y seguridad transversal |
 
-------------------------------------------------------------------------
+## 🔗 Documentos relacionados
 
-## Historial del Documento
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** dignidad, privacidad, autonomía y acompañamiento humano. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** experiencia multi-actor, Persona Activa y separación entre alumno, gestión y administración. |
+| `docs/vision/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md` | **Fundamenta:** visión conceptual original de identidad multi-persona; no sustituye este estándar operativo. |
+| `docs/models/MODELO_ROLES.md` | **Modela:** roles funcionales; debe interpretarse junto con este estándar y revisarse cuando corresponda. |
+| `docs/models/MODELO_NAVEGACION.md` | **Complementa:** navegación y requisitos de acceso por ubicación. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Implementa/aplica:** separación `consulta` / `gestion` en Mi Camino y Gestión de Misiones. |
+| `compartido/js/contexto-usuario.js` | **Implementa:** resolución actual de USER, PERSON, ROLE, USER_ROLE, PERSON_RELATION, Persona Activa y nivel efectivo. |
+| `compartido/modelos/navegacion.js` | **Implementa:** requisitos mínimos actuales de navegación, entre ellos `gestion` y `administracion`. |
+| `administracion/usuarios/` | **Implementa:** Gestión de Usuarios actual. |
+| `compartido/api/academia.js` | **Implementa:** operaciones coordinadas de Gestión de Usuarios y acceso a datos por Persona Activa. |
+| `compartido/firebase/FireStore Rules.txt` | **Implementa:** fuente canónica de reglas Firestore del proyecto. |
 
-  ---------------------------------------------------------------------------------
-  Versión                 Fecha                   Descripción
-  ----------------------- ----------------------- ---------------------------------
-  0.1                     2026-08-10              Primera versión derivada de
-                                                  MODELO-USUARIOS_ALUMNOS_Y_ROLES
-                                                  v0.4
+## 🕘 Historial de versiones
 
-  0.2                     2026-08-12              Consolida implementación real de
-                                                  Persona Activa, acceso
-                                                  profesional, login funcional y
-                                                  reglas para Gestión de Usuarios
-                                                  desde la Academia
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.0-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con el producto real. Corrige la interpretación antigua de `consulta` como CRUD global de solo lectura; formaliza acceso por capacidad y Persona Activa; actualiza el rol del alumno frente a Gestión de Misiones; reconoce Gestión de Usuarios como implementada; documenta que Firebase Authentication continúa siendo el único paso manual de alta; mantiene un único Rol efectivo por Usuario; actualiza auditoría, compatibilidad legacy y Quality Gate; adopta la estructura documental vigente. |
+| 0.3 | 12/08/2026 | Equipo del proyecto | Definió Auditoría Fase A para Gestión de Usuarios y bloque Registro de solo consulta. |
+| 0.2 | 12/08/2026 | Equipo del proyecto | Consolidó Persona Activa, acceso profesional, login funcional y reglas para Gestión de Usuarios. |
+| 0.1 | 10/08/2026 | Equipo del proyecto | Primera versión derivada del modelo de Usuarios, Alumnos y Roles. |
 
-  0.3                     2026-08-12              Define Auditoría Fase A para
-                                                  Gestión de Usuarios y bloque
-                                                  Registro de solo consulta
-  ---------------------------------------------------------------------------------
+---
 
-------------------------------------------------------------------------
+## 🎯 1. Propósito
 
-# 1. Propósito
+Definir las reglas transversales que permiten saber:
 
-Este estándar define las reglas mínimas de negocio y seguridad para
-gestionar Personas, Usuarios, Roles, relaciones entre Personas y acceso
-a datos en la Academia Gloria Valentina.
+- **quién está autenticado**;
+- **qué Persona representa ese Usuario**;
+- **sobre qué Persona se está trabajando**;
+- **qué relación existe entre ambas Personas**;
+- **qué nivel de acceso resulta efectivo**;
+- y **qué operaciones permite cada capacidad del producto**.
 
-Se deriva del documento:
+La identidad no debe reducirse a un UID, un correo o una pantalla.
 
-``` text
-docs/vision/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md
+El modelo separa deliberadamente:
+
+```text
+USER
+identidad de acceso
+
+PERSON
+persona real y propietaria de contexto/datos
+
+ROLE / USER_ROLE
+capacidad general del Usuario
+
+PERSON_RELATION
+relación y límite sobre otra Persona
+
+PERSONA ACTIVA
+contexto funcional actual
 ```
 
-El modelo conceptual define qué entidades existen.
+---
 
-Este estándar define cómo deberán comportarse.
+## 📐 2. Alcance y fronteras
 
-------------------------------------------------------------------------
+Este estándar gobierna:
 
-# 2. Principios obligatorios
+- `PERSON` y `USER`;
+- identificadores estables;
+- Roles y `USER_ROLE`;
+- niveles `consulta`, `gestion`, `administracion`;
+- `PERSON_RELATION`;
+- Persona Activa;
+- acceso efectivo;
+- operaciones propias frente a operaciones de gestión;
+- Gestión de Usuarios;
+- login funcional;
+- auditoría básica;
+- compatibilidad con `usuarios/{uid}/...`;
+- seguridad transversal.
 
-1.  `PERSON` representa a una persona real.
-2.  `USER` representa una identidad de acceso.
-3.  Una Persona puede existir sin Usuario.
-4.  Una Persona podrá tener como máximo un Usuario activo de la
-    Academia.
-5.  Un Usuario estará asociado exactamente a una Persona.
-6.  Los datos educativos y personales pertenecen a `PERSON`.
-7.  Los Roles pertenecen a `USER` mediante `USER_ROLE`.
-8.  Las relaciones familiares o profesionales pertenecen a
-    `PERSON_RELATION`.
-9.  El acceso a otra Persona requiere una relación autorizada o
-    privilegio de administración.
-10. La interfaz nunca será la única barrera de seguridad.
-11. Las restricciones de escritura deberán aplicarse también en
-    Firestore.
-12. La implementación inicial deberá mantenerse sencilla.
+No define:
 
-------------------------------------------------------------------------
+- permisos particulares completos de cada módulo;
+- campos físicos exhaustivos de Firestore;
+- reglas pedagógicas;
+- diseño visual del panel;
+- impersonación;
+- permisos granulares por operación;
+- un backend futuro de administración de Firebase Authentication.
 
-# 3. Identificadores
+Cada módulo mantiene su contrato funcional y de seguridad siempre dentro de estas reglas transversales.
 
-## 3.1 PERSON
+---
 
-Toda Persona tendrá:
+## 🧭 3. Principios no negociables
 
-``` text
+1. **PERSON representa a una persona real; USER representa una identidad de acceso.**
+2. **Los datos personales/educativos pertenecen conceptualmente a la Persona, aunque parte de la persistencia continúe físicamente bajo `usuarios/{uid}` por compatibilidad.**
+3. **Usuario autenticado y Persona Activa nunca se confunden.**
+4. **Persona Activa ajena requiere una Relación activa válida o privilegio administrativo expresamente autorizado.**
+5. **Una Relación puede restringir, pero no elevar por sí sola, la capacidad concedida por el Rol.**
+6. **El nivel de acceso no es un CRUD universal de toda la Academia.**
+7. **`consulta` no significa que el alumno sea incapaz de escribir sus propios datos educativos.**
+8. **Las operaciones propias del alumno se autorizan según el contrato del módulo y propiedad de los datos.**
+9. **`gestion` habilita capacidades adultas/de gestión únicamente donde el módulo las define y sobre Personas autorizadas.**
+10. **`administracion` protege identidad, Roles, Relaciones, configuración y otras capacidades administrativas.**
+11. **Ocultar botones o rutas no sustituye la seguridad real.**
+12. **UI, API, contexto y Firestore Rules deben ser coherentes.**
+13. **No se inventa auditoría o identidad histórica para documentos legacy.**
+14. **La compatibilidad legacy no debe ocultar una inconsistencia crítica cuando el modelo nuevo ya está activo.**
+15. **Se añade granularidad únicamente cuando existe una necesidad real.**
+
+---
+
+## 👤 4. PERSON
+
+`PERSON` representa a la persona real.
+
+Identificador estable:
+
+```text
 personaId
 ```
 
 Reglas:
 
--   obligatorio;
--   único;
--   interno;
--   inmutable;
--   no dependerá del nombre, email ni login.
+- obligatorio y único cuando existe PERSON del modelo nuevo;
+- interno;
+- estable;
+- no depende de nombre, correo, login o UID visible al usuario;
+- una Persona puede existir conceptualmente sin disponer todavía de USER;
+- los datos personales y académicos propios de la Persona deben tender a vivir o referenciarse mediante `personaId`.
 
-------------------------------------------------------------------------
+Datos actuales habituales de PERSON incluyen, según disponibilidad:
 
-## 3.2 USER
-
-Todo Usuario tendrá:
-
-``` text
-userId
-login
-personaId
-estado
-```
-
-### userId
-
-Debe ser:
-
--   obligatorio;
--   único;
--   interno;
--   inmutable.
-
-En la implementación inicial podrá utilizarse el UID de Firebase
-Authentication.
-
-### login
-
-Debe ser:
-
--   obligatorio;
--   único;
--   modificable.
-
-El cambio de `login` nunca deberá cambiar:
-
--   `userId`;
--   `personaId`;
--   Roles;
--   Relaciones;
--   propiedad de datos;
--   auditoría histórica.
-
-------------------------------------------------------------------------
-
-# 4. Datos básicos de PERSON
-
-Estructura conceptual mínima:
-
-``` text
-personaId
+```text
 nombre
 apellidos
 nombreVisible
 fechaNacimiento
 email
 avatar
-estado
+idioma
+zonaHoraria
+colegio
+curso
+cursoEscolar
+activo
 ```
 
-Reglas:
+No todos son obligatorios.
 
--   `email` es opcional;
--   una Persona puede no disponer de email;
--   `email` no es identificador;
--   `nombreVisible` podrá utilizarse para personalización de interfaz;
--   los datos educativos deberán referenciar `personaId`.
+---
 
-------------------------------------------------------------------------
+## 🔐 5. USER
 
-# 5. Roles
+`USER` representa la identidad de acceso de la Academia.
 
-## 5.1 Roles iniciales
+Actualmente conserva, entre otros:
 
-La implementación vigente utiliza:
-
-``` text
-alumno
-administracion
-gestion
-consulta
-```
-
-`alumno` identifica el uso funcional estándar del alumno y actualmente
-tiene:
-
-``` text
-nivelAcceso = gestion
-```
-
-Rol y nivel de acceso son conceptos diferentes.
-
-No se crearán Roles adicionales salvo necesidad real.
-
-Los Roles serán datos administrables.
-
-------------------------------------------------------------------------
-
-## 5.2 administracion
-
-Permite:
-
-``` text
-READ
-CREATE
-UPDATE
-DELETE
-ADMINISTRAR USUARIOS
-ADMINISTRAR ROLES
-ADMINISTRAR RELACIONES
-ADMINISTRAR CONFIGURACIÓN
-```
-
-Su asignación deberá ser restringida.
-
-------------------------------------------------------------------------
-
-## 5.3 gestion
-
-Permite, sobre la Persona autorizada:
-
-``` text
-READ
-CREATE
-UPDATE
-DELETE
-```
-
-únicamente dentro de los módulos y datos funcionales que correspondan.
-
-`gestion` no implica administración de seguridad, Usuarios o Roles.
-
-------------------------------------------------------------------------
-
-## 5.4 consulta
-
-Permite:
-
-``` text
-READ
-```
-
-Debe impedir:
-
-``` text
-CREATE
-UPDATE
-DELETE
-```
-
-La restricción deberá existir en la capa de seguridad de datos.
-
-Ocultar botones de edición no se considerará protección suficiente.
-
-------------------------------------------------------------------------
-
-# 6. USER_ROLE
-
-La relación entre Usuario y Rol se almacenará conceptualmente mediante:
-
-``` text
-USER_ROLE
-```
-
-Campos mínimos:
-
-``` text
+```text
 userId
-roleId
-estado
-```
-
-Reglas:
-
--   conceptualmente, el modelo admite uno o varios Roles por Usuario;
--   en la implementación vigente cada Usuario tendrá un único Rol
-    efectivo;
--   `usuarioRoles` utiliza actualmente el `userId` (UID Firebase) como
-    ID del documento;
--   no se almacenará `roles[]` duplicado dentro de `USER`;
--   si aparece una necesidad real de múltiples Roles simultáneos, se
-    evolucionará la estructura sin alterar `USER`;
--   la asignación y retirada de Roles deberá ser auditable.
-
-------------------------------------------------------------------------
-
-# 7. PERSON_RELATION
-
-Las relaciones humanas se almacenarán entre Personas.
-
-Estructura conceptual:
-
-``` text
-relationId
-sourcePersonId
-targetPersonId
-tipoRelacion
-nivelAcceso
-estado
-```
-
-Campos opcionales futuros:
-
-``` text
-ambitosOverride[]
-```
-
-Ejemplos de `tipoRelacion`:
-
-``` text
-padre
-madre
-familiar
-tutor
-psicologo
-logopeda
-psicoterapeuta
-otro
-```
-
-El `tipoRelacion` describe la relación.
-
-No sustituye al Rol del Usuario.
-
-------------------------------------------------------------------------
-
-# 8. Niveles de acceso
-
-Los niveles iniciales son:
-
-``` text
-consulta
-gestion
-administracion
-```
-
-No se añadirá mayor granularidad hasta que exista una necesidad
-funcional concreta.
-
-Una relación podrá reducir el acceso efectivo de un Usuario.
-
-Ejemplo:
-
-``` text
-Usuario:
-  rol = gestion
-
-Relación con Gloria:
-  nivelAcceso = consulta
-```
-
-Resultado:
-
-``` text
-acceso efectivo = consulta
-```
-
-Nunca una Relación elevará por sí sola el nivel general permitido por el
-Rol.
-
-------------------------------------------------------------------------
-
-# 9. Cálculo conceptual de acceso efectivo
-
-El acceso efectivo deberá considerar:
-
-``` text
-Usuario autenticado
-        +
-Roles activos
-        +
-Persona Activa
-        +
-PERSON_RELATION
-        +
-nivel de acceso
-```
-
-Regla general:
-
-> El acceso efectivo será el más restrictivo entre las capacidades del
-> Rol y las restricciones aplicables de la Relación.
-
-Administrador constituye la excepción global controlada.
-
-------------------------------------------------------------------------
-
-# 10. Persona Activa
-
-La aplicación maneja un contexto denominado:
-
-``` text
-Persona Activa
-```
-
-Reglas vigentes:
-
--   un Usuario que accede a sus propios datos tendrá como Persona Activa
-    su propia Persona;
--   un Usuario autorizado podrá seleccionar otra Persona relacionada
-    mediante `PERSON_RELATION` activa;
--   cambiar Persona Activa cambia exclusivamente el contexto funcional y
-    de datos;
--   cambiar Persona Activa no cambia la identidad autenticada ni la
-    identidad visual principal del Usuario;
--   el panel deberá continuar mostrando a la Persona propia del Usuario
-    autenticado;
--   si la Persona solicitada no existe o no existe una Relación válida,
-    se restablecerá la Persona propia;
--   el nivel efectivo sobre una Persona relacionada será el más
-    restrictivo entre Rol y Relación.
-
-Caso real validado:
-
-``` text
-Usuario autenticado: Azucena
-Persona propia: Azucena
-Persona Activa: Gloria
-Relación: profesional → Gloria
-```
-
-La auditoría deberá continuar registrando a Azucena como autora real de
-cualquier acción permitida.
-
-------------------------------------------------------------------------
-
-# 11. Persona Activa no es impersonación
-
-Seleccionar otra Persona no significa actuar como su Usuario.
-
-Siempre se conservará:
-
-``` text
-usuario autenticado real
-persona del usuario autenticado
-persona activa
-```
-
-Una futura función de impersonación para soporte será independiente,
-explícita y auditable.
-
-No forma parte de la primera implementación.
-
-------------------------------------------------------------------------
-
-# 12. Propiedad de datos
-
-Los nuevos datos personales o educativos deberán tender a almacenar:
-
-``` text
+login
 personaId
+activo
 ```
 
-como identificador de propietario o destinatario.
+### 5.1 `userId`
 
-No deberán depender conceptualmente del email, login o nombre de una
-carpeta.
+La implementación actual utiliza el UID de Firebase Authentication como identificador físico del USER.
 
-Durante la transición podrá mantenerse compatibilidad con:
+Debe considerarse estable.
 
-``` text
+### 5.2 `personaId`
+
+Asocia el USER a su Persona.
+
+Regla vigente:
+
+> cuando un USER declara un `personaId` del modelo nuevo, la PERSON correspondiente debe existir; una inconsistencia no debe ocultarse con fallback legacy silencioso.
+
+### 5.3 Un USER por PERSON en la implementación vigente
+
+El contexto actual espera como máximo un USER activo asociado a una Persona cuando necesita resolver las subcolecciones legacy bajo:
+
+```text
 usuarios/{uid}/...
 ```
 
-------------------------------------------------------------------------
+Si una Persona relacionada tiene cero o más de un USER activo en ese contexto, la resolución debe detenerse en lugar de elegir uno arbitrariamente.
 
-# 13. Auditoría básica · Fase A
+---
 
-La Gestión de Usuarios implementará inicialmente únicamente auditoría básica.
+## 🎭 6. ROLE y USER_ROLE
 
-Entidades administrativas auditadas:
+### 6.1 Conceptos
 
-``` text
-PERSON
-USER_ROLE
-PERSON_RELATION
-accesosLogin
+`ROLE` describe una capacidad general.
+
+`USER_ROLE` asigna el Rol al Usuario.
+
+Actualmente:
+
+```text
+usuarioRoles/{userId}
 ```
 
-Campos:
+utiliza el UID como ID del documento y cada Usuario dispone de **un único Rol efectivo**.
 
-``` text
-createdAt
-createdBy
-updatedAt
-updatedBy
+El modelo puede evolucionar en el futuro si aparece una necesidad real de múltiples Roles simultáneos, sin duplicar `roles[]` dentro de USER.
+
+### 6.2 Roles existentes
+
+El catálogo puede incluir Roles como:
+
+- `alumno`;
+- `consulta`;
+- `gestion`;
+- `administracion`.
+
+El nombre del Rol y su `nivelAcceso` son conceptos relacionados pero distintos.
+
+### 6.3 Rol de alumno
+
+El alumno debe acceder a su experiencia educativa normal sin adquirir por ello capacidad adulta de Gestión.
+
+Por tanto:
+
+- puede consultar y operar sus experiencias propias cuando el módulo lo permite;
+- puede generar sesiones, evidencias o contenido propio conforme al contrato de cada Motor;
+- puede finalizar manualmente una Misión cuando corresponda;
+- **no debe acceder a Gestión de Misiones**;
+- **no debe acceder a Gestión de Usuarios**;
+- no se concede capacidad `gestion` solo porque necesite escribir sus propios datos educativos.
+
+Esta regla sustituye la interpretación histórica que equiparaba el rol `alumno` con `nivelAcceso = gestion`.
+
+---
+
+## 🪜 7. Niveles de acceso
+
+La escala transversal actual es:
+
+```text
+consulta        10
+gestion         20
+administracion  30
 ```
 
-Reglas:
+### 7.1 `consulta`
 
-- `createdAt` y `createdBy` se asignan al crear realmente la entidad desde la Academia;
-- `updatedAt` y `updatedBy` se actualizan en cada modificación administrativa;
-- `createdBy` y `updatedBy` almacenan el `userId` (UID Firebase) del Usuario administrador real;
-- nunca se utilizará la Persona Activa como autor de una acción administrativa;
-- los documentos legacy que no dispongan de `createdAt/createdBy` no inventarán retrospectivamente esos valores;
-- `USER` mantiene su esquema mínimo vigente y no incorpora estos cuatro campos;
-- `USER.fechaAlta` continúa siendo la fecha propia de alta del Usuario.
+Permite acceder a la experiencia normal que corresponda al Usuario/Persona y a los módulos autorizados.
 
-La pantalla Gestión de Usuarios mostrará un bloque:
+**No debe interpretarse como “solo lectura global”.**
 
-``` text
-5. Registro
+Una Persona en contexto propio puede realizar escrituras de producto autorizadas por el módulo y Firestore Rules.
+
+Ejemplo vigente:
+
+```text
+Mi Baúl
+propietario de la Persona Activa → puede crear/editar/eliminar
+persona relacionada con consulta → solo consulta
+persona relacionada con gestion/administracion → puede gestionar si el contrato lo permite
 ```
 
-de solo consulta con:
+### 7.2 `gestion`
 
-``` text
-Creado
-Creado por
-Última actualización
-Actualizado por
+Habilita capacidades de gestión adulta cuando:
+
+- el módulo requiere `gestion`;
+- la Persona objetivo está autorizada;
+- la Relación no reduce el nivel;
+- API y reglas de datos permiten la operación.
+
+Ejemplo actual:
+
+```text
+Gestión de Misiones
+nivel mínimo = gestion
 ```
 
-Cuando sea posible, la interfaz resolverá el UID del autor a su nombre visible sin duplicar ese nombre en Firestore.
+### 7.3 `administracion`
 
-La Fase B de historial completo de eventos queda expresamente fuera del alcance actual.
+Habilita capacidades administrativas sensibles.
 
+Ejemplo actual:
 
-------------------------------------------------------------------------
-
-# 14.
-------------------------------------------------------------------------
-
-# 14. Timeout de sesión
-
-El timeout por inactividad será una configuración global de la Academia.
-
-Ejemplo:
-
-``` text
-sessionTimeoutMinutes: 30
+```text
+Administración
+→ Gestión de Usuarios
+nivel mínimo = administracion
 ```
 
-Reglas:
+No todo Usuario con `gestion` puede administrar seguridad, Usuarios o Roles.
 
--   no se configurará individualmente por Usuario;
--   no se configurará por Rol;
--   existirá un único valor global;
--   deberá residir en la configuración general de la Academia;
--   su modificación no deberá requerir cambios de código funcional.
+---
 
-El valor definitivo se establecerá durante la implementación.
+## 🔗 8. PERSON_RELATION
 
-------------------------------------------------------------------------
+Las relaciones entre Personas se representan mediante `PERSON_RELATION`.
 
-# 15. Configuración vigente
+Estructura conceptual vigente:
 
-``` text
-ROLE
---------------------------------
-alumno
-administracion
-gestion
-consulta
-```
-
-Accesos:
-
-  Rol               Consulta          Gestión de datos          Seguridad / Usuarios
-  ---------------- ---------- -------------------------------- ----------------------
-  alumno               Sí           Sí, sobre su Persona                 No
-  administracion       Sí                    Sí                          Sí
-  gestion              Sí      Sí, sobre Personas autorizadas            No
-  consulta             Sí                    No                          No
-
-No se implementará inicialmente una matriz compleja por módulo.
-
-------------------------------------------------------------------------
-
-# 16. Seguridad
-
-Las reglas de seguridad deberán garantizar como mínimo:
-
-``` text
-consulta:
-  lectura permitida
-  escritura denegada
-
-gestion:
-  lectura permitida
-  escritura permitida sobre Personas autorizadas
-
-administracion:
-  acceso completo autorizado
-```
-
-La aplicación deberá validar permisos antes de mostrar acciones, pero
-Firestore deberá constituir la protección definitiva frente a
-operaciones no autorizadas.
-
-------------------------------------------------------------------------
-
-# 17. Login funcional
-
-El login visible de la Academia se mantiene separado del UID técnico de
-Firebase Authentication.
-
-La resolución utiliza:
-
-``` text
-accesosLogin/{login}
-        ↓
-identidad Firebase asociada
-        ↓
-Firebase Authentication
-        ↓
-usuarios/{uid}
-```
-
-Reglas:
-
--   `login` será único;
--   el login podrá modificarse sin cambiar `userId` ni `personaId`;
--   `accesosLogin` es infraestructura de acceso y deberá mantenerse
-    consistente con USER y Firebase Authentication;
--   no se permitirá enumerar públicamente la colección de logins;
--   las escrituras de `accesosLogin` no se realizarán desde un cliente
-    no privilegiado.
-
-------------------------------------------------------------------------
-
-# 18. Compatibilidad y transición
-
-La implementación será incremental.
-
-No se migrarán todos los datos existentes en una única operación.
-
-Durante la transición:
-
--   Gloria deberá continuar funcionando;
--   las rutas actuales podrán seguir utilizándose;
--   los nuevos conceptos se introducirán progresivamente;
--   no se eliminará un campo o estructura antigua hasta comprobar que no
-    existe dependencia técnica.
-
-En particular:
-
-``` text
-calendarioSlug
-```
-
-no pertenece al modelo objetivo, pero no deberá eliminarse todavía
-mientras exista código que lo consuma.
-
-------------------------------------------------------------------------
-
-# 19. Fuera de alcance inicial
-
-Quedan fuera de la primera implementación:
-
--   permisos granulares por cada operación y módulo;
--   Roles especializados completos;
--   impersonación;
--   historial universal de auditoría;
--   múltiples políticas de timeout;
--   múltiples Usuarios por Persona;
--   administración avanzada de ámbitos;
--   delegación compleja de seguridad.
-
-Estas capacidades solo se incorporarán cuando exista una necesidad real.
-
-------------------------------------------------------------------------
-
-# 20. Criterio de evolución
-
-La Academia utilizará el siguiente principio:
-
-> Empezar con reglas simples, explícitas y seguras; añadir granularidad
-> únicamente cuando un caso real la justifique.
-
-El núcleo:
-
-``` text
-PERSON
-USER
-ROLE
-USER_ROLE
-PERSON_RELATION
-```
-
-deberá mantenerse estable durante la evolución.
-
-------------------------------------------------------------------------
-
-# 21. Gestión de Usuarios desde la Academia
-
-La administración manual distribuida entre Firebase Authentication y
-varias colecciones de Firestore deja de considerarse un procedimiento
-operativo aceptable.
-
-La Academia deberá disponer de una función administrativa única para
-gestionar Usuarios y sus Personas asociadas.
-
-## 21.1 Objetivo
-
-Una operación de alta deberá mantener de forma coordinada, según
-corresponda:
-
-``` text
-Firebase Authentication
-accesosLogin
-usuarios
-personas
-usuarioRoles
-personaRelaciones
-```
-
-El administrador no deberá tener que crear manualmente y por separado
-estas piezas.
-
-## 21.2 Operaciones iniciales
-
-La primera versión deberá cubrir como mínimo:
-
-``` text
-CONSULTAR
-CREAR
-EDITAR
-ACTIVAR / INACTIVAR
-ASIGNAR ROL
-GESTIONAR RELACIONES AUTORIZADAS
-```
-
-La eliminación física no será la operación normal.
-
-Cuando sea suficiente, se utilizará:
-
-``` text
-activo = false
-```
-
-para conservar integridad y trazabilidad.
-
-## 21.3 Alta integral
-
-Antes de confirmar un alta deberán validarse como mínimo:
-
-``` text
-login único
-Persona válida
-Usuario válido
-Rol existente y activo
-coherencia USER.personaId → PERSON
-coherencia USER_ROLE.userId → USER
-coherencia USER_ROLE.roleId → ROLE
-Relaciones sin referencias inexistentes
-```
-
-Para un profesional con acceso a Gloria, el resultado mínimo coherente
-será:
-
-``` text
-PERSON profesional
-        +
-USER profesional
-        +
-USER_ROLE
-        +
-PERSON_RELATION profesional → Gloria
-        +
-accesosLogin
-        +
-cuenta Firebase Authentication
-```
-
-La operación deberá finalizar completa o informar claramente qué
-componente no pudo crearse. No deberá dejar silenciosamente un Usuario
-parcialmente configurado.
-
-## 21.4 Edición
-
-Modificar datos personales no deberá alterar los identificadores
-estables:
-
-``` text
-personaId
-userId
-```
-
-Modificar `login` deberá mantener sincronizados los mecanismos
-necesarios para el acceso, sin modificar Persona, Rol, Relaciones ni
-propiedad histórica de datos.
-
-Cambiar un Rol o una Relación deberá recalcular el acceso efectivo en la
-siguiente inicialización del contexto.
-
-## 21.5 Relaciones
-
-La administración deberá permitir definir explícitamente:
-
-``` text
+```text
+relationId
 sourcePersonId
 targetPersonId
 tipoRelacion
@@ -783,106 +324,452 @@ nivelAcceso
 activo
 ```
 
-La interfaz deberá seleccionar Personas existentes; no deberá exigir
-introducir manualmente identificadores internos cuando exista una
-alternativa segura.
+`tipoRelacion` describe la relación humana o profesional.
 
-Una Relación nunca elevará el nivel concedido por el Rol.
+Ejemplos posibles:
 
-## 21.6 Seguridad administrativa
+- familiar;
+- tutor;
+- psicólogo;
+- logopeda;
+- otro profesional autorizado.
 
-Solo un Usuario con acceso efectivo:
+El tipo de relación **no sustituye al Rol**.
 
-``` text
-administracion
+### 8.1 Regla de límite
+
+Para una Persona relacionada:
+
+```text
+nivel efectivo = más restrictivo entre nivel del Rol y nivel de la Relación
 ```
 
-podrá administrar Usuarios, Roles o Relaciones.
+Ejemplo:
 
-La creación, modificación o desactivación de cuentas de Firebase
-Authentication requiere privilegios de servidor.
+```text
+Rol del Usuario: gestion
+Relación con Persona Activa: consulta
+→ nivel efectivo: consulta
+```
 
-Por tanto:
+Una Relación no eleva por sí sola el nivel general del Rol.
 
-> Las operaciones administrativas que requieran Firebase Admin SDK o
-> privilegios equivalentes deberán ejecutarse mediante backend seguro;
-> nunca exponiendo credenciales administrativas en el navegador.
+---
 
-Firestore continuará siendo la barrera definitiva para los datos.
+## 🎯 9. Persona Activa
 
-## 21.7 Consistencia obligatoria
+Persona Activa es el contexto funcional sobre el que opera la Academia.
 
-La Gestión de Usuarios deberá tratar la identidad como un conjunto
-coherente y no como documentos independientes.
+### 9.1 Persona propia
 
-Antes de finalizar una operación se deberá comprobar que no existan,
-entre otras, estas inconsistencias:
+Si no existe selección válida de otra Persona:
 
-``` text
+```text
+Persona Activa = Persona propia del Usuario autenticado
+```
+
+### 9.2 Persona relacionada
+
+Una Persona ajena solo puede convertirse en Persona Activa si:
+
+- existe PERSON;
+- existe una `PERSON_RELATION` activa válida desde la Persona propia;
+- la aplicación puede resolver correctamente su contexto.
+
+Si falla la validación, se vuelve a la Persona propia.
+
+### 9.3 Persistencia de contexto
+
+La implementación actual conserva la selección en `sessionStorage` y reconstruye el contexto al inicializar.
+
+Eso es un detalle de implementación, no una identidad nueva.
+
+### 9.4 No es impersonación
+
+Cambiar Persona Activa no cambia:
+
+- Firebase Authentication;
+- USER autenticado;
+- Persona propia del Usuario;
+- autor real de una acción.
+
+La auditoría debe atribuir la acción al Usuario real que la ejecutó.
+
+---
+
+## ⚖️ 10. Acceso efectivo
+
+El acceso efectivo considera:
+
+```text
+Usuario autenticado
++ USER_ROLE / ROLE
++ Persona propia
++ Persona Activa
++ PERSON_RELATION cuando existe
++ contrato del módulo
++ propiedad de los datos
++ Firestore Rules
+```
+
+### 10.1 Contexto propio
+
+Sobre la Persona propia, el nivel base proviene del Rol efectivo.
+
+Pero las operaciones permitidas siguen dependiendo del contrato de cada capacidad.
+
+### 10.2 Contexto relacionado
+
+Sobre otra Persona:
+
+```text
+nivel efectivo = min(nivelRol, nivelRelacion)
+```
+
+### 10.3 Regla crítica
+
+> **El nivel de acceso determina el techo de gestión, pero no reemplaza las reglas de propiedad y comportamiento del módulo.**
+
+Esto evita dos errores opuestos:
+
+- conceder gestión adulta al alumno para permitirle guardar su propio trabajo;
+- bloquear toda escritura educativa del alumno por tener nivel `consulta`.
+
+---
+
+## 🧩 11. Acceso por capacidad
+
+El producto actual utiliza requisitos mínimos donde corresponde.
+
+Ejemplos verificados:
+
+| Capacidad | Regla de acceso |
+|---|---|
+| Mi Camino y experiencias normales | Contexto autenticado + reglas del módulo |
+| Mi Baúl propio | Propietario puede editar; relación requiere `gestion`/`administracion` para editar |
+| Gestión de Misiones | `gestion` o superior |
+| Administración | `administracion` |
+| Gestión de Usuarios | `administracion` |
+
+No debe construirse una matriz universal de CRUD que intente describir todos los módulos desde este estándar.
+
+Cada nueva capacidad sensible declara su requisito mínimo y lo aplica en UI, API y datos.
+
+---
+
+## 🪪 12. Login funcional y Firebase Authentication
+
+La Academia separa:
+
+```text
+login funcional
+≠
+UID Firebase Authentication
+```
+
+El acceso funcional utiliza la relación entre:
+
+```text
+accesosLogin/{login}
+→ userId / authEmail
+→ Firebase Authentication
+→ usuarios/{uid}
+```
+
+Reglas:
+
+- el login funcional debe ser único;
+- cambiar login no debe cambiar `userId`, `personaId`, Rol, Relaciones ni propiedad histórica;
+- `accesosLogin` es infraestructura de acceso y debe mantenerse coherente con USER y Firebase Authentication;
+- no se debe exponer una enumeración pública de logins.
+
+---
+
+## 🛡️ 13. Gestión de Usuarios · estado actual
+
+Gestión de Usuarios **ya está implementada** en:
+
+```text
+administracion/usuarios/
+```
+
+La pantalla exige administración antes de habilitar la zona funcional.
+
+### 13.1 Capacidades actuales
+
+La implementación permite actualmente:
+
+- listar Usuarios y Personas;
+- buscar;
+- preparar un nuevo Usuario a partir de un UID de Firebase ya existente;
+- editar datos personales;
+- editar login funcional;
+- asignar un Rol del catálogo;
+- activar/inactivar el Usuario en la Academia;
+- crear o actualizar una Relación opcional hacia otra Persona;
+- asignar `consulta` o `gestion` sobre esa Relación;
+- mostrar incidencias de consistencia;
+- mostrar auditoría básica disponible.
+
+### 13.2 Firebase Authentication continúa manual
+
+La creación de la cuenta de Firebase Authentication **no está automatizada por la Academia**.
+
+Flujo actual:
+
+```text
+Administrador
+→ Firebase Console / Authentication
+→ crear cuenta manualmente
+→ copiar UID y correo Authentication
+→ Gestión de Usuarios
+→ Academia coordina PERSON, USER, USER_ROLE, acceso funcional y Relación
+```
+
+La UI lo declara como **único paso manual**.
+
+No se debe documentar todavía un backend de Firebase Admin SDK como si estuviera implementado.
+
+### 13.3 No hay borrado físico normal
+
+La gestión actual utiliza activación/inactivación como operación normal.
+
+La eliminación física de identidad no debe introducirse sin análisis de dependencias, trazabilidad y seguridad.
+
+---
+
+## ✅ 14. Consistencia de identidad
+
+Gestión de Usuarios trata la identidad como un conjunto coherente.
+
+Debe detectar o impedir, según corresponda:
+
+```text
 USER sin PERSON
 USER_ROLE sin USER
-USER_ROLE con ROLE inexistente/inactivo
-PERSON_RELATION con PERSON inexistente
+USER_ROLE con ROLE inexistente o inactivo
+PERSON_RELATION con Persona inexistente
 login duplicado
-accesosLogin apuntando a una identidad incorrecta
+accesosLogin incoherente
 Usuario activo con componentes obligatorios ausentes
 ```
 
-Si el modelo nuevo está activo para un Usuario, la aplicación no deberá
-ocultar una inconsistencia crítica mediante fallback legacy.
+Cuando el modelo nuevo está activo, una inconsistencia crítica debe mostrarse o detener la operación; no ocultarse mediante fallback legacy.
 
-## 21.8 Auditoría
+---
 
-Las operaciones administrativas deberán registrar como mínimo:
+## 🕘 15. Auditoría básica
 
-``` text
+La Fase A de auditoría utiliza, donde la entidad lo soporta:
+
+```text
 createdAt
 createdBy
 updatedAt
 updatedBy
 ```
 
-`createdBy` y `updatedBy` identificarán al Usuario administrador real.
+La Gestión de Usuarios muestra un bloque de solo consulta:
 
-## 21.9 Primera entrega
-
-La primera entrega de Gestión de Usuarios deberá priorizar:
-
-``` text
-1. listado y consulta de Usuarios/Personas
-2. alta integral
-3. edición básica
-4. Rol
-5. Relaciones y nivel de acceso
-6. activar/inactivar
-7. validación de consistencia
+```text
+Creado
+Creado por
+Última actualización
+Actualizado por
 ```
 
-No se incorporarán todavía permisos granulares por módulo, impersonación
-ni administración avanzada de ámbitos.
+Reglas:
 
-------------------------------------------------------------------------
+- el autor es el USER autenticado real, no la Persona Activa;
+- no se inventan valores históricos en documentos legacy;
+- la interfaz puede resolver el UID del autor a un nombre visible sin duplicar innecesariamente el nombre en la persistencia;
+- no se afirma que exista un historial universal e inmutable de cada cambio.
 
-# 22. Estado de implementación de Identidad Multi-Persona
+Una Fase B de auditoría de eventos completos requerirá diseño explícito si llega a ser necesaria.
 
-A fecha 2026-08-12 se considera estabilizado funcionalmente:
+---
 
-``` text
-USER → PERSON
-USER → USER_ROLE → ROLE
-Persona propia
-Persona Activa
+## 🧬 16. Compatibilidad legacy
+
+La transición de identidad es incremental.
+
+El código actual mantiene compatibilidad con información histórica en:
+
+```text
+usuarios/{uid}
+usuarios/{uid}/...
+```
+
+### 16.1 Fallback permitido
+
+El fallback existe para Usuarios que todavía no han activado completamente el modelo nuevo.
+
+### 16.2 Fallback no permitido
+
+Cuando USER ya referencia una PERSON del modelo nuevo:
+
+- PERSON debe existir;
+- USER_ROLE activo debe resolverse;
+- no debe esconderse un error de configuración mediante valores legacy arbitrarios.
+
+### 16.3 Subcolecciones educativas
+
+Muchas fuentes educativas continúan físicamente bajo el USER asociado a la Persona Activa.
+
+La Academia resuelve ese USER mediante `personaId` durante la transición.
+
+Migrar toda la persistencia a rutas por Persona no es requisito de esta versión y solo debe hacerse con beneficio y plan de compatibilidad claros.
+
+---
+
+## 🔒 17. Seguridad
+
+Toda operación sensible debe sostenerse en varias capas coherentes:
+
+```text
+navegación / UI
+→ contexto y permisos
+→ API
+→ Firestore Rules
+```
+
+Reglas:
+
+- una ruta oculta no es una autorización;
+- una validación JavaScript no sustituye Firestore;
+- el cliente no contiene credenciales administrativas;
+- la Persona Activa no convierte al Usuario en propietario de datos ajenos;
+- la escritura sobre otra Persona requiere el permiso del módulo y nivel efectivo suficiente;
+- Administración se mantiene fuera de la experiencia normal del alumno.
+
+La fuente canónica de reglas Firestore del repositorio es:
+
+```text
+compartido/firebase/FireStore Rules.txt
+```
+
+Una modificación en GitHub no equivale por sí sola a despliegue de Firebase Rules.
+
+---
+
+## 🚫 18. Supuestos retirados de v0.3
+
+La v1.0 deja de tratar como reglas vigentes estas afirmaciones antiguas:
+
+1. **“`alumno` tiene `nivelAcceso = gestion`.”**  
+   El alumno no necesita Gestión para escribir su propio trabajo. Gestión de Misiones requiere `gestion` y debe quedar fuera de su acceso normal.
+
+2. **“`consulta` implica READ y prohíbe CREATE/UPDATE/DELETE en toda la Academia.”**  
+   `consulta` limita gestión; las operaciones propias dependen del contrato y propiedad de cada módulo.
+
+3. **“Gestión de Usuarios es el siguiente producto funcional prioritario.”**  
+   La capacidad ya existe y está operativa en `administracion/usuarios/`.
+
+4. **“El alta integral crea la cuenta de Firebase Authentication desde la Academia.”**  
+   Actualmente la cuenta se crea manualmente y Gestión de Usuarios coordina el resto de la identidad.
+
+5. **“Existe o debe existir ya un timeout global configurable.”**  
+   No se documenta como capacidad implementada mientras no exista contrato/producto real verificado. Puede reconsiderarse si surge una necesidad de seguridad concreta.
+
+6. **“Un único CRUD global describe el acceso.”**  
+   El modelo vigente combina nivel, Persona Activa, Relación, propiedad y reglas específicas del módulo.
+
+---
+
+## ✅ 19. Quality Gate
+
+Antes de crear o modificar una capacidad relacionada con identidad/acceso:
+
+### Identidad
+
+- [ ] USER y PERSON mantienen responsabilidades separadas.
+- [ ] `userId` y `personaId` estables no se sustituyen por nombre/email/login.
+- [ ] La Persona propietaria del dato está identificada correctamente.
+
+### Persona Activa
+
+- [ ] Se conserva durante navegación y operaciones.
+- [ ] Persona ajena requiere Relación válida.
+- [ ] La autoría real sigue siendo del USER autenticado.
+- [ ] El retorno a Persona propia funciona ante contexto inválido.
+
+### Acceso
+
+- [ ] Se distingue operación propia de operación de gestión.
+- [ ] No se concede `gestion` al alumno solo para permitir su actividad normal.
+- [ ] Gestión de Misiones requiere `gestion` o superior.
+- [ ] Administración requiere `administracion`.
+- [ ] La Relación nunca eleva el Rol.
+
+### Seguridad
+
+- [ ] UI, API y Firestore Rules son coherentes.
+- [ ] Una ruta directa no permite saltarse permisos.
+- [ ] No hay credenciales administrativas en cliente.
+- [ ] Una inconsistencia del modelo nuevo no se oculta con fallback legacy.
+
+### Gestión de Usuarios
+
+- [ ] Firebase Authentication se trata según la capacidad real existente.
+- [ ] login funcional permanece desacoplado del UID.
+- [ ] Rol y Relación se validan contra catálogos/Personas existentes.
+- [ ] activar/inactivar conserva trazabilidad.
+- [ ] auditoría no inventa datos legacy.
+
+---
+
+## 🔄 20. Evolución
+
+La arquitectura mantiene estable el núcleo:
+
+```text
+PERSON
+USER
+ROLE
+USER_ROLE
 PERSON_RELATION
-nivel efectivo Rol + Relación
-login funcional separado del UID
-acceso profesional de Azucena a Gloria
-identidad visual del Usuario autenticado en el panel
-Creciendo por Dentro utilizando Persona Activa
+Persona Activa
 ```
 
-La Gestión de Usuarios definida en la sección 21 constituye el siguiente
-producto funcional prioritario.
+Posibles evoluciones —no compromisos automáticos—:
 
-------------------------------------------------------------------------
+- backend seguro para automatizar creación/desactivación de Firebase Authentication;
+- varios Roles simultáneos si aparece un caso real;
+- ámbitos más granulares por Relación;
+- permisos profesionales más específicos;
+- auditoría de eventos ampliada;
+- migración adicional desde rutas físicas por USER hacia propiedad directa por Persona;
+- políticas de sesión si existe una necesidad concreta.
 
-**Fin de STD-USUARIOS_ROLES_Y_ACCESOS.md · v0.3**
+Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de mantenimiento.
+
+---
+
+## 📌 21. Decisiones adoptadas
+
+| ID | Decisión | Estado |
+|---|---|---|
+| URA-001 | Separar PERSON y USER como entidades con responsabilidades distintas. | Aprobada · implementada |
+| URA-002 | Mantener un USER efectivo asociado a una Persona en la implementación vigente. | Aprobada · implementada |
+| URA-003 | Mantener un único Rol efectivo por USER mientras no exista necesidad real de múltiples Roles. | Aprobada · implementada |
+| URA-004 | Calcular el nivel sobre otra Persona como el más restrictivo entre Rol y Relación. | Aprobada · implementada |
+| URA-005 | Persona Activa cambia contexto, no identidad ni autoría. | Aprobada · implementada |
+| URA-006 | `consulta` no es un CRUD global de solo lectura; las operaciones propias dependen del módulo y propiedad. | Candidato v1.0 |
+| URA-007 | Gestión de Misiones requiere `gestion` o superior; el alumno no recibe gestión solo para operar su experiencia normal. | Aprobada · implementada |
+| URA-008 | Gestión de Usuarios requiere `administracion`. | Aprobada · implementada |
+| URA-009 | Firebase Authentication continúa como paso manual en el alta actual; la Academia coordina el resto de la identidad. | Aprobada · implementada |
+| URA-010 | Fallback legacy no debe ocultar inconsistencias cuando el modelo nuevo ya está activo. | Aprobada · implementada |
+| URA-011 | La seguridad real requiere coherencia entre UI, API y Firestore Rules. | Aprobada |
+
+## ✅ DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | 🟡 Candidato para aprobación |
+| **Versión propuesta** | 1.0 |
+| **Fecha** | 04/09/2026 |
+| **Aprobado por** | Pendiente Product Owner |
+| **Sustituye al aprobarse** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v0.3 |
+| **Principio central** | Identidad autenticada, Persona Activa y permiso efectivo son conceptos distintos; el acceso se determina por contexto, Relación, propiedad y contrato de cada capacidad. |
+
+**Impacto:** Identidad · Persona Activa · Roles · Relaciones · Mi Camino · Gestión de Misiones · Gestión de Usuarios · Seguridad · Firestore · Multi-persona
