@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
-| **Versión** | 1.0-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.0 |
+| **Estado** | Activo |
 | **Fecha de origen** | 10/08/2026 |
 | **Última actualización** | 04/09/2026 |
 | **Propietario** | Identidad, Accesos y Seguridad |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 de Usuarios, Roles y Accesos. |
 | 1.0-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con el producto real. Corrige la interpretación antigua de `consulta` como CRUD global de solo lectura; formaliza acceso por capacidad y Persona Activa; actualiza el rol del alumno frente a Gestión de Misiones; reconoce Gestión de Usuarios como implementada; documenta que Firebase Authentication continúa siendo el único paso manual de alta; mantiene un único Rol efectivo por Usuario; actualiza auditoría, compatibilidad legacy y Quality Gate; adopta la estructura documental vigente. |
 | 0.3 | 12/08/2026 | Equipo del proyecto | Definió Auditoría Fase A para Gestión de Usuarios y bloque Registro de solo consulta. |
 | 0.2 | 12/08/2026 | Equipo del proyecto | Consolidó Persona Activa, acceso profesional, login funcional y reglas para Gestión de Usuarios. |
@@ -754,7 +755,7 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | URA-003 | Mantener un único Rol efectivo por USER mientras no exista necesidad real de múltiples Roles. | Aprobada · implementada |
 | URA-004 | Calcular el nivel sobre otra Persona como el más restrictivo entre Rol y Relación. | Aprobada · implementada |
 | URA-005 | Persona Activa cambia contexto, no identidad ni autoría. | Aprobada · implementada |
-| URA-006 | `consulta` no es un CRUD global de solo lectura; las operaciones propias dependen del módulo y propiedad. | Candidato v1.0 |
+| URA-006 | `consulta` no es un CRUD global de solo lectura; las operaciones propias dependen del módulo y propiedad. | Aprobada |
 | URA-007 | Gestión de Misiones requiere `gestion` o superior; el alumno no recibe gestión solo para operar su experiencia normal. | Aprobada · implementada |
 | URA-008 | Gestión de Usuarios requiere `administracion`. | Aprobada · implementada |
 | URA-009 | Firebase Authentication continúa como paso manual en el alta actual; la Academia coordina el resto de la identidad. | Aprobada · implementada |
@@ -765,11 +766,11 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.0 |
-| **Fecha** | 04/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v0.3 |
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.0 |
+| **Fecha de aprobación** | 04/09/2026 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v0.3 |
 | **Principio central** | Identidad autenticada, Persona Activa y permiso efectivo son conceptos distintos; el acceso se determina por contexto, Relación, propiedad y contrato de cada capacidad. |
 
 **Impacto:** Identidad · Persona Activa · Roles · Relaciones · Mi Camino · Gestión de Misiones · Gestión de Usuarios · Seguridad · Firestore · Multi-persona
