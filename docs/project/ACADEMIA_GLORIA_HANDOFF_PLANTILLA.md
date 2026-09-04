@@ -29,7 +29,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.4 | 04/09/2026 | Product Owner + AI Collaborator | Cierra P0/P1/P2, registra el baseline estable `main` tras PR #71, descarta PR #72 sin merge, formaliza congelación funcional y consolida pendientes para retomar después del inicio de clases. |
+| 1.4 | 04/09/2026 | Product Owner + AI Collaborator | Cierra P0/P1/P2, registra el baseline estable `main` tras PR #71, descarta PR #72 sin merge, formaliza congelación funcional y consolida pendientes para retomar después del inicio de clases, incluida la mejora del proceso de incorporación de nuevas Semillas. |
 | 1.3 | 04/09/2026 | Product Owner + AI Collaborator | Cierre de revisión P2 en 32/32 documentos. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | Registró PR #68 fusionado, cierre de P2-21 a P2-30 y dejó P2-31/P2-32 como último tramo. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronizó el HandOff con P0/P1 cerrados y P2 en ejecución por lotes. |
@@ -232,6 +232,27 @@ Antecedente importante:
 
 **Regla al retomarlo:** reanalizar desde cero el componente existente de Recompensas y resolver con el cambio mínimo posible; no reutilizar el parche/observador del PR #72.
 
+### 8.5 Creciendo por Dentro · proceso de incorporación de nuevas Semillas
+
+**Estado:** 🟡 Incidencia de proceso / deuda técnica · deliberadamente pospuesta.
+
+Observación del Product Owner:
+
+- incorporar solo dos Semillas resultó un trabajo excesivamente arduo para el valor añadido;
+- no conviene seguir ampliando el catálogo con el mismo proceso;
+- antes de añadir nuevas Semillas debe simplificarse el flujo de incorporación.
+
+**Regla acordada para la próxima oportunidad:**
+
+1. construir primero la Semilla funcional con **un icono genérico, sencillo y reutilizable**;
+2. no generar ni integrar la imagen definitiva durante esa primera iteración;
+3. una vez estable la Semilla, la AI Collaborator debe indicar al Product Owner **el nombre exacto y la ruta del archivo de imagen asociado**;
+4. el Product Owner crea/publica la imagen definitiva;
+5. después se sustituye el icono provisional por la imagen y se realiza una prueba visual corta;
+6. mantener separadas la validación funcional de la Semilla y la validación de su recurso gráfico.
+
+**Criterio:** si este proceso no puede hacerse simple y repetible, no ampliar nuevas Semillas hasta replantear el mecanismo de incorporación.
+
 ---
 
 ## 🌿 9. Reglas que no deben perderse
@@ -273,7 +294,8 @@ Cuando el Product Owner decida retomar:
 2. revisar este HandOff y `ROADMAP.md`;
 3. confirmar si la primera prioridad sigue siendo **Velocidad de voz por Persona** o si el uso escolar real produjo una necesidad más urgente;
 4. tratar la duplicación de Guacamaya como mejora menor independiente y solo después de un análisis nuevo del componente actual;
-5. construir una sola iniciativa por vez y validar antes de abrir la siguiente.
+5. no añadir nuevas Semillas con el proceso anterior: aplicar primero el flujo `icono genérico → Semilla funcional → nombre/ruta de imagen → imagen del Product Owner → prueba visual`;
+6. construir una sola iniciativa por vez y validar antes de abrir la siguiente.
 
 ---
 
@@ -286,6 +308,7 @@ Cuando el Product Owner decida retomar:
 - PR #71 aprobado y fusionado.
 - PR #72 descartado completamente y no fusionado.
 - Academia devuelta a un baseline estable.
+- Backlog de continuidad actualizado, incluida la mejora del proceso para nuevas Semillas.
 
 ## Qué estamos trabajando ahora
 
