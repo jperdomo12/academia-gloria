@@ -1,6 +1,6 @@
 /* Academia Gloria Valentina · Creciendo por Dentro
- * Detecta cuando una Semilla elegida en exploración libre forma parte de una
- * Misión activa y ofrece continuar la Misión antes de iniciar la práctica.
+ * Evita que una Semilla asociada a una Misión activa se practique libremente
+ * por error. Practicar libremente sigue siendo una opción válida.
  */
 
 import { Academia } from "../../compartido/api/academia.js";
@@ -13,30 +13,22 @@ const ESTADOS_ACTIVOS = new Set([
   "necesita_ayuda"
 ]);
 
-let misionesActivas = [];
-let instalado = false;
-
 function texto(valor = "") {
   return String(valor ?? "").trim();
 }
 
-function idsSemillasMision(tarea = {}) {
+function idsSemillas(tarea = {}) {
   const filtros = tarea.criterioCumplimiento?.filtros || {};
   return Array.isArray(filtros.semillasIds)
     ? filtros.semillasIds.map(texto).filter(Boolean)
     : [];
 }
 
-function objetivoPendiente(tarea = {}) {
+function esMisionActivaSemillas(tarea = {}) {
   const criterio = tarea.criterioCumplimiento || {};
   const progreso = tarea.progreso || {};
   const objetivo = Math.max(1, Number(criterio.cantidadObjetivo || 1));
   const actual = Math.max(0, Number(progreso.cantidadActual || 0));
-  return actual < objetivo;
-}
-
-function esMisionActivaDeSemillas(tarea = {}) {
-  const criterio = tarea.criterioCumplimiento || {};
 
   return Boolean(
     tarea.id &&
@@ -44,18 +36,13 @@ function esMisionActivaDeSemillas(tarea = {}) {
     tarea.modulo === "creciendo-por-dentro" &&
     criterio.evidenciaTipo === "semilla_completada" &&
     ESTADOS_ACTIVOS.has(texto(tarea.estado)) &&
-    objetivoPendiente(tarea)
+    actual < objetivo
   );
 }
 
-function misionesParaSemilla(semillaId) {
-  const id = texto(semillaId);
-  if (!id) return [];
-
-  return misionesActivas.filter(tarea => {
-    const permitidas = idsSemillasMision(tarea);
-    return !permitidas.length || permitidas.includes(id);
-  });
+function incluyeSemilla(tarea, semillaId) {
+  const permitidas = idsSemillas(tarea);
+  return !permitidas.length || permitidas.includes(texto(semillaId));
 }
 
 function tituloMision(tarea = {}) {
@@ -66,128 +53,68 @@ function tituloMision(tarea = {}) {
   );
 }
 
-function urlMision(tarea, semillaId) {
+function abrirMision(tarea) {
   const destino = new URL(window.location.href);
-  const permitidas = idsSemillasMision(tarea);
-
   destino.search = "";
   destino.hash = "";
   destino.searchParams.set("misionId", texto(tarea.id));
-
-  /* El Motor ya abre automáticamente una Misión que contiene una única
-     Semilla. semillaId solo hace falta para conservar la elección cuando la
-     Misión admite varias Semillas o es de libre elección. */
-  if (permitidas.length !== 1) {
-    destino.searchParams.set("semillaId", texto(semillaId));
-  }
-
-  return destino.href;
+  window.location.assign(destino.href);
 }
 
-function urlMiCamino() {
-  return new URL("../mi-camino/", window.location.href).href;
-}
-
-function confirmarContinuacionMision(tarea, semillaId) {
-  const continuar = window.confirm(
-    "🌟 Esta Semilla forma parte de una Misión que tienes pendiente.\n\n" +
-    `“${tituloMision(tarea)}”\n\n` +
-    "Aceptar: continuar la Misión para que esta práctica cuente.\n" +
-    "Cancelar: practicar libremente."
-  );
-
-  if (!continuar) return false;
-  window.location.assign(urlMision(tarea, semillaId));
-  return true;
-}
-
-function confirmarVariasMisiones(cantidad) {
-  const continuar = window.confirm(
-    `🌟 Esta Semilla forma parte de ${cantidad} Misiones pendientes.\n\n` +
-    "Para que la práctica cuente en la Misión correcta, entra desde Mi Camino.\n\n" +
-    "Aceptar: ir a Mi Camino.\n" +
-    "Cancelar: practicar libremente."
-  );
-
-  if (!continuar) return false;
-  window.location.assign(urlMiCamino());
-  return true;
-}
-
-function instalarIntercepcion() {
-  if (instalado) return;
-  instalado = true;
-
+function instalarAviso(misiones) {
   document.addEventListener("click", event => {
     const boton = event.target?.closest?.("[data-start-seed]");
     if (!boton) return;
 
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("misionId")) return;
+    if (new URLSearchParams(window.location.search).get("misionId")) return;
 
-    const semillaId = texto(boton.dataset.startSeed);
-    const candidatas = misionesParaSemilla(semillaId);
+    const candidatas = misiones.filter(tarea =>
+      incluyeSemilla(tarea, boton.dataset.startSeed)
+    );
+
     if (!candidatas.length) return;
 
-    const redirigido = candidatas.length === 1
-      ? confirmarContinuacionMision(candidatas[0], semillaId)
-      : confirmarVariasMisiones(candidatas.length);
+    if (candidatas.length > 1) {
+      const irACamino = window.confirm(
+        `🌟 Esta Semilla forma parte de ${candidatas.length} Misiones pendientes.\n\n` +
+        "Para que la práctica cuente en la Misión correcta, entra desde Mi Camino.\n\n" +
+        "Aceptar: ir a Mi Camino.\n" +
+        "Cancelar: practicar libremente."
+      );
 
-    if (!redirigido) return;
+      if (!irACamino) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.assign(new URL("../mi-camino/", window.location.href).href);
+      return;
+    }
+
+    const tarea = candidatas[0];
+    const continuarMision = window.confirm(
+      "🌟 Esta Semilla forma parte de una Misión que tienes pendiente.\n\n" +
+      `“${tituloMision(tarea)}”\n\n` +
+      "Aceptar: continuar la Misión para que esta práctica cuente.\n" +
+      "Cancelar: practicar libremente."
+    );
+
+    if (!continuarMision) return;
 
     event.preventDefault();
     event.stopImmediatePropagation();
+    abrirMision(tarea);
   }, true);
 }
 
-function abrirSemillaContextualSiCorresponde() {
+async function iniciar() {
   const params = new URLSearchParams(window.location.search);
-  const misionId = texto(params.get("misionId"));
-  const semillaId = texto(params.get("semillaId"));
-  if (!misionId || !semillaId) return;
+  if (params.get("misionId")) return;
 
-  let terminado = false;
-
-  const intentar = () => {
-    if (terminado) return true;
-
-    const catalogo = document.getElementById("catalogPanel");
-    if (!catalogo || catalogo.classList.contains("hidden")) return false;
-
-    const boton = [...catalogo.querySelectorAll("[data-start-seed]")]
-      .find(item => texto(item.dataset.startSeed) === semillaId);
-
-    if (!boton) return false;
-
-    terminado = true;
-    boton.click();
-    return true;
-  };
-
-  if (intentar()) return;
-
-  const observador = new MutationObserver(() => {
-    if (intentar()) observador.disconnect();
-  });
-
-  observador.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ["class"]
-  });
-
-  window.setTimeout(() => observador.disconnect(), 5000);
-}
-
-async function cargarMisionesActivas() {
   try {
     await auth.authStateReady();
     if (!auth.currentUser) return;
 
     const tareas = await Academia.tareas.leer();
-    misionesActivas = tareas.filter(esMisionActivaDeSemillas);
-    instalarIntercepcion();
+    instalarAviso(tareas.filter(esMisionActivaSemillas));
   } catch (error) {
     console.debug(
       "[CreciendoPorDentro] No se pudo comprobar si hay Misiones activas de Semillas.",
@@ -196,5 +123,4 @@ async function cargarMisionesActivas() {
   }
 }
 
-abrirSemillaContextualSiCorresponde();
-cargarMisionesActivas();
+iniciar();
