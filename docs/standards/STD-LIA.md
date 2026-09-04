@@ -5,8 +5,8 @@
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-LIA.md` |
 | **Código** | STD-010 |
-| **Versión** | 1.1-rc1 |
-| **Estado** | Candidato para aprobación |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
 | **Última actualización** | 04/09/2026 |
 | **Propietario** | Acompañamiento Inteligente |
@@ -31,7 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.1-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Evoluciona Lía desde un estándar centrado casi exclusivamente en Rincón de Lectura hacia un contrato transversal de acompañamiento inteligente; conserva las reglas válidas de lectura, incorpora Persona Activa, Reconocimientos automáticos de alta confianza y límites de interpretación; elimina como roadmap obligatorio capacidades ya implementadas, sustituidas o pospuestas y adopta conformidad documental completa. |
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Versión aprobada y activa tras sincronización P1. Evoluciona Lía desde un estándar centrado casi exclusivamente en Rincón de Lectura hacia un contrato transversal de acompañamiento inteligente; conserva las reglas válidas de lectura, incorpora Persona Activa, Reconocimientos automáticos de alta confianza y límites de interpretación; elimina como roadmap obligatorio capacidades ya implementadas, sustituidas o pospuestas y adopta conformidad documental completa. |
 | 1.0 | Agosto 2026 | Equipo del proyecto | Primera implementación de Lía 2.0 centrada en Mi Rincón de Lectura: mensajes de acompañamiento, repetición, comparación visual, métricas orientativas y Diario de Lecturas. |
 
 ---
@@ -525,11 +525,11 @@ Antes de incorporar una nueva intervención de Lía:
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 Candidato para aprobación |
-| **Versión propuesta** | 1.1 |
+| **Estado** | 🟢 Activo |
+| **Versión** | 1.1 |
 | **Fecha** | 04/09/2026 |
-| **Aprobado por** | Pendiente Product Owner |
-| **Sustituye al aprobarse** | `STD-LIA.md` v1.0 |
+| **Aprobado por** | Product Owner |
+| **Sustituye** | `STD-LIA.md` v1.0 |
 | **Principio central** | Lía acompaña, orienta y reconoce cuando puede demostrarlo; nunca sustituye el pensamiento ni el criterio humano. |
 
 **Impacto:** Lía · IA · Lectura · Mi Camino · Reconocimientos · Persona Activa · Motivación · Análisis Educativo
