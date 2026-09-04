@@ -16,7 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.6 | 04/09/2026 | Juan Perdomo + AI Collaborator | Cierra la jornada documental P0/P1/P2, consolida el baseline funcional estable tras PR #71, registra PR #72 descartado sin merge, formaliza la congelación funcional por inicio del curso y deja un backlog pequeño y explícito para retomar posteriormente. |
+| 1.6 | 04/09/2026 | Juan Perdomo + AI Collaborator | Cierra la jornada documental P0/P1/P2, consolida el baseline funcional estable tras PR #71, registra PR #72 descartado sin merge, formaliza la congelación funcional por inicio del curso y deja un backlog pequeño y explícito para retomar posteriormente, incluida la simplificación del proceso para incorporar nuevas Semillas. |
 | 1.5 | 03/09/2026 | Juan Perdomo + IA | Cerró la jornada P0 de sincronización documental del 03Sep2026 y dejó como siguiente frente funcional la expansión curricular progresiva de 6.º. |
 | 1.4 | 03/09/2026 | Juan Perdomo + IA | Sincronizó Gestión de Misiones V1, Repaso Académico, Misiones libres, refuerzos, Análisis Educativo V1, datos de prueba, eliminación controlada, Recompensas V1, recordatorios y base visual de 6.º. |
 | 1.3 | 30/08/2026 | Juan Perdomo + IA | Registró propuestas de refuerzo de Detectives y pruebas académicas, consolidando Evidencia → Observación → Propuesta → Revisión humana → Misión. |
@@ -61,6 +61,7 @@ No sustituye:
 9. **Motivación no transaccional.** Recompensas reconocen actividad/progreso real, no clics ni perfección.
 10. **Cambios pequeños deben seguir siendo pequeños.** Una mejora menor no justifica arquitectura paralela ni riesgo innecesario sobre una experiencia estable.
 11. **El uso escolar manda.** Durante el curso, las necesidades reales del colegio pueden reordenar el backlog.
+12. **Separar funcionalidad de recursos gráficos.** Una nueva experiencia debe poder validarse con iconos provisionales antes de invertir tiempo en imágenes definitivas.
 
 ---
 
@@ -382,6 +383,37 @@ Decisión:
 
 ---
 
+## 🟡 Incidencia de proceso · incorporación de nuevas Semillas
+
+**Estado:** conocida, no bloqueante y deliberadamente pospuesta.
+
+Observación:
+
+- incorporar solo dos Semillas requirió un esfuerzo excesivo;
+- repetir el mismo proceso para ampliar el catálogo no es sostenible;
+- antes de añadir nuevas Semillas debe simplificarse la incorporación y separar funcionalidad de imagen final.
+
+### Proceso acordado para la próxima incorporación
+
+```text
+1. Definir Semilla
+2. Implementar con icono genérico sencillo
+3. Probar flujo funcional completo
+4. AI Collaborator indica nombre exacto y ruta del archivo de imagen
+5. Product Owner crea/publica la imagen
+6. Sustituir icono provisional
+7. Prueba visual breve
+```
+
+Reglas:
+
+- no generar la imagen definitiva en la primera iteración;
+- no bloquear la Semilla funcional por trabajo gráfico;
+- el Product Owner controla la creación/publicación de la imagen final;
+- si el proceso no puede convertirse en algo simple y repetible, no ampliar nuevas Semillas hasta replantearlo.
+
+---
+
 # 📘 6. Curso 2026–2027 · criterio de evolución
 
 A partir del inicio de clases, la prioridad es **usar la Academia y observar necesidades reales**, no anticipar funcionalidades.
@@ -471,6 +503,7 @@ P1  Velocidad de voz por Persona
 P1  Comprensión de preguntas en Mi Universo
 P1  Integración selectiva de actividades sugeridas por psicología/familia
 🟡  Duplicación visual de Guacamayas en Mi Camino
+🟡  Simplificar incorporación de nuevas Semillas
 P1  Nuevos Temas de 6.º según material escolar real
 ```
 
@@ -499,6 +532,7 @@ P1  Nuevos Temas de 6.º según material escolar real
 | Mi Universo · comprender preguntas | ⏳ Congelado |
 | Actividades sugeridas desde email | ⏳ Congelado |
 | Duplicación visual de Guacamaya | 🟡 Conocida · congelada |
+| Proceso de incorporación de nuevas Semillas | 🟡 Mejorar antes de ampliar catálogo |
 | Desarrollo funcional general | 🧊 Congelado desde 04/09/2026 |
 
 ---
