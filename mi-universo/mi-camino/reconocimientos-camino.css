@@ -203,15 +203,31 @@
 }
 
 .recompensas-a1__historia > summary {
+  position: relative;
   cursor: pointer;
   list-style: none;
-  padding: 17px 20px;
+  padding: 17px 50px 17px 20px;
   color: #166534;
   font-weight: 900;
 }
 
 .recompensas-a1__historia > summary::-webkit-details-marker {
   display: none;
+}
+
+.recompensas-a1__historia > summary::after {
+  content: "▾";
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  color: #166534;
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.recompensas-a1__historia[open] > summary::after {
+  content: "▴";
 }
 
 .recompensas-a1__lista {
