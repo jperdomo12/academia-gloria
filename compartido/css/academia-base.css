@@ -220,8 +220,8 @@ img { max-width: 100%; height: auto; }
 .zona-secundaria .modulo.adicionales .modulo-icono::before {
   content: "";
   position: absolute;
-  inset: 7px;
-  background: url("../../assets/iconos/icono-adicionales-home-v2.webp") center / contain no-repeat;
+  inset: 6px;
+  background: url("../../assets/iconos/icono-adicionales-adjunto.webp") center / contain no-repeat;
 }
 
 @media (max-width: 720px) {
