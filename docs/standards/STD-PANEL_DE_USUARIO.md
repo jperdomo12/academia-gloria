@@ -1,450 +1,608 @@
-# STD-006 – PANEL DE USUARIO
-## Versión 1.1
+# 👤 Panel de Usuario
+## 🌈 Academia Gloria Valentina
 
-**Proyecto:** Academia Gloria
-**Ubicación:** `docs/standards/`
-**Estado:** Aprobado
-**Versión:** 1.1
-**Fecha:** Agosto 2026
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-PANEL_DE_USUARIO.md` |
+| **Código** | STD-006 |
+| **Versión** | 1.2-rc1 |
+| **Estado** | Candidato para aprobación |
+| **Fecha de origen** | Agosto 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Identidad visible y navegación personal |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Identidad visible del Usuario autenticado, Persona Activa, menú del Panel, integración con cabecera global, reutilización, responsive y fronteras de seguridad |
 
-## Historial de versiones
+## 🔗 Documentos relacionados
 
-| Versión | Fecha | Cambio |
-|---|---:|---|
-| 1.1 | 24/08/2026 | Formaliza la integración del Panel con la cabecera global: host canónico único, neutralización compatible de hosts heredados, mismo CSS/JS/menú en todas las pantallas y reinicialización segura. Registra como deuda separada la discrepancia preexistente entre la arquitectura prevista de acceso a datos y las lecturas directas actuales de Firestore para Personas relacionadas. |
-| 1.0 | Agosto 2026 | Primera versión aprobada del estándar transversal del Panel de Usuario. |
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** dignidad, cercanía, privacidad y experiencia humana. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** experiencia multi-actor y separación entre identidad, Persona Activa y espacios funcionales. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** USER, PERSON, Persona Activa, Roles, Relaciones y acceso efectivo. |
+| `docs/models/MODELO_NAVEGACION.md` | **Modela:** navegación y ubicación de capacidades. |
+| `compartido/modelos/navegacion.js` | **Implementa:** árbol central de navegación y requisitos mínimos de acceso. |
+| `compartido/js/contexto-usuario.js` | **Implementa:** identidad, Persona propia, Persona Activa y nivel efectivo. |
+| `compartido/js/perfil-usuario.js` | **Implementa:** servicio compartido de perfil/saludo sobre el contexto actual. |
+| `compartido/js/panel-usuario.js` | **Implementa:** componente visual y comportamiento actual del Panel. |
+| `compartido/css/panel-usuario.css` | **Implementa:** apariencia compartida. |
+| `compartido/componentes/navegacion-global.js` | **Implementa:** host canónico del Panel dentro de la cabecera global. |
 
----
+## 🕘 Historial de versiones
 
-# 1. Objetivo
-
-Definir el estándar oficial del **Panel de Usuario** utilizado por todos los módulos privados de la Academia.
-
-El Panel de Usuario representa la identidad permanente del alumno dentro de la Academia y constituye el punto central desde el cual accederá a su perfil, preferencias y sesión.
-
-No se considera un simple botón de usuario.
-
-Es el lugar donde cada niño reconoce inmediatamente que se encuentra en **su propia Academia**.
-
----
-
-# 2. Filosofía
-
-Cuando un niño entra en la Academia no debe sentir que inicia sesión en una aplicación informática.
-
-Debe sentir que entra en un espacio que le conoce, le recuerda y le acompaña.
-
-La Academia debe darle la bienvenida utilizando su nombre, su avatar y un lenguaje cercano, positivo y motivador.
-
-Cada alumno debe sentir:
-
-> **"Este es mi espacio."**
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.2-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Formaliza que el Panel representa a la Persona propia del Usuario autenticado y que Persona Activa es un contexto separado; documenta selector de Persona Activa, menú derivado de la navegación central y filtrado por nivel; actualiza fuentes de identidad hacia ContextoUsuario/PERSON; mantiene el host canónico único de cabecera; conserva como excepción técnica controlada las lecturas directas actuales de relaciones/Personas realizadas por el propio Panel. |
+| 1.1 | 24/08/2026 | Equipo del proyecto | Formalizó host canónico único en cabecera global, neutralización compatible de hosts heredados, mismo CSS/JS/menú y reinicialización segura. |
+| 1.0 | Agosto 2026 | Equipo del proyecto | Primera versión aprobada del estándar transversal del Panel de Usuario. |
 
 ---
 
-# 3. Principios
+## 🎯 1. Propósito
 
-El Panel de Usuario deberá transmitir siempre:
+Definir el estándar oficial del **Panel de Usuario** utilizado como componente transversal en las pantallas privadas de la Academia.
 
-- Cercanía.
-- Confianza.
-- Simplicidad.
-- Alegría.
-- Personalización.
-- Seguridad.
+El Panel debe permitir responder de manera inmediata y sin lenguaje técnico:
 
-Nunca deberá transmitir complejidad técnica.
+- **¿Quién ha iniciado sesión?**
+- **¿Con qué Persona estoy trabajando ahora?**, cuando el Usuario puede acompañar a otra Persona;
+- **¿Dónde están mis accesos principales?**
+- **¿Cómo cierro mi sesión?**
 
-No mostrará información innecesaria como UID, correo electrónico o datos internos del sistema.
+El Panel no es solamente un botón.
 
----
-
-# 4. Ubicación
-
-El Panel de Usuario aparecerá de forma consistente en la esquina superior derecha de todos los módulos privados de la Academia.
-
-Entre ellos:
-
-- Inicio de la Academia.
-- Mi Universo.
-- Biblioteca Encantada.
-- Gloria Escritora.
-- Mi Rincón de Lectura.
-- Calendario.
-- Matemáticas.
-- Lía.
-- Cualquier módulo futuro.
-
-La posición deberá ser siempre la misma para favorecer el aprendizaje visual y la familiaridad.
-
-**Decisión vigente desde v1.1:** en las pantallas que utilizan la cabecera global, esa posición pertenece al host canónico creado por `compartido/componentes/navegacion-global.js`. Un módulo no debe crear una segunda ubicación visible ni trasladar hacia la cabecera una instancia local del Panel.
+Es la representación visible y estable de la identidad autenticada dentro de la Academia.
 
 ---
 
-# 5. Información mostrada
+## 🧭 2. Principio central
 
-Toda la información deberá obtenerse dinámicamente desde Firestore.
+> **El Panel representa a quien inició sesión; Persona Activa indica con quién se está trabajando.**
 
-Nunca deberá escribirse manualmente dentro del código HTML o JavaScript.
-
-## Avatar
+Estos conceptos no deben confundirse.
 
 Ejemplo:
-
-🌈
-
-## Nombre visible
-
-Ejemplo:
-
-Gloria
-
-(No necesariamente el nombre completo.)
-
-## Saludo
-
-Dependiendo de la hora local del usuario.
-
-Ejemplos:
-
-🌞 Buenos días
-
-☀️ Buenas tardes
-
-🌙 Buenas noches
-
----
-
-# 6. Menú del Panel
-
-## Versión 1.0
-
-👤 Mi Perfil
-
-🚧 Configuración (Próximamente)
-
-🚧 Mis Logros (Próximamente)
-
-────────────────────
-
-🚪 Cerrar sesión
-
----
-
-## Versiones futuras
-
-El menú podrá incorporar:
-
-👤 Mi Perfil
-
-⚙️ Configuración
-
-🏆 Mis Logros
-
-🌍 Idioma
-
-🎨 Apariencia
-
-🔔 Notificaciones
-
-👨‍👩‍👧 Familia
-
-👩‍🏫 Profesorado
-
-🤖 Lía
-
-📈 Mi progreso
-
-🚪 Cerrar sesión
-
----
-
-# 7. Arquitectura
-
-El Panel de Usuario nunca accederá directamente a Firebase.
-
-Toda la información será obtenida mediante los servicios comunes de la Academia.
-
-Arquitectura prevista:
-
-panel-usuario.js
-
-↓
-
-perfil-usuario.js
-
-↓
-
-Firebase Authentication
-
-↓
-
-Cloud Firestore
-
-### Estado de implementación observado en v1.1
-
-**HECHO:** la implementación actual de `panel-usuario.js` todavía realiza lecturas directas de Firestore para resolver Personas relacionadas y la Persona Activa.
-
-**DEUDA ARQUITECTÓNICA:** esa situación no cumple todavía completamente la arquitectura prevista en esta sección. La corrección pertenece a una evolución específica de la capa de datos/servicios y **no forma parte del ajuste de cabecera y navegación de v1.1**.
-
-Esta deuda no autoriza a duplicar dichas consultas en los módulos. El Panel compartido sigue siendo el único lugar actual donde existe ese comportamiento.
-
----
-
-# 8. Datos utilizados
-
-Colección:
-
-usuarios/{uid}
-
-Campos mínimos:
-
-nombre
-
-nombreVisible
-
-avatar
-
-idioma
-
-curso
-
-cursoEscolar
-
-colegio
-
-zonaHoraria
-
-tipoUsuario
-
-activo
-
-En el futuro podrán añadirse otros campos sin modificar la interfaz del Panel.
-
----
-
-# 9. Responsabilidades
-
-## panel-usuario.js
-
-Responsable de:
-
-- Construir el Panel.
-- Mostrar el saludo.
-- Mostrar el avatar.
-- Mostrar el nombre.
-- Abrir y cerrar el menú.
-- Ejecutar el cierre de sesión.
-- Redirigir al Login cuando sea necesario.
-- Garantizar que las reinicializaciones del componente sean seguras y no acumulen listeners globales.
-- Tratar una inicialización dirigida a un host heredado inexistente como un no-op, sin desmontar la instancia canónica activa.
-
-## perfil-usuario.js
-
-Responsable de:
-
-- Obtener el perfil completo.
-- Obtener el nombre.
-- Obtener el avatar.
-- Obtener el idioma.
-- Obtener el saludo.
-- Obtener las preferencias del usuario.
-- Gestionar futuras ampliaciones del perfil.
-
-## navegacion-global.js
-
-Cuando una pantalla adopta la cabecera global, es responsable de:
-
-- Crear el host canónico del Panel.
-- Garantizar la carga del CSS compartido del Panel antes de presentar la cabecera.
-- Neutralizar hosts locales heredados sin moverlos ni reutilizarlos.
-- Iniciar una única instancia visible del Panel en la zona derecha de la cabecera.
-
----
-
-# 10. Integración
-
-Todos los módulos privados deberán utilizar exactamente el mismo componente.
-
-Los recursos compartidos son:
 
 ```text
-compartido/css/panel-usuario.css
-compartido/js/panel-usuario.js
+Usuario autenticado: Azucena
+Persona propia: Azucena
+Persona Activa: Gloria
+
+Panel visible:
+Azucena
+🎯 Viendo a: Gloria
 ```
 
-En pantallas con cabecera global, la integración del Panel debe realizarse a través de:
+El Panel **no debe transformarse visualmente en Gloria** cuando Azucena selecciona a Gloria como Persona Activa.
+
+La sesión, identidad y autoría continúan perteneciendo al Usuario autenticado.
+
+---
+
+## 💛 3. Filosofía de experiencia
+
+Cuando una persona entra en la Academia no debe sentir que está operando un sistema administrativo.
+
+Debe encontrar:
+
+- cercanía;
+- confianza;
+- simplicidad;
+- alegría;
+- personalización;
+- continuidad;
+- seguridad.
+
+Para el alumno, el Panel debe reforzar:
+
+> **“Este es mi espacio.”**
+
+Para un adulto o profesional autorizado debe reforzar:
+
+> **“Sigo siendo yo, pero ahora estoy acompañando a esta Persona.”**
+
+Nunca debe mostrar innecesariamente:
+
+- UID;
+- identificadores internos;
+- estructura de Firestore;
+- datos técnicos de seguridad.
+
+---
+
+## 🧩 4. Ubicación e instancia canónica
+
+El Panel aparece de forma consistente en la zona superior derecha de las pantallas que adoptan la cabecera global.
+
+La ubicación canónica pertenece a:
 
 ```text
 compartido/componentes/navegacion-global.js
 ```
 
-Nunca se duplicará el código del Panel.
+Reglas:
 
-Toda mejora deberá realizarse únicamente en los componentes compartidos correspondientes.
-
-Una página heredada puede conservar temporalmente en su HTML un antiguo host `[data-panel-usuario]` mientras se completa la migración, pero ese host:
-
-- no puede permanecer visible junto al Panel canónico;
-- no puede alterar la apariencia del Panel canónico;
-- no debe trasladarse físicamente hacia la cabecera;
-- debe quedar neutralizado por el componente global antes de iniciar el Panel canónico.
-
----
-
-# 11. Evolución prevista
-
-El Panel crecerá junto con la Academia.
-
-Entre las futuras funcionalidades previstas:
-
-- Configuración personal.
-- Cambio de avatar.
-- Cambio de idioma.
-- Tema claro / oscuro.
-- Notificaciones inteligentes.
-- Insignias.
-- Estadísticas.
-- Recomendaciones de lectura.
-- Integración con Lía.
-- Gestión familiar.
-- Gestión docente.
-
-La evolución deberá realizarse sin modificar la experiencia básica del alumno.
+1. Debe existir **un único Panel visible por pantalla**.
+2. La cabecera global crea el host canónico.
+3. Un módulo no debe crear una segunda instancia visible.
+4. Un host heredado puede permanecer temporalmente en HTML mientras se migra, pero debe quedar neutralizado.
+5. No se mueve físicamente un host local heredado hacia la cabecera para “reutilizarlo”.
+6. Reinicializaciones posteriores no deben desmontar o sustituir una instancia canónica ya activa.
+7. Los estilos locales del módulo no deben alterar la apariencia del Panel compartido.
 
 ---
 
-# 12. Reglas de diseño
+## 👤 5. Identidad mostrada
 
-El Panel deberá cumplir siempre las siguientes normas:
+### 5.1 Identidad principal
 
-✔ Mismo diseño en toda la Academia.
+El nombre y avatar visibles en el botón principal corresponden a:
 
-✔ Mismo comportamiento.
+```text
+contexto.personaUsuario
+```
 
-✔ Mismo CSS.
+es decir, la **Persona propia del Usuario autenticado**.
 
-✔ Mismo JavaScript.
+Fuentes preferidas:
 
-✔ Mismo menú.
+- `nombreVisible`;
+- `nombre` como fallback;
+- `avatar`;
+- saludo compartido.
 
-✔ Misma ubicación.
+### 5.2 Persona Activa
 
-✔ Un único Panel visible por pantalla.
+Cuando Persona Activa difiere de Persona propia, el Panel muestra un indicador contextual como:
 
-✔ El estado cerrado y el menú abierto conservan la misma identidad visual independientemente del módulo.
+```text
+🎯 Viendo a: <nombre de Persona Activa>
+```
 
-✔ Los estilos locales de Biblioteca, Escritura, Matemáticas, Lectura u otros módulos no pueden modificar el Panel canónico.
+Ese indicador:
 
-El usuario nunca deberá preguntarse dónde encontrar su perfil o cómo cerrar la sesión.
+- informa contexto;
+- no cambia identidad;
+- no cambia autoría;
+- no representa impersonación.
+
+### 5.3 Selector de Persona Activa
+
+Cuando existen Personas relacionadas disponibles, el Panel puede mostrar un selector:
+
+```text
+Persona activa
+[ Yo · Persona propia ]
+[ Persona relacionada ]
+```
+
+La ayuda debe explicar que:
+
+> **La sesión sigue siendo del Usuario autenticado; el selector cambia la Persona con la que se trabaja.**
+
+Cambiar Persona Activa debe reconstruir el contexto de forma segura. La implementación actual realiza una recarga de página intencionada para evitar que otros componentes conserven datos del contexto anterior.
 
 ---
 
-# 13. Experiencia de usuario
+## 🔗 6. Relaciones y acceso al selector
 
-La Academia debe reconocer automáticamente al alumno.
+Una Persona relacionada no se presenta porque exista en una lista local o porque su identificador sea conocido.
 
-Debe recuperar su perfil y darle la bienvenida de forma natural.
+Debe existir una relación válida conforme a `STD-USUARIOS_ROLES_Y_ACCESOS.md` y a Firestore Rules.
 
-El alumno no cambia de aplicación.
+El Panel solo debe ofrecer Personas que el Usuario puede legítimamente seleccionar.
 
-Simplemente continúa su aventura.
+Si no existen Personas relacionadas disponibles:
 
-La tecnología debe permanecer invisible.
-
-La experiencia debe sentirse humana.
+- no se necesita selector;
+- Persona Activa permanece en Persona propia.
 
 ---
 
-# 14. Relación con Lía
+## 🗺️ 7. Menú actual del Panel
 
-En versiones futuras el Panel permitirá la integración natural con Lía.
+El menú ya no se define mediante una lista local fija de páginas.
+
+Su estructura combina:
+
+1. **Mi espacio personal**;
+2. navegación central de la Academia;
+3. **Descubre la Academia** cuando corresponde;
+4. **Cerrar sesión**.
+
+### 7.1 Mi espacio personal
+
+Actualmente puede incluir:
+
+- Mi Camino;
+- Mi Calendario;
+- Mis Logros — marcado como próximo cuando no existe capacidad real;
+- Configuración — marcada como próxima cuando no existe capacidad real.
+
+Una opción futura no debe presentarse como producto operativo.
+
+### 7.2 Navegación central
+
+Las secciones principales proceden de:
+
+```text
+compartido/modelos/navegacion.js
+```
+
+El Panel no debe mantener una segunda copia divergente de:
+
+- Mi Universo;
+- Mis Cursos;
+- Administración;
+- Explorar más;
+- ni sus hijos.
+
+### 7.3 Filtrado por nivel
+
+El Panel filtra las ubicaciones según `nivelMinimo` y el nivel efectivo actual.
 
 Ejemplos:
 
-🌞 Buenos días, Gloria.
+- Gestión de Misiones → `gestion`+;
+- Administración → `administracion`;
+- Gestión de Usuarios → `administracion`.
 
-Hoy tienes una nueva aventura esperándote.
-
-o
-
-🎉 ¡Ayer terminaste una lectura!
-
-Estoy muy orgullosa de ti.
-
-Lía utilizará el Panel como punto principal para establecer una comunicación personalizada con cada alumno.
+Este filtrado mejora la experiencia, pero **no constituye por sí solo seguridad**.
 
 ---
 
-# 15. Visión
+## 🔐 8. Seguridad
 
-El Panel de Usuario constituye la puerta de entrada a toda la experiencia personalizada de la Academia.
+El Panel nunca será la barrera definitiva de autorización.
 
-Desde él será posible acceder a:
+La seguridad real combina:
 
-👤 Perfil
+```text
+Panel / navegación
+→ ContextoUsuario
+→ contrato del módulo / API
+→ Firestore Rules
+```
 
-🏆 Logros
+Reglas:
 
-🤖 Lía
-
-📈 Progreso
-
-⚙️ Configuración
-
-🔔 Notificaciones
-
-sin alterar la simplicidad que caracteriza a la Academia.
-
----
-
-# 16. Contrato de integración con la cabecera global
-
-Para una pantalla que adopta la cabecera global se considera correcta la integración cuando:
-
-1. existe exactamente un Panel de Usuario visible;
-2. ese Panel está renderizado en el host canónico de la cabecera;
-3. no existe un segundo host local activo;
-4. el botón cerrado conserva el diseño oficial;
-5. al abrir el menú conserva el mismo CSS, anchura, jerarquía y opciones compartidas;
-6. el menú puede cerrarse por clic exterior, `Escape`, scroll y resize sin acumular listeners por reinicializaciones;
-7. una inicialización heredada posterior no sustituye ni desmonta el Panel canónico;
-8. el Panel no depende de wrappers, grid, estilos o layout propios del módulo;
-9. el comportamiento es equivalente en escritorio y móvil dentro de las reglas responsive compartidas.
-
-Estas reglas son parte del criterio de aceptación transversal de navegación y deben verificarse antes de declarar cerrada una migración de cabecera.
+- ocultar una opción no concede ni revoca permisos reales;
+- una URL directa debe volver a validar acceso;
+- Persona Activa no convierte al Usuario en propietario de información ajena;
+- cerrar sesión elimina el contexto temporal de Persona Activa;
+- el Panel no contiene credenciales administrativas.
 
 ---
 
-# Inspiración
+## 🧱 9. Arquitectura de datos y servicios
 
-Este estándar nace de la experiencia real de Gloria Valentina.
+Arquitectura preferida:
 
-Ha sido construido a partir de las conversaciones mantenidas con su familia, su colegio, su logopeda, su psicóloga infantil y de la observación de sus necesidades reales.
+```text
+panel-usuario.js
+        ↓
+ContextoUsuario / PerfilUsuario
+        ↓
+Firebase Authentication + Firestore
+```
 
-Su propósito es que cualquier niño que utilice la Academia sienta que ese espacio también ha sido creado pensando en él.
+### 9.1 Identidad y perfil
+
+La identidad principal del Panel se resuelve mediante `ContextoUsuario` y la Persona propia.
+
+`perfil-usuario.js` continúa como servicio compartido de perfil, saludo y compatibilidad.
+
+`PERSON` es la fuente prioritaria de datos personales del modelo nuevo.
+
+### 9.2 Excepción técnica actual
+
+`panel-usuario.js` todavía realiza lecturas directas de:
+
+- `personaRelaciones`;
+- `personas`;
+
+para construir el selector de Personas relacionadas.
+
+Esto se considera una **excepción técnica localizada**, no un patrón que otros módulos deban copiar.
+
+No es necesario crear una abstracción nueva solo por pureza arquitectónica; se revisará cuando exista beneficio real en centralizar esa capacidad.
 
 ---
 
-# Frase guía
+## 🗃️ 10. Datos utilizados
 
-> **"Cada niño debe sentir que la Academia le conoce, le recuerda y le acompaña."**
+El Panel no depende ya de una lista rígida de campos dentro de `usuarios/{uid}`.
+
+Conceptualmente utiliza:
+
+### Identidad autenticada
+
+```text
+USER
+→ userId
+→ login
+→ personaId
+→ rol / nivelAcceso
+```
+
+### Persona propia
+
+```text
+PERSON
+→ nombre
+→ nombreVisible
+→ avatar
+→ datos personales/contextuales disponibles
+```
+
+### Persona Activa
+
+```text
+PERSON
++ PERSON_RELATION cuando es ajena
+```
+
+### Compatibilidad
+
+`PerfilUsuario` y `ContextoUsuario` pueden conservar temporalmente datos legacy cuando el modelo nuevo todavía no está completo.
+
+El Panel no debe inventar datos faltantes ni depender de email/login como identidad visual principal.
 
 ---
 
-# Nota de Arquitectura
+## ⚙️ 11. Responsabilidades por componente
 
-Este documento forma parte de los estándares oficiales de la Academia Gloria.
+### `panel-usuario.js`
 
-Su finalidad es garantizar que todos los módulos presentes y futuros compartan una identidad común, una experiencia consistente y una arquitectura reutilizable.
+Responsable de:
 
-El Panel de Usuario representa el primer componente transversal de la Academia y constituye la base sobre la que evolucionarán el Perfil del Alumno, Lía y el resto de servicios inteligentes.
+- construir el Panel;
+- mostrar identidad propia;
+- mostrar saludo;
+- mostrar contexto de Persona Activa;
+- ofrecer selector de Persona Activa cuando corresponde;
+- construir el menú compartido;
+- filtrar navegación por nivel;
+- abrir/cerrar el menú;
+- gestionar responsive del menú;
+- ejecutar cierre de sesión;
+- mantener reinicializaciones seguras;
+- no acumular listeners globales;
+- tratar inicializaciones heredadas contra hosts inexistentes como no-op seguro.
 
-## Principio de Personalización
+### `contexto-usuario.js`
 
-Todo texto mostrado al alumno deberá ser:
+Responsable de:
 
-- Personalizado mediante el perfil del usuario, o
-- Universal, evitando referencias a un alumno concreto.
+- USER;
+- Persona propia;
+- Persona Activa;
+- Roles;
+- Relaciones;
+- nivel efectivo;
+- selección/retorno de Persona Activa.
 
-El nombre "Gloria" solo podrá aparecer cuando forme parte del nombre oficial del proyecto "Academia Gloria" o de contenidos específicamente dedicados a Gloria.
+### `perfil-usuario.js`
+
+Responsable de:
+
+- servicio compartido de perfil;
+- saludo;
+- preferencias/contexto disponibles;
+- cierre de sesión;
+- compatibilidad temporal con consumidores existentes.
+
+### `navegacion-global.js`
+
+Responsable de:
+
+- crear el host canónico;
+- cargar recursos compartidos necesarios;
+- neutralizar hosts heredados;
+- iniciar una única instancia visible.
+
+### `navegacion.js`
+
+Responsable de:
+
+- definir el árbol de navegación;
+- rutas;
+- títulos;
+- iconos semánticos;
+- requisitos mínimos de acceso.
+
+---
+
+## ♻️ 12. Reutilización
+
+Todos los módulos privados deben reutilizar el componente compartido cuando incorporan Panel de Usuario.
+
+Recursos canónicos:
+
+```text
+compartido/css/panel-usuario.css
+compartido/js/panel-usuario.js
+compartido/componentes/navegacion-global.js
+compartido/modelos/navegacion.js
+```
+
+No se debe:
+
+- copiar el HTML del Panel a cada página;
+- mantener menús privados divergentes;
+- crear CSS local que reinterprete el Panel;
+- crear un selector de Persona Activa distinto por módulo.
+
+---
+
+## 📱 13. Responsive e interacción
+
+El Panel debe funcionar de forma equivalente en:
+
+- escritorio;
+- portátil;
+- tablet;
+- iPad;
+- móvil cuando la pantalla lo requiera.
+
+El menú debe:
+
+- mantenerse dentro de la ventana;
+- poder abrir hacia arriba cuando no exista espacio inferior suficiente;
+- limitar su altura y permitir scroll interno;
+- cerrar por clic exterior;
+- cerrar con `Escape`;
+- cerrarse/recolocarse ante scroll o resize según el comportamiento compartido;
+- evitar depender de hover.
+
+Los controles táctiles deben conservar tamaño y separación suficientes.
+
+---
+
+## 🎨 14. Diseño visual
+
+Reglas:
+
+- mismo componente;
+- mismo CSS;
+- misma jerarquía;
+- mismo comportamiento;
+- misma ubicación canónica;
+- una sola identidad visible;
+- no mostrar información técnica innecesaria;
+- mantener nombre y avatar reconocibles;
+- distinguir claramente identidad propia de contexto de Persona Activa.
+
+El estado cerrado y el menú abierto deben conservar identidad visual común sin depender del layout particular de cada módulo.
+
+---
+
+## 🗣️ 15. Personalización y lenguaje
+
+Todo texto dirigido al alumno debe ser:
+
+- personalizado desde el contexto real, o
+- universal cuando no exista contexto suficiente.
+
+No se debe escribir manualmente “Gloria” en componentes transversales salvo que:
+
+- forme parte del nombre oficial del proyecto;
+- el contenido esté explícitamente dedicado a Gloria;
+- o el nombre proceda del perfil/contexto real.
+
+El Panel utiliza lenguaje simple y cercano.
+
+---
+
+## 🤖 16. Relación con Lía
+
+Lía puede utilizar en el futuro el contexto de identidad y Persona Activa para acompañamiento personalizado.
+
+Eso **no convierte al Panel en un canal obligatorio de Lía** ni implica que mensajes proactivos estén implementados actualmente.
+
+Cualquier integración futura debe:
+
+- respetar Persona Activa;
+- respetar permisos;
+- no confundir quién inició sesión;
+- no saturar el Panel con contenido educativo.
+
+---
+
+## 🚫 17. Supuestos retirados de v1.1
+
+La v1.2 deja de tratar como reglas vigentes estas formulaciones anteriores:
+
+1. **“El Panel representa permanentemente la identidad del alumno.”**  
+   El producto es multi-actor. El Panel representa la Persona propia del Usuario autenticado, que puede ser alumno, familiar, profesional o administrador.
+
+2. **“Cambiar Persona Activa debe cambiar el nombre/avatar principal del Panel.”**  
+   No. Persona Activa es contexto, no impersonación.
+
+3. **“El menú del Panel es una lista fija definida dentro del propio Panel.”**  
+   La navegación principal procede del modelo central y se filtra por nivel.
+
+4. **“Todos los datos proceden directamente de `usuarios/{uid}`.”**  
+   PERSON y ContextoUsuario son prioritarios; existen compatibilidades legacy.
+
+5. **“Mis Logros, Configuración, Notificaciones, Familia, Profesorado, Lía y Progreso están disponibles por figurar en la visión.”**  
+   Una capacidad futura solo se muestra como operativa cuando existe producto real. Las opciones `proximo` siguen siendo futuras.
+
+6. **“El Panel no accede directamente a Firestore.”**  
+   Es la arquitectura preferida, pero la implementación actual mantiene una excepción localizada para leer relaciones y Personas destinadas al selector.
+
+---
+
+## ✅ 18. Quality Gate
+
+Antes de modificar el Panel o integrar una nueva pantalla:
+
+### Identidad
+
+- [ ] El nombre/avatar principal representan la Persona propia del Usuario autenticado.
+- [ ] Persona Activa ajena se muestra como contexto separado.
+- [ ] No existe impersonación visual accidental.
+
+### Integración
+
+- [ ] Existe un único Panel visible.
+- [ ] Utiliza host canónico de cabecera global cuando aplica.
+- [ ] Hosts heredados quedan neutralizados.
+- [ ] No se copia el componente localmente.
+
+### Navegación
+
+- [ ] Las rutas principales proceden del modelo central.
+- [ ] El nivel mínimo se respeta en la presentación.
+- [ ] El módulo vuelve a validar permisos reales.
+- [ ] Las opciones futuras no parecen implementadas.
+
+### Persona Activa
+
+- [ ] El selector solo muestra Personas legítimamente relacionadas.
+- [ ] Cambiar Persona Activa reconstruye el contexto.
+- [ ] Cerrar sesión limpia el contexto temporal.
+
+### UX
+
+- [ ] Funciona con teclado y táctil.
+- [ ] `Escape`, clic exterior, scroll y resize no dejan el menú en estado incoherente.
+- [ ] No acumula listeners tras reinicialización.
+- [ ] El menú permanece dentro del viewport.
+
+### Seguridad
+
+- [ ] No aparecen UID ni datos internos innecesarios.
+- [ ] Ocultar navegación no se trata como autorización suficiente.
+- [ ] No se duplican consultas directas de relaciones en otros módulos.
+
+---
+
+## 📌 19. Decisiones adoptadas
+
+| ID | Decisión | Estado |
+|---|---|---|
+| PU-001 | Mantener un único Panel compartido y visible por pantalla. | Aprobada · implementada |
+| PU-002 | La cabecera global posee el host canónico del Panel. | Aprobada · implementada |
+| PU-003 | La identidad principal del Panel corresponde a la Persona propia del Usuario autenticado. | Aprobada · implementada |
+| PU-004 | Persona Activa se presenta como contexto separado y nunca como impersonación. | Aprobada · implementada |
+| PU-005 | El Panel puede seleccionar Persona Activa entre Personas relacionadas válidas. | Aprobada · implementada |
+| PU-006 | La navegación principal del Panel procede de `NAVEGACION_ACADEMIA` y se filtra por nivel. | Aprobada · implementada |
+| PU-007 | El filtrado del menú mejora UX pero no sustituye seguridad de módulo/API/Firestore. | Aprobada |
+| PU-008 | Las lecturas directas de relaciones/Personas permanecen como excepción localizada, no como patrón reusable. | Candidato v1.2 |
+| PU-009 | Opciones futuras no se declaran operativas hasta existir producto real. | Aprobada |
+
+---
+
+## ✅ DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | 🟡 Candidato para aprobación |
+| **Versión propuesta** | 1.2 |
+| **Fecha** | 04/09/2026 |
+| **Aprobado por** | Pendiente Product Owner |
+| **Sustituye al aprobarse** | `STD-PANEL_DE_USUARIO.md` v1.1 |
+| **Principio central** | El Panel identifica a quien inició sesión; Persona Activa indica con quién se trabaja. |
+
+**Impacto:** Panel de Usuario · Persona Activa · Navegación · Identidad · Seguridad · Cabecera global · Multi-persona
