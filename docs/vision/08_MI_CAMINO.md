@@ -1,188 +1,287 @@
-# 08_MI_CAMINO_v1.0.md
+# 🌱 Mi Camino
+## 🌈 Academia Gloria Valentina
 
-# 🌈 Academia Gloria Valentina
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/vision/08_MI_CAMINO.md` |
+| **Versión** | 1.1 |
+| **Estado** | Visión activa · no especificación funcional |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Visión de Mi Camino |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Sentido del espacio personal del alumno, recorrido, Misiones y crecimiento visible |
 
-# Mi Camino
+## 🔗 Documentos relacionados
 
-**Versión:** 1.0
-**Estado:** Vigente
+| Documento / fuente | Relación |
+|---|---|
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** posición de Mi Camino dentro de la experiencia global. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** Misiones, finalización, evidencia y separación alumno/gestión. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Gobierna:** Reconocimientos, Guacamayas y `Así voy creciendo`. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** Persona Activa, nivel efectivo y acceso. |
+| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Gobierna:** consulta histórica del trabajo mediante visor de solo lectura. |
+| `mi-universo/mi-camino/` | **Implementa:** experiencia actual de Mi Camino. |
+| `mi-universo/mis-tareas/` | **Implementa otra responsabilidad:** Gestión de Misiones para usuarios con capacidad de gestión. |
+
+> **Regla de lectura:** Mi Camino es la experiencia personal del alumno. No es el lugar donde la familia administra Misiones, Usuarios o reglas del producto.
+
+## 🕘 Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la visión con la separación real Mi Camino / Gestión de Misiones, Persona Activa, Misiones y finalización actual, `Así voy creciendo`, Reconocimientos/Guacamayas y consulta histórica de solo lectura. Retira niveles/estrellas/insignias genéricos como promesa del espacio y evita convertir Mi Camino en panel de control familiar/profesional. |
+| 1.0 | Julio 2026 | Equipo del proyecto | Primera visión de Mi Camino como espacio personal del alumno. |
 
 ---
 
-# 1. Propósito
+## 💛 1. Propósito
 
 Cada alumno recorre un camino diferente.
 
-Algunos avanzan más rápido en unas áreas y más despacio en otras.
+La Academia entiende que aprender no consiste en llegar antes que otra persona, sino en avanzar con comprensión, apoyo adecuado y creciente autonomía.
 
-Algunos descubren pronto sus fortalezas.
+**Mi Camino** es el espacio personal desde el que el alumno puede reconocer qué tiene por delante, continuar una experiencia y mirar parte de lo que ya ha recorrido.
 
-Otros necesitan más tiempo para encontrarlas.
+No representa únicamente lo que sabe.
 
-La Academia Gloria Valentina entiende que aprender no consiste en llegar antes, sino en avanzar respetando el ritmo de cada persona.
-
-Por ello, la Academia incorpora **Mi Camino**, un espacio personal que acompaña al alumno durante toda su aventura de aprendizaje.
+Representa una historia de práctica, descubrimiento, esfuerzo y crecimiento sustentada por hechos reales de la Academia.
 
 ---
 
-# 2. Un espacio personal
+## 🏡 2. Un espacio personal del alumno
 
-Mi Camino es el hogar del alumno dentro de la Academia.
+Mi Camino debe sentirse como un lugar propio y comprensible.
 
-Es el lugar al que siempre puede regresar.
+Puede ayudar a responder preguntas sencillas:
 
-Desde allí podrá descubrir:
+- ¿Qué puedo hacer ahora?
+- ¿Qué Misión tengo en curso?
+- ¿Dónde continúo?
+- ¿Qué he terminado?
+- ¿Qué momentos importantes forman parte de mi recorrido?
+- ¿Qué está reconociendo mi familia o la Academia sobre mi esfuerzo y crecimiento?
 
-- las aventuras que está realizando;
-- las tareas que tiene pendientes;
-- sus logros;
-- su progreso;
-- aquello que está aprendiendo;
-- aquello que está descubriendo sobre sí mismo.
+No pretende reunir todas las funciones de la Academia.
 
-Mi Camino no representa únicamente lo que el alumno sabe.
-
-Representa cómo va creciendo.
+Las capacidades de gestión conservan sus espacios propietarios.
 
 ---
 
-# 3. Cada alumno tiene un camino diferente
+## 🎯 3. Mi aventura de hoy
 
-La Academia nunca comparará a un alumno con otro.
+Las Misiones asignadas pueden presentarse en Mi Camino como acciones claras para el alumno.
 
-No existen clasificaciones.
+Una Misión debe ayudar a comprender:
 
-No existen rankings.
+- qué se propone hacer;
+- dónde comenzar o continuar;
+- cuál es su estado;
+- si necesita ayuda;
+- y cuándo puede considerarse finalizada conforme al contrato vigente.
 
-No existen ganadores ni perdedores.
+Mi Camino **consume** el contrato de Misiones; no mantiene una segunda lógica de asignación.
 
-Cada alumno recorrerá su propio camino.
+Cuando una actividad puede verificar la finalización con evidencia fiable, el progreso puede actualizarse automáticamente.
 
-La única comparación posible será con uno mismo.
-
-El verdadero progreso consiste en ser hoy un poco mejor que ayer.
-
----
-
-# 4. Descubrir antes que evaluar
-
-Mi Camino no pretende convertirse en un sistema de evaluación.
-
-Su objetivo principal será ayudar al alumno a descubrir:
-
-- qué disfruta aprendiendo;
-- cuáles son sus fortalezas;
-- qué habilidades está desarrollando;
-- qué dificultades necesita seguir trabajando.
-
-La Academia entiende que descubrir las propias capacidades es uno de los mayores aprendizajes de la infancia.
+Cuando no puede verificarse de forma fiable, la finalización utiliza el mecanismo manual previsto por el estándar, sin fabricar evidencia.
 
 ---
 
-# 5. Un crecimiento visible
+## 🛠️ 4. Mi Camino no es Gestión de Misiones
 
-Los pequeños avances merecen ser reconocidos.
+Esta separación es deliberada:
 
-Por ello, Mi Camino mostrará de forma sencilla el crecimiento del alumno.
+```text
+Mi Camino
+→ experiencia personal del alumno
+→ ver / comenzar / continuar / finalizar cuando corresponda
+→ reconocer su recorrido
 
-No se destacarán únicamente los resultados.
+Gestión de Misiones
+→ crear / editar / revisar / gestionar
+→ capacidad adulta o de gestión autorizada
+```
 
-También tendrán valor:
+El alumno **no debe acceder a Gestión de Misiones** para poder utilizar normalmente Mi Camino.
 
-- el esfuerzo;
-- la constancia;
-- la curiosidad;
+La familia acompaña el recorrido desde las capacidades que le corresponden, no transformando Mi Camino en una consola administrativa.
+
+---
+
+## 🌿 5. Crecimiento visible
+
+Mi Camino puede hacer visibles hechos significativos del recorrido sin reducir a la persona a números.
+
+Tienen valor, cuando están sustentados:
+
+- esfuerzo;
+- constancia;
+- curiosidad;
+- autonomía;
+- cooperación;
 - volver a intentarlo;
-- terminar una actividad;
-- ayudar a otros;
-- descubrir nuevas capacidades.
+- pedir ayuda y continuar;
+- completar una experiencia;
+- descubrir una estrategia útil;
+- reconocer algo importante sobre el propio crecimiento.
+
+No debe mostrar una narrativa inventada a partir de datos que el sistema no posee.
 
 ---
 
-# 6. La motivación
+## 🦜 6. Así voy creciendo
 
-Mi Camino utilizará elementos motivadores para hacer más agradable la experiencia de aprendizaje.
+El bloque **Así voy creciendo** permite que Reconocimientos y Guacamayas formen parte visible del recorrido personal.
 
-Estos podrán incluir:
+Su función es conservar y mostrar momentos significativos, no construir una economía de premios.
 
-- tareas;
-- retos;
-- niveles;
-- estrellas;
-- insignias;
-- reconocimientos;
-- mensajes positivos.
+Reglas de visión:
 
-Todos estos elementos tendrán una única finalidad:
+- reconocer hechos y procesos concretos;
+- no comparar con otros alumnos;
+- no utilizar rankings;
+- no retirar Reconocimientos como castigo;
+- no premiar login, clics o cualquier actividad por defecto;
+- no confundir una ilustración o una celebración con evidencia educativa;
+- mantener el historial comprensible y proporcional.
 
-animar al alumno a continuar aprendiendo.
-
-Nunca sustituirán la satisfacción personal de comprender algo nuevo.
+La mecánica exacta pertenece al Sistema de Motivación y Reconocimiento.
 
 ---
 
-# 7. La familia como compañera de viaje
+## 🌱 7. Progreso personal sin etiquetas
 
-Los padres y tutores forman parte del camino.
+Mi Camino no pretende declarar “qué tipo de alumno eres”.
 
-La Academia facilitará herramientas para que puedan:
+Puede mostrar recorrido, hechos y evolución cuando existen datos comparables y fiables.
 
-- acompañar el aprendizaje;
-- proponer pequeños retos;
-- celebrar logros;
-- descubrir fortalezas;
-- comprender mejor las necesidades del alumno.
+Preferir:
 
-La intención nunca será controlar.
+> “Antes necesitabas esta ayuda y en estas actividades recientes pudiste continuar con menos apoyo.”
 
-Será caminar juntos.
+frente a:
 
----
+> “Ahora eres mejor.”
 
-# 8. El equipo educativo
+La persona no se convierte en una puntuación.
 
-Profesores, tutores, especialistas, PT, logopedas, psicólogos y familia podrán compartir una visión común del crecimiento del alumno.
-
-Cada uno aporta una mirada diferente.
-
-Mi Camino aspira a convertirse en un punto de encuentro donde todas esas miradas ayuden a comprender mejor al estudiante.
+El progreso describe experiencias, no valor personal.
 
 ---
 
-# 9. Mucho más que aprender
+## 🤝 8. La familia como compañera de viaje
 
-La Academia no desea formar únicamente alumnos que obtengan buenas calificaciones.
+La familia puede:
 
-Aspira a acompañar personas que desarrollen:
+- proponer o gestionar Misiones desde su capacidad correspondiente;
+- revisar trabajo realizado;
+- reconocer momentos importantes;
+- acompañar cuando el alumno solicita ayuda;
+- aportar observaciones cuando el producto lo permite.
+
+La intención es acompañar, no vigilar.
+
+Mi Camino debe permitir que el alumno siga sintiendo que el recorrido es suyo.
+
+---
+
+## 👥 9. Profesionales y otros acompañantes
+
+Una Persona relacionada puede consultar o gestionar únicamente aquello que su Rol, Relación y el contrato del módulo permitan.
+
+Mi Camino no crea un acceso profesional universal ni funciona como expediente compartido de toda la persona.
+
+Cuando se requiera consulta histórica o análisis educativo, se utilizan las capacidades propietarias correspondientes.
+
+---
+
+## 🎯 10. Persona Activa
+
+Mi Camino se interpreta siempre desde la **Persona Activa**.
+
+Esto permite que un adulto autorizado pueda consultar el recorrido de otra Persona sin cambiar su propia identidad autenticada.
+
+Reglas:
+
+- la Persona Activa determina de quién es el camino mostrado;
+- el Usuario autenticado real conserva la autoría de sus acciones;
+- cambiar Persona Activa no es impersonación;
+- navegación y retornos deben conservar el contexto cuando corresponda.
+
+---
+
+## 📚 11. Mirar hacia atrás
+
+El recorrido histórico debe permitir recordar trabajo real sin reabrirlo accidentalmente como una sesión editable.
+
+Cuando Mi Camino enlaza al trabajo realizado:
+
+```text
+Mi Camino
+→ Ver trabajo
+→ visor reutilizable
+→ evidencia/sesión real
+→ solo lectura
+```
+
+La consulta histórica no crea nueva sesión, evidencia, progreso ni recompensa.
+
+---
+
+## 🌈 12. Mucho más que completar actividades
+
+La Academia no desea construir una lista interminable de tareas marcadas como terminadas.
+
+Aspira a acompañar el desarrollo de:
 
 - autonomía;
 - confianza;
 - curiosidad;
 - capacidad para resolver problemas;
-- deseo de seguir aprendiendo durante toda su vida.
+- estrategias para aprender;
+- deseo de seguir descubriendo.
 
-Porque aprender no termina cuando acaba una actividad.
-
-Aprender es una forma de vivir.
-
----
-
-# 10. Nuestra visión
-
-Algún día, cuando un alumno mire hacia atrás y recorra todo su camino dentro de la Academia, nos gustaría que pudiera descubrir algo mucho más importante que una colección de actividades completadas.
-
-Nos gustaría que pudiera reconocer cuánto ha crecido como persona.
-
-Si Mi Camino consigue transmitir esa sensación, habrá cumplido su verdadero propósito.
+Mi Camino ayuda a unir acciones concretas con esa sensación de recorrido, sin afirmar más de lo que la evidencia permite.
 
 ---
 
-# Nuestra promesa
+## 🔭 13. Evolución
 
-Cada pequeño paso cuenta.
+Mi Camino puede evolucionar cuando exista una necesidad real, pero no se incorporarán por defecto:
 
-Cada descubrimiento importa.
+- niveles competitivos;
+- estrellas como moneda;
+- insignias genéricas;
+- rankings;
+- paneles de métricas por acumular datos;
+- perfil psicológico;
+- recomendaciones opacas;
+- herramientas de administración que pertenecen a Gestión de Misiones u otros dominios.
 
-Cada alumno merece recorrer un camino propio.
+Cada nueva capacidad debe respetar la arquitectura de experiencia y reutilizar sus propietarios existentes.
 
-Y la Academia Gloria Valentina estará siempre ahí para acompañarlo, con respeto, alegría y confianza, durante cada etapa de esa aventura.
+---
+
+## 💌 Nuestra promesa
+
+Cada pequeño paso puede contar.
+
+Cada descubrimiento puede importar.
+
+Cada Persona merece un recorrido propio.
+
+Mi Camino debe ayudar a mirar ese recorrido con respeto, alegría y confianza, sin convertirlo en una competición ni en una etiqueta.
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | ✅ Visión activa |
+| **Versión activa** | 1.1 |
+| **Experiencia principal** | Alumno / Persona Activa |
+| **Gestión de Misiones** | Separada de Mi Camino |
+| **Crecimiento visible** | Reconocimientos y Guacamayas mediante sistema propietario |
+| **Histórico** | Consulta de solo lectura |
