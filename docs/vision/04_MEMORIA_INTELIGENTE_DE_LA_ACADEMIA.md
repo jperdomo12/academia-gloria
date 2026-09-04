@@ -1,172 +1,297 @@
-# 04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA_v1.0
+# 🧠 Memoria Inteligente de la Academia
+## 🌈 Academia Gloria Valentina
 
-**Ubicación sugerida**
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA.md` |
+| **Versión** | 1.1 |
+| **Estado** | Visión estratégica activa · no subsistema implementado |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Visión de Continuidad y Personalización |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Uso futuro y responsable de recuerdos del recorrido para ofrecer continuidad sin vigilancia ni duplicación de datos |
 
-`docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA_v1.0.md`
+## 🔗 Documentos relacionados
 
-------------------------------------------------------------------------
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** dignidad, confianza, privacidad y propósito. |
+| `docs/vision/03_PERFIL_INTELIGENTE_DEL_USUARIO.md` | **Complementa:** preferencias y contexto personal sin perfilado opaco. |
+| `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Gobierna:** observaciones y propuestas derivadas de evidencia real. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Gobierna:** Reconocimientos y Guacamayas. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** Misiones, sesiones/evidencias y revisión. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** Persona Activa, relaciones y acceso a información. |
+| `baul/` | **Implementa otra responsabilidad:** conserva contenidos e ideas elegidos; no debe convertirse en memoria analítica paralela. |
 
-# Una idea sencilla
+> **Regla de lectura:** “Memoria Inteligente” es una cualidad de la experiencia futura, no el nombre de una nueva base de datos ni autorización para copiar información de todos los dominios a un expediente central.
 
-Una buena aplicación guarda datos.
+## 🕘 Historial de versiones
 
-Una gran Academia **recuerda personas**.
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Conserva la visión de continuidad, pero la alinea con las fuentes actuales: memoria distribuida por dominios propietarios, evidencia trazable, Persona Activa, minimización, ausencia de etiquetas y adaptación mediante reglas/propuestas revisables en lugar de perfilado automático opaco. |
+| 1.0 | Julio 2026 | Equipo del proyecto | Primera visión de una Academia capaz de recordar el recorrido del alumno. |
 
-La memoria será uno de los pilares fundamentales del proyecto.
+---
 
-No queremos que Lía pregunte siempre lo mismo. Queremos que acompañe a
-cada niño como lo haría un buen profesor que recuerda sus avances, sus
-ilusiones y sus pequeños logros.
+## 🌱 1. Una idea sencilla
 
-------------------------------------------------------------------------
+Una aplicación puede guardar datos.
 
-# Misión
+La Academia debe saber **utilizar de forma respetuosa aquello que ya conoce y tiene derecho a utilizar** para no tratar cada experiencia como si fuera la primera.
 
-Construir una memoria positiva, personalizada y respetuosa.
+La memoria debe aportar continuidad:
 
-Nunca será una herramienta de vigilancia.
+- recordar un recorrido real;
+- reconocer un avance significativo;
+- facilitar retomar lo pendiente;
+- recuperar una preferencia útil;
+- ofrecer contexto sin obligar a repetir información;
+- mantener una historia comprensible del aprendizaje.
 
-Será una herramienta para motivar.
+No queremos una memoria que vigile.
 
-------------------------------------------------------------------------
+Queremos una memoria que acompañe.
 
-# Qué podrá recordar
+---
 
-## Identidad
+## 🎯 2. Misión
 
--   Nombre
--   Avatar
--   Cumpleaños
--   Colegio
--   Curso
+Construir una continuidad positiva, personalizada, proporcional y respetuosa.
 
-## Gustos
+La memoria nunca será un fin en sí mismo.
 
--   Historias favoritas
--   Animales favoritos
--   Colores
--   Personajes
--   Temas preferidos
+Cada dato utilizado debe poder responder:
 
-## Evolución
+> **¿Para qué ayuda conservar o recuperar esto?**
 
--   Libros leídos
--   Aventuras completadas
--   Tiempo leyendo
--   Grabaciones
--   Pronunciación
--   Comprensión
--   Escritura
--   Matemáticas
+Si la respuesta no es clara, no debe incorporarse solo “por si acaso”.
 
-## Momentos especiales
+---
 
--   Primer libro
--   Primera grabación
--   Primer cuento contado completo
--   Primer mes leyendo seguido
+## 🧩 3. La memoria no es una colección única
 
-------------------------------------------------------------------------
-
-# Recuerdos que generan conversación
+La Academia ya dispone de distintos propietarios de conocimiento.
 
 Ejemplos:
 
-> ¡Hola Gloria! Hace cuatro días leímos juntas.
+```text
+PERSON
+→ identidad y contexto actual
 
-> Hoy completas diez aventuras.
+Misiones / sesiones / evidencias
+→ trabajo realizado y trazabilidad
 
-> La última vez disfrutaste mucho una historia de estrellas.
+Reconocimientos / Guacamayas
+→ momentos significativos reconocidos
 
-> ¿Quieres continuar por ahí?
+Análisis Educativo
+→ observaciones prudentes y propuestas
 
-------------------------------------------------------------------------
+Calendarios
+→ eventos y recordatorios
 
-# Celebraciones
+Mi Baúl
+→ contenidos e ideas que la Persona/familia decide conservar
+```
 
-La Academia recordará fechas importantes.
+Una futura experiencia de “memoria” debe **consultar y combinar de forma autorizada** esos dominios cuando sea necesario, no copiar todos sus datos a una nueva fuente paralela.
 
--   Cumpleaños
--   Aniversario de ingreso
--   Objetivos conseguidos
--   Retos personales
+---
 
-------------------------------------------------------------------------
+## 👤 4. Qué puede recordar
 
-# Adaptación automática
+### Identidad y contexto
 
-La memoria permitirá adaptar:
+Solo lo que corresponda al contrato de PERSON y demás fuentes propietarias, por ejemplo:
 
--   dificultad;
--   longitud de las historias;
--   tipo de preguntas;
--   mensajes motivadores;
--   recomendaciones.
+- nombre visible;
+- avatar;
+- idioma;
+- curso actual;
+- otras preferencias útiles declaradas.
 
-------------------------------------------------------------------------
+### Recorrido educativo
 
-# Aprendizaje continuo
+Cuando existe evidencia real:
 
-La Academia irá aprendiendo, por ejemplo:
+- actividades y Misiones realizadas;
+- sesiones guardadas;
+- Temas trabajados;
+- progreso observable;
+- estrategias o apoyos registrados de forma fiable.
 
--   cuándo el niño está más concentrado;
--   qué tipo de historias disfruta;
--   cómo mejora leyendo;
--   qué actividades le motivan más.
+### Momentos significativos
 
-------------------------------------------------------------------------
+Preferentemente mediante el Sistema de Motivación y Reconocimiento o la fuente que corresponda:
 
-# Familia
+- un hito de autonomía;
+- una Guacamaya;
+- un Reconocimiento familiar;
+- una experiencia especialmente importante.
 
-Los padres podrán ver la evolución sin necesidad de interpretar gráficos
-complejos.
+### Intereses y preferencias
 
-Queremos responder preguntas sencillas:
+Solo cuando hayan sido declarados, confirmados o inferidos con suficiente prudencia y exista una finalidad clara.
 
--   ¿Lee más que hace tres meses?
--   ¿Habla con mayor confianza?
--   ¿Qué le gusta leer?
--   ¿Qué logros ha conseguido?
+---
 
-------------------------------------------------------------------------
+## 💬 5. Recuerdos que generan continuidad
 
-# Profesionales
+Ejemplos conceptuales adecuados:
 
-Logopedas, psicólogos y docentes podrán disponer (si la familia lo
-autoriza) de información útil para acompañar al niño.
+> “La última vez dejaste esta Misión en curso. ¿Quieres continuar?”
 
-Nunca sustituirá su trabajo.
+> “Tu familia quiso guardar este momento en tu camino.”
 
-Lo complementará.
+> “Has practicado este Tema varias veces; hoy podemos intentar otra actividad relacionada.”
 
-------------------------------------------------------------------------
+> “Tienes guardada esta preferencia de voz. Puedes cambiarla cuando quieras.”
 
-# Principios
+La Academia no debe fabricar recuerdos ni hablar como si supiera algo que no está sustentado por una fuente real.
 
-1.  La memoria siempre debe animar.
-2.  Nunca utilizar comparaciones entre niños.
-3.  Los errores nunca se almacenan como etiquetas.
-4.  Celebrar el esfuerzo más que el resultado.
-5.  El niño siempre debe sentirse comprendido.
+---
 
-------------------------------------------------------------------------
+## 🏅 6. Celebraciones
 
-# Una visión de futuro
+Los hitos motivacionales pertenecen al Sistema de Motivación y Reconocimiento.
 
-Imaginamos que, dentro de algunos años, Gloria abra la Academia y Lía le
-diga:
+La Memoria puede ayudar a recuperarlos para dar continuidad, pero no crea:
 
-> "Hola Gloria. Hoy recordé la primera vez que leíste una historia
-> conmigo. Te daba un poco de vergüenza leer en voz alta. Hoy lees con
-> mucha más confianza. Estoy muy orgullosa de todo lo que has
-> conseguido."
+- puntos;
+- rachas punitivas;
+- aniversarios artificiales;
+- premios por login;
+- recompensas duplicadas.
 
-Ese día la Academia habrá cumplido su propósito.
+Las fechas reales que requieran recordatorio pertenecen al dominio de Calendarios cuando ese sea el mecanismo adecuado.
 
-------------------------------------------------------------------------
+---
 
-**Versión:** 1.0
+## 🔎 7. Aprendizaje a partir de evidencia
 
-**Estado:** Visión estratégica
+La Academia puede detectar patrones educativos únicamente de forma prudente y trazable.
 
-**Proyecto:** Academia Gloria
+Patrón vigente:
+
+```text
+Evidencia real
+   ↓
+Observación prudente
+   ↓
+Propuesta
+   ↓
+Revisión humana cuando corresponda
+```
+
+No convertir automáticamente un patrón local en una afirmación permanente sobre la persona.
+
+Evitar, sin evidencia suficiente:
+
+- “siempre aprende mejor por la mañana”;
+- “se pone nerviosa al leer”;
+- “no le gusta X”;
+- “tiene baja confianza”.
+
+La memoria conserva hechos y contexto útil; no inventa personalidad.
+
+---
+
+## 🧭 8. Adaptación
+
+La memoria puede permitir que la experiencia futura:
+
+- respete preferencias configuradas;
+- recuerde dónde quedó una actividad;
+- proponga una práctica relacionada;
+- ajuste ayudas cuando el Motor dispone de reglas fiables;
+- sugiera contenido relevante con explicación suficiente.
+
+La adaptación automática no debe actuar como una caja negra que cambia el aprendizaje sin trazabilidad.
+
+Cuando una decisión tenga impacto educativo relevante, preferir:
+
+```text
+observación → propuesta → decisión/revisión
+```
+
+antes que una modificación silenciosa del perfil o del nivel.
+
+---
+
+## 👨‍👩‍👧 9. Familia y profesionales
+
+El acceso a información se rige por USER/PERSON, Persona Activa, Relaciones y nivel efectivo.
+
+La memoria no crea un permiso adicional.
+
+Cuando una persona autorizada consulta el recorrido, la experiencia debe:
+
+- mostrar información comprensible;
+- distinguir hechos de observaciones;
+- evitar diagnósticos;
+- permitir rastrear el origen cuando sea relevante;
+- respetar la finalidad educativa y la autonomía progresiva.
+
+---
+
+## 🔒 10. Privacidad y minimización
+
+Principios:
+
+1. guardar únicamente lo que tenga una finalidad legítima;
+2. reutilizar la fuente propietaria en lugar de duplicar;
+3. no construir perfiles psicológicos ocultos;
+4. no inferir estados emocionales desde la voz;
+5. no convertir errores en etiquetas;
+6. no comparar alumnos;
+7. no conservar datos sensibles solo porque técnicamente sea posible;
+8. mantener Persona Activa y autoría real separadas;
+9. permitir que preferencias configurables evolucionen;
+10. revisar retención/eliminación cuando una nueva categoría de datos lo requiera.
+
+---
+
+## 🌈 11. Visión de futuro
+
+La aspiración sigue siendo que, con los años, la Academia pueda mostrar una continuidad auténtica del recorrido.
+
+No necesita decir:
+
+> “Yo sé cómo eres.”
+
+Debe poder decir, cuando exista evidencia:
+
+> “Aquí está parte de lo que has hecho, practicado y descubierto. Podemos continuar desde ahí.”
+
+Esa diferencia protege la identidad de la Persona y hace que la memoria sea una ayuda, no una etiqueta.
+
+---
+
+## ⏸️ 12. No implementado por esta visión
+
+Este documento no declara implementado:
+
+- un servicio central `MemoriaInteligente`;
+- una colección Firestore única de memoria;
+- recomendaciones automáticas universales;
+- adaptación autónoma de dificultad en todos los Motores;
+- perfilado emocional;
+- predicción de comportamiento o rendimiento;
+- acceso profesional general a toda la información;
+- generación automática de recuerdos narrativos sin fuente verificable.
+
+Cada capacidad deberá evolucionar desde sus dominios reales y una necesidad validada.
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | ✅ Visión estratégica activa |
+| **Versión activa** | 1.1 |
+| **Memoria central única** | No definida / no requerida |
+| **Principio de arquitectura** | Consultar fuentes propietarias antes que duplicar datos |
+| **Principio humano** | Recordar para acompañar, nunca para etiquetar o vigilar |

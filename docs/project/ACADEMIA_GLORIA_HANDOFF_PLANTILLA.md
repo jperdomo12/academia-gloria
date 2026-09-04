@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 04/09/2026 |
@@ -29,8 +29,9 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el HandOff vivo con el estado real: P0 y P1 cerrados, P2 en ejecución por lotes, elimina como `On going` los ajustes funcionales antiguos que ya no deben gobernar la continuidad sin nueva verificación y refuerza la regla de confirmar repositorio antes de reabrirlos. |
-| 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Activa la plantilla como mecanismo oficial de continuidad y formaliza último HandOff + instrucción breve. |
+| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Registra PR #68 fusionado, cierre de P2-21 a P2-30, actualización/archivo de referencias técnicas y visiones, y deja P2-31/P2-32 como último tramo documental pendiente después de la aprobación del lote actual. |
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronizó el HandOff con P0/P1 cerrados y P2 en ejecución por lotes, eliminando pendientes funcionales históricos como `On going`. |
+| 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Activó la plantilla como mecanismo oficial de continuidad. |
 
 ---
 
@@ -38,11 +39,9 @@
 
 Permitir continuar la Academia Gloria Valentina en otro chat de forma rápida y segura, conservando únicamente el **contexto operativo reciente** que todavía no se deduce con facilidad de las fuentes oficiales.
 
-Debe responder:
+> **El HandOff orienta; las fuentes propietarias y el producto real gobiernan.**
 
-> **Si este chat termina ahora, ¿qué necesita saber el siguiente para continuar correctamente desde el punto vigente?**
-
-El HandOff no sustituye documentación propietaria, código, ramas, PR ni comportamiento validado.
+No sustituye código, estándares, especificaciones, ramas, PR ni comportamiento validado.
 
 ---
 
@@ -51,120 +50,135 @@ El HandOff no sustituye documentación propietaria, código, ramas, PR ni compor
 Procedimiento normal:
 
 1. proporcionar el último HandOff disponible;
-2. abrir el nuevo chat;
-3. escribir una instrucción breve, por ejemplo:
+2. abrir un nuevo chat;
+3. indicar brevemente que se continúa desde ese HandOff;
+4. verificar en repositorio únicamente las fuentes necesarias antes de modificar.
 
-```text
-Continuamos Academia Gloria Valentina de acuerdo con el HandOff adjunto.
-Revísalo y continúa desde el estado vigente, verificando en repositorio lo necesario antes de modificar.
-```
-
-No es necesario reconstruir el historial completo ni adjuntar múltiples fuentes si el repositorio puede resolver el contexto.
+No reconstruir conversaciones anteriores cuando el estado actual pueda resolverse con HandOff + repositorio.
 
 ---
 
 ## ⚖️ 3. Regla de autoridad
-
-> **El HandOff orienta; las fuentes propietarias y el producto real gobiernan.**
 
 Antes de modificar o afirmar un estado, verificar según corresponda:
 
 - `main` y rama/PR vigente;
 - documento propietario;
 - código afectado;
-- especificaciones/estándares;
+- estándar/especificación;
 - comportamiento validado.
 
-Si el HandOff y el repositorio discrepan sobre el estado implementado, prevalece la evidencia verificada del repositorio y debe actualizarse el HandOff cuando el desfase afecte la continuidad.
+Si el HandOff discrepa con el repositorio verificado, prevalece el repositorio.
 
 ---
 
 ## 🔁 4. Regla de mantenimiento
 
-Actualizar de forma proporcional cuando:
+Actualizar proporcionalmente cuando:
 
 - se cierre un bloque relevante;
 - cambie la prioridad inmediata;
 - se abra/cierre una rama o PR importante;
 - cambie el siguiente paso exacto;
-- una decisión afecte la continuidad;
 - o antes de cerrar un chat largo.
 
-No convertir este documento en bitácora exhaustiva ni copiar contenido que ya tenga propietario.
+No convertir el HandOff en una segunda bitácora exhaustiva.
 
 ---
 
 ## 🧩 5. Contexto mínimo
 
-### Producto
+Academia Gloria Valentina es un producto educativo familiar vivo, inspirado inicialmente en Gloria y diseñado para evolucionar mediante uso real, acompañamiento y reutilización de patrones validados.
 
-Academia Gloria Valentina es un producto educativo familiar vivo, centrado inicialmente en Gloria y diseñado para evolucionar mediante uso real, acompañamiento y reutilización de patrones validados.
+Reglas de trabajo:
 
-### Forma de trabajo
-
-- Product Owner: dirección, prioridad y aceptación.
-- AI Collaborator: análisis, construcción, revisión y continuidad.
-- Reutilizar antes de crear.
-- Evitar fuentes paralelas.
-- Cuando el alcance está claro, construir sin interacciones innecesarias.
+- Product Owner: dirección, prioridad y aceptación;
+- AI Collaborator: análisis, construcción, revisión y continuidad;
+- reutilizar antes de crear;
+- evitar fuentes paralelas;
+- cuando el alcance está claro, construir sin interacciones innecesarias;
 - GitHub `main` es la base canónica del producto integrado.
 
 ---
 
-## ✅ 6. Estado documental reciente
+## ✅ 6. Estado documental
 
 | Bloque | Estado |
 |---|---|
-| P0 · sincronización documental prioritaria | ✅ Cerrado |
-| P1 · revisión de arquitectura/estándares | ✅ 15/15 cerrados |
-| P2 · comprobación dirigida | 🟡 En curso · 20/32 revisados |
-| P2-01 a P2-10 | ✅ Revisados y fusionados · PR #67 |
-| P2-11 a P2-20 | ✅ Revisados · PR #68 pendiente de aprobación/merge |
-| P2-21 a P2-30 | ⏭️ Siguiente lote después de cerrar PR #68 |
+| P0 | ✅ Cerrado |
+| P1 | ✅ 15/15 cerrados |
+| P2 | 🟡 En curso · **30/32 revisados** |
+| P2-01 a P2-10 | ✅ Fusionados · PR #67 |
+| P2-11 a P2-20 | ✅ Fusionados · PR #68 · merge `2995f4dc93495f92b2b0e69c6bee98267f784202` |
+| P2-21 a P2-30 | ✅ 10/10 revisados · rama `docs/p2-batch-21-30` · pendiente PR/aprobación |
+| P2-31 a P2-32 | ⏭️ Tramo final después de cerrar el lote 21-30 |
 
-En P2, **revisar no implica modificar**. Cada documento puede cerrarse sin cambio cuando ya está vigente.
+En P2, revisar no implica modificar; una fuente ya vigente puede cerrarse sin cambios.
 
 ---
 
-## 🌿 7. Reglas que no deben perderse
+## 📚 7. Resultado del lote P2-21 a P2-30
+
+- `TECH-DATOS-BASE-FIRESTORE-FASE1.md` → histórico; referencia vigente trasladada a transición de Usuarios/Firestore.
+- `TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` → v0.4 activo como referencia técnica de transición.
+- `01_PRINCIPIOS_PEDAGOGICOS.md` → original histórico; `FOUNDATION.md` y ADN gobiernan hoy el fundamento.
+- `02_VISION_DEL_RINCON_DE_LECTURA.md` → v1.1 visión activa, no contrato funcional.
+- `03_PERFIL_INTELIGENTE_DEL_USUARIO.md` → v1.1 visión estratégica sin perfil psicológico automático.
+- `04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA.md` → v1.1 visión estratégica basada en fuentes propietarias, no memoria central paralela.
+- `05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS.md` → v1.1 manifiesto activo; mundos conceptuales separados del estado implementado.
+- `06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA.md` → original histórico; `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` gobierna actualmente.
+- `07_IDENTIDAD_GUACAMAYAS.md` → v1.1 visión fundacional; retirada colisión histórica `STD-008`.
+- `08_MI_CAMINO.md` → v1.1 visión activa alineada con Mi Camino / Gestión de Misiones / Persona Activa / Reconocimientos.
+
+Los documentos originales trasladados a `history/` mantienen punteros de compatibilidad en sus rutas anteriores para no romper referencias mientras concluye la sincronización.
+
+---
+
+## 🌿 8. Reglas que no deben perderse
 
 - `docs/DOCUMENTATION_STANDARD.md` gobierna la jornada documental.
 - Verificar antes de crear, reescribir o declarar algo obsoleto.
 - Evolucionar una fuente antes de crear otra paralela.
-- Un documento de visión puede describir futuro; uno que describe presente debe coincidir con producto real.
-- Los documentos históricos se preservan explícitamente cuando dejan de gobernar.
-- Persona Activa, Misiones/evidencia, navegación compartida, Recompensas y demás dominios conservan sus documentos propietarios; el HandOff no los redefine.
-- No reabrir trabajo funcional antiguo únicamente porque aparezca en un HandOff anterior; verificar primero su estado actual.
+- Una visión puede describir futuro; no debe fingir implementación.
+- Documentos históricos no gobiernan cuando existe propietario vigente.
+- Persona Activa, Misiones/evidencia, navegación, Recompensas y demás dominios conservan sus propietarios.
+- Firestore Rules versionadas en GitHub no equivalen a Rules desplegadas en Firebase.
+- No reabrir trabajo funcional antiguo únicamente porque aparezca en documentación histórica.
 
 ---
 
-## 🌿 8. Rama / trabajo actual
+## 🌿 9. Rama / trabajo actual
 
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Rama activa** | `docs/p2-batch-11-20` |
-| **PR** | #68 · `Docs P2: revisar documentos 11 a 20` |
-| **Estado** | 10/10 documentos revisados; pendiente de aprobación del Product Owner |
-| **Siguiente tras cierre** | P2-21 a P2-30 |
+| **Rama activa** | `docs/p2-batch-21-30` |
+| **Objetivo** | Cerrar el lote P2-21 a P2-30 mediante un único PR documental |
+| **Estado** | 10/10 documentos revisados |
+| **Siguiente tras aprobación/merge** | P2-31 y P2-32 |
 
 ---
 
-## 🚨 9. Advertencias
+## 🚨 10. Advertencias
 
-- No interpretar un pendiente histórico como pendiente actual sin comprobarlo.
-- No utilizar este documento como inventario exhaustivo de funcionalidades.
-- No presentar una propuesta, piloto o auditoría histórica como contrato activo.
-- Si un documento P2 está vigente, cerrarlo sin cambios artificiales.
+- No interpretar una visión como contrato físico de implementación.
+- No reutilizar como norma activa documentos trasladados a `docs/history/`.
+- Los punteros de compatibilidad no son nuevas fuentes normativas.
+- No crear un Perfil o Memoria central que replique datos propietarios existentes.
+- No confundir Mi Camino con Gestión de Misiones.
+- La Guacamaya como símbolo, representación visual y Reconocimiento tiene propietarios distintos y coordinados.
 
 ---
 
-## ▶️ 10. Siguiente paso exacto
+## ▶️ 11. Siguiente paso exacto
 
-1. Obtener aprobación del Product Owner para **PR #68**.
-2. Verificar que el diff final y la rama siguen limpios/mergeables.
-3. Fusionar PR #68 a `main` sin solicitar una segunda aprobación redundante.
-4. Continuar con **P2-21 a P2-30**.
+1. comparar `docs/p2-batch-21-30` contra `main`;
+2. abrir un único PR del lote;
+3. solicitar la aprobación única del Product Owner;
+4. fusionar después de aprobación y verificación final;
+5. revisar **P2-31 `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`**;
+6. revisar **P2-32 `docs/vision/README.md`**;
+7. cerrar P2 completo.
 
 ---
 
@@ -172,27 +186,20 @@ En P2, **revisar no implica modificar**. Cada documento puede cerrarse sin cambi
 
 ## Qué acabamos de cerrar
 
-- Jornada P1: **15/15**.
-- P2-01 a P2-10: fusionados mediante PR #67.
-- P2-11 a P2-20: **10/10 revisados**, con PR #68 abierto.
+- P2-11 a P2-20 fusionados mediante PR #68.
+- P2-21 a P2-30 revisados: **10/10**.
 
-## Qué estamos esperando ahora
+## Qué estamos trabajando ahora
 
-> **Aprobación única del Product Owner para fusionar PR #68.**
+> **Preparación y aprobación del PR de P2-21 a P2-30.**
 
 Rama:
 
 ```text
-docs/p2-batch-11-20
+docs/p2-batch-21-30
 ```
 
-PR:
-
-```text
-#68 · Docs P2: revisar documentos 11 a 20
-```
-
-Después del merge, el siguiente bloque será P2-21 a P2-30.
+Después del merge quedarán únicamente **P2-31 y P2-32**.
 
 ---
 
@@ -201,6 +208,6 @@ Después del merge, el siguiente bloque será P2-21 a P2-30.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.1 |
+| **Versión activa** | 1.2 |
 | **Mecanismo de continuidad** | Último HandOff + instrucción breve + verificación dirigida de fuentes |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
