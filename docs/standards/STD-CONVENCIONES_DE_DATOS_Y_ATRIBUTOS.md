@@ -1,90 +1,117 @@
-# STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md
+# 🧱 Convenciones de Datos y Atributos
+## 🌈 Academia Gloria Valentina
 
-# Academia Gloria Valentina
-## Estándar de convenciones de datos y atributos
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` |
+| **Código** | STD-008 |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
+| **Fecha de origen** | 13/08/2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Convenciones Transversales de Datos |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Nombres, identificadores, auditoría, estados, fechas, booleanos, referencias, versionado de esquema y adopción progresiva en datos persistidos |
 
-**Versión:** 1.0  
-**Fecha:** 2026-08-13  
-**Estado:** ✅ Aprobado  
-**Ruta canónica:** `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md`
+## 🔗 Documentos relacionados
 
----
+| Documento | Relación |
+|---|---|
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** estructura, trazabilidad y mantenimiento de este estándar. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** significado de PERSON, USER, Persona Activa, identidad y autoría. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Aplica:** semántica funcional del dominio de Misiones. |
+| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** contrato funcional actual de Misiones/evidencias. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Aplica:** identidad académica, sesiones y evidencia de nuevos Temas. |
+| `docs/tech/AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` | **Describe:** fotografía técnica de entidades/atributos; no sustituye esta norma. |
+| `compartido/api/academia.js` | **Implementa parcialmente:** convenciones actuales y compatibilidad legacy de varios dominios. |
+| `compartido/js/contexto-usuario.js` | **Implementa:** resolución de USER/PERSON/Persona Activa. |
 
-## Historial del documento
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
-|---|---|---|---|
-| 1.0 | 2026-08-13 | Product Owner + AI Collaborator | Primera versión. Define la convención transversal para nombres de atributos, identificadores, auditoría, estados, fechas, hitos y adopción progresiva. |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Mantiene `camelCase`, vocabulario funcional preferentemente en español, identificadores técnicos y auditoría transversal; aclara PERSON/USER/Persona Activa frente a campos de compatibilidad como `alumnoId`; reconoce coexistencia legacy sin autorizar nuevas variantes; elimina la antigua autorización genérica de sacrificar datos históricos de Misiones; incorpora `schemaVersion`, datos de prueba, enums, mapas, reglas de migración segura, Quality Gate y estado real de Tareas/Misiones. |
+| 1.0 | 13/08/2026 | Product Owner + AI Collaborator | Primera versión. Define convención transversal para nombres, identificadores, auditoría, estados, fechas, hitos y adopción progresiva. |
 
 ---
 
-## 1. Propósito
+## 🎯 1. Propósito
 
-Definir una convención única y predecible para nombrar los datos persistidos y los atributos utilizados por la Academia Gloria Valentina.
+Definir una convención única y predecible para **nombrar y evolucionar los datos persistidos** de la Academia.
 
-El objetivo es reducir ambigüedad, duplicidades y errores, y facilitar la evolución del producto sin exigir una migración masiva inmediata de todo lo ya construido.
+El objetivo es reducir:
+
+- ambigüedad;
+- nombres equivalentes;
+- errores de identidad;
+- duplicación de esquemas;
+- migraciones innecesarias;
+- y dificultad para reutilizar evidencia entre módulos.
+
+Este estándar no busca uniformidad estética perfecta.
+
+Busca que cada nuevo dato tenga un significado claro y que la consistencia aumente progresivamente sin romper el producto.
 
 ---
 
-## 2. Contexto de origen
+## 📐 2. Alcance y fronteras
 
-La Academia Gloria Valentina nació inicialmente como una solución puntual para acompañar el material escolar de 5.º de Primaria de Gloria Valentina.
-
-Con el uso real fue creciendo progresivamente en módulos, persistencia, seguimiento educativo, identidad, usuarios, relaciones, misiones, evidencias y colaboración. Esa evolución ocurrió antes de disponer de una visión integral de producto y de un modelo transversal de datos.
-
-Como consecuencia natural de ese crecimiento incremental, el repositorio actual contiene distintas convenciones de nombres, incluyendo combinaciones de español e inglés y variantes para conceptos equivalentes.
-
-La auditoría técnica realizada el 13/08/2026 confirmó que esta situación es transversal y no está limitada a un único módulo. El detalle se mantiene separado en `docs/tech/AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` para no mezclar evidencia de situación con reglas normativas.
-
----
-
-## 3. Alcance
-
-Este estándar aplica a:
+Aplica a:
 
 - nuevas entidades persistidas;
 - nuevos atributos de entidades existentes;
 - cambios de modelo de datos;
 - Firestore;
-- estructuras equivalentes persistidas en otros mecanismos cuando formen parte del producto;
-- evoluciones de módulos existentes cuando se decida normalizar sus datos.
+- objetos persistidos en otros mecanismos cuando formen parte del producto;
+- DTO/objetos compartidos cuando su nombre sea parte del contrato;
+- evoluciones de módulos existentes cuando se normalicen sus datos.
 
-No obliga a renombrar inmediatamente todos los atributos históricos o ya implementados.
+No obliga a:
 
----
-
-## 4. Principios
-
-1. Un mismo concepto debe tender a tener un único nombre en toda la Academia.
-2. Los nombres deben ser descriptivos, estables y predecibles.
-3. Se utilizará `camelCase` para atributos.
-4. Los atributos funcionales del producto se expresan preferentemente en español.
-5. Los identificadores técnicos y la auditoría transversal utilizan una convención técnica común en inglés.
-6. Los términos propios de Firebase, Web APIs o tecnologías externas pueden conservar su denominación técnica cuando corresponda.
-7. No se realizará una migración únicamente por estética si no existe beneficio proporcional.
-8. Todo desarrollo nuevo debe aplicar este estándar desde su aprobación.
-9. Los módulos existentes se normalizan de forma progresiva cuando sean intervenidos o exista una migración expresamente justificada.
+- renombrar masivamente datos históricos;
+- migrar una colección solo para mejorar estética;
+- modificar nombres impuestos por Firebase, Web APIs o librerías externas;
+- convertir todos los campos existentes al mismo idioma en una sola intervención;
+- ni inventar auditoría histórica que nunca se registró.
 
 ---
 
-## 5. Formato general
+## 🧭 3. Principios no negociables
 
-### 5.1 Atributos
+1. **Un mismo concepto debe tender a un único nombre.**
+2. **Los atributos utilizan `camelCase`.**
+3. **Los conceptos funcionales se expresan preferentemente en español.**
+4. **Identificadores técnicos siguen la forma `<entidad>Id` cuando identifican claramente otra entidad.**
+5. **La auditoría transversal utiliza `createdAt`, `createdBy`, `updatedAt`, `updatedBy`.**
+6. **Autoría y propiedad no son lo mismo.** El actor autenticado puede modificar datos pertenecientes a otra Persona autorizada.
+7. **Persona Activa no se deduce de nombres de campos ambiguos.**
+8. **No se crean nuevas variantes legacy por comodidad.**
+9. **No se migra un dato solo por estética.**
+10. **No se sacrifica historial real salvo una decisión funcional explícita, limitada y aprobada para un caso concreto.**
+11. **No se inventa backfill de auditoría, sesiones o identidad histórica.**
+12. **Un nuevo esquema debe reutilizar contratos compartidos antes de crear otro paralelo.**
+13. **La compatibilidad temporal debe ser explícita y eliminable.**
+14. **Los datos de prueba deben poder identificarse cuando participan en flujos reales.**
 
-Usar `camelCase`.
+---
 
-Ejemplos:
+## ✍️ 4. Formato general
+
+### 4.1 Atributos
+
+Usar `camelCase`:
 
 ```text
 nombreVisible
 fechaInicio
 nivelAcceso
 visibleParaAlumno
+actividadId
 createdAt
 sourcePersonId
 ```
 
-Evitar:
+Evitar crear nuevas variantes como:
 
 ```text
 nombre_visible
@@ -92,26 +119,45 @@ NombreVisible
 NOMBRE_VISIBLE
 ```
 
-### 5.2 Abreviaturas
+### 4.2 Nombres descriptivos
 
-Evitar abreviaturas salvo términos técnicos claramente establecidos.
+Preferir un nombre explícito a una abreviatura local.
 
-No crear variantes nuevas basadas en `uid` cuando el concepto que se quiere expresar es un `userId`.
+Preferir:
+
+```text
+fechaLimite
+tiempoEstimadoMinutos
+historialObservaciones
+```
+
+Evitar nuevos nombres como:
+
+```text
+fLim
+timeEst
+histObs
+```
+
+salvo abreviaturas técnicas universalmente entendidas dentro del contrato.
+
+### 4.3 Singular y plural
+
+- referencia a una entidad → singular: `misionId`;
+- lista de entidades/valores → plural: `respuestas`, `evidencias`, `historialObservaciones`;
+- mapa u objeto compuesto → nombre semántico singular: `progreso`, `resultado`, `presentacionAlumno`.
 
 ---
 
-## 6. Idioma y vocabulario
+## 🌐 5. Idioma y vocabulario
 
-### 6.1 Datos funcionales
+### 5.1 Datos funcionales
 
-Los atributos propios del dominio funcional se expresan en español.
-
-Ejemplos:
+Preferentemente en español:
 
 ```text
 nombre
 apellidos
-nombreVisible
 estado
 fechaInicio
 fechaLimite
@@ -119,17 +165,49 @@ tipoRelacion
 nivelAcceso
 requiereRevision
 visibleParaAlumno
+observacionActual
 ```
 
-### 6.2 Identificadores técnicos
+### 5.2 Conceptos técnicos transversales
 
-Se utiliza la forma `<entidad>Id`.
-
-Ejemplos:
+Pueden permanecer en inglés cuando ya existe una convención clara y transversal:
 
 ```text
-userId
+createdAt
+createdBy
+updatedAt
+updatedBy
+statusChangedAt
+statusChangedBy
+schemaVersion
+sourcePersonId
+targetPersonId
+```
+
+### 5.3 Tecnología externa
+
+Conservar nombres propios de plataforma cuando traducirlos cause ambigüedad, por ejemplo:
+
+- UID de Firebase Authentication;
+- `localStorage`;
+- MIME type;
+- APIs Web.
+
+No convertir un término tecnológico en un nombre funcional si representan cosas distintas.
+
+---
+
+## 🆔 6. Identificadores y actores
+
+### 6.1 Regla base
+
+Cuando un campo referencia una entidad, utilizar una forma que deje claro **qué tipo de identidad contiene**.
+
+Ejemplos preferidos:
+
+```text
 personaId
+userId
 roleId
 misionId
 sesionId
@@ -137,22 +215,63 @@ actividadId
 evidenciaId
 ```
 
-Cuando una relación tenga dirección explícita:
+### 6.2 PERSON frente a USER
+
+Según el modelo vigente:
+
+```text
+personaId
+→ identifica PERSON, la persona real.
+
+userId
+→ identifica USER, la identidad de acceso; actualmente coincide físicamente con UID de Firebase.
+```
+
+No son intercambiables.
+
+### 6.3 Persona Activa
+
+Persona Activa es un **contexto funcional**, no un tipo nuevo de identificador persistente.
+
+Un servicio puede resolver:
+
+```text
+Persona Activa
+→ personaId
+→ USER asociado cuando una subcolección legacy todavía vive bajo usuarios/{uid}
+```
+
+No crear campos como `personaActivaId` por defecto si el dato realmente necesita `personaId` o `userId`.
+
+### 6.4 `alumnoId` como compatibilidad de dominio
+
+El dominio actual de Tareas/Misiones utiliza `alumnoId` en registros existentes y en su API.
+
+Ese nombre debe interpretarse **según el contrato propietario de Misiones**, no como sinónimo universal de `personaId`.
+
+Reglas:
+
+- no introducir `alumnoId` en nuevos dominios solo por copiar Misiones;
+- no asumir que su valor representa siempre PERSON;
+- no renombrarlo silenciosamente mientras código, reglas y datos dependan de él;
+- una futura normalización debe ser explícita y coordinada con el propietario de Misiones.
+
+### 6.5 Relaciones dirigidas
+
+Cuando la dirección sea relevante:
 
 ```text
 sourcePersonId
 targetPersonId
 ```
 
-### 6.3 Términos tecnológicos
-
-Los nombres técnicos establecidos pueden permanecer en inglés cuando representan directamente un concepto de la tecnología y traducirlos generaría más ambigüedad que beneficio.
+No utilizar `persona1` / `persona2` cuando la dirección tenga significado funcional.
 
 ---
 
-## 7. Auditoría transversal
+## 🧾 7. Auditoría transversal
 
-Toda entidad mutable relevante debe utilizar, cuando corresponda:
+Para una entidad mutable nueva y relevante, utilizar cuando corresponda:
 
 ```text
 createdAt
@@ -161,35 +280,68 @@ updatedAt
 updatedBy
 ```
 
-Semántica:
-
-| Atributo | Significado |
+| Atributo | Semántica |
 |---|---|
-| `createdAt` | Fecha/hora de creación de la entidad |
+| `createdAt` | instante de creación |
 | `createdBy` | `userId` autenticado que creó la entidad |
-| `updatedAt` | Fecha/hora de la última modificación de la entidad |
-| `updatedBy` | `userId` autenticado que realizó la última modificación |
+| `updatedAt` | instante de última modificación relevante |
+| `updatedBy` | `userId` autenticado que realizó la modificación |
 
-Reglas:
+### 7.1 Autoría
 
-- `createdAt` y `createdBy` no deben cambiar después de la creación.
-- `updatedAt` y `updatedBy` se actualizan ante modificaciones relevantes.
-- No crear nuevas variantes como `creadaEn`, `creadoEn`, `actualizadaEn`, `actualizadoEn`, `creadaPorUid` o equivalentes.
-- La auditoría transversal no sustituye hitos funcionales ni un eventual historial completo.
+`createdBy` / `updatedBy` identifican al **Usuario autenticado actor**.
+
+No deben sustituirse automáticamente por el identificador de la Persona Activa.
+
+Ejemplo:
+
+```text
+familia autenticada
+→ gestiona Misión de Gloria
+→ datos pertenecen/contextualizan a Gloria
+→ createdBy conserva al Usuario familiar que actuó
+```
+
+### 7.2 Reglas
+
+- `createdAt` y `createdBy` no cambian después de creación.
+- `updatedAt` y `updatedBy` cambian ante modificaciones relevantes.
+- en Firestore, preferir timestamp de servidor para auditoría cuando el servicio propietario ya utiliza ese patrón;
+- no inventar valores para documentos legacy que nunca los tuvieron.
+
+### 7.3 Compatibilidad legacy
+
+Persisten módulos con nombres como:
+
+```text
+creadoEn
+actualizadoEn
+creadaEn
+creadaPorUid
+```
+
+Su existencia no convierte esas variantes en la nueva convención.
+
+Cuando el módulo sea intervenido:
+
+1. evaluar coste/beneficio de normalizar;
+2. mantener lectura compatible si existen datos reales;
+3. evitar backfill ficticio;
+4. retirar compatibilidad solo cuando sea seguro.
 
 ---
 
-## 8. Estado
+## 🔄 8. Estado y cambios de estado
 
-El atributo funcional general se mantiene en español:
+El atributo funcional general es:
 
 ```text
 estado
 ```
 
-Los valores del estado pertenecen al dominio de cada entidad.
+Los valores pertenecen a cada dominio.
 
-Ejemplo para Misiones:
+Ejemplo vigente de Misiones:
 
 ```text
 pendiente
@@ -200,37 +352,36 @@ necesita_ayuda
 cancelada
 ```
 
-Cuando sea necesario conocer específicamente cuándo y quién produjo el último cambio de estado, utilizar:
+Los enums existentes pueden utilizar `snake_case` en sus **valores**. Esto no contradice que los **nombres de atributos** utilicen `camelCase`.
+
+### 8.1 Auditoría de estado
+
+Cuando el dominio necesita registrar quién/cuándo produjo el último cambio efectivo:
 
 ```text
 statusChangedAt
 statusChangedBy
 ```
 
-Semántica:
+Solo se actualizan cuando cambia realmente `estado`.
 
-- `statusChangedAt`: fecha/hora del último cambio efectivo de `estado`.
-- `statusChangedBy`: `userId` del usuario autenticado que produjo el cambio.
-
-Estos campos solo se actualizan cuando cambia efectivamente `estado`; no ante una modificación general de la entidad.
+No deben utilizarse como sustituto de un historial completo cuando el producto necesite conservar todos los cambios.
 
 ---
 
-## 9. Fechas e hitos funcionales
+## 📅 9. Fechas e hitos funcionales
 
-Las fechas propias del dominio permanecen en español.
-
-Ejemplos:
+Las fechas propias del dominio permanecen preferentemente en español:
 
 ```text
 fechaInicio
 fechaLimite
 fechaNacimiento
+fechaHecho
+fechaReconocimiento
 ```
 
-Los hitos funcionales pueden utilizar la convención verbal `...En` cuando expresa claramente un evento del dominio.
-
-Ejemplos:
+Los hitos dentro de un objeto funcional pueden usar formas como:
 
 ```text
 iniciadaEn
@@ -239,13 +390,15 @@ aplicadaEn
 ocurridaEn
 ```
 
-Estos campos no sustituyen `createdAt` ni `updatedAt`.
+Los hitos funcionales no sustituyen la auditoría transversal.
+
+No se obliga a usar el mismo tipo físico para todas las fechas si los contratos existentes tienen necesidades distintas; el servicio propietario debe mantener un tipo estable y documentado dentro de su dominio.
 
 ---
 
-## 10. Booleanos
+## ☑️ 10. Booleanos
 
-Los booleanos deben expresar claramente una condición o capacidad.
+El nombre debe expresar una condición o capacidad inequívoca.
 
 Ejemplos:
 
@@ -256,50 +409,78 @@ requiereRevision
 convieneRepetir
 necesitaAyuda
 contabilizada
+esDatoPrueba
 ```
 
-No se exige el prefijo técnico `is` o `has` cuando el nombre en español ya es inequívoco.
+No se exige prefijo `is` / `has` cuando el español ya resulta claro.
+
+Preferir condiciones positivas cuando simplifiquen el contrato.
 
 ---
 
-## 11. Relaciones y actores
+## 🧩 11. Objetos anidados, listas y mapas
 
-Los atributos que apuntan a otra entidad deben identificar claramente el tipo de destino.
+Los objetos anidados deben tener responsabilidad clara.
 
-Ejemplos:
-
-```text
-personaId
-userId
-roleId
-misionId
-sesionId
-actividadId
-```
-
-Para actores de auditoría se utiliza directamente:
+Ejemplos actuales válidos:
 
 ```text
-createdBy
-updatedBy
-statusChangedBy
+presentacionAlumno
+criterioCumplimiento
+progreso
+resultado
+fuentePrincipal
 ```
 
-El valor representa un `userId`.
+Reglas:
 
-Para una asignación funcional puede utilizarse:
-
-```text
-assignedBy
-```
-
-cuando sea necesario distinguir quién asignó una entidad de quién la creó.
+- mantener `camelCase` también dentro de objetos;
+- no duplicar en el nivel raíz el mismo dato solo por comodidad;
+- no esconder dentro de `metadata` genérico información que ya tiene significado funcional estable;
+- listas deben contener elementos de semántica homogénea;
+- mapas dinámicos necesitan una razón real para no usar campos explícitos.
 
 ---
 
-## 12. Aplicación inmediata a Tareas / Misiones
+## 🧬 12. Versionado de esquema
 
-La evolución actual de Tareas / Misiones debe converger hacia:
+Cuando una estructura persistida pueda evolucionar de forma incompatible o necesite distinguir generaciones de datos, puede utilizar:
+
+```text
+schemaVersion
+```
+
+Reglas:
+
+- no es obligatorio en toda entidad;
+- debe existir cuando realmente ayude a interpretar o migrar datos;
+- su significado pertenece al contrato propietario;
+- cambiar la versión exige compatibilidad, migración o rechazo explícito según el caso;
+- no usar la versión como sustituto de una estrategia de evolución.
+
+---
+
+## 🧪 13. Datos de prueba
+
+Cuando un dato recorre el flujo real pero debe quedar excluido de análisis, constancia o Reconocimientos, utilizar el contrato propietario de prueba; actualmente se emplea, entre otros casos:
+
+```text
+esDatoPrueba
+```
+
+Regla semántica:
+
+> **dato de prueba puede validar funcionalidad, pero no debe convertirse en hecho educativo real.**
+
+No inferir que un dato es de prueba únicamente por fecha, título o Usuario.
+
+---
+
+## 🗺️ 14. Estado actual de Tareas / Misiones
+
+Tareas/Misiones es la primera aplicación transversal consolidada de la convención de auditoría nueva.
+
+La implementación actual utiliza, entre otros:
 
 ```text
 alumnoId
@@ -308,6 +489,7 @@ descripcion
 tipo
 modulo
 estado
+visibleParaAlumno
 
 createdAt
 createdBy
@@ -321,126 +503,168 @@ progreso.iniciadaEn
 progreso.completadaEn
 ```
 
-Cuando aplique una asignación explícita:
+La API mantiene además lectura compatible con documentos legacy que pueden usar fechas como `actualizadaEn` o `creadaEn`.
 
-```text
-assignedBy
-```
+### 14.1 Regla de evolución
 
-Los campos históricos equivalentes podrán eliminarse o sustituirse en esta evolución porque se ha aceptado sacrificar los datos históricos actuales de Tareas / Misiones si resulta necesario para dejar un modelo limpio.
+La v1.0 indicaba que los campos históricos de Misiones podían sacrificarse si era necesario para dejar un modelo limpio.
+
+Esa autorización genérica queda retirada.
+
+Regla vigente:
+
+> **La normalización no justifica por sí sola perder historia real.**
+
+Si una futura migración necesita eliminar o transformar datos:
+
+- debe existir necesidad funcional/técnica concreta;
+- debe delimitarse el conjunto afectado;
+- debe revisarse compatibilidad;
+- debe decidirse explícitamente qué historia puede perderse y por qué;
+- y debe validarse con el propietario del dominio.
 
 ---
 
-## 13. Adopción en lo ya implementado
+## 🧭 15. Adopción progresiva
 
-### 13.1 Desde la aprobación
+### Nuevo desarrollo
 
-Todo atributo nuevo debe seguir este estándar.
+```text
+→ aplicar este estándar desde el diseño
+```
 
-**Coste:** muy bajo.  
-**Beneficio:** alto, porque evita aumentar la inconsistencia existente.
+### Módulo existente intervenido
 
-### 13.2 Cuando se intervenga un módulo existente
+```text
+→ revisar convenciones
+→ normalizar solo si el beneficio compensa coste/riesgo
+→ conservar compatibilidad necesaria
+```
 
-Al modificar de forma significativa un módulo, se debe evaluar si conviene normalizar sus atributos en la misma intervención.
+### Migración global
 
-Ejemplos:
+```text
+→ no aprobada por defecto
+```
 
-- Biblioteca;
-- Mi Rincón de Lectura;
-- Detectives de Problemas;
-- Creciendo por Dentro;
-- Eventos;
-- Evidencias.
-
-**Coste:** bajo o medio, dependiendo de persistencia, reglas, consultas y datos existentes.  
-**Beneficio:** medio/alto en mantenibilidad y comprensión.
-
-### 13.3 Migración global
-
-No se aprueba actualmente una migración masiva de todas las entidades solo para uniformar nombres.
-
-Una migración global puede afectar:
+Una migración transversal puede afectar:
 
 - Firestore;
-- código de lectura y escritura;
+- código de lectura/escritura;
 - consultas e índices;
 - Firestore Rules;
 - datos existentes;
-- modelos y contratos;
-- localStorage u otros mecanismos persistentes;
-- compatibilidad entre versiones.
+- modelos/contratos;
+- históricos;
+- `localStorage` u otras persistencias;
+- compatibilidad entre versiones desplegadas.
 
-**Coste:** alto.  
-**Beneficio funcional inmediato:** bajo.  
-**Beneficio técnico de largo plazo:** medio/alto.
-
-Solo debe ejecutarse si una futura evolución hace que el beneficio supere claramente el coste y el riesgo.
+No debe realizarse solo para que los nombres “se vean iguales”.
 
 ---
 
-## 14. Auditoría de situación e inventario
+## 🛡️ 16. Migraciones y compatibilidad
 
-La auditoría detallada de entidades y atributos **no forma parte normativa de este estándar**.
+Toda migración relevante debe responder:
 
-Se mantiene en:
+1. ¿qué problema real resuelve?
+2. ¿qué datos existen hoy?
+3. ¿qué lector/escritor depende de ellos?
+4. ¿qué reglas/índices se ven afectados?
+5. ¿se requiere lectura dual temporal?
+6. ¿cómo se valida que no se perdió historia?
+7. ¿cómo se retira la compatibilidad después?
+
+Evitar:
+
+- migración silenciosa al abrir una pantalla;
+- reinterpretar un UID histórico como `personaId` sin evidencia;
+- completar `createdBy` con el Usuario actual si el actor histórico es desconocido;
+- duplicar campos antiguos y nuevos indefinidamente sin plan de retirada.
+
+---
+
+## 📚 17. Auditoría técnica separada
+
+La fotografía detallada de qué entidades/campos existen en un momento concreto pertenece a:
 
 ```text
 docs/tech/AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md
 ```
 
-Razón:
+Este estándar define la **regla futura y transversal**.
 
-- el estándar define cómo deben nombrarse los datos;
-- la auditoría describe qué existe realmente en un momento determinado;
-- separar ambas responsabilidades evita que una fotografía técnica convierta el estándar en un documento histórico o excesivamente voluminoso.
+La auditoría técnica describe la **realidad observada**.
 
-Este estándar conserva únicamente las conclusiones necesarias para gobernar el futuro.
+No se duplican ambas responsabilidades.
 
 ---
 
-## 15. Regla de evolución
+## ✅ 18. Quality Gate
 
-La Academia no debe detener su evolución para alcanzar uniformidad perfecta.
+Antes de añadir o modificar un dato persistido:
 
-La regla es:
+### Semántica
 
-```text
-Nuevo desarrollo         → cumplir el estándar
-Módulo intervenido       → evaluar normalización
-Migración global         → solo con beneficio justificado
-```
+- [ ] El campo representa un concepto necesario.
+- [ ] No existe ya otro nombre propietario para el mismo concepto.
+- [ ] El nombre deja claro si referencia PERSON, USER u otra entidad.
+- [ ] No confunde Persona Activa con actor autenticado.
 
-La consistencia debe crecer progresivamente con el producto.
+### Nomenclatura
+
+- [ ] Atributo en `camelCase`.
+- [ ] Concepto funcional preferentemente en español.
+- [ ] Identificador usa `<entidad>Id` cuando corresponde.
+- [ ] No se crea una nueva variante legacy.
+
+### Auditoría
+
+- [ ] Entidad mutable relevante registra auditoría transversal cuando corresponde.
+- [ ] `createdBy/updatedBy` representan al Usuario actor.
+- [ ] Cambio de estado actualiza `statusChanged*` solo si el dominio lo utiliza y el estado cambió.
+- [ ] No se inventa auditoría histórica.
+
+### Arquitectura
+
+- [ ] Se reutiliza contrato compartido antes de crear esquema privado.
+- [ ] Se valoró `schemaVersion` si existe evolución incompatible.
+- [ ] Los datos de prueba pueden excluirse cuando el dominio lo necesita.
+- [ ] Una migración preserva historia salvo decisión explícita y justificada.
 
 ---
 
-## 16. Decisiones adoptadas
+## 📌 19. Decisiones adoptadas
 
-| ID | Decisión |
-|---|---|
-| DAT-001 | `camelCase` como formato general de atributos |
-| DAT-002 | Datos funcionales preferentemente en español |
-| DAT-003 | Identificadores técnicos con convención `<entidad>Id` |
-| DAT-004 | Auditoría transversal con `createdAt`, `createdBy`, `updatedAt`, `updatedBy` |
-| DAT-005 | `estado` permanece como atributo funcional general |
-| DAT-006 | Último cambio de estado con `statusChangedAt` y `statusChangedBy` cuando sea requerido |
-| DAT-007 | Hitos funcionales conservan nombres de dominio como `iniciadaEn` y `completadaEn` |
-| DAT-008 | Todo desarrollo nuevo aplica el estándar desde su aprobación |
-| DAT-009 | Los módulos existentes se normalizan progresivamente al ser intervenidos |
-| DAT-010 | No se aprueba una migración masiva únicamente por uniformidad estética |
-| DAT-011 | La auditoría detallada se mantiene separada en `docs/tech/` |
+| ID | Decisión | Estado |
+|---|---|---|
+| DAT-001 | `camelCase` como formato general de atributos. | Aprobada |
+| DAT-002 | Datos funcionales preferentemente en español. | Aprobada |
+| DAT-003 | Identificadores técnicos con convención `<entidad>Id`. | Aprobada |
+| DAT-004 | Auditoría transversal con `createdAt`, `createdBy`, `updatedAt`, `updatedBy`. | Aprobada |
+| DAT-005 | `estado` permanece como atributo funcional general. | Aprobada |
+| DAT-006 | Último cambio de estado puede usar `statusChangedAt` / `statusChangedBy`. | Aprobada |
+| DAT-007 | Hitos funcionales conservan nombres de dominio como `iniciadaEn` / `completadaEn`. | Aprobada |
+| DAT-008 | Todo desarrollo nuevo aplica el estándar. | Aprobada |
+| DAT-009 | Módulos existentes se normalizan progresivamente al ser intervenidos. | Aprobada |
+| DAT-010 | No se aprueba migración masiva únicamente por uniformidad estética. | Aprobada |
+| DAT-011 | La auditoría detallada se mantiene separada en `docs/tech/`. | Aprobada |
+| DAT-012 | PERSON (`personaId`) y USER (`userId`) no son identificadores intercambiables. | Aprobada |
+| DAT-013 | `alumnoId` se conserva como compatibilidad propietaria de Misiones, no como convención universal. | Aprobada |
+| DAT-014 | No se inventa auditoría, identidad ni sesiones históricas durante una normalización. | Aprobada |
+| DAT-015 | `schemaVersion` se utiliza cuando aporta valor real para evolucionar un contrato. | Aprobada |
+| DAT-016 | La normalización de nombres no autoriza pérdida genérica de historia real. | Aprobada |
 
 ---
 
-## DECISIÓN
+## ✅ DECISIÓN
 
 | Campo | Valor |
 |---|---|
-| Estado | ✅ Aprobado |
-| Versión activa | 1.0 |
-| Fecha | 13/08/2026 |
-| Responsables | Product Owner + AI Collaborator |
-| Aplicación | Toda nueva evolución de datos de la Academia |
-| Migración inmediata global | No |
-| Primera aplicación | Tareas / Misiones |
+| **Estado** | Activo |
+| **Versión** | 1.1 |
+| **Fecha** | 04/09/2026 |
+| **Regla general** | Consistencia progresiva sin migraciones estéticas ni pérdida silenciosa de historia. |
+| **Identidad** | Diferenciar PERSON, USER, Persona Activa y actor autenticado. |
+| **Auditoría** | `createdAt/By`, `updatedAt/By` y `statusChangedAt/By` cuando corresponde. |
+| **Migración global inmediata** | No. |
