@@ -1,62 +1,77 @@
-# 🌈 Aventuras Matemáticas
+# 🧮 Aventuras Matemáticas
+## Descubrir · Comprender · Resolver
+### 🌈 Academia Gloria Valentina
 
-## Descubrir. Comprender. Resolver.
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS.md` |
+| **Versión** | 1.1 |
+| **Estado** | Visión / manifiesto activo · no contrato funcional |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Visión de Aventuras Matemáticas |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Intención educativa y carácter de Aventuras Matemáticas |
 
-**Documento:** 05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS_v1.0.md
+## 🔗 Documentos relacionados
 
-**Versión:** 1.0
+| Documento / fuente | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** propósito humano y principios fundacionales. |
+| `docs/standards/STD-AVENTURAS_MATEMATICAS.md` | **Gobierna:** reglas y estado funcional vigente de Aventuras Matemáticas. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** currículo, Curso → Asignatura → Tema y material académico. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** posición de Aventuras Matemáticas dentro de Mi Universo. |
+| `mi-universo/aventuras-matematicas/` | **Implementa:** portal y mundos realmente disponibles. |
 
-**Estado:** Aprobado
+> **Regla de lectura:** este manifiesto conserva la intención original. Los mundos nombrados aquí pueden ser aspiracionales; su presencia no significa que estén implementados.
 
-**Fecha:** Julio 2026
+## 🕘 Historial de versiones
 
----
-
-# 1. Introducción
-
-Aventuras Matemáticas nace con una idea muy sencilla.
-
-No queremos que Gloria aprenda más matemáticas.
-
-Queremos ayudarla a descubrir que es capaz de comprender el mundo que la rodea utilizando las matemáticas como una herramienta para la vida.
-
-Cada actividad buscará desarrollar confianza.
-
-Cada reto buscará desarrollar razonamiento.
-
-Cada logro buscará fortalecer su autonomía.
-
----
-
-# 2. Nuestro propósito
-
-Las matemáticas están presentes en casi todas las decisiones cotidianas.
-
-Comprar.
-
-Viajar.
-
-Organizar el tiempo.
-
-Leer un horario.
-
-Preparar una receta.
-
-Compartir.
-
-Ahorrar.
-
-Resolver pequeños problemas.
-
-Por ello, Aventuras Matemáticas tendrá como objetivo principal preparar a Gloria para desenvolverse con seguridad en situaciones reales.
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Preserva el lema y propósito original, aclara la separación entre manifiesto y contrato vigente, evita presentar todos los mundos como implementados y armoniza la relación con el currículo académico actual. |
+| 1.0 | Julio 2026 | Equipo del proyecto | Manifiesto original de Aventuras Matemáticas. |
 
 ---
 
-# 3. Descubrir. Comprender. Resolver.
+## 🌱 1. Idea central
 
-Este será el lema del módulo.
+Aventuras Matemáticas nace con una idea sencilla:
 
-## Descubrir
+No queremos que aprender matemáticas sea acumular ejercicios.
+
+Queremos ayudar al alumno a descubrir que puede **comprender, pensar y resolver** situaciones utilizando las matemáticas como una herramienta para la vida.
+
+Cada actividad debe buscar comprensión.
+
+Cada reto debe invitar a razonar.
+
+Cada experiencia debe favorecer autonomía y confianza.
+
+---
+
+## 🎯 2. Nuestro propósito
+
+Las matemáticas están presentes en decisiones cotidianas:
+
+- comprar;
+- viajar;
+- organizar el tiempo;
+- leer un horario;
+- preparar una receta;
+- compartir;
+- ahorrar;
+- medir;
+- comparar;
+- resolver pequeños problemas.
+
+Aventuras Matemáticas busca que el aprendizaje pueda salir del ejercicio aislado y conectarse con contextos que tengan sentido.
+
+---
+
+## 🧭 3. Descubrir · Comprender · Resolver
+
+### Descubrir
 
 Observar.
 
@@ -66,61 +81,45 @@ Curiosear.
 
 Explorar.
 
-Antes de resolver cualquier situación, debemos descubrir qué está ocurriendo.
+Antes de resolver una situación, descubrir qué está ocurriendo y qué información importa.
+
+### Comprender
+
+Comprender es más importante que aplicar una fórmula sin sentido.
+
+Antes de calcular, entender qué se pregunta y cómo se relacionan los datos.
+
+### Resolver
+
+Resolver no significa únicamente obtener un resultado correcto.
+
+También significa:
+
+- elegir una estrategia;
+- intentarlo;
+- comprobar;
+- revisar;
+- aprender del proceso.
 
 ---
 
-## Comprender
+## 💛 4. Antes que la mecánica, está la persona
 
-Comprender siempre será más importante que memorizar.
+Aventuras Matemáticas nació pensando en Gloria y debe seguir aprendiendo del uso real.
 
-Antes de calcular.
+Eso no significa ignorar el currículo escolar.
 
-Antes de aplicar una fórmula.
+El contenido curricular pertenece a sus fuentes académicas propietarias; Aventuras Matemáticas aporta una **forma de vivir y practicar** las matemáticas cuando esa experiencia resulte adecuada.
 
-Antes de responder.
+El currículo puede indicar **qué** aprender.
 
-Debemos comprender.
-
----
-
-## Resolver
-
-Resolver no significa únicamente obtener el resultado correcto.
-
-Resolver significa pensar.
-
-Elegir una estrategia.
-
-Intentarlo.
-
-Comprobar.
-
-Aprender.
+La aventura ayuda a decidir **cómo** comprenderlo y practicarlo de forma significativa.
 
 ---
 
-# 4. Antes que las matemáticas, está Gloria
+## 🧠 5. Aprender a pensar
 
-Cada actividad será diseñada pensando en Gloria.
-
-Nunca en un libro.
-
-Nunca en un currículo.
-
-Nunca en una colección de ejercicios.
-
-Las matemáticas serán el medio.
-
-Nunca el objetivo final.
-
----
-
-# 5. Aprender a pensar
-
-Aventuras Matemáticas enseñará mucho más que operaciones.
-
-Desarrollará habilidades como:
+Aventuras Matemáticas quiere desarrollar habilidades como:
 
 - observar;
 - comparar;
@@ -129,232 +128,145 @@ Desarrollará habilidades como:
 - decidir;
 - comprobar;
 - razonar;
-- explicar.
+- explicar;
+- buscar otra estrategia.
 
-Pensar será siempre más importante que calcular rápidamente.
+La rapidez no es el objetivo principal.
+
+Pensar con sentido sí lo es.
 
 ---
 
-# 6. Detectives de Problemas
+## 🧩 6. Detectives de Problemas
 
-La comprensión será el punto de partida.
+Detectives nació como el primer gran mundo dedicado a comprender los problemas antes de resolverlos.
 
-Muchos niños saben sumar y restar.
-
-Lo difícil es descubrir qué operación necesitan utilizar.
-
-Por ello, el primer gran mundo de Aventuras Matemáticas estará dedicado a comprender los problemas antes de resolverlos.
-
-Aprenderemos a identificar:
+Su intención es aprender a identificar:
 
 - qué ocurre;
 - qué información tenemos;
 - qué nos preguntan;
-- qué estrategia puede ayudarnos.
+- qué estrategia puede ayudar;
+- y solo después, qué operación o acción corresponde.
 
-Solo después aparecerán las operaciones.
-
----
-
-# 7. Matemáticas para la vida
-
-Las actividades estarán inspiradas en situaciones cotidianas.
-
-Ir a una tienda.
-
-Preparar una mochila.
-
-Organizar un viaje.
-
-Leer un calendario.
-
-Planificar una semana.
-
-Medir ingredientes.
-
-Calcular un cambio.
-
-Interpretar un plano.
-
-Comparar precios.
-
-Las matemáticas saldrán del cuaderno para entrar en la vida.
+El estado funcional de Detectives y de cualquier otro mundo se documenta en `STD-AVENTURAS_MATEMATICAS.md` y se verifica en el producto real.
 
 ---
 
-# 8. Aprender sin miedo
+## 🌍 7. Matemáticas para la vida
 
-La Academia nunca utilizará el error como castigo.
+Las experiencias pueden inspirarse en situaciones como:
 
-Equivocarse significa aprender.
+- una tienda;
+- una mochila;
+- un viaje;
+- un calendario;
+- una semana;
+- ingredientes y recetas;
+- cambio y precios;
+- planos;
+- distancias;
+- patrones;
+- decisiones.
 
-Los mensajes motivarán siempre a continuar.
-
-Nunca compararemos a Gloria con otros niños.
-
-Solo compararemos el camino recorrido por Gloria con el de la Gloria de ayer.
-
----
-
-# 9. Una aventura personalizada
-
-Cada nueva observación realizada por:
-
-- Gloria;
-- su familia;
-- el colegio;
-- la logopeda;
-- la PT;
-- la psicóloga;
-
-podrá convertirse en nuevas actividades.
-
-La Academia evolucionará junto con Gloria.
+El contexto debe ayudar a pensar; no ser decoración alrededor de un ejercicio idéntico.
 
 ---
 
-# 10. Los grandes mundos
+## 🌎 8. Mundos imaginados
 
-Aventuras Matemáticas estará formada por diferentes mundos.
+La visión original imaginó mundos como:
 
-Cada uno desarrollará una habilidad distinta.
+- 🧩 Detectives de Problemas;
+- 💶 Mi Tienda;
+- 🔢 Reino de los Números;
+- ⚡ Cálculo a mi ritmo;
+- 📐 Isla de la Geometría;
+- 🧠 Laboratorio de Lógica;
+- 🕒 Matemáticas de cada día.
 
-## 🧩 Detectives de Problemas
+Estos nombres expresan posibilidades de experiencia.
 
-Comprender antes de calcular.
+> **Un mundo conceptual no se convierte en compromiso ni capacidad operativa por aparecer en este manifiesto.**
 
----
-
-## 💶 Mi Tienda
-
-Dinero.
-
-Compras.
-
-Cambio.
-
-Decisiones.
+Cada nuevo mundo debe nacer de una necesidad real y superar el contrato/validación vigente antes de considerarse disponible.
 
 ---
 
-## 🔢 Reino de los Números
+## 🌱 9. Aprender sin miedo
 
-Comprender el significado de los números.
+El error forma parte del aprendizaje.
 
----
+La Academia no debe utilizarlo como castigo ni como etiqueta.
 
-## ⚡ Cálculo a mi ritmo
+Preferimos:
 
-Operaciones básicas.
+> “Probemos otro camino.”
 
-Siempre priorizando la comprensión.
+> “Vuelve a mirar qué te están preguntando.”
 
----
+> “Encontraste una pista importante.”
 
-## 📐 Isla de la Geometría
+No compararemos al alumno con otros alumnos.
 
-Observar.
-
-Construir.
-
-Descubrir formas.
+El progreso personal se interpreta desde su propia trayectoria y evidencia real.
 
 ---
 
-## 🧠 Laboratorio de Lógica
+## 🎉 10. Celebrar con sentido
 
-Series.
+Un avance puede ser:
 
-Patrones.
+- una nueva estrategia;
+- una buena explicación;
+- comprender finalmente una pregunta;
+- volver a intentarlo;
+- utilizar una ayuda y continuar;
+- resolver y comprobar.
 
-Clasificaciones.
+Las celebraciones deben ser sencillas, específicas y proporcionadas.
 
-Razonamiento.
-
----
-
-## 🕒 Matemáticas de cada día
-
-Tiempo.
-
-Medidas.
-
-Distancias.
-
-Viajes.
-
-Recetas.
-
-Calendarios.
+El sistema de Motivación y Reconocimiento vigente gobierna Reconocimientos y Guacamayas; Aventuras Matemáticas no necesita crear una economía paralela de premios.
 
 ---
 
-# 11. Celebrar cada pequeño avance
+## 🌿 11. Una aventura que puede crecer
 
-Cada logro será importante.
+Aventuras Matemáticas puede evolucionar con:
 
-No importa su tamaño.
+- nuevos cursos;
+- nuevas necesidades;
+- nuevas observaciones;
+- nuevos contextos de vida;
+- nuevas formas de comprender.
 
-Una nueva estrategia.
+Crecer no significa completar un catálogo imaginado.
 
-Una buena explicación.
-
-Un problema comprendido.
-
-Un cálculo correcto.
-
-Todo merece ser celebrado.
-
-Las celebraciones serán sencillas.
-
-Bonitas.
-
-Motivadoras.
-
-Nunca exageradas.
+Significa incorporar la siguiente experiencia cuando aporte valor real.
 
 ---
 
-# 12. Una aventura que crecerá con Gloria
+## 💫 12. Compromiso
 
-Aventuras Matemáticas nunca estará terminada.
+Aventuras Matemáticas no pretende enseñar únicamente operaciones.
 
-Cada nuevo curso.
+Pretende ayudar a desarrollar una forma de pensar que pueda acompañar al alumno dentro y fuera del colegio.
 
-Cada nueva experiencia.
-
-Cada nueva necesidad.
-
-Permitirá crear nuevas aventuras.
-
-Nuevos mundos.
-
-Nuevos retos.
-
-Nuevas historias.
+Porque comprender, pensar, resolver, comprobar y confiar en la propia capacidad son habilidades que van mucho más allá de una ficha de ejercicios.
 
 ---
 
-# 13. Compromiso
-
-Aventuras Matemáticas no pretende enseñar únicamente matemáticas.
-
-Pretende ayudar a Gloria a desarrollar una forma de pensar que la acompañará durante toda su vida.
-
-Porque comprender.
-
-Pensar.
-
-Resolver.
-
-Y confiar en uno mismo.
-
-Son habilidades que van mucho más allá del colegio.
+> **🌈 Aventuras Matemáticas**  
+> **Descubrir · Comprender · Resolver.**  
+> Cada problema puede ser una nueva oportunidad para descubrir de lo que eres capaz.
 
 ---
 
-> **🌈 Aventuras Matemáticas**
->
-> **Descubrir. Comprender. Resolver.**
->
-> Cada problema es una nueva oportunidad para descubrir de lo que eres capaz.
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | ✅ Manifiesto activo |
+| **Versión activa** | 1.1 |
+| **Gobierna implementación** | No |
+| **Fuente funcional vigente** | `STD-AVENTURAS_MATEMATICAS.md` + producto real |
