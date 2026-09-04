@@ -1,3 +1,22 @@
+# 🗃️ Cierre, Reflexión y Evidencias de las Misiones — archivo histórico
+## Academia Gloria Valentina
+
+| Campo | Valor |
+|---|---|
+| **Ruta histórica** | `docs/history/STD-CIERRE_Y_REFLEXION_DE_MISIONES.md` |
+| **Código histórico** | STD-012 |
+| **Versión original** | 1.0 |
+| **Estado** | Histórico |
+| **Fecha de archivo** | 04/09/2026 |
+| **Motivo** | Propuesta funcional de julio/agosto que no llegó a consolidarse como contrato activo y quedó superada por el modelo real de Misiones, evidencias, revisión familiar, Análisis Educativo y Reconocimientos. |
+| **Fuentes vigentes sucesoras** | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`, `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md`, `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md`, `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` y `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` según el aspecto consultado. |
+
+> **Nota histórica:** el contenido original se conserva a continuación como fotografía de una propuesta de diseño. No constituye una fuente normativa vigente y no debe utilizarse para inferir que existen `ejecuciones`, un formulario de cierre independiente, un Árbol de Mi Camino, un Panel de Evolución o una API `Academia.tareas.ejecuciones` tal como aquí se propusieron.
+
+---
+
+# CONTENIDO ORIGINAL PRESERVADO
+
 # STD-012_CIERRE_Y_REFLEXION_DE_MISIONES_v1.0
 
 # Academia Gloria Valentina

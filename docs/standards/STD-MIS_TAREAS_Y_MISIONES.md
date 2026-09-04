@@ -26,7 +26,7 @@
 | `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Gobierna/complementa:** seguimiento basado en evidencia y motivación no punitiva. |
 | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Diseña:** Reconocimientos, Guacamayas y demás mecanismos de Motivación. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** roles, relaciones, Persona Activa y niveles de acceso. |
-| `docs/standards/STD-CIERRE_Y_REFLEXION_DE_MISIONES.md` | **Separado:** propuesta histórica de cierre/reflexión pendiente de sincronización; no redefine el contrato vigente de finalización de este estándar. |
+| `docs/history/STD-CIERRE_Y_REFLEXION_DE_MISIONES.md` | **Histórico:** conserva la propuesta STD-012 original como contexto; no constituye fuente normativa vigente ni redefine finalización, evidencia o revisión. |
 | `compartido/api/academia.js` | **Implementa:** API compartida actual del dominio de Tareas/Misiones. |
 | `mi-universo/mis-tareas/` | **Implementa:** Gestión familiar/administrativa. |
 | `mi-universo/mi-camino/` | **Implementa:** presentación y ejecución para el alumno. |
