@@ -1,597 +1,492 @@
-# STD-007 – Aventuras Matemáticas
+# 🧮 Aventuras Matemáticas
+## 🌈 Academia Gloria Valentina
 
-## Documento de Estándar Funcional
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-AVENTURAS_MATEMATICAS.md` |
+| **Código** | STD-007 |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Aventuras Matemáticas |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Principios funcionales y de experiencia del espacio Aventuras Matemáticas, sus mundos y su integración con la arquitectura actual de la Academia |
 
-**Código:** STD-007
+## 🔗 Documentos relacionados
 
-**Nombre:** Aventuras Matemáticas
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** propósito humano, dignidad, autonomía y acompañamiento. |
+| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` | **Gobierna:** comprensión, error, motivación y aprendizaje significativo. |
+| `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS.md` | **Fundamenta:** visión original y lema `Descubrir. Comprender. Resolver.` |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** posición de Aventuras Matemáticas dentro de Mi Universo y relación con Persona Activa. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** Temas académicos curriculares, incluidos los de Matemáticas de 6.º. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** Misiones, evidencia, finalización y revisión familiar. |
+| `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Gobierna:** seguimiento, constancia, motivación y límites de gamificación. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Gobierna:** Reconocimientos, Guacamayas y automatizaciones motivacionales. |
+| `docs/standards/STD-PANEL_DE_USUARIO.md` | **Gobierna:** Panel de Usuario compartido y Persona Activa. |
+| `mi-universo/aventuras-matematicas/` | **Implementa:** portal actual de Aventuras Matemáticas. |
+| `mi-universo/aventuras-matematicas/detectives/` | **Implementa:** primer mundo operativo, Detectives de Problemas. |
 
-**Versión:** 1.0
+## 🕘 Historial de versiones
 
-**Estado:** Aprobado
-
-**Fecha:** Julio 2026
-
----
-
-# 1. Objetivo
-
-Aventuras Matemáticas constituye el entorno de aprendizaje matemático de la Academia Gloria Valentina.
-
-Su propósito no consiste únicamente en enseñar contenidos curriculares.
-
-Su objetivo principal es desarrollar el razonamiento, la autonomía y la confianza necesarios para resolver situaciones de la vida cotidiana.
-
----
-
-# 2. Filosofía
-
-Lema oficial:
-
-> 🌈 Aventuras Matemáticas
-
-> Descubrir. Comprender. Resolver.
-
-Todas las actividades seguirán los principios definidos en:
-
-01_PRINCIPIOS_PEDAGOGICOS_v1.0.md
-
-05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS_v1.0.md
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con el producto real. Mantiene la visión matemática y los mundos conceptuales, declara Detectives como único mundo actualmente operativo, separa mundos futuros de implementación actual, elimina el árbol Firebase y el roadmap de versiones como contratos obligatorios, sustituye gamificación genérica por el sistema vigente de Motivación/Reconocimiento, incorpora Persona Activa, Misiones/evidencia, accesibilidad, Quality Gate y referencias canónicas actuales. |
+| 1.0 | Julio 2026 | Equipo del proyecto | Primera versión aprobada. Definió propósito, mundos, filosofía, gamificación inicial, propuesta de persistencia y roadmap original. |
 
 ---
 
-# 3. Objetivos pedagógicos
+## 🎯 1. Propósito
 
-El módulo desarrollará principalmente:
+Aventuras Matemáticas es el espacio de la Academia dedicado a aprender a **pensar con matemáticas** mediante situaciones comprensibles, útiles y conectadas con la vida.
 
-• Comprensión.
+Su propósito no es acumular ejercicios ni acelerar cálculos.
 
-• Razonamiento.
+Busca desarrollar progresivamente:
 
-• Lógica.
+- comprensión de situaciones;
+- razonamiento;
+- lógica;
+- selección de estrategias;
+- resolución de problemas;
+- capacidad de comprobar;
+- autonomía;
+- confianza para intentarlo;
+- y uso de las matemáticas en contextos cotidianos.
 
-• Resolución de problemas.
+Lema preservado:
 
-• Pensamiento matemático.
-
-• Organización.
-
-• Autonomía.
-
-• Confianza.
-
-Las operaciones serán un medio.
-
-Nunca el objetivo principal.
+> **Descubrir. Comprender. Resolver.**
 
 ---
 
-# 4. Estructura general
+## 📐 2. Alcance y fronteras
 
-```
-Aventuras Matemáticas
+Este estándar gobierna:
 
-│
+- la intención educativa de Aventuras Matemáticas;
+- la experiencia general de sus mundos;
+- el papel de Detectives de Problemas;
+- principios de interacción, feedback y accesibilidad;
+- relación con Misiones, evidencia y seguimiento;
+- y criterios para incorporar futuros mundos.
 
-├── Inicio
+No gobierna:
 
-├── Detectives de Problemas
+- el currículo completo de Matemáticas;
+- los Temas académicos de `Mis Cursos`;
+- el contrato físico completo de sesiones/evidencias;
+- las reglas detalladas de Reconocimientos;
+- la persistencia completa de cada mundo;
+- ni un roadmap obligatorio de versiones.
 
-├── Mi Tienda
-
-├── Reino de los Números
-
-├── Cálculo a mi ritmo
-
-├── Isla de la Geometría
-
-├── Laboratorio de Lógica
-
-├── Matemáticas de cada día
-
-├── Grandes Aventuras
-
-└── Mi Progreso
-```
+Los Temas curriculares de 6.º —por ejemplo Fracciones, Decimales o Geometría escolar— pertenecen al estándar de **Contenidos Académicos y Material Escolar**, aunque puedan reutilizar una mecánica o experiencia nacida en Aventuras Matemáticas.
 
 ---
 
-# 5. Pantalla principal
+## 🧭 3. Principios no negociables
 
-La pantalla inicial seguirá el estándar visual del resto de la Academia.
-
-Deberá incluir:
-
-• Panel Inteligente de Usuario.
-
-• Bienvenida personalizada.
-
-• Mensaje motivador.
-
-• Tarjeta principal.
-
-• Acceso a cada mundo.
-
-• Barra de progreso.
-
-• Logros recientes.
-
-• Botón de continuar aventura.
+1. **Comprender antes que calcular.**
+2. **Las operaciones son herramientas, no el objetivo único.**
+3. **El error aporta información y nunca se utiliza como castigo.**
+4. **La rapidez no se premia por defecto.**
+5. **El alumno debe poder pensar, probar, revisar y volver a intentar.**
+6. **Las ayudas deben facilitar el siguiente paso sin resolver innecesariamente por el alumno.**
+7. **Las matemáticas deben conectarse, cuando aporte valor, con decisiones y situaciones reales.**
+8. **No existen rankings ni comparaciones entre alumnos.**
+9. **El progreso se interpreta principalmente frente a la propia trayectoria y mediante evidencia real.**
+10. **No se inventan estadísticas, niveles o logros que el sistema no pueda demostrar.**
+11. **Persona Activa determina sobre quién opera la experiencia cuando existen datos personales.**
+12. **Un nuevo mundo se crea por necesidad real, no para completar un catálogo histórico.**
 
 ---
 
-# 6. Orden recomendado de los mundos
+## 🧠 4. Modelo de aprendizaje
 
-## Mundo 1
+El patrón general es:
 
-🧩 Detectives de Problemas
+```text
+DESCUBRIR
+¿Qué está ocurriendo?
+¿Qué información tengo?
 
-Comprender antes de resolver.
+        ↓
 
----
+COMPRENDER
+¿Qué me preguntan?
+¿Qué relaciones existen?
 
-## Mundo 2
+        ↓
 
-💶 Mi Tienda
+PENSAR UNA ESTRATEGIA
+¿Qué podría ayudarme?
 
-Compras.
+        ↓
 
-Dinero.
+RESOLVER
+Aplicar, probar, calcular o construir.
 
-Cambio.
+        ↓
 
-Decisiones.
-
----
-
-## Mundo 3
-
-🔢 Reino de los Números
-
-Comprensión numérica.
-
----
-
-## Mundo 4
-
-⚡ Cálculo a mi ritmo
-
-Sumas.
-
-Restas.
-
-Multiplicaciones.
-
-Divisiones.
-
----
-
-## Mundo 5
-
-📐 Isla de la Geometría
-
-Figuras.
-
-Espacio.
-
-Medidas.
-
----
-
-## Mundo 6
-
-🧠 Laboratorio de Lógica
-
-Series.
-
-Patrones.
-
-Clasificaciones.
-
-Inferencias.
-
----
-
-## Mundo 7
-
-🕒 Matemáticas de cada día
-
-Tiempo.
-
-Calendarios.
-
-Viajes.
-
-Recetas.
-
-Temperaturas.
-
-Distancias.
-
----
-
-## Mundo 8
-
-🏆 Grandes Aventuras
-
-Retos que combinan todos los conocimientos anteriores.
-
----
-
-# 7. Tipos de actividades
-
-Cada mundo podrá utilizar diferentes tipos.
-
-• Arrastrar.
-
-• Seleccionar.
-
-• Ordenar.
-
-• Completar.
-
-• Relacionar.
-
-• Escuchar.
-
-• Leer.
-
-• Resolver.
-
-• Construir.
-
-• Simular.
-
----
-
-# 8. Detectives de Problemas
-
-Será el primer gran módulo.
-
-Objetivo:
-
-Aprender a identificar:
-
-• Qué ocurre.
-
-• Qué sabemos.
-
-• Qué nos preguntan.
-
-• Qué estrategia utilizar.
-
-Solo después aparecerán las operaciones.
-
----
-
-# 9. Mi Tienda
-
-Uno de los módulos prioritarios.
-
-Trabajará:
-
-• Monedas.
-
-• Billetes.
-
-• Compras.
-
-• Cambio.
-
-• Comparación de precios.
-
-• Presupuesto.
-
-• Ahorro.
-
-• Decisiones.
-
-Inspirado en situaciones reales.
-
----
-
-# 10. Sistema de progreso
-
-Cada mundo tendrá:
-
-• Exploración.
-
-• Práctica.
-
-• Dominio.
-
-• Grandes retos.
-
-Nunca existirá el concepto de "suspenso".
-
-El progreso siempre será positivo.
-
----
-
-# 11. Gamificación
-
-Se utilizarán:
-
-⭐ Estrellas
-
-🌈 Arcoíris
-
-✨ Celebraciones
-
-🎉 Logros
-
-🏆 Insignias
-
-Nunca rankings.
-
-Nunca comparaciones.
-
----
-
-# 12. Mensajes
-
-Todos los mensajes serán positivos.
-
-Ejemplos:
-
-"Muy buena idea."
-
-"Has encontrado una pista."
-
-"Cada intento cuenta."
-
-"Probemos otro camino."
-
-"Nunca dejamos de aprender."
-
----
-
-# 13. Panel Inteligente de Usuario
-
-Seguirá exactamente el estándar definido para:
-
-panel-usuario.js
-
-panel-usuario.css
-
-Mostrará:
-
-Nombre.
-
-Avatar.
-
-Saludo.
-
-Acceso al perfil.
-
-Cerrar sesión.
-
----
-
-# 14. Firebase
-
-Cada usuario almacenará:
-
-```
-usuarios
-
-└── uid
-
-        aventurasMatematicas
-
-                progreso
-
-                mundos
-
-                logros
-
-                actividades
-
-                estadisticas
+COMPROBAR
+¿Tiene sentido el resultado?
+¿Qué aprendí del proceso?
 ```
 
----
-
-# 15. Estadísticas
-
-Se almacenarán:
-
-Tiempo total.
-
-Actividades realizadas.
-
-Retos completados.
-
-Mundos desbloqueados.
-
-Última actividad.
-
-No se almacenarán puntuaciones para comparar usuarios.
+No toda actividad necesita mostrar literalmente estas cinco etapas, pero debe conservar la intención cuando corresponda.
 
 ---
 
-# 16. Diseño visual
+## 🌍 5. Mundos de Aventuras Matemáticas
 
-Seguirá la línea gráfica de:
+La visión original conserva los siguientes mundos conceptuales:
 
-Biblioteca.
+1. 🧩 Detectives de Problemas
+2. 💶 Mi Tienda
+3. 🔢 Reino de los Números
+4. ⚡ Cálculo a mi ritmo
+5. 📐 Isla de la Geometría
+6. 🧠 Laboratorio de Lógica
+7. 🕒 Matemáticas de cada día
+8. 🏆 Grandes Aventuras
 
-Lectura.
+### 5.1 Interpretación correcta
 
-Escritura.
+La existencia de estos nombres en la visión o en el portal **no significa que todos estén implementados**.
 
-Predominarán:
+Estado validado al 04/09/2026:
 
-Azules.
+| Mundo | Estado |
+|---|---|
+| 🧩 Detectives de Problemas | ✅ Operativo |
+| 💶 Mi Tienda | ⏳ Próximamente / conceptual |
+| 🔢 Reino de los Números | ⏳ Próximamente / conceptual |
+| ⚡ Cálculo a mi ritmo | ⏳ Próximamente / conceptual |
+| 📐 Isla de la Geometría | ⏳ Próximamente / conceptual |
+| 🧠 Laboratorio de Lógica | ⏳ Próximamente / conceptual |
+| 🕒 Matemáticas de cada día | ⏳ Próximamente / conceptual |
+| 🏆 Grandes Aventuras | ⏳ Próximamente / conceptual |
 
-Morados.
+El portal puede mostrar mundos futuros como orientación visual siempre que su estado sea inequívoco y no simule una capacidad disponible.
 
-Amarillos.
+### 5.2 Activación de un nuevo mundo
 
-Verdes.
+Un nuevo mundo solo pasa a operativo cuando existe:
 
-Fondos claros.
+- necesidad educativa real;
+- experiencia suficientemente definida;
+- implementación navegable;
+- persistencia/evidencia solo si aporta valor;
+- integración con Persona Activa cuando corresponde;
+- validación funcional;
+- y documentación propietaria actualizada si cambia el contrato transversal.
 
-Ilustraciones suaves.
-
-Mucho espacio en blanco.
-
----
-
-# 17. Sonido
-
-Opcional.
-
-Solo cuando aporte valor.
-
-Nunca obligatorio.
-
----
-
-# 18. Accesibilidad
-
-Botones grandes.
-
-Texto claro.
-
-Alto contraste.
-
-Lectura por voz cuando sea necesario.
-
-Instrucciones sencillas.
+No se activa un mundo únicamente porque aparecía en el roadmap de v1.0.
 
 ---
 
-# 19. Integración
+## 🧩 6. Detectives de Problemas
 
-Compatible con:
+Detectives de Problemas es el primer mundo operativo y la referencia funcional actual de Aventuras Matemáticas.
 
-Perfil Inteligente.
+Su propósito es ayudar a separar:
 
-Memoria Inteligente.
+```text
+comprender la historia
+↓
+identificar los datos útiles
+↓
+entender qué se pregunta
+↓
+elegir una estrategia
+↓
+resolver
+```
 
-Biblioteca.
+### 6.1 Experiencia
 
-Rincón de Lectura.
+Una aventura puede incluir:
 
-Rincón de Escritura.
+- historia o situación contextual;
+- preguntas de comprensión;
+- descubrimiento de información relevante;
+- elección o construcción de estrategia;
+- cálculo/resolución;
+- pistas;
+- reintentos;
+- celebración proporcional al cierre.
 
-Calendario.
+### 6.2 Evidencia y Misiones
 
----
+Cuando Detectives se utiliza desde una Misión y existe evidencia verificable, debe reutilizar los contratos vigentes de Misiones/sesiones/evidencia.
 
-# 20. Futuras ampliaciones
+La Misión referencia el trabajo real; no copia de forma completa toda la experiencia dentro del registro de la Misión.
 
-Podrán incorporarse:
+Cuando se consulta trabajo histórico, la vista es de **solo lectura**.
 
-Fracciones.
+### 6.3 Motivación derivada
 
-Decimales.
+Detectives puede producir señales observables útiles para acompañamiento, por ejemplo uso de pistas o intentos adicionales.
 
-Porcentajes.
+Cualquier Reconocimiento automático de Lía debe cumplir el principio de **alta confianza** definido por el Sistema de Motivación y Reconocimiento.
 
-Estadística.
-
-Probabilidad.
-
-Álgebra.
-
-Programación visual.
-
-Pensamiento computacional.
-
-Economía doméstica.
-
-Planificación financiera.
-
----
-
-# 21. Criterios de aceptación
-
-El módulo se considerará terminado cuando:
-
-✓ Mantenga la identidad visual de la Academia.
-
-✓ Todas las actividades sean motivadoras.
-
-✓ El aprendizaje esté conectado con la vida cotidiana.
-
-✓ No existan mensajes negativos.
-
-✓ El progreso sea personalizado.
-
-✓ Toda la información se almacene correctamente en Firebase.
-
-✓ La experiencia sea completamente responsive.
-
-✓ El módulo pueda crecer sin modificar la arquitectura.
+No se convierte una señal puntual en una etiqueta sobre capacidad, autonomía, emoción o personalidad.
 
 ---
 
-# 22. Roadmap
+## 💶 7. Matemáticas para la vida
 
-Versión 1.0
+Los futuros mundos y actividades pueden inspirarse en contextos como:
 
-• Arquitectura.
+- compras y cambio;
+- comparación de precios;
+- presupuesto;
+- tiempo y horarios;
+- calendarios;
+- viajes y distancias;
+- recetas y medidas;
+- organización;
+- planos y espacio;
+- patrones y decisiones.
 
-• Pantalla principal.
-
-• Detectives de Problemas.
-
----
-
-Versión 1.1
-
-• Mi Tienda.
-
----
-
-Versión 1.2
-
-• Reino de los Números.
+El contexto cotidiano debe ayudar a comprender, no convertirse en decoración narrativa sin función.
 
 ---
 
-Versión 1.3
+## 🎮 8. Motivación y celebración
 
-• Cálculo a mi ritmo.
+La versión 1.0 proponía una gamificación local basada en estrellas, arcoíris, logros e insignias.
 
----
+La regla vigente es distinta:
 
-Versión 1.4
+> **Aventuras Matemáticas no mantiene un sistema paralelo de puntos, insignias o premios.**
 
-• Geometría.
+Puede utilizar:
 
----
+- mensajes positivos y específicos;
+- microcelebraciones;
+- progresión visual;
+- Reconocimientos;
+- Guacamayas cuando el sistema propietario las conceda;
+- hitos de constancia o progreso personal cuando estén sustentados.
 
-Versión 1.5
+Nunca utilizar como patrón:
 
-• Lógica.
-
----
-
-Versión 1.6
-
-• Matemáticas de cada día.
-
----
-
-Versión 2.0
-
-• Grandes Aventuras.
+- rankings;
+- comparación pública;
+- pérdida de recompensas;
+- moneda/puntos como pago por aprender;
+- premio por clic o login;
+- presión para completar un catálogo.
 
 ---
 
-# 23. Observación final
+## 👤 9. Persona Activa y Panel de Usuario
 
-Aventuras Matemáticas no pretende enseñar únicamente contenidos escolares.
+Aventuras Matemáticas reutiliza el **Panel de Usuario compartido** y el contexto global de **Persona Activa**.
 
-Pretende ayudar a Gloria a descubrir que comprender un problema, pensar con calma y encontrar una solución son habilidades que la acompañarán durante toda su vida.
+Reglas:
+
+- no crear un panel privado del módulo;
+- no asumir que `auth.currentUser.uid` es siempre la Persona sobre la que se consulta información;
+- las operaciones propias del alumno se rigen por el contrato del módulo;
+- las capacidades de gestión/revisión respetan el modelo transversal de accesos;
+- la navegación debe conservar Persona Activa cuando corresponda.
 
 ---
 
-> 🌈 Aventuras Matemáticas
+## 📊 10. Progreso y datos
 
-> Descubrir. Comprender. Resolver.
+El portal puede presentar progreso únicamente cuando el significado del dato sea claro y verificable.
 
-> Cada aventura empieza comprendiendo el camino.
+No existe como contrato obligatorio la estructura propuesta en v1.0:
+
+```text
+usuarios/{uid}/aventurasMatematicas/progreso/mundos/logros/actividades/estadisticas
+```
+
+Cada mundo debe reutilizar los contratos compartidos existentes antes de introducir persistencia propia.
+
+Los datos pueden incluir, cuando tengan utilidad y sean fiables:
+
+- sesiones realizadas;
+- nivel o caso trabajado;
+- respuestas/intentos;
+- pistas utilizadas;
+- finalización;
+- relación con Misión;
+- evidencia necesaria para histórico/análisis;
+- señales comparables para progreso personal.
+
+No guardar o mostrar por defecto:
+
+- tiempo de pantalla como sustituto de aprendizaje;
+- puntuaciones comparativas entre alumnos;
+- métricas que no puedan medirse con fiabilidad;
+- inferencias emocionales o clínicas;
+- indicadores visuales que aparenten progreso real sin una fuente válida.
+
+---
+
+## 🗣️ 11. Lenguaje y feedback
+
+El feedback debe ser:
+
+- breve;
+- específico;
+- orientado al proceso;
+- no punitivo;
+- compatible con carga cognitiva reducida.
+
+Ejemplos válidos:
+
+> “Encontraste una pista importante.”
+
+> “Vuelve a leer qué te están preguntando.”
+
+> “Probemos otro camino.”
+
+> “Usaste una ayuda y seguiste pensando.”
+
+Evitar:
+
+> “Eres mala en problemas.”
+
+> “Deberías haberlo sabido.”
+
+> “Los demás lo hacen más rápido.”
+
+---
+
+## ♿ 12. Accesibilidad y TEL
+
+Cuando aplique:
+
+- instrucciones directas;
+- una acción principal clara;
+- botones/objetivos táctiles suficientes;
+- texto legible;
+- apoyo visual con función;
+- posibilidad de repetir;
+- ayudas progresivas;
+- tiempo suficiente para pensar;
+- diseño responsive;
+- reducción de movimiento cuando el sistema lo solicita;
+- audio/voz solo cuando aporte valor.
+
+Adaptar la experiencia no significa reducir automáticamente el nivel matemático.
+
+---
+
+## 🎨 13. Identidad visual
+
+Aventuras Matemáticas debe reconocerse como parte de la Academia.
+
+Puede conservar personalidad propia mediante:
+
+- colores;
+- narrativa;
+- iconografía;
+- escenas;
+- ilustración;
+- mundos temáticos.
+
+Pero debe reutilizar, cuando corresponda:
+
+- navegación global;
+- Panel de Usuario;
+- favicon oficial;
+- patrones compartidos;
+- lenguaje visual del producto.
+
+La identidad nunca debe dificultar comprender la actividad.
+
+---
+
+## 🔄 14. Evolución
+
+La evolución no se organiza mediante el roadmap rígido `1.0 → 1.1 → … → 2.0` definido en la primera versión.
+
+La prioridad se decide por:
+
+```text
+necesidad real
++ valor educativo
++ evidencia de uso
++ reutilización posible
++ coste/riesgo proporcional
+```
+
+Un futuro mundo puede incluso no ser necesario si el mismo objetivo queda mejor resuelto mediante un Tema Académico, Detectives u otro Motor existente.
+
+---
+
+## ✅ 15. Quality Gate
+
+Antes de incorporar o modificar una experiencia de Aventuras Matemáticas:
+
+### Propósito
+
+- [ ] Resuelve una necesidad matemática real.
+- [ ] La mecánica favorece comprensión o razonamiento.
+- [ ] No existe otro Motor/experiencia reutilizable suficiente.
+
+### Alumno
+
+- [ ] La instrucción es clara.
+- [ ] Existe tiempo para pensar.
+- [ ] El error no produce castigo.
+- [ ] Las ayudas son graduales.
+- [ ] No se premia rapidez sin motivo académico.
+
+### Datos
+
+- [ ] Solo se guardan datos con propósito.
+- [ ] La evidencia reutiliza contratos existentes cuando aplica.
+- [ ] No se inventan métricas.
+- [ ] Datos `🧪` no se interpretan como progreso real.
+
+### Integración
+
+- [ ] Respeta Persona Activa y permisos.
+- [ ] Reutiliza navegación y Panel compartidos.
+- [ ] Misiones/histórico respetan sus contratos cuando aplican.
+- [ ] No crea un sistema paralelo de Recompensas.
+
+### Experiencia
+
+- [ ] Funciona en móvil, tablet y escritorio.
+- [ ] El diseño mantiene jerarquía y legibilidad.
+- [ ] El estado de capacidades futuras se muestra con claridad.
+
+---
+
+## 📌 16. Decisiones adoptadas
+
+| ID | Decisión | Estado |
+|---|---|---|
+| MAT-001 | `Descubrir. Comprender. Resolver.` continúa siendo el lema funcional de Aventuras Matemáticas. | Aprobada |
+| MAT-002 | Comprender y razonar tienen prioridad sobre calcular rápidamente. | Aprobada |
+| MAT-003 | Detectives de Problemas es el único mundo operativo confirmado al 04/09/2026. | Aprobada / implementada |
+| MAT-004 | Los demás mundos se conservan como visión y no se declaran implementados por aparecer en el portal. | Aprobada |
+| MAT-005 | No existe un árbol Firebase obligatorio propio de Aventuras Matemáticas; se reutilizan contratos compartidos. | Aprobada |
+| MAT-006 | Motivación y Reconocimientos se gobiernan por el sistema transversal, sin gamificación paralela. | Aprobada |
+| MAT-007 | Temas curriculares de Matemáticas pertenecen al estándar académico aunque puedan reutilizar mecánicas de Aventuras. | Aprobada |
+| MAT-008 | El roadmap original de mundos deja de ser compromiso de versión. | Aprobada |
+
+---
+
+## ✅ DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | Activo |
+| **Versión** | 1.1 |
+| **Fecha** | 04/09/2026 |
+| **Principio central** | Comprender antes que calcular; pensar antes que responder. |
+| **Implementación actual** | Portal de Aventuras Matemáticas + Detectives de Problemas. |
+| **Mundos restantes** | Visión/evolución, no compromisos de versión. |
+
+> 🌈 **Cada aventura empieza comprendiendo el camino.**
