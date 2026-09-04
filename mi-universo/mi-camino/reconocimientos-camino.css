@@ -1,7 +1,9 @@
 .recompensas-a1 {
+  width: 100%;
+  max-width: 1320px;
   display: grid;
   gap: 16px;
-  margin-bottom: 18px;
+  margin: 0 auto 18px;
 }
 
 .recompensas-a1__ultimo,
@@ -103,6 +105,7 @@
 }
 
 .recompensas-a2__guacamayas {
+  overflow: hidden;
   padding: 20px 22px;
   border-color: #bbf7d0;
   background: linear-gradient(145deg, #f0fdf4, #fff 72%);
@@ -113,9 +116,35 @@
 }
 
 .recompensas-a2__guacamayas-cabecera {
+  position: relative;
   display: grid;
   gap: 3px;
+  margin-bottom: 0;
+  padding-right: 30px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.recompensas-a2__guacamayas-cabecera::-webkit-details-marker {
+  display: none;
+}
+
+.recompensas-a2__guacamayas-cabecera::after {
+  content: "▾";
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #166534;
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.recompensas-a2__guacamayas[open] > .recompensas-a2__guacamayas-cabecera {
   margin-bottom: 14px;
+}
+
+.recompensas-a2__guacamayas[open] > .recompensas-a2__guacamayas-cabecera::after {
+  content: "▴";
 }
 
 .recompensas-a2__titulo {
@@ -174,15 +203,31 @@
 }
 
 .recompensas-a1__historia > summary {
+  position: relative;
   cursor: pointer;
   list-style: none;
-  padding: 17px 20px;
+  padding: 17px 50px 17px 20px;
   color: #166534;
   font-weight: 900;
 }
 
 .recompensas-a1__historia > summary::-webkit-details-marker {
   display: none;
+}
+
+.recompensas-a1__historia > summary::after {
+  content: "▾";
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  color: #166534;
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.recompensas-a1__historia[open] > summary::after {
+  content: "▴";
 }
 
 .recompensas-a1__lista {

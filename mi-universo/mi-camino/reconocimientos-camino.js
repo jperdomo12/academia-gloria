@@ -508,7 +508,7 @@ function renderItemHistoria(item) {
   `;
 }
 
-function renderGuacamayas(items = []) {
+function renderGuacamayas(items = [], { abierta = false } = {}) {
   const guacamayas = items.filter(item => item.tipo === "guacamaya");
 
   if (!guacamayas.length) {
@@ -523,11 +523,11 @@ function renderGuacamayas(items = []) {
   }
 
   return `
-    <section class="recompensas-a2__guacamayas">
-      <div class="recompensas-a2__guacamayas-cabecera">
+    <details class="recompensas-a2__guacamayas" ${abierta ? "open" : ""}>
+      <summary class="recompensas-a2__guacamayas-cabecera">
         <span class="recompensas-a2__titulo">🦜 Mis Guacamayas</span>
         <small>Hitos especiales que ya forman parte de tu historia.</small>
-      </div>
+      </summary>
       <div class="recompensas-a2__guacamayas-lista">
         ${guacamayas.map(item => `
           <article class="recompensas-a2__guacamaya">
@@ -541,7 +541,7 @@ function renderGuacamayas(items = []) {
           </article>
         `).join("")}
       </div>
-    </section>
+    </details>
   `;
 }
 
@@ -551,6 +551,9 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
 
   const historiaAbierta = Boolean(
     host.querySelector(".recompensas-a1__historia")?.open
+  );
+  const guacamayasAbiertas = Boolean(
+    host.querySelector(".recompensas-a2__guacamayas")?.open
   );
 
   reconocimientosActuales = items.filter(reconocimientoVisible);
@@ -589,7 +592,7 @@ function render(items = [], { reiniciarPaginacion = false } = {}) {
       </div>
     </article>
 
-    ${renderGuacamayas(reconocimientosActuales)}
+    ${renderGuacamayas(reconocimientosActuales, { abierta: guacamayasAbiertas })}
 
     <details class="recompensas-a1__historia" ${historiaAbierta ? "open" : ""}>
       <summary>🌈 Ver mi historia de crecimiento</summary>
