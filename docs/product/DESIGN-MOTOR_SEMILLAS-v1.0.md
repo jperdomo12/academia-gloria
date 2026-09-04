@@ -1,129 +1,213 @@
-# DISEÑO TÉCNICO — MOTOR DE SEMILLAS
+# 🌱 Diseño · Motor de Semillas
+## 🌈 Academia Gloria Valentina
 
-**Versión:** 1.0  
-**Estado:** Piloto implementable  
-**Módulo:** `mi-universo/creciendo-por-dentro/`
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` |
+| **Versión** | 1.1 |
+| **Estado** | Activo |
+| **Fecha de origen** | Agosto 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Producto · Creciendo por Dentro |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Diseño de producto del Motor de Semillas implementado en `mi-universo/creciendo-por-dentro/` |
 
-## 1. Objetivo
+## 🔗 Documentos relacionados
 
-Implementar el primer Motor de Semillas reutilizando los patrones validados en Detectives y Mi Rincón de Lectura, sin construir todavía un motor universal.
+| Documento / fuente | Relación |
+|---|---|
+| `docs/specifications/SPEC-CRECIENDO_POR_DENTRO.md` | **Especifica:** comportamiento funcional y criterios verificables de Creciendo por Dentro. |
+| `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` | **Modela:** patrón transversal Motor → sesión → evidencia. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** integración con Misiones, evidencia, finalización y revisión. |
+| `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Gobierna:** seguimiento y motivación no punitiva. |
+| `mi-universo/creciendo-por-dentro/` | **Implementa:** Motor de Semillas vigente. |
+| `compartido/api/academia.js` | **Implementa:** persistencia y API compartida. |
 
-## 2. Decisiones
+## 🕘 Historial de versiones
 
-- Contenido en `semillas.json`.
-- Motor en `creciendo-por-dentro.js`.
-- Presentación en `index.html` y CSS propio.
-- Grabación y transcripción usando el patrón de Lectura.
-- Persistencia mediante `Academia.semillas`.
-- Evidencia mediante `Academia.evidencias.registrarParaMision`.
-- Una Misión mantiene un único módulo y tipo de evidencia.
-- `cantidadObjetivo` admite varias Semillas.
-- `filtros.semillasIds` limita opcionalmente las Semillas.
-- Si no hay IDs, el alumno elige libremente.
-- Una misma Semilla no cuenta dos veces para la misma Misión porque la evidencia usa `actividadId` y queda deduplicada.
-- DESC no se muestra al alumno en el piloto.
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el diseño con el producto real: el piloto ya está implementado; conserva la arquitectura de Semillas, sesión y evidencia, reconoce la integración vigente con Mi Camino/Misiones y separa claramente diseño, especificación y evolución futura. |
+| 1.0 | Agosto 2026 | Product Owner + AI Collaborator | Diseño inicial del piloto implementable del Motor de Semillas. |
 
-## 3. Flujo
+---
+
+## 🎯 1. Objetivo
+
+Definir el diseño de producto del primer **Motor de Semillas** de la Academia, reutilizando patrones ya validados sin introducir un motor universal prematuro.
+
+El Motor está actualmente materializado en:
 
 ```text
-Acceso libre o ?misionId=...
+mi-universo/creciendo-por-dentro/
+```
+
+Este documento conserva las decisiones de diseño. El comportamiento funcional verificable pertenece a `SPEC-CRECIENDO_POR_DENTRO.md` y el estado implementado se confirma contra el código vigente.
+
+---
+
+## 🧭 2. Principios de diseño
+
+1. **Una Semilla es una experiencia de crecimiento, no una evaluación clínica.**
+2. **La experiencia debe ser comprensible, guiada y no punitiva.**
+3. **Se reutilizan patrones compartidos de voz, sesión, evidencia, navegación y Persona Activa antes de crear infraestructura paralela.**
+4. **La sesión conserva el trabajo realizado; la evidencia referencia la sesión cuando una Misión necesita trazabilidad.**
+5. **Práctica libre y ejecución desde Misión son recorridos válidos y distintos.**
+6. **La complejidad administrativa no se expone al alumno.**
+7. **No se realizan diagnósticos ni análisis emocionales automáticos presentados como conclusiones profesionales.**
+
+---
+
+## 🧩 3. Componentes del Motor
+
+La implementación actual conserva la separación:
+
+```text
+semillas.json
+    ↓ contenido
+creciendo-por-dentro.js
+    ↓ experiencia y coordinación
+index.html + CSS
+    ↓ presentación
+Academia.semillas / API compartida
+    ↓ persistencia
+sesión guardada
+    ↓ cuando existe Misión
+Evidencia de aprendizaje
+```
+
+El catálogo de Semillas vive en `semillas.json` y la experiencia se ejecuta desde `creciendo-por-dentro.js`.
+
+---
+
+## 🌱 4. Flujo conceptual
+
+```text
+Acceso libre o desde una Misión
         ↓
-Cargar perfil, misión, sesiones y semillas.json
+Cargar contexto y catálogo
         ↓
-Catálogo libre o filtrado
+Seleccionar / recibir una Semilla válida
         ↓
-Bienvenida
-        ↓
-Situación
+Comprender la situación
         ↓
 Describir
         ↓
 Expresar
         ↓
-Solicitar
+Solicitar / construir respuesta
         ↓
-Consecuencia
-        ↓
-Construir frase
-        ↓
-Grabar / transcribir / repetir
+Practicar con voz cuando corresponde
         ↓
 Guardar sesión
         ↓
-Registrar evidencia
+Registrar evidencia si existe Misión válida
         ↓
-Actualizar progreso
-        ↓
-Historial y cierre
+Actualizar el recorrido correspondiente
 ```
 
-## 4. Persistencia
+La UI concreta puede evolucionar sin cambiar este flujo conceptual mientras preserve su intención educativa.
 
-Nueva subcolección:
+---
+
+## 💾 5. Sesión y persistencia
+
+La sesión de Semilla conserva el trabajo real realizado por la Persona Activa. Entre los datos que la implementación puede registrar se encuentran:
+
+- identificador de Semilla;
+- título / familia / tipo de situación;
+- nivel de apoyo;
+- respuestas construidas;
+- grabación y transcripción cuando existen;
+- intentos y duración cuando son observables;
+- observación familiar;
+- referencias de contexto necesarias.
+
+El contrato físico exacto pertenece al código y a las convenciones de datos vigentes; este diseño no congela un payload exhaustivo.
+
+---
+
+## 🔗 6. Evidencia y Misiones
+
+Cuando la experiencia se ejecuta dentro de una Misión compatible:
 
 ```text
-usuarios/{uid}/sesionesSemillas/{sesionId}
+Misión
+  ↓
+Semilla realizada
+  ↓
+sesión guardada
+  ↓
+evidencia referenciada
 ```
 
-Campos principales:
+La evidencia identifica la actividad y su sesión propietaria. No debe duplicar innecesariamente todo el contenido de la sesión.
 
-- `semillaId`
-- `titulo`
-- `familia`
-- `tipoSituacion`
-- `nivelApoyo`
-- `duracion`
-- `intentos`
-- `respuestaConstruida`
-- `audioData`
-- `mimeType`
-- `duracionAudio`
-- `transcripcion`
-- `respuestas`
-- `analisisEducativo`
-- `observacionFamilia`
-- `misionId`
+La finalización y el progreso de Misiones se rigen por `STD-MIS_TAREAS_Y_MISIONES.md` y su especificación propietaria.
 
-## 5. Evidencia
+---
 
-```text
-modulo: creciendo-por-dentro
-tipo: semilla_completada
-actividadId: semillaId
-sesionId: sesión guardada
-```
+## 👤 7. Persona Activa
 
-## 6. Ajuste compartido
+El Motor debe operar sobre la **Persona Activa** autorizada y conservar ese contexto durante navegación, persistencia, evidencia y retorno.
 
-`academia.js` incorpora:
+Usuario autenticado, Persona propia y Persona Activa no deben confundirse.
 
-- módulo válido `creciendo-por-dentro`;
-- API `Academia.semillas`;
-- filtro por arrays;
-- filtro especial por `actividadId`.
+---
 
-## 7. Alcance no incluido
+## ✅ 8. Estado actual
 
-- UI de creación de Misiones en Mis Tareas, porque esa carpeta no fue incluida en esta entrega.
-- Misiones heterogéneas.
-- servicio común extraído de grabación;
-- análisis emocional automático;
-- Jardín Personal completo;
-- recomendaciones automáticas por IA.
+La capacidad base está **implementada** y dispone, entre otros elementos, de:
 
-## 8. Validación del piloto
+- catálogo `semillas.json`;
+- Motor funcional en `creciendo-por-dentro.js`;
+- acceso libre;
+- ejecución contextual desde Misión;
+- guardado de sesiones;
+- integración con evidencia/progreso;
+- voz/transcripción donde corresponde;
+- navegación compartida y retorno contextual.
 
-El piloto deberá comprobar:
+La existencia de herramientas de piloto o compatibilidad no las convierte en el contrato permanente del producto.
 
-1. acceso libre;
-2. acceso con `misionId`;
-3. filtrado de Semillas;
-4. grabación;
-5. transcripción;
-6. repetición;
-7. guardado;
-8. evidencia;
-9. progreso;
-10. historial;
-11. comprensión de Gloria;
-12. motivación para regresar.
+---
+
+## 🚫 9. Fuera del contrato actual
+
+No forman parte obligatoria de este diseño:
+
+- un motor universal abstracto para todas las experiencias;
+- Misiones heterogéneas entre múltiples Motores;
+- diagnóstico o análisis emocional automático;
+- recomendaciones automáticas no revisadas;
+- un Jardín Personal completo por el mero hecho de existir Semillas;
+- nuevas capas técnicas sin una necesidad observada.
+
+Estas capacidades requieren decisión y fuente propietaria antes de considerarse producto vigente.
+
+---
+
+## 🧪 10. Validación
+
+La experiencia debe seguir validándose mediante uso real y criterios observables, entre ellos:
+
+- comprensión de la situación y de las instrucciones;
+- facilidad para completar el recorrido;
+- claridad de voz/transcripción cuando se usa;
+- persistencia correcta;
+- evidencia/progreso correctos cuando existe Misión;
+- ausencia de escrituras indebidas en modos de consulta/preview;
+- motivación y disposición para regresar;
+- coherencia con FOUNDATION y con la supervisión familiar.
+
+---
+
+## 🛠️ 11. Mantenimiento
+
+Actualizar este documento cuando cambie una **decisión estable de diseño del Motor de Semillas**.
+
+Los cambios detallados de comportamiento se consolidan primero en la especificación propietaria; los cambios puramente técnicos permanecen en código o documentación técnica cuando no alteran el diseño de producto.
+
+---
+
+**Fin de `DESIGN-MOTOR_SEMILLAS-v1.0.md` · v1.1 · Activo**
