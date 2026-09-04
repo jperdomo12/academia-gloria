@@ -1,64 +1,87 @@
-# TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md
+# 🔎 Auditoría técnica de Entidades y Atributos
+## 🌈 Academia Gloria Valentina
 
-# Academia Gloria Valentina
-## Auditoría técnica de entidades y atributos persistidos
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/tech/TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` |
+| **Versión** | 1.2 |
+| **Estado** | Activo como inventario técnico de referencia |
+| **Fecha base inicial** | 13/08/2026 |
+| **Última revisión dirigida** | 04/09/2026 |
+| **Propietario** | Referencia técnica de Datos Persistidos |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Fotografía técnica de entidades, familias de atributos y deuda de normalización; no constituye norma ni esquema exhaustivo de Firestore |
 
-**Versión:** 1.1  
-**Fecha base:** 2026-08-13  
-**Estado:** Activo como inventario técnico de referencia  
-**Ruta canónica:** `docs/tech/TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md`
+## 🔗 Documentos relacionados
 
----
+| Documento / fuente | Relación |
+|---|---|
+| `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` | **Gobierna:** convención normativa de datos y atributos. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** PERSON, USER, ROLE, relaciones y Persona Activa. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** semántica de Misiones/evidencia. |
+| `docs/models/MODELO_MISIONES.md` | **Modela:** conceptos del dominio de Misiones. |
+| `compartido/api/academia.js` | **Implementa:** persistencia compartida de múltiples dominios. |
+| `compartido/api/reconocimientos.js` | **Implementa:** Reconocimientos y Guacamayas persistidos. |
+| `compartido/modelos/baul.js` | **Modela/normaliza:** elementos y adjuntos de Mi Baúl. |
+| `compartido/firebase/FireStore Rules.txt` | **Implementa:** fuente canónica en Git de reglas Firestore. |
 
-## Historial del documento
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
-|---|---|---|---|
-| 1.0 | 2026-08-13 | Product Owner + AI Collaborator | Consolidación inicial del inventario técnico derivado del repositorio actual y de la auditoría preliminar de nomenclatura. |
-| 1.1 | 2026-08-13 | Product Owner + AI Collaborator | Adopta prefijo `TECH-` y actualiza la ruta canónica sin alterar el alcance ni la autoridad del documento. |
+|---|---:|---|---|
+| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Revalida la función del documento como fotografía técnica, incorpora dominios posteriores a la base de agosto como Reconocimientos y Mi Baúl, reconoce `schemaVersion`, Persona Activa y auditoría actual, retira el conteo aproximado de 156 atributos como dato vigente y elimina la idea de que Misiones “será” la primera normalización, ya ejecutada parcialmente. |
+| 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Adopta prefijo `TECH-` y actualiza ruta canónica. |
+| 1.0 | 13/08/2026 | Product Owner + AI Collaborator | Consolidación inicial del inventario técnico y variantes de nomenclatura. |
 
 ---
 
-## 1. Propósito
+## 🎯 1. Propósito
 
-Mantener una fotografía técnica verificable de las entidades persistidas, sus atributos y las principales variantes de nomenclatura existentes en la Academia.
+Mantener una fotografía técnica útil de:
 
-Este documento **no define el estándar**. Su propietario normativo es:
+- entidades persistidas relevantes;
+- familias de atributos;
+- variantes legacy;
+- puntos de normalización;
+- impacto potencial de futuras migraciones.
+
+Este documento **no define el estándar** y no debe utilizarse para inventar nuevos campos o colecciones.
+
+La norma vigente es:
 
 ```text
 docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md
 ```
 
-La auditoría permite medir el grado de adopción del estándar y estimar el impacto de futuras normalizaciones.
+---
+
+## 📐 2. Naturaleza y límites
+
+Esta auditoría se construye principalmente desde el **repositorio y sus contratos actuales**.
+
+No es:
+
+- un export completo de Firestore;
+- una lista garantizada de todos los campos históricos;
+- un esquema obligatorio;
+- una autorización para migrar;
+- una fuente funcional sobre Misiones, Usuarios u otros dominios.
+
+Antes de una migración destructiva debe contrastarse con datos reales y reglas desplegadas.
 
 ---
 
-## 2. Contexto
+## 🧩 3. Familias persistidas observadas
 
-La Academia nació como una solución puntual orientada al material escolar de 5.º de Primaria y evolucionó gradualmente hacia un producto con múltiples módulos, persistencia, usuarios, roles, relaciones, evidencias y seguimiento educativo.
-
-La nomenclatura actual refleja esa evolución incremental. Existen atributos en español, en inglés y combinaciones de ambas convenciones.
-
-La finalidad de esta auditoría es hacer visible esa realidad sin bloquear el desarrollo ni exigir una migración inmediata.
-
----
-
-## 3. Alcance de la auditoría base
-
-Repositorio revisado: versión proporcionada el 13/08/2026.
-
-Se priorizaron estructuras activas y fuentes de persistencia actuales. No se utilizaron históricos como fuente de verdad para definir el estado vigente.
-
-Entidades principales detectadas en la auditoría inicial:
+El repositorio contiene o referencia actualmente familias como:
 
 ```text
-SISTEMA_PRUEBA
 EVENTO
 LIBRO
 BIBLIOTECA_AUDIO
 SESION_LECTURA
 SESION_SEMILLA
-TAREA_MISION
+TAREA / MISION
 EVIDENCIA
 DETECTIVES_HISTORIA
 DETECTIVES_SESION
@@ -68,53 +91,128 @@ ROLE
 USER_ROLE
 ACCESO_LOGIN
 PERSON_RELATION
+RECONOCIMIENTO / GUACAMAYA
+BAUL_ELEMENTO / BAUL_ADJUNTO
 ```
 
-La auditoría preliminar identificó aproximadamente 156 nombres de atributos distintos y confirmó que la mezcla ES/EN es transversal.
+También pueden existir estructuras auxiliares, datos de prueba, compatibilidad o subcolecciones específicas de módulo.
+
+La lista representa **familias conceptuales/técnicas observadas**, no obliga a que cada una corresponda a una colección raíz independiente.
 
 ---
 
-## 4. Principales variantes detectadas
+## 🆕 4. Cambios relevantes desde la base 13/08
 
-| Concepto | Variantes observadas | Prioridad de normalización |
-|---|---|---|
-| Creación | `creadoEn`, `creadaEn`, `createdAt`, `fechaAlta` | Alta |
-| Actualización | `actualizadoEn`, `actualizadaEn`, `updatedAt`, `observacionActualizadaEn` | Alta |
-| Actor de creación | `creadaPorUid`, `createdBy` | Alta |
-| Actor de actualización | `updatedBy` y ausencia del dato en distintas entidades educativas | Alta |
-| Usuario | `uid`, `userId`, `alumnoId`, `creadaPorUid`, `asignadaPorUid` | Media |
-| Persona | `personaId`, `sourcePersonId`, `targetPersonId` | Media |
-| Estado | `estado`, `readingStatus`, `activo`, `completado`, `contabilizada` | Revisar por semántica |
-| Biblioteca | `title`, `author`, `readingStatus`, `favoriteCharacter`, etc. | Alta cuando se intervenga |
-| Audio Biblioteca | `audioData`, `mimeType`, `duration`, `transcript`, etc. | Alta cuando se intervenga |
+### 4.1 Identidad y Persona Activa
 
-No todos los nombres agrupados representan exactamente el mismo concepto; la tabla identifica áreas de revisión, no sustituciones automáticas.
+El modelo USER/PERSON/ROLE/PERSON_RELATION está consolidado y Persona Activa determina el contexto de múltiples operaciones.
 
----
+Consecuencia para auditoría:
 
-## 5. Criterio de mantenimiento
+- `userId` y `personaId` no son sinónimos;
+- autoría (`createdBy`, `updatedBy`) identifica al actor autenticado;
+- propiedad/contexto puede corresponder a otra Persona autorizada;
+- campos legacy como `alumnoId` deben interpretarse según su dominio propietario.
 
-Este documento se actualiza cuando ocurra alguno de estos casos:
+### 4.2 Misiones
 
-1. se incorpore una entidad persistida nueva relevante;
-2. se cambie sustancialmente el modelo de una entidad;
-3. se normalice un módulo existente;
-4. una auditoría de datos detecte una nueva variante relevante;
-5. se planifique una migración que necesite estimación de impacto.
-
-No es necesario actualizarlo por cada atributo transitorio o detalle de interfaz.
-
----
-
-## 6. Relación con el estándar
-
-La comparación se realiza contra:
+Tareas/Misiones adoptó parcialmente la auditoría transversal vigente, incluyendo nombres como:
 
 ```text
-STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md
+createdAt
+createdBy
+updatedAt
+updatedBy
+statusChangedAt
+statusChangedBy
 ```
 
-Clasificación recomendada para futuras revisiones:
+Persisten campos legacy y compatibilidad; esto no autoriza una migración silenciosa.
+
+### 4.3 Reconocimientos
+
+El dominio operativo de Motivación persiste Reconocimientos bajo el contexto de la Persona y utiliza, entre otros:
+
+```text
+schemaVersion
+userIdPersona
+tipo
+categoria
+origen
+fuentePrincipal
+estado
+visibleAlumno
+createdAt / createdBy
+updatedAt / updatedBy
+```
+
+La fuente de verdad funcional pertenece al diseño/estándar de Motivación, no a esta auditoría.
+
+### 4.4 Mi Baúl
+
+Mi Baúl incorpora un modelo normalizado con:
+
+```text
+schemaVersion: 1
+titulo
+tipo
+temas
+descripcion
+mensajeAlumno
+enlace
+favorito
+```
+
+Los adjuntos incluyen metadatos y contenido validado como:
+
+```text
+schemaVersion
+nombre
+mimeType
+tamano
+dataUrl
+```
+
+El Baúl no genera Misiones, evidencias, estadísticas ni Recompensas.
+
+---
+
+## 🔤 5. Variantes de nomenclatura todavía observables
+
+| Concepto | Variantes legacy / actuales | Tratamiento |
+|---|---|---|
+| Creación | `creadoEn`, `creadaEn`, `createdAt`, `fechaAlta` | Nuevos contratos: preferir estándar; legacy no se renombra por estética |
+| Actualización | `actualizadoEn`, `actualizadaEn`, `updatedAt`, variantes específicas | Convergencia progresiva |
+| Actor de creación | `creadaPorUid`, `createdBy` | Preferir `createdBy` en nuevos contratos relevantes |
+| Actor de actualización | `updatedBy` o ausencia histórica | No inventar backfill |
+| Usuario | `uid`, `userId`, `alumnoId`, `creadaPorUid`, `asignadaPorUid` | Interpretar por semántica; no sustituir automáticamente |
+| Persona | `personaId`, `sourcePersonId`, `targetPersonId` | Mantener significado explícito |
+| Estado | `estado`, `readingStatus`, `activo`, `contabilizada`, etc. | No unificar conceptos diferentes solo por nombre |
+| Fechas de módulo | múltiples nombres históricos | Normalizar solo cuando el contrato se intervenga y sea seguro |
+
+No todos los nombres de una fila representan el mismo concepto. Esta tabla marca zonas de atención.
+
+---
+
+## 🧱 6. Convenciones ya consolidadas para nuevo desarrollo
+
+Según STD-008, los nuevos contratos deben tender a:
+
+- `camelCase`;
+- vocabulario funcional preferentemente en español;
+- identificadores explícitos `<entidad>Id`;
+- `createdAt / createdBy / updatedAt / updatedBy` cuando corresponda;
+- `schemaVersion` cuando el modelo pueda requerir evolución;
+- enums/estados con semántica documentada;
+- datos de prueba identificables cuando entren en flujos reales;
+- compatibilidad legacy explícita y eliminable;
+- migraciones seguras, no estéticas.
+
+---
+
+## 🪜 7. Clasificación de hallazgos
+
+Utilizar:
 
 ```text
 Conforme
@@ -123,61 +221,66 @@ Pendiente de normalización
 Excepción justificada
 ```
 
+Evitar la categoría implícita:
+
+```text
+"está distinto, por tanto hay que migrarlo"
+```
+
+La diferencia solo exige acción cuando afecta claridad, seguridad, reutilización, mantenimiento o una evolución concreta.
+
 ---
 
-## 7. Estrategia de normalización
+## 🔄 8. Estrategia de normalización
 
 ### Nivel 1 · Nuevo desarrollo
 
-Aplicar el estándar inmediatamente.
+Aplicar el estándar vigente desde el inicio.
 
-### Nivel 2 · Módulo intervenido
+### Nivel 2 · Dominio intervenido
 
-Revisar y normalizar los atributos afectados cuando el coste sea proporcional.
+Revisar los campos afectados y converger cuando:
+
+- el riesgo sea bajo;
+- la compatibilidad esté controlada;
+- el beneficio sea real.
 
 ### Nivel 3 · Migración global
 
-Solo realizarla con decisión específica, análisis de impacto, estrategia de datos y validación de reglas/consultas.
+Solo mediante decisión explícita, inventario de datos reales, plan de compatibilidad, revisión de consultas/reglas y validación posterior.
+
+Actualmente **no existe necesidad de una migración global solo para homogeneizar nombres**.
 
 ---
 
-## 8. Coste y beneficio estimados
+## 🔥 9. Firestore real y reglas
 
-| Estrategia | Coste | Beneficio | Decisión actual |
-|---|---:|---:|---|
-| Aplicar estándar a atributos nuevos | Muy bajo | Alto | ✅ Aplicar |
-| Normalizar al intervenir un módulo | Bajo/medio | Medio/alto | ✅ Evaluar siempre |
-| Migración global de toda la Academia | Alto | Medio/alto a largo plazo; bajo funcional inmediato | ⏸️ No ejecutar ahora |
+Antes de modificar datos existentes de forma destructiva:
 
----
+1. revisar código y contratos propietarios;
+2. revisar `compartido/firebase/FireStore Rules.txt`;
+3. verificar datos reales cuando sea necesario;
+4. distinguir reglas versionadas en Git de reglas efectivamente desplegadas;
+5. preparar compatibilidad/migración;
+6. validar antes de retirar campos legacy.
 
-## 9. Primera normalización prioritaria
-
-Tareas / Misiones es el primer dominio que aplicará el nuevo estándar durante su evolución de auditoría y trazabilidad.
-
-Objetivo de convergencia:
-
-```text
-createdAt
-createdBy
-updatedAt
-updatedBy
-estado
-statusChangedAt
-statusChangedBy
-```
-
-más los hitos funcionales propios del dominio.
+No inferir el estado de producción únicamente desde este documento.
 
 ---
 
-## 10. Nota sobre Firestore real
+## 🛠️ 10. Mantenimiento de esta auditoría
 
-El inventario se deriva principalmente del código y estructuras del repositorio actual.
+Actualizar cuando:
 
-Antes de una migración destructiva de una entidad existente debe contrastarse con Firestore real para detectar campos históricos o datos que ya no aparezcan en el código.
+- aparece una nueva familia persistida relevante;
+- cambia sustancialmente un contrato de datos;
+- se ejecuta una normalización con impacto transversal;
+- aparece una nueva variante que aumenta deuda técnica;
+- se prepara una migración.
 
-Esta comprobación no es necesaria para aplicar el estándar a desarrollo nuevo.
+No es necesario actualizarla por cada campo editorial o temporal.
+
+Cuando se requiera un inventario **exhaustivo**, deberá realizarse una auditoría específica contra código + Firestore real y registrar su fecha/base exacta; no reutilizar esta fotografía como si fuera exhaustiva.
 
 ---
 
@@ -185,9 +288,9 @@ Esta comprobación no es necesaria para aplicar el estándar a desarrollo nuevo.
 
 | Campo | Valor |
 |---|---|
-| Estado | Activo como inventario técnico |
-| Fecha base | 13/08/2026 |
-| Responsables | Product Owner + AI Collaborator |
-| Documento normativo | `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` |
-| Uso | Evidencia técnica, impacto y seguimiento de normalización |
-| Fuente normativa | No |
+| **Estado** | Activo como referencia técnica |
+| **Versión** | 1.2 |
+| **Fuente normativa** | No |
+| **Norma propietaria** | `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` |
+| **Uso correcto** | Evidencia técnica, deuda de normalización y preparación de impacto |
+| **Uso incorrecto** | Definir esquemas nuevos o autorizar migraciones |

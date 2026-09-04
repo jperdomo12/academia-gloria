@@ -1,3 +1,22 @@
+# 🗃️ Piloto con Gloria · Semilla 01 · Histórico
+## Academia Gloria Valentina
+
+| Campo | Valor |
+|---|---|
+| **Ruta histórica** | `docs/history/PILOTO-GLORIA-SEMILLA-01.md` |
+| **Ruta original** | `docs/product/PILOTO-GLORIA-SEMILLA-01.md` |
+| **Estado** | Histórico |
+| **Fecha de archivo** | 04/09/2026 |
+| **Naturaleza original** | Guion de validación del primer piloto de Semillas |
+| **Motivo de archivo** | Documento específico de una prueba inicial; no constituye diseño, especificación ni procedimiento transversal vigente del producto. |
+| **Sucesores** | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md`, `docs/specifications/SPEC-CRECIENDO_POR_DENTRO.md` |
+
+> Se conserva por trazabilidad. Este archivo registra **cómo se propuso observar el primer piloto**, no resultados del piloto ni reglas vigentes del producto.
+>
+> El contenido original se preserva a continuación sin reinterpretarlo.
+
+---
+
 # PILOTO CON GLORIA — APRENDO A DECIR LO QUE SIENTO
 
 ## Preparación
