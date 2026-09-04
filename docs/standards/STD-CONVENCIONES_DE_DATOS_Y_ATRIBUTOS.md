@@ -22,7 +22,7 @@
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Aplica:** semántica funcional del dominio de Misiones. |
 | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** contrato funcional actual de Misiones/evidencias. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Aplica:** identidad académica, sesiones y evidencia de nuevos Temas. |
-| `docs/tech/AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` | **Describe:** fotografía técnica de entidades/atributos; no sustituye esta norma. |
+| `docs/tech/TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` | **Describe:** fotografía técnica de entidades/atributos; no sustituye esta norma. |
 | `compartido/api/academia.js` | **Implementa parcialmente:** convenciones actuales y compatibilidad legacy de varios dominios. |
 | `compartido/js/contexto-usuario.js` | **Implementa:** resolución de USER/PERSON/Persona Activa. |
 
@@ -589,7 +589,7 @@ Evitar:
 La fotografía detallada de qué entidades/campos existen en un momento concreto pertenece a:
 
 ```text
-docs/tech/AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md
+docs/tech/TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md
 ```
 
 Este estándar define la **regla futura y transversal**.
