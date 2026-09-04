@@ -1,580 +1,842 @@
-# STD-011_MIS_TAREAS_Y_MISIONES_v1.1
+# 🌈 Mis Tareas y Misiones
+## Academia Gloria Valentina
 
-# Academia Gloria Valentina
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` |
+| **Código** | STD-011 |
+| **Versión** | 2.0 |
+| **Estado** | Activo |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Estándares de Gestión de Misiones |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Reglas transversales de Tareas/Misiones, acceso, visibilidad, ejecución, finalización, evidencia, revisión, histórico, refuerzo, datos de prueba y conservación |
 
-## Estándar de Diseño
+## 🔗 Documentos relacionados
 
-# Sistema de Tareas, Misiones y Seguimiento
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Gobierna:** propósito humano, dignidad, autonomía y acompañamiento. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** posición de Misiones dentro de la experiencia global y separación entre espacios adulto/alumno. |
+| `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa/especifica:** comportamiento funcional vigente de Gestión de Misiones y Mi Camino. |
+| `docs/models/MODELO_MISIONES.md` | **Modela:** conceptos y relaciones del dominio; no sustituye este estándar ni la especificación vigente. |
+| `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Especifica:** consulta histórica y visualización de trabajo/evidencia. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna/complementa:** contratos académicos, sesiones y evidencia reutilizable de Temas. |
+| `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Gobierna/complementa:** seguimiento basado en evidencia y motivación no punitiva. |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Diseña:** Reconocimientos, Guacamayas y demás mecanismos de Motivación. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** roles, relaciones, Persona Activa y niveles de acceso. |
+| `docs/standards/STD-CIERRE_Y_REFLEXION_DE_MISIONES.md` | **Separado:** propuesta histórica de cierre/reflexión pendiente de sincronización; no redefine el contrato vigente de finalización de este estándar. |
+| `compartido/api/academia.js` | **Implementa:** API compartida actual del dominio de Tareas/Misiones. |
+| `mi-universo/mis-tareas/` | **Implementa:** Gestión familiar/administrativa. |
+| `mi-universo/mi-camino/` | **Implementa:** presentación y ejecución para el alumno. |
 
-**Código:** STD-011
+## 🕘 Historial de versiones
 
-**Versión:** 1.1
-
-**Estado:** Aprobado para desarrollo
-
-**Última actualización:** Agosto 2026
-
----
-
-# 1. Objetivo
-
-Definir el modelo mediante el cual la Academia organiza las actividades que un alumno debe realizar, las presenta de forma motivadora y registra posteriormente su evolución.
-
-El sistema debe permitir que padres, tutores y profesionales planifiquen objetivos educativos sin perder el enfoque lúdico y motivador de la Academia.
-
----
-
-# 2. Filosofía
-
-La Academia no entrega tareas.
-
-La Academia propone aventuras.
-
-Los adultos organizan el aprendizaje.
-
-Gloria vive una misión.
-
----
-
-# 3. Conceptos
-
-## 3.1 Tarea
-
-Una tarea es la definición formal de una actividad.
-
-Está orientada al seguimiento.
-
-Contiene toda la información necesaria para padres, tutores y profesionales.
-
-Una tarea puede:
-
-- estar pendiente
-- estar en curso
-- completarse
-- necesitar ayuda
-- cancelarse
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 2.0 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de STD-011 v2.0 como fuente normativa transversal vigente del dominio de Misiones. |
+| 2.0-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con el producto real y `SPEC-MIS_TAREAS_Y_MISIONES` v2.0. Consolida Tarea/Misión como dos vistas de la misma intención, Persona Activa, acceso `gestion`, visibilidad, Repaso Académico, Misiones libres, finalización automática/manual, evidencia referenciada, histórico/preview sin escrituras, refuerzos familiares, datos de prueba y eliminación controlada. Retira obligaciones antiguas no implementadas como Diario automático, Panel de Evolución obligatorio, desaparición imposible y versionado universal de cada modificación. |
+| 1.1 | Agosto 2026 | Equipo del proyecto | Formalizó finalización manual, confirmación del alumno, revisión familiar y separación entre cierre automático y manual. |
+| 1.0 | Julio 2026 | Equipo del proyecto | Definición inicial del sistema de Tareas, Misiones y Seguimiento. |
 
 ---
 
-## 3.2 Misión
+## 🎯 1. Propósito
 
-Una misión es la forma en que una tarea se presenta al alumno.
+Este estándar responde a una pregunta principal:
 
-Su objetivo es motivar.
+> **¿Qué reglas deben mantenerse estables para que la familia pueda organizar actividades y el alumno pueda vivirlas como Misiones claras, motivadoras, seguras y trazables?**
 
-Nunca debe parecer un deber escolar.
+La Academia necesita dos perspectivas sobre una misma intención:
 
-Ejemplo:
+```text
+ESPACIO ADULTO
+organizar · decidir · revisar · acompañar
 
-Tarea:
+              ↕ misma intención / mismo registro
 
-Leer una historia del Nivel 2.
+ESPACIO DEL ALUMNO
+comprender · comenzar · realizar · continuar · celebrar
+```
 
-Misión:
+El objetivo no es disfrazar deberes con decoración.
 
-📖
-
-Lía encontró una nueva historia y necesita tu ayuda para descubrir su final.
-
----
-
-# 4. Flujo general
-
-Adulto
-
-↓
-
-Crea una tarea
-
-↓
-
-La Academia genera una misión
-
-↓
-
-Gloria realiza la misión
-
-↓
-
-La Academia registra automáticamente la actividad cuando dispone de una evidencia verificable, o permite que Gloria indique manualmente que ha terminado cuando no existe un mecanismo automático fiable
-
-↓
-
-Mi Camino muestra el progreso
-
-↓
-
-El Panel de Evolución consolida toda la información
+Es reducir complejidad para el alumno sin perder control, evidencia ni contexto para la familia.
 
 ---
 
-# 5. Tipos de tarea
+## 🧭 2. Principio central
 
-## 5.1 Actividad de un módulo
+> **La familia gestiona; el alumno vive la Misión.**
 
-Ejemplo
+Una Tarea y una Misión **no son por defecto dos entidades diferentes**.
 
-Resolver un caso de Detectives.
+Son dos formas de presentar y operar sobre la misma asignación:
 
----
+- **Tarea / asignación:** lenguaje administrativo o técnico cuando resulta útil;
+- **Misión:** lenguaje visible para el alumno.
 
-## 5.2 Tiempo de práctica
+El código y los datos pueden conservar nombres históricos como `tarea` cuando renombrarlos no aporta valor suficiente.
 
-Ejemplo
-
-Leer aproximadamente 10 minutos.
-
----
-
-## 5.3 Cantidad
-
-Ejemplo
-
-Leer dos historias esta semana.
+La interfaz del alumno debe utilizar **Misión** y evitar complejidad administrativa innecesaria.
 
 ---
 
-## 5.4 Objetivo libre
+## 📐 3. Alcance y fronteras
 
-Ejemplo
+Este estándar gobierna reglas transversales sobre:
 
-Escribir en papel cinco frases sobre tus vacaciones.
+- terminología;
+- Persona Activa;
+- acceso y separación de espacios;
+- tipos compatibles de Misión;
+- visibilidad;
+- inicio y contexto de ejecución;
+- finalización automática y manual;
+- revisión familiar;
+- evidencia;
+- consulta histórica;
+- refuerzos y propuestas;
+- datos de prueba;
+- conservación y eliminación controlada;
+- compatibilidad histórica;
+- y límites de motivación.
 
-Una Misión libre no debe conservar accidentalmente un módulo de la Academia. Su módulo asociado será `libre` / actividad fuera de la Academia, salvo que exista una actividad digital concreta y explícitamente asociada.
+No define en detalle:
 
----
+- campos físicos completos de cada documento Firestore;
+- HTML/CSS de cada pantalla;
+- algoritmos de Análisis Educativo;
+- reglas particulares de cada Motor de Aprendizaje;
+- mecánica de Recompensas;
+- diseño completo de cierre/reflexión;
+- ni rutas técnicas que ya pertenezcan a una especificación o implementación propietaria.
 
-## 5.5 Objetivo combinado
-
-Ejemplo
-
-Leer una historia.
-
-Responder las preguntas.
-
-Contársela a Lía.
-
-Escuchar tu grabación.
-
-Guardar la aventura.
-
----
-
-# 6. Información de una tarea
-
-Cada tarea debe contener como mínimo:
-
-ID
-
-Alumno
-
-Título
-
-Descripción
-
-Módulo asociado
-
-Actividad
-
-Fecha creación
-
-Fecha inicio
-
-Fecha límite
-
-Tiempo estimado
-
-Prioridad
-
-Estado
-
-Asignada por
-
-Observaciones
-
-Resultado
+La especificación funcional puede evolucionar con más detalle siempre que no contradiga estas reglas transversales.
 
 ---
 
-# 7. Estados
+## ✅ 4. Reglas no negociables
 
-Pendiente
-
-En curso
-
-Completada
-
-Necesita ayuda
-
-Cancelada
-
-Cuando una Misión requiere revisión familiar, la finalización realizada por Gloria no equivale todavía al cierre definitivo. Debe pasar primero a un estado de espera o validación familiar.
-
----
-
-# 8. Vista para Gloria
-
-Gloria nunca verá una "tarea".
-
-Verá una misión.
-
-Ejemplo
-
-📖
-
-## Misión de lectura
-
-Lía encontró una nueva historia.
-
-¿Quieres ayudarla?
-
-⏱️
-
-10 minutos
-
-📅
-
-Antes del domingo.
-
-[ Comenzar misión ]
+1. **Persona Activa determina sobre qué alumno se opera.**
+2. **Gestión de Misiones es un espacio adulto y requiere nivel `gestion` o superior.**
+3. **El alumno no accede a Gestión por menú ni por URL directa.**
+4. **La UI nunca sustituye las reglas de seguridad.**
+5. **Una Misión visible debe ser comprensible sin conocer detalles técnicos.**
+6. **La finalización automática solo se usa cuando existe evidencia suficientemente fiable.**
+7. **Sin evidencia fiable, la finalización es manual, confirmada por el alumno y revisable por la familia.**
+8. **No se fabrica evidencia digital para simular que una actividad ocurrió.**
+9. **Una evidencia referencia la experiencia propietaria; no copia innecesariamente toda la sesión dentro de la Misión.**
+10. **Vista previa no persiste actividad, sesión, evidencia ni progreso.**
+11. **Vista histórica/consulta es de solo lectura.**
+12. **Una Misión libre sin actividad digital no navega a un módulo genérico como falso destino.**
+13. **Las propuestas de refuerzo no se convierten automáticamente en Misiones visibles para el alumno.**
+14. **Los datos de prueba se identifican y se excluyen de conclusiones/recompensas reales.**
+15. **Una Misión completada se conserva normalmente como historial, pero puede eliminarse excepcionalmente mediante un proceso adulto, controlado y seguro.**
+16. **Vencimiento, error o necesidad de ayuda no producen castigo, pérdida de progreso ni lenguaje punitivo.**
+17. **No se fabrican retrospectivamente sesiones o evidencias que nunca existieron.**
+18. **Se reutilizan navegación, contexto, API y seguridad compartidos antes de crear mecanismos paralelos.**
 
 ---
 
-# 9. Vista para Padres
+## 👤 5. Usuarios, Persona Activa y acceso
 
-Los adultos visualizarán información completa.
+### 5.1 Alumno · nivel `consulta`
 
-Ejemplo
+Cuando una Misión es visible y ejecutable para él, el alumno puede:
 
-Título
+- verla en Mi Camino;
+- comprender qué debe hacer;
+- iniciarla o continuarla;
+- abrir su actividad real cuando existe;
+- utilizar finalización manual cuando corresponde;
+- consultar trabajo histórico autorizado;
+- recibir el acompañamiento y reconocimiento definidos por otros dominios.
 
-Leer una historia Nivel 2
+No puede:
 
-Estado
+- acceder a Gestión de Misiones;
+- crear o eliminar Misiones;
+- cambiar objetivos o fechas administrativas;
+- validar su propio cierre familiar;
+- activar refuerzos ocultos;
+- limpiar datos de prueba;
+- concederse Reconocimientos.
 
-En curso
+### 5.2 Familia / relación con nivel `gestion`
 
-Tiempo estimado
+Puede, dentro de sus permisos:
 
-10 minutos
+- preparar y editar Misiones;
+- decidir visibilidad;
+- revisar estados y evidencias;
+- validar o reabrir cuando corresponda;
+- preparar refuerzos;
+- ejecutar herramientas adultas autorizadas de limpieza/eliminación;
+- aportar contexto y Reconocimientos cuando el dominio correspondiente lo permita.
 
-Tiempo real
+### 5.3 Administración
 
-12 minutos
+`administracion` dispone de las capacidades autorizadas por el modelo global de usuarios y accesos.
 
-Intentos
+### 5.4 Persona Activa
 
-2
+Toda operación debe conservar la Persona Activa correcta durante:
 
-Observaciones
+- Gestión;
+- Mi Camino;
+- navegación a un Motor;
+- consulta de trabajo;
+- retorno al origen;
+- análisis/refuerzo;
+- acciones adultas sensibles.
 
-Pendiente de revisar.
+No se debe inferir el alumno únicamente a partir del usuario autenticado cuando el modelo de Persona Activa ya dispone del contexto correcto.
 
 ---
 
-# 10. Finalización de Misiones
+## 🧩 6. Tipos de Misión y compatibilidad
 
-La Academia utilizará dos mecanismos de finalización: automática y manual.
+La Academia mantiene compatibilidad con tipos históricos y vigentes, entre ellos:
 
-La regla general es:
+- `actividad_modulo`;
+- `tiempo_practica`;
+- `cantidad_actividades`;
+- `tarea_libre`;
+- `tarea_combinada`;
+- `repaso_academico`.
 
-> Si la Academia puede verificar objetivamente que la actividad terminó, utilizará finalización automática. Si no puede verificarlo de forma fiable, utilizará finalización manual con confirmación del alumno y revisión familiar.
+La existencia de un tipo no obliga a que todas las Misiones compartan los mismos campos, evidencia o forma de cierre.
 
-## 10.1 Finalización automática
+Los contratos físicos detallados pertenecen a la especificación/modelo y a la implementación vigente.
 
-Cuando un módulo informa que la actividad ha sido realizada y existe una evidencia verificable, la Academia podrá actualizar automáticamente la Misión de acuerdo con su criterio de cumplimiento.
+### 6.1 Misión con actividad digital
 
-Ejemplo
+Debe apuntar a una experiencia real de la Academia y conservar contexto suficiente para vincular ejecución y Misión cuando corresponda.
 
-Mi Rincón de Lectura
+### 6.2 Misión libre
 
-↓
+Representa una actividad que puede realizarse fuera de un Motor digital.
 
-Historia guardada
+Si no existe una actividad real asociada:
 
-↓
+- se muestran título, descripción e indicaciones;
+- no se inventa una URL;
+- no se envía al menú principal para simular ejecución;
+- se utiliza finalización manual;
+- no se ofrece un visor de trabajo digital inexistente.
 
-Criterio cumplido
+### 6.3 Repaso Académico
 
-↓
+Cuando el contenido está catalogado por la Academia, la preparación debe partir del contenido real:
 
-Misión terminada / enviada al flujo de revisión correspondiente
+```text
+Curso de referencia
+→ Materia
+→ Tema real
+→ recurso/actividad real
+```
 
-↓
+La familia no debe conocer ni copiar rutas técnicas que la Academia ya puede resolver.
 
-Actualizar Mi Camino
+No se mantendrá una segunda lista curricular desconectada únicamente para alimentar Misiones.
 
-↓
-
-Actualizar Logros
-
-↓
-
-Actualizar Constancia
-
-↓
-
-Registrar en Panel de Evolución
-
-No se debe mostrar un control manual redundante cuando la Academia dispone de un mecanismo automático fiable de finalización.
-
-## 10.2 Finalización manual estándar
-
-Se utilizará para Misiones que no producen una evidencia automática suficiente para determinar su cumplimiento, por ejemplo una actividad realizada en papel, fuera de la Academia o una futura actividad familiar que no pueda verificarse digitalmente.
-
-En Mi Camino, mientras la Misión esté en curso, se mostrará:
-
-**Texto de orientación:**
-
-`Cuando termines esta misión, indícalo aquí.`
-
-**Acción principal:**
-
-`✅ Ya terminé`
-
-El texto de orientación debe ser visualmente secundario. El botón debe ser claramente reconocible como la acción principal, con un estilo positivo y amable coherente con Mi Camino.
-
-Al pulsar `✅ Ya terminé`, siempre se solicitará confirmación antes de cambiar el estado.
-
-La confirmación estándar será conceptualmente:
-
-**¿Terminaste esta misión?**
-
-`Si confirmas, la enviaremos a tu familia para su revisión.`
-
-La confirmación positiva puede expresarse como `✅ Sí, ya terminé`; la alternativa debe permitir continuar trabajando, por ejemplo `Todavía no`.
-
-Después de confirmar:
-
-En curso
-
-↓
-
-Gloria confirma que terminó
-
-↓
-
-Pendiente de validación / Esperando a mi familia
-
-↓
-
-La familia revisa
-
-↓
-
-Misión conseguida / completada
-
-La confirmación de Gloria no debe fabricar una evidencia digital inexistente ni navegar a un módulo genérico como sustituto de dicha evidencia.
-
-Una Misión manual en revisión no debe ofrecer `Ver mi trabajo` cuando no existe un trabajo digital consultable. Debe mostrar su estado de revisión familiar.
-
-## 10.3 Criterio de selección del mecanismo
-
-Antes de implementar el cierre de una nueva clase de Misión debe definirse cuál de los dos mecanismos corresponde.
-
-Usar finalización automática cuando exista un criterio de cumplimiento observable y persistido por la Academia.
-
-Usar finalización manual cuando el sistema no pueda saber con suficiente fiabilidad que la actividad terminó.
-
-No se debe usar la finalización manual únicamente por comodidad técnica si ya existe una evidencia automática adecuada.
+Una salida manual controlada puede conservar compatibilidad con recursos heredados todavía no catalogados.
 
 ---
 
-# 11. Motivación
+## 🔄 7. Estados y ciclo de vida
 
-Completar una misión nunca debe producir únicamente un mensaje de:
+El producto reconoce actualmente estados como:
 
-"Tarea completada"
+- `pendiente`;
+- `en_curso`;
+- `pendiente_validacion`;
+- `completada_pendiente_validacion` como compatibilidad histórica;
+- `completada`;
+- `necesita_ayuda`;
+- `vencida`;
+- `cancelada`.
 
-Debe convertirse en una experiencia.
+La coexistencia de nombres históricos no autoriza una migración silenciosa de datos.
 
-Ejemplo
+### 7.1 Presentación para el alumno
 
-🌟
+La presentación debe traducir el estado a lenguaje comprensible y no administrativo.
 
-¡Fantástico!
+Conceptualmente:
 
-Hoy ayudaste a Lía a descubrir una nueva historia.
+| Estado | Sentido para el alumno |
+|---|---|
+| `pendiente` | Misión preparada |
+| `en_curso` | Aventura en curso |
+| espera de validación | Esperando a mi familia |
+| `completada` | Misión conseguida |
+| `necesita_ayuda` | Podemos pedir ayuda |
+| `vencida` | Podemos retomarla |
+| `cancelada` | No forma parte del recorrido activo |
 
-Tu árbol ha seguido creciendo.
+### 7.2 Vencimiento
 
----
+`vencida` es una señal de organización, no un castigo.
 
-# 12. Relación con Mi Camino
+No debe producir:
 
-Mi Camino será el centro organizador del sistema.
-
-Su estructura será:
-
-🌳 Árbol de Mi Camino
-
-↓
-
-🌈 Mi aventura de hoy
-
-↓
-
-📌 Mis Tareas
-
-↓
-
-🏆 Mis Logros
-
-↓
-
-🔥 Mi Constancia
-
----
-
-# 13. Relación con los módulos
-
-Cada módulo puede generar tareas.
-
-Ejemplo
-
-Biblioteca
-
-Leer un libro.
+- culpa;
+- pérdida de Recompensas;
+- pérdida de progreso ya realizado;
+- mensajes de fracaso;
+- ni bloqueo automático injustificado de una actividad que la familia puede decidir retomar.
 
 ---
 
-Mi Rincón de Lectura
+## 👁️ 8. Visibilidad
 
-Leer una historia.
+Mi Camino muestra únicamente las Misiones que corresponden al recorrido normal del alumno.
 
----
+Cuando existe el atributo de visibilidad vigente:
 
-Detectives
+```text
+visibleParaAlumno = false
+```
 
-Resolver un caso.
+la Misión queda fuera de ese recorrido hasta decisión adulta.
 
----
+Reglas:
 
-Matemáticas
-
-Completar una aventura.
-
----
-
-Cursos
-
-Finalizar una lección.
+- una Misión oculta puede seguir siendo visible en Gestión;
+- estar oculta no equivale a estar eliminada;
+- el orden no puede hacer ejecutable accidentalmente una Misión oculta;
+- una propuesta de refuerzo nace oculta por defecto;
+- la familia decide cuándo incorporarla a Mi Camino.
 
 ---
 
-# 14. Seguimiento
+## ▶️ 9. Inicio, navegación y contexto
 
-Cada tarea conservará:
+Al comenzar una Misión con actividad real, el sistema debe:
 
-fecha creación
+1. conservar la Persona Activa;
+2. identificar la Misión;
+3. registrar el inicio cuando corresponda;
+4. abrir el destino contextual correcto;
+5. permitir un retorno coherente.
 
-fecha inicio
+El identificador de Misión puede transportarse por URL u otro mecanismo compartido definido por la implementación.
 
-fecha finalización
+Este estándar no obliga a una sintaxis técnica única mientras el contexto sea inequívoco y trazable.
 
-duración
+### 9.1 Práctica libre
 
-número de intentos
+Una actividad realizada fuera del contexto de una Misión puede seguir siendo una experiencia válida de aprendizaje.
 
-resultado
+No debe adjudicarse retrospectivamente a una Misión activa únicamente porque “parece corresponder”.
 
-observaciones
+### 9.2 Navegación compartida
 
-evidencias
+No se debe crear un sistema privado de navegación/retorno para cada Motor si el modelo compartido ya puede resolver:
 
----
-
-# 15. Integración con el Diario
-
-Toda tarea completada podrá generar automáticamente una entrada en el Diario correspondiente.
-
-Ejemplo
-
-Mi Diario de Lecturas.
-
-Mi Diario Matemático.
-
-Mi Diario de Detectives.
+- Persona Activa;
+- origen;
+- destino;
+- retorno;
+- modo de consulta/ejecución.
 
 ---
 
-# 16. Reglas
+## ✅ 10. Finalización de Misiones
 
-Una tarea nunca desaparece.
+Existen dos mecanismos: **automático** y **manual**.
 
-Simplemente cambia de estado.
+La regla transversal es:
 
-Toda modificación queda registrada.
+> **Si la Academia puede verificar objetivamente que el criterio se cumplió, utiliza finalización automática. Si no puede saberlo con suficiente fiabilidad, utiliza finalización manual con confirmación del alumno y revisión familiar.**
 
-Las observaciones podrán actualizarse.
+### 10.1 Finalización automática
 
-Las versiones anteriores permanecerán disponibles.
+Corresponde cuando un Motor produce y persiste evidencia suficiente.
 
-Las Misiones sin actividad verificable no deben navegar a un módulo de la Academia únicamente para simular un flujo de ejecución o revisión.
+Flujo conceptual:
 
----
+```text
+Motor realiza/finaliza experiencia
+→ persiste sesión o resultado real
+→ registra o referencia evidencia de la Misión
+→ actualiza el estado de revisión correspondiente
+→ familia puede revisar cuando el contrato lo requiere
+```
 
-# 17. Futuras versiones
+No debe mostrarse `✅ Ya terminé` como segundo mecanismo redundante cuando el cierre automático ya es fiable.
 
-## v2
+### 10.2 Finalización manual
 
-Asignación automática de misiones.
+Corresponde cuando la Academia no puede verificar digitalmente la realización.
 
----
+Flujo conceptual:
 
-## v3
+```text
+Misión en curso
+→ ✅ Ya terminé
+→ confirmación explícita del alumno
+→ Esperando a mi familia
+→ revisión familiar
+→ completada o reabierta
+```
 
-Misiones adaptativas según evolución.
+La confirmación debe dejar claro que la Misión se enviará a revisión cuando así funcione el contrato.
 
----
+La alternativa debe permitir continuar trabajando sin penalización.
 
-## v4
+### 10.3 Lo que la finalización manual NO hace
 
-Recomendaciones inteligentes de Lía.
+No debe:
 
----
+- fabricar una sesión;
+- inventar una evidencia digital;
+- navegar a un módulo genérico;
+- marcar como “trabajo consultable” algo que no existe;
+- omitir la revisión familiar cuando el contrato la exige.
 
-## v5
+### 10.4 Selección del mecanismo
 
-Sincronización con profesionales externos.
-
----
-
-# Historial de versiones
-
-- **v1.0 · Julio 2026:** definición inicial del sistema de Tareas, Misiones y Seguimiento.
-- **v1.1 · Agosto 2026:** formaliza el estándar de finalización manual, la confirmación del alumno, la revisión familiar y la separación entre cierre automático y manual.
-
----
-
-# Resumen
-
-Los adultos crean tareas.
-
-↓
-
-La Academia las transforma en misiones.
-
-↓
-
-Gloria vive aventuras.
-
-↓
-
-La Academia registra evidencias automáticas cuando puede verificarlas; en caso contrario Gloria confirma manualmente que terminó
-
-↓
-
-La familia revisa cuando corresponde
-
-↓
-
-Mi Camino organiza el progreso.
-
-↓
-
-El Panel de Evolución integra toda la información.
+La selección automática/manual se define por **capacidad de verificación**, no por comodidad de implementación.
 
 ---
 
-Este estándar convierte las tareas tradicionales en experiencias motivadoras, manteniendo un seguimiento longitudinal completo del aprendizaje del alumno.
+## 📎 11. Evidencia
+
+La evidencia representa o referencia algo que realmente ocurrió.
+
+Principio:
+
+```text
+Misión
+→ referencia/resumen de evidencia
+→ sesión, resultado o recurso propietario
+```
+
+Evitar:
+
+```text
+Misión
+→ copia completa de toda la experiencia
+```
+
+La evidencia debe:
+
+- pertenecer a la Persona Activa correcta;
+- conservar trazabilidad suficiente;
+- vincularse a la Misión cuando la ejecución procede de ella;
+- permitir consulta posterior cuando exista un visor autorizado;
+- conservar la fuente propietaria de los datos.
+
+No todas las Misiones producen los mismos indicadores.
+
+No se inventarán duración, intentos, ayudas, precisión u otras métricas si el Motor no las registra.
+
+---
+
+## 🕰️ 12. Vista previa, histórico y “Ver trabajo”
+
+### 12.1 Vista previa
+
+Una Vista previa existe para validar una experiencia sin contaminar datos reales.
+
+No persiste:
+
+- sesión;
+- evidencia;
+- progreso;
+- finalización;
+- Recompensas;
+- actividad educativa real.
+
+### 12.2 Histórico
+
+La consulta histórica es **solo lectura**.
+
+No debe:
+
+- recalcular el progreso por el hecho de abrirse;
+- crear una nueva sesión;
+- modificar respuestas;
+- volver a conceder reconocimientos;
+- cambiar el estado de la Misión.
+
+### 12.3 Ver trabajo
+
+`👁️ Ver trabajo` se ofrece únicamente cuando existe trabajo digital consultable.
+
+Debe:
+
+- conservar Persona Activa;
+- conservar origen/retorno;
+- reutilizar el visor especializado o general vigente;
+- operar en modo de consulta;
+- no persistir cambios.
+
+Una Misión manual sin evidencia digital no debe mostrar un falso `Ver trabajo`.
+
+El comportamiento detallado pertenece a `SPEC-REVISION_TRABAJO_REALIZADO.md`.
+
+---
+
+## 👨‍👩‍👧 13. Revisión familiar
+
+Cuando una Misión pasa a espera de validación, la confirmación del alumno **no equivale todavía a cierre definitivo**.
+
+La familia puede, según el contrato funcional vigente:
+
+- revisar evidencia disponible;
+- confirmar el cierre;
+- reabrir para continuar;
+- añadir observación/contexto cuando corresponda;
+- realizar acciones adultas autorizadas.
+
+La revisión debe acompañar, no convertir cada actividad en un examen familiar.
+
+El diseño detallado de reflexión/cierre pertenece a su documento específico y no debe asumirse implementado por este estándar.
+
+---
+
+## 🌱 14. Observaciones, Análisis y refuerzos
+
+Las evidencias pueden alimentar procesos separados de observación y análisis.
+
+El patrón transversal es:
+
+```text
+Evidencia real
+→ observación/análisis prudente
+→ propuesta de actuación
+→ decisión familiar
+→ posible Misión
+```
+
+No:
+
+```text
+señal aislada
+→ Misión visible automática para el alumno
+```
+
+### 14.1 Refuerzos
+
+Una Misión preparada desde una propuesta de refuerzo debe nacer oculta mientras la familia decide su uso.
+
+La propuesta no debe:
+
+- etiquetar al alumno;
+- castigar un error;
+- fabricarse con datos de prueba;
+- hacerse visible automáticamente;
+- saltarse el flujo normal de ejecución/evidencia.
+
+### 14.2 Análisis Educativo
+
+El algoritmo y presentación pertenecen a `SPEC-ANALISIS_EDUCATIVO.md`.
+
+Este estándar solo exige que cualquier acción derivada conserve:
+
+- evidencia real;
+- prudencia interpretativa;
+- decisión humana cuando corresponda;
+- Persona Activa y permisos.
+
+---
+
+## 🧪 15. Datos de prueba
+
+Los registros creados para validación técnica deben poder distinguirse de la actividad educativa real.
+
+Cuando el contrato utiliza:
+
+```text
+esDatoPrueba = true
+```
+
+ese dato no debe producir:
+
+- Recompensas reales;
+- conclusiones educativas;
+- estadísticas reales contaminadas;
+- decisiones automáticas sobre el alumno.
+
+Las herramientas de limpieza deben operar con confirmación y vínculos inequívocos.
+
+Ante una relación ambigua, es preferible detener el borrado que eliminar información real por inferencia.
+
+---
+
+## 🗑️ 16. Conservación y eliminación controlada
+
+### 16.1 Regla general
+
+Las Misiones completadas se conservan normalmente como parte del historial del alumno.
+
+### 16.2 Excepción
+
+Un adulto autorizado puede eliminar puntualmente una Misión —incluso completada— cuando existe una razón válida, por ejemplo:
+
+- dato de prueba;
+- registro incorrecto;
+- duplicado inequívoco;
+- corrección administrativa justificada.
+
+### 16.3 Condiciones de seguridad
+
+La eliminación debe, según corresponda:
+
+- inventariar qué se eliminará y qué se conservará;
+- identificar dependencias;
+- eliminar únicamente datos exclusivos inequívocos;
+- proteger sesiones/evidencias compartidas o ambiguas;
+- revisar Reconocimientos vinculados;
+- exigir confirmación reforzada;
+- conservar trazabilidad proporcional de la acción.
+
+No se crea un motor de borrado independiente para cada módulo si existe una capacidad transversal reutilizable.
+
+### 16.4 Regla retirada de v1.1
+
+Ya no es normativa la afirmación absoluta:
+
+> “Una tarea nunca desaparece.”
+
+La regla correcta es **conservación por defecto + eliminación excepcional controlada**.
+
+---
+
+## ✨ 17. Motivación y Reconocimientos
+
+Una Misión debe ser motivadora, pero no necesita producir una Recompensa por el simple hecho de completarse.
+
+La presentación debe:
+
+- reconocer esfuerzo/proceso cuando exista fundamento;
+- evitar lenguaje escolar punitivo;
+- normalizar pedir ayuda;
+- permitir retomar;
+- evitar rankings y comparación con otros alumnos.
+
+La mecánica de Reconocimientos/Recompensas pertenece a `DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` y `STD-SEGUIMIENTO_Y_MOTIVACION.md`.
+
+Reglas de frontera:
+
+- una Misión real completada **puede** ser fuente de Reconocimiento;
+- una Misión de prueba no produce Recompensa real;
+- el alumno no se concede Reconocimientos;
+- eliminar una Misión fuente exige revisar dependencias del Reconocimiento;
+- ninguna Recompensa debe convertirse en pago automático por obediencia.
+
+---
+
+## 🔐 18. Seguridad, auditoría y cambios
+
+### 18.1 Seguridad
+
+Toda operación sensible debe ser coherente en:
+
+- UI;
+- API;
+- Firestore Rules;
+- Persona Activa;
+- nivel de acceso.
+
+Ocultar un botón no equivale a proteger una operación.
+
+### 18.2 Auditoría
+
+Los registros deben conservar auditoría proporcional **cuando el contrato/implementación correspondiente la soporte**, especialmente para:
+
+- creación/asignación;
+- modificación relevante;
+- cambios de estado;
+- eliminación;
+- acciones adultas sensibles.
+
+Este estándar no afirma que exista versionado completo e inmutable de cada modificación histórica.
+
+### 18.3 Regla retirada de v1.1
+
+Ya no son obligaciones universales:
+
+> “Toda modificación queda registrada.”
+
+> “Las versiones anteriores permanecerán disponibles.”
+
+La auditoría debe ampliarse de forma explícita y controlada donde exista necesidad real, no documentarse como implementada antes de estarlo.
+
+---
+
+## 🧬 19. Compatibilidad histórica
+
+La Academia conserva actividad previa sin inventar datos que no existían.
+
+Debe admitirse compatibilidad con:
+
+- tipos históricos de Misión;
+- alias históricos del estado de validación;
+- actividades de 5.º que no generaban sesiones académicas estructuradas;
+- Misiones anteriores a contratos de persistencia actuales;
+- actividades sin evidencia automática.
+
+Regla:
+
+> **No fabricar retrospectivamente sesiones/evidencias para hacer parecer que el pasado utilizaba el contrato actual.**
+
+Si una actividad heredada se ejecuta nuevamente después de incorporar persistencia, esa **nueva ejecución** puede utilizar el contrato vigente.
+
+Las normalizaciones de campos/estados requieren una migración explícita, revisable y justificada.
+
+---
+
+## 🧱 20. Arquitectura y datos
+
+### 20.1 Fuente única de reglas
+
+Este documento es la fuente normativa transversal del dominio.
+
+- `SPEC-MIS_TAREAS_Y_MISIONES.md` especifica el comportamiento concreto;
+- `MODELO_MISIONES.md` describe conceptos/relaciones;
+- el código implementa contratos físicos;
+- otros estándares gobiernan sus propios dominios.
+
+No debe copiarse la misma regla normativa en múltiples documentos con formulaciones divergentes.
+
+### 20.2 Módulos/Motores
+
+Los Motores registran su experiencia y evidencia.
+
+No deben crear arbitrariamente nuevas Tareas/Misiones por su cuenta salvo que exista un flujo de producto autorizado.
+
+La Gestión de Misiones interpreta el contexto de Misión y coordina el ciclo correspondiente mediante capacidades compartidas.
+
+### 20.3 Datos mínimos
+
+No existe una lista universal de campos que toda Misión deba completar aunque no apliquen.
+
+Cada contrato debe conservar solo la información necesaria para:
+
+- identificar alumno/Persona Activa;
+- expresar la intención;
+- controlar estado/visibilidad;
+- ejecutar o describir la actividad;
+- relacionar evidencia cuando exista;
+- mantener trazabilidad suficiente.
+
+Los nombres de nuevos atributos deben respetar `STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md`.
+
+---
+
+## 🚫 21. Supuestos retirados de versiones anteriores
+
+La v2.0 deja explícitamente de tratar como reglas vigentes las siguientes afirmaciones antiguas:
+
+1. **“Toda Tarea completada generará/puede generar automáticamente una entrada en un Diario.”**  
+   No existe una obligación transversal de Diario automático.
+
+2. **“El Panel de Evolución consolida necesariamente toda Misión.”**  
+   El seguimiento actual utiliza evidencias, Análisis Educativo y capacidades propietarias; este estándar no obliga a un Panel concreto.
+
+3. **“Mi Camino debe tener una estructura fija Árbol → Mis Tareas → Mis Logros → Mi Constancia.”**  
+   Mi Camino puede evolucionar mientras preserve las responsabilidades del espacio del alumno.
+
+4. **“Cada módulo puede generar tareas.”**  
+   Los Motores generan experiencia/evidencia; crear una Misión requiere un flujo de producto autorizado.
+
+5. **“Todas las Misiones conservan siempre duración, intentos y resultado.”**  
+   Solo se registran métricas que realmente existen y aportan significado.
+
+6. **“Una Tarea nunca desaparece.”**  
+   Conservación es el comportamiento normal, pero existe eliminación excepcional controlada.
+
+7. **“Toda modificación y todas sus versiones históricas están disponibles.”**  
+   La auditoría real debe documentarse según capacidades implementadas.
+
+8. **Roadmaps internos `v2/v3/v4/v5` dentro del estándar.**  
+   Las evoluciones pertenecen al `ROADMAP.md` y a necesidades reales, no a promesas incrustadas en una norma transversal.
+
+---
+
+## ✅ 22. Quality Gate
+
+Antes de crear o modificar una capacidad de Misiones debe comprobarse:
+
+### Contexto y acceso
+
+- [ ] Opera sobre la Persona Activa correcta.
+- [ ] Gestión requiere `gestion` o superior.
+- [ ] El alumno no dispone de bypass administrativo.
+- [ ] UI, API y Firestore Rules son coherentes.
+
+### Creación y visibilidad
+
+- [ ] La Misión visible es comprensible para el alumno.
+- [ ] Una Misión oculta no se vuelve ejecutable por accidente.
+- [ ] Un refuerzo preparado nace oculto hasta decisión familiar.
+- [ ] Repaso Académico reutiliza contenido real cuando existe catálogo.
+- [ ] Misión libre sin destino no inventa navegación.
+
+### Ejecución y cierre
+
+- [ ] Conserva contexto de Misión y Persona Activa.
+- [ ] Usa finalización automática solo con evidencia fiable.
+- [ ] Usa manual + confirmación + revisión cuando no puede verificar.
+- [ ] No muestra mecanismos redundantes de finalización.
+
+### Evidencia e histórico
+
+- [ ] La evidencia referencia la experiencia real sin duplicación innecesaria.
+- [ ] No inventa métricas ausentes.
+- [ ] Vista previa no escribe.
+- [ ] Histórico/`Ver trabajo` es solo lectura.
+- [ ] No fabrica evidencia histórica inexistente.
+
+### Seguimiento y seguridad
+
+- [ ] Datos de prueba quedan excluidos donde corresponde.
+- [ ] Vencimiento/error/ayuda no se convierten en castigo.
+- [ ] Eliminación completada sigue siendo excepcional, inventariada y confirmada.
+- [ ] No se introduce una arquitectura paralela cuando existe capacidad compartida reutilizable.
+
+---
+
+## 🛣️ 23. Evolución
+
+Este estándar no mantiene una lista artificial de “v2/v3/v4/v5”.
+
+Las capacidades futuras se priorizan en `ROADMAP.md` y se incorporan cuando una necesidad real lo justifica.
+
+Ejemplos posibles —no compromisos automáticos—:
+
+- nuevos tipos de Misión;
+- recurrencia avanzada;
+- más Motores académicos;
+- permisos profesionales más granulares;
+- automatizaciones adicionales basadas en evidencia;
+- auditoría ampliada.
+
+Toda evolución debe preservar las reglas no negociables de la sección 4.
+
+---
+
+## 📌 24. Decisión del estándar
+
+| Campo | Valor |
+|---|---|
+| **Unidad conceptual** | Tarea/Misión = dos perspectivas de una misma asignación/intención por defecto. |
+| **Espacio adulto** | Gestión de Misiones · `gestion`+. |
+| **Espacio alumno** | Mi Camino · Misiones visibles, claras y no administrativas. |
+| **Persona** | Toda operación se realiza sobre Persona Activa autorizada. |
+| **Finalización** | Automática con evidencia fiable; manual + confirmación + revisión cuando no existe. |
+| **Evidencia** | Referencia experiencia real; no fabrica ni duplica sesiones completas. |
+| **Vista previa / histórico** | Sin escrituras / solo lectura. |
+| **Refuerzo** | Evidencia → propuesta → decisión familiar → Misión inicialmente oculta. |
+| **Datos de prueba** | Identificados y excluidos de conclusiones/Recompensas reales. |
+| **Conservación** | Historial por defecto; eliminación excepcional, segura y controlada. |
+| **Motivación** | Sin castigo por error, ayuda o vencimiento; sin Recompensa automática por obediencia. |
+| **Estado del documento** | ✅ Activo · v2.0. |
+
+**Impacto:** Gestión de Misiones · Mi Camino · Motores de Aprendizaje · Evidencias · Revisión familiar · Refuerzos · Seguridad · Histórico · Motivación
