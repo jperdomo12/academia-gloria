@@ -68,10 +68,19 @@ function tituloMision(tarea = {}) {
 
 function urlMision(tarea, semillaId) {
   const destino = new URL(window.location.href);
+  const permitidas = idsSemillasMision(tarea);
+
   destino.search = "";
   destino.hash = "";
   destino.searchParams.set("misionId", texto(tarea.id));
-  destino.searchParams.set("semillaId", texto(semillaId));
+
+  /* El Motor ya abre automáticamente una Misión que contiene una única
+     Semilla. semillaId solo hace falta para conservar la elección cuando la
+     Misión admite varias Semillas o es de libre elección. */
+  if (permitidas.length !== 1) {
+    destino.searchParams.set("semillaId", texto(semillaId));
+  }
+
   return destino.href;
 }
 
