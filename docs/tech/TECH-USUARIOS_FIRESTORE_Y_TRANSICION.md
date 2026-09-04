@@ -1,58 +1,62 @@
-# TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md
+# 👥 Usuarios, Personas y Firestore
+## 🌈 Academia Gloria Valentina
 
-**Academia Gloria Valentina**  
-**Diseño técnico Firestore de Personas, Usuarios, Roles, Relaciones y Gestión de Usuarios**  
-**Versión:** 0.3  
-**Fecha:** 2026-08-13  
-**Estado:** Implementación vigente consolidada
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/tech/TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` |
+| **Versión** | 0.4 |
+| **Estado** | Activo como referencia técnica de transición |
+| **Fecha de origen** | 10/08/2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Implementación técnica de Identidad y Accesos |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Estructura Firestore y transición técnica de PERSON, USER, ROLE, USER_ROLE, PERSON_RELATION, Persona Activa y Gestión de Usuarios |
 
----
+## 🔗 Documentos relacionados
 
-## Historial del Documento
+| Documento / fuente | Relación |
+|---|---|
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** reglas funcionales y de acceso vigentes. |
+| `docs/models/MODELO_ROLES.md` | **Modela:** actores y relaciones conceptuales sin duplicar permisos normativos. |
+| `docs/manuales/MANUAL-GESTION_DE_USUARIOS.md` | **Opera:** procedimiento actual de alta y mantenimiento. |
+| `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` | **Gobierna:** nombres, auditoría y evolución de datos. |
+| `compartido/js/contexto-usuario.js` | **Implementa:** resolución actual de USER, PERSON, USER_ROLE, ROLE, Persona Activa y nivel efectivo. |
+| `administracion/usuarios/` | **Implementa:** Gestión de Usuarios. |
+| `compartido/api/academia.js` | **Implementa:** operaciones compartidas y resolución física de datos por Persona Activa. |
+| `compartido/firebase/FireStore Rules.txt` | **Implementa/canoniza en repositorio:** reglas Firestore del proyecto; su edición en Git no certifica despliegue en Firebase. |
+| `docs/history/TECH-DATOS-BASE-FIRESTORE-FASE1.md` | **Histórico:** fotografía de Fase 1/1.5 ya superada como referencia activa. |
+
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
-|---|---|---|---|
-| 0.1 | 2026-08-10 | Product Owner + AI Collaborator | Primera propuesta técnica. |
-| 0.2 | 2026-08-12 | Product Owner + AI Collaborator | Alinea el documento con la implementación real Multi-Persona, Gestión de Usuarios gratuita y Auditoría Fase A. |
-| 0.3 | 2026-08-13 | Product Owner + AI Collaborator | Actualiza referencias documentales al prefijo `TECH-` y explicita la relación con el estándar transversal de atributos. |
+|---|---:|---|---|
+| 0.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la referencia técnica con Persona Activa y el estándar vigente, retira la interpretación histórica `alumno = gestion`, actualiza propietarios documentales, formaliza el cálculo de nivel efectivo, la resolución física de datos legacy y la separación entre reglas versionadas y reglas realmente desplegadas. |
+| 0.3 | 13/08/2026 | Product Owner + AI Collaborator | Consolidó la implementación Multi-Persona, Gestión de Usuarios y Auditoría Fase A. |
+| 0.2 | 12/08/2026 | Product Owner + AI Collaborator | Alineó el documento con la implementación Multi-Persona y Gestión de Usuarios. |
+| 0.1 | 10/08/2026 | Product Owner + AI Collaborator | Primera propuesta técnica. |
 
 ---
 
-# 1. Propósito
+## 🎯 1. Propósito
 
-Este documento describe la implementación técnica vigente de:
+Describir **cómo está materializado técnicamente** el modelo de identidad y acceso que permite separar:
 
 ```text
-PERSON
-USER
-ROLE
-USER_ROLE
-PERSON_RELATION
-accesosLogin
+Usuario autenticado
+Persona propia
+Rol efectivo
+Persona Activa
+Relación con otra Persona
+Datos físicos todavía alojados bajo usuarios/{uid}
 ```
 
-y su uso por Gestión de Usuarios.
-
-La fuente conceptual es `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`; las reglas obligatorias están en `STD-USUARIOS_ROLES_Y_ACCESOS.md`; la estructura física vigente se contrasta con `TECH-DATOS-BASE-FIRESTORE-FASE1.md`. Las convenciones transversales de nuevos atributos se rigen por `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md`.
+Este documento no redefine permisos. Las reglas obligatorias pertenecen a `STD-USUARIOS_ROLES_Y_ACCESOS.md` y a los contratos de cada módulo.
 
 ---
 
-# 2. Principios técnicos vigentes
+## 🧱 2. Estructuras principales
 
-- `userId = UID Firebase Authentication`.
-- `personaId` es interno, estable e inmutable.
-- Convención de Persona: `per_001`, `per_002`, `per_003`, ...
-- `login` es funcional, único y modificable.
-- `USER` no duplica datos de PERSON ni de Firebase Authentication.
-- `USER_ROLE` usa el UID como ID del documento.
-- `PERSON_RELATION` relaciona Personas, no Usuarios.
-- La creación de Firebase Authentication continúa siendo manual en la versión gratuita/Spark.
-- El resto del alta se realiza desde Gestión de Usuarios mediante Firestore.
-- Firestore Rules constituye la barrera de seguridad definitiva.
-
----
-
-# 3. Colecciones
+La implementación utiliza actualmente:
 
 ```text
 personas
@@ -63,203 +67,213 @@ personaRelaciones
 accesosLogin
 ```
 
----
-
-# 4. PERSON → personas/{personaId}
-
-Ejemplo:
-
-```javascript
-personas/per_001 {
-  activo: true,
-  nombre: "Gloria Valentina",
-  apellidos: "Perdomo Pelayo",
-  nombreVisible: "Gloria Valentina",
-  email: "...",
-  avatar: "🌈",
-  fechaNacimiento: Timestamp,
-  idioma: "es",
-  zonaHoraria: "Europe/Madrid",
-  colegio: "Colegio Gaudem",
-  curso: "6º Primaria",
-  cursoEscolar: "2026-2027",
-
-  createdAt: Timestamp,   // si fue creada bajo Auditoría Fase A
-  createdBy: "adminUid",
-  updatedAt: Timestamp,
-  updatedBy: "adminUid"
-}
-```
-
-Los campos académicos y de contacto son opcionales según la Persona.
-
-La edición se realiza con `merge` para conservar atributos existentes que la pantalla todavía no gestione.
-
----
-
-# 5. USER → usuarios/{userId}
-
-Esquema vigente y deliberadamente mínimo:
-
-```javascript
-usuarios/{uid} {
-  activo: true,
-  personaId: "per_001",
-  login: "gloria",
-  fechaAlta: Timestamp
-}
-```
-
-No se almacenan aquí:
+Además, varias capacidades educativas continúan almacenándose por compatibilidad bajo:
 
 ```text
-authEmail
-createdAt
-createdBy
-updatedAt
-updatedBy
+usuarios/{userId}/...
+```
+
+Esto no convierte USER en propietario conceptual de todos esos datos. `ContextoUsuario` resuelve qué `userId` físico corresponde a la Persona Activa cuando un módulo legacy lo necesita.
+
+---
+
+## 👤 3. PERSON · `personas/{personaId}`
+
+`PERSON` representa a la persona real.
+
+Identificador:
+
+```text
+personaId
+```
+
+Propiedades técnicas relevantes:
+
+- estable e interno;
+- independiente de email, nombre y UID de Firebase;
+- fuente prioritaria de datos personales y académicos actuales;
+- puede incluir auditoría cuando fue creada o modificada bajo el modelo nuevo;
+- no requiere inventar auditoría para registros legacy.
+
+Campos habituales, no exhaustivos:
+
+```text
+activo
 nombre
+apellidos
+nombreVisible
+email
 avatar
-rol
+fechaNacimiento
+idioma
+zonaHoraria
+colegio
+curso
+cursoEscolar
+createdAt / createdBy
+updatedAt / updatedBy
 ```
-
-`fechaAlta` es la fecha propia de alta del Usuario.
 
 ---
 
-# 6. ROLE → roles/{roleId}
+## 🔐 4. USER · `usuarios/{userId}`
 
-Roles vigentes:
+La implementación actual utiliza:
 
 ```text
-alumno
-administracion
-gestion
+userId = UID de Firebase Authentication
+```
+
+USER conserva una identidad de acceso deliberadamente pequeña, por ejemplo:
+
+```text
+activo
+personaId
+login
+fechaAlta
+```
+
+No deben volver a duplicarse aquí datos cuya fuente es PERSON únicamente por comodidad.
+
+`fechaAlta` es un dato propio del alta del USER y no obliga a inventar `createdAt/createdBy` en documentos legacy.
+
+---
+
+## 🎭 5. ROLE y USER_ROLE
+
+Asignación vigente:
+
+```text
+usuarioRoles/{userId}
+```
+
+La implementación actual espera **un único USER_ROLE efectivo por Usuario**.
+
+El `roleId` referencia:
+
+```text
+roles/{roleId}
+```
+
+El nivel se obtiene del ROLE almacenado y se normaliza a:
+
+```text
 consulta
+Gestion        ← concepto funcional escrito como `gestion`
+administracion
 ```
 
-Ejemplo:
-
-```javascript
-roles/administracion {
-  nombre: "Administración",
-  nivelAcceso: "administracion",
-  activo: true
-}
-```
-
-Gestión de Usuarios v0.x asigna Roles existentes; no administra todavía el catálogo ROLE.
-
----
-
-# 7. USER_ROLE → usuarioRoles/{userId}
-
-```javascript
-usuarioRoles/{uid} {
-  userId: "{uid}",
-  roleId: "administracion",
-  activo: true,
-
-  createdAt: Timestamp,
-  createdBy: "adminUid",
-  updatedAt: Timestamp,
-  updatedBy: "adminUid"
-}
-```
-
-El ID del documento es directamente el UID Firebase.
-
----
-
-# 8. accesosLogin → accesosLogin/{login}
-
-Permite resolver el login funcional antes de la autenticación:
-
-```javascript
-accesosLogin/jperdomo {
-  userId: "{uid}",
-  authEmail: "correo-auth@example.com",
-  activo: true,
-
-  createdAt: Timestamp,
-  createdBy: "adminUid",
-  updatedAt: Timestamp,
-  updatedBy: "adminUid"
-}
-```
-
-`authEmail` pertenece a este mecanismo técnico y a Firebase Authentication; no se duplica en USER.
-
-Si cambia el login, se crea la nueva clave funcional y se retira la anterior conservando, cuando exista, la información original de creación.
-
----
-
-# 9. PERSON_RELATION → personaRelaciones/{sourcePersonId__targetPersonId}
-
-```javascript
-personaRelaciones/per_002__per_001 {
-  sourcePersonId: "per_002",
-  targetPersonId: "per_001",
-  tipoRelacion: "psicologo",
-  nivelAcceso: "gestion",
-  activo: true,
-
-  createdAt: Timestamp,
-  createdBy: "adminUid",
-  updatedAt: Timestamp,
-  updatedBy: "adminUid"
-}
-```
-
-Una Relación nunca eleva el nivel concedido por el Rol.
-
----
-
-# 10. Persona Activa
-
-La sesión mantiene separados:
+La forma canónica es:
 
 ```text
-Usuario autenticado
-Persona propia
+consulta
+gestion
+administracion
+```
+
+### Regla importante
+
+No se codifica en este documento una equivalencia fija:
+
+```text
+alumno = gestion
+```
+
+Esa fue una interpretación histórica ya sustituida.
+
+El alumno puede escribir sus propios datos educativos cuando el contrato del módulo lo permite sin recibir por ello capacidad adulta de `gestion`.
+
+El código actual carga `roles/{roleId}.nivelAcceso`; por tanto, el catálogo de ROLE y el estándar vigente gobiernan el significado, no una tabla histórica copiada aquí.
+
+---
+
+## 🔗 6. PERSON_RELATION · `personaRelaciones/{relationId}`
+
+Una Relación conecta Personas, no Usuarios.
+
+Campos conceptuales:
+
+```text
+sourcePersonId
+targetPersonId
+tipoRelacion
+nivelAcceso
+activo
+createdAt / createdBy
+updatedAt / updatedBy
+```
+
+Para Persona Activa ajena:
+
+```text
+nivel efectivo = nivel más restrictivo entre Rol y Relación
+```
+
+Una Relación puede limitar, pero no elevar por sí sola, la capacidad general concedida por el Rol.
+
+---
+
+## 🎯 7. Persona Activa
+
+`compartido/js/contexto-usuario.js` mantiene separados:
+
+```text
+USER autenticado
+PERSON propia
 Persona Activa
-nivel efectivo
+Relación, si existe
+nivelAcceso efectivo
+userId físico de la Persona Activa
 ```
 
-Cambiar Persona Activa no cambia la identidad autenticada ni el autor de auditoría.
+Reglas técnicas actuales:
+
+1. sin selección válida, Persona Activa = Persona propia;
+2. una Persona ajena requiere Relación activa válida;
+3. si la Persona relacionada no existe o no puede resolverse correctamente, se vuelve a la Persona propia;
+4. la selección se conserva actualmente en `sessionStorage`;
+5. cambiar Persona Activa no cambia Firebase Authentication ni la autoría real;
+6. cuando una subcolección legacy vive bajo `usuarios/{uid}`, debe existir exactamente un USER activo asociado a la Persona Activa; cero o varios detienen la resolución en lugar de elegir arbitrariamente.
 
 ---
 
-# 11. Gestión de Usuarios gratuita
+## 🔑 8. Login funcional · `accesosLogin/{login}`
 
-Firebase Authentication se crea manualmente en Firebase Console.
+`accesosLogin` permite resolver el login funcional utilizado por la Academia hacia la identidad técnica necesaria para autenticación.
 
-Desde la Academia, un administrador mantiene de forma coordinada:
+Puede conservar, según el registro:
 
 ```text
-usuarios/{uid}
-personas/{personaId}
-usuarioRoles/{uid}
-accesosLogin/{login}
-personaRelaciones/{source__target}
+userId
+authEmail
+activo
+createdAt / createdBy
+updatedAt / updatedBy
 ```
 
-Las operaciones se ejecutan mediante transacción Firestore cuando corresponde.
+`authEmail` pertenece al mecanismo de autenticación/login y no debe convertirse en duplicado indiscriminado dentro de USER.
 
 ---
 
-# 12. Auditoría Fase A
+## 🛠️ 9. Gestión de Usuarios
 
-Se auditan:
+En la operación vigente:
 
-```text
-PERSON
-USER_ROLE
-PERSON_RELATION
-accesosLogin
-```
+1. la identidad de **Firebase Authentication** se crea manualmente;
+2. Gestión de Usuarios administra las estructuras Firestore coordinadas;
+3. las operaciones sensibles requieren nivel `administracion`;
+4. la interfaz no sustituye las Firestore Rules;
+5. las actualizaciones deben conservar atributos no gestionados cuando corresponda y no fabricar datos históricos.
 
-Campos estándar:
+La guía operativa vigente es `docs/manuales/MANUAL-GESTION_DE_USUARIOS.md`.
+
+---
+
+## 🧾 10. Auditoría
+
+Las entidades nuevas o intervenidas aplican las convenciones propietarias de datos.
+
+Cuando corresponda:
 
 ```text
 createdAt
@@ -268,66 +282,84 @@ updatedAt
 updatedBy
 ```
 
-Reglas técnicas:
+El actor de auditoría es el **USER autenticado real**, no la Persona Activa.
 
-1. `createdAt/createdBy` se asignan únicamente cuando la entidad se crea realmente.
-2. `updatedAt/updatedBy` se asignan en cada guardado administrativo.
-3. El autor es siempre el UID del Usuario administrador autenticado.
-4. Los registros legacy no reciben una creación ficticia si ese dato histórico no existe.
-5. USER conserva su esquema mínimo y queda fuera de estos cuatro campos.
-6. No se implementa todavía historial completo de eventos.
+USER conserva su esquema mínimo histórico mientras no exista una decisión explícita de migración.
 
 ---
 
-# 13. Bloque Registro
+## 🔒 11. Firestore Rules
 
-Gestión de Usuarios muestra un bloque de solo consulta:
-
-```text
-5. Registro
-```
-
-con:
+Fuente canónica versionada en el repositorio:
 
 ```text
-Creado
-Creado por
-Última actualización
-Actualizado por
+compartido/firebase/FireStore Rules.txt
 ```
 
-La interfaz puede resolver un UID a `nombreVisible` para presentación. Firestore conserva únicamente el UID como autor.
+Reglas operativas:
 
-Para registros legacy, `USER.fechaAlta` puede mostrarse como fecha de alta/creación cuando no exista `createdAt`; esto no genera ni altera datos históricos en Firestore.
+- la UI no es frontera de seguridad;
+- Persona Activa no concede permisos por sí sola;
+- las Rules deben validar identidad/relación/capacidad según el contrato implementado;
+- un cambio en GitHub **no demuestra que las reglas estén desplegadas en Firebase**;
+- antes de afirmar que una regla está activa en producción debe existir evidencia del despliegue correspondiente.
 
 ---
 
-# 14. Seguridad
+## 🔄 12. Estado de transición
 
-La administración se reconoce mediante:
+El modelo nuevo de identidad está activo, pero persiste una compatibilidad deliberada:
 
 ```text
-usuarioRoles/{request.auth.uid}
-        ↓
-roles/{roleId}.nivelAcceso == "administracion"
+Identidad y contexto nuevos
++
+subcolecciones funcionales históricas bajo usuarios/{uid}
 ```
 
-Las Rules permiten al administrador mantener las colecciones administrativas y conservan las restricciones de los demás usuarios.
+La transición no exige una migración física global mientras el resolver compartido mantenga una correspondencia segura y el coste de migrar no aporte valor suficiente.
+
+No crear una segunda estructura de datos solo para eliminar esa compatibilidad visualmente.
 
 ---
 
-# 15. Fuera de alcance actual
+## ⏸️ 13. Fuera de alcance actual
 
-```text
-Cloud Functions
-Firebase Admin SDK
-Blaze
-historial completo de auditoría (Fase B)
-permisos granulares por módulo
-impersonación
-administración del catálogo ROLE
-```
+No se consideran implementados por este documento:
+
+- múltiples Roles simultáneos por USER;
+- permisos granulares universales por operación;
+- impersonación real;
+- migración global de todas las subcolecciones desde `usuarios/{uid}` hacia PERSON;
+- historial completo de auditoría;
+- administración automática de Firebase Authentication mediante backend/Admin SDK;
+- un modelo académico histórico completo.
 
 ---
 
-**Fin de TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md · v0.3**
+## ✅ 14. Quality Gate
+
+Antes de modificar identidad/acceso verificar:
+
+- [ ] USER autenticado y Persona Activa siguen separados;
+- [ ] el propietario de permisos es `STD-USUARIOS_ROLES_Y_ACCESOS.md`;
+- [ ] no se reintroduce `alumno = gestion` como regla fija;
+- [ ] el nivel relacionado no supera al Rol;
+- [ ] autoría usa al USER real;
+- [ ] se reutiliza `ContextoUsuario` antes de crear otro resolver;
+- [ ] módulos legacy resuelven el `userId` físico de la Persona Activa de forma inequívoca;
+- [ ] Firestore Rules versionadas y estado desplegado no se confunden;
+- [ ] no se inventa auditoría histórica;
+- [ ] no se migra masivamente por estética.
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | ✅ Activo como referencia técnica de transición |
+| **Versión activa** | 0.4 |
+| **Fuente normativa** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` |
+| **Fuente de modelo** | `MODELO_ROLES.md` |
+| **Implementación principal** | `ContextoUsuario` + Gestión de Usuarios + APIs propietarias + Firestore Rules |
+| **Migración global de subcolecciones** | No requerida actualmente |
