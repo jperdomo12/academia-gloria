@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/RELEASE_NOTES.md` |
-| **Versión del documento** | 1.1 |
+| **Versión del documento** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 03/08/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 04/09/2026 |
 | **Propietario** | Gobierno del Producto |
 | **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
 | **Ámbito** | Versionado, publicación y trazabilidad de entregas de Academia Gloria Valentina |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registra el PR #74 como entrega visual validada y fusionada sin nueva versión de producto: `Mis Guacamayas` plegado por defecto, flechas consistentes y alineación de los tres bloques de reconocimientos. |
 | 1.1 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el documento con las entregas reales fusionadas entre 29Ago y 03Sep2026. Distingue releases formales de GitHub, versiones históricas internas y bloques de producto validados todavía sin nueva versión asignada. Registra Gestión de Misiones, evidencias académicas, refuerzos, Análisis Educativo, limpieza de pruebas, Recompensas/Reconocimientos, `Ver trabajo`, recordatorios de calendario y los nuevos portales de 6.º. Corrige la inconsistencia de estado documental de la versión anterior. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera consolidación formal. Incorpora metadatos, política de versionado, estado de release, estructura común y preserva el contenido existente de `v2.3-RC6`. |
 
@@ -130,7 +131,7 @@ Esto describe su estado sin inventar versionado.
 
 | Campo | Valor |
 |---|---|
-| **Período cubierto** | 29/08/2026 – 03/09/2026 |
+| **Período cubierto** | 29/08/2026 – 04/09/2026 |
 | **Estado** | Validado y fusionado en `main` |
 | **Nueva versión de producto** | No asignada todavía |
 | **Criterio** | Se registran capacidades reales y cerradas; no pendientes ni trabajo exploratorio |
@@ -139,7 +140,36 @@ Estas entregas representan una evolución funcional importante de la Academia, p
 
 ---
 
-## 4.2 03Sep2026 · 6.º de Primaria: portales y estándar de tarjetas
+## 4.2 04Sep2026 · Mi Camino: historial plegable de Guacamayas
+
+**PR #74 · `Fix: plegar Mis Guacamayas sin tocar la lógica`**
+
+### Entregado
+
+- `🦜 Mis Guacamayas` se presenta como historial especializado mediante `<details>` nativo;
+- el historial comienza cerrado por defecto;
+- al abrirlo muestra las mismas Guacamayas ya existentes;
+- el estado abierto se conserva durante re-renderizados del módulo;
+- `🌈 Historia de crecimiento` mantiene su comportamiento y recibe una flecha visual consistente de apertura/cierre;
+- Último reconocimiento, Mis Guacamayas e Historia de crecimiento se alinean al ancho de referencia de Constancia/Crecimiento (`max-width: 1320px`).
+
+### Alcance técnico
+
+- solo se modificaron `reconocimientos-camino.js` y `reconocimientos-camino.css`;
+- no se modificaron datos, Firestore, creación de Guacamayas, Misiones, navegación ni `mision-libre.js`;
+- no se añadió `MutationObserver` ni script auxiliar.
+
+### Validación
+
+El Product Owner probó el ajuste localmente, indicó que quedó **muy bien**, solicitó únicamente igualar la flecha de Historia de crecimiento y aprobó la versión final antes del merge.
+
+### Antecedente preservado
+
+El PR #72 fue descartado sin merge. El cierre de PR #74 confirma el criterio de resolver mejoras menores directamente en el componente propietario y con el cambio mínimo posible.
+
+---
+
+## 4.3 03Sep2026 · 6.º de Primaria: portales y estándar de tarjetas
 
 **PR #49 · `6.º: nuevos portales y estándar de tarjetas`**
 
@@ -172,7 +202,7 @@ Portada de 6.º y portal de Matemáticas aprobados funcional y visualmente por e
 
 ---
 
-## 4.3 02Sep2026 · Calendario: recordatorios al ingresar
+## 4.4 02Sep2026 · Calendario: recordatorios al ingresar
 
 **PR #48 · `Calendario: recordatorios al ingresar en la Academia`**
 
@@ -191,7 +221,7 @@ Comportamiento funcional aprobado por el usuario.
 
 ---
 
-## 4.4 01–02Sep2026 · Recompensas / Sistema de Motivación y Reconocimiento V1
+## 4.5 01–02Sep2026 · Recompensas / Sistema de Motivación y Reconocimiento V1
 
 **PRs #40, #41, #42, #43, #44, #46 y #47**
 
@@ -250,7 +280,7 @@ Primera automatización segura basada en señales de sesiones reales:
 
 ---
 
-## 4.5 02Sep2026 · Acceso unificado `👁️ Ver trabajo`
+## 4.6 02Sep2026 · Acceso unificado `👁️ Ver trabajo`
 
 **PR #45 · `Acceso de consulta · Ver trabajo`**
 
@@ -285,7 +315,7 @@ Se validaron explícitamente:
 
 ---
 
-## 4.6 31Ago–01Sep2026 · Análisis Educativo y calidad de datos
+## 4.7 31Ago–01Sep2026 · Análisis Educativo y calidad de datos
 
 **PRs #35, #36 y #37**
 
@@ -331,7 +361,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.7 31Ago2026 · Gestión de Misiones consolidada
+## 4.8 31Ago2026 · Gestión de Misiones consolidada
 
 **PRs #24, #25, #29, #31, #34, #38 y #39**
 
@@ -364,7 +394,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.8 30–31Ago2026 · Refuerzos basados en evidencias
+## 4.9 30–31Ago2026 · Refuerzos basados en evidencias
 
 **PRs #20, #21, #32, #33 y #34**
 
@@ -395,7 +425,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.9 29–30Ago2026 · Repaso Académico y expansión curricular asistida
+## 4.10 29–30Ago2026 · Repaso Académico y expansión curricular asistida
 
 **PRs #16, #17, #21, #22 y #23**
 
@@ -433,7 +463,7 @@ El proceso interno cubre análisis, diseño, implementación, integración, vali
 
 ---
 
-## 4.10 30–31Ago2026 · Creciendo por Dentro
+## 4.11 30–31Ago2026 · Creciendo por Dentro
 
 **PRs #18, #19 y #27**
 
@@ -474,7 +504,7 @@ Se corrigió un caso real en el que un audio grande podía impedir guardar toda 
 - nuevo framework;
 - nuevo Design System.
 
-A 03/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
+A 04/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
 
 ---
 
@@ -604,7 +634,7 @@ Estado: Validada y fusionada · sin nueva versión asignada
 | Campo | Valor |
 |---|---|
 | **Estado documental** | Activo |
-| **Última sincronización** | 03/09/2026 |
+| **Última sincronización** | 04/09/2026 |
 | **Release formal comprobada** | `2.0` · publicada 20/07/2026 |
 | **Versión histórica interna preservada** | `v2.3-RC6` · 01/08/2026 |
 | **Entregas posteriores** | Validadas y fusionadas; todavía sin nueva versión de producto asignada |

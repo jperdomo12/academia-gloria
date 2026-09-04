@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo · Academia funcionalmente congelada |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 04/09/2026 |
@@ -29,6 +29,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 04/09/2026 | Product Owner + AI Collaborator | Registra PR #74 aprobado y fusionado, cierra la incidencia visual de Guacamayas, actualiza el baseline funcional y devuelve la Academia a congelación sin trabajo funcional activo. |
 | 1.4 | 04/09/2026 | Product Owner + AI Collaborator | Cierra P0/P1/P2, registra el baseline estable `main` tras PR #71, descarta PR #72 sin merge, formaliza congelación funcional y consolida pendientes para retomar después del inicio de clases, incluida la mejora del proceso de incorporación de nuevas Semillas. |
 | 1.3 | 04/09/2026 | Product Owner + AI Collaborator | Cierre de revisión P2 en 32/32 documentos. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | Registró PR #68 fusionado, cierre de P2-21 a P2-30 y dejó P2-31/P2-32 como último tramo. |
@@ -85,16 +86,19 @@ Mientras permanezca congelada:
 - sí se permite corregir un problema crítico de seguridad, pérdida/corrupción de datos o bloqueo del uso real, previa verificación;
 - la documentación puede actualizarse para preservar continuidad.
 
-### Baseline estable de congelación
+### Baseline funcional estable
 
 ```text
 main
-4db6c734556e7fdc702bd0b78b228173d64ac036
+d893e977d2c5f122b97c7efecef1f665a1988f38
 ```
 
-Este commit incluye la mejora aprobada de Creciendo por Dentro del **PR #71**.
+Este baseline incluye:
 
-El **PR #72** fue cerrado **sin merge** y su rama fue restablecida al mismo commit de `main`. No reutilizar ese enfoque al retomar el ajuste de Guacamayas.
+- **PR #71**, mejora aprobada de Creciendo por Dentro;
+- **PR #74**, ajuste visual mínimo aprobado de `Mis Guacamayas`.
+
+El **PR #72** permanece como antecedente histórico: fue cerrado **sin merge** y su enfoque con ajuste externo/observador no debe reutilizarse.
 
 ---
 
@@ -138,6 +142,8 @@ El **PR #72** fue cerrado **sin merge** y su rama fue restablecida al mismo comm
   - ✨ Reconocimientos de Lía;
   - 🤝 Retos cooperativos cuando aplique.
 - Principios vigentes: actividad/progreso real, sin rankings, sin comparación con otros y sin pérdida de recompensas.
+- ✅ `Mis Guacamayas` consolidado como historial especializado plegado por defecto en PR #74.
+- ✅ `Historia de crecimiento` conserva su lógica y utiliza indicador visual de apertura/cierre consistente.
 
 ### Calendarios y curso
 
@@ -152,7 +158,9 @@ El **PR #72** fue cerrado **sin merge** y su rama fue restablecida al mismo comm
 
 ---
 
-## 🌱 7. Creciendo por Dentro · incidencia revisada y cerrada
+## 🌱 7. Incidencias recientes revisadas y cerradas
+
+### 7.1 Creciendo por Dentro · Misión / práctica libre
 
 Se verificó mediante una Misión de prueba real que:
 
@@ -169,14 +177,32 @@ El flujo funcionó correctamente.
 
 La situación observada durante una sesión con la psicóloga probablemente correspondió a realizar la misma Semilla como **práctica libre**, sin entrar desde la Misión; por tanto la práctica se guardó, pero no avanzó aquella Misión.
 
-### Mejora aprobada y ya integrada
-
-PR #71 añade una advertencia cuando una Semilla abierta libremente pertenece a una Misión activa:
+**PR #71**, probado y aprobado, añade una advertencia cuando una Semilla abierta libremente pertenece a una Misión activa:
 
 - continuar la Misión para que la práctica cuente; o
 - practicar libremente de forma consciente.
 
-Esta mejora fue probada y aprobada antes del merge.
+### 7.2 Mi Camino · Guacamaya repetida visualmente
+
+✅ **Cerrado · PR #74 · 04/09/2026**
+
+Diagnóstico confirmado:
+
+- no había dos Guacamayas duplicadas en datos;
+- el mismo reconocimiento podía aparecer como `Último reconocimiento`, dentro de `Mis Guacamayas` y dentro de `Historia de crecimiento`;
+- el problema percibido era de presentación.
+
+Solución aprobada:
+
+- se mantiene `Último reconocimiento` sin cambiar su lógica;
+- `🦜 Mis Guacamayas` se presenta como historial especializado, comprimido inicialmente;
+- al abrirlo muestra las Guacamayas ya existentes;
+- `🌈 Historia de crecimiento` permanece igual funcionalmente y muestra flecha de apertura/cierre consistente;
+- los tres bloques se alinean al ancho de referencia de Constancia/Crecimiento (`max-width: 1320px`);
+- se modificaron únicamente `reconocimientos-camino.js` y `reconocimientos-camino.css`;
+- no se añadieron observadores, scripts auxiliares ni cambios en Firestore, Misiones o datos.
+
+Lección preservada del PR #72: para ajustes menores, modificar el componente propietario con el cambio mínimo; no crear capas externas que observen y reescriban el DOM.
 
 ---
 
@@ -214,25 +240,7 @@ No diseñar todavía el producto; retomar cuando vuelva a existir capacidad de d
 
 La fuente ya revisada propone actividades relacionadas con lenguaje, narración, opinión propia, instrucciones, autonomía y expresión. Al retomarlo, evitar crear un sistema paralelo o una pantalla por actividad; estudiar integración con Mi Universo, Misiones y Creciendo por Dentro.
 
-### 8.4 Mi Camino · duplicación visual de Guacamaya
-
-**Estado:** 🟡 Conocido · deliberadamente pospuesto.
-
-Síntoma:
-
-- aparece repetida una Guacamaya, por ejemplo `🦜 Guacamaya Valiente · Algo que conseguí esta semana`;
-- al Product Owner le gusta más la presentación del segundo bloque;
-- si ese segundo bloque actúa como historial, debería aparecer inicialmente comprimido.
-
-Antecedente importante:
-
-- el intento del PR #72 no alcanzó una solución estable;
-- provocó incluso un bloqueo de la página en una iteración de prueba;
-- el PR fue cerrado sin merge y la rama restablecida a `main`.
-
-**Regla al retomarlo:** reanalizar desde cero el componente existente de Recompensas y resolver con el cambio mínimo posible; no reutilizar el parche/observador del PR #72.
-
-### 8.5 Creciendo por Dentro · proceso de incorporación de nuevas Semillas
+### 8.4 Creciendo por Dentro · proceso de incorporación de nuevas Semillas
 
 **Estado:** 🟡 Incidencia de proceso / deuda técnica · deliberadamente pospuesta.
 
@@ -276,7 +284,7 @@ Observación del Product Owner:
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional** | `4db6c734556e7fdc702bd0b78b228173d64ac036` |
+| **Baseline funcional** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
 | **Estado** | 🧊 Academia funcionalmente congelada |
 | **Desarrollo funcional activo** | Ninguno |
 | **Prioridad operativa** | Uso real de la Academia durante el inicio de clases |
@@ -293,9 +301,8 @@ Cuando el Product Owner decida retomar:
 1. partir del `main` vigente;
 2. revisar este HandOff y `ROADMAP.md`;
 3. confirmar si la primera prioridad sigue siendo **Velocidad de voz por Persona** o si el uso escolar real produjo una necesidad más urgente;
-4. tratar la duplicación de Guacamaya como mejora menor independiente y solo después de un análisis nuevo del componente actual;
-5. no añadir nuevas Semillas con el proceso anterior: aplicar primero el flujo `icono genérico → Semilla funcional → nombre/ruta de imagen → imagen del Product Owner → prueba visual`;
-6. construir una sola iniciativa por vez y validar antes de abrir la siguiente.
+4. no añadir nuevas Semillas con el proceso anterior: aplicar primero el flujo `icono genérico → Semilla funcional → nombre/ruta de imagen → imagen del Product Owner → prueba visual`;
+5. construir una sola iniciativa por vez y validar antes de abrir la siguiente.
 
 ---
 
@@ -307,8 +314,10 @@ Cuando el Product Owner decida retomar:
 - Verificación del flujo Creciendo por Dentro → Esperando a mi familia.
 - PR #71 aprobado y fusionado.
 - PR #72 descartado completamente y no fusionado.
-- Academia devuelta a un baseline estable.
-- Backlog de continuidad actualizado, incluida la mejora del proceso para nuevas Semillas.
+- Reanálisis del issue visual de Guacamayas.
+- PR #74 aprobado y fusionado con solución mínima y estable.
+- `Mis Guacamayas` queda como historial plegado por defecto y los tres bloques alineados.
+- Backlog actualizado: Guacamayas ya no está pendiente.
 
 ## Qué estamos trabajando ahora
 
@@ -323,8 +332,8 @@ La prioridad inmediata es el uso real durante el inicio del curso escolar.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.4 |
+| **Versión activa** | 1.5 |
 | **Estado del producto** | 🧊 Congelado funcionalmente desde 04/09/2026 |
-| **Baseline funcional al congelar** | `4db6c734556e7fdc702bd0b78b228173d64ac036` |
+| **Baseline funcional estable** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
 | **Mecanismo de continuidad** | Último HandOff + instrucción breve + verificación dirigida de fuentes |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |

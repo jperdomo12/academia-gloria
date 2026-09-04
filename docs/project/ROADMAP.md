@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.6 |
+| **Versión del documento** | 1.7 |
 | **Estado** | Activo · evolución funcional congelada |
 | **Última actualización** | 04/09/2026 |
 | **Responsables** | Juan Perdomo + AI Collaborator |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registra el cierre del ajuste visual de Guacamayas mediante PR #74, actualiza el baseline funcional estable y retira este punto del backlog congelado. |
 | 1.6 | 04/09/2026 | Juan Perdomo + AI Collaborator | Cierra la jornada documental P0/P1/P2, consolida el baseline funcional estable tras PR #71, registra PR #72 descartado sin merge, formaliza la congelación funcional por inicio del curso y deja un backlog pequeño y explícito para retomar posteriormente, incluida la simplificación del proceso para incorporar nuevas Semillas. |
 | 1.5 | 03/09/2026 | Juan Perdomo + IA | Cerró la jornada P0 de sincronización documental del 03Sep2026 y dejó como siguiente frente funcional la expansión curricular progresiva de 6.º. |
 | 1.4 | 03/09/2026 | Juan Perdomo + IA | Sincronizó Gestión de Misiones V1, Repaso Académico, Misiones libres, refuerzos, Análisis Educativo V1, datos de prueba, eliminación controlada, Recompensas V1, recordatorios y base visual de 6.º. |
@@ -69,12 +70,17 @@ No sustituye:
 
 Por decisión del Product Owner, la Academia queda **funcionalmente congelada desde el 04/09/2026** para priorizar el inicio del curso escolar y utilizar el producto real con Gloria.
 
-### Baseline estable
+### Baseline funcional estable
 
 ```text
 main
-4db6c734556e7fdc702bd0b78b228173d64ac036
+d893e977d2c5f122b97c7efecef1f665a1988f38
 ```
+
+Este baseline incorpora:
+
+- PR #71 · aviso cuando una Semilla abierta libremente pertenece a una Misión activa;
+- PR #74 · ajuste visual mínimo y aprobado de `Mis Guacamayas`.
 
 ### Regla durante la congelación
 
@@ -279,6 +285,25 @@ Si una Semilla abierta como práctica libre pertenece a una Misión activa, la A
 
 ---
 
+## 4.9 Mi Camino · historial de Guacamayas
+
+✅ **Cerrado · 04Sep2026 · PR #74**
+
+Tras reanalizar el problema desde el componente propietario se confirmó que la repetición observada no era duplicación de datos: una misma Guacamaya podía aparecer como último reconocimiento, dentro de `Mis Guacamayas` y dentro de la Historia de crecimiento.
+
+Se adoptó la solución visual mínima:
+
+- `Último reconocimiento` queda sin cambios;
+- `🦜 Mis Guacamayas` funciona como historial especializado y aparece comprimido inicialmente;
+- al abrirlo muestra las mismas Guacamayas existentes;
+- `🌈 Historia de crecimiento` conserva su lógica y también muestra indicador visual de apertura/cierre;
+- los tres bloques de reconocimientos se alinean al ancho de referencia de Constancia/Crecimiento (`max-width: 1320px`);
+- no se modificaron datos, Firestore, Misiones ni lógica de creación de Recompensas.
+
+Antecedente preservado: el PR #72 fue descartado sin merge. Su enfoque con un ajuste externo/observador no debe reutilizarse.
+
+---
+
 # ⏳ 5. Backlog congelado
 
 Nada de esta sección debe implementarse mientras la Academia permanezca congelada.
@@ -353,33 +378,6 @@ No crear una pantalla por cada actividad. Estudiar cuáles se integran naturalme
 - Creciendo por Dentro;
 - Rincón de Lectura;
 - rutinas familiares breves.
-
----
-
-## 🟡 Ajuste conocido · Mi Camino / Guacamayas
-
-**Estado:** conocido, no bloqueante y deliberadamente pospuesto.
-
-Síntoma:
-
-- una Guacamaya puede aparecer duplicada en `Así voy creciendo`;
-- caso observado: `🦜 Guacamaya Valiente · Algo que conseguí esta semana`;
-- el Product Owner prefiere la presentación del segundo bloque;
-- si ese bloque funciona como historial de Guacamayas, debe estudiarse que aparezca inicialmente comprimido.
-
-### Antecedente
-
-El **PR #72** intentó resolver esta mejora junto con otro ajuste menor, pero no alcanzó una solución estable y llegó a provocar bloqueo de `Mi Camino` durante una prueba.
-
-Decisión:
-
-- PR #72 cerrado **sin merge**;
-- rama restablecida al mismo commit de `main`;
-- ningún cambio de PR #72 forma parte del baseline congelado.
-
-### Regla al retomar
-
-> Reanalizar desde cero el componente actual de Recompensas y resolver con el mínimo cambio posible. No reutilizar el observador/parche del PR #72.
 
 ---
 
@@ -502,7 +500,6 @@ Backlog conocido, sin prioridad definitiva hasta reactivar:
 P1  Velocidad de voz por Persona
 P1  Comprensión de preguntas en Mi Universo
 P1  Integración selectiva de actividades sugeridas por psicología/familia
-🟡  Duplicación visual de Guacamayas en Mi Camino
 🟡  Simplificar incorporación de nuevas Semillas
 P1  Nuevos Temas de 6.º según material escolar real
 ```
@@ -521,6 +518,7 @@ P1  Nuevos Temas de 6.º según material escolar real
 | Datos de prueba / limpieza | ✅ Listo |
 | Eliminación controlada de Misiones completadas | ✅ Listo |
 | Recompensas / Reconocimientos V1 | ✅ Listo |
+| Historial `Mis Guacamayas` | ✅ PR #74 integrado |
 | Calendarios / recordatorios actuales | ✅ Listo |
 | 6.º + Matemáticas | ✅ Base lista |
 | Mi Baúl V1 | ✅ Listo |
@@ -531,7 +529,6 @@ P1  Nuevos Temas de 6.º según material escolar real
 | Velocidad de voz por Persona | ⏳ Congelado |
 | Mi Universo · comprender preguntas | ⏳ Congelado |
 | Actividades sugeridas desde email | ⏳ Congelado |
-| Duplicación visual de Guacamaya | 🟡 Conocida · congelada |
 | Proceso de incorporación de nuevas Semillas | 🟡 Mejorar antes de ampliar catálogo |
 | Desarrollo funcional general | 🧊 Congelado desde 04/09/2026 |
 
@@ -560,10 +557,10 @@ P1  Nuevos Temas de 6.º según material escolar real
 | Campo | Valor |
 |---|---|
 | **Estado del Roadmap** | ✅ Activo |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado funcional del producto** | 🧊 Congelado |
 | **Fecha de congelación** | 04/09/2026 |
-| **Baseline funcional** | `4db6c734556e7fdc702bd0b78b228173d64ac036` |
+| **Baseline funcional** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
 | **Prioridad inmediata** | Inicio de clases + uso real |
 | **Reactivación** | Solo por decisión explícita del Product Owner |
 
