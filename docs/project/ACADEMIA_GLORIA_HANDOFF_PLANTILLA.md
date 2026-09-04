@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 04/09/2026 |
@@ -29,8 +29,9 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Registra PR #68 fusionado, cierre de P2-21 a P2-30, actualización/archivo de referencias técnicas y visiones, y deja P2-31/P2-32 como último tramo documental pendiente después de la aprobación del lote actual. |
-| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronizó el HandOff con P0/P1 cerrados y P2 en ejecución por lotes, eliminando pendientes funcionales históricos como `On going`. |
+| 1.3 | 04/09/2026 | Product Owner + AI Collaborator | Cierra la revisión P2 en 32/32 documentos. Registra la fusión de P2-21 a P2-30 mediante PR #69, archiva el modelo histórico de Usuarios/Alumnos/Roles, sincroniza el README de Visión y deja únicamente el PR final de P2 pendiente de aprobación/merge. |
+| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | Registró PR #68 fusionado, cierre de P2-21 a P2-30 y dejó P2-31/P2-32 como último tramo. |
+| 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronizó el HandOff con P0/P1 cerrados y P2 en ejecución por lotes. |
 | 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Activó la plantilla como mecanismo oficial de continuidad. |
 
 ---
@@ -46,8 +47,6 @@ No sustituye código, estándares, especificaciones, ramas, PR ni comportamiento
 ---
 
 ## 🧭 2. Cómo utilizarlo
-
-Procedimiento normal:
 
 1. proporcionar el último HandOff disponible;
 2. abrir un nuevo chat;
@@ -107,36 +106,44 @@ Reglas de trabajo:
 |---|---|
 | P0 | ✅ Cerrado |
 | P1 | ✅ 15/15 cerrados |
-| P2 | 🟡 En curso · **30/32 revisados** |
+| P2 | ✅ **32/32 revisados** · pendiente únicamente de fusionar el PR final |
 | P2-01 a P2-10 | ✅ Fusionados · PR #67 |
-| P2-11 a P2-20 | ✅ Fusionados · PR #68 · merge `2995f4dc93495f92b2b0e69c6bee98267f784202` |
-| P2-21 a P2-30 | ✅ 10/10 revisados · rama `docs/p2-batch-21-30` · pendiente PR/aprobación |
-| P2-31 a P2-32 | ⏭️ Tramo final después de cerrar el lote 21-30 |
+| P2-11 a P2-20 | ✅ Fusionados · PR #68 |
+| P2-21 a P2-30 | ✅ Fusionados · PR #69 · merge `60b934557afe0ad5072a8e5af30afd79e0dfcd94` |
+| P2-31 a P2-32 | ✅ Revisados en rama `docs/p2-final-31-32` |
 
 En P2, revisar no implica modificar; una fuente ya vigente puede cerrarse sin cambios.
 
 ---
 
-## 📚 7. Resultado del lote P2-21 a P2-30
+## 📚 7. Cierre P2-31 y P2-32
 
-- `TECH-DATOS-BASE-FIRESTORE-FASE1.md` → histórico; referencia vigente trasladada a transición de Usuarios/Firestore.
-- `TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` → v0.4 activo como referencia técnica de transición.
-- `01_PRINCIPIOS_PEDAGOGICOS.md` → original histórico; `FOUNDATION.md` y ADN gobiernan hoy el fundamento.
-- `02_VISION_DEL_RINCON_DE_LECTURA.md` → v1.1 visión activa, no contrato funcional.
-- `03_PERFIL_INTELIGENTE_DEL_USUARIO.md` → v1.1 visión estratégica sin perfil psicológico automático.
-- `04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA.md` → v1.1 visión estratégica basada en fuentes propietarias, no memoria central paralela.
-- `05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS.md` → v1.1 manifiesto activo; mundos conceptuales separados del estado implementado.
-- `06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA.md` → original histórico; `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` gobierna actualmente.
-- `07_IDENTIDAD_GUACAMAYAS.md` → v1.1 visión fundacional; retirada colisión histórica `STD-008`.
-- `08_MI_CAMINO.md` → v1.1 visión activa alineada con Mi Camino / Gestión de Misiones / Persona Activa / Reconocimientos.
+### P2-31 · `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`
 
-Los documentos originales trasladados a `history/` mantienen punteros de compatibilidad en sus rutas anteriores para no romper referencias mientras concluye la sincronización.
+El modelo de agosto se conserva íntegramente en:
+
+```text
+docs/history/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md
+```
+
+La ruta anterior queda como puntero histórico de compatibilidad.
+
+Motivo: ya existe un modelo conceptual activo (`docs/models/MODELO_ROLES.md`) y un estándar propietario (`STD-USUARIOS_ROLES_Y_ACCESOS.md`). El documento histórico mantenía además supuestos sustituidos, entre ellos múltiples Roles efectivos por Usuario, `consulta = solo lectura` universal y ámbitos como base persistida del acceso.
+
+### P2-32 · `docs/vision/README.md`
+
+Se sincroniza como puerta de entrada a las Visiones:
+
+- distingue visión de contrato funcional;
+- lista visiones activas;
+- identifica fuentes históricas/sustituidas;
+- recuerda que la visión inspira, las fuentes propietarias gobiernan y el producto real confirma implementación.
 
 ---
 
 ## 🌿 8. Reglas que no deben perderse
 
-- `docs/DOCUMENTATION_STANDARD.md` gobierna la jornada documental.
+- `docs/DOCUMENTATION_STANDARD.md` gobierna la documentación.
 - Verificar antes de crear, reescribir o declarar algo obsoleto.
 - Evolucionar una fuente antes de crear otra paralela.
 - Una visión puede describir futuro; no debe fingir implementación.
@@ -152,10 +159,10 @@ Los documentos originales trasladados a `history/` mantienen punteros de compati
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Rama activa** | `docs/p2-batch-21-30` |
-| **Objetivo** | Cerrar el lote P2-21 a P2-30 mediante un único PR documental |
-| **Estado** | 10/10 documentos revisados |
-| **Siguiente tras aprobación/merge** | P2-31 y P2-32 |
+| **Rama activa** | `docs/p2-final-31-32` |
+| **Objetivo** | Cerrar definitivamente P2 |
+| **Estado** | P2 32/32 revisado; preparar PR final |
+| **Siguiente tras aprobación/merge** | Jornada documental P0/P1/P2 cerrada; volver al siguiente objetivo funcional/prioridad del producto |
 
 ---
 
@@ -164,21 +171,18 @@ Los documentos originales trasladados a `history/` mantienen punteros de compati
 - No interpretar una visión como contrato físico de implementación.
 - No reutilizar como norma activa documentos trasladados a `docs/history/`.
 - Los punteros de compatibilidad no son nuevas fuentes normativas.
-- No crear un Perfil o Memoria central que replique datos propietarios existentes.
-- No confundir Mi Camino con Gestión de Misiones.
-- La Guacamaya como símbolo, representación visual y Reconocimiento tiene propietarios distintos y coordinados.
+- No confundir USER, PERSON, ROLE, Relación y Persona Activa.
+- No reintroducir `consulta = solo lectura universal` ni múltiples Roles efectivos como reglas actuales sin una nueva decisión explícita.
 
 ---
 
 ## ▶️ 11. Siguiente paso exacto
 
-1. comparar `docs/p2-batch-21-30` contra `main`;
-2. abrir un único PR del lote;
-3. solicitar la aprobación única del Product Owner;
-4. fusionar después de aprobación y verificación final;
-5. revisar **P2-31 `MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`**;
-6. revisar **P2-32 `docs/vision/README.md`**;
-7. cerrar P2 completo.
+1. comparar `docs/p2-final-31-32` contra `main`;
+2. abrir el PR final de P2;
+3. solicitar una única aprobación del Product Owner;
+4. fusionar tras aprobación y verificación final;
+5. declarar P2 cerrado y retomar el siguiente objetivo funcional del producto.
 
 ---
 
@@ -186,20 +190,22 @@ Los documentos originales trasladados a `history/` mantienen punteros de compati
 
 ## Qué acabamos de cerrar
 
-- P2-11 a P2-20 fusionados mediante PR #68.
-- P2-21 a P2-30 revisados: **10/10**.
+- PR #69 fusionado.
+- P2-31 revisado y reclasificado como histórico.
+- P2-32 sincronizado.
+- **P2 = 32/32 documentos revisados.**
 
 ## Qué estamos trabajando ahora
 
-> **Preparación y aprobación del PR de P2-21 a P2-30.**
+> **Preparación del PR final de P2.**
 
 Rama:
 
 ```text
-docs/p2-batch-21-30
+docs/p2-final-31-32
 ```
 
-Después del merge quedarán únicamente **P2-31 y P2-32**.
+Después del merge, la jornada documental P0/P1/P2 quedará cerrada.
 
 ---
 
@@ -208,6 +214,6 @@ Después del merge quedarán únicamente **P2-31 y P2-32**.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.2 |
+| **Versión activa** | 1.3 |
 | **Mecanismo de continuidad** | Último HandOff + instrucción breve + verificación dirigida de fuentes |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
