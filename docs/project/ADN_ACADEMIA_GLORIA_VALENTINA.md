@@ -1,78 +1,79 @@
 # 🌈 Academia Gloria Valentina
+# ADN del Producto
 
-# ADN DEL PRODUCTO
-## Versión 2.0
+| Campo | Valor |
+|---|---|
+| **Ruta oficial** | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` |
+| **Versión** | 2.1 |
+| **Estado** | Activo |
+| **Fecha de origen** | Julio 2026 |
+| **Última actualización** | 04/09/2026 |
+| **Propietario** | Identidad y principios del Producto |
+| **Responsables** | Product Owner + AI Collaborator |
+| **Ámbito** | Principios de identidad, filosofía pedagógica, experiencia, inclusión, acompañamiento y evolución responsable de la Academia |
 
----
+## 🔗 Documentos relacionados
 
-**Producto:** Academia Gloria Valentina  
-**Versión del documento:** 2.0  
-**Estado:** 🟢 Activo  
-**Propietarios:** Arquitectos del Producto  
-**Última actualización:** Agosto 2026  
-**Audiencia:** Familia, tutores, equipo educativo, arquitectura, diseño, desarrollo e IA colaboradora
+| Documento | Relación |
+|---|---|
+| `docs/FOUNDATION.md` | **Fundamenta:** propósito humano, origen y promesa de la Academia. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** propiedad, ubicación y ciclo de vida del conocimiento. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** estructura, versionado y mantenimiento documental. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Concreta:** arquitectura conceptual de la experiencia. |
+| `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Concreta:** identidad visual, emocional y Personajes Oficiales. |
+| `docs/standards/STD-LIA.md` | **Concreta:** comportamiento transversal de Lía. |
+| `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Concreta:** reglas vigentes de Misiones. |
+| `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Concreta:** seguimiento y motivación no punitiva. |
+| `docs/models/MODELO_NAVEGACION.md` | **Concreta:** navegación y continuidad de Persona Activa. |
+| `docs/project/DECISION_LOG.md` | **Registra:** decisiones transversales relevantes. |
 
-**Repositorio:**  
-https://github.com/jperdomo12/academia-gloria
+## 🕘 Historial de versiones
 
-**Documentos relacionados:**
-
-- `DOCUMENTATION_ARCHITECTURE.md`
-- `DOCUMENTATION_STANDARD.md`
-- `docs/project/RELEASE_NOTES.md`
-- `docs/project/MASTER_ARCHITECTURE_AND_AI_HANDOFF.md`
-- `docs/standards/STD-010_LIA_2_0.md`
-
----
-
-# 1. Propósito de este documento
-
-Este documento define la identidad oficial de la Academia Gloria Valentina.
-
-No describe una implementación concreta ni una versión tecnológica.
-
-Describe los principios que deben permanecer reconocibles aunque evolucionen:
-
-- los cursos;
-- los módulos;
-- los dispositivos;
-- la arquitectura;
-- los personajes;
-- la inteligencia artificial;
-- y el número de alumnos que utilicen el producto.
-
-Toda decisión importante de producto deberá ser coherente con este ADN.
+| Versión | Fecha | Estado | Cambios |
+|---|---:|---|---|
+| 2.1 | 04/09/2026 | Activo | P2. Sincroniza referencias y responsabilidades con la arquitectura documental vigente; separa Mi Camino de Gestión de Misiones; incorpora Persona Activa como principio multi-persona; remite navegación, Lía, Motivación y Misiones a sus propietarios y retira el “próximo paso” histórico ya superado. Conserva los principios centrales de v2.0. |
+| 2.0 | Agosto 2026 | Activo en su etapa | Evolución a ADN del producto: dos formas de crecer, enfoque multi-alumno, Mi Camino, Misiones/Aventuras, reconocimiento, principio del regreso, Personajes Oficiales, IA, experiencia táctil y evidencias reales. |
+| 1.0 | Julio 2026 | Vigente en su etapa | ADN original del proyecto, centrado en Gloria, aprendizaje accesible, comprensión, autonomía y calidad de las páginas. |
 
 ---
 
-# 2. Nuestra Filosofía
+## 1. Propósito
+
+Este documento define la **identidad estable del producto**: los principios que deben seguir siendo reconocibles aunque evolucionen cursos, módulos, dispositivos, arquitectura, personajes, inteligencia artificial o número de alumnos.
+
+No sustituye `FOUNDATION.md`, que conserva el origen y propósito humano, ni las especificaciones/estándares que gobiernan comportamientos concretos.
+
+Toda decisión importante debe poder responder:
+
+> **¿Es coherente con el ADN de la Academia?**
+
+---
+
+## 2. Nuestra filosofía
 
 La Academia Gloria Valentina no es simplemente una colección de páginas web.
 
-Es un entorno digital de aprendizaje visual diseñado para acompañar el crecimiento académico y personal de cada alumno.
+Es un entorno digital de aprendizaje diseñado para acompañar el crecimiento académico y personal de cada alumno.
 
-Nació para ayudar a Gloria.
+Nació para ayudar a Gloria. Gloria continúa siendo su inspiración, su primera alumna y una referencia privilegiada de aprendizaje real.
 
-Gloria continúa siendo su inspiración, su primera alumna y su principal referencia de aprendizaje real.
+Cada página, actividad, ilustración, Misión, aventura o juego debe tener un propósito:
 
-Cada página, actividad, ilustración, misión, aventura y juego tiene un propósito:
+> **Ayudar al alumno a comprender mejor y descubrir que es capaz de aprender.**
 
-> **Ayudar al alumno a comprender mejor el mundo y descubrir que es capaz de aprender.**
-
-Nuestro objetivo nunca será únicamente mejorar las notas.
-
-Queremos favorecer:
+El objetivo nunca será únicamente mejorar calificaciones. Queremos favorecer:
 
 - confianza;
 - autonomía;
 - curiosidad;
 - comprensión;
 - motivación;
+- comunicación;
 - y disfrute aprendiendo.
 
 ---
 
-# 3. Nuestra Misión
+## 3. Nuestra misión
 
 Construir un entorno de aprendizaje:
 
@@ -84,48 +85,44 @@ Construir un entorno de aprendizaje:
 - personalizable;
 - y capaz de crecer con el alumno.
 
-La Academia debe ayudar a desarrollar estrategias para aprender por sí mismo, respetando siempre el ritmo, las necesidades y la forma de comprender de cada persona.
+La Academia ayuda a desarrollar estrategias para aprender por sí mismo, respetando el ritmo, las necesidades y la forma de comprender de cada Persona.
 
 ---
 
-# 4. Nuestra Visión
+## 4. Nuestra visión
 
-La Academia crecerá junto con Gloria y estará preparada para acompañar en el futuro a otros alumnos.
+La Academia crecerá junto con Gloria y podrá acompañar progresivamente a otros alumnos.
 
-No será únicamente una web de apoyo para un curso escolar.
-
-Será un producto educativo vivo, de largo alcance, que evolucionará con:
+No es únicamente una web de apoyo para un curso escolar. Es un producto educativo vivo y de largo alcance que puede evolucionar mediante:
 
 - nuevas etapas educativas;
 - nuevos alumnos;
-- nuevas misiones;
-- nuevas aventuras;
+- nuevas Misiones;
+- nuevas experiencias;
 - nuevas formas de acompañamiento;
 - y nuevas evidencias de uso.
 
-Cada evolución deberá mejorar la experiencia sin perder la sencillez ni la identidad del producto.
+Cada evolución debe mejorar la experiencia sin perder sencillez ni identidad.
 
 ---
 
-# 5. Nuestra Inspiración
+## 5. Nuestra inspiración
 
 La Academia nace inspirada en Gloria.
 
-Todas las decisiones de diseño y producto parten de dos preguntas:
+Las decisiones de diseño y producto parten de dos preguntas:
 
 > **¿Esto ayudará a Gloria a comprender mejor?**
 
 > **¿Esto ayudará al alumno a aprender con mayor autonomía y confianza?**
 
-Si la respuesta es no, la propuesta deberá replantearse.
+Si la respuesta es no, la propuesta debe replantearse.
 
-El crecimiento hacia múltiples alumnos no diluirá el origen del producto.
-
-La experiencia real de Gloria seguirá siendo una fuente privilegiada para comprender qué funciona, qué debe simplificarse y qué merece evolucionar.
+El crecimiento hacia múltiples alumnos no diluye el origen del producto. La experiencia real de Gloria orienta, pero no se convierte automáticamente en una regla universal para todos.
 
 ---
 
-# 6. Nuestros Valores
+## 6. Nuestros valores
 
 ❤️ **Respeto**  
 Cada alumno merece aprender sin presión, comparación ni juicio.
@@ -140,10 +137,10 @@ Comprender tiene prioridad sobre memorizar.
 Cada experiencia debe reforzar la percepción de capacidad.
 
 🚀 **Autonomía**  
-La ayuda debe disminuir progresivamente a medida que crece la seguridad.
+La ayuda debe disminuir progresivamente cuando ya no es necesaria.
 
 🤝 **Colaboración**  
-Familia, colegio, tutores y especialistas forman parte del acompañamiento.
+Familia, colegio, docentes y profesionales pueden formar parte del acompañamiento.
 
 🎨 **Creatividad**  
 Existen muchas formas válidas de observar, representar y resolver.
@@ -152,88 +149,82 @@ Existen muchas formas válidas de observar, representar y resolver.
 Aprender también es preguntar, explorar y descubrir.
 
 💛 **Motivación**  
-El esfuerzo y el progreso deben ser visibles y celebrados.
+El esfuerzo y el progreso merecen ser visibles y celebrados.
 
 🧩 **Inclusión**  
-La diversidad en la forma de aprender se considera una realidad de diseño, no una excepción.
+La diversidad en la forma de aprender es una realidad de diseño, no una excepción.
 
 ---
 
-# 7. Dos formas de crecer
+## 7. Dos formas de crecer
 
-La Academia acompaña al alumno en dos dimensiones complementarias:
+La Academia acompaña dos dimensiones complementarias.
 
-## 📚 Crecer en conocimiento académico
+### 📚 Crecer en conocimiento académico
 
-Desarrollando la comprensión de las distintas áreas del aprendizaje mediante experiencias visuales, motivadoras y adaptadas a su ritmo.
+Desarrollar comprensión de las distintas áreas mediante experiencias visuales, motivadoras y adaptables al ritmo del alumno.
 
-## 🌱 Crecer en habilidades para la vida
+### 🌱 Crecer en habilidades para la vida
 
-Desarrollando autonomía, curiosidad, confianza, comunicación, perseverancia, autorregulación y capacidad para resolver problemas.
+Desarrollar autonomía, curiosidad, confianza, comunicación, perseverancia, autorregulación y capacidad para resolver problemas.
 
-Ambas dimensiones se enriquecen mutuamente y se reflejan en las diferentes experiencias de la Academia.
-
-Los espacios funcionales actuales —como **Mi Universo**, **Mis Cursos**, **Mi Camino**, las misiones y las aventuras— materializan partes de esta filosofía, pero pueden evolucionar junto con el producto.
+Ambas dimensiones se enriquecen mutuamente. Los espacios funcionales actuales materializan partes de esta filosofía, pero pueden evolucionar sin convertirse en el ADN mismo.
 
 ---
 
-# 8. Cómo aprende Gloria
+## 8. Aprender de Gloria sin convertirla en plantilla
 
-Durante el curso 2025-2026 hemos identificado que Gloria aprende especialmente bien cuando:
+La experiencia de uso ha mostrado valor en apoyos como:
 
-- observa antes de leer;
-- dispone de esquemas visuales;
-- recibe instrucciones paso a paso;
-- trabaja mediante ejemplos;
-- utiliza colores consistentes;
-- interactúa mediante juegos;
-- escucha música cuando aporta valor;
-- relaciona conceptos con imágenes;
-- puede repetir las actividades;
-- dispone del tiempo necesario;
-- comprende qué debe hacer antes de comenzar;
-- y recibe mensajes positivos durante el proceso.
+- observar antes de leer;
+- esquemas visuales;
+- instrucciones paso a paso;
+- ejemplos;
+- colores consistentes;
+- interacción mediante juegos;
+- música cuando aporta valor;
+- relación entre conceptos e imágenes;
+- posibilidad de repetir;
+- tiempo suficiente;
+- comprensión de la tarea antes de comenzar;
+- mensajes positivos durante el proceso.
 
-Estas observaciones no se convierten en una fórmula rígida.
-
-Son evidencias que orientan el producto y deberán contrastarse con el uso real de cada alumno.
+Estas observaciones orientan el producto. No son una fórmula rígida ni una caracterización automática de otros alumnos.
 
 ---
 
-# 9. Principios TEL y aprendizaje accesible
+## 9. Aprendizaje accesible e inclusivo
 
-Toda la Academia respetará las necesidades asociadas al TEL y, por extensión, favorecerá a cualquier alumno que aprenda mejor mediante recursos visuales, estructurados y secuenciales.
+La Academia prioriza recursos visuales, estructurados y secuenciales cuando ayudan a comprender.
 
-Por ello priorizaremos:
+Entre los principios heredados de su origen están:
 
-- una idea principal por pantalla;
-- poco texto;
-- frases cortas;
-- mucho espacio en blanco;
-- ilustraciones cuando aporten comprensión;
+- una idea principal por pantalla cuando el contenido lo permite;
+- texto proporcional a la tarea;
+- frases claras;
+- espacio visual suficiente;
+- ilustraciones con propósito;
 - iconografía consistente;
-- lenguaje sencillo;
+- lenguaje comprensible;
 - procesos paso a paso;
 - repetición positiva;
 - refuerzo visual;
 - instrucciones visibles;
-- y comprensión antes que memorización.
+- comprensión antes que memorización.
 
-La accesibilidad no será una capa añadida al final.
-
-Será una condición de diseño desde el comienzo.
+La accesibilidad no es una capa decorativa añadida al final: forma parte del diseño desde el comienzo.
 
 ---
 
-# 10. El error
+## 10. El error
 
-En esta Academia el error nunca será un fracaso.
+En esta Academia el error no se utiliza como fracaso ni castigo.
 
-El error representa una oportunidad para descubrir una estrategia diferente.
+Es una oportunidad para descubrir otra estrategia.
 
-Nunca utilizaremos mensajes que avergüencen, castiguen o reduzcan la confianza.
+Nunca se usan mensajes que avergüencen, ridiculicen o reduzcan la confianza. La corrección debe orientar, no juzgar.
 
-Preferiremos expresiones como:
+Ejemplos de tono compatible:
 
 - 🌱 Vamos a intentarlo otra vez.
 - ⭐ Muy cerca.
@@ -242,337 +233,225 @@ Preferiremos expresiones como:
 - 🌈 Vamos paso a paso.
 - 💛 Excelente intento.
 
-La corrección debe orientar, no juzgar.
+---
+
+## 11. La autonomía
+
+El objetivo es que el alumno pueda necesitar cada vez menos ayuda para avanzar.
+
+> **No construiremos experiencias para explicar más de forma indefinida. Construiremos experiencias que enseñen a observar, comprender, decidir y pensar.**
+
+La ayuda aparece cuando aporta valor y se retira cuando ya no es necesaria.
 
 ---
 
-# 11. La autonomía
+## 12. Mi Camino y Gestión de Misiones
 
-El objetivo final de la Academia es que el alumno necesite cada vez menos ayuda para avanzar.
+**Mi Camino** es el espacio del alumno para comprender su recorrido: qué puede hacer, qué está en curso, qué ha completado y qué puede venir después.
 
-Por ello:
+No es el espacio administrativo de la familia.
 
-> No construiremos experiencias para explicar más.
+La gestión adulta de asignaciones se realiza en **Gestión de Misiones**, con permisos y reglas propios. Ambas vistas pueden operar sobre la misma intención de trabajo, pero ofrecen experiencias diferentes según el actor.
 
-> Construiremos experiencias que enseñen a observar, comprender, decidir y pensar.
-
-La ayuda deberá aparecer cuando aporte valor y retirarse cuando ya no sea necesaria.
+Las Misiones no deben sentirse como una lista punitiva de obligaciones. Deben presentarse como pasos claros, alcanzables y motivadores.
 
 ---
 
-# 12. Mi Camino: acompañar y organizar el aprendizaje
+## 13. Misiones, aventuras y reconocimiento
 
-**Mi Camino** es el espacio personal donde el alumno encuentra, de forma clara y accesible, las actividades que tiene asignadas y su estado de avance.
+Las Misiones transforman objetivos educativos en acciones comprensibles y cercanas.
 
-No pretende contener todo el conocimiento de la Academia ni sustituir a sus demás espacios.
+Una Misión debe:
 
-Su función es ayudar al alumno a comprender:
-
-- qué puede hacer hoy;
-- qué dejó en curso;
-- qué ha completado;
-- qué necesita practicar;
-- y cuál puede ser su siguiente paso.
-
-Para la familia y los tutores, Mi Camino permite crear, asignar, revisar, comentar y cerrar tareas o misiones.
-
-Las misiones no deben sentirse como una lista de obligaciones.
-
-Deben presentarse como pasos claros, alcanzables y motivadores dentro de una experiencia de aprendizaje.
-
----
-
-# 13. Misiones, Mis Aventuras y reconocimiento
-
-Las misiones transforman objetivos educativos en acciones comprensibles y cercanas.
-
-Cada misión deberá:
-
-- tener un propósito claro;
+- tener propósito claro;
 - ser adecuada al alumno;
-- poder completarse paso a paso;
+- permitir avance comprensible;
 - ofrecer ayuda sin sustituir el esfuerzo;
-- reconocer el progreso;
-- y permitir una celebración significativa.
+- reconocer progreso;
+- y permitir cierre significativo.
 
-**Mis Aventuras** amplía esta filosofía conectando historias, retos, decisiones, personajes, conocimientos académicos y habilidades para la vida dentro de una experiencia con sentido.
+Las experiencias narrativas o de aventura pueden conectar historias, retos, decisiones, personajes, conocimiento académico y habilidades para la vida cuando ello aporta valor.
 
-## Filosofía de reconocimiento
+La existencia de una idea narrativa en este ADN **no declara una capacidad concreta como implementada**.
 
-La Academia reconoce el esfuerzo, la constancia, la curiosidad, la autonomía y el progreso.
+### Filosofía de reconocimiento
 
-Las recompensas no deben convertir el aprendizaje en una simple acumulación de puntos ni sustituir la motivación interior.
+La Academia reconoce esfuerzo, constancia, curiosidad, autonomía, cooperación y progreso.
 
-Pueden representarse mediante personajes, símbolos, logros, niveles u otros recursos coherentes con la identidad del producto.
+Las Recompensas no convierten el aprendizaje en acumulación de puntos ni sustituyen la motivación interior.
 
-Su propósito será:
-
-- hacer visible el avance;
-- celebrar el esfuerzo;
-- reforzar la confianza;
-- y animar al alumno a continuar.
-
-La mejor recompensa no será obtener un objeto digital.
-
-Será reconocer que el alumno ha avanzado y desea seguir aprendiendo.
+Las reglas operativas pertenecen a los documentos propietarios de Motivación y Reconocimientos.
 
 ---
 
-# 14. Principio del regreso
+## 14. Principio del regreso
 
 La Academia no busca únicamente que el alumno complete una actividad.
 
-Busca despertar el deseo de continuar aprendiendo y hacer que la experiencia se sienta propia.
+Busca que quiera continuar aprendiendo y que la experiencia se sienta propia.
 
-> **La mejor señal de que la Academia cumple su misión es que el alumno quiera regresar mañana.**
+> **Una señal valiosa de que la Academia cumple su misión es que el alumno quiera regresar.**
 
-Ese deseo no debe generarse mediante presión, dependencia artificial ni recompensas desproporcionadas.
-
-Debe nacer de una experiencia comprensible, retadora, segura, divertida y significativa.
+Ese deseo no debe producirse mediante presión, dependencia artificial o recompensas desproporcionadas, sino mediante una experiencia comprensible, segura, interesante y significativa.
 
 ---
 
-# 15. Personajes Oficiales
+## 15. Personajes Oficiales
 
-La Academia puede utilizar **Personajes Oficiales** como parte estable de su identidad visual, narrativa y emocional.
+Los Personajes Oficiales pueden dar continuidad visual, narrativa y emocional.
 
-Los personajes no son simples adornos ni dibujos intercambiables.
-
-Pueden cumplir funciones como:
+Pueden:
 
 - dar la bienvenida;
 - acompañar;
 - ofrecer pistas;
-- celebrar el esfuerzo;
-- narrar aventuras;
-- transmitir seguridad;
-- y reforzar la continuidad entre experiencias.
+- celebrar esfuerzo;
+- narrar;
+- transmitir seguridad.
 
-Cada personaje deberá mantener:
+Su representación concreta, identidad visual y reglas de uso pertenecen a `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`.
 
-- identidad reconocible;
-- función clara;
-- estilo visual coherente;
-- lenguaje apropiado;
-- y comportamiento consistente.
-
-La selección concreta de personajes, sus símbolos, personalidad, ilustraciones y reglas de uso se documentará en `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`.
-
-Podrán incorporarse, evolucionar o retirarse personajes cuando exista una necesidad pedagógica, narrativa o de producto suficientemente justificada, sin alterar los principios de este ADN.
+El ADN exige coherencia de función y trato; no congela ilustraciones específicas.
 
 ---
 
-# 16. Lía y la filosofía de la inteligencia artificial
+## 16. Lía y la inteligencia artificial
 
-Lía representa el acompañamiento inteligente de la Academia.
+Lía representa una forma de acompañamiento inteligente dentro de la Academia.
 
-La inteligencia artificial deberá estar siempre al servicio del alumno y de las personas que lo acompañan.
+La IA está al servicio del alumno y de quienes lo acompañan.
 
-La IA:
+Puede:
 
-- acompaña;
-- orienta;
-- explica;
-- adapta;
-- propone;
-- y ayuda a comprender.
+- orientar;
+- explicar;
+- adaptar apoyos;
+- proponer;
+- ayudar a comprender.
 
-La IA nunca deberá:
+No debe:
 
 - sustituir al alumno;
-- sustituir a la familia, al tutor o a los profesionales;
+- sustituir a la familia o profesionales;
 - presionar;
 - juzgar;
 - etiquetar;
 - generar dependencia innecesaria;
-- ni tomar decisiones sensibles sin supervisión humana.
+- tomar decisiones sensibles sin supervisión humana.
 
-Lía deberá comunicarse con mensajes breves, claros, positivos y contextuales.
+El contrato actual de Lía pertenece a `STD-LIA.md`.
 
-Su presencia debe aportar calma y continuidad, nunca ruido ni saturación.
-
-> **La inteligencia de la Academia no se medirá por cuánto habla, sino por cuánto ayuda a comprender.**
+> **La inteligencia de la Academia no se mide por cuánto habla, sino por cuánto ayuda a comprender.**
 
 ---
 
-# 17. Filosofía Visual
+## 17. Filosofía visual
 
-La Academia debe transmitir calma.
+La Academia debe transmitir claridad y calma, no saturación.
 
-Nunca saturación.
+Se priorizan:
 
-Utilizaremos:
-
-- colores suaves;
-- mucho blanco;
+- colores coherentes y suaves cuando corresponda;
+- espacio suficiente;
 - tarjetas claras;
 - ilustraciones con propósito;
 - iconos consistentes;
 - tipografía legible;
 - jerarquía visual;
-- y animaciones suaves.
+- animaciones discretas.
 
-Cada pantalla debe respirar.
-
-La belleza visual no será decorativa.
-
-Deberá facilitar la orientación, la comprensión y la confianza.
+La belleza visual debe facilitar orientación, comprensión y confianza.
 
 ---
 
-# 18. Experiencia multidispositivo y táctil
+## 18. Experiencia multidispositivo y táctil
 
-La Academia acompaña al alumno allí donde aprende.
+La experiencia debe mantenerse clara en ordenadores, portátiles, tabletas y dispositivos compatibles de uso real.
 
-La experiencia deberá mantenerse clara y coherente en:
+El diseño táctil considera:
 
-- ordenadores;
-- portátiles;
-- tabletas;
-- iPad;
-- y otros dispositivos compatibles que puedan incorporarse en el futuro.
-
-El iPad será uno de los accesos frecuentes de Gloria y, por tanto, la experiencia táctil deberá considerarse desde el diseño inicial.
-
-Esto implica:
-
-- objetivos táctiles cómodos;
-- botones y tarjetas fáciles de pulsar;
-- ausencia de interacciones dependientes exclusivamente del ratón;
-- textos legibles sin ampliaciones innecesarias;
+- objetivos cómodos;
+- controles fáciles de pulsar;
+- ausencia de dependencia exclusiva del ratón;
+- textos legibles;
 - navegación sencilla;
-- compatibilidad con orientación vertical y horizontal cuando proceda;
-- animaciones que no interfieran con la interacción;
-- y pruebas reales en dispositivos táctiles.
+- orientación adecuada cuando proceda;
+- animaciones que no interfieran;
+- pruebas en dispositivos reales relevantes.
 
 > **La tecnología se adapta al alumno; el alumno no debe adaptarse a la tecnología.**
 
-Responsive no significa únicamente que la pantalla se ajuste.
-
-Significa que la experiencia continúa siendo natural, comprensible y agradable.
+Responsive significa conservar una experiencia natural y comprensible, no solo ajustar dimensiones.
 
 ---
 
-# 19. Filosofía Pedagógica
+## 19. Filosofía pedagógica
 
-Nuestro objetivo no es memorizar.
+Siempre que aporte valor, la experiencia puede seguir una secuencia como:
 
-Nuestro objetivo es comprender.
-
-Siempre que sea posible, la experiencia seguirá esta secuencia:
-
-**Observar**
-
+```text
+Observar
 ↓
-
-**Comprender**
-
+Comprender
 ↓
-
-**Relacionar**
-
+Relacionar
 ↓
-
-**Practicar**
-
+Practicar
 ↓
-
-**Jugar o aplicar**
-
+Jugar o aplicar
 ↓
+Recordar y transferir
+```
 
-**Recordar y transferir**
-
-La secuencia podrá adaptarse según el contenido y el alumno.
+La secuencia se adapta al contenido y al alumno.
 
 ---
 
-# 20. Estructura orientativa de una experiencia educativa
+## 20. Estructura orientativa de una experiencia
 
-Toda experiencia nueva intentará incluir, cuando aporte valor:
+Una experiencia puede incluir, cuando corresponda:
 
-1. Bienvenida.
-2. Propósito claro.
-3. Resumen visual.
-4. Explicación o teoría.
-5. Ejemplos.
-6. Esquema o apoyo visual.
-7. Actividad interactiva.
-8. Vídeo o audio.
-9. Juego o reto.
-10. Comprobación de comprensión.
-11. Cierre y mensaje motivador.
+1. bienvenida;
+2. propósito claro;
+3. resumen visual;
+4. explicación;
+5. ejemplos;
+6. apoyo visual;
+7. actividad interactiva;
+8. audio o vídeo;
+9. juego o reto;
+10. comprobación de comprensión;
+11. cierre motivador.
 
-No todos los contenidos necesitan todos los elementos.
-
-La estructura debe servir al aprendizaje, no convertirse en una lista mecánica.
+No es una lista obligatoria. La estructura sirve al aprendizaje.
 
 ---
 
-# 21. Niveles de experiencia
+## 21. Niveles de experiencia
 
-## PRO
+Los nombres históricos **PRO / PLUS PRO / ULTRA PRO / SIGNATURE** expresan grados de riqueza y cuidado, no una obligación de acumular elementos.
 
-Una experiencia PRO ofrece una base completa, clara y funcional para comprender y practicar.
+Una experiencia más completa puede integrar progresivamente teoría, práctica, interacción, recursos audiovisuales, narrativa, ayudas inteligentes o elementos de identidad, siempre que cada uno aporte valor.
 
-Puede incluir:
+El nivel más alto de calidad se reconoce por la **coherencia entre pedagogía, diseño, interacción y autonomía**, no por cantidad de funcionalidades.
 
-- resumen;
-- teoría;
-- ejemplos;
-- fichas;
-- comprobación de comprensión;
-- y recursos audiovisuales.
-
-## PLUS PRO
-
-Amplía la experiencia con elementos que favorecen interacción, variedad y autonomía.
-
-Puede incorporar:
-
-- animaciones;
-- juegos;
-- música;
-- recursos imprimibles;
-- y actividades adicionales.
-
-## ULTRA PRO
-
-Integra experiencias avanzadas cuando aportan un valor educativo real.
-
-Puede incorporar:
-
-- esquemas interactivos;
-- canciones;
-- ayudas inteligentes;
-- misiones;
-- logros;
-- narrativa;
-- y experiencias inmersivas.
-
-## SIGNATURE
-
-Una experiencia SIGNATURE representa el nivel más completo y propio de la Academia.
-
-No se define por acumular elementos.
-
-Se reconoce porque integra pedagogía, diseño, narrativa, interacción, personajes y autonomía de forma excepcionalmente coherente.
+Las reglas técnicas actuales de desarrollo pertenecen al estándar de desarrollo vigente.
 
 ---
 
-# 22. Reglas Visuales
+## 22. Reglas visuales generales
 
-Nunca:
+Evitar:
 
-- grandes bloques de texto;
+- grandes bloques de texto sin necesidad;
 - saturación visual;
 - exceso de colores;
 - botones pequeños;
 - información sin jerarquía;
 - animaciones que distraigan;
-- ni imágenes sin propósito.
+- imágenes sin propósito.
 
-Siempre:
+Priorizar:
 
 - estructura clara;
 - colores coherentes;
@@ -580,267 +459,209 @@ Siempre:
 - iconos comprensibles;
 - foco visible;
 - legibilidad;
-- y una experiencia adaptada a móvil y tablet.
+- adaptación a dispositivos relevantes.
 
 ---
 
-# 23. Reglas de Navegación
+## 23. Navegación
 
-Toda experiencia deberá permitir orientarse y volver fácilmente.
+Toda experiencia debe permitir orientarse y volver de forma comprensible.
 
-La navegación debe ser:
+La navegación transversal se rige por `MODELO_NAVEGACION.md` y los componentes compartidos actuales.
+
+El ADN exige que la navegación sea:
 
 - predecible;
 - consistente;
-- accesible por teclado y tacto;
-- y comprensible sin necesidad de explicación adulta.
+- accesible por teclado/tacto cuando corresponda;
+- comprensible sin dependencia adulta innecesaria;
+- coherente con Persona Activa.
 
-Cuando proceda, existirán accesos claros a:
-
-- 🏠 Inicio;
-- ⬅ Volver;
-- 🌱 Mi Camino;
-- 🎯 Actividad o comprobación;
-- 📄 Imprimir o descargar recursos.
-
-No todos los accesos deben mostrarse simultáneamente si generan carga cognitiva.
+No se fijan aquí botones o rutas concretas que pertenecen al modelo técnico de navegación.
 
 ---
 
-# 24. Organización del Producto
+## 24. Organización del producto
 
-La Academia se organiza mediante espacios funcionales que responden a necesidades diferentes y se complementan entre sí.
+La Academia se organiza mediante espacios funcionales que responden a necesidades distintas y se complementan.
 
-Actualmente incluye experiencias relacionadas con:
+Puede incluir experiencias relacionadas con:
 
-- contenidos y apoyo académico;
+- aprendizaje académico;
 - cursos escolares;
 - exploración y recursos;
 - lectura y comprensión;
-- asignaciones y misiones;
-- aventuras y retos;
+- Misiones;
+- retos y aventuras;
 - progreso y reconocimiento;
-- y acompañamiento a alumnos, familias y tutores.
+- acompañamiento a alumnos, familias y profesionales.
 
-Los nombres, carpetas, pantallas y módulos son estructuras del producto; no son su ADN.
-
-Podrán evolucionar siempre que mantengan:
-
-- coherencia;
-- facilidad de navegación;
-- reutilización;
-- capacidad multi-alumno;
-- continuidad de la experiencia;
-- y alineación con las dos formas de crecer que acompaña la Academia.
+Los nombres, carpetas y pantallas son estructuras del producto; no son su ADN.
 
 ---
 
-# 25. Producto multi-alumno y personalización
+## 25. Producto multi-persona y personalización
 
-La Academia nació para Gloria, pero su arquitectura y su visión están preparadas para acompañar a más alumnos.
+La Academia nació para Gloria, pero su arquitectura puede acompañar a más Personas.
 
-Cada alumno deberá poder disponer progresivamente de:
+La experiencia distingue:
 
-- perfil propio;
-- camino personal;
-- misiones adecuadas;
-- ritmo de aprendizaje;
-- progreso;
-- preferencias;
-- logros;
-- y acompañamiento contextual.
+```text
+Usuario autenticado
+Persona propia
+Persona Activa
+Relación / nivel de acceso
+```
 
-La personalización no deberá reducir al alumno a una etiqueta, diagnóstico o nivel.
+Cada alumno puede disponer progresivamente de recorrido, Misiones, preferencias, progreso y acompañamiento propios.
 
-Servirá para ofrecer mejores apoyos y oportunidades.
+La personalización no reduce al alumno a una etiqueta, diagnóstico o puntuación. Sirve para ofrecer apoyos y oportunidades más adecuados.
 
-Gloria no será una configuración por defecto.
-
-Será la inspiración fundacional de un producto que aprende a respetar la singularidad de cada persona.
+Gloria no es una configuración por defecto: es la inspiración fundacional.
 
 ---
 
-# 26. Evidencias reales y aprendizaje del producto
+## 26. Evidencias reales y aprendizaje del producto
 
 La Academia evoluciona escuchando a quienes aprenden con ella.
 
-Las decisiones deberán considerar evidencias como:
+Las decisiones pueden considerar evidencia como:
 
-- qué actividades comprende el alumno;
-- dónde necesita ayuda;
-- qué recorridos abandona;
-- qué elementos le motivan;
-- qué desea repetir;
-- qué solicita espontáneamente;
+- qué actividades se comprenden;
+- dónde se necesita ayuda;
+- qué recorridos se abandonan;
+- qué elementos motivan;
+- qué se desea repetir;
+- qué se solicita espontáneamente;
 - qué funciona mejor en cada dispositivo;
-- y qué observan la familia y los tutores.
+- qué observan familia y tutores.
 
-Una frase, una dificultad o una reacción espontánea pueden revelar una necesidad importante del producto.
+La evidencia no sustituye criterio pedagógico, privacidad ni supervisión adulta.
 
-Las evidencias no sustituyen el criterio pedagógico, la privacidad ni la supervisión adulta.
-
-Lo complementan.
-
-No se recopilarán datos por acumular información.
-
-Toda observación deberá tener un propósito legítimo de mejora y respetar la intimidad del alumno.
+No se recopilan datos por acumular información. Toda observación debe tener propósito legítimo y respetar intimidad y permisos.
 
 ---
 
-# 27. Trabajo en Equipo y roles humanos
+## 27. Trabajo en equipo y roles humanos
 
-La Academia pretende complementar el trabajo realizado por:
+La Academia complementa, no sustituye, el trabajo de:
 
-- el alumno;
-- la familia y los padres;
-- tutores y docentes;
-- el colegio;
-- profesionales de pedagogía terapéutica;
-- logopedas;
-- psicólogos;
-- otros especialistas;
-- y los arquitectos y responsables del producto.
+- alumno;
+- familia;
+- docentes;
+- colegio;
+- profesionales de apoyo;
+- responsables de producto y desarrollo.
 
-Nunca pretende sustituirlo.
-
-Cada rol aporta una perspectiva diferente.
-
-La Academia debe facilitar colaboración, no crear competencia entre ellas.
-
-Las decisiones educativas sensibles permanecerán bajo responsabilidad humana.
+Cada rol aporta una perspectiva diferente. Las decisiones educativas sensibles permanecen bajo responsabilidad humana.
 
 ---
 
-# 28. Evolución Responsable del Producto
+## 28. Evolución responsable
 
 No construiremos funcionalidades por cantidad.
 
 Construiremos mejores experiencias.
 
-> **La Academia no aspira a estar terminada; aspira a evolucionar continuamente sin perder su identidad. Cada nueva idea se incorpora cuando demuestra que ayuda realmente al alumno y es coherente con el ADN del producto.**
+> **La Academia puede evolucionar continuamente sin perder su identidad. Cada nueva idea se incorpora cuando demuestra que aporta valor real y es coherente con el ADN.**
 
-La Academia se construye con visión de largo plazo.
+La evolución prioriza:
 
-Sus fundamentos se consolidarán antes de ampliar el producto, permitiendo que futuros arquitectos, desarrolladores, docentes y responsables de producto puedan hacerlo crecer sin perder su esencia.
+1. comprender el problema;
+2. considerar impacto global;
+3. revisar detalles críticos;
+4. tomar una decisión clara;
+5. construir con alcance acordado;
+6. validar con evidencia;
+7. consolidar lo aprendido.
 
-La evolución seguirá este principio:
-
-> **Pensar bien, decidir pronto y construir con calidad.**
-
-Antes de desarrollar una idea importante:
-
-1. analizaremos el problema;
-2. consideraremos su impacto global;
-3. revisaremos los detalles necesarios;
-4. tomaremos una decisión clara;
-5. y construiremos con un alcance acordado.
-
-Cuando sea necesario explorar una idea, podremos diseñar, probar y observar antes de documentar definitivamente.
-
-Después, el conocimiento validado deberá consolidarse de forma organizada.
-
-Las nuevas ideas que no pertenezcan a la fase activa deberán registrarse y planificarse, sin interrumpir innecesariamente el trabajo en curso.
-
-Cada versión deberá aportar una mejora real y trazable respecto a la anterior.
+Las ideas que no pertenecen a la fase activa se planifican sin interrumpir innecesariamente el trabajo vigente.
 
 ---
 
-# 29. Nuestro compromiso de calidad
+## 29. Compromiso de calidad
 
-Cada nueva experiencia deberá responder afirmativamente a estas preguntas:
+Una experiencia relevante debe preguntarse:
 
-- ¿Es más clara?
-- ¿Es más visual?
-- ¿Es más sencilla?
-- ¿Ayuda al alumno a pensar?
-- ¿Favorece la autonomía?
-- ¿Reduce la frustración?
-- ¿Es cómoda en los dispositivos reales de uso?
+- ¿Es clara?
+- ¿Es suficientemente visual para su propósito?
+- ¿Es sencilla de comprender?
+- ¿Ayuda a pensar?
+- ¿Favorece autonomía?
+- ¿Reduce frustración evitable?
+- ¿Funciona en los dispositivos relevantes?
 - ¿Respeta la identidad de la Academia?
-- ¿Hace que aprender resulte agradable?
+- ¿Hace que aprender resulte agradable y digno?
 
-Si alguna respuesta es no, la experiencia todavía debe revisarse.
+Las respuestas orientan revisión y mejora; no sustituyen pruebas funcionales específicas.
 
 ---
 
-# 30. Nuestra Promesa
+## 30. Nuestra promesa de producto
 
 No queremos construir la Academia con más páginas.
 
 Queremos construirla con mejores experiencias.
 
-Cada mejora deberá ayudar al alumno a necesitar un poco menos de ayuda y tener un poco más de confianza en sí mismo.
-
-Si algún día Gloria dice:
-
-> **Puedo aprender sola, paso a paso.**
-
-habremos conseguido mucho más que un buen resultado académico.
-
-Y cuando un alumno diga:
-
-> **Mañana quiero otra misión.**
-
-sabremos que aprender empieza a sentirse como una aventura propia.
-
-Habremos contribuido a formar personas más seguras, autónomas, curiosas y felices.
+Cada mejora debe ayudar al alumno a ganar comprensión, autonomía y confianza.
 
 ---
 
-# 31. Declaración del Producto
+## 31. Declaración del producto
 
 > **La Academia Gloria Valentina existe para ayudar a cada alumno a comprender mejor, descubrir su propia forma de aprender y confiar cada día un poco más en sí mismo.**
 
-Sus fundamentos serán más sólidos que cualquiera de sus funcionalidades.
-
-Su crecimiento deberá preservar siempre la filosofía, la identidad y el propósito que le dieron origen.
+Sus fundamentos deben ser más estables que cualquiera de sus funcionalidades.
 
 ---
 
-# 32. Lema de la Academia
+## 32. Lema
 
-🌈
+🌈 **Aprender puede ser bonito.**
 
-> **Aprender puede ser bonito.**
-
-Y cuando el aprendizaje se adapta a la persona...
-
-> **también puede convertirse en una aventura.**
-
-❤️
+Y cuando el aprendizaje se adapta a la Persona, también puede convertirse en una aventura.
 
 ---
 
-# 33. Historial de versiones
+## 33. Decisiones vigentes de este ADN
 
-| Versión | Fecha | Estado | Descripción |
-|---|---|---|---|
-| 1.0 | Julio 2026 | Vigente en su momento | ADN original del proyecto, centrado en Gloria, TEL, comprensión, autonomía y calidad de las páginas. |
-| 2.0 | Agosto 2026 | Activo | Evolución a ADN del producto: dos formas de crecer, enfoque multi-alumno, Mi Camino, misiones y aventuras, reconocimiento, principio del regreso, Personajes Oficiales, IA, experiencia táctil, evidencias reales y evolución responsable. |
-
----
-
-# 34. Decisiones adoptadas
-
-- El documento pasa de **ADN del Proyecto** a **ADN del Producto**.
 - Gloria permanece como inspiración fundacional y primera alumna.
-- La Academia se prepara para acompañar a múltiples alumnos sin perder su origen.
-- La Academia acompaña dos formas de crecer: **conocimiento académico** y **habilidades para la vida**.
-- Mi Camino se define como espacio personal para organizar y acompañar asignaciones, misiones y progreso.
-- Misiones y Mis Aventuras se incorporan como parte de la filosofía del producto.
-- El reconocimiento celebra esfuerzo, constancia, curiosidad, autonomía y progreso, sin sustituir la motivación interior.
-- Se adopta el **Principio del Regreso**: la mejor señal de éxito es que el alumno quiera volver mañana.
-- Los Personajes Oficiales se reconocen como categoría abierta de identidad; su definición concreta se trasladará a `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`.
-- La inteligencia artificial acompaña y complementa; nunca sustituye al alumno ni a las personas responsables.
-- La experiencia multidispositivo incluye explícitamente el uso frecuente del iPad.
-- Las evidencias reales de uso orientan la evolución del producto.
-- La tecnología se adapta al alumno; el alumno no debe adaptarse a la tecnología.
-- La Academia adopta una evolución responsable, con fundamentos consolidados y visión de largo plazo.
+- La Academia puede crecer hacia múltiples alumnos sin perder su origen.
+- Se acompañan dos formas de crecer: conocimiento académico y habilidades para la vida.
+- Mi Camino pertenece a la experiencia del alumno; la gestión adulta vive en Gestión de Misiones.
+- El reconocimiento celebra esfuerzo, constancia, curiosidad, autonomía, cooperación y progreso sin convertirlos en una economía punitiva.
+- El Principio del Regreso se mantiene como señal cualitativa de una experiencia que invita a continuar.
+- Los Personajes Oficiales aportan continuidad, pero su definición concreta pertenece a Identidad Visual.
+- Lía acompaña; no sustituye a personas ni concentra toda la IA del producto.
+- La experiencia debe considerar dispositivos táctiles y reales de uso.
+- Persona Activa permite contexto multi-persona sin confundir identidad autenticada y Persona sobre la que se trabaja.
+- La evidencia real orienta la evolución sin justificar recopilación ilimitada.
+- La tecnología se adapta al alumno.
+- La evolución del producto se basa en valor, evidencia, reutilización y calidad proporcional.
 
 ---
 
-# DECISIÓN
+## 🛠️ 34. Mantenimiento
 
-**Estado:** 🟢 Aprobado  
-**Próximo paso:** Auditoría de `docs/vision/` y definición del alcance de `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`  
-**Impacto:** Identidad del Producto · Filosofía Pedagógica · Experiencia del Alumno · IA · Personajes Oficiales · Evolución multi-alumno · Crecimiento sostenible
+Este ADN cambia únicamente cuando cambia un principio estable de identidad del producto.
+
+No debe actualizarse por:
+
+- cada nueva pantalla;
+- cada cambio de CSS;
+- un proveedor tecnológico;
+- una funcionalidad aislada;
+- un experimento todavía no validado.
+
+Los cambios funcionales, técnicos, visuales o de planificación deben mantenerse en sus fuentes propietarias.
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | 🟢 Activo |
+| **Versión activa** | 2.1 |
+| **Relación con FOUNDATION** | Complementa el propósito fundacional con principios estables de producto; no lo sustituye. |
+| **Aprobación previa** | v2.0 aprobada; v2.1 corresponde a sincronización documental P2 sin alterar el núcleo filosófico. |
