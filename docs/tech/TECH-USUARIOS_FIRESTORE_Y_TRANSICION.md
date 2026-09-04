@@ -155,15 +155,7 @@ El `roleId` referencia:
 roles/{roleId}
 ```
 
-El nivel se obtiene del ROLE almacenado y se normaliza a:
-
-```text
-consulta
-Gestion        ← concepto funcional escrito como `gestion`
-administracion
-```
-
-La forma canónica es:
+El nivel se obtiene del ROLE almacenado y se normaliza a una de estas formas canónicas:
 
 ```text
 consulta
