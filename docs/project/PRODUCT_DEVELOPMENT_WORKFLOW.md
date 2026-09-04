@@ -1,585 +1,455 @@
-# Product Development Workflow
-## Academia Gloria Valentina
+# 🔄 Product Development Workflow
+## 🌈 Academia Gloria Valentina
 
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
-| **Fecha** | 24/08/2026 |
-| **Última actualización** | 24/08/2026 |
+| **Fecha de origen** | 04/08/2026 |
+| **Última actualización** | 04/09/2026 |
 | **Propietario** | Gobierno del Desarrollo del Producto |
-| **Responsables** | Product Owner + Desarrollo + IA colaboradora |
-| **Ámbito** | Ciclo operativo de recepción, construcción, integración, validación y aprendizaje de cambios en la Academia |
+| **Responsables** | Product Owner + Desarrollo + AI Collaborator |
+| **Ámbito** | Ciclo operativo desde una necesidad hasta su integración, validación y cierre en el producto |
 
-## Documentos relacionados
+## 🔗 Documentos relacionados
 
 | Documento | Relación |
 |---|---|
-| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** define cómo colaboran las personas, la documentación y la IA. |
-| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** establece la estructura, trazabilidad y Quality Gate documental. |
-| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define dónde vive cada conocimiento y quién lo mantiene. |
-| `docs/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Gobierna:** define la identidad y los principios que toda evolución debe respetar. |
-| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** define la arquitectura conceptual de la experiencia. |
-| `docs/project/RELEASE_NOTES.md` | **Complementa:** registra las entregas y cambios relevantes del producto. |
-| `docs/project/PROJECT_ROLES.md` | **Complementará:** identificará quién desempeña actualmente cada rol. |
-| `docs/ai/AI_DEVELOPMENT_BOOTSTRAP.md` | **Implementará:** permitirá que una nueva IA se incorpore rápidamente al desarrollo. |
+| `docs/FOUNDATION.md` | **Fundamenta:** propósito humano y principios que no deben perderse. |
+| `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta/complementa:** principios estables de producto. |
+| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** colaboración entre Personas, Documentación e IA. |
+| `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** incorporación rápida de un nuevo chat/IA. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** documentación, estados, trazabilidad y Quality Gate. |
+| `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** propietarios y ubicación del conocimiento. |
+| `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | **Gobierna técnicamente:** calidad transversal, reutilización, UX, datos y publicación. |
+| `docs/project/PROJECT_ROLES.md` | **Gobierna:** autoridad y responsabilidades del proyecto. |
+| `docs/project/RELEASE_NOTES.md` | **Registra:** cambios publicados relevantes. |
+| `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Continúa:** estado operativo entre chats. |
 
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.1 | 24/08/2026 | Product Owner + Desarrollo + IA colaboradora | Incorpora Codex como herramienta opcional de ingeniería, formaliza el control proporcional mediante flujo corto y flujo controlado, actualiza el estado actual del producto, retira `OLD-*` del repositorio como práctica normal y consolida el uso de Git como historial técnico. |
-| 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del flujo de desarrollo de la Academia Gloria Valentina. Define el ciclo de vida de los cambios, desde la identificación de una necesidad hasta la validación, integración y publicación del producto, incluyendo la colaboración con IA, la gestión documental y las buenas prácticas para mantener un desarrollo incremental, consistente y sostenible. |
+| 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Alinea el workflow con la práctica y el estándar vigentes: `main` canónico, rama + PR como flujo normal, Codex opcional, validación proporcional, aprobación única sin confirmaciones redundantes, verificación posterior al merge y separación explícita entre cambio de Firestore Rules en Git y despliegue real. Retira rutas locales nominales, cuota 20–30 % de Codex y bootstrap inexistente. |
+| 1.1 | 24/08/2026 | Product Owner + Desarrollo + IA colaboradora | Incorporó Codex opcional y control proporcional mediante flujo corto/controlado. |
+| 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del flujo de desarrollo. |
 
-## Propósito
+---
 
-Definir el proceso operativo mediante el cual una necesidad, corrección o mejora se convierte en un cambio integrado, ejecutable, validado y disponible dentro de la Academia Gloria Valentina.
+## 🎯 1. Propósito
 
-Este documento no enseña a utilizar Git, VS Code, Codex ni una tecnología concreta.
+Definir cómo una necesidad, corrección o mejora se convierte en un cambio:
 
-Define **cómo evoluciona un cambio dentro del producto**.
+- comprendido;
+- construido;
+- revisado;
+- validado;
+- aprobado;
+- integrado en `main`;
+- y verificable en el entorno que corresponda.
 
-## Alcance
+Este documento no enseña Git, GitHub, VS Code, Codex o Firebase. Define **cómo debe evolucionar un cambio dentro del producto**.
 
-Aplica a entregables como:
+---
 
-- HTML;
-- CSS;
-- JavaScript;
-- imágenes;
-- archivos de configuración;
+## 📐 2. Alcance
+
+Aplica a:
+
+- HTML, CSS y JavaScript;
+- imágenes y assets;
+- configuración;
+- Firestore Rules;
 - documentación;
-- y otros recursos incorporados al repositorio.
+- contenido;
+- modelos/especificaciones;
+- y otros recursos del repositorio.
 
-Quedan fuera de su alcance:
-
-- la arquitectura detallada de cada solución;
-- reglas funcionales específicas;
-- formación sobre herramientas;
-- y procesos de operación o despliegue masivo que todavía no existen.
-
-## Estado actual del producto
-
-La Academia se encuentra actualmente en **construcción activa**, con **uso real familiar y controlado**.
-
-Características de esta fase:
-
-- existen módulos funcionales ya utilizados;
-- Gloria utiliza dinámicamente el producto y aporta evidencia real de uso;
-- la familia participa en la creación, seguimiento y validación de experiencias;
-- el producto todavía no ha sido liberado para uso general o compartido con terceros;
-- no existe todavía una operación intensiva ni una base amplia de usuarios;
-- y muchas decisiones se validan mediante observación directa y uso familiar.
-
-Esta situación permite iterar con rapidez, observar el resultado real, corregir antes de escalar y consolidar arquitectura, documentación y experiencia progresivamente.
-
-El objetivo operativo actual es equilibrar:
-
-> **velocidad de aprendizaje + seguridad razonable + reversibilidad**
-
-La validación positiva con Gloria es una evidencia valiosa, pero no sustituye futuras pruebas de escalabilidad, concurrencia, diversidad de usuarios, seguridad operativa, rendimiento intensivo y soporte en producción.
-
-> **El workflow actual está diseñado para una etapa de construcción activa y uso controlado. Deberá evolucionar cuando el producto alcance uso compartido, intensivo o incorpore nuevos usuarios y colaboradores.**
-
-## Principios
-
-### Cambios pequeños y verificables
-
-Preferir cambios acotados, reversibles, fáciles de probar y con valor observable.
-
-### Producto siempre ejecutable
-
-El repositorio debe mantenerse utilizable durante la evolución.
-
-### Comprender antes de modificar
-
-Antes de cambiar un archivo se debe entender qué función cumple, qué otros recursos utiliza y qué documento gobierna el comportamiento afectado.
-
-### Construir para aprender
-
-La primera versión puede ser suficiente para validar una idea sin intentar resolver todo el futuro.
-
-### Producto ejecutable
-
-> **Un entregable no termina cuando ha sido generado; termina cuando puede integrarse, ejecutarse, validarse y aportar valor.**
-
-### Control proporcional
-
-> **El nivel de control del cambio debe ser proporcional a su impacto, riesgo y alcance técnico.**
-
-No todos los cambios requieren el mismo proceso.
-
-Regla operativa:
-
-- **Bajo impacto → flujo corto.**
-- **Impacto técnico relevante → flujo controlado con Codex, rama y Pull Request.**
-- **Duda técnica → Codex puede utilizarse solo para análisis antes de decidir la ruta.**
-
-### Codex es opcional
-
-> **Codex no es obligatorio para todos los cambios.**
-
-Cuando Codex participa:
-
-> **Codex prepara cambios; el Product Owner valida; `main` solo recibe cambios aprobados.**
-
-Codex no sustituye:
-
-- la decisión de producto;
-- la revisión humana;
-- la prueba local;
-- la aprobación del Product Owner;
-- ni la validación contra servicios reales cuando corresponda.
-
-La referencia operativa actual es que el flujo controlado con Codex represente aproximadamente un **20–30 %** de los cambios, como orientación y no como cuota fija. El criterio real es siempre el impacto y riesgo técnico.
-
-## Herramientas operativas actuales
-
-Esta sección delimita responsabilidades y no constituye un manual de uso.
-
-| Herramienta | Papel operativo |
-|---|---|
-| **ChatGPT** | Análisis funcional, producto, arquitectura, pedagogía, decisiones, alcance y preparación de cambios o encargos técnicos. |
-| **Codex Cloud** | Análisis del repositorio, revisión de dependencias e implementación controlada cuando el impacto técnico lo justifica. |
-| **GitHub** | Repositorio remoto canónico; mantiene `main`, historial, ramas y Pull Requests cuando se utilizan. |
-| **GitHub Desktop** | Sincronización local, commits, push, fetch/pull, cambio de ramas y revisión básica de evolución. |
-| **Visual Studio Code** | Revisión y edición local, inspección de archivos y validación técnica. |
-| **Live Server** | Ejecución local de HTML mediante `VS Code → Open with Live Server`. |
-| **Firebase** | Servicios reales de Authentication y Firestore utilizados por la aplicación. El repositorio por sí solo no certifica el estado desplegado. |
-
-## Workflow oficial
-
-El workflow tiene **dos rutas válidas**.
-
-La selección de ruta se realiza según impacto, riesgo y alcance técnico. ChatGPT o Arquitectura pueden recomendar el uso de Codex, pero el Product Owner mantiene la decisión final.
+El nivel de validación se adapta al riesgo real.
 
 ---
 
-## RUTA A — FLUJO CORTO
+## 🌿 3. Estado operativo del producto
 
-### Cuándo aplica
+La Academia se encuentra en construcción activa y uso familiar/controlado.
 
-Es la ruta normal para cambios:
+Por ello se prioriza:
 
-- pequeños;
-- localizados;
-- fáciles de comprender;
-- fácilmente reversibles;
-- con dependencias conocidas;
-- de bajo riesgo técnico.
+> **velocidad de aprendizaje + calidad proporcional + reversibilidad + trazabilidad suficiente**
 
-### Flujo
+No se introduce proceso propio de operación masiva mientras no exista esa necesidad.
+
+La evidencia de uso real es valiosa, pero no sustituye pruebas futuras de diversidad, escalabilidad, rendimiento o seguridad cuando el producto crezca.
+
+---
+
+## ✅ 4. Principios del workflow
+
+### 4.1 Comprender antes de modificar
+
+Antes de cambiar:
+
+- localizar el producto real;
+- identificar el documento propietario;
+- comprender dependencias;
+- comprobar qué ya existe;
+- definir el resultado esperado.
+
+### 4.2 Reutilizar antes de crear
+
+No crear un segundo servicio, modelo, componente, regla o documento cuando el actual puede evolucionar.
+
+### 4.3 Cambio mínimo suficiente
+
+Preferir cambios acotados y verificables antes que rediseños preventivos.
+
+### 4.4 `main` es la base canónica integrada
+
+`main` representa el producto integrado aprobado.
+
+El trabajo normal se prepara en una rama de alcance claro y llega a `main` mediante Pull Request.
+
+### 4.5 PR no significa aprobación
+
+> **Crear una PR no autoriza el merge.**
+
+La PR es la superficie de revisión del cambio.
+
+### 4.6 Validación proporcional
+
+Un cambio documental no necesita las mismas pruebas que una modificación de autenticación, datos o UI.
+
+### 4.7 Una aprobación, no confirmaciones redundantes
+
+Una vez que el Product Owner aprueba el resultado y el alcance no cambia, se realiza la revisión final y el merge sin volver a pedir la misma decisión.
+
+### 4.8 Codex es opcional
+
+Codex puede ayudar a analizar o implementar cuando aporta valor técnico, pero **no es requisito del workflow**.
+
+La elección depende de complejidad, riesgo y utilidad, no de una cuota porcentual.
+
+---
+
+## 🧭 5. Flujo normal
 
 ```text
 NECESIDAD / OBSERVACIÓN
         ↓
-COMPRENSIÓN Y ALCANCE
+COMPRENSIÓN DEL ESTADO ACTUAL
         ↓
-CAMBIO LOCALIZADO
+DOCUMENTO PROPIETARIO + CÓDIGO REAL
         ↓
-VALIDACIÓN LOCAL PROPORCIONAL
-VS CODE / LIVE SERVER CUANDO APLIQUE
+ALCANCE / CRITERIOS DE ACEPTACIÓN
         ↓
-APROBACIÓN
+RAMA DE TRABAJO DESDE main
         ↓
-GITHUB DESKTOP
-COMMIT + PUSH
+IMPLEMENTACIÓN / ACTUALIZACIÓN
         ↓
-VERIFICACIÓN
+REVISIÓN INTERNA
         ↓
-USO REAL CUANDO CORRESPONDA
-        ↓
-APRENDIZAJE / NUEVA EVOLUCIÓN
-```
-
-Este flujo puede utilizarse para ajustes de contenido, documentación menor, correcciones visuales o funcionales claramente localizadas y otros cambios cuyo impacto sea conocido y bajo.
-
-No requiere rama ni Pull Request salvo que aparezca nueva evidencia de riesgo durante el trabajo.
-
----
-
-## RUTA B — FLUJO CONTROLADO CON CODEX
-
-### Cuándo aplica
-
-Se recomienda cuando exista uno o varios de estos factores:
-
-- impacto transversal;
-- varios archivos o módulos relacionados;
-- dependencias difíciles de determinar;
-- cambios en servicios compartidos;
-- Firebase, Firestore o reglas;
-- usuarios, identidad o accesos;
-- navegación compartida;
-- misiones, evidencias o datos;
-- nueva funcionalidad relevante;
-- refactor;
-- arquitectura;
-- o riesgo técnico suficiente para justificar aislamiento y revisión adicional.
-
-### Flujo
-
-```text
-NECESIDAD / OBSERVACIÓN
-        ↓
-COMPRENSIÓN Y ALCANCE
-        ↓
-BASELINE main LIMPIO Y SINCRONIZADO
-        ↓
-CONSTRUCCIÓN EN RAMA
-        ↓
-CODEX / DESARROLLO
-        ↓
-VALIDACIÓN TÉCNICA
+VALIDACIÓN TÉCNICA PROPORCIONAL
         ↓
 PULL REQUEST
         ↓
-REVISIÓN DE DIFF Y ARCHIVOS
+REVISIÓN DE DIFF / DEPENDENCIAS
         ↓
-VALIDACIÓN LOCAL
-VS CODE + LIVE SERVER CUANDO APLIQUE
+VALIDACIÓN DEL PRODUCT OWNER CUANDO APLICA
         ↓
-APROBACIÓN DEL PRODUCT OWNER
+APROBACIÓN
+        ↓
+REVISIÓN FINAL
         ↓
 MERGE A main
         ↓
-FETCH / PULL DE main EN LOCAL
+VERIFICACIÓN DE main / DESPLIEGUE APLICABLE
         ↓
-VERIFICACIÓN FINAL
-        ↓
-ELIMINACIÓN DE RAMA DE TRABAJO
-        ↓
-USO REAL CUANDO CORRESPONDA
-        ↓
-APRENDIZAJE / NUEVA EVOLUCIÓN
+CIERRE / DOCUMENTACIÓN / HANDOFF
 ```
 
-> **CREAR PR ≠ MERGE.**
+El orden de **PR** y **prueba local** puede ajustarse cuando la prueba necesita una rama o cuando resulta más eficiente validar antes de abrir la PR. Lo obligatorio es que el resultado aprobado y el diff final coincidan antes del merge.
 
-Crear una Pull Request no aprueba el cambio ni autoriza su integración en `main`.
+---
 
-Codex no está autorizado a realizar merge directo a `main`.
+## 🧩 6. Fase 1 · Necesidad y comprensión
 
-## Codex solo para análisis
+Un cambio puede originarse por:
 
-Codex también puede utilizarse sin implementar cambios.
+- bug;
+- observación de uso;
+- mejora;
+- nueva necesidad;
+- deuda técnica;
+- decisión de producto;
+- revisión documental;
+- incidencia operativa.
 
-Ejemplos:
+Primero se describe el **problema**, no solo una solución imaginada.
 
-- análisis de dependencias;
-- identificación de archivos afectados;
-- revisión de impacto;
-- auditoría técnica;
-- revisión de riesgos.
-
-Después del análisis puede decidirse continuar mediante Ruta A o Ruta B.
-
-## 1. Necesidad u observación
-
-El cambio puede originarse por una idea, una mejora, un bug, una observación de Gloria, una necesidad familiar, una revisión arquitectónica o una deuda técnica.
-
-Debe describirse primero el problema y no únicamente la solución imaginada.
-
-## 2. Comprensión y alcance
-
-Antes de construir se confirma:
+Antes de construir se conoce, en la medida necesaria:
 
 - objetivo;
-- archivo o módulo afectado;
+- actor principal;
 - comportamiento actual;
 - resultado esperado;
 - documentos propietarios;
-- impacto;
+- archivos/dependencias;
 - riesgo;
-- dependencias conocidas;
-- y forma de validación.
+- forma de validación.
 
-Cuando exista suficiente claridad se construye. No se prolonga el análisis sin valor nuevo.
+Cuando el alcance está claro, se construye. No se prolonga el análisis sin información nueva.
 
-En este punto se selecciona Ruta A o Ruta B.
+---
 
-## 3. Construcción del entregable
+## 🌿 7. Fase 2 · Rama de trabajo
 
-La IA o el responsable de desarrollo entrega o modifica únicamente los archivos necesarios.
-
-El entregable debe indicar, cuando corresponda:
-
-- archivos nuevos;
-- archivos modificados;
-- ubicación prevista;
-- dependencias;
-- pasos especiales;
-- criterios de validación;
-- y limitaciones conocidas.
-
-## 4. Integración local
-
-El repositorio local actual se mantiene en:
+Regla normal:
 
 ```text
-C:\Users\jpperdomo\JP\Personales\Gloria\GitHub\academia-gloria
+main limpio / vigente
+        ↓
+feature/...  fix/...  docs/...  style/...
 ```
 
-En Ruta A, el cambio se integra directamente sobre el estado local aprobado de `main`.
+La rama debe tener un objetivo identificable.
 
-En Ruta B, se trabaja sobre la rama de la tarea.
+Evitar mezclar:
 
-En ambos casos deben revisarse las rutas internas y las dependencias afectadas.
+- cambios no relacionados;
+- experimentos ajenos al alcance;
+- refactors oportunistas;
+- archivos temporales.
 
-### Respaldos temporales
+Una escritura directa a `main` debe ser excepcional y explícitamente justificada; no es el camino normal del proyecto.
 
-Git constituye el historial técnico oficial.
+---
 
-Los archivos `OLD-*` **no deben mantenerse dentro del repositorio activo como práctica normal de respaldo o versionado**.
+## 🛠️ 8. Fase 3 · Construcción
 
-Si el Product Owner desea una protección física adicional, puede conservar una copia temporal fuera del repositorio, por ejemplo en:
+La implementación debe:
+
+- modificar únicamente lo necesario;
+- reutilizar componentes/servicios vigentes;
+- respetar Persona Activa y permisos cuando aplica;
+- conservar navegación compartida;
+- evitar inventar datos o sesiones;
+- mantener compatibilidad requerida;
+- actualizar la documentación propietaria cuando el conocimiento estable cambie.
+
+### IA / Codex / herramientas
+
+Una herramienta puede:
+
+- inspeccionar;
+- proponer;
+- construir;
+- revisar;
+- probar;
+- preparar una PR.
+
+No sustituye la decisión de producto ni la aprobación humana.
+
+---
+
+## 🧪 9. Fase 4 · Validación interna
+
+Antes de trasladar la detección de defectos obvios al usuario, revisar internamente lo que sea razonablemente verificable.
+
+Según el cambio:
+
+### Código / UI
+
+- carga de HTML/CSS/JS;
+- consola;
+- rutas y assets;
+- flujo principal;
+- estados de error;
+- responsive/táctil cuando aplica;
+- Persona Activa/permisos;
+- Live Server y GitHub Pages cuando corresponda.
+
+### Datos / Firestore
+
+- colección/documento correcto;
+- propietario correcto;
+- compatibilidad;
+- operaciones permitidas;
+- errores;
+- no fabricación de auditoría o evidencia.
+
+### Documentación
+
+- propietario correcto;
+- estado/versión;
+- referencias;
+- presente vs futuro;
+- coherencia con producto real;
+- diff sin cambios ajenos.
+
+---
+
+## 🔀 10. Fase 5 · Pull Request
+
+La PR debe permitir responder con rapidez:
+
+- ¿qué problema resuelve?;
+- ¿qué archivos cambia?;
+- ¿qué no cambia?;
+- ¿qué se validó?;
+- ¿qué riesgo queda?;
+- ¿qué necesita probar el Product Owner?
+
+El diff debe coincidir con el alcance.
+
+Si una rama quedó desfasada respecto a `main`, se actualiza de forma segura antes de fusionar.
+
+---
+
+## 👤 11. Fase 6 · Validación y aprobación
+
+El Product Owner valida principalmente aquello que requiere criterio humano/producto:
+
+- experiencia;
+- utilidad;
+- comprensión;
+- comportamiento esperado;
+- presentación;
+- decisión documental relevante.
+
+El usuario **no debe ser utilizado para descubrir defectos básicos que podían verificarse internamente**.
+
+Cuando la aprobación ya fue otorgada y el diff final no cambia sustancialmente, no se solicita una confirmación redundante.
+
+---
+
+## ✅ 12. Fase 7 · Revisión final y merge
+
+Antes del merge:
+
+- comprobar PR abierta y rama correcta;
+- revisar archivos modificados;
+- confirmar ausencia de cambios ajenos;
+- comprobar que la aprobación corresponde al diff vigente;
+- revisar cualquier CI/check disponible;
+- confirmar mergeability.
+
+Después:
 
 ```text
-C:\Users\jpperdomo\JP\Personales\Gloria\GitHub\RESPALDOS-academia-gloria
+merge → main
 ```
 
-Estas copias:
+El método de merge puede variar; el criterio es conservar historial comprensible y no introducir cambios no aprobados.
 
-- son opcionales;
-- no deben incluirse en commits;
-- no sustituyen Git;
-- y no deben confundirse con código vigente.
+---
 
-## 5. Validación técnica y funcional
+## 🚀 13. Verificación posterior
 
-La validación es proporcional al cambio.
+El merge no siempre equivale a disponibilidad real.
 
-Para HTML o cambios funcionales que afecten interfaz:
+### GitHub Pages
+
+Cuando la UI publicada depende de Pages:
+
+- verificar que el workflow correspondiente terminó correctamente;
+- comprobar que el despliegue corresponde al SHA esperado;
+- usar la página pública solo después de considerar caché/propagación.
+
+### Firebase / Firestore Rules
+
+> **Modificar `compartido/firebase/FireStore Rules.txt` en Git no despliega automáticamente las reglas a Firebase.**
+
+Cuando un cambio requiere reglas reales, debe distinguirse:
 
 ```text
-VS Code → Open with Live Server
+regla documentada/versionada en Git
+≠
+regla desplegada en Firebase
 ```
 
-Checklist aplicable:
+No declarar desplegado lo que solo fue fusionado al repositorio.
 
-- [ ] la página abre correctamente;
-- [ ] no aparecen errores relevantes en consola;
-- [ ] CSS y JavaScript cargan;
-- [ ] imágenes, iconos y otros recursos cargan;
-- [ ] navegación y enlaces principales funcionan;
-- [ ] no se rompen funcionalidades existentes;
-- [ ] el comportamiento básico es correcto en escritorio;
-- [ ] se prueba en iPad cuando el cambio afecta la experiencia táctil;
-- [ ] las rutas funcionan bajo Live Server y no dependen de abrir el archivo mediante `file://`.
+---
 
-Para cambios exclusivamente documentales, la revisión del contenido y del diff puede ser suficiente.
+## 🧹 14. Cierre
 
-Las validaciones automáticas de Codex no sustituyen pruebas visuales, humanas o contra Firebase real cuando sean necesarias.
+Al cerrar:
 
-## 6. Ajustes iterativos
+- `main` contiene el cambio aprobado;
+- se verificó lo aplicable;
+- no quedan temporales innecesarios;
+- la documentación relevante está sincronizada;
+- el HandOff se actualiza si el cambio altera continuidad;
+- la rama puede eliminarse cuando ya no sea necesaria.
 
-Cuando aparecen observaciones:
+Git es el historial técnico. No mantener copias `OLD-*` dentro del repositorio como sistema normal de respaldo.
 
-```text
-PRUEBA
-  ↓
-OBSERVACIÓN
-  ↓
-AJUSTE
-  ↓
-NUEVA PRUEBA
-```
+---
 
-Los ajustes deben mantenerse dentro del alcance acordado.
+## 📋 15. Definición de Terminado
 
-Si durante un flujo corto aparece nueva complejidad, puede escalarse a Ruta B.
+Según el tipo de cambio:
 
-## 7. Consolidación
+- [ ] el alcance aprobado fue construido;
+- [ ] el diff es proporcional y limpio;
+- [ ] se reutilizó antes de crear cuando correspondía;
+- [ ] la validación interna relevante fue realizada;
+- [ ] la PR representa el cambio final;
+- [ ] el Product Owner aprobó cuando era necesario;
+- [ ] el resultado fue fusionado en `main`;
+- [ ] se verificó Pages/Firebase/otro entorno cuando aplicaba;
+- [ ] la documentación propietaria quedó actualizada;
+- [ ] no quedan temporales ni duplicados introducidos por el trabajo;
+- [ ] el siguiente paso está claro.
 
-Cuando el resultado es satisfactorio:
+Un cambio puede estar **técnicamente integrado** y todavía **pendiente de uso real**. Debe indicarse así y no confundir ambos estados.
 
-- se conserva el archivo definitivo;
-- se revisa que no queden recursos huérfanos;
-- se eliminan temporales innecesarios;
-- se actualiza documentación cuando el cambio modifica conocimiento relevante;
-- y se confirma que la ruta utilizada fue suficiente para el riesgo real.
+---
 
-## 8. Commit, sincronización y merge
-
-### Ruta A
-
-Mediante GitHub Desktop:
-
-1. revisar los cambios;
-2. confirmar que solo se incluyen archivos relacionados;
-3. preparar el commit;
-4. realizar el commit;
-5. sincronizar mediante `Push origin`.
-
-### Ruta B
-
-Antes de integrar:
-
-1. revisar la Pull Request;
-2. confirmar que el diff coincide con el alcance;
-3. realizar validación local cuando aplique;
-4. obtener aprobación del Product Owner;
-5. hacer merge a `main`;
-6. volver a `main` en GitHub Desktop;
-7. realizar `Fetch origin`;
-8. realizar `Pull origin` si corresponde;
-9. verificar el resultado;
-10. eliminar la rama cuando ya no sea necesaria.
-
-La IA puede proponer Summary, Description y lista de archivos modificados. El responsable humano revisa y aprueba.
-
-## 9. Validación con uso real
-
-Cuando corresponda, Gloria prueba el cambio.
-
-Esta validación puede realizarse después del commit o merge y no necesariamente el mismo día.
-
-Se observa:
-
-- si comprende qué debe hacer;
-- si completa el flujo;
-- si necesita ayuda externa;
-- si la experiencia la motiva;
-- si aparecen errores;
-- y si el resultado cumple el objetivo educativo o de vida diaria.
-
-La experiencia de Gloria es la principal evidencia actual porque el producto está en uso familiar controlado. No debe interpretarse como validación universal para todos los alumnos.
-
-## 10. Aprendizaje y nueva evolución
-
-Las observaciones relevantes se convierten en bugs, mejoras, decisiones, nuevas especificaciones o actualizaciones documentales.
-
-## Definición de Terminado
-
-Un cambio puede considerarse terminado cuando, según su impacto y ruta:
-
-- [ ] el alcance acordado fue construido;
-- [ ] está integrado en el repositorio correcto;
-- [ ] supera la validación técnica proporcional;
-- [ ] no rompe capacidades conocidas;
-- [ ] se realizó commit y sincronización;
-- [ ] si se utilizó Ruta B, la PR fue revisada y aprobada antes del merge;
-- [ ] si se utilizó Ruta B, `main` quedó sincronizado y verificado después del merge;
-- [ ] la documentación fue actualizada cuando correspondía;
-- [ ] no quedaron respaldos `OLD-*` dentro del repositorio;
-- [ ] y la validación con uso real quedó realizada o registrada como pendiente cuando aplica.
-
-Cuando la prueba con Gloria quede pendiente, el cambio puede estar **técnicamente completado**, pero todavía **pendiente de validación con uso real**.
-
-## Escalado del workflow
-
-El proceso deberá revisarse cuando ocurra alguno de estos eventos:
-
-- más alumnos utilizan la Academia;
-- existe uso intensivo;
-- participan varios desarrolladores;
-- aparece despliegue automatizado;
-- se incorporan entornos separados;
-- se requiere rollback formal;
-- existen datos compartidos;
-- o las pruebas manuales dejan de ser suficientes.
-
-Las ramas y Pull Requests ya forman parte del workflow cuando el riesgo lo justifica.
-
-En una fase futura podrían incorporarse:
-
-- pruebas automatizadas amplias;
-- integración continua;
-- despliegue continuo;
-- entornos formales de prueba y producción;
-- telemetría;
-- monitoreo;
-- rollback automatizado;
-- revisión por pares formal;
-- y gestión estructurada de incidencias.
-
-Estas capacidades no deben implementarse antes de que su beneficio justifique el coste.
-
-## Antipatrones
+## ⚠️ 16. Antipatrones
 
 Evitar:
 
-- copiar archivos sin revisar la ruta;
-- sobrescribir sin posibilidad razonable de recuperación;
-- mantener `OLD-*` dentro del repositorio como práctica habitual;
-- hacer commits con cambios no relacionados;
-- considerar terminado un archivo solo porque fue generado;
-- probar únicamente mediante `file://`;
-- ignorar errores de consola;
-- introducir referencias directas nuevas a assets que deben resolverse mediante catálogo;
-- modificar documentación por cada ajuste menor;
-- retrasar una corrección clara mediante análisis repetitivo;
-- utilizar el flujo completo de Codex para cambios triviales cuando no reduce riesgo real;
-- convertir herramientas de control en burocracia sin beneficio proporcional;
-- utilizar el flujo corto para cambios transversales o de riesgo significativo solo por rapidez;
-- hacer merge de una PR sin revisar el diff;
-- asumir que crear una PR equivale a aprobarla.
+- empezar a desarrollar sin revisar el estado actual;
+- escribir directo en `main` como práctica normal;
+- crear PR y asumir que equivale a aprobación;
+- fusionar un diff distinto del aprobado;
+- pedir confirmaciones repetidas de la misma decisión;
+- crear arquitectura preventiva;
+- usar Codex por obligación cuando no aporta valor;
+- omitir Codex u otra herramienta cuando sí reduce un riesgo relevante;
+- guardar respaldos `OLD-*` en el repositorio;
+- usar al Product Owner como sustituto de QA básico;
+- modificar documentos por cada ajuste menor;
+- declarar desplegadas Firestore Rules solo porque cambiaron en Git;
+- afirmar que Pages ya refleja el cambio sin verificar el despliegue correspondiente.
 
-## Checklist operativo resumido
+---
 
-### Antes de construir
+## 🔭 17. Evolución del workflow
 
-- [ ] Objetivo claro.
-- [ ] Archivo o módulo identificado.
-- [ ] Documento propietario revisado.
-- [ ] Impacto y riesgo entendidos.
-- [ ] Ruta A o Ruta B seleccionada.
+Revisar este proceso cuando cambie materialmente el contexto, por ejemplo:
 
-### Antes de integrar
+- varios desarrolladores trabajando en paralelo;
+- más alumnos/usuarios;
+- CI obligatorio;
+- entornos separados;
+- despliegue automatizado adicional;
+- rollback formal;
+- datos compartidos o mayor criticidad;
+- pruebas manuales insuficientes.
 
-- [ ] Validación proporcional realizada.
-- [ ] Consola revisada cuando aplica.
-- [ ] Recursos y navegación comprobados cuando aplica.
-- [ ] No hay archivos temporales innecesarios.
-- [ ] No hay `OLD-*` dentro del repositorio.
-- [ ] Documentación actualizada si aplica.
+La evolución debe responder a una necesidad real, no anticipar burocracia.
 
-### Si se utilizó Ruta B
-
-- [ ] Baseline identificado.
-- [ ] Rama aislada.
-- [ ] PR creada.
-- [ ] Diff revisado.
-- [ ] `CREAR PR ≠ MERGE` respetado.
-- [ ] Aprobación humana obtenida.
-- [ ] Merge realizado.
-- [ ] `main` local sincronizado.
-- [ ] Rama eliminada cuando procede.
-
-### Antes de cerrar
-
-- [ ] Commit realizado.
-- [ ] Push realizado o `main` sincronizado después del merge.
-- [ ] Estado de validación con Gloria registrado cuando aplica.
-- [ ] Observaciones pendientes identificadas.
-- [ ] Próxima acción clara.
-
-## Decisiones adoptadas
-
-| ID | Decisión | Estado | Impacto |
-|---|---|---|---|
-| PDW-001 | Formalizar el proceso actual como workflow oficial de desarrollo del producto. | Aprobada | Desarrollo · Gobierno |
-| PDW-002 | Reconocer que la Academia se encuentra en construcción activa y uso familiar controlado, todavía no liberada para uso general. | Aprobada | Calidad · Escalabilidad |
-| PDW-003 | Garantizar compatibilidad con VS Code Live Server para los HTML actuales. | Aprobada | Ejecución local |
-| PDW-004 | Retirar `OLD-*` del repositorio como práctica normal; cualquier copia adicional será externa y opcional. | Aprobada | Recuperación · Orden |
-| PDW-005 | Separar validación técnica de validación mediante uso real. | Aprobada | Calidad · Producto |
-| PDW-006 | Mantener el workflow proporcional a la etapa actual y evolucionarlo cuando el producto escale. | Aprobada | Coste · Evolución Responsable |
-| PDW-007 | Considerar terminado un cambio solo cuando esté integrado, ejecutable y validado según su alcance. | Aprobada | Producto Ejecutable |
-| PDW-008 | Evitar nuevas referencias directas a assets cuando exista un mecanismo semántico aprobado. | Aprobada | Identidad · Mantenibilidad |
-| PDW-009 | Utilizar flujo corto para cambios de bajo impacto y flujo controlado con Codex, rama y PR cuando el riesgo técnico justifique controles adicionales. | Aprobada | Desarrollo · Calidad |
-| PDW-010 | Codex puede utilizarse solo para análisis técnico sin obligar a implementar mediante rama y Pull Request. | Aprobada | Desarrollo · Eficiencia |
-| PDW-011 | Codex no es obligatorio para todos los cambios; el Product Owner mantiene la decisión final sobre la ruta de trabajo. | Aprobada | Gobierno · Eficiencia |
+---
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
-| **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 24/08/2026 |
-| **Aprobado por** | Product Owner |
-| **Sustituye** | 1.0 |
-| **Sustituido por** | — |
-
-**Impacto:** Desarrollo · Colaboración con IA · Arquitectura · Documentación · Calidad · Evolución del Producto
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.2 |
+| **Flujo normal** | Rama → cambio → validación → PR → aprobación → revisión final → merge → verificación |
+| **Codex** | Opcional según valor/riesgo |
+| **Base canónica** | `main` |
