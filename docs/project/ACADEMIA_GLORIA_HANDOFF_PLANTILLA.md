@@ -117,9 +117,10 @@ Academia Gloria Valentina es un producto educativo familiar vivo, centrado inici
 |---|---|
 | P0 · sincronización documental prioritaria | ✅ Cerrado |
 | P1 · revisión de arquitectura/estándares | ✅ 15/15 cerrados |
-| P2 · comprobación dirigida | 🟡 En curso |
+| P2 · comprobación dirigida | 🟡 En curso · 20/32 revisados |
 | P2-01 a P2-10 | ✅ Revisados y fusionados · PR #67 |
-| P2-11 a P2-20 | 🟡 Lote actual de revisión |
+| P2-11 a P2-20 | ✅ Revisados · PR #68 pendiente de aprobación/merge |
+| P2-21 a P2-30 | ⏭️ Siguiente lote después de cerrar PR #68 |
 
 En P2, **revisar no implica modificar**. Cada documento puede cerrarse sin cambio cuando ya está vigente.
 
@@ -143,8 +144,9 @@ En P2, **revisar no implica modificar**. Cada documento puede cerrarse sin cambi
 |---|---|
 | **Base canónica** | `main` |
 | **Rama activa** | `docs/p2-batch-11-20` |
-| **Objetivo** | Revisar y, solo si aplica, sincronizar P2-11 a P2-20 |
-| **Criterio de cierre** | 10 documentos revisados; PR preparado; aprobación del Product Owner antes de fusionar |
+| **PR** | #68 · `Docs P2: revisar documentos 11 a 20` |
+| **Estado** | 10/10 documentos revisados; pendiente de aprobación del Product Owner |
+| **Siguiente tras cierre** | P2-21 a P2-30 |
 
 ---
 
@@ -159,15 +161,10 @@ En P2, **revisar no implica modificar**. Cada documento puede cerrarse sin cambi
 
 ## ▶️ 10. Siguiente paso exacto
 
-Completar la revisión del lote **P2-11 a P2-20** siguiendo `DOCUMENTATION_STANDARD.md`.
-
-Al terminar:
-
-1. comparar la rama contra `main`;
-2. abrir un único PR documental del lote;
-3. solicitar aprobación del Product Owner;
-4. fusionar solo después de esa aprobación;
-5. continuar con P2-21 a P2-30.
+1. Obtener aprobación del Product Owner para **PR #68**.
+2. Verificar que el diff final y la rama siguen limpios/mergeables.
+3. Fusionar PR #68 a `main` sin solicitar una segunda aprobación redundante.
+4. Continuar con **P2-21 a P2-30**.
 
 ---
 
@@ -176,11 +173,12 @@ Al terminar:
 ## Qué acabamos de cerrar
 
 - Jornada P1: **15/15**.
-- Primer bloque P2: **P2-01 a P2-10**, fusionado mediante PR #67.
+- P2-01 a P2-10: fusionados mediante PR #67.
+- P2-11 a P2-20: **10/10 revisados**, con PR #68 abierto.
 
-## Qué estamos trabajando ahora
+## Qué estamos esperando ahora
 
-> **Revisión P2-11 a P2-20.**
+> **Aprobación única del Product Owner para fusionar PR #68.**
 
 Rama:
 
@@ -188,7 +186,13 @@ Rama:
 docs/p2-batch-11-20
 ```
 
-La instrucción vigente es revisar documento por documento, actualizar únicamente cuando exista desfase real y solicitar una sola aprobación al completar los diez.
+PR:
+
+```text
+#68 · Docs P2: revisar documentos 11 a 20
+```
+
+Después del merge, el siguiente bloque será P2-21 a P2-30.
 
 ---
 
