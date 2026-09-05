@@ -6,10 +6,10 @@
  *
  * V1
  * - Registra una sola vez por sesión de pestaña/navegador y login real.
- * - Guarda fecha/hora con serverTimestamp de Firestore.
- * - Obtiene ubicación aproximada por IP (ciudad/región/país).
+ * - Guarda fecha/hora inmediatamente con serverTimestamp de Firestore.
+ * - Resuelve después, sin bloquear, ubicación aproximada por IP.
  * - NO persiste la IP pública, coordenadas, código postal, ISP ni otros datos.
- * - La geolocalización es no bloqueante y puede quedar "No disponible".
+ * - La geolocalización puede quedar "No disponible" sin perder el acceso.
  ******************************************************************************/
 
 import { db } from "../firebase/firebase-config.js";
@@ -58,6 +58,19 @@ function marcarAccesoRegistrado(usuario) {
   }
 }
 
+function desmarcarAcceso(usuario) {
+  const uid = texto(usuario?.uid);
+  if (!uid) return;
+
+  try {
+    if (sessionStorage.getItem(claveSesion(uid)) === identificadorLogin(usuario)) {
+      sessionStorage.removeItem(claveSesion(uid));
+    }
+  } catch {
+    // Sin impacto: solo habilita reintento dentro de la misma pestaña.
+  }
+}
+
 function ubicacionNoDisponible() {
   return {
     disponible: false,
@@ -80,6 +93,8 @@ async function obtenerUbicacionAproximada() {
     const respuesta = await fetch(URL_GEOLOCALIZACION, {
       method: "GET",
       headers: { Accept: "application/json" },
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
       signal: controlador.signal,
       cache: "no-store"
     });
@@ -130,17 +145,42 @@ export async function registrarAccesoAcademia(usuario) {
     return false;
   }
 
+  const referencia = doc(db, "usuarios", uid, "accesosAcademia", "ultimo");
+
+  /*
+   * Marcamos antes de iniciar la escritura para evitar duplicados si otra
+   * página protegida se abre mientras este registro sigue en curso.
+   */
+  marcarAccesoRegistrado(usuario);
+
+  try {
+    await setDoc(
+      referencia,
+      { ultimoAccesoAcademia: serverTimestamp() },
+      { merge: true }
+    );
+  } catch (error) {
+    desmarcarAcceso(usuario);
+    throw error;
+  }
+
+  /*
+   * La ubicación es complementaria. Nunca condiciona la fecha/hora de acceso.
+   */
   const ubicacionAproximada = await obtenerUbicacionAproximada();
 
-  await setDoc(
-    doc(db, "usuarios", uid, "accesosAcademia", "ultimo"),
-    {
-      ultimoAccesoAcademia: serverTimestamp(),
-      ubicacionAproximada
-    },
-    { merge: true }
-  );
+  try {
+    await setDoc(
+      referencia,
+      { ubicacionAproximada },
+      { merge: true }
+    );
+  } catch (error) {
+    console.debug(
+      "[RegistroAcceso] El acceso quedó registrado, pero no su ubicación.",
+      error
+    );
+  }
 
-  marcarAccesoRegistrado(usuario);
   return true;
 }
