@@ -41,7 +41,7 @@
       <div class="barra-herramientas">
         <label class="busqueda">
           <span>Buscar</span>
-          <input id="buscarUsuario" type="search" placeholder="Nombre, login, correo o rol">
+          <input id="buscarUsuario" type="search" placeholder="Nombre, login, correo, rol o ubicación">
         </label>
         <button id="btnRecargar" class="boton" type="button">↻ Actualizar</button>
       </div>
@@ -55,6 +55,8 @@
                 <th>Login</th>
                 <th>Rol</th>
                 <th>Estado</th>
+                <th>Último acceso</th>
+                <th>Ubicación aprox.</th>
                 <th>Consistencia</th>
                 <th></th>
               </tr>
@@ -148,6 +150,18 @@
             <select name="roleId" id="selectRol" required></select>
           </label>
         </div>
+
+        <div class="grid-form acceso-observado">
+          <label>Último acceso a la Academia
+            <input id="ultimoAccesoAcademia" type="text" value="—" readonly tabindex="-1">
+          </label>
+          <label>Ubicación aproximada del último acceso
+            <input id="ubicacionUltimoAcceso" type="text" value="—" readonly tabindex="-1">
+          </label>
+        </div>
+        <p class="ayuda ayuda-acceso">
+          Información automática de solo consulta. La ubicación se estima a partir de la IP pública y puede no coincidir exactamente con el lugar físico; no utiliza GPS y la Academia no guarda la IP.
+        </p>
       </fieldset>
 
       <fieldset>
