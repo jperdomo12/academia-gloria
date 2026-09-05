@@ -110,7 +110,11 @@ function mostrarRegistro(usuario = null) {
 function ubicacionUltimoAcceso(usuario = null) {
   const ubicacion = usuario?.accesoAcademia?.ubicacionAproximada;
 
-  if (!ubicacion) return "—";
+  if (!ubicacion) {
+    return usuario?.accesoAcademia?.ultimoAccesoAcademia
+      ? "No disponible"
+      : "—";
+  }
   if (ubicacion.disponible === false) return "No disponible";
 
   const partes = [
