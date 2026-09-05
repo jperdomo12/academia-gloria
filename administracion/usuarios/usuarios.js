@@ -1,6 +1,12 @@
 import { Academia } from "../../compartido/api/academia.js";
 import { protegerPagina } from "../../compartido/js/auth-guard.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+import { db } from "../../compartido/firebase/firebase-config.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const $ = selector => document.querySelector(selector);
 
@@ -101,6 +107,56 @@ function mostrarRegistro(usuario = null) {
   $("#registroActualizadoPor").value = nombreUsuarioPorUid(registro.actualizadoPor);
 }
 
+function ubicacionUltimoAcceso(usuario = null) {
+  const ubicacion = usuario?.accesoAcademia?.ubicacionAproximada;
+
+  if (!ubicacion) return "—";
+  if (ubicacion.disponible === false) return "No disponible";
+
+  const partes = [
+    ubicacion.ciudad,
+    ubicacion.region,
+    ubicacion.pais
+  ]
+    .map(valor => String(valor || "").trim())
+    .filter(Boolean)
+    .filter((valor, indice, arreglo) => arreglo.indexOf(valor) === indice);
+
+  return partes.join(", ") || "No disponible";
+}
+
+function mostrarAccesoAcademia(usuario = null) {
+  $("#ultimoAccesoAcademia").value = fechaRegistro(
+    usuario?.accesoAcademia?.ultimoAccesoAcademia
+  );
+  $("#ubicacionUltimoAcceso").value = ubicacionUltimoAcceso(usuario);
+}
+
+async function leerAccesoAcademia(userId) {
+  try {
+    const resultado = await getDoc(
+      doc(db, "usuarios", userId, "accesosAcademia", "ultimo")
+    );
+
+    return resultado.exists() ? resultado.data() : null;
+  } catch (error) {
+    console.warn(
+      `[Gestión de Usuarios] No se pudo leer el último acceso de '${userId}'.`,
+      error
+    );
+    return null;
+  }
+}
+
+async function enriquecerUsuariosConAcceso(lista = []) {
+  return Promise.all(
+    lista.map(async usuario => ({
+      ...usuario,
+      accesoAcademia: await leerAccesoAcademia(usuario.userId)
+    }))
+  );
+}
+
 function identidadVisible(usuario) {
   if (usuario.persona) {
     return {
@@ -125,7 +181,8 @@ function renderizarUsuarios(filtro = "") {
       usuario.login,
       usuario.acceso?.authEmail,
       usuario.rol?.nombre,
-      usuario.asignacion?.roleId
+      usuario.asignacion?.roleId,
+      ubicacionUltimoAcceso(usuario)
     ].join(" ").toLowerCase().includes(termino);
   });
 
@@ -134,6 +191,8 @@ function renderizarUsuarios(filtro = "") {
     const coherente = incidencias.length === 0;
     const activo = usuario.activo !== false;
     const identidad = identidadVisible(usuario);
+    const ultimoAcceso = fechaRegistro(usuario.accesoAcademia?.ultimoAccesoAcademia);
+    const ubicacion = ubicacionUltimoAcceso(usuario);
 
     return `
       <tr>
@@ -145,6 +204,8 @@ function renderizarUsuarios(filtro = "") {
         <td>${escaparHTML(usuario.login || "—")}</td>
         <td>${escaparHTML(usuario.rol?.nombre || usuario.asignacion?.roleId || "⚠ Sin rol")}</td>
         <td><span class="estado ${activo ? "estado--activo" : "estado--inactivo"}">${activo ? "Activo" : "Inactivo"}</span></td>
+        <td><span class="dato-acceso">${escaparHTML(ultimoAcceso)}</span></td>
+        <td><span class="dato-acceso" title="Ubicación aproximada basada en la IP pública; no es GPS.">${escaparHTML(ubicacion)}</span></td>
         <td>
           <span class="consistencia ${coherente ? "consistencia--ok" : "consistencia--error"}"
                 title="${escaparHTML(incidencias.join(" · "))}">
@@ -176,6 +237,7 @@ function abrirNuevo() {
   formulario.relationIdAnterior.value = "";
   formulario.userId.readOnly = false;
   formulario.activo.checked = true;
+  mostrarAccesoAcademia();
   mostrarRegistro();
   $("#tituloFormulario").textContent = "Nuevo usuario";
   errorFormulario.hidden = true;
@@ -211,6 +273,7 @@ function abrirEdicion(userId) {
   formulario.targetPersonId.value = relacion?.targetPersonId || "";
   formulario.tipoRelacion.value = relacion?.tipoRelacion || "";
   formulario.nivelRelacion.value = relacion?.nivelAcceso || "consulta";
+  mostrarAccesoAcademia(usuario);
   mostrarRegistro(usuario);
 
   $("#tituloFormulario").textContent = "Editar usuario";
@@ -219,10 +282,13 @@ function abrirEdicion(userId) {
 }
 
 async function recargar() {
-  [usuarios, catalogos] = await Promise.all([
+  const [usuariosBase, catalogosActuales] = await Promise.all([
     Academia.administracion.usuarios.listar(),
     Academia.administracion.usuarios.catalogos()
   ]);
+
+  usuarios = await enriquecerUsuariosConAcceso(usuariosBase);
+  catalogos = catalogosActuales;
 
   cargarCatalogos();
   renderizarUsuarios($("#buscarUsuario").value);
