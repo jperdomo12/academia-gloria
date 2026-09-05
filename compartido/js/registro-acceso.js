@@ -5,7 +5,7 @@
  * Versión: 1.0
  *
  * V1
- * - Registra una sola vez por sesión de pestaña/navegador.
+ * - Registra una sola vez por sesión de pestaña/navegador y login real.
  * - Guarda fecha/hora con serverTimestamp de Firestore.
  * - Obtiene ubicación aproximada por IP (ciudad/región/país).
  * - NO persiste la IP pública, coordenadas, código postal, ISP ni otros datos.
@@ -32,17 +32,27 @@ function claveSesion(uid) {
   return `${PREFIJO_CLAVE_SESION}:${uid}`;
 }
 
-function accesoYaRegistrado(uid) {
+function identificadorLogin(usuario) {
+  return texto(usuario?.metadata?.lastSignInTime) || "sesion-autenticada";
+}
+
+function accesoYaRegistrado(usuario) {
+  const uid = texto(usuario?.uid);
+  if (!uid) return false;
+
   try {
-    return sessionStorage.getItem(claveSesion(uid)) === "1";
+    return sessionStorage.getItem(claveSesion(uid)) === identificadorLogin(usuario);
   } catch {
     return false;
   }
 }
 
-function marcarAccesoRegistrado(uid) {
+function marcarAccesoRegistrado(usuario) {
+  const uid = texto(usuario?.uid);
+  if (!uid) return;
+
   try {
-    sessionStorage.setItem(claveSesion(uid), "1");
+    sessionStorage.setItem(claveSesion(uid), identificadorLogin(usuario));
   } catch {
     // El registro en Firestore sigue siendo válido aunque sessionStorage falle.
   }
@@ -116,7 +126,7 @@ async function obtenerUbicacionAproximada() {
 export async function registrarAccesoAcademia(usuario) {
   const uid = texto(usuario?.uid);
 
-  if (!uid || accesoYaRegistrado(uid)) {
+  if (!uid || accesoYaRegistrado(usuario)) {
     return false;
   }
 
@@ -131,6 +141,6 @@ export async function registrarAccesoAcademia(usuario) {
     { merge: true }
   );
 
-  marcarAccesoRegistrado(uid);
+  marcarAccesoRegistrado(usuario);
   return true;
 }
