@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 05/09/2026 |
@@ -25,11 +25,13 @@
 | `docs/project/DECISION_LOG.md` | **Complementa:** decisiones transversales estables. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** ciclo operativo de construcción y cierre. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** incorporación curricular de 6.º a partir de material escolar real. |
+| `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** identidad, acceso, Gestión de Usuarios y observación administrativa del último acceso. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 05/09/2026 | Product Owner + AI Collaborator | Registra PR #78 aprobado y fusionado: **Último acceso a la Academia** + ubicación aproximada ciudad/región/país en Gestión de Usuarios, con minimización de datos, sin GPS ni persistencia de IP. Actualiza el baseline funcional a `9e03c096...` y mantiene intacta la Fase de uso prioritario. |
 | 1.6 | 05/09/2026 | Product Owner + AI Collaborator | Sustituye el concepto de “congelación funcional” por **Fase de uso prioritario**. Mantiene en espera el crecimiento funcional general para concentrarse durante varias semanas en uso real, motivación y utilidad efectiva; deja activo el carril de incorporación curricular de 6.º por una sola instrucción; formaliza reporte y resolución rápida de issues reales; añade el arranque preferido de nuevos chats desde GitHub y registra PR #7 como antecedente histórico cerrado sin merge. |
 | 1.5 | 04/09/2026 | Product Owner + AI Collaborator | Registró PR #74 aprobado y fusionado, cerró la incidencia visual de Guacamayas y actualizó el baseline funcional. El término “congelación” utilizado en esta versión queda reinterpretado por v1.6 como una decisión de foco de gestión, no como inmovilidad del producto. |
 | 1.4 | 04/09/2026 | Product Owner + AI Collaborator | Cerró P0/P1/P2, registró PR #71 aprobado, PR #72 descartado y consolidó pendientes de continuidad. |
@@ -223,13 +225,16 @@ Un issue real puede justificar una corrección durante esta fase. **No debe conv
 
 ```text
 main
-d893e977d2c5f122b97c7efecef1f665a1988f38
+9e03c096167597c497567033a50a9496972ec7ba
 ```
 
-Este baseline funcional incorpora:
+Este baseline funcional incorpora, entre otras entregas cerradas:
 
 - **PR #71**, mejora aprobada de Creciendo por Dentro;
-- **PR #74**, ajuste visual mínimo aprobado de `Mis Guacamayas`.
+- **PR #74**, ajuste visual mínimo aprobado de `Mis Guacamayas`;
+- **PR #78**, Último acceso a la Academia + ubicación aproximada en Gestión de Usuarios.
+
+PR #78 mantiene la separación USER/PERSON: el acceso observado pertenece al USER autenticado, no a Persona Activa. La ubicación V1 es aproximada por IP y persiste solo ciudad/región/país/código de país; no usa GPS ni conserva IP, coordenadas, ISP o código postal.
 
 El HEAD documental de `main` puede ser posterior sin cambiar este baseline funcional.
 
@@ -253,7 +258,7 @@ Antecedentes:
 
 ---
 
-## ✅ 6. Capacidades cerradas antes de la fase de uso prioritario
+## ✅ 6. Capacidades cerradas antes y durante la fase de uso prioritario
 
 ### Misiones y acompañamiento
 
@@ -279,9 +284,11 @@ Principios vigentes: actividad/progreso real, sin rankings, sin comparación con
 - ✅ Portal 6.º de Primaria y Matemáticas preparado para crecimiento por Temas.
 - ✅ Contrato de incorporación curricular de una sola instrucción.
 
-### Otros
+### Administración y otros
 
 - ✅ Mi Baúl V1.
+- ✅ Gestión de Usuarios con **Último acceso a la Academia** y **Ubicación aproximada del último acceso** · PR #78.
+- ✅ Ubicación V1 minimizada: ciudad/región/país, sin GPS ni persistencia de IP.
 - ✅ Plantilla oficial de HandOff.
 - ✅ Documentación P0/P1/P2 sincronizada.
 
@@ -383,6 +390,8 @@ No ampliar nuevas Semillas con el proceso anterior si sigue resultando costoso.
 - Firestore Rules versionadas en GitHub no equivalen a Rules desplegadas en Firebase.
 - Los nuevos Temas de 6.º deben aplicar el modo de incorporación curricular de una sola instrucción y producir la evidencia académica exigida por el estándar.
 - Issues reales de uso se reportan, verifican y corrigen con prioridad proporcional a su impacto.
+- El último acceso observado pertenece al USER autenticado y no es evidencia académica ni actividad de Persona Activa.
+- La ubicación aproximada de acceso aplica minimización de datos; no interpretar ciudad/región como posición física exacta.
 
 ---
 
@@ -391,7 +400,7 @@ No ampliar nuevas Semillas con el proceso anterior si sigue resultando costoso.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de referencia** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
+| **Baseline funcional de referencia** | `9e03c096167597c497567033a50a9496972ec7ba` |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Crecimiento funcional general** | ⏸️ En espera por foco de uso |
 | **Carril curricular 6.º** | ✅ Activo con material escolar real |
@@ -428,6 +437,7 @@ Esperar varias semanas de uso real antes de volver a priorizarlas, salvo necesid
 
 ## Qué acabamos de cerrar
 
+- PR #78 aprobado y fusionado: Último acceso a la Academia + ubicación aproximada minimizada en Gestión de Usuarios.
 - Jornada documental P0 + P1 + P2.
 - PR #71 aprobado y fusionado.
 - PR #72 descartado y no fusionado.
@@ -457,9 +467,9 @@ No existe una nueva funcionalidad general `On going`.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.6 |
+| **Versión activa** | 1.7 |
 | **Estado operativo** | 🌿 Fase de uso prioritario desde 05/09/2026 |
-| **Baseline funcional de referencia** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
+| **Baseline funcional de referencia** | `9e03c096167597c497567033a50a9496972ec7ba` |
 | **Crecimiento curricular 6.º** | ✅ Activo durante la fase |
 | **Issues reales** | ✅ Reportar → verificar → corregir con rapidez |
 | **Crecimiento funcional general** | ⏸️ En espera por foco de uso, no prohibido |
