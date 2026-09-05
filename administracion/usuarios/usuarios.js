@@ -4,8 +4,13 @@ import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import { db } from "../../compartido/firebase/firebase-config.js";
 
 import {
+  collection,
   doc,
-  getDoc
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const $ = selector => document.querySelector(selector);
@@ -107,14 +112,8 @@ function mostrarRegistro(usuario = null) {
   $("#registroActualizadoPor").value = nombreUsuarioPorUid(registro.actualizadoPor);
 }
 
-function ubicacionUltimoAcceso(usuario = null) {
-  const ubicacion = usuario?.accesoAcademia?.ubicacionAproximada;
-
-  if (!ubicacion) {
-    return usuario?.accesoAcademia?.ultimoAccesoAcademia
-      ? "No disponible"
-      : "—";
-  }
+function textoUbicacion(ubicacion = null, tieneFecha = false) {
+  if (!ubicacion) return tieneFecha ? "No disponible" : "—";
   if (ubicacion.disponible === false) return "No disponible";
 
   const partes = [
@@ -129,11 +128,48 @@ function ubicacionUltimoAcceso(usuario = null) {
   return partes.join(", ") || "No disponible";
 }
 
+function ubicacionUltimoAcceso(usuario = null) {
+  return textoUbicacion(
+    usuario?.accesoAcademia?.ubicacionAproximada,
+    Boolean(usuario?.accesoAcademia?.ultimoAccesoAcademia)
+  );
+}
+
 function mostrarAccesoAcademia(usuario = null) {
   $("#ultimoAccesoAcademia").value = fechaRegistro(
     usuario?.accesoAcademia?.ultimoAccesoAcademia
   );
   $("#ubicacionUltimoAcceso").value = ubicacionUltimoAcceso(usuario);
+}
+
+function mostrarHistorialAccesos(usuario = null) {
+  const detalle = $("#historialAccesosDetalle");
+  const lista = $("#historialAccesosLista");
+  const cantidad = $("#historialAccesosCantidad");
+  const historial = usuario?.historialAccesos || [];
+
+  detalle.open = false;
+  cantidad.textContent = historial.length
+    ? `${historial.length} acceso${historial.length === 1 ? "" : "s"} conservado${historial.length === 1 ? "" : "s"} · máximo 10`
+    : "Se conservan hasta 10 accesos";
+
+  if (!historial.length) {
+    lista.innerHTML = '<p class="historial-accesos__vacio">No hay accesos históricos registrados todavía.</p>';
+    return;
+  }
+
+  lista.innerHTML = `
+    <div class="historial-accesos__cabecera" aria-hidden="true">
+      <span>Fecha y hora</span>
+      <span>Ubicación aproximada</span>
+    </div>
+    ${historial.map(acceso => `
+      <div class="historial-acceso__fila">
+        <time>${escaparHTML(fechaRegistro(acceso.fechaAcceso))}</time>
+        <span>${escaparHTML(textoUbicacion(acceso.ubicacionAproximada, Boolean(acceso.fechaAcceso)))}</span>
+      </div>
+    `).join("")}
+  `;
 }
 
 async function leerAccesoAcademia(userId) {
@@ -152,12 +188,42 @@ async function leerAccesoAcademia(userId) {
   }
 }
 
+async function leerHistorialAccesos(userId) {
+  try {
+    const consulta = query(
+      collection(db, "usuarios", userId, "accesosAcademia"),
+      orderBy("fechaAcceso", "desc"),
+      limit(10)
+    );
+    const resultado = await getDocs(consulta);
+
+    return resultado.docs.map(item => ({
+      id: item.id,
+      ...item.data()
+    }));
+  } catch (error) {
+    console.warn(
+      `[Gestión de Usuarios] No se pudo leer el historial de accesos de '${userId}'.`,
+      error
+    );
+    return [];
+  }
+}
+
 async function enriquecerUsuariosConAcceso(lista = []) {
   return Promise.all(
-    lista.map(async usuario => ({
-      ...usuario,
-      accesoAcademia: await leerAccesoAcademia(usuario.userId)
-    }))
+    lista.map(async usuario => {
+      const [accesoAcademia, historialAccesos] = await Promise.all([
+        leerAccesoAcademia(usuario.userId),
+        leerHistorialAccesos(usuario.userId)
+      ]);
+
+      return {
+        ...usuario,
+        accesoAcademia,
+        historialAccesos
+      };
+    })
   );
 }
 
@@ -243,6 +309,7 @@ function abrirNuevo() {
   formulario.activo.checked = true;
   mostrarAccesoAcademia();
   mostrarRegistro();
+  mostrarHistorialAccesos();
   $("#tituloFormulario").textContent = "Nuevo usuario";
   errorFormulario.hidden = true;
   dialogo.showModal();
@@ -279,6 +346,7 @@ function abrirEdicion(userId) {
   formulario.nivelRelacion.value = relacion?.nivelAcceso || "consulta";
   mostrarAccesoAcademia(usuario);
   mostrarRegistro(usuario);
+  mostrarHistorialAccesos(usuario);
 
   $("#tituloFormulario").textContent = "Editar usuario";
   errorFormulario.hidden = true;
