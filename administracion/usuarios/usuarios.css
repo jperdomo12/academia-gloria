@@ -54,4 +54,33 @@ fieldset{margin:18px 0;border:2px solid #e7e5f4;border-radius:18px;padding:16px}
   cursor:default;
 }
 
-@media(max-width:700px){.cabecera-admin,.barra-herramientas,.paso-manual{align-items:stretch;flex-direction:column}.grid-form{grid-template-columns:1fr}.paso-manual strong{white-space:normal}}
+.historial-accesos{margin:18px 0;border:2px solid #e7e5f4;border-radius:18px;background:#fff;overflow:hidden}
+.historial-accesos summary{display:flex;align-items:center;gap:14px;padding:16px;cursor:pointer;list-style:none}
+.historial-accesos summary::-webkit-details-marker{display:none}
+.historial-accesos summary:focus-visible{outline:3px solid rgba(117,87,246,.18);outline-offset:-3px}
+.historial-accesos__titulo{display:grid;gap:3px;min-width:0;flex:1}
+.historial-accesos__titulo strong{color:#4c1d95;font-weight:900}
+.historial-accesos__titulo small{color:#64748b;font-size:.82rem;font-weight:650}
+.historial-accesos__accion{flex:0 0 auto;border:2px solid #ddd6fe;border-radius:999px;padding:6px 10px;color:#5b21b6;background:#faf8ff;font-size:.82rem;font-weight:900}
+.historial-accesos__accion--abierto{display:none}
+.historial-accesos[open] .historial-accesos__accion--cerrado{display:none}
+.historial-accesos[open] .historial-accesos__accion--abierto{display:inline-flex}
+.historial-accesos__contenido{padding:0 16px 16px}
+.historial-accesos__contenido .ayuda{margin-top:0}
+.historial-accesos__lista{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fbfdff}
+.historial-accesos__cabecera,.historial-acceso__fila{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(0,1.3fr);gap:14px;padding:10px 12px}
+.historial-accesos__cabecera{background:#f8fafc;color:#64748b;font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.historial-acceso__fila{color:#475569;font-size:.9rem;font-weight:700;line-height:1.4}
+.historial-acceso__fila + .historial-acceso__fila{border-top:1px solid #e5e7eb}
+.historial-acceso__fila time{color:#334155;font-weight:800}
+.historial-accesos__vacio{margin:0;padding:18px;color:#64748b;text-align:center;font-weight:700}
+
+@media(max-width:700px){
+  .cabecera-admin,.barra-herramientas,.paso-manual{align-items:stretch;flex-direction:column}
+  .grid-form{grid-template-columns:1fr}
+  .paso-manual strong{white-space:normal}
+  .historial-accesos summary{align-items:flex-start;flex-wrap:wrap}
+  .historial-accesos__accion{margin-left:auto}
+  .historial-accesos__cabecera{display:none}
+  .historial-acceso__fila{grid-template-columns:1fr;gap:4px}
+}

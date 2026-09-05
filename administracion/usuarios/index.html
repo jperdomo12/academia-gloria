@@ -204,6 +204,25 @@
         </div>
       </fieldset>
 
+      <details id="historialAccesosDetalle" class="historial-accesos">
+        <summary>
+          <span class="historial-accesos__titulo">
+            <strong>6. Historial de accesos</strong>
+            <small id="historialAccesosCantidad">Se conservan hasta 10 accesos</small>
+          </span>
+          <span class="historial-accesos__accion historial-accesos__accion--cerrado">Ver detalles</span>
+          <span class="historial-accesos__accion historial-accesos__accion--abierto">Ocultar</span>
+        </summary>
+        <div class="historial-accesos__contenido">
+          <p class="ayuda">
+            Últimos accesos observados, del más reciente al más antiguo. Solo se conserva fecha/hora y ubicación aproximada; no se guarda IP, GPS, coordenadas, ISP ni código postal.
+          </p>
+          <div id="historialAccesosLista" class="historial-accesos__lista">
+            <p class="historial-accesos__vacio">No hay accesos históricos registrados todavía.</p>
+          </div>
+        </div>
+      </details>
+
       <label class="activo-check">
         <input name="activo" type="checkbox" checked>
         <span>Usuario activo en la Academia</span>

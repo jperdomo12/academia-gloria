@@ -2,11 +2,12 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/registro-acceso.js
  * Registro operativo del último acceso del Usuario a la Academia.
- * Versión: 1.0
+ * Versión: 1.1
  *
- * V1
+ * V1.1
  * - Registra una sola vez por sesión de pestaña/navegador y login real.
  * - Guarda fecha/hora inmediatamente con serverTimestamp de Firestore.
+ * - Conserva un historial limitado a los 10 accesos más recientes.
  * - Resuelve después, sin bloquear, ubicación aproximada por IP.
  * - NO persiste la IP pública, coordenadas, código postal, ISP ni otros datos.
  * - La geolocalización puede quedar "No disponible" sin perder el acceso.
@@ -15,14 +16,20 @@
 import { db } from "../firebase/firebase-config.js";
 
 import {
+  collection,
+  deleteDoc,
   doc,
+  getDocs,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-const PREFIJO_CLAVE_SESION = "academia.acceso.registrado.v1";
+const PREFIJO_CLAVE_SESION = "academia.acceso.registrado.v2";
 const URL_GEOLOCALIZACION = "https://whatismyip.technology/api/me";
 const TIMEOUT_GEOLOCALIZACION_MS = 3500;
+const MAX_HISTORIAL_ACCESOS = 10;
 
 function texto(valor = "") {
   return String(valor ?? "").trim();
@@ -107,7 +114,7 @@ async function obtenerUbicacionAproximada() {
 
     /*
      * El servicio devuelve también la IP y otros datos de red.
-     * Por diseño V1 se ignoran por completo: la Academia persiste únicamente
+     * Por diseño se ignoran por completo: la Academia persiste únicamente
      * ciudad, región y país aproximados.
      */
     const ciudad = texto(datos?.city);
@@ -138,6 +145,26 @@ async function obtenerUbicacionAproximada() {
   }
 }
 
+async function recortarHistorialAccesos(uid) {
+  try {
+    const consulta = query(
+      collection(db, "usuarios", uid, "accesosAcademia"),
+      orderBy("fechaAcceso", "desc")
+    );
+    const resultado = await getDocs(consulta);
+    const excedentes = resultado.docs.slice(MAX_HISTORIAL_ACCESOS);
+
+    if (excedentes.length) {
+      await Promise.all(excedentes.map(item => deleteDoc(item.ref)));
+    }
+  } catch (error) {
+    console.debug(
+      "[RegistroAcceso] No se pudo aplicar la retención de 10 accesos.",
+      error
+    );
+  }
+}
+
 export async function registrarAccesoAcademia(usuario) {
   const uid = texto(usuario?.uid);
 
@@ -145,7 +172,10 @@ export async function registrarAccesoAcademia(usuario) {
     return false;
   }
 
-  const referencia = doc(db, "usuarios", uid, "accesosAcademia", "ultimo");
+  const coleccionAccesos = collection(db, "usuarios", uid, "accesosAcademia");
+  const referenciaUltimo = doc(coleccionAccesos, "ultimo");
+  const referenciaHistorial = doc(coleccionAccesos);
+  let historialCreado = false;
 
   /*
    * Marcamos antes de iniciar la escritura para evitar duplicados si otra
@@ -155,7 +185,7 @@ export async function registrarAccesoAcademia(usuario) {
 
   try {
     await setDoc(
-      referencia,
+      referenciaUltimo,
       { ultimoAccesoAcademia: serverTimestamp() },
       { merge: true }
     );
@@ -165,21 +195,55 @@ export async function registrarAccesoAcademia(usuario) {
   }
 
   /*
+   * El historial conserva el instante del acceso independientemente de que la
+   * ubicación tarde o falle. Cada documento representa una entrada observada.
+   */
+  try {
+    await setDoc(referenciaHistorial, {
+      fechaAcceso: serverTimestamp(),
+      ubicacionAproximada: ubicacionNoDisponible()
+    });
+    historialCreado = true;
+  } catch (error) {
+    console.debug(
+      "[RegistroAcceso] El último acceso quedó registrado, pero no su historial.",
+      error
+    );
+  }
+
+  /*
    * La ubicación es complementaria. Nunca condiciona la fecha/hora de acceso.
    */
   const ubicacionAproximada = await obtenerUbicacionAproximada();
 
   try {
     await setDoc(
-      referencia,
+      referenciaUltimo,
       { ubicacionAproximada },
       { merge: true }
     );
   } catch (error) {
     console.debug(
-      "[RegistroAcceso] El acceso quedó registrado, pero no su ubicación.",
+      "[RegistroAcceso] El acceso quedó registrado, pero no su ubicación actual.",
       error
     );
+  }
+
+  if (historialCreado) {
+    try {
+      await setDoc(
+        referenciaHistorial,
+        { ubicacionAproximada },
+        { merge: true }
+      );
+    } catch (error) {
+      console.debug(
+        "[RegistroAcceso] No se pudo completar la ubicación del historial.",
+        error
+      );
+    }
+
+    await recortarHistorialAccesos(uid);
   }
 
   return true;

@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-GESTION_DE_USUARIOS.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | 12/08/2026 |
 | **Última actualización** | 05/09/2026 |
@@ -21,12 +21,13 @@
 | `docs/models/MODELO_ROLES.md` | **Modela:** actores y roles funcionales. |
 | `administracion/usuarios/` | **Implementa:** pantalla actual de Gestión de Usuarios. |
 | `compartido/api/academia.js` | **Implementa:** operaciones coordinadas de alta/edición. |
-| `compartido/js/registro-acceso.js` | **Implementa:** registro del último acceso y ubicación aproximada sin persistir la IP. |
+| `compartido/js/registro-acceso.js` | **Implementa:** registro del último acceso e historial limitado con ubicación aproximada sin persistir la IP. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 05/09/2026 | Product Owner + AI Collaborator | Amplía la observación administrativa de acceso: conserva los **10 accesos más recientes**, los muestra en un bloque `6. Historial de accesos` plegado por defecto dentro de `Ver / editar`, mantiene el último acceso visible en tabla/formulario y conserva las mismas reglas de minimización de datos. |
 | 1.1 | 05/09/2026 | Product Owner + AI Collaborator | Documenta la V1 de **Último acceso a la Academia** y ubicación aproximada del último acceso en Gestión de Usuarios. Aclara que es información automática de solo consulta, que la ubicación se estima por IP sin GPS y que la Academia no persiste la IP pública. |
 | 1.0 | 04/09/2026 | Product Owner + AI Collaborator | P2. Activa el manual conforme al producto vigente. Mantiene Firebase Authentication como único paso manual, conserva la generación `per_###`, actualiza lenguaje USER/PERSON/ROLE/PERSON_RELATION, niveles de Relación, auditoría y resolución de incidencias. |
 | 0.3 | 12/08/2026 | Juan Perdomo + IA | Normaliza el historial al formato documental estándar. |
@@ -157,7 +158,7 @@ Rol
 
 El selector de Rol utiliza el catálogo vigente y muestra también su nivel de acceso.
 
-Al editar un Usuario existente, este mismo bloque muestra además como información automática de solo consulta:
+Al consultar/editar un Usuario existente, este mismo bloque muestra además como información automática de solo consulta:
 
 ```text
 Último acceso a la Academia
@@ -234,12 +235,12 @@ No debe confundirse con el correo de Firebase Authentication.
 
 ---
 
-## ✏️ 5. Editar un Usuario
+## ✏️ 5. Ver / editar un Usuario
 
 En la lista pulsar:
 
 ```text
-Editar
+Ver / editar
 ```
 
 La pantalla permite mantener, según corresponda:
@@ -254,7 +255,7 @@ La pantalla permite mantener, según corresponda:
 
 El UID existente se muestra como identificador técnico y no debe cambiarse.
 
-Los datos de último acceso son informativos y no se editan manualmente desde este formulario.
+Los datos de acceso observados son informativos y no se editan manualmente desde este formulario.
 
 ---
 
@@ -298,7 +299,7 @@ Sin embargo, el selector de **nivel sobre otra Persona** ofrece actualmente `con
 
 ---
 
-## 🧾 8. Registro y último acceso
+## 🧾 8. Registro y accesos
 
 ### 8.1 Registro de auditoría
 
@@ -340,7 +341,7 @@ Ubicación aproximada del último acceso
 
 La fecha/hora se registra con tiempo del servidor y no depende de que la ubicación pueda resolverse.
 
-La ubicación V1:
+La ubicación:
 
 - se estima a partir de la IP pública de la conexión;
 - guarda únicamente ciudad, región, país y código de país cuando están disponibles;
@@ -350,6 +351,35 @@ La ubicación V1:
 - la Academia **no persiste la IP pública**, coordenadas, ISP ni código postal.
 
 Si el servicio de ubicación no está disponible, la fecha/hora del último acceso puede existir igualmente y la ubicación se muestra como no disponible.
+
+### 8.3 Historial de accesos · últimos 10
+
+Al final del formulario de `Ver / editar`, el bloque:
+
+```text
+6. Historial de accesos
+→ Ver detalles
+```
+
+permanece **plegado por defecto**.
+
+Al abrirlo muestra los accesos históricos observados, del más reciente al más antiguo, con:
+
+```text
+Fecha y hora
+Ubicación aproximada
+```
+
+Reglas de retención:
+
+- se conservan como máximo **10 accesos históricos** por USER;
+- al registrar un acceso nuevo por encima del límite se elimina el más antiguo;
+- el documento de `Último acceso` continúa separado para lectura rápida en la tabla;
+- el historial comienza a acumularse desde la activación de esta capacidad;
+- no se reconstruyen ni inventan accesos anteriores que la V1 no conservó;
+- cada entrada mantiene las mismas reglas de minimización: sin IP persistida, GPS, coordenadas, ISP ni código postal.
+
+El historial es administrativo y de solo consulta. No es evidencia académica ni actividad de Persona Activa.
 
 ---
 
@@ -386,7 +416,7 @@ El botón:
 ↻ Actualizar
 ```
 
-vuelve a leer los datos actuales y refresca la tabla, incluidos los datos del último acceso disponibles en ese momento.
+vuelve a leer los datos actuales y refresca la tabla, incluidos el último acceso y el historial disponible en ese momento.
 
 No modifica información.
 
@@ -458,6 +488,10 @@ Es un estado válido. El registro de fecha/hora es independiente de la consulta 
 
 Es esperable en algunos casos. La ubicación es una estimación basada en IP, no GPS. No interpretar ciudad/región como una posición física exacta del dispositivo.
 
+### El historial muestra menos de 10 accesos
+
+También es normal. El límite de 10 es un máximo, no una cantidad mínima. El historial solo contiene accesos observados desde que esta ampliación comenzó a registrarlos; no se reconstruye información anterior.
+
 ### Cambié algo excepcionalmente en Firebase y no aparece
 
 Pulsar:
@@ -480,7 +514,7 @@ Antes de tocar manualmente datos de identidad en Firestore:
 
 La edición manual directa debe quedar como excepción controlada y con comprensión del impacto sobre USER, PERSON, ROLE, login y Relaciones.
 
-La información del último acceso es automática y no debe corregirse manualmente para aparentar actividad o ubicación que no fue observada realmente.
+La información de accesos es automática y no debe corregirse manualmente para aparentar actividad o ubicación que no fue observada realmente.
 
 ---
 
@@ -489,8 +523,9 @@ La información del último acceso es automática y no debe corregirse manualmen
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Acceso requerido** | `administracion` |
 | **Paso manual normal** | Crear la cuenta en Firebase Authentication y copiar UID. |
 | **Resto del alta** | Gestionado desde la Academia. |
-| **Último acceso V1** | Fecha/hora + ubicación aproximada ciudad/región/país; sin GPS ni persistencia de IP pública. |
+| **Último acceso** | Fecha/hora + ubicación aproximada ciudad/región/país; sin GPS ni persistencia de IP pública. |
+| **Historial de accesos** | Máximo 10 entradas, plegado por defecto en `Ver / editar`, con la misma minimización de datos. |
