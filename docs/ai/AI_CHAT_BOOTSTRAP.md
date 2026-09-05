@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/ai/AI_CHAT_BOOTSTRAP.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 05/09/2026 |
 | **Propietario** | Gobierno de Colaboración con IA |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Incorporación rápida y controlada de una nueva IA a cualquier área de trabajo de la Academia Gloria Valentina |
@@ -17,46 +17,84 @@
 | Documento | Relación |
 |---|---|
 | `docs/DOCUMENTATION_ARCHITECTURE.md` | **Gobierna:** define dónde vive cada conocimiento, su propietario y su ciclo de vida. |
-| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** establece la estructura, trazabilidad, versionado y Quality Gate documental. |
-| `docs/README.md` | **Orienta:** actúa como punto único de entrada y mapa operativo de la documentación oficial. |
-| `docs/FOUNDATION.md` | **Gobierna:** define origen, propósito, identidad y principios fundacionales del producto. |
-| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** define cómo colaboran las personas, la documentación y la IA. |
-| `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Complementa:** conserva el punto operativo reciente y el bloque `On going` para continuar trabajo entre chats. |
-| `docs/project/PROJECT_ROLES.md` | **Gobierna:** define roles, autoridad, colaboración y asignación vigente. |
-| `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** define el ciclo operativo de los cambios del producto. |
-| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Complementa:** define la arquitectura conceptual de la experiencia. |
-| `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Complementa:** define identidad visual, emocional y Personajes Oficiales. |
-| `docs/models/` | **Modela:** contiene los modelos conceptuales oficiales del producto. |
-| `docs/specifications/` | **Especifica:** contiene especificaciones funcionales de módulos y capacidades. |
+| `docs/DOCUMENTATION_STANDARD.md` | **Gobierna:** estructura, trazabilidad, versionado y Quality Gate documental. |
+| `docs/README.md` | **Orienta:** punto de entrada y mapa operativo de documentación oficial. |
+| `docs/FOUNDATION.md` | **Gobierna:** origen, propósito, identidad y principios fundacionales. |
+| `docs/ai/AI_COLLABORATION_GUIDE.md` | **Gobierna:** colaboración entre personas, documentación e IA. |
+| `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Complementa:** punto operativo reciente y continuidad entre chats. |
+| `docs/project/ROADMAP.md` | **Complementa:** prioridades y fase operativa actual. |
+| `docs/project/PROJECT_ROLES.md` | **Gobierna:** roles, autoridad y colaboración. |
+| `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** ciclo operativo de cambios de producto. |
+| `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Complementa:** arquitectura conceptual de experiencia. |
+| `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Complementa:** identidad visual, emocional y Personajes Oficiales. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** incorporación de nuevos Temas académicos desde material escolar real. |
+| `docs/models/` | **Modela:** modelos conceptuales oficiales. |
+| `docs/specifications/` | **Especifica:** comportamiento funcional verificable. |
 
-
-## Historial de versiones
+## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Vincula el bootstrap con la plantilla viva oficial de HandOff y formaliza el procedimiento preferido para continuar un chat existente: último HandOff disponible + instrucción breve, usando luego las fuentes oficiales para verificar el estado real. |
-| 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Incorpora un texto visible y reutilizable para iniciar nuevos chats, alinea la lectura inicial con `README.md`, `docs/README.md`, `FOUNDATION.md` y la arquitectura documental vigente, y corrige referencias de onboarding a `models/` y `specifications/`. |
-| 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del protocolo de incorporación de una nueva IA a la Academia Gloria Valentina. Define el proceso de bootstrap, la lectura mínima recomendada, los niveles de incorporación, las reglas de construcción documental, el prompt operativo reutilizable y los principios para una colaboración eficaz y consistente con el proyecto. |
+| 1.3 | 05/09/2026 | Product Owner + AI Collaborator | Añade arranque preferido de nuevos chats directamente desde GitHub `main`, formaliza el modo curricular de 6.º como carril operativo activo durante la fase de uso prioritario, obliga a cargar `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` para ese tipo de trabajo, incorpora la regla de seis bloqueos materiales como únicos motivos normales de interrupción y deja explícito que issues reales del uso deben reportarse/verificarse/resolverse con rapidez. |
+| 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Vinculó el bootstrap con la plantilla viva oficial de HandOff y formalizó el procedimiento preferido para continuar un chat existente: último HandOff + instrucción breve + verificación dirigida. |
+| 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Incorporó un texto reutilizable para iniciar nuevos chats y alineó el onboarding con las fuentes oficiales. |
+| 1.0 | 04/08/2026 | Product Owner + AI Collaborator | Primera versión oficial del protocolo de incorporación de una nueva IA. |
+
+---
 
 ## 🚀 Texto para iniciar un nuevo chat
 
-### Continuar un chat existente
+### Opción A · Preferida cuando GitHub está conectado
 
-Cuando existe una versión reciente de `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`, el procedimiento preferido es más simple:
-
-1. adjuntar o proporcionar **el último HandOff disponible**;
-2. escribir una instrucción breve, por ejemplo:
+Copiar y pegar:
 
 ```text
-Continuamos Academia Gloria Valentina de acuerdo con lo indicado en el HandOff adjunto.
-Revísalo y dime si está claro para continuar.
+Continuamos el proyecto Academia Gloria Valentina.
+
+Revisa en el repositorio jperdomo12/academia-gloria, rama main:
+1. el último `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`;
+2. este `docs/ai/AI_CHAT_BOOTSTRAP.md`;
+3. las fuentes propietarias necesarias antes de actuar.
+
+No reconstruyas conversaciones anteriores y no me pidas contexto que ya esté
+consolidado en documentación, código o repositorio.
+
+La Academia se encuentra en fase de uso prioritario: durante varias semanas
+priorizamos usar muy bien lo existente, que Gloria lo use de manera motivada y
+que sea de ayuda efectiva. El crecimiento funcional general queda en espera por
+foco de uso, pero siguen activos:
+- la incorporación rápida de Temas reales de 6.º a partir del material del colegio;
+- el reporte, verificación y resolución rápida de issues reales que aparezcan con el uso.
+
+Si el trabajo es curricular de 6.º, aplica obligatoriamente
+`docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
+y todos los estándares relacionados que correspondan.
+
+En incorporación curricular, pregunta solo si falta información que pueda cambiar
+materialmente:
+- qué debe aprender Gloria;
+- el procedimiento exigido por el colegio;
+- el nivel de dificultad;
+- cómo la van a evaluar;
+- una respuesta que deba coincidir exactamente con el material;
+- o una decisión arquitectónica nueva no resuelta.
+
+Al comenzar, indícame brevemente que revisaste el contexto y que estás listo.
 ```
 
-Eso debe ser suficiente para orientarse. El nuevo chat verificará después en repositorio y fuentes oficiales aquello que necesite antes de modificar o declarar algo implementado.
+Con GitHub conectado, este texto debe ser suficiente para recuperar el contexto operativo sin adjuntar manualmente el HandOff.
 
-### Incorporación sin HandOff reciente
+### Opción B · Continuar con HandOff adjunto
 
-El siguiente bloque está pensado para **copiar y pegar al abrir un nuevo chat** cuando no existe un HandOff reciente suficiente o se necesita una incorporación más general.
+Si el nuevo chat no puede consultar GitHub, adjuntar el último HandOff y escribir:
+
+```text
+Continuamos Academia Gloria Valentina de acuerdo con el HandOff adjunto.
+Revísalo, aplica las fuentes oficiales que correspondan y dime si estás listo para continuar.
+No me pidas información que ya esté consolidada en el HandOff o en los documentos proporcionados.
+```
+
+### Opción C · Incorporación general sin HandOff reciente
 
 ```text
 Actúa como AI Collaborator de la Academia Gloria Valentina.
@@ -66,53 +104,28 @@ No reconstruyas el proyecto desde cero y no asumas que una conversación anterio
 es fuente de verdad.
 
 Antes de proponer o modificar:
-
 1. Revisa README.md.
 2. Revisa docs/README.md.
 3. Revisa docs/FOUNDATION.md.
 4. Revisa docs/DOCUMENTATION_ARCHITECTURE.md.
 5. Revisa docs/DOCUMENTATION_STANDARD.md.
 6. Revisa docs/ai/AI_COLLABORATION_GUIDE.md.
-7. Identifica el documento propietario del dominio en el que vamos a trabajar.
-8. Revisa el código, archivos y documentación actuales directamente afectados.
+7. Identifica el documento propietario del dominio.
+8. Revisa código, archivos y documentación directamente afectados.
 
-Distingue siempre entre:
-- Hecho
-- Inferencia
-- Propuesta
-- Decisión
-- Implementado
-
-Comprende antes de proponer o modificar.
-
-No dupliques documentación ni estructuras existentes.
-No presentes propuestas o visión futura como implementadas.
-Reutiliza la arquitectura, componentes y servicios actuales.
-
-Cuando el alcance esté claro y yo indique “adelante”, construye y entrega
-el producto solicitado sin volver a abrir innecesariamente el análisis.
-
-Mantén respuestas concisas y orientadas al producto.
+Distingue siempre entre Hecho, Inferencia, Propuesta, Decisión e Implementado.
+Reutiliza antes de crear.
+No presentes visión futura como implementada.
+Cuando exista claridad suficiente y yo indique “adelante”, construye sin reabrir
+innecesariamente el análisis.
 
 Al comenzar, indícame brevemente:
 - qué fuentes revisaste;
-- qué entiendes que es el objetivo actual;
-- qué documento gobierna el trabajo;
-- qué está implementado;
-- y si existe alguna duda crítica que impida comenzar.
+- objetivo actual;
+- documento propietario;
+- estado implementado relevante;
+- y dudas críticas, si existen.
 ```
-
-Después del bloque, añade únicamente el contexto específico que deba continuar, por ejemplo:
-
-```text
-Objetivo de este chat:
-Continuar [módulo / problema / entregable] desde el estado actual del repositorio.
-
-Contexto adicional:
-[solo la información que todavía no esté consolidada en documentación o código].
-```
-
-Este texto **no sustituye** la lectura de las fuentes oficiales ni un HandOff específico cuando exista.
 
 ---
 
@@ -122,7 +135,7 @@ Este texto **no sustituye** la lectura de las fuentes oficiales ni un HandOff es
 2. Alcance
 3. Resultado esperado
 4. Principios del bootstrap
-5. Estado actual del producto
+5. Estado operativo actual
 6. Niveles de incorporación
 7. Lectura mínima obligatoria
 8. Identificación del trabajo
@@ -132,7 +145,7 @@ Este texto **no sustituye** la lectura de las fuentes oficiales ni un HandOff es
 12. Reglas según el tipo de chat
 13. Confirmación de preparación
 14. Prompt operativo de inicio
-15. Handoff y cierre
+15. HandOff y cierre
 16. Antipatrones
 17. Mantenimiento
 18. Decisiones adoptadas
@@ -142,26 +155,26 @@ Este texto **no sustituye** la lectura de las fuentes oficiales ni un HandOff es
 
 ## 1. Propósito
 
-Permitir que una nueva IA pueda incorporarse a la Academia Gloria Valentina en pocos minutos y comenzar a colaborar correctamente sin depender del historial completo de conversaciones anteriores.
+Permitir que una nueva IA pueda incorporarse a la Academia Gloria Valentina en pocos minutos y colaborar correctamente **sin depender del historial completo de conversaciones anteriores**.
 
-Este documento no resume toda la arquitectura.
+Este documento no resume toda la arquitectura ni sustituye a `AI_COLLABORATION_GUIDE.md`.
 
-Tampoco sustituye a `AI_COLLABORATION_GUIDE.md`.
+Su función es ofrecer un protocolo breve y repetible para:
 
-Su función es ofrecer un protocolo breve y repetible que ayude a la IA a:
-
-- localizar las fuentes oficiales;
-- comprender el objetivo del trabajo;
-- identificar el documento propietario;
-- conocer sus límites;
-- distinguir análisis de construcción;
+- localizar fuentes oficiales;
+- recuperar el estado operativo actual;
+- comprender el objetivo;
+- identificar propietario documental;
+- distinguir presente de futuro;
+- saber cuándo preguntar;
+- construir cuando existe claridad;
 - y producir entregables coherentes con el producto.
 
 ---
 
 ## 2. Alcance
 
-Este bootstrap puede utilizarse para iniciar chats especializados en:
+Puede utilizarse para iniciar chats de:
 
 - desarrollo;
 - arquitectura;
@@ -170,35 +183,30 @@ Este bootstrap puede utilizarse para iniciar chats especializados en:
 - identidad visual;
 - análisis funcional;
 - contenido;
-- bugs y observaciones;
+- incorporación curricular de 6.º;
+- bugs/issues y observaciones;
 - soporte;
 - y otras áreas de colaboración con IA.
 
-No contiene instrucciones específicas de una herramienta, proveedor o modelo.
-
-No pretende reproducir:
-
-- la filosofía completa de colaboración;
-- los workflows operativos;
-- las especificaciones funcionales;
-- ni el contenido de los documentos propietarios.
+No contiene instrucciones específicas de un proveedor o modelo.
 
 ---
 
 ## 3. Resultado esperado
 
-Después de completar el bootstrap, la IA debe ser capaz de responder claramente:
+Después del bootstrap, la IA debe poder responder:
 
 1. ¿Qué es la Academia Gloria Valentina?
 2. ¿Cuál es el objetivo concreto del chat?
 3. ¿Qué rol desempeña la IA?
 4. ¿Qué documentos gobiernan el trabajo?
 5. ¿Qué está implementado?
-6. ¿Qué está propuesto?
-7. ¿Qué decisión o entregable se espera?
-8. ¿Qué restricciones existen?
-9. ¿Cómo se validará?
-10. ¿Existe suficiente claridad para comenzar?
+6. ¿Qué está propuesto o en espera?
+7. ¿Cuál es el estado operativo actual?
+8. ¿Qué entregable se espera?
+9. ¿Qué restricciones existen?
+10. ¿Cómo se validará?
+11. ¿Existe claridad suficiente para comenzar?
 
 El bootstrap está completado cuando la IA puede colaborar sin reconstruir meses de conversaciones ni reinventar decisiones existentes.
 
@@ -210,151 +218,132 @@ El bootstrap está completado cuando la IA puede colaborar sin reconstruir meses
 
 > **Comprender antes de proponer o modificar.**
 
-La IA debe empezar por las fuentes oficiales y no por una solución imaginada.
+La IA empieza por fuentes oficiales, no por una solución imaginada.
 
 ### 4.2 Lectura dirigida
 
 No es necesario leer toda la documentación.
 
-Debe leerse:
+Leer:
 
-- el núcleo mínimo;
-- el documento propietario del dominio;
-- y los archivos o especificaciones directamente afectados.
+- HandOff reciente cuando exista;
+- núcleo mínimo;
+- documento propietario del dominio;
+- especificaciones/estándares aplicables;
+- código y archivos afectados.
 
 ### 4.3 Documento propietario
 
-Antes de crear o modificar conocimiento, la IA debe identificar dónde vive oficialmente.
+> **Una verdad importante, un propietario.**
+
+Antes de crear o modificar conocimiento estable, identificar dónde vive oficialmente.
 
 ### 4.4 Construcción cuando existe claridad suficiente
 
-El análisis debe conducir a una decisión o entregable.
+El análisis debe conducir a decisión o producto.
 
-Cuando varias interacciones ya no aportan información nueva, la IA debe recomendar construir.
-
-La expresión:
-
-> **Ya tenemos las interacciones necesarias y suficientes.**
-
-indica que la fase de diseño o análisis está cerrada y debe comenzar la construcción, salvo que exista una incertidumbre crítica explícita.
+Cuando nuevas interacciones ya no aportan información material, construir.
 
 ### 4.5 La documentación facilita; no bloquea
 
 > **El producto es el objetivo. La documentación es un facilitador, nunca un bloqueador.**
 
-La ausencia de documentación adicional no debe impedir un cambio cuando:
-
-- el conocimiento existente es suficiente;
-- el alcance está claro;
-- el riesgo es proporcional;
-- y el cambio puede construirse y validarse correctamente.
+La ausencia de documentación adicional no impide un cambio cuando el conocimiento existente es suficiente, el alcance está claro y el riesgo es proporcional.
 
 ### 4.6 Revisar antes de crear
 
-Antes de proponer un documento nuevo, la IA debe comprobar si:
+Antes de crear un documento, componente o servicio nuevo:
 
-- ya existe un documento propietario;
-- el conocimiento puede añadirse a una fuente existente;
-- o la necesidad puede resolverse mediante reorganización o referencia.
-
-Solo se crea un documento nuevo cuando existe un vacío real y estable de conocimiento.
+- buscar lo existente;
+- comprobar si un propietario actual puede evolucionar;
+- evitar duplicidad;
+- crear solo ante un vacío real.
 
 ### 4.7 Producto ejecutable
 
-Un entregable no termina cuando se genera.
-
-Termina cuando puede:
-
-- integrarse;
-- ejecutarse;
-- validarse;
-- y aportar valor.
+Un entregable termina cuando puede integrarse, ejecutarse, validarse y aportar valor.
 
 ### 4.8 Autoridad humana
 
-La IA colabora de manera funcional y técnica.
-
-El Product Owner mantiene:
-
-- dirección;
-- priorización;
-- aceptación;
-- y decisión final.
+El Product Owner mantiene dirección, prioridad, aceptación y decisión final.
 
 ---
 
-## 5. Estado actual del producto
+## 5. Estado operativo actual
 
-La Academia se encuentra en una etapa de **uso controlado y evolución guiada**.
+Desde el **05/09/2026**, la Academia está en **🌿 Fase de uso prioritario**.
 
-Características actuales:
+Objetivo durante varias semanas:
 
-- existen módulos funcionales en uso;
-- Gloria es la principal usuaria real;
-- la familia participa en observación y validación;
-- todavía no existe uso intensivo ni masivo;
-- el equipo es reducido;
-- y gran parte de la evolución se valida mediante uso real y ciclos cortos.
+```text
+usar muy bien lo existente
++ Gloria motivada
++ ayuda efectiva
++ material real de 6.º incorporado rápidamente
++ issues reales resueltos
+```
 
-Las soluciones deben priorizar:
+### 5.1 En espera por foco de uso
 
-- simplicidad;
-- mantenibilidad;
-- rapidez para aprender;
-- compatibilidad con el producto actual;
-- y calidad proporcional.
+No priorizar por iniciativa propia:
 
-No deben introducirse arquitecturas propias de operación masiva sin una necesidad real.
+- nuevas funcionalidades generales;
+- mejoras visuales no motivadas por uso real;
+- refactors preventivos;
+- ampliaciones de motores;
+- cambios generales de navegación/configuración.
+
+### 5.2 Activo durante la fase
+
+- incorporación curricular de Temas reales de 6.º;
+- validación con uso real;
+- resolución de bugs/issues observados;
+- mantenimiento documental de continuidad.
+
+No interpretar esta fase como una prohibición rígida de cambio.
 
 ---
 
 ## 6. Niveles de incorporación
 
-## 6.1 Nivel 1 — Comprender el proyecto
+### 6.1 Nivel 1 — Comprender el proyecto
 
-La IA debe revisar:
+Revisar:
 
-- `README.md`
-- `docs/README.md`
-- `docs/FOUNDATION.md`
-- `docs/DOCUMENTATION_ARCHITECTURE.md`
-- `docs/DOCUMENTATION_STANDARD.md`
-- `docs/ai/AI_COLLABORATION_GUIDE.md`
-- `docs/project/PROJECT_ROLES.md`
+- `README.md`;
+- `docs/README.md`;
+- `docs/FOUNDATION.md`;
+- `docs/DOCUMENTATION_ARCHITECTURE.md`;
+- `docs/DOCUMENTATION_STANDARD.md`;
+- `docs/ai/AI_COLLABORATION_GUIDE.md`;
+- `docs/project/PROJECT_ROLES.md`;
+- y primero el último HandOff si se continúa trabajo reciente.
 
-Si está continuando un trabajo reciente, debe revisar primero el último `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` disponible.
+Resultado: comprender producto, documentación, colaboración y autoridad.
 
-Resultado esperado:
+### 6.2 Nivel 2 — Comprender el dominio
 
-- comprender qué es el producto;
-- cómo se organiza el conocimiento;
-- cómo se colabora;
-- y quién decide.
+Identificar y revisar:
 
-## 6.2 Nivel 2 — Comprender el dominio
-
-La IA debe identificar y revisar:
-
-- el documento propietario del dominio;
-- sus documentos complementarios;
-- las decisiones activas;
-- y las especificaciones aplicables.
-
-Ejemplos:
+- documento propietario;
+- documentos complementarios;
+- decisiones activas;
+- estándares/especificaciones aplicables.
 
 | Tema | Documento principal |
 |---|---|
-| Experiencia | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` |
-| Identidad visual y personajes | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` |
-| Desarrollo | `PRODUCT_DEVELOPMENT_WORKFLOW.md` |
-| Roles | `PROJECT_ROLES.md` |
-| Modelos conceptuales | `docs/models/MODELO_*.md` |
-| Especificaciones funcionales | `docs/specifications/SPEC-*.md` |
-| Documentación | `DOCUMENTATION_STANDARD.md` |
+| Incorporación curricular de 6.º | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
+| Experiencia | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` |
+| Identidad visual/personajes | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` |
+| Desarrollo | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` |
+| Roles | `docs/project/PROJECT_ROLES.md` |
+| Modelos conceptuales | `docs/models/` |
+| Especificaciones funcionales | `docs/specifications/` |
+| Documentación | `docs/DOCUMENTATION_STANDARD.md` |
 
-## 6.3 Nivel 3 — Comprender la tarea
+### 6.3 Nivel 3 — Comprender la tarea
 
-Antes de construir, la IA debe conocer:
+Antes de construir, conocer:
 
 - objetivo;
 - alcance;
@@ -362,19 +351,18 @@ Antes de construir, la IA debe conocer:
 - archivos afectados;
 - restricciones;
 - criterios de aceptación;
-- y forma de validación.
+- forma de validación.
 
-No todos los chats necesitan llegar al Nivel 3 inmediatamente.
-
-Un chat de exploración puede permanecer temporalmente en Nivel 2.
+No pedir al usuario datos que pueden resolverse desde fuentes disponibles.
 
 ---
 
 ## 7. Lectura mínima obligatoria
 
-La secuencia recomendada es:
+Secuencia general:
 
 ```text
+0. HandOff reciente, cuando exista
 1. README.md
 2. docs/README.md
 3. docs/FOUNDATION.md
@@ -382,48 +370,39 @@ La secuencia recomendada es:
 5. docs/DOCUMENTATION_STANDARD.md
 6. docs/ai/AI_COLLABORATION_GUIDE.md
 7. Documento propietario del dominio
-8. Especificaciones, código y archivos afectados
+8. Especificaciones/estándares/código afectados
 ```
 
-Cuando se continúa un chat previo, `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` se consulta **antes de esta secuencia** para conocer el punto operativo actual.
+Para desarrollo añadir:
 
-Para desarrollo se añade:
+`docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md`
 
-```text
-PRODUCT_DEVELOPMENT_WORKFLOW
-```
+Para identidad visual añadir:
 
-Para identidad visual se añade:
+`docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`
 
-```text
-PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES
-```
+Para **cualquier incorporación de Tema nuevo de 6.º** añadir obligatoriamente:
 
-La IA no debe afirmar que leyó o verificó un documento que no tuvo disponible.
+`docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`
 
-Cuando una fuente necesaria no esté accesible debe indicarlo claramente.
+La IA no debe afirmar que leyó una fuente que no tuvo disponible.
 
 ---
 
 ## 8. Identificación del trabajo
 
-Al iniciar un chat deben definirse los siguientes campos:
-
 | Campo | Pregunta |
 |---|---|
 | **Objetivo** | ¿Qué resultado se busca? |
-| **Tipo de trabajo** | ¿Desarrollo, análisis, documentación, auditoría, identidad u otro? |
+| **Tipo de trabajo** | ¿Desarrollo, contenido, issue, documentación, auditoría u otro? |
 | **Actor principal** | ¿A quién afecta? |
-| **Documento propietario** | ¿Qué fuente gobierna el dominio? |
+| **Documento propietario** | ¿Qué fuente gobierna? |
 | **Estado actual** | ¿Qué existe hoy? |
-| **Problema u oportunidad** | ¿Qué debe mejorar? |
 | **Entregable** | ¿Qué producto concreto se espera? |
 | **Restricciones** | ¿Qué límites deben respetarse? |
 | **Validación** | ¿Cómo sabremos que funciona? |
 
-Cuando un campo sea indispensable y no pueda resolverse leyendo las fuentes, la IA debe hacer una pregunta concreta.
-
-No debe pedir información que ya puede obtener de la documentación o los archivos disponibles.
+Cuando un campo indispensable no pueda resolverse leyendo las fuentes, hacer una pregunta concreta.
 
 ---
 
@@ -431,52 +410,56 @@ No debe pedir información que ya puede obtener de la documentación o los archi
 
 La IA debe:
 
-1. localizar el material real;
-2. revisar el documento propietario;
+1. localizar material/implementación real;
+2. revisar documento propietario;
 3. identificar decisiones existentes;
-4. distinguir presente, propuesta y visión futura;
-5. evaluar impacto;
-6. confirmar el entregable;
-7. y construir cuando exista claridad suficiente.
+4. distinguir presente, propuesta y futuro;
+5. revisar reutilización posible;
+6. evaluar impacto;
+7. confirmar entregable;
+8. construir cuando exista claridad suficiente.
 
 ### 9.1 Pocas interacciones, mucho producto
 
-Como referencia práctica:
+No existe cuota rígida de preguntas.
 
-- una interacción puede presentar la necesidad;
-- otra puede analizar globalmente;
-- una tercera puede resolver dudas críticas;
-- y una cuarta puede confirmar la decisión.
-
-No es un límite rígido.
-
-El criterio es si continuar hablando sigue aportando decisiones relevantes.
+Preguntar solo cuando una respuesta pueda cambiar una decisión material, resolver riesgo o aportar información no disponible.
 
 ### 9.2 Señal de construcción
 
-Cuando el Product Owner indique expresiones como:
+Expresiones como `adelante`, `construye`, `a por ello`, `aprobado` o equivalentes deben mover el trabajo a la fase correspondiente cuando el alcance esté claro.
 
-- “adelante”;
-- “a por ello”;
-- “construye el documento”;
-- “genera el producto”;
-- “ya tenemos suficiente análisis”;
-- o equivalentes,
+No responder con una nueva explicación del proceso en lugar del producto solicitado.
 
-y el alcance esté claro, la IA debe entregar el producto solicitado.
+### 9.3 Incertidumbre crítica general
 
-No debe responder con una nueva explicación del proceso.
+Detener construcción solo cuando:
 
-### 9.3 Incertidumbre crítica
-
-La IA solo debe detener la construcción cuando:
-
-- falta una decisión imprescindible;
+- falta decisión imprescindible;
 - existe riesgo significativo;
 - hay dos interpretaciones incompatibles;
-- o no dispone del material necesario.
+- no se dispone del material necesario.
 
-La incertidumbre debe explicarse de manera breve y concreta.
+### 9.4 Regla específica de no interrupción para 6.º
+
+En incorporación curricular, una instrucción como:
+
+```text
+6.º · Lengua · Acentuación. Incorporar a la Academia.
+```
+
++ material escolar debe considerarse suficiente.
+
+Solo preguntar si falta información que pueda cambiar materialmente:
+
+1. **qué debe aprender Gloria**;
+2. **el procedimiento exigido por el colegio**;
+3. **el nivel de dificultad**;
+4. **cómo la van a evaluar**;
+5. **una respuesta que deba coincidir exactamente con el material**;
+6. **una decisión arquitectónica nueva no resuelta**.
+
+No preguntar por rutas, archivos, estructura técnica, evidencias, Persona Activa, navegación, Vista previa, histórico, PR, merge ni decisiones ya gobernadas por fuentes vigentes.
 
 ---
 
@@ -486,55 +469,34 @@ La incertidumbre debe explicarse de manera breve y concreta.
 
 Antes de crear documentación:
 
-- buscar el documento propietario;
-- revisar posibles duplicidades;
-- comprobar la arquitectura documental;
-- y decidir si corresponde actualizar, complementar o crear.
+- buscar propietario;
+- revisar duplicidades;
+- comprobar arquitectura documental;
+- actualizar antes que crear cuando sea posible.
 
-### 10.2 Construcción estructurada desde el inicio
+### 10.2 Construcción estructurada
 
-> **Todo documento oficial debe nacer desde su primera versión con la estructura aplicable de `DOCUMENTATION_STANDARD.md`.**
+Todo documento oficial debe nacer con la estructura aplicable de `DOCUMENTATION_STANDARD.md`, incluyendo metadatos e historial cuando corresponda.
 
-No se escribe primero el contenido para añadir después:
-
-- metadatos;
-- historial;
-- relaciones;
-- decisiones;
-- o estado.
-
-La estructura precede al contenido.
-
-### 10.3 Entrega completa
-
-Los documentos oficiales deben entregarse:
-
-- completos;
-- autocontenidos;
-- en un único archivo;
-- y listos para revisión.
-
-No deben fragmentarse en varias respuestas salvo solicitud expresa o limitación técnica insalvable.
-
-### 10.4 Documentación proporcional
+### 10.3 Documentación proporcional
 
 Una corrección pequeña no necesita un documento nuevo.
 
-Se actualiza documentación cuando el cambio:
+Actualizar documentación cuando el cambio:
 
 - crea conocimiento reusable;
 - modifica arquitectura;
-- altera un contrato;
-- cambia una decisión;
+- altera contrato;
+- cambia decisión;
 - o afecta una fuente oficial.
 
-### 10.5 No bloquear
+### 10.4 No bloquear
 
-Cuando la documentación disponible permite construir con seguridad y coherencia:
+Cuando la documentación disponible permite construir con seguridad:
 
-- se construye;
-- se valida;
-- y después se consolida el conocimiento nuevo cuando corresponda.
+- construir;
+- validar;
+- consolidar después el conocimiento nuevo cuando corresponda.
 
 ---
 
@@ -545,262 +507,209 @@ Los entregables deben ser:
 - completos;
 - verificables;
 - listos para integrar;
-- coherentes con la arquitectura;
-- y proporcionales al alcance.
+- coherentes con arquitectura;
+- proporcionales al alcance.
 
-Deben indicar, cuando aplique:
+Cuando aplique, indicar:
 
-- archivos creados;
-- archivos modificados;
-- rutas;
-- dependencias;
+- archivos/rutas;
 - decisiones;
-- criterios de validación;
+- validación;
 - limitaciones;
-- y próximos pasos.
+- siguiente acción.
 
-### 11.1 Archivos
+### 11.1 Archivos y código
 
-Cuando se solicite un archivo oficial, debe generarse el archivo real.
+Cuando se solicite un archivo o código real, entregar el artefacto real; no sustituirlo por una promesa.
 
-No debe sustituirse por una promesa o por contenido fragmentado en el chat.
-
-### 11.2 Código
-
-Cuando se solicite código debe entregarse:
-
-- completo;
-- sin omisiones esenciales;
-- compatible con la estructura actual;
-- y preparado para validación.
-
-### 11.3 Cambios sobre archivos existentes
+### 11.2 Cambios existentes
 
 Antes de modificar:
 
-- revisar el archivo real;
+- revisar archivo real;
 - comprender dependencias;
 - preservar comportamiento no afectado;
-- y evitar reescrituras innecesarias.
+- evitar reescrituras innecesarias.
 
-### 11.4 Cierre del entregable
+### 11.3 Cierre
 
-Al terminar, indicar brevemente:
-
-- qué se entregó;
-- ruta prevista;
-- estado;
-- y siguiente acción.
+Al terminar, indicar brevemente qué se entregó, estado y siguiente acción.
 
 ---
 
 ## 12. Reglas según el tipo de chat
 
-## 12.1 Chat de desarrollo
+### 12.1 Chat de desarrollo
 
-Debe priorizar:
+Priorizar archivos reales, cambios pequeños, reutilización, producto ejecutable, compatibilidad y pruebas.
 
-- archivos reales;
-- cambios pequeños;
-- producto ejecutable;
-- compatibilidad;
-- pruebas;
-- y commit sugerido.
+Revisar `PRODUCT_DEVELOPMENT_WORKFLOW.md`.
 
-Debe revisar `PRODUCT_DEVELOPMENT_WORKFLOW.md`.
+### 12.2 Chat de documentación
 
-## 12.2 Chat de documentación
+Priorizar propietario, ausencia de duplicidades, historial, decisiones y entrega completa.
 
-Debe priorizar:
+### 12.3 Chat de arquitectura
 
-- documento propietario;
-- estructura oficial desde el inicio;
-- ausencia de duplicidades;
-- decisiones;
-- historial;
-- y entrega completa como archivo.
+Priorizar visión global, alternativas, coste/beneficio, dependencias y evolución sostenible. No prolongar análisis sin rendimiento.
 
-## 12.3 Chat de arquitectura
+### 12.4 Chat de auditoría
 
-Debe priorizar:
+Comparar evidencia con fuentes, clasificar hallazgos y emitir dictamen. No rediseñar salvo que el alcance lo incluya.
 
-- visión global;
-- alternativas;
-- coste y beneficio;
-- dependencias;
-- principios;
-- y evolución sostenible.
-
-No debe prolongar indefinidamente el análisis.
-
-## 12.4 Chat de auditoría
+### 12.5 Chat de bugs / issues
 
 Debe:
 
-- comparar evidencia con una fuente;
-- clasificar hallazgos;
-- distinguir obligatorios, recomendados y observaciones;
-- y emitir un dictamen.
+1. reproducir o verificar el problema;
+2. identificar impacto y propietario;
+3. revisar archivos reales;
+4. aplicar/proponer corrección acotada;
+5. validar;
+6. facilitar cierre.
 
-No debe rediseñar el producto salvo que el alcance lo incluya.
+Durante la fase de uso prioritario, un issue real **no se pospone automáticamente**. Dar prioridad proporcional, especialmente si afecta aprendizaje, motivación, acceso, datos, Persona Activa, evidencia/progreso o uso escolar.
 
-## 12.5 Chat de bugs y observaciones
+No convertir cada issue en una iniciativa arquitectónica.
 
-Debe:
+### 12.6 Chat de identidad visual
 
-- reproducir o comprender el problema;
-- identificar archivos;
-- evaluar impacto;
-- proponer una corrección acotada;
-- construir;
-- y facilitar validación.
+Revisar propietario de identidad y assets reales. Evitar recursos nuevos si existe una solución vigente reutilizable.
 
-No debe convertir cada bug en una iniciativa arquitectónica.
+### 12.7 Chat curricular de 6.º
 
-## 12.6 Chat de identidad visual
+Este es un modo operativo prioritario durante el curso 2026–2027.
 
-Debe revisar:
+Entrada ideal:
 
-- `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`;
-- el catálogo de identidad cuando exista;
-- los assets reales;
-- y sus usos actuales.
+```text
+material del colegio
++ “6.º · Materia · Tema. Incorporar a la Academia.”
++ notas opcionales
+```
 
-No debe introducir referencias físicas nuevas cuando exista un identificador semántico aprobado.
+Obligatorio:
+
+- aplicar `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`;
+- aplicar todos los estándares relacionados;
+- analizar completamente el material en el alcance necesario;
+- respetar la fuente escolar;
+- reutilizar antes de crear;
+- diseñar TEL-friendly sin bajar nivel ni infantilizar;
+- generar evidencia académica estructurada según contrato vigente;
+- integrar histórico/análisis/fortalecimiento cuando corresponda;
+- validar rutas, Persona Activa, Vista previa, navegación y comportamiento;
+- auditar diff;
+- devolver como primera revisión familiar un Tema suficientemente completo.
+
+Primera devolución esperada:
+
+```text
+YA PUEDES PROBAR
+```
+
+con ruta y únicamente los puntos útiles de validación.
+
+Después de `Aprobado`:
+
+```text
+auditoría final
+→ documentación aplicable
+→ PR
+→ revisión remota
+→ merge a main
+→ cierre
+```
 
 ---
 
 ## 13. Confirmación de preparación
 
-Antes de comenzar un trabajo relevante, la IA debe poder marcar:
+La IA debe poder confirmar internamente:
 
-### Nivel 1 — Proyecto
+### Proyecto
 
-- [ ] Comprendo el propósito de la Academia.
-- [ ] Comprendo cómo se organiza la documentación.
-- [ ] Comprendo el modelo de colaboración.
-- [ ] Comprendo los roles y la autoridad.
+- [ ] Comprendo propósito, documentación, colaboración y autoridad.
 
-### Nivel 2 — Dominio
+### Dominio
 
-- [ ] Identifiqué el documento propietario.
-- [ ] Revisé las decisiones aplicables.
-- [ ] Distingo presente, propuesta y visión futura.
-- [ ] Conozco el estado actual del producto.
+- [ ] Identifiqué propietario y fuentes aplicables.
+- [ ] Distingo implementado, propuesta y futuro.
 
-### Nivel 3 — Tarea
+### Tarea
 
-- [ ] Comprendo el objetivo.
-- [ ] Comprendo el alcance.
-- [ ] Conozco los archivos o componentes afectados.
-- [ ] Conozco las restricciones.
-- [ ] Comprendo el entregable.
-- [ ] Sé cómo se validará.
+- [ ] Comprendo objetivo, alcance, restricciones, archivos y validación.
 
-### Resultado
+Para incorporación curricular:
+
+- [ ] Revisé el estándar curricular.
+- [ ] Tengo material + curso/materia/tema suficientes.
+- [ ] No existe uno de los seis bloqueos materiales.
+
+Resultado breve posible:
 
 ```text
 BOOTSTRAP COMPLETADO
-
 ✓ Contexto comprendido
-✓ Documento propietario identificado
-✓ Objetivo y alcance comprendidos
-✓ Restricciones conocidas
-✓ Entregable identificado
+✓ Fuentes propietarias identificadas
+✓ Estado operativo comprendido
 ✓ Listo para colaborar
 ```
 
-No es necesario publicar este checklist completo en cada conversación.
-
-Puede utilizarse como validación interna o como respuesta breve cuando el Product Owner lo solicite.
+No es necesario publicar checklist completo en cada conversación.
 
 ---
 
 ## 14. Prompt operativo de inicio
 
-El siguiente bloque puede utilizarse como mensaje inicial al abrir un nuevo chat cuando no se dispone de un HandOff reciente suficiente:
+Cuando exista GitHub conectado, usar preferentemente la **Opción A** al inicio de este documento.
+
+Sin HandOff reciente, usar:
 
 ```text
-Actúa como AI Collaborator de la Academia Gloria Valentina.
+Actúa como AI Collaborator de Academia Gloria Valentina.
 
-Este chat continúa trabajo sobre un producto ya existente.
-No reconstruyas el proyecto desde cero y no asumas que una conversación anterior
-es fuente de verdad.
+Revisa fuentes oficiales, identifica propietario, verifica estado real y comprende
+objetivo/alcance antes de modificar.
+Reutiliza antes de crear.
+Distingue Hecho, Inferencia, Propuesta, Decisión e Implementado.
+No pidas información ya disponible.
+Cuando exista claridad suficiente y yo solicite construir, entrega sin reabrir
+innecesariamente el análisis.
 
-Antes de proponer o construir:
-
-1. Revisa las fuentes oficiales indicadas por este bootstrap.
-2. Identifica el documento propietario del dominio.
-3. Revisa el código, archivos y documentación directamente afectados.
-4. Distingue Hecho, Inferencia, Propuesta, Decisión e Implementado.
-5. Comprende objetivo, alcance, restricciones, entregable y validación.
-6. No crees documentación nueva sin revisar primero la existente.
-7. Reutiliza arquitectura, componentes y servicios actuales.
-8. No presentes propuestas o visión futura como implementadas.
-9. Cuando el análisis deje de aportar decisiones nuevas, recomienda construir.
-10. Cuando el Product Owner solicite construir y exista claridad suficiente,
-    entrega el producto solicitado sin reabrir innecesariamente el análisis.
-
-Al iniciar, confirma brevemente:
-
-- fuentes revisadas;
-- objetivo comprendido;
-- dominio y documento propietario;
-- estado implementado relevante;
-- entregable esperado;
-- dudas críticas, si existen;
-- y si estás listo para comenzar.
+Confirma brevemente fuentes revisadas, objetivo, propietario, estado relevante y
+si existe alguna duda crítica.
 ```
-
-### 14.1 Uso del prompt
-
-El prompt operativo:
-
-- orienta;
-- no sustituye los documentos oficiales;
-- no debe copiarse dentro de cada documento;
-- y puede adaptarse al objetivo concreto del chat.
-
-Cuando exista un HandOff reciente suficiente, se prefiere el procedimiento más corto definido al inicio de este documento.
-
-### 14.2 Contexto específico
-
-Después del prompt deben añadirse:
-
-- objetivo del chat;
-- archivos o carpeta;
-- problema actual;
-- entregable esperado;
-- y restricciones particulares.
 
 ---
 
-## 15. Handoff y cierre
+## 15. HandOff y cierre
 
-La fuente oficial para continuidad operativa entre chats es:
+Fuente oficial de continuidad:
 
 `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`
 
-Cuando otro chat continúe el trabajo, el HandOff debe incluir:
+Un HandOff útil conserva:
 
-- objetivo;
-- estado actual;
-- decisiones;
-- fuentes;
-- archivos afectados;
-- cambios realizados;
-- pendientes;
-- riesgos;
-- siguiente entregable;
-- y un bloque final actualizado de **Última actualización / On going**.
+- qué se cerró;
+- qué está activo;
+- estado operativo;
+- decisiones recientes;
+- rama/PR relevante;
+- riesgos/advertencias;
+- siguiente paso exacto.
 
-Un chat puede cerrarse cuando:
+No copia todo el chat ni toda la documentación.
 
-- el objetivo está cumplido;
-- los productos están entregados;
-- las decisiones relevantes están documentadas;
-- el HandOff refleja el punto de continuidad cuando resulte necesario;
-- y otro colaborador puede continuar sin reconstruir la conversación.
+Antes de actuar al retomar, contrastar cuando corresponda:
+
+- `main`;
+- rama/PR;
+- documento propietario;
+- código afectado;
+- estado validado.
+
+Si HandOff y repositorio discrepan, prevalece la fuente real verificada.
 
 ---
 
@@ -808,40 +717,34 @@ Un chat puede cerrarse cuando:
 
 Evitar:
 
-- empezar construyendo sin revisar contexto;
-- afirmar que se leyó una fuente no disponible;
-- crear documentos por cada idea;
+- desarrollar sin contexto;
+- reconstruir conversaciones pudiendo leer HandOff/repositorio;
+- pedir información ya documentada;
+- analizar indefinidamente;
+- repetir plan en vez de construir;
+- crear documento por cada idea;
 - duplicar conocimiento;
-- usar el chat como única fuente de verdad;
-- pedir información que ya está en los archivos;
-- prolongar análisis después de una decisión;
-- repetir planes en lugar de entregar;
-- fragmentar documentos oficiales innecesariamente;
-- añadir estructura documental al final;
+- presentar futuro como implementado;
+- crear complejidad preventiva;
 - convertir bugs pequeños en rediseños;
-- inventar funcionalidades;
-- introducir complejidad para una escala inexistente;
-- y asociar el método a un proveedor concreto de IA.
+- crear arquitectura paralela sin revisar lo existente;
+- tratar la fase de uso prioritario como prohibición absoluta de corregir problemas;
+- frenar incorporación curricular de 6.º con preguntas técnicas o administrativas ya resueltas.
 
 ---
 
 ## 17. Mantenimiento
 
-Este documento debe revisarse cuando:
+Revisar este documento cuando:
 
-- cambie el conjunto mínimo de fuentes;
-- cambie el modelo de colaboración;
-- se incorporen nuevos tipos de chat;
-- cambie el mecanismo oficial de HandOff;
+- cambie conjunto mínimo de fuentes;
+- cambie modelo de colaboración;
+- cambie mecanismo de HandOff;
+- cambie estado operativo del producto;
 - aparezcan antipatrones recurrentes;
-- cambie el estado operativo del producto;
-- o el bootstrap deje de permitir una incorporación rápida.
+- o deje de permitir incorporación rápida.
 
-No se actualiza únicamente porque:
-
-- cambie el modelo de IA;
-- cambie el proveedor;
-- o aparezca una nueva versión de una herramienta.
+No actualizar solo porque cambie proveedor/modelo de IA.
 
 ---
 
@@ -849,19 +752,23 @@ No se actualiza únicamente porque:
 
 | ID | Decisión | Estado | Impacto |
 |---|---|---|---|
-| ACB-001 | Definir un bootstrap único para cualquier área de soporte de IA. | Propuesta | Incorporación · Reutilización |
-| ACB-002 | Mantener el bootstrap breve y basado en referencias, no en duplicación. | Propuesta | SSOT · Mantenibilidad |
-| ACB-003 | Organizar la incorporación en tres niveles: proyecto, dominio y tarea. | Propuesta | Eficacia |
-| ACB-004 | Exigir identificación del documento propietario antes de modificar conocimiento. | Propuesta | Gobierno Documental |
-| ACB-005 | Establecer que la documentación facilita y no bloquea el desarrollo. | Propuesta | Entrega de Valor |
-| ACB-006 | Exigir revisión de documentación existente antes de crear un documento nuevo. | Propuesta | Control de Duplicidades |
-| ACB-007 | Construir documentos oficiales desde el inicio conforme a `DOCUMENTATION_STANDARD.md`. | Propuesta | Calidad Documental |
-| ACB-008 | Entregar documentos oficiales completos en un único archivo. | Propuesta | Revisión · Calidad |
-| ACB-009 | Utilizar “interacciones necesarias y suficientes” como señal de transición a construcción. | Propuesta | Eficacia |
-| ACB-010 | Exigir producto cuando el Product Owner solicita construir y existe claridad suficiente. | Propuesta | Colaboración |
-| ACB-011 | Incorporar un prompt operativo reutilizable sin sustituir las fuentes oficiales. | Propuesta | Onboarding |
-| ACB-012 | Mantener el bootstrap independiente de proveedores y modelos de IA. | Propuesta | Longevidad |
-| ACB-013 | Usar la plantilla viva de HandOff como mecanismo preferido para continuar un chat existente. | Aprobada | Continuidad · Velocidad de incorporación |
+| ACB-001 | Definir un bootstrap único para cualquier área de soporte de IA. | Vigente | Incorporación · Reutilización |
+| ACB-002 | Mantener el bootstrap basado en referencias, no duplicación. | Vigente | SSOT · Mantenibilidad |
+| ACB-003 | Organizar incorporación en proyecto, dominio y tarea. | Vigente | Eficacia |
+| ACB-004 | Identificar propietario antes de modificar conocimiento. | Vigente | Gobierno Documental |
+| ACB-005 | La documentación facilita y no bloquea. | Vigente | Entrega de Valor |
+| ACB-006 | Revisar documentación existente antes de crear otra. | Vigente | Duplicidades |
+| ACB-007 | Documentos oficiales nacen conforme a `DOCUMENTATION_STANDARD.md`. | Vigente | Calidad |
+| ACB-008 | Entregar productos completos y verificables. | Vigente | Calidad |
+| ACB-009 | Interacciones necesarias y suficientes marcan transición a construcción. | Vigente | Eficacia |
+| ACB-010 | Construir cuando Product Owner lo solicita y existe claridad suficiente. | Vigente | Colaboración |
+| ACB-011 | Mantener prompt operativo reutilizable sin sustituir fuentes. | Vigente | Onboarding |
+| ACB-012 | Bootstrap independiente de proveedor/modelo. | Vigente | Longevidad |
+| ACB-013 | HandOff es mecanismo preferido de continuidad. | Vigente | Continuidad |
+| ACB-014 | Con GitHub conectado, nuevo chat puede recuperar directamente HandOff + Bootstrap desde `main`. | Aprobada · 05/09/2026 | Continuidad · Menor intervención |
+| ACB-015 | Chat curricular de 6.º debe cargar siempre el estándar curricular y aceptar material + materia + tema como entrada suficiente. | Aprobada · 05/09/2026 | Curso 2026–2027 · Velocidad |
+| ACB-016 | En incorporación curricular solo se interrumpe ante los seis bloqueos materiales definidos. | Aprobada · 05/09/2026 | Menor intervención · Fidelidad |
+| ACB-017 | Issues reales del uso se reportan, verifican y resuelven con rapidez proporcional a impacto. | Aprobada · 05/09/2026 | Calidad · Operación |
 
 ---
 
@@ -869,19 +776,22 @@ No se actualiza únicamente porque:
 
 > **Una nueva IA no necesita reconstruir la historia completa de la Academia. Necesita acceder a las fuentes correctas, comprender la tarea y respetar el modelo de colaboración.**
 
-> **La documentación orienta. El HandOff ubica el punto operativo. El contexto permite decidir. La IA amplía la capacidad del equipo. El Product Owner mantiene la dirección. Y cuando existe claridad suficiente, se construye.**
+> **La documentación orienta. El HandOff ubica el punto operativo. El repositorio verifica. El Product Owner mantiene la dirección. Y cuando existe claridad suficiente, se construye.**
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.2 |
-| **Fecha de aprobación** | 04/08/2026 |
-| **Última actualización aprobada** | 03/09/2026 |
+| **Versión activa** | 1.3 |
+| **Fecha de aprobación inicial** | 04/08/2026 |
+| **Última actualización aprobada** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
 | **HandOff oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
+| **Modo operativo actual** | 🌿 Fase de uso prioritario |
+| **Carril curricular 6.º** | 📚 Activo |
+| **Issues reales** | 🛠️ Reportar y resolver con rapidez |
 | **Sustituye** | — |
 | **Sustituido por** | — |
 
-**Impacto:** Incorporación de IA · Colaboración · Documentación · Desarrollo · Arquitectura · Continuidad
+**Impacto:** Incorporación de IA · Colaboración · Documentación · Desarrollo · Arquitectura · Continuidad · Curso 2026–2027
