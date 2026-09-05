@@ -839,7 +839,7 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | URA-001 | Separar PERSON y USER como entidades con responsabilidades distintas. | Aprobada · implementada |
 | URA-002 | Mantener un USER efectivo asociado a una Persona en la implementación vigente. | Aprobada · implementada |
 | URA-003 | Mantener un único Rol efectivo por USER mientras no exista necesidad real de múltiples Roles. | Aprobada · implementada |
-| URA-004 | Calcular el nivel sobre otra Persona como el más restrictivo entre nivel del Rol y nivel de la Relación. | Aprobada · implementada |
+| URA-004 | Calcular el nivel sobre otra Persona como el más restrictivo entre Rol y Relación. | Aprobada · implementada |
 | URA-005 | Persona Activa cambia contexto, no identidad ni autoría. | Aprobada · implementada |
 | URA-006 | `consulta` no es un CRUD global de solo lectura; las operaciones propias dependen del módulo y propiedad. | Aprobada |
 | URA-007 | Gestión de Misiones requiere `gestion` o superior; el alumno no recibe gestión solo para operar su experiencia normal. | Aprobada · implementada |
