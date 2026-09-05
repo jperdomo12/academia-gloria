@@ -3,13 +3,15 @@
 
 > **¿Primera vez en el proyecto?** Empieza por `docs/FOUNDATION.md`: explica por qué existe la Academia y qué principios humanos no deben perderse al evolucionarla.
 
+> **💬 ¿Vas a iniciar un nuevo chat?** Usa `docs/ai/AI_CHAT_BOOTSTRAP.md` → **📋 PROMPT RÁPIDO · NUEVO CHAT**. Esa es la única copia oficial del prompt; este README solo la referencia.
+
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 05/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -24,7 +26,7 @@
 | `docs/project/PROJECT_MAP.md` | **Orienta:** dónde vive cada parte del repositorio y qué fuente es propietaria. |
 | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta:** identidad y principios del producto/proyecto. |
 | `docs/ai/AI_COLLABORATION_GUIDE.md` | **Complementa:** modelo general de colaboración con IA. |
-| `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** incorporación rápida de una nueva IA al proyecto. |
+| `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** incorporación rápida de una nueva IA y conserva el prompt oficial para iniciar un nuevo chat. |
 | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Continúa:** conserva el punto operativo vigente para retomar rápidamente el trabajo en otro chat. |
 | `docs/project/PROJECT_ROLES.md` | **Complementa:** roles, responsabilidades y autoridad. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia y expansión curricular. |
@@ -34,6 +36,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 05/09/2026 | Product Owner + AI Collaborator | Añade un acceso visible **Iniciar un nuevo chat** que referencia el `📋 PROMPT RÁPIDO · NUEVO CHAT` de `AI_CHAT_BOOTSTRAP.md`, manteniendo una sola copia oficial y evitando duplicar el prompt en este portal. Actualiza además la ruta recomendada de continuidad para priorizar recuperación directa desde GitHub cuando esté conectado. |
 | 1.4 | 03/09/2026 | Product Owner + AI Collaborator | Incorpora la plantilla viva oficial de HandOff a la navegación documental y la ruta para retomar trabajo entre chats, manteniendo separado el contexto operativo reciente del bootstrap general de incorporación de IA. |
 | 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal con la estructura documental real. Incorpora `manuales/`, `specifications/` y `tech/`, corrige la responsabilidad de `models/`, añade `PROJECT_MAP.md` como mapa operativo y amplía la ruta para nuevos Temas de 6.º con evidencia y Análisis Educativo. Registra la jornada de sincronización documental P0 del 03Sep2026. |
 | 1.2 | 22/08/2026 | Product Owner + AI Collaborator | Incorpora el estándar activo de Contenidos Académicos y Material Escolar y una ruta específica para diseñar o incorporar un Tema Académico. |
@@ -170,16 +173,23 @@ docs/
 
 ### 6.3 Incorporar una nueva IA o retomar el proyecto
 
-**Si se continúa un chat anterior**, empezar por:
+**Si GitHub está conectado**, la ruta preferida es:
 
-1. `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — usar la última versión disponible para conocer el punto operativo actual.
-2. `AGENTS.md`
-3. `docs/ai/AI_CHAT_BOOTSTRAP.md`
-4. `docs/ai/AI_COLLABORATION_GUIDE.md`
-5. `docs/project/PROJECT_ROLES.md`
+1. abrir `docs/ai/AI_CHAT_BOOTSTRAP.md`;
+2. copiar el bloque **📋 PROMPT RÁPIDO · NUEVO CHAT**;
+3. pegarlo en el chat nuevo;
+4. el nuevo chat recupera desde `main` el HandOff vigente y las fuentes propietarias necesarias.
+
+**Si GitHub no está disponible**, empezar por:
+
+1. `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — proporcionar la última versión disponible;
+2. `AGENTS.md`;
+3. `docs/ai/AI_CHAT_BOOTSTRAP.md`;
+4. `docs/ai/AI_COLLABORATION_GUIDE.md`;
+5. `docs/project/PROJECT_ROLES.md`;
 6. los documentos propietarios de la tarea concreta.
 
-El procedimiento normal para Juan al abrir otro chat es simplemente **adjuntar el último HandOff disponible + una instrucción breve para continuar**. El nuevo chat consulta después las fuentes oficiales que necesite verificar.
+El prompt no se duplica en este README: su única copia oficial vive en `docs/ai/AI_CHAT_BOOTSTRAP.md`.
 
 ### 6.4 Comprender cómo se desarrolla producto
 
@@ -262,7 +272,7 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 ---
 
-## 📊 8. Estado documental al 03/09/2026
+## 📊 8. Estado documental al 05/09/2026
 
 ### Base consolidada
 
@@ -275,30 +285,19 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 - arquitectura de experiencia;
 - identidad visual;
 - estándar académico de 6.º y material escolar;
-- plantilla viva de HandOff para continuidad entre chats.
+- plantilla viva de HandOff para continuidad entre chats;
+- Bootstrap con prompt oficial único de nuevo chat.
 
-### Nuevas fuentes propietarias relevantes
+### Fuentes propietarias relevantes
 
 - `SPEC-ANALISIS_EDUCATIVO.md` — V1 implementada y contrato de consumo de evidencias;
 - `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` v1.3 — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º;
-- `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` v1.0 — continuidad operativa y punto `On going` mantenible entre chats.
+- `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — continuidad operativa y punto vigente mantenible entre chats;
+- `AI_CHAT_BOOTSTRAP.md` — incorporación de IA + única copia oficial del prompt rápido de nuevo chat.
 
-### Jornada P0 de sincronización
+### Jornada documental P0/P1/P2
 
-El 03/09/2026 se inició una revisión priorizada de las fuentes principales para alinear documentación con el producto real.
-
-Orden operativo:
-
-```text
-Inventario
-→ P0 / P1 / P2
-→ propietario
-→ contraste con producto real
-→ actualización mínima suficiente
-→ Quality Gate
-```
-
-La jornada no busca reescribir todos los documentos ni bloquear el desarrollo.
+La jornada de sincronización documental quedó cerrada el 04/09/2026. A partir de ese punto se actualizan únicamente las fuentes afectadas por decisiones nuevas o cambios reales de estado.
 
 ---
 
@@ -371,7 +370,8 @@ No requiere actualización por cada cambio interno de un documento.
 | README-008 | Mantener una ruta específica para incorporación de Temas Académicos. | Aprobada |
 | README-009 | Los nuevos Temas de 6.º deben considerar desde su incorporación evidencia reutilizable por Análisis Educativo/fortalecimiento. | Aprobada |
 | README-010 | `PROJECT_MAP.md` forma parte de la ruta de orientación para localizar propietarios físicos/documentales. | Aprobada |
-| README-011 | La plantilla viva de HandOff es la entrada operativa preferida cuando un nuevo chat continúa trabajo reciente. | Aprobada |
+| README-011 | La plantilla viva de HandOff es la entrada operativa preferida para recuperar continuidad reciente. | Aprobada |
+| README-012 | `AI_CHAT_BOOTSTRAP.md` conserva la única copia oficial del prompt rápido de nuevo chat; este portal únicamente la enlaza. | Aprobada |
 
 ---
 
@@ -380,9 +380,10 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.4 |
-| **Última sincronización** | 03/09/2026 |
+| **Versión activa** | 1.5 |
+| **Última sincronización** | 05/09/2026 |
 | **Portal documental** | `docs/README.md` |
+| **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |
 | **Gobierno de estructura** | `DOCUMENTATION_ARCHITECTURE.md` |
 | **Gobierno de calidad/formato** | `DOCUMENTATION_STANDARD.md` |
 | **Mapa físico/propietarios** | `project/PROJECT_MAP.md` |
