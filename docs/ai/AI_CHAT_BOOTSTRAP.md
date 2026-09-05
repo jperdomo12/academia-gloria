@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/ai/AI_CHAT_BOOTSTRAP.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
 | **Última actualización** | 05/09/2026 |
@@ -35,6 +35,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 05/09/2026 | Product Owner + AI Collaborator | Declara y destaca al inicio el **📋 PROMPT RÁPIDO · NUEVO CHAT** como única copia oficial para iniciar una nueva conversación cuando GitHub está conectado. Evita crear archivos paralelos de prompts y mantiene HandOff + Bootstrap + fuentes propietarias como mecanismo de recuperación de contexto. |
 | 1.3 | 05/09/2026 | Product Owner + AI Collaborator | Añade arranque preferido de nuevos chats directamente desde GitHub `main`, formaliza el modo curricular de 6.º como carril operativo activo durante la fase de uso prioritario, obliga a cargar `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` para ese tipo de trabajo, incorpora la regla de seis bloqueos materiales como únicos motivos normales de interrupción y deja explícito que issues reales del uso deben reportarse/verificarse/resolverse con rapidez. |
 | 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Vinculó el bootstrap con la plantilla viva oficial de HandOff y formalizó el procedimiento preferido para continuar un chat existente: último HandOff + instrucción breve + verificación dirigida. |
 | 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Incorporó un texto reutilizable para iniciar nuevos chats y alineó el onboarding con las fuentes oficiales. |
@@ -42,11 +43,13 @@
 
 ---
 
-## 🚀 Texto para iniciar un nuevo chat
+# 📋 PROMPT RÁPIDO · NUEVO CHAT
 
-### Opción A · Preferida cuando GitHub está conectado
+> **Esta es la única copia oficial del prompt de inicio.** No crear `PROMPT.txt`, `NUEVO_CHAT.md` ni otra copia paralela. Si el texto necesita evolucionar, se actualiza aquí.
 
-Copiar y pegar:
+### ✅ Prompt oficial · cuando GitHub está conectado
+
+**Copiar y pegar en un chat nuevo:**
 
 ```text
 Continuamos el proyecto Academia Gloria Valentina.
@@ -83,6 +86,8 @@ Al comenzar, indícame brevemente que revisaste el contexto y que estás listo.
 ```
 
 Con GitHub conectado, este texto debe ser suficiente para recuperar el contexto operativo sin adjuntar manualmente el HandOff.
+
+## 🚀 Otras formas de iniciar un nuevo chat
 
 ### Opción B · Continuar con HandOff adjunto
 
@@ -662,7 +667,7 @@ No es necesario publicar checklist completo en cada conversación.
 
 ## 14. Prompt operativo de inicio
 
-Cuando exista GitHub conectado, usar preferentemente la **Opción A** al inicio de este documento.
+Cuando exista GitHub conectado, usar preferentemente el **📋 PROMPT RÁPIDO · NUEVO CHAT** al inicio de este documento.
 
 Sin HandOff reciente, usar:
 
@@ -724,6 +729,7 @@ Evitar:
 - repetir plan en vez de construir;
 - crear documento por cada idea;
 - duplicar conocimiento;
+- crear copias paralelas del prompt oficial;
 - presentar futuro como implementado;
 - crear complejidad preventiva;
 - convertir bugs pequeños en rediseños;
@@ -741,6 +747,7 @@ Revisar este documento cuando:
 - cambie modelo de colaboración;
 - cambie mecanismo de HandOff;
 - cambie estado operativo del producto;
+- cambie el prompt oficial de inicio;
 - aparezcan antipatrones recurrentes;
 - o deje de permitir incorporación rápida.
 
@@ -769,6 +776,7 @@ No actualizar solo porque cambie proveedor/modelo de IA.
 | ACB-015 | Chat curricular de 6.º debe cargar siempre el estándar curricular y aceptar material + materia + tema como entrada suficiente. | Aprobada · 05/09/2026 | Curso 2026–2027 · Velocidad |
 | ACB-016 | En incorporación curricular solo se interrumpe ante los seis bloqueos materiales definidos. | Aprobada · 05/09/2026 | Menor intervención · Fidelidad |
 | ACB-017 | Issues reales del uso se reportan, verifican y resuelven con rapidez proporcional a impacto. | Aprobada · 05/09/2026 | Calidad · Operación |
+| ACB-018 | `AI_CHAT_BOOTSTRAP.md` conserva la única copia oficial del prompt rápido de nuevo chat; otras fuentes solo deben enlazarla. | Aprobada · 05/09/2026 | SSOT · Continuidad |
 
 ---
 
@@ -783,10 +791,11 @@ No actualizar solo porque cambie proveedor/modelo de IA.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.3 |
+| **Versión activa** | 1.4 |
 | **Fecha de aprobación inicial** | 04/08/2026 |
 | **Última actualización aprobada** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
+| **Prompt oficial de nuevo chat** | `📋 PROMPT RÁPIDO · NUEVO CHAT` en este documento |
 | **HandOff oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
 | **Modo operativo actual** | 🌿 Fase de uso prioritario |
 | **Carril curricular 6.º** | 📚 Activo |
