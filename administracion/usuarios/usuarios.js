@@ -282,7 +282,7 @@ function renderizarUsuarios(filtro = "") {
             ${coherente ? "Correcta" : `${incidencias.length} incidencia(s)`}
           </span>
         </td>
-        <td><button class="boton" type="button" data-editar="${escaparHTML(usuario.userId)}">Editar</button></td>
+        <td><button class="boton" type="button" data-editar="${escaparHTML(usuario.userId)}">Ver / editar</button></td>
       </tr>`;
   }).join("");
 
