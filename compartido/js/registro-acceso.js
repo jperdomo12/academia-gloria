@@ -21,7 +21,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const PREFIJO_CLAVE_SESION = "academia.acceso.registrado.v1";
-const URL_GEOLOCALIZACION = "https://ipapi.co/json/";
+const URL_GEOLOCALIZACION = "https://whatismyip.technology/api/me";
 const TIMEOUT_GEOLOCALIZACION_MS = 3500;
 
 function texto(valor = "") {
@@ -80,14 +80,15 @@ async function obtenerUbicacionAproximada() {
 
     const datos = await respuesta.json();
 
-    if (datos?.error) {
-      throw new Error("El servicio de ubicación no pudo resolver la conexión.");
-    }
-
+    /*
+     * El servicio devuelve también la IP y otros datos de red.
+     * Por diseño V1 se ignoran por completo: la Academia persiste únicamente
+     * ciudad, región y país aproximados.
+     */
     const ciudad = texto(datos?.city);
     const region = texto(datos?.region);
-    const pais = texto(datos?.country_name);
-    const codigoPais = texto(datos?.country_code).toUpperCase();
+    const pais = texto(datos?.country);
+    const codigoPais = texto(datos?.countryCode).toUpperCase();
 
     if (!ciudad && !region && !pais) {
       return ubicacionNoDisponible();
