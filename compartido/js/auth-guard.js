@@ -2,7 +2,7 @@
  * Academia Gloria Valentina
  * Archivo: compartido/js/auth-guard.js
  * Protección de páginas autenticadas
- * Versión: 1.4
+ * Versión: 1.5
  *
  * Ajustes:
  * - Espera a que Firebase termine de restaurar la sesión antes de decidir
@@ -12,12 +12,14 @@
  *   de mostrar o inicializar una pantalla restringida.
  * - Si el nivel es insuficiente, conserva un aviso temporal en sessionStorage
  *   y lo muestra tras redirigir al destino seguro.
+ * - Registra de forma no bloqueante el último acceso del Usuario a la Academia.
  ******************************************************************************/
 
 import { auth } from "../firebase/firebase-config.js";
 import { observarSesion } from "../firebase/firebase-auth.js";
 import { UBICACIONES_ACADEMIA } from "../modelos/navegacion.js";
 import { activarTimeoutSesion } from "./timeout-sesion.js";
+import { registrarAccesoAcademia } from "./registro-acceso.js";
 
 const NIVELES_ACCESO = Object.freeze({
   consulta: 10,
@@ -234,6 +236,15 @@ export async function protegerPagina({
     window.location.replace(construirRutaAcademia(""));
     return null;
   }
+
+  /*
+   * El registro de acceso no debe retrasar ni bloquear la navegación.
+   * Una sola escritura se intenta por sesión de pestaña; si la ubicación por
+   * IP no está disponible, el servicio conserva igualmente fecha/hora.
+   */
+  registrarAccesoAcademia(usuarioInicial).catch(error => {
+    console.debug("[AuthGuard] No se pudo registrar el último acceso.", error);
+  });
 
   await activarTimeoutSesion({ loginUrl });
   document.documentElement.style.visibility = "visible";

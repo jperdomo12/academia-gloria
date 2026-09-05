@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha de origen** | 10/08/2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 05/09/2026 |
 | **Propietario** | Identidad, Accesos y Seguridad |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Identidad USER/PERSON, Roles, niveles de acceso, Relaciones, Persona Activa, Gestión de Usuarios, auditoría básica, compatibilidad y seguridad transversal |
@@ -26,12 +26,14 @@
 | `compartido/modelos/navegacion.js` | **Implementa:** requisitos mínimos actuales de navegación, entre ellos `gestion` y `administracion`. |
 | `administracion/usuarios/` | **Implementa:** Gestión de Usuarios actual. |
 | `compartido/api/academia.js` | **Implementa:** operaciones coordinadas de Gestión de Usuarios y acceso a datos por Persona Activa. |
+| `compartido/js/registro-acceso.js` | **Implementa:** observación del último acceso del USER y ubicación aproximada con minimización de datos. |
 | `compartido/firebase/FireStore Rules.txt` | **Implementa:** fuente canónica de reglas Firestore del proyecto. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 05/09/2026 | Product Owner + AI Collaborator | Incorpora la V1 de observación de **Último acceso a la Academia** en Gestión de Usuarios. Define que el dato pertenece al USER autenticado, diferencia acceso observado de login técnico Firebase, formaliza ubicación aproximada ciudad/región/país, minimización de datos, ausencia de GPS/IP persistida y comportamiento no bloqueante. |
 | 1.0 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 de Usuarios, Roles y Accesos. |
 | 1.0-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con el producto real. Corrige la interpretación antigua de `consulta` como CRUD global de solo lectura; formaliza acceso por capacidad y Persona Activa; actualiza el rol del alumno frente a Gestión de Misiones; reconoce Gestión de Usuarios como implementada; documenta que Firebase Authentication continúa siendo el único paso manual de alta; mantiene un único Rol efectivo por Usuario; actualiza auditoría, compatibilidad legacy y Quality Gate; adopta la estructura documental vigente. |
 | 0.3 | 12/08/2026 | Equipo del proyecto | Definió Auditoría Fase A para Gestión de Usuarios y bloque Registro de solo consulta. |
@@ -89,6 +91,7 @@ Este estándar gobierna:
 - Gestión de Usuarios;
 - login funcional;
 - auditoría básica;
+- observación administrativa del último acceso;
 - compatibilidad con `usuarios/{uid}/...`;
 - seguridad transversal.
 
@@ -123,6 +126,7 @@ Cada módulo mantiene su contrato funcional y de seguridad siempre dentro de est
 13. **No se inventa auditoría o identidad histórica para documentos legacy.**
 14. **La compatibilidad legacy no debe ocultar una inconsistencia crítica cuando el modelo nuevo ya está activo.**
 15. **Se añade granularidad únicamente cuando existe una necesidad real.**
+16. **La observación de acceso debe recopilar únicamente la información necesaria y no convertirse en seguimiento físico preciso del alumno.**
 
 ---
 
@@ -202,6 +206,29 @@ usuarios/{uid}/...
 ```
 
 Si una Persona relacionada tiene cero o más de un USER activo en ese contexto, la resolución debe detenerse en lugar de elegir uno arbitrariamente.
+
+### 5.4 Último acceso observado
+
+El **Último acceso a la Academia** es información operativa del USER autenticado, no de la Persona Activa.
+
+Semántica vigente:
+
+```text
+Último acceso a la Academia
+=
+última entrada autenticada observada por la aplicación
+```
+
+No equivale necesariamente al último `signIn` de Firebase Authentication, porque la sesión técnica puede permanecer persistida entre visitas.
+
+La V1 registra el dato bajo el USER técnico y mantiene separados:
+
+- identidad autenticada;
+- Persona Activa;
+- actividad educativa;
+- observación administrativa de acceso.
+
+El último acceso **no es evidencia académica**, no completa Misiones y no genera Recompensas.
 
 ---
 
@@ -510,7 +537,9 @@ La implementación permite actualmente:
 - crear o actualizar una Relación opcional hacia otra Persona;
 - asignar `consulta` o `gestion` sobre esa Relación;
 - mostrar incidencias de consistencia;
-- mostrar auditoría básica disponible.
+- mostrar auditoría básica disponible;
+- mostrar **Último acceso a la Academia**;
+- mostrar **Ubicación aproximada del último acceso** cuando está disponible.
 
 ### 13.2 Firebase Authentication continúa manual
 
@@ -559,7 +588,9 @@ Cuando el modelo nuevo está activo, una inconsistencia crítica debe mostrarse 
 
 ---
 
-## 🕘 15. Auditoría básica
+## 🕘 15. Auditoría básica y observación de acceso
+
+### 15.1 Auditoría básica
 
 La Fase A de auditoría utiliza, donde la entidad lo soporta:
 
@@ -587,6 +618,31 @@ Reglas:
 - no se afirma que exista un historial universal e inmutable de cada cambio.
 
 Una Fase B de auditoría de eventos completos requerirá diseño explícito si llega a ser necesaria.
+
+### 15.2 Observación del último acceso V1
+
+La observación vigente persiste únicamente el último estado conocido, no un historial de localizaciones.
+
+Contrato actual:
+
+```text
+usuarios/{uid}/accesosAcademia/ultimo
+  ultimoAccesoAcademia
+  ubicacionAproximada
+```
+
+Reglas:
+
+- fecha/hora se registra con `serverTimestamp()`;
+- el registro de fecha/hora debe completarse aunque la consulta de ubicación falle;
+- la consulta de ubicación no debe bloquear navegación ni uso de la Academia;
+- ubicación se limita a ciudad, región, país y código de país cuando están disponibles;
+- la IP pública **no se persiste**;
+- no se persisten coordenadas, ISP ni código postal;
+- no se solicita geolocalización GPS del navegador;
+- la ubicación por IP es aproximada y no debe presentarse como dirección física exacta;
+- la información se consulta desde Gestión de Usuarios, protegida por `administracion`;
+- no se utiliza este dato para evaluación académica, Misiones, Recompensas ni inferencias sobre conducta del alumno.
 
 ---
 
@@ -641,7 +697,9 @@ Reglas:
 - el cliente no contiene credenciales administrativas;
 - la Persona Activa no convierte al Usuario en propietario de datos ajenos;
 - la escritura sobre otra Persona requiere el permiso del módulo y nivel efectivo suficiente;
-- Administración se mantiene fuera de la experiencia normal del alumno.
+- Administración se mantiene fuera de la experiencia normal del alumno;
+- la observación de acceso aplica minimización de datos y no conserva la IP pública;
+- no se incorporará localización física precisa/GPS sin una decisión explícita de producto, privacidad y seguridad.
 
 La fuente canónica de reglas Firestore del repositorio es:
 
@@ -716,6 +774,10 @@ Antes de crear o modificar una capacidad relacionada con identidad/acceso:
 - [ ] Rol y Relación se validan contra catálogos/Personas existentes.
 - [ ] activar/inactivar conserva trazabilidad.
 - [ ] auditoría no inventa datos legacy.
+- [ ] último acceso se atribuye al USER autenticado, no a Persona Activa.
+- [ ] fecha/hora no depende del servicio externo de ubicación.
+- [ ] ubicación es aproximada y no bloqueante.
+- [ ] no se persisten IP, GPS, coordenadas, ISP ni código postal.
 
 ---
 
@@ -740,7 +802,8 @@ Posibles evoluciones —no compromisos automáticos—:
 - permisos profesionales más específicos;
 - auditoría de eventos ampliada;
 - migración adicional desde rutas físicas por USER hacia propiedad directa por Persona;
-- políticas de sesión si existe una necesidad concreta.
+- políticas de sesión si existe una necesidad concreta;
+- mayor detalle de localización solo si existe una necesidad real y una decisión explícita de privacidad/seguridad.
 
 Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de mantenimiento.
 
@@ -761,16 +824,17 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | URA-009 | Firebase Authentication continúa como paso manual en el alta actual; la Academia coordina el resto de la identidad. | Aprobada · implementada |
 | URA-010 | Fallback legacy no debe ocultar inconsistencias cuando el modelo nuevo ya está activo. | Aprobada · implementada |
 | URA-011 | La seguridad real requiere coherencia entre UI, API y Firestore Rules. | Aprobada |
+| URA-012 | Registrar el último acceso observado del USER con fecha/hora y ubicación aproximada minimizada; sin persistir IP ni usar GPS en V1. | Aprobada · implementada · PR #78 |
 
 ## ✅ DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.0 |
-| **Fecha de aprobación** | 04/09/2026 |
+| **Versión activa** | 1.1 |
+| **Fecha de aprobación** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v0.3 |
-| **Principio central** | Identidad autenticada, Persona Activa y permiso efectivo son conceptos distintos; el acceso se determina por contexto, Relación, propiedad y contrato de cada capacidad. |
+| **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v1.0 |
+| **Principio central** | Identidad autenticada, Persona Activa y permiso efectivo son conceptos distintos; el acceso se determina por contexto, Relación, propiedad y contrato de cada capacidad. La observación administrativa de acceso debe aplicar minimización de datos. |
 
 **Impacto:** Identidad · Persona Activa · Roles · Relaciones · Mi Camino · Gestión de Misiones · Gestión de Usuarios · Seguridad · Firestore · Multi-persona
