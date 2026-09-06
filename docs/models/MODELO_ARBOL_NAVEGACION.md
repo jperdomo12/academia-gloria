@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha de origen** | 13/08/2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Representación humana del árbol funcional visible vigente, sin sustituir la fuente técnica central |
@@ -17,15 +17,17 @@
 | Fuente | Relación |
 |---|---|
 | `compartido/modelos/navegacion.js` | **Implementa:** fuente técnica central del árbol compartido. |
-| `compartido/js/panel-usuario.js` | **Implementa:** Mi espacio personal, selector de Persona Activa y renderizado por nivel. |
+| `compartido/js/panel-usuario.js` | **Implementa:** Mi espacio personal, selector de Persona Activa y renderizado por nivel/estructura. |
 | `docs/models/MODELO_NAVEGACION.md` | **Gobierna conceptualmente:** reglas transversales de navegación. |
 | `docs/standards/STD-PANEL_DE_USUARIO.md` | **Gobierna:** Panel de Usuario y separación entre identidad propia y Persona Activa. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** niveles y acceso efectivo. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** comportamiento funcional de la Bitácora de Acompañamiento V1. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el árbol con la Bitácora de Acompañamiento V1 fusionada mediante PR #83 y la corrección de menú PR #85. Añade Bitácora como nodo principal sin hijos, penúltimo antes de `Descubre la Academia`, y formaliza que un nodo principal sin hijos se renderiza como enlace directo. |
 | 1.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el árbol con `main`: incorpora Mi Baúl en Explorar más, explicita que Gestión de Misiones requiere `gestion`, actualiza 6.º como portal activo y mantiene la separación entre Mi espacio personal y el árbol central. |
 | 1.3 | 26/08/2026 | Product Owner + AI Collaborator | Activa 6.º de Primaria como destino navegable dentro de Mis Cursos. |
 | 1.2 | 13/08/2026 | Product Owner + AI Collaborator | Alinea el árbol con el modelo de navegación v1.2, aclara responsabilidades de Mi espacio personal y visibilidad por nivel. |
@@ -78,6 +80,8 @@ Academia
 │   ├── Mi Baúl
 │   └── Adicionales
 │
+├── 🤝 Bitácora de Acompañamiento
+│
 └── Descubre la Academia
 ```
 
@@ -89,6 +93,24 @@ Academia
 - y como nodo real dentro de **Mi Universo**.
 
 No son dos páginas distintas: ambos accesos llevan al mismo espacio del alumno.
+
+### 2.2 Bitácora como nodo principal directo
+
+`🤝 Bitácora de Acompañamiento` es un nodo principal del árbol central y no tiene hijos en V1.
+
+Por ello, el Panel la presenta como enlace directo de un solo nivel:
+
+```text
+Bitácora de Acompañamiento
+→ abrir Bitácora
+```
+
+No debe presentarse como:
+
+```text
+Bitácora de Acompañamiento
+└── Abrir Bitácora
+```
 
 ---
 
@@ -114,12 +136,13 @@ Proceden de:
 compartido/modelos/navegacion.js
 ```
 
-los grupos:
+los grupos/nodos:
 
 - Mi Universo;
 - Mis Cursos;
 - Administración;
-- Explorar más.
+- Explorar más;
+- Bitácora de Acompañamiento.
 
 `Descubre la Academia` está definido también por el modelo central como acceso destacado independiente.
 
@@ -179,23 +202,35 @@ En el árbol actual:
 - `Gestión de Misiones` exige `gestion`;
 - `Administración` exige `administracion`;
 - `Gestión de Usuarios` exige `administracion`;
-- los nodos que no declaran `nivelMinimo` son visibles desde `consulta`.
+- los nodos que no declaran `nivelMinimo`, incluida Bitácora como acceso visible, son visibles desde `consulta`.
 
-La visibilidad del menú es una regla de experiencia; **no sustituye la autorización real del módulo/API/Firestore**.
+La visibilidad del menú es una regla de experiencia; **no sustituye la autorización real del módulo/API/Firestore**. En particular, la Bitácora aplica además su contrato propio de relación, autoría y visibilidad.
 
 ---
 
-## 🌿 7. Nodos con hijos
+## 🌿 7. Nodos con y sin hijos
 
-Un nodo puede ser simultáneamente:
+El patrón compartido distingue dos casos:
+
+```text
+nodo principal con hijos
+→ grupo desplegable
+
+nodo principal sin hijos
+→ enlace directo
+```
+
+Cuando un nodo tiene hijos puede ser simultáneamente:
 
 - una página navegable;
 - un contenedor de hijos.
 
-El patrón compartido distingue:
+En esos casos el patrón compartido puede distinguir:
 
 - acción principal del nodo → navegar;
 - flecha/control secundario → expandir o comprimir.
+
+No debe crearse un segundo nivel artificial solo para poder abrir un nodo principal sin hijos.
 
 ---
 
@@ -230,6 +265,7 @@ No se define de forma general como “carpeta padre”.
 | Calendarios | ✅ Implementado |
 | Mi Baúl | ✅ Implementado |
 | Adicionales | ✅ Implementado |
+| Bitácora de Acompañamiento | ✅ V1 implementada · Persona Activa · contrato específico de colaboración |
 | Mis Logros | ⏳ Próximo |
 | Configuración | ⏳ Próximo |
 
@@ -244,9 +280,10 @@ No actualizarla por cada ubicación auxiliar o detalle de cabecera.
 Antes de modificarla:
 
 1. comprobar `compartido/modelos/navegacion.js`;
-2. comprobar `panel-usuario.js` si afecta Mi espacio personal;
+2. comprobar `panel-usuario.js` si afecta Mi espacio personal o la forma de renderizar nodos;
 3. distinguir nodo visible de ubicación auxiliar;
-4. no convertir una ruta futura en capacidad implementada sin evidencia.
+4. distinguir nodos con hijos de nodos principales directos;
+5. no convertir una ruta futura en capacidad implementada sin evidencia.
 
 ---
 
@@ -255,6 +292,7 @@ Antes de modificarla:
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Reglas conceptuales** | `MODELO_NAVEGACION.md` |
+| **Baseline funcional de esta sincronización** | `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
