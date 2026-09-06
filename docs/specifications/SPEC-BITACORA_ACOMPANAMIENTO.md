@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` |
-| **Versión** | 1.0-rc1 |
+| **Versión** | 1.0-rc2 |
 | **Estado** | Candidato · V1 construida en rama y pendiente de validación del Product Owner |
 | **Fecha** | 06/09/2026 |
 | **Última actualización** | 06/09/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0-rc2 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el contrato con el endurecimiento previo a prueba: aclara que una respuesta hereda exactamente la visibilidad de su entrada, que una respuesta incluida en una entrada visible al alumno también será visible para él, y mantiene la advertencia explícita antes de publicar/contestar. |
 | 1.0-rc1 | 06/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria. Materializa el Dominio de Colaboración como Bitácora de Acompañamiento V1: opción de menú, Persona Activa, entradas estructuradas, destino y visibilidad separados, opción `Otros` en catálogos cerrados, una única respuesta, autoría trazable, permisos específicos y fronteras respecto a chat, Misiones, evidencias, IA y Análisis Educativo. |
 
 ---
@@ -278,9 +279,13 @@ Visible para: Familia y profesionales
 
 Puede representar una recomendación pensada para ayudar al alumno que los adultos desean revisar antes de comunicársela.
 
-Regla:
+Reglas:
 
 > **Una entrada dirigida al alumno no se vuelve automáticamente visible al alumno.**
+
+> **Una respuesta conserva exactamente la visibilidad de su entrada.** Si la entrada es visible para el alumno, su respuesta también lo será.
+
+La interfaz debe advertir este efecto antes de publicar o responder cuando la Persona Activa esté incluida en la audiencia real.
 
 ---
 
@@ -315,6 +320,8 @@ Una respuesta exige simultáneamente:
 - ausencia de respuesta anterior;
 - autor de respuesta distinto del autor de la entrada;
 - una única modificación limitada a campos de respuesta, estado y auditoría.
+
+La respuesta **no posee una audiencia independiente**. Hereda el contrato de lectura de la entrada. Por ello, si `visibilidad = todos-relacionados`, tanto la entrada como su respuesta son visibles para el alumno/Persona Activa.
 
 ### 8.4 Entradas privadas
 
@@ -518,6 +525,7 @@ Profesional/familia publica otra entrada
 → Visibilidad = Alumno + familia + profesionales
 → Alumno inicia sesión
 → SÍ ve la entrada
+→ si existe respuesta, también la ve
 ```
 
 ### 15.4 `Otros`
@@ -556,6 +564,7 @@ Antes de declarar la V1 implementada y cerrada:
 - [ ] alumno no puede publicar ni responder en V1;
 - [ ] alumno no ve notas adultas;
 - [ ] alumno sí ve una entrada expresamente compartida;
+- [ ] una respuesta visible al alumno solo existe dentro de una entrada ya visible al alumno;
 - [ ] una entrada privada solo es visible para su autor/admin;
 - [ ] una respuesta solo puede registrarse una vez;
 - [ ] autor de la entrada no puede auto-responderla;
@@ -598,6 +607,7 @@ Estas extensiones requieren nueva decisión; no se infieren de V1.
 | BIT-008 | Los catálogos cerrados de V1 incluyen `Otros`; cuando se usa debe especificarse. | Aprobada |
 | BIT-009 | `Otros` de visibilidad utiliza un comportamiento conservador privado al autor hasta que exista un modelo explícito para otra audiencia. | Aprobada |
 | BIT-010 | Las entradas humanas no se convierten automáticamente en Misiones, evidencias, análisis o Recompensas. | Aprobada |
+| BIT-011 | La respuesta no define una audiencia nueva: hereda la visibilidad de la entrada y la UI lo advierte antes de responder. | Aprobada |
 
 ---
 
@@ -621,6 +631,6 @@ Cuando la V1 sea validada y fusionada:
 | Campo | Valor |
 |---|---|
 | **Estado funcional** | ✅ Diseño aprobado · implementación V1 en rama · pendiente de prueba del Product Owner |
-| **Versión candidata** | 1.0-rc1 |
+| **Versión candidata** | 1.0-rc2 |
 | **Propietario funcional** | Colaboración y Acompañamiento |
 | **Regla central** | Compartir información útil con trazabilidad y visibilidad controlada, sin convertir la Academia en chat ni vigilancia. |
