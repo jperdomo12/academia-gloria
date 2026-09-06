@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/RELEASE_NOTES.md` |
-| **Versión del documento** | 1.2 |
+| **Versión del documento** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 03/08/2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Gobierno del Producto |
 | **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
 | **Ámbito** | Versionado, publicación y trazabilidad de entregas de Academia Gloria Valentina |
@@ -20,11 +20,13 @@
 | `docs/DOCUMENTATION_STANDARD.md` | Gobierna su estructura, metadatos, estados, historial y mantenimiento. |
 | `docs/project/DECISION_LOG.md` | Conserva decisiones transversales de producto cuando corresponda. |
 | `docs/project/ROADMAP.md` | Orienta la evolución prevista del producto sin sustituir el historial de entregas. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | Define el comportamiento funcional de la Bitácora de Acompañamiento V1. |
 
 ## 🕘 Historial de versiones del documento
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 06/09/2026 | Juan Perdomo + AI Collaborator | Extiende el historial real hasta el 06Sep2026. Registra PR #78/#80 de observación administrativa minimizada de accesos y PR #83/#85 de Bitácora de Acompañamiento V1, sin inventar una nueva versión del producto. |
 | 1.2 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registra el PR #74 como entrega visual validada y fusionada sin nueva versión de producto: `Mis Guacamayas` plegado por defecto, flechas consistentes y alineación de los tres bloques de reconocimientos. |
 | 1.1 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el documento con las entregas reales fusionadas entre 29Ago y 03Sep2026. Distingue releases formales de GitHub, versiones históricas internas y bloques de producto validados todavía sin nueva versión asignada. Registra Gestión de Misiones, evidencias académicas, refuerzos, Análisis Educativo, limpieza de pruebas, Recompensas/Reconocimientos, `Ver trabajo`, recordatorios de calendario y los nuevos portales de 6.º. Corrige la inconsistencia de estado documental de la versión anterior. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera consolidación formal. Incorpora metadatos, política de versionado, estado de release, estructura común y preserva el contenido existente de `v2.3-RC6`. |
@@ -131,16 +133,148 @@ Esto describe su estado sin inventar versionado.
 
 | Campo | Valor |
 |---|---|
-| **Período cubierto** | 29/08/2026 – 04/09/2026 |
+| **Período cubierto** | 29/08/2026 – 06/09/2026 |
 | **Estado** | Validado y fusionado en `main` |
 | **Nueva versión de producto** | No asignada todavía |
+| **Baseline funcional más reciente cubierto** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
 | **Criterio** | Se registran capacidades reales y cerradas; no pendientes ni trabajo exploratorio |
 
 Estas entregas representan una evolución funcional importante de la Academia, pero **no constituyen por sí mismas una nueva versión numerada** hasta que el Product Owner lo determine.
 
 ---
 
-## 4.2 04Sep2026 · Mi Camino: historial plegable de Guacamayas
+## 4.2 06Sep2026 · Bitácora de Acompañamiento V1
+
+**PR #83 · `Feat: Bitácora de Acompañamiento V1`**
+
+### Entregado
+
+Se materializó el Dominio de Colaboración mediante una Bitácora asociada a Persona Activa para familia, profesionales relacionados y administración.
+
+Incluye:
+
+- opción principal `🤝 Bitácora de Acompañamiento`;
+- Persona Activa como contexto propietario;
+- entradas estructuradas con tipo, título, mensaje, destino y visibilidad;
+- separación explícita entre **destino** y **visibilidad**;
+- `Otros` en catálogos cerrados extensibles, con especificación obligatoria;
+- una única respuesta estructurada por entrada, sin chat ni hilos;
+- respuesta con la misma visibilidad de la entrada;
+- alumno con lectura únicamente de entradas expresamente compartidas con él;
+- entradas publicadas inmutables y sin eliminación funcional en V1;
+- autoría y fechas trazables;
+- filtros de consulta sin ampliar la visibilidad autorizada.
+
+### Seguridad y fronteras
+
+- Firestore Rules específicas restringen lectura, creación y respuesta;
+- el nivel `consulta` puede publicar dentro del contrato específico del módulo cuando existe relación válida, sin convertirse en `gestion` general;
+- `bitacoraAcompanamiento` queda fuera del fallback legacy;
+- las Rules canónicas necesarias fueron publicadas en Firebase antes de completar la validación funcional;
+- una entrada de Bitácora no genera Misiones, evidencias, Análisis Educativo, Recompensas ni inferencias de IA.
+
+### Validación
+
+El Product Owner validó funcionalmente la V1 el 06/09/2026 y autorizó el merge.
+
+La especificación propietaria activa es:
+
+```text
+docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md
+```
+
+---
+
+## 4.3 06Sep2026 · Bitácora como opción de menú de un solo nivel
+
+**PR #85 · `Fix: Bitácora como opción de menú de un solo nivel`**
+
+### Problema corregido
+
+La Bitácora es un nodo principal sin hijos, pero el Panel de Usuario trataba todos los nodos principales como grupos desplegables, creando un segundo nivel innecesario.
+
+### Entregado
+
+Se formalizó y aplicó la regla:
+
+```text
+nodo principal con hijos → grupo desplegable
+nodo principal sin hijos → enlace directo
+```
+
+Como resultado, `🤝 Bitácora de Acompañamiento` se abre con un solo clic desde el menú.
+
+### Alcance técnico
+
+- solo cambia `compartido/js/panel-usuario.js`;
+- no cambia el contrato funcional de Bitácora;
+- no cambia Persona Activa;
+- no cambia Firestore ni permisos;
+- no cambia el árbol central de datos.
+
+---
+
+## 4.4 05Sep2026 · Gestión de Usuarios: último acceso y ubicación aproximada
+
+**PR #78 · `Usuarios: registrar último acceso y ubicación aproximada`**
+
+### Entregado
+
+- registro del último acceso real a la Academia;
+- fecha/hora mediante `serverTimestamp()`;
+- ubicación aproximada `ciudad / región / país` estimada por IP;
+- visualización administrativa en tabla y `Ver / editar`;
+- registro no bloqueante respecto a la navegación.
+
+### Privacidad
+
+- no GPS;
+- no coordenadas;
+- no persistencia de IP pública;
+- no ISP;
+- no código postal;
+- la información se limita a Gestión de Usuarios con nivel `administracion`.
+
+La ubicación es aproximada y esta capacidad no se considera evidencia académica ni seguimiento de Persona Activa.
+
+### Validación
+
+El Product Owner probó y aprobó la V1 el 05/09/2026.
+
+---
+
+## 4.5 05Sep2026 · Gestión de Usuarios: historial de 10 accesos recientes
+
+**PR #80 · `Usuarios: historial de los últimos 10 accesos`**
+
+### Entregado
+
+- conservación de un máximo de 10 accesos recientes por USER;
+- eliminación del más antiguo al superar el límite;
+- listado del más reciente al más antiguo;
+- bloque plegado `6. Historial de accesos` dentro de `Ver / editar`;
+- mantenimiento separado del documento `ultimo` para lectura rápida.
+
+### Privacidad
+
+Mantiene la misma minimización de PR #78:
+
+- sin IP persistida;
+- sin GPS;
+- sin coordenadas;
+- sin ISP;
+- sin código postal;
+- ubicación únicamente aproximada ciudad/región/país.
+
+No se realiza backfill ni se inventan accesos anteriores.
+
+### Validación
+
+El Product Owner probó y aprobó la funcionalidad el 05/09/2026.
+
+---
+
+## 4.6 04Sep2026 · Mi Camino: historial plegable de Guacamayas
 
 **PR #74 · `Fix: plegar Mis Guacamayas sin tocar la lógica`**
 
@@ -169,7 +303,7 @@ El PR #72 fue descartado sin merge. El cierre de PR #74 confirma el criterio de 
 
 ---
 
-## 4.3 03Sep2026 · 6.º de Primaria: portales y estándar de tarjetas
+## 4.7 03Sep2026 · 6.º de Primaria: portales y estándar de tarjetas
 
 **PR #49 · `6.º: nuevos portales y estándar de tarjetas`**
 
@@ -202,7 +336,7 @@ Portada de 6.º y portal de Matemáticas aprobados funcional y visualmente por e
 
 ---
 
-## 4.4 02Sep2026 · Calendario: recordatorios al ingresar
+## 4.8 02Sep2026 · Calendario: recordatorios al ingresar
 
 **PR #48 · `Calendario: recordatorios al ingresar en la Academia`**
 
@@ -221,7 +355,7 @@ Comportamiento funcional aprobado por el usuario.
 
 ---
 
-## 4.5 01–02Sep2026 · Recompensas / Sistema de Motivación y Reconocimiento V1
+## 4.9 01–02Sep2026 · Recompensas / Sistema de Motivación y Reconocimiento V1
 
 **PRs #40, #41, #42, #43, #44, #46 y #47**
 
@@ -280,7 +414,7 @@ Primera automatización segura basada en señales de sesiones reales:
 
 ---
 
-## 4.6 02Sep2026 · Acceso unificado `👁️ Ver trabajo`
+## 4.10 02Sep2026 · Acceso unificado `👁️ Ver trabajo`
 
 **PR #45 · `Acceso de consulta · Ver trabajo`**
 
@@ -315,7 +449,7 @@ Se validaron explícitamente:
 
 ---
 
-## 4.7 31Ago–01Sep2026 · Análisis Educativo y calidad de datos
+## 4.11 31Ago–01Sep2026 · Análisis Educativo y calidad de datos
 
 **PRs #35, #36 y #37**
 
@@ -361,7 +495,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.8 31Ago2026 · Gestión de Misiones consolidada
+## 4.12 31Ago2026 · Gestión de Misiones consolidada
 
 **PRs #24, #25, #29, #31, #34, #38 y #39**
 
@@ -394,7 +528,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.9 30–31Ago2026 · Refuerzos basados en evidencias
+## 4.13 30–31Ago2026 · Refuerzos basados en evidencias
 
 **PRs #20, #21, #32, #33 y #34**
 
@@ -425,7 +559,7 @@ La eliminación exige vínculos exactos y bloquea casos ambiguos.
 
 ---
 
-## 4.10 29–30Ago2026 · Repaso Académico y expansión curricular asistida
+## 4.14 29–30Ago2026 · Repaso Académico y expansión curricular asistida
 
 **PRs #16, #17, #21, #22 y #23**
 
@@ -463,7 +597,7 @@ El proceso interno cubre análisis, diseño, implementación, integración, vali
 
 ---
 
-## 4.11 30–31Ago2026 · Creciendo por Dentro
+## 4.15 30–31Ago2026 · Creciendo por Dentro
 
 **PRs #18, #19 y #27**
 
@@ -504,7 +638,7 @@ Se corrigió un caso real en el que un audio grande podía impedir guardar toda 
 - nuevo framework;
 - nuevo Design System.
 
-A 04/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
+A 06/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
 
 ---
 
@@ -634,8 +768,8 @@ Estado: Validada y fusionada · sin nueva versión asignada
 | Campo | Valor |
 |---|---|
 | **Estado documental** | Activo |
-| **Última sincronización** | 04/09/2026 |
+| **Última sincronización** | 06/09/2026 |
 | **Release formal comprobada** | `2.0` · publicada 20/07/2026 |
 | **Versión histórica interna preservada** | `v2.3-RC6` · 01/08/2026 |
-| **Entregas posteriores** | Validadas y fusionadas; todavía sin nueva versión de producto asignada |
+| **Entregas posteriores** | Validadas y fusionadas hasta `main @ 58cab370...`; todavía sin nueva versión de producto asignada |
 | **Regla principal** | No inventar versionado; primero registrar lo realmente entregado y asignar una release solo por decisión explícita del Product Owner. |
