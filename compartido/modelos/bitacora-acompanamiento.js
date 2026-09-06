@@ -19,7 +19,7 @@ export const TIPOS_BITACORA = Object.freeze([
 ]);
 
 export const DESTINOS_BITACORA = Object.freeze([
-  Object.freeze({ id: "general", icono: "🌍", etiqueta: "Todos / General" }),
+  Object.freeze({ id: "general", icono: "🌍", etiqueta: "Público / general" }),
   Object.freeze({ id: "alumno", icono: "🎓", etiqueta: "Alumno" }),
   Object.freeze({ id: "familia", icono: "🏠", etiqueta: "Familia / Padres" }),
   Object.freeze({ id: "profesionales", icono: "👥", etiqueta: "Profesionales" }),
