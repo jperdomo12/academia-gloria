@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.9 |
+| **Versión** | 2.0 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 06/09/2026 |
@@ -24,13 +24,16 @@
 | `docs/project/ROADMAP.md` | **Complementa:** evolución planificada y prioridades de producto. |
 | `docs/project/DECISION_LOG.md` | **Complementa:** decisiones transversales estables. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** ciclo operativo de construcción y cierre. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define candidato actual:** Bitácora de Acompañamiento V1, pendiente de prueba funcional y merge. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** incorporación curricular de 6.º a partir de material escolar real. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** identidad, acceso, Gestión de Usuarios y observación administrativa de accesos con retención limitada. |
+| `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | **Gobierna:** calidad transversal; desde v2.3 formaliza `Otros` en catálogos cerrados extensibles. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.0 | 06/09/2026 | Product Owner + AI Collaborator | Registra la **Bitácora de Acompañamiento V1** como excepción funcional activa motivada por el inicio real de clases y la colaboración con profesionales. Documenta PR #83 Draft, rama `feature/bitacora-acompanamiento-v1`, Rules publicadas en Firebase, especificación `1.0-rc3`, posición de menú aprobada antes de `Descubre la Academia`, regla transversal `Otros` y deja como siguiente paso exacto la prueba funcional del Product Owner. |
 | 1.9 | 06/09/2026 | Product Owner + AI Collaborator | Incorpora como pendiente la evaluación de **ChatGPT Work** con el primer caso real de incorporación de material escolar, para comprobar hasta qué punto puede ejecutar autónomamente el proceso completo de preparación para Academia. |
 | 1.8 | 05/09/2026 | Product Owner + AI Collaborator | Registra PR #80 aprobado y fusionado: historial administrativo de los **10 accesos más recientes** por USER, bloque plegado `6. Historial de accesos`, botón `Ver / editar`, misma minimización de datos y baseline funcional actualizado a `77c734a5...`. |
 | 1.7 | 05/09/2026 | Product Owner + AI Collaborator | Registra PR #78 aprobado y fusionado: **Último acceso a la Academia** + ubicación aproximada ciudad/región/país en Gestión de Usuarios, con minimización de datos, sin GPS ni persistencia de IP. Actualiza el baseline funcional a `9e03c096...` y mantiene intacta la Fase de uso prioritario. |
@@ -68,6 +71,9 @@ Revisa en el repositorio jperdomo12/academia-gloria, rama main, el último
 
 Verifica el estado actual en las fuentes propietarias antes de actuar.
 No me pidas contexto que ya esté documentado.
+
+Si existe una rama/PR funcional On going registrada en el HandOff,
+revísala antes de iniciar trabajo nuevo.
 
 Si el trabajo es incorporación de material escolar real de 6.º, aplica obligatoriamente
 `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` y todos los
@@ -122,7 +128,7 @@ ALIMENTAR 6.º CON MATERIAL REAL DEL COLEGIO
         +
 OBSERVAR UTILIDAD Y MOTIVACIÓN
         +
-RESOLVER RÁPIDO LOS ISSUES REALES
+RESOLVER RÁPIDO LOS ISSUES / NECESIDADES REALES
         ↓
 DECIDIR MÁS ADELANTE QUÉ NUEVAS FUNCIONES MERECEN CRECER
 ```
@@ -223,7 +229,52 @@ Se resolverá con especial rapidez cuando afecte:
 
 Un issue real puede justificar una corrección durante esta fase. **No debe convertirse automáticamente en una nueva iniciativa arquitectónica.**
 
-### 4.4 Baseline funcional estable de referencia
+### 4.4 Excepción funcional activa · Bitácora de Acompañamiento V1
+
+La Bitácora fue autorizada por el Product Owner el 06/09/2026 porque responde a una necesidad real inmediata: **incorporar a los profesionales que apoyan la educación/formación de Gloria desde el inicio del curso** y ofrecerles un espacio común para observaciones, recomendaciones, dudas, sugerencias y seguimiento.
+
+Estado actual verificado:
+
+```text
+rama: feature/bitacora-acompanamiento-v1
+PR: #83 · Draft · NO MERGE todavía
+base: main @ 3f560fbd37e16faa955ed5f19b54148f3f77beb9
+head candidato: 24f0aacc1bce155e0dbbc7a6803b6b2ed5864af4
+especificación: SPEC-BITACORA_ACOMPANAMIENTO.md · 1.0-rc3
+Firestore Rules candidatas: publicadas en Firebase por el Product Owner
+siguiente paso: prueba funcional del Product Owner
+```
+
+Alcance V1 aprobado:
+
+- opción principal `🤝 Bitácora de Acompañamiento`;
+- posición de menú: **penúltima opción, inmediatamente después de `Explorar más` y antes de `Descubre la Academia`**;
+- opera sobre Persona Activa reutilizando USER / PERSON / USER_ROLE / PERSON_RELATION;
+- entradas estructuradas con tipo, título, mensaje, destino y visibilidad separados;
+- catálogos cerrados extensibles incluyen `Otros` y requieren especificación cuando corresponde;
+- `Otros` de visibilidad es conservador: permanece privado al autor en V1;
+- una entrada puede recibir **0 o 1 respuesta estructurada**; no hay chat ni hilos;
+- la respuesta hereda exactamente la visibilidad de su entrada;
+- alumno solo lee entradas expresamente compartidas con él y no publica/responde en V1;
+- entradas publicadas son inmutables y sin eliminación funcional V1;
+- no genera Misiones, evidencias, Análisis Educativo, Recompensas ni inferencias de IA.
+
+Regla de seguridad importante:
+
+> **Destino comunica intención; visibilidad gobierna lectura. Una entrada dirigida al alumno no se vuelve visible al alumno salvo que la visibilidad lo incluya expresamente.**
+
+La rama toca únicamente el alcance de Bitácora y fuentes transversales necesarias: pantalla propia, modelo/API propios, navegación central, Rules canónicas, especificación candidata y regla `Otros` en la guía de desarrollo. No modifica motores educativos certificados.
+
+No fusionar PR #83 hasta:
+
+1. prueba funcional controlada;
+2. corrección de incidencias reales si aparecen;
+3. aprobación del Product Owner;
+4. auditoría final;
+5. activación/sincronización documental;
+6. merge a `main`.
+
+### 4.5 Baseline funcional estable de referencia
 
 ```text
 main
@@ -237,11 +288,17 @@ Este baseline funcional incorpora, entre otras entregas cerradas:
 - **PR #78**, Último acceso a la Academia + ubicación aproximada en Gestión de Usuarios;
 - **PR #80**, historial limitado de los 10 accesos más recientes + acción `Ver / editar`.
 
+El `main` actual verificado al iniciar la Bitácora es:
+
+```text
+3f560fbd37e16faa955ed5f19b54148f3f77beb9
+```
+
+Ese HEAD es posterior por cambios no funcionales —incluido el Overview visual— y no altera el baseline funcional de referencia anterior.
+
 La observación administrativa de acceso mantiene la separación USER/PERSON: pertenece al USER autenticado, no a Persona Activa. La ubicación es aproximada por IP y persiste solo ciudad/región/país/código de país; no usa GPS ni conserva IP, coordenadas, ISP o código postal.
 
 El historial de PR #80 conserva como máximo 10 accesos observados, elimina el más antiguo al superar el límite, aparece plegado por defecto y no reconstruye accesos previos que no fueron conservados por la V1.
-
-El HEAD documental de `main` puede ser posterior sin cambiar este baseline funcional.
 
 Antecedentes:
 
@@ -258,6 +315,8 @@ Antecedentes:
 | P1 | ✅ 15/15 cerrados |
 | P2 | ✅ 32/32 cerrados |
 | Jornada documental P0 + P1 + P2 | ✅ Cerrada · 04/09/2026 |
+| `SPEC-BITACORA_ACOMPANAMIENTO.md` | 🟡 Candidato 1.0-rc3 · pendiente de validación funcional |
+| `STD-GUIA_DESARROLLO_ULTRA_PRO.md` | ✅ v2.3 Cloud en rama candidata · regla transversal `Otros` |
 
 `docs/DOCUMENTATION_STANDARD.md` continúa gobernando cualquier evolución documental futura.
 
@@ -297,6 +356,8 @@ Principios vigentes: actividad/progreso real, sin rankings, sin comparación con
 - ✅ Ubicación minimizada: ciudad/región/país, sin GPS ni persistencia de IP.
 - ✅ Plantilla oficial de HandOff.
 - ✅ Documentación P0/P1/P2 sincronizada.
+
+**Bitácora de Acompañamiento V1 todavía NO pertenece a este bloque:** está en validación mediante PR #83 Draft.
 
 ---
 
@@ -407,6 +468,9 @@ Esta evaluación debe realizarse con un caso real del colegio y observar qué pa
 - El acceso observado pertenece al USER autenticado y no es evidencia académica ni actividad de Persona Activa.
 - La ubicación aproximada de acceso aplica minimización de datos; no interpretar ciudad/región como posición física exacta.
 - El historial de acceso conserva como máximo 10 entradas; ampliar esa retención requiere una nueva decisión explícita de producto y privacidad.
+- En catálogos cerrados extensibles debe existir `Otros`; cuando sea necesario debe especificarse y nunca puede ampliar permisos/visibilidad de forma ambigua.
+- En Bitácora, **destino y visibilidad son distintos** y una respuesta hereda la visibilidad de su entrada.
+- No declarar la Bitácora cerrada/implementada en `main` hasta que PR #83 sea probada, aprobada y fusionada.
 
 ---
 
@@ -414,19 +478,50 @@ Esta evaluación debe realizarse con un caso real del colegio y observar qué pa
 
 | Campo | Valor actual |
 |---|---|
-| **Base canónica** | `main` |
-| **Baseline funcional de referencia** | `77c734a5cadd992238cff478eb0b6d619100623e` |
-| **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Crecimiento funcional general** | ⏸️ En espera por foco de uso |
+| **Base canónica integrada** | `main` |
+| **HEAD actual de main al iniciar Bitácora** | `3f560fbd37e16faa955ed5f19b54148f3f77beb9` |
+| **Baseline funcional cerrado de referencia** | `77c734a5cadd992238cff478eb0b6d619100623e` |
+| **Rama funcional On going** | `feature/bitacora-acompanamiento-v1` |
+| **PR funcional** | `#83` · Draft · NO MERGE |
+| **Head candidato Bitácora** | `24f0aacc1bce155e0dbbc7a6803b6b2ed5864af4` |
+| **Especificación candidata** | `SPEC-BITACORA_ACOMPANAMIENTO.md` · `1.0-rc3` |
+| **Firestore Rules** | ✅ Publicadas en Firebase para prueba funcional |
+| **Estado operativo general** | 🌿 Fase de uso prioritario |
 | **Carril curricular 6.º** | ✅ Activo con material escolar real |
 | **Issues de uso real** | ✅ Reportar y resolver con rapidez |
-| **Prioridad** | Uso motivado + ayuda efectiva + crecimiento curricular real |
+| **Prioridad inmediata** | Probar Bitácora V1 sin afectar lo certificado |
 
 ---
 
-## ▶️ 11. Siguiente paso exacto durante el curso
+## ▶️ 11. Siguiente paso exacto
 
-### Cuando llegue material escolar
+### 11.1 Continuación inmediata · Bitácora de Acompañamiento V1
+
+En el siguiente chat:
+
+```text
+1. Revisar este HandOff.
+2. Verificar PR #83 y rama feature/bitacora-acompanamiento-v1.
+3. Confirmar que el head candidato no cambió inesperadamente.
+4. Solicitar al Product Owner cambiar localmente a la rama y Fetch/Pull solo cuando sea momento de probar.
+5. Ejecutar prueba funcional controlada.
+6. Corregir únicamente incidencias reales encontradas.
+7. Tras aprobación: auditoría final + activar SPEC 1.0 + sincronizar navegación/HandOff/Roadmap/Release Notes que correspondan + merge.
+```
+
+Casos mínimos de prueba:
+
+```text
+A. Profesional/familiar relacionado → Persona Activa Gloria → crear entrada adultos/profesionales → otro adulto la ve y responde.
+B. Gloria → no ve la entrada anterior.
+C. Entrada con visibilidad Alumno + familia + profesionales → Gloria sí la ve; si tiene respuesta, también la ve.
+D. Otros en Tipo/Destino/Visibilidad → exige especificación; Otros de visibilidad permanece privado.
+E. Autor no puede auto-responder; segunda respuesta no existe.
+F. Bitácora aparece inmediatamente antes de Descubre la Academia.
+G. Navegación, Persona Activa y módulos existentes siguen funcionando sin regresiones.
+```
+
+### 11.2 Cuando llegue material escolar
 
 La familia debe poder limitarse a:
 
@@ -438,17 +533,17 @@ La familia debe poder limitarse a:
 
 La AI Collaborator realiza el resto aplicando las fuentes propietarias y todos los estándares correspondientes.
 
-### Cuando aparezca un issue
+### 11.3 Cuando aparezca un issue
 
 La familia lo reporta de forma natural, idealmente con captura o pasos si los tiene. La AI Collaborator verifica antes de asumir la causa y propone/aplica la corrección mínima suficiente.
 
-### Nuevas funcionalidades generales
+### 11.4 Nuevas funcionalidades generales
 
-Esperar varias semanas de uso real antes de volver a priorizarlas, salvo necesidad clara surgida del colegio, de Gloria o de la familia.
+Mantener la Fase de uso prioritario y no iniciar otras capacidades generales mientras Bitácora V1 esté On going, salvo necesidad clara surgida del colegio, de Gloria o de la familia.
 
 ---
 
-# 🟣 Última actualización / On going — 05/09/2026
+# 🟣 Última actualización / On going — 06/09/2026
 
 ## Qué acabamos de cerrar
 
@@ -461,20 +556,25 @@ Esperar varias semanas de uso real antes de volver a priorizarlas, salvo necesid
 - PR #7 cerrado sin merge como antecedente histórico/obsoleto.
 - Mi Baúl V1 cerrado.
 - Mecanismo oficial de HandOff activo.
+- Overview visual de Academia incorporado a `docs/project/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.png` en `main`.
 
 ## Qué estamos trabajando ahora
 
-> **🌿 Fase de uso prioritario del curso 2026–2027.**
+> **🤝 Bitácora de Acompañamiento V1 · PR #83 Draft · pendiente de prueba funcional.**
 
-Prioridad inmediata:
+Completado antes del cambio de chat:
 
-1. que Gloria use la Academia de forma motivada;
-2. comprobar que resulte de ayuda efectiva;
-3. incorporar con rapidez Temas reales de 6.º a partir del material del colegio;
-4. reportar y resolver rápidamente los issues que aparezcan con el uso;
-5. posponer crecimiento funcional general durante varias semanas salvo necesidad real.
+- concepto funcional aprobado;
+- diseño y construcción V1 realizados en rama aislada;
+- auditoría estática y endurecimiento de seguridad realizados;
+- `Otros` formalizado como regla transversal en la guía de desarrollo candidata;
+- Firestore Rules candidatas publicadas en Firebase por el Product Owner;
+- respuesta única y herencia de visibilidad documentadas/advertidas;
+- posición de menú ajustada: después de `Explorar más`, antes de `Descubre la Academia`;
+- especificación sincronizada a `1.0-rc3`;
+- `main` no contiene todavía la Bitácora.
 
-No existe una nueva funcionalidad general `On going`.
+**Próximo paso exacto:** prueba funcional del Product Owner sobre la rama candidata. No fusionar antes de esa prueba y aprobación.
 
 ---
 
@@ -483,11 +583,15 @@ No existe una nueva funcionalidad general `On going`.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.9 |
+| **Versión activa** | 2.0 |
 | **Estado operativo** | 🌿 Fase de uso prioritario desde 05/09/2026 |
-| **Baseline funcional de referencia** | `77c734a5cadd992238cff478eb0b6d619100623e` |
+| **Baseline funcional cerrado** | `77c734a5cadd992238cff478eb0b6d619100623e` |
+| **HEAD main verificado al iniciar Bitácora** | `3f560fbd37e16faa955ed5f19b54148f3f77beb9` |
+| **Trabajo On going** | 🤝 Bitácora de Acompañamiento V1 · PR #83 Draft |
+| **Head candidato** | `24f0aacc1bce155e0dbbc7a6803b6b2ed5864af4` |
+| **Siguiente paso** | Prueba funcional controlada del Product Owner |
 | **Crecimiento curricular 6.º** | ✅ Activo durante la fase |
 | **Issues reales** | ✅ Reportar → verificar → corregir con rapidez |
-| **Crecimiento funcional general** | ⏸️ En espera por foco de uso, no prohibido |
-| **Mecanismo de continuidad** | GitHub `main` + último HandOff + Bootstrap + verificación dirigida de fuentes |
+| **Crecimiento funcional general** | ⏸️ En espera por foco de uso, salvo necesidad real |
+| **Mecanismo de continuidad** | GitHub `main` + HandOff + rama/PR On going + Bootstrap + verificación dirigida de fuentes |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
