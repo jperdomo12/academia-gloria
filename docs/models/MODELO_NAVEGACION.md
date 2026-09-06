@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.9 |
+| **Versión** | 1.10 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
-| **Última actualización** | 29/08/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global, Panel de Usuario y comportamiento de retorno |
@@ -16,13 +16,14 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.10 | 06/09/2026 | Product Owner + AI Collaborator | Formaliza tras PR #85 la representación de nodos principales con y sin hijos: `con hijos → grupo desplegable`, `sin hijos → enlace directo`. Registra Bitácora de Acompañamiento como primer caso principal de nodo directo y alinea el modelo con `STD-PANEL_DE_USUARIO.md` y el árbol visible. |
 | 1.9 | 29/08/2026 | Product Owner + AI Collaborator | Formaliza la continuidad de Persona Activa durante navegación interna, el tratamiento de URLs canónicas de Academia como destinos internos del entorno actual y el historial lógico de `Volver`, evitando rebotes del tipo A → B → C → B → C. |
 | 1.8 | 26/08/2026 | Product Owner + AI Collaborator | Activa `6.º de Primaria` como nodo navegable real dentro de `Mis Cursos`, retirando su estado `proximo`. El acceso compartido y la página principal apuntan a `cursos/6to/`; el portal de 6.º permanece identificado como construcción activa mientras incorpora materias y temas reales. |
 | 1.7 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la arquitectura robusta de cabecera global: un único host canónico del Panel de Usuario, prohibición de trasladar Paneles locales a la cabecera, desactivación compatible de hosts heredados, inicialización repetible segura, carga de CSS compartido por el propio componente y separación entre árbol visible del menú y ubicaciones auxiliares de cabecera. Amplía la adopción controlada a Biblioteca, Escritura, Creciendo por Dentro, auxiliares de Detectives y Calendarios, y Adicionales. |
 | 1.6 | 24/08/2026 | Product Owner + AI Collaborator | Cierra P2 de navegación de pantallas principales. El modelo central puede declarar adopción de cabecera global, fallback de retorno y limpieza controlada de navegación heredada. La carga de la cabecera puede activarse desde `navegacion.js` sin reescribir HTML grandes, preservando las acciones locales propias de cada módulo. |
-| 1.5 | 24/08/2026 | Product Owner + AI Collaborator | Separa el espaciado del contenido del espaciado de la página: la cabecera global queda fuera del padding local y el contenido conserva su separación en un contenedor interior. Aplica la corrección al conjunto de once páginas de 5.º de Primaria identificado en la validación visual. |
-| 1.4 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza la tipografía e identidad visual de la cabecera, responsabiliza al recurso compartido de cargar Outfit, fija los tamaños responsive del nombre de pantalla y establece el favicon oficial local como obligatorio en páginas funcionales. Define 5.º de Primaria como conjunto inicial de validación y referencia, cuyo cierre queda condicionado a la superación de las pruebas. |
-| 1.3 | 24/08/2026 | Product Owner + AI Collaborator | Aprueba la cabecera global `Academia + Volver · Pantalla actual · Menú`, elimina la necesidad de un bloque independiente para Volver, consolida su implementación mediante componente compartido y define el comportamiento responsive y las excepciones operativas. |
+| 1.5 | 24/08/2026 | Product Owner + AI Collaborator | Separa el espaciado del contenido del espaciado de la página: la cabecera global queda fuera del padding local y el contenido conserva su separación en un contenedor interior. |
+| 1.4 | 24/08/2026 | Product Owner + AI Collaborator | Formaliza tipografía/identidad visual de cabecera y favicon oficial local. |
+| 1.3 | 24/08/2026 | Product Owner + AI Collaborator | Aprueba la cabecera global `Academia + Volver · Pantalla actual · Menú`. |
 | 1.2 | 13/08/2026 | Product Owner + AI Collaborator | Consolida Persona Activa, visibilidad por nivel, ruta única de Mi Calendario, responsabilidades entre modelo central y panel, y regla estándar de Volver. |
 | 1.1 | 01/08/2026 | Proyecto Academia | Regla genérica de nodos navegables con hijos y centralización del árbol. |
 
@@ -31,7 +32,7 @@
 | Fuente | Relación |
 |---|---|
 | `compartido/modelos/navegacion.js` | Fuente técnica central del árbol compartido, de las declaraciones de adopción de cabecera y de las ubicaciones auxiliares. |
-| `compartido/js/panel-usuario.js` | Presenta el menú de usuario, Mi espacio personal, Persona Activa y filtra nodos por nivel de acceso. |
+| `compartido/js/panel-usuario.js` | Presenta el menú de usuario, Mi espacio personal, Persona Activa y filtra/renderiza nodos por nivel y estructura. |
 | `compartido/js/navegacion.js` | Implementa navegación contextual, comportamiento de retorno y carga declarativa de la cabecera cuando el modelo lo indica. |
 | `compartido/componentes/navegacion-global.js` | Implementa la cabecera global, crea el host canónico del Panel, neutraliza hosts heredados y retira navegación global duplicada cuando el modelo lo autoriza. |
 | `compartido/css/navegacion-global.css` | Define la presentación responsive de la cabecera global. |
@@ -39,6 +40,7 @@
 | `docs/models/MODELO_ARBOL_NAVEGACION.md` | Representación humana del árbol funcional visible vigente. |
 | `docs/standards/STD-PANEL_DE_USUARIO.md` | Estándar transversal del Panel de Usuario. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | Gobierna roles, relaciones y niveles de acceso. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | Define el primer nodo principal directo incorporado por Bitácora V1. |
 
 ---
 
@@ -68,10 +70,13 @@ El árbol concreto vigente se documenta en `MODELO_ARBOL_NAVEGACION.md` y su fue
 12. **Las opciones visibles del menú y las ubicaciones auxiliares de cabecera son conceptos distintos.**
 13. **La navegación interna debe conservar la Persona Activa y el contexto de sesión.**
 14. **`Volver` representa una pila lógica de recorrido, no un rebote entre las dos últimas páginas visitadas.**
+15. **La forma del nodo determina su interacción: los nodos con hijos despliegan; los nodos sin hijos navegan directamente.**
 
 ---
 
-## 3. Nodos con hijos
+## 3. Nodos con y sin hijos
+
+### 3.1 Nodo principal con hijos
 
 Un nodo puede cumplir simultáneamente dos funciones:
 
@@ -80,17 +85,43 @@ Un nodo puede cumplir simultáneamente dos funciones:
 
 La interfaz ofrece controles separados:
 
-- el nombre o contenido principal del nodo navega a su página;
+- el nombre o contenido principal del nodo navega a su página cuando existe ruta;
 - la flecha expande o comprime sus hijos;
 - la rama de la página actual puede abrirse automáticamente.
 
-Este patrón es genérico y puede aplicarse a:
+Este patrón puede aplicarse a:
 
 - Mi Universo;
 - Aventuras Matemáticas;
 - cursos;
 - materias con temas;
 - futuros módulos equivalentes.
+
+### 3.2 Nodo principal sin hijos
+
+Cuando un nodo principal tiene ruta pero **no tiene hijos**, el Panel debe representarlo como un enlace directo.
+
+```text
+nodo principal con hijos → grupo desplegable
+nodo principal sin hijos → enlace directo
+```
+
+No debe crearse un segundo nivel artificial como:
+
+```text
+Bitácora de Acompañamiento
+└── Abrir Bitácora
+```
+
+cuando el modelo ya expresa suficiente información mediante:
+
+```text
+Bitácora de Acompañamiento → bitacora/
+```
+
+Bitácora de Acompañamiento V1 es el primer caso principal que motivó la formalización explícita de esta regla mediante PR #85.
+
+La implementación debe derivar este comportamiento de la estructura del nodo (`hijos`) y no de excepciones por nombre.
 
 ---
 
@@ -140,10 +171,11 @@ Esto evita duplicar o contaminar el árbol visible para resolver únicamente tí
 compartido/js/panel-usuario.js
 ```
 
-Tiene dos responsabilidades de navegación:
+Tiene responsabilidades de navegación:
 
 1. presentar `Mi espacio personal`;
-2. renderizar el árbol central filtrado según el nivel de acceso.
+2. renderizar el árbol central filtrado según nivel de acceso;
+3. representar la forma del nodo según tenga o no hijos.
 
 `Mi espacio personal` contiene actualmente:
 
@@ -164,11 +196,11 @@ compartido/js/navegacion.js
 
 Gestiona el retorno contextual y la conservación del origen cuando una página abre otra.
 
-También es responsable de reconocer como navegación interna los destinos canónicos de la propia Academia, resolverlos en el entorno actual —desarrollo local o GitHub Pages— y preservar el contexto necesario para que Persona Activa y el historial lógico continúen siendo válidos.
+También reconoce como navegación interna los destinos canónicos de la propia Academia, los resuelve en el entorno actual —desarrollo local o GitHub Pages— y preserva el contexto necesario para que Persona Activa y el historial lógico continúen siendo válidos.
 
 Una URL absoluta de producción que apunta a la propia Academia no debe tratarse como un sitio externo únicamente por su forma. Cuando corresponda, debe abrirse en la misma pestaña y en el entorno actual. Los enlaces realmente externos conservan su comportamiento propio.
 
-Además, puede consultar el modelo central y cargar la cabecera global de forma declarativa cuando el nodo actual define `cabeceraGlobal: true`. Esta capacidad evita modificar innecesariamente HTML grandes solo para conectar un componente ya existente.
+Además, puede consultar el modelo central y cargar la cabecera global de forma declarativa cuando el nodo actual define `cabeceraGlobal: true`.
 
 ### 4.5 Cabecera global
 
@@ -186,14 +218,12 @@ La cabecera global compone de forma compartida:
 
 **DECISIÓN:** la cabecera crea su propio host canónico del Panel de Usuario (`#nav-panel-usuario`).
 
-La cabecera **no mueve** a ese host un Panel construido previamente dentro de la página. En su lugar:
+La cabecera no mueve un Panel local previo. En su lugar:
 
 1. identifica hosts locales heredados;
 2. los desactiva y vacía;
-3. conserva intacta la lógica funcional restante del módulo;
+3. conserva la lógica funcional restante del módulo;
 4. inicia una única instancia del Panel en el host canónico.
-
-Este comportamiento evita que wrappers y CSS locales —por ejemplo estilos históricos de Biblioteca, Escritura o Matemáticas— modifiquen la apariencia del Panel global.
 
 El componente también garantiza la disponibilidad de:
 
@@ -201,7 +231,7 @@ El componente también garantiza la disponibilidad de:
 - `panel-usuario.css`;
 - favicon oficial local.
 
-Cuando un nodo declara `limpiarNavegacionLegada: true`, el componente puede retirar elementos globales heredados equivalentes —enlaces o botones de retorno ubicados en la zona superior, identificaciones duplicadas de pantalla y hosts locales del Panel—. Las acciones propias del módulo deben conservarse.
+Cuando un nodo declara `limpiarNavegacionLegada: true`, puede retirar equivalentes globales heredados. Las acciones propias del módulo deben conservarse.
 
 ---
 
@@ -219,24 +249,21 @@ La Persona conectada mantiene la sesión, identidad y permisos propios.
 
 La Persona Activa determina el contexto funcional cuando el usuario trabaja sobre sí mismo o sobre una Persona relacionada.
 
-Cuando Persona conectada y Persona Activa son distintas, el Panel muestra de forma persistente:
+Cuando son distintas, el Panel muestra:
 
 ```text
 🎯 Viendo a: <nombre de Persona Activa>
 ```
-
-Cuando coinciden, no se muestra indicador adicional.
 
 El cambio de Persona Activa puede afectar:
 
 - Mi Camino;
 - Mi Calendario;
 - módulos educativos con datos de la Persona;
-- tareas, misiones, eventos y evidencias cuando el módulo lo soporte.
+- tareas, misiones, eventos y evidencias cuando el módulo lo soporte;
+- Bitácora de Acompañamiento y otras capacidades colaborativas autorizadas.
 
-**Continuidad obligatoria:** una navegación entre pantallas internas de la Academia no debe restablecer silenciosamente Persona Activa a la Persona conectada. Si un adulto está `Viendo a` una Persona relacionada, ese contexto debe mantenerse al abrir recursos internos y al regresar mediante `Volver`, salvo que el propio usuario cambie expresamente la Persona Activa o finalice la sesión.
-
-Esta continuidad implica evitar aperturas internas que creen innecesariamente un nuevo contexto de pestaña cuando ello rompa el estado de sesión de la Academia.
+**Continuidad obligatoria:** navegar entre pantallas internas no debe restablecer silenciosamente Persona Activa a la Persona conectada. El contexto se mantiene hasta cambio explícito o fin de sesión.
 
 ---
 
@@ -248,14 +275,9 @@ Esta continuidad implica evitar aperturas internas que creen innecesariamente un
 calendarios/
 ```
 
-No debe construirse una ruta mediante:
+No debe construirse una ruta mediante `calendarioSlug`, nombre visible, nombre de Persona o carpeta física individual.
 
-- `calendarioSlug`;
-- nombre visible;
-- nombre de la Persona;
-- carpeta física individual.
-
-La Persona Activa determina qué datos personales deben mostrarse.
+Persona Activa determina qué datos personales se muestran.
 
 ---
 
@@ -267,27 +289,17 @@ El Panel utiliza tres niveles ordenados:
 consulta < gestion < administracion
 ```
 
-Un nodo puede declarar:
+Un nodo puede declarar `nivelMinimo`.
 
-```text
-nivelMinimo
-```
+Si no lo declara, el comportamiento actual lo considera visible desde `consulta`.
 
-Si no lo declara, el comportamiento actual lo considera accesible desde `consulta`.
+La visibilidad del menú no debe confundirse con autorización de datos: **el contrato del módulo y Firestore Rules siguen siendo autoridad efectiva**.
 
-Consecuencias:
-
-- un nodo `nivelMinimo: administracion` solo aparece a nivel Administración;
-- un nodo `nivelMinimo: gestion` aparece a Gestión y Administración;
-- un nodo sin `nivelMinimo` aparece desde Consulta.
-
-La visibilidad del menú no debe confundirse con autorización de datos: **Firestore Rules siguen siendo la autoridad efectiva sobre acceso a la información**.
+Bitácora es un ejemplo: puede ser visible como nodo desde `consulta`, pero su lectura/escritura real depende además de Persona Activa, relación, autoría, visibilidad y Rules.
 
 ---
 
 ## 8. Regla estándar de Volver
-
-El comportamiento transversal es:
 
 > **Volver regresa al punto real desde el que se llegó a la página.**
 
@@ -299,40 +311,19 @@ Prioridad:
 3. ruta alternativa segura definida por la página o por el modelo central
 ```
 
-No debe utilizarse como regla general:
+No debe utilizarse como regla general `Volver = carpeta padre`.
 
-```text
-Volver = carpeta padre
-```
-
-porque una misma página puede abrirse desde distintos puntos del producto.
-
-El historial de `Volver` debe comportarse como una **pila lógica de navegación**. Cuando el usuario retrocede, la rama abandonada se elimina del recorrido lógico para evitar volver hacia delante accidentalmente.
-
-Ejemplo obligatorio:
+El historial debe comportarse como una pila lógica:
 
 ```text
 A → B → C
-
 Volver desde C → B
 Volver desde B → A
 ```
 
-No debe producirse:
-
-```text
-A → B → C
-Volver → B
-Volver → C
-```
-
-Los parámetros contextuales como `volver` pueden participar en la resolución del retorno, pero no deben crear entradas artificialmente distintas dentro del historial cuando representan la misma pantalla funcional.
+No debe rebotar B → C tras retroceder.
 
 ### 8.1 Ruta alternativa
-
-La ruta alternativa es un mecanismo de seguridad.
-
-Solo se utiliza cuando no existe un origen válido o cuando el acceso fue directo.
 
 Puede declararse mediante:
 
@@ -340,70 +331,68 @@ Puede declararse mediante:
 data-nav-back="..."
 ```
 
-o centralmente en el nodo correspondiente:
+o centralmente:
 
 ```js
 volver: "ruta/segura/"
 ```
 
-La declaración local `data-nav-back` tiene prioridad cuando existe. La declaración `volver` del modelo permite migrar pantallas existentes sin introducir otra modificación local exclusivamente para la cabecera.
+La declaración local tiene prioridad cuando existe; `volver` central permite migrar sin modificación local innecesaria.
 
 ### 8.2 Estándar visual de cabecera global
-
-La cabecera estándar de las pantallas funcionales internas de la Academia es:
 
 ```text
 ACADEMIA + VOLVER    |    PANTALLA ACTUAL    |    MENÚ DEL USUARIO
 ```
 
-Cuando la pantalla no necesita acción contextual de retorno:
+Sin retorno contextual:
 
 ```text
 ACADEMIA             |    PANTALLA ACTUAL    |    MENÚ DEL USUARIO
 ```
 
-Reglas:
+Reglas principales:
 
-1. **Academia permanece visible** como acceso estable al inicio.
-2. **Volver aparece junto a Academia** cuando existe retorno alternativo local o central.
-3. **Volver no ocupa un bloque o fila independiente.**
-4. **La pantalla actual permanece en la zona central.**
-5. **El Panel de Usuario permanece en la zona derecha.**
-6. El comportamiento real de `Volver` continúa gobernado por la navegación contextual; la ruta alternativa solo es fallback seguro.
-7. En pantallas pequeñas, la cabecera puede compactar etiquetas y conservar iconos para evitar desbordamiento.
-8. No deben implementarse copias locales de esta composición salvo piloto temporal explícitamente aprobado.
-9. Las nuevas pantallas funcionales deben consumir el componente y CSS compartidos.
-10. Las pantallas existentes que todavía no consuman la cabecera compartida deberán migrarse de manera controlada, sin reescrituras funcionales innecesarias.
-11. La fuente de la cabecera es Outfit y debe cargarse desde el recurso CSS compartido, sin depender de las fuentes de cada página.
-12. El nombre de la pantalla actual usa `14px`, peso `800` y `line-height: 1.2`; pasa a `13px` en tablet (anchuras de hasta 900px) y a `12px` en móvil (hasta 480px).
-13. El icono de la pantalla actual usa `16px` y no se contrae; puede ocultarse en pantallas pequeñas para evitar desbordamiento.
-14. La pantalla actual ocupa una sola línea y aplica ellipsis cuando el espacio disponible no permite mostrar el nombre completo.
-15. `data-page-title` contiene un nombre funcional corto, sin identidad, nombres personales ni mensajes promocionales redundantes.
-16. Los estilos locales de una página no deben alterar la tipografía ni la presentación de la cabecera compartida.
-17. Toda página funcional debe usar el favicon oficial local de la Academia; la cabecera compartida puede completar las relaciones estándar cuando la página todavía no las declara.
-18. No deben usarse favicons externos de terceros salvo una excepción explícitamente documentada.
-19. El espaciado propio del contenido debe aplicarse a un contenedor interior, no al `<body>`, para que el padding local no desplace ni estreche la cabecera global.
-20. Una pantalla existente puede adoptar la cabecera global mediante `cabeceraGlobal: true` en el modelo central cuando ya carga `navegacion.js`.
-21. La retirada automática de navegación heredada requiere `limpiarNavegacionLegada: true`; no debe aplicarse indiscriminadamente a todas las páginas.
-22. La limpieza legada solo elimina equivalentes de navegación global. Acciones funcionales propias —por ejemplo, `Gestión de Misiones` desde Mi Camino— permanecen visibles.
-23. La cabecera contiene un único host canónico del Panel. Los hosts locales heredados no son reutilizados ni trasladados.
-24. El Panel canónico debe mantener el mismo CSS, menú y comportamiento independientemente del módulo que se encuentre debajo.
-25. Una reinicialización heredada tardía no puede desmontar el Panel canónico.
+1. Academia permanece visible como acceso estable.
+2. Volver aparece junto a Academia cuando corresponde.
+3. Volver no ocupa bloque/fila independiente.
+4. Pantalla actual permanece al centro.
+5. Panel de Usuario permanece a la derecha.
+6. `Volver` real sigue gobernado por navegación contextual; fallback es seguridad.
+7. En móvil la cabecera puede compactar etiquetas e iconos.
+8. No implementar copias locales salvo piloto explícito.
+9. Nuevas pantallas consumen componente/CSS compartidos.
+10. Migraciones existentes deben ser controladas y sin reescrituras funcionales innecesarias.
+11. Outfit se carga desde recurso compartido.
+12. Nombre de pantalla: 14px/800/1.2; 13px hasta 900px; 12px hasta 480px.
+13. Icono de pantalla: 16px, no se contrae y puede ocultarse en pantalla pequeña.
+14. Nombre en una línea con ellipsis.
+15. `data-page-title` usa nombre funcional corto y no identidad personal.
+16. CSS local no altera cabecera compartida.
+17. Página funcional usa favicon oficial local.
+18. No favicons externos salvo excepción documentada.
+19. Padding de contenido se aplica a contenedor interior, no al `<body>`.
+20. Adopción declarativa mediante `cabeceraGlobal: true` cuando ya carga `navegacion.js`.
+21. Limpieza heredada requiere `limpiarNavegacionLegada: true`.
+22. Limpieza no elimina acciones propias del módulo.
+23. Cabecera contiene un único host canónico del Panel.
+24. Panel conserva mismo CSS/menú/comportamiento en cualquier módulo.
+25. Reinicialización heredada no desmonta Panel canónico.
 
-### 8.3 Alcance del estándar
+### 8.3 Alcance
 
-Este estándar se aplica a las **pantallas funcionales internas de la Academia**.
+Aplica a pantallas funcionales internas.
 
-Quedan fuera, salvo decisión posterior específica:
+Quedan fuera salvo decisión específica:
 
-- `login.html` y otras pantallas previas a autenticación;
-- archivos históricos;
+- `login.html` y pantallas preautenticación;
+- históricos;
 - páginas técnicas de prueba;
-- utilidades que no formen parte de la experiencia de navegación del producto.
+- utilidades fuera de la experiencia de navegación.
 
 ### 8.4 Adopción validada y ampliada
 
-El patrón compartido tiene como referencias iniciales las pantallas principales aprobadas en P2:
+Referencias iniciales P2:
 
 - Mi Universo;
 - Mi Camino;
@@ -412,41 +401,34 @@ El patrón compartido tiene como referencias iniciales las pantallas principales
 - Detectives;
 - Mi Rincón de Lectura.
 
-La arquitectura v1.7 amplía de forma declarativa o compatible la adopción a:
+La arquitectura v1.7 amplió adopción a Biblioteca, Escritura, Creciendo por Dentro, auxiliares de Detectives, Calendarios y Adicionales.
 
-- Biblioteca Encantada;
-- Mi Rincón de Escritura;
-- Creciendo por Dentro;
-- Historial, Detalle y Trabajo realizado de Detectives;
-- Mi Calendario y Calendarios del Colegio;
-- Adicionales;
-- Música;
-- Juegos;
-- Lecturas y sus lecturas individuales registradas.
+v1.8 activó `6.º de Primaria` dentro de `Mis Cursos`.
 
-La versión v1.8 activa además `6.º de Primaria` como destino navegable dentro de `Mis Cursos`. Su disponibilidad en navegación no significa que todas las materias estén terminadas: el portal puede estar disponible mientras el contenido académico continúa en construcción activa.
+v1.9 consolidó continuidad de Persona Activa y pila histórica de retorno.
 
-La versión v1.9 consolida como parte del contrato transversal la continuidad de Persona Activa y la pila histórica de retorno, validadas en el recorrido Gestión de Misiones ↔ recursos académicos ↔ resultado histórico.
+v1.10 incorpora Bitácora de Acompañamiento y formaliza la representación directa de nodos principales sin hijos.
 
-La inclusión en este alcance significa **adopción arquitectónica**. El cierre definitivo de una familia de pantallas continúa condicionado a las pruebas visuales y funcionales correspondientes.
+La inclusión significa adopción arquitectónica; el cierre de cada familia depende de sus pruebas aplicables.
 
 ---
 
 ## 9. Independencia de las páginas
 
-Los HTML y módulos deben consumir la navegación compartida cuando corresponda.
+Los HTML y módulos consumen navegación compartida cuando corresponde.
 
 No deben:
 
-- reconstruir el árbol completo localmente;
-- introducir rutas alternativas sin necesidad funcional;
+- reconstruir árbol completo localmente;
+- introducir rutas alternativas sin necesidad;
 - decidir permisos por nombre de Persona;
 - crear estructuras paralelas a `NAVEGACION_ACADEMIA`;
-- duplicar localmente la cabecera global;
-- mover o reubicar mediante JavaScript una instancia local del Panel hacia la cabecera;
-- aplicar estilos locales al Panel canónico.
+- duplicar cabecera global;
+- mover un Panel local hacia la cabecera;
+- aplicar estilos locales al Panel canónico;
+- crear niveles de menú artificiales para nodos directos.
 
-Se admiten accesos locales complementarios cuando pertenecen específicamente a una pantalla y no sustituyen el modelo global.
+Se admiten accesos locales complementarios cuando pertenecen a una pantalla y no sustituyen el modelo global.
 
 ---
 
@@ -455,35 +437,33 @@ Se admiten accesos locales complementarios cuando pertenecen específicamente a 
 La navegación se considera coherente cuando:
 
 - el menú carga desde el modelo central;
-- los nodos visibles corresponden al nivel efectivo;
-- las ubicaciones auxiliares no aparecen como opciones nuevas del menú;
-- Persona Activa no cambia la identidad de la Persona conectada;
-- Persona Activa se conserva al navegar entre recursos internos y al regresar, salvo cambio explícito del usuario;
-- el indicador contextual solo aparece cuando corresponde;
+- un nodo principal con hijos se renderiza como grupo desplegable;
+- un nodo principal sin hijos se renderiza como enlace directo;
+- no se crea un hijo artificial para abrir un nodo directo;
+- nodos visibles corresponden al nivel efectivo;
+- ubicaciones auxiliares no aparecen como nuevas opciones;
+- Persona Activa no cambia identidad del conectado;
+- Persona Activa se conserva al navegar y regresar;
+- indicador contextual aparece solo cuando corresponde;
 - Mi Calendario usa `calendarios/`;
-- las rutas funcionan localmente y en GitHub Pages;
-- una URL canónica de la propia Academia se resuelve como navegación interna en el entorno actual cuando corresponde;
-- la navegación interna no abre una nueva pestaña cuando ello rompería el contexto de Persona Activa o el historial compartido;
-- Volver recupera el origen real cuando existe;
-- una secuencia A → B → C retrocede C → B → A sin rebote hacia C;
-- las páginas siguen funcionando con acceso directo mediante una ruta alternativa segura;
-- Academia permanece accesible desde la cabecera;
-- Volver comparte el bloque izquierdo con Academia cuando corresponde;
-- la pantalla actual permanece identificada;
-- existe exactamente **un Panel de Usuario visible** asociado a la cabecera global;
-- no existe un segundo host local activo del Panel;
-- el Panel mantiene el mismo diseño con menú cerrado y abierto independientemente de la página;
-- una inicialización heredada tardía no destruye ni sustituye el Panel canónico;
-- la cabecera no produce desbordamientos relevantes en móvil;
-- la cabecera queda fuera del padding propio del contenido;
-- no existe una segunda cabecera global reconstruida localmente;
-- la tipografía del centro es idéntica aunque el contenido de la página utilice otra fuente;
-- no existen acciones globales `Volver` duplicadas;
-- la adopción declarativa solo se activa en nodos expresamente marcados;
-- la limpieza de navegación heredada no elimina acciones propias del módulo;
-- el favicon oficial local aparece y su ruta resuelve correctamente;
-- no quedan favicons externos en el conjunto adoptado;
-- y 5.º de Primaria permanece sin regresiones respecto a la referencia aprobada.
+- rutas funcionan localmente y en GitHub Pages;
+- URLs canónicas de Academia se resuelven como internas cuando corresponde;
+- navegación interna no rompe contexto por aperturas innecesarias;
+- Volver recupera origen real;
+- A → B → C retrocede C → B → A;
+- acceso directo usa fallback seguro;
+- Academia permanece accesible;
+- existe exactamente un Panel visible asociado a cabecera global;
+- no existe segundo host local activo;
+- reinicialización tardía no sustituye Panel;
+- cabecera no desborda en móvil;
+- cabecera queda fuera del padding del contenido;
+- no existe segunda cabecera local;
+- no existen acciones globales Volver duplicadas;
+- adopción declarativa solo se activa en nodos marcados;
+- limpieza legada conserva acciones propias;
+- favicon local resuelve;
+- y el conjunto certificado no presenta regresiones relevantes.
 
 ---
 
@@ -492,27 +472,42 @@ La navegación se considera coherente cuando:
 | ID | Decisión |
 |---|---|
 | NAV-001 | El árbol compartido vive en `compartido/modelos/navegacion.js`. |
-| NAV-002 | Nombre/contenido principal navega; flecha expande o comprime. |
+| NAV-002 | En nodos con hijos, nombre/contenido principal navega y flecha expande/comprime cuando existe página propia. |
 | NAV-003 | Persona conectada y Persona Activa permanecen separadas. |
 | NAV-004 | Si Persona Activa es distinta, se muestra `🎯 Viendo a: <nombre>`. |
 | NAV-005 | Mi Calendario utiliza `calendarios/` y no `calendarioSlug`. |
 | NAV-006 | La visibilidad por nivel usa `consulta < gestion < administracion`. |
-| NAV-007 | Un nodo sin `nivelMinimo` es visible desde Consulta. |
-| NAV-008 | Volver prioriza el origen real y usa una ruta alternativa solo como fallback. |
-| NAV-009 | La cabecera estándar agrupa `Academia + Volver` en el bloque izquierdo, mantiene la pantalla actual al centro y el Panel de Usuario a la derecha. |
-| NAV-010 | Las pantallas funcionales internas deben reutilizar la cabecera global compartida y no reconstruirla localmente. |
-| NAV-011 | La cabecera carga y gobierna su propia tipografía; la pantalla no es responsable de cargar Outfit. |
-| NAV-012 | Las páginas funcionales usan el favicon oficial local de Academia salvo excepción documentada. |
-| NAV-013 | El padding local de cada pantalla se aplica al contenedor de contenido y no al `<body>`, para no afectar a la cabecera global. |
-| NAV-014 | El modelo central puede declarar `volver`, `cabeceraGlobal` y `limpiarNavegacionLegada` para migrar pantallas existentes sin reescrituras innecesarias. |
-| NAV-015 | `navegacion.js` puede cargar la cabecera global automáticamente únicamente cuando el nodo actual declara `cabeceraGlobal: true`. |
-| NAV-016 | La limpieza heredada es opt-in y conserva las acciones funcionales propias de cada módulo. |
-| NAV-017 | La cabecera global crea y posee el único host canónico del Panel de Usuario; no reutiliza ni traslada hosts locales. |
-| NAV-018 | Los hosts locales heredados del Panel se neutralizan de forma compatible antes de iniciar el Panel canónico. |
-| NAV-019 | `panel-usuario.js` debe tolerar inicializaciones repetidas; una llamada sin destino válido no puede desmontar el Panel activo. |
-| NAV-020 | Las ubicaciones auxiliares de cabecera se mantienen fuera de `NAVEGACION_ACADEMIA` para no alterar el menú visible. |
-| NAV-021 | La cabecera garantiza la carga de sus estilos y de `panel-usuario.css` antes de renderizar la composición global. |
-| NAV-022 | `6.º de Primaria` es un destino navegable activo en `Mis Cursos`; la disponibilidad del portal es compatible con que sus materias continúen en construcción progresiva. |
-| NAV-023 | La navegación interna conserva Persona Activa hasta que el usuario la cambie explícitamente o finalice la sesión. |
-| NAV-024 | `Volver` utiliza un historial lógico que elimina la rama abandonada al retroceder; A → B → C debe regresar C → B → A. |
-| NAV-025 | Los destinos canónicos de la propia Academia se tratan como navegación interna y se resuelven en el entorno actual, evitando aperturas que rompan el contexto compartido. |
+| NAV-007 | Un nodo sin `nivelMinimo` es visible desde Consulta; esto no sustituye autorización real. |
+| NAV-008 | Volver prioriza el origen real y usa ruta alternativa solo como fallback. |
+| NAV-009 | La cabecera agrupa `Academia + Volver` a la izquierda, pantalla actual al centro y Panel a la derecha. |
+| NAV-010 | Las pantallas funcionales internas reutilizan cabecera global. |
+| NAV-011 | La cabecera gobierna su propia tipografía. |
+| NAV-012 | Las páginas funcionales usan favicon oficial local salvo excepción. |
+| NAV-013 | El padding local se aplica al contenido, no al `<body>`. |
+| NAV-014 | El modelo puede declarar `volver`, `cabeceraGlobal` y `limpiarNavegacionLegada`. |
+| NAV-015 | `navegacion.js` carga cabecera automáticamente solo con `cabeceraGlobal: true`. |
+| NAV-016 | La limpieza heredada es opt-in y conserva acciones propias. |
+| NAV-017 | La cabecera crea y posee el único host canónico del Panel. |
+| NAV-018 | Hosts locales heredados se neutralizan antes de iniciar Panel canónico. |
+| NAV-019 | `panel-usuario.js` tolera inicializaciones repetidas. |
+| NAV-020 | Ubicaciones auxiliares se mantienen fuera de `NAVEGACION_ACADEMIA`. |
+| NAV-021 | Cabecera garantiza carga de sus estilos y `panel-usuario.css`. |
+| NAV-022 | `6.º de Primaria` es destino navegable activo en `Mis Cursos`. |
+| NAV-023 | Navegación interna conserva Persona Activa hasta cambio explícito o fin de sesión. |
+| NAV-024 | `Volver` utiliza historial lógico que elimina rama abandonada al retroceder. |
+| NAV-025 | Destinos canónicos de Academia se tratan como navegación interna y se resuelven en el entorno actual. |
+| NAV-026 | Un nodo principal sin hijos se representa como enlace directo; un nodo principal con hijos se representa como grupo desplegable. |
+
+---
+
+## DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | ✅ Activo |
+| **Versión activa** | 1.10 |
+| **Última sincronización** | 06/09/2026 |
+| **Fuente técnica central** | `compartido/modelos/navegacion.js` |
+| **Representación humana del árbol** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
+| **Implementación del Panel** | `compartido/js/panel-usuario.js` |
+| **Regla nueva consolidada** | Con hijos → desplegable; sin hijos → enlace directo |
