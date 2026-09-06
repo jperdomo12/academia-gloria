@@ -339,6 +339,8 @@ compartido/firebase/FireStore Rules.txt
 
 > **Modificar este archivo en GitHub no despliega automáticamente las reglas en Firebase.** Antes de una prueba funcional remota que escriba/lea esta nueva colección, las Rules vigentes deben estar desplegadas en el proyecto Firebase correspondiente.
 
+**Estado operativo de esta candidata:** el Product Owner confirmó el 06/09/2026 que las Rules canónicas de la Bitácora fueron publicadas en Firebase para permitir la validación funcional V1.
+
 ---
 
 ## 💬 9. Respuesta estructurada, no chat
@@ -572,7 +574,7 @@ Antes de declarar la V1 implementada y cerrada:
 - [ ] fallback legacy no reabre permisos sobre la colección;
 - [ ] no se generan Misiones, evidencias ni Recompensas;
 - [ ] responsive básico funciona en móvil/tablet/escritorio;
-- [ ] Rules canónicas desplegadas antes de validar la persistencia remota;
+- [x] Rules canónicas desplegadas antes de validar la persistencia remota;
 - [ ] diff final coincide con el alcance aprobado.
 
 ---
@@ -630,7 +632,7 @@ Cuando la V1 sea validada y fusionada:
 
 | Campo | Valor |
 |---|---|
-| **Estado funcional** | ✅ Diseño aprobado · implementación V1 en rama · pendiente de prueba del Product Owner |
+| **Estado funcional** | ✅ Diseño aprobado · implementación V1 en rama · Rules publicadas · pendiente de prueba del Product Owner |
 | **Versión candidata** | 1.0-rc2 |
 | **Propietario funcional** | Colaboración y Acompañamiento |
 | **Regla central** | Compartir información útil con trazabilidad y visibilidad controlada, sin convertir la Academia en chat ni vigilancia. |
