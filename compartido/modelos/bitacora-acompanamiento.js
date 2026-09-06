@@ -19,7 +19,7 @@ export const TIPOS_BITACORA = Object.freeze([
 ]);
 
 export const DESTINOS_BITACORA = Object.freeze([
-  Object.freeze({ id: "general", icono: "🌍", etiqueta: "Público / general" }),
+  Object.freeze({ id: "general", icono: "🌍", etiqueta: "General / Todos los relacionados" }),
   Object.freeze({ id: "alumno", icono: "🎓", etiqueta: "Alumno" }),
   Object.freeze({ id: "familia", icono: "🏠", etiqueta: "Familia / Padres" }),
   Object.freeze({ id: "profesionales", icono: "👥", etiqueta: "Profesionales" }),
@@ -58,6 +58,10 @@ export const VISIBILIDADES_BITACORA = Object.freeze([
 const IDS_TIPO = new Set(TIPOS_BITACORA.map(item => item.id));
 const IDS_DESTINO = new Set(DESTINOS_BITACORA.map(item => item.id));
 const IDS_VISIBILIDAD = new Set(VISIBILIDADES_BITACORA.map(item => item.id));
+const VISIBILIDADES_RESPONDIBLES = new Set([
+  "adultos-profesionales",
+  "todos-relacionados"
+]);
 
 function texto(valor = "", maximo = 0) {
   const normalizado = String(valor ?? "").replace(/\r\n/g, "\n").trim();
@@ -83,6 +87,7 @@ export function crearEntradaBitacora(datos = {}) {
   const tipo = texto(datos.tipo).toLowerCase();
   const destino = texto(datos.destino).toLowerCase();
   const visibilidad = texto(datos.visibilidad).toLowerCase();
+  const requiereRespuesta = Boolean(datos.requiereRespuesta);
 
   if (!titulo) throw new Error("Escribe un título para la entrada.");
   if (!mensaje) throw new Error("Escribe el mensaje de la entrada.");
@@ -90,6 +95,12 @@ export function crearEntradaBitacora(datos = {}) {
   if (!IDS_DESTINO.has(destino)) throw new Error("Selecciona un destino válido.");
   if (!IDS_VISIBILIDAD.has(visibilidad)) {
     throw new Error("Selecciona una visibilidad válida.");
+  }
+
+  if (requiereRespuesta && !VISIBILIDADES_RESPONDIBLES.has(visibilidad)) {
+    throw new Error(
+      "Para solicitar respuesta, comparte la entrada con Familia y profesionales o con todos los relacionados."
+    );
   }
 
   const visibilidadDef = obtenerVisibilidadBitacora(visibilidad);
@@ -109,7 +120,7 @@ export function crearEntradaBitacora(datos = {}) {
       "la visibilidad"
     ),
     visibleParaPersonaActiva: visibilidadDef.visibleParaPersonaActiva === true,
-    requiereRespuesta: Boolean(datos.requiereRespuesta),
+    requiereRespuesta,
     estado: "abierta"
   };
 }
