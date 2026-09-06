@@ -126,15 +126,6 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
     ]
   },
   {
-    id: "bitacora-acompanamiento",
-    titulo: "Bitácora de Acompañamiento",
-    icono: "🤝",
-    ruta: "bitacora/",
-    volver: "",
-    cabeceraGlobal: true,
-    limpiarNavegacionLegada: true
-  },
-  {
     id: "administracion",
     titulo: "Administración",
     icono: "🛡️",
@@ -182,6 +173,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         limpiarNavegacionLegada: true
       }
     ]
+  },
+  {
+    id: "bitacora-acompanamiento",
+    titulo: "Bitácora de Acompañamiento",
+    icono: "🤝",
+    ruta: "bitacora/",
+    volver: "",
+    cabeceraGlobal: true,
+    limpiarNavegacionLegada: true
   }
 ]);
 
