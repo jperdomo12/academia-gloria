@@ -87,7 +87,7 @@ export function crearEntradaBitacora(datos = {}) {
   const tipo = texto(datos.tipo).toLowerCase();
   const destino = texto(datos.destino).toLowerCase();
   const visibilidad = texto(datos.visibilidad).toLowerCase();
-  const requiereRespuesta = Boolean(datos.requiereRespuesta);
+  const requiereRespuesta = datos.requiereRespuesta === true;
 
   if (!titulo) throw new Error("Escribe un título para la entrada.");
   if (!mensaje) throw new Error("Escribe el mensaje de la entrada.");
