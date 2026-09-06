@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` |
-| **Versión** | 1.0-rc2 |
+| **Versión** | 1.0-rc3 |
 | **Estado** | Candidato · V1 construida en rama y pendiente de validación del Product Owner |
 | **Fecha** | 06/09/2026 |
 | **Última actualización** | 06/09/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0-rc3 | 06/09/2026 | Product Owner + AI Collaborator | Alinea la especificación con la posición de menú aprobada: `Bitácora de Acompañamiento` queda como penúltima opción principal, inmediatamente después de `Explorar más` y antes de `Descubre la Academia`. |
 | 1.0-rc2 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el contrato con el endurecimiento previo a prueba: aclara que una respuesta hereda exactamente la visibilidad de su entrada, que una respuesta incluida en una entrada visible al alumno también será visible para él, y mantiene la advertencia explícita antes de publicar/contestar. |
 | 1.0-rc1 | 06/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria. Materializa el Dominio de Colaboración como Bitácora de Acompañamiento V1: opción de menú, Persona Activa, entradas estructuradas, destino y visibilidad separados, opción `Otros` en catálogos cerrados, una única respuesta, autoría trazable, permisos específicos y fronteras respecto a chat, Misiones, evidencias, IA y Análisis Educativo. |
 
@@ -387,6 +388,8 @@ No se implementa todavía un workflow de reapertura, archivo o cierre administra
 
 La Bitácora es un **nodo principal del menú compartido**, no parte de `Mi espacio personal`.
 
+Por decisión de producto, aparece como **penúltima opción principal**, inmediatamente después de `Explorar más` y antes de `Descubre la Academia`.
+
 Ubicación conceptual:
 
 ```text
@@ -394,9 +397,9 @@ Academia
 │
 ├── Mi Universo
 ├── Mis Cursos
-├── 🤝 Bitácora de Acompañamiento
 ├── Administración
 ├── Explorar más
+├── 🤝 Bitácora de Acompañamiento
 └── Descubre la Academia
 ```
 
@@ -405,7 +408,8 @@ Motivo:
 - es un espacio colaborativo multi-actor;
 - depende de Persona Activa;
 - no es un acceso personal privado del USER autenticado;
-- debe estar disponible como capacidad transversal del ecosistema.
+- debe estar disponible como capacidad transversal del ecosistema;
+- su ubicación cerca del final mantiene visible la colaboración sin interrumpir los recorridos académicos principales.
 
 La pantalla adopta la cabecera global y el contrato vigente de `Volver`.
 
@@ -558,6 +562,7 @@ Antes de declarar la V1 implementada y cerrada:
 
 - [ ] nueva ruta carga sin errores de sintaxis/imports;
 - [ ] opción de menú resuelve correctamente la ruta;
+- [ ] Bitácora aparece como penúltima opción principal, antes de `Descubre la Academia`;
 - [ ] cabecera global se carga una sola vez;
 - [ ] Persona Activa se conserva;
 - [ ] filtros no amplían visibilidad;
@@ -600,7 +605,7 @@ Estas extensiones requieren nueva decisión; no se infieren de V1.
 | ID | Decisión | Estado |
 |---|---|---|
 | BIT-001 | La capacidad se denomina `Bitácora de Acompañamiento`. | Aprobada |
-| BIT-002 | La Bitácora es opción principal del menú compartido y opera sobre Persona Activa. | Aprobada |
+| BIT-002 | La Bitácora es opción principal del menú compartido, aparece como penúltima opción inmediatamente antes de `Descubre la Academia` y opera sobre Persona Activa. | Aprobada |
 | BIT-003 | Destino y visibilidad son conceptos separados. | Aprobada |
 | BIT-004 | Cada entrada admite como máximo una respuesta estructurada; V1 no es chat. | Aprobada |
 | BIT-005 | Las entradas publicadas son inmutables y no eliminables desde la interfaz V1. | Aprobada |
@@ -633,6 +638,6 @@ Cuando la V1 sea validada y fusionada:
 | Campo | Valor |
 |---|---|
 | **Estado funcional** | ✅ Diseño aprobado · implementación V1 en rama · Rules publicadas · pendiente de prueba del Product Owner |
-| **Versión candidata** | 1.0-rc2 |
+| **Versión candidata** | 1.0-rc3 |
 | **Propietario funcional** | Colaboración y Acompañamiento |
 | **Regla central** | Compartir información útil con trazabilidad y visibilidad controlada, sin convertir la Academia en chat ni vigilancia. |
