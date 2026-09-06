@@ -31,6 +31,11 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+const VISIBILIDADES_RESPONDIBLES = new Set([
+  "adultos-profesionales",
+  "todos-relacionados"
+]);
+
 function texto(valor = "", alternativo = "") {
   const resultado = String(valor ?? "").trim();
   return resultado || alternativo;
@@ -177,13 +182,20 @@ export function observarEntradasBitacora(callback, onError = console.error) {
 
       const consultas = consultasLectura(contexto);
       const resultados = consultas.map(() => []);
+      const inicializadas = consultas.map(() => false);
 
       cancelarSnapshots = consultas.map((consulta, indice) =>
         onSnapshot(
           consulta,
           snapshot => {
             resultados[indice] = documentosDesdeSnapshot(snapshot);
-            callback(combinarResultados(resultados));
+            inicializadas[indice] = true;
+
+            // Evita mostrar una lista parcial mientras una segunda consulta
+            // (por ejemplo, entradas privadas propias) todavía no respondió.
+            if (inicializadas.every(Boolean)) {
+              callback(combinarResultados(resultados));
+            }
           },
           onError
         )
@@ -219,6 +231,18 @@ export async function responderEntradaBitacora(entradaId, respuesta = "") {
   }
 
   const actual = snapshot.data();
+
+  if (actual.personaId !== contexto.personaActiva.personaId) {
+    throw new Error("La entrada no corresponde a la Persona Activa actual.");
+  }
+
+  if (
+    !esAdministradorContexto(contexto) &&
+    !VISIBILIDADES_RESPONDIBLES.has(texto(actual.visibilidad))
+  ) {
+    throw new Error("Esta entrada no está compartida con otras personas para responderla.");
+  }
+
   if (actual.createdBy === contexto.usuario.userId) {
     throw new Error("La respuesta debe registrarla otra persona autorizada.");
   }
