@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v1.9
+ * Modelo central de navegación · v2.0
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -173,6 +173,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         limpiarNavegacionLegada: true
       }
     ]
+  },
+  {
+    id: "bitacora-acompanamiento",
+    titulo: "Bitácora de Acompañamiento",
+    icono: "🤝",
+    ruta: "bitacora/",
+    volver: "",
+    cabeceraGlobal: true,
+    limpiarNavegacionLegada: true
   }
 ]);
 

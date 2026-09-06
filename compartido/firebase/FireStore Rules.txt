@@ -1,7 +1,7 @@
 rules_version = '2';
 
 // Academia Gloria Valentina
-// Identidad Multi-Persona · Fase 1.8
+// Identidad Multi-Persona · Fase 1.9
 // Login funcional separado del UID Firebase
 // Administración de Usuarios + acceso funcional por Persona Activa · Spark / sin Cloud Functions
 
@@ -142,7 +142,8 @@ service cloud.firestore {
     //   para resolver personaId -> userId.
     // - El acceso relacionado se abre únicamente a las subcolecciones
     //   funcionales declaradas explícitamente debajo.
-    // - Escritura relacionada exige acceso efectivo de gestión.
+    // - Escritura relacionada exige acceso efectivo de gestión salvo contrato
+    //   específico documentado, como la Bitácora de Acompañamiento.
     // - El resto de subcolecciones continúa restringido al propietario/admin.
     match /usuarios/{userId} {
       allow read: if esPropietario(userId)
@@ -198,6 +199,201 @@ service cloud.firestore {
         allow delete: if esPropietario(userId)
           || esAdministrador()
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
+      }
+
+      // BITÁCORA DE ACOMPAÑAMIENTO · V1
+      //
+      // Contrato específico de colaboración:
+      // - el alumno/propietario solo lee entradas expresamente compartidas con él;
+      // - una relación activa con nivel efectivo de consulta puede leer las
+      //   entradas para adultos/profesionales y sus propias entradas privadas;
+      // - familia/profesionales relacionados pueden crear únicamente entradas
+      //   cuya autoría coincide con el USER autenticado;
+      // - una entrada publicada es inmutable en V1 salvo por una única respuesta
+      //   estructurada registrada por otra persona autorizada;
+      // - no hay delete en V1.
+      match /bitacoraAcompanamiento/{entradaId} {
+        allow read: if esAdministrador()
+          || (
+            esPropietario(userId)
+            && resource.data.visibleParaPersonaActiva == true
+          )
+          || (
+            puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+            && (
+              resource.data.createdBy == request.auth.uid
+              || resource.data.visibilidad == "adultos-profesionales"
+              || resource.data.visibilidad == "todos-relacionados"
+            )
+          );
+
+        allow create: if (
+            esAdministrador()
+            || puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+          )
+          && request.resource.data.keys().hasOnly([
+            "schemaVersion",
+            "tipo",
+            "tipoOtros",
+            "titulo",
+            "mensaje",
+            "destino",
+            "destinoOtros",
+            "visibilidad",
+            "visibilidadOtros",
+            "visibleParaPersonaActiva",
+            "requiereRespuesta",
+            "estado",
+            "personaId",
+            "createdAt",
+            "createdBy",
+            "createdByPersonaId",
+            "createdByNombre",
+            "createdByRol",
+            "createdByRelacion",
+            "updatedAt",
+            "updatedBy",
+            "updatedByNombre",
+            "respuestaTexto",
+            "respuestaCreatedAt",
+            "respuestaCreatedBy",
+            "respuestaCreatedByPersonaId",
+            "respuestaCreatedByNombre",
+            "respuestaCreatedByRol"
+          ])
+          && request.resource.data.schemaVersion == 1
+          && request.resource.data.personaId == personaIdUsuarioObjetivo(userId)
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.createdByPersonaId == personaIdUsuarioActual()
+          && request.resource.data.createdByNombre is string
+          && request.resource.data.createdByNombre.size() > 0
+          && request.resource.data.createdByNombre.size() <= 180
+          && request.resource.data.createdByRol is string
+          && request.resource.data.createdByRol.size() <= 120
+          && request.resource.data.createdByRelacion is string
+          && request.resource.data.createdByRelacion.size() <= 120
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time
+          && request.resource.data.updatedBy == request.auth.uid
+          && request.resource.data.updatedByNombre == request.resource.data.createdByNombre
+          && request.resource.data.titulo is string
+          && request.resource.data.titulo.size() > 0
+          && request.resource.data.titulo.size() <= 180
+          && request.resource.data.mensaje is string
+          && request.resource.data.mensaje.size() > 0
+          && request.resource.data.mensaje.size() <= 6000
+          && request.resource.data.tipo in [
+            "observacion",
+            "recomendacion",
+            "duda",
+            "sugerencia",
+            "acuerdo",
+            "seguimiento",
+            "mensaje",
+            "asunto-revisar",
+            "otros"
+          ]
+          && request.resource.data.tipoOtros is string
+          && request.resource.data.tipoOtros.size() <= 180
+          && (
+            (request.resource.data.tipo == "otros"
+              && request.resource.data.tipoOtros.size() > 0)
+            || (request.resource.data.tipo != "otros"
+              && request.resource.data.tipoOtros == "")
+          )
+          && request.resource.data.destino in [
+            "general",
+            "alumno",
+            "familia",
+            "profesionales",
+            "familia-profesionales",
+            "otros"
+          ]
+          && request.resource.data.destinoOtros is string
+          && request.resource.data.destinoOtros.size() <= 180
+          && (
+            (request.resource.data.destino == "otros"
+              && request.resource.data.destinoOtros.size() > 0)
+            || (request.resource.data.destino != "otros"
+              && request.resource.data.destinoOtros == "")
+          )
+          && request.resource.data.visibilidad in [
+            "solo-autor",
+            "adultos-profesionales",
+            "todos-relacionados",
+            "otros"
+          ]
+          && request.resource.data.visibilidadOtros is string
+          && request.resource.data.visibilidadOtros.size() <= 180
+          && (
+            (request.resource.data.visibilidad == "otros"
+              && request.resource.data.visibilidadOtros.size() > 0)
+            || (request.resource.data.visibilidad != "otros"
+              && request.resource.data.visibilidadOtros == "")
+          )
+          && request.resource.data.visibleParaPersonaActiva
+            == (request.resource.data.visibilidad == "todos-relacionados")
+          && request.resource.data.requiereRespuesta is bool
+          && (
+            request.resource.data.requiereRespuesta == false
+            || request.resource.data.visibilidad in [
+              "adultos-profesionales",
+              "todos-relacionados"
+            ]
+          )
+          && request.resource.data.estado == "abierta"
+          && request.resource.data.respuestaTexto == ""
+          && request.resource.data.respuestaCreatedAt == null
+          && request.resource.data.respuestaCreatedBy == ""
+          && request.resource.data.respuestaCreatedByPersonaId == ""
+          && request.resource.data.respuestaCreatedByNombre == ""
+          && request.resource.data.respuestaCreatedByRol == "";
+
+        allow update: if (
+            esAdministrador()
+            || (
+              puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+              && resource.data.visibilidad in [
+                "adultos-profesionales",
+                "todos-relacionados"
+              ]
+            )
+          )
+          && resource.data.requiereRespuesta == true
+          && resource.data.respuestaTexto == ""
+          && resource.data.createdBy != request.auth.uid
+          && request.resource.data.personaId == resource.data.personaId
+          && request.resource.data.createdBy == resource.data.createdBy
+          && request.resource.data.respuestaTexto is string
+          && request.resource.data.respuestaTexto.size() > 0
+          && request.resource.data.respuestaTexto.size() <= 4000
+          && request.resource.data.respuestaCreatedBy == request.auth.uid
+          && request.resource.data.respuestaCreatedByPersonaId == personaIdUsuarioActual()
+          && request.resource.data.respuestaCreatedByNombre is string
+          && request.resource.data.respuestaCreatedByNombre.size() > 0
+          && request.resource.data.respuestaCreatedByNombre.size() <= 180
+          && request.resource.data.respuestaCreatedByRol is string
+          && request.resource.data.respuestaCreatedByRol.size() <= 120
+          && request.resource.data.respuestaCreatedAt == request.time
+          && request.resource.data.estado == "atendida"
+          && request.resource.data.updatedAt == request.time
+          && request.resource.data.updatedBy == request.auth.uid
+          && request.resource.data.updatedByNombre
+            == request.resource.data.respuestaCreatedByNombre
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            "respuestaTexto",
+            "respuestaCreatedAt",
+            "respuestaCreatedBy",
+            "respuestaCreatedByPersonaId",
+            "respuestaCreatedByNombre",
+            "respuestaCreatedByRol",
+            "estado",
+            "updatedAt",
+            "updatedBy",
+            "updatedByNombre"
+          ]);
+
+        allow delete: if false;
       }
 
       match /tareas/{tareaId} {
@@ -326,11 +522,12 @@ service cloud.firestore {
       // Antes este fallback era recursivo ({documento=**}); por lo tanto también
       // coincidía con reconocimientos/{id} y, como los allow se acumulan,
       // devolvía al propietario permiso genérico de escritura sobre Recompensas.
-      // Se limita a una sola subcolección/documento y se excluye explícitamente
-      // Reconocimientos. Esto conserva colecciones legacy de primer nivel como
-      // biblioteca/bibliotecaAudios sin crear una puerta recursiva paralela.
+      // Se limita a una sola subcolección/documento y se excluyen explícitamente
+      // las colecciones con contrato de seguridad propio.
       match /{coleccionLegacy}/{documentoLegacy} {
-        allow read, write: if coleccionLegacy != "reconocimientos"
+        allow read, write: if !(
+            coleccionLegacy in ["reconocimientos", "bitacoraAcompanamiento"]
+          )
           && (esPropietario(userId) || esAdministrador());
       }
     }

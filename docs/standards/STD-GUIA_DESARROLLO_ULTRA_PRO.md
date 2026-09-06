@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` |
-| **Versión** | 2.2 Cloud |
+| **Versión** | 2.3 Cloud |
 | **Estado** | Activo |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Calidad de Desarrollo y Experiencia |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Reglas transversales de desarrollo, reutilización, UX, accesibilidad, navegación, datos y calidad antes de publicar |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.3 Cloud | 06/09/2026 | Product Owner + AI Collaborator | Formaliza la regla transversal aprobada por Product Owner: los catálogos cerrados de clasificación que puedan recibir casos no previstos deben incluir `Otros`, acompañado de especificación cuando sea necesario y sin ampliar permisos de forma ambigua. |
 | 2.2 Cloud | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza la guía con el núcleo real: Persona Activa, navegación/retorno, favicon oficial, reutilización antes de crear, Vista previa sin escritura, histórico de solo lectura, evidencia de nuevos Temas académicos y Quality Gate. Formaliza como referencia general de la Academia la rejilla de tarjetas `3 escritorio → 2 tablet/móvil → 1 solo móvil muy estrecho`, validada inicialmente en los portales de 6.º. |
 | 2.1 Cloud | 29/08/2026 | Product Owner + AI Collaborator | Formaliza como regla transversal que los fallos visibles expliquen la causa cuando sea conocida y segura de mostrar, e incorpora la comprobación correspondiente antes de publicar. |
 | 2.0 Cloud | — | Equipo del proyecto | Base activa previa de la guía; la fuente original no declaraba fecha concreta. |
@@ -232,6 +233,24 @@ Reglas:
 - una excepción es válida cuando la semántica o densidad del contenido requiere otro patrón, pero debe ser deliberada y no accidental;
 - no utilizar esta regla para formularios, textos largos o componentes que no sean comparables a tarjetas de catálogo/navegación.
 
+### 7.4 Catálogos cerrados y opción `Otros`
+
+Cuando una interfaz utilice un **catálogo cerrado de clasificación** y sea razonable que aparezcan casos legítimos no previstos, el catálogo debe incluir una opción:
+
+```text
+Otros
+```
+
+Reglas:
+
+- `Otros` evita forzar al usuario a clasificar incorrectamente un caso real;
+- cuando conocer el significado sea necesario, seleccionar `Otros` debe habilitar un campo breve de especificación;
+- no se utiliza `Otros` en controles exhaustivos cuyo universo esté completamente definido, por ejemplo `Sí / No`, orden ascendente/descendente o estados técnicos cerrados que no admiten extensión funcional;
+- `Otros` nunca puede ampliar permisos, visibilidad, seguridad o alcance mediante texto libre cuando el modelo no represente explícitamente esa posibilidad;
+- ante una dimensión sensible —por ejemplo visibilidad— el comportamiento de `Otros` debe ser conservador hasta que exista un contrato explícito.
+
+La decisión sobre si un catálogo es extensible debe basarse en su semántica, no en añadir `Otros` mecánicamente a cualquier `<select>`.
+
 ---
 
 ## 🧠 8. TEL, lenguaje y carga cognitiva
@@ -395,6 +414,8 @@ El usuario realiza la validación funcional final, pero no sustituye la auditor�
 - [ ] Usa `assets/iconos/icono-principal.png` como favicon en nueva página funcional.
 - [ ] Es usable en móvil, tablet y escritorio.
 - [ ] Si usa rejilla comparable de tarjetas, sigue `3 → 2 → 2 → 1` salvo excepción justificada.
+- [ ] Si usa un catálogo cerrado extensible, incluye `Otros` y especificación cuando corresponda.
+- [ ] `Otros` no amplía permisos/visibilidad de forma ambigua.
 - [ ] Lenguaje y carga cognitiva son apropiados.
 - [ ] Fallos visibles explican causa cuando es conocida y segura.
 - [ ] Vista previa no escribe cuando aplica.
@@ -420,6 +441,7 @@ El usuario realiza la validación funcional final, pero no sustituye la auditor�
 | DEV-006 | La rejilla de tarjetas `3 escritorio → 2 tablet/móvil → 1 solo muy estrecho` es patrón general de referencia de la Academia para catálogos/navegación comparables. | Aprobada |
 | DEV-007 | El usuario valida funcionalmente el producto después de una auditoría interna suficiente. | Aprobada |
 | DEV-008 | Una aprobación funcional permite continuar cierre/PR/merge sin confirmaciones redundantes mientras el alcance permanezca estable. | Aprobada |
+| DEV-009 | Los catálogos cerrados extensibles incluyen `Otros`; su uso no puede ampliar permisos, visibilidad o seguridad de forma ambigua. | Aprobada |
 
 ---
 
@@ -432,7 +454,8 @@ El usuario realiza la validación funcional final, pero no sustituye la auditor�
 | **Visual** | Claridad y jerarquía; tarjetas `3 → 2 → 2 → 1` como patrón de referencia. |
 | **Datos** | Solo con propósito; evidencia reusable cuando aplica. |
 | **Modos** | Vista previa sin escritura; histórico de solo lectura. |
+| **Catálogos** | Los catálogos cerrados extensibles incluyen `Otros`; en dimensiones sensibles su comportamiento debe ser conservador. |
 | **Calidad** | Auditoría interna antes de prueba del usuario y cierre controlado tras aprobación. |
-| **Estado** | Activo · v2.2 Cloud · 03/09/2026. |
+| **Estado** | Activo · v2.3 Cloud · 06/09/2026. |
 
 🌈
