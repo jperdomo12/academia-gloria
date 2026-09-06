@@ -5,13 +5,15 @@
 
 > **💬 ¿Vas a iniciar un nuevo chat?** Usa `docs/ai/AI_CHAT_BOOTSTRAP.md` → **📋 PROMPT RÁPIDO · NUEVO CHAT**. Esa es la única copia oficial del prompt; este README solo la referencia.
 
+> **Ruta canónica para IA:** `docs/ai/`. No existe un dominio documental activo paralelo `docs/ia/`; cualquier referencia externa a `docs/ia/` debe interpretarse/corregirse hacia `docs/ai/`.
+
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 05/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -31,11 +33,13 @@
 | `docs/project/PROJECT_ROLES.md` | **Complementa:** roles, responsabilidades y autoridad. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia y expansión curricular. |
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Implementa/documenta:** consumo de evidencias para análisis y fortalecimiento. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** colaboración humana estructurada mediante Bitácora de Acompañamiento V1. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras la estabilización documental posterior a Bitácora V1: hace explícita la ruta canónica `docs/ai/`, incorpora `SPEC-BITACORA_ACOMPANAMIENTO.md` como fuente propietaria activa y añade una ruta de lectura específica para colaboración/acompañamiento. |
 | 1.5 | 05/09/2026 | Product Owner + AI Collaborator | Añade un acceso visible **Iniciar un nuevo chat** que referencia el `📋 PROMPT RÁPIDO · NUEVO CHAT` de `AI_CHAT_BOOTSTRAP.md`, manteniendo una sola copia oficial y evitando duplicar el prompt en este portal. Actualiza además la ruta recomendada de continuidad para priorizar recuperación directa desde GitHub cuando esté conectado. |
 | 1.4 | 03/09/2026 | Product Owner + AI Collaborator | Incorpora la plantilla viva oficial de HandOff a la navegación documental y la ruta para retomar trabajo entre chats, manteniendo separado el contexto operativo reciente del bootstrap general de incorporación de IA. |
 | 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal con la estructura documental real. Incorpora `manuales/`, `specifications/` y `tech/`, corrige la responsabilidad de `models/`, añade `PROJECT_MAP.md` como mapa operativo y amplía la ruta para nuevos Temas de 6.º con evidencia y Análisis Educativo. Registra la jornada de sincronización documental P0 del 03Sep2026. |
@@ -137,6 +141,16 @@ docs/
 ├── tech/            Referencias y auditorías técnicas
 └── vision/          Visión estratégica y evoluciones conceptuales
 ```
+
+### 4.1 Ruta canónica de contexto para IA
+
+La carpeta oficial es:
+
+```text
+docs/ai/
+```
+
+No crear `docs/ia/` como alias, copia o estructura paralela. Si instrucciones externas mencionan `docs/ia/`, deben corregirse hacia `docs/ai/` en su fuente externa cuando sea posible.
 
 ---
 
@@ -241,6 +255,19 @@ La AI Collaborator debe resolver la ubicación `Curso → Asignatura → Tema`, 
 2. `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md`
 3. estándares de Misiones/evidencias cuando el reconocimiento dependa de actividad real.
 
+### 6.9 Trabajar con colaboración / Bitácora de Acompañamiento
+
+1. `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md`;
+2. `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` — Dominio de Colaboración;
+3. `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md`;
+4. `docs/standards/STD-PANEL_DE_USUARIO.md` si interviene menú/Persona Activa;
+5. `compartido/modelos/bitacora-acompanamiento.js` y `compartido/api/bitacora-acompanamiento.js` para implementación real;
+6. `compartido/firebase/FireStore Rules.txt` para autorización real.
+
+Regla de frontera:
+
+> Bitácora conserva aportaciones humanas; no las convierte automáticamente en Misiones, evidencias, Análisis Educativo, Recompensas ni inferencias de IA.
+
 ---
 
 ## 🔎 7. Principios de navegación documental
@@ -272,7 +299,7 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 ---
 
-## 📊 8. Estado documental al 05/09/2026
+## 📊 8. Estado documental al 06/09/2026
 
 ### Base consolidada
 
@@ -286,11 +313,13 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 - identidad visual;
 - estándar académico de 6.º y material escolar;
 - plantilla viva de HandOff para continuidad entre chats;
-- Bootstrap con prompt oficial único de nuevo chat.
+- Bootstrap con prompt oficial único de nuevo chat;
+- especificación activa de Bitácora de Acompañamiento V1.
 
 ### Fuentes propietarias relevantes
 
 - `SPEC-ANALISIS_EDUCATIVO.md` — V1 implementada y contrato de consumo de evidencias;
+- `SPEC-BITACORA_ACOMPANAMIENTO.md` — V1 implementada del Dominio de Colaboración;
 - `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` v1.3 — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º;
 - `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — continuidad operativa y punto vigente mantenible entre chats;
 - `AI_CHAT_BOOTSTRAP.md` — incorporación de IA + única copia oficial del prompt rápido de nuevo chat.
@@ -298,6 +327,8 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 ### Jornada documental P0/P1/P2
 
 La jornada de sincronización documental quedó cerrada el 04/09/2026. A partir de ese punto se actualizan únicamente las fuentes afectadas por decisiones nuevas o cambios reales de estado.
+
+La estabilización del 06/09/2026 no reabre P0/P1/P2: corrige el cierre documental de entregas reales posteriores, principalmente Bitácora y navegación asociada.
 
 ---
 
@@ -372,6 +403,8 @@ No requiere actualización por cada cambio interno de un documento.
 | README-010 | `PROJECT_MAP.md` forma parte de la ruta de orientación para localizar propietarios físicos/documentales. | Aprobada |
 | README-011 | La plantilla viva de HandOff es la entrada operativa preferida para recuperar continuidad reciente. | Aprobada |
 | README-012 | `AI_CHAT_BOOTSTRAP.md` conserva la única copia oficial del prompt rápido de nuevo chat; este portal únicamente la enlaza. | Aprobada |
+| README-013 | `docs/ai/` es la ruta canónica de documentación para IA; no se mantiene un alias paralelo `docs/ia/`. | Aprobada |
+| README-014 | Bitácora de Acompañamiento dispone de ruta documental explícita desde el portal y su especificación es propietaria del comportamiento funcional. | Aprobada |
 
 ---
 
@@ -380,9 +413,10 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.5 |
-| **Última sincronización** | 05/09/2026 |
+| **Versión activa** | 1.6 |
+| **Última sincronización** | 06/09/2026 |
 | **Portal documental** | `docs/README.md` |
+| **Ruta canónica para IA** | `docs/ai/` |
 | **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |
 | **Gobierno de estructura** | `DOCUMENTATION_ARCHITECTURE.md` |
 | **Gobierno de calidad/formato** | `DOCUMENTATION_STANDARD.md` |
@@ -390,4 +424,4 @@ No requiere actualización por cada cambio interno de un documento.
 | **Continuidad entre chats** | `project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
 | **Principio** | Leer proporcionalmente, localizar propietario, reutilizar y consolidar solo conocimiento estable. |
 
-**Impacto:** Navegación · Arquitectura Documental · Onboarding · Continuidad · Trazabilidad · Incorporación Académica
+**Impacto:** Navegación · Arquitectura Documental · Onboarding · Continuidad · Trazabilidad · Incorporación Académica · Colaboración
