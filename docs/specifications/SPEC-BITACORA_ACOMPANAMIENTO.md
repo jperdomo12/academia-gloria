@@ -8,7 +8,7 @@
 | **Estado** | Candidato · V1 construida en rama y pendiente de validación del Product Owner |
 | **Fecha** | 06/09/2026 |
 | **Última actualización** | 06/09/2026 |
-| **Propietario** | Colaboración y Acompañamiento |
+| **Propietario** | Colaboración y Acompñamiento |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Registro colaborativo de observaciones, recomendaciones, dudas, sugerencias, seguimiento y una respuesta estructurada sobre la Persona Activa |
 
