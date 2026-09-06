@@ -1,4 +1,4 @@
-rules_version = '2';
+rules_version = '2-2';
 
 // Academia Gloria Valentina
 // Identidad Multi-Persona · Fase 1.9
