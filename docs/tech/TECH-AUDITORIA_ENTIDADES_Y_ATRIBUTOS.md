@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/tech/TECH-AUDITORIA_ENTIDADES_Y_ATRIBUTOS.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo como inventario técnico de referencia |
 | **Fecha base inicial** | 13/08/2026 |
-| **Última revisión dirigida** | 04/09/2026 |
+| **Última revisión dirigida** | 06/09/2026 |
 | **Propietario** | Referencia técnica de Datos Persistidos |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Fotografía técnica de entidades, familias de atributos y deuda de normalización; no constituye norma ni esquema exhaustivo de Firestore |
@@ -19,16 +19,20 @@
 | `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` | **Gobierna:** convención normativa de datos y atributos. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** PERSON, USER, ROLE, relaciones y Persona Activa. |
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** semántica de Misiones/evidencia. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Gobierna funcionalmente:** Bitácora de Acompañamiento V1, visibilidad, autoría y respuesta. |
 | `docs/models/MODELO_MISIONES.md` | **Modela:** conceptos del dominio de Misiones. |
 | `compartido/api/academia.js` | **Implementa:** persistencia compartida de múltiples dominios. |
 | `compartido/api/reconocimientos.js` | **Implementa:** Reconocimientos y Guacamayas persistidos. |
+| `compartido/api/bitacora-acompanamiento.js` | **Implementa:** operaciones persistidas de la Bitácora. |
 | `compartido/modelos/baul.js` | **Modela/normaliza:** elementos y adjuntos de Mi Baúl. |
+| `compartido/modelos/bitacora-acompanamiento.js` | **Modela/valida:** contrato persistido de la Bitácora V1. |
 | `compartido/firebase/FireStore Rules.txt` | **Implementa:** fuente canónica en Git de reglas Firestore. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 06/09/2026 | Product Owner + AI Collaborator | Incorpora `BITACORA_ACOMPANAMIENTO` como nueva familia persistida relevante tras PR #83 y registra sus rasgos técnicos principales: Persona Activa, autoría, destino/visibilidad separados, respuesta única, `schemaVersion` y persistencia física bajo USER asociado. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Revalida la función del documento como fotografía técnica, incorpora dominios posteriores a la base de agosto como Reconocimientos y Mi Baúl, reconoce `schemaVersion`, Persona Activa y auditoría actual, retira el conteo aproximado de 156 atributos como dato vigente y elimina la idea de que Misiones “será” la primera normalización, ya ejecutada parcialmente. |
 | 1.1 | 13/08/2026 | Product Owner + AI Collaborator | Adopta prefijo `TECH-` y actualiza ruta canónica. |
 | 1.0 | 13/08/2026 | Product Owner + AI Collaborator | Consolidación inicial del inventario técnico y variantes de nomenclatura. |
@@ -93,6 +97,7 @@ ACCESO_LOGIN
 PERSON_RELATION
 RECONOCIMIENTO / GUACAMAYA
 BAUL_ELEMENTO / BAUL_ADJUNTO
+BITACORA_ACOMPANAMIENTO
 ```
 
 También pueden existir estructuras auxiliares, datos de prueba, compatibilidad o subcolecciones específicas de módulo.
@@ -174,6 +179,61 @@ dataUrl
 ```
 
 El Baúl no genera Misiones, evidencias, estadísticas ni Recompensas.
+
+### 4.5 Bitácora de Acompañamiento
+
+La V1 incorpora una familia persistida dedicada a colaboración humana:
+
+```text
+BITACORA_ACOMPANAMIENTO
+```
+
+Ruta física actual:
+
+```text
+usuarios/{userIdPersonaActiva}/bitacoraAcompanamiento/{entradaId}
+```
+
+El documento conserva, entre otros grupos de atributos:
+
+```text
+schemaVersion
+personaId
+
+tipo / tipoOtros
+titulo
+mensaje
+destino / destinoOtros
+visibilidad / visibilidadOtros
+visibleParaPersonaActiva
+
+requiereRespuesta
+estado
+
+createdBy
+createdByPersonaId
+createdByNombre
+createdByRol
+createdByRelacion
+createdAt
+updatedAt
+
+respuestaTexto
+respuestaCreatedAt
+respuestaCreatedBy
+respuestaCreatedByPersonaId
+respuestaCreatedByNombre
+respuestaCreatedByRol
+```
+
+Observaciones técnicas:
+
+- la Persona propietaria y el USER físico de la ruta no deben confundirse;
+- la autoría corresponde al USER/PERSON que publica, aunque se trabaje sobre otra Persona Activa;
+- destino y visibilidad son campos distintos y no deben inferirse uno del otro;
+- la respuesta no crea una segunda entidad/hilo en V1: se persiste como conjunto limitado de campos sobre la entrada;
+- una entrada de Bitácora no es Misión ni evidencia académica;
+- la fuente funcional propietaria es `SPEC-BITACORA_ACOMPANAMIENTO.md`.
 
 ---
 
@@ -266,6 +326,16 @@ Antes de modificar datos existentes de forma destructiva:
 
 No inferir el estado de producción únicamente desde este documento.
 
+Para cambios que requieran Rules reales, conviene conservar en la fuente operativa aplicable al menos:
+
+```text
+fecha de despliegue
++ entorno/proyecto
++ SHA o baseline del archivo de Rules validado
+```
+
+cuando esos datos estén disponibles. Esto no convierte esta auditoría en registro de despliegues.
+
 ---
 
 ## 🛠️ 10. Mantenimiento de esta auditoría
@@ -289,7 +359,7 @@ Cuando se requiera un inventario **exhaustivo**, deberá realizarse una auditor�
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo como referencia técnica |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Fuente normativa** | No |
 | **Norma propietaria** | `docs/standards/STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS.md` |
 | **Uso correcto** | Evidencia técnica, deuda de normalización y preparación de impacto |
