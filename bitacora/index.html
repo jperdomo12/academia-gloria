@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bitácora de Acompañamiento | Academia Gloria Valentina</title>
+  <meta
+    name="description"
+    content="Espacio colaborativo para observaciones, recomendaciones, dudas y seguimiento de la Persona Activa."
+  >
+  <meta name="theme-color" content="#0f766e">
+
+  <link rel="icon" type="image/png" href="../assets/iconos/icono-principal.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../assets/iconos/icono-principal.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/iconos/icono-principal.png?v=2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../compartido/css/navegacion-global.css">
+  <link rel="stylesheet" href="./bitacora.css">
+</head>
+
+<body data-page-title="Bitácora de Acompañamiento | Academia Gloria Valentina">
+  <main class="bitacora-pagina">
+    <header class="bitacora-superficie bitacora-hero">
+      <div class="bitacora-hero__contenido">
+        <button
+          type="button"
+          class="boton-volver"
+          data-accion-volver
+          data-ruta-alternativa="../">
+          ← Volver
+        </button>
+
+        <span class="bitacora-eyebrow">🤝 Aprender también es acompañar juntos</span>
+        <h1>Bitácora de Acompañamiento</h1>
+        <p id="bitacoraSubtitulo">
+          Un espacio para compartir observaciones, recomendaciones, dudas y seguimiento de forma clara y respetuosa.
+        </p>
+      </div>
+
+      <div class="bitacora-hero__acciones">
+        <button
+          id="nuevaEntrada"
+          class="bitacora-boton bitacora-boton--primario"
+          type="button"
+          hidden>
+          ➕ Nueva entrada
+        </button>
+        <span id="bitacoraAcceso" class="bitacora-acceso">
+          🔎 Comprobando acceso…
+        </span>
+      </div>
+    </header>
+
+    <section class="bitacora-superficie bitacora-explicacion" aria-label="Cómo funciona la Bitácora">
+      <div>
+        <strong>💡 Una bitácora, no un chat.</strong>
+        <span>Cada entrada deja una idea clara y puede recibir, como máximo, una respuesta estructurada.</span>
+      </div>
+      <div>
+        <strong>👁️ Destino y visibilidad son distintos.</strong>
+        <span>El destino indica a quién va dirigido; la visibilidad controla quién puede leerlo.</span>
+      </div>
+    </section>
+
+    <section class="bitacora-superficie bitacora-filtros" aria-label="Buscar y filtrar la Bitácora">
+      <div class="bitacora-filtros__cabecera">
+        <div>
+          <strong>🔎 Buscar en la Bitácora</strong>
+          <small>Filtra por contenido, tipo, destino o autor.</small>
+        </div>
+        <small id="bitacoraSincronizacion">☁️ Conectando…</small>
+      </div>
+
+      <div class="bitacora-filtros__grid">
+        <div class="bitacora-campo bitacora-campo--buscar">
+          <label for="filtroBuscar">Buscar</label>
+          <input
+            id="filtroBuscar"
+            type="search"
+            autocomplete="off"
+            placeholder="Ej.: lectura, instrucciones, recomendación…">
+        </div>
+
+        <div class="bitacora-campo">
+          <label for="filtroTipo">Tipo</label>
+          <select id="filtroTipo">
+            <option value="">Todos los tipos</option>
+          </select>
+        </div>
+
+        <div class="bitacora-campo">
+          <label for="filtroDestino">Destino</label>
+          <select id="filtroDestino">
+            <option value="">Todos los destinos</option>
+          </select>
+        </div>
+
+        <div class="bitacora-campo">
+          <label for="filtroAutor">Autor</label>
+          <select id="filtroAutor">
+            <option value="">Todos los autores</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="limpiarFiltros" class="bitacora-limpiar" type="button">
+        ✕ Limpiar filtros
+      </button>
+    </section>
+
+    <div class="bitacora-estado">
+      <div>
+        <h2>Entradas recientes</h2>
+        <p id="bitacoraContexto">Cargando contexto…</p>
+      </div>
+      <span id="contadorResultados">Cargando…</span>
+    </div>
+
+    <section id="bitacoraLista" class="bitacora-lista" aria-live="polite">
+      <div class="bitacora-vacio">
+        <span class="bitacora-vacio__icono">🤝</span>
+        Abriendo la Bitácora…
+      </div>
+    </section>
+
+    <footer class="bitacora-footer">
+      Academia Gloria Valentina · Acompañamiento humano, trazable y respetuoso
+    </footer>
+  </main>
+
+  <div id="modalEditor" class="bitacora-modal-fondo" aria-hidden="true">
+    <div class="bitacora-modal" role="dialog" aria-modal="true" aria-labelledby="editorTitulo">
+      <div class="bitacora-modal__cabecera">
+        <div>
+          <span class="bitacora-eyebrow">Nueva aportación</span>
+          <h2 id="editorTitulo">Registrar una entrada</h2>
+        </div>
+        <button id="cerrarEditor" class="bitacora-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <form id="formEntrada" class="bitacora-form">
+        <div class="bitacora-form-grid">
+          <div class="bitacora-campo">
+            <label for="entradaTipo">Tipo *</label>
+            <select id="entradaTipo" required></select>
+          </div>
+
+          <div id="grupoTipoOtros" class="bitacora-campo" hidden>
+            <label for="entradaTipoOtros">Especifica el tipo *</label>
+            <input id="entradaTipoOtros" maxlength="180" placeholder="Ej.: recordatorio de reunión">
+          </div>
+
+          <div class="bitacora-campo bitacora-campo--completo">
+            <label for="entradaTitulo">Título *</label>
+            <input
+              id="entradaTitulo"
+              maxlength="180"
+              placeholder="Resume la idea principal"
+              required>
+          </div>
+
+          <div class="bitacora-campo bitacora-campo--completo">
+            <label for="entradaMensaje">Mensaje *</label>
+            <textarea
+              id="entradaMensaje"
+              maxlength="6000"
+              placeholder="Escribe la observación, recomendación, duda o seguimiento…"
+              required></textarea>
+          </div>
+
+          <div class="bitacora-campo">
+            <label for="entradaDestino">Dirigido a *</label>
+            <select id="entradaDestino" required></select>
+            <small>Indica la audiencia principal del mensaje.</small>
+          </div>
+
+          <div id="grupoDestinoOtros" class="bitacora-campo" hidden>
+            <label for="entradaDestinoOtros">Especifica el destino *</label>
+            <input id="entradaDestinoOtros" maxlength="180" placeholder="¿A quién va dirigido?">
+          </div>
+
+          <div class="bitacora-campo">
+            <label for="entradaVisibilidad">Visible para *</label>
+            <select id="entradaVisibilidad" required></select>
+            <small>Controla quién puede leer la entrada.</small>
+          </div>
+
+          <div id="grupoVisibilidadOtros" class="bitacora-campo" hidden>
+            <label for="entradaVisibilidadOtros">Especifica la visibilidad *</label>
+            <input id="entradaVisibilidadOtros" maxlength="180" placeholder="Describe la audiencia deseada">
+            <small>Por seguridad, “Otros” permanece visible solo para el autor en V1.</small>
+          </div>
+
+          <label class="bitacora-check bitacora-campo--completo">
+            <input id="entradaRequiereRespuesta" type="checkbox">
+            <span>
+              <strong>Requiere respuesta / seguimiento</strong>
+              <small>La entrada podrá recibir una única respuesta estructurada.</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="bitacora-form__nota">
+          🔐 Una vez publicada, la entrada queda como registro de la Bitácora. Si necesitas corregir o ampliar algo, crea una nueva entrada relacionada en lugar de reescribir la anterior.
+        </div>
+
+        <div class="bitacora-form__acciones">
+          <button id="cancelarEditor" class="bitacora-boton bitacora-boton--suave" type="button">
+            Cancelar
+          </button>
+          <button id="guardarEntrada" class="bitacora-boton bitacora-boton--primario" type="submit">
+            💾 Publicar entrada
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalDetalle" class="bitacora-modal-fondo" aria-hidden="true">
+    <div class="bitacora-modal bitacora-modal--detalle" role="dialog" aria-modal="true" aria-labelledby="detalleTitulo">
+      <div class="bitacora-modal__cabecera">
+        <h2 id="detalleTitulo">Entrada de la Bitácora</h2>
+        <button id="cerrarDetalle" class="bitacora-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <article id="detalleContenido" class="bitacora-detalle"></article>
+
+      <form id="formRespuesta" class="bitacora-respuesta-form" hidden>
+        <label for="respuestaTexto">💬 Respuesta / seguimiento</label>
+        <textarea
+          id="respuestaTexto"
+          maxlength="4000"
+          placeholder="Escribe una respuesta breve y concreta…"></textarea>
+        <div class="bitacora-form__acciones">
+          <button id="guardarRespuesta" class="bitacora-boton bitacora-boton--primario" type="submit">
+            Registrar respuesta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="bitacoraToast" class="bitacora-toast" role="status" aria-live="polite"></div>
+
+  <script src="../compartido/js/navegacion.js"></script>
+  <script type="module" src="../compartido/componentes/navegacion-global.js"></script>
+  <script type="module" src="./bitacora.js"></script>
+</body>
+</html>
