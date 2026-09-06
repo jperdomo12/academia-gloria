@@ -46,7 +46,7 @@ function esAdministradorContexto(contexto) {
 }
 
 function puedeColaborar(contexto) {
-  return esAdministradorContexto(contexto) || contexto?.esPersonaPropia === false;
+  return contexto?.esPersonaPropia === false;
 }
 
 function coleccionBitacora(userId) {
@@ -124,7 +124,7 @@ export async function guardarEntradaBitacora(entrada = {}) {
   const contexto = await ContextoUsuario.inicializar();
   if (!puedeColaborar(contexto)) {
     throw new Error(
-      "Esta primera versión permite publicar entradas a familia y profesionales autorizados."
+      "Selecciona primero la Persona que quieres acompañar."
     );
   }
 
@@ -217,7 +217,7 @@ export function observarEntradasBitacora(callback, onError = console.error) {
 export async function responderEntradaBitacora(entradaId, respuesta = "") {
   const contexto = await ContextoUsuario.inicializar();
   if (!puedeColaborar(contexto)) {
-    throw new Error("No tienes acceso para responder en esta Bitácora.");
+    throw new Error("Selecciona primero la Persona que quieres acompañar.");
   }
 
   const referencia = documentoBitacora(
