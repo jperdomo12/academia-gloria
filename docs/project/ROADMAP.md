@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.8 |
+| **Versión del documento** | 1.9 |
 | **Estado** | Activo · fase de uso prioritario |
-| **Última actualización** | 05/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Evolución funcional y prioridades de producto |
 
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza la fase de uso prioritario con el estado real posterior a PR #78/#80/#83/#85: Gestión de Usuarios conserva observación administrativa minimizada de accesos; Bitácora de Acompañamiento V1 se registra como excepción funcional ya cerrada porque respondió a una necesidad inmediata de colaboración con profesionales; actualiza baseline funcional a `58cab370...` y mantiene el resto del crecimiento general en espera por foco. |
 | 1.8 | 05/09/2026 | Juan Perdomo + AI Collaborator | Sustituye “congelación funcional” por **fase de uso prioritario**. Durante varias semanas prioriza uso real, motivación y ayuda efectiva; mantiene activo el crecimiento curricular de 6.º mediante material real + una sola instrucción; formaliza reporte y resolución rápida de issues reales; deja el crecimiento funcional general en espera por foco, no prohibido. |
 | 1.7 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registró el cierre del ajuste visual de Guacamayas mediante PR #74 y actualizó el baseline funcional estable. La “congelación” descrita entonces queda reinterpretada por v1.8 como una decisión de foco de gestión. |
 | 1.6 | 04/09/2026 | Juan Perdomo + AI Collaborator | Cerró la jornada documental P0/P1/P2, consolidó el baseline tras PR #71, registró PR #72 descartado y dejó un backlog explícito. |
@@ -66,6 +67,7 @@ No sustituye:
 12. **Separar funcionalidad de recursos gráficos.** Validar primero la experiencia; perfeccionar imágenes después cuando aporte valor.
 13. **Los issues reales se atienden.** Un problema detectado en uso no se pospone solo porque exista una fase de foco.
 14. **El siguiente Tema debe costar menos.** La incorporación curricular debe hacerse cada vez más rápida y segura sin bajar calidad.
+15. **Una necesidad real puede justificar una excepción funcional.** Debe mantenerse acotada, validarse y cerrarse sin convertir la excepción en reapertura general del backlog.
 
 ---
 
@@ -87,13 +89,15 @@ EVIDENCIA PARA DECIDIR EL PRÓXIMO CRECIMIENTO
 
 ```text
 main
-d893e977d2c5f122b97c7efecef1f665a1988f38
+58cab370fbf0b8e2191ef29ec4823dcb37b58bd2
 ```
 
-Incluye:
+Incluye, además del baseline previo:
 
-- PR #71 · aviso cuando una Semilla abierta libremente pertenece a una Misión activa;
-- PR #74 · ajuste visual mínimo aprobado de `Mis Guacamayas`.
+- PR #78 · último acceso administrativo + ubicación aproximada minimizada;
+- PR #80 · historial de los 10 accesos más recientes por USER;
+- PR #83 · Bitácora de Acompañamiento V1;
+- PR #85 · Bitácora como nodo principal de menú de un solo nivel.
 
 El HEAD documental puede ser posterior sin cambiar este baseline funcional.
 
@@ -192,9 +196,26 @@ Prioridad alta cuando afecte:
 
 Un issue no debe convertirse automáticamente en rediseño ni arquitectura nueva.
 
+### 3.4 Excepción funcional cerrada · Bitácora de Acompañamiento V1
+
+La Bitácora fue autorizada el 06/09/2026 porque existía una necesidad inmediata y concreta: incorporar a los profesionales que acompañan a Gloria desde el inicio real del curso.
+
+Estado:
+
+```text
+SPEC-BITACORA_ACOMPANAMIENTO.md · 1.0 Activo
+PR #83 · fusionado
+PR #85 · fusionado
+baseline funcional · 58cab370...
+```
+
+La excepción queda **cerrada**: no significa reactivar nuevas funcionalidades generales ni ampliar automáticamente la Bitácora.
+
+Su evolución futura dependerá del uso real.
+
 ---
 
-# ✅ 4. Estado consolidado al entrar en la fase
+# ✅ 4. Estado consolidado actual
 
 ## 4.1 Misiones
 
@@ -305,7 +326,8 @@ Todo Tema nuevo de 6.º debe seguir el estándar curricular vigente y producir e
 - P0 cerrado.
 - P1 cerrado: 15/15.
 - P2 cerrado: 32/32.
-- `DOCUMENTATION_STANDARD.md` sigue siendo el estándar rector.
+- mantenimiento posterior únicamente cuando cambie conocimiento estable o continuidad;
+- `DOCUMENTATION_STANDARD.md` sigue siendo el estándar rector;
 - HandOff y Bootstrap son los mecanismos de continuidad entre chats.
 
 ---
@@ -339,6 +361,33 @@ Antecedentes:
 
 - PR #72 cerrado sin merge;
 - PR #7 cerrado el 05/09/2026 sin merge y considerado histórico/obsoleto.
+
+---
+
+## 4.10 Gestión de Usuarios · observación administrativa de accesos
+
+✅ **V1 lista · PR #78/#80**
+
+- último acceso real a la Academia;
+- ubicación aproximada ciudad/región/país;
+- sin GPS, coordenadas, ISP ni persistencia de IP;
+- historial de máximo 10 accesos recientes por USER;
+- uso administrativo, no evidencia académica ni seguimiento de Persona Activa.
+
+---
+
+## 4.11 Bitácora de Acompañamiento
+
+✅ **V1 lista · PR #83/#85**
+
+- Persona Activa;
+- familia/profesionales autorizados;
+- entradas estructuradas;
+- destino separado de visibilidad;
+- una única respuesta;
+- alumno solo ve entradas expresamente compartidas;
+- sin chat, Misiones, evidencias, Recompensas ni análisis IA;
+- nodo principal directo antes de `Descubre la Academia`.
 
 ---
 
@@ -442,9 +491,19 @@ Base disponible:
 - niveles de acceso;
 - acceso profesional;
 - Gestión de Usuarios;
-- revisión familiar de Misiones.
+- revisión familiar de Misiones;
+- **Bitácora de Acompañamiento V1**.
 
-Evolución futura solo ante necesidad concreta y con seguridad/privacidad definidas.
+La Bitácora materializa la colaboración estructurada inicial.
+
+Evoluciones futuras solo ante necesidad concreta y con seguridad/privacidad definidas, por ejemplo:
+
+- destinatarios más granulares;
+- adjuntos;
+- notificaciones proporcionales;
+- relación explícita con otros objetos.
+
+Nada de ello forma parte de V1 ni tiene prioridad automática.
 
 ---
 
@@ -473,6 +532,7 @@ AHORA
 💡 Observar qué ayuda de verdad
 😊 Cuidar motivación y experiencia
 🛠️ Reportar y resolver issues reales
+🤝 Usar Bitácora con familia/profesionales cuando aporte valor
 ⏸️ No anticipar nuevas funciones generales
 ```
 
@@ -516,6 +576,8 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Recompensas / Reconocimientos V1 | ✅ Listo |
 | Historial `Mis Guacamayas` | ✅ PR #74 integrado |
 | Calendarios / recordatorios actuales | ✅ Listo |
+| Gestión de Usuarios · accesos recientes | ✅ PR #78/#80 integrado |
+| Bitácora de Acompañamiento V1 | ✅ PR #83/#85 integrado |
 | 6.º · base estructural | ✅ Lista |
 | 6.º · incorporación de Temas reales | 📚 Activa |
 | Mi Baúl V1 | ✅ Listo |
@@ -550,6 +612,7 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 - `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md`
 - `docs/standards/STD-LIA.md`
 - `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`
+- `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md`
 
 ---
 
@@ -558,13 +621,14 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Campo | Valor |
 |---|---|
 | **Estado del Roadmap** | ✅ Activo |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Inicio de la fase** | 05/09/2026 |
-| **Baseline funcional de referencia** | `d893e977d2c5f122b97c7efecef1f665a1988f38` |
+| **Baseline funcional de referencia** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
 | **Prioridad inmediata** | Uso motivado + ayuda efectiva + Temas reales de 6.º |
 | **Incorporación curricular 6.º** | 📚 Activa |
 | **Issues reales** | 🛠️ Reportar → verificar → resolver rápidamente |
+| **Bitácora V1** | ✅ Excepción funcional cerrada; usar y observar antes de ampliar |
 | **Nuevas funciones generales** | ⏸️ En espera por foco de uso |
 | **Revisión del foco** | Después de varias semanas o antes si el uso real lo justifica |
 
