@@ -231,11 +231,51 @@ service cloud.firestore {
             esAdministrador()
             || puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
           )
+          && request.resource.data.keys().hasOnly([
+            "schemaVersion",
+            "tipo",
+            "tipoOtros",
+            "titulo",
+            "mensaje",
+            "destino",
+            "destinoOtros",
+            "visibilidad",
+            "visibilidadOtros",
+            "visibleParaPersonaActiva",
+            "requiereRespuesta",
+            "estado",
+            "personaId",
+            "createdAt",
+            "createdBy",
+            "createdByPersonaId",
+            "createdByNombre",
+            "createdByRol",
+            "createdByRelacion",
+            "updatedAt",
+            "updatedBy",
+            "updatedByNombre",
+            "respuestaTexto",
+            "respuestaCreatedAt",
+            "respuestaCreatedBy",
+            "respuestaCreatedByPersonaId",
+            "respuestaCreatedByNombre",
+            "respuestaCreatedByRol"
+          ])
+          && request.resource.data.schemaVersion == 1
           && request.resource.data.personaId == personaIdUsuarioObjetivo(userId)
           && request.resource.data.createdBy == request.auth.uid
           && request.resource.data.createdByPersonaId == personaIdUsuarioActual()
+          && request.resource.data.createdByNombre is string
+          && request.resource.data.createdByNombre.size() > 0
+          && request.resource.data.createdByNombre.size() <= 180
+          && request.resource.data.createdByRol is string
+          && request.resource.data.createdByRol.size() <= 120
+          && request.resource.data.createdByRelacion is string
+          && request.resource.data.createdByRelacion.size() <= 120
           && request.resource.data.createdAt == request.time
           && request.resource.data.updatedAt == request.time
+          && request.resource.data.updatedBy == request.auth.uid
+          && request.resource.data.updatedByNombre == request.resource.data.createdByNombre
           && request.resource.data.titulo is string
           && request.resource.data.titulo.size() > 0
           && request.resource.data.titulo.size() <= 180
@@ -253,6 +293,14 @@ service cloud.firestore {
             "asunto-revisar",
             "otros"
           ]
+          && request.resource.data.tipoOtros is string
+          && request.resource.data.tipoOtros.size() <= 180
+          && (
+            (request.resource.data.tipo == "otros"
+              && request.resource.data.tipoOtros.size() > 0)
+            || (request.resource.data.tipo != "otros"
+              && request.resource.data.tipoOtros == "")
+          )
           && request.resource.data.destino in [
             "general",
             "alumno",
@@ -261,21 +309,55 @@ service cloud.firestore {
             "familia-profesionales",
             "otros"
           ]
+          && request.resource.data.destinoOtros is string
+          && request.resource.data.destinoOtros.size() <= 180
+          && (
+            (request.resource.data.destino == "otros"
+              && request.resource.data.destinoOtros.size() > 0)
+            || (request.resource.data.destino != "otros"
+              && request.resource.data.destinoOtros == "")
+          )
           && request.resource.data.visibilidad in [
             "solo-autor",
             "adultos-profesionales",
             "todos-relacionados",
             "otros"
           ]
+          && request.resource.data.visibilidadOtros is string
+          && request.resource.data.visibilidadOtros.size() <= 180
+          && (
+            (request.resource.data.visibilidad == "otros"
+              && request.resource.data.visibilidadOtros.size() > 0)
+            || (request.resource.data.visibilidad != "otros"
+              && request.resource.data.visibilidadOtros == "")
+          )
           && request.resource.data.visibleParaPersonaActiva
             == (request.resource.data.visibilidad == "todos-relacionados")
+          && request.resource.data.requiereRespuesta is bool
+          && (
+            request.resource.data.requiereRespuesta == false
+            || request.resource.data.visibilidad in [
+              "adultos-profesionales",
+              "todos-relacionados"
+            ]
+          )
           && request.resource.data.estado == "abierta"
           && request.resource.data.respuestaTexto == ""
-          && request.resource.data.respuestaCreatedBy == "";
+          && request.resource.data.respuestaCreatedAt == null
+          && request.resource.data.respuestaCreatedBy == ""
+          && request.resource.data.respuestaCreatedByPersonaId == ""
+          && request.resource.data.respuestaCreatedByNombre == ""
+          && request.resource.data.respuestaCreatedByRol == "";
 
         allow update: if (
             esAdministrador()
-            || puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+            || (
+              puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+              && resource.data.visibilidad in [
+                "adultos-profesionales",
+                "todos-relacionados"
+              ]
+            )
           )
           && resource.data.requiereRespuesta == true
           && resource.data.respuestaTexto == ""
@@ -287,9 +369,17 @@ service cloud.firestore {
           && request.resource.data.respuestaTexto.size() <= 4000
           && request.resource.data.respuestaCreatedBy == request.auth.uid
           && request.resource.data.respuestaCreatedByPersonaId == personaIdUsuarioActual()
+          && request.resource.data.respuestaCreatedByNombre is string
+          && request.resource.data.respuestaCreatedByNombre.size() > 0
+          && request.resource.data.respuestaCreatedByNombre.size() <= 180
+          && request.resource.data.respuestaCreatedByRol is string
+          && request.resource.data.respuestaCreatedByRol.size() <= 120
           && request.resource.data.respuestaCreatedAt == request.time
           && request.resource.data.estado == "atendida"
           && request.resource.data.updatedAt == request.time
+          && request.resource.data.updatedBy == request.auth.uid
+          && request.resource.data.updatedByNombre
+            == request.resource.data.respuestaCreatedByNombre
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
             "respuestaTexto",
             "respuestaCreatedAt",
