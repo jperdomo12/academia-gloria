@@ -16,6 +16,10 @@ import {
 } from "../compartido/modelos/bitacora-acompanamiento.js";
 
 const $ = id => document.getElementById(id);
+const VISIBILIDADES_RESPONDIBLES = new Set([
+  "adultos-profesionales",
+  "todos-relacionados"
+]);
 
 let contexto = null;
 let entradas = [];
@@ -98,6 +102,10 @@ function cerrarModal(id) {
   modal.classList.remove("abierto");
   modal.setAttribute("aria-hidden", "true");
 
+  if (id === "modalDetalle") {
+    detalleActualId = "";
+  }
+
   if (
     !$("modalEditor").classList.contains("abierto") &&
     !$("modalDetalle").classList.contains("abierto")
@@ -127,6 +135,16 @@ function actualizarCampoOtros(selectId, grupoId, inputId) {
   if (!activo) $(inputId).value = "";
 }
 
+function actualizarDisponibilidadRespuesta() {
+  const compartida = VISIBILIDADES_RESPONDIBLES.has(
+    $("entradaVisibilidad").value
+  );
+  const checkbox = $("entradaRequiereRespuesta");
+
+  checkbox.disabled = !compartida;
+  if (!compartida) checkbox.checked = false;
+}
+
 function actualizarCamposOtros() {
   actualizarCampoOtros("entradaTipo", "grupoTipoOtros", "entradaTipoOtros");
   actualizarCampoOtros("entradaDestino", "grupoDestinoOtros", "entradaDestinoOtros");
@@ -135,6 +153,7 @@ function actualizarCamposOtros() {
     "grupoVisibilidadOtros",
     "entradaVisibilidadOtros"
   );
+  actualizarDisponibilidadRespuesta();
 }
 
 function nombreTipo(entrada) {
@@ -308,7 +327,10 @@ function aplicarContexto() {
     texto(contexto?.personaActiva?.nombre, "la Persona Activa")
   );
 
-  puedeColaborar = esAdministrador() || contexto.esPersonaPropia === false;
+  // V1 registra aportaciones sobre otra Persona relacionada. Aunque el usuario
+  // sea administrador, trabajar sobre su propia Persona no debe crear por error
+  // una Bitácora de acompañamiento personal.
+  puedeColaborar = contexto.esPersonaPropia === false;
 
   $("bitacoraSubtitulo").textContent =
     `Espacio compartido de acompañamiento de ${nombre}: observaciones, recomendaciones, dudas y seguimiento con autoría y visibilidad claras.`;
@@ -317,9 +339,14 @@ function aplicarContexto() {
 
   $("bitacoraAcceso").className =
     `bitacora-acceso ${puedeColaborar ? "bitacora-acceso--colabora" : "bitacora-acceso--consulta"}`;
-  $("bitacoraAcceso").textContent = puedeColaborar
-    ? "✍️ Puedes registrar y responder"
-    : "👁️ Solo entradas compartidas contigo";
+
+  if (puedeColaborar) {
+    $("bitacoraAcceso").textContent = "✍️ Puedes registrar y responder";
+  } else if (esAdministrador()) {
+    $("bitacoraAcceso").textContent = "🎯 Selecciona la Persona que quieres acompañar";
+  } else {
+    $("bitacoraAcceso").textContent = "👁️ Solo entradas compartidas contigo";
+  }
 }
 
 function limpiarEditor() {
@@ -378,6 +405,7 @@ function puedeResponderEntrada(entrada) {
   return Boolean(
     puedeColaborar &&
     entrada?.requiereRespuesta === true &&
+    VISIBILIDADES_RESPONDIBLES.has(texto(entrada?.visibilidad)) &&
     !texto(entrada?.respuestaTexto) &&
     entrada?.createdBy !== contexto?.usuario?.userId
   );
@@ -434,6 +462,7 @@ function abrirDetalle(id) {
   detalleActualId = id;
   renderDetalle(entrada);
   abrirModal("modalDetalle");
+  setTimeout(() => $("cerrarDetalle").focus(), 50);
 }
 
 async function guardarRespuesta(evento) {
@@ -451,6 +480,7 @@ async function guardarRespuesta(evento) {
       detalleActualId,
       $("respuestaTexto").value
     );
+    $("formRespuesta").hidden = true;
     mostrarToast("Respuesta registrada.");
   } catch (error) {
     console.error(error);
