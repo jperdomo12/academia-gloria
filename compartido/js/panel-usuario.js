@@ -2,7 +2,7 @@
  * Academia Gloria
  * Archivo: compartido/js/panel-usuario.js
  * Componente visual reutilizable del Panel de Usuario.
- * Versión: 2.5
+ * Versión: 2.6
  ******************************************************************************/
 
 import {
@@ -517,11 +517,20 @@ function construirMenu(nivelActual = "consulta") {
   }
 
   /*
-   * Mi Universo, Mis Cursos y Explorar más vuelven a proceder de la
-   * fuente central NAVEGACION_ACADEMIA. El panel no inventa opciones.
+   * El árbol procede de la fuente central NAVEGACION_ACADEMIA.
+   * Los nodos con hijos se muestran como grupos desplegables; un nodo
+   * principal sin hijos se muestra como enlace directo y no inventa
+   * un segundo nivel de navegación.
    */
   secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
-  secciones.push(...filtrarNavegacionPorNivel(NAVEGACION_ACADEMIA, nivelActual).map(nodo => renderGrupo(nodo)));
+  secciones.push(
+    ...filtrarNavegacionPorNivel(NAVEGACION_ACADEMIA, nivelActual)
+      .map(nodo =>
+        Array.isArray(nodo.hijos) && nodo.hijos.length
+          ? renderGrupo(nodo)
+          : renderEnlace(nodo)
+      )
+  );
   secciones.push('<div class="panel-usuario__separador" role="separator"></div>');
 
   if (configuracionActiva.mostrarDescubreAcademia) {
