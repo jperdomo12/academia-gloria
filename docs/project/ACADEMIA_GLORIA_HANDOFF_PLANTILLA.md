@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 05/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 06/09/2026 | Product Owner + AI Collaborator | Incorpora como pendiente la evaluación de **ChatGPT Work** con el primer caso real de incorporación de material escolar, para comprobar hasta qué punto puede ejecutar autónomamente el proceso completo de preparación para Academia. |
 | 1.8 | 05/09/2026 | Product Owner + AI Collaborator | Registra PR #80 aprobado y fusionado: historial administrativo de los **10 accesos más recientes** por USER, bloque plegado `6. Historial de accesos`, botón `Ver / editar`, misma minimización de datos y baseline funcional actualizado a `77c734a5...`. |
 | 1.7 | 05/09/2026 | Product Owner + AI Collaborator | Registra PR #78 aprobado y fusionado: **Último acceso a la Academia** + ubicación aproximada ciudad/región/país en Gestión de Usuarios, con minimización de datos, sin GPS ni persistencia de IP. Actualiza el baseline funcional a `9e03c096...` y mantiene intacta la Fase de uso prioritario. |
 | 1.6 | 05/09/2026 | Product Owner + AI Collaborator | Sustituye el concepto de “congelación funcional” por **Fase de uso prioritario**. Mantiene en espera el crecimiento funcional general para concentrarse durante varias semanas en uso real, motivación y utilidad efectiva; deja activo el carril de incorporación curricular de 6.º por una sola instrucción; formaliza reporte y resolución rápida de issues reales; añade el arranque preferido de nuevos chats desde GitHub y registra PR #7 como antecedente histórico cerrado sin merge. |
@@ -378,6 +379,14 @@ Semilla funcional con icono genérico
 
 No ampliar nuevas Semillas con el proceso anterior si sigue resultando costoso.
 
+### 8.5 Evaluar ChatGPT Work con incorporación real de material escolar
+
+**Estado:** ⏳ Pendiente.
+
+> **[PENDIENTE] Evaluar ChatGPT Work con el primer caso real de incorporación de material escolar: proporcionar material + materia + tema y comprobar hasta qué punto Work puede ejecutar autónomamente el proceso completo de preparación para Academia.**
+
+Esta evaluación debe realizarse con un caso real del colegio y observar qué partes del flujo vigente puede ejecutar Work de extremo a extremo sin introducir un proceso paralelo ni sustituir las fuentes propietarias de Academia.
+
 ---
 
 ## 🌿 9. Reglas que no deben perderse
@@ -474,7 +483,7 @@ No existe una nueva funcionalidad general `On going`.
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.8 |
+| **Versión activa** | 1.9 |
 | **Estado operativo** | 🌿 Fase de uso prioritario desde 05/09/2026 |
 | **Baseline funcional de referencia** | `77c734a5cadd992238cff478eb0b6d619100623e` |
 | **Crecimiento curricular 6.º** | ✅ Activo durante la fase |
