@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/PROJECT_MAP.md` |
-| **Versión** | 2.0 |
+| **Versión** | 2.1 |
 | **Estado** | Activo |
 | **Fecha** | 23/07/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Arquitectura del Proyecto |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Organización física del repositorio, responsabilidades principales y mapa de fuentes propietarias |
@@ -22,12 +22,14 @@
 | `docs/project/MASTER_PLAN.md` | Resume dirección y grandes frentes del proyecto. |
 | `docs/project/ROADMAP.md` | Define prioridades y evolución funcional. |
 | `docs/project/RELEASE_NOTES.md` | Registra entregas reales y releases. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | Define el dominio funcional de Bitácora de Acompañamiento. |
 | `AGENTS.md` | Reglas operativas que deben respetar los colaboradores/IA al intervenir el repositorio. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.1 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el mapa contra `main @ 58cab370...`: incorpora `baul/` y `bitacora/` como directorios raíz funcionales, añade API/modelo propios de Bitácora al núcleo compartido, incorpora la especificación activa de Bitácora y cierra el estado temporal de sincronización documental del 03Sep. |
 | 2.0 | 03/09/2026 | Juan Perdomo + AI Collaborator | Reconstruye el mapa contra la estructura real del repositorio. Elimina directorios históricos que ya no existen (`etapas`, `habilidades`, `OLD`), corrige Calendarios, incorpora `administracion`, `descubre-la-academia`, `herramientas`, `history`, la estructura vigente de `mi-universo`, el curso 6.º, los portales académicos compartidos, Recompensas, Análisis Educativo y el mapa actual de documentación propietaria. |
 | 1.1 | 23/07/2026 | Juan Perdomo | Primera actualización del mapa Cloud y responsabilidades generales. |
 
@@ -67,7 +69,7 @@ No pretende enumerar cada archivo del repositorio. Debe proporcionar un mapa suf
 
 ## 🏠 3. Raíz actual del repositorio
 
-Estructura funcional principal comprobada al 03/09/2026:
+Estructura funcional principal comprobada al 06/09/2026:
 
 ```text
 academia-gloria/
@@ -81,6 +83,8 @@ academia-gloria/
 ├── adicionales/
 ├── administracion/
 ├── assets/
+├── baul/
+├── bitacora/
 ├── calendarios/
 ├── compartido/
 ├── cursos/
@@ -99,11 +103,13 @@ academia-gloria/
 | `adicionales/` | Lecturas, música, juegos y otros recursos complementarios. | ✅ |
 | `administracion/` | Funciones administrativas; actualmente Gestión de Usuarios. | ✅ |
 | `assets/` | Iconos, identidad, personajes e imágenes compartidas. | ✅ |
+| `baul/` | Mi Baúl: conservación personal de contenidos e ideas sin convertirlos en evaluación. | ✅ V1 |
+| `bitacora/` | Bitácora de Acompañamiento: colaboración humana estructurada sobre Persona Activa. | ✅ V1 |
 | `calendarios/` | Entrada a calendarios y calendario escolar. | ✅ |
 | `compartido/` | Núcleo técnico, contratos y componentes reutilizables. | ✅ |
 | `cursos/` | Contenido curricular por curso/asignatura/tema. | 🚧 Crecimiento activo |
 | `descubre-la-academia/` | Experiencia/guía para descubrir la Academia. | ✅ |
-| `docs/` | Documentación oficial activa e histórica. | 🚧 Sincronización 03Sep |
+| `docs/` | Documentación oficial activa e histórica. | ✅ Sistema activo |
 | `herramientas/` | Herramientas educativas reutilizables no ligadas a un único Tema. | ✅ |
 | `history/` | Recursos técnicos antiguos de prueba conservados fuera de la documentación oficial. | 🗃️ Histórico |
 | `mi-universo/` | Experiencias personales, aprendizaje, Misiones y Mi Camino. | ✅ / evolución activa |
@@ -132,7 +138,9 @@ Fachadas y APIs de dominio compartidas.
 Referencias destacadas:
 
 - `academia.js` — fachada principal de operaciones de la Academia;
-- `reconocimientos.js` — API cohesionada del dominio de Reconocimientos/Recompensas.
+- `reconocimientos.js` — API cohesionada del dominio de Reconocimientos/Recompensas;
+- `baul.js` — API del dominio Mi Baúl;
+- `bitacora-acompanamiento.js` — API del dominio Bitácora de Acompañamiento.
 
 ### 4.2 `compartido/componentes/`
 
@@ -183,10 +191,11 @@ Referencias especialmente relevantes:
 | `contexto-usuario.js` | Usuario, Persona Activa, roles y nivel efectivo de acceso. |
 | `auth-guard.js` | Protección de páginas y nivel mínimo de acceso. |
 | `navegacion.js` | Navegación y retorno contextual. |
-| `panel-usuario.js` | Panel reutilizable de usuario/Persona Activa. |
+| `panel-usuario.js` | Panel reutilizable de usuario/Persona Activa y renderizado del menú central. |
 | `sesiones-academicas.js` | Contrato compartido `sesion-academica-v1`. |
 | `detectives-progreso.js` | Persistencia/consulta de progreso y sesiones de Detectives. |
 | `recordatorios-calendario-ingreso.js` | Recordatorios de eventos al entrar en la Academia. |
+| `registro-acceso.js` | Registro administrativo de accesos con ubicación aproximada minimizada. |
 | `trabajo-realizado.js` | Apoyo compartido al acceso de trabajo/evidencias. |
 | `lector-texto.js` | Lectura de texto compartida. |
 
@@ -196,8 +205,10 @@ Modelos compartidos de entidades/comportamiento transversal.
 
 Referencias:
 
-- `navegacion.js`;
-- `evento.js`.
+- `navegacion.js` — árbol central de navegación;
+- `evento.js` — modelo de evento;
+- `baul.js` — contrato de Mi Baúl;
+- `bitacora-acompanamiento.js` — catálogos, validación y contrato de Bitácora V1.
 
 ---
 
@@ -215,12 +226,14 @@ Responsabilidad actual:
 
 - Gestión de Usuarios;
 - relaciones Persona/Usuario/Rol;
-- operaciones administrativas autorizadas.
+- operaciones administrativas autorizadas;
+- último acceso y ubicación aproximada;
+- historial de los 10 accesos más recientes por USER.
 
 Documentación propietaria principal:
 
 - `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md`;
-- `docs/vision/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md`;
+- `docs/vision/MODELO-USUARIOS_ALUMNOS_Y_ROLES.md` como puntero de compatibilidad hacia sus sucesores;
 - `docs/manuales/MANUAL-GESTION_DE_USUARIOS.md`.
 
 ---
@@ -246,7 +259,63 @@ Ingreso a Academia
 → mostrar recordatorio cuando corresponde
 ```
 
-A 03/09/2026 **no existe una especificación independiente de Recordatorios**. Si el dominio Calendarios crece lo suficiente, su comportamiento deberá consolidarse en un documento propietario de Gestión de Calendarios, evitando un documento aislado para una sola particularidad.
+Actualmente no existe una especificación independiente de Recordatorios. Si el dominio Calendarios crece lo suficiente, su comportamiento deberá consolidarse en un documento propietario de Gestión de Calendarios, evitando un documento aislado para una sola particularidad.
+
+---
+
+## 🧰 Mi Baúl · `baul/`
+
+```text
+baul/
+├── index.html
+├── baul.css
+└── baul.js
+```
+
+Responsabilidad:
+
+- conservar contenidos e ideas de valor personal;
+- operar sobre Persona Activa;
+- reutilizar `compartido/api/baul.js` y `compartido/modelos/baul.js`;
+- mantener separado este dominio de Misiones, evidencias, estadísticas y Recompensas.
+
+---
+
+## 🤝 Bitácora de Acompañamiento · `bitacora/`
+
+```text
+bitacora/
+├── index.html
+├── bitacora.css
+└── bitacora.js
+```
+
+Responsabilidad:
+
+- colaboración humana estructurada sobre Persona Activa;
+- observaciones, recomendaciones, dudas, sugerencias, acuerdos, seguimiento y mensajes;
+- destino y visibilidad separados;
+- una única respuesta estructurada cuando aplica;
+- autoría trazable;
+- privacidad gobernada por contrato de módulo + Firestore Rules.
+
+Infraestructura compartida:
+
+```text
+compartido/modelos/bitacora-acompanamiento.js
+compartido/api/bitacora-acompanamiento.js
+compartido/modelos/navegacion.js
+compartido/js/panel-usuario.js
+compartido/firebase/FireStore Rules.txt
+```
+
+Fuente funcional propietaria:
+
+```text
+docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md
+```
+
+La Bitácora es un nodo principal del menú sin hijos en V1; por ello se representa como enlace directo de un solo nivel.
 
 ---
 
@@ -563,7 +632,7 @@ Incluye:
 Documentación principal:
 
 - `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md`;
-- `docs/vision/06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA.md`;
+- `docs/vision/06_IDENTIDAD_VISUAL_DE_LA_ACADEMIA.md` como puntero histórico/compatibilidad;
 - `docs/vision/07_IDENTIDAD_GUACAMAYAS.md`.
 
 ---
@@ -592,6 +661,8 @@ docs/
 └── vision/
 ```
 
+> La ruta canónica para contexto de IA es `docs/ai/`. No existe un dominio documental activo paralelo `docs/ia/`.
+
 ### 11.1 Raíz documental
 
 | Documento | Responsabilidad |
@@ -614,6 +685,7 @@ docs/
 | `PRODUCT_DEVELOPMENT_WORKFLOW.md` | Flujo de desarrollo de producto. |
 | `PROJECT_ROLES.md` | Roles del proyecto. |
 | `ADN_ACADEMIA_GLORIA_VALENTINA.md` | ADN/identidad de proyecto. |
+| `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | Continuidad operativa entre chats/personas/IA. |
 
 ### 11.3 `docs/specifications/`
 
@@ -622,7 +694,8 @@ Especificaciones funcionales activas:
 - `SPEC-CRECIENDO_POR_DENTRO.md`;
 - `SPEC-MIS_TAREAS_Y_MISIONES.md`;
 - `SPEC-REVISION_TRABAJO_REALIZADO.md`;
-- `SPEC-ANALISIS_EDUCATIVO.md`.
+- `SPEC-ANALISIS_EDUCATIVO.md`;
+- `SPEC-BITACORA_ACOMPANAMIENTO.md`.
 
 ### 11.4 `docs/standards/`
 
@@ -630,7 +703,7 @@ Normas reutilizables del producto, entre ellas:
 
 - contenidos académicos/material escolar;
 - Misiones;
-- navegación/experiencia según sus propietarios;
+- panel/navegación según sus propietarios;
 - usuarios/roles/accesos;
 - motivación/seguimiento;
 - Lía;
@@ -645,6 +718,7 @@ Incluyen:
 
 - Misiones;
 - Navegación;
+- Árbol de Navegación;
 - Roles;
 - Motores de Aprendizaje.
 
@@ -660,14 +734,15 @@ No debe utilizarse como fuente normativa cuando existe equivalente activo fuera 
 
 | Necesidad | Primer lugar a revisar |
 |---|---|
-| Propósito humano/pedagógico | `FOUNDATION.md` + `vision/01_PRINCIPIOS_PEDAGOGICOS.md` |
+| Propósito humano/pedagógico | `FOUNDATION.md` + fuentes activas de visión aplicables |
 | Crear/modificar documentación | `DOCUMENTATION_STANDARD.md` |
 | Decidir dónde documentar | `DOCUMENTATION_ARCHITECTURE.md` |
 | Prioridad del proyecto | `project/ROADMAP.md` |
 | Qué se entregó realmente | `project/RELEASE_NOTES.md` |
 | Estructura del repositorio | `project/PROJECT_MAP.md` |
+| Continuar en otro chat | `project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` + `ai/AI_CHAT_BOOTSTRAP.md` |
 | Usuarios / Persona Activa / accesos | `STD-USUARIOS_ROLES_Y_ACCESOS.md` + `ContextoUsuario` |
-| Navegación / Volver | `MODELO_NAVEGACION.md` + compartidos de navegación |
+| Navegación / Volver | `MODELO_NAVEGACION.md` + `MODELO_ARBOL_NAVEGACION.md` + compartidos de navegación |
 | Nueva Misión / Gestión de Misiones | `STD-MIS_TAREAS_Y_MISIONES.md` + `SPEC-MIS_TAREAS_Y_MISIONES.md` |
 | Revisar trabajo realizado | `SPEC-REVISION_TRABAJO_REALIZADO.md` |
 | Reportes/tendencias educativas | `SPEC-ANALISIS_EDUCATIVO.md` |
@@ -675,6 +750,8 @@ No debe utilizarse como fuente normativa cuando existe equivalente activo fuera 
 | Evidencia académica | `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` + `sesiones-academicas.js` |
 | Refuerzo desde evidencias | `SPEC-ANALISIS_EDUCATIVO.md` + estándar del motor correspondiente |
 | Recompensas / Reconocimientos | `DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` + `reconocimientos.js` |
+| Bitácora / colaboración humana | `SPEC-BITACORA_ACOMPANAMIENTO.md` + `bitacora-acompanamiento.js` |
+| Mi Baúl | `compartido/modelos/baul.js` + `compartido/api/baul.js` |
 | Identidad visual | `PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` + assets |
 | Firestore Rules | `compartido/firebase/FireStore Rules.txt` |
 
@@ -706,13 +783,14 @@ Antes de declarar una ruta como actual debe contrastarse con la estructura real 
 
 | Campo | Valor |
 |---|---|
-| **Estructura activa** | Raíz y dominios comprobados contra el repositorio al 03/09/2026. |
+| **Estructura activa** | Raíz y dominios comprobados contra `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2`. |
 | **Núcleo compartido** | `compartido/` es propietario de infraestructura reutilizable; los módulos no deben recrearla localmente sin causa justificada. |
 | **Currículo** | `cursos/` sigue `Curso → Asignatura → Tema`; 6.º es la primera aplicación estructurada del nuevo patrón. |
 | **Mi Universo** | Aloja experiencias personales, Misiones, aprendizaje y Mi Camino. |
-| **Documentación** | `docs/` contiene las fuentes oficiales; `docs/history/` preserva contexto sustituido. |
+| **Colaboración** | `bitacora/` materializa el Dominio de Colaboración V1 sobre Persona Activa. |
+| **Documentación** | `docs/` contiene las fuentes oficiales; `docs/ai/` es la ruta canónica para IA; `docs/history/` preserva contexto sustituido. |
 | **Principio** | Encontrar propietario → reutilizar → modificar lo mínimo → documentar en la fuente correcta. |
-| **Estado** | Activo y sincronizado al 03/09/2026. |
+| **Estado** | Activo y sincronizado al 06/09/2026. |
 
 ---
 

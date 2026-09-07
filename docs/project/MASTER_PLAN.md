@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/MASTER_PLAN.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 23/07/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Dirección Estratégica del Proyecto |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Dirección general, pilares y grandes líneas de evolución de Academia Gloria Valentina |
@@ -24,11 +24,13 @@
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna producto:** arquitectura de experiencia. |
 | `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` | **Gobierna conceptualmente:** Motores, evidencias y transformación de datos en acciones. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** expansión curricular y evidencia de nuevos Temas. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** colaboración humana estructurada y acompañamiento compartido sobre Persona Activa. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el plan con la fase de uso prioritario y el estado real posterior a PR #83/#85: incorpora Bitácora de Acompañamiento V1 como materialización inicial del Dominio de Colaboración, reconoce Gestión de Usuarios con observación administrativa de accesos y cambia la sincronización documental de frente P0 en progreso a sistema consolidado de mantenimiento por cambio real. |
 | 1.2 | 03/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el Master Plan con la Academia real: identidad multi-persona, Mi Camino/Misiones, Biblioteca, Creciendo por Dentro, Detectives, 6.º, evidencia académica, Análisis Educativo, refuerzos, Reconocimientos/Recompensas y recordatorios. Sustituye objetivos de julio ya superados, elimina la previsión rígida de versiones futuras no aprobadas y formaliza como eje estratégico la expansión curricular de mínima intervención con evidencia reutilizable. |
 | 1.1 | 23/07/2026 | Juan Perdomo | Plan Cloud previo centrado en consolidar infraestructura y comenzar grandes módulos funcionales sobre la base 2.0. |
 
@@ -70,7 +72,7 @@ La tecnología está al servicio de esa experiencia, no al revés.
 
 ## 🧭 3. Misión
 
-Construir una plataforma sencilla de usar pero capaz de crecer durante años, donde contenido escolar real, experiencias personales, Misiones, evidencias, acompañamiento familiar y análisis educativo formen un sistema coherente.
+Construir una plataforma sencilla de usar pero capaz de crecer durante años, donde contenido escolar real, experiencias personales, Misiones, evidencias, acompañamiento familiar/profesional y análisis educativo formen un sistema coherente.
 
 La Academia debe ser suficientemente modular para evolucionar sin reconstruirse con cada curso, materia o necesidad nueva.
 
@@ -98,6 +100,7 @@ La base técnica se apoya en:
 - Firebase Authentication;
 - Cloud Firestore;
 - API `Academia`;
+- APIs de dominio cuando existe responsabilidad diferenciada;
 - componentes compartidos;
 - navegación global;
 - Persona Activa;
@@ -119,7 +122,7 @@ USER
 → nivel efectivo de acceso
 ```
 
-Esto permite que familia, administración y futuros profesionales colaboren sobre una misma Persona sin duplicar la Academia por usuario.
+Esto permite que familia, administración y profesionales autorizados colaboren sobre una misma Persona sin duplicar la Academia por usuario.
 
 ### 4.4 Aprendizaje mediante Motores y experiencias
 
@@ -191,7 +194,31 @@ La Academia también conserva experiencias que ayudan a construir identidad y me
 - Creciendo por Dentro;
 - Biblioteca;
 - Escritora;
+- Mi Baúl;
 - futuras experiencias personales justificadas por uso real.
+
+### 4.9 Colaboración y acompañamiento humano
+
+La Academia puede ofrecer espacios donde familia y profesionales autorizados compartan información útil sin convertirla en chat, diagnóstico ni evidencia académica automática.
+
+La primera materialización activa es:
+
+```text
+Bitácora de Acompañamiento V1
+→ Persona Activa
+→ aportaciones humanas estructuradas
+→ destino + visibilidad separados
+→ trazabilidad
+→ respuesta única cuando corresponde
+```
+
+La colaboración debe mantener fronteras claras respecto a:
+
+- Misiones;
+- evidencias;
+- Análisis Educativo;
+- Recompensas;
+- IA/Lía.
 
 ---
 
@@ -283,7 +310,7 @@ El detalle visual normativo debe mantenerse en los documentos de identidad/exper
 
 ---
 
-## ✅ 6. Estado estratégico al 03/09/2026
+## ✅ 6. Estado estratégico al 06/09/2026
 
 ### Base técnica
 
@@ -292,11 +319,12 @@ El detalle visual normativo debe mantenerse en los documentos de identidad/exper
 | Firebase Authentication | ✅ |
 | Cloud Firestore | ✅ |
 | API Academia | ✅ |
+| APIs de dominio | ✅ Cuando aplica |
 | Navegación compartida | ✅ |
 | Panel de usuario | ✅ |
 | Persona Activa | ✅ |
 | Roles / relaciones / niveles de acceso | ✅ Base operativa |
-| Gestión de Usuarios | ✅ Base operativa |
+| Gestión de Usuarios | ✅ Base operativa + observación administrativa de accesos |
 
 ### Ecosistema funcional
 
@@ -312,8 +340,10 @@ El detalle visual normativo debe mantenerse en los documentos de identidad/exper
 | Detectives de Problemas | ✅ |
 | Creciendo por Dentro | ✅ |
 | Escritora | ✅ Base existente |
+| Mi Baúl | ✅ V1 |
 | Calendarios | ✅ |
 | Recordatorios al ingreso | ✅ |
+| Bitácora de Acompañamiento | ✅ V1 |
 | Portal 6.º + Matemáticas | ✅ Base validada |
 | Fracciones 6.º | ✅ Tema real |
 
@@ -332,16 +362,26 @@ El detalle visual normativo debe mantenerse en los documentos de identidad/exper
 | Guacamayas | ✅ V1 |
 | Reconocimientos automáticos de Lía | ✅ Primeras reglas |
 | Constancia / transparencia motivacional | ✅ V1 |
+| Colaboración familia/profesionales mediante Bitácora | ✅ V1 |
 
 ---
 
 ## 🚩 7. Grandes líneas activas
 
-### A. Sincronización documental
+### A. Mantenimiento documental por cambio real
 
-Alinear documentos propietarios con el producto real para reducir decisiones repetidas y permitir que futuras IA colaboren con contexto correcto.
+La jornada de sincronización documental P0/P1/P2 quedó cerrada el 04/09/2026.
 
-Estado al 03/09/2026: **en progreso P0**.
+Desde entonces la documentación se mantiene como parte del cierre normal de cada cambio real:
+
+```text
+cambio estable
+→ identificar fuentes propietarias afectadas
+→ actualizar solo las necesarias
+→ mantener HandOff cuando cambie continuidad
+```
+
+No existe un frente P0 documental permanente abierto.
 
 ### B. Expansión curricular de 6.º
 
@@ -349,15 +389,17 @@ Añadir nuevos Temas reales con el modo de incorporación de mínima intervenci�
 
 Objetivo: que cada nuevo Tema sea más rápido y seguro de incorporar que el anterior.
 
-### C. Calidad y certificación del núcleo
+### C. Uso real y calidad del núcleo
 
-Continúan vigentes revisiones específicas de:
+Durante la fase de uso prioritario se observan:
 
-- identidad/usuarios/auditoría;
-- auditoría de entidades educativas;
-- regresión del núcleo multi-persona.
+- utilidad real para Gloria;
+- motivación y posibilidad de continuar actividades;
+- incidencias de identidad/Persona Activa/permisos;
+- calidad de datos y evidencias;
+- regresiones del núcleo multi-persona.
 
-Estas líneas son técnicas y no deben mezclarse con cada nuevo Tema salvo que lo bloqueen.
+Los issues reales se corrigen con el cambio mínimo suficiente.
 
 ### D. Preferencias por Persona
 
@@ -366,6 +408,8 @@ Primera candidata concreta pendiente:
 - velocidad de voz administrable por adulto/administrador;
 - opciones visibles simples: Normal / Pausada / Muy pausada;
 - valores técnicos internos.
+
+Continúa en espera salvo necesidad real durante el uso.
 
 ### E. Mi Universo guiado por necesidades reales
 
@@ -389,7 +433,7 @@ Evolucionar Análisis Educativo hacia vistas familiares/profesionales más larga
 
 ### Colaboración profesional más granular
 
-Ampliar ámbitos y permisos para colegio, psicología, logopedia u otros profesionales autorizados.
+Evolucionar la Bitácora y los contratos de relación/visibilidad cuando el uso real requiera ámbitos, destinatarios o permisos más precisos para colegio, psicología, logopedia u otros profesionales autorizados.
 
 ### IA educativa visible para el alumno
 
@@ -463,6 +507,12 @@ Reglas documentales:
 docs/DOCUMENTATION_STANDARD.md
 ```
 
+Contexto para IA:
+
+```text
+docs/ai/
+```
+
 ---
 
 ## 🧭 11. Relación Master Plan ↔ Roadmap ↔ Release Notes
@@ -512,6 +562,8 @@ No duplicar detalle de Roadmap dentro del Master Plan.
 | MP-010 | Todo nuevo Tema de 6.º genera evidencia académica estructurada y reutilizable. | Aprobada |
 | MP-011 | No se asignarán versiones futuras del producto dentro del Master Plan; el versionado requiere decisión explícita y se registra en Release Notes. | Aprobada |
 | MP-012 | Nuevas áreas de Mi Universo deben justificarse por necesidad real antes de aumentar complejidad. | Aprobada |
+| MP-013 | La colaboración humana se mantiene separada de evidencia/IA y se materializa inicialmente mediante Bitácora de Acompañamiento V1. | Aprobada / implementada |
+| MP-014 | La documentación consolidada se mantiene por cambio real; no se mantiene una jornada P0 artificialmente abierta. | Aprobada |
 
 ---
 
@@ -521,12 +573,12 @@ No duplicar detalle de Roadmap dentro del Master Plan.
 |---|---|
 | **Dirección** | Ecosistema educativo/personal de largo plazo, modular, familiar y basado en experiencias reales. |
 | **Eje académico actual** | Expansión progresiva de 6.º con mínima intervención y evidencia desde el nacimiento de cada Tema. |
-| **Eje de acompañamiento** | Evidencia → análisis prudente → fortalecimiento bajo control familiar. |
+| **Eje de acompañamiento** | Evidencia → análisis prudente → fortalecimiento + colaboración humana trazable, manteniendo las fuentes separadas. |
 | **Eje motivacional** | Reconocer progreso real sin rankings ni presión transaccional. |
 | **Eje técnico** | Núcleo Cloud compartido + Persona Activa + reutilización antes que duplicación. |
 | **Gobierno de prioridades** | `ROADMAP.md`. |
 | **Gobierno de entregas/versiones** | `RELEASE_NOTES.md`. |
-| **Estado** | Activo y sincronizado al 03/09/2026. |
+| **Estado** | Activo y sincronizado al 06/09/2026. |
 
 ---
 

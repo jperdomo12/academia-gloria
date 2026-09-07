@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 03/08/2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Arquitectura del Producto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Arquitectura conceptual de la experiencia del producto, sus actores, dominios, relaciones y evolución |
@@ -25,21 +25,22 @@
 | `docs/project/RELEASE_NOTES.md` | **Evidencia:** evolución consolidada del producto real. |
 | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Complementa:** identidad visual, emocional y Personajes Oficiales. |
 | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Implementa:** diseño específico de Motivación y Reconocimientos. |
-| `docs/models/MODELO_NAVEGACION.md` | **Implementa:** modelo conceptual de navegación. |
+| `docs/models/MODELO_NAVEGACION.md` | **Modela:** navegación conceptual. |
 | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | **Implementa:** comportamiento funcional de Misiones y Gestión de Misiones. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Implementa:** primera materialización activa del Dominio de Colaboración. |
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** reglas normativas del dominio de Misiones. |
-| `docs/vision/00_MANIFIESTO_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** visión fundacional de la Academia. |
-| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS_v1.0.md` | **Complementa:** principios pedagógicos aplicados a las experiencias. |
-| `docs/vision/02_VISION_DEL_RINCON_DE_LECTURA_v1.0.md` | **Implementa:** visión de una experiencia específica de lectura. |
-| `docs/vision/03_PERFIL_INTELIGENTE_DEL_USUARIO_v1.0.md` | **Complementa:** visión futura de perfil y personalización. |
-| `docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA_v1.0.md` | **Complementa:** visión futura de memoria del producto. |
-| `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS_v1.0.md` | **Implementa:** experiencias matemáticas contextualizadas. |
-| `docs/vision/08_MI_CAMINO_v1.0.md` | **Implementa:** visión funcional de Mi Camino. |
+| `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` | **Referencia compatible:** remite a los fundamentos pedagógicos vigentes. |
+| `docs/vision/02_VISION_DEL_RINCON_DE_LECTURA.md` | **Complementa:** visión de una experiencia específica de lectura. |
+| `docs/vision/03_PERFIL_INTELIGENTE_DEL_USUARIO.md` | **Complementa:** visión futura de perfil y personalización. |
+| `docs/vision/04_MEMORIA_INTELIGENTE_DE_LA_ACADEMIA.md` | **Complementa:** visión futura de memoria del producto. |
+| `docs/vision/05_MANIFIESTO_DE_AVENTURAS_MATEMATICAS.md` | **Complementa:** experiencias matemáticas contextualizadas. |
+| `docs/vision/08_MI_CAMINO.md` | **Complementa:** visión funcional de Mi Camino. |
 
 ## Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza la arquitectura con Bitácora de Acompañamiento V1 ya validada y fusionada: el Dominio de Colaboración deja de ser solo una base futura y dispone de una primera experiencia activa sobre Persona Activa. Corrige referencias de visión con nombres obsoletos `_v1.0`, incorpora la frontera Bitácora ≠ evidencia/IA/Misión y reconoce la observación administrativa minimizada de accesos en Gestión de Usuarios. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 de la arquitectura de experiencia. |
 | 1.1-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1 con la experiencia real: incorpora Persona Activa y acceso multi-persona; reconoce la separación ya implementada entre Mi Camino y Gestión de Misiones; actualiza Recompensas V1, evidencia/Análisis Educativo, expansión curricular de 6.º y Mi Baúl; corrige rutas documentales y elimina formulaciones futuras ya superadas sin alterar los principios centrales de la arquitectura. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Versión aprobada. Adopta conformidad completa con el estándar documental: metadatos, relaciones, historial, alcance, jerarquía, índice, decisiones y cierre. |
@@ -81,7 +82,7 @@ Este documento gobierna:
 - los actores y sus responsabilidades;
 - los dominios del producto;
 - las relaciones entre contenidos, experiencias, acompañamiento, motivación, progreso, colaboración, IA y administración;
-- la interpretación arquitectónica de Mi Camino, Mis Cursos, Gestión de Misiones, Mis Aventuras, Mi Baúl y otros espacios transversales;
+- la interpretación arquitectónica de Mi Camino, Mis Cursos, Gestión de Misiones, Mis Aventuras, Mi Baúl, Bitácora de Acompañamiento y otros espacios transversales;
 - y los criterios para evaluar la evolución de nuevas capacidades.
 
 Quedan fuera de su alcance:
@@ -196,12 +197,14 @@ Durante agosto y septiembre de 2026 la Academia dio un nuevo salto:
 
 - identidad multi-persona y **Persona Activa**;
 - Gestión de Usuarios y niveles de acceso;
+- observación administrativa minimizada de accesos recientes;
 - **Gestión de Misiones** separada de la experiencia normal del alumno;
 - evidencia académica e histórico de solo lectura;
 - propuestas de refuerzo y Análisis Educativo basados en datos reales;
 - Recompensas/Reconocimientos V1 dentro de Mi Camino;
 - nueva base curricular `Curso → Asignatura → Tema` para 6.º;
-- y **Mi Baúl** como espacio personal para conservar contenidos e ideas de valor sin convertirlos en evaluación.
+- **Mi Baúl** como espacio personal para conservar contenidos e ideas de valor sin convertirlos en evaluación;
+- y **Bitácora de Acompañamiento V1** como primer espacio activo de colaboración estructurada entre familia y profesionales autorizados.
 
 Esta evolución mantiene el principio que permitió crecer desde el inicio:
 
@@ -307,6 +310,7 @@ Puede, según permisos:
 - observar el progreso;
 - revisar evidencias;
 - aportar observaciones;
+- compartir información de acompañamiento;
 - celebrar los logros;
 - y decidir ajustes.
 
@@ -325,7 +329,9 @@ La arquitectura de identidad y relaciones permite incorporar progresivamente:
 - orientador;
 - y otros profesionales autorizados.
 
-La base multi-persona y los niveles de acceso ya existen; la colaboración profesional concreta debe abrirse solo con permisos y casos de uso explícitos.
+La base multi-persona y los niveles de acceso existen. Desde el 06/09/2026, **Bitácora de Acompañamiento V1** ofrece además un primer caso concreto de colaboración profesional autorizada sobre Persona Activa.
+
+Esto no significa que todos los flujos profesionales estén abiertos ni que un profesional adquiera permisos generales de gestión. Cada capacidad conserva su contrato específico.
 
 El producto complementa su trabajo y nunca pretende sustituirlo.
 
@@ -355,6 +361,7 @@ No debe:
 - presionar;
 - castigar;
 - juzgar;
+- interpretar automáticamente aportaciones humanas sensibles sin un contrato explícito;
 - ni tomar decisiones humanas sensibles sin trazabilidad y el nivel de revisión requerido.
 
 ### 4.5 Arquitectos y responsables de producto
@@ -732,42 +739,67 @@ Permitir que las personas que acompañan al alumno compartan información útil 
 - PT;
 - logopeda;
 - psicólogo;
-- y futuros profesionales autorizados.
+- y otros profesionales autorizados.
 
 ### 10.3 Base actual
 
-La Academia ya dispone de una base transversal para colaboración controlada:
+La Academia dispone de una base transversal para colaboración controlada:
 
 - `PERSON` y `USER` separados conceptualmente;
 - roles y niveles de acceso;
 - relaciones entre Personas;
 - Persona Activa;
 - acceso a otra Persona según relación y nivel;
-- y Gestión de Usuarios para administración.
+- Gestión de Usuarios para administración;
+- y **Bitácora de Acompañamiento V1** como primera experiencia colaborativa explícita.
 
-Esto no significa que todos los flujos profesionales estén ya construidos. Significa que deben reutilizar esta identidad y permisos antes de crear mecanismos paralelos.
+La Bitácora reutiliza esta identidad y permisos; no introduce un segundo modelo de personas ni convierte a un profesional en gestor general del producto.
 
-### 10.4 Capacidades de colaboración
+### 10.4 Bitácora de Acompañamiento V1
 
-Pueden incluir:
+La primera materialización del dominio permite:
 
-- observaciones;
-- objetivos;
-- evidencias;
-- recomendaciones;
-- seguimiento;
-- validaciones;
-- y coordinación.
+- registrar observaciones, recomendaciones, dudas, sugerencias, acuerdos, seguimiento y mensajes;
+- indicar a quién va dirigido principalmente el mensaje;
+- controlar por separado quién puede leerlo;
+- compartir expresamente una entrada con el alumno cuando corresponde;
+- solicitar y registrar una única respuesta estructurada;
+- conservar autoría y fechas;
+- consultar el histórico autorizado sobre Persona Activa.
 
-### 10.5 Principios
+Reglas arquitectónicas:
+
+> **Destino comunica intención; visibilidad gobierna lectura.**
+
+> **Una respuesta hereda la visibilidad de su entrada.**
+
+> **Bitácora conserva aportaciones humanas; no las convierte automáticamente en evidencia académica, Misión, Análisis Educativo, Recompensa ni inferencia de IA.**
+
+La especificación propietaria es `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md`.
+
+### 10.5 Capacidades futuras de colaboración
+
+Solo ante necesidad real podrán incorporarse:
+
+- destinatarios profesionales más granulares;
+- adjuntos;
+- notificaciones proporcionales;
+- relaciones explícitas con otros objetos;
+- u otros flujos profesionales.
+
+No forman parte de V1 ni deben inferirse por existir la Bitácora.
+
+### 10.6 Principios
 
 - acceso mínimo necesario;
 - consentimiento y privacidad;
 - separación de observaciones adultas y mensajes al alumno;
+- destino y visibilidad no se confunden;
 - trazabilidad;
 - lenguaje respetuoso;
 - ausencia de comparaciones entre alumnos;
-- y uso de Persona Activa para atribuir correctamente la información.
+- Persona Activa para atribuir correctamente la información;
+- y fronteras explícitas frente a evidencia, IA, Misiones y Recompensas.
 
 ---
 
@@ -889,11 +921,13 @@ Pueden incluir:
 - pistas o ayudas;
 - textos;
 - producciones;
-- observaciones;
+- observaciones derivadas del motor;
 - solicitudes de ayuda;
 - y validaciones.
 
 No se inventan métricas que un motor no registra.
+
+Una entrada humana de Bitácora **no se clasifica automáticamente como evidencia académica** por contener una observación.
 
 ### 12.4 Progreso
 
@@ -938,6 +972,8 @@ El Análisis Educativo:
 - no etiqueta al alumno;
 - separa las métricas propias de cada motor;
 - y mantiene la decisión familiar/humana antes de convertir una propuesta en acción visible cuando corresponda.
+
+Las aportaciones humanas de Bitácora pueden orientar conversaciones o decisiones, pero no se mezclan silenciosamente con este pipeline.
 
 ### 12.6 Datos de prueba
 
@@ -1007,6 +1043,7 @@ La IA no debe modificar automáticamente sin el contrato y autorización adecuad
 - relaciones entre Personas;
 - decisiones finales de adultos;
 - Guacamayas u otros hitos que requieran control humano;
+- contenido humano de la Bitácora;
 - ni estados cuya modificación no pueda verificarse de forma fiable.
 
 La existencia de automatización no elimina la necesidad de límites. Los Reconocimientos automáticos ya implementados son un ejemplo de automatización acotada: se derivan de fuentes reales, con reglas explícitas, deduplicación y exclusión de datos de prueba.
@@ -1039,6 +1076,7 @@ Incluye:
 - permisos;
 - configuración;
 - auditoría;
+- observación administrativa minimizada de accesos;
 - seguridad;
 - mantenimiento;
 - versiones;
@@ -1051,6 +1089,8 @@ La administración no debe formar parte de la navegación habitual del alumno.
 Los adultos solo deben ver las capacidades que correspondan a su rol y nivel de acceso.
 
 La Academia ya aplica esta separación, por ejemplo, a Gestión de Usuarios y Gestión de Misiones mediante niveles mínimos de acceso.
+
+La observación administrativa de accesos conserva únicamente información limitada para utilidad operativa: fecha/hora y ubicación aproximada ciudad/región/país; no se convierte en GPS, seguimiento físico ni evidencia educativa.
 
 ---
 
@@ -1067,6 +1107,7 @@ No sustituyen a los dominios.
 | Mi Camino | Misiones, acompañamiento y crecimiento visible | Acompañamiento · Asignaciones · Progreso · Motivación |
 | Gestión de Misiones | Gestión familiar/administrativa de Misiones y análisis asociado | Asignaciones · Colaboración · Evidencias · Progreso |
 | Análisis Educativo | Lectura prudente de evidencia real y propuestas de actuación | Progreso · Evidencias · Acompañamiento |
+| Bitácora de Acompañamiento | Aportaciones humanas estructuradas y trazables sobre Persona Activa | Colaboración · Acompañamiento · Seguridad |
 | Mis Aventuras / Aventuras Matemáticas | Aprendizaje contextual y habilidades para la vida | Experiencias · Motivación |
 | Biblioteca / Rincón de Lectura | Lectura, comprensión, dicción y expresión | Contenidos · Experiencias · Evidencias |
 | Detectives | Resolución contextual de problemas | Experiencias · Práctica · Evidencias |
@@ -1075,7 +1116,7 @@ No sustituyen a los dominios.
 | Calendarios | Organización temporal personal y escolar | Acompañamiento · Organización |
 | Lía | Guía contextual y automatización acotada | IA · Acompañamiento · Motivación |
 | Guacamayas / Reconocimientos | Celebración de progreso real | Motivación · Identidad · Progreso |
-| Gestión de Usuarios | Administración de identidad, roles y relaciones | Administración · Seguridad · Colaboración |
+| Gestión de Usuarios | Administración de identidad, roles, relaciones y accesos recientes | Administración · Seguridad · Colaboración |
 
 ### 15.1 Sobre Mi Universo
 
@@ -1083,7 +1124,7 @@ Mi Universo es actualmente una agrupación importante de experiencias personales
 
 No es el contenedor único de toda la Academia.
 
-**Mis Cursos**, **Administración** y **Explorar más** mantienen responsabilidades y rutas propias en la navegación actual.
+**Mis Cursos**, **Administración**, **Explorar más** y **Bitácora de Acompañamiento** mantienen responsabilidades y rutas propias en la navegación actual.
 
 Por tanto, la arquitectura no fuerza que todo deba vivir dentro de Mi Universo. Su función es agrupar experiencias personales coherentes, mientras otros dominios conservan sus propios puntos de entrada.
 
@@ -1213,7 +1254,27 @@ Puede volver a consultarlo o compartir significado
 
 Este flujo termina allí: **no crea Misión, evidencia, estadística ni recompensa**.
 
-### 16.7 Evolución del producto
+### 16.7 Colaboración mediante Bitácora
+
+```text
+Familia o profesional autorizado
+        ↓
+Selecciona Persona Activa
+        ↓
+Publica aportación estructurada
+        ↓
+Define destino + visibilidad
+        ↓
+Personas autorizadas consultan
+        ↓
+Puede existir una única respuesta si fue solicitada
+        ↓
+La aportación permanece como registro humano trazable
+```
+
+Este flujo **no deriva automáticamente** en Misión, evidencia, análisis, recompensa o interpretación de IA.
+
+### 16.8 Evolución del producto
 
 ```text
 Idea
@@ -1269,7 +1330,7 @@ Las funciones de gestión deben protegerse mediante permisos y no solo mediante 
 
 ### 17.5 Persona Activa coherente
 
-Cuando un adulto autorizado acompaña a otra Persona, la navegación y las operaciones deben conservar la **Persona Activa** y atribuir correctamente sesiones, evidencias y progreso.
+Cuando un adulto autorizado acompaña a otra Persona, la navegación y las operaciones deben conservar la **Persona Activa** y atribuir correctamente sesiones, evidencias, progreso y aportaciones de colaboración.
 
 La identidad autenticada y la Persona sobre la que se trabaja no deben confundirse.
 
@@ -1296,10 +1357,10 @@ No debe depender de:
 Las mejoras y conclusiones sobre progreso deben apoyarse en:
 
 - uso real;
-- observaciones;
+- observaciones verificables;
 - resultados;
 - comentarios de Gloria;
-- y aportaciones de la familia y profesionales.
+- y aportaciones de la familia y profesionales cuando se distingan como fuente humana.
 
 Una señal aislada no se convierte en una etiqueta personal.
 
@@ -1336,8 +1397,9 @@ Actualmente:
 
 - Mi Camino concentra la experiencia del alumno respecto a Misiones y crecimiento visible;
 - Gestión de Misiones concentra la gestión adulta/familiar y exige acceso de gestión;
-- Gestión de Usuarios está separada en Administración;
+- Gestión de Usuarios está separada en Administración e incluye observación administrativa minimizada de accesos recientes;
 - Persona Activa permite operar sobre otra Persona autorizada sin duplicar pantallas;
+- Bitácora de Acompañamiento materializa una primera colaboración humana estructurada sin convertirse en chat ni evidencia;
 - Mis Cursos crece mediante Curso → Asignatura → Tema;
 - evidencia, sesiones y visores históricos mantienen responsabilidades diferenciadas;
 - Análisis Educativo consume datos reales sin persistir un diagnóstico paralelo;
@@ -1363,11 +1425,12 @@ EXPERIENCIA DEL ALUMNO
 ├── Conservar contenidos personales
 └── Celebrar
 
-ACOMPAÑAMIENTO ADULTO
+ACOMPAÑAMIENTO ADULTO / PROFESIONAL
 ├── Crear objetivos
 ├── Asignar
 ├── Revisar
 ├── Observar
+├── Compartir aportaciones
 ├── Analizar
 ├── Validar
 └── Ajustar
@@ -1377,6 +1440,7 @@ CAPACIDADES TRANSVERSALES
 ├── IA
 ├── Progreso
 ├── Evidencias
+├── Colaboración
 ├── Seguridad
 ├── Permisos
 └── Datos
@@ -1443,6 +1507,8 @@ Explican aspiraciones y principios de dominios específicos.
 
 No deben duplicar la arquitectura global ni declararse como estado implementado cuando describen futuro.
 
+Las rutas activas se consultan en `docs/vision/README.md`; no deben asumirse nombres históricos con sufijos de versión que ya no existen.
+
 ### 20.4 Modelos
 
 Definen entidades, estados y relaciones conceptuales o de datos.
@@ -1451,10 +1517,11 @@ Definen entidades, estados y relaciones conceptuales o de datos.
 
 Definen el comportamiento concreto de una capacidad.
 
-Ejemplo:
+Ejemplos:
 
 ```text
 docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md
+docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md
 ```
 
 ### 20.6 Estándares
@@ -1637,6 +1704,22 @@ Mitigación:
 
 - mantener contratos como Mi Baúl, donde conservar contenido no genera Misiones, evidencia, estadísticas ni Recompensas.
 
+### 22.10 Confundir colaboración humana con evidencia o chat
+
+Riesgo:
+
+- incorporar opiniones humanas como métricas automáticas;
+- ampliar accidentalmente la audiencia de información sensible;
+- convertir la colaboración en mensajería sin límites.
+
+Mitigación:
+
+- Bitácora con contrato propietario;
+- destino y visibilidad separados;
+- respuesta única en V1;
+- autoría trazable;
+- no integración automática con evidencia, Misiones, Recompensas o IA.
+
 ---
 
 ## 23. Hoja de evolución recomendada
@@ -1647,15 +1730,16 @@ La arquitectura recomienda mantener estas direcciones:
 
 ### Corto plazo
 
+- usar la Academia durante la fase de uso prioritario y corregir issues reales;
 - continuar la expansión curricular real de 6.º mediante `Curso → Asignatura → Tema`;
 - preservar evidencia estructurada desde los nuevos Temas cuando corresponda;
-- completar la revisión técnica pendiente de identidad, auditoría y regresión del núcleo;
-- seguir refinando Mi Camino y Gestión de Misiones sin volver a mezclar sus responsabilidades;
+- usar Bitácora V1 con familia/profesionales y observar si resuelve la necesidad antes de ampliarla;
+- seguir refinando Mi Camino y Gestión de Misiones solo cuando el uso real lo justifique;
 - mejorar la calidad de fuentes antes de ampliar automatizaciones educativas o motivacionales.
 
 ### Medio plazo
 
-- ampliar colaboración profesional sobre la base multi-persona existente cuando existan casos reales;
+- ampliar colaboración profesional solo si el uso de Bitácora V1 demuestra necesidades no cubiertas;
 - mejorar perfiles y memoria solo con datos suficientes;
 - ampliar Análisis Educativo y refuerzos a nuevos motores sin inventar métricas;
 - continuar las fases futuras de Motivación únicamente cuando la evidencia y el valor lo justifiquen.
@@ -1681,7 +1765,7 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 
 1. El alumno es el centro del ecosistema.
 2. La Academia diseña experiencias, no colecciones de funcionalidades.
-3. Contenido, acompañamiento, asignación, evidencia y reconocimiento son responsabilidades diferentes.
+3. Contenido, acompañamiento, asignación, colaboración humana, evidencia y reconocimiento son responsabilidades diferentes.
 4. Mi Camino organiza y acompaña; no debe poseer todo el producto.
 5. La gestión adulta se mantiene separada de la experiencia normal del alumno y protegida por permisos.
 6. Persona Activa determina de quién son los datos cuando el contexto difiere del usuario autenticado.
@@ -1697,7 +1781,8 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 16. Se reutiliza y evoluciona antes de duplicar.
 17. Cada conocimiento, dato y capacidad debe tener un propietario claro.
 18. No todo contenido valioso debe convertirse en Misión o evidencia.
-19. El producto debe poder crecer durante años sin perder su ADN.
+19. Una aportación humana no se convierte automáticamente en evidencia, análisis o decisión de IA.
+20. El producto debe poder crecer durante años sin perder su ADN.
 
 ---
 
@@ -1709,7 +1794,7 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 
 > **Cada nueva capacidad deberá demostrar que mejora una experiencia real, respeta el ADN del producto, reutiliza adecuadamente lo existente y aporta un beneficio suficiente para justificar su coste.**
 
-> **Los datos y automatizaciones deben servir al aprendizaje sin convertir observaciones en etiquetas, pruebas en historia real ni curiosidad personal en evaluación obligatoria.**
+> **Los datos y automatizaciones deben servir al aprendizaje sin convertir observaciones en etiquetas, pruebas en historia real, aportaciones humanas en métricas automáticas ni curiosidad personal en evaluación obligatoria.**
 
 ---
 
@@ -1730,16 +1815,18 @@ Toda evolución deberá conservar la posibilidad de cambiar de dirección según
 | PEA-011 | Mantener datos `🧪` fuera de estadísticas, constancia y Reconocimientos reales. | Aprobada · implementada | Calidad de datos |
 | PEA-012 | Estructurar la expansión curricular mediante Curso → Asignatura → Tema y generar evidencia desde el nacimiento de nuevos Temas cuando corresponda. | Aprobada · base implementada | Mis Cursos · 6.º |
 | PEA-013 | Mantener Mi Baúl como espacio personal curado que no genera Misiones, evidencias, estadísticas ni Recompensas. | Aprobada · implementada | Contenidos · Acompañamiento |
+| PEA-014 | Materializar el Dominio de Colaboración inicialmente mediante Bitácora de Acompañamiento sobre Persona Activa, manteniendo destino/visibilidad separados y fronteras explícitas respecto a chat, evidencia, Misiones, Recompensas e IA. | Aprobada · V1 implementada | Colaboración · Privacidad · Profesionales |
+| PEA-015 | Mantener la observación administrativa de accesos minimizada y separada de evidencia educativa y seguimiento físico. | Aprobada · V1 implementada | Administración · Privacidad |
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.1 |
-| **Fecha de aprobación** | 04/09/2026 |
+| **Versión activa** | 1.2 |
+| **Fecha de aprobación/sincronización** | 06/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` v1.0 |
+| **Sustituye** | `PRODUCT_EXPERIENCE_ARCHITECTURE.md` v1.1 |
 | **Sustituido por** | — |
 
-**Impacto:** Arquitectura del Producto · Experiencia del Alumno · Persona Activa · Mi Camino · Gestión de Misiones · Familia · IA · Evidencias · Motivación · Evolución Responsable
+**Impacto:** Arquitectura del Producto · Experiencia del Alumno · Persona Activa · Mi Camino · Gestión de Misiones · Familia · Profesionales · Bitácora · IA · Evidencias · Motivación · Evolución Responsable

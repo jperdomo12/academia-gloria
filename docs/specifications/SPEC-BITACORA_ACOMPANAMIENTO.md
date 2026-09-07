@@ -4,13 +4,14 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` |
-| **Versión** | 1.0-rc3 |
-| **Estado** | Candidato · V1 construida en rama y pendiente de validación del Product Owner |
+| **Versión** | 1.0 |
+| **Estado** | Activo · V1 validada y fusionada |
 | **Fecha** | 06/09/2026 |
 | **Última actualización** | 06/09/2026 |
 | **Propietario** | Colaboración y Acompañamiento |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Registro colaborativo de observaciones, recomendaciones, dudas, sugerencias, seguimiento y una respuesta estructurada sobre la Persona Activa |
+| **Baseline funcional validado** | `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` · PR #83 + corrección PR #85 |
 
 ## 🔗 Documentos relacionados
 
@@ -20,6 +21,7 @@
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna conceptualmente:** Dominio de Colaboración, participantes, privacidad, trazabilidad y separación entre observaciones adultas y mensajes al alumno. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** USER/PERSON, Persona Activa, relaciones y nivel efectivo de acceso. |
 | `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | **Gobierna técnicamente:** reutilización, UX, navegación, seguridad y catálogos cerrados. |
+| `docs/standards/STD-PANEL_DE_USUARIO.md` | **Gobierna:** representación del nodo principal de Bitácora dentro del Panel y acceso directo cuando el nodo no tiene hijos. |
 | `docs/models/MODELO_NAVEGACION.md` | **Gobierna conceptualmente:** árbol compartido, Persona Activa y cabecera global. |
 | `docs/models/MODELO_ARBOL_NAVEGACION.md` | **Representa:** árbol visible del producto. |
 | `compartido/modelos/bitacora-acompanamiento.js` | **Implementa:** catálogos, validación y contrato de datos V1. |
@@ -31,6 +33,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 06/09/2026 | Product Owner + AI Collaborator | Activa la V1 después de validación funcional y merge de PR #83. Registra la corrección PR #85 para presentar la Bitácora como opción principal de un solo nivel, confirma Rules publicadas en Firebase durante la validación y fija el baseline funcional en `58cab370...`. |
 | 1.0-rc3 | 06/09/2026 | Product Owner + AI Collaborator | Alinea la especificación con la posición de menú aprobada: `Bitácora de Acompañamiento` queda como penúltima opción principal, inmediatamente después de `Explorar más` y antes de `Descubre la Academia`. |
 | 1.0-rc2 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el contrato con el endurecimiento previo a prueba: aclara que una respuesta hereda exactamente la visibilidad de su entrada, que una respuesta incluida en una entrada visible al alumno también será visible para él, y mantiene la advertencia explícita antes de publicar/contestar. |
 | 1.0-rc1 | 06/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria. Materializa el Dominio de Colaboración como Bitácora de Acompañamiento V1: opción de menú, Persona Activa, entradas estructuradas, destino y visibilidad separados, opción `Otros` en catálogos cerrados, una única respuesta, autoría trazable, permisos específicos y fronteras respecto a chat, Misiones, evidencias, IA y Análisis Educativo. |
@@ -54,6 +57,7 @@ La Bitácora conserva aportaciones humanas y facilita continuidad entre quienes 
 ### 2.1 Incluido en V1
 
 - opción visible `🤝 Bitácora de Acompañamiento` en el menú compartido;
+- acceso como nodo principal **sin segundo nivel** cuando no tiene hijos;
 - contexto explícito de Persona Activa;
 - listado cronológico de entradas, más reciente primero;
 - creación de entradas por familia/profesionales relacionados y administración;
@@ -338,9 +342,9 @@ La fuente canónica es:
 compartido/firebase/FireStore Rules.txt
 ```
 
-> **Modificar este archivo en GitHub no despliega automáticamente las reglas en Firebase.** Antes de una prueba funcional remota que escriba/lea esta nueva colección, las Rules vigentes deben estar desplegadas en el proyecto Firebase correspondiente.
+> **Modificar este archivo en GitHub no despliega automáticamente las reglas en Firebase.** Antes de una prueba funcional remota que escriba/lea esta colección, las Rules vigentes deben estar desplegadas en el proyecto Firebase correspondiente.
 
-**Estado operativo de esta candidata:** el Product Owner confirmó el 06/09/2026 que las Rules canónicas de la Bitácora fueron publicadas en Firebase para permitir la validación funcional V1.
+**Estado operativo V1:** el Product Owner confirmó el 06/09/2026 que las Rules canónicas de la Bitácora fueron publicadas en Firebase y la V1 fue validada funcionalmente antes del merge.
 
 ---
 
@@ -389,6 +393,15 @@ No se implementa todavía un workflow de reapertura, archivo o cierre administra
 La Bitácora es un **nodo principal del menú compartido**, no parte de `Mi espacio personal`.
 
 Por decisión de producto, aparece como **penúltima opción principal**, inmediatamente después de `Explorar más` y antes de `Descubre la Academia`.
+
+Además, el Panel aplica la regla transversal validada en PR #85:
+
+```text
+nodo principal con hijos → grupo desplegable
+nodo principal sin hijos → enlace directo
+```
+
+Por tanto, `🤝 Bitácora de Acompañamiento` se abre con un solo clic y no crea un segundo nivel artificial.
 
 Ubicación conceptual:
 
@@ -558,29 +571,30 @@ entrada con respuesta
 
 ## ✅ 16. Quality Gate
 
-Antes de declarar la V1 implementada y cerrada:
+Estado tras validación y merge de V1:
 
-- [ ] nueva ruta carga sin errores de sintaxis/imports;
-- [ ] opción de menú resuelve correctamente la ruta;
-- [ ] Bitácora aparece como penúltima opción principal, antes de `Descubre la Academia`;
-- [ ] cabecera global se carga una sola vez;
-- [ ] Persona Activa se conserva;
-- [ ] filtros no amplían visibilidad;
-- [ ] `Otros` funciona en los tres catálogos;
-- [ ] profesional con relación `consulta` puede publicar su propia entrada;
-- [ ] alumno no puede publicar ni responder en V1;
-- [ ] alumno no ve notas adultas;
-- [ ] alumno sí ve una entrada expresamente compartida;
-- [ ] una respuesta visible al alumno solo existe dentro de una entrada ya visible al alumno;
-- [ ] una entrada privada solo es visible para su autor/admin;
-- [ ] una respuesta solo puede registrarse una vez;
-- [ ] autor de la entrada no puede auto-responderla;
-- [ ] Firestore Rules bloquean edición/eliminación no prevista;
-- [ ] fallback legacy no reabre permisos sobre la colección;
-- [ ] no se generan Misiones, evidencias ni Recompensas;
-- [ ] responsive básico funciona en móvil/tablet/escritorio;
+- [x] nueva ruta carga sin errores de sintaxis/imports;
+- [x] opción de menú resuelve correctamente la ruta;
+- [x] Bitácora aparece como penúltima opción principal, antes de `Descubre la Academia`;
+- [x] Bitácora aparece como nodo directo de un solo nivel;
+- [x] cabecera global se carga una sola vez;
+- [x] Persona Activa se conserva;
+- [x] filtros no amplían visibilidad;
+- [x] `Otros` funciona en los tres catálogos;
+- [x] profesional con relación `consulta` puede publicar su propia entrada;
+- [x] alumno no puede publicar ni responder en V1;
+- [x] alumno no ve notas adultas;
+- [x] alumno sí ve una entrada expresamente compartida;
+- [x] una respuesta visible al alumno solo existe dentro de una entrada ya visible al alumno;
+- [x] una entrada privada solo es visible para su autor/admin;
+- [x] una respuesta solo puede registrarse una vez;
+- [x] autor de la entrada no puede auto-responderla;
+- [x] Firestore Rules bloquean edición/eliminación no prevista;
+- [x] fallback legacy no reabre permisos sobre la colección;
+- [x] no se generan Misiones, evidencias ni Recompensas;
+- [x] responsive básico funciona en móvil/tablet/escritorio;
 - [x] Rules canónicas desplegadas antes de validar la persistencia remota;
-- [ ] diff final coincide con el alcance aprobado.
+- [x] diff funcional final coincide con el alcance aprobado.
 
 ---
 
@@ -615,6 +629,7 @@ Estas extensiones requieren nueva decisión; no se infieren de V1.
 | BIT-009 | `Otros` de visibilidad utiliza un comportamiento conservador privado al autor hasta que exista un modelo explícito para otra audiencia. | Aprobada |
 | BIT-010 | Las entradas humanas no se convierten automáticamente en Misiones, evidencias, análisis o Recompensas. | Aprobada |
 | BIT-011 | La respuesta no define una audiencia nueva: hereda la visibilidad de la entrada y la UI lo advierte antes de responder. | Aprobada |
+| BIT-012 | Un nodo principal sin hijos se renderiza como enlace directo; la Bitácora no introduce un segundo nivel artificial en el Panel. | Aprobada |
 
 ---
 
@@ -624,12 +639,12 @@ Actualizar esta especificación cuando cambie el comportamiento funcional de la 
 
 No duplicar aquí reglas transversales de identidad, navegación o desarrollo más allá del resumen necesario para comprender el módulo.
 
-Cuando la V1 sea validada y fusionada:
+Una nueva versión funcional deberá:
 
-- cambiar estado de candidato a `Activo`;
-- asignar versión estable `1.0`;
+- registrar el cambio estable en esta especificación;
 - sincronizar árbol de navegación, HandOff, Roadmap/Release Notes cuando corresponda;
-- registrar el baseline real fusionado.
+- registrar el baseline real fusionado;
+- distinguir Rules versionadas en Git de Rules efectivamente desplegadas.
 
 ---
 
@@ -637,7 +652,8 @@ Cuando la V1 sea validada y fusionada:
 
 | Campo | Valor |
 |---|---|
-| **Estado funcional** | ✅ Diseño aprobado · implementación V1 en rama · Rules publicadas · pendiente de prueba del Product Owner |
-| **Versión candidata** | 1.0-rc3 |
+| **Estado funcional** | ✅ V1 validada, Rules publicadas y funcionalidad fusionada en `main` |
+| **Versión activa** | 1.0 |
+| **Baseline funcional** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
 | **Propietario funcional** | Colaboración y Acompañamiento |
 | **Regla central** | Compartir información útil con trazabilidad y visibilidad controlada, sin convertir la Academia en chat ni vigilancia. |

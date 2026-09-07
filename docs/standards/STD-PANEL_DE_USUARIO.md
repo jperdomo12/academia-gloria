@@ -5,10 +5,10 @@
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-PANEL_DE_USUARIO.md` |
 | **Código** | STD-006 |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 06/09/2026 |
 | **Propietario** | Identidad visible y navegación personal |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Identidad visible del Usuario autenticado, Persona Activa, menú del Panel, integración con cabecera global, reutilización, responsive y fronteras de seguridad |
@@ -21,6 +21,8 @@
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna/complementa:** experiencia multi-actor y separación entre identidad, Persona Activa y espacios funcionales. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** USER, PERSON, Persona Activa, Roles, Relaciones y acceso efectivo. |
 | `docs/models/MODELO_NAVEGACION.md` | **Modela:** navegación y ubicación de capacidades. |
+| `docs/models/MODELO_ARBOL_NAVEGACION.md` | **Representa:** árbol funcional visible vigente. |
+| `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** contrato funcional de Bitácora de Acompañamiento V1. |
 | `compartido/modelos/navegacion.js` | **Implementa:** árbol central de navegación y requisitos mínimos de acceso. |
 | `compartido/js/contexto-usuario.js` | **Implementa:** identidad, Persona propia, Persona Activa y nivel efectivo. |
 | `compartido/js/perfil-usuario.js` | **Implementa:** servicio compartido de perfil/saludo sobre el contexto actual. |
@@ -32,6 +34,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el estándar con PR #83/#85: incorpora Bitácora de Acompañamiento como nodo principal del menú central y formaliza la regla `nodo con hijos → grupo desplegable / nodo sin hijos → enlace directo`. Corrige además la referencia propietaria del árbol técnico a `compartido/modelos/navegacion.js`. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 del Panel de Usuario. |
 | 1.2-rc1 | 04/09/2026 | Product Owner + AI Collaborator | Sincronización P1. Formaliza que el Panel representa a la Persona propia del Usuario autenticado y que Persona Activa es un contexto separado; documenta selector de Persona Activa, menú derivado de la navegación central y filtrado por nivel; actualiza fuentes de identidad hacia ContextoUsuario/PERSON; mantiene el host canónico único de cabecera; conserva como excepción técnica controlada las lecturas directas actuales de relaciones/Personas realizadas por el propio Panel. |
 | 1.1 | 24/08/2026 | Equipo del proyecto | Formalizó host canónico único en cabecera global, neutralización compatible de hosts heredados, mismo CSS/JS/menú y reinicialización segura. |
@@ -224,7 +227,7 @@ Una opción futura no debe presentarse como producto operativo.
 
 ### 7.2 Navegación central
 
-Las secciones principales proceden de:
+Las secciones y nodos principales proceden de:
 
 ```text
 compartido/modelos/navegacion.js
@@ -236,9 +239,28 @@ El Panel no debe mantener una segunda copia divergente de:
 - Mis Cursos;
 - Administración;
 - Explorar más;
-- ni sus hijos.
+- Bitácora de Acompañamiento;
+- ni sus hijos cuando existan.
 
-### 7.3 Filtrado por nivel
+`Descubre la Academia` se integra desde la misma fuente central mediante su acceso destacado.
+
+### 7.3 Representación de nodos con y sin hijos
+
+Regla transversal validada:
+
+```text
+nodo principal con hijos → grupo desplegable
+nodo principal sin hijos → enlace directo
+```
+
+Consecuencias:
+
+- un nodo principal no necesita un hijo artificial `Abrir ...` para ser navegable;
+- la Bitácora de Acompañamiento, al no tener hijos en V1, se abre con un solo clic;
+- los grupos con hijos mantienen su control de expansión y navegación según el modelo vigente;
+- la estructura visual del Panel debe derivarse de los datos del árbol, no de excepciones por nombre de módulo.
+
+### 7.4 Filtrado por nivel
 
 El Panel filtra las ubicaciones según `nivelMinimo` y el nivel efectivo actual.
 
@@ -247,6 +269,8 @@ Ejemplos:
 - Gestión de Misiones → `gestion`+;
 - Administración → `administracion`;
 - Gestión de Usuarios → `administracion`.
+
+Bitácora no declara un `nivelMinimo` superior en el árbol, pero su capacidad real está protegida adicionalmente por su contrato de módulo, Persona Activa, relaciones y Firestore Rules.
 
 Este filtrado mejora la experiencia, pero **no constituye por sí solo seguridad**.
 
@@ -353,7 +377,7 @@ El Panel no debe inventar datos faltantes ni depender de email/login como identi
 
 ## ⚙️ 11. Responsabilidades por componente
 
-### `panel-usuario.js`
+### `compartido/js/panel-usuario.js`
 
 Responsable de:
 
@@ -364,6 +388,7 @@ Responsable de:
 - ofrecer selector de Persona Activa cuando corresponde;
 - construir el menú compartido;
 - filtrar navegación por nivel;
+- representar nodos con hijos como grupos y nodos sin hijos como enlaces directos;
 - abrir/cerrar el menú;
 - gestionar responsive del menú;
 - ejecutar cierre de sesión;
@@ -371,7 +396,7 @@ Responsable de:
 - no acumular listeners globales;
 - tratar inicializaciones heredadas contra hosts inexistentes como no-op seguro.
 
-### `contexto-usuario.js`
+### `compartido/js/contexto-usuario.js`
 
 Responsable de:
 
@@ -383,7 +408,7 @@ Responsable de:
 - nivel efectivo;
 - selección/retorno de Persona Activa.
 
-### `perfil-usuario.js`
+### `compartido/js/perfil-usuario.js`
 
 Responsable de:
 
@@ -393,7 +418,7 @@ Responsable de:
 - cierre de sesión;
 - compatibilidad temporal con consumidores existentes.
 
-### `navegacion-global.js`
+### `compartido/componentes/navegacion-global.js`
 
 Responsable de:
 
@@ -402,15 +427,17 @@ Responsable de:
 - neutralizar hosts heredados;
 - iniciar una única instancia visible.
 
-### `navegacion.js`
+### `compartido/modelos/navegacion.js`
 
 Responsable de:
 
-- definir el árbol de navegación;
+- definir el árbol central de navegación;
 - rutas;
 - títulos;
 - iconos semánticos;
-- requisitos mínimos de acceso.
+- hijos;
+- requisitos mínimos de acceso;
+- ubicaciones auxiliares que no deben convertirse en opciones visibles.
 
 ---
 
@@ -432,7 +459,8 @@ No se debe:
 - copiar el HTML del Panel a cada página;
 - mantener menús privados divergentes;
 - crear CSS local que reinterprete el Panel;
-- crear un selector de Persona Activa distinto por módulo.
+- crear un selector de Persona Activa distinto por módulo;
+- codificar excepciones de menú por nombre cuando la forma del nodo ya está declarada en el modelo central.
 
 ---
 
@@ -512,7 +540,7 @@ Cualquier integración futura debe:
 
 ## 🚫 17. Supuestos retirados de v1.1
 
-La v1.2 deja de tratar como reglas vigentes estas formulaciones anteriores:
+La v1.2 y posteriores dejan de tratar como reglas vigentes estas formulaciones anteriores:
 
 1. **“El Panel representa permanentemente la identidad del alumno.”**  
    El producto es multi-actor. El Panel representa la Persona propia del Usuario autenticado, que puede ser alumno, familiar, profesional o administrador.
@@ -553,7 +581,10 @@ Antes de modificar el Panel o integrar una nueva pantalla:
 
 ### Navegación
 
-- [ ] Las rutas principales proceden del modelo central.
+- [ ] Las rutas principales proceden de `compartido/modelos/navegacion.js`.
+- [ ] Un nodo principal con hijos se representa como grupo desplegable.
+- [ ] Un nodo principal sin hijos se representa como enlace directo.
+- [ ] No se introduce un segundo nivel artificial para abrir un nodo sin hijos.
 - [ ] El nivel mínimo se respeta en la presentación.
 - [ ] El módulo vuelve a validar permisos reales.
 - [ ] Las opciones futuras no parecen implementadas.
@@ -592,6 +623,7 @@ Antes de modificar el Panel o integrar una nueva pantalla:
 | PU-007 | El filtrado del menú mejora UX pero no sustituye seguridad de módulo/API/Firestore. | Aprobada |
 | PU-008 | Las lecturas directas de relaciones/Personas permanecen como excepción localizada, no como patrón reusable. | Aprobada |
 | PU-009 | Opciones futuras no se declaran operativas hasta existir producto real. | Aprobada |
+| PU-010 | Los nodos principales con hijos se representan como grupos desplegables y los nodos principales sin hijos como enlaces directos. | Aprobada · implementada |
 
 ---
 
@@ -600,10 +632,10 @@ Antes de modificar el Panel o integrar una nueva pantalla:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.2 |
-| **Fecha de aprobación** | 04/09/2026 |
+| **Versión activa** | 1.3 |
+| **Última sincronización funcional** | 06/09/2026 · PR #85 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `STD-PANEL_DE_USUARIO.md` v1.1 |
+| **Sustituye** | `STD-PANEL_DE_USUARIO.md` v1.2 |
 | **Principio central** | El Panel identifica a quien inició sesión; Persona Activa indica con quién se trabaja. |
 
 **Impacto:** Panel de Usuario · Persona Activa · Navegación · Identidad · Seguridad · Cabecera global · Multi-persona
