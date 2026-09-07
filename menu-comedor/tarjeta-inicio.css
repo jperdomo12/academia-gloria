@@ -80,8 +80,8 @@
 .menu-inicio h2{
   margin:0 0 8px;
   color:#27324a;
-  font-size:clamp(1.35rem,2.3vw,1.9rem);
-  line-height:1.08;
+  font-size:clamp(1.14rem,1.8vw,1.55rem);
+  line-height:1.12;
 }
 
 .menu-inicio__platos{
