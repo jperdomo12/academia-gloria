@@ -208,8 +208,9 @@ img { max-width: 100%; height: auto; }
 .zona-secundaria .modulo.baul .modulo-icono::before {
   content: "";
   position: absolute;
-  inset: 7px;
+  inset: 10px;
   background: url("../../assets/iconos/icono-baul-home.webp") center / contain no-repeat;
+  mix-blend-mode: multiply;
 }
 
 .zona-secundaria .modulo.adicionales .modulo-icono {
@@ -220,8 +221,9 @@ img { max-width: 100%; height: auto; }
 .zona-secundaria .modulo.adicionales .modulo-icono::before {
   content: "";
   position: absolute;
-  inset: 6px;
+  inset: 10px;
   background: url("../../assets/iconos/icono-adicionales-adjunto.webp") center / contain no-repeat;
+  mix-blend-mode: multiply;
 }
 
 @media (max-width: 720px) {
