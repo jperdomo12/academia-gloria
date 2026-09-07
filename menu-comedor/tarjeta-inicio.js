@@ -37,10 +37,15 @@ function asegurarEstilos() {
 }
 
 function htmlPlatos(menu) {
+  const acompanamiento = menu.acompanamiento
+    ? `<span class="menu-inicio__plato"><span aria-hidden="true">🥗</span><strong>${escapar(menu.acompanamiento)}</strong></span>`
+    : "";
   const postreIcono = menu.postre.toLowerCase().includes("yogur") ? "🥛" : "🍎";
+
   return `
-    <span class="menu-inicio__plato"><span aria-hidden="true">🥣</span><strong>${escapar(menu.primero)}</strong></span>
-    <span class="menu-inicio__plato"><span aria-hidden="true">🍽️</span><strong>${escapar(menu.segundo)}</strong></span>
+    <span class="menu-inicio__plato"><span aria-hidden="true">🍲</span><strong>${escapar(menu.primero)}</strong></span>
+    <span class="menu-inicio__plato"><span aria-hidden="true">🍴</span><strong>${escapar(menu.segundo)}</strong></span>
+    ${acompanamiento}
     <span class="menu-inicio__plato"><span aria-hidden="true">${postreIcono}</span><strong>${escapar(menu.postre)}</strong></span>
   `;
 }
@@ -96,15 +101,15 @@ async function crearTarjeta() {
     enlace.innerHTML = `
       <div class="menu-inicio__intro">
         <span class="menu-inicio__icono" aria-hidden="true">🍽️</span>
-        <span class="menu-inicio__etiqueta">🍽️ Menú del Cole</span>
+        <span class="menu-inicio__etiqueta">Menú del Cole</span>
         <span class="menu-inicio__fecha">Tu menú mensual</span>
       </div>
 
       <div class="menu-inicio__contenido">
         <h2>${escapar(nombre)}, tu menú vive aquí</h2>
         <div class="menu-inicio__platos">
-          <span class="menu-inicio__plato"><span aria-hidden="true">🥣</span><strong>Primer plato</strong></span>
-          <span class="menu-inicio__plato"><span aria-hidden="true">🍽️</span><strong>Segundo plato</strong></span>
+          <span class="menu-inicio__plato"><span aria-hidden="true">🍲</span><strong>Primer plato</strong></span>
+          <span class="menu-inicio__plato"><span aria-hidden="true">🍴</span><strong>Segundo plato</strong></span>
           <span class="menu-inicio__plato"><span aria-hidden="true">🍎</span><strong>Postre</strong></span>
         </div>
       </div>
