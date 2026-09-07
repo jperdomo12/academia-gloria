@@ -77,6 +77,7 @@ async function crearTarjeta() {
 
     enlace.innerHTML = `
       <div class="menu-inicio__intro">
+        <span class="menu-inicio__icono" aria-hidden="true">🍽️</span>
         <span class="menu-inicio__etiqueta">${menuHoy ? "⭐ Hoy en el comedor" : "👀 Próximo menú"}</span>
       </div>
 
@@ -94,6 +95,7 @@ async function crearTarjeta() {
   } else {
     enlace.innerHTML = `
       <div class="menu-inicio__intro">
+        <span class="menu-inicio__icono" aria-hidden="true">🍽️</span>
         <span class="menu-inicio__etiqueta">🍽️ Menú del Cole</span>
         <span class="menu-inicio__fecha">Tu menú mensual</span>
       </div>
