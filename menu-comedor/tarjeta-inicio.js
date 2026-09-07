@@ -16,6 +16,22 @@ function escapar(texto = "") {
     .replaceAll("'", "&#039;");
 }
 
+function normalizarCriterio(valor = "") {
+  return String(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+}
+
+function puedeVerMenuComedor(perfil = {}) {
+  const colegio = normalizarCriterio(perfil.colegio);
+  const rol = normalizarCriterio(perfil.roleId || perfil.tipoUsuario);
+  const esGaudem = colegio === "gaudem" || colegio === "colegio gaudem";
+
+  return esGaudem && rol === "alumno";
+}
+
 function fechaDesdeClave(clave) {
   const [anio, mes, dia] = clave.split("-").map(Number);
   return new Date(anio, mes - 1, dia, 12, 0, 0, 0);
@@ -56,9 +72,11 @@ async function crearTarjeta() {
   const referencia = document.querySelector(".hero");
   if (!referencia) return;
 
+  const perfil = await obtenerPerfil();
+  if (!puedeVerMenuComedor(perfil)) return;
+
   asegurarEstilos();
 
-  const perfil = await obtenerPerfil();
   const nombre = perfil.nombreVisible || perfil.nombre || "Exploradora";
   const hoy = new Date();
   hoy.setHours(12, 0, 0, 0);
