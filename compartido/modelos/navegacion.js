@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v2.0
+ * Modelo central de navegación · v2.1
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -221,6 +221,15 @@ const UBICACIONES_AUXILIARES = Object.freeze([
     icono: "🏫",
     ruta: "calendarios/escolar/",
     volver: "calendarios/",
+    cabeceraGlobal: true,
+    limpiarNavegacionLegada: true
+  },
+  {
+    id: "calendario-escolar-2026-2027",
+    titulo: "Calendario Escolar 2026-2027",
+    icono: "🗓️",
+    ruta: "calendarios/escolar/2026-2027.html",
+    volver: "calendarios/escolar/",
     cabeceraGlobal: true,
     limpiarNavegacionLegada: true
   },
