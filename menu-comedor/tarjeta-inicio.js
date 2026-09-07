@@ -22,7 +22,9 @@ function fechaDesdeClave(clave) {
 }
 
 function textoFecha(fecha) {
-  return `${DIAS[fecha.getDay()]} ${fecha.getDate()} de ${MESES[fecha.getMonth()]}`;
+  const mes = MESES[fecha.getMonth()];
+  const mesVisible = `${mes.charAt(0).toUpperCase()}${mes.slice(1)}`;
+  return `${DIAS[fecha.getDay()]} ${fecha.getDate()} de ${mesVisible}`;
 }
 
 function asegurarEstilos() {
@@ -68,14 +70,18 @@ async function crearTarjeta() {
   enlace.setAttribute("aria-label", "Abrir Menú del Cole");
 
   if (menuMostrado) {
+    const fechaVisible = textoFecha(fechaMostrada);
+    const titulo = menuHoy
+      ? `${nombre}, hoy ${fechaVisible} toca… 😋`
+      : `${nombre}, el ${fechaVisible} toca… 👀`;
+
     enlace.innerHTML = `
       <div class="menu-inicio__intro">
         <span class="menu-inicio__etiqueta">${menuHoy ? "⭐ Hoy en el comedor" : "👀 Próximo menú"}</span>
-        <span class="menu-inicio__fecha">${escapar(textoFecha(fechaMostrada))}</span>
       </div>
 
       <div class="menu-inicio__contenido">
-        <h2>${escapar(nombre)}, ${menuHoy ? "hoy toca… 😋" : "mira lo que viene…"}</h2>
+        <h2>${escapar(titulo)}</h2>
         <div class="menu-inicio__platos">
           ${htmlPlatos(menuMostrado)}
         </div>
