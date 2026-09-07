@@ -56,8 +56,8 @@ function crearPlatos(menu) {
 
   return `
     <div class="platos">
-      <div class="plato"><span class="plato__icono">🥣</span><small>Primer plato</small><strong>${escapar(menu.primero)}</strong></div>
-      <div class="plato"><span class="plato__icono">🍽️</span><small>Segundo plato</small><strong>${escapar(menu.segundo)}</strong></div>
+      <div class="plato"><span class="plato__icono">🍲</span><small>Primer plato</small><strong>${escapar(menu.primero)}</strong></div>
+      <div class="plato"><span class="plato__icono">🍴</span><small>Segundo plato</small><strong>${escapar(menu.segundo)}</strong></div>
       ${acompanamiento}
       <div class="plato"><span class="plato__icono">${menu.postre.toLowerCase().includes("yogur") ? "🥛" : "🍎"}</span><small>Postre</small><strong>${escapar(menu.postre)}</strong></div>
     </div>`;
@@ -113,8 +113,9 @@ function renderProximo(fecha) {
     <div class="menu-proximo__icono">${esManana ? "👀" : "🗓️"}</div>
     <h3>${esManana ? "¿Y mañana?" : "Próximo menú"}</h3>
     <p><strong>${escapar(formatearFechaLarga(fechaSiguiente))}</strong></p>
-    <p style="margin-top:10px">🥣 ${escapar(siguiente.menu.primero)}</p>
-    <p style="margin-top:6px">🍽️ ${escapar(siguiente.menu.segundo)}</p>
+    <p style="margin-top:10px">🍲 ${escapar(siguiente.menu.primero)}</p>
+    <p style="margin-top:6px">🍴 ${escapar(siguiente.menu.segundo)}</p>
+    ${siguiente.menu.acompanamiento ? `<p style="margin-top:6px">🥗 ${escapar(siguiente.menu.acompanamiento)}</p>` : ""}
     <p style="margin-top:6px">${siguiente.menu.postre.toLowerCase().includes("yogur") ? "🥛" : "🍎"} ${escapar(siguiente.menu.postre)}</p>
   `;
 }
@@ -146,6 +147,7 @@ function renderSemana(fecha) {
         <div class="dia-menu__cabecera"><strong>${DIAS_SEMANA[dia.getDay()]}${esHoy ? " ⭐" : ""}</strong><span class="dia-menu__numero">${dia.getDate()}</span></div>
         <div class="dia-menu__plato"><span>Primero</span>${escapar(menu.primero)}</div>
         <div class="dia-menu__plato"><span>Segundo</span>${escapar(menu.segundo)}</div>
+        ${menu.acompanamiento ? `<div class="dia-menu__plato"><span>Acompañamiento</span>${escapar(menu.acompanamiento)}</div>` : ""}
         <div class="dia-menu__plato"><span>Postre</span>${escapar(menu.postre)}</div>
       </article>`;
   }).join("");
@@ -179,8 +181,8 @@ function renderMes(fecha) {
       <article class="mes-dia">
         <div class="mes-dia__fecha"><strong>${dia.getDate()}</strong><span>${DIAS_SEMANA[dia.getDay()]}</span></div>
         <div class="mes-dia__contenido">
-          <strong>🥣 ${escapar(menu.primero)}</strong>
-          <p>🍽️ ${escapar(menu.segundo)}</p>
+          <strong>🍲 ${escapar(menu.primero)}</strong>
+          <p>🍴 ${escapar(menu.segundo)}</p>
           ${menu.acompanamiento ? `<p>🥗 ${escapar(menu.acompanamiento)}</p>` : ""}
           <p>${menu.postre.toLowerCase().includes("yogur") ? "🥛" : "🍎"} ${escapar(menu.postre)}</p>
         </div>
