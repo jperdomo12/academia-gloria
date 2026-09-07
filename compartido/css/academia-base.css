@@ -202,7 +202,7 @@ img { max-width: 100%; height: auto; }
 
 .zona-secundaria .modulo.baul .modulo-icono {
   font-size: 0;
-  background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+  background: #fff6d8;
 }
 
 .zona-secundaria .modulo.baul .modulo-icono::before {
@@ -214,7 +214,7 @@ img { max-width: 100%; height: auto; }
 
 .zona-secundaria .modulo.adicionales .modulo-icono {
   font-size: 0;
-  background: #fff0f7;
+  background: #fff6d8;
 }
 
 .zona-secundaria .modulo.adicionales .modulo-icono::before {
