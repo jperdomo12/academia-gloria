@@ -1,6 +1,5 @@
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
 import {
-  formatearClaveFecha,
   obtenerMenuPorFecha,
   obtenerSiguienteMenuDesde
 } from "./datos/menu.js";
@@ -38,16 +37,16 @@ function asegurarEstilos() {
 function htmlPlatos(menu) {
   const postreIcono = menu.postre.toLowerCase().includes("yogur") ? "🥛" : "🍎";
   return `
-    <div class="menu-inicio__plato"><span>🥣</span><strong>${escapar(menu.primero)}</strong></div>
-    <div class="menu-inicio__plato"><span>🍽️</span><strong>${escapar(menu.segundo)}</strong></div>
-    <div class="menu-inicio__plato"><span>${postreIcono}</span><strong>${escapar(menu.postre)}</strong></div>
+    <span class="menu-inicio__plato"><span aria-hidden="true">🥣</span><strong>${escapar(menu.primero)}</strong></span>
+    <span class="menu-inicio__plato"><span aria-hidden="true">🍽️</span><strong>${escapar(menu.segundo)}</strong></span>
+    <span class="menu-inicio__plato"><span aria-hidden="true">${postreIcono}</span><strong>${escapar(menu.postre)}</strong></span>
   `;
 }
 
 async function crearTarjeta() {
   if (document.querySelector("[data-menu-comedor]")) return;
 
-  const referencia = document.querySelector(".mi-camino-principal");
+  const referencia = document.querySelector(".hero");
   if (!referencia) return;
 
   asegurarEstilos();
@@ -70,29 +69,41 @@ async function crearTarjeta() {
 
   if (menuMostrado) {
     enlace.innerHTML = `
-      <div class="menu-inicio__contenido">
+      <div class="menu-inicio__intro">
         <span class="menu-inicio__etiqueta">${menuHoy ? "⭐ Hoy en el comedor" : "👀 Próximo menú"}</span>
+        <span class="menu-inicio__fecha">${escapar(textoFecha(fechaMostrada))}</span>
+      </div>
+
+      <div class="menu-inicio__contenido">
         <h2>${escapar(nombre)}, ${menuHoy ? "hoy toca… 😋" : "mira lo que viene…"}</h2>
-        <p class="menu-inicio__fecha">${escapar(textoFecha(fechaMostrada))}</p>
-        <span class="menu-inicio__accion">Ver el menú del cole y toda la semana →</span>
+        <div class="menu-inicio__platos">
+          ${htmlPlatos(menuMostrado)}
+        </div>
       </div>
-      <div class="menu-inicio__platos">
-        ${htmlPlatos(menuMostrado)}
-      </div>
+
+      <span class="menu-inicio__accion">
+        Ver menú <span aria-hidden="true">→</span>
+      </span>
     `;
   } else {
     enlace.innerHTML = `
-      <div class="menu-inicio__contenido">
+      <div class="menu-inicio__intro">
         <span class="menu-inicio__etiqueta">🍽️ Menú del Cole</span>
+        <span class="menu-inicio__fecha">Tu menú mensual</span>
+      </div>
+
+      <div class="menu-inicio__contenido">
         <h2>${escapar(nombre)}, tu menú vive aquí</h2>
-        <p class="menu-inicio__fecha">Cuando incorporemos el nuevo PDF mensual, podrás descubrir aquí qué toca cada día.</p>
-        <span class="menu-inicio__accion">Abrir Menú del Cole →</span>
+        <div class="menu-inicio__platos">
+          <span class="menu-inicio__plato"><span aria-hidden="true">🥣</span><strong>Primer plato</strong></span>
+          <span class="menu-inicio__plato"><span aria-hidden="true">🍽️</span><strong>Segundo plato</strong></span>
+          <span class="menu-inicio__plato"><span aria-hidden="true">🍎</span><strong>Postre</strong></span>
+        </div>
       </div>
-      <div class="menu-inicio__platos">
-        <div class="menu-inicio__plato"><span>🥣</span><strong>Primer plato</strong></div>
-        <div class="menu-inicio__plato"><span>🍽️</span><strong>Segundo plato</strong></div>
-        <div class="menu-inicio__plato"><span>🍎</span><strong>Postre</strong></div>
-      </div>
+
+      <span class="menu-inicio__accion">
+        Abrir menú <span aria-hidden="true">→</span>
+      </span>
     `;
   }
 
