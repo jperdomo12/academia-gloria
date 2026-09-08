@@ -6,10 +6,15 @@
    - sincroniza la cabecera-póster con los datos ya renderizados;
    - identifica Patio/Recreo y Comedor como franjas especiales;
    - fusiona la franja cuando el mismo bloque ocupa los cinco días;
-   - prepara una impresión/PDF compacta del calendario solamente.
+   - prepara una impresión/PDF compacta del calendario solamente;
+   - permite una vista directa de SOLO el horario;
+   - ordena alfabéticamente las materias en los selectores del editor.
 
    No modifica ni persiste el modelo del horario.
    ========================================================== */
+
+const VISTA_SOLO_HORARIO = new URLSearchParams(window.location.search).get("vista") === "solo";
+const ORDEN_MATERIAS = new Intl.Collator("es", { sensitivity:"base", numeric:true });
 
 function cargarAjustesVisualesV4() {
   if (document.querySelector('link[data-horario-ajustes-v4]')) return;
@@ -20,7 +25,46 @@ function cargarAjustesVisualesV4() {
   document.head.appendChild(hoja);
 }
 
+function activarVistaSoloHorario() {
+  if (!VISTA_SOLO_HORARIO) return;
+
+  document.body.classList.add("horario-vista-solo");
+  if (document.getElementById("estilos-horario-vista-solo")) return;
+
+  const estilos = document.createElement("style");
+  estilos.id = "estilos-horario-vista-solo";
+  estilos.textContent = `
+    body.horario-vista-solo .horario-hero,
+    body.horario-vista-solo #resumenHoy,
+    body.horario-vista-solo #vistaHorario > :not(.horario-bloque--tabla),
+    body.horario-vista-solo .horario-bloque--tabla > .horario-bloque__cabecera,
+    body.horario-vista-solo .horario-pagina > footer{
+      display:none!important;
+    }
+
+    body.horario-vista-solo .horario-pagina{
+      padding-top:12px;
+    }
+
+    body.horario-vista-solo .horario-bloque--tabla{
+      margin-top:0!important;
+    }
+
+    body.horario-vista-solo .horario-poster{
+      margin-top:0!important;
+    }
+
+    @media(max-width:760px){
+      body.horario-vista-solo .horario-bloque--tabla{
+        padding:14px!important;
+      }
+    }
+  `;
+  document.head.appendChild(estilos);
+}
+
 cargarAjustesVisualesV4();
+activarVistaSoloHorario();
 
 const TIPOS_ESPECIALES = Object.freeze([
   { tipo:"patio", claves:["patio","recreo","descanso"], icono:"🌤️" },
@@ -150,6 +194,35 @@ function fusionarFranjasComunes() {
   });
 }
 
+function ordenarOpcionesMateria(select) {
+  if (!(select instanceof HTMLSelectElement)) return;
+
+  const opciones = [...select.options];
+  const libre = opciones.find(opcion => opcion.value === "") || null;
+  const materias = opciones
+    .filter(opcion => opcion.value !== "")
+    .sort((a, b) => ORDEN_MATERIAS.compare(a.textContent.trim(), b.textContent.trim()));
+
+  const ordenActual = opciones.map(opcion => opcion.value).join("\u0000");
+  const ordenDeseado = [libre, ...materias]
+    .filter(Boolean)
+    .map(opcion => opcion.value)
+    .join("\u0000");
+
+  if (ordenActual === ordenDeseado) return;
+
+  const seleccionada = select.value;
+  const fragmento = document.createDocumentFragment();
+  if (libre) fragmento.appendChild(libre);
+  materias.forEach(opcion => fragmento.appendChild(opcion));
+  select.appendChild(fragmento);
+  select.value = seleccionada;
+}
+
+function ordenarListasMaterias() {
+  document.querySelectorAll("#editorTablaCuerpo select").forEach(ordenarOpcionesMateria);
+}
+
 function prepararDensidadImpresion() {
   document.body.classList.remove("horario-print-compacto", "horario-print-muy-compacto");
   const filas = document.querySelectorAll("#horarioTablaCuerpo tr").length;
@@ -169,6 +242,7 @@ function actualizarPresentacionV3() {
   sincronizarPoster();
   decorarTiposEspeciales();
   fusionarFranjasComunes();
+  ordenarListasMaterias();
 }
 
 function iniciarPresentacionV3() {
@@ -187,6 +261,21 @@ function iniciarPresentacionV3() {
     });
 
     observer.observe(vista, { childList:true, subtree:true, characterData:true });
+  }
+
+  const editor = document.getElementById("editorHorario");
+  if (editor) {
+    let pendienteEditor = false;
+    const observerEditor = new MutationObserver(() => {
+      if (pendienteEditor) return;
+      pendienteEditor = true;
+      queueMicrotask(() => {
+        pendienteEditor = false;
+        ordenarListasMaterias();
+      });
+    });
+
+    observerEditor.observe(editor, { childList:true, subtree:true });
   }
 
   window.addEventListener("beforeprint", () => {

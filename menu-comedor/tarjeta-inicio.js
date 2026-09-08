@@ -1,4 +1,5 @@
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
+import { crearAccesoHorarioInicio } from "../calendarios/horario/acceso-inicio.js";
 import {
   obtenerMenuPorFecha,
   obtenerSiguienteMenuDesde
@@ -140,6 +141,10 @@ async function crearTarjeta() {
 
   referencia.insertAdjacentElement("afterend", enlace);
 }
+
+crearAccesoHorarioInicio().catch(error => {
+  console.warn("No se pudo mostrar el acceso rápido al horario.", error);
+});
 
 crearTarjeta().catch(error => {
   console.warn("No se pudo mostrar la tarjeta del Menú del Cole.", error);
