@@ -11,6 +11,17 @@
    No modifica ni persiste el modelo del horario.
    ========================================================== */
 
+function cargarAjustesVisualesV4() {
+  if (document.querySelector('link[data-horario-ajustes-v4]')) return;
+  const hoja = document.createElement('link');
+  hoja.rel = 'stylesheet';
+  hoja.href = './horario-ajustes-v4.css';
+  hoja.dataset.horarioAjustesV4 = 'true';
+  document.head.appendChild(hoja);
+}
+
+cargarAjustesVisualesV4();
+
 const TIPOS_ESPECIALES = Object.freeze([
   { tipo:"patio", claves:["patio","recreo","descanso"], icono:"🌤️" },
   { tipo:"comedor", claves:["comedor","almuerzo","comida"], icono:"🍽️" }
