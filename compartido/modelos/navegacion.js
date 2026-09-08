@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v2.1
+ * Modelo central de navegación · v2.2
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -220,6 +220,15 @@ const UBICACIONES_AUXILIARES = Object.freeze([
     titulo: "Calendarios del Colegio",
     icono: "🏫",
     ruta: "calendarios/escolar/",
+    volver: "calendarios/",
+    cabeceraGlobal: true,
+    limpiarNavegacionLegada: true
+  },
+  {
+    id: "horario-clases",
+    titulo: "Mi horario de clases",
+    icono: "🗓️",
+    ruta: "calendarios/horario/",
     volver: "calendarios/",
     cabeceraGlobal: true,
     limpiarNavegacionLegada: true

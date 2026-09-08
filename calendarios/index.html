@@ -35,6 +35,24 @@
       margin-bottom:24px !important;
     }
 
+    .accesos-calendario-colegio{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .acceso-colegio--horario{
+      border-color:#ddd6fe;
+      background:linear-gradient(145deg,#faf5ff,#ffffff);
+      box-shadow:0 12px 28px rgba(124,58,237,.08);
+    }
+
+    .acceso-colegio--horario .acceso-colegio__icono{
+      background:linear-gradient(135deg,#ede9fe,#fce7f3);
+    }
+
+    .acceso-colegio--horario .acceso-colegio__flecha{
+      color:#7c3aed;
+    }
+
     .navegacion-anios{
       margin-top:0 !important;
       margin-bottom:24px !important;
@@ -47,6 +65,12 @@
 
     .bloque-calendario-personal{
       margin-top:0;
+    }
+
+    @media(max-width:980px){
+      .accesos-calendario-colegio{
+        grid-template-columns:1fr;
+      }
     }
 
     @media(max-width:720px){
@@ -94,7 +118,16 @@
     </header>
 
 <div class="zona-accesos-colegio">
-      <section class="accesos-calendario-colegio" aria-label="Calendarios del colegio">
+      <section class="accesos-calendario-colegio" aria-label="Calendarios y horario del colegio">
+      <a class="acceso-colegio acceso-colegio--horario" href="./horario/">
+        <span class="acceso-colegio__icono">🗓️</span>
+        <span class="acceso-colegio__texto">
+          <strong>Mi horario de clases</strong>
+          <small>Tu semana, tus materias y tus notas, todo de un vistazo</small>
+        </span>
+        <span class="acceso-colegio__flecha">→</span>
+      </a>
+
       <a class="acceso-colegio acceso-colegio--academia" href="./escolar/">
         <span class="acceso-colegio__icono">🏫</span>
         <span class="acceso-colegio__texto">

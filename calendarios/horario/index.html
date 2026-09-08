@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+  <title>Mi horario de clases | Academia Gloria Valentina</title>
+  <meta name="description" content="Horario de clases personal, visual y editable de la Academia Gloria Valentina.">
+
+  <link rel="icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
+  <link rel="stylesheet" href="./horario-clases.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body
+  data-page-title="Mi horario de clases | Academia Gloria Valentina"
+  data-page-icon="🗓️"
+  data-nav-back="../">
+
+  <main class="horario-pagina">
+    <header class="horario-superficie horario-hero">
+      <div class="horario-hero__contenido">
+        <span class="horario-eyebrow">🌈 Tu semana, a tu manera</span>
+        <h1>Mi horario de clases</h1>
+        <p>
+          <span id="heroNombre">Explorador/a</span>, aquí tienes tu semana organizada,
+          clara y llena de color. ✨
+        </p>
+        <div class="horario-hero__pildoras" aria-label="Datos principales del horario">
+          <span id="heroCurso">🎒 Tu curso</span>
+          <span id="heroPeriodo">📅 Curso escolar</span>
+        </div>
+      </div>
+
+      <div class="horario-hero__visual" aria-hidden="true">
+        <div class="mini-semana">
+          <span class="mini-semana__estrella">✨</span>
+          <div><b>L</b><span>📚</span></div>
+          <div><b>M</b><span>➗</span></div>
+          <div><b>X</b><span>🌍</span></div>
+          <div><b>J</b><span>🔬</span></div>
+          <div><b>V</b><span>🎨</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="estadoCarga" class="horario-superficie horario-estado horario-estado--carga" aria-live="polite">
+      <div class="horario-estado__icono">☁️</div>
+      <div>
+        <h2>Preparando tu horario…</h2>
+        <p>Estamos organizando tu semana.</p>
+      </div>
+    </section>
+
+    <section id="estadoVacio" class="horario-superficie horario-estado horario-estado--vacio" hidden>
+      <div class="horario-estado__ilustracion" aria-hidden="true">
+        <span>🗓️</span><span>✏️</span><span>🌟</span>
+      </div>
+      <div class="horario-estado__contenido">
+        <span class="horario-eyebrow horario-eyebrow--oscuro">MI SEMANA</span>
+        <h2>¡Vamos a crear un horario que dé gusto mirar! 🎉</h2>
+        <p>
+          Añade tus materias, tus horas y deja que la Academia convierta tu semana
+          en un horario bonito, fácil de consultar y completamente tuyo.
+        </p>
+        <button id="crearHorario" class="boton-academia boton-academia--primario" type="button">
+          ✨ Crear mi horario
+        </button>
+      </div>
+    </section>
+
+    <div id="vistaHorario" hidden>
+      <section id="resumenHoy" class="horario-resumen-hoy" aria-live="polite"></section>
+
+      <section class="horario-superficie horario-bloque">
+        <div class="horario-bloque__cabecera horario-bloque__cabecera--acciones">
+          <div>
+            <span class="horario-seccion-eyebrow">💜 ESTE ES MI HORARIO</span>
+            <h2>Mi semana de clases</h2>
+            <p>Todo lo importante, de un vistazo.</p>
+          </div>
+          <button id="editarHorario" class="boton-editar-horario" type="button">
+            <i data-lucide="pencil" width="18"></i>
+            Editar mi horario
+          </button>
+        </div>
+
+        <div class="horario-datos" id="datosHorario">
+          <article><span>👤</span><small>ALUMN@</small><strong id="datoAlumno">—</strong></article>
+          <article><span>🏫</span><small>COLEGIO</small><strong id="datoColegio">—</strong></article>
+          <article><span>🎒</span><small>CURSO</small><strong id="datoCurso">—</strong></article>
+          <article><span>💛</span><small>TUTOR/A</small><strong id="datoTutor">—</strong></article>
+          <article><span>📅</span><small>PERÍODO</small><strong id="datoPeriodo">—</strong></article>
+        </div>
+      </section>
+
+      <section class="horario-superficie horario-bloque">
+        <div class="horario-bloque__cabecera">
+          <div>
+            <span class="horario-seccion-eyebrow">🎨 MIS MATERIAS</span>
+            <h2>Los colores de mi semana</h2>
+            <p>Cada materia conserva su color para encontrarla enseguida.</p>
+          </div>
+        </div>
+        <div id="leyendaMaterias" class="materias-leyenda"></div>
+      </section>
+
+      <section class="horario-superficie horario-bloque horario-bloque--tabla">
+        <div class="horario-bloque__cabecera">
+          <div>
+            <span class="horario-seccion-eyebrow">🗓️ DE LUNES A VIERNES</span>
+            <h2>Mi semana completa</h2>
+            <p>El día de hoy queda resaltado automáticamente.</p>
+          </div>
+          <span class="horario-hoy-leyenda">⭐ Hoy</span>
+        </div>
+
+        <div class="horario-tabla-wrap">
+          <table class="horario-tabla" aria-label="Horario semanal de clases">
+            <thead id="horarioTablaCabecera"></thead>
+            <tbody id="horarioTablaCuerpo"></tbody>
+          </table>
+        </div>
+
+        <div id="horarioMovil" class="horario-movil"></div>
+      </section>
+
+      <section class="horario-superficie horario-bloque horario-notas">
+        <div class="horario-notas__icono">📝</div>
+        <div>
+          <span class="horario-seccion-eyebrow">MIS NOTAS</span>
+          <h2>Para no olvidarme</h2>
+          <p id="notasHorario">Todavía no hay notas en este horario.</p>
+        </div>
+      </section>
+    </div>
+
+    <section id="editorHorario" class="horario-superficie horario-editor" hidden>
+      <div class="horario-editor__cabecera">
+        <div>
+          <span class="horario-seccion-eyebrow">✏️ EDITAR MI HORARIO</span>
+          <h2>Construye tu semana</h2>
+          <p>Haz los cambios con calma. Nada se guarda hasta que pulses “Guardar horario”.</p>
+        </div>
+        <span class="horario-editor__estado">✨ Tu horario, tus colores</span>
+      </div>
+
+      <form id="formHorario">
+        <section class="editor-seccion">
+          <div class="editor-seccion__titulo">
+            <span>1</span>
+            <div><h3>Mi cabecera</h3><p>Los datos que identifican este horario.</p></div>
+          </div>
+
+          <div class="editor-grid editor-grid--cabecera">
+            <label class="campo-horario">
+              <span>Alumn@</span>
+              <input id="editorAlumno" type="text" disabled>
+            </label>
+            <label class="campo-horario">
+              <span>Colegio</span>
+              <input id="editorColegio" type="text" maxlength="120" placeholder="Ejemplo: Gaudem">
+            </label>
+            <label class="campo-horario">
+              <span>Curso</span>
+              <input id="editorCurso" type="text" maxlength="120" placeholder="Ejemplo: 6.º de Primaria">
+            </label>
+            <label class="campo-horario">
+              <span>Tutor/a</span>
+              <input id="editorTutor" type="text" maxlength="120" placeholder="Nombre de tu tutor/a">
+            </label>
+            <label class="campo-horario">
+              <span>Período escolar</span>
+              <input id="editorPeriodo" type="text" maxlength="30" placeholder="Ejemplo: 2026-2027">
+            </label>
+          </div>
+        </section>
+
+        <section class="editor-seccion">
+          <div class="editor-seccion__titulo">
+            <span>2</span>
+            <div><h3>Mis materias y bloques</h3><p>Materias, recreo, comedor… lo que forme parte de tu semana.</p></div>
+          </div>
+
+          <div class="materia-nueva">
+            <label class="campo-horario">
+              <span>Nueva materia o bloque</span>
+              <input id="nuevaMateria" type="text" maxlength="60" placeholder="Ejemplo: Matemáticas">
+            </label>
+            <button id="agregarMateria" class="boton-editor boton-editor--secundario" type="button">＋ Añadir</button>
+          </div>
+          <div id="editorMaterias" class="editor-materias"></div>
+        </section>
+
+        <section class="editor-seccion">
+          <div class="editor-seccion__titulo">
+            <span>3</span>
+            <div><h3>Mis horas</h3><p>Añade los tramos que realmente tiene tu colegio.</p></div>
+          </div>
+
+          <div id="editorTramos" class="editor-tramos"></div>
+          <button id="agregarTramo" class="boton-editor boton-editor--suave" type="button">＋ Añadir tramo horario</button>
+        </section>
+
+        <section class="editor-seccion">
+          <div class="editor-seccion__titulo">
+            <span>4</span>
+            <div><h3>Mi semana</h3><p>Selecciona qué toca en cada hora y cada día.</p></div>
+          </div>
+
+          <div id="editorAvisoSemana" class="editor-aviso"></div>
+          <div class="editor-tabla-wrap">
+            <table class="editor-tabla" aria-label="Editor del horario semanal">
+              <thead id="editorTablaCabecera"></thead>
+              <tbody id="editorTablaCuerpo"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="editor-seccion">
+          <div class="editor-seccion__titulo">
+            <span>5</span>
+            <div><h3>Mis notas</h3><p>Un espacio libre para recordatorios útiles de tu semana.</p></div>
+          </div>
+          <label class="campo-horario">
+            <span>Notas</span>
+            <textarea id="editorNotas" maxlength="2500" placeholder="Ejemplo: Educación Física: traer camiseta. Los viernes vamos a la biblioteca…"></textarea>
+          </label>
+        </section>
+
+        <div class="horario-editor__acciones">
+          <button class="boton-academia boton-academia--primario" type="submit">💾 Guardar horario</button>
+          <button id="cancelarEdicion" class="boton-academia boton-academia--suave" type="button">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="mensajeHorario" class="horario-mensaje" role="status" aria-live="polite" hidden></div>
+
+    <footer>Academia Gloria Valentina · Mi horario de clases 🌈</footer>
+  </main>
+
+  <script src="../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
+  <script type="module" src="./horario-clases.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
