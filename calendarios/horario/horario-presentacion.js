@@ -11,14 +11,20 @@ const ICONOS_MATERIAS = Object.freeze([
   { claves:["science","ciencia","naturales","biologia","fisica","quimica"], icono:"🔬" },
   { claves:["sociales","historia","geografia","social"], icono:"🌍" },
   { claves:["educacion fisica","ed fisica","deporte","physical"], icono:"🏃" },
+  { claves:["natacion","piscina"], icono:"🏊" },
   { claves:["musica"], icono:"🎵" },
-  { claves:["plastica","arte","artistica","dibujo"], icono:"🎨" },
-  { claves:["tecnologia","informatica","digital","comput"], icono:"💻" },
+  { claves:["plastica","arts","arte","artistica","dibujo"], icono:"🎨" },
+  { claves:["teatro"], icono:"🎭" },
+  { claves:["logopedia","lenguaje oral"], icono:"🗣️" },
+  { claves:["lse","lengua de signos","signos"], icono:"🤟" },
+  { claves:["tac","tecnologia","informatica","digital","comput"], icono:"💻" },
+  { claves:["respeto","convivencia"], icono:"🤝" },
   { claves:["religion","valores"], icono:"💛" },
   { claves:["tutoria","tutor"], icono:"💬" },
   { claves:["recreo","patio","descanso"], icono:"🌤️" },
   { claves:["comedor","almuerzo","comida"], icono:"🍽️" },
-  { claves:["biblioteca"], icono:"📚" },
+  { claves:["biblioteca","biblio"], icono:"📚" },
+  { claves:["joy land","playground"], icono:"🎡" },
   { claves:["proyecto"], icono:"🚀" }
 ]);
 
@@ -100,13 +106,13 @@ function decorarDias() {
   document.querySelectorAll("#horarioTablaCabecera th").forEach(celda => {
     const texto = normalizar(celda.textContent.replace("⭐", ""));
     const dia = DIAS.find(([visible]) => normalizar(visible) === texto)?.[1];
-    if (dia) celda.dataset.dia = dia;
+    if (dia && celda.dataset.dia !== dia) celda.dataset.dia = dia;
   });
 
   document.querySelectorAll(".horario-dia-card").forEach(tarjeta => {
     const texto = normalizar(tarjeta.querySelector(".horario-dia-card__cabecera span")?.textContent.replace("⭐", "") || "");
     const dia = DIAS.find(([visible]) => normalizar(visible) === texto)?.[1];
-    if (dia) tarjeta.dataset.dia = dia;
+    if (dia && tarjeta.dataset.dia !== dia) tarjeta.dataset.dia = dia;
   });
 }
 
@@ -116,19 +122,27 @@ function decorarHorario() {
   decorarDias();
 }
 
+function asignarTextoSiCambio(elemento, valor) {
+  if (!elemento) return;
+  const siguiente = String(valor ?? "");
+  if (elemento.textContent !== siguiente) elemento.textContent = siguiente;
+}
+
 function sincronizarCabeceraImpresion() {
   const alumno = document.getElementById("datoAlumno")?.textContent?.trim() || "Mi horario";
   const colegio = document.getElementById("datoColegio")?.textContent?.trim() || "";
   const curso = document.getElementById("datoCurso")?.textContent?.trim() || "";
   const periodo = document.getElementById("datoPeriodo")?.textContent?.trim() || "";
 
-  const alumnoPrint = document.getElementById("printAlumno");
-  const resumenPrint = document.getElementById("printResumen");
-  const cursoPrint = document.getElementById("printCurso");
-
-  if (alumnoPrint) alumnoPrint.textContent = alumno;
-  if (resumenPrint) resumenPrint.textContent = [colegio, periodo].filter(Boolean).join(" · ");
-  if (cursoPrint) cursoPrint.textContent = curso ? `🎒 ${curso}` : "🎒 Mi curso";
+  asignarTextoSiCambio(document.getElementById("printAlumno"), alumno);
+  asignarTextoSiCambio(
+    document.getElementById("printResumen"),
+    [colegio, periodo].filter(Boolean).join(" · ")
+  );
+  asignarTextoSiCambio(
+    document.getElementById("printCurso"),
+    curso ? `🎒 ${curso}` : "🎒 Mi curso"
+  );
 }
 
 function configurarImpresion() {
@@ -165,12 +179,18 @@ function iniciarPresentacion() {
   const objetivo = document.getElementById("vistaHorario");
   if (!objetivo) return;
 
+  let pendiente = false;
   const observer = new MutationObserver(() => {
-    decorarHorario();
-    sincronizarCabeceraImpresion();
+    if (pendiente) return;
+    pendiente = true;
+    queueMicrotask(() => {
+      pendiente = false;
+      decorarHorario();
+      sincronizarCabeceraImpresion();
+    });
   });
 
-  observer.observe(objetivo, { childList:true, subtree:true });
+  observer.observe(objetivo, { childList:true, subtree:true, characterData:true });
 }
 
 iniciarPresentacion();
