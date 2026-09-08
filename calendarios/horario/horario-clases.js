@@ -32,11 +32,6 @@ function escaparHTML(valor = "") {
     .replaceAll("'", "&#039;");
 }
 
-function clonar(valor) {
-  if (typeof structuredClone === "function") return structuredClone(valor);
-  return JSON.parse(JSON.stringify(valor));
-}
-
 function texto(valor = "", alternativo = "—") {
   const resultado = String(valor ?? "").trim();
   return resultado || alternativo;
@@ -561,7 +556,7 @@ function abrirEditor() {
   if (!puedeEditar) return;
 
   borrador = horario
-    ? clonar(horario)
+    ? crearHorarioClases(horario)
     : crearHorarioInicial(perfil || {});
 
   if (!borrador.celdas) borrador.celdas = {};
