@@ -19,6 +19,16 @@ const DEPENDENCIAS_PDF = Object.freeze([
   }
 ]);
 
+function asegurarEstilosPdf() {
+  if (document.querySelector('link[data-horario-pdf-estilos="true"]')) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "./horario-pdf.css";
+  link.dataset.horarioPdfEstilos = "true";
+  document.head.appendChild(link);
+}
+
 function cargarScript({ global, src }) {
   if (window[global]) return Promise.resolve();
 
@@ -105,6 +115,8 @@ function mostrarEstadoEnVentana(ventana, texto) {
 }
 
 export async function generarPdfHorario() {
+  asegurarEstilosPdf();
+
   const ventanaPdf = window.open("", "_blank");
   mostrarEstadoEnVentana(ventanaPdf, "Preparando tu horario…");
 
