@@ -9,6 +9,14 @@
    - impresión/PDF forzada a una sola página A4 apaisada.
    ========================================================== */
 
+/* ---------- Estados de carga / horario vacío ---------- */
+/* Las capas visuales usan display:flex/grid; por eso se fuerza aquí
+ * el significado real de `hidden` para que JS pueda mostrar u ocultar
+ * estos bloques según exista o no un horario. */
+.horario-estado[hidden]{
+  display:none!important;
+}
+
 /* ---------- Cabecera-póster ---------- */
 .horario-poster{
   grid-template-columns:minmax(160px,.8fr) minmax(320px,1.55fr) minmax(210px,.9fr);
