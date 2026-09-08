@@ -4,13 +4,13 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-HORARIO_CLASES.md` |
-| **Versión** | 1.0-rc2 |
+| **Versión** | 1.0-rc3 |
 | **Estado** | En validación · V1 |
 | **Fecha** | 08/09/2026 |
 | **Última actualización** | 08/09/2026 |
 | **Propietario** | Organización escolar personal |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Horario semanal actual de la Persona Activa, sus materias/bloques, cabecera escolar, notas y presentación imprimible |
+| **Ámbito** | Horario semanal actual de la Persona Activa, sus materias/bloques, cabecera escolar, notas y presentación imprimible/PDF |
 
 ## 🔗 Documentos relacionados
 
@@ -65,7 +65,7 @@ La experiencia debe ayudar a la autonomía cotidiana y, al mismo tiempo, convert
 - indicación contextual de clase actual o próxima clase cuando corresponde;
 - adaptación móvil en formato legible por días;
 - espacio libre de notas;
-- opción de **imprimir el horario** en un formato cuidado y legible, preferentemente A4 apaisado;
+- opción **Imprimir / Guardar PDF** del calendario, con composición A4 apaisada y sin contenido auxiliar de la página;
 - Persona Activa y persistencia multiusuario;
 - actualización del mismo horario cuando cambian sus datos.
 
@@ -159,7 +159,7 @@ updatedByNombre
 
 `celdas` guarda el `materiaId` asignado o cadena vacía cuando ese espacio queda libre.
 
-La iconografía contextual y el diseño de impresión son presentación derivada; no amplían el contrato persistido.
+La iconografía contextual, la cabecera-póster, las franjas especiales y el diseño de impresión son **presentación derivada**; no amplían ni sustituyen el contrato persistido.
 
 ---
 
@@ -245,6 +245,8 @@ El día actual se resalta automáticamente.
 
 Cuando la hora local se encuentra dentro de un tramo del día actual, la clase correspondiente puede identificarse como **AHORA**.
 
+Cuando `Patio/Recreo` o `Comedor` ocupan el mismo tramo en los cinco días, la presentación puede convertir esas cinco celdas en una **franja visual común**, sin modificar los datos guardados.
+
 ---
 
 ## 💜 8. Experiencia de consulta y lenguaje visual
@@ -262,11 +264,15 @@ Debe priorizar:
 
 La página debe sentirse personal, bella y motivadora sin perder claridad. Su referencia emocional es un **planner escolar personal**, no una hoja de cálculo.
 
+La evolución visual `V3` toma como referencia una pieza familiar de horario escolar del curso anterior aportada por el Product Owner: título central muy reconocible, composición geométrica de color, materias acompañadas por ilustraciones y franjas destacadas para momentos comunes de la jornada. La Academia **reinterpreta** esos principios en lugar de copiar el diseño literalmente.
+
 Principios visuales V1:
 
+- una **cabecera-póster** identifica el horario como objeto personal del alumno;
 - color vivo pero suave y equilibrado;
-- cada día puede tener una señal cromática propia sin competir con el color semántico de cada materia;
-- cada materia/bloque se presenta como una pieza visual reconocible y respirada;
+- los días comparten una familia visual consistente y pueden incorporar acentos distintos;
+- cada materia/bloque se presenta como una pieza visual reconocible, con texto protagonista e icono/ilustración de apoyo;
+- `Patio/Recreo` y `Comedor` pueden utilizar franjas cromáticas especiales cuando corresponda;
 - la hora debe distinguirse con rapidez sin dominar la tabla;
 - iconos o emojis son apoyo de reconocimiento, nunca sustituyen el nombre de la materia;
 - se evitan decoraciones que reduzcan legibilidad o aumenten innecesariamente la altura del horario;
@@ -302,7 +308,7 @@ Reglas:
 
 ---
 
-## 📝 10. Notas e impresión
+## 📝 10. Notas e impresión/PDF
 
 La V1 incluye un único espacio de texto libre para recordatorios asociados al horario completo.
 
@@ -318,14 +324,17 @@ Máximo V1: 2500 caracteres.
 
 Las notas no se interpretan como Misiones, eventos, evidencias ni Recompensas.
 
-La opción **Imprimir horario** debe:
+La opción **Imprimir / Guardar PDF** debe producir **solo el calendario**:
 
-- usar el horario ya guardado, sin crear una copia persistente;
-- incluir una cabecera identificable con alumno, colegio, curso y período cuando estén disponibles;
-- incluir materias, cuadrícula semanal y notas;
-- preservar colores útiles cuando el navegador/impresora lo permita;
-- ocultar navegación, botones de edición y elementos contextuales que no aportan al documento impreso;
-- priorizar A4 apaisado y legibilidad en una página cuando el número real de tramos lo permita.
+- usa el horario ya guardado, sin crear una copia persistente;
+- incluye la cabecera-póster con alumno, colegio, curso y período cuando estén disponibles;
+- incluye la cuadrícula semanal completa;
+- excluye navegación, resumen de hoy, fichas auxiliares, leyenda de materias, notas, botones de edición y demás contenido de la página;
+- preserva colores útiles cuando el navegador/impresora lo permita;
+- prioriza **A4 apaisado** y ajusta densidad visual cuando existan más tramos;
+- el mismo diálogo del navegador permite imprimir en papel o seleccionar **Guardar como PDF** cuando esa opción esté disponible.
+
+El nombre de documento se deriva del horario, alumno y período para facilitar la identificación del PDF generado por el navegador.
 
 ---
 
@@ -364,13 +373,15 @@ La V1 se considera funcionalmente válida cuando:
 11. escritorio y móvil siguen siendo legibles;
 12. cancelar edición no guarda cambios;
 13. Persona Activa determina el horario consultado;
-14. el horario puede imprimirse desde la propia experiencia con una salida limpia, identificable y legible;
-15. el resultado se siente claramente más atractivo que una tabla administrativa convencional y conserva la identidad visual de la Academia.
+14. `Patio/Recreo` y `Comedor` pueden destacar visualmente sin alterar el dato persistido;
+15. **Imprimir / Guardar PDF** produce únicamente la cabecera del horario y la cuadrícula semanal, en A4 apaisado;
+16. el resultado se siente claramente más atractivo que una tabla administrativa convencional y conserva la identidad visual de la Academia;
+17. la presentación puede evolucionar sin exigir reingresar ni migrar el horario ya guardado.
 
 ---
 
 ## 🚧 13. Estado de validación
 
-`1.0-rc2` permanece **En validación** hasta que el Product Owner pruebe la experiencia visual final, la impresión y apruebe el producto.
+`1.0-rc3` permanece **En validación** hasta que el Product Owner pruebe la experiencia visual final, la salida de impresión/PDF y apruebe el producto.
 
 Después de esa validación se actualizará esta especificación a `1.0 Activo` con la PR y baseline funcional correspondientes.

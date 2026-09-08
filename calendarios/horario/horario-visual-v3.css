@@ -1,0 +1,794 @@
+/* ==========================================================
+   Academia Gloria Valentina
+   Mi horario de clases · capa visual V3
+
+   Referencia de producto: horario escolar familiar del curso
+   anterior aportado por la familia (cartel colorido con
+   ilustraciones por materia y franjas de Patio/Comedor).
+
+   Objetivo: conservar esa calidez y personalidad, pero con
+   una composición más limpia, reutilizable y responsive.
+   ========================================================== */
+
+/* ---------- Cabecera-póster del horario ---------- */
+.horario-poster{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:164px;
+  display:grid;
+  grid-template-columns:minmax(150px,.75fr) minmax(320px,1.5fr) minmax(170px,.75fr);
+  align-items:center;
+  gap:18px;
+  margin:2px 0 16px;
+  padding:24px 34px;
+  border:2px solid #e9e2ee;
+  border-radius:27px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,255,255,.98),rgba(250,249,252,.96) 55%,rgba(245,244,248,.98)),
+    #f7f6f8;
+  box-shadow:0 14px 32px rgba(49,28,68,.09);
+}
+
+.horario-poster::before,
+.horario-poster::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:240px;
+  height:260px;
+  border-radius:34px;
+}
+
+.horario-poster::before{
+  left:-135px;
+  top:-105px;
+  background:linear-gradient(145deg,#ef3340,#f43f5e);
+  transform:rotate(15deg);
+}
+
+.horario-poster::after{
+  right:-125px;
+  top:-115px;
+  background:linear-gradient(145deg,#f5b700,#f6c445);
+  transform:rotate(-17deg);
+}
+
+.horario-poster__acento{
+  position:absolute;
+  z-index:-1;
+  display:block;
+  border-radius:26px;
+  opacity:.96;
+}
+
+.horario-poster__acento--morado{
+  width:180px;
+  height:88px;
+  left:80px;
+  bottom:-60px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  transform:rotate(13deg);
+}
+
+.horario-poster__acento--turquesa{
+  width:155px;
+  height:78px;
+  right:95px;
+  bottom:-55px;
+  background:linear-gradient(135deg,#14b8a6,#22d3ee);
+  transform:rotate(-10deg);
+}
+
+.horario-poster__marca{
+  position:relative;
+  z-index:2;
+  justify-self:start;
+  display:grid;
+  gap:7px;
+  max-width:180px;
+  color:#fff;
+}
+
+.horario-poster__marca strong{
+  font-size:.84rem;
+  line-height:1.08;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+
+.horario-poster__marca span{
+  width:45px;
+  height:45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid rgba(255,255,255,.5);
+  border-radius:15px;
+  background:rgba(255,255,255,.17);
+  font-size:1.55rem;
+  backdrop-filter:blur(4px);
+}
+
+.horario-poster__centro{
+  position:relative;
+  z-index:2;
+  text-align:center;
+}
+
+.horario-poster__centro small{
+  display:block;
+  margin-bottom:5px;
+  color:#7c3aed;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.horario-poster__centro h2{
+  margin:0;
+  color:#252836;
+  font-size:clamp(2.05rem,4vw,3.15rem);
+  line-height:.98;
+  letter-spacing:.015em;
+  text-transform:uppercase;
+}
+
+.horario-poster__alumno{
+  display:block;
+  margin-top:8px;
+  color:#3b3f51;
+  font-size:clamp(1.12rem,2.2vw,1.55rem);
+  font-weight:850;
+  line-height:1.15;
+  letter-spacing:.015em;
+}
+
+.horario-poster__meta{
+  position:relative;
+  z-index:2;
+  justify-self:end;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:7px;
+}
+
+.horario-poster__meta span{
+  max-width:180px;
+  padding:8px 11px;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:999px;
+  color:#3f3f46;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 7px 16px rgba(63,63,70,.08);
+  font-size:.78rem;
+  font-weight:850;
+  text-align:right;
+  backdrop-filter:blur(7px);
+}
+
+/* ---------- Contenedor principal del planner ---------- */
+.horario-bloque--tabla{
+  overflow:visible;
+  padding:18px;
+  border:2px solid #e9e2ee;
+  background:
+    radial-gradient(circle at 4% 4%,rgba(244,63,94,.055),transparent 18%),
+    radial-gradient(circle at 96% 5%,rgba(245,183,0,.07),transparent 18%),
+    linear-gradient(180deg,#fff 0%,#fffcfd 100%);
+}
+
+.horario-bloque--tabla::before{
+  display:none;
+}
+
+.horario-bloque--tabla>.horario-bloque__cabecera{
+  display:none;
+}
+
+.horario-tabla-wrap{
+  overflow-x:auto;
+  padding:8px;
+  border:1px solid #eadfe6;
+  border-radius:22px;
+  background:#fff7fa;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 13px 26px rgba(67,35,58,.06);
+}
+
+.horario-tabla{
+  width:100%;
+  min-width:780px;
+  table-layout:fixed;
+  border-collapse:separate;
+  border-spacing:5px;
+  background:transparent;
+}
+
+/* ---------- Encabezado de días ---------- */
+.horario-tabla thead th{
+  position:relative;
+  overflow:hidden;
+  padding:13px 8px 14px;
+  border:0!important;
+  border-radius:13px;
+  color:#fff;
+  background:linear-gradient(180deg,#b8799d,#a96f92);
+  box-shadow:0 7px 15px rgba(117,75,103,.15);
+  font-size:.94rem;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+
+.horario-tabla thead th:first-child{
+  width:96px;
+  color:#fff;
+  background:linear-gradient(180deg,#79506e,#65445f);
+}
+
+.horario-tabla thead th[data-dia]::after{
+  left:14%;
+  right:14%;
+  bottom:0;
+  height:5px;
+  border-radius:999px 999px 0 0;
+}
+
+.horario-tabla thead th[data-dia="lunes"]{--dia-color:#f43f5e}
+.horario-tabla thead th[data-dia="martes"]{--dia-color:#8b5cf6}
+.horario-tabla thead th[data-dia="miercoles"]{--dia-color:#f5b700}
+.horario-tabla thead th[data-dia="jueves"]{--dia-color:#10b981}
+.horario-tabla thead th[data-dia="viernes"]{--dia-color:#0ea5e9}
+
+.horario-tabla thead th.dia-hoy{
+  outline:3px solid #fde68a;
+  outline-offset:1px;
+  box-shadow:0 0 0 3px rgba(245,183,0,.11),0 8px 18px rgba(117,75,103,.16);
+}
+
+/* ---------- Horas ---------- */
+.horario-tabla td{
+  border:0!important;
+  padding:2px;
+  background:transparent;
+}
+
+.horario-tabla__hora{
+  width:96px;
+  min-width:96px;
+  padding:8px 6px!important;
+  border-radius:13px!important;
+  color:#5e3b55!important;
+  background:linear-gradient(145deg,#f8eef4,#f4e7ef)!important;
+  box-shadow:0 5px 12px rgba(117,75,103,.08)!important;
+  text-align:center;
+  vertical-align:middle;
+}
+
+.horario-tabla__hora::before{
+  content:"";
+  display:none;
+}
+
+.horario-tabla__hora strong{
+  display:block;
+  color:#51344a;
+  font-size:.88rem;
+  font-weight:900;
+  line-height:1.05;
+}
+
+.horario-tabla__hora small{
+  display:block;
+  margin-top:3px;
+  color:#8a5c79;
+  font-size:.74rem;
+  font-weight:850;
+  line-height:1.05;
+}
+
+/* ---------- Materias: texto + ilustración ---------- */
+.clase-horario{
+  min-height:72px;
+  position:relative;
+  overflow:hidden;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 42px;
+  grid-template-rows:1fr;
+  gap:8px;
+  align-items:center;
+  justify-items:stretch;
+  padding:9px 9px 9px 12px!important;
+  border-width:2px!important;
+  border-radius:15px!important;
+  box-shadow:0 6px 14px rgba(51,65,85,.075)!important;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.clase-horario::after{
+  content:"";
+  position:absolute;
+  right:-18px;
+  bottom:-22px;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:rgba(255,255,255,.24);
+  pointer-events:none;
+}
+
+.clase-horario:not(.clase-horario--vacia):hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(51,65,85,.12)!important;
+}
+
+.clase-horario__nombre{
+  position:relative;
+  z-index:2;
+  grid-column:1;
+  grid-row:1;
+  display:block;
+  max-width:100%;
+  color:inherit;
+  font-size:.91rem;
+  font-weight:900;
+  line-height:1.13;
+  text-align:left!important;
+  overflow-wrap:anywhere;
+}
+
+.clase-horario__icono{
+  position:relative;
+  z-index:2;
+  grid-column:2;
+  grid-row:1;
+  width:40px!important;
+  height:40px!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  justify-self:end;
+  border:1px solid rgba(255,255,255,.82);
+  border-radius:12px!important;
+  background:rgba(255,255,255,.80)!important;
+  box-shadow:0 5px 11px rgba(15,23,42,.07)!important;
+  font-size:1.28rem!important;
+  line-height:1;
+}
+
+.clase-horario__ahora{
+  z-index:5;
+  top:4px;
+  right:4px;
+  padding:2px 6px;
+  border-radius:999px;
+  font-size:.54rem;
+  letter-spacing:.045em;
+}
+
+.clase-horario--vacia{
+  min-height:58px!important;
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed #eadfe6!important;
+  background:rgba(255,255,255,.62)!important;
+  box-shadow:none!important;
+  color:#cab9c4!important;
+}
+
+.clase-horario--vacia::after{display:none}
+
+/* Tipos especiales cuando no es posible fusionar toda la fila. */
+.clase-horario[data-tipo="patio"]{
+  --materia-fondo:#d6f35c!important;
+  --materia-borde:#b8df2e!important;
+  --materia-tinta:#2f6e1f!important;
+}
+
+.clase-horario[data-tipo="comedor"]{
+  --materia-fondo:#ffad52!important;
+  --materia-borde:#f79027!important;
+  --materia-tinta:#6d3900!important;
+}
+
+/* ---------- Franjas comunes de Patio / Recreo / Comedor ---------- */
+.horario-tabla tr.horario-fila-franja td{
+  padding:2px!important;
+}
+
+.horario-franja{
+  height:58px;
+  padding:0!important;
+  border-radius:13px;
+  text-align:center;
+  vertical-align:middle;
+  box-shadow:0 6px 14px rgba(51,65,85,.08);
+}
+
+.horario-franja__contenido{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:8px 18px;
+  border-radius:13px;
+  font-size:1.02rem;
+  font-weight:950;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.horario-franja__contenido span[aria-hidden="true"]{
+  font-size:1.35rem;
+  letter-spacing:normal;
+}
+
+.horario-franja--patio .horario-franja__contenido{
+  color:#28711f;
+  background:linear-gradient(90deg,#b9ea35,#d3f25d 45%,#b9ea35);
+  border:2px solid #a6d51f;
+}
+
+.horario-franja--comedor .horario-franja__contenido{
+  color:#703800;
+  background:linear-gradient(90deg,#ff922b,#ffb04f 48%,#ff922b);
+  border:2px solid #f47f12;
+}
+
+/* ---------- Leyenda ---------- */
+.materias-leyenda{
+  gap:8px;
+}
+
+.materia-chip{
+  padding:7px 11px!important;
+  border-radius:13px!important;
+  box-shadow:0 5px 12px rgba(51,65,85,.05)!important;
+}
+
+.materia-chip__icono{
+  width:27px!important;
+  height:27px!important;
+  border-radius:9px!important;
+  font-size:.95rem!important;
+}
+
+.materia-chip[data-tipo="patio"]{
+  color:#2f6e1f!important;
+  background:#d6f35c!important;
+  border-color:#b8df2e!important;
+}
+
+.materia-chip[data-tipo="comedor"]{
+  color:#6d3900!important;
+  background:#ffad52!important;
+  border-color:#f79027!important;
+}
+
+/* ---------- Botón de salida en papel/PDF ---------- */
+.boton-imprimir-horario{
+  border-color:#c4b5fd!important;
+  color:#5b21b6!important;
+  background:linear-gradient(135deg,#faf5ff,#f5f3ff)!important;
+  box-shadow:0 8px 18px rgba(124,58,237,.09)!important;
+}
+
+.boton-imprimir-horario::after{
+  content:"A4";
+  padding:2px 5px;
+  border-radius:6px;
+  color:#6d28d9;
+  background:#ede9fe;
+  font-size:.58rem;
+  font-weight:950;
+  letter-spacing:.04em;
+}
+
+/* ---------- Móvil ---------- */
+@media(max-width:900px){
+  .horario-poster{
+    grid-template-columns:1fr;
+    min-height:190px;
+    padding:26px 24px;
+  }
+
+  .horario-poster__marca{
+    position:absolute;
+    left:18px;
+    top:18px;
+  }
+
+  .horario-poster__marca strong{display:none}
+
+  .horario-poster__centro{
+    align-self:center;
+    padding-top:22px;
+  }
+
+  .horario-poster__meta{
+    justify-self:center;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .horario-poster__meta span{text-align:center}
+}
+
+@media(max-width:680px){
+  .horario-bloque--tabla{padding:14px}
+  .horario-poster{margin-bottom:12px;border-radius:22px}
+  .horario-poster::before{left:-160px;top:-130px}
+  .horario-poster::after{right:-160px;top:-135px}
+  .horario-poster__centro h2{font-size:2rem}
+  .horario-poster__alumno{font-size:1.05rem}
+  .horario-poster__meta{gap:5px}
+  .horario-poster__meta span{padding:6px 9px;font-size:.69rem}
+
+  .horario-dia-card{
+    overflow:hidden;
+    border-radius:18px!important;
+    box-shadow:0 8px 18px rgba(51,65,85,.07)!important;
+  }
+
+  .horario-dia-card__cabecera{
+    color:#fff!important;
+    background:linear-gradient(180deg,#b8799d,#a96f92)!important;
+    border-bottom:4px solid var(--dia-color,#c4b5fd)!important;
+  }
+
+  .horario-dia-fila{
+    grid-template-columns:82px 1fr!important;
+  }
+
+  .horario-dia-fila .clase-horario{
+    min-height:58px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 40px!important;
+    padding:8px 9px 8px 11px!important;
+  }
+
+  .horario-dia-fila .clase-horario__nombre{text-align:left!important}
+  .horario-dia-fila .clase-horario__icono{justify-self:end!important}
+}
+
+/* ==========================================================
+   Impresión / Guardar como PDF
+   - A4 horizontal.
+   - SOLO el calendario (cabecera-póster + cuadrícula).
+   - Se excluyen datos auxiliares, leyenda, notas y controles.
+   ========================================================== */
+@media print{
+  @page{size:A4 landscape;margin:7mm}
+
+  *,*::before,*::after{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+
+  html,body{
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+  }
+
+  body>*:not(.horario-pagina){display:none!important}
+
+  .horario-pagina{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  .horario-hero,
+  #resumenHoy,
+  #estadoCarga,
+  #estadoVacio,
+  #editorHorario,
+  .horario-print-cabecera,
+  #vistaHorario>.horario-bloque:not(.horario-bloque--tabla),
+  .horario-movil,
+  .horario-mensaje,
+  footer{
+    display:none!important;
+  }
+
+  #vistaHorario{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  .horario-bloque--tabla{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    break-inside:avoid;
+  }
+
+  .horario-bloque--tabla>.horario-bloque__cabecera{display:none!important}
+
+  .horario-poster{
+    display:grid!important;
+    min-height:28mm!important;
+    grid-template-columns:34mm 1fr 46mm!important;
+    gap:4mm!important;
+    margin:0 0 3mm!important;
+    padding:3.5mm 6mm!important;
+    border:1.2pt solid #d8ced5!important;
+    border-radius:12px!important;
+    box-shadow:none!important;
+  }
+
+  .horario-poster::before{
+    width:55mm!important;
+    height:56mm!important;
+    left:-37mm!important;
+    top:-35mm!important;
+  }
+
+  .horario-poster::after{
+    width:57mm!important;
+    height:56mm!important;
+    right:-36mm!important;
+    top:-36mm!important;
+  }
+
+  .horario-poster__acento--morado{
+    width:42mm!important;
+    height:20mm!important;
+    left:19mm!important;
+    bottom:-14mm!important;
+  }
+
+  .horario-poster__acento--turquesa{
+    width:38mm!important;
+    height:18mm!important;
+    right:20mm!important;
+    bottom:-14mm!important;
+  }
+
+  .horario-poster__marca span{
+    width:10mm!important;
+    height:10mm!important;
+    border-radius:8px!important;
+    font-size:14pt!important;
+  }
+
+  .horario-poster__marca strong{
+    max-width:25mm!important;
+    font-size:6.2pt!important;
+  }
+
+  .horario-poster__centro small{font-size:6.3pt!important;margin-bottom:1mm!important}
+  .horario-poster__centro h2{font-size:19pt!important}
+  .horario-poster__alumno{margin-top:1.5mm!important;font-size:10pt!important}
+
+  .horario-poster__meta{gap:1.2mm!important}
+  .horario-poster__meta span{
+    max-width:40mm!important;
+    padding:1.2mm 2.4mm!important;
+    box-shadow:none!important;
+    font-size:6.5pt!important;
+  }
+
+  .horario-tabla-wrap{
+    display:block!important;
+    overflow:visible!important;
+    margin:0!important;
+    padding:1.5mm!important;
+    border:1pt solid #dfd3db!important;
+    border-radius:10px!important;
+    background:#fff7fa!important;
+    box-shadow:none!important;
+  }
+
+  .horario-tabla{
+    width:100%!important;
+    min-width:0!important;
+    border-spacing:1.25mm!important;
+    table-layout:fixed!important;
+  }
+
+  .horario-tabla thead th{
+    padding:1.6mm 1mm 1.8mm!important;
+    border-radius:7px!important;
+    box-shadow:none!important;
+    font-size:7.2pt!important;
+  }
+
+  .horario-tabla thead th:first-child{width:18mm!important}
+  .horario-tabla thead th[data-dia]::after{height:1.3mm!important}
+
+  .horario-tabla td{padding:.45mm!important}
+
+  .horario-tabla__hora{
+    width:18mm!important;
+    min-width:18mm!important;
+    padding:1mm!important;
+    border-radius:7px!important;
+    box-shadow:none!important;
+  }
+
+  .horario-tabla__hora strong{font-size:6.5pt!important}
+  .horario-tabla__hora small{font-size:5.9pt!important;margin-top:.6mm!important}
+
+  .clase-horario{
+    min-height:11mm!important;
+    grid-template-columns:minmax(0,1fr) 8mm!important;
+    gap:1mm!important;
+    padding:1.2mm 1.2mm 1.2mm 1.8mm!important;
+    border-width:1pt!important;
+    border-radius:7px!important;
+    box-shadow:none!important;
+  }
+
+  .clase-horario::after{display:none!important}
+
+  .clase-horario__nombre{
+    font-size:6.55pt!important;
+    line-height:1.08!important;
+  }
+
+  .clase-horario__icono{
+    width:7mm!important;
+    height:7mm!important;
+    border-radius:6px!important;
+    box-shadow:none!important;
+    font-size:10pt!important;
+  }
+
+  .clase-horario__ahora{display:none!important}
+
+  .clase-horario--vacia{
+    min-height:8mm!important;
+  }
+
+  .horario-franja,
+  .horario-franja__contenido{
+    min-height:8.5mm!important;
+    height:8.5mm!important;
+    border-radius:7px!important;
+    box-shadow:none!important;
+  }
+
+  .horario-franja__contenido{
+    gap:2mm!important;
+    padding:1mm 3mm!important;
+    font-size:7.6pt!important;
+    letter-spacing:.15em!important;
+  }
+
+  .horario-franja__contenido span[aria-hidden="true"]{font-size:10pt!important}
+
+  body.horario-print-compacto .clase-horario{
+    min-height:8.4mm!important;
+  }
+
+  body.horario-print-compacto .clase-horario__nombre{font-size:6pt!important}
+  body.horario-print-compacto .clase-horario__icono{width:6mm!important;height:6mm!important;font-size:8.6pt!important}
+
+  body.horario-print-muy-compacto .horario-poster{
+    min-height:22mm!important;
+    margin-bottom:2mm!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario{
+    min-height:6.4mm!important;
+    padding:.8mm 1mm!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario__nombre{font-size:5.4pt!important}
+  body.horario-print-muy-compacto .clase-horario__icono{width:5mm!important;height:5mm!important;font-size:7.5pt!important}
+  body.horario-print-muy-compacto .horario-tabla{border-spacing:.8mm!important}
+}
