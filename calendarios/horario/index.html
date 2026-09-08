@@ -203,11 +203,29 @@
         <section class="editor-seccion">
           <div class="editor-seccion__titulo">
             <span>3</span>
-            <div><h3>Mis horas</h3><p>Añade los tramos que realmente tiene tu colegio.</p></div>
+            <div><h3>Mis horas</h3><p>Define la hora exacta de inicio y fin de cada bloque. No tienen que durar una hora.</p></div>
+          </div>
+
+          <div class="editor-aviso">
+            ⏱️ Los tramos son totalmente libres. Por ejemplo: <strong>11:00 → 11:50</strong>,
+            <strong>12:05 → 12:55</strong> o cualquier otra combinación de minutos.
+          </div>
+
+          <div class="materia-nueva">
+            <div class="editor-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+              <label class="campo-horario">
+                <span>Hora de inicio</span>
+                <input id="nuevoTramoInicio" type="time" step="60" value="09:00">
+              </label>
+              <label class="campo-horario">
+                <span>Hora de fin</span>
+                <input id="nuevoTramoFin" type="time" step="60" value="10:00">
+              </label>
+            </div>
+            <button id="agregarTramo" class="boton-editor boton-editor--suave" type="button">＋ Añadir este tramo</button>
           </div>
 
           <div id="editorTramos" class="editor-tramos"></div>
-          <button id="agregarTramo" class="boton-editor boton-editor--suave" type="button">＋ Añadir tramo horario</button>
         </section>
 
         <section class="editor-seccion">
@@ -251,6 +269,7 @@
   <script src="../../compartido/js/navegacion.js"></script>
   <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
   <script type="module" src="./horario-clases.js"></script>
+  <script type="module" src="./horario-tramos-flexibles.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
