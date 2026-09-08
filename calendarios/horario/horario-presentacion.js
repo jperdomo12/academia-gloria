@@ -124,6 +124,43 @@ function decorarHorario() {
   decorarDias();
 }
 
+/*
+ * El HTML usa el atributo `hidden` para alternar entre carga, estado vacío
+ * y horario existente. Algunas reglas visuales antiguas aplican display:flex/grid
+ * a estos bloques y pueden imponerse al estilo nativo del navegador.
+ * Sincronizamos también `display` en línea para que `hidden` sea inequívoco,
+ * sin alterar cuándo decide mostrarlos horario-clases.js.
+ */
+function sincronizarEstadosTransitorios() {
+  ["estadoCarga", "estadoVacio"].forEach(id => {
+    const elemento = document.getElementById(id);
+    if (!elemento) return;
+
+    if (elemento.hidden) {
+      elemento.style.setProperty("display", "none", "important");
+    } else {
+      elemento.style.removeProperty("display");
+    }
+  });
+}
+
+function observarEstadosTransitorios() {
+  const estados = ["estadoCarga", "estadoVacio"]
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  sincronizarEstadosTransitorios();
+  if (!estados.length) return;
+
+  const observer = new MutationObserver(sincronizarEstadosTransitorios);
+  estados.forEach(elemento => {
+    observer.observe(elemento, {
+      attributes:true,
+      attributeFilter:["hidden"]
+    });
+  });
+}
+
 function asignarTextoSiCambio(elemento, valor) {
   if (!elemento) return;
   const siguiente = String(valor ?? "");
@@ -194,6 +231,7 @@ function configurarImpresion() {
 }
 
 function iniciarPresentacion() {
+  observarEstadosTransitorios();
   decorarHorario();
   sincronizarCabeceraImpresion();
   configurarImpresion();
@@ -207,6 +245,7 @@ function iniciarPresentacion() {
     pendiente = true;
     queueMicrotask(() => {
       pendiente = false;
+      sincronizarEstadosTransitorios();
       decorarHorario();
       sincronizarCabeceraImpresion();
     });
