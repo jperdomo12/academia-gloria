@@ -89,6 +89,25 @@ function textoFranja(nombre = "") {
   return limpio;
 }
 
+function crearContenidoFranja(nombre, especial) {
+  const contenedor = document.createElement("div");
+  contenedor.className = "horario-franja__contenido";
+
+  const iconoIzquierdo = document.createElement("span");
+  iconoIzquierdo.setAttribute("aria-hidden", "true");
+  iconoIzquierdo.textContent = especial.icono;
+
+  const etiqueta = document.createElement("strong");
+  etiqueta.textContent = textoFranja(nombre);
+
+  const iconoDerecho = document.createElement("span");
+  iconoDerecho.setAttribute("aria-hidden", "true");
+  iconoDerecho.textContent = especial.icono;
+
+  contenedor.append(iconoIzquierdo, etiqueta, iconoDerecho);
+  return contenedor;
+}
+
 function fusionarFranjasComunes() {
   document.querySelectorAll("#horarioTablaCuerpo tr").forEach(fila => {
     if (fila.dataset.franjaV3 === "true") return;
@@ -110,13 +129,7 @@ function fusionarFranjasComunes() {
     const nuevaCelda = document.createElement("td");
     nuevaCelda.colSpan = 5;
     nuevaCelda.className = `horario-franja horario-franja--${especial.tipo}`;
-    nuevaCelda.innerHTML = `
-      <div class="horario-franja__contenido">
-        <span aria-hidden="true">${especial.icono}</span>
-        <strong>${textoFranja(nombres[0])}</strong>
-        <span aria-hidden="true">${especial.icono}</span>
-      </div>
-    `;
+    nuevaCelda.appendChild(crearContenidoFranja(nombres[0], especial));
 
     celdasDia.forEach(celda => celda.remove());
     fila.appendChild(nuevaCelda);
