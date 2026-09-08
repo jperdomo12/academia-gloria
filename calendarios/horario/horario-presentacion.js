@@ -4,7 +4,7 @@
    Iconografía contextual, decoración de días e impresión.
    ========================================================== */
 
-import { generarPdfHorario } from "./horario-pdf.js";
+import { generarPdfHorario } from "./horario-pdf.js?v=20260908-104";
 
 const ICONOS_MATERIAS = Object.freeze([
   { claves:["matemat","mates","algebra","geometr"], icono:"➗" },
