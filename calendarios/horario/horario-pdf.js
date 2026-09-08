@@ -20,13 +20,25 @@ const DEPENDENCIAS_PDF = Object.freeze([
 ]);
 
 function asegurarEstilosPdf() {
-  if (document.querySelector('link[data-horario-pdf-estilos="true"]')) return;
+  const existente = document.querySelector('link[data-horario-pdf-estilos="true"]');
+  if (existente?.sheet) return Promise.resolve();
 
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "./horario-pdf.css";
-  link.dataset.horarioPdfEstilos = "true";
-  document.head.appendChild(link);
+  if (existente) {
+    return new Promise((resolve, reject) => {
+      existente.addEventListener("load", resolve, { once:true });
+      existente.addEventListener("error", reject, { once:true });
+    });
+  }
+
+  return new Promise((resolve, reject) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "./horario-pdf.css";
+    link.dataset.horarioPdfEstilos = "true";
+    link.onload = resolve;
+    link.onerror = () => reject(new Error("No se pudieron cargar los estilos del PDF."));
+    document.head.appendChild(link);
+  });
 }
 
 function cargarScript({ global, src }) {
@@ -115,8 +127,6 @@ function mostrarEstadoEnVentana(ventana, texto) {
 }
 
 export async function generarPdfHorario() {
-  asegurarEstilosPdf();
-
   const ventanaPdf = window.open("", "_blank");
   mostrarEstadoEnVentana(ventanaPdf, "Preparando tu horario…");
 
@@ -124,7 +134,11 @@ export async function generarPdfHorario() {
   let urlPdf = null;
 
   try {
-    await cargarDependenciasPdf();
+    await Promise.all([
+      asegurarEstilosPdf(),
+      cargarDependenciasPdf()
+    ]);
+
     if (document.fonts?.ready) await document.fonts.ready;
 
     escenario = crearEscenarioPdf();
