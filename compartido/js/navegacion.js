@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.8
+   Versión 2.9
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -596,6 +596,20 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
     const control = origen.closest("a[href], [data-url]");
     if (!control) return;
+
+    /*
+     * Un control Volver ya tiene su destino resuelto por configurarBotonVolver.
+     * No debe reinterpretarse como una navegación interna nueva, porque eso
+     * volvería a añadir la pantalla actual como `volver` y crearía ciclos como
+     * Calendario -> Horario -> Calendario -> Horario.
+     */
+    if (
+      control.matches(
+        "[data-nav-volver], [data-accion-volver], [data-volver-modulo]"
+      )
+    ) {
+      return;
+    }
 
     if (control.hasAttribute("data-url")) {
       const valor = control.dataset.url;
