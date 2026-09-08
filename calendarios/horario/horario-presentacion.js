@@ -4,6 +4,8 @@
    Iconografía contextual, decoración de días e impresión.
    ========================================================== */
 
+import { generarPdfHorario } from "./horario-pdf.js";
+
 const ICONOS_MATERIAS = Object.freeze([
   { claves:["matemat","mates","algebra","geometr"], icono:"➗" },
   { claves:["lengua","literatura","lectura","castell"], icono:"📖" },
@@ -150,13 +152,33 @@ function configurarImpresion() {
   if (!boton) return;
 
   let tituloAnterior = document.title;
+  let generandoPdf = false;
 
-  boton.addEventListener("click", () => {
+  boton.addEventListener("click", async () => {
+    if (generandoPdf) return;
+
     sincronizarCabeceraImpresion();
     decorarHorario();
-    window.print();
+
+    generandoPdf = true;
+    const htmlAnterior = boton.innerHTML;
+    boton.disabled = true;
+    boton.textContent = "Preparando PDF…";
+
+    try {
+      await generarPdfHorario();
+    } finally {
+      generandoPdf = false;
+      boton.disabled = false;
+      boton.innerHTML = htmlAnterior;
+      if (window.lucide) window.lucide.createIcons();
+    }
   });
 
+  /*
+   * Ctrl+P / impresión manual se conserva como alternativa.
+   * El botón principal usa un PDF A4 real para garantizar una sola página.
+   */
   window.addEventListener("beforeprint", () => {
     tituloAnterior = document.title;
     sincronizarCabeceraImpresion();
