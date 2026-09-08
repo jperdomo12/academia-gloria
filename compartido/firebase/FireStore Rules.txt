@@ -165,6 +165,28 @@ service cloud.firestore {
           || puedeGestionarPersona(personaIdUsuarioObjetivo(userId));
       }
 
+      // HORARIO DE CLASES · V1 · Persona Activa
+      //
+      // Un único documento actual por alumno:
+      // usuarios/{userId}/horarioClases/actual
+      // - propietario/admin/relación de consulta pueden leer;
+      // - propietario/admin/relación con gestión pueden modificar.
+      match /horarioClases/{horarioId} {
+        allow read: if horarioId == "actual"
+          && (
+            esPropietario(userId)
+            || esAdministrador()
+            || puedeConsultarPersona(personaIdUsuarioObjetivo(userId))
+          );
+
+        allow create, update, delete: if horarioId == "actual"
+          && (
+            esPropietario(userId)
+            || esAdministrador()
+            || puedeGestionarPersona(personaIdUsuarioObjetivo(userId))
+          );
+      }
+
       // BAÚL DEL ALUMNO · Persona Activa
       //
       // Mismo contrato funcional que Calendario:
@@ -526,7 +548,11 @@ service cloud.firestore {
       // las colecciones con contrato de seguridad propio.
       match /{coleccionLegacy}/{documentoLegacy} {
         allow read, write: if !(
-            coleccionLegacy in ["reconocimientos", "bitacoraAcompanamiento"]
+            coleccionLegacy in [
+              "reconocimientos",
+              "bitacoraAcompanamiento",
+              "horarioClases"
+            ]
           )
           && (esPropietario(userId) || esAdministrador());
       }
