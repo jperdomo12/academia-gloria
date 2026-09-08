@@ -55,16 +55,18 @@ export async function leerHorarioClases() {
 
   if (!resultado.exists()) return null;
 
+  const datos = resultado.data();
+
   return {
     id: resultado.id,
-    ...crearHorarioClases(resultado.data()),
-    personaId: resultado.data().personaId || contexto.personaActiva.personaId,
-    createdAt: resultado.data().createdAt || null,
-    createdBy: resultado.data().createdBy || "",
-    createdByNombre: resultado.data().createdByNombre || "",
-    updatedAt: resultado.data().updatedAt || null,
-    updatedBy: resultado.data().updatedBy || "",
-    updatedByNombre: resultado.data().updatedByNombre || ""
+    ...crearHorarioClases(datos),
+    personaId: datos.personaId || contexto.personaActiva.personaId,
+    createdAt: datos.createdAt || null,
+    createdBy: datos.createdBy || "",
+    createdByNombre: datos.createdByNombre || "",
+    updatedAt: datos.updatedAt || null,
+    updatedBy: datos.updatedBy || "",
+    updatedByNombre: datos.updatedByNombre || ""
   };
 }
 
@@ -79,22 +81,24 @@ export async function guardarHorarioClases(entrada = {}) {
   const referencia = documentoHorario(contexto.userIdPersonaActiva);
   const existente = await getDoc(referencia);
   const actor = actorDesdeContexto(contexto);
+  const anterior = existente.exists() ? existente.data() : null;
 
   const datos = {
     ...horario,
     personaId: contexto.personaActiva.personaId,
+    createdAt: anterior?.createdAt || serverTimestamp(),
+    createdBy: anterior?.createdBy || actor.userId,
+    createdByNombre: anterior?.createdByNombre || actor.nombre,
     updatedAt: serverTimestamp(),
     updatedBy: actor.userId,
     updatedByNombre: actor.nombre
   };
 
-  if (!existente.exists()) {
-    datos.createdAt = serverTimestamp();
-    datos.createdBy = actor.userId;
-    datos.createdByNombre = actor.nombre;
-  }
-
-  await setDoc(referencia, datos, { merge: true });
+  /*
+   * El documento representa el horario actual completo. Reemplazarlo evita
+   * conservar celdas o tramos eliminados dentro de mapas anidados.
+   */
+  await setDoc(referencia, datos);
   return horario;
 }
 
