@@ -1,0 +1,425 @@
+/* ==========================================================
+   Academia Gloria Valentina
+   Mi horario de clases · ajustes visuales V4
+
+   Correcciones derivadas de validación visual real:
+   - más contraste en cabecera-póster;
+   - metadatos alejados de los acentos amarillo/turquesa;
+   - encabezados de días claramente legibles;
+   - impresión/PDF forzada a una sola página A4 apaisada.
+   ========================================================== */
+
+/* ---------- Cabecera-póster ---------- */
+.horario-poster{
+  grid-template-columns:minmax(160px,.8fr) minmax(320px,1.55fr) minmax(210px,.9fr);
+  background:
+    linear-gradient(135deg,#ded6f3 0%,#e9dded 48%,#dcebf1 100%)!important;
+}
+
+/* Ensancha el rojo para que la marca blanca permanezca siempre sobre color. */
+.horario-poster::before{
+  width:300px!important;
+  left:-155px!important;
+  top:-112px!important;
+}
+
+/* El amarillo se reserva al borde decorativo, sin competir con los metadatos. */
+.horario-poster::after{
+  width:255px!important;
+  right:-175px!important;
+  top:-118px!important;
+}
+
+.horario-poster__acento--turquesa{
+  right:-42px!important;
+  bottom:-58px!important;
+}
+
+.horario-poster__meta{
+  margin-right:52px;
+}
+
+.horario-poster__meta span{
+  background:rgba(255,255,255,.92)!important;
+  border-color:rgba(255,255,255,.94)!important;
+  box-shadow:0 7px 16px rgba(63,63,70,.10)!important;
+}
+
+/* ---------- Encabezados de días ---------- */
+/*
+ * La V2 aplicaba fondos muy claros por día mientras V3 heredaba texto blanco.
+ * Se fija explícitamente una combinación pastel + texto oscuro de alto contraste.
+ */
+.horario-tabla thead th[data-dia]{
+  color:#302738!important;
+  text-shadow:none!important;
+  box-shadow:0 7px 15px rgba(65,45,63,.10)!important;
+}
+
+.horario-tabla thead th[data-dia="lunes"]{
+  background:#fde7ec!important;
+  color:#9f1239!important;
+}
+
+.horario-tabla thead th[data-dia="martes"]{
+  background:#eee7ff!important;
+  color:#5b21b6!important;
+}
+
+.horario-tabla thead th[data-dia="miercoles"]{
+  background:#fff3cf!important;
+  color:#8a5800!important;
+}
+
+.horario-tabla thead th[data-dia="jueves"]{
+  background:#ddf7eb!important;
+  color:#10623f!important;
+}
+
+.horario-tabla thead th[data-dia="viernes"]{
+  background:#dff3fb!important;
+  color:#075985!important;
+}
+
+.horario-tabla thead th.dia-hoy{
+  outline:3px solid #f3bf25!important;
+  outline-offset:1px!important;
+}
+
+@media(max-width:920px){
+  .horario-poster{
+    grid-template-columns:145px minmax(280px,1fr) 175px;
+    padding-inline:24px!important;
+  }
+
+  .horario-poster__meta{
+    margin-right:22px;
+  }
+}
+
+@media(max-width:760px){
+  .horario-poster__meta{
+    margin-right:0;
+  }
+}
+
+/* ==========================================================
+   Impresión / Guardar PDF
+   Objetivo: una única hoja A4 horizontal con SOLO el calendario.
+   ========================================================== */
+@media print{
+  @page{
+    size:A4 landscape;
+    margin:5mm;
+  }
+
+  html,
+  body{
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    background:#fff!important;
+  }
+
+  .horario-pagina{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  /* Solo cabecera-póster + cuadrícula. */
+  #vistaHorario{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  #vistaHorario>*:not(.horario-bloque--tabla){
+    display:none!important;
+  }
+
+  .horario-bloque--tabla{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+
+  .horario-bloque--tabla>*:not(.horario-poster):not(.horario-tabla-wrap){
+    display:none!important;
+  }
+
+  .horario-poster{
+    width:100%!important;
+    min-height:0!important;
+    height:30mm!important;
+    margin:0 0 3mm!important;
+    padding:3.5mm 8mm!important;
+    border:1.2px solid #d8cfe4!important;
+    border-radius:5mm!important;
+    grid-template-columns:38mm 1fr 48mm!important;
+    gap:4mm!important;
+    box-shadow:none!important;
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+
+  .horario-poster::before{
+    width:76mm!important;
+    height:72mm!important;
+    left:-43mm!important;
+    top:-32mm!important;
+  }
+
+  .horario-poster::after{
+    width:67mm!important;
+    height:70mm!important;
+    right:-47mm!important;
+    top:-33mm!important;
+  }
+
+  .horario-poster__acento--morado{
+    width:48mm!important;
+    height:20mm!important;
+    left:18mm!important;
+    bottom:-15mm!important;
+  }
+
+  .horario-poster__acento--turquesa{
+    width:41mm!important;
+    height:18mm!important;
+    right:-8mm!important;
+    bottom:-14mm!important;
+  }
+
+  .horario-poster__marca{
+    gap:1mm!important;
+    max-width:31mm!important;
+  }
+
+  .horario-poster__marca span{
+    width:9mm!important;
+    height:9mm!important;
+    border-radius:3mm!important;
+    font-size:11pt!important;
+  }
+
+  .horario-poster__marca strong{
+    font-size:6.7pt!important;
+    line-height:1.05!important;
+  }
+
+  .horario-poster__centro small{
+    margin-bottom:1mm!important;
+    font-size:6.5pt!important;
+  }
+
+  .horario-poster__centro h2{
+    font-size:20pt!important;
+    line-height:.95!important;
+  }
+
+  .horario-poster__alumno{
+    margin-top:1.5mm!important;
+    font-size:11pt!important;
+  }
+
+  .horario-poster__meta{
+    gap:1.2mm!important;
+    margin-right:7mm!important;
+  }
+
+  .horario-poster__meta span{
+    max-width:42mm!important;
+    padding:1.3mm 2.2mm!important;
+    font-size:6.6pt!important;
+    box-shadow:none!important;
+  }
+
+  .horario-tabla-wrap{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+
+  .horario-tabla{
+    width:100%!important;
+    min-width:0!important;
+    table-layout:fixed!important;
+    border-spacing:1.25mm!important;
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+
+  .horario-tabla thead th{
+    padding:1.7mm 1mm!important;
+    border-radius:2.5mm!important;
+    font-size:7.5pt!important;
+    box-shadow:none!important;
+  }
+
+  .horario-tabla thead th:first-child{
+    width:19mm!important;
+  }
+
+  .horario-tabla__hora{
+    width:19mm!important;
+    min-width:19mm!important;
+    padding:1.1mm .8mm!important;
+    border-radius:2.5mm!important;
+    box-shadow:none!important;
+  }
+
+  .horario-tabla__hora strong{
+    font-size:6.9pt!important;
+  }
+
+  .horario-tabla__hora small{
+    margin-top:.5mm!important;
+    font-size:6pt!important;
+  }
+
+  .clase-horario{
+    min-height:7.4mm!important;
+    grid-template-columns:minmax(0,1fr) 5.6mm!important;
+    gap:1mm!important;
+    padding:1.1mm 1mm 1.1mm 1.5mm!important;
+    border-width:.7px!important;
+    border-radius:2.5mm!important;
+    box-shadow:none!important;
+  }
+
+  .clase-horario__nombre{
+    font-size:6.6pt!important;
+    line-height:1.05!important;
+  }
+
+  .clase-horario__icono{
+    width:5.3mm!important;
+    height:5.3mm!important;
+    border-radius:1.7mm!important;
+    box-shadow:none!important;
+    font-size:7.5pt!important;
+  }
+
+  .clase-horario--vacia{
+    min-height:7.4mm!important;
+  }
+
+  .horario-franja,
+  .horario-franja__contenido{
+    min-height:7.4mm!important;
+    height:7.4mm!important;
+  }
+
+  .horario-franja__contenido{
+    gap:2mm!important;
+    padding:.8mm 3mm!important;
+    border-width:.7px!important;
+    border-radius:2.5mm!important;
+    font-size:7pt!important;
+  }
+
+  .horario-franja__contenido span[aria-hidden="true"]{
+    font-size:8.5pt!important;
+  }
+
+  /* 10-13 filas: reduce ligeramente la altura para asegurar una hoja. */
+  body.horario-print-compacto .horario-poster{
+    height:27mm!important;
+    margin-bottom:2mm!important;
+  }
+
+  body.horario-print-compacto .clase-horario,
+  body.horario-print-compacto .clase-horario--vacia,
+  body.horario-print-compacto .horario-franja,
+  body.horario-print-compacto .horario-franja__contenido{
+    min-height:6.2mm!important;
+    height:6.2mm!important;
+  }
+
+  body.horario-print-compacto .clase-horario__nombre{
+    font-size:6.1pt!important;
+  }
+
+  body.horario-print-compacto .clase-horario__icono{
+    width:4.5mm!important;
+    height:4.5mm!important;
+    font-size:6.8pt!important;
+  }
+
+  /* 14-18 filas: densidad máxima prevista por el modelo V1. */
+  body.horario-print-muy-compacto .horario-poster{
+    height:24mm!important;
+    margin-bottom:1.5mm!important;
+    padding-block:2.5mm!important;
+  }
+
+  body.horario-print-muy-compacto .horario-poster__centro h2{
+    font-size:17pt!important;
+  }
+
+  body.horario-print-muy-compacto .horario-poster__alumno{
+    font-size:9.5pt!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario,
+  body.horario-print-muy-compacto .clase-horario--vacia,
+  body.horario-print-muy-compacto .horario-franja,
+  body.horario-print-muy-compacto .horario-franja__contenido{
+    min-height:5.2mm!important;
+    height:5.2mm!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario{
+    grid-template-columns:minmax(0,1fr) 4mm!important;
+    gap:.6mm!important;
+    padding:.6mm .7mm .6mm 1mm!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario__nombre{
+    font-size:5.5pt!important;
+    line-height:1!important;
+  }
+
+  body.horario-print-muy-compacto .clase-horario__icono{
+    width:3.8mm!important;
+    height:3.8mm!important;
+    border-radius:1.2mm!important;
+    font-size:6pt!important;
+  }
+
+  body.horario-print-muy-compacto .horario-tabla{
+    border-spacing:.8mm!important;
+  }
+
+  body.horario-print-muy-compacto .horario-tabla thead th{
+    padding:1.2mm .7mm!important;
+    font-size:6.7pt!important;
+  }
+
+  body.horario-print-muy-compacto .horario-tabla__hora strong{
+    font-size:6.1pt!important;
+  }
+
+  body.horario-print-muy-compacto .horario-tabla__hora small{
+    font-size:5.4pt!important;
+  }
+}
