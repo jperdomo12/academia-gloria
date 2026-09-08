@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
   <link rel="stylesheet" href="./horario-clases.css">
   <link rel="stylesheet" href="./horario-visual-v2.css">
+  <link rel="stylesheet" href="./horario-visual-v3.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -98,9 +99,9 @@
             <p>Todo lo importante, de un vistazo.</p>
           </div>
           <div class="horario-acciones-vista">
-            <button id="imprimirHorario" class="boton-imprimir-horario" type="button">
+            <button id="imprimirHorario" class="boton-imprimir-horario" type="button" title="Imprime únicamente el calendario o guárdalo como PDF">
               <i data-lucide="printer" width="18"></i>
-              Imprimir horario
+              Imprimir / Guardar PDF
             </button>
             <button id="editarHorario" class="boton-editar-horario" type="button">
               <i data-lucide="pencil" width="18"></i>
@@ -137,6 +138,28 @@
             <p>Un planner claro, colorido y hecho a la medida de tu semana.</p>
           </div>
           <span class="horario-hoy-leyenda">⭐ Hoy</span>
+        </div>
+
+        <div class="horario-poster" aria-label="Cabecera de mi horario escolar">
+          <span class="horario-poster__acento horario-poster__acento--morado" aria-hidden="true"></span>
+          <span class="horario-poster__acento horario-poster__acento--turquesa" aria-hidden="true"></span>
+
+          <div class="horario-poster__marca" aria-hidden="true">
+            <span>🌈</span>
+            <strong>Academia Gloria Valentina</strong>
+          </div>
+
+          <div class="horario-poster__centro">
+            <small>Mi semana · mi espacio</small>
+            <h2>Horario escolar</h2>
+            <strong id="posterAlumno" class="horario-poster__alumno">Mi horario</strong>
+          </div>
+
+          <div class="horario-poster__meta">
+            <span>🏫 <b id="posterColegio">Mi colegio</b></span>
+            <span>🎒 <b id="posterCurso">Mi curso</b></span>
+            <span>📅 <b id="posterPeriodo">Curso escolar</b></span>
+          </div>
         </div>
 
         <div class="horario-tabla-wrap">
@@ -287,6 +310,7 @@
   <script type="module" src="./horario-clases.js"></script>
   <script type="module" src="./horario-tramos-flexibles.js"></script>
   <script type="module" src="./horario-presentacion.js"></script>
+  <script type="module" src="./horario-presentacion-v3.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
