@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
   <link rel="stylesheet" href="./horario-clases.css">
+  <link rel="stylesheet" href="./horario-visual-v2.css">
 
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -78,6 +79,15 @@
     </section>
 
     <div id="vistaHorario" hidden>
+      <section class="horario-print-cabecera" aria-hidden="true">
+        <div class="horario-print-cabecera__icono">🗓️</div>
+        <div>
+          <h1>Mi horario de clases</h1>
+          <p><strong id="printAlumno">Mi horario</strong> · <span id="printResumen"></span></p>
+        </div>
+        <span id="printCurso" class="horario-print-cabecera__curso">🎒 Mi curso</span>
+      </section>
+
       <section id="resumenHoy" class="horario-resumen-hoy" aria-live="polite"></section>
 
       <section class="horario-superficie horario-bloque">
@@ -87,10 +97,16 @@
             <h2>Mi semana de clases</h2>
             <p>Todo lo importante, de un vistazo.</p>
           </div>
-          <button id="editarHorario" class="boton-editar-horario" type="button">
-            <i data-lucide="pencil" width="18"></i>
-            Editar mi horario
-          </button>
+          <div class="horario-acciones-vista">
+            <button id="imprimirHorario" class="boton-imprimir-horario" type="button">
+              <i data-lucide="printer" width="18"></i>
+              Imprimir horario
+            </button>
+            <button id="editarHorario" class="boton-editar-horario" type="button">
+              <i data-lucide="pencil" width="18"></i>
+              Editar mi horario
+            </button>
+          </div>
         </div>
 
         <div class="horario-datos" id="datosHorario">
@@ -117,8 +133,8 @@
         <div class="horario-bloque__cabecera">
           <div>
             <span class="horario-seccion-eyebrow">🗓️ DE LUNES A VIERNES</span>
-            <h2>Mi semana completa</h2>
-            <p>El día de hoy queda resaltado automáticamente.</p>
+            <h2>Mi semana completa ✨</h2>
+            <p>Un planner claro, colorido y hecho a la medida de tu semana.</p>
           </div>
           <span class="horario-hoy-leyenda">⭐ Hoy</span>
         </div>
@@ -270,6 +286,7 @@
   <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
   <script type="module" src="./horario-clases.js"></script>
   <script type="module" src="./horario-tramos-flexibles.js"></script>
+  <script type="module" src="./horario-presentacion.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
