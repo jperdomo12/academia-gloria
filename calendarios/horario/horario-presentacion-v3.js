@@ -8,13 +8,118 @@
    - fusiona la franja cuando el mismo bloque ocupa los cinco días;
    - prepara una impresión/PDF compacta del calendario solamente;
    - permite una vista directa de SOLO el horario;
-   - ordena alfabéticamente las materias en los selectores del editor.
+   - ordena alfabéticamente las materias en los selectores del editor;
+   - evita ciclos Calendario ↔ Horario en la ruta contextual de Volver.
 
    No modifica ni persiste el modelo del horario.
    ========================================================== */
 
 const VISTA_SOLO_HORARIO = new URLSearchParams(window.location.search).get("vista") === "solo";
 const ORDEN_MATERIAS = new Intl.Collator("es", { sensitivity:"base", numeric:true });
+
+function rutaComparable(valor = "") {
+  try {
+    const destino = new URL(valor, window.location.origin);
+    return destino.pathname
+      .replace(/index\.html$/, "")
+      .replace(/\/+$/, "");
+  } catch {
+    return "";
+  }
+}
+
+function sanearRetornoCircularHorario() {
+  const actual = new URL(window.location.href);
+  const retornoCrudo = actual.searchParams.get("volver");
+  if (!retornoCrudo) return "";
+
+  try {
+    const destino = new URL(retornoCrudo, window.location.origin);
+    if (destino.origin !== window.location.origin) return "";
+
+    const retornoDelDestino = destino.searchParams.get("volver");
+    if (!retornoDelDestino) return "";
+
+    const retornoAnidado = new URL(retornoDelDestino, window.location.origin);
+    if (retornoAnidado.origin !== window.location.origin) return "";
+
+    /*
+     * Si el destino de Volver ya contiene otro `volver` que apunta de nuevo
+     * a esta misma pantalla, la cadena formaría un ciclo de dos páginas:
+     * Calendario -> Horario -> Calendario -> Horario.
+     * Conservamos el destino inmediato pero retiramos únicamente ese retorno
+     * circular. El historial común mantiene entonces el llamador original.
+     */
+    if (rutaComparable(retornoAnidado.href) !== rutaComparable(actual.href)) {
+      return "";
+    }
+
+    destino.searchParams.delete("volver");
+    const destinoSaneado = `${destino.pathname}${destino.search}${destino.hash}`;
+
+    actual.searchParams.set("volver", destinoSaneado);
+    window.history.replaceState(
+      window.history.state,
+      document.title,
+      `${actual.pathname}${actual.search}${actual.hash}`
+    );
+
+    return destinoSaneado;
+  } catch {
+    return "";
+  }
+}
+
+function sincronizarBotonVolverSaneado(destino) {
+  if (!destino) return;
+
+  function actualizarControles() {
+    let encontroGlobal = false;
+
+    document
+      .querySelectorAll("[data-nav-volver], [data-accion-volver]")
+      .forEach(control => {
+        control.dataset.rutaAlternativa = destino;
+
+        if (control.matches("[data-nav-volver]")) {
+          encontroGlobal = true;
+        }
+
+        if (control instanceof HTMLAnchorElement) {
+          control.href = destino;
+          return;
+        }
+
+        if (
+          control instanceof HTMLButtonElement &&
+          control.dataset.retornoCircularSaneado !== "true"
+        ) {
+          control.dataset.retornoCircularSaneado = "true";
+          control.addEventListener("click", evento => {
+            evento.preventDefault();
+            evento.stopImmediatePropagation();
+            window.location.href = destino;
+          }, true);
+        }
+      });
+
+    return encontroGlobal;
+  }
+
+  if (actualizarControles()) return;
+
+  const observer = new MutationObserver(() => {
+    if (actualizarControles()) {
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(document.documentElement, { childList:true, subtree:true });
+  window.setTimeout(() => observer.disconnect(), 5000);
+}
+
+const RETORNO_SANEADO = sanearRetornoCircularHorario();
+sincronizarBotonVolverSaneado(RETORNO_SANEADO);
 
 function cargarAjustesVisualesV4() {
   if (document.querySelector('link[data-horario-ajustes-v4]')) return;
