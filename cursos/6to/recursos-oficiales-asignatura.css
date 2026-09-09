@@ -1,0 +1,156 @@
+/* ========================================================================
+   Academia Gloria Valentina · 6.º de Primaria
+   Recursos oficiales dentro de portales de asignatura
+   Base reutilizable para Matemáticas, Lengua, Sociales, Inglés y Science
+   ======================================================================== */
+
+.portal-recursos-oficiales{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  gap:18px;
+  align-items:center;
+  padding:18px 20px;
+  border:1px solid #d9e4ef;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 8% 20%,rgba(78,147,160,.10),transparent 10rem),
+    linear-gradient(140deg,#fff,#f7fbfc 58%,#f6f2fb);
+  box-shadow:0 10px 24px rgba(55,66,39,.045);
+}
+
+.portal-recursos-oficiales__intro{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.portal-recursos-oficiales__icono{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:linear-gradient(145deg,#eaf7f8,#f3eefb);
+  font-size:1.5rem;
+}
+
+.portal-recursos-oficiales__intro h3{
+  margin:1px 0 3px;
+  color:#34423b;
+  font-size:1.08rem;
+  line-height:1.16;
+  font-weight:900;
+}
+
+.portal-recursos-oficiales__intro p{
+  margin:0;
+  color:#737d79;
+  font-size:.79rem;
+  line-height:1.38;
+  font-weight:650;
+}
+
+.portal-recursos-oficiales__acciones{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+
+.portal-recurso-oficial{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:9px;
+  min-height:58px;
+  padding:10px 12px;
+  border:1px solid #dbe5df;
+  border-radius:16px;
+  background:#fff;
+  color:#42554d;
+  text-decoration:none;
+  box-shadow:0 6px 15px rgba(55,66,39,.04);
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+
+.portal-recurso-oficial:hover,
+.portal-recurso-oficial:focus-visible{
+  transform:translateY(-2px);
+  border-color:#91a9b5;
+  box-shadow:0 12px 24px rgba(55,66,39,.09);
+  outline:none;
+}
+
+.portal-recurso-oficial__principal{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+
+.portal-recurso-oficial__emoji{
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#eef7f7;
+  font-size:1.1rem;
+}
+
+.portal-recurso-oficial__texto{
+  min-width:0;
+}
+
+.portal-recurso-oficial__tipo{
+  display:block;
+  margin-bottom:1px;
+  color:#7a8580;
+  font-size:.61rem;
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.portal-recurso-oficial__nombre{
+  display:block;
+  overflow:hidden;
+  color:#42554d;
+  font-size:.82rem;
+  line-height:1.15;
+  font-weight:900;
+  text-overflow:ellipsis;
+}
+
+.portal-recurso-oficial__externo{
+  flex:0 0 auto;
+  color:#67808b;
+  font-size:1rem;
+  font-weight:900;
+}
+
+@media(max-width:760px){
+  .portal-recursos-oficiales{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:520px){
+  .portal-recursos-oficiales{
+    padding:15px;
+  }
+
+  .portal-recursos-oficiales__acciones{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .portal-recurso-oficial{transition:none}
+  .portal-recurso-oficial:hover,
+  .portal-recurso-oficial:focus-visible{transform:none}
+}
