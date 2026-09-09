@@ -91,7 +91,7 @@
       <div id="temasAsignatura" class="academia-grid-tarjetas portal-temas-grid" aria-live="polite"></div>
     </section>
 
-    <section class="portal-seccion" aria-labelledby="tituloRecursosOficiales">
+    <section class="portal-seccion" aria-labelledby="tituloRecursosOficiales" data-recursos-gaudem hidden>
       <div class="portal-seccion__cabecera">
         <div class="portal-seccion__cabecera-principal">
           <div class="portal-seccion__icono" aria-hidden="true">🏫</div>
@@ -219,6 +219,7 @@
 
   <script src="../../../compartido/js/navegacion.js"></script>
   <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="../../../compartido/js/visibilidad-recursos-gaudem.js"></script>
 
   <script type="module">
     import { montarCatalogoTemas } from "../portal-asignatura.js";
