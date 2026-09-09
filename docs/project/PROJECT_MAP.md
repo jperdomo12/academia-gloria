@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/PROJECT_MAP.md` |
-| **Versión** | 2.1 |
+| **Versión** | 2.2 |
 | **Estado** | Activo |
 | **Fecha** | 23/07/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Propietario** | Arquitectura del Proyecto |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Organización física del repositorio, responsabilidades principales y mapa de fuentes propietarias |
@@ -23,12 +23,15 @@
 | `docs/project/ROADMAP.md` | Define prioridades y evolución funcional. |
 | `docs/project/RELEASE_NOTES.md` | Registra entregas reales y releases. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | Define el dominio funcional de Bitácora de Acompañamiento. |
+| `docs/specifications/SPEC-HORARIO_CLASES.md` | Define Mi horario de clases V1. |
+| `docs/specifications/SPEC-MENU_COMEDOR.md` | Define Menú del Cole V1. |
 | `AGENTS.md` | Reglas operativas que deben respetar los colaboradores/IA al intervenir el repositorio. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.2 | 09/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el mapa contra `main @ 27b9e0a2...`: añade `menu-comedor/`, actualiza `calendarios/` con curso 2026–2027 y `horario/`, incorpora modelo/API del horario, registra recursos oficiales reutilizables de 6.º y añade las especificaciones activas de Horario y Menú del Cole. |
 | 2.1 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el mapa contra `main @ 58cab370...`: incorpora `baul/` y `bitacora/` como directorios raíz funcionales, añade API/modelo propios de Bitácora al núcleo compartido, incorpora la especificación activa de Bitácora y cierra el estado temporal de sincronización documental del 03Sep. |
 | 2.0 | 03/09/2026 | Juan Perdomo + AI Collaborator | Reconstruye el mapa contra la estructura real del repositorio. Elimina directorios históricos que ya no existen (`etapas`, `habilidades`, `OLD`), corrige Calendarios, incorpora `administracion`, `descubre-la-academia`, `herramientas`, `history`, la estructura vigente de `mi-universo`, el curso 6.º, los portales académicos compartidos, Recompensas, Análisis Educativo y el mapa actual de documentación propietaria. |
 | 1.1 | 23/07/2026 | Juan Perdomo | Primera actualización del mapa Cloud y responsabilidades generales. |
@@ -69,7 +72,7 @@ No pretende enumerar cada archivo del repositorio. Debe proporcionar un mapa suf
 
 ## 🏠 3. Raíz actual del repositorio
 
-Estructura funcional principal comprobada al 06/09/2026:
+Estructura funcional principal comprobada al 09/09/2026:
 
 ```text
 academia-gloria/
@@ -92,6 +95,7 @@ academia-gloria/
 ├── docs/
 ├── herramientas/
 ├── history/
+├── menu-comedor/
 └── mi-universo/
 ```
 
@@ -105,13 +109,14 @@ academia-gloria/
 | `assets/` | Iconos, identidad, personajes e imágenes compartidas. | ✅ |
 | `baul/` | Mi Baúl: conservación personal de contenidos e ideas sin convertirlos en evaluación. | ✅ V1 |
 | `bitacora/` | Bitácora de Acompañamiento: colaboración humana estructurada sobre Persona Activa. | ✅ V1 |
-| `calendarios/` | Entrada a calendarios y calendario escolar. | ✅ |
+| `calendarios/` | Entrada a calendarios, calendario escolar y Mi horario de clases. | ✅ |
 | `compartido/` | Núcleo técnico, contratos y componentes reutilizables. | ✅ |
 | `cursos/` | Contenido curricular por curso/asignatura/tema. | 🚧 Crecimiento activo |
 | `descubre-la-academia/` | Experiencia/guía para descubrir la Academia. | ✅ |
 | `docs/` | Documentación oficial activa e histórica. | ✅ Sistema activo |
 | `herramientas/` | Herramientas educativas reutilizables no ligadas a un único Tema. | ✅ |
 | `history/` | Recursos técnicos antiguos de prueba conservados fuera de la documentación oficial. | 🗃️ Histórico |
+| `menu-comedor/` | Menú del Cole: consulta cotidiana del comedor a partir de fuente mensual oficial. | ✅ V1 |
 | `mi-universo/` | Experiencias personales, aprendizaje, Misiones y Mi Camino. | ✅ / evolución activa |
 
 > Las carpetas `etapas/`, `habilidades/` y `OLD/` que aparecían en versiones antiguas de este mapa **no forman parte de la estructura actual comprobada**.
@@ -140,7 +145,8 @@ Referencias destacadas:
 - `academia.js` — fachada principal de operaciones de la Academia;
 - `reconocimientos.js` — API cohesionada del dominio de Reconocimientos/Recompensas;
 - `baul.js` — API del dominio Mi Baúl;
-- `bitacora-acompanamiento.js` — API del dominio Bitácora de Acompañamiento.
+- `bitacora-acompanamiento.js` — API del dominio Bitácora de Acompañamiento;
+- `horario-clases.js` — lectura/escritura del horario actual de Persona Activa.
 
 ### 4.2 `compartido/componentes/`
 
@@ -208,7 +214,8 @@ Referencias:
 - `navegacion.js` — árbol central de navegación;
 - `evento.js` — modelo de evento;
 - `baul.js` — contrato de Mi Baúl;
-- `bitacora-acompanamiento.js` — catálogos, validación y contrato de Bitácora V1.
+- `bitacora-acompanamiento.js` — catálogos, validación y contrato de Bitácora V1;
+- `horario-clases.js` — contrato, paleta, días, límites y validación del horario V1.
 
 ---
 
@@ -243,14 +250,21 @@ Documentación propietaria principal:
 ```text
 calendarios/
 ├── index.html
-└── escolar/
+├── escolar/
+│   ├── index.html
+│   ├── 2025-2026.html
+│   └── 2026-2027.html
+└── horario/
     ├── index.html
-    └── 2025-2026.html
+    ├── horario-clases.js
+    ├── horario-presentacion.js
+    ├── horario-pdf.js
+    └── capas CSS/JS de presentación
 ```
 
-La lógica y estilos principales se apoyan además en `compartido/js/` y `compartido/css/`.
+La lógica y estilos principales se apoyan además en `compartido/js/`, `compartido/css/`, `compartido/modelos/horario-clases.js` y `compartido/api/horario-clases.js`.
 
-Capacidad adicional implementada:
+Capacidades:
 
 ```text
 Ingreso a Academia
@@ -259,7 +273,52 @@ Ingreso a Academia
 → mostrar recordatorio cuando corresponde
 ```
 
-Actualmente no existe una especificación independiente de Recordatorios. Si el dominio Calendarios crece lo suficiente, su comportamiento deberá consolidarse en un documento propietario de Gestión de Calendarios, evitando un documento aislado para una sola particularidad.
+```text
+Calendarios
+→ Mi horario de clases
+→ consulta / edición
+→ PDF una página
+```
+
+Inicio puede ofrecer `🗓️ Ver mi horario` cuando la Persona Activa ya tiene un horario persistido. Ese acceso utiliza la misma página con `?vista=solo`; no existe un segundo horario.
+
+Fuente funcional propietaria:
+
+```text
+docs/specifications/SPEC-HORARIO_CLASES.md
+```
+
+Actualmente no existe una especificación independiente de Recordatorios. Si ese dominio crece lo suficiente, su comportamiento deberá consolidarse en un documento propietario de Gestión de Calendarios, evitando un documento aislado para una sola particularidad.
+
+---
+
+## 🍽️ Menú del Cole · `menu-comedor/`
+
+```text
+menu-comedor/
+├── index.html
+├── menu-comedor.js
+├── menu-comedor.css
+├── tarjeta-inicio.js
+├── tarjeta-inicio.css
+└── datos/
+    └── módulos mensuales
+```
+
+Responsabilidad:
+
+- transformar el PDF mensual oficial del Colegio Gaudem en una consulta cotidiana;
+- mostrar Hoy / siguiente / semana / mes;
+- conservar acompañamiento/guarnición cuando existe;
+- ofrecer tarjeta dinámica en Inicio;
+- mostrar esa tarjeta solo para `alumno + Gaudem`;
+- evitar Firestore para un dato mensual de bajo volumen.
+
+Fuente funcional propietaria:
+
+```text
+docs/specifications/SPEC-MENU_COMEDOR.md
+```
 
 ---
 
@@ -337,6 +396,9 @@ cursos/
     ├── portal-curso.css
     ├── portal-asignatura.css
     ├── portal-asignatura.js
+    ├── recursos-colegio.css
+    ├── recursos-oficiales-asignatura.css
+    ├── recursos-gaudem-visibilidad.js
     └── mates/
 ```
 
@@ -371,13 +433,17 @@ Contiene:
 
 - bloque prioritario **Así aprendemos en 6.º**;
 - navegación por asignaturas;
-- patrón visual de tarjetas aprobado.
+- patrón visual de tarjetas aprobado;
+- bloque **Recursos del colegio** con acceso a Gaudem y al aula oficial de 6.º.
 
 #### Infraestructura visual de portales
 
 - `portal-curso.css` — portada de 6.º;
 - `portal-asignatura.css` — sistema visual de portales de Asignatura;
-- `portal-asignatura.js` — renderizador reutilizable de catálogo de Temas.
+- `portal-asignatura.js` — renderizador reutilizable de catálogo de Temas;
+- `recursos-colegio.css` — bloque de recursos oficiales del curso;
+- `recursos-oficiales-asignatura.css` — patrón visual reusable dentro de un portal propio;
+- `recursos-gaudem-visibilidad.js` — visibilidad `alumno + Gaudem` para recursos oficiales de materia.
 
 Patrón de cuadrícula aprobado:
 
@@ -411,9 +477,16 @@ cursos/6to/mates/
 
 `temas-matematicas.js` actúa como catálogo real del portal; no deben añadirse Temas ficticios para anticipar el curso.
 
-#### Recursos de apoyo
+#### Recursos de apoyo y recursos oficiales
 
 Puente y otras herramientas matemáticas pueden apoyar al alumno sin confundirse necesariamente con el catálogo de Temas del colegio.
+
+El portal de Matemáticas incorpora además, para alumnado Gaudem:
+
+- Área oficial de Matemáticas;
+- Matezonas.
+
+Estos enlaces externos se presentan separados del contenido propio de Academia.
 
 ### 7.5 Contrato para nuevos Temas de 6.º
 
@@ -437,6 +510,8 @@ material escolar
 La AI Collaborator decide ubicación, reutiliza estructura, crea lo mínimo necesario, aplica los estándares vigentes y entrega un Tema probado.
 
 Todo nuevo Tema debe producir evidencia académica estructurada y reutilizable por análisis y fortalecimiento durante una ejecución normal.
+
+Cuando se crea un nuevo portal propio de materia de 6.º y existen recursos oficiales del Colegio Gaudem, se reutiliza el bloque visual oficial y la condición de visibilidad `alumno + Gaudem`.
 
 ---
 
@@ -689,13 +764,15 @@ docs/
 
 ### 11.3 `docs/specifications/`
 
-Especificaciones funcionales activas:
+Especificaciones funcionales activas relevantes:
 
 - `SPEC-CRECIENDO_POR_DENTRO.md`;
 - `SPEC-MIS_TAREAS_Y_MISIONES.md`;
 - `SPEC-REVISION_TRABAJO_REALIZADO.md`;
 - `SPEC-ANALISIS_EDUCATIVO.md`;
-- `SPEC-BITACORA_ACOMPANAMIENTO.md`.
+- `SPEC-BITACORA_ACOMPANAMIENTO.md`;
+- `SPEC-HORARIO_CLASES.md`;
+- `SPEC-MENU_COMEDOR.md`.
 
 ### 11.4 `docs/standards/`
 
@@ -747,7 +824,10 @@ No debe utilizarse como fuente normativa cuando existe equivalente activo fuera 
 | Revisar trabajo realizado | `SPEC-REVISION_TRABAJO_REALIZADO.md` |
 | Reportes/tendencias educativas | `SPEC-ANALISIS_EDUCATIVO.md` |
 | Nuevo Tema académico de 6.º | `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
+| Recursos oficiales de materia Gaudem | `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` + `cursos/6to/recursos-gaudem-visibilidad.js` |
 | Evidencia académica | `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` + `sesiones-academicas.js` |
+| Horario semanal | `SPEC-HORARIO_CLASES.md` + modelo/API de horario |
+| Menú del comedor | `SPEC-MENU_COMEDOR.md` + `menu-comedor/` |
 | Refuerzo desde evidencias | `SPEC-ANALISIS_EDUCATIVO.md` + estándar del motor correspondiente |
 | Recompensas / Reconocimientos | `DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` + `reconocimientos.js` |
 | Bitácora / colaboración humana | `SPEC-BITACORA_ACOMPANAMIENTO.md` + `bitacora-acompanamiento.js` |
@@ -783,14 +863,15 @@ Antes de declarar una ruta como actual debe contrastarse con la estructura real 
 
 | Campo | Valor |
 |---|---|
-| **Estructura activa** | Raíz y dominios comprobados contra `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2`. |
+| **Estructura activa** | Raíz y dominios comprobados contra `main @ 27b9e0a29ee92a2f081504cf5f52fbb9f4332221`. |
 | **Núcleo compartido** | `compartido/` es propietario de infraestructura reutilizable; los módulos no deben recrearla localmente sin causa justificada. |
 | **Currículo** | `cursos/` sigue `Curso → Asignatura → Tema`; 6.º es la primera aplicación estructurada del nuevo patrón. |
+| **Organización escolar** | `calendarios/` contiene calendario escolar + horario; `menu-comedor/` contiene la utilidad cotidiana del comedor. |
 | **Mi Universo** | Aloja experiencias personales, Misiones, aprendizaje y Mi Camino. |
 | **Colaboración** | `bitacora/` materializa el Dominio de Colaboración V1 sobre Persona Activa. |
 | **Documentación** | `docs/` contiene las fuentes oficiales; `docs/ai/` es la ruta canónica para IA; `docs/history/` preserva contexto sustituido. |
 | **Principio** | Encontrar propietario → reutilizar → modificar lo mínimo → documentar en la fuente correcta. |
-| **Estado** | Activo y sincronizado al 06/09/2026. |
+| **Estado** | Activo y sincronizado al 09/09/2026. |
 
 ---
 
