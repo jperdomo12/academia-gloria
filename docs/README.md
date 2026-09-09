@@ -10,10 +10,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -31,14 +31,17 @@
 | `docs/ai/AI_CHAT_BOOTSTRAP.md` | **Complementa:** incorporación rápida de una nueva IA y conserva el prompt oficial para iniciar un nuevo chat. |
 | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Continúa:** conserva el punto operativo vigente para retomar rápidamente el trabajo en otro chat. |
 | `docs/project/PROJECT_ROLES.md` | **Complementa:** roles, responsabilidades y autoridad. |
-| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia y expansión curricular. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia, expansión curricular y recursos oficiales de materia cuando corresponda. |
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Implementa/documenta:** consumo de evidencias para análisis y fortalecimiento. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** colaboración humana estructurada mediante Bitácora de Acompañamiento V1. |
+| `docs/specifications/SPEC-HORARIO_CLASES.md` | **Define:** organización semanal personal mediante Mi horario de clases V1. |
+| `docs/specifications/SPEC-MENU_COMEDOR.md` | **Define:** consulta cotidiana y mantenimiento mensual de Menú del Cole V1. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras las entregas del inicio de curso 2026–2027: incorpora `SPEC-HORARIO_CLASES.md` y `SPEC-MENU_COMEDOR.md` como fuentes activas, añade rutas de lectura para organización escolar cotidiana y mantiene el estándar curricular como propietario del patrón de recursos oficiales por materia. |
 | 1.6 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras la estabilización documental posterior a Bitácora V1: hace explícita la ruta canónica `docs/ai/`, incorpora `SPEC-BITACORA_ACOMPANAMIENTO.md` como fuente propietaria activa y añade una ruta de lectura específica para colaboración/acompañamiento. |
 | 1.5 | 05/09/2026 | Product Owner + AI Collaborator | Añade un acceso visible **Iniciar un nuevo chat** que referencia el `📋 PROMPT RÁPIDO · NUEVO CHAT` de `AI_CHAT_BOOTSTRAP.md`, manteniendo una sola copia oficial y evitando duplicar el prompt en este portal. Actualiza además la ruta recomendada de continuidad para priorizar recuperación directa desde GitHub cuando esté conectado. |
 | 1.4 | 03/09/2026 | Product Owner + AI Collaborator | Incorpora la plantilla viva oficial de HandOff a la navegación documental y la ruta para retomar trabajo entre chats, manteniendo separado el contexto operativo reciente del bootstrap general de incorporación de IA. |
@@ -242,6 +245,8 @@ material oficial del colegio
 
 La AI Collaborator debe resolver la ubicación `Curso → Asignatura → Tema`, estructura técnica, reutilización, evidencia, histórico, análisis y fortalecimiento aplicando los estándares vigentes.
 
+Si el portal propio de la materia dispone de recursos oficiales del colegio, revisar también el contrato de recursos externos del estándar curricular y reutilizar el patrón vigente de visibilidad cuando corresponda.
+
 ### 6.7 Trabajar con Misiones
 
 1. `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
@@ -267,6 +272,25 @@ La AI Collaborator debe resolver la ubicación `Curso → Asignatura → Tema`, 
 Regla de frontera:
 
 > Bitácora conserva aportaciones humanas; no las convierte automáticamente en Misiones, evidencias, Análisis Educativo, Recompensas ni inferencias de IA.
+
+### 6.10 Trabajar con Mi horario de clases
+
+1. `docs/specifications/SPEC-HORARIO_CLASES.md`;
+2. `compartido/modelos/horario-clases.js`;
+3. `compartido/api/horario-clases.js`;
+4. `calendarios/horario/`;
+5. `compartido/firebase/FireStore Rules.txt` si cambia el contrato de acceso/persistencia.
+
+La presentación, vista `solo` y PDF pueden evolucionar sin duplicar ni migrar el horario persistido.
+
+### 6.11 Trabajar con Menú del Cole
+
+1. `docs/specifications/SPEC-MENU_COMEDOR.md`;
+2. PDF mensual oficial aportado como fuente del mes;
+3. `menu-comedor/datos/`;
+4. `menu-comedor/` y `menu-comedor/tarjeta-inicio.js`.
+
+El flujo mensual debe mantener fidelidad a la fuente y evitar crear Firestore o arquitectura adicional para una necesidad simple.
 
 ---
 
@@ -299,7 +323,7 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 ---
 
-## 📊 8. Estado documental al 06/09/2026
+## 📊 8. Estado documental al 09/09/2026
 
 ### Base consolidada
 
@@ -314,13 +338,17 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 - estándar académico de 6.º y material escolar;
 - plantilla viva de HandOff para continuidad entre chats;
 - Bootstrap con prompt oficial único de nuevo chat;
-- especificación activa de Bitácora de Acompañamiento V1.
+- especificación activa de Bitácora de Acompañamiento V1;
+- especificación activa de Mi horario de clases V1;
+- especificación activa de Menú del Cole V1.
 
 ### Fuentes propietarias relevantes
 
 - `SPEC-ANALISIS_EDUCATIVO.md` — V1 implementada y contrato de consumo de evidencias;
 - `SPEC-BITACORA_ACOMPANAMIENTO.md` — V1 implementada del Dominio de Colaboración;
-- `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` v1.3 — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º;
+- `SPEC-HORARIO_CLASES.md` — V1 implementada y aprobada de organización semanal personal;
+- `SPEC-MENU_COMEDOR.md` — V1 implementada de consulta mensual/cotidiana del comedor;
+- `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º + recursos oficiales de materia cuando corresponda;
 - `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — continuidad operativa y punto vigente mantenible entre chats;
 - `AI_CHAT_BOOTSTRAP.md` — incorporación de IA + única copia oficial del prompt rápido de nuevo chat.
 
@@ -328,7 +356,7 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 La jornada de sincronización documental quedó cerrada el 04/09/2026. A partir de ese punto se actualizan únicamente las fuentes afectadas por decisiones nuevas o cambios reales de estado.
 
-La estabilización del 06/09/2026 no reabre P0/P1/P2: corrige el cierre documental de entregas reales posteriores, principalmente Bitácora y navegación asociada.
+La estabilización del 09/09/2026 no reabre P0/P1/P2: sincroniza el sistema documental con las utilidades escolares y recursos de inicio de curso incorporados después del 06/09.
 
 ---
 
@@ -405,6 +433,7 @@ No requiere actualización por cada cambio interno de un documento.
 | README-012 | `AI_CHAT_BOOTSTRAP.md` conserva la única copia oficial del prompt rápido de nuevo chat; este portal únicamente la enlaza. | Aprobada |
 | README-013 | `docs/ai/` es la ruta canónica de documentación para IA; no se mantiene un alias paralelo `docs/ia/`. | Aprobada |
 | README-014 | Bitácora de Acompañamiento dispone de ruta documental explícita desde el portal y su especificación es propietaria del comportamiento funcional. | Aprobada |
+| README-015 | Las utilidades escolares con contrato propio —Horario y Menú del Cole— deben tener una ruta documental explícita desde este portal. | Aprobada |
 
 ---
 
@@ -413,8 +442,8 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.6 |
-| **Última sincronización** | 06/09/2026 |
+| **Versión activa** | 1.7 |
+| **Última sincronización** | 09/09/2026 |
 | **Portal documental** | `docs/README.md` |
 | **Ruta canónica para IA** | `docs/ai/` |
 | **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |
@@ -424,4 +453,4 @@ No requiere actualización por cada cambio interno de un documento.
 | **Continuidad entre chats** | `project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
 | **Principio** | Leer proporcionalmente, localizar propietario, reutilizar y consolidar solo conocimiento estable. |
 
-**Impacto:** Navegación · Arquitectura Documental · Onboarding · Continuidad · Trazabilidad · Incorporación Académica · Colaboración
+**Impacto:** Navegación · Arquitectura Documental · Onboarding · Continuidad · Trazabilidad · Incorporación Académica · Colaboración · Organización Escolar
