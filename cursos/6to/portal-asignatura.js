@@ -1,7 +1,13 @@
+import { aplicarVisibilidadRecursosGaudem } from "./recursos-gaudem-visibilidad.js";
+
 /* ========================================================================
    Academia Gloria Valentina · 6.º de Primaria
    Catálogo reutilizable de Temas para portales de asignatura
    ======================================================================== */
+
+aplicarVisibilidadRecursosGaudem().catch(error => {
+  console.warn("No se pudo resolver la visibilidad de los recursos oficiales de Gaudem.", error);
+});
 
 function texto(valor = "") {
   return String(valor ?? "").replace(/\s+/g, " ").trim();

@@ -16,9 +16,23 @@ export function puedeVerRecursosGaudem(perfil = {}) {
   return esGaudem && rol === "alumno";
 }
 
+function obtenerBloquesGaudem() {
+  const candidatos = document.querySelectorAll(
+    "[data-recurso-gaudem], .portal-recursos-oficiales"
+  );
+
+  return [...new Set(
+    [...candidatos].map(elemento => elemento.closest("section") || elemento)
+  )];
+}
+
 export async function aplicarVisibilidadRecursosGaudem() {
-  const bloques = [...document.querySelectorAll("[data-recurso-gaudem]")];
+  const bloques = obtenerBloquesGaudem();
   if (!bloques.length) return;
+
+  bloques.forEach(bloque => {
+    bloque.hidden = true;
+  });
 
   const perfil = await obtenerPerfil();
   const visible = puedeVerRecursosGaudem(perfil);
@@ -27,7 +41,3 @@ export async function aplicarVisibilidadRecursosGaudem() {
     bloque.hidden = !visible;
   });
 }
-
-aplicarVisibilidadRecursosGaudem().catch(error => {
-  console.warn("No se pudo resolver la visibilidad de los recursos oficiales de Gaudem.", error);
-});
