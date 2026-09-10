@@ -1,5 +1,19 @@
 /* Academia Gloria Valentina · Mi Camino · Guía visual de celebraciones */
 
+.constancia-stat__detalle {
+  display: block;
+  margin-top: 3px;
+  color: #9a3412;
+  font-size: .7rem;
+  font-weight: 750;
+  line-height: 1.2;
+  opacity: .78;
+}
+
+.constancia-stat__detalle[hidden] {
+  display: none !important;
+}
+
 .recompensas-guia.recompensas-guia--dos-paginas {
   width: min(900px, calc(100% - 28px));
   max-height: min(90vh, 900px);
