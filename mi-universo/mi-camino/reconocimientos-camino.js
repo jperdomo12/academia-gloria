@@ -1,8 +1,8 @@
 /* Academia Gloria Valentina · Recompensas A1/A2/B · Mi Camino */
 
 import { Reconocimientos } from "../../compartido/api/reconocimientos.js";
-import { Academia } from "../../compartido/api/academia.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
+import { observarTareasCamino } from "./tareas-camino.js";
 import {
   obtenerHistorialDetectives,
   obtenerSesionesHistoria
@@ -847,7 +847,7 @@ function instalarConstanciaSinDatosPrueba() {
     observadorDomConstancia.observe(semana, { childList: true });
   }
 
-  detenerObservacionConstancia = Academia.tareas.observar(
+  detenerObservacionConstancia = observarTareasCamino(
     tareas => {
       tareasConstancia = Array.isArray(tareas) ? tareas : [];
       tareasConstanciaCargadas = true;
