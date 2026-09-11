@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "modulo": "creciendo-por-dentro",
   "familias": [
     {
@@ -1038,6 +1038,165 @@
         "mensaje": "Has expresado lo que necesitas, has intentado comprender a la otra persona y has buscado un acuerdo que cuide a las dos.",
         "lia": "Escuchar y llegar a acuerdos no significa que siempre pensemos igual. Significa que nuestra voz y la de la otra persona importan.",
         "frase": "Puedo expresarme, escuchar y buscar acuerdos.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "puedo-elegir-diferente",
+      "titulo": "Puedo elegir diferente",
+      "subtitulo": "Escucho a mis amigas y también escucho lo que yo prefiero.",
+      "familia": "autoestima",
+      "tipoSituacion": "colegio",
+      "emociones": [
+        "duda",
+        "nervios",
+        "confianza",
+        "tranquilidad"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 8,
+      "activo": true,
+      "recomendada": true,
+      "portada": {
+        "icono": "🧭",
+        "ilustracion": "👧🏽 ✨",
+        "fondo": "menta"
+      },
+      "recursos": {
+        "imagen": "semilla-007-puedo-elegir-diferente.jpg"
+      },
+      "bienvenida": {
+        "titulo": "Hoy practicaremos cómo escuchar también tu propia voz",
+        "mensaje": "Tus amigas pueden tener gustos e ideas que te gustan mucho. Otras veces tú puedes preferir algo distinto. Las dos cosas están bien.",
+        "lia": "Escuchar a tus amigas es bonito. Escucharte a ti también. No hace falta pensar igual para cuidar una amistad."
+      },
+      "situacion": {
+        "titulo": "Hoy yo prefiero otra cosa",
+        "texto": "En el recreo, unas amigas quieren hacer una actividad que a ellas les gusta mucho. A ti hoy no te apetece tanto. Piensas en decir que sí solo para hacer lo mismo que ellas.",
+        "ilustracion": "👧🏽 👭 💭",
+        "audioTexto": "En el recreo, unas amigas quieren hacer una actividad que a ellas les gusta mucho. A ti hoy no te apetece tanto. Piensas en decir que sí solo para hacer lo mismo que ellas."
+      },
+      "pasos": [
+        {
+          "id": "preferencia",
+          "orden": 1,
+          "titulo": "¿Qué prefieres tú?",
+          "ayuda": "Antes de decidir, puedes darte un momento para descubrir qué te apetece de verdad.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "pr1",
+              "texto": "Hoy prefiero hacer otra cosa.",
+              "icono": "🧭"
+            },
+            {
+              "id": "pr2",
+              "texto": "Me gusta su idea, pero ahora me apetece otra actividad.",
+              "icono": "✨"
+            },
+            {
+              "id": "pr3",
+              "texto": "Todavía no estoy segura; quiero pensarlo un momento.",
+              "icono": "🤔"
+            },
+            {
+              "id": "pr4",
+              "texto": "Me doy cuenta de que iba a decir que sí solo porque ellas lo dijeron.",
+              "icono": "💭"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "diferencia",
+          "orden": 2,
+          "titulo": "¿Qué puedes recordar si tus amigas quieren otra cosa?",
+          "ayuda": "Entender lo que ellas quieren no significa que tú tengas que elegir lo mismo.",
+          "tipo": "opcion-multiple",
+          "maximo": 2,
+          "opciones": [
+            {
+              "id": "di1",
+              "texto": "A ellas puede gustarles algo distinto de lo que me gusta a mí.",
+              "icono": "🌈"
+            },
+            {
+              "id": "di2",
+              "texto": "Puedo escuchar su idea sin tener que elegirla.",
+              "icono": "👂"
+            },
+            {
+              "id": "di3",
+              "texto": "Podemos pensar diferente y seguir siendo amigas.",
+              "icono": "🤝"
+            },
+            {
+              "id": "di4",
+              "texto": "Mi preferencia también importa.",
+              "icono": "💛"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "decirlo",
+          "orden": 3,
+          "titulo": "¿Cómo podrías decirlo con amabilidad?",
+          "ayuda": "Ser clara no significa ser brusca. Puedes cuidar tus palabras y seguir diciendo lo que prefieres.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "de1",
+              "texto": "Gracias, pero hoy prefiero hacer otra cosa."
+            },
+            {
+              "id": "de2",
+              "texto": "A vosotras os apetece eso; yo hoy prefiero otra actividad."
+            },
+            {
+              "id": "de3",
+              "texto": "Ahora quiero hacer algo diferente. Luego podemos volver a estar juntas."
+            },
+            {
+              "id": "de4",
+              "texto": "Yo prefiero esto. ¿Os parece que después hacemos algo juntas?"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "cuidarAmistad",
+          "orden": 4,
+          "titulo": "¿Cómo puedes cuidar la amistad si elegís diferente?",
+          "ayuda": "Ser buena amiga no significa hacer siempre lo mismo. También podéis respetaros cuando elegís cosas distintas.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "ca1",
+              "texto": "respetar lo que ellas elijan y pedir que respeten lo que yo elija."
+            },
+            {
+              "id": "ca2",
+              "texto": "hacer cosas distintas un rato y después volver a encontrarnos."
+            },
+            {
+              "id": "ca3",
+              "texto": "buscar otra opción que nos apetezca a todas si queremos estar juntas."
+            },
+            {
+              "id": "ca4",
+              "texto": "recordar que no estar de acuerdo en todo no rompe una amistad."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Primero puedo escucharme: {preferencia} Puedo recordar: {diferencia} Puedo decir: {decirlo} Para cuidar la amistad, puedo {cuidarAmistad}",
+      "cierre": {
+        "titulo": "Has practicado cómo elegir siendo tú",
+        "mensaje": "Has escuchado tu propia preferencia, has respetado la de tus amigas y has practicado cómo expresarte con amabilidad.",
+        "lia": "Escuchar a tus amigas está bien. Escucharte a ti también. Puedes tener tus propios gustos y seguir siendo una buena amiga.",
+        "frase": "Puedo elegir algo diferente y seguir siendo una buena amiga.",
         "crecimiento": "brote"
       }
     }
