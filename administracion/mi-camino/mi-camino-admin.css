@@ -1,0 +1,433 @@
+/* Academia Gloria Valentina · Administración · Mi Camino */
+
+:root{
+  --verde:#15803d;
+  --verde-claro:#dcfce7;
+  --azul:#1d4ed8;
+  --violeta:#7c3aed;
+  --ambar:#d97706;
+  --rojo:#b91c1c;
+  --tinta:#243047;
+  --suave:#64748b;
+  --borde:#e2e8f0;
+  --fondo:#f8fafc;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:"Outfit",system-ui,sans-serif;
+  color:var(--tinta);
+  background:
+    radial-gradient(circle at 5% 4%,rgba(34,197,94,.10),transparent 24%),
+    radial-gradient(circle at 95% 8%,rgba(59,130,246,.09),transparent 24%),
+    #f8fafc;
+}
+
+button,input,select{font:inherit}
+
+.pagina-admin{
+  width:min(1460px,calc(100% - 32px));
+  margin:0 auto;
+  padding:26px 0 56px;
+}
+
+.cabecera-admin{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  align-items:flex-start;
+  margin-bottom:18px;
+  padding:28px 30px;
+  border:1.5px solid #bbf7d0;
+  border-radius:28px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 16px 42px rgba(15,23,42,.07);
+}
+
+.eyebrow,.panel__eyebrow{
+  display:inline-block;
+  color:#166534;
+  font-size:.78rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.055em;
+}
+
+.cabecera-admin h1{
+  margin:7px 0 5px;
+  font-size:clamp(2.25rem,4vw,3.5rem);
+  letter-spacing:-.035em;
+  color:#14532d;
+}
+
+.cabecera-admin p,.panel p{
+  margin:0;
+  color:var(--suave);
+  font-weight:650;
+  line-height:1.5;
+}
+
+.enlace-secundario{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:10px 14px;
+  border:1.5px solid #bfdbfe;
+  border-radius:14px;
+  background:#eff6ff;
+  color:#1e40af;
+  text-decoration:none;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.mensaje{
+  margin:14px 0;
+  padding:12px 15px;
+  border:1.5px solid #cbd5e1;
+  border-radius:14px;
+  background:#fff;
+  color:#475569;
+  font-weight:800;
+}
+
+.mensaje--ok{border-color:#86efac;background:#f0fdf4;color:#166534}
+.mensaje--error{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+
+.panel{
+  margin-top:18px;
+  padding:22px 24px;
+  border:1.5px solid var(--borde);
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 12px 34px rgba(15,23,42,.055);
+}
+
+.panel h2{
+  margin:4px 0 5px;
+  font-size:1.55rem;
+  color:#1e293b;
+}
+
+.selector-persona{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:28px;
+  border-color:#bbf7d0;
+}
+
+.selector-persona__acciones{
+  display:flex;
+  gap:10px;
+  align-items:end;
+}
+
+.selector-persona label,.grid-reglas label,.grid-etapas label{
+  display:grid;
+  gap:6px;
+  color:#475569;
+  font-size:.82rem;
+  font-weight:900;
+}
+
+select,input[type="search"],input[type="number"]{
+  min-height:43px;
+  padding:8px 11px;
+  border:1.5px solid #cbd5e1;
+  border-radius:12px;
+  background:#fff;
+  color:#1e293b;
+  outline:none;
+}
+
+select:focus,input:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 3px rgba(59,130,246,.12);
+}
+
+#selectPersona{min-width:310px}
+
+.boton{
+  min-height:43px;
+  padding:9px 14px;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:900;
+}
+
+.boton:disabled{opacity:.55;cursor:wait}
+.boton--principal{background:#166534;color:#fff}
+.boton--principal:hover:not(:disabled){background:#14532d}
+.boton--secundario{border:1.5px solid #cbd5e1;background:#fff;color:#334155}
+.boton--secundario:hover:not(:disabled){background:#f8fafc}
+
+.resumen{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+
+.resumen-card{
+  min-height:122px;
+  padding:16px 17px;
+  border:1.5px solid #e2e8f0;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 8px 22px rgba(15,23,42,.045);
+}
+
+.resumen-card--destacado{
+  border-color:#86efac;
+  background:linear-gradient(135deg,#f0fdf4,#fff);
+}
+
+.resumen-card span{
+  display:block;
+  color:#64748b;
+  font-size:.78rem;
+  font-weight:850;
+}
+
+.resumen-card strong{
+  display:block;
+  margin:7px 0 2px;
+  color:#0f172a;
+  font-size:1.65rem;
+  line-height:1.05;
+}
+
+.resumen-card--destacado strong{color:#166534}
+.resumen-card small{color:#94a3b8;font-weight:750}
+
+.panel__cabecera{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:flex-end;
+  margin-bottom:16px;
+}
+
+.filtros{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+#buscarMision{width:230px}
+
+.tabla-scroll{
+  overflow:auto;
+  max-height:620px;
+  border:1px solid #e2e8f0;
+  border-radius:15px;
+}
+
+.tabla-auditoria{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width:1040px;
+  background:#fff;
+}
+
+.tabla-auditoria th,
+.tabla-auditoria td{
+  padding:11px 12px;
+  border-bottom:1px solid #edf2f7;
+  text-align:left;
+  vertical-align:top;
+}
+
+.tabla-auditoria th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:#f8fafc;
+  color:#475569;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.035em;
+}
+
+.tabla-auditoria td{font-size:.84rem;color:#475569}
+.tabla-auditoria tr:last-child td{border-bottom:0}
+.tabla-auditoria td:first-child{min-width:250px}
+.tabla-auditoria strong{display:block;color:#1e293b}
+.tabla-auditoria small{display:block;margin-top:3px;color:#94a3b8;font-weight:750}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.badge--ok{background:#dcfce7;color:#166534}
+.badge--prueba{background:#fef3c7;color:#92400e}
+.badge--oculta{background:#f1f5f9;color:#475569}
+.badge--pendiente{background:#eff6ff;color:#1d4ed8}
+.badge--peso1{background:#f8fafc;color:#475569;border:1px solid #cbd5e1}
+.badge--peso2{background:#ede9fe;color:#6d28d9}
+.badge--peso3{background:#ffedd5;color:#c2410c}
+
+.vacio{
+  margin-top:12px;
+  padding:18px;
+  border:1.5px dashed #cbd5e1;
+  border-radius:14px;
+  background:#f8fafc;
+  text-align:center;
+  color:#64748b;
+  font-weight:800;
+}
+
+.configuracion{border-color:#c4b5fd}
+.estado-config{
+  max-width:420px;
+  color:#64748b;
+  font-size:.78rem;
+  font-weight:800;
+  text-align:right;
+}
+
+.aviso-preview{
+  margin:0 0 15px;
+  padding:11px 13px;
+  border:1.5px solid #fcd34d;
+  border-radius:13px;
+  background:#fffbeb;
+  color:#92400e;
+  font-size:.87rem;
+}
+
+fieldset{
+  margin:0 0 18px;
+  padding:18px;
+  border:1.5px solid #e2e8f0;
+  border-radius:18px;
+}
+
+legend{
+  padding:0 8px;
+  color:#334155;
+  font-weight:900;
+}
+
+.ayuda{
+  margin:-2px 0 14px!important;
+  font-size:.84rem;
+}
+
+.grid-etapas{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(110px,1fr));
+  gap:10px;
+}
+
+.grid-etapas label{
+  padding:11px;
+  border:1px solid #e2e8f0;
+  border-radius:13px;
+  background:#f8fafc;
+}
+
+.grid-etapas label.actual-preview{
+  border-color:#86efac;
+  background:#f0fdf4;
+}
+
+.grid-etapas small{color:#94a3b8;font-weight:750}
+.grid-etapas input:disabled{background:#f1f5f9;color:#64748b}
+
+.grid-reglas{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(170px,1fr));
+  gap:12px;
+}
+
+.checks-reglas{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:13px;
+}
+
+.check-regla{
+  display:flex!important;
+  align-items:flex-start;
+  gap:10px!important;
+  padding:13px;
+  border:1px solid #e2e8f0;
+  border-radius:13px;
+  background:#f8fafc;
+  cursor:pointer;
+}
+
+.check-regla input{margin-top:3px}
+.check-regla strong,.check-regla small{display:block}
+.check-regla small{margin-top:2px;color:#64748b;font-weight:700}
+
+.acciones-config{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+}
+
+.auditoria-config{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px 18px;
+  align-items:center;
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:15px;
+  background:#f8fafc;
+  color:#475569;
+  font-size:.82rem;
+}
+
+.auditoria-config strong{color:#334155}
+.auditoria-config small{
+  flex-basis:100%;
+  color:#64748b;
+  font-weight:700;
+}
+
+@media(max-width:1100px){
+  .resumen{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-etapas{grid-template-columns:repeat(4,minmax(120px,1fr))}
+  .grid-reglas{grid-template-columns:repeat(2,minmax(180px,1fr))}
+}
+
+@media(max-width:760px){
+  .pagina-admin{width:min(100% - 18px,1460px);padding-top:12px}
+  .cabecera-admin{display:grid;padding:20px}
+  .enlace-secundario{justify-self:start}
+  .selector-persona{grid-template-columns:1fr}
+  .selector-persona__acciones{align-items:stretch;flex-direction:column}
+  #selectPersona{min-width:0;width:100%}
+  .resumen{grid-template-columns:1fr 1fr}
+  .panel{padding:16px}
+  .panel__cabecera{align-items:stretch;flex-direction:column}
+  .filtros{align-items:stretch;flex-direction:column}
+  #buscarMision,.filtros select{width:100%}
+  .grid-etapas,.grid-reglas,.checks-reglas{grid-template-columns:1fr 1fr}
+  .estado-config{text-align:left}
+}
+
+@media(max-width:520px){
+  .resumen{grid-template-columns:1fr}
+  .grid-etapas,.grid-reglas,.checks-reglas{grid-template-columns:1fr}
+  .acciones-config{flex-direction:column-reverse}
+  .acciones-config .boton{width:100%}
+}
