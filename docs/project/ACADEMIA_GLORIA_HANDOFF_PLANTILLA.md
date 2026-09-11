@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.1 |
+| **Versión** | 2.2 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -25,7 +25,9 @@
 | `docs/project/DECISION_LOG.md` | **Complementa:** decisiones transversales estables. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Complementa:** ciclo operativo de construcción y cierre. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** Bitácora de Acompañamiento V1 activa. |
-| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** incorporación curricular de 6.º a partir de material escolar real. |
+| `docs/specifications/SPEC-HORARIO_CLASES.md` | **Define:** Mi horario de clases V1 activo. |
+| `docs/specifications/SPEC-MENU_COMEDOR.md` | **Define:** Menú del Cole V1 activo. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** incorporación curricular de 6.º a partir de material escolar real y recursos oficiales de materia cuando corresponda. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** identidad, acceso, Gestión de Usuarios y observación administrativa de accesos con retención limitada. |
 | `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | **Gobierna:** calidad transversal y catálogos cerrados extensibles con `Otros`. |
 
@@ -33,6 +35,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.2 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza continuidad con `main @ 27b9e0a2...` tras PR #87–#113: calendario escolar 2026–2027, Menú del Cole V1, Mi horario de clases V1 aprobado, vista `solo`, PDF una página, corrección de retorno Calendario ↔ Horario y recursos oficiales Gaudem de 6.º/Matemáticas visibles solo para alumnado Gaudem. Registra Issue #108 como próxima necesidad P1 antes/junto con 2–3 nuevas alumnas. |
 | 2.1 | 06/09/2026 | Product Owner + AI Collaborator | Cierra la excepción Bitácora de Acompañamiento V1: PR #83 y corrección PR #85 fusionados, SPEC activa 1.0, Rules publicadas/validadas, menú de un solo nivel y baseline funcional actualizado a `58cab370...`. Elimina instrucciones obsoletas de prueba/merge y deja como estado operativo real la fase de uso prioritario sin trabajo funcional On going. |
 | 2.0 | 06/09/2026 | Product Owner + AI Collaborator | Registró la Bitácora de Acompañamiento V1 como excepción funcional activa en validación. Su estado queda sustituido por v2.1 tras la prueba y merge. |
 | 1.9 | 06/09/2026 | Product Owner + AI Collaborator | Incorpora como pendiente la evaluación de **ChatGPT Work** con el primer caso real de incorporación de material escolar, para comprobar hasta qué punto puede ejecutar autónomamente el proceso completo de preparación para Academia. |
@@ -184,6 +187,14 @@ Solo interrumpir si falta información que pueda cambiar materialmente:
 5. una respuesta que deba coincidir exactamente con el material;
 6. una decisión arquitectónica nueva no resuelta.
 
+Para un nuevo portal de materia de 6.º:
+
+- revisar si existen recursos oficiales del Colegio Gaudem;
+- reutilizar el patrón **Recursos oficiales de [Materia]** ya aplicado en Matemáticas;
+- mantenerlos diferenciados del contenido propio de Academia;
+- mostrar el bloque solo para `rol = alumno` y `colegio = Gaudem / Colegio Gaudem`;
+- no crear un portal solo porque exista un enlace oficial.
+
 ### 4.3 Carril activo · issues de uso real
 
 ```text
@@ -207,7 +218,6 @@ Estado **cerrado y validado**:
 PR #83 · fusionado
 PR #85 · fusionado
 SPEC-BITACORA_ACOMPANAMIENTO.md · 1.0 Activo
-baseline funcional · main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2
 Firestore Rules V1 · publicadas en Firebase y validadas en prueba funcional
 ```
 
@@ -231,21 +241,59 @@ Regla central:
 
 No ampliar Bitácora por iniciativa propia durante la fase actual; primero usar V1 y observar necesidades reales.
 
-### 4.5 Baseline funcional estable
+### 4.5 Utilidades escolares cotidianas cerradas · 07–09/09/2026
+
+#### Calendario escolar
+
+- PR #87;
+- curso 2026–2027 activo;
+- selector con curso actual + anterior.
+
+#### Menú del Cole V1
+
+- PR #88–#93;
+- fuente mensual PDF oficial Gaudem;
+- Hoy / siguiente / semana / mes;
+- tarjeta de Inicio solo para `alumno + Gaudem`;
+- sin Firestore;
+- `SPEC-MENU_COMEDOR.md` · 1.0 Activo.
+
+#### Mi horario de clases V1
+
+- PR #96–#107 + correcciones #109/#110;
+- un horario actual por Persona Activa;
+- materias/bloques propios, tramos libres, semana L–V, notas;
+- planner visual + PDF A4 de una página;
+- acceso rápido `Ver mi horario` y `?vista=solo`;
+- navegación Calendario ↔ Horario sin ciclo;
+- `SPEC-HORARIO_CLASES.md` · 1.0 Activo.
+
+#### Recursos oficiales Gaudem
+
+- PR #111–#113;
+- portal de 6.º enlaza Gaudem + aula oficial de 6.º;
+- Matemáticas incorpora Área oficial + Matezonas;
+- bloque de recursos de materia solo para `alumno + Gaudem`;
+- patrón reusable para futuros portales de Lengua, Sociales, Inglés y Science.
+
+### 4.6 Baseline funcional estable
 
 ```text
 main
-58cab370fbf0b8e2191ef29ec4823dcb37b58bd2
+27b9e0a29ee92a2f081504cf5f52fbb9f4332221
 ```
 
 Incluye entre otras entregas recientes:
 
 - PR #71 · aviso Semilla libre asociada a Misión;
 - PR #74 · `Mis Guacamayas` plegado;
-- PR #78 · último acceso + ubicación aproximada minimizada;
-- PR #80 · historial de los 10 accesos más recientes por USER;
-- PR #83 · Bitácora de Acompañamiento V1;
-- PR #85 · Bitácora como nodo de menú de un solo nivel.
+- PR #78/#80 · observación administrativa minimizada de accesos;
+- PR #83/#85 · Bitácora de Acompañamiento V1;
+- PR #87 · calendario escolar 2026–2027;
+- PR #88–#93 · Menú del Cole V1;
+- PR #96–#107 · Mi horario de clases V1;
+- PR #109/#110 · navegación contextual corregida;
+- PR #111–#113 · recursos oficiales Gaudem 6.º.
 
 Un HEAD documental posterior no cambia este baseline funcional.
 
@@ -267,12 +315,15 @@ Antecedentes cerrados:
 | P2 | ✅ 32/32 cerrados |
 | Jornada documental P0 + P1 + P2 | ✅ Cerrada · 04/09/2026 |
 | Estabilización documental posterior a Bitácora | ✅ Ejecutada 06/09/2026 |
+| Estabilización documental inicio de curso | ✅ Ejecutada 09/09/2026 |
 | `SPEC-BITACORA_ACOMPANAMIENTO.md` | ✅ 1.0 Activo |
+| `SPEC-HORARIO_CLASES.md` | ✅ 1.0 Activo |
+| `SPEC-MENU_COMEDOR.md` | ✅ 1.0 Activo |
 | Ruta canónica IA | ✅ `docs/ai/` |
 
 `docs/DOCUMENTATION_STANDARD.md` continúa gobernando cualquier evolución documental futura.
 
-La estabilización del 06/09 no reabre P0/P1/P2; sincroniza únicamente fuentes afectadas por entregas posteriores.
+Las estabilizaciones posteriores no reabren P0/P1/P2; sincronizan únicamente fuentes afectadas por entregas reales posteriores.
 
 ---
 
@@ -294,10 +345,15 @@ La estabilización del 06/09 no reabre P0/P1/P2; sincroniza únicamente fuentes 
 - ✅ `Mis Guacamayas` como historial plegado.
 - ✅ `Historia de crecimiento` preservada.
 
-### Calendarios y curso
+### Calendarios, curso y utilidades escolares
 
 - ✅ Recordatorios al ingreso.
+- ✅ Calendario escolar 2026–2027.
+- ✅ Mi horario de clases V1.
+- ✅ Acceso rápido `Ver mi horario` + vista `solo`.
+- ✅ Menú del Cole V1.
 - ✅ Portal 6.º + Matemáticas.
+- ✅ Recursos oficiales Gaudem en 6.º/Matemáticas con patrón reusable.
 - ✅ Incorporación curricular por una sola instrucción.
 
 ### Administración, colaboración y memoria
@@ -313,25 +369,44 @@ La estabilización del 06/09 no reabre P0/P1/P2; sincroniza únicamente fuentes 
 
 ## ⏳ 7. Backlog en espera por foco de uso
 
-### 7.1 Velocidad de voz por Persona
+### 7.1 Manual breve de Academia + email de invitación
+
+**Estado:** ⏳ P1 · próxima necesidad real · Issue #108.
+
+Contexto: dentro de poco se crearán 2–3 usuarios, compañeras de Gloria, para invitarlas a Academia.
+
+Producto esperado:
+
+- mini manual visual, máximo 2 páginas;
+- comenzar en Login;
+- explicar Persona Activa y orientación desde Inicio;
+- explicar qué son las Misiones y el flujo básico del alumno;
+- Calendarios y Mi horario de clases;
+- creación/edición del horario;
+- funciones principales realmente activas;
+- email breve de invitación/bienvenida para alumna/familia.
+
+Debe redactarse contra el estado real de `main` inmediatamente antes de las invitaciones.
+
+### 7.2 Velocidad de voz por Persona
 
 **Estado:** ⏳ En espera.
 
 Objetivo futuro: `Normal / Pausada / Muy pausada`, administrable por adulto/administrador y resuelto mediante un único mecanismo compartido.
 
-### 7.2 Mi Universo · comprensión de preguntas
+### 7.3 Mi Universo · comprensión de preguntas
 
 **Estado:** ⏳ En espera.
 
 Objetivo: ayudar a Gloria a leer, identificar qué se pregunta y responder con mayor consistencia.
 
-### 7.3 Actividades sugeridas para Gloria desde email
+### 7.4 Actividades sugeridas para Gloria desde email
 
 **Estado:** ⏳ En espera.
 
 Al retomarlo, evitar una pantalla/sistema paralelo por actividad; integrar con capacidades existentes cuando sea posible.
 
-### 7.4 Creciendo por Dentro · proceso de nuevas Semillas
+### 7.5 Creciendo por Dentro · proceso de nuevas Semillas
 
 **Estado:** 🟡 Deuda de proceso conocida.
 
@@ -344,11 +419,11 @@ Semilla funcional + icono genérico
 → prueba visual breve
 ```
 
-### 7.5 Evaluar ChatGPT Work con material escolar real
+### 7.6 Evaluar ChatGPT Work con material escolar real
 
 **Estado:** ⏳ Pendiente.
 
-Evaluar con el primer caso real de incorporación escolar hasta qué punto Work puede ejecutar autónomamente el proceso completo, sin crear un proceso paralelo ni sustituir fuentes propietarias.
+Evaluar con un caso real de incorporación escolar hasta qué punto Work puede ejecutar autónomamente el proceso completo, sin crear un proceso paralelo ni sustituir fuentes propietarias.
 
 ---
 
@@ -374,6 +449,11 @@ Evaluar con el primer caso real de incorporación escolar hasta qué punto Work 
 - Catálogos cerrados extensibles incluyen `Otros` cuando corresponde.
 - En Bitácora, destino y visibilidad son distintos; la respuesta hereda visibilidad.
 - Un nodo principal de menú sin hijos se representa como enlace directo; no crear segundo nivel artificial.
+- `Mi horario de clases` mantiene un único documento `actual`; vista `solo` y PDF no crean duplicados.
+- Menú del Cole V1 usa datos mensuales simples; no añadir Firestore sin necesidad real.
+- Los recursos oficiales del colegio se muestran como externos y diferenciados del contenido propio de Academia.
+- Para Gaudem 6.º, los recursos oficiales de materia se muestran solo para `alumno + Gaudem`.
+- La existencia de un enlace oficial no obliga a crear un portal de materia ni un Tema ficticio.
 
 ---
 
@@ -382,14 +462,17 @@ Evaluar con el primer caso real de incorporación escolar hasta qué punto Work 
 | Campo | Valor actual |
 |---|---|
 | **Base canónica integrada** | `main` |
-| **Baseline funcional cerrado** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
+| **Baseline funcional cerrado** | `27b9e0a29ee92a2f081504cf5f52fbb9f4332221` |
 | **Rama funcional On going** | Ninguna registrada |
 | **PR funcional On going** | Ninguna registrada |
 | **Bitácora V1** | ✅ Cerrada · PR #83/#85 |
-| **Especificación Bitácora** | ✅ `1.0` Activo |
+| **Horario V1** | ✅ Cerrado y aprobado · PR #96–#107 + #109/#110 |
+| **Menú del Cole V1** | ✅ Cerrado · PR #88–#93 |
+| **Recursos oficiales 6.º** | ✅ Patrón activo · PR #111–#113 |
 | **Estado operativo general** | 🌿 Fase de uso prioritario |
 | **Carril curricular 6.º** | ✅ Activo con material escolar real |
 | **Issues de uso real** | ✅ Reportar y resolver con rapidez |
+| **Próxima necesidad P1** | Manual breve + email de invitación · Issue #108 |
 | **Crecimiento funcional general** | ⏸️ En espera por foco, salvo necesidad real |
 
 ---
@@ -403,9 +486,11 @@ La secuencia preferida es:
 ```text
 1. Usar la Academia con Gloria y profesionales autorizados.
 2. Incorporar material real de 6.º cuando llegue.
-3. Usar Bitácora V1 cuando aporte valor y observar si cubre la necesidad.
-4. Reportar cualquier issue real.
-5. No iniciar nuevas funciones generales por iniciativa propia durante la fase de foco.
+3. Usar Calendario, Horario y Menú del Cole como apoyos cotidianos.
+4. Usar Bitácora V1 cuando aporte valor y observar si cubre la necesidad.
+5. Reportar cualquier issue real.
+6. Antes/junto con crear 2–3 nuevas alumnas, completar Issue #108.
+7. No iniciar nuevas funciones generales por iniciativa propia durante la fase de foco.
 ```
 
 ### 10.1 Cuando llegue material escolar
@@ -420,6 +505,8 @@ La familia puede limitarse a:
 
 La AI Collaborator realiza el resto aplicando las fuentes propietarias y estándares correspondientes.
 
+Si se crea un nuevo portal de materia, reutilizar además el bloque de recursos oficiales Gaudem y sus condiciones cuando exista el enlace correspondiente.
+
 ### 10.2 Cuando aparezca un issue
 
 Reportarlo de forma natural, idealmente con captura o pasos si se tienen. La AI Collaborator verifica antes de asumir la causa y aplica la corrección mínima suficiente.
@@ -428,25 +515,39 @@ Reportarlo de forma natural, idealmente con captura o pasos si se tienen. La AI 
 
 Usar V1 tal como está. Cualquier ampliación debe justificarse por una necesidad observada y partir de `SPEC-BITACORA_ACOMPANAMIENTO.md` activa.
 
+### 10.4 Nuevas alumnas
+
+Antes de invitarlas:
+
+- verificar comportamiento vigente de Login/Inicio/Misiones/Horario;
+- preparar el mini manual y el email del Issue #108;
+- no incluir credenciales reales en el manual general.
+
 ---
 
-# 🟣 Última actualización — 06/09/2026
+# 🟣 Última actualización — 09/09/2026
 
 ## Cerrado recientemente
 
-- PR #78 · último acceso + ubicación aproximada minimizada.
-- PR #80 · historial de 10 accesos recientes.
-- PR #83 · Bitácora de Acompañamiento V1.
-- PR #85 · Bitácora como opción de menú de un solo nivel.
-- SPEC Bitácora activada como 1.0.
-- Jornada documental P0/P1/P2 cerrada.
-- Estabilización documental posterior ejecutada.
+- PR #87 · calendario escolar 2026–2027.
+- PR #88–#93 · Menú del Cole V1.
+- PR #94/#95 · refinamiento visual de Inicio.
+- PR #96–#107 · Mi horario de clases V1 + PDF + acceso rápido/vista `solo`.
+- PR #109/#110 · navegación Calendario ↔ Horario corregida.
+- PR #111–#113 · recursos oficiales Gaudem de 6.º/Matemáticas y visibilidad `alumno + Gaudem`.
+- `SPEC-HORARIO_CLASES.md` activada como 1.0.
+- `SPEC-MENU_COMEDOR.md` creada y activada como 1.0.
+- Estabilización documental de inicio de curso ejecutada.
 
 ## Trabajo funcional On going
 
 > **Ninguno.**
 
-El proyecto vuelve a su foco normal de uso prioritario, incorporación curricular real e issues.
+El proyecto continúa en uso prioritario, incorporación curricular real e issues.
+
+## Próxima necesidad concreta
+
+> **Issue #108 · mini manual + email de invitación para nuevas alumnas.**
 
 ---
 
@@ -455,12 +556,14 @@ El proyecto vuelve a su foco normal de uso prioritario, incorporación curricula
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 2.1 |
+| **Versión activa** | 2.2 |
 | **Estado operativo** | 🌿 Fase de uso prioritario desde 05/09/2026 |
-| **Baseline funcional cerrado** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
+| **Baseline funcional cerrado** | `27b9e0a29ee92a2f081504cf5f52fbb9f4332221` |
 | **Trabajo funcional On going** | Ninguno |
-| **Siguiente paso** | Uso real + material de 6.º + issues según aparezcan |
+| **Siguiente paso** | Uso real + material de 6.º + issues + Issue #108 antes/junto con nuevas alumnas |
 | **Crecimiento curricular 6.º** | ✅ Activo durante la fase |
+| **Utilidades escolares** | ✅ Calendario 2026–2027 + Menú del Cole + Horario V1 |
+| **Recursos oficiales Gaudem** | ✅ Patrón reusable por portal de materia · visible solo para `alumno + Gaudem` |
 | **Issues reales** | ✅ Reportar → verificar → corregir con rapidez |
 | **Crecimiento funcional general** | ⏸️ En espera por foco de uso, salvo necesidad real |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida de fuentes |

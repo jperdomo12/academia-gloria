@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/RELEASE_NOTES.md` |
-| **Versión del documento** | 1.3 |
+| **Versión del documento** | 1.4 |
 | **Estado** | Activo |
 | **Fecha** | 03/08/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Propietario** | Gobierno del Producto |
 | **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
 | **Ámbito** | Versionado, publicación y trazabilidad de entregas de Academia Gloria Valentina |
@@ -21,11 +21,15 @@
 | `docs/project/DECISION_LOG.md` | Conserva decisiones transversales de producto cuando corresponda. |
 | `docs/project/ROADMAP.md` | Orienta la evolución prevista del producto sin sustituir el historial de entregas. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | Define el comportamiento funcional de la Bitácora de Acompañamiento V1. |
+| `docs/specifications/SPEC-HORARIO_CLASES.md` | Define Mi horario de clases V1. |
+| `docs/specifications/SPEC-MENU_COMEDOR.md` | Define Menú del Cole V1. |
+| `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | Gobierna incorporación curricular y recursos oficiales de materia cuando corresponda. |
 
 ## 🕘 Historial de versiones del documento
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 09/09/2026 | Juan Perdomo + AI Collaborator | Extiende el historial real hasta el 09Sep2026. Agrupa PR #87–#113 como entregas de inicio de curso: calendario escolar 2026–2027, Menú del Cole V1, Mi horario de clases V1, ajustes de navegación/Inicio y recursos oficiales Gaudem de 6.º/Matemáticas. No inventa nueva versión de producto. |
 | 1.3 | 06/09/2026 | Juan Perdomo + AI Collaborator | Extiende el historial real hasta el 06Sep2026. Registra PR #78/#80 de observación administrativa minimizada de accesos y PR #83/#85 de Bitácora de Acompañamiento V1, sin inventar una nueva versión del producto. |
 | 1.2 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registra el PR #74 como entrega visual validada y fusionada sin nueva versión de producto: `Mis Guacamayas` plegado por defecto, flechas consistentes y alineación de los tres bloques de reconocimientos. |
 | 1.1 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el documento con las entregas reales fusionadas entre 29Ago y 03Sep2026. Distingue releases formales de GitHub, versiones históricas internas y bloques de producto validados todavía sin nueva versión asignada. Registra Gestión de Misiones, evidencias académicas, refuerzos, Análisis Educativo, limpieza de pruebas, Recompensas/Reconocimientos, `Ver trabajo`, recordatorios de calendario y los nuevos portales de 6.º. Corrige la inconsistencia de estado documental de la versión anterior. |
@@ -133,13 +137,88 @@ Esto describe su estado sin inventar versionado.
 
 | Campo | Valor |
 |---|---|
-| **Período cubierto** | 29/08/2026 – 06/09/2026 |
+| **Período cubierto** | 29/08/2026 – 09/09/2026 |
 | **Estado** | Validado y fusionado en `main` |
 | **Nueva versión de producto** | No asignada todavía |
-| **Baseline funcional más reciente cubierto** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
+| **Baseline funcional más reciente cubierto** | `27b9e0a29ee92a2f081504cf5f52fbb9f4332221` |
 | **Criterio** | Se registran capacidades reales y cerradas; no pendientes ni trabajo exploratorio |
 
 Estas entregas representan una evolución funcional importante de la Academia, pero **no constituyen por sí mismas una nueva versión numerada** hasta que el Product Owner lo determine.
+
+---
+
+## Entrega validada · 07–09Sep2026 · inicio real del curso 2026–2027
+
+**Estado:** Validada y fusionada · sin nueva versión asignada.
+
+### Calendario escolar 2026–2027 · PR #87
+
+- nuevo calendario oficial Gaudem septiembre 2026 → junio 2027;
+- selector limitado al curso actual y al curso anterior;
+- codificación visual de vacacionales, no lectivos, festivos y último día lectivo;
+- navegación integrada sin cambios de Firestore.
+
+### Menú del Cole V1 · PR #88–#93
+
+- nueva experiencia `menu-comedor/` a partir del PDF mensual oficial del Colegio Gaudem;
+- uso del calendario diario útil de la fuente, sin incorporar contenido genérico que no aporta a la consulta cotidiana;
+- vistas de hoy, siguiente/mañana, semana y mes;
+- primer plato, segundo, acompañamiento/guarnición cuando existe y postre;
+- tarjeta compacta en Inicio inmediatamente después del hero;
+- visibilidad de la tarjeta únicamente para `rol = alumno` y `colegio = Gaudem / Colegio Gaudem`;
+- sin Firestore, Misiones, Evidencias ni Recompensas;
+- especificación propietaria activa: `docs/specifications/SPEC-MENU_COMEDOR.md`.
+
+### Ajustes visuales de `Explora más` · PR #94/#95
+
+- unificación e integración más limpia de fondos de iconos;
+- cambio estrictamente visual, sin ampliar funcionalidad ni datos.
+
+### Mi horario de clases V1 · PR #96–#107
+
+- un único horario actual por Persona Activa;
+- cabecera escolar, materias/bloques propios, colores y notas;
+- tramos de inicio/fin exactos con duración libre;
+- cuadrícula lunes–viernes y adaptación móvil por día;
+- día actual y contexto de clase actual/próxima;
+- planner/cabecera-póster de alta identidad visual;
+- PDF A4 apaisado de exactamente una página, generado sin CDN externos;
+- estados de carga/horario vacío corregidos;
+- materias del editor ordenadas alfabéticamente conservando `Libre` primero;
+- acceso `🗓️ Ver mi horario` desde Inicio cuando existe horario;
+- vista `?vista=solo` que reutiliza el mismo dato y muestra esencialmente póster + cuadrícula;
+- especificación propietaria activa: `docs/specifications/SPEC-HORARIO_CLASES.md`.
+
+### Navegación Calendario ↔ Horario · PR #109/#110
+
+Se corrigió el ciclo:
+
+```text
+Main → Calendario → Horario → Volver → Calendario → Volver → Horario
+```
+
+La causa raíz estaba en la navegación común: un control `Volver` ya resuelto era reinterpretado como nueva navegación y recibía un nuevo `volver`, generando el ciclo.
+
+Resultado validado:
+
+```text
+Main → Calendario → Horario → Volver → Calendario → Volver → Main
+```
+
+Sin cambios en datos ni Firestore.
+
+### Recursos oficiales Gaudem de 6.º · PR #111–#113
+
+- portal de 6.º incorpora accesos al Colegio Gaudem y al aula oficial de 6.º;
+- Matemáticas incorpora un bloque propio **Recursos oficiales de Matemáticas** con Área oficial + Matezonas;
+- patrón visual reusable preparado para futuros portales de Lengua, Sociales, Inglés y Science;
+- los bloques oficiales de materia se muestran solo a perfiles `alumno + Gaudem`;
+- recursos externos permanecen diferenciados del contenido propio de Academia;
+- sin cambios en Firestore Rules.
+
+### Validación
+
+El Product Owner validó expresamente estas capacidades durante uso real entre el 07 y el 09/09/2026, incluyendo horario, PDF, acceso rápido, navegación y recursos escolares.
 
 ---
 
@@ -638,7 +717,7 @@ Se corrigió un caso real en el que un audio grande podía impedir guardar toda 
 - nuevo framework;
 - nuevo Design System.
 
-A 06/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
+A 09/09/2026, esta es la única GitHub Release formal encontrada en el repositorio.
 
 ---
 
@@ -768,8 +847,8 @@ Estado: Validada y fusionada · sin nueva versión asignada
 | Campo | Valor |
 |---|---|
 | **Estado documental** | Activo |
-| **Última sincronización** | 06/09/2026 |
+| **Última sincronización** | 09/09/2026 |
 | **Release formal comprobada** | `2.0` · publicada 20/07/2026 |
 | **Versión histórica interna preservada** | `v2.3-RC6` · 01/08/2026 |
-| **Entregas posteriores** | Validadas y fusionadas hasta `main @ 58cab370...`; todavía sin nueva versión de producto asignada |
+| **Entregas posteriores** | Validadas y fusionadas hasta `main @ 27b9e0a2...`; todavía sin nueva versión de producto asignada |
 | **Regla principal** | No inventar versionado; primero registrar lo realmente entregado y asignar una release solo por decisión explícita del Product Owner. |

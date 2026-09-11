@@ -2,6 +2,7 @@
 
 let instalada = false;
 let observador = null;
+let observadorConstancia = null;
 
 const TEXTO_ACCESO = "🌈 Las cosas bonitas que celebra la Academia";
 
@@ -13,6 +14,81 @@ function cargarEstilos() {
   enlace.href = new URL("./guia-celebraciones-gloria.css", import.meta.url).href;
   enlace.dataset.guiaCelebracionesGloriaCss = "true";
   document.head.appendChild(enlace);
+}
+
+function fechaInicioRachaDesdeVista(racha) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+
+  const fin = new Date(hoy);
+  const diaHoy = document.querySelector("#semanaConstancia .dia.hoy");
+
+  /* La racha puede seguir viva desde ayer si hoy todavía no hay actividad. */
+  if (!diaHoy?.classList.contains("hecho")) {
+    fin.setDate(fin.getDate() - 1);
+  }
+
+  const inicio = new Date(fin);
+  inicio.setDate(inicio.getDate() - Math.max(0, racha - 1));
+  return inicio;
+}
+
+function actualizarContextoRacha() {
+  const valor = document.getElementById("rachaDias");
+  const tarjeta = valor?.closest(".constancia-stat");
+  if (!valor || !tarjeta) return false;
+
+  let detalle = tarjeta.querySelector("[data-inicio-racha]");
+  if (!detalle) {
+    detalle = document.createElement("small");
+    detalle.className = "constancia-stat__detalle";
+    detalle.dataset.inicioRacha = "true";
+    tarjeta.appendChild(detalle);
+  }
+
+  const racha = Number.parseInt(String(valor.textContent || "").trim(), 10);
+  if (!Number.isFinite(racha) || racha <= 0) {
+    detalle.hidden = true;
+    if (detalle.textContent) detalle.textContent = "";
+    return true;
+  }
+
+  const inicio = fechaInicioRachaDesdeVista(racha);
+  const diaSemana = new Intl.DateTimeFormat("es-ES", {
+    weekday: "long"
+  }).format(inicio);
+  const fechaCompleta = new Intl.DateTimeFormat("es-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  }).format(inicio);
+  const nuevoTexto = `desde el ${diaSemana}`;
+
+  if (detalle.textContent !== nuevoTexto) {
+    detalle.textContent = nuevoTexto;
+  }
+  detalle.title = `Racha iniciada el ${fechaCompleta}`;
+  detalle.hidden = false;
+  return true;
+}
+
+function instalarContextoRacha() {
+  actualizarContextoRacha();
+
+  const bloque = document.querySelector(".constancia");
+  if (!bloque || observadorConstancia) return;
+
+  observadorConstancia = new MutationObserver(() => {
+    actualizarContextoRacha();
+  });
+
+  observadorConstancia.observe(bloque, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ["class"]
+  });
 }
 
 function contenidoPaginaGloria() {
@@ -235,6 +311,8 @@ function mejorarGuia() {
 }
 
 function instalar() {
+  instalarContextoRacha();
+
   if (mejorarGuia()) return;
 
   if (!document.body || observador) return;

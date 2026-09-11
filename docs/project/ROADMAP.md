@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.9 |
+| **Versión del documento** | 1.10 |
 | **Estado** | Activo · fase de uso prioritario |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Evolución funcional y prioridades de producto |
 
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.10 | 09/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el inicio real del curso 2026–2027 tras PR #87–#113: calendario escolar actual, Menú del Cole V1, Mi horario de clases V1 ya aprobado, acceso rápido/solo horario, correcciones de navegación y recursos oficiales Gaudem de 6.º/Matemáticas con visibilidad para alumnado Gaudem. Actualiza baseline funcional a `27b9e0a2...` y registra el mini manual + email de invitación como P1 real antes de incorporar 2–3 nuevas alumnas. |
 | 1.9 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza la fase de uso prioritario con el estado real posterior a PR #78/#80/#83/#85: Gestión de Usuarios conserva observación administrativa minimizada de accesos; Bitácora de Acompañamiento V1 se registra como excepción funcional ya cerrada porque respondió a una necesidad inmediata de colaboración con profesionales; actualiza baseline funcional a `58cab370...` y mantiene el resto del crecimiento general en espera por foco. |
 | 1.8 | 05/09/2026 | Juan Perdomo + AI Collaborator | Sustituye “congelación funcional” por **fase de uso prioritario**. Durante varias semanas prioriza uso real, motivación y ayuda efectiva; mantiene activo el crecimiento curricular de 6.º mediante material real + una sola instrucción; formaliza reporte y resolución rápida de issues reales; deja el crecimiento funcional general en espera por foco, no prohibido. |
 | 1.7 | 04/09/2026 | Juan Perdomo + AI Collaborator | Registró el cierre del ajuste visual de Guacamayas mediante PR #74 y actualizó el baseline funcional estable. La “congelación” descrita entonces queda reinterpretada por v1.8 como una decisión de foco de gestión. |
@@ -89,15 +90,17 @@ EVIDENCIA PARA DECIDIR EL PRÓXIMO CRECIMIENTO
 
 ```text
 main
-58cab370fbf0b8e2191ef29ec4823dcb37b58bd2
+27b9e0a29ee92a2f081504cf5f52fbb9f4332221
 ```
 
 Incluye, además del baseline previo:
 
-- PR #78 · último acceso administrativo + ubicación aproximada minimizada;
-- PR #80 · historial de los 10 accesos más recientes por USER;
-- PR #83 · Bitácora de Acompañamiento V1;
-- PR #85 · Bitácora como nodo principal de menú de un solo nivel.
+- PR #87 · calendario escolar Gaudem 2026–2027;
+- PR #88–#93 · Menú del Cole V1 y visibilidad de Inicio para alumnado Gaudem;
+- PR #94/#95 · refinamiento visual de `Explora más`;
+- PR #96–#107 · Mi horario de clases V1, evolución visual/PDF, acceso rápido y vista `solo`;
+- PR #109/#110 · corrección del retorno contextual Calendario ↔ Horario;
+- PR #111–#113 · recursos oficiales Gaudem de 6.º y Matemáticas con visibilidad selectiva.
 
 El HEAD documental puede ser posterior sin cambiar este baseline funcional.
 
@@ -171,6 +174,8 @@ material escolar
 → merge
 ```
 
+Cuando el colegio disponga de recursos oficiales por asignatura, el portal propio puede ofrecerlos de forma diferenciada del contenido de Academia. Para Gaudem 6.º, el patrón aprobado es visible solo para perfiles `alumno + Gaudem` y se reutiliza al crear nuevos portales.
+
 ### 3.3 Carril activo · issues del uso real
 
 Cualquier issue observado debe reportarse y verificarse.
@@ -206,7 +211,6 @@ Estado:
 SPEC-BITACORA_ACOMPANAMIENTO.md · 1.0 Activo
 PR #83 · fusionado
 PR #85 · fusionado
-baseline funcional · 58cab370...
 ```
 
 La excepción queda **cerrada**: no significa reactivar nuevas funcionalidades generales ni ampliar automáticamente la Bitácora.
@@ -276,14 +280,23 @@ Principios:
 
 ---
 
-## 4.4 Calendarios / Recordatorios
+## 4.4 Calendarios / organización escolar
 
-✅ **Listo**
+✅ **V1 cotidiana lista**
 
 - Persona Activa;
 - aviso al ingreso;
 - eventos de hoy y del día siguiente / un día antes;
-- sin repetición innecesaria durante la sesión.
+- sin repetición innecesaria durante la sesión;
+- calendario escolar **2026–2027** activo junto al curso anterior;
+- **Mi horario de clases V1** activo: un horario actual por Persona, materias/bloques propios, tramos libres, semana L–V, notas, consulta/edición y PDF de una página;
+- acceso rápido `🗓️ Ver mi horario` desde Inicio cuando existe horario;
+- vista rápida `?vista=solo` sin duplicar datos;
+- retorno contextual Calendario ↔ Horario corregido y validado.
+
+Propietario específico del horario:
+
+`docs/specifications/SPEC-HORARIO_CLASES.md`
 
 ---
 
@@ -300,6 +313,14 @@ Jerarquía:
 ```
 
 Matemáticas ya dispone de base real y patrones validados.
+
+El portal de 6.º dispone además de:
+
+- acceso al Colegio Gaudem;
+- acceso al aula oficial de 6.º;
+- patrón reutilizable de **Recursos oficiales de [Materia]** dentro del portal propio;
+- Matemáticas como primera aplicación con Área oficial + Matezonas;
+- visibilidad de esos bloques únicamente para `rol = alumno` y `colegio = Gaudem / Colegio Gaudem`.
 
 A partir del inicio de clases, **nuevos Temas reales de cualquier materia forman parte de la operación normal del producto**, no de un backlog futuro.
 
@@ -391,9 +412,45 @@ Antecedentes:
 
 ---
 
+## 4.12 Menú del Cole
+
+✅ **V1 lista · PR #88–#93**
+
+- PDF mensual oficial del Colegio Gaudem como fuente;
+- calendario diario transformado a datos mensuales simples;
+- Hoy / siguiente / semana / mes;
+- acompañamiento/guarnición cuando existe;
+- tarjeta cotidiana en Inicio;
+- tarjeta visible solo para `alumno + Gaudem`;
+- sin Firestore, Misiones, Evidencias ni Recompensas.
+
+Propietario funcional:
+
+`docs/specifications/SPEC-MENU_COMEDOR.md`
+
+---
+
 # ⏳ 5. Backlog en espera por foco de uso
 
 Nada de esta sección tiene prioridad automática durante las primeras semanas. Puede subir de prioridad si el uso real demuestra necesidad.
+
+## P1 · Manual breve de Academia + email de invitación
+
+**Estado:** ⏳ Próxima necesidad real · Issue #108.
+
+Antes o junto con la creación de 2–3 nuevas alumnas, preparar:
+
+- mini manual visual de máximo 2 páginas;
+- entrada desde Login;
+- orientación por la portada y Persona Activa;
+- qué son las Misiones y flujo básico del alumno;
+- Calendarios y creación/edición de Mi horario;
+- funciones activas realmente útiles;
+- email breve de invitación/bienvenida para alumna/familia.
+
+Debe basarse en el comportamiento real de `main` en ese momento.
+
+---
 
 ## P1 · Velocidad de voz por Persona
 
@@ -480,6 +537,8 @@ El esfuerzo de la familia para incorporar un Tema debe tender a:
 
 La calidad interna no se reduce por reducir interacción humana.
 
+Los recursos oficiales del colegio complementan el portal de materia, pero no sustituyen el contenido propio de Academia ni convierten enlaces externos en Temas.
+
 ---
 
 # 👨‍👩‍👧 7. Colaboración familiar y profesional
@@ -529,6 +588,9 @@ AHORA
 ────────────────────────────────────────────
 🌿 Usar la Academia con Gloria
 📚 Incorporar Temas reales de 6.º
+🏫 Reutilizar recursos oficiales del colegio cuando aporten valor
+🗓️ Usar Calendario + Horario como apoyo cotidiano
+🍽️ Usar Menú del Cole durante el curso
 💡 Observar qué ayuda de verdad
 😊 Cuidar motivación y experiencia
 🛠️ Reportar y resolver issues reales
@@ -575,10 +637,13 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Eliminación controlada de Misiones completadas | ✅ Listo |
 | Recompensas / Reconocimientos V1 | ✅ Listo |
 | Historial `Mis Guacamayas` | ✅ PR #74 integrado |
-| Calendarios / recordatorios actuales | ✅ Listo |
+| Calendario escolar 2026–2027 | ✅ PR #87 integrado |
+| Menú del Cole V1 | ✅ PR #88–#93 integrado |
+| Mi horario de clases V1 | ✅ PR #96–#107 + #109/#110 integrado |
 | Gestión de Usuarios · accesos recientes | ✅ PR #78/#80 integrado |
 | Bitácora de Acompañamiento V1 | ✅ PR #83/#85 integrado |
 | 6.º · base estructural | ✅ Lista |
+| 6.º · recursos oficiales Gaudem | ✅ PR #111–#113 integrado |
 | 6.º · incorporación de Temas reales | 📚 Activa |
 | Mi Baúl V1 | ✅ Listo |
 | HandOff | ✅ Activo |
@@ -586,6 +651,7 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Documentación P0/P1/P2 | ✅ Cerrada |
 | Creciendo por Dentro → Misión → revisión familiar | ✅ Verificado |
 | Aviso Semilla libre asociada a Misión | ✅ PR #71 integrado |
+| Manual breve + email de invitación | ⏳ P1 · Issue #108 |
 | Issues del uso real | 🛠️ Reportar y resolver con rapidez |
 | Velocidad de voz por Persona | ⏳ En espera por foco de uso |
 | Mi Universo · comprender preguntas | ⏳ En espera por foco de uso |
@@ -613,6 +679,8 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 - `docs/standards/STD-LIA.md`
 - `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`
 - `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md`
+- `docs/specifications/SPEC-HORARIO_CLASES.md`
+- `docs/specifications/SPEC-MENU_COMEDOR.md`
 
 ---
 
@@ -621,14 +689,16 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Campo | Valor |
 |---|---|
 | **Estado del Roadmap** | ✅ Activo |
-| **Versión** | 1.9 |
+| **Versión** | 1.10 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Inicio de la fase** | 05/09/2026 |
-| **Baseline funcional de referencia** | `58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
+| **Baseline funcional de referencia** | `27b9e0a29ee92a2f081504cf5f52fbb9f4332221` |
 | **Prioridad inmediata** | Uso motivado + ayuda efectiva + Temas reales de 6.º |
 | **Incorporación curricular 6.º** | 📚 Activa |
+| **Utilidades escolares cotidianas** | ✅ Calendario 2026–2027 + Menú del Cole + Horario V1 activos |
 | **Issues reales** | 🛠️ Reportar → verificar → resolver rápidamente |
 | **Bitácora V1** | ✅ Excepción funcional cerrada; usar y observar antes de ampliar |
+| **Próxima necesidad P1** | Mini manual + email de invitación antes/junto con nuevas alumnas |
 | **Nuevas funciones generales** | ⏸️ En espera por foco de uso |
 | **Revisión del foco** | Después de varias semanas o antes si el uso real lo justifica |
 
