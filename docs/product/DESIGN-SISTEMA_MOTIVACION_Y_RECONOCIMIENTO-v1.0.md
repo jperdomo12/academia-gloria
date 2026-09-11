@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial actual** | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` |
-| **Versión del documento** | 1.1 |
+| **Versión del documento** | 1.2 |
 | **Estado** | Activo |
 | **Fecha inicial** | 01/09/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 12/09/2026 |
 | **Responsables** | Juan Perdomo + Arquitectura colaborativa con IA |
 | **Ámbito** | Motivación, Reconocimientos, Guacamayas, Lía, Récord Personal, Retos cooperativos y su integración con Mi Camino |
 
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 12/09/2026 | Juan Perdomo + AI Collaborator | Activa la mecánica real de crecimiento de Mi Camino con siete etapas, ponderación 1/2/3 basada en alcance observable, exclusión de datos de prueba y Administración → Mi Camino para auditoría, vista previa y configuración global con auditoría. La etapa sigue siendo derivada: no se persiste por Persona. |
 | 1.1 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el diseño con la implementación real posterior al rc1. Declara A1 y A2 implementadas, B1 implementada para Detectives, B2 implementada para Constancia/transparencia, guía visual para Gloria y marca/filtro de Recompensa en Gestión. Mantiene Récord Personal, Reto cooperativo y mecánica Semilla/Brote/Árbol como evoluciones diseñadas todavía no implementadas. Actualiza el modelo físico real, Persona Activa, eliminación, datos de prueba y fronteras de seguridad. |
 | 1.0-rc1 | 01/09/2026 | Juan Perdomo + IA | Consolidación fundacional previa a implementación: cinco pilares, cuatro mecanismos, seis Guacamayas, reglas de alta confianza para Lía, diseño de Récord Personal, seguridad, datos de prueba y plan incremental A1–E. |
 
@@ -83,9 +84,11 @@ No significa que todas las fases conceptuales A–E estén programadas.
 | Marca/filtro `🏅 Recompensa` en Gestión | ✅ Implementado y corregido |
 | C · Récord Personal | ⏳ Diseñado · no implementado |
 | D · Reto cooperativo | ⏳ Diseñado · no implementado |
-| E · Mecánica Semilla/Brote/Árbol | ⏳ Diseñada conceptualmente · no implementada |
+| E · Crecimiento visual de Mi Camino | ✅ Implementado · 7 etapas · ponderación configurable |
 
-La representación **Semilla → Brote → Árbol** ya puede aparecer como lenguaje visual de crecimiento, pero eso no equivale a disponer de una mecánica automática que cambie etapas.
+La mecánica de crecimiento visual está implementada y se deriva de Misiones reales completadas, visibles y no marcadas como prueba. Utiliza siete etapas —**Semilla → Brote → Plantita → Árbol joven → Árbol → Árbol con frutos → Árbol lleno de frutos**— y pesos 1/2/3 que representan únicamente alcance observable de la Misión, nunca valor personal, inteligencia o comparación entre alumnos.
+
+La etapa no se guarda como dato de la Persona: se recalcula desde los hechos actuales y la configuración global. `Administración → Mi Camino` permite auditar cada contribución, previsualizar cambios y modificar umbrales/reglas de ponderación. La configuración persiste en `configuracion/miCamino` con `createdAt`, `createdBy`, `updatedAt` y `updatedBy`; los datos de prueba nunca aportan unidades.
 
 ---
 

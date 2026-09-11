@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/vision/08_MI_CAMINO.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Visión activa · no especificación funcional |
 | **Fecha de origen** | Julio 2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 12/09/2026 |
 | **Propietario** | Visión de Mi Camino |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Sentido del espacio personal del alumno, recorrido, Misiones y crecimiento visible |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 12/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza la visión con el crecimiento visual real de siete etapas derivado de Misiones reales. Mantiene la configuración/auditoría fuera de la experiencia del alumno, bajo Administración, y preserva la prohibición de rankings, economía de puntos o valor personal basado en métricas. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la visión con la separación real Mi Camino / Gestión de Misiones, Persona Activa, Misiones y finalización actual, `Así voy creciendo`, Reconocimientos/Guacamayas y consulta histórica de solo lectura. Retira niveles/estrellas/insignias genéricos como promesa del espacio y evita convertir Mi Camino en panel de control familiar/profesional. |
 | 1.0 | Julio 2026 | Equipo del proyecto | Primera visión de Mi Camino como espacio personal del alumno. |
 
@@ -147,6 +148,10 @@ Reglas de visión:
 - mantener el historial comprensible y proporcional.
 
 La mecánica exacta pertenece al Sistema de Motivación y Reconocimiento.
+
+La implementación actual puede representar visualmente el crecimiento mediante siete etapas derivadas de actividad real. Las unidades internas son un mecanismo técnico para determinar la ilustración y el tramo actual; **no se presentan como una puntuación de valor personal ni una competición**. Las Misiones de prueba quedan excluidas.
+
+La auditoría y configuración de esta mecánica vive separada en `Administración → Mi Camino`, protegida por nivel `administracion`; no convierte Mi Camino en una consola administrativa.
 
 ---
 
@@ -283,5 +288,5 @@ Mi Camino debe ayudar a mirar ese recorrido con respeto, alegría y confianza, s
 | **Versión activa** | 1.1 |
 | **Experiencia principal** | Alumno / Persona Activa |
 | **Gestión de Misiones** | Separada de Mi Camino |
-| **Crecimiento visible** | Reconocimientos y Guacamayas mediante sistema propietario |
+| **Crecimiento visible** | Reconocimientos/Guacamayas + 7 etapas derivadas de Misiones reales |
 | **Histórico** | Consulta de solo lectura |

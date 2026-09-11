@@ -137,6 +137,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         icono: "👥",
         ruta: "administracion/usuarios/",
         nivelMinimo: "administracion"
+      },
+      {
+        id: "administracion-mi-camino",
+        titulo: "Mi Camino",
+        icono: "🌳",
+        ruta: "administracion/mi-camino/",
+        nivelMinimo: "administracion",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
       }
     ]
   },
