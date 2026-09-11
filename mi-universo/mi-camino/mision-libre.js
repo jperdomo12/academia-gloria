@@ -9,6 +9,12 @@ import("./guia-celebraciones-gloria.js").catch(error => {
   console.debug("No se pudo cargar la guía visual de celebraciones.", error);
 });
 
+/* El crecimiento visual consume las Misiones reales ya observables y tampoco
+   debe bloquear la experiencia principal si su capa de presentación falla. */
+import("./crecimiento-camino.js").catch(error => {
+  console.debug("No se pudo cargar el crecimiento visual de Mi Camino.", error);
+});
+
 const SELECTOR_LISTAS = "#listaHoy, #listaRevision, #listaPasadas";
 const RUTA_FALLBACK_LIBRE = new URL("../", window.location.href).pathname;
 
