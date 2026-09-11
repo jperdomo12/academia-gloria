@@ -120,6 +120,95 @@ service cloud.firestore {
         ).data.nivelAcceso == "administracion";
     }
 
+    // CONFIGURACIÓN GLOBAL · MI CAMINO
+    //
+    // La configuración es legible por cualquier Usuario autenticado porque
+    // determina la presentación de crecimiento del alumno. Solo Administración
+    // puede modificarla y siempre conserva auditoría transversal.
+    function configuracionMiCaminoValida() {
+      let datos = request.resource.data;
+
+      return datos.keys().hasOnly([
+          "schemaVersion",
+          "etapas",
+          "reglasPeso",
+          "createdAt",
+          "createdBy",
+          "updatedAt",
+          "updatedBy"
+        ])
+        && datos.schemaVersion == 1
+        && datos.etapas is map
+        && datos.etapas.keys().hasOnly([
+          "semilla",
+          "brote",
+          "plantita",
+          "arbol-joven",
+          "arbol",
+          "arbol-con-frutos",
+          "arbol-lleno-de-frutos"
+        ])
+        && datos.etapas.semilla is int
+        && datos.etapas.semilla == 0
+        && datos.etapas.brote is int
+        && datos.etapas.plantita is int
+        && datos.etapas["arbol-joven"] is int
+        && datos.etapas.arbol is int
+        && datos.etapas["arbol-con-frutos"] is int
+        && datos.etapas["arbol-lleno-de-frutos"] is int
+        && datos.etapas.brote > datos.etapas.semilla
+        && datos.etapas.plantita > datos.etapas.brote
+        && datos.etapas["arbol-joven"] > datos.etapas.plantita
+        && datos.etapas.arbol > datos.etapas["arbol-joven"]
+        && datos.etapas["arbol-con-frutos"] > datos.etapas.arbol
+        && datos.etapas["arbol-lleno-de-frutos"] > datos.etapas["arbol-con-frutos"]
+        && datos.reglasPeso is map
+        && datos.reglasPeso.keys().hasOnly([
+          "cantidadEstandarMin",
+          "cantidadAmpliaMin",
+          "minutosEstandarMin",
+          "minutosAmpliaMin",
+          "repasoAcademicoComoEstandar",
+          "tareaCombinadaComoAmplia"
+        ])
+        && datos.reglasPeso.cantidadEstandarMin is int
+        && datos.reglasPeso.cantidadEstandarMin >= 1
+        && datos.reglasPeso.cantidadAmpliaMin is int
+        && datos.reglasPeso.cantidadAmpliaMin > datos.reglasPeso.cantidadEstandarMin
+        && datos.reglasPeso.minutosEstandarMin is int
+        && datos.reglasPeso.minutosEstandarMin >= 1
+        && datos.reglasPeso.minutosAmpliaMin is int
+        && datos.reglasPeso.minutosAmpliaMin > datos.reglasPeso.minutosEstandarMin
+        && datos.reglasPeso.repasoAcademicoComoEstandar is bool
+        && datos.reglasPeso.tareaCombinadaComoAmplia is bool
+        && datos.createdAt is timestamp
+        && datos.createdBy is string
+        && datos.updatedAt is timestamp
+        && datos.updatedBy is string;
+    }
+
+    match /configuracion/{configId} {
+      allow read: if configId == "miCamino" && estaAutenticado();
+
+      allow create: if configId == "miCamino"
+        && esAdministrador()
+        && configuracionMiCaminoValida()
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.updatedBy == request.auth.uid;
+
+      allow update: if configId == "miCamino"
+        && esAdministrador()
+        && configuracionMiCaminoValida()
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.updatedBy == request.auth.uid;
+
+      allow delete: if false;
+    }
+
     // LOGIN FUNCIONAL · Fase 1.6 / 1.8
     //
     // El usuario aún NO está autenticado cuando escribe su login.
