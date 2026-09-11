@@ -1,0 +1,53 @@
+name: temp-mi-camino-validate
+
+on:
+  push:
+    branches:
+      - refactor/mi-camino-tareas-unica-escucha
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validar sintaxis JavaScript
+        run: |
+          node --check mi-universo/mi-camino/tareas-camino.js
+          node --check mi-universo/mi-camino/crecimiento-camino.js
+          node --check mi-universo/mi-camino/reconocimientos-camino.js
+
+      - name: Validar una única escucha directa de Misiones
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('mi-universo/mi-camino')
+          archivos = [
+              root / 'index.html',
+              root / 'mision-libre.js',
+              root / 'crecimiento-camino.js',
+              root / 'reconocimientos-camino.js',
+              root / 'tareas-camino.js',
+          ]
+          coincidencias = []
+          for archivo in archivos:
+              texto = archivo.read_text(encoding='utf-8')
+              cantidad = texto.count('Academia.tareas.observar(')
+              if cantidad:
+                  coincidencias.append((str(archivo), cantidad))
+
+          assert coincidencias == [
+              ('mi-universo/mi-camino/tareas-camino.js', 1)
+          ], f'Escuchas directas inesperadas: {coincidencias}'
+
+          index = (root / 'index.html').read_text(encoding='utf-8')
+          assert 'import { observarTareasCamino } from "./tareas-camino.js";' in index
+          assert 'return observarTareasCamino(' in index
+          PY
+
+      - name: Validar whitespace
+        run: git diff --check main...HEAD
