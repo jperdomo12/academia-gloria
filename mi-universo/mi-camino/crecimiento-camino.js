@@ -1,6 +1,6 @@
 /* Academia Gloria Valentina · Mi Camino · Crecimiento visual real */
 
-import { Academia } from "../../compartido/api/academia.js";
+import { observarTareasCamino } from "./tareas-camino.js";
 
 const ETAPAS = Object.freeze([
   {
@@ -321,7 +321,7 @@ function iniciar() {
 
   if (detenerObservacion) detenerObservacion();
 
-  detenerObservacion = Academia.tareas.observar(
+  detenerObservacion = observarTareasCamino(
     tareas => renderCrecimiento(Array.isArray(tareas) ? tareas : []),
     error => {
       console.warn("No se pudo actualizar el crecimiento de Mi Camino.", error);

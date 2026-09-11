@@ -2504,6 +2504,7 @@
     import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
     import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
     import { Academia } from "../../compartido/api/academia.js";
+    import { observarTareasCamino } from "./tareas-camino.js";
 
     const DESTINOS_TAREA = Object.freeze({
       "rincon-lectura":"../rincon-lectura/",
@@ -3613,7 +3614,7 @@
     }
 
     function iniciarTareas(){
-      return Academia.tareas.observar(
+      return observarTareasCamino(
         tareas=>{
           tareasActuales = Array.isArray(tareas) ? tareas : [];
           renderTodo();
