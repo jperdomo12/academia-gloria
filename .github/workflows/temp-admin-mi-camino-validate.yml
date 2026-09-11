@@ -1,0 +1,125 @@
+name: temp-admin-mi-camino-validate
+
+on:
+  push:
+    branches:
+      - feat/administracion-mi-camino
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validar sintaxis JavaScript
+        run: |
+          node --check compartido/modelos/mi-camino-crecimiento.js
+          node --check compartido/api/mi-camino-config.js
+          node --check mi-universo/mi-camino/crecimiento-camino.js
+          node --check mi-universo/mi-camino/tareas-camino.js
+          node --check administracion/mi-camino/mi-camino-admin.js
+          node --check compartido/modelos/navegacion.js
+
+      - name: Validar contrato compartido de crecimiento
+        run: |
+          node --input-type=module <<'NODE'
+          import {
+            CONFIGURACION_CRECIMIENTO_PREDETERMINADA,
+            evaluarMisionCrecimiento,
+            resumirCrecimiento,
+            validarConfiguracionCrecimiento
+          } from './compartido/modelos/mi-camino-crecimiento.js';
+
+          const config = CONFIGURACION_CRECIMIENTO_PREDETERMINADA;
+          if (!validarConfiguracionCrecimiento(config).valida) {
+            throw new Error('La configuración predeterminada no es válida.');
+          }
+
+          const ligera = evaluarMisionCrecimiento({ estado:'completada', visibleParaAlumno:true }, config);
+          const estandar = evaluarMisionCrecimiento({ estado:'completada', visibleParaAlumno:true, tipo:'repaso_academico' }, config);
+          const amplia = evaluarMisionCrecimiento({ estado:'completada', visibleParaAlumno:true, tiempoEstimadoMinutos:30 }, config);
+          const prueba = evaluarMisionCrecimiento({ estado:'completada', visibleParaAlumno:true, esDatoPrueba:true }, config);
+          if (ligera.peso !== 1 || estandar.peso !== 2 || amplia.peso !== 3 || prueba.unidades !== 0) {
+            throw new Error('La ponderación compartida no conserva el contrato esperado.');
+          }
+
+          const resumen = resumirCrecimiento([
+            { estado:'completada', visibleParaAlumno:true },
+            { estado:'completada', visibleParaAlumno:true, tipo:'repaso_academico' },
+            { estado:'completada', visibleParaAlumno:true, tiempoEstimadoMinutos:30 },
+            { estado:'completada', visibleParaAlumno:true, esDatoPrueba:true }
+          ], config);
+          if (resumen.misionesReales !== 3 || resumen.unidades !== 6 || resumen.pruebasExcluidas !== 1) {
+            throw new Error('El resumen de auditoría no coincide con la ponderación.');
+          }
+          NODE
+
+      - name: Validar escucha única de Misiones en Mi Camino
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path('mi-universo/mi-camino')
+          archivos = [
+              root / 'index.html',
+              root / 'mision-libre.js',
+              root / 'crecimiento-camino.js',
+              root / 'reconocimientos-camino.js',
+              root / 'tareas-camino.js',
+          ]
+          coincidencias = []
+          for archivo in archivos:
+              cantidad = archivo.read_text(encoding='utf-8').count('Academia.tareas.observar(')
+              if cantidad:
+                  coincidencias.append((str(archivo), cantidad))
+          assert coincidencias == [('mi-universo/mi-camino/tareas-camino.js', 1)], coincidencias
+          PY
+
+      - name: Validar integración administrativa
+        run: |
+          test -f administracion/mi-camino/index.html
+          test -f administracion/mi-camino/mi-camino-admin.css
+          test -f administracion/mi-camino/mi-camino-admin.js
+          grep -q 'id: "administracion-mi-camino"' compartido/modelos/navegacion.js
+          grep -q 'nivelMinimo: "administracion"' compartido/modelos/navegacion.js
+          grep -q 'match /configuracion/{configId}' 'compartido/firebase/FireStore Rules.txt'
+          grep -q 'allow read: if configId == "miCamino" && estaAutenticado();' 'compartido/firebase/FireStore Rules.txt'
+          grep -q 'allow delete: if false;' 'compartido/firebase/FireStore Rules.txt'
+
+      - name: Validar HTML esencial y rutas locales
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = set()
+                  self.scripts = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if 'id' in attrs:
+                      self.ids.add(attrs['id'])
+                  if tag == 'script' and 'src' in attrs:
+                      self.scripts.append(attrs['src'])
+
+          html = Path('administracion/mi-camino/index.html').read_text(encoding='utf-8')
+          parser = Parser(); parser.feed(html)
+          requeridos = {
+              'estadoAcceso','zonaAdministracion','selectPersona','tablaMisiones',
+              'formConfiguracion','camposEtapas','btnGuardar','btnRestaurar'
+          }
+          assert requeridos <= parser.ids, requeridos - parser.ids
+          assert './mi-camino-admin.js' in parser.scripts
+          assert '../../compartido/componentes/navegacion-global.js' in parser.scripts
+          PY
+
+      - name: Validar diff
+        run: |
+          git diff --check origin/main...HEAD
+          git diff --name-only origin/main...HEAD
