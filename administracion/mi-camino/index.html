@@ -35,7 +35,7 @@
         <div>
           <span class="panel__eyebrow">Persona a auditar</span>
           <h2>¿De quién quieres revisar el crecimiento?</h2>
-          <p>La auditoría lee las Misiones reales del Usuario asociado. No cambia estados ni evidencias.</p>
+          <p>La Persona seleccionada se usa para la auditoría y para la vista previa. Nada de esta pantalla cambia sus Misiones, evidencias o Reconocimientos.</p>
         </div>
         <div class="selector-persona__acciones">
           <label>
@@ -44,6 +44,82 @@
           </label>
           <button id="btnRecargar" class="boton boton--secundario" type="button">↻ Recargar</button>
         </div>
+      </section>
+
+      <section class="panel configuracion">
+        <div class="panel__cabecera">
+          <div>
+            <span class="panel__eyebrow">Configuración global</span>
+            <h2>Reglas de crecimiento</h2>
+            <p>Los cambios se previsualizan sobre la Persona seleccionada antes de guardarlos.</p>
+          </div>
+          <div id="estadoConfiguracion" class="estado-config"></div>
+        </div>
+
+        <div class="explicacion-crecimiento" role="note">
+          <strong>Cómo leer estas reglas</strong>
+          <p><strong>Unidades</strong> es una medida técnica interna para escoger la etapa visual de Mi Camino. No son XP, puntos, notas ni una valoración de la Persona.</p>
+          <p>Una Misión real, visible y completada aporta <strong>peso 1, 2 o 3</strong> según su alcance observable. Las Misiones de prueba aportan siempre 0. Los <strong>umbrales</strong> indican desde cuántas unidades comienza cada etapa.</p>
+        </div>
+
+        <div id="avisoVistaPrevia" class="aviso-preview" hidden>
+          👁️ <strong>Vista previa activa.</strong> Estos valores todavía no están guardados.
+        </div>
+
+        <form id="formConfiguracion">
+          <fieldset>
+            <legend>🌱 Umbral de las 7 etapas</legend>
+            <p class="ayuda">Semilla empieza siempre en 0. Cada valor siguiente debe ser mayor que el anterior; al alcanzar un umbral cambia la ilustración visible.</p>
+            <div id="camposEtapas" class="grid-etapas"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>⚖️ Reglas de peso 1 · 2 · 3</legend>
+            <p class="ayuda">El peso describe solo el alcance de una Misión elegible. Peso 3 tiene prioridad sobre Peso 2; si ninguna regla especial aplica, aporta 1 unidad.</p>
+            <div class="grid-reglas">
+              <label>
+                <span>Cantidad mínima → Peso 2</span>
+                <input id="cantidadEstandarMin" type="number" min="1" step="1" required>
+              </label>
+              <label>
+                <span>Cantidad mínima → Peso 3</span>
+                <input id="cantidadAmpliaMin" type="number" min="2" step="1" required>
+              </label>
+              <label>
+                <span>Minutos mínimos → Peso 2</span>
+                <input id="minutosEstandarMin" type="number" min="1" step="1" required>
+              </label>
+              <label>
+                <span>Minutos mínimos → Peso 3</span>
+                <input id="minutosAmpliaMin" type="number" min="2" step="1" required>
+              </label>
+            </div>
+            <div class="checks-reglas">
+              <label class="check-regla">
+                <input id="repasoAcademicoComoEstandar" type="checkbox">
+                <span><strong>Repaso académico → Peso 2</strong><small>Aplica aunque no alcance cantidad o minutos.</small></span>
+              </label>
+              <label class="check-regla">
+                <input id="tareaCombinadaComoAmplia" type="checkbox">
+                <span><strong>Tarea combinada → Peso 3</strong><small>Aplica antes que cualquier regla de Peso 2.</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div id="errorConfiguracion" class="mensaje mensaje--error" hidden></div>
+
+          <div class="acciones-config">
+            <button id="btnRestaurar" class="boton boton--secundario" type="button">↩ Restaurar guardado</button>
+            <button id="btnGuardar" class="boton boton--principal" type="submit">Guardar configuración global</button>
+          </div>
+        </form>
+
+        <aside class="auditoria-config">
+          <strong>Registro de configuración</strong>
+          <span id="configCreada">Creada: —</span>
+          <span id="configActualizada">Última modificación: —</span>
+          <small>Cambiar estas reglas puede recalcular la etapa visible. No borra Misiones, Reconocimientos ni evidencia.</small>
+        </aside>
       </section>
 
       <section class="resumen" aria-label="Resumen de crecimiento">
@@ -65,7 +141,7 @@
         <article class="resumen-card">
           <span>Unidades</span>
           <strong id="resUnidades">0</strong>
-          <small>peso acumulado</small>
+          <small>medida técnica acumulada</small>
         </article>
         <article class="resumen-card">
           <span>🧪 Pruebas excluidas</span>
@@ -128,76 +204,7 @@
           </table>
         </div>
         <div id="sinMisiones" class="vacio" hidden>No hay Misiones que coincidan con este filtro.</div>
-      </section>
-
-      <section class="panel configuracion">
-        <div class="panel__cabecera">
-          <div>
-            <span class="panel__eyebrow">Configuración global</span>
-            <h2>Reglas de crecimiento</h2>
-            <p>Los cambios se previsualizan sobre la Persona seleccionada antes de guardarlos.</p>
-          </div>
-          <div id="estadoConfiguracion" class="estado-config"></div>
-        </div>
-
-        <div id="avisoVistaPrevia" class="aviso-preview" hidden>
-          👁️ <strong>Vista previa activa.</strong> Estos valores todavía no están guardados.
-        </div>
-
-        <form id="formConfiguracion">
-          <fieldset>
-            <legend>🌱 Umbral de las 7 etapas</legend>
-            <p class="ayuda">Una etapa comienza cuando las unidades acumuladas alcanzan su umbral. Semilla permanece en 0.</p>
-            <div id="camposEtapas" class="grid-etapas"></div>
-          </fieldset>
-
-          <fieldset>
-            <legend>⚖️ Reglas de peso 1 · 2 · 3</legend>
-            <p class="ayuda">Peso 3 tiene prioridad sobre Peso 2. Si ninguna regla aplica, la Misión elegible pesa 1.</p>
-            <div class="grid-reglas">
-              <label>
-                <span>Cantidad mínima → Peso 2</span>
-                <input id="cantidadEstandarMin" type="number" min="1" step="1" required>
-              </label>
-              <label>
-                <span>Cantidad mínima → Peso 3</span>
-                <input id="cantidadAmpliaMin" type="number" min="2" step="1" required>
-              </label>
-              <label>
-                <span>Minutos mínimos → Peso 2</span>
-                <input id="minutosEstandarMin" type="number" min="1" step="1" required>
-              </label>
-              <label>
-                <span>Minutos mínimos → Peso 3</span>
-                <input id="minutosAmpliaMin" type="number" min="2" step="1" required>
-              </label>
-            </div>
-            <div class="checks-reglas">
-              <label class="check-regla">
-                <input id="repasoAcademicoComoEstandar" type="checkbox">
-                <span><strong>Repaso académico → Peso 2</strong><small>Aplica aunque no alcance cantidad o minutos.</small></span>
-              </label>
-              <label class="check-regla">
-                <input id="tareaCombinadaComoAmplia" type="checkbox">
-                <span><strong>Tarea combinada → Peso 3</strong><small>Aplica antes que cualquier regla de Peso 2.</small></span>
-              </label>
-            </div>
-          </fieldset>
-
-          <div id="errorConfiguracion" class="mensaje mensaje--error" hidden></div>
-
-          <div class="acciones-config">
-            <button id="btnRestaurar" class="boton boton--secundario" type="button">↩ Restaurar guardado</button>
-            <button id="btnGuardar" class="boton boton--principal" type="submit">Guardar configuración global</button>
-          </div>
-        </form>
-
-        <aside class="auditoria-config">
-          <strong>Registro de configuración</strong>
-          <span id="configCreada">Creada: —</span>
-          <span id="configActualizada">Última modificación: —</span>
-          <small>Cambiar estas reglas puede recalcular la etapa visible. No borra Misiones, Reconocimientos ni evidencia.</small>
-        </aside>
+        <nav id="paginacionMisiones" class="paginacion-gestion-misiones" aria-label="Paginación de auditoría de Misiones"></nav>
       </section>
     </section>
   </main>
