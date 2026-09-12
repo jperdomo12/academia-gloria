@@ -300,6 +300,20 @@ select:focus,input:focus{
   text-align:right;
 }
 
+.explicacion-crecimiento{
+  margin:0 0 16px;
+  padding:14px 16px;
+  border:1.5px solid #dbeafe;
+  border-radius:15px;
+  background:#f8fbff;
+  color:#475569;
+  font-size:.86rem;
+  line-height:1.45;
+}
+
+.explicacion-crecimiento > strong{display:block;margin-bottom:5px;color:#1e3a8a}
+.explicacion-crecimiento p{margin:4px 0}
+
 .aviso-preview{
   margin:0 0 15px;
   padding:11px 13px;
@@ -330,15 +344,21 @@ legend{
 
 .grid-etapas{
   display:grid;
-  grid-template-columns:repeat(7,minmax(110px,1fr));
+  grid-template-columns:repeat(7,minmax(0,1fr));
   gap:10px;
 }
 
 .grid-etapas label{
+  min-width:0;
   padding:11px;
   border:1px solid #e2e8f0;
   border-radius:13px;
   background:#f8fafc;
+}
+
+.grid-etapas input[type="number"]{
+  width:100%;
+  min-width:0;
 }
 
 .grid-etapas label.actual-preview{
@@ -403,6 +423,45 @@ legend{
   font-weight:700;
 }
 
+.paginacion-gestion-misiones{
+  min-height:44px;
+  margin-top:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.paginacion-gestion-misiones button{
+  min-height:39px;
+  padding:8px 13px;
+  border:2px solid #dbeafe;
+  border-radius:13px;
+  background:#fff;
+  color:#243047;
+  cursor:pointer;
+  font-weight:900;
+}
+
+.paginacion-gestion-misiones button:hover:not(:disabled){
+  background:#eff6ff;
+  transform:translateY(-1px);
+}
+
+.paginacion-gestion-misiones button:disabled{
+  opacity:.38;
+  cursor:not-allowed;
+}
+
+.paginacion-gestion-misiones strong{
+  min-width:210px;
+  text-align:center;
+  color:#64748b;
+  font-size:.86rem;
+  font-weight:900;
+}
+
 @media(max-width:1100px){
   .resumen{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid-etapas{grid-template-columns:repeat(4,minmax(120px,1fr))}
@@ -423,6 +482,8 @@ legend{
   #buscarMision,.filtros select{width:100%}
   .grid-etapas,.grid-reglas,.checks-reglas{grid-template-columns:1fr 1fr}
   .estado-config{text-align:left}
+  .paginacion-gestion-misiones{gap:7px}
+  .paginacion-gestion-misiones strong{order:-1;width:100%}
 }
 
 @media(max-width:520px){
