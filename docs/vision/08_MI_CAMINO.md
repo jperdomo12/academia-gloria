@@ -21,6 +21,7 @@
 | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Gobierna:** Reconocimientos, Guacamayas y `Así voy creciendo`. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** Persona Activa, nivel efectivo y acceso. |
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Gobierna:** consulta histórica del trabajo mediante visor de solo lectura. |
+| `compartido/modelos/mi-camino-crecimiento.js` | **Implementa:** modelo canónico compartido de crecimiento visual. |
 | `mi-universo/mi-camino/` | **Implementa:** experiencia actual de Mi Camino. |
 | `administracion/mi-camino/` | **Implementa otra responsabilidad:** auditoría y configuración administrativa del crecimiento. |
 | `mi-universo/mis-tareas/` | **Implementa otra responsabilidad:** Gestión de Misiones para usuarios con capacidad de gestión. |
