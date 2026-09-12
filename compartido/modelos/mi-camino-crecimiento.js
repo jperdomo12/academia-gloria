@@ -66,18 +66,78 @@ export const ETAPAS_CRECIMIENTO = Object.freeze([
   })
 ]);
 
+export const NIVELES_CRECIMIENTO = Object.freeze({
+  bajo: Object.freeze({ id: "bajo", nombre: "Bajo", unidades: 1 }),
+  medio: Object.freeze({ id: "medio", nombre: "Medio", unidades: 2 }),
+  alto: Object.freeze({ id: "alto", nombre: "Alto", unidades: 3 })
+});
+
+export const NIVEL_CRECIMIENTO_POR_DEFECTO = "medio";
+
+const MODULOS_CONTEXTO = Object.freeze({
+  detectives: Object.freeze({
+    caminoId: "mi-universo",
+    caminoNombre: "Mi Universo",
+    areaId: "mi-universo:aventuras-matematicas",
+    areaNombre: "Aventuras Matemáticas",
+    temaId: "mi-universo:detectives",
+    temaNombre: "Detectives de Problemas"
+  }),
+  "rincon-lectura": Object.freeze({
+    caminoId: "mi-universo",
+    caminoNombre: "Mi Universo",
+    areaId: "mi-universo:rincon-lectura",
+    areaNombre: "Mi Rincón de Lectura",
+    temaId: "",
+    temaNombre: ""
+  }),
+  "creciendo-por-dentro": Object.freeze({
+    caminoId: "mi-universo",
+    caminoNombre: "Mi Universo",
+    areaId: "mi-universo:creciendo-por-dentro",
+    areaNombre: "Creciendo por Dentro",
+    temaId: "",
+    temaNombre: ""
+  }),
+  biblioteca: Object.freeze({
+    caminoId: "mi-universo",
+    caminoNombre: "Mi Universo",
+    areaId: "mi-universo:biblioteca",
+    areaNombre: "Biblioteca Encantada",
+    temaId: "",
+    temaNombre: ""
+  }),
+  libre: Object.freeze({
+    caminoId: "otras-misiones",
+    caminoNombre: "Otras Misiones",
+    areaId: "otras-misiones:actividad-externa",
+    areaNombre: "Actividad fuera de la Academia",
+    temaId: "",
+    temaNombre: ""
+  })
+});
+
+const CONTEXTOS_BASE = Object.freeze([
+  MODULOS_CONTEXTO.detectives,
+  MODULOS_CONTEXTO["rincon-lectura"],
+  Object.freeze({
+    ...MODULOS_CONTEXTO["rincon-lectura"],
+    temaId: "mi-universo:rincon-lectura:pronunciacion",
+    temaNombre: "Pronunciación · Palabras para Crecer"
+  }),
+  MODULOS_CONTEXTO["creciendo-por-dentro"],
+  MODULOS_CONTEXTO.biblioteca,
+  MODULOS_CONTEXTO.libre
+]);
+
 export const CONFIGURACION_CRECIMIENTO_PREDETERMINADA = Object.freeze({
-  schemaVersion: 1,
+  schemaVersion: 2,
   etapas: Object.freeze(
     Object.fromEntries(ETAPAS_CRECIMIENTO.map(etapa => [etapa.id, etapa.desde]))
   ),
-  reglasPeso: Object.freeze({
-    cantidadEstandarMin: 2,
-    cantidadAmpliaMin: 5,
-    minutosEstandarMin: 15,
-    minutosAmpliaMin: 30,
-    repasoAcademicoComoEstandar: true,
-    tareaCombinadaComoAmplia: true
+  nivelesContexto: Object.freeze({
+    areas: Object.freeze({}),
+    temas: Object.freeze({})
   })
 });
 
@@ -88,13 +148,57 @@ function numeroEntero(valor, predeterminado = 0) {
     : predeterminado;
 }
 
+function texto(valor = "") {
+  return String(valor ?? "").replace(/\s+/g, " ").trim();
+}
+
+function clave(valor = "") {
+  return texto(valor)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function normalizarNivelCrecimiento(valor, alternativo = "") {
+  const candidato = texto(valor).toLocaleLowerCase("es-ES");
+  if (Object.prototype.hasOwnProperty.call(NIVELES_CRECIMIENTO, candidato)) {
+    return candidato;
+  }
+
+  const numero = Number(valor);
+  if (numero === 1) return "bajo";
+  if (numero === 2) return "medio";
+  if (numero === 3) return "alto";
+
+  return alternativo;
+}
+
+export function describirNivelCrecimiento(valor) {
+  const nivel = normalizarNivelCrecimiento(valor, NIVEL_CRECIMIENTO_POR_DEFECTO);
+  return NIVELES_CRECIMIENTO[nivel];
+}
+
+function normalizarMapaNiveles(entrada = {}) {
+  if (!entrada || typeof entrada !== "object" || Array.isArray(entrada)) return {};
+
+  return Object.fromEntries(
+    Object.entries(entrada)
+      .map(([id, valor]) => [texto(id), normalizarNivelCrecimiento(valor)])
+      .filter(([id, nivel]) => id && nivel)
+      .sort(([a], [b]) => a.localeCompare(b, "es"))
+  );
+}
+
 export function normalizarConfiguracionCrecimiento(configuracion = {}) {
   const etapasEntrada = configuracion?.etapas && typeof configuracion.etapas === "object"
     ? configuracion.etapas
     : {};
-  const reglasEntrada = configuracion?.reglasPeso && typeof configuracion.reglasPeso === "object"
-    ? configuracion.reglasPeso
-    : {};
+  const nivelesEntrada = configuracion?.nivelesContexto &&
+    typeof configuracion.nivelesContexto === "object"
+      ? configuracion.nivelesContexto
+      : {};
   const base = CONFIGURACION_CRECIMIENTO_PREDETERMINADA;
 
   const etapas = Object.fromEntries(
@@ -106,29 +210,11 @@ export function normalizarConfiguracionCrecimiento(configuracion = {}) {
   etapas.semilla = 0;
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     etapas,
-    reglasPeso: {
-      cantidadEstandarMin: numeroEntero(
-        reglasEntrada.cantidadEstandarMin,
-        base.reglasPeso.cantidadEstandarMin
-      ),
-      cantidadAmpliaMin: numeroEntero(
-        reglasEntrada.cantidadAmpliaMin,
-        base.reglasPeso.cantidadAmpliaMin
-      ),
-      minutosEstandarMin: numeroEntero(
-        reglasEntrada.minutosEstandarMin,
-        base.reglasPeso.minutosEstandarMin
-      ),
-      minutosAmpliaMin: numeroEntero(
-        reglasEntrada.minutosAmpliaMin,
-        base.reglasPeso.minutosAmpliaMin
-      ),
-      repasoAcademicoComoEstandar:
-        reglasEntrada.repasoAcademicoComoEstandar !== false,
-      tareaCombinadaComoAmplia:
-        reglasEntrada.tareaCombinadaComoAmplia !== false
+    nivelesContexto: {
+      areas: normalizarMapaNiveles(nivelesEntrada.areas),
+      temas: normalizarMapaNiveles(nivelesEntrada.temas)
     }
   };
 }
@@ -149,19 +235,16 @@ export function validarConfiguracionCrecimiento(configuracion = {}) {
     }
   }
 
-  const reglas = config.reglasPeso;
-  if (reglas.cantidadEstandarMin < 1) {
-    errores.push("La cantidad mínima para peso 2 debe ser al menos 1.");
-  }
-  if (reglas.cantidadAmpliaMin <= reglas.cantidadEstandarMin) {
-    errores.push("La cantidad mínima para peso 3 debe ser mayor que la de peso 2.");
-  }
-  if (reglas.minutosEstandarMin < 1) {
-    errores.push("Los minutos mínimos para peso 2 deben ser al menos 1.");
-  }
-  if (reglas.minutosAmpliaMin <= reglas.minutosEstandarMin) {
-    errores.push("Los minutos mínimos para peso 3 deben ser mayores que los de peso 2.");
-  }
+  [
+    ["Área", config.nivelesContexto.areas],
+    ["Tema", config.nivelesContexto.temas]
+  ].forEach(([etiqueta, mapa]) => {
+    Object.entries(mapa).forEach(([id, nivel]) => {
+      if (!normalizarNivelCrecimiento(nivel)) {
+        errores.push(`${etiqueta} '${id}' contiene un nivel de crecimiento no válido.`);
+      }
+    });
+  });
 
   return { valida: errores.length === 0, errores, configuracion: config };
 }
@@ -172,6 +255,150 @@ export function obtenerEtapasConfiguradas(configuracion = {}) {
     ...etapa,
     desde: config.etapas[etapa.id]
   }));
+}
+
+function contextoAcademico(tarea = {}) {
+  const curso = texto(tarea.cursoReferencia);
+  const materia = texto(tarea.materia) || "Repaso académico";
+  const tema = texto(tarea.tema);
+  const cursoClave = clave(curso || "general");
+  const materiaClave = clave(materia || "repaso-academico");
+  const areaId = `curso:${cursoClave}|materia:${materiaClave}`;
+
+  return {
+    caminoId: curso ? `mis-cursos:${cursoClave}` : "mis-cursos",
+    caminoNombre: curso ? `Mis Cursos ${curso}.º` : "Mis Cursos",
+    areaId,
+    areaNombre: materia,
+    temaId: tema ? `${areaId}|tema:${clave(tema)}` : "",
+    temaNombre: tema
+  };
+}
+
+function contextoModulo(tarea = {}) {
+  const modulo = texto(tarea.modulo) || "libre";
+  const base = MODULOS_CONTEXTO[modulo] || {
+    caminoId: "mi-universo",
+    caminoNombre: "Mi Universo",
+    areaId: `mi-universo:${clave(modulo || "actividad")}`,
+    areaNombre: texto(modulo) || "Actividad",
+    temaId: "",
+    temaNombre: ""
+  };
+
+  if (
+    modulo === "rincon-lectura" &&
+    tarea.criterioCumplimiento?.evidenciaTipo === "pronunciacion_completada"
+  ) {
+    return {
+      ...base,
+      temaId: "mi-universo:rincon-lectura:pronunciacion",
+      temaNombre: "Pronunciación · Palabras para Crecer"
+    };
+  }
+
+  return { ...base };
+}
+
+export function obtenerContextoNivelCrecimiento(tarea = {}) {
+  return tarea.tipo === "repaso_academico"
+    ? contextoAcademico(tarea)
+    : contextoModulo(tarea);
+}
+
+export function obtenerContextosBaseCrecimiento() {
+  return CONTEXTOS_BASE.map(item => ({ ...item }));
+}
+
+function nivelPropioActividad(tarea = {}) {
+  const nivelDirecto = normalizarNivelCrecimiento(
+    tarea.nivelActividad ?? tarea.nivel
+  );
+  if (nivelDirecto) {
+    return {
+      nivel: nivelDirecto,
+      origen: "actividad",
+      detalle: "nivel propio de la actividad"
+    };
+  }
+
+  const modulo = texto(tarea.modulo);
+  const nivelFiltro = tarea.criterioCumplimiento?.filtros?.nivel;
+  const nivelNormalizado = normalizarNivelCrecimiento(nivelFiltro);
+
+  if (nivelNormalizado && modulo === "detectives") {
+    return {
+      nivel: nivelNormalizado,
+      origen: "actividad",
+      detalle: `Detectives · nivel ${Number(nivelFiltro)}`
+    };
+  }
+
+  if (nivelNormalizado && modulo === "rincon-lectura") {
+    return {
+      nivel: nivelNormalizado,
+      origen: "actividad",
+      detalle: `Lectura · nivel ${Number(nivelFiltro)}`
+    };
+  }
+
+  return null;
+}
+
+export function resolverNivelMisionCrecimiento(tarea = {}, configuracion = {}) {
+  const config = normalizarConfiguracionCrecimiento(configuracion);
+  const contexto = obtenerContextoNivelCrecimiento(tarea);
+
+  const nivelMision = normalizarNivelCrecimiento(tarea.nivelCrecimiento);
+  if (nivelMision) {
+    return {
+      ...describirNivelCrecimiento(nivelMision),
+      origen: "mision",
+      detalle: "ajuste específico de la Misión",
+      contexto
+    };
+  }
+
+  const propio = nivelPropioActividad(tarea);
+  if (propio) {
+    return {
+      ...describirNivelCrecimiento(propio.nivel),
+      origen: propio.origen,
+      detalle: propio.detalle,
+      contexto
+    };
+  }
+
+  const nivelTema = contexto.temaId
+    ? normalizarNivelCrecimiento(config.nivelesContexto.temas[contexto.temaId])
+    : "";
+  if (nivelTema) {
+    return {
+      ...describirNivelCrecimiento(nivelTema),
+      origen: "tema",
+      detalle: `nivel configurado para ${contexto.temaNombre || "el Tema"}`,
+      contexto
+    };
+  }
+
+  const nivelArea = normalizarNivelCrecimiento(
+    config.nivelesContexto.areas[contexto.areaId]
+  );
+  if (nivelArea) {
+    return {
+      ...describirNivelCrecimiento(nivelArea),
+      origen: "area",
+      detalle: `nivel configurado para ${contexto.areaNombre || "el Área"}`,
+      contexto
+    };
+  }
+
+  return {
+    ...describirNivelCrecimiento(NIVEL_CRECIMIENTO_POR_DEFECTO),
+    origen: "predeterminado",
+    detalle: "nivel predeterminado de la Academia",
+    contexto
+  };
 }
 
 function cantidadEstructurada(tarea = {}) {
@@ -190,24 +417,26 @@ function cantidadEstructurada(tarea = {}) {
 }
 
 export function evaluarMisionCrecimiento(tarea = {}, configuracion = {}) {
-  const config = normalizarConfiguracionCrecimiento(configuracion);
   const cantidad = cantidadEstructurada(tarea);
   const minutos = Math.max(0, Number(tarea.tiempoEstimadoMinutos || 0) || 0);
-  const tipo = String(tarea.tipo || "").trim();
-  const estado = String(tarea.estado || "").trim();
+  const estado = texto(tarea.estado);
   const esPrueba = tarea.esDatoPrueba === true;
   const visible = tarea.visibleParaAlumno !== false;
+  const nivel = resolverNivelMisionCrecimiento(tarea, configuracion);
 
   if (esPrueba) {
     return {
       tarea,
       elegible: false,
       categoria: "prueba",
+      nivel: null,
+      origenNivel: "excluida",
       peso: 0,
       unidades: 0,
       cantidad,
       minutos,
-      razon: "Dato de prueba · no cuenta para crecimiento"
+      contexto: nivel.contexto,
+      razon: "Dato de prueba · no aporta crecimiento"
     };
   }
 
@@ -216,11 +445,14 @@ export function evaluarMisionCrecimiento(tarea = {}, configuracion = {}) {
       tarea,
       elegible: false,
       categoria: "oculta",
+      nivel: null,
+      origenNivel: "excluida",
       peso: 0,
       unidades: 0,
       cantidad,
       minutos,
-      razon: "No visible para el alumno"
+      contexto: nivel.contexto,
+      razon: "Misión oculta · no aporta crecimiento"
     };
   }
 
@@ -229,44 +461,33 @@ export function evaluarMisionCrecimiento(tarea = {}, configuracion = {}) {
       tarea,
       elegible: false,
       categoria: "no-completada",
+      nivel: nivel.id,
+      nivelNombre: nivel.nombre,
+      origenNivel: nivel.origen,
+      detalleNivel: nivel.detalle,
       peso: 0,
       unidades: 0,
       cantidad,
       minutos,
-      razon: `Estado ${estado || "sin estado"} · todavía no cuenta`
+      contexto: nivel.contexto,
+      razon: `Estado ${estado || "sin estado"} · todavía no aporta crecimiento`
     };
-  }
-
-  const reglas = config.reglasPeso;
-
-  if (reglas.tareaCombinadaComoAmplia && tipo === "tarea_combinada") {
-    return { tarea, elegible: true, categoria: "elegible", peso: 3, unidades: 3, cantidad, minutos, razon: "Peso 3 · tarea combinada" };
-  }
-  if (cantidad >= reglas.cantidadAmpliaMin) {
-    return { tarea, elegible: true, categoria: "elegible", peso: 3, unidades: 3, cantidad, minutos, razon: `Peso 3 · cantidad ${cantidad} ≥ ${reglas.cantidadAmpliaMin}` };
-  }
-  if (minutos >= reglas.minutosAmpliaMin) {
-    return { tarea, elegible: true, categoria: "elegible", peso: 3, unidades: 3, cantidad, minutos, razon: `Peso 3 · ${minutos} min ≥ ${reglas.minutosAmpliaMin}` };
-  }
-  if (reglas.repasoAcademicoComoEstandar && tipo === "repaso_academico") {
-    return { tarea, elegible: true, categoria: "elegible", peso: 2, unidades: 2, cantidad, minutos, razon: "Peso 2 · repaso académico" };
-  }
-  if (cantidad >= reglas.cantidadEstandarMin) {
-    return { tarea, elegible: true, categoria: "elegible", peso: 2, unidades: 2, cantidad, minutos, razon: `Peso 2 · cantidad ${cantidad} ≥ ${reglas.cantidadEstandarMin}` };
-  }
-  if (minutos >= reglas.minutosEstandarMin) {
-    return { tarea, elegible: true, categoria: "elegible", peso: 2, unidades: 2, cantidad, minutos, razon: `Peso 2 · ${minutos} min ≥ ${reglas.minutosEstandarMin}` };
   }
 
   return {
     tarea,
     elegible: true,
     categoria: "elegible",
-    peso: 1,
-    unidades: 1,
+    nivel: nivel.id,
+    nivelNombre: nivel.nombre,
+    origenNivel: nivel.origen,
+    detalleNivel: nivel.detalle,
+    peso: nivel.unidades,
+    unidades: nivel.unidades,
     cantidad,
     minutos,
-    razon: "Peso 1 · Misión ligera"
+    contexto: nivel.contexto,
+    razon: `${nivel.nombre} · ${nivel.detalle}`
   };
 }
 
@@ -292,9 +513,11 @@ export function resumirCrecimiento(tareas = [], configuracion = {}) {
       ))
     : 100;
 
-  const distribucionPesos = { 1: 0, 2: 0, 3: 0 };
+  const distribucionNiveles = { bajo: 0, medio: 0, alto: 0 };
   elegibles.forEach(item => {
-    distribucionPesos[item.peso] += 1;
+    if (item.nivel && item.nivel in distribucionNiveles) {
+      distribucionNiveles[item.nivel] += 1;
+    }
   });
 
   return {
@@ -313,6 +536,11 @@ export function resumirCrecimiento(tareas = [], configuracion = {}) {
     pruebasExcluidas: evaluaciones.filter(item => item.categoria === "prueba").length,
     ocultasExcluidas: evaluaciones.filter(item => item.categoria === "oculta").length,
     noCompletadas: evaluaciones.filter(item => item.categoria === "no-completada").length,
-    distribucionPesos
+    distribucionNiveles,
+    distribucionPesos: {
+      1: distribucionNiveles.bajo,
+      2: distribucionNiveles.medio,
+      3: distribucionNiveles.alto
+    }
   };
 }
