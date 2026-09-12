@@ -26,12 +26,6 @@ body{
 button,input,select{font:inherit}
 
 .pagina-admin{width:min(1460px,calc(100% - 32px));margin:0 auto;padding:20px 0 56px}
-.barra-superior{display:flex;justify-content:flex-end;align-items:center;margin-bottom:14px}
-.enlace-secundario{
-  display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;
-  border:1.5px solid #bfdbfe;border-radius:14px;background:#fff;color:#1e40af;text-decoration:none;font-weight:900;white-space:nowrap
-}
-.enlace-secundario:hover{background:#eff6ff;transform:translateY(-1px)}
 
 .cabecera-admin{margin-bottom:18px;padding:25px 30px;border:1.5px solid #bbf7d0;border-radius:28px;background:rgba(255,255,255,.96);box-shadow:0 16px 42px rgba(15,23,42,.07)}
 .eyebrow,.panel__eyebrow{display:inline-block;color:#166534;font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.055em}
@@ -96,4 +90,4 @@ fieldset{margin:0 0 18px;padding:18px;border:1.5px solid #e2e8f0;border-radius:1
 
 @media(max-width:1100px){.resumen{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-etapas{grid-template-columns:repeat(4,minmax(120px,1fr))}}
 @media(max-width:760px){.pagina-admin{width:min(100% - 18px,1460px);padding-top:12px}.cabecera-admin{padding:20px}.selector-persona{grid-template-columns:1fr}.selector-persona__acciones{align-items:stretch;flex-direction:column}#selectPersona{min-width:0;width:100%}.resumen{grid-template-columns:1fr 1fr}.panel{padding:16px}.panel__cabecera{align-items:stretch;flex-direction:column}.filtros{align-items:stretch;flex-direction:column}#buscarMision,.filtros select{width:100%}.grid-etapas{grid-template-columns:1fr 1fr}.niveles-fijos{grid-template-columns:1fr}.estado-config{text-align:left}.paginacion-gestion-misiones{gap:7px}.paginacion-gestion-misiones strong{order:-1;width:100%}}
-@media(max-width:520px){.enlace-secundario{font-size:.82rem}.resumen{grid-template-columns:1fr}.grid-etapas{grid-template-columns:1fr}.acciones-config{flex-direction:column-reverse}.acciones-config .boton{width:100%}}
+@media(max-width:520px){.resumen{grid-template-columns:1fr}.grid-etapas{grid-template-columns:1fr}.acciones-config{flex-direction:column-reverse}.acciones-config .boton{width:100%}}
