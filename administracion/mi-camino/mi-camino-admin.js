@@ -1,30 +1,42 @@
+import { TEMAS_MATEMATICAS } from "../../cursos/6to/mates/temas-matematicas.js";
 import { Academia } from "../../compartido/api/academia.js";
 import {
   guardarConfiguracionMiCamino,
   leerConfiguracionMiCamino
 } from "../../compartido/api/mi-camino-config.js";
-import { db } from "../../compartido/firebase/firebase-config.js";
+import { auth, db } from "../../compartido/firebase/firebase-config.js";
 import { protegerPagina } from "../../compartido/js/auth-guard.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import {
   ETAPAS_CRECIMIENTO,
   CONFIGURACION_CRECIMIENTO_PREDETERMINADA,
+  NIVELES_CRECIMIENTO,
   normalizarConfiguracionCrecimiento,
+  normalizarNivelCrecimiento,
+  obtenerContextoNivelCrecimiento,
+  obtenerContextosBaseCrecimiento,
   resumirCrecimiento,
   validarConfiguracionCrecimiento
 } from "../../compartido/modelos/mi-camino-crecimiento.js";
 import {
   collection,
-  getDocs
+  deleteField,
+  doc,
+  getDocs,
+  serverTimestamp,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const $ = selector => document.querySelector(selector);
+const TAMANO_PAGINA = 5;
 
 const estadoAcceso = $("#estadoAcceso");
 const zonaAdministracion = $("#zonaAdministracion");
 const selectPersona = $("#selectPersona");
 const tablaMisiones = $("#tablaMisiones");
+const tablaNivelesContexto = $("#tablaNivelesContexto");
 const sinMisiones = $("#sinMisiones");
+const paginacionMisiones = $("#paginacionMisiones");
 const formConfiguracion = $("#formConfiguracion");
 const camposEtapas = $("#camposEtapas");
 const errorConfiguracion = $("#errorConfiguracion");
@@ -32,12 +44,14 @@ const avisoVistaPrevia = $("#avisoVistaPrevia");
 
 let usuarios = [];
 let tareas = [];
+let paginaActual = 1;
 let configuracionGuardada = normalizarConfiguracionCrecimiento(
   CONFIGURACION_CRECIMIENTO_PREDETERMINADA
 );
 let configuracionVista = configuracionGuardada;
 let auditoriaConfiguracion = null;
 let configuracionPersistida = false;
+let schemaPersistido = 0;
 let resumenActual = resumirCrecimiento([], configuracionVista);
 
 function escaparHTML(valor = "") {
@@ -55,10 +69,19 @@ function nombrePersona(persona = {}) {
     "Persona sin nombre";
 }
 
+function personaSeleccionada() {
+  return usuarios.find(item => item.userId === selectPersona.value) || null;
+}
+
+function nombrePersonaSeleccionada() {
+  const seleccion = personaSeleccionada();
+  return seleccion ? nombrePersona(seleccion.persona || {}) : "la Persona seleccionada";
+}
+
 function nombreUsuarioPorUid(uid = "") {
   if (!uid) return "—";
   const usuario = usuarios.find(item => item.userId === uid);
-  return usuario ? nombrePersona(usuario.persona || {}) : uid;
+  return usuario ? nombrePersona(usuario.persona || {}) : "Usuario autorizado";
 }
 
 function fechaRegistro(valor) {
@@ -92,8 +115,8 @@ function claseCategoria(item) {
   return "badge badge--ok";
 }
 
-function clasePeso(peso) {
-  return `badge badge--peso${peso || 1}`;
+function claseNivel(nivel) {
+  return nivel ? `badge badge--${nivel}` : "badge badge--oculta";
 }
 
 function configuracionesIguales(a, b) {
@@ -118,20 +141,14 @@ function construirCamposEtapas() {
 }
 
 function cargarFormulario(configuracion) {
-  const config = normalizarConfiguracionCrecimiento(configuracion);
+  configuracionVista = normalizarConfiguracionCrecimiento(configuracion);
 
   ETAPAS_CRECIMIENTO.forEach(etapa => {
     const input = formConfiguracion.querySelector(`[data-etapa="${etapa.id}"]`);
-    if (input) input.value = String(config.etapas[etapa.id]);
+    if (input) input.value = String(configuracionVista.etapas[etapa.id]);
   });
 
-  const reglas = config.reglasPeso;
-  $("#cantidadEstandarMin").value = reglas.cantidadEstandarMin;
-  $("#cantidadAmpliaMin").value = reglas.cantidadAmpliaMin;
-  $("#minutosEstandarMin").value = reglas.minutosEstandarMin;
-  $("#minutosAmpliaMin").value = reglas.minutosAmpliaMin;
-  $("#repasoAcademicoComoEstandar").checked = reglas.repasoAcademicoComoEstandar;
-  $("#tareaCombinadaComoAmplia").checked = reglas.tareaCombinadaComoAmplia;
+  renderNivelesContexto();
 }
 
 function configuracionDesdeFormulario() {
@@ -143,23 +160,20 @@ function configuracionDesdeFormulario() {
   etapas.semilla = 0;
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     etapas,
-    reglasPeso: {
-      cantidadEstandarMin: Number($("#cantidadEstandarMin").value),
-      cantidadAmpliaMin: Number($("#cantidadAmpliaMin").value),
-      minutosEstandarMin: Number($("#minutosEstandarMin").value),
-      minutosAmpliaMin: Number($("#minutosAmpliaMin").value),
-      repasoAcademicoComoEstandar: $("#repasoAcademicoComoEstandar").checked,
-      tareaCombinadaComoAmplia: $("#tareaCombinadaComoAmplia").checked
+    nivelesContexto: {
+      areas: { ...configuracionVista.nivelesContexto.areas },
+      temas: { ...configuracionVista.nivelesContexto.temas }
     }
   };
 }
 
 function mostrarErrorConfiguracion(mensajes = []) {
   const lista = Array.isArray(mensajes) ? mensajes : [mensajes];
-  errorConfiguracion.hidden = lista.length === 0;
-  errorConfiguracion.textContent = lista.join(" ");
+  const utiles = lista.filter(Boolean);
+  errorConfiguracion.hidden = utiles.length === 0;
+  errorConfiguracion.textContent = utiles.join(" ");
 }
 
 function actualizarAuditoriaConfiguracion() {
@@ -174,15 +188,133 @@ function actualizarAuditoriaConfiguracion() {
   $("#configActualizada").textContent = configuracionPersistida
     ? `Última modificación: ${fechaRegistro(actualizada)} · ${nombreUsuarioPorUid(actualizadaPor)}`
     : "Última modificación: todavía no existe configuración persistida";
-  $("#estadoConfiguracion").textContent = configuracionPersistida
-    ? "Configuración global guardada en Firestore."
-    : "Se están usando los valores predeterminados del producto.";
+
+  if (!configuracionPersistida) {
+    $("#estadoConfiguracion").textContent = "Se están usando los valores predeterminados del producto.";
+  } else if (schemaPersistido === 1) {
+    $("#estadoConfiguracion").textContent =
+      "Configuración anterior compatible: los umbrales se conservan y el nuevo modelo de niveles solo se persistirá al guardar.";
+  } else {
+    $("#estadoConfiguracion").textContent = "Configuración de niveles guardada en Firestore.";
+  }
+}
+
+function claveContexto(contexto = {}) {
+  return `${contexto.areaId || ""}::${contexto.temaId || ""}`;
+}
+
+function contextosCatalogoAcademico() {
+  const baseMatematicas6 = {
+    tipo: "repaso_academico",
+    cursoReferencia: "6",
+    materia: "Matemáticas",
+    tema: ""
+  };
+
+  return [
+    obtenerContextoNivelCrecimiento(baseMatematicas6),
+    ...TEMAS_MATEMATICAS.map(tema =>
+      obtenerContextoNivelCrecimiento({
+        ...baseMatematicas6,
+        tema: tema.titulo
+      })
+    )
+  ];
+}
+
+function contextosDisponibles() {
+  const mapa = new Map();
+  const agregar = contexto => {
+    if (!contexto?.areaId) return;
+    const id = claveContexto(contexto);
+    if (!mapa.has(id)) mapa.set(id, { ...contexto });
+  };
+
+  obtenerContextosBaseCrecimiento().forEach(agregar);
+  contextosCatalogoAcademico().forEach(agregar);
+  tareas.forEach(tarea => agregar(obtenerContextoNivelCrecimiento(tarea)));
+
+  return [...mapa.values()].sort((a, b) =>
+    String(a.caminoNombre).localeCompare(String(b.caminoNombre), "es") ||
+    String(a.areaNombre).localeCompare(String(b.areaNombre), "es") ||
+    String(a.temaNombre).localeCompare(String(b.temaNombre), "es")
+  );
+}
+
+function opcionesNivelArea(valor = "") {
+  const actual = normalizarNivelCrecimiento(valor);
+  return `
+    <option value="" ${!actual ? "selected" : ""}>Medio · predeterminado</option>
+    ${Object.values(NIVELES_CRECIMIENTO).map(nivel => `
+      <option value="${nivel.id}" ${actual === nivel.id ? "selected" : ""}>
+        ${nivel.nombre} · ${nivel.unidades} ${nivel.unidades === 1 ? "unidad" : "unidades"}
+      </option>
+    `).join("")}
+  `;
+}
+
+function opcionesNivelTema(valor = "") {
+  const actual = normalizarNivelCrecimiento(valor);
+  return `
+    <option value="" ${!actual ? "selected" : ""}>Hereda del Área</option>
+    ${Object.values(NIVELES_CRECIMIENTO).map(nivel => `
+      <option value="${nivel.id}" ${actual === nivel.id ? "selected" : ""}>
+        ${nivel.nombre} · ${nivel.unidades} ${nivel.unidades === 1 ? "unidad" : "unidades"}
+      </option>
+    `).join("")}
+  `;
+}
+
+function renderNivelesContexto() {
+  const contextos = contextosDisponibles();
+
+  tablaNivelesContexto.innerHTML = contextos.map(contexto => {
+    const nivelArea = configuracionVista.nivelesContexto.areas[contexto.areaId] || "";
+    const nivelTema = contexto.temaId
+      ? configuracionVista.nivelesContexto.temas[contexto.temaId] || ""
+      : "";
+
+    return `
+      <tr>
+        <td><strong>${escaparHTML(contexto.caminoNombre)}</strong></td>
+        <td>
+          <strong>${escaparHTML(contexto.areaNombre)}</strong>
+          <small>${escaparHTML(contexto.areaId)}</small>
+        </td>
+        <td>
+          <select data-nivel-contexto="area" data-contexto-id="${escaparHTML(contexto.areaId)}" aria-label="Nivel de ${escaparHTML(contexto.areaNombre)}">
+            ${opcionesNivelArea(nivelArea)}
+          </select>
+        </td>
+        <td>
+          ${contexto.temaId
+            ? `<strong>${escaparHTML(contexto.temaNombre)}</strong><small>${escaparHTML(contexto.temaId)}</small>`
+            : '<span class="sin-tema">— Hereda directamente del Área —</span>'}
+        </td>
+        <td>
+          ${contexto.temaId
+            ? `<select data-nivel-contexto="tema" data-contexto-id="${escaparHTML(contexto.temaId)}" aria-label="Nivel de ${escaparHTML(contexto.temaNombre)}">${opcionesNivelTema(nivelTema)}</select>`
+            : '<span class="sin-tema">No aplica</span>'}
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function actualizarTitulosPersona() {
+  const nombre = nombrePersonaSeleccionada();
+  $("#tituloResumen").textContent = `Resumen de crecimiento de ${nombre}`;
+  $("#tituloAuditoria").textContent = `Contribución de cada Misión de ${nombre}`;
 }
 
 function renderResumen(configuracion = configuracionVista) {
   resumenActual = resumirCrecimiento(tareas, configuracion);
   const resumen = resumenActual;
+  const nombre = nombrePersonaSeleccionada();
 
+  actualizarTitulosPersona();
+  $("#textoResumen").textContent =
+    `${resumen.misionesReales} Misiones completadas, visibles y reales aportan ${resumen.unidades} unidades al crecimiento de ${nombre}.`;
   $("#resEtapa").textContent = `${resumen.etapa.icono} ${resumen.etapa.nombre}`;
   $("#resProgreso").textContent = resumen.siguiente
     ? `${Math.round(resumen.progreso)}% del tramo · faltan ${resumen.faltanUnidades} unidades para ${resumen.siguiente.nombre}`
@@ -193,8 +325,8 @@ function renderResumen(configuracion = configuracionVista) {
   $("#resPruebas").textContent = resumen.pruebasExcluidas;
   $("#resOcultas").textContent = resumen.ocultasExcluidas;
   $("#resNoCompletadas").textContent = resumen.noCompletadas;
-  $("#resPesos").textContent =
-    `${resumen.distribucionPesos[1]} · ${resumen.distribucionPesos[2]} · ${resumen.distribucionPesos[3]}`;
+  $("#resNiveles").textContent =
+    `${resumen.distribucionNiveles.bajo} · ${resumen.distribucionNiveles.medio} · ${resumen.distribucionNiveles.alto}`;
 
   ETAPAS_CRECIMIENTO.forEach(etapa => {
     formConfiguracion
@@ -202,10 +334,8 @@ function renderResumen(configuracion = configuracionVista) {
       ?.classList.toggle("actual-preview", etapa.id === resumen.etapa.id);
   });
 
-  const persona = usuarios.find(item => item.userId === selectPersona.value);
-  $("#textoAuditoria").textContent = persona
-    ? `${nombrePersona(persona.persona || {})}: ${resumen.misionesReales} Misiones elegibles aportan ${resumen.unidades} unidades.`
-    : "Selecciona una Persona para revisar sus Misiones.";
+  $("#textoAuditoria").textContent =
+    "Cada fila muestra el nivel que la Academia resuelve para esa Misión y el aporte que produce cuando cumple las condiciones de crecimiento.";
 
   renderTabla();
 }
@@ -213,13 +343,60 @@ function renderResumen(configuracion = configuracionVista) {
 function coincideFiltro(item, filtro) {
   if (filtro === "todas") return true;
   if (filtro === "elegible") return item.elegible;
-  if (["prueba", "oculta", "no-completada"].includes(filtro)) {
-    return item.categoria === filtro;
-  }
-  if (filtro.startsWith("peso-")) {
-    return item.elegible && item.peso === Number(filtro.slice(-1));
-  }
+  if (["prueba", "oculta", "no-completada"].includes(filtro)) return item.categoria === filtro;
+  if (filtro.startsWith("nivel-")) return item.nivel === filtro.replace("nivel-", "");
   return true;
+}
+
+function pluralMision(total) {
+  return total === 1 ? "Misión" : "Misiones";
+}
+
+function renderPaginacion(total) {
+  if (!paginacionMisiones) return;
+  if (!total) {
+    paginacionMisiones.innerHTML = "";
+    return;
+  }
+
+  const totalPaginas = Math.max(1, Math.ceil(total / TAMANO_PAGINA));
+  paginaActual = Math.min(Math.max(1, paginaActual), totalPaginas);
+  const inicio = (paginaActual - 1) * TAMANO_PAGINA;
+  const fin = Math.min(inicio + TAMANO_PAGINA, total);
+
+  paginacionMisiones.innerHTML = `
+    <button type="button" data-pagina-delta="-1" ${paginaActual <= 1 ? "disabled" : ""}>← Anterior</button>
+    <strong>${inicio + 1}–${fin} de ${total} ${pluralMision(total)} · Página ${paginaActual} de ${totalPaginas}</strong>
+    <button type="button" data-pagina-delta="1" ${paginaActual >= totalPaginas ? "disabled" : ""}>Siguiente →</button>
+  `;
+
+  paginacionMisiones.querySelectorAll("[data-pagina-delta]").forEach(button => {
+    button.addEventListener("click", () => {
+      paginaActual += Number(button.dataset.paginaDelta || 0);
+      renderTabla();
+      document.querySelector(".auditoria-misiones")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function contextoAuditoria(item) {
+  const contexto = item.contexto || {};
+  return [contexto.caminoNombre, contexto.areaNombre, contexto.temaNombre]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+function selectNivelEspecifico(tarea = {}, item = {}) {
+  const explicito = normalizarNivelCrecimiento(tarea.nivelCrecimiento);
+  const automatico = item.nivelNombre ? `Automático · ${item.nivelNombre}` : "Automático";
+  return `
+    <select class="nivel-especifico" data-nivel-mision="${escaparHTML(tarea.id || "")}" aria-label="Nivel específico de la Misión">
+      <option value="" ${!explicito ? "selected" : ""}>${escaparHTML(automatico)}</option>
+      ${Object.values(NIVELES_CRECIMIENTO).map(nivel => `
+        <option value="${nivel.id}" ${explicito === nivel.id ? "selected" : ""}>${nivel.nombre} · ${nivel.unidades}</option>
+      `).join("")}
+    </select>
+  `;
 }
 
 function renderTabla() {
@@ -238,57 +415,63 @@ function renderTabla() {
         tarea.materia,
         tarea.tema,
         textoEstado(tarea.estado),
-        item.razon
+        item.nivelNombre,
+        item.detalleNivel,
+        contextoAuditoria(item)
       ].join(" ").toLowerCase().includes(busqueda);
     })
     .sort((a, b) => {
       if (a.elegible !== b.elegible) return a.elegible ? -1 : 1;
-      if (a.peso !== b.peso) return b.peso - a.peso;
-      const tituloA = String(a.tarea?.titulo || a.tarea?.presentacionAlumno?.tituloMision || "");
-      const tituloB = String(b.tarea?.titulo || b.tarea?.presentacionAlumno?.tituloMision || "");
-      return tituloA.localeCompare(tituloB, "es");
+      if (a.unidades !== b.unidades) return b.unidades - a.unidades;
+      return String(a.tarea?.titulo || "").localeCompare(String(b.tarea?.titulo || ""), "es");
     });
 
-  tablaMisiones.innerHTML = items.map(item => {
+  const totalPaginas = Math.max(1, Math.ceil(items.length / TAMANO_PAGINA));
+  paginaActual = Math.min(Math.max(1, paginaActual), totalPaginas);
+  const inicio = (paginaActual - 1) * TAMANO_PAGINA;
+  const itemsPagina = items.slice(inicio, inicio + TAMANO_PAGINA);
+
+  tablaMisiones.innerHTML = itemsPagina.map(item => {
     const tarea = item.tarea || {};
     const titulo = tarea.presentacionAlumno?.tituloMision || tarea.titulo || "Misión sin título";
-    const detalle = [tarea.materia, tarea.tema].filter(Boolean).join(" · ");
-    const tipoModulo = [tarea.tipo || "sin tipo", tarea.modulo || "sin módulo"].join(" · ");
+    const contexto = contextoAuditoria(item) || "Contexto no disponible";
+    const estadoEtiqueta = item.categoria === "prueba"
+      ? "🧪 Prueba"
+      : item.categoria === "oculta"
+        ? "Oculta"
+        : textoEstado(tarea.estado);
+    const razon = item.elegible ? item.detalleNivel : item.razon;
 
     return `
       <tr>
         <td>
           <strong>${escaparHTML(titulo)}</strong>
-          <small>${escaparHTML(detalle || tarea.id || "")}</small>
+          <small>${escaparHTML(tarea.id || "")}</small>
         </td>
-        <td>
-          <span class="${claseCategoria(item)}">${escaparHTML(textoEstado(tarea.estado))}</span>
-          ${tarea.visibleParaAlumno === false ? '<small>Oculta</small>' : ""}
-          ${tarea.esDatoPrueba === true ? '<small>🧪 Dato de prueba</small>' : ""}
-        </td>
-        <td>${escaparHTML(tipoModulo)}</td>
-        <td>${escaparHTML(item.cantidad)}</td>
-        <td>${escaparHTML(item.minutos)}</td>
-        <td>${item.elegible ? `<span class="${clasePeso(item.peso)}">${item.peso}</span>` : "—"}</td>
-        <td>${escaparHTML(item.razon)}</td>
+        <td><span class="${claseCategoria(item)}">${escaparHTML(estadoEtiqueta)}</span></td>
+        <td>${escaparHTML(contexto)}</td>
+        <td>${item.nivel ? `<span class="${claseNivel(item.nivel)}">${escaparHTML(item.nivelNombre)}</span>` : "—"}</td>
+        <td><span class="aporte ${item.unidades ? "" : "aporte--cero"}">${item.unidades}</span></td>
+        <td>${selectNivelEspecifico(tarea, item)}</td>
+        <td>${escaparHTML(razon || "—")}</td>
       </tr>
     `;
   }).join("");
 
   sinMisiones.hidden = items.length > 0;
+  renderPaginacion(items.length);
 }
 
 async function cargarMisiones(userId) {
   tareas = [];
+  paginaActual = 1;
+  renderNivelesContexto();
   renderResumen();
-
   if (!userId) return;
 
   const resultado = await getDocs(collection(db, "usuarios", userId, "tareas"));
-  tareas = resultado.docs.map(documento => ({
-    id: documento.id,
-    ...documento.data()
-  }));
+  tareas = resultado.docs.map(documento => ({ id: documento.id, ...documento.data() }));
+  renderNivelesContexto();
   renderResumen();
 }
 
@@ -324,8 +507,7 @@ function aplicarVistaPrevia() {
 }
 
 function restaurarGuardado() {
-  configuracionVista = normalizarConfiguracionCrecimiento(configuracionGuardada);
-  cargarFormulario(configuracionVista);
+  cargarFormulario(configuracionGuardada);
   mostrarErrorConfiguracion([]);
   avisoVistaPrevia.hidden = true;
   renderResumen(configuracionVista);
@@ -338,14 +520,14 @@ async function guardarConfiguracion(evento) {
   const resumenPreview = resumirCrecimiento(tareas, configuracionVista);
   const confirmado = window.confirm(
     "¿Guardar esta configuración global de Mi Camino?\n\n" +
-    `Vista previa actual: ${resumenPreview.etapa.nombre}, ${resumenPreview.unidades} unidades.\n\n` +
-    "El cambio se aplicará a todas las Personas y puede recalcular su etapa visible."
+    `Vista previa de ${nombrePersonaSeleccionada()}: ${resumenPreview.etapa.nombre}, ${resumenPreview.unidades} unidades.\n\n` +
+    "Los niveles automáticos y la etapa visible pueden recalcularse para todas las Personas."
   );
   if (!confirmado) return;
 
   const boton = $("#btnGuardar");
   boton.disabled = true;
-  const texto = boton.textContent;
+  const textoBoton = boton.textContent;
   boton.textContent = "Guardando…";
 
   try {
@@ -354,9 +536,9 @@ async function guardarConfiguracion(evento) {
     configuracionVista = resultado.configuracion;
     auditoriaConfiguracion = resultado.auditoria;
     configuracionPersistida = resultado.existe;
+    schemaPersistido = resultado.schemaPersistido;
     cargarFormulario(configuracionGuardada);
     avisoVistaPrevia.hidden = true;
-    mostrarErrorConfiguracion([]);
     actualizarAuditoriaConfiguracion();
     renderResumen();
   } catch (error) {
@@ -366,7 +548,7 @@ async function guardarConfiguracion(evento) {
     );
   } finally {
     boton.disabled = false;
-    boton.textContent = texto;
+    boton.textContent = textoBoton;
   }
 }
 
@@ -377,6 +559,7 @@ async function cargarConfiguracion() {
     configuracionVista = resultado.configuracion;
     auditoriaConfiguracion = resultado.auditoria;
     configuracionPersistida = resultado.existe;
+    schemaPersistido = resultado.schemaPersistido;
   } catch (error) {
     console.warn(
       "No se pudo leer la configuración persistida de Mi Camino; se usarán los valores predeterminados.",
@@ -388,12 +571,51 @@ async function cargarConfiguracion() {
     configuracionVista = configuracionGuardada;
     auditoriaConfiguracion = null;
     configuracionPersistida = false;
-    $("#estadoConfiguracion").textContent =
-      "No se pudo leer Firestore. La auditoría usa temporalmente los valores predeterminados.";
+    schemaPersistido = 0;
   }
 
   cargarFormulario(configuracionGuardada);
   actualizarAuditoriaConfiguracion();
+}
+
+async function guardarNivelEspecificoMision(misionId, nivelSolicitado, control) {
+  const tarea = tareas.find(item => item.id === misionId);
+  const userId = selectPersona.value;
+  if (!tarea || !userId) return;
+
+  const anterior = normalizarNivelCrecimiento(tarea.nivelCrecimiento);
+  const siguiente = normalizarNivelCrecimiento(nivelSolicitado);
+  if (anterior === siguiente) return;
+
+  const etiqueta = siguiente
+    ? `${NIVELES_CRECIMIENTO[siguiente].nombre} (${NIVELES_CRECIMIENTO[siguiente].unidades})`
+    : "Automático";
+  const titulo = tarea.presentacionAlumno?.tituloMision || tarea.titulo || "esta Misión";
+
+  if (!window.confirm(`¿Cambiar el nivel específico de “${titulo}” a ${etiqueta}?`)) {
+    renderTabla();
+    return;
+  }
+
+  control.disabled = true;
+  try {
+    await auth.authStateReady();
+    if (!auth.currentUser) throw new Error("No hay sesión autenticada.");
+
+    await updateDoc(doc(db, "usuarios", userId, "tareas", misionId), {
+      nivelCrecimiento: siguiente || deleteField(),
+      updatedAt: serverTimestamp(),
+      updatedBy: auth.currentUser.uid
+    });
+
+    await cargarMisiones(userId);
+  } catch (error) {
+    console.error("No se pudo actualizar el nivel específico de la Misión.", error);
+    window.alert(`No se pudo actualizar el nivel de la Misión.\n${error.message}`);
+    renderTabla();
+  } finally {
+    control.disabled = false;
+  }
 }
 
 async function recargarTodo() {
@@ -435,6 +657,7 @@ async function iniciar() {
 }
 
 selectPersona.addEventListener("change", () => {
+  paginaActual = 1;
   cargarMisiones(selectPersona.value).catch(error => {
     console.error(error);
     estadoAcceso.textContent = `No se pudieron cargar las Misiones: ${error.message}`;
@@ -446,10 +669,49 @@ $("#btnRecargar").addEventListener("click", () => {
   recargarTodo().catch(error => window.alert(error.message));
 });
 
-$("#buscarMision").addEventListener("input", renderTabla);
-$("#filtroMision").addEventListener("change", renderTabla);
-formConfiguracion.addEventListener("input", aplicarVistaPrevia);
-formConfiguracion.addEventListener("change", aplicarVistaPrevia);
+$("#buscarMision").addEventListener("input", () => {
+  paginaActual = 1;
+  renderTabla();
+});
+
+$("#filtroMision").addEventListener("change", () => {
+  paginaActual = 1;
+  renderTabla();
+});
+
+tablaNivelesContexto.addEventListener("change", event => {
+  const control = event.target.closest("[data-nivel-contexto]");
+  if (!control) return;
+
+  const tipo = control.dataset.nivelContexto;
+  const id = control.dataset.contextoId;
+  const nivel = normalizarNivelCrecimiento(control.value);
+  const siguiente = normalizarConfiguracionCrecimiento(configuracionDesdeFormulario());
+  const mapa = tipo === "tema"
+    ? siguiente.nivelesContexto.temas
+    : siguiente.nivelesContexto.areas;
+
+  if (nivel) mapa[id] = nivel;
+  else delete mapa[id];
+
+  configuracionVista = siguiente;
+  renderNivelesContexto();
+  aplicarVistaPrevia();
+});
+
+tablaMisiones.addEventListener("change", event => {
+  const control = event.target.closest("[data-nivel-mision]");
+  if (!control) return;
+  guardarNivelEspecificoMision(
+    control.dataset.nivelMision,
+    control.value,
+    control
+  );
+});
+
+formConfiguracion.addEventListener("input", event => {
+  if (event.target.matches("[data-etapa]")) aplicarVistaPrevia();
+});
 formConfiguracion.addEventListener("submit", guardarConfiguracion);
 $("#btnRestaurar").addEventListener("click", restaurarGuardado);
 

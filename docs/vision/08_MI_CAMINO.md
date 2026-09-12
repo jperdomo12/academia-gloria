@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/vision/08_MI_CAMINO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Visión activa · no especificación funcional |
 | **Fecha de origen** | Julio 2026 |
 | **Última actualización** | 12/09/2026 |
@@ -21,7 +21,9 @@
 | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | **Gobierna:** Reconocimientos, Guacamayas y `Así voy creciendo`. |
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** Persona Activa, nivel efectivo y acceso. |
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Gobierna:** consulta histórica del trabajo mediante visor de solo lectura. |
+| `compartido/modelos/mi-camino-crecimiento.js` | **Implementa:** modelo canónico compartido de crecimiento visual. |
 | `mi-universo/mi-camino/` | **Implementa:** experiencia actual de Mi Camino. |
+| `administracion/mi-camino/` | **Implementa otra responsabilidad:** auditoría y configuración administrativa del crecimiento. |
 | `mi-universo/mis-tareas/` | **Implementa otra responsabilidad:** Gestión de Misiones para usuarios con capacidad de gestión. |
 
 > **Regla de lectura:** Mi Camino es la experiencia personal del alumno. No es el lugar donde la familia administra Misiones, Usuarios o reglas del producto.
@@ -30,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 12/09/2026 | Juan Perdomo + AI Collaborator | Consolida el crecimiento por nivel técnico de Misión: Bajo = 1, Medio = 2, Alto = 3; fija la precedencia Misión → nivel propio de actividad → Tema → Área → Medio; mantiene etapa derivada, configuración y excepciones fuera de la experiencia del alumno. |
 | 1.2 | 12/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza la visión con el crecimiento visual real de siete etapas derivado de Misiones reales. Mantiene la configuración/auditoría fuera de la experiencia del alumno, bajo Administración, y preserva la prohibición de rankings, economía de puntos o valor personal basado en métricas. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la visión con la separación real Mi Camino / Gestión de Misiones, Persona Activa, Misiones y finalización actual, `Así voy creciendo`, Reconocimientos/Guacamayas y consulta histórica de solo lectura. Retira niveles/estrellas/insignias genéricos como promesa del espacio y evita convertir Mi Camino en panel de control familiar/profesional. |
 | 1.0 | Julio 2026 | Equipo del proyecto | Primera visión de Mi Camino como espacio personal del alumno. |
@@ -102,9 +105,14 @@ Mi Camino
 Gestión de Misiones
 → crear / editar / revisar / gestionar
 → capacidad adulta o de gestión autorizada
+
+Administración → Mi Camino
+→ auditar el crecimiento derivado
+→ configurar niveles por contexto y umbrales
+→ gestionar excepciones específicas de nivel
 ```
 
-El alumno **no debe acceder a Gestión de Misiones** para poder utilizar normalmente Mi Camino.
+El alumno **no debe acceder a Gestión de Misiones ni a Administración → Mi Camino** para poder utilizar normalmente Mi Camino.
 
 La familia acompaña el recorrido desde las capacidades que le corresponden, no transformando Mi Camino en una consola administrativa.
 
@@ -149,9 +157,27 @@ Reglas de visión:
 
 La mecánica exacta pertenece al Sistema de Motivación y Reconocimiento.
 
-La implementación actual puede representar visualmente el crecimiento mediante siete etapas derivadas de actividad real. Las unidades internas son un mecanismo técnico para determinar la ilustración y el tramo actual; **no se presentan como una puntuación de valor personal ni una competición**. Las Misiones de prueba quedan excluidas.
+La implementación actual representa visualmente el crecimiento mediante siete etapas derivadas de Misiones reales. Las Misiones completadas, visibles y reales pueden aportar unidades internas según un **nivel técnico de crecimiento**:
 
-La auditoría y configuración de esta mecánica vive separada en `Administración → Mi Camino`, protegida por nivel `administracion`; no convierte Mi Camino en una consola administrativa.
+- **Bajo → 1 unidad**;
+- **Medio → 2 unidades**;
+- **Alto → 3 unidades**.
+
+Estas unidades son un mecanismo técnico para determinar la ilustración y el tramo actual; **no son XP, una nota, una moneda, una valoración de la Persona ni una competición**. El aporte 1/2/3 es fijo en esta versión.
+
+El nivel de una Misión se resuelve con una sola precedencia compartida:
+
+1. nivel específico de la Misión, si existe una excepción administrativa;
+2. nivel propio de la actividad, cuando el módulo ya dispone de uno reutilizable;
+3. nivel configurado del Tema;
+4. nivel configurado del Área o módulo;
+5. Medio como valor predeterminado.
+
+Una Misión sin excepción explícita permanece en modo **Automático**: no necesita guardar una copia del nivel calculado. Las Misiones de prueba, ocultas o no completadas no aportan crecimiento.
+
+La etapa visible se deriva de los hechos reales y de la configuración vigente; **no se persiste manualmente por Persona**.
+
+La auditoría y configuración de esta mecánica vive separada en `Administración → Mi Camino`, protegida por nivel `administracion`; allí se pueden revisar niveles, aportes, Área/Tema, umbrales y excepciones por Misión sin convertir Mi Camino en una consola administrativa.
 
 ---
 
@@ -285,8 +311,9 @@ Mi Camino debe ayudar a mirar ese recorrido con respeto, alegría y confianza, s
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Visión activa |
-| **Versión activa** | 1.1 |
+| **Versión activa** | 1.3 |
 | **Experiencia principal** | Alumno / Persona Activa |
 | **Gestión de Misiones** | Separada de Mi Camino |
-| **Crecimiento visible** | Reconocimientos/Guacamayas + 7 etapas derivadas de Misiones reales |
+| **Administración del crecimiento** | Separada en `Administración → Mi Camino` |
+| **Crecimiento visible** | Reconocimientos/Guacamayas + 7 etapas derivadas de Misiones reales; aporte técnico Bajo=1, Medio=2, Alto=3 con precedencia Misión → actividad → Tema → Área → Medio |
 | **Histórico** | Consulta de solo lectura |
