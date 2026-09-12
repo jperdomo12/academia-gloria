@@ -22,6 +22,7 @@
 | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` | **Gobierna:** Persona Activa, nivel efectivo y acceso. |
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | **Gobierna:** consulta histórica del trabajo mediante visor de solo lectura. |
 | `mi-universo/mi-camino/` | **Implementa:** experiencia actual de Mi Camino. |
+| `administracion/mi-camino/` | **Implementa otra responsabilidad:** auditoría y configuración administrativa del crecimiento. |
 | `mi-universo/mis-tareas/` | **Implementa otra responsabilidad:** Gestión de Misiones para usuarios con capacidad de gestión. |
 
 > **Regla de lectura:** Mi Camino es la experiencia personal del alumno. No es el lugar donde la familia administra Misiones, Usuarios o reglas del producto.
@@ -103,9 +104,14 @@ Mi Camino
 Gestión de Misiones
 → crear / editar / revisar / gestionar
 → capacidad adulta o de gestión autorizada
+
+Administración → Mi Camino
+→ auditar el crecimiento derivado
+→ configurar niveles por contexto y umbrales
+→ gestionar excepciones específicas de nivel
 ```
 
-El alumno **no debe acceder a Gestión de Misiones** para poder utilizar normalmente Mi Camino.
+El alumno **no debe acceder a Gestión de Misiones ni a Administración → Mi Camino** para poder utilizar normalmente Mi Camino.
 
 La familia acompaña el recorrido desde las capacidades que le corresponden, no transformando Mi Camino en una consola administrativa.
 
@@ -307,5 +313,6 @@ Mi Camino debe ayudar a mirar ese recorrido con respeto, alegría y confianza, s
 | **Versión activa** | 1.3 |
 | **Experiencia principal** | Alumno / Persona Activa |
 | **Gestión de Misiones** | Separada de Mi Camino |
+| **Administración del crecimiento** | Separada en `Administración → Mi Camino` |
 | **Crecimiento visible** | Reconocimientos/Guacamayas + 7 etapas derivadas de Misiones reales; aporte técnico Bajo=1, Medio=2, Alto=3 con precedencia Misión → actividad → Tema → Área → Medio |
 | **Histórico** | Consulta de solo lectura |
