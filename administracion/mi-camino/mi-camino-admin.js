@@ -1,3 +1,4 @@
+import { TEMAS_MATEMATICAS } from "../../cursos/6to/mates/temas-matematicas.js";
 import { Academia } from "../../compartido/api/academia.js";
 import {
   guardarConfiguracionMiCamino,
@@ -202,6 +203,25 @@ function claveContexto(contexto = {}) {
   return `${contexto.areaId || ""}::${contexto.temaId || ""}`;
 }
 
+function contextosCatalogoAcademico() {
+  const baseMatematicas6 = {
+    tipo: "repaso_academico",
+    cursoReferencia: "6",
+    materia: "Matemáticas",
+    tema: ""
+  };
+
+  return [
+    obtenerContextoNivelCrecimiento(baseMatematicas6),
+    ...TEMAS_MATEMATICAS.map(tema =>
+      obtenerContextoNivelCrecimiento({
+        ...baseMatematicas6,
+        tema: tema.titulo
+      })
+    )
+  ];
+}
+
 function contextosDisponibles() {
   const mapa = new Map();
   const agregar = contexto => {
@@ -211,6 +231,7 @@ function contextosDisponibles() {
   };
 
   obtenerContextosBaseCrecimiento().forEach(agregar);
+  contextosCatalogoAcademico().forEach(agregar);
   tareas.forEach(tarea => agregar(obtenerContextoNivelCrecimiento(tarea)));
 
   return [...mapa.values()].sort((a, b) =>
