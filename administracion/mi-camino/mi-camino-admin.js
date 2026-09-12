@@ -19,12 +19,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const $ = selector => document.querySelector(selector);
+const TAMANO_PAGINA = 5;
 
 const estadoAcceso = $("#estadoAcceso");
 const zonaAdministracion = $("#zonaAdministracion");
 const selectPersona = $("#selectPersona");
 const tablaMisiones = $("#tablaMisiones");
 const sinMisiones = $("#sinMisiones");
+const paginacionMisiones = $("#paginacionMisiones");
 const formConfiguracion = $("#formConfiguracion");
 const camposEtapas = $("#camposEtapas");
 const errorConfiguracion = $("#errorConfiguracion");
@@ -32,6 +34,7 @@ const avisoVistaPrevia = $("#avisoVistaPrevia");
 
 let usuarios = [];
 let tareas = [];
+let paginaActual = 1;
 let configuracionGuardada = normalizarConfiguracionCrecimiento(
   CONFIGURACION_CRECIMIENTO_PREDETERMINADA
 );
@@ -222,6 +225,45 @@ function coincideFiltro(item, filtro) {
   return true;
 }
 
+function pluralMision(total) {
+  return total === 1 ? "Misión" : "Misiones";
+}
+
+function renderPaginacion(total) {
+  if (!paginacionMisiones) return;
+
+  if (!total) {
+    paginacionMisiones.innerHTML = "";
+    return;
+  }
+
+  const totalPaginas = Math.max(1, Math.ceil(total / TAMANO_PAGINA));
+  paginaActual = Math.min(Math.max(1, paginaActual), totalPaginas);
+  const inicio = (paginaActual - 1) * TAMANO_PAGINA;
+  const fin = Math.min(inicio + TAMANO_PAGINA, total);
+
+  paginacionMisiones.innerHTML = `
+    <button type="button" data-pagina-delta="-1" ${paginaActual <= 1 ? "disabled" : ""}>
+      ← Anterior
+    </button>
+    <strong>${inicio + 1}–${fin} de ${total} ${pluralMision(total)} · Página ${paginaActual} de ${totalPaginas}</strong>
+    <button type="button" data-pagina-delta="1" ${paginaActual >= totalPaginas ? "disabled" : ""}>
+      Siguiente →
+    </button>
+  `;
+
+  paginacionMisiones.querySelectorAll("[data-pagina-delta]").forEach(button => {
+    button.addEventListener("click", () => {
+      paginaActual += Number(button.dataset.paginaDelta || 0);
+      renderTabla();
+      document.querySelector(".auditoria-misiones")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  });
+}
+
 function renderTabla() {
   const filtro = $("#filtroMision").value;
   const busqueda = String($("#buscarMision").value || "").trim().toLowerCase();
@@ -249,7 +291,12 @@ function renderTabla() {
       return tituloA.localeCompare(tituloB, "es");
     });
 
-  tablaMisiones.innerHTML = items.map(item => {
+  const totalPaginas = Math.max(1, Math.ceil(items.length / TAMANO_PAGINA));
+  paginaActual = Math.min(Math.max(1, paginaActual), totalPaginas);
+  const inicio = (paginaActual - 1) * TAMANO_PAGINA;
+  const itemsPagina = items.slice(inicio, inicio + TAMANO_PAGINA);
+
+  tablaMisiones.innerHTML = itemsPagina.map(item => {
     const tarea = item.tarea || {};
     const titulo = tarea.presentacionAlumno?.tituloMision || tarea.titulo || "Misión sin título";
     const detalle = [tarea.materia, tarea.tema].filter(Boolean).join(" · ");
@@ -276,10 +323,12 @@ function renderTabla() {
   }).join("");
 
   sinMisiones.hidden = items.length > 0;
+  renderPaginacion(items.length);
 }
 
 async function cargarMisiones(userId) {
   tareas = [];
+  paginaActual = 1;
   renderResumen();
 
   if (!userId) return;
@@ -435,6 +484,7 @@ async function iniciar() {
 }
 
 selectPersona.addEventListener("change", () => {
+  paginaActual = 1;
   cargarMisiones(selectPersona.value).catch(error => {
     console.error(error);
     estadoAcceso.textContent = `No se pudieron cargar las Misiones: ${error.message}`;
@@ -446,8 +496,14 @@ $("#btnRecargar").addEventListener("click", () => {
   recargarTodo().catch(error => window.alert(error.message));
 });
 
-$("#buscarMision").addEventListener("input", renderTabla);
-$("#filtroMision").addEventListener("change", renderTabla);
+$("#buscarMision").addEventListener("input", () => {
+  paginaActual = 1;
+  renderTabla();
+});
+$("#filtroMision").addEventListener("change", () => {
+  paginaActual = 1;
+  renderTabla();
+});
 formConfiguracion.addEventListener("input", aplicarVistaPrevia);
 formConfiguracion.addEventListener("change", aplicarVistaPrevia);
 formConfiguracion.addEventListener("submit", guardarConfiguracion);
