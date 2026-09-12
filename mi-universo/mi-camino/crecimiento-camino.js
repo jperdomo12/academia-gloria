@@ -154,6 +154,10 @@ function renderCrecimiento() {
 function iniciar() {
   cargarEstilos();
 
+  // Sustituye de inmediato la maqueta HTML inicial por el modelo canónico
+  // compartido, antes de esperar las lecturas asíncronas de Misiones/configuración.
+  renderCrecimiento();
+
   detenerObservacionTareas?.();
   detenerObservacionConfiguracion?.();
 
