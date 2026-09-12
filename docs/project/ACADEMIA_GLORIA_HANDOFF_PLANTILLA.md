@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.3 |
+| **Versión** | 2.4 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 12/09/2026 |
@@ -35,6 +35,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.4 | 12/09/2026 | Product Owner + AI Collaborator | Cierra PR #122 en `main @ 8b93f1b...`: modelo de crecimiento Bajo/Medio/Alto, configuración por Área/Tema, auditoría refinada, navegación estándar, documentación v1.3 y Firestore Rules v1/v2 publicadas en Firebase. Registra validación funcional en producción y deja como siguiente ajuste la revisión de la guía visual estática `Así crece mi camino`, seguida del retorno al uso prioritario y Issue #108. |
 | 2.3 | 12/09/2026 | Product Owner + AI Collaborator | Sincroniza continuidad con `main @ af3d936f...` tras PR #114–#119. Registra Semilla 007 `Puedo elegir diferente`, contexto de Constancia, crecimiento visual real de Mi Camino con 7 etapas y ponderación interna 1/2/3, escucha única de Misiones y nueva consola `Administración → Mi Camino`. Deja como trabajo inmediato los refinamientos UX observados por el Product Owner, la publicación pendiente de Firestore Rules de configuración y la revisión posterior de la guía visual estática `Así crece mi camino`. |
 | 2.2 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza continuidad con `main @ 27b9e0a2...` tras PR #87–#113: calendario escolar 2026–2027, Menú del Cole V1, Mi horario de clases V1 aprobado, vista `solo`, PDF una página, corrección de retorno Calendario ↔ Horario y recursos oficiales Gaudem de 6.º/Matemáticas visibles solo para alumnado Gaudem. Registra Issue #108 como próxima necesidad P1 antes/junto con 2–3 nuevas alumnas. |
 | 2.1 | 06/09/2026 | Product Owner + AI Collaborator | Cierra la excepción Bitácora de Acompañamiento V1: PR #83 y corrección PR #85 fusionados, SPEC activa 1.0, Rules publicadas/validadas, menú de un solo nivel y baseline funcional actualizado a `58cab370...`. Elimina instrucciones obsoletas de prueba/merge y deja como estado operativo real la fase de uso prioritario sin trabajo funcional On going. |
@@ -281,47 +282,35 @@ No ampliar Bitácora por iniciativa propia durante la fase actual; primero usar 
 
 La observación de Gloria de que su planta de Mi Camino “no crecía” originó una mejora real de uso y motivación.
 
-Estado integrado en `main`:
+Estado integrado y validado en `main`:
 
 - PR #117 · crecimiento visual real de Mi Camino;
 - 7 etapas: `Semilla → Brote → Plantita → Árbol joven → Árbol → Árbol con frutos → Árbol lleno de frutos`;
 - solo cuentan Misiones `completada`, visibles para el alumno y no marcadas `esDatoPrueba=true`;
-- ponderación interna por alcance observable: peso 1 ligera, 2 estándar y 3 amplia;
-- la ponderación no se presenta al alumno como puntos/XP ni valor personal;
+- cada Misión elegible usa un nivel técnico: `Bajo = 1`, `Medio = 2`, `Alto = 3` unidades de crecimiento;
+- precedencia canónica: nivel específico de Misión → nivel propio de actividad → Tema → Área → Medio;
+- las unidades son una medida técnica interna y no se presentan como XP, nota, moneda, ranking ni valoración personal;
 - umbrales predeterminados vigentes: `0 / 30 / 140 / 260 / 400 / 560 / 740` unidades;
 - la etapa no se persiste por Persona: se deriva de Misiones reales + configuración;
 - PR #118 · una única observación compartida de Misiones dentro de Mi Camino;
-- PR #119 · nueva opción `Administración → Mi Camino` con auditoría por Persona, desglose por Misión, vista previa y configuración global con auditoría.
+- PR #119 · opción `Administración → Mi Camino` con auditoría por Persona, vista previa y configuración global;
+- PR #122 · refinamiento completo: Resumen por Persona, Configuración antes de Auditoría, paginación 5, dimensionado correcto, explicación Bajo/Medio/Alto, configuración por Área/Tema, catálogo académico real cuando existe, excepción específica por Misión y navegación estándar `Volver`.
 
-La configuración global usa el documento:
+La configuración global usa:
 
 ```text
 configuracion/miCamino
 ```
 
-con `createdAt`, `createdBy`, `updatedAt` y `updatedBy`. La fuente canónica de Firestore Rules ya contiene el contrato y fue compilada correctamente con Firestore Emulator, pero **su publicación en Firebase todavía es un paso separado pendiente**. Hasta entonces, la interfaz puede trabajar con los valores predeterminados, pero guardar la configuración global no debe considerarse validado.
+con `createdAt`, `createdBy`, `updatedAt` y `updatedBy`. PR #122 evoluciona el contrato a schema v2 conservando lectura compatible del schema v1. Las Firestore Rules v1/v2 fueron publicadas en Firebase el 12/09/2026 y la versión integrada fue validada posteriormente en producción por el Product Owner.
 
-#### Feedback del Product Owner pendiente de aplicar
-
-1. `Configuración global · Reglas de crecimiento` debe aparecer **antes** de `Auditoría · Contribución de cada Misión`.
-2. La auditoría debe mostrar registros en bloques/páginas de **5**, reutilizando el patrón de Gestión de Misiones.
-3. Corregir el dimensionado visual de los campos de las siete etapas; actualmente los `input` no quedan proporcionados dentro de sus tarjetas.
-4. La función del bloque de configuración no resulta suficientemente autoexplicativa. Debe explicar de forma sencilla que:
-   - una **unidad no equivale necesariamente a una Misión**;
-   - una Misión real completada puede aportar 1, 2 o 3 unidades según su alcance observable;
-   - cada número de etapa es el umbral global desde el cual comienza esa etapa;
-   - editar esos valores cambia el cálculo para todas las Personas, sin modificar ni borrar sus Misiones;
-   - los cambios deben poder previsualizarse antes de guardar.
-5. Después de estos refinamientos, publicar las Firestore Rules necesarias y validar lectura/guardado real de `configuracion/miCamino`.
-6. Queda pendiente revisar la guía/modal estática **`Así crece mi camino`** mostrada al alumno, que todavía representa visualmente Semilla/Brote/Árbol y debe revisarse con calma frente al modelo actual de 7 etapas.
-
-El Product Owner valoró positivamente la primera versión administrativa (“Que buen trabajo !!!!”); los puntos anteriores son refinamientos, no un rechazo del enfoque.
+Queda pendiente, como ajuste separado y de bajo impacto, revisar la guía/modal estática **`Así crece mi camino`** para asegurar que represente correctamente las 7 etapas y no contradiga el modelo real.
 
 ### 4.7 Baseline funcional estable
 
 ```text
 main
-af3d936f660b9bb4d160c8ca10ad12166b274cea
+8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4
 ```
 
 Incluye entre otras entregas recientes:
@@ -334,15 +323,14 @@ Incluye entre otras entregas recientes:
 - PR #88–#93 · Menú del Cole V1;
 - PR #96–#107 · Mi horario de clases V1;
 - PR #109/#110 · navegación contextual corregida;
-- PR #111–#113 · recursos oficiales Gaudem 6.º.
-- PR #114 · estabilización documental de inicio de curso.
-- PR #115 · contexto temporal de Constancia.
-- PR #116 · Semilla 007 `Puedo elegir diferente`.
-- PR #117 · crecimiento visual real de Mi Camino.
-- PR #118 · escucha única de Misiones en Mi Camino.
-- PR #119 · Administración de Mi Camino.
-
-Un HEAD documental posterior no cambia este baseline funcional.
+- PR #111–#113 · recursos oficiales Gaudem 6.º;
+- PR #114 · estabilización documental de inicio de curso;
+- PR #115 · contexto temporal de Constancia;
+- PR #116 · Semilla 007 `Puedo elegir diferente`;
+- PR #117 · crecimiento visual real de Mi Camino;
+- PR #118 · escucha única de Misiones en Mi Camino;
+- PR #119 · Administración de Mi Camino;
+- PR #122 · evolución del crecimiento por niveles + refinamiento administrativo + Rules v1/v2 + documentación v1.3.
 
 La observación administrativa de acceso pertenece al USER autenticado, no a Persona Activa. Conserva fecha/hora y ubicación aproximada ciudad/región/país; no GPS, coordenadas, ISP ni IP persistida. El historial conserva máximo 10 accesos.
 
@@ -366,6 +354,8 @@ Antecedentes cerrados:
 | `SPEC-BITACORA_ACOMPANAMIENTO.md` | ✅ 1.0 Activo |
 | `SPEC-HORARIO_CLASES.md` | ✅ 1.0 Activo |
 | `SPEC-MENU_COMEDOR.md` | ✅ 1.0 Activo |
+| `docs/vision/08_MI_CAMINO.md` | ✅ 1.3 Activo |
+| `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` | ✅ 1.3 Activo |
 | Ruta canónica IA | ✅ `docs/ai/` |
 
 `docs/DOCUMENTATION_STANDARD.md` continúa gobernando cualquier evolución documental futura.
@@ -392,8 +382,8 @@ Las estabilizaciones posteriores no reabren P0/P1/P2; sincronizan únicamente fu
 - ✅ `Mis Guacamayas` como historial plegado.
 - ✅ `Historia de crecimiento` preservada.
 - ✅ Crecimiento visual real de Mi Camino con 7 etapas derivadas de Misiones reales.
-- ✅ Ponderación interna 1/2/3 por alcance observable, invisible como economía para el alumno.
-- ✅ Administración → Mi Camino para auditoría/configuración global, pendiente de refinamientos UX y publicación de Rules.
+- ✅ Nivel técnico por Misión `Bajo/Medio/Alto = 1/2/3`, sin economía ni valoración personal para el alumno.
+- ✅ Administración → Mi Camino cerrada y validada mediante PR #122, con configuración Área/Tema, auditoría, navegación estándar y Rules v1/v2 publicadas.
 
 ### Calendarios, curso y utilidades escolares
 
@@ -419,18 +409,19 @@ Las estabilizaciones posteriores no reabren P0/P1/P2; sincronizan únicamente fu
 
 ## ⏳ 7. Backlog en espera por foco de uso
 
-### 7.0 Refinamiento inmediato · Administración → Mi Camino
+### 7.0 Revisión visual · `Así crece mi camino`
 
-**Estado:** 🟡 Trabajo inmediato de continuidad.
+**Estado:** 🟡 Próximo ajuste pequeño de continuidad.
 
-Aplicar el feedback del Product Owner registrado en 4.6 antes de dar por cerrada la consola administrativa:
+Revisar la guía/modal mostrada al alumno para asegurar que:
 
-- Configuración antes que Auditoría;
-- paginación de auditoría en bloques de 5;
-- corregir tamaño de campos de etapas;
-- explicar claramente unidades, pesos y umbrales con lenguaje administrativo comprensible;
-- publicar Firestore Rules y validar guardado real;
-- revisar después la guía visual `Así crece mi camino`.
+- represente las 7 etapas reales;
+- sea coherente con la experiencia visual vigente de Mi Camino;
+- no exponga unidades/niveles técnicos como puntuación personal;
+- reutilice el modelo y los componentes actuales;
+- no introduzca una segunda lógica de crecimiento.
+
+Si la revisión confirma una discrepancia, aplicar únicamente el ajuste visual/textual mínimo suficiente y validarlo brevemente en producción.
 
 ### 7.1 Manual breve de Academia + email de invitación
 
@@ -517,6 +508,8 @@ Evaluar con un caso real de incorporación escolar hasta qué punto Work puede e
 - Los recursos oficiales del colegio se muestran como externos y diferenciados del contenido propio de Academia.
 - Para Gaudem 6.º, los recursos oficiales de materia se muestran solo para `alumno + Gaudem`.
 - La existencia de un enlace oficial no obliga a crear un portal de materia ni un Tema ficticio.
+- El nivel técnico de Mi Camino se resuelve con una sola precedencia canónica; no crear cálculos paralelos.
+- Escrituras directas a `main` siguen siendo excepcionales; pueden usarse cuando el Product Owner las autoriza explícitamente para un cambio de bajo impacto y se verifica previamente que no afecta funcionalidad sensible, datos, seguridad o arquitectura. El flujo normal continúa siendo rama + PR.
 
 ---
 
@@ -525,9 +518,10 @@ Evaluar con un caso real de incorporación escolar hasta qué punto Work puede e
 | Campo | Valor actual |
 |---|---|
 | **Base canónica integrada** | `main` |
-| **Baseline funcional cerrado** | `af3d936f660b9bb4d160c8ca10ad12166b274cea` |
-| **Rama funcional On going** | Ninguna; iniciar nueva rama desde `main` para refinamientos de Administración → Mi Camino |
+| **Baseline funcional cerrado** | `8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4` |
+| **Rama funcional On going** | Ninguna |
 | **PR funcional On going** | Ninguna |
+| **Mi Camino / Administración** | ✅ Cerrado y validado · PR #117–#119 + #122 |
 | **Bitácora V1** | ✅ Cerrada · PR #83/#85 |
 | **Horario V1** | ✅ Cerrado y aprobado · PR #96–#107 + #109/#110 |
 | **Menú del Cole V1** | ✅ Cerrado · PR #88–#93 |
@@ -535,27 +529,23 @@ Evaluar con un caso real de incorporación escolar hasta qué punto Work puede e
 | **Estado operativo general** | 🌿 Fase de uso prioritario |
 | **Carril curricular 6.º** | ✅ Activo con material escolar real |
 | **Issues de uso real** | ✅ Reportar y resolver con rapidez |
-| **Próxima necesidad P1** | Refinar Administración → Mi Camino; después Issue #108 |
+| **Próximo paso** | Revisar guía visual `Así crece mi camino`; después uso real + Issue #108 |
 | **Crecimiento funcional general** | ⏸️ En espera por foco, salvo necesidad real |
 
 ---
 
 ## ▶️ 10. Siguiente paso exacto
 
-Existe una continuidad funcional inmediata surgida de la validación real del Product Owner sobre `Administración → Mi Camino`.
+PR #122 está cerrada, fusionada, desplegada y validada en producción. No reabrir sus decisiones sin una necesidad nueva.
 
 La secuencia preferida es:
 
 ```text
-1. Crear rama limpia desde main para refinamientos de Administración → Mi Camino.
-2. Mover Configuración global antes de Auditoría.
-3. Añadir paginación de 5 registros reutilizando Gestión de Misiones.
-4. Corregir dimensionado de inputs de las 7 etapas.
-5. Reescribir ayudas del bloque para explicar unidades, pesos y umbrales con claridad.
-6. Validar la vista previa con una Persona real.
-7. Publicar Firestore Rules pendientes y validar guardar/leer configuracion/miCamino.
-8. Revisar luego la guía visual estática `Así crece mi camino`.
-9. Volver al flujo normal de uso prioritario y al Issue #108.
+1. Revisar la guía/modal estática `Así crece mi camino` contra el modelo real de 7 etapas.
+2. Si existe discrepancia, aplicar el ajuste visual/textual mínimo suficiente reutilizando el modelo vigente.
+3. Validar brevemente el resultado en producción.
+4. Retomar el flujo normal de uso prioritario.
+5. Abordar Issue #108 cuando se acerque la incorporación de nuevas alumnas.
 ```
 
 ### 10.1 Cuando llegue material escolar
@@ -600,12 +590,13 @@ Antes de invitarlas:
 - PR #117 · crecimiento visual real de Mi Camino con 7 etapas.
 - PR #118 · una sola escucha de Misiones en Mi Camino.
 - PR #119 · Administración → Mi Camino integrada en `main`.
+- PR #122 · modelo Bajo/Medio/Alto, refinamiento administrativo, Rules v1/v2 publicadas y validación en producción.
 
 ## Trabajo funcional On going
 
-> **Refinamiento de Administración → Mi Camino, todavía sin rama funcional abierta.**
+> **Ninguno.**
 
-Pendientes exactos: orden Configuración/Auditoría, paginación 5, tamaño de inputs, explicación clara del modelo, despliegue/validación de Rules y revisión posterior de la guía visual estática.
+El siguiente ajuste es una revisión puntual de la guía visual `Así crece mi camino`; no se considera reapertura de PR #122.
 
 ## Próxima necesidad posterior
 
@@ -618,11 +609,11 @@ Pendientes exactos: orden Configuración/Auditoría, paginación 5, tamaño de i
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 2.3 |
+| **Versión activa** | 2.4 |
 | **Estado operativo** | 🌿 Fase de uso prioritario desde 05/09/2026 |
-| **Baseline funcional cerrado** | `af3d936f660b9bb4d160c8ca10ad12166b274cea` |
-| **Trabajo funcional On going** | Refinamiento de Administración → Mi Camino |
-| **Siguiente paso** | Refinar Administración → Mi Camino → publicar/validar Rules → revisar guía visual → retomar uso real + Issue #108 |
+| **Baseline funcional cerrado** | `8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4` |
+| **Trabajo funcional On going** | Ninguno |
+| **Siguiente paso** | Revisar guía visual `Así crece mi camino` → retomar uso real → Issue #108 |
 | **Crecimiento curricular 6.º** | ✅ Activo durante la fase |
 | **Utilidades escolares** | ✅ Calendario 2026–2027 + Menú del Cole + Horario V1 |
 | **Recursos oficiales Gaudem** | ✅ Patrón reusable por portal de materia · visible solo para `alumno + Gaudem` |
