@@ -19,13 +19,21 @@
 </head>
 <body data-page-title="Administración · Mi Camino">
   <main class="pagina-admin">
+    <div class="barra-superior">
+      <a class="boton-regreso" href="../../">← Volver</a>
+      <div class="barra-superior__centro" aria-label="Sección actual">
+        <span aria-hidden="true">🌳</span>
+        <strong>Administración · Mi Camino</strong>
+      </div>
+      <a class="enlace-secundario" href="../usuarios/">👥 Gestión de Usuarios</a>
+    </div>
+
     <header class="cabecera-admin">
       <div>
         <span class="eyebrow">🛡️ Administración</span>
         <h1>🌳 Mi Camino</h1>
-        <p>Audita cómo se calcula el crecimiento y configura sus reglas globales sin modificar las Misiones.</p>
+        <p>Revisa cómo crece Mi Camino y configura sus reglas sin modificar Misiones, evidencias ni Reconocimientos.</p>
       </div>
-      <a class="enlace-secundario" href="../usuarios/">👥 Gestión de Usuarios</a>
     </header>
 
     <div id="estadoAcceso" class="mensaje">Verificando permisos de administración…</div>
@@ -33,9 +41,9 @@
     <section id="zonaAdministracion" hidden>
       <section class="panel selector-persona">
         <div>
-          <span class="panel__eyebrow">Persona a auditar</span>
+          <span class="panel__eyebrow">Persona a revisar</span>
           <h2>¿De quién quieres revisar el crecimiento?</h2>
-          <p>La Persona seleccionada se usa para la auditoría y para la vista previa. Nada de esta pantalla cambia sus Misiones, evidencias o Reconocimientos.</p>
+          <p>La Persona seleccionada se utiliza para el resumen, la vista previa y la auditoría.</p>
         </div>
         <div class="selector-persona__acciones">
           <label>
@@ -46,20 +54,78 @@
         </div>
       </section>
 
+      <section class="panel panel-resumen" aria-labelledby="tituloResumen">
+        <div class="panel__cabecera panel__cabecera--resumen">
+          <div>
+            <span class="panel__eyebrow">Situación actual</span>
+            <h2 id="tituloResumen">Resumen de crecimiento</h2>
+            <p id="textoResumen">Selecciona una Persona para revisar su recorrido.</p>
+          </div>
+        </div>
+
+        <div class="resumen" aria-label="Resumen de crecimiento">
+          <article class="resumen-card resumen-card--destacado">
+            <span>Etapa actual</span>
+            <strong id="resEtapa">—</strong>
+            <small id="resProgreso">—</small>
+          </article>
+          <article class="resumen-card">
+            <span>Misiones registradas</span>
+            <strong id="resTotal">0</strong>
+            <small>todas las Misiones leídas</small>
+          </article>
+          <article class="resumen-card">
+            <span>Misiones que hacen crecer</span>
+            <strong id="resElegibles">0</strong>
+            <small>completadas · visibles · reales</small>
+          </article>
+          <article class="resumen-card">
+            <span>Unidades de crecimiento</span>
+            <strong id="resUnidades">0</strong>
+            <small>aporte acumulado de las Misiones</small>
+          </article>
+          <article class="resumen-card">
+            <span>🧪 Pruebas excluidas</span>
+            <strong id="resPruebas">0</strong>
+            <small>no hacen crecer Mi Camino</small>
+          </article>
+          <article class="resumen-card">
+            <span>Ocultas excluidas</span>
+            <strong id="resOcultas">0</strong>
+            <small>no visibles para el alumno</small>
+          </article>
+          <article class="resumen-card">
+            <span>No completadas</span>
+            <strong id="resNoCompletadas">0</strong>
+            <small>todavía no aportan crecimiento</small>
+          </article>
+          <article class="resumen-card">
+            <span>Distribución por nivel</span>
+            <strong id="resNiveles">—</strong>
+            <small>Bajo · Medio · Alto</small>
+          </article>
+        </div>
+      </section>
+
       <section class="panel configuracion">
         <div class="panel__cabecera">
           <div>
             <span class="panel__eyebrow">Configuración global</span>
-            <h2>Reglas de crecimiento</h2>
+            <h2>Cómo crecen las Misiones</h2>
             <p>Los cambios se previsualizan sobre la Persona seleccionada antes de guardarlos.</p>
           </div>
           <div id="estadoConfiguracion" class="estado-config"></div>
         </div>
 
         <div class="explicacion-crecimiento" role="note">
-          <strong>Cómo leer estas reglas</strong>
-          <p><strong>Unidades</strong> es una medida técnica interna para escoger la etapa visual de Mi Camino. No son XP, puntos, notas ni una valoración de la Persona.</p>
-          <p>Una Misión real, visible y completada aporta <strong>peso 1, 2 o 3</strong> según su alcance observable. Las Misiones de prueba aportan siempre 0. Los <strong>umbrales</strong> indican desde cuántas unidades comienza cada etapa.</p>
+          <strong>Regla sencilla</strong>
+          <p>Cada Misión completada que forma parte del recorrido aporta al crecimiento de Mi Camino según su <strong>nivel</strong>.</p>
+          <div class="niveles-fijos" aria-label="Aporte por nivel">
+            <span><strong>🌱 Bajo</strong><b>1</b><small>unidad</small></span>
+            <span><strong>🌿 Medio</strong><b>2</b><small>unidades</small></span>
+            <span><strong>🌳 Alto</strong><b>3</b><small>unidades</small></span>
+          </div>
+          <p class="precedencia"><strong>¿De dónde sale el nivel?</strong> Misión específica → nivel propio de la actividad → Tema → Área → Medio.</p>
         </div>
 
         <div id="avisoVistaPrevia" class="aviso-preview" hidden>
@@ -68,42 +134,28 @@
 
         <form id="formConfiguracion">
           <fieldset>
-            <legend>🌱 Umbral de las 7 etapas</legend>
-            <p class="ayuda">Semilla empieza siempre en 0. Cada valor siguiente debe ser mayor que el anterior; al alcanzar un umbral cambia la ilustración visible.</p>
-            <div id="camposEtapas" class="grid-etapas"></div>
+            <legend>🧭 Nivel por Área y Tema</legend>
+            <p class="ayuda">Por defecto un Área es <strong>Media</strong>. Un Tema hereda el nivel de su Área mientras no se configure expresamente. Aquí se reutilizan los contextos reales de las Misiones; no se crea un segundo catálogo académico.</p>
+            <div class="tabla-scroll tabla-scroll--config">
+              <table class="tabla-niveles-contexto">
+                <thead>
+                  <tr>
+                    <th>Camino</th>
+                    <th>Área / módulo</th>
+                    <th>Nivel del Área</th>
+                    <th>Tema / actividad</th>
+                    <th>Nivel del Tema</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaNivelesContexto"></tbody>
+              </table>
+            </div>
           </fieldset>
 
           <fieldset>
-            <legend>⚖️ Reglas de peso 1 · 2 · 3</legend>
-            <p class="ayuda">El peso describe solo el alcance de una Misión elegible. Peso 3 tiene prioridad sobre Peso 2; si ninguna regla especial aplica, aporta 1 unidad.</p>
-            <div class="grid-reglas">
-              <label>
-                <span>Cantidad mínima → Peso 2</span>
-                <input id="cantidadEstandarMin" type="number" min="1" step="1" required>
-              </label>
-              <label>
-                <span>Cantidad mínima → Peso 3</span>
-                <input id="cantidadAmpliaMin" type="number" min="2" step="1" required>
-              </label>
-              <label>
-                <span>Minutos mínimos → Peso 2</span>
-                <input id="minutosEstandarMin" type="number" min="1" step="1" required>
-              </label>
-              <label>
-                <span>Minutos mínimos → Peso 3</span>
-                <input id="minutosAmpliaMin" type="number" min="2" step="1" required>
-              </label>
-            </div>
-            <div class="checks-reglas">
-              <label class="check-regla">
-                <input id="repasoAcademicoComoEstandar" type="checkbox">
-                <span><strong>Repaso académico → Peso 2</strong><small>Aplica aunque no alcance cantidad o minutos.</small></span>
-              </label>
-              <label class="check-regla">
-                <input id="tareaCombinadaComoAmplia" type="checkbox">
-                <span><strong>Tarea combinada → Peso 3</strong><small>Aplica antes que cualquier regla de Peso 2.</small></span>
-              </label>
-            </div>
+            <legend>🌱 Umbral de las 7 etapas</legend>
+            <p class="ayuda">Semilla empieza siempre en 0. Cada valor siguiente indica cuántas unidades acumuladas hacen falta para comenzar esa etapa.</p>
+            <div id="camposEtapas" class="grid-etapas"></div>
           </fieldset>
 
           <div id="errorConfiguracion" class="mensaje mensaje--error" hidden></div>
@@ -118,73 +170,34 @@
           <strong>Registro de configuración</strong>
           <span id="configCreada">Creada: —</span>
           <span id="configActualizada">Última modificación: —</span>
-          <small>Cambiar estas reglas puede recalcular la etapa visible. No borra Misiones, Reconocimientos ni evidencia.</small>
+          <small>Cambiar niveles o umbrales puede recalcular la etapa visible. No borra Misiones, Reconocimientos ni evidencia.</small>
         </aside>
-      </section>
-
-      <section class="resumen" aria-label="Resumen de crecimiento">
-        <article class="resumen-card resumen-card--destacado">
-          <span>Etapa actual</span>
-          <strong id="resEtapa">—</strong>
-          <small id="resProgreso">—</small>
-        </article>
-        <article class="resumen-card">
-          <span>Misiones registradas</span>
-          <strong id="resTotal">0</strong>
-          <small>todas las Misiones leídas</small>
-        </article>
-        <article class="resumen-card">
-          <span>Elegibles</span>
-          <strong id="resElegibles">0</strong>
-          <small>completadas · visibles · reales</small>
-        </article>
-        <article class="resumen-card">
-          <span>Unidades</span>
-          <strong id="resUnidades">0</strong>
-          <small>medida técnica acumulada</small>
-        </article>
-        <article class="resumen-card">
-          <span>🧪 Pruebas excluidas</span>
-          <strong id="resPruebas">0</strong>
-          <small>nunca hacen crecer el camino</small>
-        </article>
-        <article class="resumen-card">
-          <span>Ocultas excluidas</span>
-          <strong id="resOcultas">0</strong>
-          <small>no visibles para el alumno</small>
-        </article>
-        <article class="resumen-card">
-          <span>No completadas</span>
-          <strong id="resNoCompletadas">0</strong>
-          <small>todavía no aportan unidades</small>
-        </article>
-        <article class="resumen-card">
-          <span>Distribución de pesos</span>
-          <strong id="resPesos">—</strong>
-          <small>P1 · P2 · P3</small>
-        </article>
       </section>
 
       <section class="panel auditoria-misiones">
         <div class="panel__cabecera">
           <div>
             <span class="panel__eyebrow">Auditoría</span>
-            <h2>Contribución de cada Misión</h2>
+            <h2 id="tituloAuditoria">Contribución de cada Misión</h2>
             <p id="textoAuditoria">Selecciona una Persona para revisar sus Misiones.</p>
           </div>
           <div class="filtros">
             <input id="buscarMision" type="search" placeholder="Buscar Misión…" aria-label="Buscar Misión">
             <select id="filtroMision" aria-label="Filtrar Misiones">
               <option value="todas">Todas</option>
-              <option value="elegible">Elegibles</option>
+              <option value="elegible">Hacen crecer</option>
               <option value="prueba">🧪 Pruebas</option>
               <option value="oculta">Ocultas</option>
               <option value="no-completada">No completadas</option>
-              <option value="peso-1">Peso 1</option>
-              <option value="peso-2">Peso 2</option>
-              <option value="peso-3">Peso 3</option>
+              <option value="nivel-bajo">Nivel Bajo</option>
+              <option value="nivel-medio">Nivel Medio</option>
+              <option value="nivel-alto">Nivel Alto</option>
             </select>
           </div>
+        </div>
+
+        <div class="ayuda-auditoria">
+          <strong>Nivel específico</strong> permite hacer una excepción para una Misión concreta. Si se deja en <em>Automático</em>, la Academia aplica las reglas globales y el nivel propio de la actividad cuando existe.
         </div>
 
         <div class="tabla-scroll">
@@ -193,11 +206,11 @@
               <tr>
                 <th>Misión</th>
                 <th>Estado</th>
-                <th>Tipo / módulo</th>
-                <th>Cantidad</th>
-                <th>Min.</th>
-                <th>Peso</th>
-                <th>Por qué</th>
+                <th>Camino / contexto</th>
+                <th>Nivel calculado</th>
+                <th>Aporte</th>
+                <th>Nivel específico</th>
+                <th>Cómo se decidió</th>
               </tr>
             </thead>
             <tbody id="tablaMisiones"></tbody>
