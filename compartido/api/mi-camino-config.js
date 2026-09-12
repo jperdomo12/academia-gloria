@@ -24,6 +24,7 @@ function resultadoDesdeSnapshot(snapshot) {
   const datos = snapshot.exists() ? snapshot.data() : null;
   return {
     existe: snapshot.exists(),
+    schemaPersistido: Number(datos?.schemaVersion || 0),
     configuracion: normalizarConfiguracionCrecimiento(
       datos || CONFIGURACION_CRECIMIENTO_PREDETERMINADA
     ),
@@ -102,9 +103,9 @@ export async function guardarConfiguracionMiCamino(configuracion) {
   const ahoraServidor = serverTimestamp();
 
   const datos = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     etapas: validacion.configuracion.etapas,
-    reglasPeso: validacion.configuracion.reglasPeso,
+    nivelesContexto: validacion.configuracion.nivelesContexto,
     createdAt: anterior?.createdAt || ahoraServidor,
     createdBy: anterior?.createdBy || actor.uid,
     updatedAt: ahoraServidor,
