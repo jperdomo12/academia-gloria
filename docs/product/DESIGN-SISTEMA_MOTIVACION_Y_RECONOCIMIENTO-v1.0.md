@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial actual** | `docs/product/DESIGN-SISTEMA_MOTIVACION_Y_RECONOCIMIENTO-v1.0.md` |
-| **Versión del documento** | 1.2 |
+| **Versión del documento** | 1.3 |
 | **Estado** | Activo |
 | **Fecha inicial** | 01/09/2026 |
 | **Última actualización** | 12/09/2026 |
@@ -27,11 +27,14 @@
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Separa:** análisis educativo y motivación comparten evidencia, pero no son el mismo dominio. |
 | `compartido/api/reconocimientos.js` | **Implementa:** API actual de Reconocimientos humanos y Guacamayas. |
 | `mi-universo/mi-camino/reconocimientos-camino.js` | **Implementa:** presentación y reglas derivadas de Reconocimientos en Mi Camino. |
+| `compartido/modelos/mi-camino-crecimiento.js` | **Implementa:** modelo canónico compartido de crecimiento visual. |
+| `administracion/mi-camino/` | **Implementa:** auditoría y configuración administrativa del crecimiento. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 12/09/2026 | Juan Perdomo + AI Collaborator | Consolida la mecánica E ya implementada: siete etapas derivadas de Misiones reales, nivel técnico Bajo/Medio/Alto con aporte fijo 1/2/3, precedencia Misión → actividad → Tema → Área → Medio, configuración global schema v2 y excepción administrativa por Misión. Elimina contradicciones documentales que todavía describían E como pendiente. |
 | 1.2 | 12/09/2026 | Juan Perdomo + AI Collaborator | Activa la mecánica real de crecimiento de Mi Camino con siete etapas, ponderación 1/2/3 basada en alcance observable, exclusión de datos de prueba y Administración → Mi Camino para auditoría, vista previa y configuración global con auditoría. La etapa sigue siendo derivada: no se persiste por Persona. |
 | 1.1 | 03/09/2026 | Juan Perdomo + IA | Sincroniza el diseño con la implementación real posterior al rc1. Declara A1 y A2 implementadas, B1 implementada para Detectives, B2 implementada para Constancia/transparencia, guía visual para Gloria y marca/filtro de Recompensa en Gestión. Mantiene Récord Personal, Reto cooperativo y mecánica Semilla/Brote/Árbol como evoluciones diseñadas todavía no implementadas. Actualiza el modelo físico real, Persona Activa, eliminación, datos de prueba y fronteras de seguridad. |
 | 1.0-rc1 | 01/09/2026 | Juan Perdomo + IA | Consolidación fundacional previa a implementación: cinco pilares, cuatro mecanismos, seis Guacamayas, reglas de alta confianza para Lía, diseño de Récord Personal, seguridad, datos de prueba y plan incremental A1–E. |
@@ -72,9 +75,9 @@ Al 03/09/2026 existe una **primera capacidad operativa completa y usable** de Mo
 
 Eso significa que el bloque de producto **Recompensas v1** puede considerarse cerrado como primera entrega funcional.
 
-No significa que todas las fases conceptuales A–E estén programadas.
+No significa que todas las fases conceptuales A–E estuvieran programadas en esa fecha. Desde el 12/09/2026 la mecánica E de crecimiento visual también está implementada.
 
-| Bloque | Estado 03/09/2026 |
+| Bloque | Estado actual |
 |---|:---:|
 | A1 · Reconocimiento humano | ✅ Implementado y validado |
 | A2 · Guacamayas humanas | ✅ Implementado y validado |
@@ -84,11 +87,27 @@ No significa que todas las fases conceptuales A–E estén programadas.
 | Marca/filtro `🏅 Recompensa` en Gestión | ✅ Implementado y corregido |
 | C · Récord Personal | ⏳ Diseñado · no implementado |
 | D · Reto cooperativo | ⏳ Diseñado · no implementado |
-| E · Crecimiento visual de Mi Camino | ✅ Implementado · 7 etapas · ponderación configurable |
+| E · Crecimiento visual de Mi Camino | ✅ Implementado · 7 etapas · niveles Bajo/Medio/Alto |
 
-La mecánica de crecimiento visual está implementada y se deriva de Misiones reales completadas, visibles y no marcadas como prueba. Utiliza siete etapas —**Semilla → Brote → Plantita → Árbol joven → Árbol → Árbol con frutos → Árbol lleno de frutos**— y pesos 1/2/3 que representan únicamente alcance observable de la Misión, nunca valor personal, inteligencia o comparación entre alumnos.
+La mecánica de crecimiento visual se deriva de Misiones reales completadas, visibles y no marcadas como prueba. Utiliza siete etapas —**Semilla → Brote → Plantita → Árbol joven → Árbol → Árbol con frutos → Árbol lleno de frutos**— y un nivel técnico de crecimiento por Misión:
 
-La etapa no se guarda como dato de la Persona: se recalcula desde los hechos actuales y la configuración global. `Administración → Mi Camino` permite auditar cada contribución, previsualizar cambios y modificar umbrales/reglas de ponderación. La configuración persiste en `configuracion/miCamino` con `createdAt`, `createdBy`, `updatedAt` y `updatedBy`; los datos de prueba nunca aportan unidades.
+- **Bajo → 1 unidad**;
+- **Medio → 2 unidades**;
+- **Alto → 3 unidades**.
+
+Estas unidades son una medida interna para calcular el crecimiento visual. **No son XP, una nota, una moneda, una valoración de la Persona ni una clasificación competitiva.** El aporte 1/2/3 es fijo en esta versión.
+
+El nivel se resuelve mediante una única precedencia compartida:
+
+1. excepción específica de la Misión;
+2. nivel propio de la actividad cuando exista y sea reutilizable;
+3. nivel configurado del Tema;
+4. nivel configurado del Área o módulo;
+5. Medio como valor predeterminado.
+
+Una Misión sin excepción permanece en modo **Automático** y no necesita persistir una copia del nivel derivado.
+
+La etapa no se guarda como dato de la Persona: se recalcula desde los hechos actuales y la configuración global. `Administración → Mi Camino` permite auditar cada contribución, previsualizar cambios, configurar niveles por Área/Tema, ajustar umbrales y definir o retirar una excepción explícita por Misión. La configuración global evoluciona a `schemaVersion: 2` en `configuracion/miCamino`, conserva auditoría transversal y puede leer de forma compatible la configuración anterior durante la transición. Los datos de prueba nunca aportan unidades.
 
 ---
 
@@ -234,6 +253,8 @@ El Sistema NO utiliza como patrón:
 - comparación pública;
 - afirmaciones clínicas;
 - recompensas basadas en datos de prueba.
+
+Las unidades internas de crecimiento 1/2/3 no constituyen una economía de puntos: no se canjean, no se gastan, no se comparan entre Personas y no representan valor personal.
 
 Una recompensa correctamente concedida no se retira como disciplina.
 
@@ -535,13 +556,13 @@ Elementos conceptuales:
 
 > **Guacamaya es hito; no moneda.**
 
-> **Semilla/Brote/Árbol puede representar crecimiento visual sin constituir todavía una mecánica automática de niveles.**
+> **Semilla/Brote/Árbol representa crecimiento visual derivado de Misiones reales; no es una economía de puntos ni una clasificación del alumno.**
 
 ### Estado
 
 ✅ Guía visual implementada.
 
-⏳ Mecánica E de cambio de etapa todavía no implementada.
+✅ Mecánica E de cambio de etapa implementada mediante siete etapas y unidades técnicas derivadas de Misiones elegibles.
 
 ---
 
@@ -561,6 +582,7 @@ Elementos que pueden aparecer **solo cuando existen realmente**:
 - Reconocimientos derivados de Lía;
 - Guacamayas obtenidas;
 - Constancia;
+- etapa visual actual derivada de Misiones elegibles;
 - Récord Personal futuro cuando esté implementado;
 - Reto cooperativo futuro cuando exista.
 
@@ -599,11 +621,13 @@ Regla V1:
 
 La familia puede editarlo o elevarlo a Guacamaya.
 
+La configuración del nivel técnico que una Misión aporta a la mecánica E no forma parte de este flujo de Reconocimiento humano. Se administra separadamente en `Administración → Mi Camino`.
+
 ---
 
 ## 🗃️ 14. Modelo físico implementado
 
-Colección actual:
+Colección actual de Reconocimientos:
 
 ```text
 usuarios/{userIdPersonaActiva}/reconocimientos/{reconocimientoId}
@@ -647,6 +671,46 @@ fechaGuacamaya?
 fuenteSnapshot?       // si la fuente fue eliminada y el hito se conserva
 ```
 
+### 14.1 Modelo físico de crecimiento visual
+
+Configuración global:
+
+```text
+configuracion/miCamino
+```
+
+Schema v2:
+
+```text
+schemaVersion: 2
+etapas
+  semilla
+  brote
+  plantita
+  arbol-joven
+  arbol
+  arbol-con-frutos
+  arbol-lleno-de-frutos
+nivelesContexto
+  areas
+  temas
+createdAt
+createdBy
+updatedAt
+updatedBy
+```
+
+La excepción explícita de una Misión, cuando existe, se conserva como:
+
+```text
+usuarios/{userIdPersonaActiva}/tareas/{misionId}
+  nivelCrecimiento: bajo | medio | alto
+```
+
+La ausencia de `nivelCrecimiento` significa **Automático**. No se persiste el nivel calculado ni la etapa calculada por Persona.
+
+Durante la transición, el lector conserva compatibilidad con la configuración schema v1 para no exigir una migración destructiva de los umbrales ya existentes.
+
 ### Modelo conceptual futuro
 
 El diseño conserva capacidad conceptual para:
@@ -674,7 +738,8 @@ No puede:
 - crear Reconocimiento humano;
 - concederse Guacamayas;
 - modificar mensajes familiares;
-- ejecutar correcciones administrativas.
+- ejecutar correcciones administrativas;
+- modificar la configuración global de Mi Camino ni excepciones de nivel.
 
 ### Gestión relacionada / familia
 
@@ -687,7 +752,7 @@ Puede, según permisos:
 
 ### Administrador
 
-Gestión/corrección conforme al modelo global.
+Gestión/corrección conforme al modelo global, incluida la auditoría y configuración de crecimiento de Mi Camino.
 
 ### Regla crítica
 
@@ -708,6 +773,7 @@ Por ello:
 - una Misión `esDatoPrueba=true` no puede generar Reconocimiento humano;
 - las reglas derivadas excluyen Misiones de prueba;
 - Mi constancia excluye Misiones de prueba;
+- una Misión de prueba aporta **0 unidades** al crecimiento visual;
 - marcar posteriormente una fuente como prueba hace que un Reconocimiento derivado deje de presentarse si su regla depende de esa elegibilidad;
 - la limpieza de datos de prueba debe eliminar fuentes exactas, no usar heurísticas por fecha.
 
@@ -746,6 +812,8 @@ Esto es **corrección administrativa**, no pérdida motivacional.
 
 Un reconocimiento derivado depende de su fuente real; si la fuente deja de sostener el hecho, no debe seguir afirmándose como verificable.
 
+El crecimiento visual también es derivado: modificar una regla o una excepción puede recalcular la etapa visible sin borrar Misiones, evidencias ni Reconocimientos.
+
 ---
 
 ## 🏷️ 18. Integración con Gestión de Misiones
@@ -766,6 +834,8 @@ Gestión dispone de filtro específico compatible con:
 Regla de implementación validada:
 
 > el filtro Recompensa opera sobre el conjunto real de Misiones reconocidas, no solamente sobre la página actual del paginador.
+
+La mecánica E consume las Misiones como fuente real, pero su nivel técnico se resuelve en un modelo compartido. La administración de Área/Tema, umbrales y excepciones específicas pertenece a `Administración → Mi Camino`, evitando duplicar reglas en Gestión de Misiones.
 
 ---
 
@@ -833,6 +903,8 @@ Muchos requieren contexto humano porque el sistema no puede distinguir todavía 
 
 No premiar “más páginas” como regla automática por defecto.
 
+Los niveles reales que ya poseen actividades como Detectives o Lectura sí pueden reutilizarse como fuente técnica para el crecimiento visual; eso no convierte esos niveles en una valoración personal del alumno.
+
 ---
 
 ## ⚠️ 21. Limitaciones conocidas
@@ -844,7 +916,8 @@ Fortaleza:
 - sesiones independientes;
 - intentos;
 - pistas;
-- datos comparables.
+- datos comparables;
+- nivel propio reutilizable por la mecánica de crecimiento.
 
 Es la fuente actual de reglas automáticas B1 y sigue siendo candidato natural para Récord Personal futuro.
 
@@ -855,7 +928,8 @@ Parte del registro puede reutilizar el mismo documento por historia.
 Consecuencia:
 
 - no reconstruir retrospectivamente intenciones inexistentes;
-- no crear Récords de lectura sin histórico comparable.
+- no crear Récords de lectura sin histórico comparable;
+- reutilizar el nivel de lectura cuando una Misión lo delimita, sin confundirlo con una nota personal.
 
 ### Palabras para Crecer
 
@@ -1003,11 +1077,24 @@ Diseñado para Detectives; no implementado.
 
 Concepto aprobado; no implementado.
 
-### ⏳ E — Mecánica de crecimiento
+### ✅ E — Mecánica de crecimiento
 
-Concepto Semilla/Brote/Árbol aprobado como lenguaje visual.
+Implementado:
 
-La mecánica para determinar cambio de etapa todavía no está implementada y **no debe reducirse a `X puntos = etapa`**.
+- siete etapas visuales;
+- etapa derivada, nunca persistida manualmente por Persona;
+- solo Misiones completadas, visibles y reales aportan;
+- datos de prueba aportan 0;
+- nivel técnico Bajo/Medio/Alto con aporte fijo 1/2/3;
+- precedencia Misión → nivel propio de actividad → Tema → Área → Medio;
+- reutilización de niveles reales de Detectives/Lectura cuando aplica;
+- configuración global de Área/Tema y umbrales;
+- vista previa administrativa antes de guardar;
+- excepción explícita por Misión;
+- auditoría de configuración;
+- compatibilidad de lectura con schema v1 y persistencia v2.
+
+La mecánica no debe interpretarse como `X puntos = valor del alumno`. Las unidades son únicamente una medida técnica interna que determina el tramo visual actual.
 
 ---
 
@@ -1018,7 +1105,8 @@ No medir éxito solo por:
 - clics;
 - tiempo de pantalla;
 - sesiones;
-- cantidad de recompensas.
+- cantidad de recompensas;
+- unidades de crecimiento acumuladas.
 
 Buscar que:
 
@@ -1030,7 +1118,8 @@ Buscar que:
 - equivocarse no amenace lo conseguido;
 - la familia pueda aportar significado humano;
 - exista interés por volver;
-- la capa motivacional no distraiga del aprendizaje.
+- la capa motivacional no distraiga del aprendizaje;
+- la etapa visual sea comprensible sin convertir las unidades internas en objetivo transaccional.
 
 ---
 
@@ -1047,7 +1136,9 @@ Revisar periódicamente:
 - idoneidad del cooldown y límite diario;
 - necesidad real de Récord Personal;
 - necesidad real de Reto cooperativo;
-- si la metáfora Semilla/Brote/Árbol aporta sin convertirse en presión.
+- si las siete etapas de crecimiento aportan sin convertirse en presión;
+- calibración de umbrales con uso real;
+- si los niveles por Área/Tema siguen siendo comprensibles y mantenibles.
 
 No ampliar por completar un roadmap conceptual.
 
@@ -1066,7 +1157,7 @@ Ampliar porque el uso real demuestra valor.
 7. Unicidad de Guacamaya por categoría en V1.
 8. Solo Guacamayas obtenidas son visibles.
 9. Reconocimiento humano puede aplicarse a una Misión real completada.
-10. Datos de prueba quedan fuera de motivación real.
+10. Datos de prueba quedan fuera de motivación real y aportan 0 al crecimiento visual.
 11. Lía automatiza únicamente señales de alta confianza.
 12. Detectives dispone de B1 real.
 13. Constancia de 7 días dispone de B2 real.
@@ -1074,15 +1165,19 @@ Ampliar porque el uso real demuestra valor.
 15. Mi Camino → Así voy creciendo es hogar principal.
 16. Panda es guía, no recompensa.
 17. Guacamaya es hito, no moneda.
-18. Semilla → Brote → Árbol es metáfora visual aprobada; su mecánica automática sigue pendiente.
-19. Bosque es representación visual/emocional, no nivel competitivo.
-20. Récord Personal sigue diseñado, no implementado.
-21. Reto cooperativo sigue diseñado, no implementado.
-22. Menos pistas debe interpretarse como progreso personal antes que inferir autonomía.
-23. La UI no es frontera de seguridad.
-24. Fuentes y dependencias deben mantener trazabilidad suficiente.
-25. Si una fuente no puede demostrar una afirmación, la automatización se pospone.
-26. La primera entrega Recompensas v1 está cerrada sin obligar a implementar todas las fases futuras del diseño.
+18. La mecánica E está implementada con siete etapas derivadas de Misiones reales.
+19. Bajo/Medio/Alto son niveles técnicos de aporte 1/2/3; no etiquetas del alumno ni economía de XP.
+20. La precedencia canónica de nivel es Misión → actividad → Tema → Área → Medio.
+21. Una Misión sin excepción explícita permanece en Automático; no se persiste innecesariamente el nivel derivado.
+22. Administración → Mi Camino es el propietario de niveles por contexto, umbrales, auditoría y excepciones específicas.
+23. Bosque es representación visual/emocional, no nivel competitivo.
+24. Récord Personal sigue diseñado, no implementado.
+25. Reto cooperativo sigue diseñado, no implementado.
+26. Menos pistas debe interpretarse como progreso personal antes que inferir autonomía.
+27. La UI no es frontera de seguridad.
+28. Fuentes y dependencias deben mantener trazabilidad suficiente.
+29. Si una fuente no puede demostrar una afirmación, la automatización se pospone.
+30. La primera entrega Recompensas v1 está cerrada sin obligar a implementar todas las fases futuras del diseño.
 
 ---
 
@@ -1103,14 +1198,16 @@ Estas referencias orientaron el diseño inicial. No convierten la Academia en he
 
 ---
 
-## 🔎 29. Auditoría de coherencia V1.1
+## 🔎 29. Auditoría de coherencia V1.3
 
-La sincronización al 03/09 confirma:
+La sincronización al 12/09 confirma:
 
 ### Dato ≠ interpretación
 
 - menos pistas = progreso observable;
-- no prueba automática de autonomía.
+- no prueba automática de autonomía;
+- nivel técnico de crecimiento = aporte al mecanismo visual;
+- no es nivel de inteligencia, valor personal ni nota.
 
 ### Significado humano ≠ automatización
 
@@ -1119,16 +1216,23 @@ La sincronización al 03/09 confirma:
 
 ### Fuente débil = automatización pospuesta
 
-- Lectura/Palabras no reciben todavía las reglas automáticas inicialmente imaginadas.
+- Lectura/Palabras no reciben todavía las reglas automáticas de Reconocimiento inicialmente imaginadas.
 
 ### Implementado ≠ diseñado
 
-- A1/A2/B1/B2 son hechos reales;
-- C/D/E continúan como diseño/evolución.
+- A1/A2/B1/B2/E son hechos reales;
+- C/D continúan como diseño/evolución.
 
-### Visual ≠ mecánica
+### Visual + mecánica, sin economía de puntos
 
-- Semilla/Brote/Árbol puede explicar crecimiento aunque no exista algoritmo de etapas.
+- Semilla/Brote/Plantita/Árbol joven/Árbol/Árbol con frutos/Árbol lleno de frutos constituyen la mecánica visual actual;
+- las unidades 1/2/3 solo resuelven el crecimiento visual y no se presentan como moneda o puntuación personal.
+
+### Configuración ≠ dato personal persistido
+
+- se configuran Área/Tema y umbrales globales;
+- la etapa y el nivel automático se derivan;
+- solo una excepción explícita de Misión se persiste como tal.
 
 ### Corrección ≠ castigo
 
@@ -1141,15 +1245,17 @@ La sincronización al 03/09 confirma:
 | Campo | Valor |
 |---|---|
 | **Primera versión operativa** | Cerrada y disponible al 02/09/2026. |
-| **Implementado** | A1, A2, B1 Detectives, B2 Constancia/transparencia, guía visual y soporte de Gestión. |
-| **Diseñado / pendiente** | Récord Personal, Reto cooperativo y mecánica automática Semilla/Brote/Árbol. |
+| **Implementado** | A1, A2, B1 Detectives, B2 Constancia/transparencia, guía visual, soporte de Gestión y E Crecimiento visual de Mi Camino. |
+| **Diseñado / pendiente** | Récord Personal y Reto cooperativo. |
 | **Hogar visible** | `Mi Camino → Así voy creciendo`. |
+| **Administración del crecimiento** | `Administración → Mi Camino`. |
 | **Datos** | Actividad/progreso real; `🧪` excluido. |
+| **Crecimiento E** | 7 etapas derivadas; Bajo=1, Medio=2, Alto=3; precedencia Misión → actividad → Tema → Área → Medio. |
 | **Comparación** | Principalmente con uno mismo y solo cuando sea válida. |
 | **Guacamayas** | Hitos raros y significativos, nunca moneda. |
 | **Lía** | Solo hechos observables de alta confianza. |
 | **Familia** | Aporta significado humano y conserva control en decisiones de alto significado. |
-| **Estado** | Activo · v1.1 · sincronizado al 03/09/2026. |
+| **Estado** | Activo · v1.3 · sincronizado al 12/09/2026. |
 
 ---
 
@@ -1157,7 +1263,7 @@ La sincronización al 03/09 confirma:
 
 > **El Sistema de Motivación y Reconocimiento no premia obediencia ni perfección. Hace visible crecimiento real.**
 >
-> Las Guacamayas conservan momentos especiales. Lía pone palabras breves a hechos observables. La familia aporta el significado humano que ningún algoritmo conoce por completo. Los futuros Récords solo existirán cuando una comparación pueda demostrarse y los Retos cooperativos solo cuando exista cooperación real.
+> Las Guacamayas conservan momentos especiales. Lía pone palabras breves a hechos observables. La familia aporta el significado humano que ningún algoritmo conoce por completo. Mi Camino puede representar ese recorrido mediante etapas derivadas de hechos reales, sin convertir las unidades internas en una economía de puntos ni en una etiqueta personal. Los futuros Récords solo existirán cuando una comparación pueda demostrarse y los Retos cooperativos solo cuando exista cooperación real.
 >
 > La recompensa nunca será la razón principal para aprender.
 >
