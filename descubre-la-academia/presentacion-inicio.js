@@ -56,6 +56,7 @@ export function prepararPresentacionDescubreInicio() {
       Conoce en pocos minutos qué es este proyecto, sus dos grandes caminos y
       nuestra forma de aprender. <strong>Si es tu primera vez, dentro encontrarás
       una Guía rápida de uso</strong> para orientarte y empezar a explorar con confianza.
+      <strong>Haz clic en este bloque y conoce la Academia por dentro.</strong>
     `;
   }
 }
