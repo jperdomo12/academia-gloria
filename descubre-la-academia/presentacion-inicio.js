@@ -38,7 +38,8 @@ function asegurarAjusteDeAncho() {
       font-weight: 900;
     }
 
-    .descubre-academia .descubre-accion {
+    .descubre-academia .descubre-accion,
+    .mi-camino-principal .mi-camino-accion {
       color: #7c3aed;
       font-weight: 900;
     }
@@ -60,13 +61,33 @@ function reforzarMensajeMiCamino() {
   if (!mensaje) return;
 
   const ajustar = () => {
-    const texto = mensaje.textContent || "";
+    const textoActual = mensaje.textContent || "";
     const original = "¡todo está al día! Entra en Mi Camino";
     const reforzado = "¡todo está al día! Haz clic en este bloque y entra en Mi Camino";
+    const accion = "Haz clic en este bloque y entra en Mi Camino";
+    const textoFinal = textoActual.includes(original)
+      ? textoActual.replace(original, reforzado)
+      : textoActual;
 
-    if (texto.includes(original)) {
-      mensaje.textContent = texto.replace(original, reforzado);
+    if (!textoFinal.includes(accion)) return;
+
+    const destacadoActual = mensaje.querySelector(".mi-camino-accion");
+    if (destacadoActual && destacadoActual.textContent === accion && mensaje.textContent === textoFinal) {
+      return;
     }
+
+    const indiceAccion = textoFinal.indexOf(accion);
+    const antes = textoFinal.slice(0, indiceAccion);
+    const despues = textoFinal.slice(indiceAccion + accion.length);
+    const destacado = document.createElement("strong");
+    destacado.className = "mi-camino-accion";
+    destacado.textContent = accion;
+
+    mensaje.replaceChildren(
+      document.createTextNode(antes),
+      destacado,
+      document.createTextNode(despues)
+    );
   };
 
   ajustar();
@@ -97,7 +118,7 @@ export function prepararPresentacionDescubreInicio() {
     descripcion.innerHTML = `
       <span class="descubre-linea">Conoce en pocos minutos qué es este proyecto, sus dos grandes caminos y nuestra forma de aprender.</span>
       <span class="descubre-linea">Dentro también encontrarás una <strong class="descubre-guia">Guía rápida de uso</strong> para orientarte y empezar a explorar con confianza.</span>
-      <span class="descubre-linea descubre-accion">Haz clic y conoce la Academia por dentro.</span>
+      <span class="descubre-linea descubre-accion">Haz clic en este bloque y conoce la Academia por dentro.</span>
     `;
   }
 }
