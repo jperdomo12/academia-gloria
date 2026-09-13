@@ -3,7 +3,8 @@
    Acceso compacto a Bitácora de Acompañamiento desde Inicio
 
    Se muestra únicamente cuando el USER autenticado no tiene
-   rol alumno. La Persona Activa no cambia esta decisión.
+   rol alumno. El criterio usa el Rol real del USER; cambiar la
+   Persona Activa no modifica la visibilidad de este acceso.
    ========================================================== */
 
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
