@@ -9,7 +9,6 @@
 <link rel="icon" type="image/png" href="../assets/iconos/icono-principal.png?v=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../compartido/css/academia-base.css">
-<link rel="stylesheet" href="../compartido/css/panel-usuario.css">
 <link rel="stylesheet" href="./guia.css">
 <style>
 .guide-quick-access{
@@ -41,9 +40,14 @@
 <body>
 <main class="guide-shell">
 <header class="guide-topbar">
-<button id="backButton" class="guide-back" type="button">← Volver</button>
+<button
+  id="backButton"
+  class="boton-volver"
+  type="button"
+  data-accion-volver
+  data-ruta-alternativa="../"
+>← Volver</button>
 <a class="guide-quick-access" href="./guia-rapida.html">📘 Guía rápida · Empieza aquí →</a>
-<div class="guide-user-panel" data-panel-usuario></div>
 </header>
 
 <section class="guide-frame" aria-labelledby="guideTitle">
@@ -60,12 +64,9 @@
 </nav>
 </section>
 
-<p class="guide-hint">
-  ¿Buscas ayuda práctica para empezar?
-  <a href="./guia-rapida.html"><strong>📘 Abrir Guía rápida de uso</strong></a>
-</p>
 <p class="guide-hint">Puedes volver a esta guía cuando quieras desde las páginas principales de la Academia.</p>
 </main>
+<script src="../compartido/js/navegacion.js"></script>
 <script type="module" src="./guia.js"></script>
 </body>
 </html>

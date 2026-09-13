@@ -1,6 +1,3 @@
-import { auth } from "../compartido/firebase/firebase-config.js";
-import { iniciarPanelUsuario } from "../compartido/js/panel-usuario.js";
-
 const $ = id => document.getElementById(id);
 let slides = [];
 let currentIndex = 0;
@@ -43,25 +40,6 @@ function safeReturnUrl(){
 }
 
 const returnUrl = safeReturnUrl();
-
-async function initializeUserPanel(){
-  try{
-    await auth.authStateReady();
-
-    if(auth.currentUser){
-      await iniciarPanelUsuario({
-        contenedor:"[data-panel-usuario]",
-        loginUrl:"/academia-gloria/login.html",
-        mostrarPerfil:false
-      });
-    }else{
-      document.querySelector("[data-panel-usuario]")?.remove();
-    }
-  }catch(error){
-    console.warn("No fue posible iniciar el Panel de Usuario.", error);
-    document.querySelector("[data-panel-usuario]")?.remove();
-  }
-}
 
 async function loadSlides(){
   const response = await fetch("./contenido.json", {cache:"no-store"});
@@ -185,8 +163,6 @@ function goBack(){
   window.location.href = returnUrl;
 }
 
-$("backButton").onclick = goBack;
-
 $("previousButton").onclick = () => {
   if(currentIndex === 0) return;
   currentIndex -= 1;
@@ -210,7 +186,7 @@ document.addEventListener("keydown", event => {
 });
 
 try{
-  await Promise.all([initializeUserPanel(), loadSlides()]);
+  await loadSlides();
   render();
 }catch(error){
   console.error(error);
