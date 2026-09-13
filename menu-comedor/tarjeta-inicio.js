@@ -1,5 +1,6 @@
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
 import { crearAccesoHorarioInicio } from "../calendarios/horario/acceso-inicio.js";
+import { crearAccesoBitacoraInicio } from "../bitacora/acceso-inicio.js";
 import {
   obtenerMenuPorFecha,
   obtenerSiguienteMenuDesde
@@ -144,6 +145,10 @@ async function crearTarjeta() {
 
 crearAccesoHorarioInicio().catch(error => {
   console.warn("No se pudo mostrar el acceso rápido al horario.", error);
+});
+
+crearAccesoBitacoraInicio().catch(error => {
+  console.warn("No se pudo mostrar el acceso rápido a la Bitácora.", error);
 });
 
 crearTarjeta().catch(error => {
