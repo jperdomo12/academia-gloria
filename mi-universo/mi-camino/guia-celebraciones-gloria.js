@@ -1,10 +1,24 @@
 /* Academia Gloria Valentina · Mi Camino · Guía visual de celebraciones para Gloria */
 
+import {
+  ETAPAS_CRECIMIENTO
+} from "../../compartido/modelos/mi-camino-crecimiento.js";
+
 let instalada = false;
 let observador = null;
 let observadorConstancia = null;
 
 const TEXTO_ACCESO = "🌈 Las cosas bonitas que celebra la Academia";
+
+const FRASES_ETAPA = Object.freeze({
+  semilla: "Cuando empiezas",
+  brote: "Tus primeros pasos",
+  plantita: "Sigues creciendo",
+  "arbol-joven": "Ganas fuerza",
+  arbol: "Avanzas con constancia",
+  "arbol-con-frutos": "Tu esfuerzo da frutos",
+  "arbol-lleno-de-frutos": "Un camino lleno de frutos"
+});
 
 function cargarEstilos() {
   if (document.querySelector('link[data-guia-celebraciones-gloria-css="true"]')) return;
@@ -91,6 +105,29 @@ function instalarContextoRacha() {
   });
 }
 
+function rutaImagenEtapa(etapa) {
+  return new URL(
+    `../../assets/imagenes/mi-camino/crecimiento/${etapa.imagenArchivo}`,
+    import.meta.url
+  ).href;
+}
+
+function etapasCrecimientoMarkup() {
+  return ETAPAS_CRECIMIENTO.map(etapa => `
+    <article class="guia-gloria__etapa" data-guia-etapa="${etapa.id}">
+      <img
+        class="guia-gloria__etapa-imagen"
+        src="${rutaImagenEtapa(etapa)}"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      >
+      <strong>${etapa.nombre}</strong>
+      <small>${FRASES_ETAPA[etapa.id] || "Sigues avanzando"}</small>
+    </article>
+  `).join("");
+}
+
 function contenidoPaginaGloria() {
   return `
     <section
@@ -119,34 +156,18 @@ function contenidoPaginaGloria() {
         <div class="guia-gloria__seccion-titulo">
           <span aria-hidden="true">🌱</span>
           <div>
-            <h3 id="guiaGloriaCrecimientoTitulo">Mi árbol crece conmigo</h3>
-            <p>Cada aventura, cada intento y cada paso bonito ayudan a crecer tu camino.</p>
+            <h3 id="guiaGloriaCrecimientoTitulo">Mi camino crece conmigo</h3>
+            <p>Cada Misión que completas ayuda a que tu camino siga creciendo.</p>
           </div>
         </div>
 
-        <div class="guia-gloria__etapas" aria-label="Etapas de crecimiento">
-          <article class="guia-gloria__etapa guia-gloria__etapa--semilla">
-            <span aria-hidden="true">🌱</span>
-            <strong>Semilla</strong>
-            <small>Cuando empiezas</small>
-          </article>
-          <span class="guia-gloria__flecha" aria-hidden="true">→</span>
-          <article class="guia-gloria__etapa guia-gloria__etapa--brote">
-            <span aria-hidden="true">🌿</span>
-            <strong>Brote</strong>
-            <small>Cuando vas avanzando</small>
-          </article>
-          <span class="guia-gloria__flecha" aria-hidden="true">→</span>
-          <article class="guia-gloria__etapa guia-gloria__etapa--arbol">
-            <span aria-hidden="true">🌳</span>
-            <strong>Árbol</strong>
-            <small>Cuando tu camino crece mucho</small>
-          </article>
+        <div class="guia-gloria__etapas" aria-label="Siete etapas de crecimiento de Mi Camino">
+          ${etapasCrecimientoMarkup()}
         </div>
 
         <div class="guia-gloria__bosque">
-          <div class="guia-gloria__bosque-dibujo" aria-hidden="true">🌳 🌲 🌳</div>
-          <p><strong>Y todos tus pasos bonitos van formando tu bosque.</strong></p>
+          <div class="guia-gloria__bosque-dibujo" aria-hidden="true">🌱 → 🌳 → 🍎</div>
+          <p><strong>Cada etapa guarda una parte de todo lo que has recorrido.</strong></p>
         </div>
       </section>
 
