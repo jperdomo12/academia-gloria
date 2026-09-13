@@ -30,11 +30,20 @@ function asegurarAjusteDeAncho() {
   document.head.appendChild(estilos);
 }
 
+function retirarPistasDeInteraccion() {
+  document
+    .querySelectorAll(
+      ".descubre-academia .bloque-pista, .mi-camino-principal .bloque-pista"
+    )
+    .forEach(elemento => elemento.remove());
+}
+
 export function prepararPresentacionDescubreInicio() {
   const descubre = document.querySelector(".descubre-academia");
   if (!descubre) return;
 
   asegurarAjusteDeAncho();
+  retirarPistasDeInteraccion();
 
   const etiqueta = descubre.querySelector(".etiqueta-estado");
   if (etiqueta) {
