@@ -1,6 +1,7 @@
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
 import { crearAccesoHorarioInicio } from "../calendarios/horario/acceso-inicio.js";
 import { crearAccesoBitacoraInicio } from "../bitacora/acceso-inicio.js";
+import { crearAccesoGuiaRapidaInicio } from "../descubre-la-academia/acceso-guia-inicio.js";
 import {
   obtenerMenuPorFecha,
   obtenerSiguienteMenuDesde
@@ -142,6 +143,8 @@ async function crearTarjeta() {
 
   referencia.insertAdjacentElement("afterend", enlace);
 }
+
+crearAccesoGuiaRapidaInicio();
 
 crearAccesoHorarioInicio().catch(error => {
   console.warn("No se pudo mostrar el acceso rápido al horario.", error);
