@@ -1,6 +1,6 @@
 /**
  * Academia Gloria Valentina
- * Modelo central de navegación · v2.2
+ * Modelo central de navegación · v2.3
  *
  * Este archivo contiene únicamente datos.
  * No contiene HTML, CSS ni comportamiento visual.
@@ -140,7 +140,7 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
       },
       {
         id: "administracion-mi-camino",
-        titulo: "Mi Camino",
+        titulo: "Gestión de Mi Camino",
         icono: "🌳",
         ruta: "administracion/mi-camino/",
         nivelMinimo: "administracion",
