@@ -1,7 +1,7 @@
 import { obtenerPerfil } from "../compartido/js/perfil-usuario.js";
 import { crearAccesoHorarioInicio } from "../calendarios/horario/acceso-inicio.js";
 import { crearAccesoBitacoraInicio } from "../bitacora/acceso-inicio.js";
-import { prepararPresentacionDescubreInicio } from "../descubre-la-academia/presentacion-inicio.js?v=20260913-1240";
+import { prepararPresentacionDescubreInicio } from "../descubre-la-academia/presentacion-inicio.js?v=20260913-1305";
 import {
   obtenerMenuPorFecha,
   obtenerSiguienteMenuDesde
