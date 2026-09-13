@@ -43,6 +43,12 @@ function asegurarAjusteDeAncho() {
       color: #7c3aed;
       font-weight: 900;
     }
+
+    @media (max-width: 640px) {
+      .zona-secundaria {
+        grid-template-columns: 1fr;
+      }
+    }
   `;
 
   document.head.appendChild(estilos);
