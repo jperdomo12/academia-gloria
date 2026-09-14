@@ -120,13 +120,18 @@
       window.history.replaceState(window.history.state, "", rutaLimpia);
     }
 
+    function mostrarControl(elemento, mostrar) {
+      elemento.hidden = !mostrar;
+      elemento.style.display = mostrar ? "" : "none";
+    }
+
     function actualizarGuiaSegunSesion(usuario) {
       const conectado = Boolean(usuario);
       const quickLoginLink = document.getElementById("quickLoginLink");
       const entryDoorLink = document.getElementById("entryDoorLink");
 
-      quickLoginLink.hidden = conectado;
-      entryDoorLink.hidden = conectado;
+      mostrarControl(quickLoginLink, !conectado);
+      mostrarControl(entryDoorLink, !conectado);
 
       if (!conectado) return;
 
