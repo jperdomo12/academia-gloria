@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.6 |
+| **Versión** | 2.7 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/09/2026 |
@@ -28,6 +28,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
+| 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y deja Issue #108 listo para cierre. |
 | 2.6 | 14/09/2026 | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
 | 2.5 | 12/09/2026 | Cierra revisión visual `Así crece mi camino` y alinea el render inicial al modelo canónico de 7 etapas. |
 | 2.4 | 12/09/2026 | Cierra PR #122: niveles Bajo/Medio/Alto, configuración Área/Tema, auditoría, navegación, Rules v1/v2 y documentación v1.3. |
@@ -147,7 +148,9 @@ Issue: **#108 · P1 · Guía rápida + email de invitación para nuevos alumnos*
 
 ### 6.1 Estado real
 
-El paquete funcional fue trabajado y validado durante este ciclo, pero el Issue #108 **sigue OPEN y su cuerpo está desactualizado**. Después de resolver el defecto visual actual de `Academia de un vistazo`, sincronizar/cerrar el issue si no queda pendiente real.
+✅ **COMPLETADO y validado por el Product Owner.**
+
+El paquete de Guía rápida + invitaciones quedó cerrado. `Academia de un vistazo` también fue refinada y validada visualmente, eliminando el último defecto que mantenía abierto este frente. El Issue #108 puede permanecer cerrado como referencia histórica del trabajo.
 
 ### 6.2 Decisiones para las primeras invitaciones
 
@@ -184,6 +187,10 @@ El email quedó trabajado/cerrado como mensaje breve, cálido e institucional, a
 
 Tono preferido: **“Nos alegra compartir…”**.
 
+Referencia visual conservada en GitHub:
+
+`assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg`
+
 ---
 
 ## 🏠 7. Inicio y Descubre · refinamientos cerrados
@@ -215,64 +222,47 @@ Implementación:
 - bloques: Propósito, Cómo funciona, Así se vive la Academia, Lo que hace diferente a la Academia y Una historia real que sigue creciendo;
 - contenido general validado por el Product Owner.
 
-Hero aprobado en composición:
+Hero final aprobado:
 - Gloria a la izquierda;
 - título y subtítulo al centro;
-- guacamaya + Alumno/Familia/Profesionales/IA a la derecha.
+- guacamaya + Alumno/Familia/Profesionales/IA a la derecha;
+- ilustración de Gloria integrada mediante `assets/imagenes/personajes/gloria-academia-un-vistazo.webp`;
+- fondo de la ilustración ajustado para integrarse con el fondo menta del hero.
 
-`0eb6b928...` integró una primera Gloria inline. El Product Owner aprobó **posición y composición**, pero pidió sustituir el dibujo por una ilustración concreta seleccionada después.
+Secuencia final del fix:
+- `e1ff64f0...` · WebP válido de Gloria;
+- `b8c6d08b...` · ajuste visual del fondo de Gloria para integrarlo con el hero;
+- GitHub Pages #670 · `success`;
+- validación visual final del Product Owner: ✅ aprobada.
+
+El SVG defectuoso `assets/imagenes/personajes/gloria-academia-un-vistazo.svg` fue retirado al cerrar el punto.
+
+El brochure original se conserva como referencia visual de identidad en:
+
+`assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg`
 
 ---
 
-## 🔴 9. TRABAJO ON GOING · reparar ilustración de Gloria
+## ✅ 9. TRABAJO ON GOING
 
-Este es el **siguiente paso exacto** del nuevo chat.
+No hay trabajo On going activo al cierre de esta actualización.
 
-### 9.1 Requisito
+El frente `Academia de un vistazo` + Guía rápida + invitaciones queda cerrado. No reabrirlo salvo que aparezca una necesidad real de uso, un defecto verificable o una nueva decisión del Product Owner.
 
-Usar **exactamente el archivo seleccionado `Niña Gloria.jpg`** para reemplazar la niña del hero de `Academia de un vistazo`.
-
-No generar una nueva imagen. Si el nuevo chat no dispone del archivo, pedir únicamente que el Product Owner lo vuelva a adjuntar.
-
-La imagen seleccionada muestra una niña sentada junto a cuatro libros con los textos `Explora`, `Aprende`, `Crece`, `Sueña`, camiseta violeta, jeans y flor violeta en el cabello.
-
-### 9.2 Estado técnico actual
-
-- `8a9a633ff751509c5d13edda99eddb5738938318` crea `assets/imagenes/personajes/gloria-academia-un-vistazo.svg`.
-- `5ae3634350691add7993dc1ed84197c4d430e1c0` hace que `descubre-la-academia/guia.css` use ese asset como fondo de `.overview-girl` y oculte el SVG inline anterior.
-- GitHub Pages #665 terminó `success` técnicamente.
-- Validación visual del Product Owner: **fallida**; aparece el icono de imagen rota en lugar de Gloria.
-
-Causa verificada: el SVG contiene un `data:image/webp;base64,...` cuyo payload no es un WebP válido/completo. El build de Pages puede ser exitoso aunque el recurso interno no renderice.
-
-### 9.3 Corrección esperada
-
-```text
-mantener layout/posición aprobados
-+ sustituir únicamente el recurso roto
-+ usar el archivo exacto elegido
-+ validar desktop y móvil
-```
-
-Preferir un PNG/WebP válido como asset real. Si el conector de contenidos no admite binarios, usar Git Data API (`create_blob` con base64 → `create_tree` → `create_commit` → `update_ref`).
-
-El Product Owner autorizó este fix de bajo impacto **directamente en `main`**, tras verificar HEAD.
-
-### 9.4 Observación menor
+### 9.1 Observación menor no bloqueante
 
 Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. La Guía rápida limpia su propio retorno, pero no asumir que el anidamiento global está completamente resuelto. Tratarlo solo si vuelve a ser una necesidad real.
 
 ---
 
-## ⏳ 10. Backlog después del fix actual
+## ⏳ 10. Backlog posterior
 
-1. Sincronizar/cerrar Issue #108 si ya no queda pendiente de invitación.
-2. Explicar la configuración de peso/niveles de Misiones cuando el Product Owner lo retome.
-3. Velocidad de voz por Persona: `Normal / Pausada / Muy pausada` mediante mecanismo compartido.
-4. Mi Universo · comprensión de preguntas.
-5. Actividades sugeridas desde email, reutilizando capacidades existentes.
-6. Creciendo por Dentro · formalizar proceso de nuevas Semillas.
-7. Evaluar ChatGPT Work con un caso real de material escolar.
+1. Explicar la configuración de peso/niveles de Misiones cuando el Product Owner lo retome.
+2. Velocidad de voz por Persona: `Normal / Pausada / Muy pausada` mediante mecanismo compartido.
+3. Mi Universo · comprensión de preguntas.
+4. Actividades sugeridas desde email, reutilizando capacidades existentes.
+5. Creciendo por Dentro · formalizar proceso de nuevas Semillas.
+6. Evaluar ChatGPT Work con un caso real de material escolar.
 
 ---
 
@@ -296,18 +286,19 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 |---|---|
 | **Base canónica** | `main` |
 | **Baseline funcional cerrado** | `8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4` |
-| **HEAD de producto previo a este HandOff** | `5ae3634350691add7993dc1ed84197c4d430e1c0` |
+| **HEAD relevante al cierre** | verificar `main` al iniciar el siguiente trabajo |
 | **Rama On going** | Ninguna |
 | **PR On going** | Ninguna |
-| **Trabajo inmediato** | 🔴 Reparar ilustración de Gloria en `Academia de un vistazo` |
-| **Último Pages relevante** | #665 · deploy técnico exitoso; validación visual fallida |
+| **Trabajo inmediato** | Ninguno obligatorio; volver a uso prioritario y material real de 6.º |
+| **Último Pages relevante** | #670 · deploy exitoso y validado visualmente |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ Cerrada y validada |
 | **Horario / Menú / Calendario** | ✅ Cerrados |
 | **Guía rápida** | ✅ Publicada, orientada al alumno y sensible a sesión |
-| **Email de invitación** | ✅ Trabajado/cerrado en este ciclo |
-| **Academia de un vistazo** | 🟡 General aprobada; imagen de Gloria rota |
-| **Issue #108** | 🟡 OPEN y desactualizado |
+| **Email de invitación** | ✅ Cerrado |
+| **Academia de un vistazo** | ✅ Cerrada y validada |
+| **Brochure overview** | ✅ Conservado en `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
+| **Issue #108** | ✅ Cerrado/completado |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Carril curricular 6.º** | ✅ Activo |
 
@@ -315,17 +306,14 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 
 ## ▶️ 13. Siguiente paso exacto
 
-Al iniciar el nuevo chat:
+Al iniciar o retomar trabajo:
 
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main`;
-3. revisar `descubre-la-academia/guia.css`, `descubre-la-academia/guia.js` y `assets/imagenes/personajes/gloria-academia-un-vistazo.svg`;
-4. reemplazar el asset roto por el archivo `Niña Gloria.jpg` seleccionado;
-5. mantener layout/posición ya aprobados;
-6. desplegar y validar desktop + móvil;
-7. pedir solo validación visual final al Product Owner;
-8. sincronizar/cerrar Issue #108 si no queda otro pendiente;
-9. regresar a uso prioritario + material real de 6.º + resolución de issues reales.
+3. confirmar que no exista un nuevo trabajo On going antes de iniciar otro frente;
+4. continuar la **Fase de uso prioritario**;
+5. priorizar material real de 6.º, uso real de Gloria y resolución de issues reales;
+6. retomar el backlog solo cuando exista una decisión o necesidad concreta.
 
 ---
 
@@ -333,19 +321,20 @@ Al iniciar el nuevo chat:
 
 ## Trabajo On going
 
-> **Corregir el recurso visual de Gloria en `Academia de un vistazo`: el asset actual muestra imagen rota.**
+> **Ninguno.** El frente `Academia de un vistazo` + Guía rápida + invitaciones quedó cerrado y validado.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 2.6 |
+| **Versión** | 2.7 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | 🔴 Reparar imagen de Gloria |
+| **Trabajo On going** | Ninguno |
 | **PR On going** | Ninguno |
-| **Directo a main para este fix** | ✅ Autorizado por el Product Owner |
-| **Issue #108** | 🟡 OPEN; pendiente sincronización/cierre |
-| **Siguiente paso** | Reparar asset → validar → sincronizar/cerrar #108 → volver a uso prioritario |
+| **Issue #108** | ✅ Cerrado/completado |
+| **Academia de un vistazo** | ✅ Cerrada y validada |
+| **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
+| **Siguiente paso** | Uso prioritario → material real de 6.º → resolver issues reales |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
