@@ -116,6 +116,17 @@ audio{width:100%;margin-top:12px}
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center center;
+}
+
+/* Ajustes ópticos de portada: desplazamos ligeramente el contenido
+   de las Semillas 007 y 009 hacia abajo dentro del mismo marco 16:9. */
+.seed-card__image img[src$="semilla-007-puedo-elegir-diferente.jpg"]{
+  object-position:center 44%;
+}
+
+.seed-card__image img[src$="semilla-009-puedo-pasar-con-calma.jpg"]{
+  object-position:center 42%;
 }
 
 .seed-illustration{
