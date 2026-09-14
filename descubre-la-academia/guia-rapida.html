@@ -15,7 +15,7 @@
   <main class="quick-shell">
     <header class="quick-topbar">
       <a class="quick-back" href="./">← Volver a Descubre la Academia</a>
-      <a class="quick-login" href="../login.html">🔑 Entrar a la Academia</a>
+      <a id="quickLoginLink" class="quick-login" href="../login.html">🔑 Entrar a la Academia</a>
     </header>
 
     <article class="quick-card">
@@ -34,24 +34,24 @@
       <div class="quick-body">
         <section class="quick-section quick-section--entry" aria-labelledby="entrar">
           <h2 id="entrar">🔑 1. Entra por la Puerta Mágica</h2>
-          <p class="quick-section-intro">La <strong>Puerta Mágica</strong> es la entrada a tu Academia.</p>
+          <p id="entryIntro" class="quick-section-intro">La <strong>Puerta Mágica</strong> es la entrada a tu Academia.</p>
 
           <div class="quick-steps">
             <div class="quick-step quick-step--sky">
               <div class="quick-step-number">1</div>
-              <strong>Abre la Puerta Mágica</strong>
-              <p>Puedes entrar desde el enlace de bienvenida o usar este botón.</p>
-              <a class="quick-entry-link" href="../login.html">🔑 Abrir Puerta Mágica →</a>
+              <strong id="entryStep1Title">Abre la Puerta Mágica</strong>
+              <p id="entryStep1Text">Puedes entrar desde el enlace de bienvenida o usar este botón.</p>
+              <a id="entryDoorLink" class="quick-entry-link" href="../login.html">🔑 Abrir Puerta Mágica →</a>
             </div>
             <div class="quick-step quick-step--violet">
               <div class="quick-step-number">2</div>
-              <strong>Escribe tu usuario y tu Clave mágica</strong>
-              <p>Usa los datos que te enviaron y pulsa <em>Entrar a la Academia</em>.</p>
+              <strong id="entryStep2Title">Escribe tu usuario y tu Clave mágica</strong>
+              <p id="entryStep2Text">Usa los datos que te enviaron y pulsa <em>Entrar a la Academia</em>.</p>
             </div>
             <div class="quick-step quick-step--green">
               <div class="quick-step-number">3</div>
-              <strong>¡Ya estás dentro! ✨</strong>
-              <p>Desde Inicio puedes moverte por la Academia y volver siempre que quieras.</p>
+              <strong id="entryStep3Title">¡Ya estás dentro! ✨</strong>
+              <p id="entryStep3Text">Desde Inicio puedes moverte por la Academia y volver siempre que quieras.</p>
             </div>
           </div>
         </section>
@@ -106,5 +106,49 @@
 
     <p class="quick-footer">Academia Gloria Valentina · Aprender con calma, confianza, curiosidad y color. 🌈</p>
   </main>
+
+  <script type="module">
+    import { observarSesion } from "../compartido/firebase/firebase-auth.js";
+
+    function limpiarRetornoAnidado() {
+      const url = new URL(window.location.href);
+      if (!url.searchParams.has("volver")) return;
+
+      url.searchParams.delete("volver");
+      const query = url.searchParams.toString();
+      const rutaLimpia = `${url.pathname}${query ? `?${query}` : ""}${url.hash}`;
+      window.history.replaceState(window.history.state, "", rutaLimpia);
+    }
+
+    function actualizarGuiaSegunSesion(usuario) {
+      const conectado = Boolean(usuario);
+      const quickLoginLink = document.getElementById("quickLoginLink");
+      const entryDoorLink = document.getElementById("entryDoorLink");
+
+      quickLoginLink.hidden = conectado;
+      entryDoorLink.hidden = conectado;
+
+      if (!conectado) return;
+
+      document.getElementById("entrar").textContent = "🔑 1. Ya estás dentro de la Academia";
+      document.getElementById("entryIntro").innerHTML =
+        "Ya cruzaste la <strong>Puerta Mágica</strong>. Puedes seguir explorando sin volver a iniciar sesión.";
+
+      document.getElementById("entryStep1Title").textContent = "Ya cruzaste la Puerta Mágica ✨";
+      document.getElementById("entryStep1Text").textContent =
+        "Tu sesión está activa. No necesitas volver a entrar.";
+
+      document.getElementById("entryStep2Title").textContent = "Tus datos de acceso";
+      document.getElementById("entryStep2Text").textContent =
+        "Los necesitarás la próxima vez que la Academia te pida entrar.";
+
+      document.getElementById("entryStep3Title").textContent = "¡Sigue explorando! 🌈";
+      document.getElementById("entryStep3Text").textContent =
+        "Desde Inicio puedes moverte por la Academia y volver siempre que quieras.";
+    }
+
+    limpiarRetornoAnidado();
+    observarSesion(actualizarGuiaSegunSesion);
+  </script>
 </body>
 </html>
