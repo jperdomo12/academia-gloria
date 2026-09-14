@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "1.7",
   "modulo": "creciendo-por-dentro",
   "familias": [
     {
@@ -1197,6 +1197,168 @@
         "mensaje": "Has escuchado tu propia preferencia, has respetado la de tus amigas y has practicado cómo expresarte con amabilidad.",
         "lia": "Escuchar a tus amigas está bien. Escucharte a ti también. Puedes tener tus propios gustos y seguir siendo una buena amiga.",
         "frase": "Puedo elegir algo diferente y seguir siendo una buena amiga.",
+        "crecimiento": "brote"
+      }
+    },
+    {
+      "id": "cuando-un-plan-no-me-incluye",
+      "titulo": "Cuando un plan no me incluye",
+      "subtitulo": "Entiendo lo que siento y elijo cómo cuidarme.",
+      "familia": "relaciones",
+      "tipoSituacion": "colegio",
+      "emociones": [
+        "tristeza",
+        "decepcion",
+        "confusion",
+        "enfado",
+        "celos"
+      ],
+      "nivelApoyo": 2,
+      "duracionEstimada": 8,
+      "activo": true,
+      "recomendada": false,
+      "portada": {
+        "icono": "🤝",
+        "ilustracion": "🌤️",
+        "fondo": "lavanda"
+      },
+      "recursos": {
+        "imagen": "semilla-008-cuando-un-plan-no-me-incluye.jpg"
+      },
+      "bienvenida": {
+        "titulo": "Hoy practicaremos qué hacer cuando un plan no nos incluye",
+        "mensaje": "A veces unas amigas hacen un plan y nosotros no estamos en él. Eso puede doler o confundirnos, incluso si ya teníamos otro plan. Vamos a entender lo que sentimos y a elegir qué podemos hacer después.",
+        "lia": "Lo que sientes importa. Podemos mirarlo con calma, sin adivinar lo que otras personas piensan, paso a paso."
+      },
+      "situacion": {
+        "titulo": "Un plan sin mí",
+        "texto": "En el recreo, unas amigas hablan con ilusión de una actividad que harán después. Tú escuchas el plan y te das cuenta de que no te invitaron.",
+        "ilustracion": "👧🏽 💬 👭",
+        "audioTexto": "En el recreo, unas amigas hablan con ilusión de una actividad que harán después. Tú escuchas el plan y te das cuenta de que no te invitaron."
+      },
+      "pasos": [
+        {
+          "id": "observar",
+          "orden": 1,
+          "titulo": "¿Qué pasó de verdad?",
+          "ayuda": "Primero miramos el hecho. Todavía no necesitamos adivinar por qué ocurrió.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "o1",
+              "texto": "Mis amigas tienen un plan y yo no estoy invitada.",
+              "recomendada": true
+            },
+            {
+              "id": "o2",
+              "texto": "Ya no quieren ser mis amigas.",
+              "recomendada": false
+            },
+            {
+              "id": "o3",
+              "texto": "Seguro lo hicieron para hacerme daño.",
+              "recomendada": false
+            }
+          ],
+          "otraRespuesta": true,
+          "liaSiNecesitaApoyo": "A veces nuestra cabeza completa la historia muy rápido. ¿Buscamos primero una frase que diga solamente lo que ocurrió?"
+        },
+        {
+          "id": "sentir",
+          "orden": 2,
+          "titulo": "¿Cómo podrías sentirte?",
+          "ayuda": "Puede doler aunque tú también tengas otro plan. Puedes sentir más de una emoción al mismo tiempo.",
+          "tipo": "opcion-multiple",
+          "maximo": 3,
+          "opciones": [
+            {
+              "id": "s1",
+              "texto": "Triste",
+              "icono": "😢"
+            },
+            {
+              "id": "s2",
+              "texto": "Decepcionada",
+              "icono": "😞"
+            },
+            {
+              "id": "s3",
+              "texto": "Confundida",
+              "icono": "😕"
+            },
+            {
+              "id": "s4",
+              "texto": "Enfadada",
+              "icono": "😠"
+            },
+            {
+              "id": "s5",
+              "texto": "Celosa",
+              "icono": "😣"
+            },
+            {
+              "id": "s6",
+              "texto": "No estoy segura todavía",
+              "icono": "🤔"
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "recordar",
+          "orden": 3,
+          "titulo": "¿Qué podrías recordar para pensar con calma?",
+          "ayuda": "Un plan sin ti puede doler, pero no siempre explica toda una amistad.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "r1",
+              "texto": "No sé por qué no me invitaron, y eso no cambia lo que valgo."
+            },
+            {
+              "id": "r2",
+              "texto": "Puedo sentirme mal y aun así cuidarme."
+            },
+            {
+              "id": "r3",
+              "texto": "Un plan sin mí no significa automáticamente que ya no me quieran."
+            }
+          ],
+          "otraRespuesta": true
+        },
+        {
+          "id": "elegir",
+          "orden": 4,
+          "titulo": "¿Qué podrías hacer ahora?",
+          "ayuda": "No tienes que reaccionar enseguida. Puedes elegir una acción que te cuide y que encaje con tu situación.",
+          "tipo": "opcion-unica",
+          "opciones": [
+            {
+              "id": "e1",
+              "texto": "Si ya tengo otro plan, puedo seguir con él y disfrutarlo."
+            },
+            {
+              "id": "e2",
+              "texto": "Si no tengo plan, puedo elegir una actividad que me guste o buscar a otra persona con quien estar."
+            },
+            {
+              "id": "e3",
+              "texto": "Si necesito entenderlo, puedo preguntar con calma en otro momento."
+            },
+            {
+              "id": "e4",
+              "texto": "Si pasa muchas veces o me hace sentir muy mal, puedo hablar con un adulto de confianza."
+            }
+          ],
+          "otraRespuesta": true
+        }
+      ],
+      "plantillaRespuesta": "Hoy pasó que {observar} Me siento {sentir}. Puedo recordar que {recordar} Ahora puedo {elegir}",
+      "cierre": {
+        "titulo": "Has cuidado lo que sientes",
+        "mensaje": "Has separado lo que ocurrió de lo que todavía no sabes, has escuchado cómo te sientes y has elegido una forma de cuidarte.",
+        "lia": "Que un plan no te incluya puede doler. Tu valor no cambia por eso. Y si algo parecido ocurre muchas veces, puedes pedir ayuda a un adulto de confianza.",
+        "frase": "Que un plan no me incluya no cambia mi valor.",
         "crecimiento": "brote"
       }
     }
