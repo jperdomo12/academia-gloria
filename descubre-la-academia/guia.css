@@ -506,3 +506,28 @@ a {
     transition-duration: .01ms !important
   }
 }
+
+/* Academia de un vistazo: reutiliza la ilustración aprobada de Gloria. */
+.overview-girl {
+  min-height: 190px !important;
+  background-image: url("../assets/imagenes/personajes/gloria-academia-un-vistazo.svg") !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: contain !important;
+}
+
+.overview-girl svg {
+  display: none !important;
+}
+
+@media(max-width:820px) {
+  .overview-girl {
+    min-height: 175px !important;
+  }
+}
+
+@media(max-width:520px) {
+  .overview-girl {
+    min-height: 150px !important;
+  }
+}
