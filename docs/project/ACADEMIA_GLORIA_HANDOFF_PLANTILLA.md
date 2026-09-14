@@ -28,7 +28,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
-| 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y deja Issue #108 listo para cierre. |
+| 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
 | 2.6 | 14/09/2026 | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
 | 2.5 | 12/09/2026 | Cierra revisión visual `Así crece mi camino` y alinea el render inicial al modelo canónico de 7 etapas. |
 | 2.4 | 12/09/2026 | Cierra PR #122: niveles Bajo/Medio/Alto, configuración Área/Tema, auditoría, navegación, Rules v1/v2 y documentación v1.3. |
@@ -148,9 +148,9 @@ Issue: **#108 · P1 · Guía rápida + email de invitación para nuevos alumnos*
 
 ### 6.1 Estado real
 
-✅ **COMPLETADO y validado por el Product Owner.**
+✅ **CERRADO / COMPLETADO y validado por el Product Owner.**
 
-El paquete de Guía rápida + invitaciones quedó cerrado. `Academia de un vistazo` también fue refinada y validada visualmente, eliminando el último defecto que mantenía abierto este frente. El Issue #108 puede permanecer cerrado como referencia histórica del trabajo.
+El paquete de Guía rápida + invitaciones quedó cerrado. `Academia de un vistazo` también fue refinada y validada visualmente, eliminando el último defecto que mantenía abierto este frente. El Issue #108 queda cerrado como referencia histórica del trabajo.
 
 ### 6.2 Decisiones para las primeras invitaciones
 
