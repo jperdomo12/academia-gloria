@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.7 |
+| **Versión** | 2.8 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 14/09/2026 |
+| **Última actualización** | 15/09/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -22,12 +22,14 @@
 - `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` · arquitectura conceptual de experiencia.
 - `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` · identidad visual y personajes.
 - `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` · incorporación curricular de 6.º.
+- `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` · proceso oficial de creación de nuevas Semillas.
 - `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` · identidad, roles y accesos.
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
+| 2.8 | 15/09/2026 | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
 | 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
 | 2.6 | 14/09/2026 | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
 | 2.5 | 12/09/2026 | Cierra revisión visual `Así crece mi camino` y alinea el render inicial al modelo canónico de 7 etapas. |
@@ -140,6 +142,17 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 - Mi horario V1 · PR #96–#107 + #109/#110.
 - Recursos oficiales Gaudem 6.º/Matemáticas · PR #111–#113.
 
+### 5.4 Creciendo por Dentro · Semillas
+
+- Semilla 007 `Puedo elegir diferente` continúa activa y validada.
+- Semilla 008 `Cuando un plan no me incluye` quedó incorporada y validada por el Product Owner.
+- Semilla 009 `Puedo pasar con calma` quedó incorporada y validada visualmente; pendiente únicamente de prueba de uso real con Gloria, no de desarrollo.
+- El catálogo vigente es data-driven y reutiliza un Motor compartido.
+- Las miniaturas de 007 y 009 recibieron un ajuste óptico de encuadre para alinearse mejor con 008; validado por el Product Owner.
+- El proceso oficial de nuevas Semillas vive en `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
+- Flujo por defecto: necesidad real → diseño completo por AI Collaborator → imagen generada por AI Collaborator → validación → Product Owner sube el binario solo cuando la conexión GitHub no permita hacerlo → implementación/verificación por AI Collaborator → prueba real con Gloria.
+- Cuando Gloria aparece, debe mantenerse como personaje visual reconocible y coherente con las ilustraciones aprobadas anteriores.
+
 ---
 
 ## 🌈 6. Issue #108 · Guía rápida e invitaciones
@@ -247,7 +260,7 @@ El brochure original se conserva como referencia visual de identidad en:
 
 No hay trabajo On going activo al cierre de esta actualización.
 
-El frente `Academia de un vistazo` + Guía rápida + invitaciones queda cerrado. No reabrirlo salvo que aparezca una necesidad real de uso, un defecto verificable o una nueva decisión del Product Owner.
+El frente de nuevas Semillas 008/009 y la formalización de su proceso quedan cerrados como desarrollo/documentación. La Semilla 009 queda naturalmente sujeta a observación durante su uso real con Gloria, sin considerarse trabajo On going.
 
 ### 9.1 Observación menor no bloqueante
 
@@ -261,8 +274,7 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 2. Velocidad de voz por Persona: `Normal / Pausada / Muy pausada` mediante mecanismo compartido.
 3. Mi Universo · comprensión de preguntas.
 4. Actividades sugeridas desde email, reutilizando capacidades existentes.
-5. Creciendo por Dentro · formalizar proceso de nuevas Semillas.
-6. Evaluar ChatGPT Work con un caso real de material escolar.
+5. Evaluar ChatGPT Work con un caso real de material escolar.
 
 ---
 
@@ -276,6 +288,7 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 - Datos de prueba no contaminan análisis/reconocimientos.
 - Recursos oficiales del colegio son externos y diferenciados del contenido propio.
 - El nivel técnico de Mi Camino usa una sola precedencia canónica.
+- Nuevas Semillas deben reutilizar el Motor existente por defecto y seguir `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
 - No convertir ideas exploratorias en requisitos aprobados automáticamente.
 
 ---
@@ -290,13 +303,14 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 | **Rama On going** | Ninguna |
 | **PR On going** | Ninguna |
 | **Trabajo inmediato** | Ninguno obligatorio; volver a uso prioritario y material real de 6.º |
-| **Último Pages relevante** | #670 · deploy exitoso y validado visualmente |
+| **Último Pages funcional relevante** | #681 · ajuste visual de miniaturas de Semillas 007/009 desplegado con éxito |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ Cerrada y validada |
 | **Horario / Menú / Calendario** | ✅ Cerrados |
 | **Guía rápida** | ✅ Publicada, orientada al alumno y sensible a sesión |
 | **Email de invitación** | ✅ Cerrado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
+| **Creciendo por Dentro** | ✅ Semillas 008/009 incorporadas; proceso de nuevas Semillas formalizado |
 | **Brochure overview** | ✅ Conservado en `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
@@ -317,24 +331,25 @@ Al iniciar o retomar trabajo:
 
 ---
 
-# 🟣 Última actualización — 14/09/2026
+# 🟣 Última actualización — 15/09/2026
 
 ## Trabajo On going
 
-> **Ninguno.** El frente `Academia de un vistazo` + Guía rápida + invitaciones quedó cerrado y validado.
+> **Ninguno.** Semillas 008/009 y el proceso oficial de creación de nuevas Semillas están integrados; la Semilla 009 pasa a validación natural mediante uso real con Gloria.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 2.7 |
+| **Versión** | 2.8 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Ninguno |
 | **PR On going** | Ninguno |
+| **Nuevas Semillas** | ✅ 008/009 incorporadas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Uso prioritario → material real de 6.º → resolver issues reales |
+| **Siguiente paso** | Uso prioritario → material real de 6.º → resolver issues reales / evaluar backlog decidido |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
