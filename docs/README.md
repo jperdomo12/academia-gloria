@@ -10,10 +10,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.7 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 15/09/2026 |
+| **Última actualización** | 09/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -32,7 +32,6 @@
 | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` | **Continúa:** conserva el punto operativo vigente para retomar rápidamente el trabajo en otro chat. |
 | `docs/project/PROJECT_ROLES.md` | **Complementa:** roles, responsabilidades y autoridad. |
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | **Gobierna:** creación e incorporación de Temas Académicos, evidencia, expansión curricular y recursos oficiales de materia cuando corresponda. |
-| `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` | **Gobierna:** creación, imagen, integración, validación y cierre de nuevas Semillas con mínima intervención del Product Owner. |
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Implementa/documenta:** consumo de evidencias para análisis y fortalecimiento. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** colaboración humana estructurada mediante Bitácora de Acompañamiento V1. |
 | `docs/specifications/SPEC-HORARIO_CLASES.md` | **Define:** organización semanal personal mediante Mi horario de clases V1. |
@@ -42,7 +41,6 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.8 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como fuente propietaria del proceso de nuevas Semillas y añade su ruta de lectura oficial, consolidando el modelo de mínima intervención validado con las Semillas 008/009. |
 | 1.7 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras las entregas del inicio de curso 2026–2027: incorpora `SPEC-HORARIO_CLASES.md` y `SPEC-MENU_COMEDOR.md` como fuentes activas, añade rutas de lectura para organización escolar cotidiana y mantiene el estándar curricular como propietario del patrón de recursos oficiales por materia. |
 | 1.6 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras la estabilización documental posterior a Bitácora V1: hace explícita la ruta canónica `docs/ai/`, incorpora `SPEC-BITACORA_ACOMPANAMIENTO.md` como fuente propietaria activa y añade una ruta de lectura específica para colaboración/acompañamiento. |
 | 1.5 | 05/09/2026 | Product Owner + AI Collaborator | Añade un acceso visible **Iniciar un nuevo chat** que referencia el `📋 PROMPT RÁPIDO · NUEVO CHAT` de `AI_CHAT_BOOTSTRAP.md`, manteniendo una sola copia oficial y evitando duplicar el prompt en este portal. Actualiza además la ruta recomendada de continuidad para priorizar recuperación directa desde GitHub cuando esté conectado. |
@@ -294,22 +292,6 @@ La presentación, vista `solo` y PDF pueden evolucionar sin duplicar ni migrar e
 
 El flujo mensual debe mantener fidelidad a la fuente y evitar crear Firestore o arquitectura adicional para una necesidad simple.
 
-### 6.12 Crear una nueva Semilla de Creciendo por Dentro
-
-1. `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`;
-2. `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` cuando intervenga ilustración/personaje;
-3. `docs/standards/STD-LIA.md` para mensajes de acompañamiento;
-4. `mi-universo/creciendo-por-dentro/semillas.json` para el catálogo vigente;
-5. `mi-universo/creciendo-por-dentro/creciendo-por-dentro.js` solo si la necesidad no puede resolverse data-driven.
-
-Entrada normal suficiente para la familia:
-
-```text
-situación real / necesidad emocional o social
-```
-
-La AI Collaborator diseña la experiencia, genera la imagen cuando sea posible, mantiene continuidad visual de Gloria, implementa y verifica. El Product Owner interviene para decidir/validar y, cuando haga falta por limitación del conector, subir el archivo binario.
-
 ---
 
 ## 🔎 7. Principios de navegación documental
@@ -341,7 +323,7 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 ---
 
-## 📊 8. Estado documental al 15/09/2026
+## 📊 8. Estado documental al 09/09/2026
 
 ### Base consolidada
 
@@ -354,7 +336,6 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 - arquitectura de experiencia;
 - identidad visual;
 - estándar académico de 6.º y material escolar;
-- estándar de creación de nuevas Semillas de Creciendo por Dentro;
 - plantilla viva de HandOff para continuidad entre chats;
 - Bootstrap con prompt oficial único de nuevo chat;
 - especificación activa de Bitácora de Acompañamiento V1;
@@ -368,7 +349,6 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 - `SPEC-HORARIO_CLASES.md` — V1 implementada y aprobada de organización semanal personal;
 - `SPEC-MENU_COMEDOR.md` — V1 implementada de consulta mensual/cotidiana del comedor;
 - `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` — incorporación curricular mínima + evidencia obligatoria para nuevos Temas de 6.º + recursos oficiales de materia cuando corresponda;
-- `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` — proceso oficial de mínima intervención para diseñar, ilustrar, integrar, validar y cerrar nuevas Semillas;
 - `ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` — continuidad operativa y punto vigente mantenible entre chats;
 - `AI_CHAT_BOOTSTRAP.md` — incorporación de IA + única copia oficial del prompt rápido de nuevo chat.
 
@@ -378,4 +358,99 @@ La jornada de sincronización documental quedó cerrada el 04/09/2026. A partir 
 
 La estabilización del 09/09/2026 no reabre P0/P1/P2: sincroniza el sistema documental con las utilidades escolares y recursos de inicio de curso incorporados después del 06/09.
 
-La actualización del 15/09/2026 incorpora únicamente la nueva fuente propietaria de Semillas y la ruta necesaria para descubrirla.
+---
+
+## 🗃️ 9. `docs/history/`
+
+Contiene documentos que:
+
+- fueron sustituidos;
+- dejaron de ser fuente oficial;
+- representan una fotografía histórica;
+- o se conservan por trazabilidad.
+
+Cuando sea posible, un histórico debe indicar:
+
+- estado;
+- motivo de sustitución;
+- fecha;
+- documento vigente sucesor.
+
+No forma parte de la ruta normal de lectura.
+
+---
+
+## ✅ 10. Convenciones resumidas
+
+Las reglas completas viven en `DOCUMENTATION_STANDARD.md`.
+
+Recordatorio rápido:
+
+- metadatos coherentes;
+- 🕘 historial obligatorio y preservado;
+- estado canónico;
+- nombre estable para documentos activos;
+- una pregunta principal;
+- propietario claro;
+- referencias a fuentes relacionadas;
+- distinguir `Implementado / En desarrollo / Propuesto / Visión futura`;
+- no usar copias `final`, `nuevo`, `corregido` como estrategia de versionado;
+- iconos pueden mejorar escaneabilidad, pero **el texto es normativo**;
+- antes de declarar “Implementado”, contrastar producto real;
+- actualizar solo las fuentes afectadas.
+
+---
+
+## 🔄 11. Mantenimiento
+
+Actualizar este README cuando:
+
+- cambie la estructura de `docs/`;
+- aparezca/elimine una familia documental;
+- cambie de forma significativa la ruta de lectura;
+- se incorpore una fuente propietaria de alto impacto que deba ser visible desde el portal;
+- cambie el procedimiento general de incorporación de IA, continuidad entre chats o contenido académico.
+
+No requiere actualización por cada cambio interno de un documento.
+
+---
+
+## 📌 12. Decisiones adoptadas
+
+| ID | Decisión | Estado |
+|---|---|---|
+| README-001 | `docs/README.md` es el portal único de entrada a la documentación oficial. | Aprobada |
+| README-002 | La estructura visible debe reflejar todas las familias documentales activas reales. | Aprobada |
+| README-003 | `history/` es dominio no activo y queda fuera de la ruta normal de lectura. | Aprobada |
+| README-004 | Utilizar rutas de lectura proporcionales en lugar de exigir leer todo `docs/`. | Aprobada |
+| README-005 | Este README funciona como mapa y no duplica normativa de propietarios. | Aprobada |
+| README-006 | Mantener un resumen operativo de principios sin sustituir `DOCUMENTATION_STANDARD.md`. | Aprobada |
+| README-007 | Evolucionar documentos mediante cambios mínimos y preservar conocimiento válido. | Aprobada |
+| README-008 | Mantener una ruta específica para incorporación de Temas Académicos. | Aprobada |
+| README-009 | Los nuevos Temas de 6.º deben considerar desde su incorporación evidencia reutilizable por Análisis Educativo/fortalecimiento. | Aprobada |
+| README-010 | `PROJECT_MAP.md` forma parte de la ruta de orientación para localizar propietarios físicos/documentales. | Aprobada |
+| README-011 | La plantilla viva de HandOff es la entrada operativa preferida para recuperar continuidad reciente. | Aprobada |
+| README-012 | `AI_CHAT_BOOTSTRAP.md` conserva la única copia oficial del prompt rápido de nuevo chat; este portal únicamente la enlaza. | Aprobada |
+| README-013 | `docs/ai/` es la ruta canónica de documentación para IA; no se mantiene un alias paralelo `docs/ia/`. | Aprobada |
+| README-014 | Bitácora de Acompañamiento dispone de ruta documental explícita desde el portal y su especificación es propietaria del comportamiento funcional. | Aprobada |
+| README-015 | Las utilidades escolares con contrato propio —Horario y Menú del Cole— deben tener una ruta documental explícita desde este portal. | Aprobada |
+
+---
+
+## ✅ DECISIÓN
+
+| Campo | Valor |
+|---|---|
+| **Estado** | Activo |
+| **Versión activa** | 1.7 |
+| **Última sincronización** | 09/09/2026 |
+| **Portal documental** | `docs/README.md` |
+| **Ruta canónica para IA** | `docs/ai/` |
+| **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |
+| **Gobierno de estructura** | `DOCUMENTATION_ARCHITECTURE.md` |
+| **Gobierno de calidad/formato** | `DOCUMENTATION_STANDARD.md` |
+| **Mapa físico/propietarios** | `project/PROJECT_MAP.md` |
+| **Continuidad entre chats** | `project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
+| **Principio** | Leer proporcionalmente, localizar propietario, reutilizar y consolidar solo conocimiento estable. |
+
+**Impacto:** Navegación · Arquitectura Documental · Onboarding · Continuidad · Trazabilidad · Incorporación Académica · Colaboración · Organización Escolar
