@@ -4,13 +4,13 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 15/09/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Diseño, imagen, incorporación, validación y cierre de nuevas Semillas del módulo `Creciendo por Dentro` |
+| **Ámbito** | Diseño, imagen, incorporación, validación, documentación de acompañamiento y cierre de nuevas Semillas del módulo `Creciendo por Dentro` |
 
 ## 🔗 Documentos relacionados
 
@@ -21,15 +21,18 @@
 | `docs/product/PRODUCT_EXPERIENCE_ARCHITECTURE.md` | **Gobierna:** experiencia general del alumno y relación con los dominios del producto. |
 | `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` | **Gobierna:** lenguaje visual, coherencia de personajes, generación mediante IA y validación en contexto. |
 | `docs/standards/STD-LIA.md` | **Gobierna:** tono, ayuda gradual y límites del acompañamiento de Lía. |
+| `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` | **Explica:** significado, objetivo, práctica y aspectos observables de cada Semilla para familias y profesionales. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Gobierna:** construcción, validación y cierre de cambios del producto. |
 | `mi-universo/creciendo-por-dentro/semillas.json` | **Implementa:** catálogo vigente de Semillas y contenido data-driven. |
 | `mi-universo/creciendo-por-dentro/creciendo-por-dentro.js` | **Implementa:** Motor compartido de la experiencia. |
+| `mi-universo/creciendo-por-dentro/guia-familias-profesionales.html` | **Presenta:** guía web para usuarios adultos autorizados. |
 | `assets/imagenes/creciendo-por-dentro/semillas/` | **Implementa:** ilustraciones activas de las Semillas. |
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora al cierre estándar de una nueva Semilla la actualización de la guía oficial para familias/profesionales y de sus presentaciones derivadas vigentes. Evita que catálogo, documentación de acompañamiento y guía web queden desincronizados. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Formaliza el flujo validado durante la creación de las Semillas 007–009: necesidad real → diseño pedagógico → imagen generada por IA manteniendo continuidad visual de Gloria → subida mínima del binario por el Product Owner cuando sea necesaria → integración técnica por la AI Collaborator → validación de Pages → prueba real con Gloria. Reduce al mínimo la intervención manual del Product Owner y establece Quality Gate funcional, emocional, visual y técnico. |
 
 ---
@@ -57,6 +60,7 @@ Este estándar gobierna:
 - continuidad visual de Gloria cuando aparezca;
 - reparto de responsabilidades Product Owner / AI Collaborator;
 - integración directa con el Motor existente;
+- actualización de la documentación de acompañamiento;
 - validación técnica y visual;
 - prueba real y ajustes posteriores.
 
@@ -136,9 +140,10 @@ La AI Collaborator debe asumir, salvo bloqueo material:
 8. mantener continuidad visual de Gloria y de la Academia;
 9. incorporar la Semilla a `semillas.json`;
 10. actualizar la versión del catálogo cuando corresponda;
-11. realizar ajustes mínimos del Motor/CSS solo si son realmente necesarios;
-12. verificar commit, consistencia y GitHub Pages;
-13. entregar la experiencia lista para prueba real.
+11. actualizar la guía oficial para familias/profesionales y sus presentaciones derivadas vigentes;
+12. realizar ajustes mínimos del Motor/CSS solo si son realmente necesarios;
+13. verificar commit, consistencia y GitHub Pages;
+14. entregar la experiencia lista para prueba real.
 
 ### 5.3 Intervención mínima del Product Owner
 
@@ -367,6 +372,26 @@ No se añade una propiedad nueva al contrato únicamente para una Semilla si el 
 
 Si una necesidad demuestra valor transversal, puede evolucionarse el contrato compartido mediante el cambio mínimo necesario.
 
+### 8.1 Documentación de acompañamiento
+
+Toda nueva Semilla activa debe quedar explicada también en:
+
+```text
+docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md
+```
+
+La guía debe conservar el orden **de la Semilla más nueva a la más antigua** y explicar, con lenguaje orientado a familias/profesionales:
+
+- situación que aborda;
+- objetivo principal;
+- cómo se practica;
+- qué puede ser útil observar;
+- mensaje clave.
+
+Esta guía es la fuente documental de acompañamiento. Las presentaciones derivadas vigentes —actualmente la guía web dentro de Academia y, cuando se genere para compartir, el PDF— deben mantenerse coherentes con ella.
+
+La guía no convierte respuestas del alumno en evaluación clínica ni diagnóstico.
+
 ---
 
 ## ✅ 9. Quality Gate antes de darla por lista
@@ -386,6 +411,8 @@ Una nueva Semilla se considera técnicamente lista cuando:
 - Gloria mantiene continuidad visual cuando aparece;
 - otras personas no se representan como antagonistas sin fundamento;
 - `semillas.json` sigue siendo válido;
+- la guía oficial para familias/profesionales incluye la nueva Semilla;
+- la presentación web para adultos está sincronizada cuando aplica;
 - el Motor existente sigue funcionando;
 - la imagen carga desde la ruta oficial;
 - el catálogo se ve equilibrado;
@@ -435,16 +462,19 @@ No se debe modificar inmediatamente una Semilla por una reacción aislada sin en
 5. IMPLEMENTACIÓN
    AI Collaborator actualiza catálogo/versión y solo toca Motor si es necesario
 
-6. VERIFICACIÓN
-   JSON + imagen + UI + commit + GitHub Pages
+6. DOCUMENTACIÓN DE ACOMPAÑAMIENTO
+   AI Collaborator actualiza la guía oficial y sus presentaciones derivadas vigentes
 
-7. PRUEBA REAL
+7. VERIFICACIÓN
+   JSON + imagen + UI + guía + commit + GitHub Pages
+
+8. PRUEBA REAL
    Product Owner / familia / Gloria usan la Semilla
 
-8. AJUSTE
+9. AJUSTE
    AI Collaborator corrige solo necesidades observadas
 
-9. CIERRE
+10. CIERRE
    Product Owner aprueba; conocimiento estable permanece en GitHub
 ```
 
@@ -464,6 +494,7 @@ Evitar:
 - presentar exposición forzada como única estrategia;
 - eliminar la posibilidad de pedir ayuda;
 - modificar el Motor por comodidad cuando el catálogo basta;
+- añadir una Semilla al catálogo sin actualizar su explicación para familias/profesionales;
 - documentar cada Semilla en un archivo separado;
 - mantener procesos paralelos fuera de esta fuente propietaria.
 
@@ -475,11 +506,12 @@ Este estándar debe revisarse cuando:
 
 - una nueva Semilla requiera cambiar materialmente el contrato del Motor;
 - cambie la forma habitual de generar/subir imágenes;
+- cambie la forma de mantener o presentar la guía para familias/profesionales;
 - se consolide una nueva regla pedagógica reutilizable;
 - cambie la identidad visual de Gloria;
 - o varias experiencias reales demuestren que una regla aquí descrita ya no funciona.
 
-No requiere nueva versión por cada Semilla incorporada cuando esta cumple el proceso existente.
+No requiere nueva versión por cada Semilla incorporada cuando esta cumple el proceso existente. La guía de acompañamiento, en cambio, sí debe actualizarse para reflejar cada nueva Semilla activa.
 
 ---
 
@@ -493,9 +525,9 @@ necesidad familiar / educativa
 → imagen generada por AI Collaborator
 → validación del Product Owner
 → subida manual del binario solo cuando sea técnicamente necesaria
-→ implementación y verificación por AI Collaborator
+→ implementación por AI Collaborator
+→ actualización de la guía para familias/profesionales
+→ verificación por AI Collaborator
 → prueba real con Gloria
 → ajuste si la evidencia de uso lo justifica
 ```
-
-La continuidad visual de Gloria y la coherencia emocional de la escena son requisitos del proceso, no detalles opcionales.
