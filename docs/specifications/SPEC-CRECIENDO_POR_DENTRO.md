@@ -5,10 +5,10 @@
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO.md` |
 | **Código** | SPEC-CRECIENDO_POR_DENTRO |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 15/09/2026 |
 | **Propietario** | Producto · Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Comportamiento funcional del módulo Creciendo por Dentro y su Motor de Semillas |
@@ -21,6 +21,8 @@
 | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta/complementa:** principios estables de producto. |
 | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` | **Diseña:** decisiones de producto del Motor de Semillas. |
 | `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` | **Modela:** patrón Motor → sesión → evidencia. |
+| `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` | **Gobierna:** creación, imagen, integración, documentación y cierre de nuevas Semillas. |
+| `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` | **Explica:** propósito, práctica y aspectos observables de las Semillas para familias y profesionales. |
 | `docs/standards/STD-LIA.md` | **Gobierna:** comportamiento transversal de Lía. |
 | `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md` | **Gobierna:** Misiones, evidencia, finalización, revisión y Persona Activa. |
 | `docs/standards/STD-SEGUIMIENTO_Y_MOTIVACION.md` | **Gobierna:** seguimiento y motivación no punitiva. |
@@ -32,6 +34,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora la guía para familias y profesionales como capacidad real del módulo: acceso desde Creciendo por Dentro para USER adultos autorizados, separación respecto de la experiencia infantil, uso del Rol autenticado para decidir visibilidad y documentación de acompañamiento sincronizada con el catálogo. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Activa la especificación contra el producto implementado. Corrige ruta/modelo relacionados, sustituye lenguaje de piloto futuro por estado real, alinea Semilla/Misión con STD-011, incorpora Persona Activa, catálogo `semillas.json`, sesión + evidencia, historial actual, límites de voz/privacidad y separa Jardín completo/backlog como evolución futura. |
 | 1.1 | Agosto 2026 | Product Owner + AI Collaborator | Incorporó expresión oral, grabación, integración con Misiones, contenido configurable, historial e insumos del piloto. |
 | 1.0 | Agosto 2026 | Product Owner + AI Collaborator | Primera definición integral de Creciendo por Dentro, Semillas y primera experiencia inspirada en DESC. |
@@ -75,7 +78,9 @@ La capacidad actual dispone de:
 - historial de Semillas guardadas;
 - Persona Activa;
 - navegación compartida y retorno contextual;
-- cierre positivo y celebración.
+- cierre positivo y celebración;
+- guía de Semillas para familias y profesionales;
+- acceso a esa guía desde el propio módulo únicamente para USER adultos autorizados.
 
 La existencia de ideas históricas como un Jardín Personal completo o informes longitudinales **no significa que estén implementadas**.
 
@@ -172,6 +177,49 @@ La sesión, historial y evidencia deben pertenecer al contexto correcto.
 Un adulto relacionado puede consultar el trabajo únicamente conforme a su Relación/nivel y a las reglas de seguridad vigentes.
 
 La UI no sustituye Firestore Rules.
+
+### 5.1 Guía para familias y profesionales
+
+Creciendo por Dentro dispone de una guía explicativa orientada a adultos:
+
+```text
+mi-universo/creciendo-por-dentro/guia-familias-profesionales.html
+```
+
+Su propósito es explicar, en lenguaje comprensible:
+
+- qué son las Semillas;
+- cómo utilizarlas y acompañarlas;
+- cómo pueden interpretarse prudencialmente en conversación con profesionales;
+- qué situación aborda cada Semilla;
+- cuál es su objetivo;
+- cómo se practica;
+- qué puede ser útil observar;
+- y cuál es su mensaje clave.
+
+La guía **no forma parte de la experiencia infantil de Gloria** y no debe convertirse en una capa de evaluación sobre sus respuestas.
+
+La visibilidad se decide por el **Rol del USER autenticado**, no por la Persona Activa. Esto permite que un padre/profesional autorizado consulte la guía incluso cuando la Persona Activa sea Gloria.
+
+Regla vigente:
+
+```text
+USER con rol alumno
+→ no ve el acceso y no entra en la guía
+
+USER adulto autorizado
+→ puede acceder a la guía
+```
+
+Si un USER con rol `alumno` intenta abrir la URL directamente, la aplicación retorna al módulo.
+
+La fuente documental de acompañamiento es:
+
+```text
+docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md
+```
+
+La presentación web debe mantenerse coherente con esa guía oficial y con el catálogo activo.
 
 ---
 
@@ -456,6 +504,8 @@ Principios:
 
 La implementación actual permite que usuarios autorizados por el modelo de Persona Activa consulten sesiones conforme a las reglas vigentes. Cualquier ampliación de acceso requiere decisión explícita de producto y seguridad.
 
+La guía para familias/profesionales explica el propósito y funcionamiento de las Semillas; **no concede por sí misma acceso adicional a sesiones, respuestas o datos personales**.
+
 ---
 
 ## 🎨 15. UX y accesibilidad
@@ -473,6 +523,8 @@ La experiencia debe:
 - evitar saturación visual;
 - respetar `prefers-reduced-motion` cuando exista animación relevante;
 - funcionar en escritorio, tablet y móvil.
+
+La guía para familias/profesionales debe permanecer visualmente separada del flujo infantil y utilizar la navegación global estándar de Academia.
 
 La identidad visual se rige además por los documentos de identidad vigentes.
 
@@ -534,6 +586,9 @@ Al revisar cambios de este módulo comprobar, según alcance:
 - historial;
 - Persona Activa;
 - navegación/retorno;
+- acceso adulto a la guía;
+- ocultación/redirección de la guía para rol `alumno`;
+- coherencia entre catálogo, guía oficial y presentación web cuando se incorpora una nueva Semilla;
 - responsive;
 - errores comprensibles;
 - ausencia de lenguaje evaluativo o clínico.
@@ -578,7 +633,7 @@ Pueden evaluarse en el futuro, mediante decisión separada:
 - niveles de apoyo más ricos;
 - Jardín Personal completo;
 - recomendaciones revisadas;
-- participación familiar ampliada;
+- participación familiar ampliada más allá de la guía actual;
 - nuevas modalidades de interacción;
 - análisis educativo más sofisticado pero no clínico;
 - visualizaciones longitudinales prudentes.
@@ -607,6 +662,7 @@ El roadmap detallado pertenece a `docs/project/ROADMAP.md`.
 14. El Jardín Personal completo sigue siendo evolución futura.
 15. La familia/profesionales pueden acompañar únicamente dentro de permisos y responsabilidades autorizados.
 16. El producto se valida con uso real sin convertir observaciones de una Persona en reglas universales automáticas.
+17. La guía de Semillas para familias/profesionales es una capacidad adulta separada de la experiencia infantil; su visibilidad depende del Rol del USER autenticado y debe mantenerse sincronizada con la guía documental oficial y el catálogo activo.
 
 ---
 
@@ -628,8 +684,10 @@ No actualizarla por:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.2 |
+| **Versión activa** | 1.3 |
 | **Capacidad base** | Implementada |
 | **Fuente funcional** | Esta SPEC |
 | **Diseño complementario** | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` |
+| **Proceso de nuevas Semillas** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
+| **Guía de acompañamiento** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
 | **Implementación** | `mi-universo/creciendo-por-dentro/` + `compartido/api/academia.js` |
