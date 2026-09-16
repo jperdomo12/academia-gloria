@@ -74,6 +74,36 @@ const ACTIVIDADES = Object.freeze([
         descripcion: "Elegir y encadenar los pasos necesarios dentro de una situación con fracciones."
       }
     })
+  },
+  {
+    actividadId: "6-science-organizacion-seres-vivos",
+    titulo: "Organización de los seres vivos",
+    icono: "🔬",
+    curso: "6.º",
+    materia: "Science",
+    destinoUrl: "../../cursos/6to/science/organizacion-seres-vivos/",
+    bloques: Object.freeze({
+      "vida-procesos": {
+        icono: "🌍",
+        titulo: "Vida y procesos vitales",
+        descripcion: "Biodiversidad, condiciones para la vida e interacción, nutrición y reproducción."
+      },
+      "celulas-organismos": {
+        icono: "🔬",
+        titulo: "Células y organismos",
+        descripcion: "Partes de la célula y diferencia entre organismos unicelulares y pluricelulares."
+      },
+      "organizacion-pluricelular": {
+        icono: "🧩",
+        titulo: "Niveles de organización",
+        descripcion: "Relación entre célula, tejido, órgano, sistema y cuerpo humano."
+      },
+      "sistemas-procesos": {
+        icono: "🫀",
+        titulo: "Sistemas y procesos vitales",
+        descripcion: "Cómo varios sistemas del cuerpo participan en nutrición, interacción y reproducción."
+      }
+    })
   }
 ]);
 
@@ -161,10 +191,8 @@ function resumenBloqueSesion(sesion = {}, bloqueId = "") {
   );
 
   if (!item) return null;
-
   const total = Math.max(0, numero(item.total));
   if (!total) return null;
-
   const correctas = Math.max(0, Math.min(total, numero(item.correctas)));
 
   return {
@@ -176,7 +204,6 @@ function resumenBloqueSesion(sesion = {}, bloqueId = "") {
 
 function cargarEstilos() {
   if (document.querySelector('link[data-refuerzos-academicos-css="true"]')) return;
-
   const enlace = document.createElement("link");
   enlace.rel = "stylesheet";
   enlace.href = new URL("./refuerzos-academicos.css", import.meta.url).href;
@@ -196,7 +223,7 @@ function crearSeccionesBase() {
       <span class="grupo-refuerzo__icono" aria-hidden="true">📘</span>
       <span class="grupo-refuerzo__texto">
         <strong>Mis Cursos</strong>
-        <small>6.º · Matemáticas · resultados académicos</small>
+        <small>6.º · resultados académicos</small>
       </span>
       <span class="grupo-refuerzo__flecha" aria-hidden="true">⌄</span>
     </summary>
@@ -239,11 +266,8 @@ function crearSeccionesBase() {
                   La proporción de respuestas incorrectas determina la prioridad; la cantidad de repeticiones no la aumenta.
                 </p>
               </div>
-              <button id="actualizarRefuerzosAcademicos" class="btn secundaria" type="button">
-                ↻ Actualizar
-              </button>
+              <button id="actualizarRefuerzosAcademicos" class="btn secundaria" type="button">↻ Actualizar</button>
             </div>
-
             <div id="estadoRefuerzosAcademicos" class="estado-carga" aria-live="polite">
               Abre esta sección para revisar los resultados disponibles.
             </div>
@@ -251,18 +275,15 @@ function crearSeccionesBase() {
           </section>
         </div>
       </details>
-    </div>
-  `;
+    </div>`;
 
   panel.appendChild(grupo);
 
   grupo.addEventListener("toggle", () => {
     if (!grupo.open) return;
-    document
-      .querySelectorAll("#panelRefuerzos .grupo-refuerzo[open]")
-      .forEach(otro => {
-        if (otro !== grupo) otro.open = false;
-      });
+    document.querySelectorAll("#panelRefuerzos .grupo-refuerzo[open]").forEach(otro => {
+      if (otro !== grupo) otro.open = false;
+    });
   });
 
   $("actualizarRefuerzosAcademicos")?.addEventListener("click", () => cargarTodo());
@@ -282,13 +303,7 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
       const respuestasRecientes = respuestasBloqueSesion(sesionReciente, bloqueId);
       const erroresRecientes = respuestasRecientes.filter(respuesta => respuesta.correcta === false);
 
-      if (
-        !reciente ||
-        !["camino", "reforzar"].includes(reciente.estado) ||
-        !erroresRecientes.length
-      ) {
-        return;
-      }
+      if (!reciente || !["camino", "reforzar"].includes(reciente.estado) || !erroresRecientes.length) return;
 
       const observaciones = sesiones.flatMap(sesion => {
         const completadaEn = sesion.completadaEn || sesion.updatedAt || sesion.finCliente || null;
@@ -301,7 +316,6 @@ function construirPropuestas(sesionesPorActividad, tareas = []) {
         }));
       });
       const senales = observaciones.filter(observacion => observacion.correcta === false);
-
       if (senales.length < MINIMO_SENALES_CONFIRMACION || !observaciones.length) return;
 
       const clave = clavePropuesta(actividad.actividadId, bloqueId);
@@ -346,21 +360,14 @@ async function leerDatos() {
   const [tareas, ...sesiones] = await Promise.all([
     Academia.tareas.leer(),
     ...ACTIVIDADES.map(actividad =>
-      leerSesionesAcademicas({
-        actividadId: actividad.actividadId,
-        maximo: MAXIMO_SESIONES_ANALISIS
-      })
+      leerSesionesAcademicas({ actividadId:actividad.actividadId, maximo:MAXIMO_SESIONES_ANALISIS })
     )
   ]);
 
   misionesPreparadas = tareas.filter(esMisionRefuerzoAcademico);
   const sesionesPorActividad = new Map(
-    ACTIVIDADES.map((actividad, indice) => [
-      actividad.actividadId,
-      sesiones[indice] || []
-    ])
+    ACTIVIDADES.map((actividad, indice) => [actividad.actividadId, sesiones[indice] || []])
   );
-
   propuestas = construirPropuestas(sesionesPorActividad, tareas);
 
   return {
@@ -375,7 +382,6 @@ function textoSenal(propuesta) {
   const cantidad = propuesta.senales.length;
   const sesiones = propuesta.sesionesConSenal;
   const porcentaje = porcentajeError(propuesta.proporcionError);
-
   return (
     `En este bloque se observaron ${cantidad} ${plural(cantidad, "respuesta incorrecta", "respuestas incorrectas")} ` +
     `en ${sesiones} ${plural(sesiones, "sesión reciente", "sesiones recientes")}. ` +
@@ -388,16 +394,14 @@ function renderPropuestas(meta = {}) {
   const estado = $("estadoRefuerzosAcademicos");
   const lista = $("listaRefuerzosAcademicos");
   if (!estado || !lista) return;
-
   estado.classList.add("hidden");
 
   if (!meta.actividadesConSesion) {
     lista.innerHTML = `
       <div class="refuerzo-vacio">
-        Todavía no hay sesiones de aprendizaje guardadas de Puente de 5.º a 6.º o Fracciones.
+        Todavía no hay sesiones de aprendizaje guardadas de las actividades académicas disponibles.
         Las vistas previas no generan propuestas.
-      </div>
-    `;
+      </div>`;
     return;
   }
 
@@ -406,8 +410,7 @@ function renderPropuestas(meta = {}) {
       <div class="refuerzo-vacio">
         No hay bloques con una dificultad repetida y todavía vigente en la sesión más reciente.
         Una sola respuesta incorrecta no genera automáticamente una Misión de refuerzo.
-      </div>
-    `;
+      </div>`;
     return;
   }
 
@@ -419,49 +422,28 @@ function renderPropuestas(meta = {}) {
           <h4>${escapar(propuesta.bloque.titulo)}</h4>
           <div class="refuerzo-academico__meta">
             <span>📘 ${escapar(propuesta.actividad.titulo)}</span>
-            <span>6.º · Matemáticas</span>
+            <span>${escapar(propuesta.actividad.curso)} · ${escapar(propuesta.actividad.materia)}</span>
             <span>🎯 ${porcentajeError(propuesta.proporcionError)} % incorrectas</span>
             <span>${propuesta.senales.length} señales observadas</span>
             <span>Última: ${propuesta.correctas} de ${propuesta.total}</span>
           </div>
         </div>
       </div>
-
-      <div class="refuerzo-academico__ruta">
-        <strong>Dónde ocurrió</strong>
-        <span>${escapar(rutaTexto(propuesta.actividad))}</span>
-      </div>
-
-      <div class="refuerzo-academico__foco">
-        <strong>Qué conviene reforzar</strong>
-        <span>${escapar(propuesta.bloque.titulo)}</span>
-      </div>
-
+      <div class="refuerzo-academico__ruta"><strong>Dónde ocurrió</strong><span>${escapar(rutaTexto(propuesta.actividad))}</span></div>
+      <div class="refuerzo-academico__foco"><strong>Qué conviene reforzar</strong><span>${escapar(propuesta.bloque.titulo)}</span></div>
       <p class="refuerzo-academico__observacion">${escapar(textoSenal(propuesta))}</p>
       <p class="refuerzo-academico__descripcion">${escapar(propuesta.bloque.descripcion)}</p>
-
       <div class="refuerzo-academico__acciones">
-        <small>
-          La Misión se prepara oculta. Al abrirla, se repasa el tema completo poniendo
-          especial atención en este foco.
-        </small>
-        <button
-          class="btn primaria"
-          type="button"
-          data-crear-refuerzo-academico="${escapar(propuesta.clave)}"
-          ${propuesta.yaPreparada ? "disabled" : ""}
-        >
+        <small>La Misión se prepara oculta. Al abrirla, se repasa el tema completo poniendo especial atención en este foco.</small>
+        <button class="btn primaria" type="button" data-crear-refuerzo-academico="${escapar(propuesta.clave)}" ${propuesta.yaPreparada ? "disabled" : ""}>
           ${propuesta.yaPreparada ? "✅ Misión ya preparada" : "✨ Preparar misión de refuerzo"}
         </button>
       </div>
-    </article>
-  `).join("");
+    </article>`).join("");
 
   lista.querySelectorAll("[data-crear-refuerzo-academico]").forEach(button => {
     button.addEventListener("click", () => {
-      const propuesta = propuestas.find(
-        item => item.clave === button.dataset.crearRefuerzoAcademico
-      );
+      const propuesta = propuestas.find(item => item.clave === button.dataset.crearRefuerzoAcademico);
       if (propuesta) crearMision(propuesta, button);
     });
   });
@@ -475,7 +457,6 @@ function ordenFinalVisible(tareas = []) {
     )
     .map(tarea => Number(tarea.ordenMision))
     .filter(valor => Number.isFinite(valor) && valor > 0 && valor < 9999);
-
   return (ordenes.length ? Math.max(...ordenes) : 0) + 1;
 }
 
@@ -484,16 +465,13 @@ async function cambiarVisibilidad(tarea, visible, checkbox) {
   try {
     const tareas = await Academia.tareas.leer();
     await Academia.tareas.actualizar(tarea.id, {
-      visibleParaAlumno: visible,
-      ordenMision: visible ? ordenFinalVisible(tareas) : 9999
+      visibleParaAlumno:visible,
+      ordenMision:visible ? ordenFinalVisible(tareas) : 9999
     });
-    await cargarTodo({ silencioso: true });
+    await cargarTodo({ silencioso:true });
   } catch (error) {
     checkbox.checked = !visible;
-    alert(
-      "No se pudo cambiar la visibilidad de la Misión académica.\n" +
-      `Razón: ${error.message || "Error no identificado"}`
-    );
+    alert("No se pudo cambiar la visibilidad de la Misión académica.\n" + `Razón: ${error.message || "Error no identificado"}`);
   } finally {
     checkbox.disabled = false;
   }
@@ -502,25 +480,17 @@ async function cambiarVisibilidad(tarea, visible, checkbox) {
 function renderMisionesPreparadas() {
   const lista = $("listaMisionesRefuerzoAcademico");
   if (!lista) return;
-
   const activas = misionesPreparadas.filter(tarea => !estadoCerrado(tarea));
 
   if (!activas.length) {
-    lista.innerHTML = `
-      <div class="refuerzo-vacio">
-        No hay Misiones de refuerzo académico pendientes de gestión.
-      </div>
-    `;
+    lista.innerHTML = `<div class="refuerzo-vacio">No hay Misiones de refuerzo académico pendientes de gestión.</div>`;
     return;
   }
 
   lista.innerHTML = activas.map(tarea => {
     const cfg = configuracionRefuerzo(tarea);
     const actividad = actividadPorId(cfg.actividadId);
-    const bloque = actividad?.bloques?.[cfg.bloqueId] || {
-      icono: "📘",
-      titulo: cfg.foco || "Refuerzo académico"
-    };
+    const bloque = actividad?.bloques?.[cfg.bloqueId] || { icono:"📘", titulo:cfg.foco || "Refuerzo académico" };
     const visible = tarea.visibleParaAlumno !== false;
 
     return `
@@ -530,34 +500,23 @@ function renderMisionesPreparadas() {
             <h4>${escapar(bloque.icono)} ${escapar(tarea.titulo || bloque.titulo)}</h4>
             <div class="refuerzo-academico__meta">
               <span>${actividad ? escapar(actividad.titulo) : "Repaso académico"}</span>
+              <span>${actividad ? `${escapar(actividad.curso)} · ${escapar(actividad.materia)}` : ""}</span>
               <span>${visible ? "👁️ Visible en Mi Camino" : "🔒 Aún no visible"}</span>
             </div>
           </div>
           <span class="mision-refuerzo-academico__estado">${escapar(tarea.estado || "pendiente")}</span>
         </div>
-
-        <div class="refuerzo-academico__foco">
-          <strong>Foco</strong>
-          <span>${escapar(bloque.titulo)}</span>
-        </div>
-
+        <div class="refuerzo-academico__foco"><strong>Foco</strong><span>${escapar(bloque.titulo)}</span></div>
         <label class="mision-refuerzo-academico__visibilidad">
-          <input
-            type="checkbox"
-            data-visibilidad-refuerzo-academico="${escapar(tarea.id)}"
-            ${visible ? "checked" : ""}
-          >
+          <input type="checkbox" data-visibilidad-refuerzo-academico="${escapar(tarea.id)}" ${visible ? "checked" : ""}>
           <span>Mostrar en Mi Camino</span>
         </label>
-      </article>
-    `;
+      </article>`;
   }).join("");
 
   lista.querySelectorAll("[data-visibilidad-refuerzo-academico]").forEach(checkbox => {
     checkbox.addEventListener("change", () => {
-      const tarea = misionesPreparadas.find(
-        item => item.id === checkbox.dataset.visibilidadRefuerzoAcademico
-      );
+      const tarea = misionesPreparadas.find(item => item.id === checkbox.dataset.visibilidadRefuerzoAcademico);
       if (tarea) cambiarVisibilidad(tarea, checkbox.checked, checkbox);
     });
   });
@@ -575,10 +534,7 @@ async function crearMision(propuesta, button) {
       const cfg = configuracionRefuerzo(tarea);
       return clavePropuesta(cfg.actividadId, cfg.bloqueId) === propuesta.clave;
     });
-
-    if (duplicada) {
-      throw new Error("ya existe una Misión activa para este mismo tema y foco");
-    }
+    if (duplicada) throw new Error("ya existe una Misión activa para este mismo tema y foco");
 
     const { actividad, bloque } = propuesta;
     const titulo = `${actividad.titulo} · ${bloque.titulo}`;
@@ -588,60 +544,57 @@ async function crearMision(propuesta, button) {
       descripcion:
         `Misión propuesta a partir de una dificultad repetida en preguntas del mismo bloque académico. ` +
         `Foco: ${bloque.titulo}.`,
-      tipo: "repaso_academico",
-      cursoReferencia: "6",
-      materia: actividad.materia,
-      tema: actividad.titulo,
-      modulo: "libre",
-      destinoUrl: actividad.destinoUrl,
-      objetivo: `Reforzar ${bloque.titulo} dentro de ${actividad.titulo}.`,
+      tipo:"repaso_academico",
+      cursoReferencia:"6",
+      materia:actividad.materia,
+      tema:actividad.titulo,
+      modulo:"libre",
+      destinoUrl:actividad.destinoUrl,
+      objetivo:`Reforzar ${bloque.titulo} dentro de ${actividad.titulo}.`,
       criterioFinalizacion:
         `Repasar ${actividad.titulo} poniendo especial atención en ${bloque.titulo} ` +
         "y completar la prueba final. La finalización describe la sesión; no exige perfección.",
-      criterioCumplimiento: {
-        tipo: "cantidad",
-        modulo: "libre",
-        evidenciaTipo: "sesion_academica",
-        cantidadObjetivo: 1,
-        filtros: {}
+      criterioCumplimiento:{
+        tipo:"cantidad",
+        modulo:"libre",
+        evidenciaTipo:"sesion_academica",
+        cantidadObjetivo:1,
+        filtros:{}
       },
-      requiereRevision: true,
-      tiempoEstimadoMinutos: 20,
-      prioridad: "normal",
-      estado: "pendiente",
-      visibleParaAlumno: false,
-      ordenMision: 9999,
-      presentacionAlumno: {
-        icono: bloque.icono,
-        tituloMision: titulo,
-        descripcionMision:
-          `Vuelve a ${actividad.titulo} y pon especial atención en ${bloque.titulo}.`,
-        mensaje:
-          "📘 Repasa con calma. Puedes volver a la teoría, usar las fichas y practicar antes de comenzar la prueba."
+      requiereRevision:true,
+      tiempoEstimadoMinutos:20,
+      prioridad:"normal",
+      estado:"pendiente",
+      visibleParaAlumno:false,
+      ordenMision:9999,
+      presentacionAlumno:{
+        icono:bloque.icono,
+        tituloMision:titulo,
+        descripcionMision:`Vuelve a ${actividad.titulo} y pon especial atención en ${bloque.titulo}.`,
+        mensaje:"📘 Repasa con calma. Puedes volver a la teoría, usar las fichas y practicar antes de comenzar la prueba."
       },
-      progreso: { cantidadObjetivo: 1 },
-      evidencia: {
-        tipo: "refuerzo_academico",
-        modulo: "libre",
-        referenciaId: propuesta.sesionId,
-        resumen:
-          `${rutaTexto(actividad)} · Foco: ${bloque.titulo}`,
-        configuracion: {
-          origen: "sesion_academica",
-          actividadId: actividad.actividadId,
-          bloqueId: propuesta.bloqueId,
-          foco: bloque.titulo,
-          ruta: ["Mis Cursos", actividad.curso, actividad.materia, actividad.titulo],
-          sesionOrigenId: propuesta.sesionId,
-          estadoOrigen: propuesta.estadoReciente,
-          correctasOrigen: propuesta.correctas,
-          totalOrigen: propuesta.total,
-          senalesConfirmacion: propuesta.senales.map(senal => ({
-            sesionId: senal.sesionId,
-            preguntaId: senal.preguntaId,
-            conceptoId: senal.conceptoId
+      progreso:{ cantidadObjetivo:1 },
+      evidencia:{
+        tipo:"refuerzo_academico",
+        modulo:"libre",
+        referenciaId:propuesta.sesionId,
+        resumen:`${rutaTexto(actividad)} · Foco: ${bloque.titulo}`,
+        configuracion:{
+          origen:"sesion_academica",
+          actividadId:actividad.actividadId,
+          bloqueId:propuesta.bloqueId,
+          foco:bloque.titulo,
+          ruta:["Mis Cursos", actividad.curso, actividad.materia, actividad.titulo],
+          sesionOrigenId:propuesta.sesionId,
+          estadoOrigen:propuesta.estadoReciente,
+          correctasOrigen:propuesta.correctas,
+          totalOrigen:propuesta.total,
+          senalesConfirmacion:propuesta.senales.map(senal => ({
+            sesionId:senal.sesionId,
+            preguntaId:senal.preguntaId,
+            conceptoId:senal.conceptoId
           })),
-          proporcionIncorrectas: propuesta.proporcionError
+          proporcionIncorrectas:propuesta.proporcionError
         }
       }
     });
@@ -649,13 +602,9 @@ async function crearMision(propuesta, button) {
     $("estadoRefuerzosAcademicos").classList.remove("hidden");
     $("estadoRefuerzosAcademicos").textContent =
       "✅ Misión preparada. Mostrar en Mi Camino = No. Revísala en Misiones preparadas.";
-
-    await cargarTodo({ silencioso: true });
+    await cargarTodo({ silencioso:true });
   } catch (error) {
-    alert(
-      "No se pudo preparar la Misión de refuerzo académico.\n" +
-      `Razón: ${error.message || "Error no identificado"}`
-    );
+    alert("No se pudo preparar la Misión de refuerzo académico.\n" + `Razón: ${error.message || "Error no identificado"}`);
     button.disabled = false;
     button.textContent = textoOriginal;
   }
@@ -663,21 +612,16 @@ async function crearMision(propuesta, button) {
 
 function protegerAccionesGenericas() {
   const porId = new Map(misionesPreparadas.map(tarea => [tarea.id, tarea]));
-
   document.querySelectorAll("#listaTareas [data-id]").forEach(control => {
     const tarea = porId.get(control.dataset.id);
     if (!tarea) return;
-
     const accion = control.dataset.action;
 
     if (accion === "start") {
       const oculta = tarea.visibleParaAlumno === false;
       control.classList.toggle("hidden", oculta);
       if (oculta) {
-        control.setAttribute(
-          "title",
-          "Activa Mostrar en Mi Camino antes de abrir la actividad."
-        );
+        control.setAttribute("title", "Activa Mostrar en Mi Camino antes de abrir la actividad.");
       } else {
         control.removeAttribute("title");
       }
@@ -688,10 +632,7 @@ function protegerAccionesGenericas() {
       !["pendiente_validacion", "completada_pendiente_validacion"].includes(tarea.estado)
     ) {
       control.classList.add("hidden");
-      control.setAttribute(
-        "title",
-        "Esta Misión pasa a revisión desde la prueba y su evidencia académica."
-      );
+      control.setAttribute("title", "Esta Misión pasa a revisión desde la prueba y su evidencia académica.");
     }
   });
 }
@@ -704,14 +645,12 @@ function programarProteccion() {
 async function cargarTodo({ silencioso = false } = {}) {
   if (cargando) return;
   cargando = true;
-
   const estado = $("estadoRefuerzosAcademicos");
   const lista = $("listaRefuerzosAcademicos");
 
   if (!silencioso && estado && lista) {
     estado.classList.remove("hidden");
-    estado.textContent =
-      "🦜 Lía está revisando las sesiones académicas más recientes de 6.º...";
+    estado.textContent = "🦜 Lía está revisando las sesiones académicas más recientes de 6.º...";
     lista.innerHTML = "";
   }
 
@@ -728,8 +667,7 @@ async function cargarTodo({ silencioso = false } = {}) {
         <div class="refuerzo-error">
           No fue posible preparar las propuestas académicas.<br>
           Razón: ${escapar(error.message || "Error no identificado")}
-        </div>
-      `;
+        </div>`;
     }
   } finally {
     cargando = false;
@@ -752,15 +690,12 @@ function inicializar() {
     new MutationObserver(() => {
       programarProteccion();
       if (!sincronizacionInicialCompleta && !cargando) {
-        window.setTimeout(() => cargarTodo({ silencioso: true }), 80);
+        window.setTimeout(() => cargarTodo({ silencioso:true }), 80);
       }
-    }).observe(listaTareas, {
-      childList: true,
-      subtree: true
-    });
+    }).observe(listaTareas, { childList:true, subtree:true });
   }
 
-  window.setTimeout(() => cargarTodo({ silencioso: true }), 700);
+  window.setTimeout(() => cargarTodo({ silencioso:true }), 700);
 }
 
 inicializar();
