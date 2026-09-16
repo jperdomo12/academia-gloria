@@ -1,0 +1,45 @@
+/* Academia Gloria Valentina · 6.º Science · énfasis de entrada a Temas */
+
+.portal-tema__recursos:empty{
+  display:none;
+}
+
+.portal-tema__pie{
+  justify-content:flex-end;
+}
+
+.portal-tema__entrar{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:9px 15px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#4f8b72 0%,#4e93a0 100%);
+  color:#fff;
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.01em;
+  box-shadow:0 9px 20px rgba(79,139,114,.20);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+
+.portal-tema:hover .portal-tema__entrar,
+.portal-tema:focus-visible .portal-tema__entrar{
+  transform:translateY(-1px);
+  box-shadow:0 12px 24px rgba(79,139,114,.27);
+  filter:saturate(1.08);
+}
+
+@media(max-width:650px){
+  .portal-tema__entrar{
+    width:100%;
+    min-height:42px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .portal-tema__entrar{transition:none}
+  .portal-tema:hover .portal-tema__entrar,
+  .portal-tema:focus-visible .portal-tema__entrar{transform:none}
+}
