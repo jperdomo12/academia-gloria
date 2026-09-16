@@ -1,0 +1,42 @@
+.portal-english .portal-tema__entrar{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:9px 14px;
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(135deg,#4e93a0,#6f7b43);
+  box-shadow:0 8px 18px rgba(78,147,160,.22);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+
+.portal-english .portal-tema:hover .portal-tema__entrar,
+.portal-english .portal-tema:focus-visible .portal-tema__entrar{
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(78,147,160,.30);
+  filter:saturate(1.08);
+}
+
+.portal-english .portal-tema__pista{
+  border-color:#d8e9ec;
+  background:#f8fcfd;
+  color:#4e7880;
+}
+
+.portal-english .portal-hero{
+  border-color:#cfe0e3;
+  background:
+    radial-gradient(circle at 92% 20%,rgba(78,147,160,.22),transparent 13rem),
+    radial-gradient(circle at 78% 105%,rgba(111,123,67,.18),transparent 14rem),
+    linear-gradient(135deg,#fffef9 0%,#eef8fa 54%,#f2f6e8 100%);
+}
+
+@media(max-width:650px){
+  .portal-english .portal-tema__pie{align-items:stretch;flex-direction:column}
+  .portal-english .portal-tema__entrar{width:100%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .portal-english .portal-tema__entrar{transition:none}
+}

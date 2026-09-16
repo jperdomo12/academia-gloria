@@ -104,6 +104,36 @@ const ACTIVIDADES = Object.freeze([
         descripcion: "Cómo varios sistemas del cuerpo participan en nutrición, interacción y reproducción."
       }
     })
+  },
+  {
+    actividadId: "6-english-present-simple-vs-present-continuous",
+    titulo: "Present Simple vs Present Continuous",
+    icono: "🇬🇧",
+    curso: "6.º",
+    materia: "English",
+    destinoUrl: "../../cursos/6to/english/present-simple-vs-present-continuous/",
+    bloques: Object.freeze({
+      "simple-uso-tiempo": {
+        icono: "🔁",
+        titulo: "Present Simple · use & time expressions",
+        descripcion: "Routines, timetables, permanent situations, general truths y expresiones de tiempo asociadas."
+      },
+      "simple-estructuras": {
+        icono: "🧱",
+        titulo: "Present Simple · structures",
+        descripcion: "Affirmative, negative, interrogative y short answers con do / does."
+      },
+      "continuous-uso-tiempo": {
+        icono: "⏱️",
+        titulo: "Present Continuous · use & time expressions",
+        descripcion: "Acciones que ocurren en ese mismo momento y expresiones como right now o at the moment."
+      },
+      "continuous-estructuras": {
+        icono: "⚙️",
+        titulo: "Present Continuous · structures",
+        descripcion: "Affirmative, negative e interrogative con am / are / is + verb (ing)."
+      }
+    })
   }
 ]);
 
