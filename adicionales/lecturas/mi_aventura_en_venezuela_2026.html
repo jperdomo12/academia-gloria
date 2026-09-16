@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mi Aventura en Venezuela 2026 | Academia Gloria Valentina</title>
+  <meta name="description" content="Cómic familiar sobre el viaje de Juan, Anais y Gloria por Venezuela en 2026.">
+  <meta name="theme-color" content="#facc15">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+
+  <style>
+    :root{
+      --azul:#1d4ed8;
+      --rojo:#dc2626;
+      --amarillo:#facc15;
+      --verde:#15803d;
+      --tinta:#1e293b;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Outfit",sans-serif;
+      color:var(--tinta);
+      background:
+        radial-gradient(circle at 8% 5%,rgba(250,204,21,.23),transparent 25%),
+        radial-gradient(circle at 92% 8%,rgba(37,99,235,.16),transparent 28%),
+        radial-gradient(circle at 82% 92%,rgba(220,38,38,.10),transparent 26%),
+        linear-gradient(155deg,#fffdf4,#f4fbff 52%,#fff7ed);
+    }
+    .glass-card{
+      background:rgba(255,255,255,.94);
+      border:2px solid rgba(226,232,240,.95);
+      box-shadow:0 22px 58px rgba(15,23,42,.10);
+      backdrop-filter:blur(12px);
+    }
+    .hero{
+      overflow:hidden;
+      position:relative;
+      border-color:#fde68a;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;
+      right:-80px;bottom:-140px;
+      border-radius:50%;
+      background:radial-gradient(circle,#facc15 0 31%,#2563eb 32% 60%,#dc2626 61% 100%);
+      opacity:.12;
+    }
+    .hero > *{position:relative;z-index:1}
+    .gradient-title{
+      background:linear-gradient(90deg,#1d4ed8 0 30%,#dc2626 42% 72%,#1d4ed8 82% 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .back-button,.comic-button{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:11px 16px;border-radius:16px;font-weight:900;
+      text-decoration:none;transition:.18s ease;
+    }
+    .back-button{background:#fff;color:#0369a1;border:2px solid #bae6fd;box-shadow:0 9px 22px rgba(14,116,144,.08)}
+    .back-button:hover,.comic-button:hover{transform:translateY(-2px)}
+    .comic-frame{
+      width:min(100%,940px);
+      margin:0 auto;
+      padding:clamp(8px,1.3vw,14px);
+      border-radius:26px;
+      background:linear-gradient(145deg,#fff,#fffbeb);
+      border:2px solid #fde68a;
+      box-shadow:0 28px 65px rgba(15,23,42,.14);
+    }
+    .comic-image{
+      display:block;width:100%;height:auto;border-radius:17px;
+      background:#f8fafc;
+    }
+    .viewer-toolbar{
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+      width:min(100%,940px);margin:18px auto 0;
+    }
+    .page-label{font-weight:900;color:#334155}
+    .nav-group{display:flex;gap:10px;flex-wrap:wrap}
+    .comic-button{border:0;cursor:pointer;font-family:inherit}
+    .comic-button.primary{color:#fff;background:linear-gradient(90deg,#1d4ed8,#2563eb);box-shadow:0 10px 24px rgba(37,99,235,.20)}
+    .comic-button.secondary{color:#1e3a8a;background:#fff;border:2px solid #bfdbfe}
+    .comic-button:disabled{opacity:.42;cursor:not-allowed;transform:none}
+    .thumb-strip{
+      display:grid;grid-template-columns:repeat(7,minmax(72px,1fr));gap:10px;
+      width:min(100%,940px);margin:20px auto 0;
+      overflow-x:auto;padding:3px 2px 8px;
+    }
+    .thumb{
+      appearance:none;border:3px solid transparent;border-radius:14px;padding:4px;background:#fff;
+      cursor:pointer;min-width:72px;box-shadow:0 8px 20px rgba(15,23,42,.08);transition:.18s ease;
+    }
+    .thumb:hover{transform:translateY(-2px);border-color:#bfdbfe}
+    .thumb.active{border-color:#facc15;box-shadow:0 0 0 2px #1d4ed8,0 10px 24px rgba(15,23,42,.12)}
+    .thumb img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px}
+    .story-note{border:2px dashed #fde68a;background:#fffbeb}
+    .tip{color:#475569}
+    @media(max-width:720px){
+      .thumb-strip{grid-template-columns:repeat(7,84px)}
+      .viewer-toolbar{align-items:stretch}
+      .nav-group{width:100%;display:grid;grid-template-columns:1fr 1fr}
+      .comic-button{width:100%}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body data-page-title="Mi Aventura en Venezuela 2026" data-page-icon="🇻🇪" data-nav-back="./">
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    <div class="mb-5">
+      <a href="index.html" data-volver-modulo data-ruta-alternativa="./" class="back-button">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        Volver a Mis Cuentos Mágicos
+      </a>
+    </div>
+
+    <header class="glass-card hero rounded-[2.5rem] p-6 md:p-9 mb-7">
+      <div class="flex flex-wrap gap-3 mb-5">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-yellow-200 px-4 py-2 text-sm font-black text-amber-700">🇻🇪 Viaje real</span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-rose-100 px-4 py-2 text-sm font-black text-rose-700">❤️ Familia</span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-sky-100 px-4 py-2 text-sm font-black text-sky-700">😂 Aventuras</span>
+      </div>
+      <p class="text-xs font-black uppercase tracking-[.18em] text-blue-700 mb-2">Cómic familiar · Venezuela 2026</p>
+      <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">Mi Aventura en <span class="gradient-title">Venezuela 2026</span></h1>
+      <p class="text-lg md:text-xl text-slate-600 font-semibold leading-relaxed max-w-4xl">
+        El viaje de Juan, Anais y Gloria contado en viñetas: familia, lugares increíbles, situaciones inesperadas y muchas historias para recordar juntos.
+      </p>
+    </header>
+
+    <section class="story-note rounded-[2rem] p-5 md:p-6 mb-7" aria-label="Cómo leer este cómic">
+      <div class="flex gap-4 items-start">
+        <div class="text-4xl" aria-hidden="true">🦜</div>
+        <div>
+          <h2 class="font-black text-xl text-slate-800 mb-1">El cómic es el protagonista</h2>
+          <p class="tip font-semibold leading-relaxed">Pasa las páginas con los botones o toca una miniatura. En ordenador también puedes usar las flechas ← y → del teclado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="comic" aria-live="polite">
+      <figure class="comic-frame">
+        <img id="comicImage" class="comic-image" src="../../assets/lecturas/mi-aventura-venezuela-2026/01-portada.webp" alt="Portada de Mi Aventura en Venezuela 2026">
+      </figure>
+
+      <div class="viewer-toolbar">
+        <div>
+          <div id="pageLabel" class="page-label">Página 1 de 7 · Portada</div>
+          <div class="text-sm text-slate-500 font-semibold mt-1">Toca la imagen si quieres abrirla sola y verla con más detalle.</div>
+        </div>
+        <div class="nav-group">
+          <button id="prevBtn" class="comic-button secondary" type="button"><i data-lucide="chevron-left" class="w-5 h-5"></i> Anterior</button>
+          <button id="nextBtn" class="comic-button primary" type="button">Siguiente <i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+        </div>
+      </div>
+
+      <nav id="thumbs" class="thumb-strip" aria-label="Páginas del cómic"></nav>
+    </section>
+
+    <footer class="text-center py-10 text-slate-500 text-sm font-semibold">
+      Academia Gloria Valentina · Mis Cuentos Mágicos · Una historia familiar para recordar 🇻🇪❤️
+    </footer>
+  </main>
+
+  <script>
+    const pages = [
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/01-portada.webp', title:'Portada', alt:'Portada de Mi Aventura en Venezuela 2026' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/02-llegada-caracas.webp', title:'¡Los platanitos más caros del mundo!', alt:'Cómic sobre la llegada a Caracas, los platanitos y la lluvia' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/03-en-caracas.webp', title:'Cédulas, mototaxi y un pan con sorpresa', alt:'Cómic sobre trámites, mototaxi y una compra en la panadería' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/04-caracas-barquisimeto.webp', title:'Caracas, Barquisimeto y un Día del Padre sabroso', alt:'Cómic sobre Caracas, el viaje a Barquisimeto y el Día del Padre' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/05-punto-fijo.webp', title:'Punto Fijo, Médanos, playa y noticias inesperadas', alt:'Cómic sobre Punto Fijo, los Médanos de Coro, la playa y noticias inesperadas' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/06-retorno.webp', title:'Regreso, sustos y guacamayas', alt:'Cómic sobre el regreso a Caracas, la familia y las guacamayas' },
+      { src:'../../assets/lecturas/mi-aventura-venezuela-2026/07-historias.webp', title:'Historias que también viviremos siempre', alt:'Cómic con recuerdos adicionales del viaje a Venezuela' }
+    ];
+
+    const comicImage = document.getElementById('comicImage');
+    const pageLabel = document.getElementById('pageLabel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const thumbs = document.getElementById('thumbs');
+    let current = Math.max(0, Math.min(pages.length - 1, Number(new URLSearchParams(location.search).get('pagina') || 1) - 1));
+
+    function buildThumbs(){
+      pages.forEach((page,index)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='thumb';
+        button.setAttribute('aria-label',`Ir a la página ${index+1}: ${page.title}`);
+        button.innerHTML=`<img src="${page.src}" alt="" loading="lazy">`;
+        button.addEventListener('click',()=>showPage(index,true));
+        thumbs.appendChild(button);
+      });
+    }
+
+    function showPage(index,scroll=false){
+      current=Math.max(0,Math.min(pages.length-1,index));
+      const page=pages[current];
+      comicImage.src=page.src;
+      comicImage.alt=page.alt;
+      comicImage.onclick=()=>window.open(page.src,'_blank','noopener');
+      pageLabel.textContent=`Página ${current+1} de ${pages.length} · ${page.title}`;
+      prevBtn.disabled=current===0;
+      nextBtn.disabled=current===pages.length-1;
+      nextBtn.innerHTML=current===pages.length-1
+        ? '<i data-lucide="check" class="w-5 h-5"></i> Fin del cómic'
+        : 'Siguiente <i data-lucide="chevron-right" class="w-5 h-5"></i>';
+      [...thumbs.children].forEach((el,i)=>{
+        el.classList.toggle('active',i===current);
+        if(i===current) el.setAttribute('aria-current','page'); else el.removeAttribute('aria-current');
+      });
+      const url=new URL(location.href);
+      url.searchParams.set('pagina',current+1);
+      history.replaceState(null,'',url);
+      if(scroll) document.getElementById('comic').scrollIntoView({behavior:'smooth',block:'start'});
+      lucide.createIcons();
+    }
+
+    prevBtn.addEventListener('click',()=>showPage(current-1,true));
+    nextBtn.addEventListener('click',()=>{ if(current<pages.length-1) showPage(current+1,true); });
+    document.addEventListener('keydown',(event)=>{
+      if(event.key==='ArrowLeft' && current>0) showPage(current-1,false);
+      if(event.key==='ArrowRight' && current<pages.length-1) showPage(current+1,false);
+    });
+
+    buildThumbs();
+    showPage(current,false);
+  </script>
+  <script src="../../compartido/js/navegacion.js"></script>
+</body>
+</html>
