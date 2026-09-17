@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 09/09/2026 |
+| **Última actualización** | 17/09/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 17/09/2026 | Product Owner + AI Collaborator | Formaliza que, al incorporar el **primer Tema real** de una materia de 6.º que todavía figure como `Preparando` en `/cursos/6to/`, la misma incorporación debe activar la materia, crear o completar su portal y enlazar el Tema sin pedir una intervención adicional al Product Owner. Distingue esta activación por contenido real de la mera existencia de enlaces externos. Registra Science y English como aplicaciones reales del patrón mediante PR #123 y PR #125. |
 | 1.4 | 09/09/2026 | Product Owner + AI Collaborator | Incorpora el patrón de **recursos oficiales del colegio por materia** dentro de los portales propios de 6.º: contenido de Academia y recursos externos claramente diferenciados, enlaces en nueva pestaña, visibilidad `alumno + Gaudem` y catálogo 2026–2027 obtenido de la fuente del proyecto `Gaudem_Enlaces Materias 6to Primaria 26-27.txt`. Registra Matemáticas como primera aplicación validada mediante PR #112/#113. |
 | 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Refuerza el **Modo de Incorporación Curricular de una sola instrucción** como ciclo de mínima intervención: material + curso/materia/tema + notas opcionales → análisis → ubicación `Curso → Asignatura → Tema` → creación de estructura solo si hace falta → construcción aplicando todos los estándares vigentes → evidencia/analítica/refuerzo → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. Establece como requisito que **todo nuevo Tema de 6.º genere evidencia académica estructurada y reutilizable** por Trabajo realizado, Análisis Educativo, estadísticas y propuestas de fortalecimiento, sin crear persistencias privadas por Tema. |
 | 1.2 | 30/08/2026 | Product Owner + AI Collaborator | Formaliza el **Modo de Incorporación Curricular de una sola instrucción** para 6.º: material + curso/materia/tema como entrada suficiente, trabajo interno sin interacciones administrativas, aclaraciones solo ante bloqueos académicos materiales, entrega `YA PUEDES PROBAR` y cierre posterior a la aprobación mediante auditoría, documentación, PR y merge. Sincroniza además el estado ya implementado de propuestas de refuerzo académico de Puente y Fracciones. |
@@ -63,7 +64,8 @@ El resultado esperado es que, cuando la familia comparta material del colegio �
 10. identificar oportunidades de refuerzo sin etiquetar al alumno;
 11. proponer acciones de fortalecimiento cuando exista evidencia suficiente;
 12. mantener una experiencia visual coherente con la Academia;
-13. y, cuando existan recursos oficiales del colegio por materia, integrarlos como accesos externos útiles sin confundirlos con contenido propio de Academia.
+13. activar el portal de una materia cuando llegue su primer Tema académico real y todavía figure como `Preparando` en el portal del curso;
+14. y, cuando existan recursos oficiales del colegio por materia, integrarlos como accesos externos útiles sin confundirlos con contenido propio de Academia.
 
 ---
 
@@ -77,6 +79,7 @@ Este estándar gobierna:
 - contenidos de Matemáticas, Lengua, Ciencias, Sociales, Inglés y futuras materias;
 - material escolar aportado por el colegio;
 - materiales complementarios autorizados por la familia;
+- activación del módulo/portal de una materia cuando se incorpora su primer Tema real;
 - recursos oficiales externos del colegio asociados a una materia cuando aporten valor;
 - explicaciones, resúmenes, fichas, esquemas y ejemplos;
 - vídeos, mapas, gráficos, líneas del tiempo, música, simulaciones y otros recursos cuando aporten valor;
@@ -131,19 +134,22 @@ Entre los patrones ya validados se encuentran:
 - gráficos y esquemas para relaciones visuales;
 - práctica contextualizada;
 - test de repaso;
+- activación del portal de una materia cuando llega su primer Tema real;
 - y accesos diferenciados a recursos oficiales del colegio cuando existe un portal propio de materia.
 
-A 09/09/2026, la primera aplicación estructurada dispone además de dos referencias académicas validadas con persistencia, Misiones y propuestas de refuerzo:
+A 17/09/2026, además de Puente y Fracciones en Matemáticas, el patrón de incorporación de material real se ha aplicado a:
 
-- **Puente de 5.º a 6.º**;
-- **Fracciones**.
+- **Science · Organización de los seres vivos** · primer Tema formal recibido del colegio para Science; activación de la materia mediante PR #123;
+- **English · Present Simple vs Present Continuous** · primer Tema formal recibido para English; activación de la materia mediante PR #125.
 
-Ambas utilizan el patrón aprobado de aprendizaje, práctica, prueba final, sesión académica, evidencia de Misión, revisión histórica y continuidad/refuerzo bajo revisión familiar.
+Estas incorporaciones reutilizan el patrón aprobado de aprendizaje, práctica, prueba final, sesión académica, evidencia reutilizable y continuidad/refuerzo, manteniendo la entrada desde el portal general de 6.º.
 
 Matemáticas 6.º incorpora además la primera aplicación del patrón de recursos oficiales externos mediante:
 
 - Área oficial de Matemáticas del Colegio Gaudem;
 - Matezonas.
+
+Science y English reutilizan posteriormente el mismo principio de recursos oficiales cuando corresponde a su portal propio.
 
 ---
 
@@ -258,6 +264,10 @@ MATERIAL DEL COLEGIO
         ↓
 ANÁLISIS DE FUENTE
         ↓
+UBICACIÓN CURSO → ASIGNATURA → TEMA
+        ↓
+VERIFICAR / ACTIVAR MATERIA SI ES EL PRIMER TEMA REAL
+        ↓
 OBJETIVOS Y CONCEPTOS
         ↓
 ADAPTACIÓN DE COMPRENSIÓN
@@ -304,6 +314,7 @@ Antes de generar la experiencia se identificará:
 - curso de referencia;
 - materia;
 - tema;
+- estado actual de la materia en el portal del curso (`Activa`, `Preparando` u otro estado vigente);
 - propósito aparente;
 - conceptos clave;
 - vocabulario académico;
@@ -359,8 +370,9 @@ Reglas:
 3. un enlace externo no genera sesión académica, Evidencia, Misión ni Recompensa por el mero hecho de abrirse;
 4. no se incorporan los enlaces dentro de cada tarjeta de Tema como si fueran parte del contenido interno;
 5. el bloque debe reutilizar el componente/patrón visual vigente antes de crear otro;
-6. la existencia de un enlace oficial **no obliga a crear un portal de materia** ni a activar contenido ficticio;
-7. para Colegio Gaudem 6.º, el bloque se muestra únicamente cuando la Persona Activa cumple:
+6. la existencia de un enlace oficial **no obliga por sí sola a crear o activar un portal de materia** ni a activar contenido ficticio;
+7. la llegada del **primer Tema real del colegio sí activa la materia** si esta todavía figura como `Preparando`, porque ya existe contenido académico propio que justifica el portal;
+8. para Colegio Gaudem 6.º, el bloque se muestra únicamente cuando la Persona Activa cumple:
 
 ```text
 rol = alumno
@@ -368,7 +380,7 @@ AND
 colegio = Gaudem | Colegio Gaudem
 ```
 
-8. otros colegios podrán adoptar una regla diferente únicamente cuando exista una necesidad real y una decisión explícita.
+9. otros colegios podrán adoptar una regla diferente únicamente cuando exista una necesidad real y una decisión explícita.
 
 #### 6.5.1 Fuente de enlaces Gaudem 6.º · curso 2026–2027
 
@@ -391,6 +403,38 @@ A 09/09/2026 contiene:
 La misma fuente conserva enlaces de Valores, Arts, Música y TAC, pero esas materias **no están previstas por ahora como portales de Academia**. Sus enlaces no deben provocar creación anticipada de estructura.
 
 Cuando se cree un nuevo portal propio de Lengua, Inglés, Sociales o Science, se consultará esta fuente, se validará el enlace y se incorporará el bloque con el mismo contrato aplicado en Matemáticas.
+
+### 6.6 Activación de la materia al incorporar su primer Tema real
+
+Cuando el material recibido corresponde al primer Tema académico real de una materia que ya está representada en `/cursos/6to/` pero todavía figura como `Preparando`, la activación de esa materia forma parte de la **misma incorporación curricular**.
+
+La AI Collaborator debe, sin solicitar una decisión técnica adicional a la familia:
+
+1. cambiar la tarjeta de la materia de `Preparando` a `Activa`;
+2. convertirla en un acceso funcional al portal propio de la materia;
+3. crear el portal únicamente si todavía no existe, reutilizando el patrón compartido vigente;
+4. incorporar en ese portal el nuevo Tema dentro de su catálogo;
+5. conservar la navegación `6.º → Materia → Tema` y el retorno contextual;
+6. incorporar los recursos oficiales de la materia cuando correspondan según la sección 6.5;
+7. actualizar cualquier contador o texto visible del portal de 6.º que dependa del número de materias activas;
+8. validar el recorrido completo empezando en `/cursos/6to/`, no únicamente mediante una URL profunda al Tema.
+
+Esta regla **no significa activar materias por anticipación**. Una tarjeta puede permanecer `Preparando` mientras no exista un Tema real de Academia que justifique su apertura.
+
+Por tanto:
+
+```text
+SOLO EXISTE UN ENLACE EXTERNO DEL COLEGIO
+→ la materia puede seguir en Preparando
+
+LLEGA EL PRIMER TEMA REAL PARA INCORPORAR A ACADEMIA
+→ activar materia
+→ habilitar/crear portal
+→ incorporar Tema
+→ validar desde /cursos/6to/
+```
+
+Science y English constituyen las primeras aplicaciones reales de esta regla en 6.º.
 
 ---
 
@@ -930,7 +974,7 @@ El consumidor principal de este contrato se documenta en `docs/specifications/SP
 
 ### 12.10 Estado de implementación validado
 
-A 09/09/2026 se ha validado en uso real el siguiente flujo con **Puente de 5.º a 6.º** y **Fracciones**:
+A 17/09/2026 el patrón compartido ya se utiliza en Matemáticas y en los primeros Temas reales de Science y English:
 
 ```text
 Tema Académico
@@ -1062,7 +1106,7 @@ nueva evidencia
 
 ### 14.2 Estado actual de propuestas desde pruebas
 
-La propuesta asistida de Misiones de refuerzo a partir de resultados académicos está **implementada y validada** en **Puente de 5.º a 6.º** y **Fracciones**.
+La propuesta asistida de Misiones de refuerzo a partir de resultados académicos reutiliza el mismo mecanismo compartido para las actividades académicas registradas de 6.º, incluyendo Matemáticas, Science y English.
 
 Reutiliza el ciclo común:
 
@@ -1367,6 +1411,8 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 - [ ] Usa el favicon oficial de la Academia en una nueva página funcional.
 - [ ] Los fallos visibles indican la razón cuando es conocida y segura de mostrar.
 - [ ] Las rutas funcionan tanto en validación local como en GitHub Pages.
+- [ ] Si es el primer Tema real de una materia de 6.º todavía marcada como `Preparando`, la materia quedó `Activa`, enlaza a su portal y el Tema es accesible mediante `6.º → Materia → Tema`.
+- [ ] La prueba de navegación comienza desde `/cursos/6to/` cuando la incorporación activa una materia nueva.
 - [ ] En Gaudem 6.º, el bloque de recursos oficiales de materia se muestra solo para `alumno + Gaudem`.
 
 ---
@@ -1393,12 +1439,15 @@ Material del colegio
 TRABAJO INTERNO DE LA ACADEMIA / IA
 Analizar material
 → decidir ubicación `Curso → Asignatura → Tema`
+→ verificar si la Asignatura ya está activa en el portal del curso
+→ si es el primer Tema real y está `Preparando`, activar Asignatura + portal
 → revisar estándares y estructura existentes
 → crear carpetas/archivos solo si hacen falta
 → diseñar experiencia
 → implementar contenido
 → integrar evidencia, histórico, análisis y fortalecimiento
 → validar fidelidad y funcionamiento
+→ validar navegación desde `/cursos/6to/`
 → auditar
 
         ↓
@@ -1449,6 +1498,8 @@ La familia no debe tener que especificar en cada incorporación:
 
 - la ruta exacta dentro del repositorio;
 - si hay que crear carpetas;
+- si la materia debe pasar de `Preparando` a `Activa` en `/cursos/6to/`;
+- si hay que crear o completar el portal de la materia;
 - plantilla técnica;
 - estructura HTML/CSS/JavaScript;
 - documentación que debe revisarse;
@@ -1480,23 +1531,26 @@ Tras recibir la entrada mínima, antes de pedir cualquier aclaración o modifica
 2. revisar **todos los estándares aprobados que apliquen** al nuevo Tema;
 3. revisar la estructura, código, configuración y componentes reales del curso y la materia;
 4. decidir la ubicación correcta dentro de la jerarquía `Curso → Asignatura → Tema`;
-5. buscar referencias existentes reutilizables antes de crear estructura nueva;
-6. crear carpetas/archivos únicamente cuando la estructura existente no sea suficiente;
-7. analizar completamente el material escolar en el alcance necesario;
-8. identificar hechos del material, inferencias y enriquecimientos de la Academia;
-9. definir objetivos, conceptos, vocabulario, procedimientos y recursos que no deben perderse;
-10. diseñar la experiencia adecuada al contenido sin convertir el estándar en una plantilla visual rígida;
-11. definir desde el diseño **qué evidencia académica producirá** y qué focos/bloques permitirán analizarla;
-12. implementar con los patrones compartidos vigentes;
-13. integrar Sesión de aprendizaje/evidencia académica en todo Tema nuevo de 6.º;
-14. integrar, cuando corresponda, Vista previa, Misiones, evidencia de Misión, histórico y refuerzo;
-15. confirmar que la evidencia puede ser utilizada por Trabajo realizado y Análisis Educativo sin conocer un esquema privado del Tema;
-16. comprobar que una señal suficiente pueda traducirse en una propuesta de fortalecimiento sin obligar a repetir todo el Tema;
-17. si se crea/activa el portal propio de la materia, consultar la fuente de recursos oficiales del colegio y reutilizar el bloque/visibilidad aprobados cuando corresponda;
-18. comprobar favicon, navegación, `Volver`, Persona Activa, rutas local/GitHub Pages y mensajes de error;
-19. validar fidelidad académica contra el material original;
-20. realizar las comprobaciones técnicas proporcionales;
-21. auditar el diff y confirmar que no se mezcló trabajo ajeno al Tema.
+5. verificar el estado de la Asignatura en el portal general del curso;
+6. si es el primer Tema real de la materia y la tarjeta sigue `Preparando`, activar la materia, crear/completar su portal y enlazarlo desde `/cursos/6to/` como parte de la misma incorporación;
+7. buscar referencias existentes reutilizables antes de crear estructura nueva;
+8. crear carpetas/archivos únicamente cuando la estructura existente no sea suficiente;
+9. analizar completamente el material escolar en el alcance necesario;
+10. identificar hechos del material, inferencias y enriquecimientos de la Academia;
+11. definir objetivos, conceptos, vocabulario, procedimientos y recursos que no deben perderse;
+12. diseñar la experiencia adecuada al contenido sin convertir el estándar en una plantilla visual rígida;
+13. definir desde el diseño **qué evidencia académica producirá** y qué focos/bloques permitirán analizarla;
+14. implementar con los patrones compartidos vigentes;
+15. integrar Sesión de aprendizaje/evidencia académica en todo Tema nuevo de 6.º;
+16. integrar, cuando corresponda, Vista previa, Misiones, evidencia de Misión, histórico y refuerzo;
+17. confirmar que la evidencia puede ser utilizada por Trabajo realizado y Análisis Educativo sin conocer un esquema privado del Tema;
+18. comprobar que una señal suficiente pueda traducirse en una propuesta de fortalecimiento sin obligar a repetir todo el Tema;
+19. si se crea/activa el portal propio de la materia, consultar la fuente de recursos oficiales del colegio y reutilizar el bloque/visibilidad aprobados cuando corresponda;
+20. comprobar favicon, navegación, `Volver`, Persona Activa, rutas local/GitHub Pages y mensajes de error;
+21. cuando la incorporación haya activado una materia, validar expresamente la cadena completa `6.º → Materia → Tema` comenzando desde `/cursos/6to/`;
+22. validar fidelidad académica contra el material original;
+23. realizar las comprobaciones técnicas proporcionales;
+24. auditar el diff y confirmar que no se mezcló trabajo ajeno al Tema.
 
 La incorporación no debe delegar al usuario decisiones técnicas que puedan resolverse aplicando la documentación y la arquitectura vigentes.
 
@@ -1530,6 +1584,8 @@ La indicación de prueba señalará únicamente:
 - la ruta o punto de entrada necesario;
 - los puntos funcionales/pedagógicos que realmente conviene validar;
 - y cualquier limitación conocida que pueda afectar la prueba.
+
+Cuando el Tema haya activado por primera vez una materia, el punto de entrada para la validación será por defecto el portal general de 6.º (`/cursos/6to/`) para comprobar la navegación real completa.
 
 El usuario debe validar el producto, no descubrir defectos básicos que podían detectarse durante la construcción y auditoría interna.
 
@@ -1578,6 +1634,8 @@ Si durante la incorporación aparece un defecto genérico del motor, navegación
 - si no lo bloquea, se registrará/tratará como trabajo técnico independiente;
 - si lo bloquea, se aplicará el cambio compartido mínimo necesario y se justificará explícitamente;
 - no se crearán arquitecturas, colecciones, servicios o estructuras paralelas solo para resolver un Tema concreto.
+
+La activación de una materia de 6.º al recibir su primer Tema real **no se considera una reconstrucción de arquitectura**: forma parte de la ubicación normal del contenido en `Curso → Asignatura → Tema`.
 
 La medida de éxito del proceso no es únicamente que el Tema actual funcione: también debe facilitar que **el siguiente Tema sea más rápido y seguro de incorporar**.
 
@@ -1641,6 +1699,8 @@ Vista previa e histórico conservan su comportamiento sin escrituras.
 
 La incorporación seguirá por defecto el **Modo de Incorporación Curricular de una sola instrucción** definido en la sección 21.
 
+Cuando el material corresponda al primer Tema real de una materia todavía `Preparando`, la misma incorporación activará la materia y su portal en `/cursos/6to/` según la sección 6.6.
+
 Cuando exista un portal propio de la materia, se aplicará además la regla de recursos oficiales de la sección 6.5 cuando existan enlaces válidos para el colegio del alumno.
 
 ### 22.3 Cursos posteriores
@@ -1684,6 +1744,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-027 | La AI Collaborator decide la ubicación `Curso → Asignatura → Tema`, reutiliza estructura existente y crea carpetas/archivos solo cuando sean necesarios; la familia no administra rutas técnicas. | Aprobada |
 | CA-028 | El ciclo normal es entrada mínima → trabajo interno → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. | Aprobada |
 | CA-029 | Un portal propio de materia puede incorporar recursos oficiales externos del colegio como bloque diferenciado; para Gaudem 6.º se reutiliza el patrón visible solo para `alumno + Gaudem`, sin convertir enlaces en contenido/evidencia ni crear portales por anticipación. | Aprobada y validada |
+| CA-030 | Cuando llega el primer Tema real de una materia de 6.º todavía marcada como `Preparando`, la misma incorporación activa la materia en `/cursos/6to/`, crea/completa su portal, enlaza el Tema y valida la navegación completa; no requiere una instrucción adicional de la familia. | Aprobada y validada con Science y English |
 
 ---
 
@@ -1691,7 +1752,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 
 ### Implementado y validado
 
-A 09/09/2026 están construidos y probados:
+A 17/09/2026 están construidos y probados:
 
 1. Temas Académicos de referencia: Puente y Fracciones.
 2. Contrato compartido `sesion-academica-v1`.
@@ -1703,23 +1764,27 @@ A 09/09/2026 están construidos y probados:
 8. Resultado histórico de solo lectura.
 9. Compatibilidad con Misiones académicas creadas antes de esta persistencia.
 10. Reglas de acceso a `sesionesAcademicas` desplegadas y validadas para Persona Activa relacionada.
-11. Propuestas de refuerzo a partir del mapa formativo de la sesión académica más reciente en Puente y Fracciones.
+11. Propuestas de refuerzo a partir del mapa formativo de sesiones académicas compatibles.
 12. Preparación de Misiones académicas de refuerzo bajo revisión/activación familiar, sin persistencia paralela.
 13. Protección para que una Misión académica de refuerzo oculta no se abra ni se cierre manualmente saltándose su sesión/evidencia.
 14. **Modo de Incorporación Curricular de una sola instrucción** aprobado como procedimiento operativo para nuevos temas de 6.º.
 15. Reporte de **Análisis Educativo V1** que consume Detectives, Pruebas Académicas y Rincón de Lectura para describir fortalezas, aspectos a reforzar, evolución, intentos, pistas/ayudas, mejoras personales y propuestas de actuación.
 16. Contrato documental que exige evidencia académica analizable para cada nuevo Tema de 6.º.
 17. Portal general de 6.º con acceso al Colegio Gaudem y aula oficial de 6.º.
-18. Patrón reusable **Recursos oficiales de [Materia]** implementado en Matemáticas con Área oficial + Matezonas.
+18. Patrón reusable **Recursos oficiales de [Materia]** implementado inicialmente en Matemáticas con Área oficial + Matezonas y reutilizado por nuevos portales cuando corresponde.
 19. Visibilidad del bloque de recursos oficiales de materia limitada a perfiles `alumno + Gaudem` mediante patrón compartido para futuros portales.
+20. **Science** activada en el portal general de 6.º al incorporar su primer Tema real, `Organización de los seres vivos` · PR #123.
+21. **English** activada en el portal general de 6.º al incorporar su primer Tema real, `Present Simple vs Present Continuous` · PR #125.
+22. Patrón validado de activación automática de una materia al llegar su primer Tema real, manteniendo sin activar las materias que solo disponen de un placeholder o enlaces externos.
 
 ### Pendiente de evolución
 
-1. Aplicar el modo de incorporación completo al siguiente tema/materia real de 6.º y aprender de su uso repetido.
+1. Aplicar sistemáticamente el modo de incorporación completo a cada nuevo material real de 6.º.
 2. Aplicar sistemáticamente el contrato de evidencia analizable a cada nuevo Tema de 6.º.
-3. Reutilizar el bloque de recursos oficiales cuando se creen los portales propios de Lengua, Inglés, Sociales o Science y validar sus enlaces contra la fuente del curso 2026–2027.
-4. Extender los tipos de señales compartidas solo cuando nuevos contenidos reales lo requieran.
-5. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.
+3. Activar Lengua o Sociales únicamente cuando llegue su primer Tema real para Academia; no por anticipación.
+4. Reutilizar el bloque de recursos oficiales cuando se creen nuevos portales propios y validar sus enlaces contra la fuente del curso 2026–2027.
+5. Extender los tipos de señales compartidas solo cuando nuevos contenidos reales lo requieran.
+6. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.
 
 La existencia de persistencia no obliga a modernizar de forma masiva los recursos de 5.º.
 
@@ -1735,8 +1800,9 @@ La existencia de persistencia no obliga a modernizar de forma masiva los recurso
 | **Principio de diseño** | Estándar común de experiencia; implementación específica según materia y tema. |
 | **Persistencia** | `sesion-academica-v1`: todo nuevo Tema de 6.º produce evidencia académica estructurada; la evidencia de Misión referencia la sesión cuando existe Misión. |
 | **Análisis** | La evidencia debe poder alimentar Trabajo realizado, Análisis Educativo, estadísticas/evolución y propuestas de fortalecimiento. |
+| **Activación de materia** | Si el material recibido constituye el primer Tema real de una materia todavía `Preparando`, la incorporación incluye activar esa materia en `/cursos/6to/`, crear/completar su portal y validar `6.º → Materia → Tema`; la familia no debe solicitarlo por separado. |
 | **Recursos oficiales** | Dentro de un portal propio pueden mostrarse como bloque externo diferenciado; en Gaudem 6.º se usa la fuente 2026–2027 y visibilidad `alumno + Gaudem`. |
 | **Retroalimentación** | Basada en datos observables, prudente, accionable y no diagnóstica. |
-| **Operación curricular** | Material + curso/materia/tema + notas opcionales + “Incorporar a la Academia” → análisis/ubicación/construcción/integración → `YA PUEDES PROBAR` → aprobación u observaciones → cierre definitivo. |
-| **Intervención familiar** | La familia aporta contenido y contexto, valida el producto y controla las acciones de fortalecimiento; no administra rutas, carpetas ni contratos técnicos. |
-| **Estado** | Activo; implementación base validada con Puente y Fracciones, Análisis Educativo V1 disponible, patrón de recursos oficiales Gaudem validado en Matemáticas y procedimiento de incorporación de mínima intervención aprobado para la expansión progresiva de 6.º. |
+| **Operación curricular** | Material + curso/materia/tema + notas opcionales + “Incorporar a la Academia” → análisis/ubicación/activación de materia cuando corresponda/construcción/integración → `YA PUEDES PROBAR` → aprobación u observaciones → cierre definitivo. |
+| **Intervención familiar** | La familia aporta contenido y contexto, valida el producto y controla las acciones de fortalecimiento; no administra rutas, carpetas, activación de materias ni contratos técnicos. |
+| **Estado** | Activo; implementación base validada con Matemáticas, Science y English, Análisis Educativo V1 disponible, patrón de recursos oficiales Gaudem reutilizable y procedimiento de incorporación de mínima intervención activo para la expansión progresiva de 6.º. |
