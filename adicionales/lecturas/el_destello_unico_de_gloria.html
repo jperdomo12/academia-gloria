@@ -53,11 +53,19 @@
     .hero > *{position:relative;z-index:1}
     .gradient-title{background:linear-gradient(90deg,#7c3aed,#ec4899,#0ea5e9);-webkit-background-clip:text;background-clip:text;color:transparent}
     .cover-card{padding:14px;border-radius:28px;background:linear-gradient(145deg,#faf5ff,#eff6ff);border:2px solid #e9d5ff;box-shadow:0 18px 42px rgba(76,29,149,.10)}
-    .cover-card img{display:block;width:100%;max-height:560px;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(15,23,42,.08)}
+    .cover-poster{position:relative;min-height:520px;border-radius:18px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:radial-gradient(circle at 18% 14%,rgba(255,255,255,.94),transparent 22%),linear-gradient(150deg,#faf5ff 0%,#fce7f3 48%,#e0f2fe 100%);border:2px solid #e9d5ff;box-shadow:0 10px 24px rgba(15,23,42,.08)}
+    .cover-poster::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-78px;bottom:-88px;background:radial-gradient(circle,#fde68a 0 30%,#f9a8d4 31% 60%,#c4b5fd 61% 100%);opacity:.3}
+    .poster-top,.poster-body{position:relative;z-index:1}
+    .poster-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+    .poster-tag{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.88);color:#7c3aed;font-size:.78rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;box-shadow:0 8px 20px rgba(15,23,42,.07)}
+    .poster-icon{font-size:78px;filter:drop-shadow(0 10px 12px rgba(15,23,42,.10))}
+    .poster-kicker{font-size:.82rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:#7c3aed;margin-bottom:10px}
+    .poster-title{font-size:clamp(2.5rem,5vw,4.3rem);line-height:.96;font-weight:900;letter-spacing:-.05em;color:#4c1d95;margin:0 0 16px}
+    .poster-copy{font-size:1.05rem;line-height:1.55;font-weight:700;color:#6b21a8;max-width:92%}
     .action.primary{color:#fff;background:linear-gradient(90deg,#7c3aed,#ec4899);box-shadow:0 11px 24px rgba(124,58,237,.20)}
     .action.secondary{color:#6d28d9;background:#fff;border:2px solid #ddd6fe}
     .note{border:2px dashed #e9d5ff;background:#faf5ff;color:#6b21a8}
-    @media(max-width:720px){.action{width:100%}}
+    @media(max-width:720px){.action{width:100%}.cover-poster{min-height:430px;padding:24px}.poster-icon{font-size:62px}}
     @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
   </style>
 </head>
@@ -96,8 +104,18 @@
           </div>
         </div>
 
-        <div class="cover-card">
-          <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w1000" alt="Portada de El Destello Único de Gloria">
+        <div class="cover-card" aria-label="Portada visual de El Destello Único de Gloria">
+          <div class="cover-poster">
+            <div class="poster-top">
+              <span class="poster-tag">Cuento mágico</span>
+              <span class="poster-icon" aria-hidden="true">✨</span>
+            </div>
+            <div class="poster-body">
+              <p class="poster-kicker">Academia Gloria Valentina</p>
+              <h2 class="poster-title">El Destello<br>Único de Gloria</h2>
+              <p class="poster-copy">Una historia sobre identidad, confianza y el valor de ser uno mismo.</p>
+            </div>
+          </div>
         </div>
       </div>
     </header>

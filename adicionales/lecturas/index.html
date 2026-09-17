@@ -49,14 +49,29 @@
     .reading-card:hover{transform:translateY(-5px);border-color:#c4b5fd;box-shadow:0 28px 58px rgba(76,29,149,.14)}
     .cover{position:relative;overflow:hidden;aspect-ratio:4/5;background:#ede9fe}
     .cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
-    .cover.legacy-cover{padding:14px;background:linear-gradient(145deg,#faf5ff,#eff6ff)}
-    .cover.legacy-cover img{object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 12px 28px rgba(76,29,149,.10)}
-    .cover.legacy-cover .cover-overlay{inset:14px;border-radius:18px}
     .reading-card:hover .cover img{transform:scale(1.035)}
-    .reading-card:hover .cover.legacy-cover img{transform:scale(1.018)}
     .cover-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,transparent 35%,rgba(15,23,42,.55));opacity:0;transition:opacity .25s ease}
     .reading-card:hover .cover-overlay{opacity:1}
     .cover-label{align-self:flex-end;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.95);color:#6d28d9;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.16)}
+
+    .cover-art{padding:14px;background:linear-gradient(145deg,#faf5ff,#eff6ff)}
+    .cover-poster{position:relative;width:100%;height:100%;border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 14px 32px rgba(15,23,42,.12);transition:transform .30s ease}
+    .reading-card:hover .cover-poster{transform:scale(1.018)}
+    .cover-poster::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;bottom:-75px;opacity:.28}
+    .poster-destello{background:radial-gradient(circle at 18% 14%,rgba(255,255,255,.92),transparent 22%),linear-gradient(150deg,#faf5ff 0%,#fce7f3 48%,#e0f2fe 100%);border:2px solid #e9d5ff}
+    .poster-destello::after{background:radial-gradient(circle,#fde68a 0 30%,#f9a8d4 31% 60%,#c4b5fd 61% 100%)}
+    .poster-burgos{background:radial-gradient(circle at 20% 14%,rgba(255,255,255,.9),transparent 22%),linear-gradient(150deg,#eff6ff 0%,#f0f9ff 48%,#fffbeb 100%);border:2px solid #bae6fd}
+    .poster-burgos::after{background:radial-gradient(circle,#fde68a 0 34%,#7dd3fc 35% 64%,#93c5fd 65% 100%)}
+    .poster-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .poster-tag{display:inline-flex;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.86);font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 7px 18px rgba(15,23,42,.07)}
+    .poster-icon{font-size:clamp(46px,5vw,68px);filter:drop-shadow(0 8px 10px rgba(15,23,42,.10))}
+    .poster-body{position:relative;z-index:1}
+    .poster-kicker{font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+    .poster-title{font-size:clamp(1.9rem,3vw,2.8rem);line-height:.98;font-weight:900;letter-spacing:-.04em;margin:0 0 12px}
+    .poster-copy{font-size:.95rem;line-height:1.5;font-weight:700;max-width:95%}
+    .poster-destello .poster-tag,.poster-destello .poster-kicker{color:#7c3aed}.poster-destello .poster-title{color:#4c1d95}.poster-destello .poster-copy{color:#6b21a8}
+    .poster-burgos .poster-tag,.poster-burgos .poster-kicker{color:#0369a1}.poster-burgos .poster-title{color:#0c4a6e}.poster-burgos .poster-copy{color:#475569}
+
     .reading-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
     .reading-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:#f5f3ff;color:#6d28d9;font-size:.75rem;font-weight:900}
     .primary-action,.secondary-action{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;padding:11px 14px;border-radius:15px;font-weight:900;text-decoration:none;transition:.18s ease}
@@ -65,7 +80,7 @@
     .primary-action:hover,.secondary-action:hover{transform:translateY(-2px)}
     .empty-note{margin-top:28px;padding:20px;border:2px dashed #d8b4fe;border-radius:22px;background:rgba(250,245,255,.82);text-align:center;color:#6d28d9;font-weight:800}
     @keyframes floatBooks{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
-    @media(max-width:768px){.hero{padding:22px}.hero-visual{min-height:150px}.cover-overlay{opacity:1;background:linear-gradient(180deg,transparent 48%,rgba(15,23,42,.48))}}
+    @media(max-width:768px){.hero{padding:22px}.hero-visual{min-height:150px}.cover-overlay{opacity:1;background:linear-gradient(180deg,transparent 48%,rgba(15,23,42,.48))}.cover-poster{padding:20px}}
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -101,9 +116,15 @@
 
     <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
       <article class="glass-card reading-card">
-        <div class="cover legacy-cover">
-          <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w600" alt="Portada de El Destello Único de Gloria">
-          <div class="cover-overlay" aria-hidden="true"><span class="cover-label">✨ Abrir cuento</span></div>
+        <div class="cover cover-art" aria-label="Portada visual de El Destello Único de Gloria">
+          <div class="cover-poster poster-destello">
+            <div class="poster-top"><span class="poster-tag">Cuento mágico</span><span class="poster-icon" aria-hidden="true">✨</span></div>
+            <div class="poster-body">
+              <p class="poster-kicker">Academia Gloria Valentina</p>
+              <h3 class="poster-title">El Destello<br>Único de Gloria</h3>
+              <p class="poster-copy">Una historia sobre identidad, confianza y el valor de ser uno mismo.</p>
+            </div>
+          </div>
         </div>
         <div class="p-6">
           <div class="reading-meta"><span class="reading-chip">✨ Identidad</span><span class="reading-chip">💛 Confianza</span></div>
@@ -117,9 +138,15 @@
       </article>
 
       <article class="glass-card reading-card">
-        <div class="cover legacy-cover">
-          <img src="https://drive.google.com/thumbnail?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k&sz=w600" alt="Portada de El Camino de las Historias en Burgos">
-          <div class="cover-overlay" aria-hidden="true"><span class="cover-label">🏰 Explorar Burgos</span></div>
+        <div class="cover cover-art" aria-label="Portada visual de El Camino de las Historias en Burgos">
+          <div class="cover-poster poster-burgos">
+            <div class="poster-top"><span class="poster-tag">Viaje especial</span><span class="poster-icon" aria-hidden="true">🏰</span></div>
+            <div class="poster-body">
+              <p class="poster-kicker">Semana Santa 2026</p>
+              <h3 class="poster-title">El Camino de las<br>Historias en Burgos</h3>
+              <p class="poster-copy">Un viaje de familia, historia, naturaleza y pequeños descubrimientos.</p>
+            </div>
+          </div>
         </div>
         <div class="p-6">
           <div class="reading-meta"><span class="reading-chip">🏰 Historia</span><span class="reading-chip">🧭 Viaje</span></div>
