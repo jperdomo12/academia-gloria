@@ -1,41 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lectura Mágica - Academia Gloria</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/iconos/icono-principal.png">
-    <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
-    <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>El Destello Único de Gloria | Academia Gloria Valentina</title>
+  <meta name="description" content="Acceso a El Destello Único de Gloria, una lectura sobre identidad, confianza y el valor de ser uno mismo.">
+  <meta name="theme-color" content="#7c3aed">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+
+  <style>
+    :root{
+      --violeta:#7c3aed;
+      --rosa:#ec4899;
+      --tinta:#243047;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Outfit",sans-serif;
+      color:var(--tinta);
+      background:
+        radial-gradient(circle at 8% 8%,rgba(196,181,253,.30),transparent 28%),
+        radial-gradient(circle at 92% 12%,rgba(249,168,212,.24),transparent 28%),
+        linear-gradient(155deg,#faf7ff,#fff8fb 55%,#f4f9ff);
+    }
+    .glass-card{
+      background:rgba(255,255,255,.94);
+      border:2px solid rgba(226,232,240,.95);
+      box-shadow:0 22px 58px rgba(76,29,149,.10);
+      backdrop-filter:blur(12px);
+    }
+    .back-button,.action{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:11px 16px;border-radius:16px;font-weight:900;
+      text-decoration:none;transition:.18s ease;
+    }
+    .back-button{background:#fff;color:#6d28d9;border:2px solid #ddd6fe;box-shadow:0 9px 22px rgba(76,29,149,.08)}
+    .back-button:hover,.action:hover{transform:translateY(-2px)}
+    .hero{position:relative;overflow:hidden;border-color:#e9d5ff}
+    .hero::after{
+      content:"";position:absolute;width:290px;height:290px;right:-100px;bottom:-155px;border-radius:50%;
+      background:radial-gradient(circle,#fde68a 0 28%,#f9a8d4 29% 58%,#c4b5fd 59% 100%);opacity:.19;
+    }
+    .hero > *{position:relative;z-index:1}
+    .gradient-title{background:linear-gradient(90deg,#7c3aed,#ec4899,#0ea5e9);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .cover-card{padding:14px;border-radius:28px;background:linear-gradient(145deg,#faf5ff,#eff6ff);border:2px solid #e9d5ff;box-shadow:0 18px 42px rgba(76,29,149,.10)}
+    .cover-card img{display:block;width:100%;max-height:560px;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(15,23,42,.08)}
+    .action.primary{color:#fff;background:linear-gradient(90deg,#7c3aed,#ec4899);box-shadow:0 11px 24px rgba(124,58,237,.20)}
+    .action.secondary{color:#6d28d9;background:#fff;border:2px solid #ddd6fe}
+    .note{border:2px dashed #e9d5ff;background:#faf5ff;color:#6b21a8}
+    @media(max-width:720px){.action{width:100%}}
+    @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+  </style>
 </head>
-<body class="bg-violet-50 min-h-screen font-sans">
+<body data-page-title="El Destello Único de Gloria" data-page-icon="✨" data-nav-back="./">
+  <main class="max-w-5xl mx-auto p-4 md:p-8">
+    <div class="mb-5">
+      <a href="index.html" data-volver-modulo data-ruta-alternativa="./" class="back-button">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        Volver a Mis Cuentos Mágicos
+      </a>
+    </div>
 
-    <main class="min-h-[calc(100vh-78px)] flex flex-col items-center justify-center p-6">
-        <div class="max-w-xl bg-white p-10 rounded-[40px] shadow-2xl border-b-8 border-violet-200 text-center">
-            <div class="text-7xl mb-6">📖</div>
-            <h1 class="text-3xl font-black text-slate-800 mb-4 italic">El Destello Único de Gloria</h1>
-            <p class="text-slate-500 mb-8 leading-relaxed">
-                ¡Hola Gloria! Tu cuento es tan grande y tiene tantas imágenes mágicas que necesitamos abrirlo en el lector especial de tu iPad.
-            </p>
+    <header class="glass-card hero rounded-[2.5rem] p-6 md:p-9 mb-7">
+      <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
+        <div>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-violet-100 px-4 py-2 text-sm font-black text-violet-700">✨ Identidad</span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white border-2 border-pink-100 px-4 py-2 text-sm font-black text-pink-700">💛 Confianza</span>
+          </div>
 
-            <a href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&confirm=t" 
-               class="inline-block w-full bg-violet-600 hover:bg-violet-500 text-white text-xl font-bold py-5 px-8 rounded-2xl shadow-lg shadow-violet-200 transition-all transform hover:scale-105 active:scale-95">
-                ✨ ¡Abrir mi Libro Mágico! ✨
+          <p class="text-xs font-black uppercase tracking-[.18em] text-violet-700 mb-2">Lectura especial</p>
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4">El <span class="gradient-title">Destello Único</span> de Gloria ✨</h1>
+          <p class="text-lg md:text-xl text-slate-600 font-semibold leading-relaxed mb-6">
+            Una aventura mágica para recordar que cada persona tiene gustos, ideas y cualidades propias, y que ese brillo personal merece ser cuidado.
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <a href="https://drive.google.com/file/d/11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b/view" target="_blank" rel="noopener noreferrer" class="action primary">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+              Abrir el cuento
             </a>
-
-            <div class="mt-8">
-                <a href="index.html" class="text-violet-400 hover:text-violet-600 font-medium transition-colors">
-                    ← Volver a la biblioteca
-                </a>
-            </div>
+            <a href="https://drive.google.com/uc?export=download&id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b" class="action secondary">
+              <i data-lucide="download" class="w-5 h-5"></i>
+              Descargar PDF
+            </a>
+          </div>
         </div>
 
-        <p class="mt-6 text-slate-400 text-xs">
-            Nota: Al ser un archivo de 347MB, puede tardar unos segundos en aparecer.
-        </p>
-    </main>
+        <div class="cover-card">
+          <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w1000" alt="Portada de El Destello Único de Gloria">
+        </div>
+      </div>
+    </header>
 
-    <script src="../../compartido/js/navegacion.js"></script>
+    <section class="note rounded-[2rem] p-5 md:p-6">
+      <div class="flex gap-4 items-start">
+        <div class="text-4xl" aria-hidden="true">📖</div>
+        <div>
+          <h2 class="font-black text-xl text-slate-800 mb-1">Un cuento para leer con calma</h2>
+          <p class="font-semibold leading-relaxed text-slate-600">
+            El cuento se conserva en PDF para respetar su formato original y sus ilustraciones. Al ser un archivo grande, puede tardar unos segundos en abrirse según la conexión.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center py-10 text-slate-500 text-sm font-semibold">
+      Academia Gloria Valentina · Mis Cuentos Mágicos · Cada persona tiene un brillo propio ✨
+    </footer>
+  </main>
+
+  <script>lucide.createIcons();</script>
+  <script src="../../compartido/js/navegacion.js"></script>
 </body>
 </html>

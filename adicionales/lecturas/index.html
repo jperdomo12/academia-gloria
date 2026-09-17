@@ -49,7 +49,11 @@
     .reading-card:hover{transform:translateY(-5px);border-color:#c4b5fd;box-shadow:0 28px 58px rgba(76,29,149,.14)}
     .cover{position:relative;overflow:hidden;aspect-ratio:4/5;background:#ede9fe}
     .cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+    .cover.legacy-cover{padding:14px;background:linear-gradient(145deg,#faf5ff,#eff6ff)}
+    .cover.legacy-cover img{object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 12px 28px rgba(76,29,149,.10)}
+    .cover.legacy-cover .cover-overlay{inset:14px;border-radius:18px}
     .reading-card:hover .cover img{transform:scale(1.035)}
+    .reading-card:hover .cover.legacy-cover img{transform:scale(1.018)}
     .cover-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,transparent 35%,rgba(15,23,42,.55));opacity:0;transition:opacity .25s ease}
     .reading-card:hover .cover-overlay{opacity:1}
     .cover-label{align-self:flex-end;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.95);color:#6d28d9;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.16)}
@@ -97,7 +101,7 @@
 
     <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
       <article class="glass-card reading-card">
-        <div class="cover">
+        <div class="cover legacy-cover">
           <img src="https://drive.google.com/thumbnail?id=11MLv_tLknDbn8S8n0Yh_U7w7AQ3yk54b&sz=w600" alt="Portada de El Destello Único de Gloria">
           <div class="cover-overlay" aria-hidden="true"><span class="cover-label">✨ Abrir cuento</span></div>
         </div>
@@ -113,7 +117,7 @@
       </article>
 
       <article class="glass-card reading-card">
-        <div class="cover">
+        <div class="cover legacy-cover">
           <img src="https://drive.google.com/thumbnail?id=1eeoKGtE-v10FfCZPRLfe6EXpyFzqas9k&sz=w600" alt="Portada de El Camino de las Historias en Burgos">
           <div class="cover-overlay" aria-hidden="true"><span class="cover-label">🏰 Explorar Burgos</span></div>
         </div>
