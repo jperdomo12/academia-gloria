@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha de origen** | 17/09/2026 |
 | **Última actualización** | 17/09/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 17/09/2026 | Product Owner + AI Collaborator | Explicita qué representa el Site privado `https://sites.google.com/gaudem.es/sexto/inicio` en el trabajo escolar de 6.º y su relación con Academia: es la fuente donde Gaudem publica materiales que los alumnos deben considerar para su preparación, habitualmente trabajados o explicados en clase, y esos materiales constituyen la base curricular prioritaria para desarrollar `Cursos → 6.º de Primaria` en Academia. |
 | 1.0 | 17/09/2026 | Product Owner + AI Collaborator | Documenta el monitor semi-manual validado para revisar desde `Inicio` las materias de 6.º de Gaudem, conservar una línea base local, detectar cambios concretos y aceptar explícitamente un nuevo estado. Registra además como evolución pendiente la unificación de los dos marcadores actuales en uno solo. |
 
 ---
@@ -34,6 +35,40 @@
 Conservar de forma oficial y recuperable el procedimiento creado para responder a esta necesidad:
 
 > Estando ya autenticado en el Site privado de 6.º de Gaudem, ejecutar una revisión local que indique si alguna materia contiene cambios respecto a la última línea base aceptada.
+
+### 1.1 Fuente escolar de referencia
+
+El punto de entrada del monitor es:
+
+```text
+https://sites.google.com/gaudem.es/sexto/inicio
+```
+
+En el contexto de 6.º de Primaria, este Site privado es el espacio que el **Colegio Gaudem** utiliza para publicar los documentos y materiales que los alumnos deben considerar para su preparación académica. La gran mayoría de estos materiales son explicados o trabajados en clase y funcionan como referencia directa del contenido que el alumno debe comprender, practicar o repasar.
+
+Para **Academia Gloria Valentina**, estos materiales constituyen la **base curricular prioritaria** para desarrollar la zona:
+
+```text
+Cursos
+→ 6.º de Primaria
+→ Asignatura
+→ Tema
+```
+
+Por tanto, el monitor no es únicamente una utilidad técnica de detección de cambios. Su función práctica es ayudar a descubrir de forma temprana cuándo Gaudem publica o modifica material que podría requerir revisión e incorporación a Academia.
+
+La relación correcta es:
+
+```text
+Gaudem publica / actualiza material
+→ el monitor detecta la novedad
+→ se revisa el documento real
+→ se determina su relevancia para Academia
+→ se aplica STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR
+→ se incorpora o evoluciona Curso → Asignatura → Tema cuando corresponda
+```
+
+El Site de Gaudem es la fuente escolar de referencia; **Academia no debe copiarlo mecánicamente**. La incorporación debe preservar la terminología, método, nivel y contenido del material escolar, pudiendo reorganizarlo o enriquecerlo de acuerdo con los estándares pedagógicos y de accesibilidad de Academia.
 
 La solución actual utiliza **bookmarklets**: marcadores del navegador cuyo campo URL contiene JavaScript que se ejecuta sobre la página abierta.
 
@@ -349,13 +384,15 @@ Hasta que esa evolución se implemente y valide, los **dos marcadores actuales s
 
 ## 🧩 11. Relación con Academia
 
-Cuando el monitor detecte material escolar nuevo, eso **no implica automáticamente** que deba publicarse en Academia.
+El Site privado de 6.º de Gaudem es la **fuente escolar de referencia** para los materiales que alimentan el desarrollo curricular de `Cursos → 6.º de Primaria` en Academia. Los documentos publicados allí reflejan el material que el colegio pide considerar para la preparación del alumno y, en su gran mayoría, son explicados o trabajados durante las clases.
+
+Esto convierte el monitor en el primer eslabón de un flujo de incorporación curricular, pero una novedad detectada **no implica automáticamente** que deba publicarse en Academia.
 
 El flujo correcto es:
 
 ```text
 Novedad detectada en Gaudem
-→ revisar el material
+→ revisar el material escolar real
 → determinar si es relevante para Academia
 → obtener/proporcionar la fuente cuando corresponda
 → aplicar STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR
