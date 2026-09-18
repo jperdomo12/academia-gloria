@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_STANDARD.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 04/08/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 18/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, revisión, aprobación, versionado, sincronización y mantenimiento de documentación oficial |
@@ -33,10 +33,45 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 18/09/2026 | Product Owner + AI Collaborator | Incorpora el **Resumen de contenido** como elemento obligatorio de todo documento oficial: lista sus secciones principales y describe brevemente qué contiene cada una. Integra esta regla en conformidad mínima, orden de cabecera, estructura, plantillas, Quality Gate, lista de comprobación y adopción incremental. |
 | 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Evoluciona el estándar para la jornada de sincronización documental de septiembre: formaliza nombres canónicos estables para `STD-*` y `SPEC-*`, incorpora sincronización explícita contra producto real, prueba de necesidad antes de crear documentos, método P0/P1/P2 para jornadas documentales, consolidación de acuerdos provenientes de conversaciones, lenguaje visual mediante iconos no normativos y refuerzo del Quality Gate e historial. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Versión oficial. Consolida la metodología documental: evolución incremental de documentos, revisión obligatoria de la fuente existente, estructura desde el inicio, entrega completa de archivos y normalización de la sección `DECISIÓN`. |
 | 1.0 | 03/08/2026 | Arquitectura del Producto | Primera versión activa, validada mediante documentos reales. Incorpora roles estables, Quality Gate documental y nombre canónico estable para documentos activos. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta del estándar documental del producto. Define conformidad, metadatos, estados, versionado, decisiones, nombres, revisión, aprobación y adopción incremental. |
+
+---
+
+## 🧭 Resumen de contenido
+
+> Este resumen permite comprender rápidamente la estructura del documento y localizar la sección relevante sin tener que recorrerlo completo.
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define para qué existe el estándar documental y qué objetivos persigue. |
+| 2. Alcance | Determina a qué documentos y situaciones aplica el estándar. |
+| 3. Principios del estándar | Establece los criterios fundamentales para crear y mantener documentación oficial. |
+| 4. Niveles de conformidad | Define los requisitos mínimos, completos e históricos. |
+| 5. Cabecera documental | Normaliza el orden inicial, los metadatos y la identificación de cada documento. |
+| 6. Documentos relacionados y dependencias | Define cómo expresar relaciones entre fuentes documentales. |
+| 7. Estados documentales | Establece los estados canónicos de madurez y vigencia. |
+| 8. Versionado | Define cómo evolucionan las versiones y los nombres canónicos. |
+| 9. Historial de versiones | Regula la trazabilidad de los cambios documentales. |
+| 10. Estructura, legibilidad e identidad documental | Define organización, resumen de contenido, encabezados, lenguaje e identidad visual. |
+| 11. Convenciones de nombres y rutas | Normaliza nombres de archivos, familias documentales y rutas oficiales. |
+| 12. Terminología y afirmaciones de estado | Establece vocabulario y reglas para describir el estado real del producto. |
+| 13. Decisiones adoptadas | Define cuándo y cómo registrar decisiones dentro del documento propietario. |
+| 14. Decisión de cierre del entregable | Normaliza la sección administrativa `DECISIÓN`. |
+| 15. Revisión y Quality Gate | Define los controles mínimos antes de aprobar o activar un documento. |
+| 16. Sincronización documental con el producto real | Regula cómo corregir desfases entre documentación e implementación. |
+| 17. Jornadas de actualización documental | Define cómo organizar revisiones documentales priorizadas. |
+| 18. Sustitución, histórico y eliminación | Regula el ciclo de vida final de los documentos. |
+| 19. Uso de IA y conversaciones | Define cómo debe colaborar la IA con las fuentes oficiales. |
+| 20. Plantillas | Proporciona estructuras base para documentos mínimos y completos. |
+| 21. Lista de comprobación | Resume las verificaciones de conformidad antes de cerrar un documento. |
+| 22. Criterios de calidad | Define cuándo un documento cumple el estándar. |
+| 23. Adopción | Establece cómo incorporar el estándar de forma incremental. |
+| Decisiones adoptadas | Consolida las decisiones normativas vigentes de este estándar. |
+| DECISIÓN | Registra la aprobación administrativa y la versión activa. |
 
 ---
 
@@ -198,6 +233,7 @@ Obligatoria para cualquier documento oficial nuevo:
 - fecha o última actualización;
 - propietario o responsable;
 - **historial de versiones**;
+- **resumen de contenido** con las secciones principales y una descripción breve de cada una;
 - contenido estructurado;
 - documentos relacionados cuando existan;
 - ausencia de duplicidad conocida.
@@ -240,8 +276,9 @@ Los documentos de conformidad completa comenzarán con:
 3. tabla de metadatos;
 4. documentos relacionados;
 5. historial de versiones;
-6. propósito;
-7. alcance.
+6. **resumen de contenido**;
+7. propósito;
+8. alcance.
 
 El historial debe permanecer **cerca del inicio** para que la evolución del documento sea visible y difícil de olvidar.
 
@@ -427,9 +464,33 @@ Según el tipo documental pueden utilizarse:
 
 No se crean secciones vacías únicamente para cumplir una plantilla.
 
-### 10.2. Índice
+### 10.2. Resumen de contenido
 
-Se recomienda para documentos extensos, de referencia frecuente o con más de diez secciones principales.
+Todo documento oficial debe incluir, cerca del inicio, un **Resumen de contenido** que permita comprender su estructura y localizar rápidamente la sección relevante.
+
+Formato estándar:
+
+```markdown
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Nombre del punto | Descripción muy breve de lo que contiene. |
+| 2. Nombre del punto | Descripción muy breve de lo que contiene. |
+```
+
+Reglas:
+
+- es **obligatorio para todo documento oficial nuevo**;
+- los documentos existentes lo incorporan cuando sean revisados, siguiendo la adopción incremental;
+- se ubica después de metadatos, documentos relacionados e historial de versiones, y antes del contenido principal;
+- lista las secciones principales `##`, evitando reproducir todos los niveles `###` y `####`;
+- cada descripción debe ser breve, normalmente una sola frase;
+- debe mantenerse sincronizado cuando cambie la estructura principal del documento;
+- no sustituye al propósito, alcance ni contenido: funciona como mapa rápido de navegación y comprensión;
+- en documentos excepcionalmente breves puede condensarse, pero no omitirse sin una razón explícita.
+
+> **El Resumen de contenido no es un índice mecánico: explica brevemente qué encontrará el lector en cada punto.**
 
 ### 10.3. Encabezados
 
@@ -629,6 +690,7 @@ Antes de aprobar se valida:
 - enlaces y rutas;
 - estado y versión;
 - **historial de versiones**;
+- **resumen de contenido actualizado y coherente con las secciones principales**;
 - decisiones adoptadas cuando proceda.
 
 ### 15.2. Auditoría de conformidad
@@ -773,6 +835,12 @@ Cuando el Product Owner solicite construir y exista claridad suficiente, la IA d
 |---|---:|---|---|
 | 1.0 | DD/MM/AAAA | ... | Primera versión. |
 
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Explica para qué existe el documento. |
+
 ## 🎯 Propósito
 
 ...
@@ -806,6 +874,14 @@ Cuando el Product Owner solicite construir y exista claridad suficiente, la IA d
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
 | 1.0-rc1 | DD/MM/AAAA | ... | Primera propuesta. |
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Explica para qué existe el documento. |
+| 2. Alcance | Define los límites de aplicación. |
+| ... | ... |
 
 ## 🎯 1. Propósito
 
@@ -846,6 +922,9 @@ Las plantillas son una base; cada tipo documental conserva su propósito y clari
 
 ### Contenido
 
+- [ ] Incluye **Resumen de contenido**.
+- [ ] El resumen lista las secciones principales y describe brevemente qué contiene cada una.
+- [ ] El resumen está sincronizado con la estructura actual del documento.
 - [ ] Refleja correctamente el producto o identifica explícitamente la visión futura.
 - [ ] Las afirmaciones de estado fueron contrastadas con fuentes reales suficientes.
 - [ ] Utiliza terminología oficial.
@@ -874,6 +953,7 @@ Las plantillas son una base; cada tipo documental conserva su propósito y clari
 Un documento cumple este estándar cuando:
 
 - puede entenderse sin reconstruir conversaciones anteriores;
+- permite comprender de un vistazo su estructura mediante un **Resumen de contenido**;
 - permite localizar fuentes y dependencias;
 - deja claro si describe presente, propuesta o visión;
 - posee responsable y vigencia identificables;
@@ -887,7 +967,7 @@ Un documento cumple este estándar cuando:
 
 ## 🌱 23. Adopción
 
-Tras la aprobación de la versión 1.2:
+Tras la aprobación de la versión 1.3:
 
 1. todo documento nuevo aplicará este estándar desde el inicio;
 2. todo documento aprobado se evolucionará desde su versión vigente;
@@ -898,7 +978,8 @@ Tras la aprobación de la versión 1.2:
 7. las jornadas documentales podrán priorizar mediante P0/P1/P2;
 8. el historial de versiones será parte explícita del Quality Gate;
 9. los iconos podrán mejorar legibilidad sin convertirse en significado normativo;
-10. la consolidación documental continuará sin bloquear el desarrollo del producto.
+10. todo documento oficial nuevo incluirá un **Resumen de contenido** y los existentes lo incorporarán cuando sean revisados;
+11. la consolidación documental continuará sin bloquear el desarrollo del producto.
 
 ---
 
@@ -930,6 +1011,7 @@ Tras la aprobación de la versión 1.2:
 | DD-022 | Utilizar P0/P1/P2 como método recomendado de priorización en jornadas documentales. | Aprobada | Eficacia documental |
 | DD-023 | Permitir iconos para mejorar exploración, manteniendo el texto como significado normativo. | Aprobada | Legibilidad · Identidad |
 | DD-024 | Reforzar el historial de versiones como elemento explícito e ineludible del Quality Gate. | Aprobada | Trazabilidad |
+| DD-025 | Exigir un **Resumen de contenido** en todo documento oficial, con las secciones principales y una descripción breve de cada una; aplicarlo incrementalmente a documentos existentes. | Aprobada | Navegabilidad · Comprensión · Colaboración con IA |
 
 ---
 
@@ -938,10 +1020,10 @@ Tras la aprobación de la versión 1.2:
 | Campo | Valor |
 |---|---|
 | **Estado** | Aprobado |
-| **Versión activa** | 1.2 |
-| **Fecha de aprobación** | 03/09/2026 |
+| **Versión activa** | 1.3 |
+| **Fecha de aprobación** | 18/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `DOCUMENTATION_STANDARD.md` v1.1 |
+| **Sustituye** | `DOCUMENTATION_STANDARD.md` v1.2 |
 | **Sustituido por** | — |
 
 **Impacto:** Documentación Oficial · Gobierno del Conocimiento · Calidad Documental · Sincronización con Producto Real · Continuidad · Colaboración con IA
