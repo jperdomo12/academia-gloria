@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/DOCUMENTATION_ARCHITECTURE.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
-| **Fecha de aprobación** | 03/09/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Fecha de aprobación** | 18/09/2026 |
+| **Última actualización** | 18/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Organización y gobierno del conocimiento oficial del producto |
@@ -39,11 +39,37 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 18/09/2026 | Product Owner + AI Collaborator | Adopta el **Resumen de contenido** obligatorio definido por `DOCUMENTATION_STANDARD.md` v1.3, manteniendo sin cambios los principios y responsabilidades de la arquitectura documental. |
 | 1.2 | 03/09/2026 | Product Owner + AI Collaborator | Versión aprobada de la sincronización P1. Incorpora `manuales/`, `specifications/` y `tech/` como dominios activos; actualiza la responsabilidad de `models/`; formaliza el HandOff operativo en `project/`; corrige la ruta canónica de `PROJECT_MAP.md`; y reconoce `FOUNDATION.md` y `CARTA_A_GLORIA.md` como fuentes raíz intencionales. |
 | 1.2-rc1 | 03/09/2026 | Product Owner + AI Collaborator | Candidato revisado y aprobado como base de la versión 1.2. Sincroniza la arquitectura con la estructura documental real y preserva los principios, gobierno, ciclo de vida y criterios arquitectónicos de v1.1. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Evolución menor de la versión 1.0. Incorpora oficialmente los dominios `ai/`, `product/` y `history/`; actualiza documentos relacionados, responsabilidades y gobierno; y alinea la arquitectura con la estructura documental vigente. |
 | 1.0 | 03/08/2026 | Juan Perdomo + IA | Primera versión aprobada. Consolida principios, tipos, dominios, propiedad, relaciones, ciclo de vida, adopción incremental y tratamiento del conocimiento histórico. |
 | 1.0-rc1 | 03/08/2026 | Juan Perdomo + IA | Primera propuesta consolidada construida a partir de la documentación y estructura real del producto. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define para qué existe la Arquitectura Documental y qué problemas de conocimiento resuelve. |
+| 2. Alcance | Delimita qué documentación gobierna y qué elementos quedan fuera de su responsabilidad. |
+| 3. Principios arquitectónicos | Establece las reglas estructurales para propiedad, evolución, trazabilidad y simplicidad documental. |
+| 4. Las tres dimensiones de un documento | Explica tipo, dominio y estado como dimensiones independientes de cada fuente. |
+| 5. Tipos documentales | Define las funciones documentales reconocidas dentro de la Academia. |
+| 6. Dominios y organización física | Describe la estructura de `docs/` y la responsabilidad de cada dominio. |
+| 7. Autoridad y propiedad documental | Define propietarios, consumidores y resolución de conflictos entre fuentes. |
+| 8. Relaciones entre documentos | Explica cómo se conectan fundamentos, visiones, modelos, estándares, especificaciones y producto. |
+| 9. Estados documentales | Resume los estados arquitectónicamente reconocidos y remite su uso formal al estándar. |
+| 10. Ciclo de vida documental | Describe nacimiento, elaboración, revisión, aprobación, mantenimiento y archivo. |
+| 11. Estrategia de adopción | Define la adopción incremental de la arquitectura y del estándar vigentes. |
+| 12. Incorporación de nueva documentación | Establece las preguntas que deben resolverse antes de crear una nueva fuente. |
+| 13. Gobierno y responsabilidades | Define roles, metodología de decisión y uso de evidencias de experiencia real. |
+| 14. Criterios de calidad arquitectónica | Establece cómo reconocer una arquitectura documental sostenible y comprensible. |
+| 15. Límites y evolución | Define cuándo debe evolucionar esta arquitectura y qué principios debe preservar. |
+| 16. Regla de cierre | Resume el principio rector de la documentación como memoria útil de un producto vivo. |
+| Decisiones adoptadas | Consolida las decisiones arquitectónicas vigentes. |
+| DECISIÓN | Registra la aprobación administrativa y la versión activa de la arquitectura. |
 
 ---
 
@@ -672,10 +698,10 @@ Toda evolución conservará:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Aprobado |
-| **Versión activa** | 1.2 |
+| **Versión activa** | 1.3 |
 | **Fecha de aprobación** | 03/09/2026 |
 | **Aprobado por** | Product Owner |
-| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.1 |
+| **Sustituye** | `DOCUMENTATION_ARCHITECTURE.md` v1.2 |
 | **Sustituido por** | — |
 
 **Impacto:** Arquitectura Documental · Gobierno del Conocimiento · Continuidad del Producto · SSOT · Navegación
