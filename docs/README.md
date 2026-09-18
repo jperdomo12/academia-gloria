@@ -10,10 +10,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 15/09/2026 |
+| **Última actualización** | 18/09/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -42,6 +42,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 18/09/2026 | Product Owner + AI Collaborator | Adopta el **Resumen de contenido** obligatorio definido por `DOCUMENTATION_STANDARD.md` v1.3 y sincroniza la referencia al estándar documental vigente. |
 | 1.8 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como fuente propietaria del proceso de nuevas Semillas y añade su ruta de lectura oficial, consolidando el modelo de mínima intervención validado con las Semillas 008/009. |
 | 1.7 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras las entregas del inicio de curso 2026–2027: incorpora `SPEC-HORARIO_CLASES.md` y `SPEC-MENU_COMEDOR.md` como fuentes activas, añade rutas de lectura para organización escolar cotidiana y mantiene el estándar curricular como propietario del patrón de recursos oficiales por materia. |
 | 1.6 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras la estabilización documental posterior a Bitácora V1: hace explícita la ruta canónica `docs/ai/`, incorpora `SPEC-BITACORA_ACOMPANAMIENTO.md` como fuente propietaria activa y añade una ruta de lectura específica para colaboración/acompañamiento. |
@@ -51,6 +52,26 @@
 | 1.2 | 22/08/2026 | Product Owner + AI Collaborator | Incorpora el estándar activo de Contenidos Académicos y Material Escolar y una ruta específica para diseñar o incorporar un Tema Académico. |
 | 1.1 | 04/08/2026 | Product Owner + AI Collaborator | Actualización integral para reflejar la arquitectura documental vigente. Incorpora `ai/`, `product/` y `history/`, actualiza la ruta de lectura, elimina referencias obsoletas, adopta la estructura de `DOCUMENTATION_STANDARD.md` y conserva los principios documentales y convenciones resumidas de la versión anterior. |
 | 1.0 | 27/07/2026 | Equipo del proyecto | Primera versión del índice y orientación general de la documentación. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Explica la función del README como portal único de entrada a la documentación oficial. |
+| 2. Alcance | Delimita qué orienta este portal y qué responsabilidades pertenecen a otras fuentes. |
+| 3. Principios documentales rápidos | Resume las reglas esenciales para localizar, actualizar y consolidar conocimiento. |
+| 4. Estructura documental actual | Muestra la organización vigente de `docs/` y la ruta canónica para IA. |
+| 5. Responsabilidad por dominio | Describe qué tipo de conocimiento corresponde a cada carpeta documental. |
+| 6. Rutas recomendadas de lectura | Indica qué fuentes consultar según la tarea o necesidad concreta. |
+| 7. Principios de navegación documental | Establece cómo priorizar fuentes oficiales y realizar una lectura proporcional. |
+| 8. Estado documental | Resume la base consolidada y las fuentes propietarias relevantes del momento. |
+| 9. `docs/history/` | Explica el propósito y uso del dominio histórico. |
+| 10. Convenciones resumidas | Recuerda las reglas documentales principales sin duplicar el estándar propietario. |
+| 11. Mantenimiento | Define cuándo debe actualizarse este portal documental. |
+| 12. Decisiones adoptadas | Registra las decisiones específicas que gobiernan el README. |
+| DECISIÓN | Resume el estado activo, sincronización y referencias de gobierno del portal. |
 
 ---
 
@@ -341,12 +362,12 @@ No es necesario leer todo `docs/` para cada tarea. Leer:
 
 ---
 
-## 📊 8. Estado documental al 15/09/2026
+## 📊 8. Estado documental al 18/09/2026
 
 ### Base consolidada
 
 - arquitectura documental;
-- estándar documental v1.2;
+- estándar documental v1.3;
 - Foundation/ADN;
 - colaboración con IA;
 - workflow;
@@ -379,6 +400,8 @@ La jornada de sincronización documental quedó cerrada el 04/09/2026. A partir 
 La estabilización del 09/09/2026 no reabre P0/P1/P2: sincroniza el sistema documental con las utilidades escolares y recursos de inicio de curso incorporados después del 06/09.
 
 La actualización del 15/09/2026 incorpora únicamente la nueva fuente propietaria de Semillas y la ruta necesaria para descubrirla.
+
+La actualización del 18/09/2026 adopta el **Resumen de contenido** definido por `DOCUMENTATION_STANDARD.md` v1.3, sin reabrir la arquitectura ni las jornadas P0/P1/P2.
 
 ---
 
@@ -465,8 +488,8 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.8 |
-| **Última sincronización** | 15/09/2026 |
+| **Versión activa** | 1.9 |
+| **Última sincronización** | 18/09/2026 |
 | **Portal documental** | `docs/README.md` |
 | **Ruta canónica para IA** | `docs/ai/` |
 | **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |
