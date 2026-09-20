@@ -8,8 +8,9 @@ import { generarPdfHorario } from "./horario-pdf.js?v=20260908-104";
 
 const ICONOS_MATERIAS = Object.freeze([
   { claves:["matemat","mates","algebra","geometr"], icono:"➗" },
+  { claves:["educacion fisica","ed fisica","deporte","physical"], icono:"🏃" },
   { claves:["science","ciencia","naturales","biologia","fisica","quimica"], icono:"🧪" },
-  { claves:["ingles","english"], icono:"🇬🇧" },
+  { claves:["ingles","english"], icono:"bandera-uk" },
   { claves:["sociales","historia","geografia","social"], icono:"🌍" },
   { claves:["lengua","literatura","lectura","castell"], icono:"📖" },
   { claves:["tac","tecnologia","informatica","digital","comput"], icono:"💻" },
@@ -23,7 +24,6 @@ const ICONOS_MATERIAS = Object.freeze([
   { claves:["comedor","almuerzo","comida"], icono:"🍴" },
   { claves:["logopedia","lenguaje oral"], icono:"🗣️" },
   { claves:["lse","lengua de signos","signos"], icono:"💡" },
-  { claves:["educacion fisica","ed fisica","deporte","physical"], icono:"🏃" },
   { claves:["extra escolar","extraescolar"], icono:"⭐" },
   { claves:["ballet","danza"], icono:"🩰" },
   { claves:["detectives de emociones","emociones"], icono:"😊" },
@@ -58,6 +58,26 @@ function iconoMateria(nombre = "") {
   return coincidencia?.icono || "✨";
 }
 
+function aplicarIconoMateria(elemento, nombre = "") {
+  const icono = iconoMateria(nombre);
+
+  if (icono === "bandera-uk") {
+    elemento.innerHTML = `
+      <svg viewBox="0 0 60 36" width="20" height="14" aria-hidden="true" focusable="false"
+           style="display:block;border-radius:2px;overflow:hidden">
+        <rect width="60" height="36" fill="#012169"></rect>
+        <path d="M0 0 L60 36 M60 0 L0 36" stroke="#FFFFFF" stroke-width="8"></path>
+        <path d="M0 0 L60 36 M60 0 L0 36" stroke="#C8102E" stroke-width="4"></path>
+        <path d="M30 0 V36 M0 18 H60" stroke="#FFFFFF" stroke-width="12"></path>
+        <path d="M30 0 V36 M0 18 H60" stroke="#C8102E" stroke-width="7"></path>
+      </svg>
+    `;
+    return;
+  }
+
+  elemento.textContent = icono;
+}
+
 function textoMateria(elemento) {
   const copia = elemento.cloneNode(true);
   copia.querySelectorAll(".clase-horario__ahora,.clase-horario__icono").forEach(nodo => nodo.remove());
@@ -76,7 +96,7 @@ function decorarClase(elemento) {
   const icono = document.createElement("span");
   icono.className = "clase-horario__icono";
   icono.setAttribute("aria-hidden", "true");
-  icono.textContent = iconoMateria(nombre);
+  aplicarIconoMateria(icono, nombre);
 
   const nombreNodo = document.createElement("span");
   nombreNodo.className = "clase-horario__nombre";
@@ -102,7 +122,7 @@ function decorarChip(elemento) {
   const icono = document.createElement("span");
   icono.className = "materia-chip__icono";
   icono.setAttribute("aria-hidden", "true");
-  icono.textContent = iconoMateria(nombre);
+  aplicarIconoMateria(icono, nombre);
   elemento.prepend(icono);
   elemento.dataset.presentacionV2 = "true";
 }
