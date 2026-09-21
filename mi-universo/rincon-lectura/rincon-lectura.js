@@ -7,6 +7,7 @@ import { iniciarMisionPronunciacion, iniciarHistorialPronunciacion } from "./ref
 
 const $ = id => document.getElementById(id);
 const MAX_RECORDING_SECONDS = 150;
+const MAX_WORD_PRACTICE_ATTEMPTS = 6;
 
 let historia = HISTORIAS[0];
 let perfil = null;
@@ -42,7 +43,7 @@ function inicializarPalabrasParaCrecer() {
 
   palabrasParaCrecer = crearPalabrasParaCrecer({
     root,
-    maxAttempts: 3,
+    maxAttempts: MAX_WORD_PRACTICE_ATTEMPTS,
     idioma: historia?.idioma || "es-ES",
     origen: {
       modulo: "rincon-lectura",
