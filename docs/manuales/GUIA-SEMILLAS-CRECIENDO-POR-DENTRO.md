@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
-| **Última actualización** | 15/09/2026 |
+| **Última actualización** | 21/09/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Explicación comprensible de las Semillas activas para familias y profesionales que acompañan al alumno |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 21/09/2026 | Product Owner + AI Collaborator | Incorpora las Semillas 010 y 011 a partir de necesidades familiares reales y amplía la Semilla 007 para reforzar pensamiento propio, autonomía y aprendizaje al probar la propia manera. Sincroniza el catálogo explicado a 11 Semillas activas. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Reorganiza la guía para que el lector comprenda primero propósito, uso, acompañamiento familiar/profesional y filosofía común; concentra después el detalle de las 9 Semillas en un único capítulo final, justo antes de `DECISIÓN`. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Primera guía para familias y profesionales. Resume las 9 Semillas activas, de la más nueva a la más antigua, explicando situación, objetivo, práctica, aspectos observables y mensaje clave. |
 
@@ -108,6 +109,69 @@ El objetivo no es que el alumno responda “perfectamente”, sino que disponga 
 
 Las Semillas se presentan de la más nueva a la más antigua para facilitar la lectura de la evolución reciente del módulo.
 
+### 011 · Puedo aceptar apoyo y seguir siendo capaz
+**Familia:** Autoestima · **Duración estimada:** 8 min
+
+#### Situación que aborda
+Estar ante una actividad que cuesta, recibir una oferta de ayuda de una persona adulta o compañera y sentir el impulso de rechazarla aunque todavía no se sepa cómo continuar.
+
+#### Objetivo principal
+Ayudar a comprender que **aceptar apoyo no elimina la autonomía ni el mérito propio**. Una pista, una explicación o un ejemplo pueden facilitar el aprendizaje sin sustituir el pensamiento, el esfuerzo ni los siguientes pasos del alumno.
+
+#### Cómo se practica
+La Semilla guía cinco movimientos:
+
+1. reconocer qué puede sentirse o pensarse cuando alguien ofrece ayuda;
+2. recordar que recibir apoyo no significa entregar la actividad a otra persona;
+3. identificar qué tipo de ayuda concreta podría resultar útil;
+4. practicar una frase para aceptar, limitar o posponer el apoyo de forma clara;
+5. elegir cómo continuar después por cuenta propia.
+
+La experiencia diferencia entre “hacerlo por mí” y “ayudarme a aprender cómo hacerlo”.
+
+#### Qué puede ser útil observar
+- qué motivos aparecen cuando rechaza ayuda;
+- si identifica qué tipo de apoyo le resulta más cómodo;
+- si puede pedir una pista o explicación concreta en lugar de aceptar o rechazar toda la ayuda;
+- si comprende que después del apoyo puede recuperar la iniciativa;
+- qué frases le resultan naturales para conservar autonomía y aceptar acompañamiento.
+
+#### Mensaje clave
+> **Puedo aceptar apoyo y seguir siendo capaz.**
+
+---
+
+### 010 · Un momento para mí también está bien
+**Familia:** Emociones · **Duración estimada:** 7 min
+
+#### Situación que aborda
+Después de un tiempo de actividad, conversación o juego, notar cansancio, saturación o dificultad para concentrarse y necesitar unos minutos de tranquilidad antes de continuar.
+
+#### Objetivo principal
+Normalizar que **un breve momento de calma o de estar consigo mismo puede ser una forma saludable de descansar la mente**, sin convertirlo en rechazo de los demás ni en evitación permanente.
+
+#### Cómo se practica
+La Semilla ayuda a:
+
+1. reconocer señales que pueden indicar necesidad de una pausa;
+2. recordar que necesitar tranquilidad no significa dejar de querer o valorar a otras personas;
+3. elegir una pausa pequeña y concreta;
+4. pensar cómo volver después a la actividad, conversación o tarea.
+
+La idea es que la pausa sea un recurso para regularse y regresar, no una forma de desaparecer de las situaciones que cuestan.
+
+#### Qué puede ser útil observar
+- qué señales de cansancio o saturación identifica;
+- si distingue entre necesitar calma y querer aislarse por malestar;
+- qué tipo de pausa siente como propia y realista;
+- si puede avisar a otros de que necesita un momento tranquilo;
+- si concibe el regreso como parte natural de la pausa.
+
+#### Mensaje clave
+> **Puedo darme un momento de calma y después volver.**
+
+---
+
 ### 009 · Puedo pasar con calma
 **Familia:** Relaciones · **Duración estimada:** 9 min
 
@@ -172,13 +236,13 @@ Entre las alternativas aparecen seguir disfrutando un plan propio, buscar otra a
 ---
 
 ### 007 · Puedo elegir diferente
-**Familia:** Autoestima · **Duración estimada:** 8 min
+**Familia:** Autoestima · **Duración estimada:** 9 min
 
 #### Situación que aborda
 Estar con amigas que quieren hacer una actividad y sentir la tentación de elegir lo mismo aunque realmente prefiera otra cosa.
 
 #### Objetivo principal
-Fortalecer la capacidad de **escuchar la propia preferencia**, expresarla con amabilidad y comprender que pensar o elegir diferente no significa perder una amistad.
+Fortalecer la capacidad de **escuchar la propia preferencia**, expresarla con amabilidad y comprender que pensar o elegir diferente no significa perder una amistad. La Semilla refuerza además que **pensar, elegir o probar algo por cuenta propia puede ayudar a aprender, comprender mejor una actividad y conocerse más**.
 
 #### Cómo se practica
 La Semilla invita a:
@@ -186,17 +250,20 @@ La Semilla invita a:
 1. reconocer qué prefiere realmente;
 2. recordar que otras personas pueden tener gustos distintos;
 3. practicar una forma amable y clara de expresarlo;
-4. pensar cómo cuidar la amistad aunque cada una elija algo diferente.
+4. identificar qué puede descubrir si prueba su propia manera antes de mirar o copiar lo que hacen los demás;
+5. pensar cómo cuidar la amistad aunque cada una elija algo diferente.
 
 #### Qué puede ser útil observar
 - si identifica su preferencia antes de mirar qué eligen las amigas;
 - si le cuesta sostener una elección diferente;
+- si puede generar una idea propia antes de buscar la respuesta o elección de otra persona;
 - qué frases le resultan naturales para expresarse;
+- si relaciona probar por sí misma con aprender y descubrir;
 - si asocia “ser buena amiga” con tener que hacer siempre lo mismo;
 - si puede imaginar separación temporal y posterior reencuentro sin vivirlo como ruptura.
 
 #### Mensaje clave
-> **Puedo elegir algo diferente y seguir siendo una buena amiga.**
+> **Puedo pensar diferente, probar mi manera y seguir siendo una buena amiga.**
 
 ---
 
@@ -376,8 +443,8 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.1 |
-| **Catálogo explicado** | 9 Semillas activas · 009 → 001 |
+| **Versión** | 1.2 |
+| **Catálogo explicado** | 11 Semillas activas · 011 → 001 |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |
 | **No es** | Evaluación psicológica, diagnóstico ni instrumento clínico |
