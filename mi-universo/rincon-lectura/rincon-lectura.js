@@ -6,7 +6,7 @@ import { crearPalabrasParaCrecer } from "../../compartido/js/palabras-para-crece
 import { iniciarMisionPronunciacion, iniciarHistorialPronunciacion } from "./refuerzo-pronunciacion.js";
 
 const $ = id => document.getElementById(id);
-const MAX_RECORDING_SECONDS = 120;
+const MAX_RECORDING_SECONDS = 150;
 
 let historia = HISTORIAS[0];
 let perfil = null;
@@ -1177,7 +1177,7 @@ $("recordButton").onclick = async () => {
       const elapsedSeconds = (Date.now() - recordingStartedAt) / 1000;
       updateRecordingDashboard(elapsedSeconds, true);
 
-      if (!warningShown && elapsedSeconds >= 90) {
+      if (!warningShown && elapsedSeconds >= MAX_RECORDING_SECONDS - 30) {
         warningShown = true;
         $("voiceStatus").textContent =
           "Te quedan 30 segundos. Lía sigue escuchándote; continúa con calma 🎙️";
