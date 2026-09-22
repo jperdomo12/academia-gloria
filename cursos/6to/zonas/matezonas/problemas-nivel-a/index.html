@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2c7892">
+  <title>Problemas y operaciones · Nivel A | Matezonas 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Experiencia de Matemáticas de 6.º basada en Matezonas Problemas Nivel A: comprender, planificar, calcular y comprobar problemas de varios pasos.">
+
+  <link rel="icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./problemas-nivel-a.css">
+</head>
+<body
+  data-page-title="Problemas y operaciones · Nivel A"
+  data-page-icon="🧩"
+  data-nav-back="../index.html"
+>
+  <main class="problemas-shell">
+    <header class="problemas-hero">
+      <div>
+        <div class="problemas-ruta" aria-label="Ruta académica">
+          <span>6.º de Primaria</span>
+          <span>Zonas del cole</span>
+          <span>Matezonas</span>
+          <span>Problemas · Nivel A</span>
+        </div>
+
+        <h1>Problemas y operaciones</h1>
+        <p class="problemas-hero__lead">
+          Tres problemas de varios pasos. El reto no es solo calcular:
+          primero hay que entender qué ocurre, decidir el orden y comprobar que la respuesta tenga sentido.
+        </p>
+
+        <div class="problemas-chips" aria-label="Qué trabajaremos">
+          <span class="problemas-chip">👀 Comprender</span>
+          <span class="problemas-chip">🧭 Planificar</span>
+          <span class="problemas-chip">✏️ Calcular</span>
+          <span class="problemas-chip">✅ Comprobar</span>
+        </div>
+      </div>
+
+      <div class="problemas-hero__visual" aria-hidden="true">
+        <div class="problemas-orbit">
+          <span class="problemas-orbit__mini problemas-orbit__mini--a">📚</span>
+          <span class="problemas-orbit__main">🧩</span>
+          <span class="problemas-orbit__mini problemas-orbit__mini--b">🧮</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="problemas-mode" aria-live="polite">
+      <div class="problemas-mode__main">
+        <div id="iconoModo" class="problemas-mode__icon" aria-hidden="true">🎓</div>
+        <div>
+          <h2 id="tituloModo">Sesión de aprendizaje</h2>
+          <p id="descripcionModo">Preparando el contexto…</p>
+        </div>
+      </div>
+      <button id="botonModo" type="button">Cambiar a Vista previa</button>
+    </section>
+
+    <nav class="problemas-tabs" aria-label="Secciones del tema">
+      <button class="problemas-tab activa" type="button" data-pestana="mapa">🧭 Mapa</button>
+      <button class="problemas-tab" type="button" data-pestana="metodo">🧠 Método</button>
+      <button class="problemas-tab" type="button" data-pestana="problemas">📘 Problemas</button>
+      <button class="problemas-tab" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="problemas-tab" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section class="problemas-panel" data-panel="mapa">
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">🧭</div>
+        <div>
+          <p class="eyebrow">La ruta para no perderse</p>
+          <h2>Cuatro pasos para resolver un problema</h2>
+          <p>El documento del colegio recuerda que hay que hacer todos los pasos. Aquí los hacemos visibles.</p>
+        </div>
+      </div>
+
+      <div class="step-grid">
+        <article class="step-card step-card--blue">
+          <h3>👀 1. Comprender</h3>
+          <p>Lee la pregunta y separa los datos que realmente necesitas.</p>
+        </article>
+        <article class="step-card step-card--olive">
+          <h3>🧭 2. Planificar</h3>
+          <p>Decide qué operación va primero y cuál depende del resultado anterior.</p>
+        </article>
+        <article class="step-card step-card--violet">
+          <h3>✏️ 3. Calcular</h3>
+          <p>Resuelve un paso cada vez y conserva los resultados intermedios.</p>
+        </article>
+        <article class="step-card step-card--coral">
+          <h3>✅ 4. Comprobar</h3>
+          <p>Revisa si el número tiene sentido y responde con la unidad correcta.</p>
+        </article>
+      </div>
+
+      <div class="source-note">
+        <strong>📘 Fuente base:</strong> Matezonas · “PROBLEMAS NIVEL A”.
+        El material propone tres problemas y la instrucción explícita:
+        <strong>“Resuelve los siguientes problemas. No olvides hacer todos los pasos.”</strong>
+        La Academia conserva esos problemas y hace visible el proceso de resolución.
+      </div>
+    </section>
+
+    <section class="problemas-panel" data-panel="metodo" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">🧠</div>
+        <div>
+          <p class="eyebrow">Antes de hacer cuentas</p>
+          <h2>Una plantilla mental sencilla</h2>
+          <p>Sirve para los tres problemas del material y para otros problemas de varios pasos.</p>
+        </div>
+      </div>
+
+      <div class="problem-list">
+        <article class="problem-card" id="metodoPregunta">
+          <h3>1 · ¿Qué me preguntan?</h3>
+          <p>Escribe con tus palabras qué resultado final necesitas encontrar.</p>
+          <div class="problem-step">Ejemplo: “libros por estantería”, no solo “libros”.</div>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#metodoPregunta">🔊 Escuchar</button>
+        </article>
+
+        <article class="problem-card" id="metodoDatos">
+          <h3>2 · ¿Qué datos se conectan?</h3>
+          <p>No todos los números se usan al mismo tiempo. Busca qué información permite resolver el primer paso.</p>
+          <div class="problem-step">12 cajas × 45 libros → primero averiguo cuántos libros llegaron.</div>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#metodoDatos">🔊 Escuchar</button>
+        </article>
+
+        <article class="problem-card" id="metodoCadena">
+          <h3>3 · Construye una cadena</h3>
+          <p>Cada resultado intermedio se convierte en un dato para el paso siguiente.</p>
+          <div class="problem-step">540 → 490 → 49</div>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#metodoCadena">🔊 Escuchar</button>
+        </article>
+
+        <article class="problem-card" id="metodoComprobar">
+          <h3>4 · Comprueba antes de cerrar</h3>
+          <p>Si quitas una cantidad, el total debería bajar. Si repartes, cada parte debería ser menor que el total.</p>
+          <div class="problem-step">Respuesta completa = número + unidad + contexto.</div>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#metodoComprobar">🔊 Escuchar</button>
+        </article>
+      </div>
+
+      <div class="method-note">
+        <strong>🌿 Idea importante:</strong> un problema largo no se resuelve “de una vez”.
+        Se convierte en varios pasos pequeños y conectados.
+      </div>
+    </section>
+
+    <section class="problemas-panel" data-panel="problemas" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">📘</div>
+        <div>
+          <p class="eyebrow">Material del colegio</p>
+          <h2>Los tres problemas, organizados por pasos</h2>
+          <p>Primero intenta resolverlos tú. Después puedes abrir la ruta para comprobar.</p>
+        </div>
+      </div>
+
+      <div class="problem-list">
+        <article class="problem-card">
+          <h3>📚 1. La biblioteca</h3>
+          <p>
+            12 cajas con 45 libros cada una. Se separan 50 libros en mal estado.
+            El resto se reparte equitativamente en 10 estanterías.
+          </p>
+          <p><strong>Pregunta:</strong> ¿Cuántos libros se colocaron en cada estantería?</p>
+          <details>
+            <summary>Ver los pasos</summary>
+            <div class="problem-steps">
+              <div class="problem-step">12 × 45 = 540 libros recibidos</div>
+              <div class="problem-step">540 − 50 = 490 libros para repartir</div>
+              <div class="problem-step">490 ÷ 10 = 49 libros por estantería</div>
+            </div>
+            <span class="problem-answer">Respuesta: 49 libros por estantería</span>
+          </details>
+        </article>
+
+        <article class="problem-card">
+          <h3>🏀 2. El equipo de baloncesto</h3>
+          <p>
+            15 jugadores necesitan equipaciones de 35 € cada una.
+            La tienda aplica un descuento total de 60 € y el coste final se divide en 3 cuotas.
+          </p>
+          <p><strong>Pregunta:</strong> ¿A cuánto asciende el valor de cada cuota mensual?</p>
+          <details>
+            <summary>Ver los pasos</summary>
+            <div class="problem-steps">
+              <div class="problem-step">15 × 35 = 525 €</div>
+              <div class="problem-step">525 − 60 = 465 €</div>
+              <div class="problem-step">465 ÷ 3 = 155 € por cuota</div>
+            </div>
+            <span class="problem-answer">Respuesta: 155 € por cuota mensual</span>
+          </details>
+        </article>
+
+        <article class="problem-card">
+          <h3>🍎 3. El agricultor</h3>
+          <p>
+            Recolecta 450 kg por la mañana y 350 kg por la tarde.
+            Guarda 80 kg. El resto se empaqueta en bolsas de 5 kg y cada bolsa se vende a 4 €.
+          </p>
+          <p><strong>Pregunta:</strong> ¿Cuánto dinero obtendrá por la venta de todas las bolsas?</p>
+          <details>
+            <summary>Ver los pasos</summary>
+            <div class="problem-steps">
+              <div class="problem-step">450 + 350 = 800 kg</div>
+              <div class="problem-step">800 − 80 = 720 kg para vender</div>
+              <div class="problem-step">720 ÷ 5 = 144 bolsas</div>
+              <div class="problem-step">144 × 4 = 576 €</div>
+            </div>
+            <span class="problem-answer">Respuesta: 576 €</span>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="problemas-panel" data-panel="practica" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✏️</div>
+        <div>
+          <p class="eyebrow">Con pistas y nuevos intentos</p>
+          <h2>Práctica guiada</h2>
+          <p>Trabaja la lectura, el orden de operaciones y los cálculos sin presión.</p>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="progress" aria-hidden="true"><span id="barraPractica"></span></div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido"></div>
+        <div id="pistaPractica" class="hint" hidden></div>
+        <div id="mensajePractica" class="message" role="status"></div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="problemas-panel" data-panel="prueba" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✅</div>
+        <div>
+          <p class="eyebrow">Comprobación formativa</p>
+          <h2>Prueba de problemas</h2>
+          <p>Ocho preguntas: comprender, planificar, calcular y comprobar.</p>
+        </div>
+      </div>
+
+      <div id="inicioPrueba" class="test-start">
+        <div class="test-start__icon" aria-hidden="true">🎯</div>
+        <h3>Cuando estés preparada</h3>
+        <p>
+          No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve.
+          Al final tendrás un mapa de las estrategias que salieron firmes y de las que conviene seguir practicando.
+        </p>
+        <button id="botonIniciarPrueba" class="btn btn--violet" type="button">🧩 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="challenge" hidden>
+        <div class="progress" aria-hidden="true"><span id="barraPrueba"></span></div>
+        <div class="test-meta">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="test-block">Bloque</span>
+        </div>
+        <div id="pruebaContenido"></div>
+        <div id="explicacionPrueba" class="explanation" hidden></div>
+        <div class="actions">
+          <button id="botonResponderPrueba" class="btn btn--primary" type="button" disabled>Comprobar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="test-end" hidden>
+        <div class="test-end__icon" aria-hidden="true">🌱</div>
+        <h3>Tu mapa de hoy</h3>
+        <p id="textoCierre"></p>
+        <div id="resultadoPruebaResumen"></div>
+        <div id="mapaResultados" class="results"></div>
+        <div id="estadoGuardado" class="save-state" aria-live="polite"></div>
+        <div class="actions" style="justify-content:center">
+          <button id="botonVolverRepaso" class="btn btn--soft" type="button">← Volver a repasar</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./problemas-nivel-a.js"></script>
+</body>
+</html>
