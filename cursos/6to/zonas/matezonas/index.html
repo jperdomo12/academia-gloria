@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#187f95">
+  <title>Matezonas 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Portal de contenidos incorporados desde Matezonas para 6.º de Primaria.">
+
+  <link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../../compartido/css/grid-tarjetas-academia.css">
+  <link rel="stylesheet" href="../../portal-asignatura.css">
+  <link rel="stylesheet" href="../../recursos-oficiales-asignatura.css">
+</head>
+<body
+  class="portal-6to"
+  data-page-title="Matezonas 6.º"
+  data-page-icon="🎯"
+  data-nav-back="../index.html"
+>
+  <main class="portal-asignatura">
+    <header class="portal-hero">
+      <div class="portal-hero__contenido">
+        <div class="portal-ruta" aria-label="Ruta académica">
+          <span>6.º de Primaria</span>
+          <span class="portal-ruta__separador" aria-hidden="true">→</span>
+          <span>Zonas del cole</span>
+          <span class="portal-ruta__separador" aria-hidden="true">→</span>
+          <span>Matezonas</span>
+        </div>
+
+        <h1>Matezonas</h1>
+        <p class="portal-hero__lema">Retos para pensar, probar y descubrir una estrategia.</p>
+        <p class="portal-hero__texto">
+          Aquí viven los temas que llegan desde Matezonas. Se muestran en un espacio propio por su origen escolar,
+          pero siguen formando parte del aprendizaje de Matemáticas.
+        </p>
+
+        <div class="portal-hero__chips" aria-label="Cómo trabajamos Matezonas">
+          <span class="portal-chip">🎯 Zona del cole</span>
+          <span class="portal-chip">➗ Matemáticas</span>
+          <span class="portal-chip">🧠 Razonamiento</span>
+        </div>
+      </div>
+
+      <div class="portal-hero__visual" aria-hidden="true">
+        <div class="portal-hero__orbita">
+          <span class="portal-hero__mini portal-hero__mini--a">🔢</span>
+          <span class="portal-hero__icono">🎯</span>
+          <span class="portal-hero__mini portal-hero__mini--b">🧩</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="portal-seccion" aria-labelledby="tituloTemas">
+      <div class="portal-seccion__cabecera">
+        <div class="portal-seccion__cabecera-principal">
+          <div class="portal-seccion__icono" aria-hidden="true">📚</div>
+          <div>
+            <p class="portal-sobrelinea">Material real del colegio</p>
+            <h2 id="tituloTemas">Mis temas de Matezonas</h2>
+          </div>
+        </div>
+        <div class="portal-seccion__apoyo">Elige el reto que necesitas hoy.</div>
+      </div>
+
+      <div class="portal-catalogo__barra">
+        <span id="contadorTemas" class="portal-catalogo__contador" aria-live="polite">Preparando Temas…</span>
+        <label class="portal-busqueda" data-busqueda-temas hidden>
+          <span class="sr-only">Buscar un Tema</span>
+          <input
+            id="buscarTema"
+            type="search"
+            autocomplete="off"
+            placeholder="Buscar un Tema…"
+            aria-label="Buscar un Tema de Matezonas"
+          >
+        </label>
+      </div>
+
+      <div id="temasAsignatura" class="academia-grid-tarjetas portal-temas-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="portal-seccion" aria-labelledby="tituloRecursosOficiales">
+      <div class="portal-seccion__cabecera">
+        <div class="portal-seccion__cabecera-principal">
+          <div class="portal-seccion__icono" aria-hidden="true">🏫</div>
+          <div>
+            <p class="portal-sobrelinea">Del Colegio Gaudem</p>
+            <h2 id="tituloRecursosOficiales">Recurso oficial de Matezonas</h2>
+          </div>
+        </div>
+        <div class="portal-seccion__apoyo">Acceso externo para consultar la zona original del colegio.</div>
+      </div>
+
+      <div class="portal-recursos-oficiales" data-recurso-gaudem>
+        <div class="portal-recursos-oficiales__intro">
+          <div class="portal-recursos-oficiales__icono" aria-hidden="true">🎯</div>
+          <div>
+            <h3>Academia + Matezonas</h3>
+            <p>Los temas de Academia se construyen a partir del material real; el sitio del colegio sigue siendo la fuente oficial.</p>
+          </div>
+        </div>
+
+        <div class="portal-recursos-oficiales__acciones">
+          <a
+            class="portal-recurso-oficial"
+            href="https://sites.google.com/gaudem.es/sexto/zonas/matezonas"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="portal-recurso-oficial__principal">
+              <span class="portal-recurso-oficial__emoji" aria-hidden="true">🎯</span>
+              <span class="portal-recurso-oficial__texto">
+                <span class="portal-recurso-oficial__tipo">Zona oficial · Gaudem</span>
+                <span class="portal-recurso-oficial__nombre">Matezonas</span>
+              </span>
+            </span>
+            <span class="portal-recurso-oficial__externo" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal-superficie portal-idea" aria-label="Relación entre Matezonas y Matemáticas">
+      <div class="portal-idea__contenido">
+        <div class="portal-idea__icono" aria-hidden="true">🧭</div>
+        <div>
+          <h2>Un espacio distinto, la misma materia</h2>
+          <p>
+            Matezonas se mantiene visible como una Zona del cole para reconocer de dónde viene el material.
+            Las sesiones y evidencias académicas de estos temas siguen asociadas a Matemáticas.
+          </p>
+        </div>
+      </div>
+      <strong class="portal-idea__frase">Origen: Matezonas · Materia: Matemáticas.</strong>
+    </section>
+  </main>
+
+  <script src="../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module">
+    import { montarCatalogoTemas } from "../../portal-asignatura.js";
+    import { TEMAS_MATEZONAS } from "./temas-matezonas.js";
+
+    montarCatalogoTemas({
+      temas:TEMAS_MATEZONAS,
+      crecimiento:{
+        icono:"🌱",
+        titulo:"Matezonas crecerá con el material del curso",
+        texto:"Los próximos retos aparecerán aquí cuando el colegio publique material nuevo que decidamos incorporar a Academia."
+      }
+    });
+  </script>
+</body>
+</html>
