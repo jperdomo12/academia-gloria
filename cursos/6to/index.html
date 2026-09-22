@@ -208,6 +208,40 @@
       </div>
     </section>
 
+    <section class="curso6-seccion" aria-labelledby="tituloZonasCole" data-recurso-gaudem hidden>
+      <div class="curso6-seccion__cabecera">
+        <div class="curso6-seccion__principal">
+          <div class="curso6-seccion__icono" aria-hidden="true">🎯</div>
+          <div>
+            <p class="curso6-sobrelinea">Espacios especiales del cole</p>
+            <h2 id="tituloZonasCole">Zonas del cole</h2>
+          </div>
+        </div>
+        <span class="curso6-seccion__estado">✨ Matezonas activa</span>
+      </div>
+
+      <div class="academia-grid-tarjetas curso6-asignaturas">
+        <a
+          href="./zonas/"
+          class="curso6-asignatura curso6-asignatura--activa"
+          style="--asig-acento:#187f95;--asig-suave:#e8f6f9;--asig-texto:#0f5969"
+        >
+          <div class="curso6-asignatura__arriba">
+            <div class="curso6-asignatura__icono" aria-hidden="true">🎯</div>
+            <span class="curso6-asignatura__estado">● Activa</span>
+          </div>
+          <h3>Zonas del cole</h3>
+          <p class="curso6-asignatura__texto">
+            Linguizonas, Matezonas y English Zones en un espacio propio, conectadas con su materia académica.
+          </p>
+          <div class="curso6-asignatura__pie">
+            <span>1 Zona con material incorporado</span>
+            <span class="curso6-asignatura__accion">Entrar →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <section class="curso6-superficie curso6-recursos" aria-labelledby="tituloRecursosColegio">
       <div class="curso6-recursos__contenido">
         <div class="curso6-recursos__intro">
@@ -264,5 +298,11 @@
 
   <script src="../../compartido/js/navegacion.js"></script>
   <script type="module" src="../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module">
+    import { aplicarVisibilidadRecursosGaudem } from "./recursos-gaudem-visibilidad.js";
+    aplicarVisibilidadRecursosGaudem().catch(error => {
+      console.warn("No se pudo resolver la visibilidad de Zonas del cole.", error);
+    });
+  </script>
 </body>
 </html>
