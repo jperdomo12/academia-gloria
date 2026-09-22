@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#187f95">
+  <title>Dale al coco · Zonas 1 | Matezonas 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Experiencia de Matemáticas de 6.º basada en Matezonas · Dale al coco Zonas 1: cálculo, expresiones, patrones y lógica numérica.">
+
+  <link rel="icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./dale-al-coco-zonas-1.css">
+</head>
+<body
+  data-page-title="Dale al coco · Zonas 1"
+  data-page-icon="🧠"
+  data-nav-back="../index.html"
+>
+  <main class="coco-shell">
+    <header class="coco-hero">
+      <div>
+        <div class="coco-ruta" aria-label="Ruta académica">
+          <span>6.º de Primaria</span>
+          <span>Zonas del cole</span>
+          <span>Matezonas</span>
+          <span>Dale al coco · Zonas 1</span>
+        </div>
+        <h1>Dale al coco</h1>
+        <p class="coco-hero__lead">
+          Cálculo, patrones y lógica para pensar con calma. Aquí no buscamos correr:
+          buscamos descubrir la regla, probar una estrategia y comprobar si funciona.
+        </p>
+        <div class="coco-chips" aria-label="Qué trabajaremos">
+          <span class="coco-chip">⚡ Cálculo</span>
+          <span class="coco-chip">🧠 Expresiones</span>
+          <span class="coco-chip">🔎 Patrones</span>
+          <span class="coco-chip">🍐 Lógica</span>
+        </div>
+      </div>
+
+      <div class="coco-hero__visual" aria-hidden="true">
+        <div class="coco-orbit">
+          <span class="coco-orbit__mini coco-orbit__mini--a">➗</span>
+          <span class="coco-orbit__main">🧠</span>
+          <span class="coco-orbit__mini coco-orbit__mini--b">🔢</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="coco-mode" aria-live="polite">
+      <div class="coco-mode__main">
+        <div id="iconoModo" class="coco-mode__icon" aria-hidden="true">🎓</div>
+        <div>
+          <h2 id="tituloModo">Sesión de aprendizaje</h2>
+          <p id="descripcionModo">Preparando el contexto…</p>
+        </div>
+      </div>
+      <button id="botonModo" type="button">Cambiar a Vista previa</button>
+    </section>
+
+    <nav class="coco-tabs" aria-label="Secciones del tema">
+      <button class="coco-tab activa" type="button" data-pestana="mapa">🧭 Mapa</button>
+      <button class="coco-tab" type="button" data-pestana="estrategias">🧠 Estrategias</button>
+      <button class="coco-tab" type="button" data-pestana="material">📘 Material</button>
+      <button class="coco-tab" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="coco-tab" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section class="coco-panel" data-panel="mapa">
+      <div class="coco-title">
+        <div class="coco-title__icon" aria-hidden="true">🧭</div>
+        <div>
+          <p class="coco-eyebrow">Primero vemos el mapa</p>
+          <h2>Cuatro formas de pensar</h2>
+          <p>El material mezcla cálculo y razonamiento. Separarlo por tipo de reto ayuda a saber qué estrategia usar.</p>
+        </div>
+      </div>
+
+      <div class="coco-grid">
+        <article class="coco-card coco-card--blue">
+          <h3>⚡ Cálculo y operaciones</h3>
+          <p>Elegir resultados correctos de multiplicaciones y mantener control sobre cada paso.</p>
+        </article>
+        <article class="coco-card coco-card--violet">
+          <h3>🧠 Construir resultados</h3>
+          <p>Combinar números y operaciones para llegar a una meta concreta.</p>
+        </article>
+        <article class="coco-card coco-card--olive">
+          <h3>🔎 Series y patrones</h3>
+          <p>Mirar cuánto cambia cada número para descubrir la regla que se repite.</p>
+        </article>
+        <article class="coco-card coco-card--coral">
+          <h3>🍐 Lógica numérica</h3>
+          <p>Usar filas, columnas y símbolos como pistas que se conectan entre sí.</p>
+        </article>
+      </div>
+
+      <div class="source-note">
+        <strong>📘 Fuente base:</strong> material de Matezonas · Colegio Gaudem · 6.º de Primaria ·
+        <em>Dale al Coco · Zonas 1</em>, páginas 15, 16, 17 y 19.
+        El documento es principalmente visual y no muestra instrucciones escritas para todos los ejercicios;
+        la Academia conserva los retos observables y añade explicaciones y práctica guiada sin sustituir el material.
+      </div>
+    </section>
+
+    <section class="coco-panel" data-panel="estrategias" hidden>
+      <div class="coco-title">
+        <div class="coco-title__icon" aria-hidden="true">🧠</div>
+        <div>
+          <p class="coco-eyebrow">Antes de resolver</p>
+          <h2>Una estrategia para cada tipo de reto</h2>
+          <p>No hace falta intentar todo de la misma manera.</p>
+        </div>
+      </div>
+
+      <div class="examples">
+        <article class="example" id="estrategiaCalculo">
+          <h3>⚡ Multiplicaciones</h3>
+          <p>Descompón cuando te ayude. Por ejemplo:</p>
+          <span class="equation">51 × 4</span>
+          <p><strong>50 × 4 = 200</strong> y <strong>1 × 4 = 4</strong>. Después: 200 + 4 = 204.</p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#estrategiaCalculo">🔊 Escuchar</button>
+        </article>
+
+        <article class="example" id="estrategiaMeta">
+          <h3>🧠 Llegar a una meta</h3>
+          <p>Si debes usar varios números y operaciones, busca primero una combinación sencilla.</p>
+          <span class="equation">5 × (2 + 7) = 45</span>
+          <p>Primero 2 + 7 = 9. Después 5 × 9 = 45.</p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#estrategiaMeta">🔊 Escuchar</button>
+        </article>
+
+        <article class="example" id="estrategiaPatron">
+          <h3>🔎 Series</h3>
+          <p>No mires solo los números: mira los <strong>saltos</strong>.</p>
+          <span class="equation">1 → 2 → 4 → 7 → 11 → 16 → 22</span>
+          <p>Los saltos son +1, +2, +3, +4, +5 y +6. El siguiente salto es +7.</p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#estrategiaPatron">🔊 Escuchar</button>
+        </article>
+
+        <article class="example" id="estrategiaLogica">
+          <h3>🍐 Tablas de símbolos</h3>
+          <p>Empieza por la fila o columna que tenga más información conocida.</p>
+          <span class="equation">🍊 + 🍊 + 🍊 + 🍊 = 28</span>
+          <p>Cuatro naranjas iguales suman 28, así que una naranja vale 7.</p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#estrategiaLogica">🔊 Escuchar</button>
+        </article>
+      </div>
+
+      <div class="strategy-note">
+        <strong>🌿 Regla útil:</strong> si un camino se vuelve confuso, no significa que “no sabes Matemáticas”.
+        Vuelve a una pista segura, resuelve una parte pequeña y continúa desde allí.
+      </div>
+    </section>
+
+    <section class="coco-panel" data-panel="material" hidden>
+      <div class="coco-title">
+        <div class="coco-title__icon" aria-hidden="true">📘</div>
+        <div>
+          <p class="coco-eyebrow">Lo que aparece en la ficha</p>
+          <h2>Retos del material, organizados</h2>
+          <p>Aquí puedes repasar los tipos de ejercicio antes de practicar.</p>
+        </div>
+      </div>
+
+      <div class="examples">
+        <article class="example">
+          <h3>📄 Página 15 · cálculo</h3>
+          <p>La ficha propone elegir el resultado correcto entre varias opciones.</p>
+          <details>
+            <summary>Ver resultados para comprobar</summary>
+            <p>17 × 3 = 51 · 19 × 12 = 228 · 51 × 4 = 204 · 24 × 4 = 96 · 28 × 6 = 168 · 32 × 6 = 192.</p>
+          </details>
+        </article>
+
+        <article class="example">
+          <h3>📄 Página 16 · construir un resultado</h3>
+          <p>Se dan números, operaciones y un objetivo. Una resolución coherente es:</p>
+          <details>
+            <summary>Ver ejemplos resueltos por Academia</summary>
+            <p>(7 + 4) ÷ 11 = 1 · 5 × (2 + 7) = 45 · (18 − 5) × 2 = 26.</p>
+            <p>12 + (8 ÷ 4) = 14 · (4 × 7) − 25 = 3 · (9 ÷ 3) − 2 = 1.</p>
+          </details>
+        </article>
+
+        <article class="example">
+          <h3>📄 Página 17 · patrones y cálculo</h3>
+          <p>Dos ruedas numéricas piden descubrir el siguiente valor.</p>
+          <details>
+            <summary>Ver patrones</summary>
+            <p>1, 2, 4, 7, 11, 16, 22, <strong>29</strong>: los saltos crecen +1, +2, +3…</p>
+            <p>5, 8, 10, 13, 15, 18, 20, <strong>23</strong>: se alternan +3 y +2.</p>
+          </details>
+        </article>
+
+        <article class="example">
+          <h3>📄 Página 19 · frutas y cuadrícula</h3>
+          <p>La tabla de frutas permite deducir valores usando las sumas de filas y columnas.</p>
+          <details>
+            <summary>Ver una resolución de la tabla de frutas</summary>
+            <p>🍊 naranja = 7 · 🍒 cerezas = 9 · 🍎 manzana = 1 · 🍐 pera = 5.</p>
+            <p>Con esos valores, los totales pendientes quedan: filas 22, 12 y 12; columnas 32 y 36.</p>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="coco-panel" data-panel="practica" hidden>
+      <div class="coco-title">
+        <div class="coco-title__icon" aria-hidden="true">✏️</div>
+        <div>
+          <p class="coco-eyebrow">Con pistas y nuevos intentos</p>
+          <h2>Práctica guiada</h2>
+          <p>Aquí puedes equivocarte, pedir una pista y volver a probar.</p>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="progress" aria-hidden="true"><span id="barraPractica"></span></div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido"></div>
+        <div id="pistaPractica" class="hint" hidden></div>
+        <div id="mensajePractica" class="message" role="status"></div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="coco-panel" data-panel="prueba" hidden>
+      <div class="coco-title">
+        <div class="coco-title__icon" aria-hidden="true">✅</div>
+        <div>
+          <p class="coco-eyebrow">Comprobación formativa</p>
+          <h2>Prueba de Dale al coco</h2>
+          <p>Ocho preguntas. Dos señales por cada bloque importante del material.</p>
+        </div>
+      </div>
+
+      <div id="inicioPrueba" class="test-start">
+        <div class="test-start__icon" aria-hidden="true">🎯</div>
+        <h3>Cuando estés preparada</h3>
+        <p>
+          No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve.
+          Al final tendrás un mapa de lo que salió firme y de lo que conviene seguir practicando.
+        </p>
+        <button id="botonIniciarPrueba" class="btn btn--violet" type="button">🧠 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="challenge" hidden>
+        <div class="progress" aria-hidden="true"><span id="barraPrueba"></span></div>
+        <div class="test-meta">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="test-block">Bloque</span>
+        </div>
+        <div id="pruebaContenido"></div>
+        <div id="explicacionPrueba" class="explanation" hidden></div>
+        <div class="actions">
+          <button id="botonResponderPrueba" class="btn btn--primary" type="button" disabled>Comprobar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="test-end" hidden>
+        <div class="test-end__icon" aria-hidden="true">🌱</div>
+        <h3>Tu mapa de hoy</h3>
+        <p id="textoCierre"></p>
+        <div id="resultadoPruebaResumen"></div>
+        <div id="mapaResultados" class="results"></div>
+        <div id="estadoGuardado" class="save-state" aria-live="polite"></div>
+        <div class="actions" style="justify-content:center">
+          <button id="botonVolverRepaso" class="btn btn--soft" type="button">← Volver a repasar</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./dale-al-coco-zonas-1.js"></script>
+</body>
+</html>
