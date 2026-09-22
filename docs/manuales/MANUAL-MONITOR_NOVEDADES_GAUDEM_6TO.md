@@ -4,13 +4,13 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | 17/09/2026 |
-| **Última actualización** | 17/09/2026 |
+| **Última actualización** | 22/09/2026 |
 | **Propietario** | Operación escolar · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Procedimiento local para detectar cambios en las páginas de materias del Site privado de 6.º de Gaudem desde un navegador ya autenticado |
+| **Ámbito** | Procedimiento local para detectar cambios en las páginas de áreas y zonas académicas del Site privado de 6.º de Gaudem desde un navegador ya autenticado |
 
 ## 🔗 Documentos relacionados
 
@@ -25,8 +25,28 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 22/09/2026 | Product Owner + AI Collaborator | Amplía el monitor para descubrir y comparar tanto `/áreas/` como `/zonas/`, corrige la limitación que impedía detectar cambios en Linguizonas/Matezonas, preserva la línea base `gaudem6_detalle_v2`, muestra detalle inicial de espacios nuevos y adopta el bloque obligatorio **Resumen de contenido**. |
 | 1.1 | 17/09/2026 | Product Owner + AI Collaborator | Explicita qué representa el Site privado `https://sites.google.com/gaudem.es/sexto/inicio` en el trabajo escolar de 6.º y su relación con Academia: es la fuente donde Gaudem publica materiales que los alumnos deben considerar para su preparación, habitualmente trabajados o explicados en clase, y esos materiales constituyen la base curricular prioritaria para desarrollar `Cursos → 6.º de Primaria` en Academia. |
 | 1.0 | 17/09/2026 | Product Owner + AI Collaborator | Documenta el monitor semi-manual validado para revisar desde `Inicio` las materias de 6.º de Gaudem, conservar una línea base local, detectar cambios concretos y aceptar explícitamente un nuevo estado. Registra además como evolución pendiente la unificación de los dos marcadores actuales en uno solo. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Explica para qué existe el monitor y cómo se relaciona con la incorporación curricular de 6.º. |
+| 2. Estado actual | Describe la solución operativa vigente basada en bookmarklets locales. |
+| 3. Flujo normal de uso | Indica cómo revisar novedades y cuándo aceptar una nueva línea base. |
+| 4. Línea base local | Explica dónde se conserva el estado conocido y cómo se recupera. |
+| 5. Privacidad y seguridad | Define las garantías de ejecución local y uso de la sesión autenticada. |
+| 6. Qué compara | Detalla qué espacios, textos y recursos se descubren y normalizan. |
+| 7. Validación realizada | Registra las comprobaciones efectuadas sobre estabilidad y detección. |
+| 8. Reconstrucción de los marcadores | Conserva el código oficial de los bookmarklets de revisión y aceptación. |
+| 9. Incidencias habituales | Resume causas y acciones ante fallos o ruido de comparación. |
+| 10. Evolución aprobada pendiente | Documenta la futura unificación de los dos marcadores. |
+| 11. Relación con Academia | Conecta las novedades de Gaudem con el estándar curricular y el producto. |
+| DECISIÓN | Resume el estado operativo y las reglas que deben preservarse. |
 
 ---
 
@@ -195,13 +215,16 @@ No se deben incorporar al código credenciales, tokens de sesión ni datos perso
 
 ## 🧠 6. Qué compara
 
-Desde `Inicio`, el monitor identifica los enlaces internos con ruta equivalente a:
+Desde `Inicio`, el monitor identifica actualmente dos familias de espacios académicos internos:
 
 ```text
 /gaudem.es/sexto/areas/
+/gaudem.es/sexto/zonas/
 ```
 
-Para cada materia obtiene y compara:
+La ampliación a `/zonas/` se incorporó el 22/09/2026 después de comprobar que Gaudem publica material específico en **Linguizonas** y **Matezonas** fuera de la rama `/áreas/`. La versión anterior no podía detectarlo porque su descubrimiento estaba limitado expresamente a `/areas/`.
+
+Para cada área o zona obtiene y compara:
 
 - fragmentos de texto relevantes (`h1`…`h6`, `p`, `li`, `a`, headings);
 - enlaces y recursos detectables (`a`, `iframe`, `embed`, `object`).
@@ -229,13 +252,15 @@ La solución fue comprobada de forma incremental en el navegador autenticado.
 
 ### 7.1 Descubrimiento desde Inicio
 
-Desde una única ejecución en `Inicio` se detectaron y pudieron consultar correctamente:
+En la validación original del 17/09/2026 se detectaron y pudieron consultar correctamente:
 
 ```text
 15 páginas de materias/áreas
 ```
 
-El número `15` es un dato observado en la validación, **no un contrato fijo**. El monitor descubre las materias existentes cada vez.
+El número `15` era un dato observado, **no un contrato fijo**. El 22/09/2026 se identificó que la rama escolar `/zonas/` quedaba fuera del descubrimiento, por lo que el monitor se amplió para revisar conjuntamente áreas y zonas.
+
+La interfaz utiliza desde v1.2 la expresión **Espacios revisados** en lugar de **Materias revisadas**, porque el conjunto ya no contiene únicamente páginas de asignaturas.
 
 ### 7.2 Estabilidad de la línea base
 
@@ -270,7 +295,7 @@ La versión final comprobada:
 
 - exige ejecutarse dentro del Site de 6.º;
 - avisa si falta la línea base;
-- avisa si no puede localizar materias;
+- avisa si no puede localizar áreas o zonas académicas;
 - avisa si no logra leer correctamente las páginas;
 - no modifica la línea base ante esos errores.
 
@@ -285,7 +310,7 @@ Durante la validación se descartó una comprobación que buscaba cadenas de log
 Crear un marcador del navegador con ese nombre y sustituir su URL por el siguiente código en **una sola línea**:
 
 ```javascript
-javascript:(async()=>{const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}};if(!location.href.startsWith('https://sites.google.com/gaudem.es/sexto/')){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No estás dentro del Site de 6.º de Gaudem.\n\nAbre:\nhttps://sites.google.com/gaudem.es/sexto/inicio\n\ny vuelve a ejecutar el marcador.');return}const old=JSON.parse(localStorage.getItem(K)||'null');if(!old){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No encuentro la línea base en este navegador/perfil.\n\nPuede haberse borrado el almacenamiento local o quizá estás usando otro perfil, navegador u ordenador.\n\nNo se ha realizado ninguna comparación.');return}const ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href);if(u.origin===location.origin&&path(u.pathname).includes('/gaudem.es/sexto/areas/'))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop())}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No puedo localizar las materias.\n\nComprueba que estás en Inicio y que la sesión de Gaudem está abierta.\n\nNo se ha modificado la línea base.');return}const snap={f:new Date().toLocaleString(),m:{}};let readError=false;for(const m of ms){try{const r=await fetch(m.u,{credentials:'include',redirect:'follow'});if(!r.ok){readError=true;break}const fu=new URL(r.url||m.u);if(fu.hostname!=='sites.google.com'||!path(fu.pathname).includes('/gaudem.es/sexto/')){readError=true;break}const h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,t,q}}catch(e){readError=true;break}}if(readError){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No he podido completar la lectura de Gaudem.\n\nPuede deberse a una sesión caducada o a un problema de conexión.\n\nNo se ha modificado la línea base.\n\nComprueba que Gaudem está accesible y vuelve a ejecutar el marcador.');return}let out=[];for(const[u,x]of Object.entries(snap.m)){const o=old.m[u];if(!o){out.push('🆕 '+x.n+' (materia nueva)');continue}const at=x.t.filter(v=>!o.t.includes(v)),dt=o.t.filter(v=>!x.t.includes(v)),aq=x.q.filter(v=>!o.q.includes(v)),dq=o.q.filter(v=>!x.q.includes(v));if(at.length||dt.length||aq.length||dq.length){let z=['⚠️ '+x.n];at.slice(0,5).forEach(v=>z.push('+ TEXTO: '+v));aq.slice(0,5).forEach(v=>z.push('+ RECURSO: '+v));dt.slice(0,3).forEach(v=>z.push('- TEXTO: '+v));dq.slice(0,3).forEach(v=>z.push('- RECURSO: '+v));out.push(z.join('\n'))}}for(const[u,x]of Object.entries(old.m))if(!snap.m[u])out.push('❌ '+x.n+' (materia retirada)');alert('🔎 Revisar Gaudem 6.º\n\nMaterias revisadas: '+ms.length+'\n\n'+(out.length?'Cambios respecto a la línea base:\n\n'+out.slice(0,8).join('\n\n'):'✅ Sin cambios detallados desde la línea base.')+'\n\nRevisión: '+snap.f);})();
+javascript:(async()=>{const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),tracked=p=>p.includes('/gaudem.es/sexto/areas/')||p.includes('/gaudem.es/sexto/zonas/'),kind=p=>p.includes('/gaudem.es/sexto/zonas/')?'ZONA':'ÁREA',canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}};if(!location.href.startsWith('https://sites.google.com/gaudem.es/sexto/')){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No estás dentro del Site de 6.º de Gaudem.\n\nAbre:\nhttps://sites.google.com/gaudem.es/sexto/inicio\n\ny vuelve a ejecutar el marcador.');return}const old=JSON.parse(localStorage.getItem(K)||'null');if(!old){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No encuentro la línea base en este navegador/perfil.\n\nPuede haberse borrado el almacenamiento local o quizá estás usando otro perfil, navegador u ordenador.\n\nNo se ha realizado ninguna comparación.');return}const ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href),p=path(u.pathname);if(u.origin===location.origin&&tracked(p))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop()),k:kind(p)}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No puedo localizar áreas o zonas académicas.\n\nComprueba que estás en Inicio y que la sesión de Gaudem está abierta.\n\nNo se ha modificado la línea base.');return}const snap={f:new Date().toLocaleString(),m:{}};let readError=false;for(const m of ms){try{const r=await fetch(m.u,{credentials:'include',redirect:'follow'});if(!r.ok){readError=true;break}const fu=new URL(r.url||m.u);if(fu.hostname!=='sites.google.com'||!path(fu.pathname).includes('/gaudem.es/sexto/')){readError=true;break}const h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,k:m.k,t,q}}catch(e){readError=true;break}}if(readError){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No he podido completar la lectura de Gaudem.\n\nPuede deberse a una sesión caducada o a un problema de conexión.\n\nNo se ha modificado la línea base.\n\nComprueba que Gaudem está accesible y vuelve a ejecutar el marcador.');return}let out=[];for(const[u,x]of Object.entries(snap.m)){const o=old.m[u];if(!o){let z=['🆕 '+(x.k||'ESPACIO')+' · '+x.n];x.t.slice(0,5).forEach(v=>z.push('+ TEXTO: '+v));x.q.slice(0,5).forEach(v=>z.push('+ RECURSO: '+v));out.push(z.join('\n'));continue}const at=x.t.filter(v=>!o.t.includes(v)),dt=o.t.filter(v=>!x.t.includes(v)),aq=x.q.filter(v=>!o.q.includes(v)),dq=o.q.filter(v=>!x.q.includes(v));if(at.length||dt.length||aq.length||dq.length){let z=['⚠️ '+(x.k||o.k||'ESPACIO')+' · '+x.n];at.slice(0,5).forEach(v=>z.push('+ TEXTO: '+v));aq.slice(0,5).forEach(v=>z.push('+ RECURSO: '+v));dt.slice(0,3).forEach(v=>z.push('- TEXTO: '+v));dq.slice(0,3).forEach(v=>z.push('- RECURSO: '+v));out.push(z.join('\n'))}}for(const[u,x]of Object.entries(old.m))if(!snap.m[u])out.push('❌ '+(x.k||'ESPACIO')+' · '+x.n+' (retirado)');alert('🔎 Revisar Gaudem 6.º\n\nEspacios revisados: '+ms.length+'\n\n'+(out.length?'Cambios respecto a la línea base:\n\n'+out.slice(0,8).join('\n\n'):'✅ Sin cambios detallados desde la línea base.')+'\n\nRevisión: '+snap.f);})();
 ```
 
 ### 8.2 `✅ Aceptar cambios Gaudem`
@@ -293,7 +318,7 @@ javascript:(async()=>{const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,'
 Crear un segundo marcador con ese nombre y utilizar como URL:
 
 ```javascript
-javascript:(async()=>{if(!confirm('¿Aceptar el estado ACTUAL de Gaudem como nueva línea base?\n\nHazlo solo después de revisar las novedades detectadas.'))return;const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}},ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href);if(u.origin===location.origin&&path(u.pathname).includes('/gaudem.es/sexto/areas/'))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop())}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('No encontré materias.\n\nEjecuta este comando desde la página Inicio de 6.º.');return}const snap={f:new Date().toLocaleString(),m:{}};for(const m of ms){try{const r=await fetch(m.u,{credentials:'include'}),h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,t,q}}catch(e){snap.m[m.u]={n:m.n,t:[],q:[],e:true}}}localStorage.setItem(K,JSON.stringify(snap));const T=Object.values(snap.m).reduce((a,x)=>a+x.t.length,0),Q=Object.values(snap.m).reduce((a,x)=>a+x.q.length,0);alert('✅ Nueva línea base aceptada.\n\nMaterias: '+ms.length+'\nFragmentos de texto: '+T+'\nRecursos normalizados: '+Q+'\n\nFecha: '+snap.f);})();
+javascript:(async()=>{if(!confirm('¿Aceptar el estado ACTUAL de Gaudem como nueva línea base?\n\nHazlo solo después de revisar las novedades detectadas.'))return;const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),tracked=p=>p.includes('/gaudem.es/sexto/areas/')||p.includes('/gaudem.es/sexto/zonas/'),kind=p=>p.includes('/gaudem.es/sexto/zonas/')?'ZONA':'ÁREA',canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}},ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href),p=path(u.pathname);if(u.origin===location.origin&&tracked(p))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop()),k:kind(p)}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('No encontré áreas o zonas académicas.\n\nEjecuta este comando desde la página Inicio de 6.º.');return}const snap={f:new Date().toLocaleString(),m:{}};for(const m of ms){try{const r=await fetch(m.u,{credentials:'include'}),h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,k:m.k,t,q}}catch(e){snap.m[m.u]={n:m.n,k:m.k,t:[],q:[],e:true}}}localStorage.setItem(K,JSON.stringify(snap));const T=Object.values(snap.m).reduce((a,x)=>a+x.t.length,0),Q=Object.values(snap.m).reduce((a,x)=>a+x.q.length,0);alert('✅ Nueva línea base aceptada.\n\nEspacios: '+ms.length+'\nFragmentos de texto: '+T+'\nRecursos normalizados: '+Q+'\n\nFecha: '+snap.f);})();
 ```
 
 ---
@@ -315,7 +340,7 @@ Acción:
 2. desde `Inicio`, ejecutar `✅ Aceptar cambios Gaudem` para reconstruir la línea base;
 3. ejecutar después `🔎 Revisar Gaudem 6.º` para comprobar estabilidad.
 
-### El monitor no puede localizar materias
+### El monitor no puede localizar áreas o zonas
 
 Comprobar:
 
