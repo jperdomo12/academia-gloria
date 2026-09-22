@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d87968">
+  <title>Gramática · Repasamos los verbos | Lengüizonas 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Experiencia de Lengua de 6.º basada en Lengüizonas: formas simples y compuestas, número, persona y formas verbales según el contexto.">
+
+  <link rel="icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./gramatica-verbos.css">
+</head>
+<body
+  data-page-title="Gramática · Repasamos los verbos"
+  data-page-icon="🔤"
+  data-nav-back="../index.html"
+>
+  <main class="verbos-shell">
+    <header class="verbos-hero">
+      <div>
+        <div class="verbos-ruta" aria-label="Ruta académica">
+          <span>6.º de Primaria</span>
+          <span>Zonas del cole</span>
+          <span>Lengüizonas</span>
+          <span>Gramática · Verbos</span>
+        </div>
+
+        <h1>Repasamos los verbos</h1>
+        <p class="verbos-hero__lead">
+          Un repaso para observar cómo cambia el verbo: si es simple o compuesto,
+          si está en singular o plural, quién realiza la acción y qué forma encaja mejor en cada oración.
+        </p>
+
+        <div class="verbos-chips" aria-label="Qué trabajaremos">
+          <span class="verbos-chip">🔗 Simples y compuestas</span>
+          <span class="verbos-chip">1️⃣ Número</span>
+          <span class="verbos-chip">👤 Persona</span>
+          <span class="verbos-chip">🧠 Contexto</span>
+        </div>
+      </div>
+
+      <div class="verbos-hero__visual" aria-hidden="true">
+        <div class="verbos-orbit">
+          <span class="verbos-orbit__mini verbos-orbit__mini--a">1️⃣</span>
+          <span class="verbos-orbit__main">🔤</span>
+          <span class="verbos-orbit__mini verbos-orbit__mini--b">👤</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="verbos-mode" aria-live="polite">
+      <div class="verbos-mode__main">
+        <div id="iconoModo" class="verbos-mode__icon" aria-hidden="true">🎓</div>
+        <div>
+          <h2 id="tituloModo">Sesión de aprendizaje</h2>
+          <p id="descripcionModo">Preparando el contexto…</p>
+        </div>
+      </div>
+      <button id="botonModo" type="button">Cambiar a Vista previa</button>
+    </section>
+
+    <nav class="verbos-tabs" aria-label="Secciones del tema">
+      <button class="verbos-tab activa" type="button" data-pestana="mapa">🧭 Mapa</button>
+      <button class="verbos-tab" type="button" data-pestana="claves">💡 Claves</button>
+      <button class="verbos-tab" type="button" data-pestana="material">📘 Material</button>
+      <button class="verbos-tab" type="button" data-pestana="practica">✏️ Práctica</button>
+      <button class="verbos-tab" type="button" data-pestana="prueba">✅ Prueba</button>
+    </nav>
+
+    <section class="verbos-panel" data-panel="mapa">
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">🧭</div>
+        <div>
+          <p class="eyebrow">Primero vemos el mapa</p>
+          <h2>Cuatro cosas que mirar en un verbo</h2>
+          <p>La ficha del colegio mezcla varios tipos de ejercicio. Separarlos ayuda a saber qué observar en cada momento.</p>
+        </div>
+      </div>
+
+      <div class="map-grid">
+        <article class="map-card map-card--coral">
+          <h3>🔗 Forma</h3>
+          <p><strong>Simple:</strong> una sola palabra verbal. <strong>Compuesta:</strong> auxiliar + participio.</p>
+        </article>
+        <article class="map-card map-card--blue">
+          <h3>1️⃣ Número</h3>
+          <p>¿La forma verbal se refiere a una persona/cosa o a varias? Singular o plural.</p>
+        </article>
+        <article class="map-card map-card--violet">
+          <h3>👤 Persona</h3>
+          <p>Primera, segunda o tercera persona, siempre junto con su número.</p>
+        </article>
+        <article class="map-card map-card--olive">
+          <h3>🧠 Contexto</h3>
+          <p>La oración nos ayuda a elegir la forma verbal que expresa mejor cuándo y cómo ocurre la acción.</p>
+        </article>
+      </div>
+
+      <div class="source-note">
+        <strong>📘 Fuente base:</strong> Lengüizona Gramática · 6.º de Primaria · <em>Repasamos los verbos</em>.
+        La ficha contiene siete actividades: reconocer formas simples y compuestas, transformar formas,
+        clasificar número, identificar persona y número, cambiar la narración a 3.ª persona y elegir formas verbales según el contexto.
+      </div>
+    </section>
+
+    <section class="verbos-panel" data-panel="claves" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">💡</div>
+        <div>
+          <p class="eyebrow">Antes de responder</p>
+          <h2>Claves rápidas para mirar la forma verbal</h2>
+          <p>Usa estas preguntas como una pequeña lista de comprobación.</p>
+        </div>
+      </div>
+
+      <div class="lesson-list">
+        <article class="lesson-card" id="claveForma">
+          <h3>🔗 ¿Una palabra o auxiliar + participio?</h3>
+          <p>
+            En el texto de la patata aparecen ejemplos claros:
+            <span class="verb-pill">llegó</span>
+            <span class="verb-pill">se extendió</span>
+            son formas simples; 
+            <span class="verb-pill">ha sido</span>
+            <span class="verb-pill">había descubierto</span>
+            son compuestas.
+          </p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#claveForma">🔊 Escuchar</button>
+        </article>
+
+        <article class="lesson-card" id="claveNumero">
+          <h3>1️⃣ ¿Singular o plural?</h3>
+          <p>
+            Mira qué sujeto concuerda con el verbo:
+            <span class="verb-pill">una lluvia cae</span>
+            frente a
+            <span class="verb-pill">los dinosaurios desaparecieron</span>.
+          </p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#claveNumero">🔊 Escuchar</button>
+        </article>
+
+        <article class="lesson-card" id="clavePersona">
+          <h3>👤 ¿Quién realiza la acción?</h3>
+          <p>
+            <span class="verb-pill">desayunó</span> → 3.ª persona singular;
+            <span class="verb-pill">vais</span> → 2.ª persona plural;
+            <span class="verb-pill">estás</span> → 2.ª persona singular.
+          </p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#clavePersona">🔊 Escuchar</button>
+        </article>
+
+        <article class="lesson-card" id="claveContexto">
+          <h3>🧠 ¿Qué me dice el resto de la oración?</h3>
+          <p>
+            Palabras como <strong>próximo</strong>, <strong>mientras</strong>, <strong>si</strong> o <strong>ya</strong>
+            ayudan a decidir qué forma verbal encaja con la situación.
+          </p>
+          <button class="btn btn--soft" type="button" data-escuchar-contenedor="#claveContexto">🔊 Escuchar</button>
+        </article>
+      </div>
+
+      <div class="learning-note">
+        <strong>🌿 Estrategia:</strong> no intentes analizarlo todo a la vez.
+        Primero localiza el verbo; después decide qué pregunta te está haciendo el ejercicio.
+      </div>
+    </section>
+
+    <section class="verbos-panel" data-panel="material" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">📘</div>
+        <div>
+          <p class="eyebrow">Lo que trabaja la ficha</p>
+          <h2>Las siete actividades, organizadas</h2>
+          <p>El contenido se mantiene fiel al material del colegio; Academia añade organización y explicaciones para repasar.</p>
+        </div>
+      </div>
+
+      <div class="exercise-grid">
+        <article class="exercise-card">
+          <h3>1 · Simples y compuestas</h3>
+          <p>Clasificar las formas verbales del texto sobre la patata.</p>
+          <details>
+            <summary>Ver ejemplos de comprobación</summary>
+            <p><strong>Simples:</strong> llegó, se extendió, sobrevivieron.</p>
+            <p><strong>Compuestas:</strong> ha sido, había descubierto.</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>2 · Pasar de simple a compuesta</h3>
+          <p>La ficha parte del ejemplo «Yo fui bailarina» → «Yo he sido bailarina» y pide transformar otras oraciones.</p>
+          <details>
+            <summary>Ver una transformación clara</summary>
+            <p>«Andrés fue a comprar pan» → «Andrés ha ido a comprar pan».</p>
+            <p>«¿Os gustó la obra de teatro?» → «¿Os ha gustado la obra de teatro?».</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>3 · Singular y plural</h3>
+          <p>Clasificar las formas verbales de varias oraciones según su número.</p>
+          <details>
+            <summary>Ver clasificación</summary>
+            <p><strong>Singular:</strong> cae, estudiaré, vienes.</p>
+            <p><strong>Plural:</strong> desaparecieron.</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>4 · Cambiar el número</h3>
+          <p>Pasar formas verbales a plural manteniendo la misma persona.</p>
+          <details>
+            <summary>Ver un ejemplo seguro</summary>
+            <p>«Leo» → «leemos»: 1.ª persona singular → 1.ª persona plural.</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>5 · Persona y número</h3>
+          <p>Identificar la persona y el número de las formas verbales señaladas.</p>
+          <details>
+            <summary>Ver comprobación</summary>
+            <p>desayunó → 3.ª singular · vais → 2.ª plural · estás → 2.ª singular.</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>6 · Narrar en 3.ª persona</h3>
+          <p>Transformar el texto de la tormenta para que pase de 1.ª a 3.ª persona del singular.</p>
+          <details>
+            <summary>Ver qué formas cambian</summary>
+            <p>salí → salió · caminé → caminó · vi → vio · me acerqué → se acercó · acaricié → acarició.</p>
+            <p>La ficha no fija un personaje concreto; lo importante es mantener la 3.ª persona del singular de forma coherente.</p>
+          </details>
+        </article>
+
+        <article class="exercise-card">
+          <h3>7 · Elegir la forma adecuada</h3>
+          <p>Completar cuatro oraciones escogiendo entre dos formas verbales.</p>
+          <details>
+            <summary>Ver comprobación</summary>
+            <p>iremos · duchaba · fuera · había partido.</p>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="verbos-panel" data-panel="practica" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✏️</div>
+        <div>
+          <p class="eyebrow">Con pistas y nuevos intentos</p>
+          <h2>Práctica guiada</h2>
+          <p>Diez retos breves para recorrer los tipos de ejercicio del material.</p>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="progress" aria-hidden="true"><span id="barraPractica"></span></div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido"></div>
+        <div id="pistaPractica" class="hint" hidden></div>
+        <div id="mensajePractica" class="message" role="status"></div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="verbos-panel" data-panel="prueba" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✅</div>
+        <div>
+          <p class="eyebrow">Comprobación formativa</p>
+          <h2>Prueba de verbos</h2>
+          <p>Ocho preguntas: forma, número, persona y uso según el contexto.</p>
+        </div>
+      </div>
+
+      <div id="inicioPrueba" class="test-start">
+        <div class="test-start__icon" aria-hidden="true">🎯</div>
+        <h3>Cuando estés preparada</h3>
+        <p>
+          No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve.
+          Al final tendrás un mapa de las ideas que salieron firmes y de las que conviene seguir practicando.
+        </p>
+        <button id="botonIniciarPrueba" class="btn btn--violet" type="button">🔤 Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="challenge" hidden>
+        <div class="progress" aria-hidden="true"><span id="barraPrueba"></span></div>
+        <div class="test-meta">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="test-block">Bloque</span>
+        </div>
+        <div id="pruebaContenido"></div>
+        <div id="explicacionPrueba" class="explanation" hidden></div>
+        <div class="actions">
+          <button id="botonResponderPrueba" class="btn btn--primary" type="button" disabled>Comprobar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="test-end" hidden>
+        <div class="test-end__icon" aria-hidden="true">🌱</div>
+        <h3>Tu mapa de hoy</h3>
+        <p id="textoCierre"></p>
+        <div id="resultadoPruebaResumen"></div>
+        <div id="mapaResultados" class="results"></div>
+        <div id="estadoGuardado" class="save-state" aria-live="polite"></div>
+        <div class="actions" style="justify-content:center">
+          <button id="botonVolverRepaso" class="btn btn--soft" type="button">← Volver a repasar</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./gramatica-verbos.js"></script>
+</body>
+</html>
