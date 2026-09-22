@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha de origen** | 17/09/2026 |
 | **Última actualización** | 22/09/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 22/09/2026 | Product Owner + AI Collaborator | Simplifica la salida de `🔎 Revisar Gaudem 6.º`: cuando detecta diferencias, informa únicamente qué área/zona cambió, sin listar textos ni URLs. La comparación interna detallada se conserva para mantener precisión. |
 | 1.3 | 22/09/2026 | Product Owner + AI Collaborator | Completa el descubrimiento de espacios de Gaudem incorporando `english-zones`, cuya ruta no cuelga de `/zonas/`. Mantiene compatibilidad con la línea base local y clasifica Linguizonas, Matezonas y English Zones como `ZONA`. |
 | 1.2 | 22/09/2026 | Product Owner + AI Collaborator | Amplía el monitor para descubrir y comparar tanto `/áreas/` como `/zonas/`, corrige la limitación que impedía detectar cambios en Linguizonas/Matezonas, preserva la línea base `gaudem6_detalle_v2`, muestra detalle inicial de espacios nuevos y adopta el bloque obligatorio **Resumen de contenido**. |
 | 1.1 | 17/09/2026 | Product Owner + AI Collaborator | Explicita qué representa el Site privado `https://sites.google.com/gaudem.es/sexto/inicio` en el trabajo escolar de 6.º y su relación con Academia: es la fuente donde Gaudem publica materiales que los alumnos deben considerar para su preparación, habitualmente trabajados o explicados en clase, y esos materiales constituyen la base curricular prioritaria para desarrollar `Cursos → 6.º de Primaria` en Academia. |
@@ -157,13 +158,14 @@ https://sites.google.com/gaudem.es/sexto/inicio
 
 significa que no se detectaron diferencias.
 
-Si aparecen cambios, el monitor muestra la materia y hasta varios elementos nuevos/eliminados, por ejemplo:
+Si aparecen cambios, el monitor muestra únicamente **en qué área o zona** se detectó la diferencia, por ejemplo:
 
 ```text
-⚠️ SCIENCE
-+ TEXTO: ...
-+ RECURSO: ...
+⚠️ ÁREA · SCIENCE
+🆕 ZONA · MATEZONAS
 ```
+
+El monitor continúa comparando internamente textos y recursos, pero no los muestra en el aviso para mantener el resultado breve y operativo.
 
 7. Revisar la novedad real en Gaudem.
 8. Solo cuando el estado nuevo deba pasar a ser la referencia conocida, pulsar:
@@ -285,9 +287,10 @@ Se alteró temporalmente **solo la copia local de la línea base**, retirando un
 La siguiente revisión detectó correctamente:
 
 ```text
-⚠️ SCIENCE
-+ TEXTO: 6º DE PRIMARIA 26/27
+⚠️ ÁREA · SCIENCE
 ```
+
+La diferencia interna seguía siendo un texto retirado de la copia local, pero desde v1.4 el aviso solo identifica el espacio afectado.
 
 Después se restauró la línea base original y el monitor volvió a indicar ausencia de cambios.
 
@@ -312,7 +315,7 @@ Durante la validación se descartó una comprobación que buscaba cadenas de log
 Crear un marcador del navegador con ese nombre y sustituir su URL por el siguiente código en **una sola línea**:
 
 ```javascript
-javascript:(async()=>{const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),tracked=p=>p.includes('/gaudem.es/sexto/areas/')||p.includes('/gaudem.es/sexto/zonas/')||p.includes('/gaudem.es/sexto/english-zones'),kind=p=>(p.includes('/gaudem.es/sexto/zonas/')||p.includes('/gaudem.es/sexto/english-zones'))?'ZONA':'ÁREA',canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}};if(!location.href.startsWith('https://sites.google.com/gaudem.es/sexto/')){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No estás dentro del Site de 6.º de Gaudem.\n\nAbre:\nhttps://sites.google.com/gaudem.es/sexto/inicio\n\ny vuelve a ejecutar el marcador.');return}const old=JSON.parse(localStorage.getItem(K)||'null');if(!old){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No encuentro la línea base en este navegador/perfil.\n\nPuede haberse borrado el almacenamiento local o quizá estás usando otro perfil, navegador u ordenador.\n\nNo se ha realizado ninguna comparación.');return}const ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href),p=path(u.pathname);if(u.origin===location.origin&&tracked(p))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop()),k:kind(p)}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No puedo localizar áreas o zonas académicas.\n\nComprueba que estás en Inicio y que la sesión de Gaudem está abierta.\n\nNo se ha modificado la línea base.');return}const snap={f:new Date().toLocaleString(),m:{}};let readError=false;for(const m of ms){try{const r=await fetch(m.u,{credentials:'include',redirect:'follow'});if(!r.ok){readError=true;break}const fu=new URL(r.url||m.u);if(fu.hostname!=='sites.google.com'||!path(fu.pathname).includes('/gaudem.es/sexto/')){readError=true;break}const h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,k:m.k,t,q}}catch(e){readError=true;break}}if(readError){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No he podido completar la lectura de Gaudem.\n\nPuede deberse a una sesión caducada o a un problema de conexión.\n\nNo se ha modificado la línea base.\n\nComprueba que Gaudem está accesible y vuelve a ejecutar el marcador.');return}let out=[];for(const[u,x]of Object.entries(snap.m)){const o=old.m[u];if(!o){let z=['🆕 '+(x.k||'ESPACIO')+' · '+x.n];x.t.slice(0,5).forEach(v=>z.push('+ TEXTO: '+v));x.q.slice(0,5).forEach(v=>z.push('+ RECURSO: '+v));out.push(z.join('\n'));continue}const at=x.t.filter(v=>!o.t.includes(v)),dt=o.t.filter(v=>!x.t.includes(v)),aq=x.q.filter(v=>!o.q.includes(v)),dq=o.q.filter(v=>!x.q.includes(v));if(at.length||dt.length||aq.length||dq.length){let z=['⚠️ '+(x.k||o.k||'ESPACIO')+' · '+x.n];at.slice(0,5).forEach(v=>z.push('+ TEXTO: '+v));aq.slice(0,5).forEach(v=>z.push('+ RECURSO: '+v));dt.slice(0,3).forEach(v=>z.push('- TEXTO: '+v));dq.slice(0,3).forEach(v=>z.push('- RECURSO: '+v));out.push(z.join('\n'))}}for(const[u,x]of Object.entries(old.m))if(!snap.m[u])out.push('❌ '+(x.k||'ESPACIO')+' · '+x.n+' (retirado)');alert('🔎 Revisar Gaudem 6.º\n\nEspacios revisados: '+ms.length+'\n\n'+(out.length?'Cambios respecto a la línea base:\n\n'+out.slice(0,8).join('\n\n'):'✅ Sin cambios detallados desde la línea base.')+'\n\nRevisión: '+snap.f);})();
+javascript:(async()=>{const K='gaudem6_detalle_v2',n=s=>(s||'').replace(/\s+/g,' ').trim(),path=s=>decodeURIComponent(s).normalize('NFD').replace(/[\u0300-\u036f]/g,''),tracked=p=>p.includes('/gaudem.es/sexto/areas/')||p.includes('/gaudem.es/sexto/zonas/')||p.includes('/gaudem.es/sexto/english-zones'),kind=p=>(p.includes('/gaudem.es/sexto/zonas/')||p.includes('/gaudem.es/sexto/english-zones'))?'ZONA':'ÁREA',canon=(v,b,tag)=>{try{const u=new URL(v,b);u.hash='';if(/^(IFRAME|EMBED|OBJECT)$/.test(tag)){u.search=''}else{['authuser','usp','pli','embed_config','embedded','rm'].forEach(k=>u.searchParams.delete(k));const p=[...u.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));u.search='';p.forEach(([k,v])=>u.searchParams.append(k,v))}return u.href}catch(e){return''}};if(!location.href.startsWith('https://sites.google.com/gaudem.es/sexto/')){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No estás dentro del Site de 6.º de Gaudem.\n\nAbre:\nhttps://sites.google.com/gaudem.es/sexto/inicio\n\ny vuelve a ejecutar el marcador.');return}const old=JSON.parse(localStorage.getItem(K)||'null');if(!old){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No encuentro la línea base en este navegador/perfil.\n\nPuede haberse borrado el almacenamiento local o quizá estás usando otro perfil, navegador u ordenador.\n\nNo se ha realizado ninguna comparación.');return}const ms=[...new Map([...document.querySelectorAll('a[href]')].map(a=>{try{const u=new URL(a.href),p=path(u.pathname);if(u.origin===location.origin&&tracked(p))return[u.href,{u:u.href,n:n(a.innerText)||decodeURIComponent(u.pathname.split('/').pop()),k:kind(p)}]}catch(e){}}).filter(Boolean)).values()];if(!ms.length){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No puedo localizar áreas o zonas académicas.\n\nComprueba que estás en Inicio y que la sesión de Gaudem está abierta.\n\nNo se ha modificado la línea base.');return}const snap={f:new Date().toLocaleString(),m:{}};let readError=false;for(const m of ms){try{const r=await fetch(m.u,{credentials:'include',redirect:'follow'});if(!r.ok){readError=true;break}const fu=new URL(r.url||m.u);if(fu.hostname!=='sites.google.com'||!path(fu.pathname).includes('/gaudem.es/sexto/')){readError=true;break}const h=await r.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript,template,svg').forEach(x=>x.remove());const t=[...new Set([...d.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,a,[role="heading"]')].map(x=>n(x.textContent)).filter(x=>x.length>=3&&x.length<=300))].sort();const q=[...new Set([...d.querySelectorAll('a[href],iframe[src],embed[src],object[data]')].map(x=>{const v=x.getAttribute('href')||x.getAttribute('src')||x.getAttribute('data');return canon(v,m.u,x.tagName)}).filter(x=>x&&!x.startsWith(location.origin+'/gaudem.es/sexto/')))].sort();snap.m[m.u]={n:m.n,k:m.k,t,q}}catch(e){readError=true;break}}if(readError){alert('🔎 Revisar Gaudem 6.º\n\n⚠️ No he podido completar la lectura de Gaudem.\n\nPuede deberse a una sesión caducada o a un problema de conexión.\n\nNo se ha modificado la línea base.\n\nComprueba que Gaudem está accesible y vuelve a ejecutar el marcador.');return}let out=[];for(const[u,x]of Object.entries(snap.m)){const o=old.m[u];if(!o){out.push('🆕 '+(x.k||'ESPACIO')+' · '+x.n);continue}const at=x.t.filter(v=>!o.t.includes(v)),dt=o.t.filter(v=>!x.t.includes(v)),aq=x.q.filter(v=>!o.q.includes(v)),dq=o.q.filter(v=>!x.q.includes(v));if(at.length||dt.length||aq.length||dq.length)out.push('⚠️ '+(x.k||o.k||'ESPACIO')+' · '+x.n)}for(const[u,x]of Object.entries(old.m))if(!snap.m[u])out.push('❌ '+(x.k||'ESPACIO')+' · '+x.n+' (retirado)');alert('🔎 Revisar Gaudem 6.º\n\nEspacios revisados: '+ms.length+'\n\n'+(out.length?'Cambios detectados en:\n\n'+out.join('\n'):'✅ Sin cambios desde la línea base.')+'\n\nRevisión: '+snap.f);})();
 ```
 
 ### 8.2 `✅ Aceptar cambios Gaudem`
