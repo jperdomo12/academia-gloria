@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.8 |
+| **Versión** | 2.9 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 15/09/2026 |
+| **Última actualización** | 22/09/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -29,6 +29,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
+| 2.9 | 22/09/2026 | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
 | 2.8 | 15/09/2026 | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
 | 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
 | 2.6 | 14/09/2026 | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
@@ -38,6 +39,27 @@
 | 2.2 | 09/09/2026 | Registra Calendario 2026–2027, Menú del Cole, Horario V1, recursos oficiales Gaudem e Issue #108. |
 | 2.1 | 06/09/2026 | Cierra Bitácora V1, PR #83/#85 y Rules publicadas/validadas. |
 | 1.x | 03–06/09/2026 | Activación del HandOff, fase de uso prioritario, observación de accesos y consolidación documental P0/P1/P2. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define para qué existe el HandOff y qué debe conservar entre chats. |
+| 2. Cómo iniciar el siguiente chat | Proporciona el prompt mínimo y la secuencia de arranque. |
+| 3. Regla de autoridad y forma de trabajo | Resume GitHub, PR, validación y responsabilidades. |
+| 4. Fase operativa actual | Describe la fase de uso prioritario y el carril curricular de 6.º. |
+| 5. Estado estable reciente | Consolida los frentes cerrados y el crecimiento reciente del producto. |
+| 6. Issue #108 | Conserva el cierre de Guía rápida e invitaciones. |
+| 7. Inicio y Descubre | Resume los refinamientos visuales y de navegación ya cerrados. |
+| 8. Academia de un vistazo | Conserva el estado final del brochure digital. |
+| 9. Trabajo On going | Identifica si existe trabajo activo que deba continuarse primero. |
+| 10. Backlog posterior | Lista únicamente los pendientes vigentes que todavía pueden retomarse. |
+| 11. Reglas que no deben perderse | Resume criterios permanentes de producto, UX y datos. |
+| 12. Estado operativo actual | Ofrece una fotografía ejecutiva del repositorio y despliegue. |
+| 13. Siguiente paso exacto | Indica cómo retomar el proyecto sin reconstruir conversaciones. |
+| DECISIÓN | Registra el estado administrativo vigente del HandOff. |
 
 ---
 
@@ -51,19 +73,14 @@ Permitir continuar Academia Gloria Valentina en otro chat de forma rápida y seg
 
 ## 🧭 2. Cómo iniciar el siguiente chat
 
-Con GitHub conectado, usar:
+Con GitHub conectado, basta normalmente con:
 
 ```text
-Continuamos el proyecto Academia Gloria Valentina.
-Revisa en jperdomo12/academia-gloria, rama main:
-1. `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md`;
-2. `docs/ai/AI_CHAT_BOOTSTRAP.md`;
-3. las fuentes propietarias necesarias antes de actuar.
-
-No reconstruyas conversaciones anteriores ni me pidas contexto ya documentado.
-Si existe trabajo On going, revísalo antes de iniciar algo nuevo.
-Al comenzar, dime brevemente que revisaste el contexto y estás listo.
+Continuamos Academia Gloria Valentina.
+Revisa el HandOff vigente en `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` y continúa desde allí.
 ```
+
+El HandOff ya indica qué Bootstrap y fuentes propietarias consultar. No reconstruir conversaciones anteriores ni pedir contexto que ya esté documentado.
 
 La ruta canónica para contexto de IA es `docs/ai/`. No crear `docs/ia/`.
 
@@ -103,6 +120,8 @@ Propietario: `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md`.
 Entrada mínima suficiente: material del colegio + 6.º + materia + tema + notas opcionales + “Incorporar a la Academia”. La AI Collaborator resuelve estructura, rutas, evidencia, integración, navegación, Persona Activa, histórico y flujo Git.
 
 Para nuevos portales de materia, revisar recursos oficiales Gaudem y reutilizar el patrón existente solo cuando corresponda. Los recursos externos se mantienen diferenciados del contenido propio y condicionados al perfil adecuado.
+
+Desde 22/09/2026 existe además la capa de origen escolar **Zonas del cole**: Lengüizonas, Matezonas y English Zones. Esta capa no sustituye ni duplica la clasificación académica. Los Temas conservan la Zona como origen visible, pero la evidencia académica sigue asociada a su materia: Lengüizonas → Lengua, Matezonas → Matemáticas, English Zones → English. El crecimiento de 6.º continúa bajo el modo de **mínima intervención** definido por el estándar propietario.
 
 ---
 
@@ -152,6 +171,62 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 - El proceso oficial de nuevas Semillas vive en `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
 - Flujo por defecto: necesidad real → diseño completo por AI Collaborator → imagen generada por AI Collaborator → validación → Product Owner sube el binario solo cuando la conexión GitHub no permita hacerlo → implementación/verificación por AI Collaborator → prueba real con Gloria.
 - Cuando Gloria aparece, debe mantenerse como personaje visual reconocible y coherente con las ilustraciones aprobadas anteriores.
+
+### 5.5 Carril curricular 6.º · material real reciente
+
+#### Monitor Gaudem
+
+- `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` quedó en **v1.4**.
+- El monitor revisa `/areas/`, `/zonas/` y `/english-zones`.
+- La salida normal quedó simplificada para indicar únicamente **qué área/zona cambió**, manteniendo internamente la comparación de textos/recursos.
+- El Product Owner aceptó el 22/09/2026 la nueva línea base después de incorporar las Zonas.
+- Regla de uso: `🔎 Revisar Gaudem 6.º` detecta; `✅ Aceptar cambios Gaudem` solo se usa después de revisar las novedades.
+
+#### Zonas del cole
+
+Ruta de producto: `6.º → Zonas del cole`.
+
+Estado:
+- **Matezonas** · activa.
+- **Lengüizonas** · activa.
+- **English Zones** · preparada, sin Tema incorporado todavía.
+
+Criterio aprobado:
+- la Zona identifica el **origen escolar**;
+- no crea una segunda estructura curricular;
+- la evidencia se registra en la **materia académica propietaria**.
+
+#### Matezonas
+
+- PR **#139** · crea `Zonas del cole`, portal Matezonas y Tema **Dale al coco · Zonas 1**; fusionada y publicada.
+- PR **#140** · incorpora **Problemas y operaciones · Nivel A**; fusionada y publicada.
+- Ambos Temas generan evidencia académica bajo **Matemáticas** y reutilizan Vista previa, Persona Activa, lector, práctica guiada, prueba formativa y `sesion-academica-v1`.
+
+#### Lengüizonas
+
+- Primer Tema real incorporado directamente en `main` por autorización expresa del Product Owner: **Gramática · Repasamos los verbos**.
+- Trabaja formas verbales simples/compuestas, número, persona, transformaciones y elección contextual.
+- Incluye Mapa, Claves, Material, Práctica guiada y Prueba formativa.
+- La evidencia académica se registra bajo **Lengua**.
+- El portal general de Lengua puede continuar en `Preparando`; Lengüizonas es una capa de origen escolar y no obliga por sí sola a duplicar el Tema en el portal de materia.
+
+#### Rincón de Lectura
+
+PR **#133** quedó fusionada con seis nuevas lecturas Nivel 1 por intereses:
+- Shakira;
+- música;
+- arte;
+- Madrid;
+- Venezuela;
+- España.
+
+Venezuela y España muestran banderas gráficas en sus tarjetas sin prefijos `VE` / `ES` en el título.
+
+#### Estándar documental
+
+- `docs/DOCUMENTATION_STANDARD.md` está en **v1.3**.
+- Todo documento oficial nuevo debe incluir **Resumen de contenido**; los existentes lo incorporan al ser revisados.
+- `docs/README.md` y `docs/DOCUMENTATION_ARCHITECTURE.md` ya adoptaron el bloque.
 
 ---
 
@@ -260,7 +335,7 @@ El brochure original se conserva como referencia visual de identidad en:
 
 No hay trabajo On going activo al cierre de esta actualización.
 
-El frente de nuevas Semillas 008/009 y la formalización de su proceso quedan cerrados como desarrollo/documentación. La Semilla 009 queda naturalmente sujeta a observación durante su uso real con Gloria, sin considerarse trabajo On going.
+Los materiales actuales de Matezonas y el primer Tema de Lengüizonas quedaron integrados. El carril curricular continúa **a demanda del material real del colegio**, bajo mínima intervención del Product Owner y sin abrir trabajo adicional por iniciativa propia.
 
 ### 9.1 Observación menor no bloqueante
 
@@ -299,11 +374,11 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 |---|---|
 | **Base canónica** | `main` |
 | **Baseline funcional cerrado** | `8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4` |
-| **HEAD relevante al cierre** | verificar `main` al iniciar el siguiente trabajo |
+| **HEAD relevante al cierre** | `5848a213729274fe67f40a49da5ba7ba815fe524` |
 | **Rama On going** | Ninguna |
 | **PR On going** | Ninguna |
 | **Trabajo inmediato** | Ninguno obligatorio; volver a uso prioritario y material real de 6.º |
-| **Último Pages funcional relevante** | #681 · ajuste visual de miniaturas de Semillas 007/009 desplegado con éxito |
+| **Último Pages funcional relevante** | #745 · Lengüizonas + estado actualizado de Zonas del cole · `success` |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ Cerrada y validada |
 | **Horario / Menú / Calendario** | ✅ Cerrados |
@@ -314,7 +389,9 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 | **Brochure overview** | ✅ Conservado en `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Carril curricular 6.º** | ✅ Activo |
+| **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
+| **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
+| **Monitor Gaudem** | ✅ v1.4 · nueva línea base aceptada 22/09/2026 |
 
 ---
 
@@ -331,18 +408,18 @@ Al iniciar o retomar trabajo:
 
 ---
 
-# 🟣 Última actualización — 15/09/2026
+# 🟣 Última actualización — 22/09/2026
 
 ## Trabajo On going
 
-> **Ninguno.** Semillas 008/009 y el proceso oficial de creación de nuevas Semillas están integrados; la Semilla 009 pasa a validación natural mediante uso real con Gloria.
+> **Ninguno.** El crecimiento reciente de 6.º (Zonas del cole, Matezonas y Lengüizonas) quedó integrado; el siguiente material se incorpora cuando llegue, siguiendo el modo de mínima intervención.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 2.8 |
+| **Versión** | 2.9 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Ninguno |
 | **PR On going** | Ninguno |
@@ -350,6 +427,6 @@ Al iniciar o retomar trabajo:
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Uso prioritario → material real de 6.º → resolver issues reales / evaluar backlog decidido |
+| **Siguiente paso** | Uso prioritario → incorporar material real de 6.º con mínima intervención → resolver issues reales / evaluar backlog decidido |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
