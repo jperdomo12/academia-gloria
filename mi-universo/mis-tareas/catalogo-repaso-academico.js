@@ -439,6 +439,35 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     ) || null;
   }
 
+  function normalizarSeleccionZonaAnterior(materia, temaPreferido = "", recursoPreferido = "") {
+    if (!materia?.esZona) {
+      return { temaPreferido, recursoPreferido };
+    }
+
+    let absoluto = "";
+    try {
+      absoluto = new URL(String(recursoPreferido || ""), window.location.href).href;
+    } catch {
+      return { temaPreferido, recursoPreferido };
+    }
+
+    const apuntaAlPortalZona =
+      absoluto === materia.url ||
+      absoluto === new URL("index.html", materia.url).href;
+
+    if (
+      apuntaAlPortalZona &&
+      claveTexto(temaPreferido) === claveTexto(materia.nombre)
+    ) {
+      return {
+        temaPreferido: "",
+        recursoPreferido: ""
+      };
+    }
+
+    return { temaPreferido, recursoPreferido };
+  }
+
   function encontrarTema(titulo, recurso = "") {
     const claveTitulo = claveTexto(titulo);
     const recursoTexto = String(recurso || "").trim();
@@ -630,7 +659,18 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
         `${materias.length} ${materias.length === 1 ? "opción disponible" : "opciones disponibles"}.`;
 
       if (materia) {
-        await cargarTemas(materia, { temaPreferido, recursoPreferido });
+        const seleccion = normalizarSeleccionZonaAnterior(
+          materia,
+          temaPreferido,
+          recursoPreferido
+        );
+
+        if (!seleccion.temaPreferido && temaPreferido) {
+          establecerCampo(temaInput, "", { notificar: false });
+          establecerRecurso("", { manual: false });
+        }
+
+        await cargarTemas(materia, seleccion);
       } else if (textoLimpio(materiaPreferida)) {
         mostrarMateriaManual(materiaPreferida);
         temaInput.value = temaPreferido;
