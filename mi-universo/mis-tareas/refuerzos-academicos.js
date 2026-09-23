@@ -2,7 +2,7 @@
 
 import { Academia } from "../../compartido/api/academia.js";
 import { leerSesionesAcademicas } from "../../compartido/js/sesiones-academicas.js";
-import "./catalogo-repaso-academico.js?v=2";
+import "./catalogo-repaso-academico.js?v=3";
 import "./mision-libre.js";
 
 const $ = id => document.getElementById(id);
