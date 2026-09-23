@@ -272,7 +272,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     return resultado;
   }
 
-  async function incorporarFuentesZona(documentoCurso, baseCurso, materiasBase) {
+  async function incorporarZonasComoMaterias(documentoCurso, baseCurso, materiasBase) {
     const portalZonas = encontrarPortalZonas(documentoCurso, baseCurso);
     if (!portalZonas) return materiasBase;
 
@@ -284,27 +284,50 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       const fuentesZona = extraerFuentesZona(documentoZonas, portalZonas);
 
       fuentesZona.forEach(fuente => {
-        const materia = materiasBase.find(item =>
-          claveTexto(item.nombre) === claveTexto(fuente.materia)
-        );
-        if (!materia) return;
-
-        materia.fuentesAdicionales = Array.isArray(materia.fuentesAdicionales)
-          ? materia.fuentesAdicionales
-          : [];
-
-        if (!materia.fuentesAdicionales.some(item => item.url === fuente.url)) {
-          materia.fuentesAdicionales.push({
-            url: fuente.url,
-            origen: fuente.nombreZona
-          });
+        if (materiasBase.some(item => claveTexto(item.nombre) === claveTexto(fuente.nombreZona))) {
+          return;
         }
+
+        let idZona = claveTexto(fuente.nombreZona).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        try {
+          const segmentos = new URL(fuente.url).pathname.split("/").filter(Boolean);
+          idZona = segmentos.at(-1) || idZona;
+        } catch {
+          // Conserva el id derivado del nombre visible.
+        }
+
+        materiasBase.push({
+          id: idZona,
+          nombre: fuente.nombreZona,
+          url: fuente.url,
+          esZona: true,
+          materiaAcademica: fuente.materia
+        });
       });
     } catch (error) {
-      console.warn("No se pudieron incorporar las Zonas al catálogo académico.", error);
+      console.warn("No se pudieron incorporar las Zonas al selector de Materia.", error);
     }
 
     return materiasBase;
+  }
+
+  function resolverMateriaPreferida(materiaPreferida = "", recursoPreferido = "") {
+    const recursoTexto = String(recursoPreferido || "").trim();
+    if (!recursoTexto) return materiaPreferida;
+
+    let absoluto;
+    try {
+      absoluto = new URL(recursoTexto, window.location.href).href;
+    } catch {
+      return materiaPreferida;
+    }
+
+    const zona = materias.find(item =>
+      item.esZona &&
+      absoluto.startsWith(item.url)
+    );
+
+    return zona?.nombre || materiaPreferida;
   }
 
   function extraerTemas(documento, baseMateria) {
@@ -585,7 +608,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (token !== tokenCargaMaterias) return;
 
       materias = extraerMaterias(documento, baseCurso);
-      materias = await incorporarFuentesZona(documento, baseCurso, materias);
+      materias = await incorporarZonasComoMaterias(documento, baseCurso, materias);
       if (token !== tokenCargaMaterias) return;
 
       habilitarSelect(materiaSelect, true);
@@ -598,9 +621,13 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
         return;
       }
 
-      const materia = poblarMaterias(materiaPreferida);
+      const materiaPreferidaResuelta = resolverMateriaPreferida(
+        materiaPreferida,
+        recursoPreferido
+      );
+      const materia = poblarMaterias(materiaPreferidaResuelta);
       estadoCatalogo.textContent =
-        `${materias.length} ${materias.length === 1 ? "materia disponible" : "materias disponibles"}.`;
+        `${materias.length} ${materias.length === 1 ? "opción disponible" : "opciones disponibles"}.`;
 
       if (materia) {
         await cargarTemas(materia, { temaPreferido, recursoPreferido });
