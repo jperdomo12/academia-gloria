@@ -208,7 +208,7 @@
       </div>
     </section>
 
-    <section class="curso6-seccion" aria-labelledby="tituloZonasCole" data-recurso-gaudem hidden>
+    <section class="curso6-seccion" aria-labelledby="tituloZonasCole">
       <div class="curso6-seccion__cabecera">
         <div class="curso6-seccion__principal">
           <div class="curso6-seccion__icono" aria-hidden="true">🎯</div>
@@ -298,11 +298,5 @@
 
   <script src="../../compartido/js/navegacion.js"></script>
   <script type="module" src="../../compartido/componentes/navegacion-global.js?v=7"></script>
-  <script type="module">
-    import { aplicarVisibilidadRecursosGaudem } from "./recursos-gaudem-visibilidad.js";
-    aplicarVisibilidadRecursosGaudem().catch(error => {
-      console.warn("No se pudo resolver la visibilidad de Zonas del cole.", error);
-    });
-  </script>
 </body>
 </html>

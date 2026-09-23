@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
 | **Última actualización** | 23/09/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 23/09/2026 | Product Owner + AI Collaborator | Aclara que `Zonas del cole` y sus accesos internos forman parte del contenido navegable de Academia y no deben heredar la restricción visual de los bloques de recursos oficiales externos de Gaudem. Los enlaces oficiales externos pueden conservar su propia regla de visibilidad; el acceso interno a Zonas permanece disponible para navegar y revisar el contenido incorporado. |
 | 1.6 | 23/09/2026 | Product Owner + AI Collaborator | Aclara la convivencia entre Zonas del cole y materias académicas en Gestión de Misiones: una Zona activa con Temas propios puede mostrarse como opción visible del campo `Materia` para conservar el origen escolar del trabajo, sin convertirse por ello en una nueva materia curricular. Las sesiones y evidencias mantienen la materia académica propietaria del Tema. |
 | 1.5 | 17/09/2026 | Product Owner + AI Collaborator | Formaliza que, al incorporar el **primer Tema real** de una materia de 6.º que todavía figure como `Preparando` en `/cursos/6to/`, la misma incorporación debe activar la materia, crear o completar su portal y enlazar el Tema sin pedir una intervención adicional al Product Owner. Distingue esta activación por contenido real de la mera existencia de enlaces externos. Registra Science y English como aplicaciones reales del patrón mediante PR #123 y PR #125. |
 | 1.4 | 09/09/2026 | Product Owner + AI Collaborator | Incorpora el patrón de **recursos oficiales del colegio por materia** dentro de los portales propios de 6.º: contenido de Academia y recursos externos claramente diferenciados, enlaces en nueva pestaña, visibilidad `alumno + Gaudem` y catálogo 2026–2027 obtenido de la fuente del proyecto `Gaudem_Enlaces Materias 6to Primaria 26-27.txt`. Registra Matemáticas como primera aplicación validada mediante PR #112/#113. |
@@ -402,6 +403,8 @@ A 09/09/2026 contiene:
 | Science | `https://sites.google.com/gaudem.es/sexto/%C3%A1reas/science` | — |
 
 Para **Gestión de Misiones**, una Zona activa que ya contiene Temas reales de Academia puede aparecer como una opción propia dentro del campo visible `Materia` —por ejemplo, `Matezonas` o `Lengüizonas`— cuando esto haga más clara la selección para la familia. Esta presentación **no altera la taxonomía académica propietaria del Tema**: al ejecutar el contenido, la sesión y su evidencia siguen registrándose bajo la materia académica correspondiente (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`).
+
+El acceso interno **`Zonas del cole`** y los portales internos de cada Zona forman parte de la navegación de Academia. No se tratan como un recurso oficial externo ni deben ocultarse mediante la regla de visibilidad `alumno + Gaudem` reservada para bloques/enlaces oficiales externos. Esta separación permite que familia/administración puedan revisar y preparar el mismo contenido interno que utilizará el alumno.
 
 La misma fuente conserva enlaces de Valores, Arts, Música y TAC, pero esas materias **no están previstas por ahora como portales de Academia**. Sus enlaces no deben provocar creación anticipada de estructura.
 
