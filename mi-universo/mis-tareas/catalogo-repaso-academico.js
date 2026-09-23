@@ -340,6 +340,75 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     return resultado;
   }
 
+  function rutasCatalogoTemas(documento, baseMateria) {
+    const rutas = [];
+    const vistas = new Set();
+    const patronImport = /from\s+["']([^"']*temas-[^"']+\.js)["']/g;
+
+    documento.querySelectorAll('script[type="module"]').forEach(script => {
+      const codigo = String(script.textContent || "");
+      let coincidencia;
+
+      while ((coincidencia = patronImport.exec(codigo)) !== null) {
+        try {
+          const url = new URL(coincidencia[1], baseMateria);
+          if (url.origin !== window.location.origin || vistas.has(url.href)) continue;
+          vistas.add(url.href);
+          rutas.push(url);
+        } catch {
+          // Import no resoluble: se ignora y se conserva el catálogo HTML como fallback.
+        }
+      }
+    });
+
+    return rutas;
+  }
+
+  async function extraerTemasReales(documento, baseMateria) {
+    const resultado = extraerTemas(documento, baseMateria);
+    const rutasVistas = new Set(resultado.map(item => item.ruta));
+
+    for (const moduloUrl of rutasCatalogoTemas(documento, baseMateria)) {
+      try {
+        const modulo = await import(moduloUrl.href);
+        const catalogos = Object.entries(modulo)
+          .filter(([nombre, valor]) => /^TEMAS_/.test(nombre) && Array.isArray(valor))
+          .map(([, valor]) => valor);
+
+        catalogos.flat().forEach(tema => {
+          if (!tema || tema.visible === false) return;
+
+          const titulo = textoLimpio(tema.titulo || "");
+          const rutaTema = textoLimpio(tema.ruta || "");
+          if (!titulo || !rutaTema) return;
+
+          let destino;
+          try {
+            destino = new URL(rutaTema, baseMateria);
+          } catch {
+            return;
+          }
+
+          if (destino.origin !== window.location.origin) return;
+
+          const ruta = rutaEstableAcademia(destino);
+          if (rutasVistas.has(ruta)) return;
+
+          rutasVistas.add(ruta);
+          resultado.push({
+            titulo,
+            ruta,
+            url: destino.href
+          });
+        });
+      } catch (error) {
+        console.warn(`No se pudo leer el catálogo de Temas ${moduloUrl.pathname}.`, error);
+      }
+    }
+
+    return resultado;
+  }
+
   function encontrarMateria(valor) {
     const clave = claveTexto(valor);
     return materias.find(item =>
@@ -459,7 +528,10 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
           );
           if (token !== tokenCargaTemas) return;
 
-          extraerTemas(documento, baseMateria).forEach(tema => {
+          const temasFuente = await extraerTemasReales(documento, baseMateria);
+          if (token !== tokenCargaTemas) return;
+
+          temasFuente.forEach(tema => {
             if (rutasVistas.has(tema.ruta)) return;
             rutasVistas.add(tema.ruta);
             temas.push({
