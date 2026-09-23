@@ -192,7 +192,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (segmentos.length !== 1 || !destino.pathname.endsWith("/")) return;
 
       const segmento = segmentos[0];
-      if (vistas.has(segmento)) return;
+      if (segmento === "zonas" || vistas.has(segmento)) return;
 
       const encabezado = enlace.querySelector("h2,h3,h4");
       const etiqueta = etiquetaMateria(segmento, encabezado?.textContent || enlace.textContent);
@@ -207,6 +207,104 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     });
 
     return resultado;
+  }
+
+  function encontrarPortalZonas(documento, baseCurso) {
+    const basePath = baseCurso.pathname.endsWith("/")
+      ? baseCurso.pathname
+      : `${baseCurso.pathname}/`;
+
+    for (const enlace of documento.querySelectorAll("a[href]")) {
+      let destino;
+      try {
+        destino = new URL(enlace.getAttribute("href"), baseCurso);
+      } catch {
+        continue;
+      }
+
+      if (destino.origin !== window.location.origin) continue;
+      if (!destino.pathname.startsWith(basePath)) continue;
+
+      const resto = destino.pathname.slice(basePath.length);
+      const segmentos = resto.split("/").filter(Boolean);
+      if (segmentos.length === 1 && segmentos[0] === "zonas" && destino.pathname.endsWith("/")) {
+        return destino;
+      }
+    }
+
+    return null;
+  }
+
+  function extraerFuentesZona(documento, baseZonas) {
+    const basePath = baseZonas.pathname.endsWith("/")
+      ? baseZonas.pathname
+      : `${baseZonas.pathname}/`;
+    const resultado = [];
+
+    documento.querySelectorAll("a[href]").forEach(enlace => {
+      let destino;
+      try {
+        destino = new URL(enlace.getAttribute("href"), baseZonas);
+      } catch {
+        return;
+      }
+
+      if (destino.origin !== window.location.origin) return;
+      if (!destino.pathname.startsWith(basePath)) return;
+
+      const resto = destino.pathname.slice(basePath.length);
+      const segmentos = resto.split("/").filter(Boolean);
+      if (segmentos.length !== 1 || !destino.pathname.endsWith("/")) return;
+
+      const nombreZona = textoLimpio(enlace.querySelector("h2,h3,h4")?.textContent || "");
+      const materiaZona = textoLimpio(
+        enlace.querySelector(".curso6-asignatura__pie span:not(.curso6-asignatura__accion)")?.textContent || ""
+      );
+      if (!nombreZona || !materiaZona) return;
+
+      resultado.push({
+        nombreZona,
+        materia: materiaZona,
+        url: destino.href
+      });
+    });
+
+    return resultado;
+  }
+
+  async function incorporarFuentesZona(documentoCurso, baseCurso, materiasBase) {
+    const portalZonas = encontrarPortalZonas(documentoCurso, baseCurso);
+    if (!portalZonas) return materiasBase;
+
+    try {
+      const documentoZonas = await leerHtml(
+        new URL("index.html", portalZonas),
+        "no se pudo leer Zonas del cole"
+      );
+      const fuentesZona = extraerFuentesZona(documentoZonas, portalZonas);
+
+      fuentesZona.forEach(fuente => {
+        const materia = materiasBase.find(item =>
+          claveTexto(item.nombre) === claveTexto(fuente.materia)
+        );
+        if (!materia) return;
+
+        materia.fuentesAdicionales = Array.isArray(materia.fuentesAdicionales)
+          ? materia.fuentesAdicionales
+          : [];
+
+        if (!materia.fuentesAdicionales.some(item => item.url === fuente.url)) {
+          materia.fuentesAdicionales.push({
+            url: fuente.url,
+            origen: fuente.nombreZona
+          });
+        }
+      });
+    } catch (error) {
+      console.warn("No se pudieron incorporar las Zonas al catálogo académico.", error);
+    }
+
+    return materiasBase;
   }
 
   function extraerTemas(documento, baseMateria) {
@@ -238,6 +336,75 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       vistas.add(ruta);
       resultado.push({ titulo, ruta, url: destino.href });
     });
+
+    return resultado;
+  }
+
+  function rutasCatalogoTemas(documento, baseMateria) {
+    const rutas = [];
+    const vistas = new Set();
+    const patronImport = /from\s+["']([^"']*temas-[^"']+\.js)["']/g;
+
+    documento.querySelectorAll('script[type="module"]').forEach(script => {
+      const codigo = String(script.textContent || "");
+      let coincidencia;
+
+      while ((coincidencia = patronImport.exec(codigo)) !== null) {
+        try {
+          const url = new URL(coincidencia[1], baseMateria);
+          if (url.origin !== window.location.origin || vistas.has(url.href)) continue;
+          vistas.add(url.href);
+          rutas.push(url);
+        } catch {
+          // Import no resoluble: se ignora y se conserva el catálogo HTML como fallback.
+        }
+      }
+    });
+
+    return rutas;
+  }
+
+  async function extraerTemasReales(documento, baseMateria) {
+    const resultado = extraerTemas(documento, baseMateria);
+    const rutasVistas = new Set(resultado.map(item => item.ruta));
+
+    for (const moduloUrl of rutasCatalogoTemas(documento, baseMateria)) {
+      try {
+        const modulo = await import(moduloUrl.href);
+        const catalogos = Object.entries(modulo)
+          .filter(([nombre, valor]) => /^TEMAS_/.test(nombre) && Array.isArray(valor))
+          .map(([, valor]) => valor);
+
+        catalogos.flat().forEach(tema => {
+          if (!tema || tema.visible === false) return;
+
+          const titulo = textoLimpio(tema.titulo || "");
+          const rutaTema = textoLimpio(tema.ruta || "");
+          if (!titulo || !rutaTema) return;
+
+          let destino;
+          try {
+            destino = new URL(rutaTema, baseMateria);
+          } catch {
+            return;
+          }
+
+          if (destino.origin !== window.location.origin) return;
+
+          const ruta = rutaEstableAcademia(destino);
+          if (rutasVistas.has(ruta)) return;
+
+          rutasVistas.add(ruta);
+          resultado.push({
+            titulo,
+            ruta,
+            url: destino.href
+          });
+        });
+      } catch (error) {
+        console.warn(`No se pudo leer el catálogo de Temas ${moduloUrl.pathname}.`, error);
+      }
+    }
 
     return resultado;
   }
@@ -342,11 +509,42 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     estadoCatalogo.textContent = "Buscando los temas disponibles en la Academia…";
 
     try {
-      const baseMateria = new URL(materia.url);
-      const documento = await leerHtml(new URL("index.html", baseMateria), "no se pudo leer la materia");
-      if (token !== tokenCargaTemas) return;
+      const fuentes = [
+        { url: materia.url, origen: materia.nombre, principal: true },
+        ...(materia.fuentesAdicionales || []).map(fuente => ({
+          ...fuente,
+          principal: false
+        }))
+      ];
+      const rutasVistas = new Set();
 
-      temas = extraerTemas(documento, baseMateria);
+      for (const fuente of fuentes) {
+        const baseMateria = new URL(fuente.url);
+
+        try {
+          const documento = await leerHtml(
+            new URL("index.html", baseMateria),
+            fuente.principal ? "no se pudo leer la materia" : `no se pudo leer ${fuente.origen}`
+          );
+          if (token !== tokenCargaTemas) return;
+
+          const temasFuente = await extraerTemasReales(documento, baseMateria);
+          if (token !== tokenCargaTemas) return;
+
+          temasFuente.forEach(tema => {
+            if (rutasVistas.has(tema.ruta)) return;
+            rutasVistas.add(tema.ruta);
+            temas.push({
+              ...tema,
+              origen: fuente.origen
+            });
+          });
+        } catch (error) {
+          if (fuente.principal) throw error;
+          console.warn(`No se pudo incorporar ${fuente.origen} al catálogo de ${materia.nombre}.`, error);
+        }
+      }
+
       habilitarSelect(temaSelect, true);
       poblarTemas(temaPreferido, recursoPreferido);
     } catch (error) {
@@ -387,6 +585,9 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       if (token !== tokenCargaMaterias) return;
 
       materias = extraerMaterias(documento, baseCurso);
+      materias = await incorporarFuentesZona(documento, baseCurso, materias);
+      if (token !== tokenCargaMaterias) return;
+
       habilitarSelect(materiaSelect, true);
 
       if (!materias.length) {
