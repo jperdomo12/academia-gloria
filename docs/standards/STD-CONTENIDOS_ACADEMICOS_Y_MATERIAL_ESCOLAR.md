@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 17/09/2026 |
+| **Última actualización** | 23/09/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 23/09/2026 | Product Owner + AI Collaborator | Aclara la convivencia entre Zonas del cole y materias académicas en Gestión de Misiones: una Zona activa con Temas propios puede mostrarse como opción visible del campo `Materia` para conservar el origen escolar del trabajo, sin convertirse por ello en una nueva materia curricular. Las sesiones y evidencias mantienen la materia académica propietaria del Tema. |
 | 1.5 | 17/09/2026 | Product Owner + AI Collaborator | Formaliza que, al incorporar el **primer Tema real** de una materia de 6.º que todavía figure como `Preparando` en `/cursos/6to/`, la misma incorporación debe activar la materia, crear o completar su portal y enlazar el Tema sin pedir una intervención adicional al Product Owner. Distingue esta activación por contenido real de la mera existencia de enlaces externos. Registra Science y English como aplicaciones reales del patrón mediante PR #123 y PR #125. |
 | 1.4 | 09/09/2026 | Product Owner + AI Collaborator | Incorpora el patrón de **recursos oficiales del colegio por materia** dentro de los portales propios de 6.º: contenido de Academia y recursos externos claramente diferenciados, enlaces en nueva pestaña, visibilidad `alumno + Gaudem` y catálogo 2026–2027 obtenido de la fuente del proyecto `Gaudem_Enlaces Materias 6to Primaria 26-27.txt`. Registra Matemáticas como primera aplicación validada mediante PR #112/#113. |
 | 1.3 | 03/09/2026 | Product Owner + AI Collaborator | Refuerza el **Modo de Incorporación Curricular de una sola instrucción** como ciclo de mínima intervención: material + curso/materia/tema + notas opcionales → análisis → ubicación `Curso → Asignatura → Tema` → creación de estructura solo si hace falta → construcción aplicando todos los estándares vigentes → evidencia/analítica/refuerzo → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. Establece como requisito que **todo nuevo Tema de 6.º genere evidencia académica estructurada y reutilizable** por Trabajo realizado, Análisis Educativo, estadísticas y propuestas de fortalecimiento, sin crear persistencias privadas por Tema. |
@@ -399,6 +400,8 @@ A 09/09/2026 contiene:
 | Inglés | `https://sites.google.com/gaudem.es/sexto/%C3%A1reas/ingl%C3%A9s` | English Zones · `https://sites.google.com/gaudem.es/sexto/english-zones` |
 | Sociales | `https://sites.google.com/gaudem.es/sexto/%C3%A1reas/sociales` | — |
 | Science | `https://sites.google.com/gaudem.es/sexto/%C3%A1reas/science` | — |
+
+Para **Gestión de Misiones**, una Zona activa que ya contiene Temas reales de Academia puede aparecer como una opción propia dentro del campo visible `Materia` —por ejemplo, `Matezonas` o `Lengüizonas`— cuando esto haga más clara la selección para la familia. Esta presentación **no altera la taxonomía académica propietaria del Tema**: al ejecutar el contenido, la sesión y su evidencia siguen registrándose bajo la materia académica correspondiente (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`).
 
 La misma fuente conserva enlaces de Valores, Arts, Música y TAC, pero esas materias **no están previstas por ahora como portales de Academia**. Sus enlaces no deben provocar creación anticipada de estructura.
 
