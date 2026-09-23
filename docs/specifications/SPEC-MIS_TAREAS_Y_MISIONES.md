@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.0 |
+| **Versión** | 2.1 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 23/09/2026 |
 | **Propietario** | Gestión de Misiones |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Comportamiento funcional de creación, presentación, ejecución, seguimiento, revisión, evidencia, refuerzo y eliminación controlada de Misiones |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.1 | 23/09/2026 | Product Owner + AI Collaborator | Ajusta la preparación asistida de Repaso Académico para que las Zonas activas con Temas propios puedan aparecer como opciones explícitas en el campo `Materia` de Gestión de Misiones (por ejemplo, `Matezonas` y `Lengüizonas`). La selección visible conserva el origen escolar del trabajo, mientras que la ejecución del Tema mantiene su materia académica propietaria para sesiones y evidencias (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`). |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sustituye la antigua propuesta MVP por la especificación del producto real. Documenta Gestión de Misiones V1, acceso `gestion`, filtros/paginación, Repaso Académico asistido, Misiones libres, Persona Activa, evidencia/revisión, `Ver trabajo`, refuerzos, datos de prueba, eliminación controlada, Reconocimientos y compatibilidad histórica. |
 | 1.0 | 2026 | Equipo del proyecto | Primera propuesta funcional de Mis Tareas/Misiones: creación adulta, representación motivadora en Mi Camino, estados, evidencia, finalización automática/manual y validación familiar. |
 
@@ -212,7 +213,7 @@ Tipo = Repaso Académico
 ↓
 Curso de referencia
 ↓
-Materia disponible
+Materia o Zona activa disponible en el campo Materia
 ↓
 Tema real disponible
 ↓
@@ -223,9 +224,11 @@ Reglas:
 
 1. El catálogo se deriva de contenido navegable real; no mantener una segunda lista curricular desconectada.
 2. No mostrar Temas ficticios.
-3. Si el recurso heredado no está catalogado, puede mantenerse una salida manual controlada.
-4. El administrador no debe copiar rutas técnicas cuando el Tema ya es conocido por la Academia.
-5. Nuevos Temas de 6.º deben incorporarse de forma compatible con este flujo.
+3. Las Zonas activas con Temas propios pueden aparecer como opciones explícitas dentro del campo visible `Materia` para que la familia identifique claramente el origen escolar del repaso.
+4. Mostrar una Zona como opción de `Materia` en Gestión de Misiones **no redefine su materia académica propietaria**: la sesión/evidencia del Tema conserva la clasificación académica real definida por el contenido.
+5. Si el recurso heredado no está catalogado, puede mantenerse una salida manual controlada.
+6. El administrador no debe copiar rutas técnicas cuando el Tema ya es conocido por la Academia.
+7. Nuevos Temas de 6.º deben incorporarse de forma compatible con este flujo.
 
 ---
 
