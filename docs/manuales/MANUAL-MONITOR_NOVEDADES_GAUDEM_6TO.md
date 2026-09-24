@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` |
-| **Versión** | 1.5-rc2b |
-| **Estado** | En validación |
+| **Versión** | 1.5 |
+| **Estado** | Activo |
 | **Fecha de origen** | 17/09/2026 |
 | **Última actualización** | 24/09/2026 |
 | **Propietario** | Operación escolar · 6.º de Primaria |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 24/09/2026 | Product Owner + AI Collaborator | Promueve a estable la solución de doble línea base tras validación real en navegador autenticado: 18 espacios revisados, seguimiento documental activo y ausencia de falsos cambios. Conserva `gaudem6_detalle_v2` para compatibilidad histórica y `gaudem6_recursos_v3` para documentos Drive/Docs/PDF/ofimáticos. |
 | 1.5-rc2b | 24/09/2026 | Product Owner + AI Collaborator | Ajusta la lectura de la segunda línea base usando primero su valor raw en `localStorage` y añade una marca visible de versión al aviso de revisión para eliminar ambigüedad durante la validación. |
 | 1.5-rc2 | 24/09/2026 | Product Owner + AI Collaborator | Sustituye el candidato 1.5-rc1 descartado. Mantiene intacta la comparación histórica `gaudem6_detalle_v2` y añade una segunda línea base independiente `gaudem6_recursos_v3` para documentos Drive/Docs/PDF/ofimáticos. La nueva señal no genera diferencias hasta ser inicializada explícitamente mediante `✅ Aceptar cambios Gaudem`, evitando reinterpretar como novedades los recursos antiguos. |
 | 1.4 | 22/09/2026 | Product Owner + AI Collaborator | Simplifica la salida de `🔎 Revisar Gaudem 6.º`: cuando detecta diferencias, informa únicamente qué área/zona cambió, sin listar textos ni URLs. La comparación interna detallada se conserva para mantener precisión. |
@@ -246,7 +247,7 @@ Para cada área o zona se mantienen dos señales separadas:
 - enlaces y recursos detectables (`a`, `iframe`, `embed`, `object`);
 - normalización exactamente compatible con la línea base `gaudem6_detalle_v2`.
 
-**Señal documental enriquecida · 1.5-rc2**
+**Señal documental enriquecida · 1.5**
 
 - recursos de `drive.google.com` y `docs.google.com`;
 - archivos reconocibles por extensión `.pdf`, `.doc/.docx`, `.ppt/.pptx`, `.xls/.xlsx`;
@@ -313,7 +314,27 @@ Ese candidato fue descartado y la PR #145 se cerró sin fusionar.
 
 La solución 1.5-rc2 utiliza dos líneas base independientes. Esto implica una limitación inevitable y explícita: los tres documentos que ya estaban publicados antes de crear `gaudem6_recursos_v3` **no pueden reconstruirse retroactivamente como “nuevos”**, porque no existe una fotografía enriquecida anterior. Se consideran una novedad conocida manualmente. Una vez revisados y aceptado el estado actual, futuras incorporaciones documentales sí podrán compararse contra la nueva línea base.
 
-### 7.6 Control de errores de lectura
+### 7.6 Validación real de estabilidad · 24/09/2026
+
+La versión 1.5 fue validada en el navegador autenticado del Product Owner con el siguiente recorrido:
+
+1. ejecución inicial del monitor con la línea base documental todavía no creada;
+2. confirmación de que la salida mostraba `Seguimiento de documentos: pendiente de inicializar` sin falsos cambios;
+3. creación explícita de ambas líneas base mediante `✅ Aceptar cambios Gaudem`;
+4. verificación diagnóstica de que coexistían `gaudem6_detalle_v2` y `gaudem6_recursos_v3`;
+5. nueva ejecución inmediata de `🔎 Revisar Gaudem 6.º · 1.5-rc2b`.
+
+Resultado observado:
+
+```text
+Espacios revisados: 18
+Seguimiento de documentos: activo
+✅ Sin cambios desde las líneas base disponibles.
+```
+
+La validación confirma que la segunda línea base no contamina la comparación histórica ni produce falsos positivos masivos.
+
+### 7.7 Control de errores de lectura
 
 La versión final comprobada:
 
