@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Navegación común
-   Versión 2.9
+   Versión 2.10
    ========================================================== */
 
 window.Academia = window.Academia || {};
@@ -277,20 +277,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
   }
 
   function esPaginaActual(ruta) {
-    const rutaSegura = normalizarRutaInterna(ruta);
-
-    if (!rutaSegura) return false;
-
-    try {
-      const destino = new URL(rutaSegura, window.location.origin);
-
-      return (
-        destino.pathname === window.location.pathname &&
-        destino.search === window.location.search
-      );
-    } catch {
-      return false;
-    }
+    return rutasEquivalentes(ruta, obtenerRutaActual());
   }
 
   function esLogin(ruta) {
@@ -446,7 +433,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
 
   function obtenerRutaRetorno(rutaAlternativa = "./") {
     const parametros = new URLSearchParams(window.location.search);
-    const volver = normalizarRutaInterna(parametros.get("volver"));
+    const volver = normalizarRutaHistorial(parametros.get("volver"));
 
     if (volver && !esPaginaActual(volver)) {
       return volver;
@@ -457,7 +444,7 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       return anteriorHistorial;
     }
 
-    const referencia = normalizarRutaInterna(document.referrer);
+    const referencia = normalizarRutaHistorial(document.referrer);
 
     if (
       referencia &&
@@ -467,10 +454,12 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
       return referencia;
     }
 
-    return (
-      normalizarRutaInterna(rutaAlternativa) ||
-      `${obtenerBaseAcademia()}/mi-universo/`
-    );
+    const alternativa = normalizarRutaHistorial(rutaAlternativa);
+    if (alternativa && !esPaginaActual(alternativa)) {
+      return alternativa;
+    }
+
+    return `${obtenerBaseAcademia()}/mi-universo/`;
   }
 
   function construirUrlConRetorno(
@@ -479,15 +468,22 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
   ) {
     try {
       const rutaDestino = normalizarRutaInterna(url);
-      const retornoSeguro = normalizarRutaInterna(rutaRetorno);
+      const retornoSeguro = normalizarRutaHistorial(rutaRetorno);
 
       if (!rutaDestino) {
         return url;
       }
 
       const destino = new URL(rutaDestino, window.location.origin);
+      destino.searchParams.delete("volver");
 
-      if (retornoSeguro) {
+      if (
+        retornoSeguro &&
+        !rutasEquivalentes(
+          `${destino.pathname}${destino.search}${destino.hash}`,
+          retornoSeguro
+        )
+      ) {
         destino.searchParams.set("volver", retornoSeguro);
       }
 
