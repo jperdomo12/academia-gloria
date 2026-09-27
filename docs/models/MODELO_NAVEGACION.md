@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.10 |
+| **Versión** | 1.11 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 27/09/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global, Panel de Usuario y comportamiento de retorno |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.11 | 27/09/2026 | Product Owner + AI Collaborator | Refuerza la prevención de ciclos de `Volver`: el parámetro `volver` deja de formar parte de la identidad lógica de una pantalla, los retornos anidados se limpian antes de reutilizarse y no se genera un nuevo `volver` cuando destino y retorno representan la misma pantalla. Corrige el caso real observado en `Descubre la Academia`. |
 | 1.10 | 06/09/2026 | Product Owner + AI Collaborator | Formaliza tras PR #85 la representación de nodos principales con y sin hijos: `con hijos → grupo desplegable`, `sin hijos → enlace directo`. Registra Bitácora de Acompañamiento como primer caso principal de nodo directo y alinea el modelo con `STD-PANEL_DE_USUARIO.md` y el árbol visible. |
 | 1.9 | 29/08/2026 | Product Owner + AI Collaborator | Formaliza la continuidad de Persona Activa durante navegación interna, el tratamiento de URLs canónicas de Academia como destinos internos del entorno actual y el historial lógico de `Volver`, evitando rebotes del tipo A → B → C → B → C. |
 | 1.8 | 26/08/2026 | Product Owner + AI Collaborator | Activa `6.º de Primaria` como nodo navegable real dentro de `Mis Cursos`, retirando su estado `proximo`. El acceso compartido y la página principal apuntan a `cursos/6to/`; el portal de 6.º permanece identificado como construcción activa mientras incorpora materias y temas reales. |
@@ -71,6 +72,7 @@ El árbol concreto vigente se documenta en `MODELO_ARBOL_NAVEGACION.md` y su fue
 13. **La navegación interna debe conservar la Persona Activa y el contexto de sesión.**
 14. **`Volver` representa una pila lógica de recorrido, no un rebote entre las dos últimas páginas visitadas.**
 15. **La forma del nodo determina su interacción: los nodos con hijos despliegan; los nodos sin hijos navegan directamente.**
+16. **`volver` es contexto de navegación, no identidad de pantalla; nunca debe encadenarse recursivamente sobre la misma ruta lógica.**
 
 ---
 
@@ -323,6 +325,8 @@ Volver desde B → A
 
 No debe rebotar B → C tras retroceder.
 
+Además, dos URLs que solo difieren por el parámetro `volver` representan la **misma pantalla lógica** a efectos de prevención de ciclos. Antes de reutilizar un origen, la navegación debe retirar cualquier `volver` anidado. Al construir un nuevo destino, tampoco debe añadir `volver` si ese retorno es equivalente al propio destino.
+
 ### 8.1 Ruta alternativa
 
 Puede declararse mediante:
@@ -450,6 +454,7 @@ La navegación se considera coherente cuando:
 - URLs canónicas de Academia se resuelven como internas cuando corresponde;
 - navegación interna no rompe contexto por aperturas innecesarias;
 - Volver recupera origen real;
+- `volver` no se anida recursivamente ni hace que una pantalla retorne a sí misma;
 - A → B → C retrocede C → B → A;
 - acceso directo usa fallback seguro;
 - Academia permanece accesible;
@@ -497,6 +502,7 @@ La navegación se considera coherente cuando:
 | NAV-024 | `Volver` utiliza historial lógico que elimina rama abandonada al retroceder. |
 | NAV-025 | Destinos canónicos de Academia se tratan como navegación interna y se resuelven en el entorno actual. |
 | NAV-026 | Un nodo principal sin hijos se representa como enlace directo; un nodo principal con hijos se representa como grupo desplegable. |
+| NAV-027 | `volver` se trata como contexto transitorio: se elimina al comparar identidad lógica y no puede generar ciclos hacia la misma pantalla. |
 
 ---
 
@@ -505,9 +511,9 @@ La navegación se considera coherente cuando:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.10 |
-| **Última sincronización** | 06/09/2026 |
+| **Versión activa** | 1.11 |
+| **Última sincronización** | 27/09/2026 |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Representación humana del árbol** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
 | **Implementación del Panel** | `compartido/js/panel-usuario.js` |
-| **Regla nueva consolidada** | Con hijos → desplegable; sin hijos → enlace directo |
+| **Regla nueva consolidada** | `volver` no forma parte de la identidad lógica ni puede anidarse sobre la misma pantalla |
