@@ -270,9 +270,22 @@ const NAVEGACION_SCRIPT_URL = document.currentScript?.src || "";
     }
   }
 
+  function normalizarRutaIdentidad(valor) {
+    const ruta = normalizarRutaHistorial(valor);
+    if (!ruta) return null;
+
+    try {
+      const destino = new URL(ruta, window.location.origin);
+      destino.hash = "";
+      return `${destino.pathname}${destino.search}`;
+    } catch {
+      return ruta.split("#")[0];
+    }
+  }
+
   function rutasEquivalentes(a, b) {
-    const rutaA = normalizarRutaHistorial(a);
-    const rutaB = normalizarRutaHistorial(b);
+    const rutaA = normalizarRutaIdentidad(a);
+    const rutaB = normalizarRutaIdentidad(b);
     return Boolean(rutaA && rutaB && rutaA === rutaB);
   }
 
