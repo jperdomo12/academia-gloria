@@ -116,7 +116,37 @@
           </label>
 
           <label>Avatar <small>(opcional)</small>
-            <input name="avatar" maxlength="20" placeholder="Ej. 🌈">
+            <input name="avatar"
+                   maxlength="20"
+                   placeholder="Elige o escribe un emoji"
+                   list="avataresSugeridos"
+                   autocomplete="off">
+            <datalist id="avataresSugeridos">
+              <option value="🌟">Estrella</option>
+              <option value="🌈">Arcoíris</option>
+              <option value="☀️">Sol</option>
+              <option value="🌻">Girasol</option>
+              <option value="🌸">Flor</option>
+              <option value="🦋">Mariposa</option>
+              <option value="🐝">Abeja</option>
+              <option value="🐞">Mariquita</option>
+              <option value="🐬">Delfín</option>
+              <option value="🐢">Tortuga</option>
+              <option value="🦉">Búho</option>
+              <option value="🦊">Zorro</option>
+              <option value="🐼">Panda</option>
+              <option value="🐶">Perro</option>
+              <option value="🐱">Gato</option>
+              <option value="🦄">Unicornio</option>
+              <option value="🚀">Cohete</option>
+              <option value="🎨">Arte</option>
+              <option value="🎵">Música</option>
+              <option value="📚">Libros</option>
+              <option value="⚽">Deporte</option>
+              <option value="🧩">Puzle</option>
+              <option value="💡">Idea</option>
+              <option value="🤝">Acompañamiento</option>
+            </datalist>
           </label>
           <label>Fecha de nacimiento <small>(opcional)</small>
             <input name="fechaNacimiento" type="date">
