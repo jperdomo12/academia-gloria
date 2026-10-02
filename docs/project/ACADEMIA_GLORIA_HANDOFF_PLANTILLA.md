@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 2.9 |
+| **Versión** | 3.0 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 22/09/2026 |
+| **Última actualización** | 02/10/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -24,11 +24,14 @@
 - `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` · incorporación curricular de 6.º.
 - `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` · proceso oficial de creación de nuevas Semillas.
 - `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` · identidad, roles y accesos.
+- `docs/models/MODELO_NAVEGACION.md` · navegación contextual y prevención de ciclos de `Volver`.
+- `docs/specifications/SPEC-MENU_COMEDOR.md` · menú mensual del comedor y flujo de actualización.
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
+| 3.0 | 02/10/2026 | Consolida cambios materiales desde v2.9: Misiones con `Matezonas`/`Lengüizonas` como selección explícita sin alterar la materia académica de evidencia; `Zonas del cole` visible como navegación interna; Monitor Gaudem v1.5 con doble línea base; corrección transversal de ciclos de `Volver`; catálogo ampliado de avatares; menú de octubre 2026 incorporado; patrón mensual de URL Gaudem documentado y automatización mensual creada hasta junio de 2027. Retira como pendiente el issue de `volver=` ya resuelto. |
 | 2.9 | 22/09/2026 | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
 | 2.8 | 15/09/2026 | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
 | 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
@@ -156,10 +159,13 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 
 ### 5.3 Utilidades escolares
 
-- Calendario 2026–2027 · PR #87.
-- Menú del Cole V1 · PR #88–#93.
-- Mi horario V1 · PR #96–#107 + #109/#110.
-- Recursos oficiales Gaudem 6.º/Matemáticas · PR #111–#113.
+- Calendario 2026–2027 · PR #87 · estable.
+- Mi horario V1 · PR #96–#107 + #109/#110 · estable.
+- Menú del Cole V1 · PR #88–#93 · estable.
+- Octubre 2026 incorporado mediante PR #149, con 21 días de comedor y el 12/10 tratado como festivo según la fuente oficial.
+- `SPEC-MENU_COMEDOR.md` está en **v1.1** y documenta el patrón mensual observado:
+  `https://www.gaudem.es/descargas/menus/<yyyymm>/Gaudem-Menu-GENERAL.pdf`.
+- Existe una automatización externa al repositorio, **Actualizar menú Gaudem**, programada el día 1 de cada mes a las 05:00 (Europe/Madrid), desde noviembre de 2026 hasta junio de 2027 inclusive. Comprueba la publicación, extrae/valida el PDF y actualiza Academia cuando corresponde.
 
 ### 5.4 Creciendo por Dentro · Semillas
 
@@ -176,11 +182,14 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 
 #### Monitor Gaudem
 
-- `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` quedó en **v1.4**.
-- El monitor revisa `/areas/`, `/zonas/` y `/english-zones`.
-- La salida normal quedó simplificada para indicar únicamente **qué área/zona cambió**, manteniendo internamente la comparación de textos/recursos.
-- El Product Owner aceptó el 22/09/2026 la nueva línea base después de incorporar las Zonas.
-- Regla de uso: `🔎 Revisar Gaudem 6.º` detecta; `✅ Aceptar cambios Gaudem` solo se usa después de revisar las novedades.
+- `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` está en **v1.5 · Activo**.
+- Revisa 18 espacios de `/areas/`, `/zonas/` y `/english-zones`.
+- Mantiene dos líneas base locales:
+  - `gaudem6_detalle_v2` · compatibilidad histórica;
+  - `gaudem6_recursos_v3` · seguimiento enriquecido de Drive/Docs/PDF/ofimática.
+- La migración a v1.5 fue validada en navegador autenticado sin falsos cambios.
+- Regla de uso: `🔎 Revisar Gaudem 6.º` detecta; `✅ Aceptar cambios Gaudem` solo después de revisar la novedad.
+- La detección de un documento realmente nuevo posterior a la línea base v3 queda pendiente de observar cuando ocurra una publicación real; no es un bloqueo actual.
 
 #### Zonas del cole
 
@@ -191,42 +200,47 @@ Estado:
 - **Lengüizonas** · activa.
 - **English Zones** · preparada, sin Tema incorporado todavía.
 
-Criterio aprobado:
+Criterios vigentes:
 - la Zona identifica el **origen escolar**;
-- no crea una segunda estructura curricular;
-- la evidencia se registra en la **materia académica propietaria**.
+- no crea una segunda taxonomía académica;
+- la evidencia se registra en la **materia académica propietaria**;
+- `Zonas del cole` y sus portales son navegación interna de Academia y no heredan la restricción visual de recursos externos Gaudem.
+
+#### Misiones + Zonas
+
+Desde PR #143, Gestión de Misiones puede mostrar **Matezonas** y **Lengüizonas** como opciones explícitas del campo `Materia`, para conservar el origen escolar visible.
+
+La ejecución/evidencia sigue siendo académica:
+- Matezonas → Matemáticas;
+- Lengüizonas → Lengua.
+
+Compatibilidad incluida: Misiones previas con rutas de Zona se resuelven sin romper el historial.
 
 #### Matezonas
 
-- PR **#139** · crea `Zonas del cole`, portal Matezonas y Tema **Dale al coco · Zonas 1**; fusionada y publicada.
-- PR **#140** · incorpora **Problemas y operaciones · Nivel A**; fusionada y publicada.
-- Ambos Temas generan evidencia académica bajo **Matemáticas** y reutilizan Vista previa, Persona Activa, lector, práctica guiada, prueba formativa y `sesion-academica-v1`.
+- PR #139 · **Dale al coco · Zonas 1**.
+- PR #140 · **Problemas y operaciones · Nivel A**.
+- Ambos Temas generan evidencia bajo **Matemáticas** y reutilizan la sesión académica compartida.
 
 #### Lengüizonas
 
-- Primer Tema real incorporado directamente en `main` por autorización expresa del Product Owner: **Gramática · Repasamos los verbos**.
-- Trabaja formas verbales simples/compuestas, número, persona, transformaciones y elección contextual.
-- Incluye Mapa, Claves, Material, Práctica guiada y Prueba formativa.
-- La evidencia académica se registra bajo **Lengua**.
-- El portal general de Lengua puede continuar en `Preparando`; Lengüizonas es una capa de origen escolar y no obliga por sí sola a duplicar el Tema en el portal de materia.
+- Tema activo: **Gramática · Repasamos los verbos**.
+- Evidencia académica bajo **Lengua**.
 
 #### Rincón de Lectura
 
-PR **#133** quedó fusionada con seis nuevas lecturas Nivel 1 por intereses:
-- Shakira;
-- música;
-- arte;
-- Madrid;
-- Venezuela;
-- España.
-
-Venezuela y España muestran banderas gráficas en sus tarjetas sin prefijos `VE` / `ES` en el título.
+PR #133 incorporó seis lecturas Nivel 1 por intereses: Shakira, música, arte, Madrid, Venezuela y España.
 
 #### Estándar documental
 
 - `docs/DOCUMENTATION_STANDARD.md` está en **v1.3**.
 - Todo documento oficial nuevo debe incluir **Resumen de contenido**; los existentes lo incorporan al ser revisados.
-- `docs/README.md` y `docs/DOCUMENTATION_ARCHITECTURE.md` ya adoptaron el bloque.
+
+### 5.6 Correcciones transversales recientes
+
+- PR #147 · navegación común v2.10 + `MODELO_NAVEGACION.md` v1.11: `volver` y los fragmentos internos no diferencian una pantalla al detectar ciclos; el caso real de Descubre quedó corregido y publicado.
+- PR #148 · Gestión de Usuarios: catálogo ampliado de 24 sugerencias de avatar, reutilizado tanto en alta como edición y manteniendo entrada libre de emoji.
+- PR #144 · `Zonas del cole` permanece visible como contenido interno independientemente de la condición `alumno + Gaudem` aplicada a recursos externos.
 
 ---
 
@@ -335,11 +349,13 @@ El brochure original se conserva como referencia visual de identidad en:
 
 No hay trabajo On going activo al cierre de esta actualización.
 
-Los materiales actuales de Matezonas y el primer Tema de Lengüizonas quedaron integrados. El carril curricular continúa **a demanda del material real del colegio**, bajo mínima intervención del Product Owner y sin abrir trabajo adicional por iniciativa propia.
+El producto continúa en **Fase de uso prioritario**. El siguiente trabajo debe nacer de:
+- material real nuevo de 6.º;
+- una incidencia observada en uso;
+- una necesidad concreta de Gloria/familia/profesionales;
+- o una decisión explícita del Product Owner.
 
-### 9.1 Observación menor no bloqueante
-
-Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. La Guía rápida limpia su propio retorno, pero no asumir que el anidamiento global está completamente resuelto. Tratarlo solo si vuelve a ser una necesidad real.
+No reabrir por iniciativa propia frentes ya cerrados.
 
 ---
 
@@ -373,25 +389,24 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional cerrado** | `8b93f1b00618d3c7f73e18da4bf7fd6aff2d1db4` |
-| **HEAD relevante al cierre** | `5848a213729274fe67f40a49da5ba7ba815fe524` |
+| **Baseline funcional de producto verificado** | `3cd189c74998f801597e549ba9b5e2e304ba965e` |
 | **Rama On going** | Ninguna |
 | **PR On going** | Ninguna |
-| **Trabajo inmediato** | Ninguno obligatorio; volver a uso prioritario y material real de 6.º |
-| **Último Pages funcional relevante** | #745 · Lengüizonas + estado actualizado de Zonas del cole · `success` |
+| **Trabajo inmediato** | Ninguno obligatorio; continuar uso prioritario y material real de 6.º |
+| **GitHub Pages del baseline** | #755 · `success` |
 | **Mi Camino** | ✅ Cerrado y validado |
-| **Bitácora** | ✅ Cerrada y validada |
-| **Horario / Menú / Calendario** | ✅ Cerrados |
-| **Guía rápida** | ✅ Publicada, orientada al alumno y sensible a sesión |
-| **Email de invitación** | ✅ Cerrado |
-| **Academia de un vistazo** | ✅ Cerrada y validada |
-| **Creciendo por Dentro** | ✅ Semillas 008/009 incorporadas; proceso de nuevas Semillas formalizado |
-| **Brochure overview** | ✅ Conservado en `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Issue #108** | ✅ Cerrado/completado |
-| **Estado operativo** | 🌿 Fase de uso prioritario |
+| **Bitácora** | ✅ V1 cerrada y validada |
+| **Horario / Calendario** | ✅ Estables |
+| **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · actualización mensual automatizada hasta junio 2027 |
+| **Gestión de Usuarios** | ✅ Avatar con catálogo ampliado + entrada libre |
+| **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
+| **Creciendo por Dentro** | ✅ Semillas 008/009 incorporadas; proceso oficial documentado |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
-| **Monitor Gaudem** | ✅ v1.4 · nueva línea base aceptada 22/09/2026 |
+| **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
+| **Monitor Gaudem** | ✅ v1.5 · doble línea base · 18 espacios |
+| **Navegación** | ✅ v1.11 · prevención global de ciclos de `Volver` |
+| **Estado operativo** | 🌿 Fase de uso prioritario |
 
 ---
 
@@ -400,26 +415,27 @@ Las URLs de Descubre pueden mostrar `volver=` anidados en recorridos repetidos. 
 Al iniciar o retomar trabajo:
 
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
-2. verificar HEAD real de `main`;
-3. confirmar que no exista un nuevo trabajo On going antes de iniciar otro frente;
+2. verificar HEAD real de `main` y PRs abiertos;
+3. confirmar que no exista trabajo On going;
 4. continuar la **Fase de uso prioritario**;
-5. priorizar material real de 6.º, uso real de Gloria y resolución de issues reales;
-6. retomar el backlog solo cuando exista una decisión o necesidad concreta.
+5. priorizar material real de 6.º, uso real y resolución de issues observados;
+6. dejar que la automatización mensual gestione el menú Gaudem y actuar manualmente solo si informa ausencia, cambio de formato o problema de validación;
+7. retomar backlog únicamente ante una decisión o necesidad concreta.
 
 ---
 
-# 🟣 Última actualización — 22/09/2026
+# 🟣 Última actualización — 02/10/2026
 
 ## Trabajo On going
 
-> **Ninguno.** El crecimiento reciente de 6.º (Zonas del cole, Matezonas y Lengüizonas) quedó integrado; el siguiente material se incorpora cuando llegue, siguiendo el modo de mínima intervención.
+> **Ninguno.** Los cambios recientes quedaron integrados y publicados. Continuar con uso prioritario, material real de 6.º e issues observados.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 2.9 |
+| **Versión** | 3.0 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Ninguno |
 | **PR On going** | Ninguno |
@@ -427,6 +443,6 @@ Al iniciar o retomar trabajo:
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Uso prioritario → incorporar material real de 6.º con mínima intervención → resolver issues reales / evaluar backlog decidido |
+| **Siguiente paso** | Uso prioritario → material real de 6.º / issues reales → menú mensual automatizado → backlog solo por decisión concreta |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
