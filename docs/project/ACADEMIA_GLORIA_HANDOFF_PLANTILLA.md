@@ -246,102 +246,33 @@ PR #133 incorporó seis lecturas Nivel 1 por intereses: Shakira, música, arte, 
 
 ## 🌈 6. Issue #108 · Guía rápida e invitaciones
 
-Issue: **#108 · P1 · Guía rápida + email de invitación para nuevos alumnos**.
-
-### 6.1 Estado real
-
 ✅ **CERRADO / COMPLETADO y validado por el Product Owner.**
 
-El paquete de Guía rápida + invitaciones quedó cerrado. `Academia de un vistazo` también fue refinada y validada visualmente, eliminando el último defecto que mantenía abierto este frente. El Issue #108 queda cerrado como referencia histórica del trabajo.
-
-### 6.2 Decisiones para las primeras invitaciones
-
-- Compartir Academia de forma natural, no como experimento/piloto.
-- Primera etapa: USER alumno solamente; no cuentas de familias por ahora.
-- No preparar Misiones específicas inicialmente.
-- Permitir exploración libre de Mi Universo, Mis Cursos disponibles, Calendarios/Horario y Mi Camino.
-- 5.º permanece congelado; no prometer contenido actualizado.
-- 6.º crece con material escolar real.
-- Feedback inicial mediante respuesta al email; Bitácora no se convierte por ahora en canal de feedback de producto.
-
-### 6.3 Guía rápida
-
-Ruta: `descubre-la-academia/guia-rapida.html`.
-
-Contenido aprobado:
-1. `🔑 1. Entra por la Puerta Mágica`;
-2. `🌈 Mi Universo`, `🎓 Mis Cursos`, `🗓️ Calendarios`, `🗺️ Mi Camino`;
-3. `🚀 3. ¿Por dónde empiezo?` con exploración libre;
-4. ruta `Inicio → Descubre la Academia → Guía rápida de uso`;
-5. cierre `Aprender con calma, confianza, curiosidad y color. 🌈`.
-
-Commits principales: `0eb41e77...`, `d94e2d63...`, `2ae8f60d...`, `defc9193...`, `7635aa22...`.
-
-Sesión activa:
-- `af277ca4...` adapta texto/flujo;
-- `c30af612...` oculta correctamente los accesos de Login cuando el USER ya está conectado.
-
-Validado visualmente por el Product Owner.
-
-### 6.4 Email de invitación
-
-El email quedó trabajado/cerrado como mensaje breve, cálido e institucional, acompañado por el brochure. Incluye presentación de Academia, acceso a la Puerta Mágica, datos de acceso del alumno, referencia a Mi Universo/Mis Cursos/Calendarios/Mi Camino, enlace y ruta a la Guía rápida, invitación a explorar sin obligación de completar una actividad y feedback respondiendo al propio correo.
-
-Tono preferido: **“Nos alegra compartir…”**.
-
-Referencia visual conservada en GitHub:
-
-`assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg`
+- Guía rápida: `descubre-la-academia/guia-rapida.html`.
+- Invitación inicial: mensaje breve, cálido e institucional, con acceso, orientación básica y exploración libre.
+- `Academia de un vistazo` forma parte de Descubre y actúa como presentación general del producto.
+- No reabrir este frente salvo nueva necesidad real.
 
 ---
 
 ## 🏠 7. Inicio y Descubre · refinamientos cerrados
 
-Commits de bajo impacto autorizados directamente en `main`:
+Los refinamientos de Inicio/Descubre, navegación responsive y accesos de presentación quedaron cerrados y validados.
 
-- `2efa7070...` · mejor aprovechamiento del ancho de bloques principales;
-- `b6728914...` · retirada de pistas separadas de interacción;
-- `4af22d63...` + `b6c8c105...` · mensajes de Descubre y Mi Camino;
-- `84bfb768...` + `e38c23cd...` · CTA violeta y versionado;
-- `d6e3d246...` + `c6b26be1...` · `Explora más` a una columna en móvil `≤640px`, dos en tablet y tres en desktop; validado en iPhone.
-
-Los mensajes dinámicos de Mi Camino continúan intactos. No volver a añadir una tarjeta independiente de Guía rápida en Inicio: **Descubre la Academia** es la puerta natural para presentación y ayuda.
+Criterio permanente: **Descubre la Academia** es la puerta natural para presentación y ayuda; no volver a añadir una tarjeta independiente de Guía rápida en Inicio sin una nueva decisión.
 
 ---
 
 ## 🌈 8. `Academia de un vistazo` · brochure digital
 
-Decisión aprobada: dentro de Descubre mostrar dos accesos hermanos:
+✅ Cerrada y validada visualmente.
 
-- `🌈 Academia de un vistazo →`
-- `📘 Guía rápida · Empieza aquí →`
+- Ancla: `descubre-la-academia/#academia-de-un-vistazo`.
+- Presentación web responsive con Gloria y los actores de Academia.
+- Referencia visual conservada: `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg`.
+- No existe trabajo pendiente en este frente.
 
-No añadir otra llamada independiente en Inicio.
-
-Implementación:
-- `d76a15b2...` · añade `Academia de un vistazo` dentro de `descubre-la-academia/index.html` mediante `#academia-de-un-vistazo`;
-- vista web responsive, no simple imagen estática;
-- bloques: Propósito, Cómo funciona, Así se vive la Academia, Lo que hace diferente a la Academia y Una historia real que sigue creciendo;
-- contenido general validado por el Product Owner.
-
-Hero final aprobado:
-- Gloria a la izquierda;
-- título y subtítulo al centro;
-- guacamaya + Alumno/Familia/Profesionales/IA a la derecha;
-- ilustración de Gloria integrada mediante `assets/imagenes/personajes/gloria-academia-un-vistazo.webp`;
-- fondo de la ilustración ajustado para integrarse con el fondo menta del hero.
-
-Secuencia final del fix:
-- `e1ff64f0...` · WebP válido de Gloria;
-- `b8c6d08b...` · ajuste visual del fondo de Gloria para integrarlo con el hero;
-- GitHub Pages #670 · `success`;
-- validación visual final del Product Owner: ✅ aprobada.
-
-El SVG defectuoso `assets/imagenes/personajes/gloria-academia-un-vistazo.svg` fue retirado al cerrar el punto.
-
-El brochure original se conserva como referencia visual de identidad en:
-
-`assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg`
+---
 
 ---
 
