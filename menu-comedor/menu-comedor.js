@@ -7,7 +7,7 @@ import {
   obtenerMenuPorClave,
   obtenerClavesDisponibles,
   obtenerSiguienteMenuDesde
-} from "./datos/menu.js";
+} from "./datos/menu.js?v=20261002";
 
 const DIAS_SEMANA = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
