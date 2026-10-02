@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MENU_COMEDOR.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha** | 09/09/2026 |
-| **Última actualización** | 09/09/2026 |
+| **Última actualización** | 02/10/2026 |
 | **Propietario** | Utilidades escolares cotidianas |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Consulta del menú mensual del comedor escolar, su presentación en Academia y el flujo mensual de incorporación de la fuente oficial |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 02/10/2026 | Product Owner + AI Collaborator | Documenta el patrón observado de publicación mensual de Gaudem para el PDF general del comedor: `https://www.gaudem.es/descargas/menus/<yyyymm>/Gaudem-Menu-GENERAL.pdf`. Mantiene la validación mensual de existencia y contenido antes de estructurar datos. |
 | 1.0 | 09/09/2026 | Product Owner + AI Collaborator | Consolida la V1 ya implementada y validada mediante PR #88–#93: fuente mensual oficial, transformación de la página útil del PDF, vistas Hoy/Mañana/Semana/Mes, tarjeta de Inicio y visibilidad de la tarjeta para alumnado Gaudem. |
 
 ---
@@ -83,7 +84,22 @@ No incluye:
 
 ### 3.1 Fuente prioritaria
 
-La fuente V1 es el **PDF mensual oficial del Colegio Gaudem aportado por el Product Owner**.
+La fuente V1 es el **PDF mensual oficial del Colegio Gaudem**.
+
+El patrón de publicación observado y confirmado por el Product Owner es:
+
+```text
+https://www.gaudem.es/descargas/menus/<yyyymm>/Gaudem-Menu-GENERAL.pdf
+```
+
+donde `<yyyymm>` representa año y mes, por ejemplo:
+
+```text
+202610
+→ https://www.gaudem.es/descargas/menus/202610/Gaudem-Menu-GENERAL.pdf
+```
+
+Este patrón permite anticipar la URL mensual, pero **no sustituye la validación de la fuente**: antes de incorporar un nuevo mes debe comprobarse que el PDF exista y que su estructura/contenido corresponda al menú oficial esperado.
 
 Para septiembre de 2026 se validó que:
 
@@ -97,7 +113,8 @@ Esta selección no se generaliza ciegamente a todos los meses. Cuando llegue un 
 El procedimiento esperado es:
 
 ```text
-PDF oficial del nuevo mes
+construir/comprobar URL mensual según `<yyyymm>`
+→ abrir el PDF oficial del nuevo mes
 → revisar la fuente completa en el alcance necesario
 → identificar la página/calendario diario útil
 → extraer los días lectivos y platos
@@ -261,7 +278,7 @@ La capacidad se considera **Activa**.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.0 |
+| **Versión activa** | 1.1 |
 | **Fuente** | PDF mensual oficial del Colegio Gaudem aportado por el Product Owner. |
 | **Dato útil** | Calendario diario del comedor; páginas genéricas sin ese contenido quedan fuera de alcance. |
 | **Persistencia** | Módulos mensuales simples en repositorio; sin Firestore V1. |
