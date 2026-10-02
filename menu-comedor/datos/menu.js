@@ -1,7 +1,9 @@
 import { MENU_COMEDOR_SEPTIEMBRE_2026 } from "./2026-09.js";
+import { MENU_COMEDOR_OCTUBRE_2026 } from "./2026-10.js";
 
 export const MENUS_COMEDOR = Object.freeze([
-  MENU_COMEDOR_SEPTIEMBRE_2026
+  MENU_COMEDOR_SEPTIEMBRE_2026,
+  MENU_COMEDOR_OCTUBRE_2026
 ]);
 
 const DIAS_MENU = Object.freeze(
