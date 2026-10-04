@@ -371,8 +371,8 @@ Al iniciar o retomar trabajo:
 | **Estado** | ✅ Activo |
 | **Versión** | 3.1 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Ninguno |
-| **PR On going** | Ninguno |
+| **Trabajo On going** | Sin desarrollo técnico activo adicional; PR #152 pendiente de revisión del Product Owner |
+| **PR On going** | #152 · Monitor Gaudem: mostrar fecha y hora de líneas base · pendiente de revisión del Product Owner |
 | **Nuevas Semillas** | ✅ 010/011 incorporadas; catálogo con 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
