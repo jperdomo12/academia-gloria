@@ -53,7 +53,11 @@ function normalizar(texto = "") {
 function iconoMateria(nombre = "") {
   const clave = normalizar(nombre);
   const coincidencia = ICONOS_MATERIAS.find(grupo =>
-    grupo.claves.some(fragmento => clave.includes(normalizar(fragmento)))
+    grupo.claves.some(fragmento =>
+      fragmento === "tac"
+        ? /\btac\b/.test(clave)
+        : clave.includes(normalizar(fragmento))
+    )
   );
   return coincidencia?.icono || "✨";
 }
