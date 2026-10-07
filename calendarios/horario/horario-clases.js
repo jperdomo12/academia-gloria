@@ -37,8 +37,21 @@ function texto(valor = "", alternativo = "—") {
   return resultado || alternativo;
 }
 
-function estiloMateria(materia = {}) {
-  const color = colorMateria(materia.colorId);
+function claveNombreMateria(nombre = "") {
+  return String(nombre).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es").trim().replace(/\s+/g, " ");
+}
+
+function estiloMateria(materia = {}, fuente = horario) {
+  // Una variante con anotación final comparte el color de su materia base.
+  const nombreBase = String(materia.nombre || "").replace(/\s*\([^()]+\)\s*$/, "");
+  const base = nombreBase !== materia.nombre
+    ? fuente?.materias?.find(item =>
+      item.id !== materia.id
+      && claveNombreMateria(item.nombre) === claveNombreMateria(nombreBase)
+    )
+    : null;
+  const color = colorMateria(base?.colorId || materia.colorId);
   return `--materia-fondo:${color.fondo};--materia-borde:${color.borde};--materia-tinta:${color.tinta}`;
 }
 
@@ -105,7 +118,7 @@ function htmlClase(tramo, diaId, fuente = horario) {
   const ahora = tramoEsAhora(tramo, diaId);
   return `
     <div class="clase-horario ${ahora ? "clase-horario--ahora" : ""}"
-         style="${estiloMateria(materia)}">
+         style="${estiloMateria(materia, fuente)}">
       ${ahora ? '<span class="clase-horario__ahora">AHORA</span>' : ""}
       ${escaparHTML(materia.nombre)}
     </div>
@@ -345,7 +358,7 @@ function renderEditorMaterias() {
   }
 
   contenedor.innerHTML = borrador.materias.map(materia => `
-    <span class="editor-materia" style="${estiloMateria(materia)}">
+    <span class="editor-materia" style="${estiloMateria(materia, borrador)}">
       ${escaparHTML(materia.nombre)}
       <button type="button" data-renombrar-materia="${escaparHTML(materia.id)}" title="Renombrar ${escaparHTML(materia.nombre)}">✎</button>
       <button type="button" data-eliminar-materia="${escaparHTML(materia.id)}" title="Quitar ${escaparHTML(materia.nombre)}">×</button>
