@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.0 |
+| **Versión** | 3.1 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 02/10/2026 |
+| **Última actualización** | 04/10/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---:|---|
+| 3.1 | 04/10/2026 | Sincroniza el HandOff con el catálogo y la guía vigentes: Semillas 010 y 011 incorporadas, 11 Semillas activas; registra además el PR #152 abierto, pendiente de revisión del Product Owner. |
 | 3.0 | 02/10/2026 | Consolida cambios materiales desde v2.9: Misiones con `Matezonas`/`Lengüizonas` como selección explícita sin alterar la materia académica de evidencia; `Zonas del cole` visible como navegación interna; Monitor Gaudem v1.5 con doble línea base; corrección transversal de ciclos de `Volver`; catálogo ampliado de avatares; menú de octubre 2026 incorporado; patrón mensual de URL Gaudem documentado y automatización mensual creada hasta junio de 2027. Retira como pendiente el issue de `volver=` ya resuelto. |
 | 2.9 | 22/09/2026 | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
 | 2.8 | 15/09/2026 | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
@@ -53,7 +54,7 @@
 | 2. Cómo iniciar el siguiente chat | Proporciona el prompt mínimo y la secuencia de arranque. |
 | 3. Regla de autoridad y forma de trabajo | Resume GitHub, PR, validación y responsabilidades. |
 | 4. Fase operativa actual | Describe la fase de uso prioritario y el carril curricular de 6.º. |
-| 5. Estado estable reciente | Consolida los frentes cerrados y el crecimiento reciente del producto. |
+| 5. Estado estable reciente | Consolida los frentes cerrados y el crecimiento reciente, incluidas las Semillas 010 y 011 ya integradas. |
 | 6. Issue #108 | Conserva el cierre de Guía rápida e invitaciones. |
 | 7. Inicio y Descubre | Resume los refinamientos visuales y de navegación ya cerrados. |
 | 8. Academia de un vistazo | Conserva el estado final del brochure digital. |
@@ -172,7 +173,9 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 - Semilla 007 `Puedo elegir diferente` continúa activa y validada.
 - Semilla 008 `Cuando un plan no me incluye` quedó incorporada y validada por el Product Owner.
 - Semilla 009 `Puedo pasar con calma` quedó incorporada y validada visualmente; pendiente únicamente de prueba de uso real con Gloria, no de desarrollo.
-- El catálogo vigente es data-driven y reutiliza un Motor compartido.
+- Semilla 010 `Un momento para mí también está bien` quedó incorporada y activa.
+- Semilla 011 `Puedo aceptar apoyo y seguir siendo capaz` quedó incorporada y activa; practica recibir apoyo, elegir qué tipo de ayuda sirve y continuar con autonomía.
+- El catálogo vigente es data-driven, reutiliza un Motor compartido y contiene 11 Semillas activas.
 - Las miniaturas de 007 y 009 recibieron un ajuste óptico de encuadre para alinearse mejor con 008; validado por el Product Owner.
 - El proceso oficial de nuevas Semillas vive en `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
 - Flujo por defecto: necesidad real → diseño completo por AI Collaborator → imagen generada por AI Collaborator → validación → Product Owner sube el binario solo cuando la conexión GitHub no permita hacerlo → implementación/verificación por AI Collaborator → prueba real con Gloria.
@@ -278,7 +281,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-No hay trabajo On going activo al cierre de esta actualización.
+No hay desarrollo técnico activo adicional. El PR #152, “Monitor Gaudem: mostrar fecha y hora de líneas base”, sigue abierto y pendiente de revisión del Product Owner.
 
 El producto continúa en **Fase de uso prioritario**. El siguiente trabajo debe nacer de:
 - material real nuevo de 6.º;
@@ -322,7 +325,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `3cd189c74998f801597e549ba9b5e2e304ba965e` |
 | **Rama On going** | Ninguna |
-| **PR On going** | Ninguna |
+| **PR On going** | #152 · Monitor Gaudem: mostrar fecha y hora de líneas base · pendiente de revisión del Product Owner |
 | **Trabajo inmediato** | Ninguno obligatorio; continuar uso prioritario y material real de 6.º |
 | **GitHub Pages del baseline** | #755 · `success` |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -331,7 +334,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · actualización mensual automatizada hasta junio 2027 |
 | **Gestión de Usuarios** | ✅ Avatar con catálogo ampliado + entrada libre |
 | **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
-| **Creciendo por Dentro** | ✅ Semillas 008/009 incorporadas; proceso oficial documentado |
+| **Creciendo por Dentro** | ✅ Catálogo con 11 Semillas activas; 010/011 incorporadas; proceso oficial documentado |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
@@ -355,22 +358,22 @@ Al iniciar o retomar trabajo:
 
 ---
 
-# 🟣 Última actualización — 02/10/2026
+# 🟣 Última actualización — 04/10/2026
 
 ## Trabajo On going
 
-> **Ninguno.** Los cambios recientes quedaron integrados y publicados. Continuar con uso prioritario, material real de 6.º e issues observados.
+> **PR #152 pendiente de revisión del Product Owner.** No hay desarrollo técnico activo adicional; continuar con uso prioritario, material real de 6.º e issues observados.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.0 |
+| **Versión** | 3.1 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Ninguno |
-| **PR On going** | Ninguno |
-| **Nuevas Semillas** | ✅ 008/009 incorporadas; proceso oficial documentado |
+| **Trabajo On going** | Sin desarrollo técnico activo adicional; PR #152 pendiente de revisión del Product Owner |
+| **PR On going** | #152 · Monitor Gaudem: mostrar fecha y hora de líneas base · pendiente de revisión del Product Owner |
+| **Nuevas Semillas** | ✅ 010/011 incorporadas; catálogo con 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
