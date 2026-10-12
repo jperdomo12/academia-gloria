@@ -796,7 +796,7 @@ async function cargarFuentes() {
         incidencias.push(`Detectives: ${error.message || "no disponible"}`);
         return [];
       }),
-      leerSesionesAcademicas({ maximo: MAXIMO_SESIONES_ACADEMICAS }).catch(error => {
+      leerSesionesAcademicas({ maximo: MAXIMO_SESIONES_ACADEMICAS, excluirAutoevaluaciones: true }).catch(error => {
         incidencias.push(`Pruebas académicas: ${error.message || "no disponible"}`);
         return [];
       }),

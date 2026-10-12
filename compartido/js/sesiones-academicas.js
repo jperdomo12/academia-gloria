@@ -7,6 +7,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  runTransaction,
   serverTimestamp,
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -42,6 +43,14 @@ function coleccionSesiones(userId) {
   return collection(db, "usuarios", userId, COLECCION);
 }
 
+function contenidoComparable(valor) {
+  if (Array.isArray(valor)) return valor.map(contenidoComparable);
+  if (valor && typeof valor === "object") {
+    return Object.fromEntries(Object.keys(valor).sort().map(k => [k, contenidoComparable(valor[k])]));
+  }
+  return valor;
+}
+
 function fechaOrden(valor) {
   if (!valor) return 0;
   if (typeof valor.toMillis === "function") return valor.toMillis();
@@ -50,6 +59,7 @@ function fechaOrden(valor) {
 }
 
 function resolverMisionId(registro = {}) {
+  if (registro.vincularMision === false) return "";
   const explicito = texto(registro.misionId);
   if (explicito) return explicito;
 
@@ -169,6 +179,16 @@ export async function guardarSesionAcademica(registro = {}) {
   }
 
   const contexto = await ContextoUsuario.inicializar();
+  // Consumidores con borradores pueden fijar propietario e intento para evitar
+  // guardar bajo otra identidad o duplicar un envío tras una pérdida de conexión.
+  if ((registro.personaIdEsperada && registro.personaIdEsperada !== contexto.personaActiva.personaId)
+      || (registro.actorUserIdEsperado && registro.actorUserIdEsperado !== contexto.usuario.userId)) {
+    throw new Error("La identidad activa ha cambiado. Vuelve a abrir la actividad.");
+  }
+  const intentoId = texto(registro.intentoId);
+  if (intentoId && !/^[a-zA-Z0-9-]{12,80}$/.test(intentoId)) {
+    throw new Error("El identificador del intento no es válido.");
+  }
   const actividadId = texto(registro.actividadId);
   const cursoReferencia = texto(registro.cursoReferencia);
   const materia = texto(registro.materia);
@@ -179,7 +199,9 @@ export async function guardarSesionAcademica(registro = {}) {
     throw new Error("La sesión requiere actividad, curso, materia y tema.");
   }
 
-  const referencia = doc(coleccionSesiones(contexto.userIdPersonaActiva));
+  const referencia = intentoId
+    ? doc(coleccionSesiones(contexto.userIdPersonaActiva), intentoId)
+    : doc(coleccionSesiones(contexto.userIdPersonaActiva));
   const datos = limpiar({
     contrato: "sesion-academica-v1",
     modo: APRENDIZAJE,
@@ -214,12 +236,30 @@ export async function guardarSesionAcademica(registro = {}) {
     updatedBy: contexto.usuario.userId
   });
 
-  await setDoc(referencia, {
+  const documento = {
     ...datos,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     completadaEn: serverTimestamp()
-  });
+  };
+  if (intentoId) {
+    await runTransaction(db, async transaction => {
+      const existente = await transaction.get(referencia);
+      if (existente.exists()) {
+        const previo = existente.data();
+        if (previo.actividadId !== actividadId || previo.actorUserId !== contexto.usuario.userId) {
+          throw new Error("El identificador del intento ya pertenece a otra sesión.");
+        }
+        if (JSON.stringify(contenidoComparable(previo.resumen)) !== JSON.stringify(contenidoComparable(datos.resumen))) {
+          throw new Error("Este intento ya tiene un resultado guardado. Consúltalo en el historial o inicia otro intento.");
+        }
+        return; // Reintento de envío: el primer resultado es inmutable.
+      }
+      transaction.set(referencia, documento);
+    });
+  } else {
+    await setDoc(referencia, documento);
+  }
 
   const evidenciaMision = await registrarEvidenciaMisionAcademica(
     datos,
@@ -253,7 +293,7 @@ export async function leerSesionAcademica(sesionId) {
     : null;
 }
 
-export async function leerSesionesAcademicas({ actividadId = "", maximo = 20 } = {}) {
+export async function leerSesionesAcademicas({ actividadId = "", maximo = 20, excluirAutoevaluaciones = false } = {}) {
   const contexto = await ContextoUsuario.inicializar();
   const resultado = await getDocs(coleccionSesiones(contexto.userIdPersonaActiva));
   const filtro = texto(actividadId);
@@ -262,6 +302,7 @@ export async function leerSesionesAcademicas({ actividadId = "", maximo = 20 } =
   return resultado.docs
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(item => !filtro || item.actividadId === filtro)
+    .filter(item => !excluirAutoevaluaciones || item.resumen?.tipoEvaluacion !== "autoevaluacion")
     .sort((a, b) => fechaOrden(b.completadaEn || b.updatedAt) - fechaOrden(a.completadaEn || a.updatedAt))
     .slice(0, limite);
 }
