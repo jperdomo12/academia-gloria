@@ -288,7 +288,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
-**Rincón del Dictado V1: reanudado por aprobación funcional explícita del Product Owner el 12/10/2026.** Implementación candidata en `feature/rincon-dictado-v1`, basada en `main` `3ca49665e0fcb4f52c1ff6e0d2896551be609227`. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` (1.0-rc1). El módulo se prueba con papel/cuaderno; seis aventuras, voz ajustable y avance manual, autoevaluación por frases y resultado original conservado. Reutiliza lector, celebración, navegación, Persona Activa y sesiones académicas; borrador local separado del historial. No requiere nuevas Rules. Las verificaciones de interfaz/guardado usan dobles de voz y Firestore: audio físico y guardado autenticado deben comprobarse en el primer uso familiar. No declararlo estable ni publicado mientras no se verifique integración/despliegue.
+**Rincón del Dictado V1 · PR #157: reanudado por aprobación funcional explícita del Product Owner el 12/10/2026.** Implementación candidata en `feature/rincon-dictado-v1`, basada en `main` `3ca49665e0fcb4f52c1ff6e0d2896551be609227`. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` (1.0-rc1). El módulo se prueba con papel/cuaderno; seis aventuras, voz ajustable y avance manual, autoevaluación por frases y resultado original conservado. Reutiliza lector, celebración, navegación, Persona Activa y sesiones académicas; borrador local separado del historial. No requiere nuevas Rules. Las verificaciones de interfaz/guardado usan dobles de voz y Firestore: audio físico y guardado autenticado deben comprobarse en el primer uso familiar. No declararlo estable ni publicado mientras no se verifique integración/despliegue.
 
 Secuencia aprobada: **V1 funcional → validación con familia → ajustes menores o medios según uso → validación final → versión estable.** Este trabajo es la excepción explícitamente autorizada dentro de la Fase de uso prioritario; no abre otros frentes.
 
@@ -335,7 +335,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Baseline funcional de producto verificado** | `94dd1092541495224e047cf8630357c9c3d1416b` · incluye #154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
 | **Rama On going** | `feature/rincon-dictado-v1` · V1 candidata |
-| **PR On going** | Rincón del Dictado V1 · consultar PR de la rama y su estado real |
+| **PR On going** | #157 · Rincón del Dictado V1 · candidata, pendiente de integración |
 | **Trabajo inmediato** | Revisar/integrar V1 candidata y validar con Juan/Anaís/Gloria |
 | **GitHub Pages del baseline funcional** | #758 · `success` · SHA `94dd1092…` |
 | **Verificación posterior al cierre** | Comprobar Pages para el SHA que resulte del merge de #153; no equiparar merge con despliegue |
@@ -384,7 +384,7 @@ Al iniciar o retomar trabajo:
 | **Versión** | 3.2 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Dictado V1 candidata; validación real pendiente |
-| **PR On going** | Consultar PR de `feature/rincon-dictado-v1` |
+| **PR On going** | #157 · Rincón del Dictado V1 · pendiente de integración |
 | **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |

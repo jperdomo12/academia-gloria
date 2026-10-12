@@ -4,7 +4,7 @@
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
 | Versión | 1.0-rc1 |
-| Estado | Implementado en rama · pendiente de validación familiar e integración |
+| Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
