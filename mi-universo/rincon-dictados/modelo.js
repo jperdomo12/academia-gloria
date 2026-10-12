@@ -25,7 +25,7 @@ export function vozFragmento(texto) {
 export function nuevaSesion(aventura, intentoId, fecha = new Date().toISOString()) {
   return {
     version: 1, intentoId, aventuraId: aventura.id, versionAventura: aventura.version,
-    fase: 'preparar', fragmento: 0, frase: 0, velocidad: '0.84', inicio: fecha,
+    fase: 'preparar', fragmento: 0, frase: 0, velocidad: '0.75', inicio: fecha,
     revision: aventura.frases.map(frase => ({
       palabras: palabrasFrase(frase).map(() => null), puntuacion: null, extras: 0
     })),
@@ -54,7 +54,7 @@ export function validarBorrador(aventura, valor) {
       || !['preparar', 'dictar', 'terminar', 'revisar', 'resultado'].includes(valor.fase)
       || !Number.isInteger(valor.fragmento) || valor.fragmento < 0 || valor.fragmento >= fragmentosDe(aventura).length
       || !Number.isInteger(valor.frase) || valor.frase < 0 || valor.frase >= aventura.frases.length
-      || !['0.65', '0.84', '1'].includes(valor.velocidad)
+      || !['0.5', '0.75', '1', '0.65', '0.84'].includes(valor.velocidad)
       || !Array.isArray(valor.revision) || valor.revision.length !== aventura.frases.length
       || !Array.isArray(valor.practica) || !Array.isArray(valor.correcciones)) return false;
   const claves = new Set(aventura.frases.flatMap((frase, fi) => palabrasFrase(frase).map((_, pi) => `${fi}:${pi}`)));

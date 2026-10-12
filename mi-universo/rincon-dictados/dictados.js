@@ -11,6 +11,7 @@ const preview = parametros.get('modo') === 'vista_previa';
 let identidad = null, servicios = null, aventura = null, sesion = null, claveBorrador = '';
 let borradorDisponible = null, historial = [], guardando = false, guardada = false, listo = false;
 let hablando = false, turnoVoz = 0, escuchado = false, palabraActiva = null, escrituraLocalFallo = false;
+let lecturaActual = null, faseMostrada = null;
 const etiquetaEstado = { correcta:'✓ Igual', revisar:'✎ Corregir', omitida:'＋ Faltó', duda:'? Duda' };
 
 function mensaje(texto = '', error = false) {
@@ -43,7 +44,10 @@ function recuperar() {
   if (!claveBorrador) return;
   try {
     const valor = JSON.parse(localStorage.getItem(claveBorrador) || 'null');
-    if (valor && validarBorrador(porId(valor.aventuraId), valor)) borradorDisponible = valor;
+    if (valor && validarBorrador(porId(valor.aventuraId), valor)) {
+      valor.velocidad = ({'0.84':'0.75','0.65':'0.5'})[valor.velocidad] || valor.velocidad;
+      borradorDisponible = valor;
+    }
     else if (valor) mensaje('El borrador anterior no es compatible con esta versión. Puedes empezar otra aventura.');
   } catch { mensaje('No pudimos recuperar el borrador de este navegador.', true); }
 }
@@ -58,6 +62,7 @@ function detener() {
   turnoVoz += 1;
   LectorTexto.detener();
   hablando = false;
+  lecturaActual = null;
   $('estadoVoz').textContent = 'Voz detenida. Puedes volver a escuchar.';
   controlesVoz();
 }
@@ -65,13 +70,15 @@ function escuchar(texto, alTerminar = null) {
   detener();
   const turno = turnoVoz;
   hablando = true;
+  lecturaActual = {texto, alTerminar};
   $('estadoVoz').textContent = 'Lía está leyendo…';
   controlesVoz();
   const ok = LectorTexto.escuchar(texto, {
-    idioma:'es-ES', velocidad:Number(sesion?.velocidad || '0.84'),
+    idioma:'es-ES', velocidad:Number(sesion?.velocidad || '0.75'),
     alFinalizar: () => {
       if (turno !== turnoVoz) return;
       hablando = false;
+      lecturaActual = null;
       $('estadoVoz').textContent = 'Ahora escribe con calma. Te espero.';
       alTerminar?.();
       controlesVoz();
@@ -79,6 +86,7 @@ function escuchar(texto, alTerminar = null) {
     alError: () => {
       if (turno !== turnoVoz) return;
       hablando = false;
+      lecturaActual = null;
       $('estadoVoz').textContent = 'No se pudo completar la lectura.';
       mensaje('No pudimos reproducir la voz. Comprueba el sonido y pulsa Escuchar otra vez.', true);
       controlesVoz();
@@ -130,6 +138,8 @@ function render() {
   $('descansar').hidden = guardada;
   $('pantalla').innerHTML = ({preparar:prepararHtml,dictar:dictarHtml,terminar:terminarHtml,revisar:revisarHtml,resultado:resultadoHtml}[sesion.fase])();
   controlesVoz(); enfocar('tituloActividad');
+  if (faseMostrada !== sesion.fase) $('actividad').scrollIntoView({block:'start'});
+  faseMostrada = sesion.fase;
 }
 function prepararHtml() {
   return `<div class="escena"><div class="escena-icono" aria-hidden="true">${aventura.icono}</div><h3>Una aventura empieza en tu cuaderno</h3>
@@ -143,24 +153,26 @@ function dictarHtml() {
   const total = fragmentosDe(aventura).length;
   return `<div class="escena"><p class="contador">FRAGMENTO ${sesion.fragmento+1} DE ${total}</p><progress class="progreso" max="${total}" value="${sesion.fragmento}" aria-label="Fragmentos escritos"></progress>
     <div class="escena-icono" aria-hidden="true">✍️</div><h3>Escucha y escribe a tu ritmo</h3>
-    <p>El texto está escondido. Cuando termines de escribir, tú decides cuándo continuar.</p>
-    <div class="acciones"><button data-escuchar="fragmento">🔊 Escuchar otra vez</button><button id="siguienteFragmento" class="primario" disabled>${sesion.fragmento === total-1 ? 'Ya lo escribí. Terminar' : 'Ya lo escribí →'}</button></div>
+    <p>Escucha este fragmento y escríbelo en tu cuaderno. Después pulsa el botón morado para pasar al siguiente. Al llegar al último, podrás terminar y comparar.</p>
+    <div class="acciones"><button data-escuchar="fragmento">🔊 Escuchar otra vez</button><button id="siguienteFragmento" class="primario" disabled>${sesion.fragmento === total-1 ? 'Terminé de escribir el dictado →' : 'Ya escribí este fragmento → Siguiente'}</button></div>
     ${sesion.fragmento ? '<button id="anteriorFragmento" class="suave">← Escuchar el fragmento anterior</button>' : ''}</div>`;
 }
 function terminarHtml() {
-  return `<div class="escena"><div class="escena-icono" aria-hidden="true">📓</div><h3>¡Tu historia ya está en el papel!</h3><p>Escucha una última vez y comprueba si te falta algo. Todavía no verás el texto.</p>
-    <div class="acciones"><button data-escuchar="final">🎧 Escuchar para comprobar</button><button id="iniciarRevision" class="primario">🔎 Revisar mi dictado</button><button id="revisarDespues">Guardar para revisar después</button></div></div>`;
+  return `<div class="escena"><div class="escena-icono" aria-hidden="true">📓</div><h3>¡Terminaste de escribir!</h3><p>Ahora vamos a comparar tu cuaderno con el texto original, una frase cada vez.</p>
+    <div class="acciones"><button id="iniciarRevision" class="primario">Comparar con mi cuaderno →</button></div>
+    <p class="ayuda">Si quieres comprobar antes que no te falta nada, puedes escuchar la historia completa. El texto sigue oculto hasta que pulses Comparar.</p>
+    <div class="acciones"><button data-escuchar="final">🎧 Escuchar la historia completa</button><button id="revisarDespues">Descansar y revisar después</button></div></div>`;
 }
 function revisarHtml() {
   const f = sesion.revision[sesion.frase];
   const palabras = palabrasFrase(aventura.frases[sesion.frase]);
   return `<p class="contador">FRASE ${sesion.frase+1} DE ${aventura.frases.length}</p>
-    <p>Compara con lo que escribiste <strong>antes de corregir</strong>. Toca las palabras diferentes, las que faltan o las que te generan dudas.</p>
+    <p>Compara con lo que escribiste <strong>antes de corregir</strong>. Toca las palabras diferentes, las que faltan o las que te generan dudas. Revisa también los signos y las palabras añadidas. Después confirma esta frase.</p>
     <div class="frase-revision" aria-label="Texto de referencia">${palabras.map((p,i) => `<button class="palabra ${f.palabras[i] || ''}" data-palabra="${i}" aria-label="${html(p)}: ${etiquetaEstado[f.palabras[i]] || 'sin revisar'}">${html(p)}${f.palabras[i] ? `<small>${etiquetaEstado[f.palabras[i]]}</small>` : ''}</button>`).join(' ')}</div>
     <p class="leyenda">Letras, tildes y mayúsculas cuentan. Una palabra se cuenta una sola vez, aunque tenga varios cambios.</p>
     <div class="revision-extra"><fieldset><legend>Los signos de esta frase</legend>${[['correcta','Están iguales'],['revisar','Hay algo que corregir'],['duda','Tengo una duda']].map(([v,t])=>`<label><input type="radio" name="puntuacion" value="${v}" ${f.puntuacion===v?'checked':''}>${t}</label>`).join('')}</fieldset>
     <fieldset><legend>Palabras añadidas</legend><label>¿Escribiste alguna palabra de más? <input id="extras" type="number" min="0" max="99" step="1" value="${f.extras}" aria-label="Cantidad de palabras añadidas"></label><small>Se registran aparte del porcentaje.</small></fieldset></div>
-    <div class="acciones"><button id="fraseIgual">✓ Toda la frase está igual</button><button id="confirmarFrase" class="primario">He comparado: confirmar frase →</button></div>
+    <div class="acciones"><button id="fraseIgual">✓ Toda la frase está igual</button><button id="confirmarFrase" class="primario">${sesion.frase === aventura.frases.length-1 ? 'Terminé de comparar → Ver mi autoevaluación' : 'Confirmar esta frase → Siguiente'}</button></div>
     <p class="ayuda">Al confirmar, las palabras sin marcar pasarán a «Igual». Las dudas seguirán pendientes. «Toda la frase está igual» también confirma sus signos y que no añadiste palabras.</p>
     <div class="acciones">${sesion.frase ? '<button id="fraseAnterior" class="suave">← Frase anterior</button>':''}<button id="pendienteRevision" class="suave">Continuar la revisión después</button></div>`;
 }
@@ -168,7 +180,7 @@ function resultadoHtml() {
   const r = resultado(aventura,sesion);
   const cambios = sesion.revision.flatMap((f,fi) => f.palabras.map((estado,pi) => ({estado,fi,pi,palabra:palabraSinSignos(palabrasFrase(aventura.frases[fi])[pi])}))).filter(p=>['revisar','omitida'].includes(p.estado));
   return `<div class="resultado-cabecera"><div class="porcentaje">${r.porcentaje}%</div><div><p class="etiqueta">MI AUTOEVALUACIÓN</p><h3>${r.porcentaje>=META?'¡Has alcanzado tu primera meta!':'Ya sabes por dónde seguir'}</h3><p><strong>${r.correctas} de ${r.total} palabras del texto</strong> escritas correctamente según tu revisión.</p><p>Meta familiar inicial: ${META} %. Terminar y revisar también cuentan.</p></div></div>
-    <p class="ayuda">La Academia calcula lo que has marcado; no ha leído tu cuaderno. Signos y palabras añadidas no están incluidos en este porcentaje.</p>
+    <p class="ayuda">Este es el porcentaje que resulta de tus marcas. No tienes que escribir una nota: la Academia hace el cálculo, pero no ha leído tu cuaderno. Signos y palabras añadidas no están incluidos en este porcentaje.</p>
     <p>✎ Frases con signos por corregir: <strong>${r.puntuacionRevisar}</strong> · Palabras añadidas: <strong>${r.extras}</strong>.</p>
     <h3>Un pequeño paso para crecer</h3><p>${cambios.length?'Elige hasta tres palabras para practicar. Escríbelas bien en tu cuaderno y marca cuando las hayas corregido.':'Puedes repasar los signos o releer tu trabajo con calma.'}</p>
     <div class="practica">${cambios.map(p=>{const clave=`${p.fi}:${p.pi}`;return `<button data-practica="${clave}" aria-pressed="${sesion.practica.includes(clave)}" ${guardada?'disabled':''}>${html(p.palabra)}</button>`;}).join('')}</div>
@@ -176,7 +188,7 @@ function resultadoHtml() {
     <p class="ayuda">Las correcciones se guardan como aprendizaje posterior. El porcentaje del dictado original se conserva.</p>
     <label>¿Cómo revisaste? <select id="acompanamiento" ${guardada?'disabled':''}><option value="">Elige una opción</option><option value="sola" ${sesion.acompanamiento==='sola'?'selected':''}>A solas</option><option value="acompanada" ${sesion.acompanamiento==='acompanada'?'selected':''}>Con ayuda de alguien</option></select></label>
     <div class="acciones"><button id="guardar" class="primario" ${guardada||guardando?'disabled':''}>${guardada?'✓ Aventura guardada':preview?'🎉 Terminar vista previa':'💾 Guardar mi aventura'}</button>
-    ${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">Elegir otra aventura</button></div>`;
+    ${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? 'Cerrar y volver a mis aventuras' : 'Elegir otra aventura'}</button></div>`;
 }
 function avanzarRevision() {
   conservar(); detener();
@@ -251,7 +263,19 @@ function detalle(s) {
 
 $('nivel').addEventListener('change',catalogo);
 $('pararVoz').addEventListener('click',detener);
-$('velocidad').addEventListener('change',()=>{ detener(); if(sesion){sesion.velocidad=$('velocidad').value;conservar();} });
+$('velocidad').addEventListener('change',()=>{
+  if (!sesion || guardando) return;
+  const repetir = hablando ? lecturaActual : null;
+  sesion.velocidad = $('velocidad').value;
+  detener(); conservar();
+  const etiqueta = $('velocidad').selectedOptions[0].textContent;
+  if (repetir) {
+    escuchar(repetir.texto, repetir.alTerminar);
+    mensaje(`Voz ${etiqueta.toLowerCase()}: volvemos a escuchar desde el comienzo de esta lectura.`);
+  } else {
+    $('estadoVoz').textContent = `Voz ${etiqueta.toLowerCase()} seleccionada. Pulsa Escuchar otra vez o Probar la voz.`;
+  }
+});
 $('verCatalogo').addEventListener('click',()=>{if(guardando)return; detener();conservar();catalogo();enfocar('tituloCatalogo');});
 $('verHistorial').addEventListener('click',()=>verHistorial());
 $('descansar').addEventListener('click',descansar);

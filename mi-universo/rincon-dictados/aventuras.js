@@ -13,14 +13,14 @@ export const AVENTURAS = [
     ]
   },
   {
-    id: 'parque-musical', version: '1', titulo: 'Un parque con ritmo', nivel: 1,
-    categoria: 'Música', icono: '🎵', color: 'menta',
-    descripcion: 'Un paseo que se convierte en un pequeño concierto.',
-    objetivo: 'Separación de palabras y punto.',
+    id: 'shakira-escenario', version: '1', titulo: 'Una aventura con Shakira', nivel: 1,
+    categoria: 'Música', icono: '🎤', color: 'menta',
+    descripcion: 'Imagina que escuchas a Shakira y la música inspira tu dibujo.',
+    objetivo: 'Mayúsculas, tildes en música y alegría, y punto.',
     frases: [
-      ['Un músico toca', 'en el parque.'],
-      ['Su perro mueve', 'la cola.'],
-      ['Las niñas aplauden', 'y una paloma', 'camina al ritmo del tambor.']
+      ['Shakira sale', 'al escenario.'],
+      ['La música empieza', 'y yo sigo', 'el ritmo.'],
+      ['Después canto', 'con alegría', 'y dibujo una estrella.']
     ]
   },
   {

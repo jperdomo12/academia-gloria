@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0-rc1 |
+| Versión | 1.0-rc2 |
 | Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
@@ -24,7 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
-| 1.0-rc1 | 12/10/2026 | Product Owner + AI Collaborator | Primera versión para revisión: seis aventuras, tres niveles, voz ajustable con avance manual, autoevaluación por frases, práctica posterior, borradores locales e historial. |
+| 1.0-rc2 | 12/10/2026 | Product Owner + AI Collaborator | Ajustes tras revisión de Juan: velocidades más diferenciadas y repetición inmediata, navegación explícita para finalizar/comparar/ver resultado/cerrar, aventura original imaginada con Shakira en Nivel 1. Primera versión para revisión: seis aventuras, tres niveles, voz ajustable con avance manual, autoevaluación por frases, práctica posterior, borradores locales e historial. |
 
 ## Resumen de contenido
 
@@ -45,8 +45,8 @@ Acceso: `Mi Universo → Rincón del Dictado`, junto al Rincón de Lectura.
 
 1. Elegir una aventura, con filtro de nivel, extensión y objetivo ortográfico.
 2. Preparar lápiz y papel; probar la voz; escuchar opcionalmente el texto completo sin verlo.
-3. Escuchar fragmentos preparados por sentido. Velocidades: Normal (1), Pausada (0.84) y Muy pausada (0.65). El módulo prepara los signos para que el lector compartido los dicte expresamente durante los fragmentos.
-4. El texto permanece oculto. Tras terminar el audio se habilita «Ya lo escribí». No hay cuenta atrás ni penalización por repetir. Detener, repetir y escuchar el fragmento anterior son acciones explícitas. Cambiar velocidad detiene la lectura actual; debe volverse a escuchar.
+3. Escuchar fragmentos preparados por sentido. Velocidades: Normal (1), Pausada (0.75) y Muy pausada (0.5). El módulo prepara los signos para que el lector compartido los dicte expresamente durante los fragmentos.
+4. El texto permanece oculto. Tras terminar el audio se habilita «Ya lo escribí». No hay cuenta atrás ni penalización por repetir. Detener, repetir y escuchar el fragmento anterior son acciones explícitas. Cambiar velocidad durante el audio lo repite desde el principio con el nuevo valor; si está detenido, el mensaje indica volver a escuchar. Los borradores anteriores con 0.84/0.65 se recuperan con los valores nuevos. La voz depende del motor del navegador; la variación audible requiere comprobación real.
 5. Escucha final opcional antes de revelar el modelo. Puede dejarse un borrador para revisar después.
 6. Comparación de una frase cada vez con el dictado original en papel. Las palabras empiezan sin revisar. Cada una admite: igual, corregir, omitida o duda. La confirmación explícita convierte las no marcadas en iguales. Signos y palabras añadidas se registran aparte.
 7. Solo al completar la revisión aparece el porcentaje. Se elige si la revisión fue a solas o acompañada.
@@ -61,7 +61,7 @@ Seis textos originales, sin datos personales:
 
 | Nivel | Aventuras | Palabras |
 |---|---|---|
-| 1 | La carta secreta; Un parque con ritmo | 19; 22 |
+| 1 | La carta secreta; Una aventura con Shakira | 19; 20 |
 | 2 | La maleta del mar; El huerto de la azotea | 30; 32 |
 | 3 | Luces tras el telón; Un mapa de estrellas | 51; 56 |
 

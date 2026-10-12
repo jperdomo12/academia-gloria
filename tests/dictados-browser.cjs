@@ -8,7 +8,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   const page=await browser.newPage({viewport:{width:1280,height:1000}});
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
-  await page.route('**/compartido/js/lector-texto.js',r=>r.fulfill({contentType:'text/javascript',body:`let timer;export const LectorTexto={disponible:()=>true,detener:()=>clearTimeout(timer),escuchar:(texto,o)=>{window.ultimaVoz=texto;window.ultimaVelocidad=o.velocidad;if(window.fallarVoz){queueMicrotask(()=>o.alError());return true;}timer=setTimeout(()=>o.alFinalizar?.(),100);return true;}};`}));
+  await page.route('**/compartido/js/lector-texto.js',r=>r.fulfill({contentType:'text/javascript',body:`let timer;export const LectorTexto={disponible:()=>true,detener:()=>clearTimeout(timer),escuchar:(texto,o)=>{window.ultimaVoz=texto;window.ultimaVelocidad=o.velocidad;if(window.fallarVoz){queueMicrotask(()=>o.alError());return true;}timer=setTimeout(()=>o.alFinalizar?.(),window.vozLarga?1000:100);return true;}};`}));
   await page.goto(base+'/mi-universo/rincon-dictados/?modo=vista_previa');
   await page.waitForSelector('[data-aventura]:not(:disabled)');
   assert.equal(await page.locator('[data-aventura]').count(),6);
@@ -16,9 +16,16 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   await page.selectOption('#nivel','2');assert.equal(await page.locator('[data-aventura]').count(),2);
   await page.selectOption('#nivel','todos');await page.click('[data-aventura="carta-secreta"]');
   assert.equal(await page.locator('#pantalla').innerText().then(t=>t.includes('La gata Luna')),false);
-  await page.selectOption('#velocidad','0.65');
-  await page.click('#empezarDictado');await page.waitForTimeout(140);
-  assert.equal(await page.evaluate(()=>window.ultimaVelocidad),0.65);
+  await page.selectOption('#velocidad','0.5');
+  await page.evaluate(()=>window.vozLarga=true);
+  await page.click('#empezarDictado');
+  for(const rate of ['1','0.75','0.5']){
+    await page.selectOption('#velocidad',rate);
+    assert.equal(await page.evaluate(()=>window.ultimaVelocidad),Number(rate));
+    assert.ok(await page.locator('#siguienteFragmento').isDisabled());
+  }
+  await page.evaluate(()=>window.vozLarga=false);await page.waitForTimeout(1050);
+  assert.equal(await page.locator('#siguienteFragmento').isEnabled(),true);
   for(let i=0;i<6;i++){
     assert.equal(await page.locator('#pantalla').innerText().then(t=>t.includes('La gata Luna')),false);
     await page.click('#siguienteFragmento');await page.waitForTimeout(140);
@@ -46,7 +53,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   await page.route('**/compartido/js/perfil-usuario.js',r=>r.fulfill({contentType:'text/javascript',body:'export const PerfilUsuario={obtenerUID:async()=>"actor"};'}));
   await page.route('**/compartido/js/contexto-usuario.js',r=>r.fulfill({contentType:'text/javascript',body:`export const ContextoUsuario={inicializar:async()=>({usuario:{userId:'actor'},personaActiva:{personaId:localStorage.getItem('test-persona')||'p1',nombreVisible:'Persona de prueba'},nivelAcceso:window.soloConsulta?'consulta':'gestion',esPersonaPropia:false})};`}));
   await page.route('**/compartido/js/sesiones-academicas.js',r=>r.fulfill({contentType:'text/javascript',body:`export async function guardarSesionAcademica(r){window.envios=(window.envios||0)+1;if(window.fallarGuardado)throw new Error('Error de conexión simulado');localStorage.setItem('test-sesion',JSON.stringify({...r,id:r.intentoId}));return {guardado:true};}export async function leerSesionesAcademicas(){const s=JSON.parse(localStorage.getItem('test-sesion')||'null');return s?[s]:[];}export async function leerSesionAcademica(){return null;}`}));
-  await page.goto(base+'/mi-universo/rincon-dictados/');await page.click('[data-aventura="parque-musical"]');
+  await page.goto(base+'/mi-universo/rincon-dictados/');await page.click('[data-aventura="shakira-escenario"]');
   await page.click('#empezarDictado');await page.waitForTimeout(130);await page.click('#siguienteFragmento');await page.waitForTimeout(130);await page.click('#descansar');
   await page.reload();await page.click('#reanudar');assert.match(await page.locator('.contador').innerText(),/FRAGMENTO 2/);assert.ok(await page.locator('#siguienteFragmento').isDisabled());
   await page.evaluate(()=>window.fallarVoz=true);await page.click('[data-escuchar="fragmento"]');await page.waitForTimeout(50);assert.ok(await page.locator('#siguienteFragmento').isDisabled());
