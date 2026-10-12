@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0-rc5 |
+| Versión | 1.0-rc6 |
 | Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.0-rc6 | 12/10/2026 | Product Owner + AI Collaborator | Cabecera canónica en vista previa e integración, elimina Panel local y aísla CSS; matriz de estándares, árbol e índice sincronizados; prueba específica de navegación real. |
 | 1.0-rc5 | 12/10/2026 | Product Owner + AI Collaborator | Comparación con Rincón de Lectura publicado: bienvenida, tarjetas, pasos y panel de voz de la misma familia; cierre de vista previa explícito sin guardado. |
 | 1.0-rc4 | 12/10/2026 | Product Owner + AI Collaborator | Revisión integral de UX: secuencia de escucha antes de avance, salida explícita ante audio sin end, ayudas progresivas, foco de actividad, origen institucional, catálogo responsive y detalle de práctica en historial. |
 | 1.0-rc3 | 12/10/2026 | Product Owner + AI Collaborator | Ajustes tras revisión de Juan: velocidades más diferenciadas y repetición inmediata, navegación explícita para finalizar/comparar/ver resultado/cerrar, aventura original imaginada con Shakira en Nivel 1. Revisión 3: inicio/avance destacados antes del contenido y avance manual sin dependencia de evento end. Primera versión para revisión: seis aventuras, tres niveles, voz ajustable con avance manual, autoevaluación por frases, práctica posterior, borradores locales e historial. |
@@ -142,6 +143,32 @@ Referencia: `mi-universo/rincon-lectura/index.html` y `rincon-lectura-lia.css`, 
 
 Se conservan las diferencias funcionales aprobadas: papel, tildes/mayúsculas relevantes, revisión manual, historial de intentos independientes y cero penalización por ayudas. No se traslada el reconocimiento de voz ni la sustitución de una grabación previa de Lectura. No se modifica el módulo de Lectura ni se extrae un nuevo sistema visual global para este ajuste.
 
+### Conformidad documental e integración · revisión 6
+
+La semejanza visual con Lectura no sustituye los contratos transversales. Se revisa el mapa de documentación activa y se aplican los propietarios pertinentes; `history/` y capacidades futuras no se convierten en requisitos vigentes.
+
+| Propietario vigente | Aplicación y evidencia en V1 candidata |
+|---|---|
+| FOUNDATION, ADN, principios pedagógicos | Origen institucional, autonomía, pausa, respeto y ausencia de castigo. |
+| Product Experience Architecture e identidad visual | Experiencia guiada, assets oficiales, separación de actividad, acompañamiento y evidencia. |
+| MODELO_NAVEGACION y MODELO_ARBOL_NAVEGACION | Cabecera canónica fuera del contenedor local; Academia + Volver + ubicación + Panel. Nodo técnico y árbol humano alineados. |
+| STD-PANEL_DE_USUARIO | Sin host ni inicialización local: componente global propietario del único Panel. La vista previa indica ausencia de sesión, sin inventar nombre, avatar o menú autenticado. |
+| STD-USUARIOS_ROLES_Y_ACCESOS / MODELO_ROLES | ContextoUsuario separa actor y Persona Activa; consulta sin guardado. Servicio verifica identidad esperada. Rules reales pendientes de prueba autenticada. |
+| STD-GUIA_DESARROLLO_ULTRA_PRO | Acción principal oportuna, rejilla 3/2/2/1, móvil, teclado, errores visibles, estilos de controles limitados al módulo y al diálogo. |
+| STD-LIA | Instrucciones graduales, reconocimiento concreto; no lee el cuaderno ni inventa capacidades. |
+| STD-SEGUIMIENTO_Y_MOTIVACION | 70 % orientativo, todo trabajo revisado se reconoce, sin ranking ni recompensa persistida por prueba. |
+| STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS | camelCase, contrato sesion-academica-v1, IDs estables y auditoría del servicio compartido; sin colecciones privadas. |
+| MODEL_MOTORES_DE_APRENDIZAJE / STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR | Reutiliza sesiones; declara autoevaluación y no la mezcla con corrección automática. Este catálogo original no es una incorporación de material Gaudem ni un Tema curricular nuevo. |
+| STD-MIS_TAREAS_Y_MISIONES | V1 no completa Misiones ni hereda una Misión de la URL. No crea evidencia de dominio inexistente. |
+| STD-GLOSARIO | Persona Activa, aventura, revisión e historial conservan su significado; dudas no equivalen a error. |
+| DOCUMENTATION_STANDARD / ARCHITECTURE y docs/ai | Propietario único, historial y estado de candidata; HandOff solo continuidad. Corrección de versión final del índice y nodo humano del árbol. |
+| PRODUCT_DEVELOPMENT_WORKFLOW | Rama y PR; no publicado ni estable hasta integración, despliegue y validación real. |
+| STD-AVENTURAS_MATEMATICAS / estándares de Semillas | No aplican sus mecánicas específicas a Dictado; no se añaden motores ni contenidos ajenos al alcance. |
+
+**Cabecera en prueba:** la vista alojada de Dictado usa el componente real con `data-nav-preview=true`; no importa Panel/identidad/Firebase. El paquete descargable incrusta el mismo componente y CSS, adapta las rutas a la Academia publicada y conserva Volver hacia Mi Universo. No representa una sesión autenticada. En uso normal se utiliza el retorno contextual del servicio común, con Persona Activa y Panel canónico. Los controles locales no sobrescriben los estilos de ese Panel.
+
+**Verificado:** cabecera única, sin carga de Panel en preview, único inicio del Panel con identidad simulada, retorno al origen Lectura, ausencia de desbordamiento, recorrido completo de dictado, revisión e historial simulado. **Pendiente:** sonido físico y guardado/permisos con cuentas reales. No se declara conformidad completa en producción basándose solo en dobles de identidad.
+
 ## 6. Validación
 
 Pruebas de cálculo/contenido:
@@ -156,6 +183,7 @@ Prueba de interfaz con Playwright y servidor local (puerto 8765 por defecto; con
 ```sh
 python -m http.server 8765
 node tests/dictados-browser.cjs
+node tests/dictados-navegacion.cjs
 ```
 
 La prueba de navegador simula voz y servicio Firebase. La prueba del servicio ejecuta el módulo real con dobles de Firestore. Ninguna escribe datos reales. Se verificaron seis aventuras, cálculo y dudas, serialización compatible, identidad esperada, envío idempotente incluso con claves reordenadas por Firestore, compatibilidad de consumidores anteriores y flujo en navegador de escritorio/móvil. La prueba de interfaz cubre también velocidad, errores de voz, borrador aislado, reintento tras fallo y resultado por debajo del 70 %. No sustituyen la comprobación de la voz física en Edge/Chrome ni el guardado autenticado con las Rules realmente desplegadas. Esos dos puntos deben validarse en el primer uso familiar.

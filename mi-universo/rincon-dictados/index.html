@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
   <link rel="stylesheet" href="../../compartido/css/celebracion.css">
   <link rel="stylesheet" href="./dictados.css?v=1">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
 </head>
-<body>
+<body data-page-title="Rincón del Dictado" data-page-icon="✏️" data-nav-back="../index.html">
   <a class="saltar" href="#contenido">Ir a la actividad</a>
   <main class="pagina" id="contenido">
-    <div class="barra"><a href="../index.html" data-volver-modulo data-ruta-alternativa="../index.html">← Mi Universo</a><div data-panel-usuario></div></div>
     <header class="cabecera">
       <div><p class="etiqueta">ESCUCHO · ESCRIBO · DESCUBRO</p><h1>Rincón del Dictado <span aria-hidden="true">✏️</span></h1>
         <p>Pequeñas aventuras que cobran vida en tu cuaderno.</p><p id="persona" class="persona"></p></div>
@@ -39,16 +39,18 @@
   <dialog id="palabraDialogo" aria-labelledby="palabraElegida"><form method="dialog"><h2 id="palabraElegida"></h2><p>Compara esta palabra con la de tu cuaderno.</p><div class="opciones"><button value="correcta">✓ La escribí igual</button><button value="revisar">✎ La escribí diferente</button><button value="omitida">＋ Me faltó escribirla</button><button value="duda">? Tengo una duda</button><button value="cancelar" class="suave">Volver sin cambiar</button></div></form></dialog>
   <script type="module" src="./dictados.js?v=1"></script>
   <script>
-    // La vista previa es pública y no inicializa identidad ni persistencia.
-    if (new URLSearchParams(location.search).get('modo') !== 'vista_previa') {
+    // Misma cabecera canónica en ambos modos; la vista previa no carga identidad.
+    const vistaPrevia = new URLSearchParams(location.search).get('modo') === 'vista_previa';
+    document.body.dataset.navPreview = String(vistaPrevia);
+    if (!vistaPrevia) {
       const comun = document.createElement('script');
       comun.src = '../../compartido/js/navegacion.js';
       document.body.appendChild(comun);
-      const global = document.createElement('script');
-      global.type = 'module';
-      global.src = '../../compartido/componentes/navegacion-global.js';
-      document.body.appendChild(global);
     }
+    const global = document.createElement('script');
+    global.type = 'module';
+    global.src = '../../compartido/componentes/navegacion-global.js';
+    document.body.appendChild(global);
   </script>
 </body>
 </html>

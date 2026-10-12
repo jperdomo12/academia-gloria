@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha de origen** | 13/08/2026 |
-| **Última actualización** | 06/09/2026 |
+| **Última actualización** | 12/10/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Representación humana del árbol funcional visible vigente, sin sustituir la fuente técnica central |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 12/10/2026 | Product Owner + AI Collaborator | Incorpora Rincón del Dictado como nodo de Mi Universo en V1 candidata PR #157, pendiente de integración. |
 | 1.5 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el árbol con la Bitácora de Acompañamiento V1 fusionada mediante PR #83 y la corrección de menú PR #85. Añade Bitácora como nodo principal sin hijos, penúltimo antes de `Descubre la Academia`, y formaliza que un nodo principal sin hijos se renderiza como enlace directo. |
 | 1.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el árbol con `main`: incorpora Mi Baúl en Explorar más, explicita que Gestión de Misiones requiere `gestion`, actualiza 6.º como portal activo y mantiene la separación entre Mi espacio personal y el árbol central. |
 | 1.3 | 26/08/2026 | Product Owner + AI Collaborator | Activa 6.º de Primaria como destino navegable dentro de Mis Cursos. |
@@ -60,6 +61,7 @@ Academia
 ├── Mi Universo
 │   ├── Mi Camino
 │   ├── Mi Rincón de Lectura
+│   ├── Rincón del Dictado · V1 candidata PR #157
 │   ├── Biblioteca Encantada
 │   ├── Mi Rincón de Escritura
 │   ├── Aventuras Matemáticas
@@ -254,6 +256,7 @@ No se define de forma general como “carpeta padre”.
 | Mi Calendario | ✅ Implementado |
 | Persona Activa | ✅ Implementado |
 | Mi Rincón de Lectura | ✅ Implementado |
+| Rincón del Dictado | V1 candidata · PR #157 · pendiente de integración |
 | Biblioteca Encantada | ✅ Implementado |
 | Mi Rincón de Escritura | ✅ Implementado |
 | Aventuras Matemáticas / Detectives | ✅ Implementado |
@@ -292,7 +295,7 @@ Antes de modificarla:
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Reglas conceptuales** | `MODELO_NAVEGACION.md` |
 | **Baseline funcional de esta sincronización** | `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |

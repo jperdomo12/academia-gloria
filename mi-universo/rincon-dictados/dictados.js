@@ -398,22 +398,21 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){conservar(
 async function iniciar() {
   catalogo();
   if(preview) {
-    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 5 · Prueba libre sin guardar resultados.';
+    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 6 · Prueba libre sin guardar resultados.';
     listo=true;$('persona').textContent='Tu aventura, a tu ritmo';catalogo();
     if(!LectorTexto.disponible())mensaje('La voz no está disponible en este navegador. Abre esta vista previa en un navegador con lectura en voz alta.',true);
     return;
   }
   try {
-    const [{ContextoUsuario},{PerfilUsuario},api,{iniciarPanelUsuario}] = await Promise.all([
+    const [{ContextoUsuario},{PerfilUsuario},api] = await Promise.all([
       import('../../compartido/js/contexto-usuario.js'),import('../../compartido/js/perfil-usuario.js'),
-      import('../../compartido/js/sesiones-academicas.js'),import('../../compartido/js/panel-usuario.js')
+      import('../../compartido/js/sesiones-academicas.js')
     ]);
     await PerfilUsuario.obtenerUID();
     const ctx=await ContextoUsuario.inicializar();
     identidad={personaId:ctx.personaActiva.personaId,actorUserId:ctx.usuario.userId,puedeGuardar:ctx.esPersonaPropia||['gestion','administracion'].includes(ctx.nivelAcceso)};
     servicios={contexto:ContextoUsuario,guardar:api.guardarSesionAcademica,leer:api.leerSesionesAcademicas,leerUna:api.leerSesionAcademica};
     $('persona').textContent=`El rincón de ${ctx.personaActiva.nombreVisible||ctx.personaActiva.nombre||'tu Persona Activa'}`;
-    await iniciarPanelUsuario({contenedor:'[data-panel-usuario]',loginUrl:new URL('../../login.html',location.href).pathname,mostrarPerfil:false});
     claveBorrador=`academia.dictados.v1.${identidad.actorUserId}.${identidad.personaId}`;
     listo=identidad.puedeGuardar;
     if(listo)recuperar();

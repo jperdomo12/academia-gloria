@@ -490,8 +490,8 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.9 |
-| **Última sincronización** | 18/09/2026 |
+| **Versión activa** | 1.10 |
+| **Última sincronización** | 12/10/2026 |
 | **Portal documental** | `docs/README.md` |
 | **Ruta canónica para IA** | `docs/ai/` |
 | **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |

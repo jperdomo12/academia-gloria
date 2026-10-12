@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_NAVEGACION.md` |
-| **Versión** | 1.11 |
+| **Versión** | 1.12 |
 | **Estado** | Activo |
 | **Fecha** | 24/08/2026 |
-| **Última actualización** | 27/09/2026 |
+| **Última actualización** | 12/10/2026 |
 | **Propietario** | Arquitectura de Navegación |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Navegación transversal, contexto de Persona Activa, visibilidad por nivel, cabecera global, Panel de Usuario y comportamiento de retorno |
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.12 | 12/10/2026 | Product Owner + AI Collaborator | Documenta integración candidata PR #157: cabecera canónica en vista previa sin cargar identidad; Panel autenticado conserva instancia única y retorno contextual. |
 | 1.11 | 27/09/2026 | Product Owner + AI Collaborator | Refuerza la prevención de ciclos de `Volver`: el parámetro `volver` y los fragmentos internos (`#...`) dejan de diferenciar una pantalla a efectos de prevención de ciclos; los retornos anidados se limpian antes de reutilizarse y no se genera un nuevo `volver` cuando destino y retorno representan la misma pantalla lógica. Corrige el caso real observado en `Descubre la Academia`. |
 | 1.10 | 06/09/2026 | Product Owner + AI Collaborator | Formaliza tras PR #85 la representación de nodos principales con y sin hijos: `con hijos → grupo desplegable`, `sin hijos → enlace directo`. Registra Bitácora de Acompañamiento como primer caso principal de nodo directo y alinea el modelo con `STD-PANEL_DE_USUARIO.md` y el árbol visible. |
 | 1.9 | 29/08/2026 | Product Owner + AI Collaborator | Formaliza la continuidad de Persona Activa durante navegación interna, el tratamiento de URLs canónicas de Academia como destinos internos del entorno actual y el historial lógico de `Volver`, evitando rebotes del tipo A → B → C → B → C. |
@@ -511,9 +512,14 @@ La navegación se considera coherente cuando:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.11 |
+| **Versión activa** | 1.12 |
 | **Última sincronización** | 27/09/2026 |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Representación humana del árbol** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
 | **Implementación del Panel** | `compartido/js/panel-usuario.js` |
 | **Regla nueva consolidada** | `volver` y `#fragmento` no diferencian una pantalla al detectar ciclos de retorno |
+
+
+### Integración de vista previa de Dictado · PR #157 (candidata)
+
+La cabecera compartida admite `data-nav-preview="true"` para una vista sin sesión. Conserva marca, ubicación y Volver; muestra «Vista previa · sin sesión» en lugar de inicializar Panel/identidad. El atributo no concede permisos: el módulo mantiene su modo sin escrituras. En modo normal el Panel se importa e inicia desde la cabecera, sin una segunda inicialización local. Este ajuste no cambia el contrato de retorno de las pantallas autenticadas. La vista descargable usa el mismo componente empaquetado, con destino alternativo publicado porque no tiene historial de navegación de la Academia.
