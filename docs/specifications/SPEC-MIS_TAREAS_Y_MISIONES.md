@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.1 |
+| **Versión** | 2.2 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 23/09/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.2 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 2.1 | 23/09/2026 | Product Owner + AI Collaborator | Ajusta la preparación asistida de Repaso Académico para que las Zonas activas con Temas propios puedan aparecer como opciones explícitas en el campo `Materia` de Gestión de Misiones (por ejemplo, `Matezonas` y `Lengüizonas`). La selección visible conserva el origen escolar del trabajo, mientras que la ejecución del Tema mantiene su materia académica propietaria para sesiones y evidencias (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`). |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sustituye la antigua propuesta MVP por la especificación del producto real. Documenta Gestión de Misiones V1, acceso `gestion`, filtros/paginación, Repaso Académico asistido, Misiones libres, Persona Activa, evidencia/revisión, `Ver trabajo`, refuerzos, datos de prueba, eliminación controlada, Reconocimientos y compatibilidad histórica. |
 | 1.0 | 2026 | Equipo del proyecto | Primera propuesta funcional de Mis Tareas/Misiones: creación adulta, representación motivadora en Mi Camino, estados, evidencia, finalización automática/manual y validación familiar. |
@@ -714,3 +715,10 @@ Las siguientes ampliaciones solo deben implementarse cuando casos reales las jus
 | **Histórico** | Solo lectura; no fabrica ni modifica sesiones. |
 | **Eliminación** | Excepcional, inventariada, confirmada y segura. |
 | **Estado** | Activo · V2 sincronizada con producto real al 03/09/2026. |
+## Misiones del Rincón del Dictado
+
+Nueva Misión permite preparar una aventura del catálogo. Observaciones y refuerzos → Dictados permite seleccionar de uno a tres objetivos de un intento real: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Ambas variantes crean una Tarea `repaso_academico`, módulo `libre`, inicialmente oculta, con `requiereRevision: true` y cantidad objetivo 1. La familia decide cuándo mostrarla.
+
+El criterio de evidencia `sesion_academica` filtra `actividadId: rincon-dictados` y `focoDictado` exacto. Guardar el intento aporta evidencia y pasa a revisión familiar; no se exige porcentaje mínimo ni se declara dominio automático. El resumen de evidencia identifica autoevaluación y enlaza al historial propietario. Un fallo del vínculo no elimina el resultado guardado; su reintento usa el mismo ID.
+
+La edición general conserva el destino y criterio de Dictado. Los datos de prueba no alimentan el análisis ni las propuestas. El refuerzo conserva referencia al intento original y genera un resultado independiente. Contrato detallado: `SPEC-RINCON_DICTADOS.md`, sección 5.

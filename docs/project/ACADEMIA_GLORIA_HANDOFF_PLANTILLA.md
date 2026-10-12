@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.1 |
+| **Versión** | 3.3 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 12/10/2026 |
@@ -31,6 +31,8 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.3 | 12/10/2026 | Product Owner + AI Collaborator | Entrega V1 Dictado mediante PR #157 autorizada para validación familiar, con Misiones, refuerzos y análisis de autoevaluaciones. |
+| 3.2 | 12/10/2026 | Product Owner + AI Collaborator | Retoma Rincón del Dictado V1 con aprobación funcional explícita; especificación propietaria y primera implementación candidata en rama, pendiente de integración y validación familiar. Conserva el cierre operativo #152/#153/#156. |
 | 3.1 | 12/10/2026 | Product Owner + AI Collaborator | Cierre operativo autorizado: Monitor v1.6 mediante PR #152; Semillas 010/011 y 11 activas; Natación #154 y colores por materia base #155; Religión #156 cerrado sin merge, conserva 💗; baseline actualizado; automatización del menú desactivada; Dictados pausado y sin integrar. Sincronización mediante PR #153. |
 | 3.0 | 02/10/2026 | Product Owner + AI Collaborator | Consolida cambios materiales desde v2.9: Misiones con `Matezonas`/`Lengüizonas` como selección explícita sin alterar la materia académica de evidencia; `Zonas del cole` visible como navegación interna; Monitor Gaudem v1.5 con doble línea base; corrección transversal de ciclos de `Volver`; catálogo ampliado de avatares; menú de octubre 2026 incorporado; patrón mensual de URL Gaudem documentado y automatización mensual creada hasta junio de 2027. Retira como pendiente el issue de `volver=` ya resuelto. |
 | 2.9 | 22/09/2026 | Product Owner + AI Collaborator | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
@@ -287,7 +289,9 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
-**Rincón de Dictados V1: pausado por decisión del Product Owner.** Existe un borrador local en la rama `feature/rincon-dictados-v1`, fuera de `main`, sin PR publicado. Las pruebas previas usaron voz y persistencia simuladas; no hay validación de audio físico ni de guardado autenticado real. No está disponible en la Academia publicada. El borrador local no constituye una fuente canónica ni se garantiza su conservación entre sesiones; revisar su disponibilidad antes de retomar y no integrarlo como parte de este cierre.
+**Rincón del Dictado V1 · entrega mediante PR #157.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
+
+Secuencia aprobada: **V1 funcional → validación con familia → ajustes menores o medios según uso → validación final → versión estable.** Este trabajo es la excepción explícitamente autorizada dentro de la Fase de uso prioritario; no abre otros frentes.
 
 El producto continúa en **Fase de uso prioritario**. El siguiente trabajo debe nacer de:
 - material real nuevo de 6.º;
@@ -331,11 +335,11 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `94dd1092541495224e047cf8630357c9c3d1416b` · incluye #154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Ninguna activa; borrador local de Dictados pausado, sin publicación |
-| **PR On going** | Ninguna tras integrar este HandOff mediante #153; verificar GitHub al retomar |
-| **Trabajo inmediato** | Ninguno obligatorio; continuar uso prioritario y material real de 6.º |
+| **Rama On going** | `feature/rincon-dictado-v1` · rama de entrega #157 |
+| **PR On going** | #157 · entrega autorizada de V1 Dictado para validación familiar |
+| **Trabajo inmediato** | Validar voz, guardado, Misiones y refuerzos con Juan/Anaís/Gloria |
 | **GitHub Pages del baseline funcional** | #758 · `success` · SHA `94dd1092…` |
-| **Verificación posterior al cierre** | Comprobar Pages para el SHA que resulte del merge de #153; no equiparar merge con despliegue |
+| **Verificación posterior al cierre** | Cierre #153 verificado en Pages #760; verificar el despliegue correspondiente a la entrega #157 |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -347,7 +351,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
 | **Monitor Gaudem** | ✅ v1.6 · doble línea base · 18 espacios · fechas de líneas base |
-| **Rincón de Dictados V1** | Pausado; borrador local fuera de `main`, sin PR ni publicación |
+| **Rincón del Dictado V1** | V1 funcional para validación real; entrega #157 |
 | **Navegación** | ✅ v1.11 · prevención global de ciclos de `Volver` |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 
@@ -359,8 +363,8 @@ Al iniciar o retomar trabajo:
 
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos;
-3. comprobar el cierre de #152/#153 y mantener #156 cerrado; Dictados continúa pausado;
-4. continuar la **Fase de uso prioritario**;
+3. confirmar #152/#153 integrados y #156 cerrado; revisar rama/PR de Dictado y SPEC antes de continuar;
+4. completar la validación familiar de Dictado V1 cuando esté integrado; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -371,21 +375,21 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Cierre operativo autorizado mediante #153.** #152 integrado y #156 cerrado sin merge. Dictados permanece pausado, sin integración. Continuar con uso prioritario, material real de 6.º e issues observados; verificar Pages del merge final.
+> **Cierre operativo completado:** #152/#153 integrados; Pages #760 `success` para `3ca49665…`; #156 cerrado sin merge. **Trabajo actual:** Rincón del Dictado V1, entrega autorizada mediante #157 con Misiones y análisis; primera validación real pendiente. No se considera versión estable.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.1 |
+| **Versión** | 3.3 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Uso prioritario; Dictados pausado fuera de `main` |
-| **PR On going** | Ninguno tras el cierre mediante #153 |
+| **Trabajo On going** | Dictado V1 funcional; validación real pendiente |
+| **PR On going** | #157 · entrega V1 Dictado autorizada |
 | **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Verificar cierre y Pages → uso prioritario → material real de 6.º / issues reales → backlog solo por decisión concreta |
+| **Siguiente paso** | V1 Dictado → validar con familia → ajustar → validar versión estable; conservar uso prioritario |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |

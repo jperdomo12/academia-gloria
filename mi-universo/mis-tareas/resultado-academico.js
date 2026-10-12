@@ -457,6 +457,13 @@ async function iniciar() {
       return;
     }
 
+    if (sesion.actividadId === "rincon-dictados") {
+      const destino = new URL("../rincon-dictados/", location.href);
+      destino.searchParams.set("sesionId", sesionId);
+      location.replace(destino.href);
+      return;
+    }
+
     renderResultado(sesion, contexto);
   } catch (error) {
     console.error("No se pudo cargar el resultado académico.", error);
