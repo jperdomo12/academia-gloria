@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0-rc3 |
+| Versión | 1.0-rc4 |
 | Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.0-rc4 | 12/10/2026 | Product Owner + AI Collaborator | Revisión integral de UX: secuencia de escucha antes de avance, salida explícita ante audio sin end, ayudas progresivas, foco de actividad, origen institucional, catálogo responsive y detalle de práctica en historial. |
 | 1.0-rc3 | 12/10/2026 | Product Owner + AI Collaborator | Ajustes tras revisión de Juan: velocidades más diferenciadas y repetición inmediata, navegación explícita para finalizar/comparar/ver resultado/cerrar, aventura original imaginada con Shakira en Nivel 1. Revisión 3: inicio/avance destacados antes del contenido y avance manual sin dependencia de evento end. Primera versión para revisión: seis aventuras, tres niveles, voz ajustable con avance manual, autoevaluación por frases, práctica posterior, borradores locales e historial. |
 
 ## Resumen de contenido
@@ -44,16 +45,16 @@ Principio aprobado: **«Sé qué hice bien y sé qué puedo mejorar»**. El dise
 Acceso: `Mi Universo → Rincón del Dictado`, junto al Rincón de Lectura.
 
 1. Elegir una aventura, con filtro de nivel, extensión y objetivo ortográfico.
-2. Preparar lápiz y papel; probar la voz; escuchar opcionalmente el texto completo sin verlo.
+2. Preparar lápiz y papel; probar la voz; escuchar opcionalmente el texto completo sin verlo. El inicio del dictado aparece después de esa escucha o de elegir expresamente «Prefiero empezar directamente».
 3. Escuchar fragmentos preparados por sentido. Velocidades: Normal (1), Pausada (0.75) y Muy pausada (0.5). El módulo prepara los signos para que el lector compartido los dicte expresamente durante los fragmentos.
-4. El texto permanece oculto. El botón «Ya escribí este fragmento → Siguiente» aparece destacado al comienzo. Se habilita cuando se solicita reproducir el fragmento; el alumno confirma cuándo ya lo ha escuchado y escrito. No depende del evento de fin del motor, que puede faltar. Si pulsa mientras sigue leyendo, se detiene el audio anterior al avanzar. No hay cuenta atrás ni penalización por repetir. Detener, repetir y escuchar el fragmento anterior son acciones explícitas. Cambiar velocidad durante el audio lo repite desde el principio con el nuevo valor; si está detenido, el mensaje indica volver a escuchar. Los borradores anteriores con 0.84/0.65 se recuperan con los valores nuevos. La voz depende del motor del navegador; la variación audible requiere comprobación real.
+4. El texto permanece oculto. «Ya escribí este fragmento → Siguiente» aparece **después de terminar el audio**, debajo de la escucha; no avanza automáticamente. Si el navegador omite el evento de fin, «Ya terminó de sonar» permite confirmar explícitamente el final y detener cualquier audio residual. No se usan temporizadores para certificar escucha ni para avanzar. Un error deja el avance oculto hasta reintentar. Detener, repetir y escuchar el fragmento anterior son acciones explícitas. Cambiar velocidad durante el audio lo repite desde el principio con el nuevo valor. Los borradores anteriores con 0.84/0.65 se recuperan con 0.75/0.5. La diferencia audible requiere comprobación real.
 5. Escucha final opcional antes de revelar el modelo. Puede dejarse un borrador para revisar después.
 6. Comparación de una frase cada vez con el dictado original en papel. Las palabras empiezan sin revisar. Cada una admite: igual, corregir, omitida o duda. La confirmación explícita convierte las no marcadas en iguales. Signos y palabras añadidas se registran aparte.
 7. Solo al completar la revisión aparece el porcentaje. Se elige si la revisión fue a solas o acompañada.
 8. Práctica opcional de hasta tres palabras por corregir, con confirmación de corrección en papel. No altera la nota original.
 9. Guardar resultado o realizar otro intento independiente. Historial solo lectura con texto, marcas y correcciones posteriores.
 
-Al ocultar/cerrar la página se detiene la voz. Tras reanudar un borrador en fase de escritura debe escucharse otra vez el fragmento actual. Una voz no disponible o un error notificado mantienen el avance bloqueado hasta volver a escuchar. La confirmación manual no certifica que el audio haya terminado.
+Al ocultar/cerrar la página se detiene la voz. Tras reanudar un borrador en fase de escritura debe escucharse otra vez el fragmento actual. Una voz no disponible o un error notificado mantienen el avance oculto hasta volver a escuchar. La confirmación manual del final de audio declara la percepción del alumno, no verifica su escucha.
 
 ## 2. Contenido
 
@@ -107,10 +108,24 @@ Los campos opcionales nuevos (`intentoId`, `personaIdEsperada`, `actorUserIdEspe
 ## 5. Integración
 
 - Navegación contextual y Panel de Usuario compartidos en uso autenticado.
-- LectorTexto y celebración compartidos, assets de Lía existentes.
+- LectorTexto y celebración compartidos; guacamaya existente como identidad de la Academia, sin declarar una imagen universal de Lía.
 - Análisis Educativo solicita `excluirAutoevaluaciones: true` para no mezclar estas revisiones manuales con ejercicios corregidos automáticamente.
 - Un enlace genérico de resultado académico a un dictado se redirige a su historial específico, preservando el carácter de autoevaluación.
 - No se modifica Rincón de Lectura, Rules ni catálogo de Misiones.
+
+### Revisión de coherencia con la Academia · revisión 4
+
+| Fuente propietaria revisada | Aplicación en Dictado |
+|---|---|
+| FOUNDATION y ADN | Ritmo propio, ayuda sin penalizar, lenguaje respetuoso y origen familiar visible en pie de página con enlace a Descubre la Academia. No se reproduce la carta familiar. |
+| Product Experience Architecture | Acciones de aprendizaje explícitas; vista previa sin evidencia real; historial de consulta. |
+| Identidad visual y personajes | Tipografía Outfit, paleta luminosa, favicon oficial y guacamaya reutilizada; presencia discreta durante la actividad. |
+| Guía Ultra Pro, UX y TEL | Una acción principal por momento, instrucciones breves, ayuda desplegable en revisión. Catálogo 3 columnas escritorio, 2 tablet/móvil y 1 por debajo de 360 px. |
+| STD-LIA y seguimiento | Reconocimiento concreto del trabajo y siguiente paso; sin comparación ni castigo por porcentaje. Dudas conservadas y resolubles con ayuda. |
+| Navegación, Panel de Usuario y accesos | Componentes comunes, Persona Activa, historial separado de práctica; no se crea navegación global propia. |
+| Accesibilidad | Foco visible, diálogo con título accesible, estados con texto además de color, objetivos táctiles, movimiento reducido y errores próximos a la actividad. |
+
+El resultado diferencia «Lo que hice bien», «Mi siguiente paso» y la práctica opcional. El historial muestra tanto palabras seleccionadas como correcciones registradas, sin cambiar el porcentaje. La vista autónoma permite probar la actividad, pero la cabecera de cuenta y el historial real corresponden a la integración autenticada.
 
 ## 6. Validación
 

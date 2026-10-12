@@ -18,11 +18,11 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   assert.equal(await page.locator('#pantalla').innerText().then(t=>t.includes('La gata Luna')),false);
   await page.selectOption('#velocidad','0.5');
   await page.evaluate(()=>window.vozLarga=true);
-  await page.click('#empezarDictado');
+  await page.click('#saltarHistoria');await page.click('#empezarDictado');
   for(const rate of ['1','0.75','0.5']){
     await page.selectOption('#velocidad',rate);
     assert.equal(await page.evaluate(()=>window.ultimaVelocidad),Number(rate));
-    assert.ok(await page.locator('#siguienteFragmento').isEnabled());
+    assert.ok(await page.locator('#siguienteFragmento').isHidden());
   }
   await page.evaluate(()=>window.vozLarga=false);await page.waitForTimeout(1050);
   assert.equal(await page.locator('#siguienteFragmento').isEnabled(),true);
@@ -47,17 +47,20 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('academia.dictados')).length),0);
 
 
-  // El motor puede no emitir end: Gloria confirma manualmente y puede avanzar.
+  // El avance aparece después de escuchar; fallback explícito si falta end.
   await page.goto(base+'/mi-universo/rincon-dictados/?modo=vista_previa');
   await page.click('[data-aventura="carta-secreta"]');
+  assert.ok(await page.locator('#empezarDictado').isHidden());
+  await page.click('[data-escuchar="historia"]');await page.waitForTimeout(140);
+  assert.ok(await page.locator('#empezarDictado').isVisible());
   await page.evaluate(()=>window.sinFinVoz=true);
-  await page.click('[data-escuchar="historia"]');
-  assert.ok(await page.locator('#empezarDictado').isEnabled());
   await page.click('#empezarDictado');
   const siguiente=page.locator('#siguienteFragmento');
+  assert.ok(await siguiente.isHidden());
+  await page.click('#finAudioManual');
   assert.ok(await siguiente.isVisible());assert.ok(await siguiente.isEnabled());
-  const caja=await siguiente.boundingBox();assert.ok(caja.y>=0&&caja.y+caja.height<=1000);
   await siguiente.click();assert.match(await page.locator('.contador').innerText(),/FRAGMENTO 2/);
+  assert.ok(await siguiente.isHidden());
   await page.evaluate(()=>window.sinFinVoz=false);
 
   // Sesión simulada y servicio de datos simulado, con dos personas independientes.
@@ -68,7 +71,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   await page.route('**/compartido/js/contexto-usuario.js',r=>r.fulfill({contentType:'text/javascript',body:`export const ContextoUsuario={inicializar:async()=>({usuario:{userId:'actor'},personaActiva:{personaId:localStorage.getItem('test-persona')||'p1',nombreVisible:'Persona de prueba'},nivelAcceso:window.soloConsulta?'consulta':'gestion',esPersonaPropia:false})};`}));
   await page.route('**/compartido/js/sesiones-academicas.js',r=>r.fulfill({contentType:'text/javascript',body:`export async function guardarSesionAcademica(r){window.envios=(window.envios||0)+1;if(window.fallarGuardado)throw new Error('Error de conexión simulado');localStorage.setItem('test-sesion',JSON.stringify({...r,id:r.intentoId}));return {guardado:true};}export async function leerSesionesAcademicas(){const s=JSON.parse(localStorage.getItem('test-sesion')||'null');return s?[s]:[];}export async function leerSesionAcademica(){return null;}`}));
   await page.goto(base+'/mi-universo/rincon-dictados/');await page.click('[data-aventura="shakira-escenario"]');
-  await page.click('#empezarDictado');await page.waitForTimeout(130);await page.click('#siguienteFragmento');await page.waitForTimeout(130);await page.click('#descansar');
+  await page.click('#saltarHistoria');await page.click('#empezarDictado');await page.waitForTimeout(130);await page.click('#siguienteFragmento');await page.waitForTimeout(130);await page.click('#descansar');
   await page.reload();await page.click('#reanudar');assert.match(await page.locator('.contador').innerText(),/FRAGMENTO 2/);assert.ok(await page.locator('#siguienteFragmento').isDisabled());
   await page.evaluate(()=>window.fallarVoz=true);await page.click('[data-escuchar="fragmento"]');await page.waitForTimeout(50);assert.ok(await page.locator('#siguienteFragmento').isDisabled());
   await page.evaluate(()=>window.fallarVoz=false);
@@ -90,7 +93,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
 
   // Un resultado menor que la meta se reconoce y puede terminarse.
   await page.goto(base+'/mi-universo/rincon-dictados/?modo=vista_previa');
-  await page.click('[data-aventura="carta-secreta"]');await page.click('#empezarDictado');await page.waitForTimeout(140);
+  await page.click('[data-aventura="carta-secreta"]');await page.click('#saltarHistoria');await page.click('#empezarDictado');await page.waitForTimeout(140);
   while(await page.locator('#siguienteFragmento').count()){await page.click('#siguienteFragmento');await page.waitForTimeout(140);}
   await page.click('#iniciarRevision');
   while(await page.locator('#confirmarFrase').count()){
