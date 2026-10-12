@@ -8,7 +8,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   const page=await browser.newPage({viewport:{width:1280,height:1000}});
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
-  await page.route('**/compartido/js/lector-texto.js',r=>r.fulfill({contentType:'text/javascript',body:`let timer;export const LectorTexto={disponible:()=>true,detener:()=>clearTimeout(timer),escuchar:(texto,o)=>{window.ultimaVoz=texto;window.ultimaVelocidad=o.velocidad;if(window.fallarVoz){queueMicrotask(()=>o.alError());return true;}timer=setTimeout(()=>o.alFinalizar?.(),window.vozLarga?1000:100);return true;}};`}));
+  await page.route('**/compartido/js/lector-texto.js',r=>r.fulfill({contentType:'text/javascript',body:`let timer;export const LectorTexto={disponible:()=>true,detener:()=>clearTimeout(timer),escuchar:(texto,o)=>{window.ultimaVoz=texto;window.ultimaVelocidad=o.velocidad;if(window.fallarVoz){queueMicrotask(()=>o.alError());return true;}timer=setTimeout(()=>o.alFinalizar?.(),window.sinFinVoz?100000:(window.vozLarga?1000:100));return true;}};`}));
   await page.goto(base+'/mi-universo/rincon-dictados/?modo=vista_previa');
   await page.waitForSelector('[data-aventura]:not(:disabled)');
   assert.equal(await page.locator('[data-aventura]').count(),6);
@@ -22,7 +22,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   for(const rate of ['1','0.75','0.5']){
     await page.selectOption('#velocidad',rate);
     assert.equal(await page.evaluate(()=>window.ultimaVelocidad),Number(rate));
-    assert.ok(await page.locator('#siguienteFragmento').isDisabled());
+    assert.ok(await page.locator('#siguienteFragmento').isEnabled());
   }
   await page.evaluate(()=>window.vozLarga=false);await page.waitForTimeout(1050);
   assert.equal(await page.locator('#siguienteFragmento').isEnabled(),true);
@@ -45,6 +45,20 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   await page.screenshot({path:'/tmp/dictados-resultado.png',fullPage:true});
   await page.click('#guardar');assert.match(await page.locator('#mensaje').innerText(),/No se ha guardado/);
   assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('academia.dictados')).length),0);
+
+
+  // El motor puede no emitir end: Gloria confirma manualmente y puede avanzar.
+  await page.goto(base+'/mi-universo/rincon-dictados/?modo=vista_previa');
+  await page.click('[data-aventura="carta-secreta"]');
+  await page.evaluate(()=>window.sinFinVoz=true);
+  await page.click('[data-escuchar="historia"]');
+  assert.ok(await page.locator('#empezarDictado').isEnabled());
+  await page.click('#empezarDictado');
+  const siguiente=page.locator('#siguienteFragmento');
+  assert.ok(await siguiente.isVisible());assert.ok(await siguiente.isEnabled());
+  const caja=await siguiente.boundingBox();assert.ok(caja.y>=0&&caja.y+caja.height<=1000);
+  await siguiente.click();assert.match(await page.locator('.contador').innerText(),/FRAGMENTO 2/);
+  await page.evaluate(()=>window.sinFinVoz=false);
 
   // Sesión simulada y servicio de datos simulado, con dos personas independientes.
   await page.route('**/compartido/js/navegacion.js',r=>r.fulfill({contentType:'text/javascript',body:''}));

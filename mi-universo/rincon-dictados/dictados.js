@@ -53,10 +53,10 @@ function recuperar() {
 }
 function controlesVoz() {
   $('pararVoz').disabled = !hablando;
-  document.querySelectorAll('[data-escuchar]').forEach(b => b.disabled = hablando || !LectorTexto.disponible());
+  document.querySelectorAll('[data-escuchar]').forEach(b => b.disabled = !LectorTexto.disponible());
   const siguiente = $('siguienteFragmento');
-  if (siguiente) siguiente.disabled = hablando || !escuchado;
-  if ($('empezarDictado')) $('empezarDictado').disabled = hablando || !LectorTexto.disponible();
+  if (siguiente) siguiente.disabled = !escuchado;
+  if ($('empezarDictado')) $('empezarDictado').disabled = !LectorTexto.disponible();
 }
 function detener() {
   turnoVoz += 1;
@@ -67,6 +67,8 @@ function detener() {
   controlesVoz();
 }
 function escuchar(texto, alTerminar = null) {
+  const esFragmento = sesion?.fase === 'dictar';
+  if (esFragmento) escuchado = false;
   detener();
   const turno = turnoVoz;
   hablando = true;
@@ -87,11 +89,14 @@ function escuchar(texto, alTerminar = null) {
       if (turno !== turnoVoz) return;
       hablando = false;
       lecturaActual = null;
+      if (esFragmento) escuchado = false;
       $('estadoVoz').textContent = 'No se pudo completar la lectura.';
       mensaje('No pudimos reproducir la voz. Comprueba el sonido y pulsa Escuchar otra vez.', true);
       controlesVoz();
     }
   });
+  // El avance es una confirmación manual, no depende del evento end del motor.
+  if (ok && esFragmento) { escuchado = true; controlesVoz(); }
   if (!ok) {
     hablando = false;
     mensaje('Este navegador no tiene una voz disponible. Abre el dictado en un navegador con lectura en voz alta.', true);
@@ -142,20 +147,22 @@ function render() {
   faseMostrada = sesion.fase;
 }
 function prepararHtml() {
-  return `<div class="escena"><div class="escena-icono" aria-hidden="true">${aventura.icono}</div><h3>Una aventura empieza en tu cuaderno</h3>
-    <p>${html(aventura.descripcion)}</p><div class="preparativos"><span>✏️ Lápiz</span><span>📓 Papel o cuaderno</span><span>🔊 Sonido</span></div>
-    <p>Escucha primero la historia si quieres. Después la escribirás en pequeños fragmentos. El texto será una sorpresa hasta la revisión.</p>
-    <div class="acciones"><button data-escuchar="prueba">🔊 Probar la voz</button><button data-escuchar="historia">🎧 Escuchar la historia</button></div>
-    <div class="acciones"><button id="empezarDictado" class="primario">Tengo lápiz y papel. ¡Empezamos!</button></div>
+  return `<div class="escena"><div class="accion-principal"><p><strong>El siguiente paso es empezar a escribir.</strong></p>
+    <button id="empezarDictado" class="primario">Empezar el dictado por fragmentos →</button></div>
+    <h3>Prepara lápiz y papel</h3><div class="preparativos"><span>✏️ Lápiz</span><span>📓 Papel o cuaderno</span><span>🔊 Sonido</span></div>
+    <p>Al pulsar Empezar escucharás el primer fragmento. Después de escribirlo, aparecerá el botón para pasar al siguiente.</p>
+    <p class="ayuda">También puedes escuchar primero la historia completa. Para tomar el dictado, pulsa después el botón morado de arriba.</p>
+    <div class="acciones"><button data-escuchar="prueba">🔊 Probar la voz</button><button data-escuchar="historia">🎧 Escuchar la historia completa</button></div>
     <p class="ayuda">Escuchar otra vez y elegir una voz pausada no resta puntos.</p></div>`;
 }
 function dictarHtml() {
   const total = fragmentosDe(aventura).length;
-  return `<div class="escena"><p class="contador">FRAGMENTO ${sesion.fragmento+1} DE ${total}</p><progress class="progreso" max="${total}" value="${sesion.fragmento}" aria-label="Fragmentos escritos"></progress>
-    <div class="escena-icono" aria-hidden="true">✍️</div><h3>Escucha y escribe a tu ritmo</h3>
-    <p>Escucha este fragmento y escríbelo en tu cuaderno. Después pulsa el botón morado para pasar al siguiente. Al llegar al último, podrás terminar y comparar.</p>
-    <div class="acciones"><button data-escuchar="fragmento">🔊 Escuchar otra vez</button><button id="siguienteFragmento" class="primario" disabled>${sesion.fragmento === total-1 ? 'Terminé de escribir el dictado →' : 'Ya escribí este fragmento → Siguiente'}</button></div>
-    ${sesion.fragmento ? '<button id="anteriorFragmento" class="suave">← Escuchar el fragmento anterior</button>' : ''}</div>`;
+  return `<div class="escena"><p class="contador">FRAGMENTO ${sesion.fragmento+1} DE ${total}</p>
+    <div class="accion-principal"><button id="siguienteFragmento" class="primario" disabled>${sesion.fragmento === total-1 ? 'Terminé de escribir el dictado →' : 'Ya escribí este fragmento → Siguiente'}</button>
+    <p class="ayuda">Cuando hayas escuchado y escrito este fragmento, pulsa este botón. Tú decides cuándo continuar.</p></div>
+    <progress class="progreso" max="${total}" value="${sesion.fragmento}" aria-label="Fragmentos escritos"></progress>
+    <h3>Escucha y escribe a tu ritmo</h3><p>El texto sigue escondido. Puedes repetir el audio; al terminar el último fragmento podrás comparar con tu cuaderno.</p>
+    <div class="acciones"><button data-escuchar="fragmento">🔊 Escuchar otra vez</button>${sesion.fragmento ? '<button id="anteriorFragmento" class="suave">← Fragmento anterior</button>' : ''}</div></div>`;
 }
 function terminarHtml() {
   return `<div class="escena"><div class="escena-icono" aria-hidden="true">📓</div><h3>¡Terminaste de escribir!</h3><p>Ahora vamos a comparar tu cuaderno con el texto original, una frase cada vez.</p>
@@ -325,7 +332,7 @@ document.addEventListener('click',async evento=>{
     escuchar(vozFragmento(fragmentosDe(aventura)[sesion.fragmento]),()=>{escuchado=true;});return;
   }
   if(b.id==='siguienteFragmento'||b.id==='anteriorFragmento') {
-    if(b.id==='siguienteFragmento'&&(!escuchado||hablando))return;
+    if(b.id==='siguienteFragmento'&&!escuchado)return;
     detener();escuchado=false;
     if(b.id==='anteriorFragmento')sesion.fragmento--;
     else if(sesion.fragmento===fragmentosDe(aventura).length-1){sesion.fase='terminar';render();conservar();return;}
@@ -367,7 +374,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){conservar(
 async function iniciar() {
   catalogo();
   if(preview) {
-    $('modo').hidden=false;$('modo').textContent='Vista previa · Prueba libre sin guardar borradores, resultados ni progreso.';
+    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 3 · Prueba libre sin guardar resultados.';
     listo=true;$('persona').textContent='Tu aventura, a tu ritmo';catalogo();
     if(!LectorTexto.disponible())mensaje('La voz no está disponible en este navegador. Abre esta vista previa en un navegador con lectura en voz alta.',true);
     return;
