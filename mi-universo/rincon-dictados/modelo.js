@@ -77,11 +77,11 @@ export function crearRegistro(aventura, sesion, identidad) {
     actorUserIdEsperado: identidad.actorUserId,
     tituloActividad: aventura.titulo, versionActividad: aventura.version,
     cursoReferencia: '6to', materia: 'lengua', tema: 'Dictados', origen: 'rincon-dictados',
-    misionId: '', vincularMision: false,
+    misionId: sesion.misionId || '', vincularMision: Boolean(sesion.misionId),
     inicioCliente: sesion.inicio, finCliente: new Date().toISOString(),
     conceptosTrabajados: [], respuestas: [],
     resumen: { tipoEvaluacion: 'autoevaluacion', dictado: {
-      ...r, meta: META, nivel: aventura.nivel, aventuraId: aventura.id,
+      ...r, tipoPractica: aventura.sesionOrigenId ? 'refuerzo' : 'aventura', sesionOrigenId: aventura.sesionOrigenId || '', objetivos: aventura.objetivos || [], focoDictado: sesion.focoDictado || '', esDatoPrueba: sesion.esDatoPrueba === true, meta: META, nivel: aventura.nivel, aventuraId: aventura.id,
       acompanamiento: sesion.acompanamiento, velocidad: sesion.velocidad,
       textoOriginal: textoCompleto(aventura), frases: aventura.frases.map(textoFrase),
       revision: sesion.revision, practica: sesion.practica, correcciones: sesion.correcciones,

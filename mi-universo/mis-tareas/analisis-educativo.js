@@ -1,3 +1,4 @@
+import {analizarDictados, reales as dictadosReales} from '../rincon-dictados/seguimiento.js';
 /* Academia Gloria Valentina · Gestión familiar · Análisis educativo V1 */
 
 import { Academia } from "../../compartido/api/academia.js";
@@ -23,6 +24,7 @@ let datos = {
   detectives: [],
   academicos: [],
   lectura: [],
+  dictados: [],
   historias: new Map(),
   incidencias: []
 };
@@ -56,7 +58,7 @@ function fechaRegistro(registro = {}, motor = "") {
   if (motor === "detectives") {
     return fechaMs(registro.completadaEn || registro.actualizadaEn);
   }
-  if (motor === "academicos") {
+  if ((motor === "academicos" || motor === "dictados")) {
     return fechaMs(
       registro.completadaEn ||
       registro.updatedAt ||
@@ -140,7 +142,7 @@ function temaRegistro(registro = {}, motor = "") {
   if (motor === "detectives") {
     return String(registro.tema || `Nivel ${numero(registro.nivel, 1)}`).trim();
   }
-  if (motor === "academicos") {
+  if ((motor === "academicos" || motor === "dictados")) {
     return String(
       registro.tema ||
       registro.tituloActividad ||
@@ -179,7 +181,8 @@ function registrosFiltrados() {
     tema,
     detectives: filtrar(datos.detectives, "detectives"),
     academicos: filtrar(datos.academicos, "academicos"),
-    lectura: filtrar(datos.lectura, "lectura")
+    lectura: filtrar(datos.lectura, "lectura"),
+    dictados: filtrar(datos.dictados, "dictados")
   };
 }
 
@@ -641,7 +644,8 @@ function renderReporte() {
   if (filtrados.academicos.length) analisis.push(analizarAcademicos(filtrados.academicos));
   if (filtrados.lectura.length) analisis.push(analizarLectura(filtrados.lectura));
 
-  const total = filtrados.detectives.length + filtrados.academicos.length + filtrados.lectura.length;
+  if (filtrados.dictados.length) analisis.push(analizarDictados(filtrados.dictados));
+  const total = filtrados.dictados.length + filtrados.detectives.length + filtrados.academicos.length + filtrados.lectura.length;
   estado.classList.add("hidden");
 
   const rangoTexto = `${formatearFecha(filtrados.rango.desde)} – ${formatearFecha(filtrados.rango.hasta)}`;
@@ -650,6 +654,7 @@ function renderReporte() {
       <article><strong>${total}</strong><span>actividades/sesiones observadas</span></article>
       <article><strong>${filtrados.detectives.length}</strong><span>Detectives</span></article>
       <article><strong>${filtrados.academicos.length}</strong><span>Pruebas académicas</span></article>
+      <article><strong>${filtrados.dictados.length}</strong><span>Dictados · autoevaluación</span></article>
       <article><strong>${filtrados.lectura.length}</strong><span>Rincón de Lectura</span></article>
     </div>
     <p class="analisis-periodo-resumen">Período analizado: <strong>${escapar(rangoTexto)}</strong>.</p>
@@ -728,7 +733,7 @@ function opcionesTemaDisponibles() {
     ? datos.detectives
     : motor === "academicos"
       ? datos.academicos
-      : datos.lectura;
+      : motor === "dictados" ? datos.dictados : datos.lectura;
   return [...new Set(
     lista
       .filter(item => dentroRango(item, motor, rango))
@@ -791,7 +796,7 @@ async function cargarFuentes() {
     const uid = String(contexto.userIdPersonaActiva || "").trim();
     if (!uid) throw new Error("No se pudo resolver el alumno activo.");
 
-    const [historialResult, academicosResult, lecturaResult, historias] = await Promise.all([
+    const [historialResult, academicosResult, lecturaResult, historias, dictadosResult] = await Promise.all([
       obtenerHistorialDetectives(uid).catch(error => {
         incidencias.push(`Detectives: ${error.message || "no disponible"}`);
         return [];
@@ -804,7 +809,8 @@ async function cargarFuentes() {
         incidencias.push(`Rincón de Lectura: ${error.message || "no disponible"}`);
         return [];
       }),
-      cargarHistoriasDetectives()
+      cargarHistoriasDetectives(),
+      Promise.all([leerSesionesAcademicas({actividadId:'rincon-dictados',maximo:200}),Academia.tareas.leer()]).then(([sesiones,tareas])=>dictadosReales(sesiones,tareas)).catch(error=>{incidencias.push(`Dictados: ${error.message || 'no disponible'}`);return [];})
     ]);
 
     const sesionesResult = await Promise.allSettled(
@@ -833,6 +839,7 @@ async function cargarFuentes() {
       detectives,
       academicos: academicosResult,
       lectura: lecturaResult,
+      dictados: dictadosResult,
       historias,
       incidencias
     };
@@ -918,7 +925,7 @@ function crearInterfaz() {
           <option value="todos" selected>Todos</option>
           <option value="detectives">Detectives</option>
           <option value="academicos">Pruebas académicas</option>
-          <option value="lectura">Rincón de Lectura</option>
+          <option value="lectura">Rincón de Lectura</option><option value="dictados">Rincón del Dictado · autoevaluación</option>
         </select>
       </label>
 

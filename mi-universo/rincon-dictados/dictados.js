@@ -1,3 +1,4 @@
+import {aventuraMision, esMisionDictado} from './seguimiento.js';
 import { AVENTURAS, porId } from './aventuras.js';
 import { ACTIVIDAD_ID, META, nuevaSesion, textoCompleto, fragmentosDe, palabrasFrase,
   palabraSinSignos, vozFragmento, resultado, validarBorrador, crearRegistro } from './modelo.js';
@@ -11,6 +12,8 @@ const preview = parametros.get('modo') === 'vista_previa';
 let identidad = null, servicios = null, aventura = null, sesion = null, claveBorrador = '';
 let borradorDisponible = null, historial = [], guardando = false, guardada = false, listo = false;
 let hablando = false, turnoVoz = 0, escuchado = false, palabraActiva = null, escrituraLocalFallo = false;
+let misionActual = null, aventuraAsignada = null, registroPendiente = null;
+const aventuraDisponible = valor => valor?.aventuraPersonalizada || porId(valor?.aventuraId);
 let lecturaActual = null, faseMostrada = null, historiaLista = false;
 const etiquetaEstado = { correcta:'✓ Igual', revisar:'✎ Corregir', omitida:'＋ Faltó', duda:'? Duda' };
 
@@ -48,7 +51,7 @@ function recuperar() {
   if (!claveBorrador) return;
   try {
     const valor = JSON.parse(localStorage.getItem(claveBorrador) || 'null');
-    if (valor && validarBorrador(porId(valor.aventuraId), valor)) {
+    if (valor && validarBorrador(aventuraDisponible(valor), valor)) {
       valor.velocidad = ({'0.84':'0.75','0.65':'0.5'})[valor.velocidad] || valor.velocidad;
       borradorDisponible = valor;
     }
@@ -118,20 +121,22 @@ function escuchar(texto, alTerminar = null) {
 function catalogo() {
   cambiarSeccion('catalogo');
   const nivel = $('nivel').value;
-  $('aventuras').innerHTML = AVENTURAS.filter(a => nivel === 'todos' || String(a.nivel) === nivel).map(a => `
+  $('aventuras').innerHTML = (aventuraAsignada ? [aventuraAsignada] : AVENTURAS).filter(a => nivel === 'todos' || String(a.nivel) === nivel).map(a => `
     <article class="aventura"><div class="portada ${a.color}" aria-hidden="true"><span>${a.icono}</span></div>
     <div class="aventura-cuerpo"><div class="datos"><span>NIVEL ${a.nivel} · ${html(a.categoria)}</span><span>${a.frases.flatMap(palabrasFrase).length} palabras</span></div>
     <h3>${html(a.titulo)}</h3><p>${html(a.descripcion)}</p><p class="objetivo">🎯 ${html(a.objetivo)}</p>
     <button data-aventura="${a.id}" ${listo ? '' : 'disabled'}>Elegir aventura →</button></div></article>`).join('');
   $('borrador').hidden = !borradorDisponible;
-  if (borradorDisponible) $('borrador').innerHTML = `<strong>Te espera un borrador: ${html(porId(borradorDisponible.aventuraId).titulo)}</strong>
+  if (borradorDisponible) $('borrador').innerHTML = `<strong>Te espera un borrador: ${html(aventuraDisponible(borradorDisponible).titulo)}</strong>
     <p>Guardado en este navegador, para esta persona. Todavía no es un resultado del historial.</p><button id="reanudar">Continuar mi aventura</button><button id="descartar" class="suave">Descartar borrador</button>`;
 }
 function empezar(id) {
   if (!listo || guardando) return;
   if (borradorDisponible && !confirm('Hay una aventura sin terminar. ¿Quieres reemplazar su borrador por una nueva?')) return;
-  detener(); aventura = porId(id); guardada = false; escuchado = false; historiaLista = false;
+  detener(); aventura = aventuraAsignada?.id === id ? aventuraAsignada : porId(id); guardada = false; registroPendiente = null; escuchado = false; historiaLista = false;
   sesion = nuevaSesion(aventura, uuid());
+  if (misionActual) {sesion.misionId=misionActual.id;sesion.focoDictado=misionActual.evidencia.configuracion.focoDictado;sesion.esDatoPrueba=misionActual.esDatoPrueba===true;}
+  if(aventura.sesionOrigenId)sesion.aventuraPersonalizada=aventura;
   mensaje(); conservar(); render();
 }
 function descansar() {
@@ -210,7 +215,7 @@ function resultadoHtml() {
     <p class="ayuda">Las correcciones se guardan como aprendizaje posterior. El porcentaje del dictado original se conserva.</p>
     <label>¿Cómo revisaste? <select id="acompanamiento" ${guardada?'disabled':''}><option value="">Elige una opción</option><option value="sola" ${sesion.acompanamiento==='sola'?'selected':''}>A solas</option><option value="acompanada" ${sesion.acompanamiento==='acompanada'?'selected':''}>Con ayuda de alguien</option></select></label>
     <div class="acciones"><button id="guardar" class="primario" ${guardada||guardando?'disabled':''}>${guardada?(preview?'✓ Prueba terminada · sin guardar':'✓ Aventura guardada'):preview?'🎉 Terminar vista previa':'💾 Guardar mi aventura'}</button>
-    ${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? 'Cerrar y volver a mis aventuras' : 'Elegir otra aventura'}</button></div>`;
+    ${registroPendiente ? '<button id="reintentarVinculo">Reintentar vínculo con mi Misión</button>' : ''}${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? 'Cerrar y volver a mis aventuras' : 'Elegir otra aventura'}</button></div>`;
 }
 function avanzarRevision() {
   conservar(); detener();
@@ -237,11 +242,12 @@ async function guardar() {
     const actual = await servicios.contexto.inicializar({forzarRecarga:true});
     if (actual.personaActiva.personaId !== identidad.personaId || actual.usuario.userId !== identidad.actorUserId) throw new Error('La persona o la cuenta ha cambiado. Vuelve a entrar antes de guardar.');
     if (!(actual.esPersonaPropia || ['gestion','administracion'].includes(actual.nivelAcceso))) throw new Error('Este acceso permite consultar, pero no guardar dictados.');
-    await servicios.guardar(registro);
-    guardada = true; borradorDisponible = null;
+    const envio = await servicios.guardar(registro);
+    registroPendiente = sesion.misionId && !envio.evidenciaMision?.registrada ? registro : null;
+    guardada = true; borradorDisponible = registroPendiente ? sesion : null;
     // Un fallo de limpieza local no convierte un guardado remoto correcto en error.
-    try { localStorage.removeItem(claveBorrador); } catch { /* El intento remoto conserva un ID estable. */ }
-    mensaje('Tu aventura está guardada en el historial de la Academia.');
+    try { if (registroPendiente) localStorage.setItem(claveBorrador, JSON.stringify(sesion)); else localStorage.removeItem(claveBorrador); } catch { /* El intento remoto conserva un ID estable. */ }
+    mensaje(registroPendiente ? 'Tu dictado está guardado, pero no se pudo vincular a la Misión. Puedes reintentar el vínculo sin repetir el dictado.' : sesion.misionId ? 'Dictado guardado y enviado a revisión familiar de la Misión.' : 'Tu aventura está guardada en el historial de la Academia.');
     mostrarCelebracion({mostrarGuacamayas:false,titulo:'¡Aventura guardada!',mensaje:'Has escrito, revisado y aprendido algo nuevo.'});
   } catch (error) {
     mensaje(error.message || 'No se pudo guardar. Tu revisión sigue aquí; puedes reintentarlo.',true);
@@ -327,7 +333,7 @@ document.addEventListener('click',async evento=>{
   if(b.dataset.historico){detalle(historial[Number(b.dataset.historico)]);return;}
   if(b.id==='reintentarHistorial'){verHistorial();return;}
   if(b.id==='reanudar') {
-    detener();sesion=JSON.parse(JSON.stringify(borradorDisponible));aventura=porId(sesion.aventuraId);guardada=false;escuchado=false;historiaLista=false;
+    detener();sesion=JSON.parse(JSON.stringify(borradorDisponible));aventura=aventuraDisponible(sesion);guardada=false;escuchado=false;historiaLista=false;
     if(sesion.fase==='resultado'&&!resultado(aventura,sesion).completa)sesion.fase='revisar';
     mensaje('Continúa donde lo dejaste. Si estabas escribiendo, escucha de nuevo el fragmento.');render();return;
   }
@@ -388,6 +394,7 @@ document.addEventListener('click',async evento=>{
     else{mensaje('Elige hasta tres palabras para practicar con calma.');return;}
     conservar();render();document.querySelector(`[data-practica="${k}"]`)?.focus({preventScroll:true});return;
   }
+  if(b.id==='reintentarVinculo' && registroPendiente){b.disabled=true;try{const r=await servicios.guardar(registroPendiente);if(!r.evidenciaMision?.registrada)throw Error('El dictado sigue guardado. La Misión no está disponible o el vínculo no pudo completarse; pide ayuda a tu familia.');registroPendiente=null;borradorDisponible=null;try{localStorage.removeItem(claveBorrador);}catch{}mensaje('Dictado vinculado a la Misión para revisión familiar.');render();}catch(e){mensaje(e.message,true);b.disabled=false;}return;}
   if(b.id==='guardar'){await guardar();return;}
   if(b.id==='otraAventura'){detener();conservar();catalogo();}
 });
@@ -413,7 +420,19 @@ async function iniciar() {
     identidad={personaId:ctx.personaActiva.personaId,actorUserId:ctx.usuario.userId,puedeGuardar:ctx.esPersonaPropia||['gestion','administracion'].includes(ctx.nivelAcceso)};
     servicios={contexto:ContextoUsuario,guardar:api.guardarSesionAcademica,leer:api.leerSesionesAcademicas,leerUna:api.leerSesionAcademica};
     $('persona').textContent=`El rincón de ${ctx.personaActiva.nombreVisible||ctx.personaActiva.nombre||'tu Persona Activa'}`;
-    claveBorrador=`academia.dictados.v1.${identidad.actorUserId}.${identidad.personaId}`;
+    const misionId=parametros.get('misionId');
+    if(misionId && !parametros.get('sesionId')){
+      const {Academia}=await import('../../compartido/api/academia.js');
+      misionActual=await Academia.tareas.obtener(misionId);
+      if(!esMisionDictado(misionActual))throw Error('La Misión no corresponde a un dictado.');
+      if(!['pendiente','asignada','en_curso','necesita_ayuda'].includes(misionActual.estado))throw Error('Esta Misión ya no está activa. Consulta su trabajo realizado o pide ayuda a tu familia.');
+      if(ctx.esPersonaPropia && ctx.nivelAcceso==='consulta' && !misionActual.visibleParaAlumno)throw Error('La familia todavía no ha activado esta Misión.');
+      const origenId=misionActual.evidencia.configuracion.sesionOrigenId;
+      aventuraAsignada=aventuraMision(misionActual,origenId?await servicios.leerUna(origenId):null);
+      $('nivel').value='todos';$('nivel').disabled=true;
+      $('modo').hidden=false;$('modo').textContent=`Misión: ${misionActual.titulo}. Al guardar, pasará a revisión familiar.`;
+    }
+    claveBorrador=`academia.dictados.v1.${identidad.actorUserId}.${identidad.personaId}${misionActual?'.'+misionActual.id:''}`;
     listo=identidad.puedeGuardar;
     if(listo)recuperar();
     else{$('modo').hidden=false;$('modo').textContent='Acceso de consulta: puedes leer el historial. Para practicar sin guardar, abre la vista previa.';}
@@ -423,7 +442,7 @@ async function iniciar() {
   } catch(error) {
     $('modo').hidden=false;
     $('modo').innerHTML=`No pudimos abrir tu sesión. <a href="../../login.html">Entrar en la Academia</a> o <a href="?modo=vista_previa">probar sin guardar</a>.`;
-    mensaje('Revisa tu conexión e inicia sesión para guardar tus aventuras.',true);
+    mensaje(error.message || 'Revisa tu conexión e inicia sesión para guardar tus aventuras.',true);listo=false;catalogo();
     console.error('[Dictados] Inicio:',error);
   }
 }

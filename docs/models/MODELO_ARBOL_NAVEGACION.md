@@ -61,7 +61,7 @@ Academia
 ├── Mi Universo
 │   ├── Mi Camino
 │   ├── Mi Rincón de Lectura
-│   ├── Rincón del Dictado · V1 candidata PR #157
+│   ├── Rincón del Dictado · V1 para validación familiar
 │   ├── Biblioteca Encantada
 │   ├── Mi Rincón de Escritura
 │   ├── Aventuras Matemáticas
@@ -256,7 +256,7 @@ No se define de forma general como “carpeta padre”.
 | Mi Calendario | ✅ Implementado |
 | Persona Activa | ✅ Implementado |
 | Mi Rincón de Lectura | ✅ Implementado |
-| Rincón del Dictado | V1 candidata · PR #157 · pendiente de integración |
+| Rincón del Dictado | V1 para validación familiar · entrega PR #157 |
 | Biblioteca Encantada | ✅ Implementado |
 | Mi Rincón de Escritura | ✅ Implementado |
 | Aventuras Matemáticas / Detectives | ✅ Implementado |

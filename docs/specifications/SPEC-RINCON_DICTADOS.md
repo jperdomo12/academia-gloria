@@ -3,8 +3,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0-rc6 |
-| Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
+| Versión | 1.0 |
+| Estado | V1 funcional para validación familiar · entrega mediante PR #157 |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.0 | 12/10/2026 | Product Owner + AI Collaborator | Integración autorizada: Misiones de aventuras y refuerzos de palabras/frases, evidencia idempotente para revisión familiar y análisis separado de autoevaluaciones. |
 | 1.0-rc6 | 12/10/2026 | Product Owner + AI Collaborator | Cabecera canónica en vista previa e integración, elimina Panel local y aísla CSS; matriz de estándares, árbol e índice sincronizados; prueba específica de navegación real. |
 | 1.0-rc5 | 12/10/2026 | Product Owner + AI Collaborator | Comparación con Rincón de Lectura publicado: bienvenida, tarjetas, pasos y panel de voz de la misma familia; cierre de vista previa explícito sin guardado. |
 | 1.0-rc4 | 12/10/2026 | Product Owner + AI Collaborator | Revisión integral de UX: secuencia de escucha antes de avance, salida explícita ante audio sin end, ayudas progresivas, foco de actividad, origen institucional, catálogo responsive y detalle de práctica en historial. |
@@ -87,7 +88,7 @@ Cada aventura conserva ID, versión, categoría, objetivo y frases divididas en 
 
 ### Borrador
 
-Un borrador por actor + Persona Activa en `localStorage`, clave `academia.dictados.v1.<actor>.<persona>`. Contiene fase, texto/versionado referenciado, posición, revisión y práctica. Recuperación valida estructura, versión e índices. Es exclusivo de ese navegador, no se sincroniza. La interfaz lo distingue del historial. Iniciar otra aventura pide confirmar su sustitución. Acceso de consulta y vista previa no leen ni escriben borradores reales.
+Un borrador por actor + Persona Activa en `localStorage`, clave `academia.dictados.v1.<actor>.<persona>` (sufijo de Misión cuando corresponde). Contiene fase, texto/versionado referenciado, posición, revisión y práctica. Recuperación valida estructura, versión e índices. Es exclusivo de ese navegador, no se sincroniza. La interfaz lo distingue del historial. Iniciar otra aventura pide confirmar su sustitución. Acceso de consulta y vista previa no leen ni escriben borradores reales.
 
 ### Sesión terminada
 
@@ -97,7 +98,7 @@ Reutiliza `usuarios/{userIdPersonaActiva}/sesionesAcademicas/{intentoId}` y el c
 - `resumen.tipoEvaluacion: autoevaluacion`.
 - `resumen.dictado`: aventura, versión en `versionActividad`, nivel, texto y frases originales (frases como cadenas, sin arrays directamente anidados), revisión por palabra y frase, añadidas, porcentaje, meta, acompañamiento, velocidad, práctica y correcciones.
 - `respuestas` y `conceptosTrabajados` vacíos: no se inventan respuestas corregidas automáticamente.
-- `vincularMision: false` impide heredar `misionId` de la URL. V1 no completa Misiones automáticamente.
+- Práctica libre: `vincularMision: false`. Una Misión explícita y validada añade `misionId` y `focoDictado`; guardar aporta una evidencia y pasa a revisión familiar, sin exigir porcentaje mínimo.
 - No se atribuye tiempo activo: la V1 no mide tiempo de escritura en papel.
 - ID estable por intento; transacción de creación. Reintentos idénticos no duplican ni reescriben. Si el resultado ya existe y el contenido difiere, se indica consultar el historial o iniciar otro intento.
 - Servicio comprueba los campos opcionales de identidad esperada. Cliente verifica de nuevo cuenta, persona y acceso antes de guardar. Las Rules existentes siguen siendo la autorización final.
@@ -111,9 +112,9 @@ Los campos opcionales nuevos (`intentoId`, `personaIdEsperada`, `actorUserIdEspe
 
 - Navegación contextual y Panel de Usuario compartidos en uso autenticado.
 - LectorTexto y celebración compartidos; guacamaya existente como identidad de la Academia, sin declarar una imagen universal de Lía.
-- Análisis Educativo solicita `excluirAutoevaluaciones: true` para no mezclar estas revisiones manuales con ejercicios corregidos automáticamente.
+- Análisis Educativo excluye autoevaluaciones de Pruebas Académicas y carga Dictado como fuente independiente: véase SPEC-ANALISIS_EDUCATIVO.
 - Un enlace genérico de resultado académico a un dictado se redirige a su historial específico, preservando el carácter de autoevaluación.
-- No se modifica Rincón de Lectura, Rules ni catálogo de Misiones.
+- Reutiliza Misiones de tipo `repaso_academico`, módulo `libre` y evidencia `sesion_academica`. No modifica Lectura ni Rules.
 
 ### Revisión de coherencia con la Academia · revisión 4
 
@@ -159,22 +160,32 @@ La semejanza visual con Lectura no sustituye los contratos transversales. Se rev
 | STD-SEGUIMIENTO_Y_MOTIVACION | 70 % orientativo, todo trabajo revisado se reconoce, sin ranking ni recompensa persistida por prueba. |
 | STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS | camelCase, contrato sesion-academica-v1, IDs estables y auditoría del servicio compartido; sin colecciones privadas. |
 | MODEL_MOTORES_DE_APRENDIZAJE / STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR | Reutiliza sesiones; declara autoevaluación y no la mezcla con corrección automática. Este catálogo original no es una incorporación de material Gaudem ni un Tema curricular nuevo. |
-| STD-MIS_TAREAS_Y_MISIONES | V1 no completa Misiones ni hereda una Misión de la URL. No crea evidencia de dominio inexistente. |
+| STD-MIS_TAREAS_Y_MISIONES | Misión validada, evidencia del intento original y revisión familiar; sin dominio inferido ni porcentaje mínimo. Refuerzos ocultos hasta decisión familiar. |
 | STD-GLOSARIO | Persona Activa, aventura, revisión e historial conservan su significado; dudas no equivalen a error. |
 | DOCUMENTATION_STANDARD / ARCHITECTURE y docs/ai | Propietario único, historial y estado de candidata; HandOff solo continuidad. Corrección de versión final del índice y nodo humano del árbol. |
-| PRODUCT_DEVELOPMENT_WORKFLOW | Rama y PR; no publicado ni estable hasta integración, despliegue y validación real. |
+| PRODUCT_DEVELOPMENT_WORKFLOW | Rama y PR; integración autorizada para validación familiar. Publicación requiere despliegue verificado; estable requiere validación real. |
 | STD-AVENTURAS_MATEMATICAS / estándares de Semillas | No aplican sus mecánicas específicas a Dictado; no se añaden motores ni contenidos ajenos al alcance. |
 
 **Cabecera en prueba:** la vista alojada de Dictado usa el componente real con `data-nav-preview=true`; no importa Panel/identidad/Firebase. El paquete descargable incrusta el mismo componente y CSS, adapta las rutas a la Academia publicada y conserva Volver hacia Mi Universo. No representa una sesión autenticada. En uso normal se utiliza el retorno contextual del servicio común, con Persona Activa y Panel canónico. Los controles locales no sobrescriben los estilos de ese Panel.
 
 **Verificado:** cabecera única, sin carga de Panel en preview, único inicio del Panel con identidad simulada, retorno al origen Lectura, ausencia de desbordamiento, recorrido completo de dictado, revisión e historial simulado. **Pendiente:** sonido físico y guardado/permisos con cuentas reales. No se declara conformidad completa en producción basándose solo en dobles de identidad.
 
+### Misiones, historial y análisis · aprobación de integración 12/10/2026
+
+El Product Owner autoriza incorporar Misiones y seguimiento a esta V1 para uso familiar. En Gestión de Misiones → Nueva Misión se elige una de las seis aventuras. En Observaciones y refuerzos → Dictados se elige un intento y de uno a tres objetivos: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Se conserva la referencia al intento original; no se copia ni cambia su calificación. La práctica breve es un intento nuevo y se identifica como refuerzo en los datos.
+
+Las Misiones se crean ocultas y la familia decide mostrarlas. No se duplican Misiones abiertas del mismo foco desde este flujo. El alumno solo ejecuta Misiones activas y visibles. El destino incorpora `misionId`; el catálogo queda limitado a la aventura asignada. El contrato exige `actividadId` y `focoDictado` coincidentes. Una evidencia válida pasa a revisión familiar; la familia conserva el cierre final. Repetir o pedir ayuda no penaliza.
+
+El guardado original y la evidencia de Misión son operaciones independientes: si falla la segunda, el resultado sigue en el historial y se ofrece reintentar sin duplicar el intento. El borrador local se conserva para recuperar ese reintento en el mismo navegador. Si el almacenamiento local no está disponible, ese reintento solo permanece en la pantalla actual. La consulta de Trabajo realizado lleva al historial específico de Dictado.
+
+El análisis usa hasta 200 sesiones, excluye datos de prueba (incluidas Misiones marcadas después) y compara únicamente texto idéntico, mismo acompañamiento y mismo tipo de práctica. No promedia aventuras de distinta dificultad con ejercicios de una palabra. Las señales son descriptivas de la autoevaluación, no diagnósticos. La familia elige y activa cualquier nueva Misión; ninguna se asigna automáticamente. El detalle completo de errores y correcciones permanece en el historial propietario.
+
 ## 6. Validación
 
 Pruebas de cálculo/contenido:
 
 ```sh
-node --test tests/dictados-modelo.test.mjs
+node --test tests/dictados-modelo.test.mjs tests/dictados-seguimiento.test.mjs
 node --experimental-vm-modules --test tests/dictados-sesiones.test.mjs
 ```
 
@@ -184,6 +195,7 @@ Prueba de interfaz con Playwright y servidor local (puerto 8765 por defecto; con
 python -m http.server 8765
 node tests/dictados-browser.cjs
 node tests/dictados-navegacion.cjs
+node tests/dictados-misiones-browser.cjs
 ```
 
 La prueba de navegador simula voz y servicio Firebase. La prueba del servicio ejecuta el módulo real con dobles de Firestore. Ninguna escribe datos reales. Se verificaron seis aventuras, cálculo y dudas, serialización compatible, identidad esperada, envío idempotente incluso con claves reordenadas por Firestore, compatibilidad de consumidores anteriores y flujo en navegador de escritorio/móvil. La prueba de interfaz cubre también velocidad, errores de voz, borrador aislado, reintento tras fallo y resultado por debajo del 70 %. No sustituyen la comprobación de la voz física en Edge/Chrome ni el guardado autenticado con las Rules realmente desplegadas. Esos dos puntos deben validarse en el primer uso familiar.
@@ -198,6 +210,8 @@ La prueba de navegador simula voz y servicio Firebase. La prueba del servicio ej
 6. Elegir hasta tres palabras, practicar en papel y guardar indicando revisión sola o acompañada, también con resultado menor que el 70 %.
 7. Abrir el historial: comprobar fecha, nivel, resultado, marcas y práctica. Un nuevo intento no sustituye al anterior.
 
+8. Como familia, crear una Misión de aventura, mostrarla y completarla; revisar su evidencia. A partir de ese intento, preparar una Misión breve con palabras/frases y comprobar que el resultado original sigue intacto y el análisis separa ambos textos.
+
 Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesario y validar de nuevo antes de cambiar el estado a estable. La V1 no incorpora teclado obligatorio, fotos, OCR, IA para leer el manuscrito, pausas automáticas complejas ni penalización por ayudas.
 
 ## DECISIÓN
@@ -205,5 +219,5 @@ Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesari
 | Campo | Valor |
 |---|---|
 | Diseño | Aprobado para construir primera versión · 12/10/2026 |
-| Entrega | V1 candidata; pendiente de revisión de experiencia familiar |
+| Entrega | V1 funcional autorizada para integración y validación familiar; no estable |
 | Siguiente paso | Probar una aventura Nivel 1 con lápiz y papel; ajustar ritmo y revisión según uso |

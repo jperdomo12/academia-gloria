@@ -137,11 +137,12 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
       atributos: {
         cursoReferencia: datos.cursoReferencia,
         materia: datos.materia,
-        tema: datos.tema
+        tema: datos.tema,
+        ...(datos.actividadId === 'rincon-dictados' ? {actividadId: datos.actividadId, focoDictado: datos.resumen?.dictado?.focoDictado || ''} : {})
       },
       resultado: {
         titulo: datos.tituloActividad || datos.tema,
-        resumen: datos.resumen || {}
+        resumen: datos.actividadId === 'rincon-dictados' ? {tipoEvaluacion:'autoevaluacion', porcentaje:datos.resumen?.dictado?.porcentaje, tipoPractica:datos.resumen?.dictado?.tipoPractica} : datos.resumen || {}
       },
       destinoRevision: destinoRevisionActual(sesionId, datos.misionId),
       origen: "sesion_academica"
@@ -247,7 +248,7 @@ export async function guardarSesionAcademica(registro = {}) {
       const existente = await transaction.get(referencia);
       if (existente.exists()) {
         const previo = existente.data();
-        if (previo.actividadId !== actividadId || previo.actorUserId !== contexto.usuario.userId) {
+        if (previo.actividadId !== actividadId || previo.actorUserId !== contexto.usuario.userId || (previo.misionId || '') !== (datos.misionId || '')) {
           throw new Error("El identificador del intento ya pertenece a otra sesión.");
         }
         if (JSON.stringify(contenidoComparable(previo.resumen)) !== JSON.stringify(contenidoComparable(datos.resumen))) {

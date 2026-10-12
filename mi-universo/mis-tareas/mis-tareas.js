@@ -2231,6 +2231,7 @@ function recogerFormulario() {
   const visible = $("visibleParaAlumno").checked;
   const esAcademica = esRepasoAcademicoFormulario();
   const datosAcademicos = datosAcademicosFormulario();
+  const dictadoEditado = tareas.find(t=>t.id === $('tareaId').value.trim() && t.evidencia?.tipo === 'dictado');
   const esDetectives = modulo === "detectives" && !esAcademica;
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
@@ -2263,17 +2264,17 @@ function recogerFormulario() {
   return {
     titulo: $("titulo").value,
     descripcion: $("descripcion").value,
-    tipo: $("tipo").value,
-    cursoReferencia: esAcademica ? datosAcademicos.cursoReferencia : "",
-    materia: esAcademica ? datosAcademicos.materia : "",
-    tema: esAcademica ? datosAcademicos.tema : "",
-    modulo,
-    destinoUrl: esAcademica
+    tipo: dictadoEditado ? dictadoEditado.tipo : $("tipo").value,
+    cursoReferencia: dictadoEditado ? dictadoEditado.cursoReferencia : esAcademica ? datosAcademicos.cursoReferencia : "",
+    materia: dictadoEditado ? dictadoEditado.materia : esAcademica ? datosAcademicos.materia : "",
+    tema: dictadoEditado ? dictadoEditado.tema : esAcademica ? datosAcademicos.tema : "",
+    modulo: dictadoEditado ? dictadoEditado.modulo : modulo,
+    destinoUrl: dictadoEditado ? dictadoEditado.destinoUrl : esAcademica
       ? datosAcademicos.recursoUrl
       : (DESTINOS[modulo] || ""),
     objetivo: $("objetivo").value,
     criterioFinalizacion: $("criterio").value,
-    criterioCumplimiento: esAcademica
+    criterioCumplimiento: dictadoEditado ? dictadoEditado.criterioCumplimiento : esAcademica
       ? {
           tipo: "cantidad",
           modulo: "libre",
