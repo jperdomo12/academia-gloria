@@ -149,7 +149,7 @@ function render() {
   const etapas = { preparar:0, dictar:1, terminar:1, revisar:2, resultado:3 };
   const indice = etapas[sesion.fase];
   $('etapa').textContent = `NIVEL ${aventura.nivel} · ${['ME PREPARO','ESCUCHO Y ESCRIBO','REVISO MI CUADERNO','DESCUBRO MI RESULTADO'][indice]}`;
-  document.querySelectorAll('.pasos span').forEach((el,i) => { el.classList.toggle('actual', i === indice); if(i===indice) el.setAttribute('aria-current','step'); else el.removeAttribute('aria-current'); });
+  document.querySelectorAll('.pasos > span').forEach((el,i) => { el.classList.toggle('actual', i === indice); if(i===indice) el.setAttribute('aria-current','step'); else el.removeAttribute('aria-current'); });
   $('velocidad').value = sesion.velocidad;
   $('voz').hidden = ['revisar','resultado'].includes(sesion.fase);
   $('ayudaVoz').hidden = $('voz').hidden;
@@ -162,7 +162,7 @@ function render() {
   faseMostrada = sesion.fase;
 }
 function prepararHtml() {
-  return `<div class="escena"><h3>Prepara lápiz y papel</h3>
+  return `<div class="escena"><div class="aventura-elegida"><span aria-hidden="true">${aventura.icono}</span><div><strong>Tu aventura de hoy</strong><p>${html(aventura.descripcion)}</p><small>${aventura.frases.flatMap(palabrasFrase).length} palabras · Nivel ${aventura.nivel}</small></div></div><h3>Prepara lápiz y papel</h3>
     <div class="preparativos"><span>✏️ Lápiz</span><span>📓 Cuaderno</span><span>🔊 Sonido</span></div>
     <p>Primero puedes escuchar la historia. Después la escribirás por partes.</p>
     <div class="acciones"><button data-escuchar="historia" class="primario">🎧 Escuchar la historia completa</button><button data-escuchar="prueba">🔊 Probar la voz</button></div>
@@ -201,7 +201,7 @@ function revisarHtml() {
 function resultadoHtml() {
   const r = resultado(aventura,sesion);
   const cambios = sesion.revision.flatMap((f,fi) => f.palabras.map((estado,pi) => ({estado,fi,pi,palabra:palabraSinSignos(palabrasFrase(aventura.frases[fi])[pi])}))).filter(p=>['revisar','omitida'].includes(p.estado));
-  return `<div class="resultado-cabecera"><div class="porcentaje">${r.porcentaje}%</div><div><p class="etiqueta">MI AUTOEVALUACIÓN</p><h3>${r.porcentaje>=META?'¡Has alcanzado tu primera meta!':'Ya sabes por dónde seguir'}</h3><p><strong>${r.correctas} de ${r.total} palabras del texto</strong> escritas correctamente según tu revisión.</p><p>Meta familiar inicial: ${META} %. Terminar y revisar también cuentan.</p></div></div>
+  return `${guardada ? `<div class="cierre-guardado" role="status"><strong>${preview ? '✓ Has terminado la prueba' : '✓ Tu aventura está guardada'}</strong><p>${preview ? 'Esta vista previa no guarda resultados. El historial se utiliza dentro de la Academia con tu sesión iniciada.' : 'Puedes volver a consultar este intento en Mi historial. Su resultado original se conserva.'}</p></div>` : ''}<div class="resultado-cabecera"><div class="porcentaje">${r.porcentaje}%</div><div><p class="etiqueta">MI AUTOEVALUACIÓN</p><h3>${r.porcentaje>=META?'¡Has alcanzado tu primera meta!':'Ya sabes por dónde seguir'}</h3><p><strong>${r.correctas} de ${r.total} palabras del texto</strong> escritas correctamente según tu revisión.</p><p>Meta familiar inicial: ${META} %. Terminar y revisar también cuentan.</p></div></div>
     <p class="ayuda">Este es el porcentaje que resulta de tus marcas. No tienes que escribir una nota: la Academia hace el cálculo, pero no ha leído tu cuaderno. Signos y palabras añadidas no están incluidos en este porcentaje.</p>
     <p>✎ Frases con signos por corregir: <strong>${r.puntuacionRevisar}</strong> · Palabras añadidas: <strong>${r.extras}</strong>.</p>
     <div class="balance"><section><h3>Lo que hice bien</h3><p>Has completado el dictado y revisado tu cuaderno.${r.correctas ? ` Reconociste ${r.correctas} palabras iguales al modelo.` : " Ya has identificado qué palabras repasar."}</p></section><section><h3>Mi siguiente paso</h3><p>${cambios.length ? "Puedes practicar unas pocas palabras, sin repetir todo el dictado." : r.puntuacionRevisar || r.extras ? "Puedes repasar los signos o las palabras añadidas." : "Las palabras y los signos coinciden según tu revisión. Puedes volver otro día con una nueva aventura."}</p></section></div><h3>Mis palabras para practicar</h3><p>${cambios.length?'Elige hasta tres palabras para practicar. Escríbelas bien en tu cuaderno y marca cuando las hayas corregido.':'Puedes repasar los signos o releer tu trabajo con calma.'}</p>
@@ -209,7 +209,7 @@ function resultadoHtml() {
     ${sesion.practica.map(clave=>{const [fi,pi]=clave.split(':').map(Number);return `<label style="display:block;padding:8px"><input type="checkbox" data-corregida="${clave}" ${sesion.correcciones.includes(clave)?'checked':''} ${guardada?'disabled':''}>Ya corregí «${html(palabraSinSignos(palabrasFrase(aventura.frases[fi])[pi]))}» en mi cuaderno.</label>`;}).join('')}
     <p class="ayuda">Las correcciones se guardan como aprendizaje posterior. El porcentaje del dictado original se conserva.</p>
     <label>¿Cómo revisaste? <select id="acompanamiento" ${guardada?'disabled':''}><option value="">Elige una opción</option><option value="sola" ${sesion.acompanamiento==='sola'?'selected':''}>A solas</option><option value="acompanada" ${sesion.acompanamiento==='acompanada'?'selected':''}>Con ayuda de alguien</option></select></label>
-    <div class="acciones"><button id="guardar" class="primario" ${guardada||guardando?'disabled':''}>${guardada?'✓ Aventura guardada':preview?'🎉 Terminar vista previa':'💾 Guardar mi aventura'}</button>
+    <div class="acciones"><button id="guardar" class="primario" ${guardada||guardando?'disabled':''}>${guardada?(preview?'✓ Prueba terminada · sin guardar':'✓ Aventura guardada'):preview?'🎉 Terminar vista previa':'💾 Guardar mi aventura'}</button>
     ${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? 'Cerrar y volver a mis aventuras' : 'Elegir otra aventura'}</button></div>`;
 }
 function avanzarRevision() {
@@ -230,7 +230,7 @@ async function guardar() {
     if (preview) {
       guardada = true; render();
       mensaje('Vista previa terminada. No se ha guardado ninguna sesión.');
-      mostrarCelebracion({mostrarGuacamayas:false,titulo:'¡Has recorrido tu aventura!',mensaje:'Escuchar, escribir y revisar: cada paso cuenta.'});
+      mostrarCelebracion({mostrarGuacamayas:false,titulo:'¡Prueba terminada!',mensaje:'Has escuchado, escrito y revisado. Esta vista previa no guarda resultados en el historial.'});
       return;
     }
     guardando = true; $('guardar').disabled=true; $('guardar').textContent='Guardando…';
@@ -398,7 +398,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){conservar(
 async function iniciar() {
   catalogo();
   if(preview) {
-    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 4 · Prueba libre sin guardar resultados.';
+    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 5 · Prueba libre sin guardar resultados.';
     listo=true;$('persona').textContent='Tu aventura, a tu ritmo';catalogo();
     if(!LectorTexto.disponible())mensaje('La voz no está disponible en este navegador. Abre esta vista previa en un navegador con lectura en voz alta.',true);
     return;

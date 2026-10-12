@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0-rc4 |
+| Versión | 1.0-rc5 |
 | Estado | V1 candidata en PR #157 · pendiente de integración y validación familiar |
 | Fecha | 12/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.0-rc5 | 12/10/2026 | Product Owner + AI Collaborator | Comparación con Rincón de Lectura publicado: bienvenida, tarjetas, pasos y panel de voz de la misma familia; cierre de vista previa explícito sin guardado. |
 | 1.0-rc4 | 12/10/2026 | Product Owner + AI Collaborator | Revisión integral de UX: secuencia de escucha antes de avance, salida explícita ante audio sin end, ayudas progresivas, foco de actividad, origen institucional, catálogo responsive y detalle de práctica en historial. |
 | 1.0-rc3 | 12/10/2026 | Product Owner + AI Collaborator | Ajustes tras revisión de Juan: velocidades más diferenciadas y repetición inmediata, navegación explícita para finalizar/comparar/ver resultado/cerrar, aventura original imaginada con Shakira en Nivel 1. Revisión 3: inicio/avance destacados antes del contenido y avance manual sin dependencia de evento end. Primera versión para revisión: seis aventuras, tres niveles, voz ajustable con avance manual, autoevaluación por frases, práctica posterior, borradores locales e historial. |
 
@@ -126,6 +127,20 @@ Los campos opcionales nuevos (`intentoId`, `personaIdEsperada`, `actorUserIdEspe
 | Accesibilidad | Foco visible, diálogo con título accesible, estados con texto además de color, objetivos táctiles, movimiento reducido y errores próximos a la actividad. |
 
 El resultado diferencia «Lo que hice bien», «Mi siguiente paso» y la práctica opcional. El historial muestra tanto palabras seleccionadas como correcciones registradas, sin cambiar el porcentaje. La vista autónoma permite probar la actividad, pero la cabecera de cuenta y el historial real corresponden a la integración autenticada.
+
+### Comparación con Rincón de Lectura · revisión 5
+
+Referencia: `mi-universo/rincon-lectura/index.html` y `rincon-lectura-lia.css`, contrastados con el HTML publicado el 12/10/2026 (coincidente con el archivo local). La comparación visual estática no simula una sesión autenticada de Lectura.
+
+| Patrón de Lectura | Aplicación a Dictado |
+|---|---|
+| Bienvenida con Lía, fondos luminosos y tarjetas redondeadas | Misma familia visual, guacamaya institucional y mensaje específico para escritura. |
+| Guía de pasos destacada | Cuatro pasos visibles en la actividad; estado actual con texto y contraste. |
+| Contexto de aventura antes de empezar | Descripción, nivel y extensión; el texto a dictar sigue oculto. |
+| Controles de voz agrupados | Panel reconocible con velocidad, estado y detención; avance posterior al audio. |
+| Celebración de cierre | Diferencia explícita entre prueba sin guardado y resultado guardado. |
+
+Se conservan las diferencias funcionales aprobadas: papel, tildes/mayúsculas relevantes, revisión manual, historial de intentos independientes y cero penalización por ayudas. No se traslada el reconocimiento de voz ni la sustitución de una grabación previa de Lectura. No se modifica el módulo de Lectura ni se extrae un nuevo sistema visual global para este ajuste.
 
 ## 6. Validación
 

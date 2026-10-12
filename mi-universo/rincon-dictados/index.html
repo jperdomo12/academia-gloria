@@ -17,18 +17,18 @@
     <header class="cabecera">
       <div><p class="etiqueta">ESCUCHO · ESCRIBO · DESCUBRO</p><h1>Rincón del Dictado <span aria-hidden="true">✏️</span></h1>
         <p>Pequeñas aventuras que cobran vida en tu cuaderno.</p><p id="persona" class="persona"></p></div>
-      <aside class="lia"><img src="../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png" alt="Guacamaya de la Academia" width="82" height="82"><p><strong>Lía te acompaña</strong><br>Tu ritmo cuenta. Escucha, escribe y vuelve a escuchar cuando lo necesites.</p></aside>
+      <aside class="lia"><img src="../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png" alt="Guacamaya de la Academia" width="82" height="82"><p><strong>✨ Lía te acompaña</strong><br>No importa si escribes despacio. Tus palabras merecen su tiempo.</p></aside>
     </header>
     <p id="modo" class="aviso" hidden></p>
     <p id="mensaje" role="status" aria-live="polite"></p>
     <nav class="pestanas" aria-label="Rincón del Dictado"><button id="verCatalogo" aria-pressed="true">🧭 Mis aventuras</button><button id="verHistorial" aria-pressed="false">📒 Mi historial</button></nav>
-    <section id="catalogo" aria-labelledby="tituloCatalogo">
+    <section id="catalogo" class="panel catalogo-panel" aria-labelledby="tituloCatalogo">
       <div class="encabezado"><div><p class="etiqueta">UN NUEVO VIAJE</p><h2 id="tituloCatalogo" tabindex="-1">¿Qué aventura escuchamos hoy?</h2></div><label>Nivel <select id="nivel"><option value="todos">Todos</option><option value="1">1 · Primeras aventuras</option><option value="2">2 · Nuevos caminos</option><option value="3">3 · Grandes aventuras</option></select></label></div>
-      <div id="borrador" class="aviso" hidden></div><div id="aventuras" class="aventuras"></div>
+      <div class="bienvenida"><strong>🌈 Antes de comenzar</strong><p>Busca un lugar tranquilo y prepara tu cuaderno. Puedes escuchar otra vez, pedir ayuda y descansar. Cada paso cuenta.</p></div><div id="borrador" class="aviso" hidden></div><div id="aventuras" class="aventuras"></div>
     </section>
     <section id="actividad" class="panel" hidden aria-labelledby="tituloActividad">
       <div class="encabezado"><div><p id="etapa" class="etiqueta"></p><h2 id="tituloActividad" tabindex="-1"></h2></div><button id="descansar" class="suave">⏸ Descansar</button></div>
-      <div class="pasos" aria-label="Pasos de la aventura"><span>1. Me preparo</span><span>2. Escribo</span><span>3. Reviso</span><span>4. Veo mi porcentaje y guardo</span></div>
+      <nav class="pasos" aria-label="Pasos de la aventura"><span>1. Me preparo<small>Cuaderno y una historia.</small></span><span>2. Escucho y escribo<small>Un fragmento cada vez.</small></span><span>3. Comparo<small>Reviso mi cuaderno.</small></span><span>4. Reconozco mis avances<small>Mi resultado y mi práctica.</small></span></nav>
       <div id="voz" class="voz"><label>Velocidad de la voz <select id="velocidad"><option value="1">Normal</option><option value="0.75" selected>Pausada</option><option value="0.5">Muy pausada</option></select></label><button id="pararVoz" class="suave" disabled>■ Detener voz</button><span id="estadoVoz" role="status" aria-live="polite">Lista para escuchar.</span><button id="finAudioManual" class="suave" hidden>Ya terminó de sonar</button></div>
       <p class="ayuda" id="ayudaVoz">Si el audio ya acabó y la pantalla sigue leyendo, pulsa «Ya terminó de sonar».</p>
       <div id="pantalla"></div>

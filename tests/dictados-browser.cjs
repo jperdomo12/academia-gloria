@@ -43,7 +43,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   assert.equal(await page.locator('.porcentaje').innerText(),'95%');
   await page.selectOption('#acompanamiento','acompanada');
   await page.screenshot({path:'/tmp/dictados-resultado.png',fullPage:true});
-  await page.click('#guardar');assert.match(await page.locator('#mensaje').innerText(),/No se ha guardado/);
+  await page.click('#guardar');assert.match(await page.locator('#mensaje').innerText(),/No se ha guardado/);assert.match(await page.locator('.cierre-guardado').innerText(),/no guarda resultados/);assert.match(await page.locator('#guardar').innerText(),/sin guardar/);
   assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('academia.dictados')).length),0);
 
 
@@ -104,7 +104,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
   }
   assert.equal(await page.locator('.porcentaje').innerText(),'0%');
   await page.selectOption('#acompanamiento','acompanada');await page.click('#guardar');
-  assert.match(await page.locator('#mensaje').innerText(),/No se ha guardado/);
+  assert.match(await page.locator('#mensaje').innerText(),/No se ha guardado/);assert.match(await page.locator('.cierre-guardado').innerText(),/no guarda resultados/);assert.match(await page.locator('#guardar').innerText(),/sin guardar/);
   assert.deepEqual(errors,[]);
   console.log('OK: catálogo, voz controlada/errores, revisión/dudas, resultado, práctica, vista previa sin persistencia, borrador/reanudación/aislamiento, guardado/reintento, historial y consulta, móvil sin desbordamiento.');
   await browser.close();
