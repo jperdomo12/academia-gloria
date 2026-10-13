@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mi Rincón de Dictado · Academia Gloria Valentina</title>
+  <meta name="description" content="Aventuras para escuchar, escribir en tu cuaderno y descubrir lo que has aprendido.">
+  <link rel="icon" href="../../assets/iconos/icono-principal.png">
+  <link rel="stylesheet" href="../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./dictados.css?v=20261013-r2">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css?v=7">
+</head>
+<body data-page-title="Mi Rincón de Dictado" data-page-icon="✏️" data-nav-back="../index.html">
+  <a class="saltar" href="#contenido">Ir a la actividad</a>
+  <main class="pagina" id="contenido">
+    <header class="cabecera">
+      <div><p class="etiqueta">ESCUCHO · ESCRIBO · DESCUBRO</p><h1 class="titulo-rincon">Mi Rincón de Dictado <span aria-hidden="true">✏️</span></h1>
+        <p id="bienvenidaPersona">Hoy Lía tiene pequeñas aventuras para escuchar, escribir y descubrir.</p><p id="persona" class="persona"></p></div>
+      <aside class="lia"><img src="../../assets/identidad/guacamayas/guacamaya-azul-cabeza-01.png" alt="Guacamaya de la Academia" width="100" height="100"><p><strong>✨ Lía te acompaña</strong><br>No importa si escribes despacio. Tus palabras merecen su tiempo.</p></aside>
+    </header>
+    <nav class="pasos" aria-label="Pasos de la aventura"><span>1. Me preparo<small>Cuaderno y una historia.</small></span><span>2. Escucho y escribo<small>Un fragmento cada vez.</small></span><span>3. Comparo<small>Reviso mi cuaderno.</small></span><span>4. Reconozco mis avances<small>Mi resultado y mi práctica.</small></span></nav>
+    <section id="misionDictado" class="mision-dictado" aria-labelledby="tituloMisionDictado" hidden>
+      <span class="mision-dictado__icono" aria-hidden="true">🌟</span>
+      <div><h2 id="tituloMisionDictado"></h2>
+        <p id="descripcionMisionDictado"></p>
+      </div>
+      <strong id="progresoMisionDictado" class="mision-dictado__progreso"></strong>
+      <div class="mision-dictado__acciones"><span id="estadoMisionDictado" class="mision-dictado__estado" role="status"></span>
+      <button id="ayudaMisionDictado" class="suave" type="button">🤝 Necesito ayuda</button></div>
+    </section>
+    <p id="modo" class="aviso" hidden></p>
+    <p id="mensaje" role="status" aria-live="polite"></p>
+    <nav class="pestanas" aria-label="Mi Rincón de Dictado"><button id="verCatalogo" aria-pressed="true">🧭 Mis aventuras</button><button id="verHistorial" aria-pressed="false">📒 Mi historial</button></nav>
+    <section id="catalogo" class="panel catalogo-panel" aria-labelledby="tituloCatalogo">
+      <div class="encabezado"><div><p class="etiqueta">UN NUEVO VIAJE</p><h2 id="tituloCatalogo" tabindex="-1">¿Qué aventura escuchamos hoy?</h2></div><label>Nivel <select id="nivel"><option value="todos">Todos</option><option value="1">1 · Primeras aventuras</option><option value="2">2 · Nuevos caminos</option><option value="3">3 · Grandes aventuras</option></select></label></div>
+      <div class="bienvenida"><strong>🌈 Antes de comenzar</strong><p>Busca un lugar tranquilo y prepara tu cuaderno. Puedes escuchar otra vez, pedir ayuda y descansar. Cada paso cuenta.</p></div><div id="borrador" class="aviso" hidden></div><div id="aventuras" class="aventuras"></div>
+    </section>
+    <section id="actividad" class="panel" hidden aria-labelledby="tituloActividad">
+      <div class="encabezado"><div><p id="etapa" class="etiqueta"></p><h2 id="tituloActividad" tabindex="-1"></h2></div><button id="descansar" class="suave">⏸ Descansar</button></div>
+
+      <div id="voz" class="voz"><label>Velocidad de la voz <select id="velocidad"><option value="1">Normal</option><option value="0.75" selected>Pausada</option><option value="0.5">Muy pausada</option></select></label><button id="pararVoz" class="suave" disabled>■ Detener voz</button><span id="estadoVoz" role="status" aria-live="polite">Lista para escuchar.</span><button id="finAudioManual" class="suave" hidden>Ya terminó de sonar</button></div>
+      <p class="ayuda" id="ayudaVoz">Si el audio ya acabó y la pantalla sigue leyendo, pulsa «Ya terminó de sonar».</p>
+      <div id="pantalla"></div>
+    </section>
+    <section id="historial" class="panel" hidden><h2 tabindex="-1" id="tituloHistorial">Mi cuaderno de aventuras</h2><p>Compara el mismo texto y la misma forma de revisión. Las aventuras completas y las prácticas breves tienen objetivos diferentes.</p><div id="sesiones"></div><div id="detalle"></div></section>
+    <footer><p><strong>Academia Gloria Valentina</strong> · Aprender con confianza, a tu ritmo.</p><p>Nació del deseo de una familia de acompañar a Gloria. Hoy conserva ese origen y abre sus puertas a cada persona que quiere aprender.</p><a href="../../descubre-la-academia/index.html">💜 Descubre la Academia y su origen</a></footer>
+  </main>
+  <dialog id="palabraDialogo" aria-labelledby="palabraElegida"><form method="dialog"><h2 id="palabraElegida"></h2><p>Compara esta palabra con la de tu cuaderno.</p><div class="opciones"><button value="correcta">✓ La escribí igual</button><button value="revisar">✎ La escribí diferente</button><button value="omitida">＋ Me faltó escribirla</button><button value="duda">? Tengo una duda</button><button value="cancelar" class="suave">Volver sin cambiar</button></div></form></dialog>
+  <script type="module" src="./dictados.js?v=20261013-r2"></script>
+  <script>
+    // Misma cabecera canónica en ambos modos; la vista previa no carga identidad.
+    const vistaPrevia = new URLSearchParams(location.search).get('modo') === 'vista_previa';
+    document.body.dataset.navPreview = String(vistaPrevia);
+    if (!vistaPrevia) {
+      const comun = document.createElement('script');
+      comun.src = '../../compartido/js/navegacion.js';
+      document.body.appendChild(comun);
+    }
+    const global = document.createElement('script');
+    global.type = 'module';
+    global.src = '../../compartido/componentes/navegacion-global.js';
+    document.body.appendChild(global);
+  </script>
+</body>
+</html>

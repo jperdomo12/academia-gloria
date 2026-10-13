@@ -4,10 +4,14 @@ import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import { Academia } from "../../compartido/api/academia.js";
 
+import { AVENTURAS } from "../rincon-dictados/aventuras.js";
+import { prepararMision, esMisionDictado } from "../rincon-dictados/seguimiento.js";
+
 const $ = (id) => document.getElementById(id);
 
 const DESTINOS = Object.freeze({
   "rincon-lectura": "../rincon-lectura/",
+  "rincon-dictados": "../rincon-dictados/",
   detectives: "../aventuras-matematicas/detectives/",
   "creciendo-por-dentro": "../creciendo-por-dentro/",
   biblioteca: "../biblioteca/",
@@ -16,6 +20,7 @@ const DESTINOS = Object.freeze({
 
 const ICONOS = Object.freeze({
   "rincon-lectura": "📖",
+  "rincon-dictados": "✏️",
   detectives: "🧩",
   "creciendo-por-dentro": "🌱",
   biblioteca: "📚",
@@ -24,6 +29,7 @@ const ICONOS = Object.freeze({
 
 const NOMBRES_MODULO = Object.freeze({
   "rincon-lectura": "Rincón de Lectura",
+  "rincon-dictados": "Mi Rincón de Dictado",
   detectives: "Detectives",
   "creciendo-por-dentro": "Creciendo por Dentro",
   biblioteca: "Biblioteca Encantada",
@@ -37,6 +43,7 @@ const ESTADOS_EN_ESPERA = new Set([
 
 const actoresAuditoria = new Map();
 let formularioSoloLectura = false;
+let reiniciandoFormulario = false;
 
 let tareas = [];
 const evidenciasAbiertas = new Set();
@@ -44,6 +51,64 @@ let filtroActual = "activas";
 let detenerObservacion = null;
 let catalogoSemillas = [];
 let descripcionMisionPersonalizada = false;
+
+// El mismo formulario conserva la intención y configuración de un refuerzo.
+let refuerzoDictado = null;
+let textosAutomaticosDictado = {};
+
+function dictadoEnEdicion() {
+  return tareas.find(tarea => tarea.id === $("tareaId").value.trim() && esMisionDictado(tarea));
+}
+
+function datosDictadoFormulario() {
+  const existente = dictadoEnEdicion();
+  // No transformar las Misiones publicadas ni los objetivos de refuerzo al editar.
+  if (existente && (existente.tipo === "repaso_academico" ||
+      existente.evidencia.configuracion.sesionOrigenId)) return existente;
+  return refuerzoDictado || prepararMision($("dictadoAventura").value);
+}
+
+function actualizarConfiguracionDictado({ completarSugerencias = false } = {}) {
+  const existente = dictadoEnEdicion();
+  const legacy = existente?.tipo === "repaso_academico";
+  const activa = $("modulo").value === "rincon-dictados" || legacy;
+  $("configuracionDictado").classList.toggle("hidden", !activa);
+  if (!activa) return;
+  const propuesta = datosDictadoFormulario();
+  const c = propuesta.evidencia.configuracion;
+  $("dictadoAventura").disabled = Boolean(legacy || c.sesionOrigenId || misionYaIniciada(existente));
+  $("resumenCriterioDictado").textContent = c.sesionOrigenId
+    ? `Práctica breve de ${c.objetivos.length} palabras o frases del intento original.`
+    : `Un intento revisado de «${AVENTURAS.find(a => a.id === c.aventuraId)?.titulo || propuesta.titulo}».`;
+  const aviso = $("dictadoConfiguracionAviso");
+  aviso.hidden = !legacy && !c.sesionOrigenId;
+  aviso.textContent = legacy
+    ? "Misión de la primera versión: conserva su tipo, destino y objetivos originales. Puedes editar sus indicaciones y visibilidad."
+    : "Refuerzo preparado desde la revisión de un intento. Conserva los objetivos seleccionados; la familia decide cuándo mostrarlo.";
+  if (legacy || (existente && c.sesionOrigenId)) {
+    ["tipo", "modulo"].forEach(id => {
+      $(id).disabled = true;
+      $(id).dataset.criterioBloqueado = "true";
+    });
+  }
+  if (completarSugerencias) {
+    const textos = {
+      titulo: propuesta.titulo,
+      tituloMision: propuesta.titulo,
+      descripcion: propuesta.descripcion,
+      descripcionMision: propuesta.presentacionAlumno.descripcionMision,
+      objetivo: propuesta.objetivo,
+      criterio: propuesta.criterioFinalizacion,
+      mensajeMision: propuesta.presentacionAlumno.mensaje
+    };
+    Object.entries(textos).forEach(([id, valor]) => {
+      if (!$(id).value.trim() || $(id).value === textosAutomaticosDictado[id]) $(id).value = valor;
+    });
+    textosAutomaticosDictado = textos;
+    seleccionarIcono("✏️");
+    actualizarVistaPrevia();
+  }
+}
 
 function escapar(valor = "") {
   return String(valor)
@@ -1650,7 +1715,7 @@ function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
 }
 
 function actualizarTipoMision({ completarSugerencias = false } = {}) {
-  const academica = esRepasoAcademicoFormulario();
+  const academica = esRepasoAcademicoFormulario() && !dictadoEnEdicion();
   const modulo = $("modulo");
   const bloque = $("configuracionAcademica");
 
@@ -1697,6 +1762,8 @@ function tituloAutomaticoPorModulo() {
   if (esRepasoAcademicoFormulario()) {
     return tituloRepasoAcademico();
   }
+
+  if (modulo === "rincon-dictados") return datosDictadoFormulario().titulo;
 
   if (modulo === "creciendo-por-dentro") {
     return crearTextosSemillas(
@@ -1853,7 +1920,13 @@ function actualizarConfiguracionPorModulo({
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
   const esBiblioteca = modulo === "biblioteca";
-  const esAcademica = esRepasoAcademicoFormulario();
+  const esAcademica = esRepasoAcademicoFormulario() && !dictadoEnEdicion();
+
+  actualizarConfiguracionDictado({ completarSugerencias });
+  if (modulo === "rincon-dictados" || dictadoEnEdicion()?.tipo === "repaso_academico") {
+    ["configuracionAcademica", "configuracionDetectives", "configuracionLectura", "configuracionSemillas"].forEach(id => $(id).classList.add("hidden"));
+    return;
+  }
 
   $("configuracionDetectives")?.classList.toggle("hidden", !esDetectives || esAcademica);
   $("configuracionLectura")?.classList.toggle("hidden", !esLectura || esAcademica);
@@ -1933,6 +2006,7 @@ function aplicarBloqueoCriterio(tarea = null) {
   const ids = [
     "tipo",
     "modulo",
+    "dictadoAventura",
     "cantidadHistorias",
     "nivelDetectives",
     "cantidadLecturas",
@@ -1946,6 +2020,7 @@ function aplicarBloqueoCriterio(tarea = null) {
     const control = $(id);
     if (!control) return;
     control.disabled = bloqueada;
+    control.dataset.criterioBloqueado = String(bloqueada);
     control.setAttribute("aria-disabled", bloqueada ? "true" : "false");
     control.title = bloqueada
       ? "Este dato define qué actividad cumple la misión y no puede cambiarse después de iniciarla."
@@ -2040,8 +2115,11 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   reiniciarTextosAutomaticosLectura();
   reiniciarTextosAutomaticosSemillas();
   descripcionMisionPersonalizada = false;
+  refuerzoDictado = null;
+  textosAutomaticosDictado = {};
   aplicarBloqueoCriterio(null);
-  $("formTarea").reset();
+  reiniciandoFormulario = true;
+  try { $("formTarea").reset(); } finally { reiniciandoFormulario = false; }
   $("tareaId").value = "";
   $("visibleParaAlumno").checked = true;
   $("icono").value = "📖";
@@ -2096,6 +2174,8 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
 function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   const presentacion = tarea.presentacionAlumno || {};
 
+  refuerzoDictado = null;
+  $("dictadoAventura").value = tarea.evidencia?.configuracion?.aventuraId || AVENTURAS[0].id;
   $("tareaId").value = tarea.id;
   $("titulo").value = tarea.titulo || "";
   $("descripcion").value = tarea.descripcion || "";
@@ -2105,7 +2185,7 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   $("materia").value = tarea.materia || "";
   $("tema").value = tarea.tema || "";
   $("recursoAcademicoUrl").value =
-    tarea.tipo === "repaso_academico" ? (tarea.destinoUrl || "") : "";
+    tarea.tipo === "repaso_academico" && !esMisionDictado(tarea) ? (tarea.destinoUrl || "") : "";
   actualizarTipoMision();
   $("fechaInicio").value = tarea.fechaInicio || "";
   $("fechaLimite").value = tarea.fechaLimite || "";
@@ -2231,6 +2311,8 @@ function recogerFormulario() {
   const visible = $("visibleParaAlumno").checked;
   const esAcademica = esRepasoAcademicoFormulario();
   const datosAcademicos = datosAcademicosFormulario();
+  const esDictado = modulo === "rincon-dictados" || dictadoEnEdicion()?.tipo === "repaso_academico";
+  const dictado = esDictado ? datosDictadoFormulario() : null;
   const esDetectives = modulo === "detectives" && !esAcademica;
   const esLectura = modulo === "rincon-lectura";
   const esSemillas = modulo === "creciendo-por-dentro";
@@ -2263,17 +2345,17 @@ function recogerFormulario() {
   return {
     titulo: $("titulo").value,
     descripcion: $("descripcion").value,
-    tipo: $("tipo").value,
-    cursoReferencia: esAcademica ? datosAcademicos.cursoReferencia : "",
-    materia: esAcademica ? datosAcademicos.materia : "",
-    tema: esAcademica ? datosAcademicos.tema : "",
-    modulo,
-    destinoUrl: esAcademica
+    tipo: dictado ? dictado.tipo : $("tipo").value,
+    cursoReferencia: dictado ? dictado.cursoReferencia : esAcademica ? datosAcademicos.cursoReferencia : "",
+    materia: dictado ? dictado.materia : esAcademica ? datosAcademicos.materia : "",
+    tema: dictado ? dictado.tema : esAcademica ? datosAcademicos.tema : "",
+    modulo: dictado ? dictado.modulo : modulo,
+    destinoUrl: dictado ? dictado.destinoUrl : esAcademica
       ? datosAcademicos.recursoUrl
       : (DESTINOS[modulo] || ""),
     objetivo: $("objetivo").value,
     criterioFinalizacion: $("criterio").value,
-    criterioCumplimiento: esAcademica
+    criterioCumplimiento: dictado ? dictado.criterioCumplimiento : esAcademica
       ? {
           tipo: "cantidad",
           modulo: "libre",
@@ -2320,6 +2402,9 @@ function recogerFormulario() {
                   filtros: {}
                 }
               : undefined,
+    evidencia: dictado ? dictado.evidencia : dictadoEnEdicion()
+      ? { tipo: null, modulo: null, referenciaId: null, resumen: null }
+      : undefined,
     requiereRevision: true,
     fechaInicio: $("fechaInicio").value,
     fechaLimite: $("fechaLimite").value,
@@ -2341,7 +2426,9 @@ function recogerFormulario() {
       descripcionMision: visible ? $("descripcionMision").value : "",
       mensaje: visible ? $("mensajeMision").value : ""
     },
-    progreso: esAcademica
+    progreso: esDictado
+      ? { cantidadObjetivo: 1 }
+      : esAcademica
       ? {
           cantidadObjetivo: 1
         }
@@ -2374,6 +2461,39 @@ function recogerFormulario() {
 }
 
 function configurarFormulario() {
+  document.addEventListener("academia:editar-mision", async evento => {
+    try {
+      const tarea = await Academia.tareas.obtener(evento.detail.id);
+      if (!tarea) throw Error("La Misión ya no está disponible.");
+      cargarTareaEnFormulario(tarea);
+    } catch (error) {
+      $("dictadoMisionesEstado").textContent = `No pudimos abrir la Misión: ${error.message}`;
+    }
+  });
+  $("dictadoAventura").innerHTML = AVENTURAS.map(a =>
+    `<option value="${a.id}">Nivel ${a.nivel} · ${escapar(a.titulo)}</option>`
+  ).join("");
+  $("dictadoAventura").addEventListener("change", () => {
+    actualizarConfiguracionDictado({ completarSugerencias: true });
+  });
+  document.addEventListener("academia:preparar-dictado", evento => {
+    limpiarFormulario();
+    refuerzoDictado = evento.detail;
+    $("tipo").value = "actividad_modulo";
+    $("modulo").value = "rincon-dictados";
+    $("dictadoAventura").value = refuerzoDictado.evidencia.configuracion.aventuraId;
+    $("visibleParaAlumno").checked = false;
+    ["titulo", "tituloMision", "descripcion", "descripcionMision", "objetivo", "criterio", "mensajeMision"].forEach(id => $(id).value = "");
+    actualizarTipoMision();
+    actualizarConfiguracionPorModulo({ completarSugerencias: true });
+    actualizarEstadoMision();
+    $("panelRefuerzos")?.classList.add("hidden");
+    cambiarVista("crear");
+    document.querySelector('[data-acordeon="informacion"]').open = true;
+    document.querySelector('[data-acordeon="mision"]').open = true;
+    $("tituloFormulario").scrollIntoView({ block: "start" });
+    $("titulo").focus({ preventScroll: true });
+  });
   document.querySelectorAll("[data-icono]").forEach(button => {
     button.onclick = () => seleccionarIcono(button.dataset.icono);
   });
@@ -2447,12 +2567,18 @@ function configurarFormulario() {
   });
 
   $("modulo").addEventListener("change", () => {
+    refuerzoDictado = null;
+    // Al cambiar módulo, las sugerencias se calculan en el formulario habitual.
+    if ($("modulo").value === "rincon-dictados") {
+      ["titulo", "tituloMision", "descripcionMision", "objetivo", "criterio", "mensajeMision"].forEach(id => $(id).value = "");
+    }
     const modulo = $("modulo").value;
     seleccionarIcono(ICONOS[modulo] || "🌟");
     actualizarConfiguracionPorModulo({
       completarSugerencias:
         modulo === "detectives" ||
         modulo === "rincon-lectura" ||
+        modulo === "rincon-dictados" ||
         modulo === "creciendo-por-dentro"
     });
   });
@@ -2517,6 +2643,7 @@ function configurarFormulario() {
   };
 
   $("formTarea").addEventListener("reset", event => {
+    if (reiniciandoFormulario) return;
     event.preventDefault();
     limpiarFormulario();
   });
@@ -2585,6 +2712,14 @@ function configurarFormulario() {
         ? "Guardando cambios..."
         : "Guardando tarea...";
 
+      if (esMisionDictado(datos)) {
+        const actuales = await Academia.tareas.leer();
+        if (actuales.some(t => t.id !== id && esMisionDictado(t) &&
+            !["completada", "cancelada"].includes(t.estado) &&
+            t.evidencia.configuracion.focoDictado === datos.evidencia.configuracion.focoDictado)) {
+          throw new Error("Ya existe una Misión abierta para esta aventura o selección. Revísala en el listado de Misiones.");
+        }
+      }
       if (id) {
         await Academia.tareas.actualizar(id, datos);
       } else {

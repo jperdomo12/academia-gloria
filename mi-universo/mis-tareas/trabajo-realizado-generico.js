@@ -12,6 +12,7 @@ const misionId = String(parametros.get("misionId") || "").trim();
 let userIdPersonaActivaPromise = null;
 
 const MODULOS = Object.freeze({
+  "rincon-dictados": { nombre: "Mi Rincón de Dictado", icono: "✏️" },
   "rincon-lectura": { nombre:"Mi Rincón de Lectura", icono:"📚" },
   detectives: { nombre:"Detectives", icono:"🔎" },
   "creciendo-por-dentro": { nombre:"Creciendo por Dentro", icono:"🌱" },
@@ -855,6 +856,10 @@ async function renderBiblioteca(evidencias) {
 }
 
 function renderEvidenciaGenerica(evidencia) {
+  if(evidencia.actividadId === 'rincon-dictados' && evidencia.sesionId){
+    const destino=new URL('../rincon-dictados/',location.href);destino.searchParams.set('sesionId',evidencia.sesionId);
+    return tarjetaHtml({evidencia,titulo:evidencia.resultado?.titulo||'Dictado revisado',subtitulo:fechaTexto(valorFechaEvidencia(evidencia)),contenido:`<p>Dictado en papel con autoevaluación. El resultado original y la práctica posterior se conservan por separado.</p><a class="btn secundaria" href="${destino.href}">Consultar dictado y revisión</a>`});
+  }
   const titulo = evidencia.resultado?.titulo || evidencia.actividadId || "Actividad guardada";
   const atributos = listaDatosHtml(evidencia.atributos || {});
   const resultado = listaDatosHtml(evidencia.resultado || {}, { excluir:["audioData"] });

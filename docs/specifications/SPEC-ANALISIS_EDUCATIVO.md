@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Activo |
 | **Fecha** | 03/09/2026 |
 | **Última actualización** | 03/09/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria del Análisis Educativo. Documenta la V1 implementada, sus fuentes, filtros, criterios por motor, tratamiento de tendencias, mejoras personales y propuestas de actuación. Formaliza además que todo nuevo Tema Académico de 6.º debe generar evidencia estructurada reutilizable por análisis estadístico/educativo y por propuestas de fortalecimiento. |
 
 ---
@@ -957,7 +958,7 @@ No se debe anticipar un framework complejo sin casos reales que lo requieran.
 |---|---|
 | **Pregunta resuelta** | Cómo convertir evidencias reales de aprendizaje en observaciones, tendencias y acciones de fortalecimiento útiles sin etiquetar al alumno. |
 | **Unidad humana** | Persona Activa. |
-| **Fuentes V1** | Detectives, Pruebas Académicas y Rincón de Lectura. |
+| **Fuentes V1** | Detectives, Pruebas Académicas, Rincón de Lectura y Rincón del Dictado (autoevaluación separada). |
 | **Principio** | Evidencia → observación → tendencia prudente → propuesta; nunca evidencia aislada → etiqueta. |
 | **Comparación** | El alumno consigo mismo y solo entre observaciones razonablemente comparables. |
 | **Nuevos Temas** | Todo nuevo Tema de 6.º debe generar evidencia académica estructurada y reutilizable. |
@@ -965,3 +966,10 @@ No se debe anticipar un framework complejo sin casos reales que lo requieran.
 | **Fortalecimiento** | Las evidencias deben poder alimentar propuestas de actuación y nuevas experiencias de práctica/refuerzo. |
 | **Control** | La familia decide la activación de acciones/Misiones cuando corresponda. |
 | **Estado** | Activo; V1 implementada y contrato de evidencia para expansión curricular aprobado el 03/09/2026. |
+## Rincón del Dictado · fuente de autoevaluación
+
+La cuarta fuente lee hasta 200 sesiones de `rincon-dictados` mediante el servicio común, junto a las Misiones para excluir `esDatoPrueba`. Se mantiene separada de Pruebas Académicas, que excluye autoevaluaciones. Si falla esta lectura, el informe declara la fuente parcial.
+
+Se muestran intentos, señales del último intento por texto y evolución solo entre textos idénticos con el mismo acompañamiento y tipo de práctica. No se mezclan aventuras completas y refuerzos breves ni se infiere dominio o autonomía por porcentaje o velocidad. Las palabras diferentes/omitidas, signos y añadidas orientan propuestas revisables, no diagnósticos.
+
+La actuación remite a Observaciones y refuerzos → Dictados. La familia selecciona hasta tres palabras o frases y decide crear/mostrar una Misión; el informe nunca la asigna automáticamente. El historial preserva la autoevaluación original. Contrato propietario: `SPEC-RINCON_DICTADOS.md`, sección 5.

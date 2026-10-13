@@ -33,8 +33,9 @@ function aplicarContratoMisionLibre() {
    * el selector para impedir que conserve por accidente Lectura, Detectives,
    * Semillas o Biblioteca.
    */
-  modulo.disabled = libre;
-  modulo.setAttribute("aria-disabled", libre ? "true" : "false");
+  const criterioBloqueado = modulo.dataset.criterioBloqueado === "true";
+  modulo.disabled = libre || tipo.value === "repaso_academico" || criterioBloqueado;
+  modulo.setAttribute("aria-disabled", String(modulo.disabled));
   modulo.title = libre
     ? "Las Misiones libres se realizan sin una actividad asociada de la Academia."
     : "";

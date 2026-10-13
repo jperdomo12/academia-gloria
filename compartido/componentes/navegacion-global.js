@@ -14,7 +14,8 @@
  */
 
 import { UBICACIONES_ACADEMIA } from "../modelos/navegacion.js";
-import { iniciarPanelUsuario } from "../js/panel-usuario.js";
+// Solo las vistas autenticadas cargan el Panel y sus dependencias de identidad.
+const vistaPrevia = document.body?.dataset.navPreview === "true";
 
 const BASE_ACADEMIA = new URL("../../", import.meta.url);
 const SELECTOR_PANEL_PRINCIPAL = "#nav-panel-usuario";
@@ -422,6 +423,7 @@ async function iniciarPanelCanonico(cabecera) {
   if (!destino) return;
 
   try {
+    const { iniciarPanelUsuario } = await import("../js/panel-usuario.js");
     await iniciarPanelUsuario({
       contenedor: SELECTOR_PANEL_PRINCIPAL
     });
@@ -488,8 +490,14 @@ async function crearCabecera() {
 
   const padresLegados = limpiarNavegacionLegada(actual);
   normalizarContenedoresLegados(padresLegados);
-  await iniciarPanelCanonico(cabecera);
-  await iniciarRecordatoriosInicio(rutaActual);
+  if (vistaPrevia) {
+    const estado = cabecera.querySelector(SELECTOR_PANEL_PRINCIPAL);
+    estado.setAttribute("aria-label", "Vista previa sin sesión");
+    estado.textContent = "Vista previa · sin sesión";
+  } else {
+    await iniciarPanelCanonico(cabecera);
+    await iniciarRecordatoriosInicio(rutaActual);
+  }
 }
 
 function solicitarCreacionCabecera() {

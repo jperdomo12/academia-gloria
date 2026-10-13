@@ -843,6 +843,7 @@ function normalizarTarea(tarea = {}, { parcial = false, alumnoUserId = "" } = {}
 
   const modulosValidos = new Set([
     "rincon-lectura",
+    "rincon-dictados",
     "detectives",
     "creciendo-por-dentro",
     "biblioteca",

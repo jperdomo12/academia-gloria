@@ -39,6 +39,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         limpiarNavegacionLegada: true
       },
       {
+        id: "rincon-dictados",
+        titulo: "Mi Rincón de Dictado",
+        icono: "✏️",
+        ruta: "mi-universo/rincon-dictados/",
+        volver: "mi-universo/",
+        cabeceraGlobal: true,
+        limpiarNavegacionLegada: true
+      },
+      {
         id: "biblioteca",
         titulo: "Biblioteca Encantada",
         icono: "📚",

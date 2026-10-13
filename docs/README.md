@@ -10,10 +10,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/README.md` |
-| **Versión** | 1.9 |
+| **Versión** | 1.10 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 18/09/2026 |
+| **Última actualización** | 12/10/2026 |
 | **Propietario** | Arquitectura Documental |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Portal de entrada, navegación y orientación de la documentación oficial de la Academia Gloria Valentina |
@@ -35,6 +35,7 @@
 | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` | **Gobierna:** creación, imagen, integración, validación y cierre de nuevas Semillas con mínima intervención del Product Owner. |
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | **Implementa/documenta:** consumo de evidencias para análisis y fortalecimiento. |
 | `docs/specifications/SPEC-BITACORA_ACOMPANAMIENTO.md` | **Define:** colaboración humana estructurada mediante Bitácora de Acompañamiento V1. |
+| `docs/specifications/SPEC-RINCON_DICTADOS.md` | **Define:** dictado en papel, autoevaluación, borradores e historial del Rincón del Dictado V1. |
 | `docs/specifications/SPEC-HORARIO_CLASES.md` | **Define:** organización semanal personal mediante Mi horario de clases V1. |
 | `docs/specifications/SPEC-MENU_COMEDOR.md` | **Define:** consulta cotidiana y mantenimiento mensual de Menú del Cole V1. |
 
@@ -42,6 +43,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.10 | 12/10/2026 | Product Owner + AI Collaborator | Incorpora la especificación propietaria de Rincón del Dictado V1 candidata. |
 | 1.9 | 18/09/2026 | Product Owner + AI Collaborator | Adopta el **Resumen de contenido** obligatorio definido por `DOCUMENTATION_STANDARD.md` v1.3 y sincroniza la referencia al estándar documental vigente. |
 | 1.8 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como fuente propietaria del proceso de nuevas Semillas y añade su ruta de lectura oficial, consolidando el modelo de mínima intervención validado con las Semillas 008/009. |
 | 1.7 | 09/09/2026 | Product Owner + AI Collaborator | Sincroniza el portal tras las entregas del inicio de curso 2026–2027: incorpora `SPEC-HORARIO_CLASES.md` y `SPEC-MENU_COMEDOR.md` como fuentes activas, añade rutas de lectura para organización escolar cotidiana y mantiene el estándar curricular como propietario del patrón de recursos oficiales por materia. |
@@ -488,8 +490,8 @@ No requiere actualización por cada cambio interno de un documento.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión activa** | 1.9 |
-| **Última sincronización** | 18/09/2026 |
+| **Versión activa** | 1.10 |
+| **Última sincronización** | 12/10/2026 |
 | **Portal documental** | `docs/README.md` |
 | **Ruta canónica para IA** | `docs/ai/` |
 | **Prompt oficial de nuevo chat** | `ai/AI_CHAT_BOOTSTRAP.md` → `📋 PROMPT RÁPIDO · NUEVO CHAT` |

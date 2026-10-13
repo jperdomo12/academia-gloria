@@ -2414,6 +2414,7 @@
           <select id="filtroModulo" class="filtro-select" aria-label="Filtrar por módulo">
             <option value="todos">🌈 Todos los módulos</option>
             <option value="rincon-lectura">📚 Lectura</option>
+            <option value="rincon-dictados">✏️ Dictado</option>
             <option value="detectives">🔎 Detectives</option>
             <option value="creciendo-por-dentro">🌱 Creciendo por Dentro</option>
             <option value="biblioteca">📖 Biblioteca</option>
@@ -2508,6 +2509,7 @@
 
     const DESTINOS_TAREA = Object.freeze({
       "rincon-lectura":"../rincon-lectura/",
+      "rincon-dictados":"../rincon-dictados/",
       detectives:"../aventuras-matematicas/detectives/",
       "creciendo-por-dentro":"../creciendo-por-dentro/",
       biblioteca:"../biblioteca/",
@@ -2524,6 +2526,7 @@
 
     const MODULOS = Object.freeze({
       "rincon-lectura":{nombre:"Mi Rincón de Lectura",icono:"📚"},
+      "rincon-dictados":{nombre:"Mi Rincón de Dictado",icono:"✏️"},
       detectives:{nombre:"Detectives",icono:"🔎"},
       "creciendo-por-dentro":{nombre:"Creciendo por Dentro",icono:"🌱"},
       biblioteca:{nombre:"Biblioteca Encantada",icono:"📖"},
@@ -2838,7 +2841,7 @@
     }
 
     function destinoConContexto(tarea){
-      const esAcademica = tarea.tipo === "repaso_academico";
+      const esAcademica = tarea.tipo === "repaso_academico" && tarea.evidencia?.tipo !== "dictado";
       const destino =
         tarea.destinoUrl ||
         (esAcademica ? "" : (DESTINOS_TAREA[tarea.modulo] || "../"));
@@ -3062,7 +3065,7 @@
       const icono = iconoTarea(tarea);
       const tiempo = Number(tarea.tiempoEstimadoMinutos || 0);
 
-      const esAcademica = tarea.tipo === "repaso_academico";
+      const esAcademica = tarea.tipo === "repaso_academico" && tarea.evidencia?.tipo !== "dictado";
       const meta = esAcademica
         ? [
             tarea.cursoReferencia ? `📘 ${tarea.cursoReferencia}.º` : "",
@@ -3404,6 +3407,7 @@
 
       const orden = [
         "rincon-lectura",
+        "rincon-dictados",
         "detectives",
         "creciendo-por-dentro",
         "biblioteca"

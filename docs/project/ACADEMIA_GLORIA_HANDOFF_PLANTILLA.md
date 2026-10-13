@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.0 |
+| **Versión** | 3.8 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 02/10/2026 |
+| **Última actualización** | 13/10/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -29,19 +29,27 @@
 
 ## 🕘 Historial de versiones
 
-| Versión | Fecha | Cambios |
-|---|---:|---|
-| 3.0 | 02/10/2026 | Consolida cambios materiales desde v2.9: Misiones con `Matezonas`/`Lengüizonas` como selección explícita sin alterar la materia académica de evidencia; `Zonas del cole` visible como navegación interna; Monitor Gaudem v1.5 con doble línea base; corrección transversal de ciclos de `Volver`; catálogo ampliado de avatares; menú de octubre 2026 incorporado; patrón mensual de URL Gaudem documentado y automatización mensual creada hasta junio de 2027. Retira como pendiente el issue de `volver=` ya resuelto. |
-| 2.9 | 22/09/2026 | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
-| 2.8 | 15/09/2026 | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
-| 2.7 | 14/09/2026 | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
-| 2.6 | 14/09/2026 | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
-| 2.5 | 12/09/2026 | Cierra revisión visual `Así crece mi camino` y alinea el render inicial al modelo canónico de 7 etapas. |
-| 2.4 | 12/09/2026 | Cierra PR #122: niveles Bajo/Medio/Alto, configuración Área/Tema, auditoría, navegación, Rules v1/v2 y documentación v1.3. |
-| 2.3 | 12/09/2026 | Consolida PR #114–#119: Semilla 007, Constancia, crecimiento real, escucha única y Administración de Mi Camino. |
-| 2.2 | 09/09/2026 | Registra Calendario 2026–2027, Menú del Cole, Horario V1, recursos oficiales Gaudem e Issue #108. |
-| 2.1 | 06/09/2026 | Cierra Bitácora V1, PR #83/#85 y Rules publicadas/validadas. |
-| 1.x | 03–06/09/2026 | Activación del HandOff, fase de uso prioritario, observación de accesos y consolidación documental P0/P1/P2. |
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 3.8 | 13/10/2026 | Product Owner + AI Collaborator | PR #161 aprobada e integrada en `c980fcc15272b509530777a967ca70bdf380346e`; Pages #766 `success`. Cuatro ajustes publicados; SPEC Dictado 1.2, Misiones 2.4 y Árbol 1.7 sincronizados. Continúa validación familiar, sin declarar estabilidad. |
+| 3.7 | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar positiva de #159 con cuatro ajustes. Candidata en fix/dictado-revision-familiar: avisos abajo, acordeón compartido, banda libre y nombre Mi Rincón de Dictado. Pendiente de aprobación/integración; mantiene baseline publicado y validación real pendiente. |
+| 3.6 | 13/10/2026 | Product Owner + AI Collaborator | Cierre de reparación aprobado por el Product Owner: #159 integrado en `372291dd749d78a910943512b000543d8b5b8f5f`; Pages #763 `success`. Especificaciones 1.1/2.3 sincronizadas; validación familiar pendiente, sin declarar estabilidad. |
+| 3.5 | 13/10/2026 | Product Owner + AI Collaborator | Auditoría de recuperación de calidad: reparación autorizada en rama limpia, preserva núcleo de Dictado y corrige Misiones/UX contra estándares. No confundir candidata con main publicado ni declarar estabilidad. |
+| 3.4 | 12/10/2026 | Product Owner + AI Collaborator | Confirma #157 integrado y Pages #761 correcto; V1 publicada para validación familiar, sin desarrollo pendiente en ese PR. |
+| 3.3 | 12/10/2026 | Product Owner + AI Collaborator | Entrega V1 Dictado mediante PR #157 autorizada para validación familiar, con Misiones, refuerzos y análisis de autoevaluaciones. |
+| 3.2 | 12/10/2026 | Product Owner + AI Collaborator | Retoma Rincón del Dictado V1 con aprobación funcional explícita; especificación propietaria y primera implementación candidata en rama, pendiente de integración y validación familiar. Conserva el cierre operativo #152/#153/#156. |
+| 3.1 | 12/10/2026 | Product Owner + AI Collaborator | Cierre operativo autorizado: Monitor v1.6 mediante PR #152; Semillas 010/011 y 11 activas; Natación #154 y colores por materia base #155; Religión #156 cerrado sin merge, conserva 💗; baseline actualizado; automatización del menú desactivada; Dictados pausado y sin integrar. Sincronización mediante PR #153. |
+| 3.0 | 02/10/2026 | Product Owner + AI Collaborator | Consolida cambios materiales desde v2.9: Misiones con `Matezonas`/`Lengüizonas` como selección explícita sin alterar la materia académica de evidencia; `Zonas del cole` visible como navegación interna; Monitor Gaudem v1.5 con doble línea base; corrección transversal de ciclos de `Volver`; catálogo ampliado de avatares; menú de octubre 2026 incorporado; patrón mensual de URL Gaudem documentado y automatización mensual creada hasta junio de 2027. Retira como pendiente el issue de `volver=` ya resuelto. |
+| 2.9 | 22/09/2026 | Product Owner + AI Collaborator | Consolida el crecimiento reciente de 6.º: monitor Gaudem ampliado y simplificado, nueva capa `Zonas del cole`, Matezonas con `Dale al coco · Zonas 1` y `Problemas y operaciones · Nivel A`, Lengüizonas con `Gramática · Repasamos los verbos`, y seis nuevas lecturas Nivel 1 del Rincón de Lectura. Registra además `DOCUMENTATION_STANDARD.md` v1.3 con Resumen de contenido obligatorio y actualiza el estado operativo/Pages. |
+| 2.8 | 15/09/2026 | Product Owner + AI Collaborator | Consolida las Semillas 008 `Cuando un plan no me incluye` y 009 `Puedo pasar con calma`, registra el ajuste óptico de sus miniaturas, formaliza `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` como proceso oficial de mínima intervención para nuevas Semillas y retira ese punto del backlog. |
+| 2.7 | 14/09/2026 | Product Owner + AI Collaborator | Cierra el trabajo On going de `Academia de un vistazo`: sustituye el asset roto de Gloria por un WebP válido, ajusta el fondo para integrarlo con el hero, valida el resultado con el Product Owner, incorpora `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` como referencia visual del producto, retira el SVG defectuoso obsoleto y cierra Issue #108. |
+| 2.6 | 14/09/2026 | Product Owner + AI Collaborator | Consolida todo el trabajo posterior a Mi Camino: guía visual de 7 etapas, renombre `Gestión de Mi Camino`, acceso compacto a Bitácora, Guía rápida + invitaciones, refinamientos de Inicio/Descubre, responsive móvil, `Academia de un vistazo`, Guía rápida sensible a sesión y el defecto visual actual de la ilustración de Gloria. |
+| 2.5 | 12/09/2026 | Product Owner + AI Collaborator | Cierra revisión visual `Así crece mi camino` y alinea el render inicial al modelo canónico de 7 etapas. |
+| 2.4 | 12/09/2026 | Product Owner + AI Collaborator | Cierra PR #122: niveles Bajo/Medio/Alto, configuración Área/Tema, auditoría, navegación, Rules v1/v2 y documentación v1.3. |
+| 2.3 | 12/09/2026 | Product Owner + AI Collaborator | Consolida PR #114–#119: Semilla 007, Constancia, crecimiento real, escucha única y Administración de Mi Camino. |
+| 2.2 | 09/09/2026 | Product Owner + AI Collaborator | Registra Calendario 2026–2027, Menú del Cole, Horario V1, recursos oficiales Gaudem e Issue #108. |
+| 2.1 | 06/09/2026 | Product Owner + AI Collaborator | Cierra Bitácora V1, PR #83/#85 y Rules publicadas/validadas. |
+| 1.x | 03–06/09/2026 | Product Owner + AI Collaborator | Activación del HandOff, fase de uso prioritario, observación de accesos y consolidación documental P0/P1/P2. |
 
 ---
 
@@ -161,18 +169,23 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 
 - Calendario 2026–2027 · PR #87 · estable.
 - Mi horario V1 · PR #96–#107 + #109/#110 · estable.
+- PR #154 integrado: Natación muestra 🏊 y deja de coincidir accidentalmente con TAC.
+- PR #155 integrado: variantes como `<Materia>(Ana)` comparten el color de su materia base.
+- PR #156 cerrado sin merge el 08/10/2026 por decisión del Product Owner: Religión conserva 💗. No reabrir ni incorporar 🙏.
 - Menú del Cole V1 · PR #88–#93 · estable.
 - Octubre 2026 incorporado mediante PR #149, con 21 días de comedor y el 12/10 tratado como festivo según la fuente oficial.
 - `SPEC-MENU_COMEDOR.md` está en **v1.1** y documenta el patrón mensual observado:
   `https://www.gaudem.es/descargas/menus/<yyyymm>/Gaudem-Menu-GENERAL.pdf`.
-- Existe una automatización externa al repositorio, **Actualizar menú Gaudem**, programada el día 1 de cada mes a las 05:00 (Europe/Madrid), desde noviembre de 2026 hasta junio de 2027 inclusive. Comprueba la publicación, extrae/valida el PDF y actualiza Academia cuando corresponde.
+- La automatización externa **Actualizar menú Gaudem** está **desactivada**, verificado el 12/10/2026. El calendario mensual descrito en v3.0 es histórico; no contar con una actualización automática ni reactivarla sin decisión explícita. Para un nuevo menú, seguir `SPEC-MENU_COMEDOR.md` cuando el Product Owner lo solicite.
 
 ### 5.4 Creciendo por Dentro · Semillas
 
 - Semilla 007 `Puedo elegir diferente` continúa activa y validada.
 - Semilla 008 `Cuando un plan no me incluye` quedó incorporada y validada por el Product Owner.
 - Semilla 009 `Puedo pasar con calma` quedó incorporada y validada visualmente; pendiente únicamente de prueba de uso real con Gloria, no de desarrollo.
-- El catálogo vigente es data-driven y reutiliza un Motor compartido.
+- Semilla 010 `Un momento para mí también está bien` está incorporada y activa.
+- Semilla 011 `Puedo aceptar apoyo y seguir siendo capaz` está incorporada y activa. La posible ampliación sobre cómo responder a ofrecimientos de ayuda queda pendiente de observaciones del Product Owner y Anaís; no forma parte del cierre.
+- El catálogo vigente es data-driven, reutiliza un Motor compartido y contiene **11 Semillas activas**, verificado en `semillas.json` de `main`.
 - Las miniaturas de 007 y 009 recibieron un ajuste óptico de encuadre para alinearse mejor con 008; validado por el Product Owner.
 - El proceso oficial de nuevas Semillas vive en `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
 - Flujo por defecto: necesidad real → diseño completo por AI Collaborator → imagen generada por AI Collaborator → validación → Product Owner sube el binario solo cuando la conexión GitHub no permita hacerlo → implementación/verificación por AI Collaborator → prueba real con Gloria.
@@ -182,12 +195,13 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 
 #### Monitor Gaudem
 
-- `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` está en **v1.5 · Activo**.
+- `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` está en **v1.6 · Activo**, integrado mediante PR #152 el 12/10/2026.
 - Revisa 18 espacios de `/areas/`, `/zonas/` y `/english-zones`.
 - Mantiene dos líneas base locales:
   - `gaudem6_detalle_v2` · compatibilidad histórica;
   - `gaudem6_recursos_v3` · seguimiento enriquecido de Drive/Docs/PDF/ofimática.
 - La migración a v1.5 fue validada en navegador autenticado sin falsos cambios.
+- v1.6 conserva ambas líneas base y muestra sus fechas y horas locales en el aviso sin cambios; indica cuando la documental está pendiente de inicializar. El bookmarklet ya utilizado debe actualizarse manualmente desde el manual: el merge no modifica marcadores del navegador.
 - Regla de uso: `🔎 Revisar Gaudem 6.º` detecta; `✅ Aceptar cambios Gaudem` solo después de revisar la novedad.
 - La detección de un documento realmente nuevo posterior a la línea base v3 queda pendiente de observar cuando ocurra una publicación real; no es un bloqueo actual.
 
@@ -278,7 +292,13 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-No hay trabajo On going activo al cierre de esta actualización.
+El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
+
+**Prioridad vigente · ajustes de primera revisión familiar publicados el 13/10/2026.** El Product Owner aprobó la PR #161, integrada en `main` `c980fcc15272b509530777a967ca70bdf380346e` y publicada mediante Pages #766 (`success`, `e3a3e884…`, contiene #161). Conserva la recuperación de #159 y añade los cuatro ajustes de uso: avisos al final del panel activo, acordeón compartido de Observaciones y refuerzos con Misiones preparadas/sugeridas, banda de Dictado libre y nombre **Mi Rincón de Dictado**. Propietario: `SPEC-RINCON_DICTADOS.md` 1.2. No hay desarrollo pendiente en #161. Continúa la validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
+
+**Antecedente de Rincón del Dictado V1 · PR #157 integrado y publicado antes de la reparación #159.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
+
+Secuencia aprobada: **V1 funcional → validación con familia → ajustes menores o medios según uso → validación final → versión estable.** Este trabajo es la excepción explícitamente autorizada dentro de la Fase de uso prioritario; no abre otros frentes.
 
 El producto continúa en **Fase de uso prioritario**. El siguiente trabajo debe nacer de:
 - material real nuevo de 6.º;
@@ -320,23 +340,26 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `3cd189c74998f801597e549ba9b5e2e304ba965e` |
-| **Rama On going** | Ninguna |
-| **PR On going** | Ninguna |
-| **Trabajo inmediato** | Ninguno obligatorio; continuar uso prioritario y material real de 6.º |
-| **GitHub Pages del baseline** | #755 · `success` |
+| **Baseline funcional de producto verificado** | `c980fcc15272b509530777a967ca70bdf380346e` · #161 integrado; conserva #159/#157/#154/#155 |
+| **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
+| **Rama On going** | Sin rama de desarrollo activa para estos ajustes; `fix/dictado-revision-familiar` integrada |
+| **PR On going** | Ninguno de desarrollo para Dictado; #161 aprobado e integrado; #159/#160 integrados |
+| **Trabajo inmediato** | Probar los cuatro ajustes publicados y continuar validación familiar de voz, persistencia y utilidad |
+| **GitHub Pages del baseline funcional** | #766 · `success` · SHA `e3a3e884…`, incluye #161 (`c980fcc1…`) y actualización documental de Semilla 012 |
+| **Verificación posterior al cierre** | #161 integrado; build y despliegue Pages #766 correctos. Este cierre documental no cambia el producto. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
-| **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · actualización mensual automatizada hasta junio 2027 |
+| **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · automatización desactivada |
 | **Gestión de Usuarios** | ✅ Avatar con catálogo ampliado + entrada libre |
 | **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
-| **Creciendo por Dentro** | ✅ Semillas 008/009 incorporadas; proceso oficial documentado |
+| **Creciendo por Dentro** | ✅ 11 Semillas activas, incluidas 010/011; proceso oficial documentado |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
-| **Monitor Gaudem** | ✅ v1.5 · doble línea base · 18 espacios |
-| **Navegación** | ✅ v1.11 · prevención global de ciclos de `Volver` |
+| **Monitor Gaudem** | ✅ v1.6 · doble línea base · 18 espacios · fechas de líneas base |
+| **Rincón del Dictado V1** | Mi Rincón de Dictado V1 funcional publicada para validación real; ajustes #161, SPEC 1.2 |
+| **Navegación** | ✅ v1.12 · Dictado y prevención global de ciclos de `Volver` |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 
 ---
@@ -347,33 +370,33 @@ Al iniciar o retomar trabajo:
 
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos;
-3. confirmar que no exista trabajo On going;
-4. continuar la **Fase de uso prioritario**;
+3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
+4. probar los cuatro ajustes #161 publicados, siguiendo SPEC 1.2; documentar voz, persistencia y utilidad antes de declarar estabilidad. Mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
-6. dejar que la automatización mensual gestione el menú Gaudem y actuar manualmente solo si informa ausencia, cambio de formato o problema de validación;
+6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
 
 ---
 
-# 🟣 Última actualización — 02/10/2026
+# 🟣 Última actualización — 13/10/2026
 
 ## Trabajo On going
 
-> **Ninguno.** Los cambios recientes quedaron integrados y publicados. Continuar con uso prioritario, material real de 6.º e issues observados.
+> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Trabajo actual:** validación familiar de los ajustes, voz, persistencia y utilidad; no se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.0 |
+| **Versión** | 3.8 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Ninguno |
-| **PR On going** | Ninguno |
-| **Nuevas Semillas** | ✅ 008/009 incorporadas; proceso oficial documentado |
+| **Trabajo On going** | Validación familiar de los ajustes publicados de Dictado; sin desarrollo pendiente de #161 |
+| **PR On going** | Ninguno de desarrollo para Dictado; #161 aprobado e integrado; #159/#160 integrados |
+| **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Uso prioritario → material real de 6.º / issues reales → menú mensual automatizado → backlog solo por decisión concreta |
+| **Siguiente paso** | Probar ajustes publicados → documentar uso real → ajustar si procede → validar estabilidad |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
