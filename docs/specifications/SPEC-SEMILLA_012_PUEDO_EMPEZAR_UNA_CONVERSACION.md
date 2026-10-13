@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` |
-| **Versión** | 1.0 |
-| **Estado** | APROBADA PARA DESARROLLO · NO IMPLEMENTADA |
+| **Versión** | 1.1-rc |
+| **Estado** | CONTENIDO CANDIDATO EN RAMA · IMAGEN E INTEGRACIÓN PENDIENTES |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -16,8 +16,15 @@
 - `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` · gobierna el proceso de creación e integración de nuevas Semillas.
 - `docs/standards/STD-LIA.md` · gobierna tono y acompañamiento de Lía.
 - `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` · gobierna continuidad visual.
-- `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` · gobierna principios pedagógicos generales.
-- `mi-universo/creciendo-por-dentro/semillas.json` · catálogo activo; esta Semilla todavía no debe figurar como implementada hasta Desarrollo.
+- `docs/FOUNDATION.md` · fuente fundacional vigente; `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` es un puntero histórico.
+- `mi-universo/creciendo-por-dentro/semillas.json` · catálogo activo; catálogo candidato 1.10: contenido preparado; no incorporado todavía a main.
+
+## 🕘 Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---|---|---|
+| 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; binario externo pendiente. Conserva diseño aprobado y validación real pendiente. |
+| 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Diseño funcional aprobado para desarrollo e incorporado a main; todavía sin implementación. |
 
 ---
 
@@ -249,7 +256,13 @@ Evitar:
 - exceso de elementos visuales;
 - atribuir intenciones negativas a terceros.
 
-La generación y validación de la imagen seguirá `STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
+Por instrucción del Product Owner del 13/10/2026, Análisis genera y aprueba la imagen y la familia la sube a GitHub. Desarrollo no la genera ni sustituye; integra el asset cuando esté disponible.
+
+Nombre y ruta acordados:
+
+`assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`
+
+Se utiliza de forma idéntica en `recursos.imagen` y en la guía web. No se publica la candidata como técnicamente lista hasta verificar el binario real en catálogo, bienvenida y situación.
 
 ---
 
@@ -322,6 +335,8 @@ V1 funcional
 → versión estable
 ```
 
+**Verificación interna de la candidata:** JSON válido; 11 Semillas anteriores y familias intactas; contenido de 012 compatible con el contrato vigente. Recorrido con Motor real: filtro Comunicación, modelos antes de producción, cinco situaciones, incertidumbre en clase, palabras propias, ideas múltiples, frase breve, práctica sin grabar, guardado/historial simulados, entrada contextual por Misión y guía familiar con 012 primero. Catálogo, modelos y guía sin desbordamiento a 1280/768/390/320 px. Identidad y API simuladas, sin escrituras reales. No valida audio físico ni permisos/persistencia con cuentas reales. Imagen y revisión de su encuadre en contexto pendientes.
+
 La aprobación actual corresponde al **diseño funcional para desarrollo**, no significa que cada detalle quede congelado frente a evidencia de uso real.
 
 ---
@@ -330,6 +345,10 @@ La aprobación actual corresponde al **diseño funcional para desarrollo**, no s
 
 **13/10/2026 · Product Owner:** diseño funcional de la Semilla 012 `Puedo empezar una conversación` **APROBADO PARA DESARROLLO**.
 
-Estado hasta que Desarrollo la integre y se valide en producto:
+Estado de Desarrollo:
 
-> **APROBADA PARA DESARROLLO · NO IMPLEMENTADA**
+> **CONTENIDO CANDIDATO EN RAMA · IMAGEN E INTEGRACIÓN PENDIENTES**
+
+La candidata mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). Usa solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. No modifica JavaScript, CSS, identidad, historial ni contratos de Misiones.
+
+El diseño funcional continúa aprobado. No se declara incorporada a main ni estable hasta el cierre correspondiente.
