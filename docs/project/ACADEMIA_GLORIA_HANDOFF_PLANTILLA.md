@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.9 |
+| **Versión** | 3.10 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.10 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. Semilla 012 publicada con imagen aprobada, catálogo de 12 Semillas y guías sincronizadas. Continúa prueba familiar de Semilla 012 y Dictado; sin declarar estabilidad. |
 | 3.9 | 13/10/2026 | Product Owner + AI Collaborator | Dictado validado positivamente por Juan, pendiente prueba completa familiar. Desarrollo autorizado de Semilla 012 según SPEC: contenido data-driven y guías en rama; imagen externa semilla-012-puedo-empezar-una-conversacion.jpg integrada y verificada; PR #164 lista para aprobación. Sin cambios del Motor ni publicación prematura. |
 | 3.8 | 13/10/2026 | Product Owner + AI Collaborator | PR #161 aprobada e integrada en `c980fcc15272b509530777a967ca70bdf380346e`; Pages #766 `success`. Cuatro ajustes publicados; SPEC Dictado 1.2, Misiones 2.4 y Árbol 1.7 sincronizados. Continúa validación familiar, sin declarar estabilidad. |
 | 3.7 | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar positiva de #159 con cuatro ajustes. Candidata en fix/dictado-revision-familiar: avisos abajo, acordeón compartido, banda libre y nombre Mi Rincón de Dictado. Pendiente de aprobación/integración; mantiene baseline publicado y validación real pendiente. |
@@ -186,7 +187,7 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 - Semilla 009 `Puedo pasar con calma` quedó incorporada y validada visualmente; pendiente únicamente de prueba de uso real con Gloria, no de desarrollo.
 - Semilla 010 `Un momento para mí también está bien` está incorporada y activa.
 - Semilla 011 `Puedo aceptar apoyo y seguir siendo capaz` está incorporada y activa. La posible ampliación sobre cómo responder a ofrecimientos de ayuda queda pendiente de observaciones del Product Owner y Anaís; no forma parte del cierre.
-- El catálogo vigente es data-driven, reutiliza un Motor compartido y contiene **11 Semillas activas**, verificado en `semillas.json` de `main`.
+- El catálogo vigente es data-driven, reutiliza un Motor compartido y contiene **12 Semillas activas**, verificado en `semillas.json` de `main`.
 - Las miniaturas de 007 y 009 recibieron un ajuste óptico de encuadre para alinearse mejor con 008; validado por el Product Owner.
 - El proceso oficial de nuevas Semillas vive en `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md`.
 - Flujo por defecto: necesidad real → diseño completo por AI Collaborator → imagen generada por AI Collaborator → validación → Product Owner sube el binario solo cuando la conexión GitHub no permita hacerlo → implementación/verificación por AI Collaborator → prueba real con Gloria.
@@ -297,7 +298,7 @@ El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está i
 
 **Prioridad vigente · ajustes de primera revisión familiar publicados el 13/10/2026.** El Product Owner aprobó la PR #161, integrada en `main` `c980fcc15272b509530777a967ca70bdf380346e` y publicada mediante Pages #766 (`success`, `e3a3e884…`, contiene #161). Conserva la recuperación de #159 y añade los cuatro ajustes de uso: avisos al final del panel activo, acordeón compartido de Observaciones y refuerzos con Misiones preparadas/sugeridas, banda de Dictado libre y nombre **Mi Rincón de Dictado**. Propietario: `SPEC-RINCON_DICTADOS.md` 1.2. No hay desarrollo pendiente en #161. Continúa la validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
 
-**Trabajo activo · Semilla 012 aprobada para Desarrollo.** `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` gobierna el diseño aprobado desde Análisis. Candidata en `feat/semilla-012-conversacion`, desde `main` `12138c4…`: catálogo 1.10 (12 Semillas en rama), Motor sin cambios y guía familiar/web sincronizada. Análisis genera y aprueba la imagen y la familia la sube; Desarrollo incorporó la imagen `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg` subida a main (`6df2e228…`); carga y encuadre verificados en catálogo, bienvenida, situación y guía. PR #164 lista para revisión/aprobación. Contenido e integración en rama no equivalen a incorporación a main ni estabilidad. No confundir candidata validada con producto publicado; falta aprobación e integración. La revisión de Juan sobre Dictado fue positiva; quedan la prueba completa con Anaís y Gloria y las observaciones de uso.
+**Semilla 012 · Puedo empezar una conversación publicada para validación familiar.** PR #164 aprobada por el Product Owner e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` 1.1 conserva el diseño aprobado desde Análisis. Catálogo 1.10 con 12 Semillas activas; Motor sin cambios, guía familiar 1.3 y presentación web sincronizadas. Imagen aprobada por Análisis y subida por la familia: `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`, verificada en catálogo, bienvenida, situación y guía. No hay desarrollo pendiente de #164. La Semilla espera prueba familiar de comprensión y uso; Dictado conserva la revisión positiva de Juan y espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 **Antecedente de Rincón del Dictado V1 · PR #157 integrado y publicado antes de la reparación #159.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
 
@@ -343,20 +344,20 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `c980fcc15272b509530777a967ca70bdf380346e` · #161 integrado; conserva #159/#157/#154/#155 |
+| **Baseline funcional de producto verificado** | `2e12678ed44a89402f603516677e15f53929a36d` · #164 integrado; conserva #161/#159/#157/#154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `feat/semilla-012-conversacion` · Semilla 012 candidata; `fix/dictado-revision-familiar` integrada |
-| **PR On going** | PR #164 · Semilla 012 lista para aprobación/integración; #161/#163 integrados |
-| **Trabajo inmediato** | Aprobar e integrar PR #164; verificar Pages y después probar Semilla 012 en familia |
-| **GitHub Pages del baseline funcional** | #766 · `success` · SHA `e3a3e884…`, incluye #161 (`c980fcc1…`) y actualización documental de Semilla 012 |
-| **Verificación posterior al cierre** | #161 integrado; build y despliegue Pages #766 correctos. Este cierre documental no cambia el producto. |
+| **Rama On going** | Sin rama de desarrollo activa de Semilla 012; `feat/semilla-012-conversacion` integrada |
+| **PR On going** | Ninguno de desarrollo para estos frentes; #164 aprobado e integrado; #161/#163 integrados |
+| **Trabajo inmediato** | Probar Semilla 012 y Dictado con la familia; documentar comprensión, voz y persistencia real |
+| **GitHub Pages del baseline funcional** | #769 · `success` · SHA `2e12678e…` |
+| **Verificación posterior al cierre** | #164 integrado; build y despliegue Pages #769 correctos. Cierre documental sin cambios de producto. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
 | **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · automatización desactivada |
 | **Gestión de Usuarios** | ✅ Avatar con catálogo ampliado + entrada libre |
 | **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
-| **Creciendo por Dentro** | ✅ 11 Semillas publicadas; 012 validada en rama, pendiente de aprobación/integración |
+| **Creciendo por Dentro** | ✅ 12 Semillas publicadas, incluida 012; prueba familiar de la nueva Semilla pendiente |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
@@ -374,7 +375,7 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. continuar Semilla 012 desde su SPEC aprobada y rama candidata; revisar/aprobar PR #164 validada con imagen real antes de publicación. Dictado espera prueba completa familiar; mantener la **Fase de uso prioritario**;
+4. probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -385,21 +386,21 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Trabajo actual:** Semilla 012 data-driven validada en rama, PR #164 lista para aprobación; Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Trabajo actual:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.9 |
+| **Versión** | 3.10 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Semilla 012 en desarrollo; Dictado pendiente de prueba completa familiar |
-| **PR On going** | PR #164 · Semilla 012 lista para aprobación/integración; #161/#163 integrados |
-| **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 publicadas; 012 candidata validada con imagen integrada |
+| **Trabajo On going** | Validación familiar de Semilla 012 y prueba completa de Dictado; sin desarrollo pendiente |
+| **PR On going** | Ninguno de desarrollo para estos frentes; #164 aprobado e integrado; #161/#163 integrados |
+| **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | PR #164/aprobación → integrar y verificar Pages → prueba familiar |
+| **Siguiente paso** | Prueba familiar de Semilla 012 y Dictado → documentar observaciones → ajustar si procede → validar estabilidad |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |

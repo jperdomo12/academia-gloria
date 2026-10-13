@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.3-rc |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Publicación aprobada de Semilla 012 mediante #164, Pages #769 `success`. Guía propietaria y web sincronizadas con 12 Semillas; nueva Semilla pendiente de validación familiar, sin declarar estabilidad. |
 | 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Explica Semilla 012 conforme a su SPEC aprobada y sincroniza la presentación web. Contenido candidato en rama; imagen externa integrada y verificada; candidata pendiente de aprobación/integración. |
 | 1.2 | 21/09/2026 | Product Owner + AI Collaborator | Incorpora las Semillas 010 y 011 a partir de necesidades familiares reales y amplía la Semilla 007 para reforzar pensamiento propio, autonomía y aprendizaje al probar la propia manera. Sincroniza el catálogo explicado a 11 Semillas activas. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Reorganiza la guía para que el lector comprenda primero propósito, uso, acompañamiento familiar/profesional y filosofía común; concentra después el detalle de las 9 Semillas en un único capítulo final, justo antes de `DECISIÓN`. |
@@ -473,8 +474,8 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.3-rc |
-| **Catálogo explicado** | 12 Semillas en catálogo candidato · 012 → 001; 012 pendiente de aprobación e integración |
+| **Versión** | 1.3 |
+| **Catálogo explicado** | 12 Semillas activas · 012 → 001; nueva Semilla pendiente de prueba familiar |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |
 | **No es** | Evaluación psicológica, diagnóstico ni instrumento clínico |

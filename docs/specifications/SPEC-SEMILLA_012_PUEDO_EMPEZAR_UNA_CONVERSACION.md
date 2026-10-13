@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` |
-| **Versión** | 1.1-rc |
-| **Estado** | CANDIDATA VALIDADA EN RAMA · PENDIENTE DE APROBACIÓN E INTEGRACIÓN |
+| **Versión** | 1.1 |
+| **Estado** | PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -17,12 +17,13 @@
 - `docs/standards/STD-LIA.md` · gobierna tono y acompañamiento de Lía.
 - `docs/product/PRODUCT_IDENTIDAD_VISUAL_Y_PERSONAJES.md` · gobierna continuidad visual.
 - `docs/FOUNDATION.md` · fuente fundacional vigente; `docs/vision/01_PRINCIPIOS_PEDAGOGICOS.md` es un puntero histórico.
-- `mi-universo/creciendo-por-dentro/semillas.json` · catálogo activo; catálogo candidato 1.10: contenido preparado; no incorporado todavía a main.
+- `mi-universo/creciendo-por-dentro/semillas.json` · catálogo activo; catálogo 1.10 con 12 Semillas activas, incluida 012 publicada mediante #164.
 
 ## 🕘 Historial de versiones
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678e…`; Pages #769 `success`. Imagen real y contenido data-driven publicados; Motor conservado. Validación familiar pendiente. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; imagen externa integrada y verificada en contexto; pendiente de aprobación/integración. Conserva diseño aprobado y validación real pendiente. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Diseño funcional aprobado para desarrollo e incorporado a main; todavía sin implementación. |
 
@@ -262,7 +263,7 @@ Nombre y ruta acordados:
 
 `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`
 
-Se utiliza de forma idéntica en `recursos.imagen` y en la guía web. El binario fue subido a main y se incorporó a la rama candidata desde `6df2e228…`; verificado en catálogo, bienvenida, situación y guía. La candidata está lista para revisión, todavía pendiente de aprobación e integración.
+Se utiliza de forma idéntica en `recursos.imagen` y en la guía web. El binario fue subido a main y se incorporó a la rama candidata desde `6df2e228…`; verificado en catálogo, bienvenida, situación y guía. Contenido e imagen están integrados mediante #164 y publicados; queda la validación familiar.
 
 ---
 
@@ -335,7 +336,7 @@ V1 funcional
 → versión estable
 ```
 
-**Verificación interna de la candidata:** JSON válido; 11 Semillas anteriores y familias intactas; contenido de 012 compatible con el contrato vigente. Recorrido con Motor real: filtro Comunicación, modelos antes de producción, cinco situaciones, incertidumbre en clase, palabras propias, ideas múltiples, frase breve, práctica sin grabar, guardado/historial simulados, entrada contextual por Misión y guía familiar con 012 primero. Catálogo, modelos y guía sin desbordamiento a 1280/768/390/320 px. Identidad y API simuladas, sin escrituras reales. No valida audio físico ni permisos/persistencia con cuentas reales. Imagen JPEG real verificada: 1536 × 1024, 391836 bytes; carga y encuadre correctos en catálogo, bienvenida, situación y guía. No requirió cambios de presentación.
+**Verificación interna del contenido publicado:** JSON válido; 11 Semillas anteriores y familias intactas; contenido de 012 compatible con el contrato vigente. Recorrido con Motor real: filtro Comunicación, modelos antes de producción, cinco situaciones, incertidumbre en clase, palabras propias, ideas múltiples, frase breve, práctica sin grabar, guardado/historial simulados, entrada contextual por Misión y guía familiar con 012 primero. Catálogo, modelos y guía sin desbordamiento a 1280/768/390/320 px. Identidad y API simuladas, sin escrituras reales. No valida audio físico ni permisos/persistencia con cuentas reales. Imagen JPEG real verificada: 1536 × 1024, 391836 bytes; carga y encuadre correctos en catálogo, bienvenida, situación y guía. No requirió cambios de presentación.
 
 La aprobación actual corresponde al **diseño funcional para desarrollo**, no significa que cada detalle quede congelado frente a evidencia de uso real.
 
@@ -347,8 +348,8 @@ La aprobación actual corresponde al **diseño funcional para desarrollo**, no s
 
 Estado de Desarrollo:
 
-> **CANDIDATA VALIDADA EN RAMA · PENDIENTE DE APROBACIÓN E INTEGRACIÓN**
+> **PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE**
 
-La candidata mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). Usa solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. No modifica JavaScript, CSS, identidad, historial ni contratos de Misiones.
+La implementación mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). Usa solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. No modifica JavaScript, CSS, identidad, historial ni contratos de Misiones.
 
-El diseño funcional continúa aprobado. No se declara incorporada a main ni estable hasta el cierre correspondiente.
+El diseño funcional continúa aprobado. PR #164 integrada en `2e12678ed44a89402f603516677e15f53929a36d` y publicada mediante Pages #769 (`success`). Queda la validación familiar de comprensión, voz y uso real; no se declara estabilidad.
