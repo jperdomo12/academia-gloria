@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3-rc |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
-| **Última actualización** | 21/09/2026 |
+| **Última actualización** | 13/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Explicación comprensible de las Semillas activas para familias y profesionales que acompañan al alumno |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Explica Semilla 012 conforme a su SPEC aprobada y sincroniza la presentación web. Contenido candidato en rama; imagen externa integrada y verificada; candidata pendiente de aprobación/integración. |
 | 1.2 | 21/09/2026 | Product Owner + AI Collaborator | Incorpora las Semillas 010 y 011 a partir de necesidades familiares reales y amplía la Semilla 007 para reforzar pensamiento propio, autonomía y aprendizaje al probar la propia manera. Sincroniza el catálogo explicado a 11 Semillas activas. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Reorganiza la guía para que el lector comprenda primero propósito, uso, acompañamiento familiar/profesional y filosofía común; concentra después el detalle de las 9 Semillas en un único capítulo final, justo antes de `DECISIÓN`. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Primera guía para familias y profesionales. Resume las 9 Semillas activas, de la más nueva a la más antigua, explicando situación, objetivo, práctica, aspectos observables y mensaje clave. |
@@ -108,6 +109,35 @@ El objetivo no es que el alumno responda “perfectamente”, sino que disponga 
 ## 🌱 6. Detalle de las Semillas activas
 
 Las Semillas se presentan de la más nueva a la más antigua para facilitar la lectura de la evolución reciente del módulo.
+
+### 012 · Puedo empezar una conversación
+
+**Situación que aborda**
+Querer hablar con una compañera en el colegio y no saber qué decir primero. El contexto es cotidiano y neutro: no presupone rechazo, exclusión ni ansiedad.
+
+**Objetivo principal**
+Reconocer varias maneras sencillas de iniciar una conversación: una pregunta, algo que está pasando, algo propio, un comentario o un interés en común. No existe una frase única o perfecta.
+
+**Cómo se practica**
+1. Ver modelos antes de elaborar una respuesta propia y elegir una forma que resulte cómoda.
+2. Practicar una situación por pantalla: clase, fin de semana, mochila, serie compartida y recreo.
+3. Elegir varias ideas para recordar.
+4. Preparar una frase modelo o con palabras propias para una posible conversación real, sin obligación de usarla después.
+
+El Motor habitual permite escribir o dictar palabras propias, escuchar la situación y la frase preparada, y practicar con o sin grabación. «No estoy segura todavía» es una salida válida en la situación de clase. No se exige memorizar frases ni producir respuestas largas.
+
+**Qué puede ser útil observar**
+- Si reconoce que una conversación también puede empezar con un comentario o algo propio.
+- Qué modelos le parecen naturales y cuáles adapta con sus palabras.
+- Si las situaciones breves y los ejemplos previos facilitan la comprensión.
+- Si puede preparar una frase sencilla sin buscar perfección ni sentirse obligada a usarla.
+
+**Mensaje clave**
+> No necesito decir algo perfecto. Puedo empezar.
+
+No se evalúa habilidad social ni se interpretan elecciones como diagnóstico. Mantener una conversación durante varios turnos queda fuera del alcance.
+
+---
 
 ### 011 · Puedo aceptar apoyo y seguir siendo capaz
 **Familia:** Autoestima · **Duración estimada:** 8 min
@@ -443,8 +473,8 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.2 |
-| **Catálogo explicado** | 11 Semillas activas · 011 → 001 |
+| **Versión** | 1.3-rc |
+| **Catálogo explicado** | 12 Semillas en catálogo candidato · 012 → 001; 012 pendiente de aprobación e integración |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |
 | **No es** | Evaluación psicológica, diagnóstico ni instrumento clínico |
