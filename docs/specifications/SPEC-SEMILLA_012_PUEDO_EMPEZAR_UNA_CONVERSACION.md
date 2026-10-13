@@ -5,7 +5,7 @@
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` |
 | **Versión** | 1.1-rc |
-| **Estado** | CONTENIDO CANDIDATO EN RAMA · IMAGEN E INTEGRACIÓN PENDIENTES |
+| **Estado** | CANDIDATA VALIDADA EN RAMA · PENDIENTE DE APROBACIÓN E INTEGRACIÓN |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -23,7 +23,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
-| 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; binario externo pendiente. Conserva diseño aprobado y validación real pendiente. |
+| 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; imagen externa integrada y verificada en contexto; pendiente de aprobación/integración. Conserva diseño aprobado y validación real pendiente. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Diseño funcional aprobado para desarrollo e incorporado a main; todavía sin implementación. |
 
 ---
@@ -262,7 +262,7 @@ Nombre y ruta acordados:
 
 `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`
 
-Se utiliza de forma idéntica en `recursos.imagen` y en la guía web. No se publica la candidata como técnicamente lista hasta verificar el binario real en catálogo, bienvenida y situación.
+Se utiliza de forma idéntica en `recursos.imagen` y en la guía web. El binario fue subido a main y se incorporó a la rama candidata desde `6df2e228…`; verificado en catálogo, bienvenida, situación y guía. La candidata está lista para revisión, todavía pendiente de aprobación e integración.
 
 ---
 
@@ -335,7 +335,7 @@ V1 funcional
 → versión estable
 ```
 
-**Verificación interna de la candidata:** JSON válido; 11 Semillas anteriores y familias intactas; contenido de 012 compatible con el contrato vigente. Recorrido con Motor real: filtro Comunicación, modelos antes de producción, cinco situaciones, incertidumbre en clase, palabras propias, ideas múltiples, frase breve, práctica sin grabar, guardado/historial simulados, entrada contextual por Misión y guía familiar con 012 primero. Catálogo, modelos y guía sin desbordamiento a 1280/768/390/320 px. Identidad y API simuladas, sin escrituras reales. No valida audio físico ni permisos/persistencia con cuentas reales. Imagen y revisión de su encuadre en contexto pendientes.
+**Verificación interna de la candidata:** JSON válido; 11 Semillas anteriores y familias intactas; contenido de 012 compatible con el contrato vigente. Recorrido con Motor real: filtro Comunicación, modelos antes de producción, cinco situaciones, incertidumbre en clase, palabras propias, ideas múltiples, frase breve, práctica sin grabar, guardado/historial simulados, entrada contextual por Misión y guía familiar con 012 primero. Catálogo, modelos y guía sin desbordamiento a 1280/768/390/320 px. Identidad y API simuladas, sin escrituras reales. No valida audio físico ni permisos/persistencia con cuentas reales. Imagen JPEG real verificada: 1536 × 1024, 391836 bytes; carga y encuadre correctos en catálogo, bienvenida, situación y guía. No requirió cambios de presentación.
 
 La aprobación actual corresponde al **diseño funcional para desarrollo**, no significa que cada detalle quede congelado frente a evidencia de uso real.
 
@@ -347,7 +347,7 @@ La aprobación actual corresponde al **diseño funcional para desarrollo**, no s
 
 Estado de Desarrollo:
 
-> **CONTENIDO CANDIDATO EN RAMA · IMAGEN E INTEGRACIÓN PENDIENTES**
+> **CANDIDATA VALIDADA EN RAMA · PENDIENTE DE APROBACIÓN E INTEGRACIÓN**
 
 La candidata mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). Usa solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. No modifica JavaScript, CSS, identidad, historial ni contratos de Misiones.
 
