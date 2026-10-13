@@ -25,7 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.2 | 13/10/2026 | Product Owner + AI Collaborator | Añade acceso directo desde las tarjetas de Mi Universo, solicitado por Juan tras revisar #168. Reutiliza diseño y destino de Consulta educativa; no modifica permisos ni motor. |
+| 1.2 | 13/10/2026 | Product Owner + AI Collaborator | Añade acceso directo en Mi Universo, debajo de Nueva misión como enlace de botón secundario, solicitado por Juan tras revisar #168. Reutiliza diseño y destino; no modifica permisos ni motor. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata en rama: entrada de consulta con motor compartido, históricos de solo lectura, protección de mutaciones y redacción aprobada; pendiente de revisión e integración. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada para desarrollo; no implementada. |
@@ -277,4 +277,4 @@ Regresión: `dictados-modelo.test.mjs`, `dictados-seguimiento.test.mjs`, `dictad
 
 ### Acceso directo desde Mi Universo
 
-Además del menú compartido, `mi-universo/index.html` presenta la tarjeta **Consulta educativa** en Mis mundos. Abre `consulta-educativa/`, con el mismo contexto de Persona Activa y la misma comprobación de relación/permisos del destino. Reutiliza las tarjetas existentes sin CSS, lógica o autorización adicional.
+Además del menú compartido, `mi-universo/index.html` presenta el enlace **Consulta educativa** debajo de **Nueva misión**, dentro de la cabecera, con diseño de botón secundario. Abre `consulta-educativa/`, con el mismo contexto de Persona Activa y la misma comprobación de relación/permisos del destino. Reutiliza el diseño existente sin CSS, lógica o autorización adicional.
