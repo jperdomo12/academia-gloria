@@ -12,7 +12,7 @@ const preview = parametros.get('modo') === 'vista_previa';
 let identidad = null, servicios = null, aventura = null, sesion = null, claveBorrador = '';
 let borradorDisponible = null, historial = [], guardando = false, guardada = false, listo = false;
 let hablando = false, turnoVoz = 0, escuchado = false, palabraActiva = null, escrituraLocalFallo = false;
-let misionActual = null, aventuraAsignada = null, registroPendiente = null;
+let misionActual = null, aventuraAsignada = null, registroPendiente = null, apiMisiones = null;
 const aventuraDisponible = valor => valor?.aventuraPersonalizada || porId(valor?.aventuraId);
 let lecturaActual = null, faseMostrada = null, historiaLista = false;
 const etiquetaEstado = { correcta:'✓ Igual', revisar:'✎ Corregir', omitida:'＋ Faltó', duda:'? Duda' };
@@ -26,11 +26,48 @@ function enfocar(id) { $(id)?.focus({ preventScroll: true }); }
 function cambiarSeccion(id) {
   document.querySelector('.pestanas').before($('mensaje'));
   document.body.classList.toggle('en-actividad', id === 'actividad');
-  if (id !== 'actividad') faseMostrada = null;
+  if (id !== 'actividad') {
+    faseMostrada = null;
+    document.querySelectorAll('.pasos > span').forEach((el, i) => {
+      el.classList.toggle('actual', id === 'catalogo' && i === 0);
+      if (id === 'catalogo' && i === 0) el.setAttribute('aria-current', 'step');
+      else el.removeAttribute('aria-current');
+    });
+  }
+  document.querySelector('.pasos').hidden = id === 'historial';
   ['catalogo','actividad','historial'].forEach(nombre => $(nombre).hidden = nombre !== id);
   $('verCatalogo').setAttribute('aria-pressed', String(id === 'catalogo'));
   $('verHistorial').setAttribute('aria-pressed', String(id === 'historial'));
 }
+function actualizarMision() {
+  $('misionDictado').hidden = !misionActual;
+  if (!misionActual) return;
+  $('tituloMisionDictado').textContent = misionActual.titulo;
+  $('descripcionMisionDictado').textContent = misionActual.presentacionAlumno?.descripcionMision ||
+    'Prepara tu cuaderno. Al guardar tu revisión, la Misión pasará a tu familia.';
+  const esperando = ['pendiente_validacion', 'completada_pendiente_validacion'].includes(misionActual.estado);
+  $('estadoMisionDictado').textContent = esperando ? '✓ Trabajo guardado · Esperando a mi familia' :
+    misionActual.estado === 'necesita_ayuda' ? '🤝 Tu familia sabe que necesitas ayuda. Puedes continuar con calma.' :
+    '0 de 1 intentos revisados · No hay porcentaje mínimo.';
+  $('ayudaMisionDictado').hidden = esperando;
+}
+
+$('ayudaMisionDictado').addEventListener('click', async evento => {
+  if (!misionActual || !apiMisiones || guardando) return;
+  const boton = evento.currentTarget;
+  boton.disabled = true;
+  try {
+    conservar(); detener();
+    const contexto = await servicios.contexto.inicializar({ forzarRecarga: true });
+    if (contexto.personaActiva.personaId !== identidad.personaId || contexto.usuario.userId !== identidad.actorUserId) {
+      throw Error('La Persona Activa ha cambiado. Vuelve a abrir la Misión.');
+    }
+    await apiMisiones.cambiarEstado(misionActual.id, 'necesita_ayuda');
+    misionActual.estado = 'necesita_ayuda'; actualizarMision();
+  } catch (error) { mensaje(`No pudimos avisar a tu familia: ${error.message}`, true); }
+  finally { boton.disabled = false; }
+});
+
 function uuid() {
   return crypto.randomUUID ? crypto.randomUUID() : `dictado-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
@@ -132,6 +169,11 @@ function catalogo() {
 }
 function empezar(id) {
   if (!listo || guardando) return;
+  if (misionActual && (!['pendiente', 'asignada', 'en_curso', 'necesita_ayuda'].includes(misionActual.estado) ||
+      id !== aventuraAsignada?.id)) {
+    mensaje('Esta Misión tiene una actividad concreta. Continúa con la aventura asignada o consulta el trabajo guardado.', true);
+    return;
+  }
   if (borradorDisponible && !confirm('Hay una aventura sin terminar. ¿Quieres reemplazar su borrador por una nueva?')) return;
   detener(); aventura = aventuraAsignada?.id === id ? aventuraAsignada : porId(id); guardada = false; registroPendiente = null; escuchado = false; historiaLista = false;
   sesion = nuevaSesion(aventura, uuid());
@@ -215,7 +257,7 @@ function resultadoHtml() {
     <p class="ayuda">Las correcciones se guardan como aprendizaje posterior. El porcentaje del dictado original se conserva.</p>
     <label>¿Cómo revisaste? <select id="acompanamiento" ${guardada?'disabled':''}><option value="">Elige una opción</option><option value="sola" ${sesion.acompanamiento==='sola'?'selected':''}>A solas</option><option value="acompanada" ${sesion.acompanamiento==='acompanada'?'selected':''}>Con ayuda de alguien</option></select></label>
     <div class="acciones"><button id="guardar" class="primario" ${guardada||guardando?'disabled':''}>${guardada?(preview?'✓ Prueba terminada · sin guardar':'✓ Aventura guardada'):preview?'🎉 Terminar vista previa':'💾 Guardar mi aventura'}</button>
-    ${registroPendiente ? '<button id="reintentarVinculo">Reintentar vínculo con mi Misión</button>' : ''}${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? 'Cerrar y volver a mis aventuras' : 'Elegir otra aventura'}</button></div>`;
+    ${registroPendiente ? '<button id="reintentarVinculo">Reintentar vínculo con mi Misión</button>' : ''}${!guardada ? '<button id="volverRevision" class="suave">Volver a comprobar mi revisión</button>':''}<button id="otraAventura">${guardada ? (misionActual && !registroPendiente ? 'Volver a Mi Camino' : 'Cerrar y volver a mis aventuras') : 'Elegir otra aventura'}</button></div>`;
 }
 function avanzarRevision() {
   conservar(); detener();
@@ -247,6 +289,7 @@ async function guardar() {
     guardada = true; borradorDisponible = registroPendiente ? sesion : null;
     // Un fallo de limpieza local no convierte un guardado remoto correcto en error.
     try { if (registroPendiente) localStorage.setItem(claveBorrador, JSON.stringify(sesion)); else localStorage.removeItem(claveBorrador); } catch { /* El intento remoto conserva un ID estable. */ }
+    if (misionActual && !registroPendiente) { misionActual.estado = 'pendiente_validacion'; actualizarMision(); }
     mensaje(registroPendiente ? 'Tu dictado está guardado, pero no se pudo vincular a la Misión. Puedes reintentar el vínculo sin repetir el dictado.' : sesion.misionId ? 'Dictado guardado y enviado a revisión familiar de la Misión.' : 'Tu aventura está guardada en el historial de la Academia.');
     mostrarCelebracion({mostrarGuacamayas:false,titulo:'¡Aventura guardada!',mensaje:'Has escrito, revisado y aprendido algo nuevo.'});
   } catch (error) {
@@ -267,7 +310,7 @@ async function verHistorial(sesionId = '') {
     $('sesiones').innerHTML = historial.length ? historial.map((s,i)=>{
       const d=s.resumen?.dictado;
       if (!d) return '';
-      return `<article class="historia"><div><h3>${html(s.tituloActividad)}</h3><p>Nivel ${Number(d.nivel)} · ${Number(d.porcentaje)} % · ${d.acompanamiento==='acompanada'?'Revisión acompañada':'Autoevaluación a solas'}</p><small>${html(fechaSesion(s))}</small></div><button data-historico="${i}">Ver mi trabajo</button></article>`;
+      return `<article class="historia"><div><h3>${html(s.tituloActividad)}</h3><p>${d.tipoPractica==='refuerzo'?'Práctica breve':'Aventura completa'} · ${Number(d.total)} palabras · Nivel ${Number(d.nivel)} · ${Number(d.porcentaje)} % · ${d.acompanamiento==='acompanada'?'Revisión acompañada':'Autoevaluación a solas'}</p><small>${html(fechaSesion(s))}</small></div><button data-historico="${i}">Ver mi trabajo</button></article>`;
     }).join(''):'Todavía no hay dictados guardados. Tu primera aventura te espera.';
     if (sesionId) {
       let s=historial.find(item=>item.id===sesionId);
@@ -285,7 +328,7 @@ function detalle(s) {
     ${(d.frases||[]).map((f,fi)=>`<div class="historico-frase">${palabrasFrase([f]).map((p,pi)=>`<span class="${html(d.revision?.[fi]?.palabras?.[pi]||'')}">${html(p)} <small>${html(etiquetaEstado[d.revision?.[fi]?.palabras?.[pi]]||'')}</small></span>`).join(' ')}<p class="ayuda">Signos: ${d.revision?.[fi]?.puntuacion==='correcta'?'iguales':'por corregir'}.</p></div>`).join('')}
     <p>Palabras practicadas y corregidas después: ${(d.correcciones||[]).map(clave=>{const [fi,pi]=clave.split(':').map(Number);return html(palabraSinSignos(palabrasFrase([d.frases[fi]])[pi]));}).join(', ')||'Ninguna registrada'}.</p>
     <p class="ayuda">Las correcciones posteriores no cambian el resultado original.</p>
-    ${identidad?.puedeGuardar && porId(d.aventuraId)?`<button data-aventura="${html(d.aventuraId)}">Hacer un nuevo intento</button>`:''}</article>`;
+    ${identidad?.puedeGuardar && porId(d.aventuraId) && (!misionActual || (d.aventuraId === aventuraAsignada?.id && ['pendiente','asignada','en_curso','necesita_ayuda'].includes(misionActual.estado)))?`<button data-aventura="${html(d.aventuraId)}">Hacer un nuevo intento</button>`:''}</article>`;
   const seleccionadas=(d.practica||[]).map(clave=>{const [fi,pi]=clave.split(':').map(Number);return palabraSinSignos(palabrasFrase([d.frases[fi]])[pi]);});
   const practica=document.createElement('p');practica.textContent=`Palabras elegidas para practicar: ${seleccionadas.join(', ')||'Ninguna seleccionada'}.`;$('detalle').append(practica);
   enfocar('tituloDetalle'); $('detalle').scrollIntoView({block:'start',behavior:'smooth'});
@@ -394,9 +437,9 @@ document.addEventListener('click',async evento=>{
     else{mensaje('Elige hasta tres palabras para practicar con calma.');return;}
     conservar();render();document.querySelector(`[data-practica="${k}"]`)?.focus({preventScroll:true});return;
   }
-  if(b.id==='reintentarVinculo' && registroPendiente){b.disabled=true;try{const r=await servicios.guardar(registroPendiente);if(!r.evidenciaMision?.registrada)throw Error('El dictado sigue guardado. La Misión no está disponible o el vínculo no pudo completarse; pide ayuda a tu familia.');registroPendiente=null;borradorDisponible=null;try{localStorage.removeItem(claveBorrador);}catch{}mensaje('Dictado vinculado a la Misión para revisión familiar.');render();}catch(e){mensaje(e.message,true);b.disabled=false;}return;}
+  if(b.id==='reintentarVinculo' && registroPendiente){b.disabled=true;try{const r=await servicios.guardar(registroPendiente);if(!r.evidenciaMision?.registrada)throw Error('El dictado sigue guardado. La Misión no está disponible o el vínculo no pudo completarse; pide ayuda a tu familia.');registroPendiente=null;borradorDisponible=null;if(misionActual){misionActual.estado='pendiente_validacion';actualizarMision();}try{localStorage.removeItem(claveBorrador);}catch{}mensaje('Dictado vinculado a la Misión para revisión familiar.');render();}catch(e){mensaje(e.message,true);b.disabled=false;}return;}
   if(b.id==='guardar'){await guardar();return;}
-  if(b.id==='otraAventura'){detener();conservar();catalogo();}
+  if(b.id==='otraAventura'){detener();conservar();if(misionActual&&guardada&&!registroPendiente){document.querySelector('[data-nav-volver]')?.click();return;}catalogo();}
 });
 window.addEventListener('pagehide',()=>{conservar();detener();});
 window.addEventListener('beforeunload',evento=>{conservar();if(guardando || (escrituraLocalFallo&&sesion&&!guardada)){evento.preventDefault();evento.returnValue='';}});
@@ -405,7 +448,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){conservar(
 async function iniciar() {
   catalogo();
   if(preview) {
-    $('modo').hidden=false;$('modo').textContent='Vista previa V1 · Revisión 6 · Prueba libre sin guardar resultados.';
+    $('modo').hidden=false;$('modo').textContent='Vista previa · Reparación de estándares · Prueba libre sin guardar resultados.';
     listo=true;$('persona').textContent='Tu aventura, a tu ritmo';catalogo();
     if(!LectorTexto.disponible())mensaje('La voz no está disponible en este navegador. Abre esta vista previa en un navegador con lectura en voz alta.',true);
     return;
@@ -419,25 +462,27 @@ async function iniciar() {
     const ctx=await ContextoUsuario.inicializar();
     identidad={personaId:ctx.personaActiva.personaId,actorUserId:ctx.usuario.userId,puedeGuardar:ctx.esPersonaPropia||['gestion','administracion'].includes(ctx.nivelAcceso)};
     servicios={contexto:ContextoUsuario,guardar:api.guardarSesionAcademica,leer:api.leerSesionesAcademicas,leerUna:api.leerSesionAcademica};
+    $('bienvenidaPersona').textContent=`Hola, ${ctx.personaActiva.nombreVisible || ctx.personaActiva.nombre || 'bienvenida'} 😊 Elige una historia y deja que tus palabras cobren vida en el cuaderno.`;
     $('persona').textContent=`El rincón de ${ctx.personaActiva.nombreVisible||ctx.personaActiva.nombre||'tu Persona Activa'}`;
     const misionId=parametros.get('misionId');
-    if(misionId && !parametros.get('sesionId')){
+    if(misionId && !parametros.get('sesionId') && parametros.get('vista') !== 'historial'){
       const {Academia}=await import('../../compartido/api/academia.js');
-      misionActual=await Academia.tareas.obtener(misionId);
+      apiMisiones = Academia.tareas;
+      misionActual=await apiMisiones.obtener(misionId);
       if(!esMisionDictado(misionActual))throw Error('La Misión no corresponde a un dictado.');
       if(!['pendiente','asignada','en_curso','necesita_ayuda'].includes(misionActual.estado))throw Error('Esta Misión ya no está activa. Consulta su trabajo realizado o pide ayuda a tu familia.');
       if(ctx.esPersonaPropia && ctx.nivelAcceso==='consulta' && !misionActual.visibleParaAlumno)throw Error('La familia todavía no ha activado esta Misión.');
       const origenId=misionActual.evidencia.configuracion.sesionOrigenId;
       aventuraAsignada=aventuraMision(misionActual,origenId?await servicios.leerUna(origenId):null);
       $('nivel').value='todos';$('nivel').disabled=true;
-      $('modo').hidden=false;$('modo').textContent=`Misión: ${misionActual.titulo}. Al guardar, pasará a revisión familiar.`;
+      actualizarMision();
     }
     claveBorrador=`academia.dictados.v1.${identidad.actorUserId}.${identidad.personaId}${misionActual?'.'+misionActual.id:''}`;
     listo=identidad.puedeGuardar;
     if(listo)recuperar();
     else{$('modo').hidden=false;$('modo').textContent='Acceso de consulta: puedes leer el historial. Para practicar sin guardar, abre la vista previa.';}
     catalogo();
-    if(parametros.get('sesionId'))await verHistorial(parametros.get('sesionId'));
+    if(parametros.get('sesionId') || parametros.get('vista') === 'historial')await verHistorial(parametros.get('sesionId') || '');
     if(!LectorTexto.disponible())mensaje('La voz no está disponible en este navegador. Puedes consultar el historial; para un dictado usa un navegador con lectura en voz alta.',true);
   } catch(error) {
     $('modo').hidden=false;

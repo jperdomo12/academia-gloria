@@ -1,18 +1,91 @@
-import {Academia} from '../../compartido/api/academia.js';
-import {ContextoUsuario} from '../../compartido/js/contexto-usuario.js';
-import {leerSesionesAcademicas} from '../../compartido/js/sesiones-academicas.js';
-import {AVENTURAS} from '../rincon-dictados/aventuras.js';
-import {reales,objetivos,prepararMision,esMisionDictado,fechaDictado} from '../rincon-dictados/seguimiento.js';
-const $=id=>document.getElementById(id);const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let sesiones=[],tareas=[],identidad='',ocupado=false;
-async function permiso(){const c=await ContextoUsuario.inicializar({forzarRecarga:true});if(!['gestion','administracion'].includes(c.nivelAcceso))throw Error('Este espacio requiere acceso de gestión familiar.');const clave=c.usuario.userId+':'+c.personaActiva.personaId;if(identidad&&clave!==identidad)throw Error('Ha cambiado la Persona Activa. Recarga la página.');identidad=clave;}
-async function cargar(){if(ocupado)return;ocupado=true;try{await permiso();[sesiones,tareas]=await Promise.all([leerSesionesAcademicas({actividadId:'rincon-dictados',maximo:200}),Academia.tareas.leer()]);sesiones=reales(sesiones,tareas).sort((a,b)=>fechaDictado(b)-fechaDictado(a));const latest=new Map();sesiones.forEach(s=>{const texto=s.resumen.dictado.textoOriginal;if(!latest.has(texto))latest.set(texto,s)});$('dictadoIntento').innerHTML='<option value="">Elige un intento reciente</option>'+[...latest.values()].filter(s=>objetivos(s).length).map(s=>`<option value="${esc(s.id)}">${esc(s.tituloActividad)} · ${s.resumen.dictado.porcentaje} % · ${esc(new Date(fechaDictado(s)).toLocaleDateString('es-ES'))}</option>`).join('');$('dictadoObjetivos').innerHTML='';$('dictadoEstado').textContent=sesiones.length?'Revisa las diferencias del intento original. Son señales declaradas, no un diagnóstico.':'Todavía no hay dictados reales revisados. Puedes crear una primera Misión desde Nueva Misión.';renderMisiones();}catch(e){$('dictadoEstado').textContent=e.message;}finally{ocupado=false;}}
-function renderMisiones(){$('dictadoMisiones').innerHTML=tareas.filter(esMisionDictado).slice(0,30).map(t=>`<article class="superficie"><strong>${esc(t.titulo)}</strong><p>${esc(t.estado)} · ${t.esDatoPrueba?'Datos de prueba · ':''}${t.visibleParaAlumno?'Visible en Mi Camino':'Oculta en Mi Camino'}</p>${['pendiente','asignada','en_curso','necesita_ayuda'].includes(t.estado)?`<button class="btn secundaria" data-dictado-visible="${esc(t.id)}">${t.visibleParaAlumno?'Ocultar':'Mostrar en Mi Camino'}</button>`:''}</article>`).join('')||'<p>No hay misiones de Dictado preparadas.</p>';}
-async function crear(origen,seleccion,button){if(ocupado)return;ocupado=true;button.disabled=true;try{await permiso();const propuesta=prepararMision($('dictadoAventura').value,origen,seleccion);const actuales=await Academia.tareas.leer();if(actuales.some(t=>esMisionDictado(t)&&!['completada','cancelada'].includes(t.estado)&&t.evidencia.configuracion.focoDictado===propuesta.evidencia.configuracion.focoDictado))throw Error('Ya existe una Misión abierta para esta aventura o selección. Revísala en la lista.');await Academia.tareas.crear(propuesta);$('dictadoCrearEstado').textContent='Misión preparada y oculta. Revísala en la lista de Misiones y decide cuándo mostrarla en Mi Camino.';$('dictadoEstado').textContent=$('dictadoCrearEstado').textContent;tareas=await Academia.tareas.leer();renderMisiones();}catch(e){$('dictadoCrearEstado').textContent=e.message;$('dictadoEstado').textContent=e.message;}finally{ocupado=false;button.disabled=false;}}
-$('dictadoAventura').innerHTML=AVENTURAS.map(a=>`<option value="${a.id}">Nivel ${a.nivel} · ${esc(a.titulo)}</option>`).join('');
-$('crearMisionDictado').onclick=e=>crear(null,[],e.currentTarget);
-$('actualizarDictados').onclick=cargar;
-$('dictadoIntento').onchange=()=>{const s=sesiones.find(s=>s.id===$('dictadoIntento').value);$('dictadoObjetivos').innerHTML=s?objetivos(s).map(o=>`<label style="display:block;padding:10px"><input type="checkbox" value="${esc(o.clave)}"> ${o.tipo==='frase'?'Frase':'Palabra'}: ${esc(o.texto)}</label>`).join(''):'';};
-$('crearRefuerzoDictado').onclick=e=>{const s=sesiones.find(s=>s.id===$('dictadoIntento').value);if(!s){$('dictadoEstado').textContent='Elige un intento para revisar sus diferencias.';return;}crear(s,[...$('dictadoObjetivos').querySelectorAll('input:checked')].map(x=>x.value),e.currentTarget);};
-$('dictadoMisiones').onclick=async e=>{const b=e.target.closest('[data-dictado-visible]');if(!b||ocupado)return;ocupado=true;b.disabled=true;try{await permiso();const t=tareas.find(t=>t.id===b.dataset.dictadoVisible);await Academia.tareas.actualizar(t.id,{visibleParaAlumno:!t.visibleParaAlumno});t.visibleParaAlumno=!t.visibleParaAlumno;renderMisiones();}catch(e){$('dictadoEstado').textContent=e.message;}finally{ocupado=false;b.disabled=false;}};
-const obs=new MutationObserver(()=>{if(!$('panelRefuerzos').classList.contains('hidden'))cargar();});obs.observe($('panelRefuerzos'),{attributes:true,attributeFilter:['class']});
+/* Observaciones de Dictado: selecciona evidencia y prepara el formulario común.
+ * La creación, edición y visibilidad pertenecen a Gestión de Misiones.
+ */
+import { Academia } from '../../compartido/api/academia.js';
+import { ContextoUsuario } from '../../compartido/js/contexto-usuario.js';
+import { leerSesionesAcademicas } from '../../compartido/js/sesiones-academicas.js';
+import { reales, objetivos, prepararMision, fechaDictado } from '../rincon-dictados/seguimiento.js';
+
+const $ = id => document.getElementById(id);
+const escapar = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+}[c]));
+let sesiones = [];
+let identidad = '';
+let ocupado = false;
+
+async function permiso() {
+  const contexto = await ContextoUsuario.inicializar({ forzarRecarga: true });
+  if (!['gestion', 'administracion'].includes(contexto.nivelAcceso)) {
+    throw Error('Este espacio requiere acceso de gestión familiar.');
+  }
+  const clave = contexto.usuario.userId + ':' + contexto.personaActiva.personaId;
+  if (identidad && clave !== identidad) throw Error('Ha cambiado la Persona Activa. Recarga la página.');
+  identidad = clave;
+}
+
+async function cargar() {
+  if (ocupado) return;
+  ocupado = true;
+  const intentoElegido = $('dictadoIntento').value;
+  const elegidas = [...$('dictadoObjetivos').querySelectorAll('input:checked')].map(input => input.value);
+  $('actualizarDictados').disabled = true;
+  $('dictadoIntento').disabled = true;
+  $('crearRefuerzoDictado').disabled = true;
+  $('dictadoEstado').textContent = 'Consultando los dictados revisados…';
+  try {
+    await permiso();
+    const [resultados, tareas] = await Promise.all([
+      leerSesionesAcademicas({ actividadId: 'rincon-dictados', maximo: 200 }),
+      Academia.tareas.leer()
+    ]);
+    sesiones = reales(resultados, tareas).sort((a, b) => fechaDictado(b) - fechaDictado(a));
+    const recientes = new Map();
+    sesiones.forEach(s => {
+      const texto = s.resumen.dictado.textoOriginal;
+      if (!recientes.has(texto)) recientes.set(texto, s);
+    });
+    $('dictadoIntento').innerHTML = '<option value="">Elige un intento reciente</option>' +
+      [...recientes.values()].filter(s => objetivos(s).length).map(s =>
+        `<option value="${escapar(s.id)}">${escapar(s.tituloActividad)} · ${s.resumen.dictado.porcentaje} % · ${escapar(new Date(fechaDictado(s)).toLocaleDateString('es-ES'))}</option>`
+      ).join('');
+    $('dictadoIntento').value = intentoElegido;
+    mostrarObjetivos(elegidas);
+    $('dictadoEstado').textContent = sesiones.length
+      ? 'Revisa las diferencias del intento original. Son señales declaradas, no un diagnóstico.'
+      : 'Todavía no hay dictados reales revisados. Puedes preparar una aventura desde Nueva Misión.';
+  } catch (error) {
+    $('dictadoEstado').textContent = error.message;
+  } finally {
+    ocupado = false;
+    $('actualizarDictados').disabled = false;
+    $('dictadoIntento').disabled = false;
+    $('crearRefuerzoDictado').disabled = false;
+  }
+}
+
+$('actualizarDictados').onclick = cargar;
+function mostrarObjetivos(elegidas = []) {
+  const sesion = sesiones.find(s => s.id === $('dictadoIntento').value);
+  $('dictadoObjetivos').innerHTML = sesion ? objetivos(sesion).map(o =>
+    `<label class="dictado-objetivo"><input type="checkbox" value="${escapar(o.clave)}" ${elegidas.includes(o.clave) ? 'checked' : ''}> ${o.tipo === 'frase' ? 'Frase' : 'Palabra'}: ${escapar(o.texto)}</label>`
+  ).join('') : '';
+}
+$('dictadoIntento').onchange = () => mostrarObjetivos();
+$('crearRefuerzoDictado').onclick = async () => {
+  if (ocupado) return;
+  try {
+    await permiso();
+    const sesion = sesiones.find(s => s.id === $('dictadoIntento').value);
+    if (!sesion) throw Error('Elige un intento para revisar sus diferencias.');
+    const seleccion = [...$('dictadoObjetivos').querySelectorAll('input:checked')].map(x => x.value);
+    const propuesta = prepararMision('', sesion, seleccion);
+    document.dispatchEvent(new CustomEvent('academia:preparar-dictado', { detail: propuesta }));
+  } catch (error) { $('dictadoEstado').textContent = error.message; }
+};
+let abierto = false;
+new MutationObserver(() => {
+  const visible = !$('panelRefuerzos').classList.contains('hidden');
+  if (visible && !abierto) cargar();
+  abierto = visible;
+}).observe($('panelRefuerzos'), { attributes: true, attributeFilter: ['class'] });
