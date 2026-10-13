@@ -1,7 +1,23 @@
 // Contratos de Dictado sobre sesiones y Misiones compartidas. Sin acceso a datos aquí.
 import {porId} from './aventuras.js';
 import {palabrasFrase, palabraSinSignos} from './modelo.js';
-export const esMisionDictado = t => t?.tipo === 'repaso_academico' && t.evidencia?.tipo === 'dictado';
+export const esMisionDictado = tarea => tarea?.evidencia?.tipo === 'dictado' && (
+  (tarea.tipo === 'actividad_modulo' && tarea.modulo === 'rincon-dictados') ||
+  (tarea.tipo === 'repaso_academico' && tarea.modulo === 'libre') // V1 publicada: sin migración.
+);
+
+export function validarIntentoMision(tarea, dictado, origen = null) {
+  const aventura = aventuraMision(tarea, origen);
+  const configuracion = tarea.evidencia.configuracion;
+  const texto = aventura.frases.map(frase => frase.join(' ')).join(' ');
+  return dictado?.completa === true && dictado.aventuraId === aventura.id &&
+    dictado.textoOriginal === texto &&
+    dictado.focoDictado === configuracion.focoDictado &&
+    (dictado.sesionOrigenId || '') === (configuracion.sesionOrigenId || '') &&
+    JSON.stringify([...(dictado.objetivos || [])].sort()) ===
+      JSON.stringify([...(configuracion.objetivos || [])].sort());
+}
+
 export const fechaDictado = s => s.completadaEn?.toMillis?.() || s.createdAt?.toMillis?.() || Date.parse(s.finCliente || s.inicioCliente) || 0;
 export function reales(sesiones, tareas=[]) {
  const prueba=new Set(tareas.filter(t=>t.esDatoPrueba).map(t=>t.id));
@@ -26,13 +42,63 @@ export function aventuraMision(tarea, origen) {
  const elegidos=claves.map(k=>posibles.find(p=>p.clave===k));if(elegidos.some(x=>!x))throw Error('Los objetivos ya no coinciden con el intento original.');
  return {id:`refuerzo-${tarea.id}`,version:'1',nivel:origen.resumen.dictado.nivel,titulo:'Mi práctica de dictado',descripcion:'Escucha y escribe unas pocas palabras o frases de tu práctica.',icono:'✏️',categoria:'Práctica',color:'menta',objetivo:'Practicar a partir de mi revisión',frases:elegidos.map(x=>[x.texto]),sesionOrigenId:origen.id,objetivos:claves};
 }
-export function prepararMision(aventuraId, origen=null, seleccion=[]) {
- const a=porId(aventuraId);if(!a&&!origen)throw Error('Elige una aventura.');
- const claves=[...new Set(seleccion)].sort();
- if(origen&&(!claves.length||claves.length>3||claves.some(k=>!objetivos(origen).some(o=>o.clave===k))))throw Error('Selecciona entre uno y tres objetivos de este intento.');
- const foco=origen?`refuerzo:${origen.id}:${claves.join(',')}`:`aventura:${a.id}`;
- const titulo=origen?'Dictado · palabras y frases para practicar':`Dictado · ${a.titulo}`;
- return {titulo,descripcion:'Escuchar, escribir en papel y revisar el intento original.',tipo:'repaso_academico',modulo:'libre',cursoReferencia:'6',materia:'Lengua',tema:'Dictados',destinoUrl:'../rincon-dictados/',objetivo:'Sé qué hice bien y sé qué puedo mejorar.',criterioFinalizacion:'Guardar un dictado revisado. No se exige un porcentaje mínimo; la familia revisará el trabajo.',criterioCumplimiento:{tipo:'cantidad',modulo:'libre',evidenciaTipo:'sesion_academica',cantidadObjetivo:1,filtros:{actividadId:'rincon-dictados',focoDictado:foco}},requiereRevision:true,visibleParaAlumno:false,estado:'pendiente',ordenMision:9999,prioridad:'normal',progreso:{cantidadObjetivo:1},presentacionAlumno:{icono:'✏️',tituloMision:titulo,descripcionMision:'Prepara tu cuaderno. Escucharemos y escribiremos a tu ritmo.',mensaje:'Puedes repetir y pedir ayuda.'},evidencia:{tipo:'dictado',modulo:'libre',referenciaId:origen?.id||a.id,resumen:titulo,configuracion:{aventuraId:origen?.resumen.dictado.aventuraId||a.id,sesionOrigenId:origen?.id||'',objetivos:claves,focoDictado:foco}}};
+export function prepararMision(aventuraId, origen = null, seleccion = []) {
+  const aventura = porId(aventuraId);
+  if (!aventura && !origen) throw Error('Elige una aventura.');
+  const claves = [...new Set(seleccion)].sort();
+  if (origen && (!claves.length || claves.length > 3 ||
+      claves.some(clave => !objetivos(origen).some(o => o.clave === clave)))) {
+    throw Error('Selecciona entre uno y tres objetivos de este intento.');
+  }
+  const foco = origen
+    ? `refuerzo:${origen.id}:${claves.join(',')}`
+    : `aventura:${aventura.id}`;
+  const titulo = origen
+    ? 'Dictado · palabras y frases para practicar'
+    : `Dictado · ${aventura.titulo}`;
+  return {
+    titulo,
+    descripcion: 'Escuchar, escribir en papel y revisar el intento original.',
+    tipo: 'actividad_modulo',
+    modulo: 'rincon-dictados',
+    cursoReferencia: '6',
+    materia: 'Lengua',
+    tema: 'Dictados',
+    destinoUrl: '../rincon-dictados/',
+    objetivo: 'Sé qué hice bien y sé qué puedo mejorar.',
+    criterioFinalizacion: 'Guardar un dictado revisado. No se exige un porcentaje mínimo; la familia revisará el trabajo.',
+    criterioCumplimiento: {
+      tipo: 'cantidad',
+      modulo: 'rincon-dictados',
+      evidenciaTipo: 'sesion_academica',
+      cantidadObjetivo: 1,
+      filtros: { actividadId: 'rincon-dictados', focoDictado: foco }
+    },
+    requiereRevision: true,
+    visibleParaAlumno: false,
+    estado: 'pendiente',
+    ordenMision: 9999,
+    prioridad: 'normal',
+    progreso: { cantidadObjetivo: 1 },
+    presentacionAlumno: {
+      icono: '✏️',
+      tituloMision: titulo,
+      descripcionMision: 'Prepara tu cuaderno. Escucharemos y escribiremos a tu ritmo.',
+      mensaje: 'Puedes repetir y pedir ayuda.'
+    },
+    evidencia: {
+      tipo: 'dictado',
+      modulo: 'rincon-dictados',
+      referenciaId: origen?.id || aventura.id,
+      resumen: titulo,
+      configuracion: {
+        aventuraId: origen?.resumen.dictado.aventuraId || aventura.id,
+        sesionOrigenId: origen?.id || '',
+        objetivos: claves,
+        focoDictado: foco
+      }
+    }
+  };
 }
 export function analizarDictados(sesiones) {
  const ordenadas=[...sesiones].sort((a,b)=>fechaDictado(a)-fechaDictado(b));

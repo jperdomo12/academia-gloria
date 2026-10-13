@@ -3,9 +3,9 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.0 |
-| Estado | V1 funcional para validación familiar · entrega mediante PR #157 |
-| Fecha | 12/10/2026 |
+| Versión | 1.1-rc |
+| Estado | Reparación candidata de estándares · pendiente de revisión e integración |
+| Fecha | 13/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Dictados en español, escritura en papel, revisión manual e historial por Persona Activa |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Recuperación de calidad autorizada: formulario y módulo estándar, refuerzos revisables en el mismo formulario, compatibilidad sin migración, evidencia del texto asignado, Mi Camino sin cierre redundante, bienvenida basada en Lectura y pruebas sobre el flujo real. |
 | 1.0 | 12/10/2026 | Product Owner + AI Collaborator | Integración autorizada: Misiones de aventuras y refuerzos de palabras/frases, evidencia idempotente para revisión familiar y análisis separado de autoevaluaciones. |
 | 1.0-rc6 | 12/10/2026 | Product Owner + AI Collaborator | Cabecera canónica en vista previa e integración, elimina Panel local y aísla CSS; matriz de estándares, árbol e índice sincronizados; prueba específica de navegación real. |
 | 1.0-rc5 | 12/10/2026 | Product Owner + AI Collaborator | Comparación con Rincón de Lectura publicado: bienvenida, tarjetas, pasos y panel de voz de la misma familia; cierre de vista previa explícito sin guardado. |
@@ -114,7 +115,7 @@ Los campos opcionales nuevos (`intentoId`, `personaIdEsperada`, `actorUserIdEspe
 - LectorTexto y celebración compartidos; guacamaya existente como identidad de la Academia, sin declarar una imagen universal de Lía.
 - Análisis Educativo excluye autoevaluaciones de Pruebas Académicas y carga Dictado como fuente independiente: véase SPEC-ANALISIS_EDUCATIVO.
 - Un enlace genérico de resultado académico a un dictado se redirige a su historial específico, preservando el carácter de autoevaluación.
-- Reutiliza Misiones de tipo `repaso_academico`, módulo `libre` y evidencia `sesion_academica`. No modifica Lectura ni Rules.
+- Nuevas Misiones: `actividad_modulo` (Misión de Mi Aventura), módulo `rincon-dictados`, evidencia `sesion_academica`. Extiende formulario/listado/API/Mi Camino existentes. Las Misiones publicadas como `repaso_academico/libre` se conservan sin migración y mantienen su contrato original. No modifica Lectura ni Rules.
 
 ### Revisión de coherencia con la Academia · revisión 4
 
@@ -137,7 +138,7 @@ Referencia: `mi-universo/rincon-lectura/index.html` y `rincon-lectura-lia.css`, 
 | Patrón de Lectura | Aplicación a Dictado |
 |---|---|
 | Bienvenida con Lía, fondos luminosos y tarjetas redondeadas | Misma familia visual, guacamaya institucional y mensaje específico para escritura. |
-| Guía de pasos destacada | Cuatro pasos visibles en la actividad; estado actual con texto y contraste. |
+| Guía de pasos destacada | Cuatro pasos visibles desde el catálogo y durante la actividad; estado actual con texto y contraste. |
 | Contexto de aventura antes de empezar | Descripción, nivel y extensión; el texto a dictar sigue oculto. |
 | Controles de voz agrupados | Panel reconocible con velocidad, estado y detención; avance posterior al audio. |
 | Celebración de cierre | Diferencia explícita entre prueba sin guardado y resultado guardado. |
@@ -160,7 +161,7 @@ La semejanza visual con Lectura no sustituye los contratos transversales. Se rev
 | STD-SEGUIMIENTO_Y_MOTIVACION | 70 % orientativo, todo trabajo revisado se reconoce, sin ranking ni recompensa persistida por prueba. |
 | STD-CONVENCIONES_DE_DATOS_Y_ATRIBUTOS | camelCase, contrato sesion-academica-v1, IDs estables y auditoría del servicio compartido; sin colecciones privadas. |
 | MODEL_MOTORES_DE_APRENDIZAJE / STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR | Reutiliza sesiones; declara autoevaluación y no la mezcla con corrección automática. Este catálogo original no es una incorporación de material Gaudem ni un Tema curricular nuevo. |
-| STD-MIS_TAREAS_Y_MISIONES | Misión validada, evidencia del intento original y revisión familiar; sin dominio inferido ni porcentaje mínimo. Refuerzos ocultos hasta decisión familiar. |
+| STD-MIS_TAREAS_Y_MISIONES | Creación/edición en `formTarea`, módulo propio en API/listado/Mi Camino; evidencia del texto asignado y revisión familiar. Refuerzo preparado en el mismo formulario, oculto inicialmente. Sin cierre manual redundante. Véase recuperación 13/10 para evidencias de validación. |
 | STD-GLOSARIO | Persona Activa, aventura, revisión e historial conservan su significado; dudas no equivalen a error. |
 | DOCUMENTATION_STANDARD / ARCHITECTURE y docs/ai | Propietario único, historial y estado de candidata; HandOff solo continuidad. Corrección de versión final del índice y nodo humano del árbol. |
 | PRODUCT_DEVELOPMENT_WORKFLOW | Rama y PR; integración autorizada para validación familiar. Publicación requiere despliegue verificado; estable requiere validación real. |
@@ -170,15 +171,34 @@ La semejanza visual con Lectura no sustituye los contratos transversales. Se rev
 
 **Verificado:** cabecera única, sin carga de Panel en preview, único inicio del Panel con identidad simulada, retorno al origen Lectura, ausencia de desbordamiento, recorrido completo de dictado, revisión e historial simulado. **Pendiente:** sonido físico y guardado/permisos con cuentas reales. No se declara conformidad completa en producción basándose solo en dobles de identidad.
 
-### Misiones, historial y análisis · aprobación de integración 12/10/2026
+### Misiones, historial y análisis · contrato tras recuperación 13/10/2026
 
-El Product Owner autoriza incorporar Misiones y seguimiento a esta V1 para uso familiar. En Gestión de Misiones → Nueva Misión se elige una de las seis aventuras. En Observaciones y refuerzos → Dictados se elige un intento y de uno a tres objetivos: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Se conserva la referencia al intento original; no se copia ni cambia su calificación. La práctica breve es un intento nuevo y se identifica como refuerzo en los datos.
+El Product Owner autoriza incorporar Misiones y seguimiento a esta V1 para uso familiar. En Gestión de Misiones → Nueva Misión se elige **Misión de Mi Aventura → Rincón del Dictado → aventura**, dentro del formulario común. En Observaciones y refuerzos → Dictados se elige un intento y de uno a tres objetivos: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Se conserva la referencia al intento original; no se copia ni cambia su calificación. La práctica breve es un intento nuevo y se identifica como refuerzo en los datos.
 
-Las Misiones se crean ocultas y la familia decide mostrarlas. No se duplican Misiones abiertas del mismo foco desde este flujo. El alumno solo ejecuta Misiones activas y visibles. El destino incorpora `misionId`; el catálogo queda limitado a la aventura asignada. El contrato exige `actividadId` y `focoDictado` coincidentes. Una evidencia válida pasa a revisión familiar; la familia conserva el cierre final. Repetir o pedir ayuda no penaliza.
+Las Misiones de refuerzo se preparan inicialmente ocultas en el formulario común; la familia revisa sus campos y decide cuándo mostrarlas. Las aventuras utilizan la visibilidad y demás campos del formulario estándar. No se duplican Misiones abiertas del mismo foco desde este flujo. El alumno solo ejecuta Misiones activas y visibles. El destino incorpora `misionId`; el catálogo queda limitado a la aventura asignada. El contrato exige `actividadId` y `focoDictado` coincidentes y valida además aventura, texto original, referencia de origen y objetivos de refuerzo; copiar un foco no acredita otro texto. Una evidencia válida pasa a revisión familiar; la familia conserva el cierre final. Repetir o pedir ayuda no penaliza.
 
 El guardado original y la evidencia de Misión son operaciones independientes: si falla la segunda, el resultado sigue en el historial y se ofrece reintentar sin duplicar el intento. El borrador local se conserva para recuperar ese reintento en el mismo navegador. Si el almacenamiento local no está disponible, ese reintento solo permanece en la pantalla actual. La consulta de Trabajo realizado lleva al historial específico de Dictado.
 
 El análisis usa hasta 200 sesiones, excluye datos de prueba (incluidas Misiones marcadas después) y compara únicamente texto idéntico, mismo acompañamiento y mismo tipo de práctica. No promedia aventuras de distinta dificultad con ejercicios de una palabra. Las señales son descriptivas de la autoevaluación, no diagnósticos. La familia elige y activa cualquier nueva Misión; ninguna se asigna automáticamente. El detalle completo de errores y correcciones permanece en el historial propietario.
+
+### Recuperación de estándares · 13/10/2026
+
+La auditoría encontró que la V1 había documentado como válida una creación paralela mediante `repaso_academico/libre`. Esa clasificación y el creador/listado independiente quedan sustituidos en esta candidata; el diseño funcional aprobado no cambia.
+
+| Hallazgo | Corrección y evidencia verificable |
+|---|---|
+| Creación fuera del formulario | Configuración `configuracionDictado` dentro de `formTarea`; catálogo original `AVENTURAS`; guardar/editar/fechas/presentación mediante `mis-tareas.js`. |
+| Tipo y módulo incorrectos | `actividad_modulo/rincon-dictados` en `prepararMision`, API y catálogos de Gestión/Mi Camino. |
+| Listado y visibilidad duplicados | Observaciones prepara un evento para el formulario; no crea documentos ni mantiene un listado paralelo. |
+| Cierre redundante | Las Misiones de Dictado, incluidas anteriores, ejecutan el destino real y envían evidencia al guardar; Mi Camino no ofrece el cierre manual de repaso. |
+| Aventura ajena con foco copiado | Cliente limita nuevos intentos a la asignada; `validarIntentoMision` compara el texto y objetivos antes de enlazar evidencia. Un intento no atribuible se conserva sin acreditar la Misión. |
+| Edición opaca | Misiones anteriores muestran aviso y controles de contrato bloqueados; sin migración. Refuerzos conservan sus objetivos. El selector de Misión libre respeta el bloqueo canónico. |
+| Bienvenida e historial | Jerarquía visual basada en la composición de Lectura, saludo a Persona Activa, pasos desde el catálogo, contexto/ayuda de Misión. Historial identifica aventura/práctica breve y extensión. CSS local consolidado y legible. |
+| Prueba aislada del bloque nuevo | `dictados-misiones-browser.cjs` usa HTML/formulario/listado/Mi Camino/API/sesiones reales. Solo identidad, SDK Firestore, voz y paneles ajenos al caso se sustituyen. |
+
+El reinicio interno del formulario evita volver a disparar su propio manejador de `reset`. Es una corrección de integración detectada al ejercitar el formulario real, no un cambio funcional nuevo.
+
+La semejanza visual no obliga a copiar reconocimiento de voz, animales, métricas o mecanismos particulares de Lectura. No se declara estabilidad ni cumplimiento de Rules desplegadas mediante pruebas simuladas.
 
 ## 6. Validación
 
@@ -214,10 +234,12 @@ La prueba de navegador simula voz y servicio Firebase. La prueba del servicio ej
 
 Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesario y validar de nuevo antes de cambiar el estado a estable. La V1 no incorpora teclado obligatorio, fotos, OCR, IA para leer el manuscrito, pausas automáticas complejas ni penalización por ayudas.
 
+**Verificación de reparación:** 16 pruebas de modelo/seguimiento/servicio; navegación con componentes reales y voz/identidad simuladas; recorrido del formulario/listado/API/Mi Camino/sesiones reales con SDK Firestore simulado; edición y ejecución de contrato anterior sin migración; regresión de Lectura/Detectives/Semillas/Curso/Misión libre; exportación autónoma con Shakira completa, sin Firebase ni persistencia. Revisión visual de cabecera/formulario y anchos 1280/768/390/320. Estas verificaciones no sustituyen audio físico, Rules ni persistencia con cuentas reales.
+
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | Diseño | Aprobado para construir primera versión · 12/10/2026 |
-| Entrega | V1 funcional autorizada para integración y validación familiar; no estable |
+| Entrega | V1 publicada mediante #157; reparación 1.1-rc en revisión, sin integrar y sin declarar estabilidad |
 | Siguiente paso | Probar una aventura Nivel 1 con lápiz y papel; ajustar ritmo y revisión según uso |

@@ -12,6 +12,7 @@ const misionId = String(parametros.get("misionId") || "").trim();
 let userIdPersonaActivaPromise = null;
 
 const MODULOS = Object.freeze({
+  "rincon-dictados": { nombre: "Rincón del Dictado", icono: "✏️" },
   "rincon-lectura": { nombre:"Mi Rincón de Lectura", icono:"📚" },
   detectives: { nombre:"Detectives", icono:"🔎" },
   "creciendo-por-dentro": { nombre:"Creciendo por Dentro", icono:"🌱" },

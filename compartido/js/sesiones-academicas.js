@@ -109,7 +109,20 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
       return { registrada: false, motivo: "mision_no_encontrada" };
     }
 
-    if (tarea.tipo !== "repaso_academico") {
+    const esDictado = datos.actividadId === "rincon-dictados";
+    if (esDictado) {
+      const { esMisionDictado, validarIntentoMision } = await import(
+        "../../mi-universo/rincon-dictados/seguimiento.js"
+      );
+      if (!esMisionDictado(tarea)) {
+        return { registrada: false, motivo: "mision_no_dictado" };
+      }
+      const origenId = tarea.evidencia.configuracion.sesionOrigenId;
+      const origen = origenId ? await leerSesionAcademica(origenId) : null;
+      if (!validarIntentoMision(tarea, datos.resumen?.dictado, origen)) {
+        return { registrada: false, motivo: "dictado_no_asignado" };
+      }
+    } else if (tarea.tipo !== "repaso_academico") {
       return { registrada: false, motivo: "mision_no_academica" };
     }
 

@@ -131,7 +131,24 @@
       </aside>
 
 
-      <section class="superficie refuerzo-bloque" aria-labelledby="tituloDictadosFamilia"><h3 id="tituloDictadosFamilia">✏️ Dictados · palabras y frases para practicar</h3><p>Revisa el intento más reciente de cada texto. Elige hasta tres objetivos; una señal aislada no demuestra una dificultad persistente. La nueva práctica conserva separado el resultado original.</p><button id="actualizarDictados" class="btn secundaria" type="button">Actualizar dictados</button><p id="dictadoEstado" role="status">Actualiza para consultar las autoevaluaciones reales de la Persona Activa.</p><label>Intento <select id="dictadoIntento"><option value="">Actualiza para elegir</option></select></label><div id="dictadoObjetivos"></div><button id="crearRefuerzoDictado" class="btn primaria" type="button">Preparar Misión con mi selección</button><h4>Misiones de Dictado preparadas</h4><div id="dictadoMisiones"></div></section>
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloDictadosFamilia">
+        <div class="refuerzo-bloque__cabecera">
+          <div>
+            <h3 id="tituloDictadosFamilia">✏️ Dictados · palabras y frases para practicar</h3>
+            <p>Revisa el intento más reciente de cada texto y elige hasta tres objetivos.
+              La nueva práctica conserva separado el resultado original.</p>
+          </div>
+          <button id="actualizarDictados" class="btn secundaria" type="button">↻ Actualizar</button>
+        </div>
+        <p id="dictadoEstado" role="status">Actualiza para consultar las autoevaluaciones reales de la Persona Activa.</p>
+        <label>Intento
+          <select id="dictadoIntento"><option value="">Actualiza para elegir</option></select>
+        </label>
+        <div id="dictadoObjetivos"></div>
+        <button id="crearRefuerzoDictado" class="btn primaria" type="button">Revisar mi selección en Nueva Misión</button>
+        <p class="ayuda-campo">Una señal aislada no demuestra una dificultad persistente.
+          Las Misiones preparadas se consultan y activan en el listado habitual de Misiones.</p>
+      </section>
       <section class="superficie refuerzo-bloque" aria-labelledby="tituloRefuerzosDetectives">
         <div class="refuerzo-bloque__cabecera">
           <div>
@@ -209,7 +226,6 @@
     </section>
 
     <section id="panelCrear" class="panel-seccion hidden">
-      <section class="superficie refuerzo-bloque" aria-labelledby="tituloCrearDictado"><h3 id="tituloCrearDictado">✏️ Crear una Misión de Dictado</h3><p>Escribir en papel y revisar una aventura. Se prepara oculta y pasa a revisión familiar al guardar, con cualquier porcentaje.</p><label>Aventura <select id="dictadoAventura"></select></label><button id="crearMisionDictado" class="btn primaria" type="button">Preparar Misión de Dictado</button><p id="dictadoCrearEstado" role="status"></p></section>
 
       <aside class="superficie gestion-familiar-aviso">
         <span aria-hidden="true">👨‍👩‍👧</span>
@@ -269,6 +285,7 @@
                 Módulo asociado
                 <select id="modulo">
                   <option value="rincon-lectura">Mi Rincón de Lectura</option>
+                  <option value="rincon-dictados">Rincón del Dictado</option>
                   <option value="detectives">Detectives de Problemas</option>
                   <option value="creciendo-por-dentro">Creciendo por Dentro</option>
                   <option value="biblioteca">Biblioteca Encantada</option>
@@ -360,6 +377,29 @@
                   5.º de Primaria · Indica materia y tema
                 </span>
               </div>
+            </section>
+
+            <section id="configuracionDictado"
+              class="configuracion-rapida configuracion-rapida--lectura hidden"
+              aria-labelledby="tituloConfiguracionDictado">
+              <div class="configuracion-rapida__cabecera">
+                <span aria-hidden="true">✏️</span>
+                <div>
+                  <h3 id="tituloConfiguracionDictado">Configuración de la Misión de Dictado</h3>
+                  <p>Elige una aventura para escuchar, escribir en papel y revisar con calma.</p>
+                </div>
+              </div>
+              <div class="grid-formulario">
+                <label>Aventura de dictado
+                  <select id="dictadoAventura"></select>
+                  <span class="ayuda-campo">Un intento revisado y guardado cuenta una vez. No exige porcentaje mínimo.</span>
+                </label>
+              </div>
+              <div class="configuracion-rapida__resumen">
+                <strong>La Misión contará:</strong>
+                <span id="resumenCriterioDictado"></span>
+              </div>
+              <p id="dictadoConfiguracionAviso" class="ayuda-campo" hidden></p>
             </section>
 
             <section
@@ -889,11 +929,11 @@
     lucide.createIcons();
   </script>
 
-  <script type="module" src="./mis-tareas.js"></script>
+  <script type="module" src="./mis-tareas.js?v=20261013"></script>
   <script type="module" src="./refuerzos-detectives.js"></script>
   <script type="module" src="./refuerzos-academicos.js?v=3"></script>
   <script type="module" src="./refuerzos-pronunciacion.js"></script>
-  <script type="module" src="./dictados.js"></script>
+  <script type="module" src="./dictados.js?v=20261013"></script>
   <script type="module" src="./analisis-educativo.js"></script>
   <script type="module" src="./limpieza-datos-prueba.js"></script>
   <script type="module" src="./trabajo-realizado-gestion.js"></script>
