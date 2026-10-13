@@ -925,7 +925,7 @@ function crearInterfaz() {
           <option value="todos" selected>Todos</option>
           <option value="detectives">Detectives</option>
           <option value="academicos">Pruebas académicas</option>
-          <option value="lectura">Rincón de Lectura</option><option value="dictados">Rincón del Dictado · autoevaluación</option>
+          <option value="lectura">Rincón de Lectura</option><option value="dictados">Mi Rincón de Dictado · autoevaluación</option>
         </select>
       </label>
 

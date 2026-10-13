@@ -29,7 +29,7 @@ const ICONOS = Object.freeze({
 
 const NOMBRES_MODULO = Object.freeze({
   "rincon-lectura": "Rincón de Lectura",
-  "rincon-dictados": "Rincón del Dictado",
+  "rincon-dictados": "Mi Rincón de Dictado",
   detectives: "Detectives",
   "creciendo-por-dentro": "Creciendo por Dentro",
   biblioteca: "Biblioteca Encantada",
@@ -2461,6 +2461,15 @@ function recogerFormulario() {
 }
 
 function configurarFormulario() {
+  document.addEventListener("academia:editar-mision", async evento => {
+    try {
+      const tarea = await Academia.tareas.obtener(evento.detail.id);
+      if (!tarea) throw Error("La Misión ya no está disponible.");
+      cargarTareaEnFormulario(tarea);
+    } catch (error) {
+      $("dictadoMisionesEstado").textContent = `No pudimos abrir la Misión: ${error.message}`;
+    }
+  });
   $("dictadoAventura").innerHTML = AVENTURAS.map(a =>
     `<option value="${a.id}">Nivel ${a.nivel} · ${escapar(a.titulo)}</option>`
   ).join("");

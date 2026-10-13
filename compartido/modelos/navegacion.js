@@ -40,7 +40,7 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
       },
       {
         id: "rincon-dictados",
-        titulo: "Rincón del Dictado",
+        titulo: "Mi Rincón de Dictado",
         icono: "✏️",
         ruta: "mi-universo/rincon-dictados/",
         volver: "mi-universo/",

@@ -887,28 +887,38 @@ body {
   color: #4c1d95;
 }
 
+/* Misma composición de banda que Lectura: contexto, progreso y estado. */
 .mision-dictado {
-  display: flex;
+  display: grid;
+  grid-template-columns: 58px minmax(0,1fr) auto auto;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 22px;
+  gap: 14px;
+  padding: 16px 18px;
   margin: 20px 0;
-  border: 2px solid #fde68a;
+  border: 3px solid #c4b5fd;
   border-radius: 24px;
-  background: linear-gradient(125deg,#fff7ed,#fefce8);
+  background: linear-gradient(135deg,#faf5ff,#fff,#eff6ff);
+  box-shadow: 0 16px 36px rgba(76,29,149,.11);
 }
-
-.mision-dictado > div {
-  flex: 1 1 260px;
-}
-
 .mision-dictado__icono {
-  font-size: 44px;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: #ede9fe;
+  font-size: 30px;
 }
-
-.mision-dictado p {
-  margin: 6px 0;
+.mision-dictado h2 { margin: 0 0 4px; color: #5b21b6; font-size: 1.4rem; }
+.mision-dictado p { margin: 0; color: #64748b; font-weight: 700; }
+.mision-dictado__progreso { padding: 9px 12px; border-radius: 15px; color: #5b21b6; background: #fff; text-align: center; }
+.mision-dictado__acciones { display: flex; flex-direction: column; gap: 7px; align-items: flex-end; }
+.mision-dictado__estado { padding: 5px 9px; border-radius: 999px; color: #5b21b6; background: #ede9fe; font-size: .74rem; font-weight: 900; }
+.mision-dictado--libre { border-color: #bae6fd; background: linear-gradient(135deg,#f0f9ff,#fff); }
+@media(max-width:650px) {
+  .mision-dictado { grid-template-columns: 54px minmax(0,1fr); }
+  .mision-dictado__progreso, .mision-dictado__acciones { grid-column: 1 / -1; }
+  .mision-dictado__acciones { align-items: flex-start; }
 }
 
 .en-actividad .cabecera .lia {
