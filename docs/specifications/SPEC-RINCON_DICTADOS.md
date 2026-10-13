@@ -3,8 +3,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.1-rc |
-| Estado | Reparación candidata de estándares · pendiente de revisión e integración |
+| Versión | 1.1 |
+| Estado | V1 funcional publicada para validación familiar · reparación #159 |
 | Fecha | 13/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.1 | 13/10/2026 | Product Owner + AI Collaborator | Reparación #159 aprobada e integrada en `372291dd…`; Pages #763 `success`. Validación familiar de voz, Rules y persistencia real pendiente; sin declarar estabilidad. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Recuperación de calidad autorizada: formulario y módulo estándar, refuerzos revisables en el mismo formulario, compatibilidad sin migración, evidencia del texto asignado, Mi Camino sin cierre redundante, bienvenida basada en Lectura y pruebas sobre el flujo real. |
 | 1.0 | 12/10/2026 | Product Owner + AI Collaborator | Integración autorizada: Misiones de aventuras y refuerzos de palabras/frases, evidencia idempotente para revisión familiar y análisis separado de autoevaluaciones. |
 | 1.0-rc6 | 12/10/2026 | Product Owner + AI Collaborator | Cabecera canónica en vista previa e integración, elimina Panel local y aísla CSS; matriz de estándares, árbol e índice sincronizados; prueba específica de navegación real. |
@@ -44,7 +45,7 @@
 
 ## 1. Experiencia
 
-Principio aprobado: **«Sé qué hice bien y sé qué puedo mejorar»**. El diseño funcional aprobado el 12/10/2026 se conserva en esta especificación; el chat de Análisis no sustituye a este propietario. V1 es una candidata para uso real, con ajustes menores o medios posibles antes de declararla estable.
+Principio aprobado: **«Sé qué hice bien y sé qué puedo mejorar»**. El diseño funcional aprobado el 12/10/2026 se conserva en esta especificación; el chat de Análisis no sustituye a este propietario. V1 está publicada para validación familiar, con ajustes menores o medios posibles antes de declararla estable.
 
 Acceso: `Mi Universo → Rincón del Dictado`, junto al Rincón de Lectura.
 
@@ -149,7 +150,7 @@ Se conservan las diferencias funcionales aprobadas: papel, tildes/mayúsculas re
 
 La semejanza visual con Lectura no sustituye los contratos transversales. Se revisa el mapa de documentación activa y se aplican los propietarios pertinentes; `history/` y capacidades futuras no se convierten en requisitos vigentes.
 
-| Propietario vigente | Aplicación y evidencia en V1 candidata |
+| Propietario vigente | Aplicación y evidencia en V1 publicada para validación |
 |---|---|
 | FOUNDATION, ADN, principios pedagógicos | Origen institucional, autonomía, pausa, respeto y ausencia de castigo. |
 | Product Experience Architecture e identidad visual | Experiencia guiada, assets oficiales, separación de actividad, acompañamiento y evidencia. |
@@ -163,7 +164,7 @@ La semejanza visual con Lectura no sustituye los contratos transversales. Se rev
 | MODEL_MOTORES_DE_APRENDIZAJE / STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR | Reutiliza sesiones; declara autoevaluación y no la mezcla con corrección automática. Este catálogo original no es una incorporación de material Gaudem ni un Tema curricular nuevo. |
 | STD-MIS_TAREAS_Y_MISIONES | Creación/edición en `formTarea`, módulo propio en API/listado/Mi Camino; evidencia del texto asignado y revisión familiar. Refuerzo preparado en el mismo formulario, oculto inicialmente. Sin cierre manual redundante. Véase recuperación 13/10 para evidencias de validación. |
 | STD-GLOSARIO | Persona Activa, aventura, revisión e historial conservan su significado; dudas no equivalen a error. |
-| DOCUMENTATION_STANDARD / ARCHITECTURE y docs/ai | Propietario único, historial y estado de candidata; HandOff solo continuidad. Corrección de versión final del índice y nodo humano del árbol. |
+| DOCUMENTATION_STANDARD / ARCHITECTURE y docs/ai | Propietario único, historial y estado de validación familiar pendiente; HandOff solo continuidad. Corrección de versión final del índice y nodo humano del árbol. |
 | PRODUCT_DEVELOPMENT_WORKFLOW | Rama y PR; integración autorizada para validación familiar. Publicación requiere despliegue verificado; estable requiere validación real. |
 | STD-AVENTURAS_MATEMATICAS / estándares de Semillas | No aplican sus mecánicas específicas a Dictado; no se añaden motores ni contenidos ajenos al alcance. |
 
@@ -183,7 +184,7 @@ El análisis usa hasta 200 sesiones, excluye datos de prueba (incluidas Misiones
 
 ### Recuperación de estándares · 13/10/2026
 
-La auditoría encontró que la V1 había documentado como válida una creación paralela mediante `repaso_academico/libre`. Esa clasificación y el creador/listado independiente quedan sustituidos en esta candidata; el diseño funcional aprobado no cambia.
+La auditoría encontró que la V1 había documentado como válida una creación paralela mediante `repaso_academico/libre`. Esa clasificación y el creador/listado independiente quedan sustituidos en la reparación #159 integrada; el diseño funcional aprobado no cambia.
 
 | Hallazgo | Corrección y evidencia verificable |
 |---|---|
@@ -241,5 +242,5 @@ Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesari
 | Campo | Valor |
 |---|---|
 | Diseño | Aprobado para construir primera versión · 12/10/2026 |
-| Entrega | V1 publicada mediante #157; reparación 1.1-rc en revisión, sin integrar y sin declarar estabilidad |
+| Entrega | V1 publicada y reparación #159 aprobada e integrada; Pages #763 `success`; validación familiar pendiente, sin declarar estabilidad |
 | Siguiente paso | Probar una aventura Nivel 1 con lápiz y papel; ajustar ritmo y revisión según uso |

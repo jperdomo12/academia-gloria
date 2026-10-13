@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.3-rc |
+| **Versión** | 2.3 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.3 | 13/10/2026 | Product Owner + AI Collaborator | Integración aprobada de #159: Dictado utiliza Misión de Mi Aventura y módulo Rincón del Dictado; Pages #763 `success`. Conserva contrato anterior sin migración y validación familiar pendiente. |
 | 2.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Corrige la incorporación de Dictado al formulario/tipo/módulo estándar y el cierre por evidencia; conserva compatibilidad anterior sin migración. Bloqueos de criterio y reinicio del formulario verificados en el recorrido real. |
 | 2.2 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 2.1 | 23/09/2026 | Product Owner + AI Collaborator | Ajusta la preparación asistida de Repaso Académico para que las Zonas activas con Temas propios puedan aparecer como opciones explícitas en el campo `Materia` de Gestión de Misiones (por ejemplo, `Matezonas` y `Lengüizonas`). La selección visible conserva el origen escolar del trabajo, mientras que la ejecución del Tema mantiene su materia académica propietaria para sesiones y evidencias (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`). |
