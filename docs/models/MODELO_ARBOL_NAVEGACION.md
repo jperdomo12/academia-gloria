@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
-| **Versión** | 1.7 |
+| **Versión** | 1.8-rc |
 | **Estado** | Activo |
 | **Fecha de origen** | 13/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8-rc | 13/10/2026 | Product Owner + AI Collaborator | Añade Consulta educativa en Mi Universo, mínimo consulta; Gestión de Misiones mantiene gestión. Candidata pendiente de integración. |
 | 1.7 | 13/10/2026 | Product Owner + AI Collaborator | PR #161 aprobada, integrada y publicada mediante Pages #766: Mi Rincón de Dictado es el nombre visible vigente; nodo y ruta conservados. |
 | 1.7-rc | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar: nombre visible Mi Rincón de Dictado; conserva nodo y ruta rincon-dictados. Ajuste en rama pendiente de integración. |
 | 1.6 | 12/10/2026 | Product Owner + AI Collaborator | Incorpora Rincón del Dictado como nodo de Mi Universo en V1 candidata PR #157, pendiente de integración. |
@@ -70,6 +71,7 @@ Academia
 │   │   ├── Detectives
 │   │   └── Historial de Detectives
 │   ├── Creciendo por Dentro
+│   ├── Consulta educativa · nivel mínimo: consulta · candidata
 │   └── Gestión de Misiones · nivel mínimo: gestion
 │
 ├── Mis Cursos
@@ -297,7 +299,12 @@ Antes de modificarla:
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.7 |
+| **Versión** | 1.8-rc |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Reglas conceptuales** | `MODELO_NAVEGACION.md` |
 | **Baseline funcional de esta sincronización** | `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |
+
+
+## Consulta educativa · candidata 13/10/2026
+
+Mi Universo incorpora el nodo `consulta-educativa`, título **Consulta educativa**, ruta `mi-universo/consulta-educativa/`, retorno `mi-universo/` y nivel mínimo `consulta`. Usa cabecera/Panel/Volver compartidos. La página exige una Persona Activa autorizada conforme a `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`; el nodo no concede permisos sobre alumnos. Gestión de Misiones conserva `gestion`.

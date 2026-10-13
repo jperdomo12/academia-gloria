@@ -192,7 +192,7 @@ export async function guardarSesionAcademica(registro = {}) {
     return { guardado: false, modo: VISTA_PREVIA, motivo: "vista_previa" };
   }
 
-  const contexto = await ContextoUsuario.inicializar();
+  const contexto = await ContextoUsuario.exigirEscrituraEducativa();
   // Consumidores con borradores pueden fijar propietario e intento para evitar
   // guardar bajo otra identidad o duplicar un envío tras una pérdida de conexión.
   if ((registro.personaIdEsperada && registro.personaIdEsperada !== contexto.personaActiva.personaId)
@@ -307,7 +307,7 @@ export async function leerSesionAcademica(sesionId) {
     : null;
 }
 
-export async function leerSesionesAcademicas({ actividadId = "", maximo = 20, excluirAutoevaluaciones = false } = {}) {
+export async function leerSesionesAcademicas({ actividadId = "", maximo = 20, excluirAutoevaluaciones = false, todas = false } = {}) {
   const contexto = await ContextoUsuario.inicializar();
   const resultado = await getDocs(coleccionSesiones(contexto.userIdPersonaActiva));
   const filtro = texto(actividadId);
@@ -318,7 +318,7 @@ export async function leerSesionesAcademicas({ actividadId = "", maximo = 20, ex
     .filter(item => !filtro || item.actividadId === filtro)
     .filter(item => !excluirAutoevaluaciones || item.resumen?.tipoEvaluacion !== "autoevaluacion")
     .sort((a, b) => fechaOrden(b.completadaEn || b.updatedAt) - fechaOrden(a.completadaEn || a.updatedAt))
-    .slice(0, limite);
+    .slice(0, todas ? undefined : limite);
 }
 
 export async function obtenerVariantesRecientes({ actividadId, maximoSesiones = 4 } = {}) {

@@ -122,6 +122,13 @@ async function contextoRecompensasResolucion(userId,registro={}){
   }
 }
 
+async function exigirModificacionDetectives(uid) {
+  const contexto = await ContextoUsuario.exigirEscrituraEducativa();
+  if (String(uid) !== contexto.userIdPersonaActiva) {
+    throw new Error('Los datos no corresponden a la Persona Activa autorizada.');
+  }
+}
+
 export async function registrarResolucionDetective(uid,registro){
   requireUid(uid);
   if(!registro?.historiaId) throw new Error("La resolución no contiene historiaId.");
@@ -130,6 +137,7 @@ export async function registrarResolucionDetective(uid,registro){
      autenticado que la acompaña. Esto alinea Detectives con el resto de la
      Academia multi-Persona y con sus vistas históricas. */
   const userId=await userIdPersonaActivaSeguro(uid);
+  await exigirModificacionDetectives(userId);
   const contextoRecompensas=await contextoRecompensasResolucion(userId,registro);
   const historiaId = String(registro.historiaId);
   const summaryRef = progressRef(userId,historiaId);
@@ -256,11 +264,13 @@ async function borrarSubcoleccionSesiones(uid,historiaId){
 }
 
 export async function reiniciarProgresoHistoria(uid,historiaId){
+  await exigirModificacionDetectives(uid);
   await borrarSubcoleccionSesiones(uid,historiaId);
   await deleteDoc(progressRef(uid,historiaId));
 }
 
 export async function eliminarSesionHistoria(uid,historiaId,sesionId){
+  await exigirModificacionDetectives(uid);
   const userId = requireUid(uid);
   const storyId = String(historiaId);
   await deleteDoc(doc(sessionsRef(userId,storyId),String(sesionId)));
@@ -306,6 +316,7 @@ export async function eliminarSesionHistoria(uid,historiaId,sesionId){
 }
 
 export async function eliminarHistorialDetectives(uid){
+  await exigirModificacionDetectives(uid);
   const history = await obtenerHistorialDetectives(uid);
   for(const item of history){
     await reiniciarProgresoHistoria(uid,item.historiaId || item.id);
@@ -313,6 +324,7 @@ export async function eliminarHistorialDetectives(uid){
 }
 
 export async function marcarEstadoHistoria(uid,historiaId,estado){
+  await exigirModificacionDetectives(uid);
   const allowed = new Set(["en_practica","reforzar","dominada"]);
   if(!allowed.has(estado)) throw new Error("Estado de aprendizaje no válido.");
   await setDoc(progressRef(uid,historiaId),{

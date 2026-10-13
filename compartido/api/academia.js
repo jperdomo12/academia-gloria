@@ -45,6 +45,11 @@ function obtenerUID() {
     return usuario.uid;
 }
 
+async function exigirEscrituraEducativa(opciones) {
+  const { ContextoUsuario } = await import('../js/contexto-usuario.js');
+  return ContextoUsuario.exigirEscrituraEducativa(opciones);
+}
+
 async function obtenerUIDPersonaActiva() {
   const { ContextoUsuario } = await import("../js/contexto-usuario.js");
   const userId = await ContextoUsuario.obtenerUserIdPersonaActiva();
@@ -482,6 +487,7 @@ function normalizarSesionLectura(sesion = {}) {
 }
 
 async function guardarSesionLectura(sesion) {
+  await exigirEscrituraEducativa();
   const datos = normalizarSesionLectura(sesion);
   const userId = await obtenerUIDPersonaActiva();
   const referencia = doc(
@@ -529,6 +535,7 @@ async function actualizarObservacionSesionLectura(
   historiaId,
   observacionFamilia
 ) {
+  await exigirEscrituraEducativa();
   const id = String(historiaId ?? "").trim();
 
   if (!id) {
@@ -580,6 +587,7 @@ async function actualizarObservacionSesionLectura(
 
 
 async function eliminarSesionLectura(historiaId) {
+  await exigirEscrituraEducativa();
   if (!historiaId) {
     throw new Error("Falta el identificador de la aventura.");
   }
@@ -663,6 +671,7 @@ function normalizarSesionSemilla(sesion = {}) {
 }
 
 async function guardarSesionSemilla(sesion) {
+  await exigirEscrituraEducativa();
   const datos = normalizarSesionSemilla(sesion);
   const userId = await obtenerUIDPersonaActiva();
 
@@ -975,6 +984,7 @@ function normalizarTareaLeida(documento) {
 }
 
 async function crearTarea(tarea) {
+  await exigirEscrituraEducativa({ requiereGestion: true });
   const userId = await obtenerUIDPersonaActiva();
   const datos = normalizarTarea(tarea, { alumnoUserId: userId });
 
@@ -1068,6 +1078,7 @@ function observarTareas(callback, onError = console.error) {
 }
 
 async function actualizarTarea(id, cambios = {}) {
+  await exigirEscrituraEducativa({ requiereGestion: true });
   const permitidos = new Set([
     "alumnoId",
     "assignedBy",
@@ -1234,6 +1245,7 @@ async function actualizarTarea(id, cambios = {}) {
 }
 
 async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
+  await exigirEscrituraEducativa();
   const estadoNormalizado = normalizarEstadoTarea(estado, "");
 
   if (!estadoNormalizado) {
@@ -1366,6 +1378,7 @@ function evidenciaCumpleCriterio(evidencia, criterio) {
 }
 
 async function registrarEvidenciaMision(evidenciaEntrada) {
+  await exigirEscrituraEducativa();
   const userId = await obtenerUIDPersonaActiva();
   const actorUserId = obtenerUID();
   const evidencia = normalizarEvidencia(
@@ -1531,6 +1544,7 @@ async function leerEvidenciasMision(misionId) {
 }
 
 async function guardarObservacionTarea(id, texto) {
+  await exigirEscrituraEducativa({ requiereGestion: true });
   const observacion = textoSeguro(texto);
   const userId = await obtenerUIDPersonaActiva();
   const referencia = documentoTarea(id, userId);
@@ -1567,6 +1581,7 @@ async function guardarObservacionTarea(id, texto) {
 }
 
 async function eliminarTarea(id) {
+  await exigirEscrituraEducativa({ requiereGestion: true });
   const userId = await obtenerUIDPersonaActiva();
   await deleteDoc(documentoTarea(id, userId));
 }

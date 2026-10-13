@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.10 |
+| **Versión** | 3.11 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.11 | 13/10/2026 | Product Owner + AI Collaborator | Consulta educativa por alumno candidata desde main #167: motor reutilizado, permisos y redacción validados con datos simulados; revisión/integración y prueba real pendientes. |
 | 3.10 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. Semilla 012 publicada con imagen aprobada, catálogo de 12 Semillas y guías sincronizadas. Continúa prueba familiar de Semilla 012 y Dictado; sin declarar estabilidad. |
 | 3.9 | 13/10/2026 | Product Owner + AI Collaborator | Dictado validado positivamente por Juan, pendiente prueba completa familiar. Desarrollo autorizado de Semilla 012 según SPEC: contenido data-driven y guías en rama; imagen externa semilla-012-puedo-empezar-una-conversacion.jpg integrada y verificada; PR #164 lista para aprobación. Sin cambios del Motor ni publicación prematura. |
 | 3.8 | 13/10/2026 | Product Owner + AI Collaborator | PR #161 aprobada e integrada en `c980fcc15272b509530777a967ca70bdf380346e`; Pages #766 `success`. Cuatro ajustes publicados; SPEC Dictado 1.2, Misiones 2.4 y Árbol 1.7 sincronizados. Continúa validación familiar, sin declarar estabilidad. |
@@ -294,6 +295,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**Consulta educativa por alumno:** implementación candidata en `feat/consulta-educativa-alumno`, desde `main` #167. Revisión de PR, integración/publicación y prueba real pendientes; ver continuidad técnica al final.
+
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
 **Prioridad vigente · ajustes de primera revisión familiar publicados el 13/10/2026.** El Product Owner aprobó la PR #161, integrada en `main` `c980fcc15272b509530777a967ca70bdf380346e` y publicada mediante Pages #766 (`success`, `e3a3e884…`, contiene #161). Conserva la recuperación de #159 y añade los cuatro ajustes de uso: avisos al final del panel activo, acordeón compartido de Observaciones y refuerzos con Misiones preparadas/sugeridas, banda de Dictado libre y nombre **Mi Rincón de Dictado**. Propietario: `SPEC-RINCON_DICTADOS.md` 1.2. No hay desarrollo pendiente en #161. Continúa la validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
@@ -347,7 +350,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Baseline funcional de producto verificado** | `2e12678ed44a89402f603516677e15f53929a36d` · #164 integrado; conserva #161/#159/#157/#154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
 | **Rama On going** | Sin rama de desarrollo activa de Semilla 012; `feat/semilla-012-conversacion` integrada |
-| **PR On going** | Ninguno de desarrollo para estos frentes; #164 aprobado e integrado; #161/#163 integrados |
+| **PR On going** | Candidata de Consulta educativa en preparación; verificar GitHub al retomar |
 | **Trabajo inmediato** | Probar Semilla 012 y Dictado con la familia; documentar comprensión, voz y persistencia real |
 | **GitHub Pages del baseline funcional** | #769 · `success` · SHA `2e12678e…` |
 | **Verificación posterior al cierre** | #164 integrado; build y despliegue Pages #769 correctos. Cierre documental sin cambios de producto. |
@@ -393,14 +396,22 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.10 |
+| **Versión** | 3.11 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Validación familiar de Semilla 012 y prueba completa de Dictado; sin desarrollo pendiente |
-| **PR On going** | Ninguno de desarrollo para estos frentes; #164 aprobado e integrado; #161/#163 integrados |
+| **Trabajo On going** | Consulta educativa candidata pendiente de aprobación/integración; validación familiar de Semilla 012 y Dictado pendiente |
+| **PR On going** | Candidata de Consulta educativa en preparación; verificar GitHub al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Prueba familiar de Semilla 012 y Dictado → documentar observaciones → ajustar si procede → validar estabilidad |
+| **Siguiente paso** | Revisar candidata de Consulta educativa → aprobar/integrar/publicar → probar acceso profesional real; continuar pruebas familiares pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
+
+## Continuidad técnica · Consulta educativa · 13/10/2026
+
+Decisión funcional aprobada e integrada en `main` por #167, base `1105e5f94df3709d57532348b184d87710fff242`. Fuente propietaria: `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. Desarrollo en `feat/consulta-educativa-alumno`, candidato pendiente de aprobación de PR e integración. No declarar publicado ni estable.
+
+Reutiliza ContextoUsuario, motor de Análisis, APIs y visores. Entrada de consulta separada de Gestión; escrituras relacionadas requieren gestión. Redacción de Lectura cambia solo presentación. Validación automática con identidades/Firebase simulados y regresión de Dictado completada; pendiente prueba real de Lidia sobre Gloria, familiar y Rules desplegadas tras publicación.
+
+#166 incorporó el Volver estándar de la guía de familias de Semillas, revisado positivamente por Juan. Continúan pendientes la prueba completa de Dictado con Anaís/Gloria y la validación familiar de Semilla 012. Este frente aprobado no reabre otros desarrollos.

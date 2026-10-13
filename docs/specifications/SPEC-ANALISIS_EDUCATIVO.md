@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2-rc |
 | **Estado** | Activo |
 | **Fecha** | 03/09/2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 13/10/2026 |
 | **Propietario** | Análisis Educativo y Acompañamiento Familiar |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Análisis descriptivo de evidencias educativas, tendencias, fortalezas, aspectos a reforzar, mejoras personales y propuestas de actuación |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2-rc | 13/10/2026 | Product Owner + AI Collaborator | Aplica SPEC de consulta por alumno: mismo reporte accesible sin gestión y redacción educativa de Lectura; candidata pendiente de integración. |
 | 1.1 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria del Análisis Educativo. Documenta la V1 implementada, sus fuentes, filtros, criterios por motor, tratamiento de tendencias, mejoras personales y propuestas de actuación. Formaliza además que todo nuevo Tema Académico de 6.º debe generar evidencia estructurada reutilizable por análisis estadístico/educativo y por propuestas de fortalecimiento. |
 
@@ -186,7 +187,7 @@ Cuando una propuesta llegue a convertirse en Misión de refuerzo, se respetará 
 
 El reporte analiza a la **Persona Activa** resuelta por `ContextoUsuario`.
 
-La implementación V1 vive dentro de **Gestión de Misiones**, por lo que hereda el carácter familiar/administrativo de ese espacio.
+El reporte conserva su recorrido en **Gestión de Misiones** (`gestion`). La candidata añade **Consulta educativa** (`consulta`) para una Persona Activa relacionada y autorizada, reutilizando el mismo motor sin capacidades de gestión.
 
 Reglas:
 
@@ -492,6 +493,11 @@ La prioridad favorece:
 1. palabras todavía no superadas;
 2. mayor número de intentos;
 3. mayor recencia.
+
+Presentación aprobada, sin alterar las reglas anteriores:
+
+- No superada: **«<palabra>» conviene seguir practicándola. En la última lectura registrada, <Título de la lectura>, todavía necesitó apoyo.**
+- Superada con varios intentos: **«<palabra>» quedó superada, aunque necesitó varios intentos en la última lectura registrada, <Título de la lectura>.**
 
 ### 10.4 Intentos
 
@@ -973,3 +979,8 @@ La cuarta fuente lee hasta 200 sesiones de `rincon-dictados` mediante el servici
 Se muestran intentos, señales del último intento por texto y evolución solo entre textos idénticos con el mismo acompañamiento y tipo de práctica. No se mezclan aventuras completas y refuerzos breves ni se infiere dominio o autonomía por porcentaje o velocidad. Las palabras diferentes/omitidas, signos y añadidas orientan propuestas revisables, no diagnósticos.
 
 La actuación remite a Observaciones y refuerzos → Dictados. La familia selecciona hasta tres palabras o frases y decide crear/mostrar una Misión; el informe nunca la asigna automáticamente. El historial preserva la autoevaluación original. Contrato propietario: `SPEC-RINCON_DICTADOS.md`, sección 5.
+
+
+## Consulta por alumno · candidata 13/10/2026
+
+Fuente propietaria: `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. La entrada de consulta monta el mismo motor de `analisis-educativo.js`; no cambia fuentes, filtros, selección, estados, prioridades, intentos, procedencia ni límites del reporte. No concede creación de Misiones ni acceso a Gestión de Misiones. Validación y límites de producción documentados en la SPEC propietaria.

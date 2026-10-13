@@ -25,7 +25,7 @@ async function entorno(tarea=null){
       await mod.link(()=>{});await mod.evaluate();return mod;
     }
     const api=new vm.SyntheticModule(['Academia'],function(){this.setExport('Academia',{tareas:{obtener:async()=>tarea,registrarEvidencia:async e=>{evidencias.push(e);return {aplicada:true}}}})},{context:contexto});await api.link(()=>{});await api.evaluate();return api;}});
-  await m.link(async spec=>{const values=spec.includes('firebase-config')?{db}:spec.includes('contexto-usuario')?{ContextoUsuario:{inicializar:async()=>{inicializaciones++;return identidad;}}}:sdk;
+  await m.link(async spec=>{const values=spec.includes('firebase-config')?{db}:spec.includes('contexto-usuario')?{ContextoUsuario:{inicializar:async()=>{inicializaciones++;return identidad;},exigirEscrituraEducativa:async()=>{inicializaciones++;return identidad;}}}:sdk;
     return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context:contexto});});
   await m.evaluate();return{api:m.namespace,datos,evidencias,identidad,inicializaciones:()=>inicializaciones};
 }
