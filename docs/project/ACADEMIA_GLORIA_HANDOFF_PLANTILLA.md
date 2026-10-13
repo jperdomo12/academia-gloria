@@ -291,7 +291,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
-**Prioridad vigente · recuperación de calidad autorizada el 13/10/2026.** La auditoría confirmó desviaciones de creación/clasificación/edición/cierre de Misiones y menor coherencia visual respecto a Lectura. Reparación en `fix/dictado-estandares`, desde `main` `1bc1de3d…`: formulario estándar **Misión de Mi Aventura → Rincón del Dictado**, evidencia del texto asignado, refuerzos preparados en el mismo formulario, compatibilidad sin migración, bienvenida y pasos basados en Lectura. Propietario: `SPEC-RINCON_DICTADOS.md` 1.1-rc. Pendiente de revisar el resultado e integrar; no iniciar otra implementación desde los diffs locales antiguos. La V1 siguiente sigue requiriendo validación familiar antes de ser estable.
+**Prioridad vigente · recuperación de calidad autorizada el 13/10/2026.** La auditoría confirmó desviaciones de creación/clasificación/edición/cierre de Misiones y menor coherencia visual respecto a Lectura. Reparación en PR #159, rama `fix/dictado-estandares`, desde `main` `1bc1de3d…`: formulario estándar **Misión de Mi Aventura → Rincón del Dictado**, evidencia del texto asignado, refuerzos preparados en el mismo formulario, compatibilidad sin migración, bienvenida y pasos basados en Lectura. Propietario: `SPEC-RINCON_DICTADOS.md` 1.1-rc. Pendiente de revisar el resultado e integrar; no iniciar otra implementación desde los diffs locales antiguos. La V1 siguiente sigue requiriendo validación familiar antes de ser estable.
 
 **Rincón del Dictado V1 · PR #157 integrado y publicado.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
 
@@ -340,7 +340,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Baseline funcional de producto verificado** | `eb61077a81d6a49a2faaf7c946d169fc63fdf0c4` · #157 integrado; conserva #154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
 | **Rama On going** | `fix/dictado-estandares` · reparación candidata desde `1bc1de3d…` |
-| **PR On going** | Reparación de estándares pendiente de revisión; #157/#158 integrados |
+| **PR On going** | PR #159 · reparación de estándares abierta, pendiente de revisión e integración; #157/#158 integrados |
 | **Trabajo inmediato** | Revisar e integrar reparación; después validar voz, persistencia y utilidad con familia |
 | **GitHub Pages del baseline funcional** | #761 · `success` · SHA `eb61077a…` |
 | **Verificación posterior al cierre** | #157 integrado; build y despliegue Pages #761 correctos. Este cierre documental no cambia el producto. |
@@ -389,7 +389,7 @@ Al iniciar o retomar trabajo:
 | **Versión** | 3.5 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Reparación de estándares de Dictado en revisión; validación familiar posterior |
-| **PR On going** | Reparación de estándares pendiente de revisión; #157/#158 integrados |
+| **PR On going** | PR #159 · reparación de estándares abierta, pendiente de revisión e integración; #157/#158 integrados |
 | **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
