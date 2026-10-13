@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/tech/TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` |
-| **Versión** | 0.4 |
+| **Versión** | 0.5-rc |
 | **Estado** | Activo como referencia técnica de transición |
 | **Fecha de origen** | 10/08/2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 13/10/2026 |
 | **Propietario** | Implementación técnica de Identidad y Accesos |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Estructura Firestore y transición técnica de PERSON, USER, ROLE, USER_ROLE, PERSON_RELATION, Persona Activa y Gestión de Usuarios |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 0.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consumo del contexto en consulta y bloqueo de escrituras relacionadas sin gestión; sin migración ni cambio de Rules. Candidata pendiente de integración. |
 | 0.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la referencia técnica con Persona Activa y el estándar vigente, retira la interpretación histórica `alumno = gestion`, actualiza propietarios documentales, formaliza el cálculo de nivel efectivo, la resolución física de datos legacy y la separación entre reglas versionadas y reglas realmente desplegadas. |
 | 0.3 | 13/08/2026 | Product Owner + AI Collaborator | Consolidó la implementación Multi-Persona, Gestión de Usuarios y Auditoría Fase A. |
 | 0.2 | 12/08/2026 | Product Owner + AI Collaborator | Alineó el documento con la implementación Multi-Persona y Gestión de Usuarios. |
@@ -350,8 +351,17 @@ Antes de modificar identidad/acceso verificar:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo como referencia técnica de transición |
-| **Versión activa** | 0.4 |
+| **Versión activa** | 0.5-rc |
 | **Fuente normativa** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` |
 | **Fuente de modelo** | `MODELO_ROLES.md` |
 | **Implementación principal** | `ContextoUsuario` + Gestión de Usuarios + APIs propietarias + Firestore Rules |
 | **Migración global de subcolecciones** | No requerida actualmente |
+
+
+## Consulta educativa · candidata 13/10/2026
+
+Implementa `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` con el resolver existente y el UID físico de la Persona Activa. Detectives deja de consultar el UID del actor autenticado cuando el contexto es relacionado. No se crean identidades, relaciones, colecciones ni fuentes paralelas.
+
+`ContextoUsuario.exigirEscrituraEducativa({ requiereGestion })` recarga el contexto y aplica nivel efectivo/propiedad; las APIs educativas sensibles lo consumen antes de escribir. La entrada de consulta revalida el contexto antes/después de la carga y al abrir trabajo; el motor elimina resultados ante cambio/revocación.
+
+Las Rules versionadas ya distinguen lectura relacionada de gestión de datos ajenos en Misiones, evidencias y sesiones. Permanecen sin cambios. Las pruebas de navegador usan Contexto/API/Panel/motor reales con SDK y cuentas simulados; no equivalen a prueba con emulador ni a comprobación de Rules desplegadas. Validación real familiar y profesional pendiente tras aprobación/publicación.

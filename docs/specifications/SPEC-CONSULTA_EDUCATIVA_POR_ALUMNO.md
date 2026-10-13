@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` |
-| **Versión** | 1.0 |
-| **Estado** | APROBADA PARA DESARROLLO · NO IMPLEMENTADA |
+| **Versión** | 1.1-rc |
+| **Estado** | APROBADA · IMPLEMENTACIÓN CANDIDATA EN RAMA · PENDIENTE DE INTEGRACIÓN |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Experiencia multi-actor / consulta educativa |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -20,6 +20,13 @@
 - `compartido/js/contexto-usuario.js` · implementa la resolución actual de Persona Activa y nivel efectivo.
 
 ---
+
+## 🕘 Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata en rama: entrada de consulta con motor compartido, históricos de solo lectura, protección de mutaciones y redacción aprobada; pendiente de revisión e integración. |
+| 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada para desarrollo; no implementada. |
 
 ## 🎯 1. Necesidad
 
@@ -240,4 +247,27 @@ También queda aprobada la nueva redacción de señales de pronunciación del bl
 
 Estado:
 
-> **APROBADA PARA DESARROLLO · NO IMPLEMENTADA**
+> **APROBADA · IMPLEMENTACIÓN CANDIDATA EN RAMA · PENDIENTE DE INTEGRACIÓN**
+
+
+## 🛠️ Implementación candidata y trazabilidad · 13/10/2026
+
+Base de desarrollo: `main` `1105e5f94df3709d57532348b184d87710fff242` (#167). Rama: `feat/consulta-educativa-alumno`. La decisión funcional permanece aprobada; la candidata no está integrada ni publicada.
+
+| Regla aprobada | Implementación reutilizada |
+|---|---|
+| Consulta sin entrar en Gestión de Misiones | `mi-universo/consulta-educativa/` y nodo `consulta-educativa` de `compartido/modelos/navegacion.js`, nivel mínimo `consulta`; Gestión conserva `gestion`. |
+| Una identidad y autorización | `ContextoUsuario` resuelve relación activa, Persona Activa, UID físico y nivel efectivo; se comprueba antes/después de cargar y antes de abrir trabajo. La ausencia/revocación de relación oculta el contenido. |
+| Un único Análisis Educativo | `mi-universo/mis-tareas/analisis-educativo.js` se monta en ambos recorridos; conserva fuentes, límites, filtros y cálculo. |
+| Misiones, observaciones, progreso y trabajo | `Academia.tareas.leer`, `leerSesionesAcademicas({ todas: true })`, `abrirTrabajoRealizado` y visores existentes; no hay segunda colección ni motor. |
+| Históricos sin gestión | Lectura presenta observaciones sin editor/borrado; Semillas abre historial; Detectives consulta UID de Persona Activa y omite escrituras; Dictado reutiliza su historial de consulta. |
+| Consulta no concede escritura | `ContextoUsuario.exigirEscrituraEducativa` usa propiedad y nivel efectivo existentes. APIs de Misiones exigen gestión; sesiones/evidencias propias conservan el recorrido del alumno. |
+| Presentación de palabras | Solo cambian las dos redacciones de Lectura en `analizarLectura`; selección, prioridad, intentos y estados permanecen intactos. |
+
+### Validación de la candidata
+
+`tests/consulta-educativa-browser.cjs` ejecuta ContextoUsuario, Panel, API, motor y páginas reales con identidades y transporte Firebase simulados: familiar conserva creación; profesional relacionado consulta el mismo reporte sin gestión; nueve mutaciones directas se rechazan antes de escribir; relación ausente y revocada bloquean contenido; rol gestión limitado por relación consulta no puede crear. Comprueba redacción, señal reciente y anchuras 1280/768/390/320.
+
+Regresión: `dictados-modelo.test.mjs`, `dictados-seguimiento.test.mjs`, `dictados-sesiones.test.mjs` y `dictados-misiones-browser.cjs`. Las Rules propietarias `compartido/firebase/FireStore Rules.txt` ya admiten lectura educativa relacionada y requieren gestión para modificar datos ajenos; no se cambian Rules ni colecciones.
+
+**Pendiente:** aprobación de PR, integración/publicación y comprobación real con Lidia/Gloria y familiar. Las pruebas simuladas no verifican las Rules desplegadas, las cuentas reales ni la persistencia de producción.

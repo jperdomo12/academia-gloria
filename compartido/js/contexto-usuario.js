@@ -670,6 +670,16 @@ async function puedeGestionar() {
   return NIVEL[nivel] >= NIVEL.gestion;
 }
 
+/** Reutiliza nivel efectivo y propiedad; no eleva el Rol ni la Relación. */
+async function exigirEscrituraEducativa({ requiereGestion = false } = {}) {
+  const contexto = await inicializar({ forzarRecarga: true });
+  const gestion = NIVEL[contexto.nivelAcceso] >= NIVEL.gestion;
+  if (!gestion && (requiereGestion || !contexto.esPersonaPropia)) {
+    throw new Error('Este acceso permite consultar; la modificación requiere gestión autorizada.');
+  }
+  return contexto;
+}
+
 async function esAdministrador() {
   const nivel = await obtenerNivelAcceso();
   return NIVEL[nivel] >= NIVEL.administracion;
@@ -726,6 +736,7 @@ export const ContextoUsuario = Object.freeze({
 
   puedeConsultar,
   puedeGestionar,
+  exigirEscrituraEducativa,
   esAdministrador,
 
   seleccionarPersonaActiva,
@@ -747,6 +758,7 @@ export {
 
   puedeConsultar,
   puedeGestionar,
+  exigirEscrituraEducativa,
   esAdministrador,
 
   seleccionarPersonaActiva,

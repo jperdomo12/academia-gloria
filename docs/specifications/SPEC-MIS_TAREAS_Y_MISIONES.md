@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.4 |
+| **Versión** | 2.5-rc |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consulta educativa de Misiones y observaciones con APIs/visores existentes; gestión sigue separada. Candidata pendiente de integración. |
 | 2.4 | 13/10/2026 | Product Owner + AI Collaborator | Ajustes familiares aprobados e integrados mediante #161; Pages #766 `success`. Dictado comparte agrupación de Observaciones y refuerzos, consulta Misiones preparadas sobre registros reales y conserva formulario/API comunes. |
 | 2.4-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata de ajustes familiares: Mi Rincón de Dictado comparte agrupación de Observaciones y refuerzos con Lectura/Matemáticas; Misiones preparadas consulta registros reales, controla visibilidad y abre edición común. |
 | 2.3 | 13/10/2026 | Product Owner + AI Collaborator | Integración aprobada de #159: Dictado utiliza Misión de Mi Aventura y módulo Rincón del Dictado; Pages #763 `success`. Conserva contrato anterior sin migración y validación familiar pendiente. |
@@ -726,3 +727,10 @@ Nueva Misión permite preparar una aventura del catálogo. Observaciones y refue
 El criterio de evidencia `sesion_academica` filtra `actividadId: rincon-dictados` y `focoDictado` exacto. Guardar el intento aporta evidencia y pasa a revisión familiar; no se exige porcentaje mínimo ni se declara dominio automático. El resumen de evidencia identifica autoevaluación y enlaza al historial propietario. Un fallo del vínculo no elimina el resultado guardado; su reintento usa el mismo ID.
 
 La edición general muestra la configuración de Dictado y respeta el bloqueo de criterios tras iniciar. Las Misiones anteriores `repaso_academico/libre` conservan su contrato sin migración y con aviso explícito; siguen ejecutables mediante evidencia, sin un cierre manual redundante. Los datos de prueba no alimentan el análisis ni las propuestas. El refuerzo conserva referencia al intento original y genera un resultado independiente. Contrato detallado: `SPEC-RINCON_DICTADOS.md`, sección 5.
+
+
+## Consulta educativa relacionada · candidata 13/10/2026
+
+Conforme a `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`, una relación válida permite consultar Misiones, estado, observaciones, refuerzos preparados, objetivos, progreso y trabajo realizado desde Consulta educativa. Reutiliza `Academia.tareas.leer` y `abrirTrabajoRealizado`; no duplica motor ni datos.
+
+Crear/editar/eliminar Misiones y guardar observaciones requiere nivel efectivo `gestion` o superior. Gestión de Misiones mantiene ese mínimo. El alumno conserva sus escrituras educativas propias y evidencias de ejecución; el profesional en consulta no puede realizarlas sobre una persona relacionada. El reporte puede sugerir actuaciones; prepararlas como Misiones sigue siendo una decisión de gestión.

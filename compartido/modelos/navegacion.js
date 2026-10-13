@@ -104,6 +104,15 @@ export const NAVEGACION_ACADEMIA = Object.freeze([
         limpiarNavegacionLegada: true
       },
       {
+        id: "consulta-educativa",
+        titulo: "Consulta educativa",
+        icono: "📊",
+        ruta: "mi-universo/consulta-educativa/",
+        volver: "mi-universo/",
+        nivelMinimo: "consulta",
+        cabeceraGlobal: true
+      },
+      {
         id: "gestion-misiones",
         titulo: "Gestión de Misiones",
         icono: "⚙️",

@@ -28,6 +28,7 @@ let datos = {
   historias: new Map(),
   incidencias: []
 };
+let identidadConsulta = null;
 let cargado = false;
 let cargando = false;
 
@@ -467,8 +468,8 @@ function analizarLectura(sesiones = []) {
 
   const aspectos = candidatas.slice(0, 5).map(item =>
     !estadoPalabraSuperada(item.estado)
-      ? `🗣️ «${item.palabra}» no quedó superada en la señal más reciente (${item.titulo}).`
-      : `🗣️ «${item.palabra}» quedó superada en ${item.intentos} intentos en la señal más reciente (${item.titulo}).`
+      ? `🗣️ «${item.palabra}» conviene seguir practicándola. En la última lectura registrada, ${item.titulo}, todavía necesitó apoyo.`
+      : `🗣️ «${item.palabra}» quedó superada, aunque necesitó varios intentos en la última lectura registrada, ${item.titulo}.`
   );
 
   const conIntentos = ocurrencias.filter(item => item.intentos > 0);
@@ -792,7 +793,11 @@ async function cargarFuentes() {
 
   const incidencias = [];
   try {
-    const contexto = await ContextoUsuario.inicializar();
+    const contexto = await ContextoUsuario.inicializar({ forzarRecarga: Boolean(identidadConsulta) });
+    if (identidadConsulta && (contexto.personaActiva.personaId !== identidadConsulta.personaId ||
+        contexto.usuario.userId !== identidadConsulta.actorUserId)) {
+      throw new Error('La Persona Activa o su autorización cambió. Vuelve a abrir Consulta educativa.');
+    }
     const uid = String(contexto.userIdPersonaActiva || "").trim();
     if (!uid) throw new Error("No se pudo resolver el alumno activo.");
 
@@ -835,6 +840,12 @@ async function cargarFuentes() {
       return [];
     });
 
+    if (identidadConsulta) {
+      const vigente = await ContextoUsuario.inicializar({ forzarRecarga: true });
+      if (vigente.personaActiva.personaId !== identidadConsulta.personaId || vigente.usuario.userId !== identidadConsulta.actorUserId) {
+        throw new Error('La autorización cambió durante la consulta. No se muestra el reporte anterior.');
+      }
+    }
     datos = {
       detectives,
       academicos: academicosResult,
@@ -852,6 +863,13 @@ async function cargarFuentes() {
       estado.textContent = `⚠️ El reporte se generó con datos parciales. ${incidencias.length} fuente(s) o historial(es) no pudieron leerse por completo.`;
     }
   } catch (error) {
+    if (identidadConsulta) {
+      datos = { detectives: [], academicos: [], lectura: [], dictados: [], historias: new Map(), incidencias: [] };
+      const contenido = $('contenidoConsulta');
+      if (contenido) contenido.hidden = true;
+      const aviso = $('estadoConsulta');
+      if (aviso) aviso.textContent = error.message;
+    }
     cargado = false;
     if (estado) {
       estado.classList.remove("hidden");
@@ -873,16 +891,17 @@ function crearEstilos() {
 
 function crearInterfaz() {
   if ($("panelAnalisisEducativo")) return;
+  const hostConsulta = $("consultaAnalisis");
   const nav = document.querySelector(".tabs");
   const preparar = nav?.querySelector('[data-tab="crear"]');
-  if (!nav || !preparar) return;
+  if (!hostConsulta && (!nav || !preparar)) return;
 
   const tab = document.createElement("button");
   tab.className = "tab";
   tab.type = "button";
   tab.dataset.tab = "analisis";
   tab.innerHTML = "📊 Análisis educativo";
-  nav.insertBefore(tab, preparar);
+  if (!hostConsulta) nav.insertBefore(tab, preparar);
 
   const panel = document.createElement("section");
   panel.id = "panelAnalisisEducativo";
@@ -953,7 +972,8 @@ function crearInterfaz() {
   `;
 
   const panelCrear = $("panelCrear");
-  panelCrear?.parentElement?.insertBefore(panel, panelCrear);
+  if (hostConsulta) hostConsulta.appendChild(panel);
+  else panelCrear?.parentElement?.insertBefore(panel, panelCrear);
 
   const ahora = new Date();
   const hoy = new Date(ahora.getTime() - ahora.getTimezoneOffset() * 60000)
@@ -1019,7 +1039,15 @@ function iniciar() {
   configurarEventos();
 }
 
-if (document.readyState === "loading") {
+export function iniciarAnalisisConsulta(contexto) {
+  identidadConsulta = { personaId: contexto.personaActiva.personaId, actorUserId: contexto.usuario.userId };
+  iniciar();
+  abrirAnalisis();
+}
+
+if (document.body.dataset.consultaEducativa === 'true') {
+  // La entrada de consulta inicializa después de validar la Persona Activa.
+} else if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", iniciar, { once: true });
 } else {
   iniciar();

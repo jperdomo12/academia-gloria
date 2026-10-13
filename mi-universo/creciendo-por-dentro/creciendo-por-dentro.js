@@ -56,6 +56,7 @@ function activateImageFallback(container = document) {
   });
 }
 
+let soloConsultaRelacionada = false;
 let catalogo = { familias: [], semillas: [] };
 let perfil = null;
 let misionId = params.get("misionId");
@@ -271,6 +272,7 @@ function resetExperience() {
 }
 
 function startSeed(seedId) {
+  if (soloConsultaRelacionada) { showHistory(); return; }
   semilla = catalogo.semillas.find(item => item.id === seedId);
   if (!semilla) return;
   resetExperience();
@@ -1113,6 +1115,13 @@ async function initialize() {
    * del primer render del catálogo contextual. El historial es secundario y se
    * carga después para no retrasar la entrada a la actividad.
    */
+  soloConsultaRelacionada = !esPersonaPropia && !['gestion','administracion'].includes(contextoUsuario?.nivelAcceso);
+  if (soloConsultaRelacionada) {
+    $('startRecommended').hidden = true;
+    $('startRecommended').style.display = 'none';
+    await showHistory();
+    return;
+  }
   await loadMission();
 
   configureRecognition();

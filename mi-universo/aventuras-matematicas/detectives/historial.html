@@ -30,17 +30,22 @@
   <section id="historyList" class="list"><div class="card loading">Cargando historial…</div></section>
 </main>
 <script type="module">
+  import { ContextoUsuario } from "../../../compartido/js/contexto-usuario.js";
   import { auth } from "../../../compartido/firebase/firebase-config.js";
   import { iniciarPanelUsuario } from "../../../compartido/js/panel-usuario.js";
   import { obtenerHistorialDetectives,eliminarHistorialDetectives } from "../../../compartido/js/detectives-progreso.js";
   await auth.authStateReady();
   if(!auth.currentUser){location.replace("/academia-gloria/login.html");throw new Error("Sesión no disponible");}
   await iniciarPanelUsuario({contenedor:"[data-panel-usuario]",loginUrl:"/academia-gloria/login.html",mostrarPerfil:false});
+  const contexto=await ContextoUsuario.inicializar({forzarRecarga:true});
+  const userIdDatos=contexto.userIdPersonaActiva;
+  const puedeModificar=contexto.esPersonaPropia || ['gestion','administracion'].includes(contexto.nivelAcceso);
+  if(!puedeModificar){const b=document.getElementById('clearHistory');b.hidden=true;b.style.display='none';b.disabled=true;}
   const $=id=>document.getElementById(id);let histories=[],stories=[];
   const escape=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
   const dateText=value=>value?new Date(value).toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"}):"—";
   async function load(){
-    try{const [historyResponse,storyResponse]=await Promise.all([obtenerHistorialDetectives(auth.currentUser.uid),fetch("./historias.json",{cache:"no-store"})]);histories=historyResponse;stories=storyResponse.ok?await storyResponse.json():[];render();}
+    try{const [historyResponse,storyResponse]=await Promise.all([obtenerHistorialDetectives(userIdDatos),fetch("./historias.json",{cache:"no-store"})]);histories=historyResponse;stories=storyResponse.ok?await storyResponse.json():[];render();}
     catch(error){console.error(error);$("historyList").innerHTML='<div class="card error">No fue posible cargar el historial. Revisa la conexión y las reglas de Firestore.</div>';}
   }
   function render(){
@@ -48,11 +53,11 @@
     const filtered=histories.filter(item=>{const story=byId.get(item.historiaId||item.id)||{};return(!level||String(item.nivel)===level)&&(!status||item.estado===status)&&(!q||`${story.titulo||item.historiaId} ${story.texto||""}`.toLowerCase().includes(q));});
     $("totalCompleted").textContent=histories.length;$("totalPractices").textContent=histories.reduce((sum,item)=>sum+Number(item.vecesCompletada||0),0);$("totalPending").textContent=Math.max(0,stories.length-histories.length);
     if(!filtered.length){$("historyList").innerHTML='<div class="card empty">No hay historias que coincidan con estos filtros.</div>';return;}
-    $("historyList").innerHTML=filtered.map(item=>{const story=byId.get(item.historiaId||item.id)||{};const id=item.historiaId||item.id;return `<article class="card item"><div class="item-main"><span class="icon">✅</span><div><h2>${escape(story.titulo||id)}</h2><div class="meta">Nivel ${item.nivel||"—"} · ${escape(item.tema||"Sin tema")} · Última vez: ${escape(dateText(item.ultimaResolucion))}</div><div class="chips"><span class="chip">${Number(item.vecesCompletada||0)} veces</span><span class="chip">${escape((item.estado||"en_practica").replaceAll("_"," "))}</span><span class="chip">Mejor: ${item.mejorIntentos??"—"} intentos</span></div></div></div><div class="actions"><a class="btn btn-light" href="./historia.html?id=${encodeURIComponent(id)}" data-conservar-retorno>Ver detalle</a><a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(id)}" data-conservar-retorno>Practicar otra vez</a></div></article>`}).join("");
+    $("historyList").innerHTML=filtered.map(item=>{const story=byId.get(item.historiaId||item.id)||{};const id=item.historiaId||item.id;return `<article class="card item"><div class="item-main"><span class="icon">✅</span><div><h2>${escape(story.titulo||id)}</h2><div class="meta">Nivel ${item.nivel||"—"} · ${escape(item.tema||"Sin tema")} · Última vez: ${escape(dateText(item.ultimaResolucion))}</div><div class="chips"><span class="chip">${Number(item.vecesCompletada||0)} veces</span><span class="chip">${escape((item.estado||"en_practica").replaceAll("_"," "))}</span><span class="chip">Mejor: ${item.mejorIntentos??"—"} intentos</span></div></div></div><div class="actions"><a class="btn btn-light" href="./historia.html?id=${encodeURIComponent(id)}" data-conservar-retorno>Ver detalle</a>${puedeModificar?`<a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(id)}" data-conservar-retorno>Practicar otra vez</a>`:""}</div></article>`}).join("");
     window.Academia?.navegacion?.prepararEnlaces();
   }
   ["searchInput","levelFilter","statusFilter"].forEach(id=>$(id).addEventListener(id==="searchInput"?"input":"change",render));
-  $("clearHistory").onclick=async()=>{if(!confirm("¿Seguro que deseas borrar todo el historial de Detectives? Esta acción no se puede deshacer."))return;if(!confirm("Confirma por segunda vez: se eliminarán todas las resoluciones guardadas."))return;$("clearHistory").disabled=true;try{await eliminarHistorialDetectives(auth.currentUser.uid);histories=[];render();}finally{$("clearHistory").disabled=false;}};
+  $("clearHistory").onclick=async()=>{if(!confirm("¿Seguro que deseas borrar todo el historial de Detectives? Esta acción no se puede deshacer."))return;if(!confirm("Confirma por segunda vez: se eliminarán todas las resoluciones guardadas."))return;$("clearHistory").disabled=true;try{await eliminarHistorialDetectives(userIdDatos);histories=[];render();}finally{$("clearHistory").disabled=false;}};
   await load();
 </script><script src="../../../compartido/js/navegacion.js"></script>  <script type="module" src="../../../compartido/componentes/navegacion-global.js"></script>
 </body></html>

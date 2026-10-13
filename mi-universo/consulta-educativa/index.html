@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Consulta educativa · Academia Gloria Valentina</title>
+  <link rel="icon" href="../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../mis-tareas/mis-tareas.css">
+  <link rel="stylesheet" href="../mis-tareas/refuerzos-pronunciacion.css">
+  <link rel="stylesheet" href="../../compartido/css/navegacion-global.css">
+</head>
+<body data-page-title="Consulta educativa" data-page-icon="📊" data-nav-back="../index.html" data-consulta-educativa="true">
+  <main class="pagina">
+    <header class="hero-tareas superficie"><div><span class="eyebrow">Acompañamiento educativo</span><h1>Consulta educativa</h1>
+      <p id="personaConsulta">Comprobando Persona Activa…</p><p>Consulta evidencias, avances y necesidades de práctica. Las decisiones de gestión siguen en el espacio familiar.</p></div><div class="hero-tareas__visual" aria-hidden="true">📊</div></header>
+    <p id="estadoConsulta" role="status" aria-live="polite"></p>
+    <div id="contenidoConsulta" hidden>
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloHistoriales"><h2 id="tituloHistoriales">📚 Historiales educativos</h2>
+        <div class="grid-formulario">
+          <a class="btn secundaria" href="../rincon-lectura/?vista=historial">📖 Lectura y pronunciación</a>
+          <a class="btn secundaria" href="../rincon-dictados/?vista=historial">✏️ Dictado y autoevaluación</a>
+          <a class="btn secundaria" href="../aventuras-matematicas/detectives/historial.html">🔎 Detectives y progreso</a>
+          <a class="btn secundaria" href="../creciendo-por-dentro/?vista=historial">🌱 Creciendo por Dentro</a>
+        </div>
+      </section>
+      <div id="consultaAnalisis"></div>
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloMisionesConsulta"><h2 id="tituloMisionesConsulta">🗺️ Misiones y refuerzos preparados</h2>
+        <p>Observaciones, objetivos, progreso y trabajo realizado de la Persona Activa.</p><div id="misionesConsulta"></div></section>
+      <section class="superficie refuerzo-bloque" aria-labelledby="tituloSesionesConsulta"><h2 id="tituloSesionesConsulta">📒 Actividades y resultados guardados</h2><div id="sesionesConsulta"></div></section>
+      <a id="gestionConsulta" class="btn secundaria" href="../mis-tareas/" hidden>⚙️ Gestión de Misiones</a>
+    </div>
+  </main>
+  <script type="module" src="./consulta-educativa.js"></script>
+  <script src="../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../compartido/componentes/navegacion-global.js"></script>
+</body>
+</html>

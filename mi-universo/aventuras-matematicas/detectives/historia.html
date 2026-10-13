@@ -56,6 +56,7 @@
   const sesionObjetivo=params.get("sesionId");
   const misionId=params.get("misionId");
   const modoRevisionMision=Boolean(misionId && sesionObjetivo);
+  const soloConsulta=modoRevisionMision || (!contexto.esPersonaPropia && !["gestion","administracion"].includes(contexto.nivelAcceso));
   const content=document.getElementById("content");
   const escape=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
   const date=value=>value?new Date(value).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"}):"—";
@@ -150,8 +151,8 @@
         <section class="card">
           <div class="chips"><span class="chip">Nivel ${story.nivel}</span><span class="chip">${escape(story.tema)}</span><span class="chip">${escape(story.tipo)}</span></div>
           <h1 class="title">${escape(story.titulo)}</h1><p class="story">${escape(story.texto)}</p>
-          ${modoRevisionMision
-            ? `<p class="muted">🔒 Estás revisando una resolución conservada como trabajo realizado de la misión. Los datos del alumno son de solo lectura.</p>`
+          ${soloConsulta
+            ? `<p class="muted">🔒 Estás consultando una resolución guardada. Los datos de la Persona Activa son de solo lectura.</p>`
             : `
               <div class="actions">
                 <a class="btn btn-primary" href="./index.html?practicar=${encodeURIComponent(story.id)}" data-conservar-retorno>Practicar otra vez</a>
@@ -176,7 +177,7 @@
           <div id="sessions">${sessions.length?sessions.map((session,index)=>`
             <article class="session" data-session-id="${escape(session.id)}">
               <div class="session-head"><strong>${modoRevisionMision?"Resolución guardada":`Resolución ${sessions.length-index}`} · ${escape(date(session.completadaEn))}</strong>
-              ${modoRevisionMision
+              ${soloConsulta
                 ? ""
                 : `<button class="btn btn-danger delete-session" data-session="${escape(session.id)}">Eliminar</button>`
               }</div>
@@ -187,7 +188,7 @@
 
       window.Academia?.navegacion?.prepararEnlaces();
 
-      if(!modoRevisionMision){
+      if(!soloConsulta){
         const select=document.getElementById("stateSelect");
         const resetButton=document.getElementById("resetButton");
 

@@ -1,3 +1,4 @@
+import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import { Academia } from "../../compartido/api/academia.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { HISTORIAS } from "./historias.js";
@@ -11,6 +12,7 @@ const MAX_WORD_PRACTICE_ATTEMPTS = 6;
 
 let historia = HISTORIAS[0];
 let perfil = null;
+let soloConsultaRelacionada = false;
 let activeCategory = "Todas";
 let activeLanguage = "es-ES";
 let activeLevel = "all";
@@ -119,6 +121,7 @@ function setStep(stepName) {
 }
 
 function showPanel(panelId, stepName = "welcome") {
+  if (soloConsultaRelacionada) panelId = "historyPanel";
   document.querySelectorAll(".panel").forEach(panel => panel.classList.add("hidden"));
   $(panelId).classList.remove("hidden");
   setStep(stepName);
@@ -1928,7 +1931,9 @@ async function loadReadingHistory() {
             <summary>👨‍👩‍👧 Observaciones de la familia</summary>
 
             <div class="history-section__content">
-              <p class="history-help">
+              ${soloConsultaRelacionada
+                ? `<p>${escapeHtml(observation || 'Sin observación familiar.')}</p>`
+                : `              <p class="history-help">
                 Puedes leer y actualizar la observación. Cada cambio diferente
                 se conserva en el historial de esta lectura.
               </p>
@@ -1948,6 +1953,8 @@ async function loadReadingHistory() {
                   💾 Guardar observación
                 </button>
               </div>
+
+`}
 
               <details class="history-family-versions">
                 <summary>📅 Ver historial de observaciones</summary>
@@ -1978,7 +1985,7 @@ async function loadReadingHistory() {
             </div>
           </details>
 
-          ${parametrosPagina.get("misionId")
+          ${(parametrosPagina.get("misionId") || soloConsultaRelacionada)
             ? `
               <p class="history-help">
                 🔒 Esta lectura forma parte del trabajo realizado de una misión y se conserva como historial.
@@ -2047,7 +2054,14 @@ async function initialize() {
     return;
   }
 
+  const contexto = await ContextoUsuario.inicializar({ forzarRecarga: true });
+  soloConsultaRelacionada = !contexto.esPersonaPropia && !['gestion','administracion'].includes(contexto.nivelAcceso);
   perfil = await Academia.usuario.leerPerfil();
+  if (soloConsultaRelacionada) {
+    showPanel('historyPanel');
+    await loadReadingHistory();
+    return;
+  }
   await Promise.all([
     cargarMisionLectura(),
     cargarMarcasLectura()

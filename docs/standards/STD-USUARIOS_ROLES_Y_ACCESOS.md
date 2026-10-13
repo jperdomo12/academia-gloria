@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3-rc |
 | **Estado** | Activo |
 | **Fecha de origen** | 10/08/2026 |
-| **Última actualización** | 05/09/2026 |
+| **Última actualización** | 13/10/2026 |
 | **Propietario** | Identidad, Accesos y Seguridad |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Identidad USER/PERSON, Roles, niveles de acceso, Relaciones, Persona Activa, Gestión de Usuarios, auditoría básica, compatibilidad y seguridad transversal |
@@ -33,6 +33,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Sincroniza la consulta educativa completa aprobada por alumno; no añade Roles, niveles ni permisos paralelos. Candidata pendiente de integración. |
 | 1.2 | 05/09/2026 | Product Owner + AI Collaborator | Amplía la observación administrativa de acceso para conservar y consultar los **10 accesos más recientes** del USER. Mantiene el último acceso separado para lectura rápida, formaliza retención limitada, presentación plegada en Gestión de Usuarios y las mismas reglas de minimización: sin IP persistida, GPS, coordenadas, ISP ni código postal. |
 | 1.1 | 05/09/2026 | Product Owner + AI Collaborator | Incorpora la V1 de observación de **Último acceso a la Academia** en Gestión de Usuarios. Define que el dato pertenece al USER autenticado, diferencia acceso observado de login técnico Firebase, formaliza ubicación aproximada ciudad/región/país, minimización de datos, ausencia de GPS/IP persistida y comportamiento no bloqueante. |
 | 1.0 | 04/09/2026 | Product Owner + AI Collaborator | Aprobación del Product Owner y activación de la sincronización P1 de Usuarios, Roles y Accesos. |
@@ -479,6 +480,7 @@ Ejemplos verificados:
 |---|---|
 | Mi Camino y experiencias normales | Contexto autenticado + reglas del módulo |
 | Mi Baúl propio | Propietario puede editar; relación requiere `gestion`/`administracion` para editar |
+| Consulta educativa de alumno relacionado | Relación válida y activa + nivel efectivo `consulta` o superior; sin gestión |
 | Gestión de Misiones | `gestion` o superior |
 | Administración | `administracion` |
 | Gestión de Usuarios | `administracion` |
@@ -855,10 +857,17 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.2 |
+| **Versión activa** | 1.3-rc |
 | **Fecha de aprobación** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
 | **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v1.1 |
 | **Principio central** | Identidad autenticada, Persona Activa y permiso efectivo son conceptos distintos; el acceso se determina por contexto, Relación, propiedad y contrato de cada capacidad. La observación administrativa de acceso debe aplicar minimización de datos y retención explícitamente limitada. |
 
 **Impacto:** Identidad · Persona Activa · Roles · Relaciones · Mi Camino · Gestión de Misiones · Gestión de Usuarios · Seguridad · Firestore · Multi-persona
+
+
+## Consulta educativa por relación · candidata 13/10/2026
+
+La fuente funcional propietaria es `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`: relación válida y activa → consulta de toda la información educativa disponible del alumno. No equivale a gestión o administración.
+
+Se mantienen USER → PERSON → PERSON_RELATION → Persona Activa → nivel efectivo. `ContextoUsuario.exigirEscrituraEducativa` aplica propiedad y nivel existentes a escrituras educativas; el actor relacionado requiere `gestion`, y las operaciones de gestión requieren ese nivel también en contexto propio. El mínimo entre Rol y Relación sigue vigente. La entrada Consulta educativa utiliza `consulta`; Gestión de Misiones y Administración conservan sus requisitos.
