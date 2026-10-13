@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` |
-| **Versión** | 1.1-rc |
-| **Estado** | APROBADA · IMPLEMENTACIÓN CANDIDATA EN RAMA · PENDIENTE DE INTEGRACIÓN |
+| **Versión** | 1.1 |
+| **Estado** | APROBADA · IMPLEMENTADA EN MAIN · VALIDACIÓN REAL PENDIENTE |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Experiencia multi-actor / consulta educativa |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata en rama: entrada de consulta con motor compartido, históricos de solo lectura, protección de mutaciones y redacción aprobada; pendiente de revisión e integración. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada para desarrollo; no implementada. |
 
@@ -247,12 +248,12 @@ También queda aprobada la nueva redacción de señales de pronunciación del bl
 
 Estado:
 
-> **APROBADA · IMPLEMENTACIÓN CANDIDATA EN RAMA · PENDIENTE DE INTEGRACIÓN**
+> **APROBADA · IMPLEMENTADA EN MAIN · VALIDACIÓN REAL PENDIENTE**
 
 
-## 🛠️ Implementación candidata y trazabilidad · 13/10/2026
+## 🛠️ Implementación y trazabilidad · 13/10/2026
 
-Base de desarrollo: `main` `1105e5f94df3709d57532348b184d87710fff242` (#167). Rama: `feat/consulta-educativa-alumno`. La decisión funcional permanece aprobada; la candidata no está integrada ni publicada.
+Base de desarrollo: `main` `1105e5f94df3709d57532348b184d87710fff242` (#167). Rama: `feat/consulta-educativa-alumno`. PR #168 aprobada por Juan e integrada en `main` `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1`; publicada por Pages #773 (`success`). Entrada verificada HTTP 200; validación real de cuentas/Rules pendiente.
 
 | Regla aprobada | Implementación reutilizada |
 |---|---|
@@ -264,10 +265,10 @@ Base de desarrollo: `main` `1105e5f94df3709d57532348b184d87710fff242` (#167). Ra
 | Consulta no concede escritura | `ContextoUsuario.exigirEscrituraEducativa` usa propiedad y nivel efectivo existentes. APIs de Misiones exigen gestión; sesiones/evidencias propias conservan el recorrido del alumno. |
 | Presentación de palabras | Solo cambian las dos redacciones de Lectura en `analizarLectura`; selección, prioridad, intentos y estados permanecen intactos. |
 
-### Validación de la candidata
+### Validación de la implementación
 
 `tests/consulta-educativa-browser.cjs` ejecuta ContextoUsuario, Panel, API, motor y páginas reales con identidades y transporte Firebase simulados: familiar conserva creación; profesional relacionado consulta el mismo reporte sin gestión; nueve mutaciones directas se rechazan antes de escribir; relación ausente y revocada bloquean contenido; rol gestión limitado por relación consulta no puede crear. Comprueba redacción, señal reciente y anchuras 1280/768/390/320.
 
 Regresión: `dictados-modelo.test.mjs`, `dictados-seguimiento.test.mjs`, `dictados-sesiones.test.mjs` y `dictados-misiones-browser.cjs`. Las Rules propietarias `compartido/firebase/FireStore Rules.txt` ya admiten lectura educativa relacionada y requieren gestión para modificar datos ajenos; no se cambian Rules ni colecciones.
 
-**Pendiente:** aprobación de PR, integración/publicación y comprobación real con Lidia/Gloria y familiar. Las pruebas simuladas no verifican las Rules desplegadas, las cuentas reales ni la persistencia de producción.
+**Pendiente:** comprobación real con Lidia/Gloria y familiar. Las pruebas simuladas no verifican las Rules desplegadas, las cuentas reales ni la persistencia de producción.

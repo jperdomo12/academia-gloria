@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.11 |
+| **Versión** | 3.12 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.12 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 3.11 | 13/10/2026 | Product Owner + AI Collaborator | Consulta educativa por alumno candidata desde main #167: motor reutilizado, permisos y redacción validados con datos simulados; revisión/integración y prueba real pendientes. |
 | 3.10 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. Semilla 012 publicada con imagen aprobada, catálogo de 12 Semillas y guías sincronizadas. Continúa prueba familiar de Semilla 012 y Dictado; sin declarar estabilidad. |
 | 3.9 | 13/10/2026 | Product Owner + AI Collaborator | Dictado validado positivamente por Juan, pendiente prueba completa familiar. Desarrollo autorizado de Semilla 012 según SPEC: contenido data-driven y guías en rama; imagen externa semilla-012-puedo-empezar-una-conversacion.jpg integrada y verificada; PR #164 lista para aprobación. Sin cambios del Motor ni publicación prematura. |
@@ -295,7 +296,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Consulta educativa por alumno:** implementación candidata en `feat/consulta-educativa-alumno`, desde `main` #167. Revisión de PR, integración/publicación y prueba real pendientes; ver continuidad técnica al final.
+**Consulta educativa por alumno:** PR #168 aprobada e integrada en `main` `5518d4d4…`, desde la SPEC #167. Prueba real pendiente; ver continuidad técnica al final.
 
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
@@ -347,13 +348,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `2e12678ed44a89402f603516677e15f53929a36d` · #164 integrado; conserva #161/#159/#157/#154/#155 |
+| **Baseline funcional de producto verificado** | `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1` · #168 integrado; conserva #167/#166/#164 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin rama de desarrollo activa de Semilla 012; `feat/semilla-012-conversacion` integrada |
-| **PR On going** | Candidata de Consulta educativa en preparación; verificar GitHub al retomar |
-| **Trabajo inmediato** | Probar Semilla 012 y Dictado con la familia; documentar comprensión, voz y persistencia real |
-| **GitHub Pages del baseline funcional** | #769 · `success` · SHA `2e12678e…` |
-| **Verificación posterior al cierre** | #164 integrado; build y despliegue Pages #769 correctos. Cierre documental sin cambios de producto. |
+| **Rama On going** | `docs/cierre-consulta-educativa` · cierre documental; #168 integrado |
+| **PR On going** | Cierre documental de #168; verificar GitHub al retomar |
+| **Trabajo inmediato** | Probar Consulta educativa con Lidia/Gloria y familiar; continuar pruebas familiares de Semilla 012 y Dictado |
+| **GitHub Pages del baseline funcional** | #773 · `success` · SHA `5518d4d4…` |
+| **Verificación posterior al cierre** | #168 aprobado e integrado; Pages #773 correcto y página Consulta educativa responde HTTP 200. Prueba real de cuentas/Rules pendiente. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -389,28 +390,28 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Trabajo actual:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168 aprobada e integrada; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.11 |
+| **Versión** | 3.12 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Consulta educativa candidata pendiente de aprobación/integración; validación familiar de Semilla 012 y Dictado pendiente |
-| **PR On going** | Candidata de Consulta educativa en preparación; verificar GitHub al retomar |
+| **Trabajo On going** | Consulta educativa #168 aprobada e integrada, pendiente de prueba real; validación familiar de Semilla 012 y Dictado pendiente |
+| **PR On going** | Cierre documental de #168; verificar GitHub al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Revisar candidata de Consulta educativa → aprobar/integrar/publicar → probar acceso profesional real; continuar pruebas familiares pendientes |
+| **Siguiente paso** | Probar Consulta educativa con acceso profesional real; continuar pruebas familiares pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
 ## Continuidad técnica · Consulta educativa · 13/10/2026
 
-Decisión funcional aprobada e integrada en `main` por #167, base `1105e5f94df3709d57532348b184d87710fff242`. Fuente propietaria: `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. Desarrollo en `feat/consulta-educativa-alumno`, candidato pendiente de aprobación de PR e integración. No declarar publicado ni estable.
+Decisión funcional aprobada e integrada en `main` por #167, base `1105e5f94df3709d57532348b184d87710fff242`. Fuente propietaria: `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. PR #168 aprobada por Juan e integrada en `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1`. No declarar estable; validar el acceso real familiar/profesional.
 
 Reutiliza ContextoUsuario, motor de Análisis, APIs y visores. Entrada de consulta separada de Gestión; escrituras relacionadas requieren gestión. Redacción de Lectura cambia solo presentación. Validación automática con identidades/Firebase simulados y regresión de Dictado completada; pendiente prueba real de Lidia sobre Gloria, familiar y Rules desplegadas tras publicación.
 

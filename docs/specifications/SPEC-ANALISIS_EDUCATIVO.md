@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` |
-| **Versión** | 1.2-rc |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.2-rc | 13/10/2026 | Product Owner + AI Collaborator | Aplica SPEC de consulta por alumno: mismo reporte accesible sin gestión y redacción educativa de Lectura; candidata pendiente de integración. |
 | 1.1 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria del Análisis Educativo. Documenta la V1 implementada, sus fuentes, filtros, criterios por motor, tratamiento de tendencias, mejoras personales y propuestas de actuación. Formaliza además que todo nuevo Tema Académico de 6.º debe generar evidencia estructurada reutilizable por análisis estadístico/educativo y por propuestas de fortalecimiento. |
@@ -187,7 +188,7 @@ Cuando una propuesta llegue a convertirse en Misión de refuerzo, se respetará 
 
 El reporte analiza a la **Persona Activa** resuelta por `ContextoUsuario`.
 
-El reporte conserva su recorrido en **Gestión de Misiones** (`gestion`). La candidata añade **Consulta educativa** (`consulta`) para una Persona Activa relacionada y autorizada, reutilizando el mismo motor sin capacidades de gestión.
+El reporte conserva su recorrido en **Gestión de Misiones** (`gestion`). La implementación añade **Consulta educativa** (`consulta`) para una Persona Activa relacionada y autorizada, reutilizando el mismo motor sin capacidades de gestión.
 
 Reglas:
 
@@ -981,6 +982,6 @@ Se muestran intentos, señales del último intento por texto y evolución solo e
 La actuación remite a Observaciones y refuerzos → Dictados. La familia selecciona hasta tres palabras o frases y decide crear/mostrar una Misión; el informe nunca la asigna automáticamente. El historial preserva la autoevaluación original. Contrato propietario: `SPEC-RINCON_DICTADOS.md`, sección 5.
 
 
-## Consulta por alumno · candidata 13/10/2026
+## Consulta por alumno · integrada 13/10/2026
 
 Fuente propietaria: `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. La entrada de consulta monta el mismo motor de `analisis-educativo.js`; no cambia fuentes, filtros, selección, estados, prioridades, intentos, procedencia ni límites del reporte. No concede creación de Misiones ni acceso a Gestión de Misiones. Validación y límites de producción documentados en la SPEC propietaria.

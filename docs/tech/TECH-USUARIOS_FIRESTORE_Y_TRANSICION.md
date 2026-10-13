@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/tech/TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` |
-| **Versión** | 0.5-rc |
+| **Versión** | 0.5 |
 | **Estado** | Activo como referencia técnica de transición |
 | **Fecha de origen** | 10/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 0.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 0.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consumo del contexto en consulta y bloqueo de escrituras relacionadas sin gestión; sin migración ni cambio de Rules. Candidata pendiente de integración. |
 | 0.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la referencia técnica con Persona Activa y el estándar vigente, retira la interpretación histórica `alumno = gestion`, actualiza propietarios documentales, formaliza el cálculo de nivel efectivo, la resolución física de datos legacy y la separación entre reglas versionadas y reglas realmente desplegadas. |
 | 0.3 | 13/08/2026 | Product Owner + AI Collaborator | Consolidó la implementación Multi-Persona, Gestión de Usuarios y Auditoría Fase A. |
@@ -351,14 +352,14 @@ Antes de modificar identidad/acceso verificar:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo como referencia técnica de transición |
-| **Versión activa** | 0.5-rc |
+| **Versión activa** | 0.5 |
 | **Fuente normativa** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` |
 | **Fuente de modelo** | `MODELO_ROLES.md` |
 | **Implementación principal** | `ContextoUsuario` + Gestión de Usuarios + APIs propietarias + Firestore Rules |
 | **Migración global de subcolecciones** | No requerida actualmente |
 
 
-## Consulta educativa · candidata 13/10/2026
+## Consulta educativa · integrada 13/10/2026
 
 Implementa `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` con el resolver existente y el UID físico de la Persona Activa. Detectives deja de consultar el UID del actor autenticado cuando el contexto es relacionado. No se crean identidades, relaciones, colecciones ni fuentes paralelas.
 
