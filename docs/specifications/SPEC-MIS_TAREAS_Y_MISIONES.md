@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.4-rc |
+| **Versión** | 2.4 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.4 | 13/10/2026 | Product Owner + AI Collaborator | Ajustes familiares aprobados e integrados mediante #161; Pages #766 `success`. Dictado comparte agrupación de Observaciones y refuerzos, consulta Misiones preparadas sobre registros reales y conserva formulario/API comunes. |
 | 2.4-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata de ajustes familiares: Mi Rincón de Dictado comparte agrupación de Observaciones y refuerzos con Lectura/Matemáticas; Misiones preparadas consulta registros reales, controla visibilidad y abre edición común. |
 | 2.3 | 13/10/2026 | Product Owner + AI Collaborator | Integración aprobada de #159: Dictado utiliza Misión de Mi Aventura y módulo Rincón del Dictado; Pages #763 `success`. Conserva contrato anterior sin migración y validación familiar pendiente. |
 | 2.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Corrige la incorporación de Dictado al formulario/tipo/módulo estándar y el cierre por evidencia; conserva compatibilidad anterior sin migración. Bloqueos de criterio y reinicio del formulario verificados en el recorrido real. |

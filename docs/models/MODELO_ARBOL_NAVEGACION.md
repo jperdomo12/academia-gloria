@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/models/MODELO_ARBOL_NAVEGACION.md` |
-| **Versión** | 1.7-rc |
+| **Versión** | 1.7 |
 | **Estado** | Activo |
 | **Fecha de origen** | 13/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 13/10/2026 | Product Owner + AI Collaborator | PR #161 aprobada, integrada y publicada mediante Pages #766: Mi Rincón de Dictado es el nombre visible vigente; nodo y ruta conservados. |
 | 1.7-rc | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar: nombre visible Mi Rincón de Dictado; conserva nodo y ruta rincon-dictados. Ajuste en rama pendiente de integración. |
 | 1.6 | 12/10/2026 | Product Owner + AI Collaborator | Incorpora Rincón del Dictado como nodo de Mi Universo en V1 candidata PR #157, pendiente de integración. |
 | 1.5 | 06/09/2026 | Product Owner + AI Collaborator | Sincroniza el árbol con la Bitácora de Acompañamiento V1 fusionada mediante PR #83 y la corrección de menú PR #85. Añade Bitácora como nodo principal sin hijos, penúltimo antes de `Descubre la Academia`, y formaliza que un nodo principal sin hijos se renderiza como enlace directo. |
@@ -257,7 +258,7 @@ No se define de forma general como “carpeta padre”.
 | Mi Calendario | ✅ Implementado |
 | Persona Activa | ✅ Implementado |
 | Mi Rincón de Lectura | ✅ Implementado |
-| Mi Rincón de Dictado | V1 publicada #159; nombre ajustado en candidata de primera revisión familiar |
+| Mi Rincón de Dictado | V1 publicada con ajustes #161; validación familiar continúa |
 | Biblioteca Encantada | ✅ Implementado |
 | Mi Rincón de Escritura | ✅ Implementado |
 | Aventuras Matemáticas / Detectives | ✅ Implementado |
@@ -296,7 +297,7 @@ Antes de modificarla:
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.7-rc |
+| **Versión** | 1.7 |
 | **Fuente técnica central** | `compartido/modelos/navegacion.js` |
 | **Reglas conceptuales** | `MODELO_NAVEGACION.md` |
 | **Baseline funcional de esta sincronización** | `main @ 58cab370fbf0b8e2191ef29ec4823dcb37b58bd2` |

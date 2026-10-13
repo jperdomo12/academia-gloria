@@ -3,8 +3,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.2-rc |
-| Estado | Ajustes de primera revisión familiar en rama · pendiente de aprobación e integración |
+| Versión | 1.2 |
+| Estado | V1 funcional publicada para validación familiar · ajustes #161 |
 | Fecha | 13/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.2 | 13/10/2026 | Product Owner + AI Collaborator | Cuatro ajustes de primera revisión aprobados e integrados mediante #161 en `c980fcc1…`; Pages #766 `success`. Continúa validación familiar de audio físico, Rules y persistencia real; sin declarar estabilidad. |
 | 1.2-rc | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar: avisos al final del panel activo, banda de Dictado libre, nombre visible Mi Rincón de Dictado y acordeón compartido con Misiones preparadas/sugeridas. Extiende la consulta de refuerzos sobre las mismas Misiones y su API; edición en formulario común. Candidata, sin declarar estabilidad. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | Reparación #159 aprobada e integrada en `372291dd…`; Pages #763 `success`. Validación familiar de voz, Rules y persistencia real pendiente; sin declarar estabilidad. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Recuperación de calidad autorizada: formulario y módulo estándar, refuerzos revisables en el mismo formulario, compatibilidad sin migración, evidencia del texto asignado, Mi Camino sin cierre redundante, bienvenida basada en Lectura y pruebas sobre el flujo real. |
@@ -204,7 +205,7 @@ La semejanza visual no obliga a copiar reconocimiento de voz, animales, métrica
 
 ### Ajustes de primera revisión familiar · 13/10/2026
 
-| Observación y referencia real | Ajuste verificable en la candidata |
+| Observación y referencia real | Ajuste integrado mediante #161 |
 |---|---|
 | Aviso amarillo antes del resultado (`dictados.js`: `prepend`) | `mensaje` queda como último elemento del panel activo; mantiene `role=status` y `aria-live=polite` en actividad, catálogo e historial. |
 | Dictado mostraba todo directamente; Lectura y Detectives usan `grupo-refuerzo`/`subgrupo-refuerzo` | Las funciones existentes se extraen sin duplicación a `mis-tareas/grupos-refuerzos.js`. Los tres módulos comparten acordeón cerrado, icono, resumen, flecha, bordes, espaciado y apertura exclusiva del grupo. Misiones preparadas/sugeridas permanecen independientes. No se crea CSS alternativo. |
@@ -255,5 +256,5 @@ Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesari
 | Campo | Valor |
 |---|---|
 | Diseño | Aprobado para construir primera versión · 12/10/2026 |
-| Entrega | #159 publicada; ajustes 1.2-rc de primera revisión en rama, pendientes de aprobación/integración. Validación familiar continúa; sin declarar estabilidad |
+| Entrega | #161 aprobada, integrada y publicada; Pages #766 `success`. Validación familiar continúa; sin declarar estabilidad |
 | Siguiente paso | Probar una aventura Nivel 1 con lápiz y papel; ajustar ritmo y revisión según uso |
