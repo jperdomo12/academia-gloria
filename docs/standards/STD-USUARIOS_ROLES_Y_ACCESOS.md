@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
-| **Versión** | 1.3-rc |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | 10/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -33,6 +33,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Sincroniza la consulta educativa completa aprobada por alumno; no añade Roles, niveles ni permisos paralelos. Candidata pendiente de integración. |
 | 1.2 | 05/09/2026 | Product Owner + AI Collaborator | Amplía la observación administrativa de acceso para conservar y consultar los **10 accesos más recientes** del USER. Mantiene el último acceso separado para lectura rápida, formaliza retención limitada, presentación plegada en Gestión de Usuarios y las mismas reglas de minimización: sin IP persistida, GPS, coordenadas, ISP ni código postal. |
 | 1.1 | 05/09/2026 | Product Owner + AI Collaborator | Incorpora la V1 de observación de **Último acceso a la Academia** en Gestión de Usuarios. Define que el dato pertenece al USER autenticado, diferencia acceso observado de login técnico Firebase, formaliza ubicación aproximada ciudad/región/país, minimización de datos, ausencia de GPS/IP persistida y comportamiento no bloqueante. |
@@ -857,7 +858,7 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.3-rc |
+| **Versión activa** | 1.3 |
 | **Fecha de aprobación** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
 | **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v1.1 |
@@ -866,7 +867,7 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 **Impacto:** Identidad · Persona Activa · Roles · Relaciones · Mi Camino · Gestión de Misiones · Gestión de Usuarios · Seguridad · Firestore · Multi-persona
 
 
-## Consulta educativa por relación · candidata 13/10/2026
+## Consulta educativa por relación · integrada 13/10/2026
 
 La fuente funcional propietaria es `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`: relación válida y activa → consulta de toda la información educativa disponible del alumno. No equivale a gestión o administración.
 

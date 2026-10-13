@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.5-rc |
+| **Versión** | 2.5 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 2.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consulta educativa de Misiones y observaciones con APIs/visores existentes; gestión sigue separada. Candidata pendiente de integración. |
 | 2.4 | 13/10/2026 | Product Owner + AI Collaborator | Ajustes familiares aprobados e integrados mediante #161; Pages #766 `success`. Dictado comparte agrupación de Observaciones y refuerzos, consulta Misiones preparadas sobre registros reales y conserva formulario/API comunes. |
 | 2.4-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata de ajustes familiares: Mi Rincón de Dictado comparte agrupación de Observaciones y refuerzos con Lectura/Matemáticas; Misiones preparadas consulta registros reales, controla visibilidad y abre edición común. |
@@ -729,7 +730,7 @@ El criterio de evidencia `sesion_academica` filtra `actividadId: rincon-dictados
 La edición general muestra la configuración de Dictado y respeta el bloqueo de criterios tras iniciar. Las Misiones anteriores `repaso_academico/libre` conservan su contrato sin migración y con aviso explícito; siguen ejecutables mediante evidencia, sin un cierre manual redundante. Los datos de prueba no alimentan el análisis ni las propuestas. El refuerzo conserva referencia al intento original y genera un resultado independiente. Contrato detallado: `SPEC-RINCON_DICTADOS.md`, sección 5.
 
 
-## Consulta educativa relacionada · candidata 13/10/2026
+## Consulta educativa relacionada · integrada 13/10/2026
 
 Conforme a `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`, una relación válida permite consultar Misiones, estado, observaciones, refuerzos preparados, objetivos, progreso y trabajo realizado desde Consulta educativa. Reutiliza `Academia.tareas.leer` y `abrirTrabajoRealizado`; no duplica motor ni datos.
 
