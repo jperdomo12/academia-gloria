@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -32,10 +32,39 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 1.2 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.2-rc | 13/10/2026 | Product Owner + AI Collaborator | Aplica SPEC de consulta por alumno: mismo reporte accesible sin gestión y redacción educativa de Lectura; candidata pendiente de integración. |
 | 1.1 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
 | 1.0 | 03/09/2026 | Product Owner + AI Collaborator | Primera especificación propietaria del Análisis Educativo. Documenta la V1 implementada, sus fuentes, filtros, criterios por motor, tratamiento de tendencias, mejoras personales y propuestas de actuación. Formaliza además que todo nuevo Tema Académico de 6.º debe generar evidencia estructurada reutilizable por análisis estadístico/educativo y por propuestas de fortalecimiento. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define la finalidad educativa y descriptiva del reporte. |
+| 2. Alcance | Delimita motores incluidos y capacidades excluidas. |
+| 3. Principios normativos | Fija evidencia, lenguaje respetuoso y decisiones de fortalecimiento. |
+| 4. Persona Activa y acceso | Define Persona Activa y separación entre consulta y gestión. |
+| 5. Filtros funcionales | Describe filtros de período, motor y foco. |
+| 6. Fuentes de datos V1 | Identifica las fuentes reales y la carga parcial del reporte. |
+| 7. Estructura visible del reporte | Enumera los bloques visibles y su significado. |
+| 8. Criterios de Detectives | Define interpretación de intentos, pistas y evolución en Detectives. |
+| 9. Criterios de Pruebas Académicas | Define agrupación e interpretación de sesiones académicas. |
+| 10. Criterios de Mi Rincón de Lectura | Define señal reciente por palabra, prioridad, intentos y redacción. |
+| 11. Contrato obligatorio de evidencia para nuevos Temas Académicos | Fija el contrato compartido de evidencia para nuevos Temas. |
+| 12. Del reporte a una acción de fortalecimiento | Separa propuestas del reporte y preparación familiar de Misiones. |
+| 13. Separación entre estadísticas y juicio educativo | Distingue datos medidos de interpretación educativa. |
+| 14. Calidad y limitaciones de datos | Explica datos incompletos, límites de comparación y pruebas. |
+| 15. Integración con el Modo de Incorporación Curricular | Conecta nuevos contenidos curriculares con el motor existente. |
+| 16. Criterios de aceptación del Análisis Educativo | Enumera comprobaciones funcionales, de contexto y evidencia. |
+| 17. Estado de implementación al 03/09/2026 | Conserva la fotografía de implementación de septiembre y su evolución. |
+| 18. Decisiones adoptadas | Registra las decisiones adoptadas del dominio. |
+| DECISIÓN | Consolida autoridad, estado y alcance aprobado. |
+| Rincón del Dictado · fuente de autoevaluación | Incorpora autoevaluaciones de Dictado como fuente diferenciada. |
+| Consulta por alumno · integrada 13/10/2026 | Documenta el motor reutilizado en consulta sin cambiar el cálculo. |
 
 ---
 
