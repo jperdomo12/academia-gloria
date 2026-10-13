@@ -26,7 +26,7 @@ const TIPOS_LEGACY = Object.freeze({
 });
 
 const MODULOS = Object.freeze({
-  "rincon-dictados": Object.freeze({ etiqueta: "Rincón del Dictado", icono: "✏️" }),
+  "rincon-dictados": Object.freeze({ etiqueta: "Mi Rincón de Dictado", icono: "✏️" }),
   "rincon-lectura": Object.freeze({ etiqueta: "Mi Rincón de Lectura", icono: "📖" }),
   detectives: Object.freeze({ etiqueta: "Detectives de Problemas", icono: "🔎" }),
   "creciendo-por-dentro": Object.freeze({ etiqueta: "Creciendo por Dentro", icono: "🌱" }),

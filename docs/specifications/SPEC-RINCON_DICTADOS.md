@@ -1,10 +1,10 @@
-# Rincón del Dictado
+# Mi Rincón de Dictado
 
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-RINCON_DICTADOS.md` |
-| Versión | 1.1 |
-| Estado | V1 funcional publicada para validación familiar · reparación #159 |
+| Versión | 1.2-rc |
+| Estado | Ajustes de primera revisión familiar en rama · pendiente de aprobación e integración |
 | Fecha | 13/10/2026 |
 | Propietario | Práctica de escritura y autoevaluación |
 | Responsables | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.2-rc | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar: avisos al final del panel activo, banda de Dictado libre, nombre visible Mi Rincón de Dictado y acordeón compartido con Misiones preparadas/sugeridas. Extiende la consulta de refuerzos sobre las mismas Misiones y su API; edición en formulario común. Candidata, sin declarar estabilidad. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | Reparación #159 aprobada e integrada en `372291dd…`; Pages #763 `success`. Validación familiar de voz, Rules y persistencia real pendiente; sin declarar estabilidad. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Recuperación de calidad autorizada: formulario y módulo estándar, refuerzos revisables en el mismo formulario, compatibilidad sin migración, evidencia del texto asignado, Mi Camino sin cierre redundante, bienvenida basada en Lectura y pruebas sobre el flujo real. |
 | 1.0 | 12/10/2026 | Product Owner + AI Collaborator | Integración autorizada: Misiones de aventuras y refuerzos de palabras/frases, evidencia idempotente para revisión familiar y análisis separado de autoevaluaciones. |
@@ -47,7 +48,7 @@
 
 Principio aprobado: **«Sé qué hice bien y sé qué puedo mejorar»**. El diseño funcional aprobado el 12/10/2026 se conserva en esta especificación; el chat de Análisis no sustituye a este propietario. V1 está publicada para validación familiar, con ajustes menores o medios posibles antes de declararla estable.
 
-Acceso: `Mi Universo → Rincón del Dictado`, junto al Rincón de Lectura.
+Acceso: `Mi Universo → Mi Rincón de Dictado`, junto al Rincón de Lectura.
 
 1. Elegir una aventura, con filtro de nivel, extensión y objetivo ortográfico.
 2. Preparar lápiz y papel; probar la voz; escuchar opcionalmente el texto completo sin verlo. El inicio del dictado aparece después de esa escucha o de elegir expresamente «Prefiero empezar directamente».
@@ -174,7 +175,7 @@ La semejanza visual con Lectura no sustituye los contratos transversales. Se rev
 
 ### Misiones, historial y análisis · contrato tras recuperación 13/10/2026
 
-El Product Owner autoriza incorporar Misiones y seguimiento a esta V1 para uso familiar. En Gestión de Misiones → Nueva Misión se elige **Misión de Mi Aventura → Rincón del Dictado → aventura**, dentro del formulario común. En Observaciones y refuerzos → Dictados se elige un intento y de uno a tres objetivos: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Se conserva la referencia al intento original; no se copia ni cambia su calificación. La práctica breve es un intento nuevo y se identifica como refuerzo en los datos.
+El Product Owner autoriza incorporar Misiones y seguimiento a esta V1 para uso familiar. En Gestión de Misiones → Nueva Misión se elige **Misión de Mi Aventura → Mi Rincón de Dictado → aventura**, dentro del formulario común. En Observaciones y refuerzos → Mi Rincón de Dictado → Misiones sugeridas se elige un intento y de uno a tres objetivos: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Se conserva la referencia al intento original; no se copia ni cambia su calificación. La práctica breve es un intento nuevo y se identifica como refuerzo en los datos.
 
 Las Misiones de refuerzo se preparan inicialmente ocultas en el formulario común; la familia revisa sus campos y decide cuándo mostrarlas. Las aventuras utilizan la visibilidad y demás campos del formulario estándar. No se duplican Misiones abiertas del mismo foco desde este flujo. El alumno solo ejecuta Misiones activas y visibles. El destino incorpora `misionId`; el catálogo queda limitado a la aventura asignada. El contrato exige `actividadId` y `focoDictado` coincidentes y valida además aventura, texto original, referencia de origen y objetivos de refuerzo; copiar un foco no acredita otro texto. Una evidencia válida pasa a revisión familiar; la familia conserva el cierre final. Repetir o pedir ayuda no penaliza.
 
@@ -190,7 +191,7 @@ La auditoría encontró que la V1 había documentado como válida una creación 
 |---|---|
 | Creación fuera del formulario | Configuración `configuracionDictado` dentro de `formTarea`; catálogo original `AVENTURAS`; guardar/editar/fechas/presentación mediante `mis-tareas.js`. |
 | Tipo y módulo incorrectos | `actividad_modulo/rincon-dictados` en `prepararMision`, API y catálogos de Gestión/Mi Camino. |
-| Listado y visibilidad duplicados | Observaciones prepara un evento para el formulario; no crea documentos ni mantiene un listado paralelo. |
+| Listado y visibilidad duplicados | Observaciones prepara un evento para el formulario; no crea documentos por su cuenta. Desde la primera revisión familiar, Misiones preparadas consulta los mismos registros y gestiona su visibilidad mediante Academia.tareas; la edición abre el formulario común. |
 | Cierre redundante | Las Misiones de Dictado, incluidas anteriores, ejecutan el destino real y envían evidencia al guardar; Mi Camino no ofrece el cierre manual de repaso. |
 | Aventura ajena con foco copiado | Cliente limita nuevos intentos a la asignada; `validarIntentoMision` compara el texto y objetivos antes de enlazar evidencia. Un intento no atribuible se conserva sin acreditar la Misión. |
 | Edición opaca | Misiones anteriores muestran aviso y controles de contrato bloqueados; sin migración. Refuerzos conservan sus objetivos. El selector de Misión libre respeta el bloqueo canónico. |
@@ -200,6 +201,18 @@ La auditoría encontró que la V1 había documentado como válida una creación 
 El reinicio interno del formulario evita volver a disparar su propio manejador de `reset`. Es una corrección de integración detectada al ejercitar el formulario real, no un cambio funcional nuevo.
 
 La semejanza visual no obliga a copiar reconocimiento de voz, animales, métricas o mecanismos particulares de Lectura. No se declara estabilidad ni cumplimiento de Rules desplegadas mediante pruebas simuladas.
+
+### Ajustes de primera revisión familiar · 13/10/2026
+
+| Observación y referencia real | Ajuste verificable en la candidata |
+|---|---|
+| Aviso amarillo antes del resultado (`dictados.js`: `prepend`) | `mensaje` queda como último elemento del panel activo; mantiene `role=status` y `aria-live=polite` en actividad, catálogo e historial. |
+| Dictado mostraba todo directamente; Lectura y Detectives usan `grupo-refuerzo`/`subgrupo-refuerzo` | Las funciones existentes se extraen sin duplicación a `mis-tareas/grupos-refuerzos.js`. Los tres módulos comparten acordeón cerrado, icono, resumen, flecha, bordes, espaciado y apertura exclusiva del grupo. Misiones preparadas/sugeridas permanecen independientes. No se crea CSS alternativo. |
+| Faltaba consulta de refuerzos preparados en Observaciones | `listaMisionesDictado` muestra refuerzos abiertos reales, incluidos contratos anteriores, estado, objetivos y visibilidad. `Academia.tareas` conserva el único registro. Activar añade al final del orden visible; ocultar usa 9999, igual que Lectura/Detectives. Revisar abre `cargarTareaEnFormulario`, sin editor alternativo. |
+| Sin banda en acceso libre; Lectura declara explícitamente su contexto | Banda «🌈 Dictado libre», «Este dictado no pertenece a ninguna misión.», «Sin misión» y «Estado: Dictado libre». Composición basada en `reading-mission`; ayuda solo para Misión. Historial solicitado por URL conserva consulta sin atribuirle ejecución libre. |
+| Nombre discordante entre cabecera, menú y catálogos | Nombre visible **Mi Rincón de Dictado**, coherente con Lectura/Escritura; `rincon-dictados`, rutas, evidencia, sesiones y contratos persistidos permanecen iguales. |
+
+La selección sigue siendo familiar a partir de la autoevaluación más reciente de cada texto; no adopta umbrales de Detectives ni diagnostica dificultades. No se asigna ninguna Misión automáticamente. El diseño funcional aprobado se conserva.
 
 ## 6. Validación
 
@@ -242,5 +255,5 @@ Registrar observaciones de comprensión, ritmo y autonomía; ajustar lo necesari
 | Campo | Valor |
 |---|---|
 | Diseño | Aprobado para construir primera versión · 12/10/2026 |
-| Entrega | V1 publicada y reparación #159 aprobada e integrada; Pages #763 `success`; validación familiar pendiente, sin declarar estabilidad |
+| Entrega | #159 publicada; ajustes 1.2-rc de primera revisión en rama, pendientes de aprobación/integración. Validación familiar continúa; sin declarar estabilidad |
 | Siguiente paso | Probar una aventura Nivel 1 con lápiz y papel; ajustar ritmo y revisión según uso |

@@ -20,11 +20,11 @@ const etiquetaEstado = { correcta:'✓ Igual', revisar:'✎ Corregir', omitida:'
 function mensaje(texto = '', error = false) {
   $('mensaje').textContent = texto;
   $('mensaje').className = error ? 'error' : '';
-  if (texto && !$('actividad').hidden) $('actividad').prepend($('mensaje'));
+  if (texto) document.querySelector('.panel:not([hidden])')?.append($('mensaje'));
 }
 function enfocar(id) { $(id)?.focus({ preventScroll: true }); }
 function cambiarSeccion(id) {
-  document.querySelector('.pestanas').before($('mensaje'));
+  $(id).append($('mensaje'));
   document.body.classList.toggle('en-actividad', id === 'actividad');
   if (id !== 'actividad') {
     faseMostrada = null;
@@ -40,8 +40,19 @@ function cambiarSeccion(id) {
   $('verHistorial').setAttribute('aria-pressed', String(id === 'historial'));
 }
 function actualizarMision() {
-  $('misionDictado').hidden = !misionActual;
-  if (!misionActual) return;
+  const banda = $('misionDictado');
+  const historico = parametros.has('sesionId') || parametros.get('vista') === 'historial';
+  banda.hidden = historico || (!preview && parametros.has('misionId') && !misionActual);
+  banda.classList.toggle('mision-dictado--libre', !misionActual);
+  $('ayudaMisionDictado').hidden = !misionActual;
+  if (!misionActual) {
+    $('tituloMisionDictado').textContent = '🌈 Dictado libre';
+    $('descripcionMisionDictado').textContent = 'Este dictado no pertenece a ninguna misión.';
+    $('progresoMisionDictado').textContent = 'Sin misión';
+    $('estadoMisionDictado').textContent = 'Estado: Dictado libre';
+    return;
+  }
+  $('progresoMisionDictado').textContent = 'Mi misión';
   $('tituloMisionDictado').textContent = misionActual.titulo;
   $('descripcionMisionDictado').textContent = misionActual.presentacionAlumno?.descripcionMision ||
     'Prepara tu cuaderno. Al guardar tu revisión, la Misión pasará a tu familia.';
@@ -203,7 +214,7 @@ function render() {
   $('descansar').hidden = guardada;
   $('pantalla').innerHTML = ({preparar:prepararHtml,dictar:dictarHtml,terminar:terminarHtml,revisar:revisarHtml,resultado:resultadoHtml}[sesion.fase])();
   controlesVoz();
-  if ($('mensaje').textContent) $('actividad').prepend($('mensaje'));
+  $('actividad').append($('mensaje'));
   enfocar('tituloActividad');
   if (faseMostrada !== sesion.fase) $('actividad').scrollIntoView({block:'start'});
   faseMostrada = sesion.fase;
@@ -446,6 +457,7 @@ window.addEventListener('beforeunload',evento=>{conservar();if(guardando || (esc
 document.addEventListener('visibilitychange',()=>{if(document.hidden){conservar();detener();}});
 
 async function iniciar() {
+  actualizarMision();
   catalogo();
   if(preview) {
     $('modo').hidden=false;$('modo').textContent='Vista previa · Reparación de estándares · Prueba libre sin guardar resultados.';
@@ -475,8 +487,8 @@ async function iniciar() {
       const origenId=misionActual.evidencia.configuracion.sesionOrigenId;
       aventuraAsignada=aventuraMision(misionActual,origenId?await servicios.leerUna(origenId):null);
       $('nivel').value='todos';$('nivel').disabled=true;
-      actualizarMision();
     }
+    actualizarMision();
     claveBorrador=`academia.dictados.v1.${identidad.actorUserId}.${identidad.personaId}${misionActual?'.'+misionActual.id:''}`;
     listo=identidad.puedeGuardar;
     if(listo)recuperar();

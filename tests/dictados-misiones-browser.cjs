@@ -71,6 +71,17 @@ export const runTransaction=async(db,fn)=>{
     await page.goto(base+'/mi-universo/mis-tareas/',{waitUntil:'domcontentloaded'});
     await page.waitForFunction(()=>document.querySelector('#dictadoAventura').options.length===6);
   }
+  await page.goto(base+'/mi-universo/rincon-dictados/');
+  await page.waitForSelector('[data-aventura]:not(:disabled)');
+  assert.match(await page.locator('#tituloMisionDictado').innerText(),/Dictado libre/);
+  assert.match(await page.locator('#descripcionMisionDictado').innerText(),/no pertenece a ninguna misión/);
+  assert.ok(await page.locator('#ayudaMisionDictado').isHidden());
+  if (process.env.QA_IMAGES) await page.screenshot({path:'/tmp/dictado-libre-r2.png'});
+  for (const width of [1280,768,390,320]) {
+    await page.setViewportSize({width,height:1000});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),`banda libre sin desbordamiento a ${width}`);
+  }
+  await page.setViewportSize({width:1280,height:1000});
   console.log('Probando formulario estándar');
   await familia();
   console.log('Formulario cargado');
@@ -135,9 +146,21 @@ export const runTransaction=async(db,fn)=>{
   assert.equal((await stored('/sesionesAcademicas/')).length,1);
   assert.equal((await stored('/tareas/'))[0].estado,'pendiente_validacion');
   assert.equal((await stored('/evidencias/')).length,1);
+  assert.ok(await page.locator('#mensaje').evaluate(el=>el.parentElement.id === 'actividad' && el === el.parentElement.lastElementChild));
   await page.evaluate(()=>localStorage.testRole='gestion');
   await familia();
   await page.evaluate(()=>document.querySelector('#panelRefuerzos').classList.remove('hidden'));
+  // El mismo acordeón real agrupa Dictado, Lectura y Detectives.
+  for (const id of ['grupoRefuerzoDictado','grupoRefuerzoLectura','grupoRefuerzoDetectives']) {
+    assert.equal(await page.locator('#'+id).evaluate(el=>el.open), false);
+  }
+  await page.click('#grupoRefuerzoDictado > summary');
+  assert.equal(await page.locator('#grupoRefuerzoDictado .subgrupo-refuerzo').count(),2);
+  if (process.env.QA_IMAGES) await page.locator('#panelRefuerzos').screenshot({path:'/tmp/dictado-refuerzos-r2.png'});
+  await page.click('#grupoRefuerzoLectura > summary');
+  await page.waitForFunction(()=>!document.querySelector('#grupoRefuerzoDictado').open);
+  await page.click('#grupoRefuerzoDictado > summary');
+  await page.click('#subgrupoSugeridasDictado > summary');
   await page.click('#actualizarDictados');
   await page.waitForFunction(()=>document.querySelector('#dictadoIntento').options.length===2 && !document.querySelector('#dictadoIntento').disabled);
   await page.selectOption('#dictadoIntento',{index:1});
@@ -151,6 +174,29 @@ export const runTransaction=async(db,fn)=>{
   await page.click('#guardarTarea');
   await page.waitForFunction(()=>JSON.parse(localStorage.testFirestore)['usuarios/alumna/tareas/mision-2']);
   assert.equal((await stored('/tareas/')).find(t=>t.id==='mision-2').visibleParaAlumno,false);
+  await page.waitForTimeout(900); // retorno diferido del guardado común
+  await page.evaluate(()=>document.querySelector('#panelRefuerzos').classList.remove('hidden'));
+  if (!(await page.locator('#grupoRefuerzoDictado').evaluate(el=>el.open))) await page.click('#grupoRefuerzoDictado > summary');
+  await page.click('#subgrupoMisionesDictado > summary');
+  for (const width of [1280,768,390,320]) {
+    await page.setViewportSize({width,height:1000});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),`Observaciones sin desbordamiento a ${width}`);
+  }
+  await page.setViewportSize({width:1280,height:1000});
+  await page.click('#actualizarMisionesDictado');
+  await page.waitForSelector('[data-visibilidad-dictado="mision-2"]');
+  assert.equal(await page.isChecked('[data-visibilidad-dictado="mision-2"]'),false);
+  await page.check('[data-visibilidad-dictado="mision-2"]');
+  await page.waitForFunction(()=>JSON.parse(localStorage.testFirestore)['usuarios/alumna/tareas/mision-2'].visibleParaAlumno === true);
+  assert.ok((await stored('/tareas/')).find(t=>t.id==='mision-2').ordenMision < 9999);
+  await page.uncheck('[data-visibilidad-dictado="mision-2"]');
+  await page.waitForFunction(()=>JSON.parse(localStorage.testFirestore)['usuarios/alumna/tareas/mision-2'].visibleParaAlumno === false);
+  await page.click('[data-editar-dictado="mision-2"]');
+  await page.waitForFunction(()=>document.querySelector('#tituloFormulario').textContent==='Editar tarea');
+  await page.click('[data-acordeon=informacion] > summary');
+  assert.ok(await page.locator('#formTarea').isVisible());
+  assert.match(await page.locator('#resumenCriterioDictado').innerText(),/Práctica breve/);
+  await familia();
   await page.locator('.tarea-card').filter({has:page.locator('[data-action="edit"][data-id="mision-2"]')}).locator('summary').first().click();
   await page.click('[data-action="edit"][data-id="mision-2"]');
   assert.ok(await page.locator('#dictadoAventura').isDisabled());

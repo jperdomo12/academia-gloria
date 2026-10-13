@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.3 |
+| **Versión** | 2.4-rc |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.4-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata de ajustes familiares: Mi Rincón de Dictado comparte agrupación de Observaciones y refuerzos con Lectura/Matemáticas; Misiones preparadas consulta registros reales, controla visibilidad y abre edición común. |
 | 2.3 | 13/10/2026 | Product Owner + AI Collaborator | Integración aprobada de #159: Dictado utiliza Misión de Mi Aventura y módulo Rincón del Dictado; Pages #763 `success`. Conserva contrato anterior sin migración y validación familiar pendiente. |
 | 2.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Corrige la incorporación de Dictado al formulario/tipo/módulo estándar y el cierre por evidencia; conserva compatibilidad anterior sin migración. Bloqueos de criterio y reinicio del formulario verificados en el recorrido real. |
 | 2.2 | 12/10/2026 | Product Owner + AI Collaborator | Integra Dictado: autoevaluaciones separadas, Misiones y refuerzos con decisión familiar. |
@@ -717,9 +718,9 @@ Las siguientes ampliaciones solo deben implementarse cuando casos reales las jus
 | **Histórico** | Solo lectura; no fabrica ni modifica sesiones. |
 | **Eliminación** | Excepcional, inventariada, confirmada y segura. |
 | **Estado** | Activo · V2 sincronizada con producto real al 03/09/2026. |
-## Misiones del Rincón del Dictado
+## Misiones de Mi Rincón de Dictado
 
-Nueva Misión permite preparar una aventura del catálogo. Observaciones y refuerzos → Dictados permite seleccionar de uno a tres objetivos de un intento real: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Ambas variantes utilizan una Misión `actividad_modulo`, módulo `rincon-dictados`, con `requiereRevision: true` y cantidad objetivo 1. La creación de aventuras extiende el formulario común **Misión de Mi Aventura → Rincón del Dictado**. Observaciones prepara el mismo formulario con el refuerzo seleccionado, inicialmente oculto; no guarda por su cuenta ni mantiene otro listado. La familia revisa fechas, presentación y visibilidad antes de guardar.
+Nueva Misión permite preparar una aventura del catálogo. Observaciones y refuerzos → Mi Rincón de Dictado → Misiones sugeridas permite seleccionar de uno a tres objetivos de un intento real: palabras diferentes/omitidas o frases con diferencias, signos o añadidas. Ambas variantes utilizan una Misión `actividad_modulo`, módulo `rincon-dictados`, con `requiereRevision: true` y cantidad objetivo 1. La creación de aventuras extiende el formulario común **Misión de Mi Aventura → Mi Rincón de Dictado**. Observaciones prepara el mismo formulario con el refuerzo seleccionado, inicialmente oculto; no guarda por su cuenta. Misiones preparadas consulta los mismos refuerzos abiertos, controla Mostrar en Mi Camino mediante la API común y permite revisarlos en el formulario de edición existente. La agrupación usa el mismo acordeón de Lectura y Detectives, cerrado inicialmente, con subgrupos independientes. La familia revisa fechas, presentación y visibilidad antes de guardar.
 
 El criterio de evidencia `sesion_academica` filtra `actividadId: rincon-dictados` y `focoDictado` exacto. Guardar el intento aporta evidencia y pasa a revisión familiar; no se exige porcentaje mínimo ni se declara dominio automático. El resumen de evidencia identifica autoevaluación y enlaza al historial propietario. Un fallo del vínculo no elimina el resultado guardado; su reintento usa el mismo ID.
 

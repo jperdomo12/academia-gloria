@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.6 |
+| **Versión** | 3.7 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.7 | 13/10/2026 | Product Owner + AI Collaborator | Primera revisión familiar positiva de #159 con cuatro ajustes. Candidata en fix/dictado-revision-familiar: avisos abajo, acordeón compartido, banda libre y nombre Mi Rincón de Dictado. Pendiente de aprobación/integración; mantiene baseline publicado y validación real pendiente. |
 | 3.6 | 13/10/2026 | Product Owner + AI Collaborator | Cierre de reparación aprobado por el Product Owner: #159 integrado en `372291dd749d78a910943512b000543d8b5b8f5f`; Pages #763 `success`. Especificaciones 1.1/2.3 sincronizadas; validación familiar pendiente, sin declarar estabilidad. |
 | 3.5 | 13/10/2026 | Product Owner + AI Collaborator | Auditoría de recuperación de calidad: reparación autorizada en rama limpia, preserva núcleo de Dictado y corrige Misiones/UX contra estándares. No confundir candidata con main publicado ni declarar estabilidad. |
 | 3.4 | 12/10/2026 | Product Owner + AI Collaborator | Confirma #157 integrado y Pages #761 correcto; V1 publicada para validación familiar, sin desarrollo pendiente en ese PR. |
@@ -292,7 +293,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está integrado; #153 incorpora esta sincronización. #156 permanece cerrado sin merge. Verificar el estado real de GitHub al retomar, sin considerar la existencia de una PR como prueba de integración.
 
-**Prioridad vigente · recuperación de calidad integrada el 13/10/2026.** El Product Owner aprobó la PR #159, integrada en `main` `372291dd749d78a910943512b000543d8b5b8f5f` y publicada mediante Pages #763 (`success`). La reparación recupera el formulario estándar **Misión de Mi Aventura → Rincón del Dictado**, evidencia del texto asignado, refuerzos preparados en el mismo formulario, compatibilidad sin migración, bienvenida y pasos basados en Lectura. Propietario: `SPEC-RINCON_DICTADOS.md` 1.1. No hay PR de desarrollo pendiente de esta reparación. El siguiente trabajo es validar voz, persistencia y utilidad con la familia; no se declara estabilidad.
+**Prioridad vigente · recuperación de calidad integrada el 13/10/2026.** El Product Owner aprobó la PR #159, integrada en `main` `372291dd749d78a910943512b000543d8b5b8f5f` y publicada mediante Pages #763 (`success`). La reparación recupera el formulario estándar **Misión de Mi Aventura → Rincón del Dictado**, evidencia del texto asignado, refuerzos preparados en el mismo formulario, compatibilidad sin migración, bienvenida y pasos basados en Lectura. Propietario: `SPEC-RINCON_DICTADOS.md` 1.1. La primera revisión familiar fue positiva y originó cuatro ajustes en `fix/dictado-revision-familiar`, desde `b2a4628…`, gobernados por SPEC 1.2-rc. Son candidatos pendientes de aprobación/integración. Después continúa la validación de voz, persistencia y utilidad con la familia; no se declara estabilidad.
 
 **Antecedente de Rincón del Dictado V1 · PR #157 integrado y publicado antes de la reparación #159.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
 
@@ -340,9 +341,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `372291dd749d78a910943512b000543d8b5b8f5f` · #159 integrado; conserva #157/#154/#155 |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin rama de desarrollo activa para la reparación; `fix/dictado-estandares` integrada |
-| **PR On going** | Ninguno de desarrollo para Dictado; #159 aprobado e integrado; #157/#158 integrados |
-| **Trabajo inmediato** | Validar voz, persistencia y utilidad de Dictado con la familia |
+| **Rama On going** | `fix/dictado-revision-familiar` · ajustes de primera revisión desde `b2a4628…` |
+| **PR On going** | Ajustes de primera revisión pendientes de aprobación/integración; #159/#160 integrados |
+| **Trabajo inmediato** | Revisar candidata de cuatro ajustes familiares; después continuar validación real |
 | **GitHub Pages del baseline funcional** | #763 · `success` · SHA `372291dd…` |
 | **Verificación posterior al cierre** | #159 integrado; build y despliegue Pages #763 correctos. Este cierre documental no cambia el producto. |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -369,7 +370,7 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. validar familiarmente la reparación #159 publicada, siguiendo SPEC 1.1; documentar voz, persistencia y utilidad antes de declarar estabilidad. Mantener la **Fase de uso prioritario**;
+4. revisar la candidata de primera revisión familiar siguiendo SPEC 1.2-rc; tras aprobación e integración, continuar validación de Dictado; documentar voz, persistencia y utilidad antes de declarar estabilidad. Mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -380,17 +381,17 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Cierre operativo completado:** #152/#153 y #157/#158 integrados; #156 cerrado sin merge. **Reparación aprobada y publicada:** #159 integrado en `372291dd…`; Pages #763 `success`. **Trabajo actual:** validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
+> **Cierre operativo completado:** #152/#153 y #157/#158 integrados; #156 cerrado sin merge. **Reparación aprobada y publicada:** #159 integrado en `372291dd…`; Pages #763 `success`. **Trabajo actual:** ajustes de primera revisión en `fix/dictado-revision-familiar`, pendientes de aprobación/integración; después validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.6 |
+| **Versión** | 3.7 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Validación familiar de Dictado publicado; sin desarrollo pendiente de #159 |
-| **PR On going** | Ninguno de desarrollo para Dictado; #159 aprobado e integrado; #157/#158 integrados |
+| **Trabajo On going** | Cuatro ajustes de primera revisión en rama; #159 publicado; validación familiar continúa |
+| **PR On going** | Ajustes de primera revisión pendientes de aprobación/integración; #159/#160 integrados |
 | **Nuevas Semillas** | ✅ 010/011 incorporadas; 11 activas; proceso oficial documentado |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
