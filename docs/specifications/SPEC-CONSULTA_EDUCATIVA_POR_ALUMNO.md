@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | APROBADA · IMPLEMENTADA EN MAIN · VALIDACIÓN REAL PENDIENTE |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Experiencia multi-actor / consulta educativa |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 13/10/2026 | Product Owner + AI Collaborator | Añade acceso directo desde las tarjetas de Mi Universo, solicitado por Juan tras revisar #168. Reutiliza diseño y destino de Consulta educativa; no modifica permisos ni motor. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata en rama: entrada de consulta con motor compartido, históricos de solo lectura, protección de mutaciones y redacción aprobada; pendiente de revisión e integración. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada para desarrollo; no implementada. |
@@ -272,3 +273,8 @@ Base de desarrollo: `main` `1105e5f94df3709d57532348b184d87710fff242` (#167). Ra
 Regresión: `dictados-modelo.test.mjs`, `dictados-seguimiento.test.mjs`, `dictados-sesiones.test.mjs` y `dictados-misiones-browser.cjs`. Las Rules propietarias `compartido/firebase/FireStore Rules.txt` ya admiten lectura educativa relacionada y requieren gestión para modificar datos ajenos; no se cambian Rules ni colecciones.
 
 **Pendiente:** comprobación real con Lidia/Gloria y familiar. Las pruebas simuladas no verifican las Rules desplegadas, las cuentas reales ni la persistencia de producción.
+
+
+### Acceso directo desde Mi Universo
+
+Además del menú compartido, `mi-universo/index.html` presenta la tarjeta **Consulta educativa** en Mis mundos. Abre `consulta-educativa/`, con el mismo contexto de Persona Activa y la misma comprobación de relación/permisos del destino. Reutiliza las tarjetas existentes sin CSS, lógica o autorización adicional.
