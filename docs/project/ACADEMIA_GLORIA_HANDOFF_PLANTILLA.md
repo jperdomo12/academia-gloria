@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.12 |
+| **Versión** | 3.13 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.13 | 13/10/2026 | Product Owner + AI Collaborator | Cierra #169/#170 integradas; acceso debajo de Nueva misión publicado por Pages #775 y validado por Juan. Actualiza baseline y retira cierre de desarrollo activo. Mantiene pruebas reales pendientes y resume seis fuentes propietarias. |
 | 3.12 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 3.11 | 13/10/2026 | Product Owner + AI Collaborator | Consulta educativa por alumno candidata desde main #167: motor reutilizado, permisos y redacción validados con datos simulados; revisión/integración y prueba real pendientes. |
 | 3.10 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. Semilla 012 publicada con imagen aprobada, catálogo de 12 Semillas y guías sincronizadas. Continúa prueba familiar de Semilla 012 y Dictado; sin declarar estabilidad. |
@@ -348,13 +349,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1` · #168 integrado; conserva #167/#166/#164 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `69e635b4dd36a0250d7a2ac8d03cf58b67629b80` · #170 integrado; conserva #169/#168/#167/#166/#164 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `docs/cierre-consulta-educativa` · cierre documental; #168 integrado |
-| **PR On going** | Cierre documental de #168; verificar GitHub al retomar |
+| **Rama On going** | Sin desarrollo de producto pendiente; #168/#169/#170 integradas |
+| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
 | **Trabajo inmediato** | Probar Consulta educativa con Lidia/Gloria y familiar; continuar pruebas familiares de Semilla 012 y Dictado |
-| **GitHub Pages del baseline funcional** | #773 · `success` · SHA `5518d4d4…` |
-| **Verificación posterior al cierre** | #168 aprobado e integrado; Pages #773 correcto y página Consulta educativa responde HTTP 200. Prueba real de cuentas/Rules pendiente. |
+| **GitHub Pages del baseline funcional** | #775 · `success` · SHA `69e635b4…` |
+| **Verificación posterior al cierre** | #168/#169/#170 integradas; Pages #775 correcto. Enlace bajo Nueva misión publicado y revisión de Juan positiva. Prueba real de cuentas/Rules pendiente. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -377,9 +378,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 Al iniciar o retomar trabajo:
 
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
-2. verificar HEAD real de `main` y PRs abiertos;
+2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -390,17 +391,17 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168 aprobada e integrada; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.12 |
+| **Versión** | 3.13 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Consulta educativa #168 aprobada e integrada, pendiente de prueba real; validación familiar de Semilla 012 y Dictado pendiente |
-| **PR On going** | Cierre documental de #168; verificar GitHub al retomar |
+| **Trabajo On going** | Consulta educativa #168/#170 publicada y validada por Juan en interfaz, pendiente de prueba real; validación familiar de Semilla 012 y Dictado pendiente |
+| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
@@ -411,8 +412,10 @@ Al iniciar o retomar trabajo:
 
 ## Continuidad técnica · Consulta educativa · 13/10/2026
 
-Decisión funcional aprobada e integrada en `main` por #167, base `1105e5f94df3709d57532348b184d87710fff242`. Fuente propietaria: `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`. PR #168 aprobada por Juan e integrada en `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1`. No declarar estable; validar el acceso real familiar/profesional.
+Decisión funcional aprobada e integrada en `main` por #167, base `1105e5f94df3709d57532348b184d87710fff242`. Fuente propietaria: `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` 1.3. PR #168 aprobada por Juan e integrada en `5518d4d455e9f9420b3a2fc371b6efad0bd09aa1`. No declarar estable; validar el acceso real familiar/profesional.
 
 Reutiliza ContextoUsuario, motor de Análisis, APIs y visores. Entrada de consulta separada de Gestión; escrituras relacionadas requieren gestión. Redacción de Lectura cambia solo presentación. Validación automática con identidades/Firebase simulados y regresión de Dictado completada; pendiente prueba real de Lidia sobre Gloria, familiar y Rules desplegadas tras publicación.
 
 #166 incorporó el Volver estándar de la guía de familias de Semillas, revisado positivamente por Juan. Continúan pendientes la prueba completa de Dictado con Anaís/Gloria y la validación familiar de Semilla 012. Este frente aprobado no reabre otros desarrollos.
+
+Cierre de Consulta educativa: #169 integra la sincronización documental de #168; #170 integra el acceso directo bajo Nueva misión. Pages #775 `success` en `69e635b4…`. Juan valida positivamente el resultado de interfaz. Sin desarrollo de producto pendiente en esos PRs. Quedan las pruebas reales ya indicadas; no declarar estabilidad ni Rules de producción verificadas.

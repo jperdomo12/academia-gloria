@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.5 |
+| **Versión** | 2.6 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.6 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 2.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 2.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consulta educativa de Misiones y observaciones con APIs/visores existentes; gestión sigue separada. Candidata pendiente de integración. |
 | 2.4 | 13/10/2026 | Product Owner + AI Collaborator | Ajustes familiares aprobados e integrados mediante #161; Pages #766 `success`. Dictado comparte agrupación de Observaciones y refuerzos, consulta Misiones preparadas sobre registros reales y conserva formulario/API comunes. |
@@ -40,6 +41,39 @@
 | 2.1 | 23/09/2026 | Product Owner + AI Collaborator | Ajusta la preparación asistida de Repaso Académico para que las Zonas activas con Temas propios puedan aparecer como opciones explícitas en el campo `Materia` de Gestión de Misiones (por ejemplo, `Matezonas` y `Lengüizonas`). La selección visible conserva el origen escolar del trabajo, mientras que la ejecución del Tema mantiene su materia académica propietaria para sesiones y evidencias (`Matezonas → Matemáticas`, `Lengüizonas → Lengua`). |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sustituye la antigua propuesta MVP por la especificación del producto real. Documenta Gestión de Misiones V1, acceso `gestion`, filtros/paginación, Repaso Académico asistido, Misiones libres, Persona Activa, evidencia/revisión, `Ver trabajo`, refuerzos, datos de prueba, eliminación controlada, Reconocimientos y compatibilidad histórica. |
 | 1.0 | 2026 | Equipo del proyecto | Primera propuesta funcional de Mis Tareas/Misiones: creación adulta, representación motivadora en Mi Camino, estados, evidencia, finalización automática/manual y validación familiar. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define el recorrido de preparación, ejecución y revisión de Misiones. |
+| 2. Principios funcionales | Fija las reglas de experiencia y reutilización del dominio. |
+| 3. Usuarios, Persona Activa y acceso | Distingue alumno, familiar y administrador según Persona Activa. |
+| 4. Gestión de Misiones | Describe las capacidades del espacio de gestión. |
+| 5. Tipos de Misión | Enumera tipos vigentes y sus contratos de ejecución. |
+| 6. Preparación asistida de Repaso Académico | Describe preparación de Misiones desde material académico real. |
+| 7. Estados | Define estados y su presentación en el producto. |
+| 8. Inicio y navegación | Define cómo abrir la actividad correspondiente a cada Misión. |
+| 9. Finalización | Distingue finalización automática, manual y revisión familiar. |
+| 10. Evidencias | Especifica evidencia asociada a la ejecución de una Misión. |
+| 11. Ver trabajo | Define consulta del trabajo mediante visores existentes. |
+| 12. Observaciones y refuerzos | Describe observaciones y preparación de refuerzos por módulo. |
+| 13. Análisis Educativo | Conecta evidencias con el reporte educativo compartido. |
+| 14. Datos de prueba | Distingue datos de prueba y registros de aprendizaje reales. |
+| 15. Eliminación controlada | Fija condiciones y consecuencias de eliminación. |
+| 16. Reconocimientos / Recompensas | Relaciona Misiones con motivación y reconocimientos. |
+| 17. Filtros y paginación | Describe filtrado y paginación del listado. |
+| 18. Orden y visibilidad en Mi Camino | Define orden y visibilidad para el alumno. |
+| 19. Auditoría | Conserva autoría del actor y trazabilidad de cambios. |
+| 20. Compatibilidad | Describe compatibilidad con registros y contratos anteriores. |
+| 21. Criterios de aceptación | Enumera comprobaciones funcionales y de seguridad. |
+| 22. Estado de implementación al 03/09/2026 | Conserva la fotografía de implementación de septiembre y su evolución. |
+| 23. Decisiones adoptadas | Registra decisiones adoptadas del dominio. |
+| DECISIÓN | Consolida estado y contrato aprobado de Misiones. |
+| Misiones de Mi Rincón de Dictado | Documenta reutilización del tipo, módulo y formulario para Dictado. |
+| Consulta educativa relacionada · integrada 13/10/2026 | Define consulta de Misiones y trabajo sin conceder gestión. |
 
 ---
 

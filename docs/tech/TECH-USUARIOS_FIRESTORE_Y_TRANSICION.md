@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/tech/TECH-USUARIOS_FIRESTORE_Y_TRANSICION.md` |
-| **Versión** | 0.5 |
+| **Versión** | 0.6 |
 | **Estado** | Activo como referencia técnica de transición |
 | **Fecha de origen** | 10/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -30,12 +30,36 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 0.6 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 0.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 0.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consumo del contexto en consulta y bloqueo de escrituras relacionadas sin gestión; sin migración ni cambio de Rules. Candidata pendiente de integración. |
 | 0.4 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza la referencia técnica con Persona Activa y el estándar vigente, retira la interpretación histórica `alumno = gestion`, actualiza propietarios documentales, formaliza el cálculo de nivel efectivo, la resolución física de datos legacy y la separación entre reglas versionadas y reglas realmente desplegadas. |
 | 0.3 | 13/08/2026 | Product Owner + AI Collaborator | Consolidó la implementación Multi-Persona, Gestión de Usuarios y Auditoría Fase A. |
 | 0.2 | 12/08/2026 | Product Owner + AI Collaborator | Alineó el documento con la implementación Multi-Persona y Gestión de Usuarios. |
 | 0.1 | 10/08/2026 | Product Owner + AI Collaborator | Primera propuesta técnica. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define la referencia técnica de identidad y transición. |
+| 2. Estructuras principales | Relaciona estructuras funcionales con colecciones Firestore. |
+| 3. PERSON · `personas/{personaId}` | Describe documentos de Personas y sus campos. |
+| 4. USER · `usuarios/{userId}` | Describe Usuarios y vínculo con Persona y autenticación. |
+| 5. ROLE y USER_ROLE | Describe Roles, asignaciones y límites vigentes. |
+| 6. PERSON_RELATION · `personaRelaciones/{relationId}` | Describe relaciones, nivel y autorización entre Personas. |
+| 7. Persona Activa | Resuelve el contexto y UID físico del alumno seleccionado. |
+| 8. Login funcional · `accesosLogin/{login}` | Describe la resolución del login funcional. |
+| 9. Gestión de Usuarios | Describe operaciones administrativas de Usuarios. |
+| 10. Auditoría | Describe registros de autoría y observación de acceso. |
+| 11. Firestore Rules | Distingue Rules versionadas de seguridad desplegada. |
+| 12. Estado de transición | Documenta convivencia del modelo actual con datos anteriores. |
+| 13. Fuera de alcance actual | Delimita cambios que no pertenecen a esta transición. |
+| 14. Quality Gate | Enumera comprobaciones técnicas de consistencia y acceso. |
+| DECISIÓN | Consolida estado y versión de la referencia técnica. |
+| Consulta educativa · integrada 13/10/2026 | Documenta consumo del contexto, protección de escrituras y pruebas. |
 
 ---
 
@@ -352,7 +376,7 @@ Antes de modificar identidad/acceso verificar:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo como referencia técnica de transición |
-| **Versión activa** | 0.5 |
+| **Versión activa** | 0.6 |
 | **Fuente normativa** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` |
 | **Fuente de modelo** | `MODELO_ROLES.md` |
 | **Implementación principal** | `ContextoUsuario` + Gestión de Usuarios + APIs propietarias + Firestore Rules |

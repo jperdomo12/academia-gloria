@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-USUARIOS_ROLES_Y_ACCESOS.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha de origen** | 10/08/2026 |
 | **Última actualización** | 13/10/2026 |
@@ -33,6 +33,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 1.3 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Sincroniza la consulta educativa completa aprobada por alumno; no añade Roles, niveles ni permisos paralelos. Candidata pendiente de integración. |
 | 1.2 | 05/09/2026 | Product Owner + AI Collaborator | Amplía la observación administrativa de acceso para conservar y consultar los **10 accesos más recientes** del USER. Mantiene el último acceso separado para lectura rápida, formaliza retención limitada, presentación plegada en Gestión de Usuarios y las mismas reglas de minimización: sin IP persistida, GPS, coordenadas, ISP ni código postal. |
@@ -42,6 +43,36 @@
 | 0.3 | 12/08/2026 | Equipo del proyecto | Definió Auditoría Fase A para Gestión de Usuarios y bloque Registro de solo consulta. |
 | 0.2 | 12/08/2026 | Equipo del proyecto | Consolidó Persona Activa, acceso profesional, login funcional y reglas para Gestión de Usuarios. |
 | 0.1 | 10/08/2026 | Equipo del proyecto | Primera versión derivada del modelo de Usuarios, Alumnos y Roles. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define la fuente normativa de identidad y accesos. |
+| 2. Alcance y fronteras | Delimita responsabilidades y fronteras con otros dominios. |
+| 3. Principios no negociables | Fija principios de autorización y reutilización. |
+| 4. PERSON | Define la identidad de Persona independiente del acceso. |
+| 5. USER | Define Usuario y su vinculación a una Persona. |
+| 6. ROLE y USER_ROLE | Define Roles y la asignación vigente a Usuarios. |
+| 7. Niveles de acceso | Distingue consulta, gestión y administración. |
+| 8. PERSON_RELATION | Define relaciones activas y su límite de acceso. |
+| 9. Persona Activa | Distingue contexto propio y relacionado sin impersonación. |
+| 10. Acceso efectivo | Determina el nivel permitido por Rol y Relación. |
+| 11. Acceso por capacidad | Asigna requisitos mínimos a capacidades sensibles. |
+| 12. Login funcional y Firebase Authentication | Relaciona login funcional y autenticación Firebase. |
+| 13. Gestión de Usuarios · estado actual | Describe la gestión administrativa vigente de Usuarios. |
+| 14. Consistencia de identidad | Fija invariantes de Persona, Usuario e identidad activa. |
+| 15. Auditoría básica y observación de acceso | Define observación de acceso y auditoría básica. |
+| 16. Compatibilidad legacy | Conserva compatibilidad con datos e identidades heredados. |
+| 17. Seguridad | Distingue controles de UI, API y Rules. |
+| 18. Supuestos retirados de v0.3 | Identifica supuestos históricos que ya no gobiernan. |
+| 19. Quality Gate | Enumera verificaciones de identidad, acceso y transición. |
+| 20. Evolución | Delimita posibles evoluciones del modelo. |
+| 21. Decisiones adoptadas | Registra decisiones adoptadas y su autoridad. |
+| DECISIÓN | Consolida la vigencia del estándar. |
+| Consulta educativa por relación · integrada 13/10/2026 | Define consulta educativa relacionada con el modelo existente. |
 
 ---
 
@@ -858,7 +889,7 @@ Toda evolución debe justificar beneficio, riesgo, compatibilidad y coste de man
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión activa** | 1.3 |
+| **Versión activa** | 1.4 |
 | **Fecha de aprobación** | 05/09/2026 |
 | **Aprobado por** | Product Owner |
 | **Sustituye** | `STD-USUARIOS_ROLES_Y_ACCESOS.md` v1.1 |

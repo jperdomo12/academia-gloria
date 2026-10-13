@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | APROBADA · IMPLEMENTADA EN MAIN · VALIDACIÓN REAL PENDIENTE |
 | **Fecha** | 13/10/2026 |
 | **Propietario** | Experiencia multi-actor / consulta educativa |
@@ -25,10 +25,30 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Registra #170 aprobada, publicada por Pages #775 y revisada positivamente por Juan; incorpora Resumen de contenido. Validación real pendiente. |
 | 1.2 | 13/10/2026 | Product Owner + AI Collaborator | Añade acceso directo en Mi Universo, debajo de Nueva misión como enlace de botón secundario, solicitado por Juan tras revisar #168. Reutiliza diseño y destino; no modifica permisos ni motor. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Candidata en rama: entrada de consulta con motor compartido, históricos de solo lectura, protección de mutaciones y redacción aprobada; pendiente de revisión e integración. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada para desarrollo; no implementada. |
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Necesidad | Explica la necesidad de acceso educativo profesional sin gestión. |
+| 2. Regla funcional aprobada | Define la consulta completa de la información educativa autorizada. |
+| 3. Consulta no equivale a administración | Delimita las acciones de gestión y administración que no se conceden. |
+| 4. Persona Activa y seguridad | Aplica el modelo vigente de identidad, relación y nivel efectivo. |
+| 5. Primera aplicación obligatoria · Análisis Educativo | Exige acceder al reporte sin entrar en Gestión de Misiones. |
+| 6. Mejora aprobada de redacción · Rincón de Lectura | Define las dos redacciones de Lectura y preserva la lógica educativa. |
+| 7. Principios de implementación | Fija reutilización, cambio mínimo y coherencia de seguridad. |
+| 8. Fuera de alcance | Identifica capacidades que requieren una decisión funcional separada. |
+| 9. Criterios de aceptación | Enumera las condiciones de alineación funcional y seguridad. |
+| 10. Validación | Distingue los recorridos familiar y profesional que deben comprobarse. |
+| DECISIÓN | Registra la aprobación funcional y el estado de implementación. |
+| Implementación y trazabilidad · 13/10/2026 | Relaciona reglas con archivos, pruebas, publicación y límites de validación. |
+
+---
 
 ## 🎯 1. Necesidad
 
@@ -278,3 +298,5 @@ Regresión: `dictados-modelo.test.mjs`, `dictados-seguimiento.test.mjs`, `dictad
 ### Acceso directo desde Mi Universo
 
 Además del menú compartido, `mi-universo/index.html` presenta el enlace **Consulta educativa** debajo de **Nueva misión**, dentro de la cabecera, con diseño de botón secundario. Abre `consulta-educativa/`, con el mismo contexto de Persona Activa y la misma comprobación de relación/permisos del destino. Reutiliza el diseño existente sin CSS, lógica o autorización adicional.
+
+PR #170 aprobada por Juan e integrada en `main` `69e635b4dd36a0250d7a2ac8d03cf58b67629b80`. Publicación Pages #775 (`success`) y enlace verificado debajo de Nueva misión. Juan confirma que quedó bien el 13/10/2026. Esta revisión de interfaz no sustituye la prueba profesional/familiar con cuentas reales. Cierre documental previo de #168 integrado mediante #169 (`d5d2b9984b6cba2ba8b47bc747ca3161c030e294`).
