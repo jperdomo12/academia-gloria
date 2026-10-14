@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-LENGUA_6TO_VERBOS.md` |
-| **Versión** | 1.0 |
-| **Estado** | Implementada en main · aprobada para incorporación · prueba de uso real pendiente |
+| **Versión** | 1.1-rc |
+| **Estado** | Separación por documento aprobada · candidata en rama · integración pendiente |
 | **Fecha** | 14/10/2026 |
 | **Propietario** | Contenido curricular de Lengua · 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -23,6 +23,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1-rc | 14/10/2026 | Product Owner + AI Collaborator | Observación de Anaís y decisión de Juan: tres Temas por documento con práctica/prueba separadas. Reutiliza banco y motor; conserva ruta, sesiones y Misiones integradas anteriores. Candidata pendiente de revisión/integración. |
 | 1.0 | 14/10/2026 | Product Owner + AI Collaborator | PR #172 aprobada por Juan e integrada en 2bfea89ceb9892ffa4da8aae1f503d46388d395e; incorporación disponible para prueba de uso real, sin declarar estabilidad. |
 | 1.0-rc | 14/10/2026 | Product Owner + AI Collaborator | Material de Verbos incorporado en candidata: portal de Lengua, contenido de 5.º/6.º y motor reutilizado del repaso de Lengüizonas. No declara publicación ni validación familiar. |
 
@@ -34,8 +35,8 @@
 | 2. Experiencia | Describe la secuencia de aprendizaje, consultas y comprobación. |
 | 3. Fidelidad y apoyos | Distingue contenido escolar, adaptaciones y matices gramaticales. |
 | 4. Reutilización e integración | Identifica archivos, navegación, sesiones y refuerzos. |
-| 5. Validación y cierre | Registra candidata, comprobaciones y límites de prueba. |
-| DECISIÓN | Conserva la instrucción de incorporación y aprobación pendiente. |
+| 5. Validación y cierre | Registra la separación candidata, comprobaciones y límites de prueba. |
+| DECISIÓN | Conserva la incorporación aprobada y la nueva decisión de separación por documento. |
 
 ## 1. Fuentes y cobertura
 
@@ -50,6 +51,20 @@ Material recibido el 14/10/2026; no se infiere la fecha de enseñanza a partir d
 Los archivos originales se leen como fuente, no se sustituyen ni se publican sus ilustraciones. El material de 5.º es continuidad dentro del tema de 6.º; no migra ni reconstruye el curso de 5.º.
 
 ## 2. Experiencia
+
+### Separación aprobada por documento · 14/10/2026
+
+Anaís observa que reunir los tres documentos en un solo Tema dificulta trabajar el material. Juan solicita separarlos y confirma explícitamente los siguientes nombres y alcances. Esta organización sustituye la tarjeta integrada para nuevos recorridos.
+
+| Documento | Tema y destino | Contenido y comprobación |
+|---|---|---|
+| `5_EL VERBO(2).pdf` | **El verbo · Repaso de 5.º** · `cursos/6to/lengua/el-verbo/` | Concepto de verbo, conjugaciones, raíz/desinencia, formas simples/compuestas, persona/número, formas no personales, tiempo/modo; conserva consulta de diez tiempos de cantar en indicativo. Cuatro prácticas y cuatro familias de prueba, bloques `base` e `indicativo`. |
+| `6_LI_Lengua_Indicativo y Subjuntivo(2).pdf` | **Indicativo y subjuntivo** · `cursos/6to/lengua/indicativo-subjuntivo/` | Comparación de ambos modos, afirmaciones frente a deseos/dudas/posibilidades, expresiones y contraste es/sea, come/coma. Dos prácticas y dos familias de prueba, bloque `modos`. |
+| `6_LI_LOS VERBOS_Subjuntivo e imperativo(2).docx` | **Subjuntivo e imperativo** · `cursos/6to/lengua/subjuntivo-imperativo/` | Seis tiempos de subjuntivo, modelos cantar/temer/partir, variantes -ra/-se, futuros poco habituales e imperativo afirmativo/negativo. Seis prácticas y seis familias de prueba, bloques `subjuntivo` e `imperativo`. |
+
+Cada Tema conserva Mapa, Claves, Material, Práctica y Prueba con la plantilla/CSS actuales. El lector y el motor compartidos no se modifican. Los modelos están cerrados inicialmente; la producción en cuaderno es libre y no se presenta como evaluada automáticamente. No se amplía dificultad ni contenido del banco: se distribuyen las doce familias y veinticuatro variantes existentes, sin preguntas de otros documentos en cada prueba. El concepto de verbo se explicita conforme al alcance confirmado por Juan.
+
+### Recorrido integrado anterior · compatibilidad
 
 Recorrido: **6.º → Lengua → Verbos · Indicativo, subjuntivo e imperativo**.
 
@@ -78,6 +93,14 @@ Contraste lingüístico complementario, sin sustituir el alcance escolar: [RAE �
 
 ## 4. Reutilización e integración
 
+En la candidata de separación, `verbos/temas-por-documento.js` selecciona bloques, prácticas y familias desde el banco ya incorporado. Es la definición compartida que consumen `temas-lengua.js`, los tres wrappers de datos y el registro existente de `refuerzos-academicos.js`. No se copia el banco ni se duplica el motor.
+
+Actividades nuevas: `6-lengua-el-verbo`, `6-lengua-indicativo-subjuntivo` y `6-lengua-subjuntivo-imperativo`, todas de materia **Lengua** y contrato `sesion-academica-v1`. Misiones nuevas seleccionan los tres Temas del catálogo propietario; el repaso de Lengüizonas sigue siendo su actividad original.
+
+La ruta `cursos/6to/lengua/verbos/` y el ID `6-lengua-verbos-modos` se conservan con sus doce familias y cinco bloques para las Misiones, históricos y refuerzos anteriores. La tarjeta integrada se retira del catálogo de nuevos Temas; la página anterior orienta hacia los tres documentos. No se borran, reclasifican ni migran resultados existentes. Las nuevas actividades no mezclan sus señales con las de la prueba integrada. El algoritmo de Análisis/refuerzos y los permisos no cambian.
+
+Implementación integrada original:
+
 | Elemento | Archivo/patrón |
 |---|---|
 | Activación de Lengua | `cursos/6to/index.html` sustituye el placeholder por enlace real al portal; no activa Sociales. |
@@ -93,6 +116,14 @@ El repaso previo **Gramática · Repasamos los verbos** sigue en Lengüizonas co
 
 ## 5. Validación y cierre
 
+Candidata de separación: base `main` `6b6a29ab4e34ae21020d8da7493f43b49ec50930` (#175), rama `fix/lengua-temas-por-documento`. Las fuentes originales fueron extraídas/revisadas en #172; esta corrección usa su trazabilidad propietaria y el contenido incorporado, junto con el alcance confirmado por Juan. Los binarios originales no están disponibles de nuevo en este entorno; no se declara una nueva lectura visual de ellos.
+
+Validación de separación completada en `tests/verbos-browser.cjs`: tres entradas independientes del portal y catálogo de Misiones; banco 4/2/6, doce familias distribuidas sin duplicación ni pérdida; material de indicativo en El verbo, listas de contraste en Indicativo y subjuntivo, modelos de subjuntivo en Subjuntivo e imperativo; cinco pestañas y rutas/imports/IDs válidos; práctica sin escritura; sesiones y variantes independientes; evidencia de Misión y revisión familiar; consulta histórica de solo lectura; profesional en vista previa incluso con `modo=aprendizaje`, sin escrituras; resultados de los tres Temas consumidos por Análisis y refuerzos existentes. Volver ejecutado desde los tres Temas devuelve al portal de Lengua; material desplegado en 320px sin desbordamiento y revisión visual de portal/material en escritorio. Anchuras 1280/768/390/320 sin desbordamiento y revisión visual móvil. Regresión completa de la ruta integrada anterior y repaso de Lengüizonas de ocho preguntas superada. Regresión de English/Grammar zone mediante `tests/quantifiers-browser.cjs` superada: destino único, lector, práctica/prueba, sesiones, Misiones, históricos, consulta, refuerzos y Análisis. Motor, banco original y permisos sin cambios.
+
+Identidades y SDK simulados; no certifica cuentas reales, Rules desplegadas ni audio físico. La revisión de utilidad con Anaís/Gloria y aprobación/integración de la PR siguen pendientes. La incidencia heredada de ilustración de celebración se mantiene con su fallback, como en #172; no se introduce una ruta de asset nueva.
+
+Cierre de la incorporación original:
+
 Base de desarrollo: `main` `f1d4d5c8a8a68e307ce3292a7bac12ef66fbd5ea` (#171). PR #172 aprobada por Juan e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Pages #777 `success`; curso, portal de Lengua, tema y motor responden HTTP 200 y contienen la incorporación.
 
 Validación técnica y de fidelidad: extracción y lectura visual de las tres fuentes, revisión de claves/modelos/banco, comprobación del motor trasladado contra su versión previa, sintaxis/imports/rutas y navegador en escritorio/tablet/móvil. El test `tests/verbos-browser.cjs` comprueba navegación, práctica, aprendizaje, vista previa, histórico, Misión/evidencia, variantes, catálogo asistido, refuerzo/Análisis y el repaso previo con identidades/SDK simulados.
@@ -106,3 +137,5 @@ Estas pruebas no certifican Firestore desplegado, cuentas reales ni audio físic
 ## DECISIÓN
 
 La instrucción del Product Owner **Incorporar a la Academia** autoriza esta incorporación curricular conforme al estándar de una sola instrucción. Juan aprueba la PR #172 el 14/10/2026; integrada para uso de la familia. El tema mantiene datos propios y reutiliza el motor existente. La aprobación de incorporación no equivale a estabilidad: continúa pendiente la prueba de comprensión y uso con Gloria. No se abren cambios de permisos o arquitectura paralela.
+
+**Decisión de separación:** Juan confirma el 14/10/2026 los tres nombres y alcances por documento. La experiencia candidata sigue el workflow rama → validación → PR → aprobación → integración. No cambia la decisión de English Much/Many: explicación y Grammar zone del mismo contenido continúan en un único Tema conforme a CA-031.

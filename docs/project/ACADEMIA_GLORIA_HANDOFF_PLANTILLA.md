@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.17 |
+| **Versión** | 3.18 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.18 | 14/10/2026 | Product Owner + AI Collaborator | Candidata para observación de Anaís: separa Lengua/Verbos en tres Temas por documento, según nombres y alcance confirmados por Juan; mantiene compatibilidad de Misiones/históricos anteriores. Revisión e integración pendientes. |
 | 3.17 | 14/10/2026 | Product Owner + AI Collaborator | Cierra English Much/Many mediante #174 aprobada e integrada; activa English Zones con referencia al mismo Tema, sincroniza SPEC y CA-031 y conserva pruebas reales pendientes. |
 | 3.16 | 14/10/2026 | Product Owner + AI Collaborator | Candidata de English Much/Many: integra apuntes y Grammar zone como único Tema y activa acceso de English Zones al destino propietario. Regla de enriquecimiento documentada; revisión/integración pendientes. |
 | 3.15 | 14/10/2026 | Product Owner + AI Collaborator | Lengua 6.º y Verbos incorporados mediante #172 aprobada; actualiza baseline, cierre y prueba familiar pendiente. Conserva Dictado/Semilla 012 y consulta profesional pendientes de uso real. |
@@ -301,6 +302,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**Lengua · separación por documento:** decisión de Juan tras revisión de Anaís. Candidata en `fix/lengua-temas-por-documento`, base #175 (`6b6a29ab…`), propietario `SPEC-LENGUA_6TO_VERBOS.md` 1.1-rc. Tres Temas: El verbo · Repaso de 5.º; Indicativo y subjuntivo; Subjuntivo e imperativo. Motor y banco reutilizados; ruta y registros anteriores conservados. Revisión/aprobación de PR e integración pendientes; no declarar publicado.
+
 **English · Much / Many – A lot of / Lots of:** PR #174 aprobada e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`. Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md` 1.0. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Sin desarrollo pendiente de #174; prueba de uso real con Gloria pendiente.
 
 **Lengua 6.º · Verbos:** PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.0. Portal de Lengua activo con Verbos (continuidad de 5.º e indicativo/subjuntivo/imperativo de 6.º) y acceso al repaso anterior de Lengüizonas. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
@@ -359,8 +362,8 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `e2943d19dfa5739270570ab0e1e616308f777332` · #174 integrado; conserva #172/#171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin rama de desarrollo de producto activa para #174 |
-| **PR On going** | Ninguna de producto para esta incorporación; #174 integrada |
+| **Rama On going** | `fix/lengua-temas-por-documento` · candidata de separación de Lengua |
+| **PR On going** | Separación de Lengua candidata; verificar PR al retomar |
 | **Trabajo inmediato** | Probar English → Much/Many y Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #779 · `success` · SHA `e2943d19…` |
 | **Verificación posterior al cierre** | #174 aprobada e integrada; Pages #779 correcto, Tema HTTP 200 y catálogos de English/English Zones idénticos a main. Consulta educativa, Lengua y frentes anteriores conservados. Pruebas reales pendientes. |
@@ -406,10 +409,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.17 |
+| **Versión** | 3.18 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Ninguna de producto para esta incorporación; #174 integrada |
+| **PR On going** | Separación de Lengua candidata; verificar PR al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
@@ -441,3 +444,7 @@ Publicación de Lengua/Verbos: Pages #777 `success` sobre `2bfea89c…`; `/curso
 Much/Many conserva un único Tema y actividad de English, con material explicativo y práctica de Grammar zone. English Zones abre el mismo destino mediante referencia al catálogo de English; las sesiones no crean una materia o fuente paralela. Regla de enriquecer un Tema existente documentada en estándar curricular §6.4.1/CA-031 por instrucción de Juan. PR #174 aprobada e integrada; sin desarrollo pendiente de esta incorporación. Prueba de uso real con Gloria pendiente; conservar los pendientes de prueba real de Lengua/Verbos, Dictado, Semilla 012 y consulta profesional.
 
 Publicación de English/Much-Many: Pages #779 `success` sobre `e2943d19…`; Tema y portal English Zones HTTP 200, catálogos publicados idénticos a main. No sustituye la prueba de uso real.
+
+## Continuidad curricular · Separación de Lengua por documento · 14/10/2026
+
+Observación de Anaís: el material agrupado resulta demasiado amplio para trabajar por documento. Juan confirma tres Temas con los nombres y alcances documentados en SPEC 1.1-rc. Implementación candidata: contenido/práctica/prueba acotados; IDs independientes para resultados nuevos; legado integrado sin migración ni eliminación. Test de navegador completado para los tres Temas, catálogos, Misiones, sesiones, históricos, permisos, refuerzos y Análisis; regresión de ruta anterior y Lengüizonas superada. Pruebas con identidades/SDK simulados; no certifican producción. El repaso de Lengüizonas y English/Grammar zone se conservan. Pendiente integración de PR y pruebas familiares anteriores.
