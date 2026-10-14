@@ -5,11 +5,14 @@ import { leerSesionesAcademicas } from "../../compartido/js/sesiones-academicas.
 import "./catalogo-repaso-academico.js?v=3";
 import "./mision-libre.js";
 
+import { VERBOS_META, BLOQUES_RESULTADO } from "../../cursos/6to/lengua/verbos/verbos-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  { actividadId: VERBOS_META.actividadId, titulo: VERBOS_META.tituloActividad, icono: "🔤", curso: "6.º", materia: "Lengua", destinoUrl: "../../cursos/6to/lengua/verbos/", bloques: Object.freeze(Object.fromEntries(BLOQUES_RESULTADO.map(b => [b.id, { icono: b.icono, titulo: b.titulo, descripcion: b.descripcion }]))) },
   {
     actividadId: "6-mates-puente-5to-6to",
     titulo: "Puente de 5.º a 6.º",
