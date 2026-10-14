@@ -1,0 +1,3 @@
+/* Acentos de English sobre el diseño académico compartido, sin otro layout. */
+:root{--coral:#4e93a0;--coral-osc:#356f79;--coral-suave:#edf8f9}
+.lesson-card li{margin:8px 0;line-height:1.55}

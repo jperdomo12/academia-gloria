@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9-rc |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9-rc | 14/10/2026 | Product Owner + AI Collaborator | Documenta regla aprobada por Juan: material explicativo y actividad posterior de Zonas sobre el mismo contenido enriquecen un único Tema; origen escolar conservado sin duplicar materia/actividad. Primera aplicación candidata Much/Many en English. |
 | 1.8 | 14/10/2026 | Product Owner + AI Collaborator | Sincroniza Lengua 6.º activa y Verbos publicados mediante #172; incorpora Resumen de contenido. Conserva reglas curriculares, pruebas reales y aprobación familiar sin nuevas normas. |
 | 1.7 | 23/09/2026 | Product Owner + AI Collaborator | Aclara que `Zonas del cole` y sus accesos internos forman parte del contenido navegable de Academia y no deben heredar la restricción visual de los bloques de recursos oficiales externos de Gaudem. Los enlaces oficiales externos pueden conservar su propia regla de visibilidad; el acceso interno a Zonas permanece disponible para navegar y revisar el contenido incorporado. |
 | 1.6 | 23/09/2026 | Product Owner + AI Collaborator | Aclara la convivencia entre Zonas del cole y materias académicas en Gestión de Misiones: una Zona activa con Temas propios puede mostrarse como opción visible del campo `Materia` para conservar el origen escolar del trabajo, sin convertirse por ello en una nueva materia curricular. Las sesiones y evidencias mantienen la materia académica propietaria del Tema. |
@@ -387,6 +388,16 @@ La experiencia debe contrastarse contra el material original para confirmar:
 - nivel adecuado;
 - correspondencia entre práctica y contenido explicado;
 - y capacidad real de producir evidencia interpretable durante una ejecución normal.
+
+### 6.4.1 Un Tema compartido entre explicación y Zonas
+
+Si primero llega material explicativo y después una actividad de Zonas del cole sobre el mismo contenido, se **enriquece el Tema existente**. Cuando ambos llegan juntos, se incorporan como un único Tema desde el inicio.
+
+Antes de crear otro Tema, contrastar materia, conceptos, objetivos y tipo de trabajo. La procedencia de una Zona no crea por sí sola una materia ni un Tema diferentes. Se conservan un identificador académico, destino propietario, motor y fuente de resultados; se integran explicación, práctica, corrección y producción cuando el material las pide.
+
+El origen escolar se conserva en la presentación, trazabilidad de fuentes y actividades correspondientes. Un portal de Zona puede referenciar el catálogo de la materia y abrir el mismo destino con retorno a la Zona; no copia el Tema ni crea sesiones paralelas. Un contenido materialmente diferente puede justificar otro Tema, previa comprobación del alcance real.
+
+Primera aplicación: **6.º · English · Much / Many – A lot of / Lots of**. Los apuntes explicativos y **English Zones · Grammar zone** forman un único Tema; la práctica enriquece el aprendizaje y la sesión mantiene materia `English`. Propietario de la aplicación: `docs/specifications/SPEC-ENGLISH_6TO_QUANTIFIERS.md`.
 
 ### 6.5 Recursos oficiales del colegio dentro del portal de materia
 
@@ -1784,6 +1795,7 @@ No se crearán estándares independientes por curso salvo que aparezca una neces
 | CA-028 | El ciclo normal es entrada mínima → trabajo interno → `YA PUEDES PROBAR` → observaciones opcionales → aprobación → cierre definitivo. | Aprobada |
 | CA-029 | Un portal propio de materia puede incorporar recursos oficiales externos del colegio como bloque diferenciado; para Gaudem 6.º se reutiliza el patrón visible solo para `alumno + Gaudem`, sin convertir enlaces en contenido/evidencia ni crear portales por anticipación. | Aprobada y validada |
 | CA-030 | Cuando llega el primer Tema real de una materia de 6.º todavía marcada como `Preparando`, la misma incorporación activa la materia en `/cursos/6to/`, crea/completa su portal, enlaza el Tema y valida la navegación completa; no requiere una instrucción adicional de la familia. | Aprobada y validada con Science y English |
+| CA-031 | Material explicativo y actividad de Zonas del cole sobre el mismo contenido enriquecen un único Tema académico, con origen escolar visible y sin duplicar materia, actividad ni resultados. | Aprobada por Product Owner el 14/10/2026 |
 
 ---
 

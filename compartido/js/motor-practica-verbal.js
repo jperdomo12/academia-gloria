@@ -10,7 +10,7 @@ import {
 import { escuchar, detener, disponible } from "./lector-texto.js";
 
 // Motor de verbos existente, parametrizado para reutilizarlo con contenidos distintos.
-export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS, familias: FAMILIAS_PRUEBA_VERBOS }) {
+export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos" }) {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -194,7 +194,7 @@ function renderPractica() {
   });
 
   $("practicaEscuchar")?.addEventListener("click",()=>{
-    iniciarLectura($("practicaEscuchar"),`${reto.enunciado}. ${reto.pregunta}`);
+    iniciarLectura($("practicaEscuchar"),reto.textoLectura || `${reto.enunciado}. ${reto.pregunta}`,reto.idiomaLectura || "es-ES");
   });
 }
 
@@ -319,7 +319,7 @@ function renderPreguntaPrueba() {
   });
 
   $("pruebaEscuchar")?.addEventListener("click",()=>{
-    iniciarLectura($("pruebaEscuchar"),`${pregunta.enunciado}. ${pregunta.pregunta}`);
+    iniciarLectura($("pruebaEscuchar"),pregunta.textoLectura || `${pregunta.enunciado}. ${pregunta.pregunta}`,pregunta.idiomaLectura || "es-ES");
   });
 }
 
@@ -436,7 +436,7 @@ async function finalizarPrueba() {
   const enCamino=mapa.filter(item=>item.estado==="camino");
 
   if (reforzar.length) {
-    $("textoCierre").textContent=`${nombreAlumno}, ya tenemos una fotografía útil: algunas ideas sobre los verbos están firmes y otras conviene volver a practicar con calma.`;
+    $("textoCierre").textContent=`${nombreAlumno}, ya tenemos una fotografía útil: algunas ideas sobre ${campoSemantico} están firmes y otras conviene volver a practicar con calma.`;
   } else if (enCamino.length) {
     $("textoCierre").textContent=`${nombreAlumno}, las ideas principales están apareciendo. Unas variantes más ayudarán a hacerlas más firmes.`;
   } else {
@@ -500,7 +500,7 @@ async function finalizarPrueba() {
   if (typeof mostrarCelebracion==="function") {
     mostrarCelebracion({
       titulo:"¡Repaso recorrido!",
-      mensaje:"Ya sabemos qué ideas sobre los verbos seguir fortaleciendo."
+      mensaje:`Ya sabemos qué ideas sobre ${campoSemantico} seguir fortaleciendo.`
     });
   }
 }
@@ -533,7 +533,7 @@ function textoLimpioContenedor(contenedor) {
   return String(copia.textContent||"").replace(/\s+/g," ").trim();
 }
 
-function iniciarLectura(boton,texto) {
+function iniciarLectura(boton,texto,idioma="es-ES") {
   if (!disponible()) {
     boton.disabled=true;
     boton.textContent="🔇 Escucha no disponible";
@@ -551,7 +551,7 @@ function iniciarLectura(boton,texto) {
   boton.textContent="⏹ Detener lectura";
 
   const iniciado=escuchar(texto,{
-    idioma:"es-ES",
+    idioma,
     velocidad:.70,
     tono:1,
     alFinalizar:detenerLecturaActual,
@@ -564,7 +564,7 @@ document.addEventListener("click",evento=>{
   const boton=evento.target.closest("[data-escuchar-contenedor]");
   if (!boton) return;
   const contenedor=document.querySelector(boton.dataset.escucharContenedor);
-  if (contenedor) iniciarLectura(boton,textoLimpioContenedor(contenedor));
+  if (contenedor) iniciarLectura(boton,textoLimpioContenedor(contenedor),boton.dataset.idioma || "es-ES");
 });
 
 window.addEventListener("beforeunload",detenerLecturaActual,{once:true});
