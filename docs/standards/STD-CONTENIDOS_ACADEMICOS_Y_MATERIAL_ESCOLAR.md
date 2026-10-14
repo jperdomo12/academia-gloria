@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.9-rc |
+| **Versión** | 1.9 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 14/10/2026 | Product Owner + AI Collaborator | Cierra primera aplicación de CA-031: PR #174 aprobada e integrada; un Tema de English con apuntes y Grammar zone, consulta desde ambos orígenes y prueba real pendiente. |
 | 1.9-rc | 14/10/2026 | Product Owner + AI Collaborator | Documenta regla aprobada por Juan: material explicativo y actividad posterior de Zonas sobre el mismo contenido enriquecen un único Tema; origen escolar conservado sin duplicar materia/actividad. Primera aplicación candidata Much/Many en English. |
 | 1.8 | 14/10/2026 | Product Owner + AI Collaborator | Sincroniza Lengua 6.º activa y Verbos publicados mediante #172; incorpora Resumen de contenido. Conserva reglas curriculares, pruebas reales y aprobación familiar sin nuevas normas. |
 | 1.7 | 23/09/2026 | Product Owner + AI Collaborator | Aclara que `Zonas del cole` y sus accesos internos forman parte del contenido navegable de Academia y no deben heredar la restricción visual de los bloques de recursos oficiales externos de Gaudem. Los enlaces oficiales externos pueden conservar su propia regla de visibilidad; el acceso interno a Zonas permanece disponible para navegar y revisar el contenido incorporado. |
@@ -1831,6 +1832,10 @@ A 17/09/2026 están construidos y probados:
 ### Incorporación de Lengua · 14/10/2026
 
 PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`: portal de Lengua activado con Verbos · Indicativo, subjuntivo e imperativo. Fuente propietaria: `docs/specifications/SPEC-LENGUA_6TO_VERBOS.md` 1.0. Reutiliza motor de Lengüizonas parametrizado, sesión/evidencia, histórico y Análisis; integra bloques en el catálogo de refuerzos existente. Pruebas automáticas con identidades/SDK simulados; prueba real con Gloria pendiente. No declara estabilidad ni altera el proceso aprobado.
+
+### Incorporación de English · 14/10/2026
+
+PR #174 aprobada e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`: Much / Many – A lot of / Lots of incorpora ambos materiales en un único Tema de English. English Zones · Grammar zone conserva su origen y abre la actividad propietaria del catálogo de English; no duplica materia, Tema ni fuente de datos. Fuente propietaria: `docs/specifications/SPEC-ENGLISH_6TO_QUANTIFIERS.md` 1.0. Primera aplicación de §6.4.1/CA-031 aprobada por Juan. Motor, sesiones, Misiones, histórico y refuerzos reutilizados; regresión de Verbos verificada. Prueba de uso real con Gloria pendiente.
 
 ### Pendiente de evolución
 
