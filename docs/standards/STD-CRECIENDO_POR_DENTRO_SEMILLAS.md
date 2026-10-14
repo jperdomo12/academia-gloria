@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.2-rc |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 14/10/2026 | Product Owner + AI Collaborator | Integra la composición aprobada mediante #178: resumen derivado y frase de un único paso con contrato vigente, sin persistencia paralela. Nueva prueba familiar de 012 pendiente. |
 | 1.2-rc | 14/10/2026 | Product Owner + AI Collaborator | Candidata de ajuste por validación familiar: documenta composición con resumen derivado y frase de un único paso, usando el contrato vigente y sin persistencia paralela. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora al cierre estándar de una nueva Semilla la actualización de la guía oficial para familias/profesionales y de sus presentaciones derivadas vigentes. Evita que catálogo, documentación de acompañamiento y guía web queden desincronizados. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Formaliza el flujo validado durante la creación de las Semillas 007–009: necesidad real → diseño pedagógico → imagen generada por IA manteniendo continuidad visual de Gloria → subida mínima del binario por el Product Owner cuando sea necesaria → integración técnica por la AI Collaborator → validación de Pages → prueba real con Gloria. Reduce al mínimo la intervención manual del Product Owner y establece Quality Gate funcional, emocional, visual y técnico. |
@@ -373,7 +374,7 @@ No se añade una propiedad nueva al contrato únicamente para una Semilla si el 
 
 Si una necesidad demuestra valor transversal, puede evolucionarse el contrato compartido mediante el cambio mínimo necesario.
 
-Cuando `plantillaRespuesta` referencia **únicamente un paso** (`{idPaso}`) y la Semilla contiene varios pasos, el compositor puede separar dos propósitos: resumir las elecciones restantes y mostrar la frase de ese paso con su título. El resumen se deriva de `pasos` y `respuestas`, reutilizando el lector del histórico; no se añade otro campo guardado. `respuestaConstruida`, el lector de voz y la práctica oral continúan trabajando con la frase referenciada. Las plantillas compuestas conservan su comportamiento. Esta presentación reutilizable nace de la validación familiar de Semilla 012; no establece un comportamiento por ID ni una nueva estructura de permisos/datos. Candidata pendiente de integración; detalle funcional propietario en `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` 1.2-rc.
+Cuando `plantillaRespuesta` referencia **únicamente un paso** (`{idPaso}`) y la Semilla contiene varios pasos, el compositor puede separar dos propósitos: resumir las elecciones restantes y mostrar la frase de ese paso con su título. El resumen se deriva de `pasos` y `respuestas`, reutilizando el lector del histórico; no se añade otro campo guardado. `respuestaConstruida`, el lector de voz y la práctica oral continúan trabajando con la frase referenciada. Las plantillas compuestas conservan su comportamiento. Esta presentación reutilizable nace de la validación familiar de Semilla 012; no establece un comportamiento por ID ni una nueva estructura de permisos/datos. Implementada mediante PR #178 aprobada e integrada; detalle funcional propietario en `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` 1.2. La integración no declara la Semilla estable.
 
 ### 8.1 Documentación de acompañamiento
 

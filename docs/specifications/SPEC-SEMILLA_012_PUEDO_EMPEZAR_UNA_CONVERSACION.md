@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` |
-| **Versión** | 1.2-rc |
+| **Versión** | 1.2 |
 | **Estado** | PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE |
 | **Fecha** | 13/10/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.2 | 14/10/2026 | Product Owner + AI Collaborator | PR #178 aprobada por Juan e integrada; resumen de siete elecciones y frase final separados, oralidad/guardado conservados. Nueva revisión familiar pendiente; no declara estabilidad. |
 | 1.2-rc | 14/10/2026 | Product Owner + AI Collaborator | Ajuste autorizado tras uso real de Anaís/Gloria: resumen de elecciones y frase final separados. Motor deriva el resumen del contrato existente; práctica oral y persistencia conservadas. Candidata pendiente de integración. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678e…`; Pages #769 `success`. Imagen real y contenido data-driven publicados; Motor conservado. Validación familiar pendiente. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; imagen externa integrada y verificada en contexto; pendiente de aprobación/integración. Conserva diseño aprobado y validación real pendiente. |
@@ -369,10 +370,12 @@ Estado de Desarrollo:
 
 > **PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE**
 
-La implementación mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). La incorporación original usó solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. La incorporación original no requirió cambios de JavaScript/CSS. El ajuste familiar 1.2-rc modifica únicamente la presentación compartida del compositor y su estilo de resumen; conserva identidad, histórico, oralidad y contratos de Misiones.
+La implementación mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). La incorporación original usó solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. La incorporación original no requirió cambios de JavaScript/CSS. El ajuste familiar 1.2 modifica únicamente la presentación compartida del compositor y su estilo de resumen; conserva identidad, histórico, oralidad y contratos de Misiones.
 
 El diseño funcional continúa aprobado. PR #164 integrada en `2e12678ed44a89402f603516677e15f53929a36d` y publicada mediante Pages #769 (`success`). Queda la validación familiar de comprensión, voz y uso real; no se declara estabilidad.
 
-**Ajuste de validación familiar · 14/10/2026:** autorizado por Juan, candidato en `fix/semilla-012-resumen` desde `main` #177 (`c705ef73…`). Revisión/integración de PR y nueva prueba familiar pendientes. No se declara la Semilla estable.
+**Ajuste de validación familiar · 14/10/2026:** PR #178 aprobada por Juan e integrada en `f6c199453bc1d525022a90b5a9daeb3590730d23`, desarrollada desde `main` #177 (`c705ef73…`). Sin desarrollo pendiente de este ajuste; nueva prueba familiar pendiente. No se declara la Semilla estable.
 
-**Validación de la corrección candidata:** `tests/semillas-composicion-browser.cjs` recorre los ocho pasos con Motor, ContextoUsuario y API reales y SDK/identidad/voz simulados. Comprueba siete filas de resumen, opciones múltiples y palabras propias, escape de HTML, frase final separada y sin repetirse en el resumen, lectura y objetivo de grabación solo de la frase, cambio de respuesta anterior al volver, guardado sin grabación y con grabación simulada, una sesión nueva por guardado sin campos de resumen adicionales, sesión anterior intacta y consulta histórica sin alterar datos. Recorre las once Semillas previas y comprueba su compositor original; aplica la misma presentación a otra Semilla y otro ID de paso mediante la plantilla vigente, sin condición exclusiva de 012. Anchuras 1280/768/390/320 sin desbordamiento; revisión visual escritorio/móvil. Construcción de frase, lector de respuestas del histórico, grabador y persistencia sin cambios; catálogo JSON intacto. No certifica audio físico ni cuentas/Rules de producción.
+**Validación de la corrección integrada:** `tests/semillas-composicion-browser.cjs` recorre los ocho pasos con Motor, ContextoUsuario y API reales y SDK/identidad/voz simulados. Comprueba siete filas de resumen, opciones múltiples y palabras propias, escape de HTML, frase final separada y sin repetirse en el resumen, lectura y objetivo de grabación solo de la frase, cambio de respuesta anterior al volver, guardado sin grabación y con grabación simulada, una sesión nueva por guardado sin campos de resumen adicionales, sesión anterior intacta y consulta histórica sin alterar datos. Recorre las once Semillas previas y comprueba su compositor original; aplica la misma presentación a otra Semilla y otro ID de paso mediante la plantilla vigente, sin condición exclusiva de 012. Anchuras 1280/768/390/320 sin desbordamiento; revisión visual escritorio/móvil. Construcción de frase, lector de respuestas del histórico, grabador y persistencia sin cambios; catálogo JSON intacto. No certifica audio físico ni cuentas/Rules de producción.
+
+**Publicación del ajuste:** PR #178 aprobada e integrada en `f6c199453bc1d525022a90b5a9daeb3590730d23`; Pages #788 `success`. Página, Motor, CSS y catálogo responden HTTP 200 y coinciden con el producto integrado. Nueva revisión familiar de resumen, frase y práctica oral pendiente. La Semilla sigue PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE.

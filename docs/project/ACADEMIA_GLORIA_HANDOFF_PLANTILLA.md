@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.20 |
+| **Versión** | 3.21 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.21 | 14/10/2026 | Product Owner + AI Collaborator | Cierra #178 aprobada e integrada: Semilla 012 resume elecciones y separa frase oral; SPEC y estándar 1.2. Retira candidata de desarrollo; conserva nueva prueba familiar y pendientes previos. |
 | 3.20 | 14/10/2026 | Product Owner + AI Collaborator | Uso real de Semilla 012: ajuste candidato para resumir elecciones y separar la frase oral. Reutiliza contrato y lector del histórico; mantiene validación familiar y no declara estabilidad. |
 | 3.19 | 14/10/2026 | Product Owner + AI Collaborator | Cierra separación de Lengua por documento: #176 aprobada e integrada, SPEC 1.1 y compatibilidad anterior conservada. Retira rama/PR de desarrollo activa; prueba familiar pendiente. |
 | 3.18 | 14/10/2026 | Product Owner + AI Collaborator | Candidata para observación de Anaís: separa Lengua/Verbos en tres Temas por documento, según nombres y alcance confirmados por Juan; mantiene compatibilidad de Misiones/históricos anteriores. Revisión e integración pendientes. |
@@ -304,7 +305,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Semilla 012 · ajuste de composición:** uso real de Anaís/Gloria confirma necesidad de resumir las elecciones además de la frase final. Juan autoriza corrección; candidata en `fix/semilla-012-resumen`, base #177 (`c705ef73…`), propietario SPEC 1.2-rc. Resumen derivado del contrato vigente y lector del histórico; grabación/guardado siguen usando solo la frase final. PR/integración y nueva prueba familiar pendientes; no declarar estable.
+**Semilla 012 · ajuste de composición:** PR #178 aprobada por Juan e integrada en `f6c199453bc1d525022a90b5a9daeb3590730d23`, tras observación real de Anaís/Gloria. Propietario SPEC 1.2. Resumen de siete pasos derivado del contrato vigente y lector del histórico; frase final separada para escuchar/grabar. Sin campos nuevos ni cambios de sesiones anteriores. Sin desarrollo pendiente; nueva revisión familiar del ajuste pendiente; no declarar estable.
 
 **Lengua · separación por documento:** PR #176 aprobada por Juan e integrada en `4ee57aa79a1753c31cc31eb3e9a551360b1c8563`; propietario `SPEC-LENGUA_6TO_VERBOS.md` 1.1. Tres Temas: El verbo · Repaso de 5.º; Indicativo y subjuntivo; Subjuntivo e imperativo. Motor y banco reutilizados; ruta, Misiones y resultados anteriores conservados. Sin desarrollo pendiente; prueba de uso real con Anaís/Gloria pendiente.
 
@@ -318,7 +319,7 @@ El cierre operativo de PR #152/#153 queda autorizado el 12/10/2026. #152 está i
 
 **Prioridad vigente · ajustes de primera revisión familiar publicados el 13/10/2026.** El Product Owner aprobó la PR #161, integrada en `main` `c980fcc15272b509530777a967ca70bdf380346e` y publicada mediante Pages #766 (`success`, `e3a3e884…`, contiene #161). Conserva la recuperación de #159 y añade los cuatro ajustes de uso: avisos al final del panel activo, acordeón compartido de Observaciones y refuerzos con Misiones preparadas/sugeridas, banda de Dictado libre y nombre **Mi Rincón de Dictado**. Propietario: `SPEC-RINCON_DICTADOS.md` 1.2. No hay desarrollo pendiente en #161. Continúa la validación familiar de voz, persistencia y utilidad; no se declara estabilidad.
 
-**Semilla 012 · Puedo empezar una conversación publicada para validación familiar.** PR #164 aprobada por el Product Owner e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` 1.1 conserva el diseño aprobado desde Análisis. Catálogo 1.10 con 12 Semillas activas; Motor sin cambios, guía familiar 1.3 y presentación web sincronizadas. Imagen aprobada por Análisis y subida por la familia: `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`, verificada en catálogo, bienvenida, situación y guía. No hay desarrollo pendiente de #164. La Semilla espera prueba familiar de comprensión y uso; Dictado conserva la revisión positiva de Juan y espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+**Semilla 012 · Puedo empezar una conversación publicada para validación familiar.** PR #164 aprobada por el Product Owner e integrada en `2e12678ed44a89402f603516677e15f53929a36d`; Pages #769 `success`. `SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` 1.2 conserva el diseño aprobado desde Análisis. Catálogo 1.10 con 12 Semillas activas; Motor reutilizado con ajuste de composición #178 indicado arriba, guía familiar 1.3 y presentación web sincronizadas. Imagen aprobada por Análisis y subida por la familia: `assets/imagenes/creciendo-por-dentro/semillas/semilla-012-puedo-empezar-una-conversacion.jpg`, verificada en catálogo, bienvenida, situación y guía. No hay desarrollo pendiente de #164. La Semilla espera prueba familiar de comprensión y uso; Dictado conserva la revisión positiva de Juan y espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 **Antecedente de Rincón del Dictado V1 · PR #157 integrado y publicado antes de la reparación #159.** El Product Owner autoriza su incorporación para uso con Gloria y Anaís, incluyendo Misiones, guardado, consulta, análisis y nuevos refuerzos basados en palabras/frases. Propietario: `docs/specifications/SPEC-RINCON_DICTADOS.md` 1.0. Seis aventuras (incluida Shakira), escritura en papel, voz ajustable, avance manual, revisión por frases y porcentaje original conservado. Cabecera/Volver/Panel, lector, celebraciones, identidad y sesiones reutilizados. Gestión de Misiones permite crear aventuras y refuerzos ocultos hasta decisión familiar; guardar envía evidencia a revisión familiar sin porcentaje mínimo. Análisis Educativo incorpora una fuente separada de autoevaluación, excluye pruebas y compara solo textos y acompañamiento equivalentes. Sin nuevas colecciones ni Rules. Pruebas automatizadas con voz/Firestore simulados; primera validación familiar pendiente de comprobar audio físico, permisos y persistencia reales. La autorización de publicación no declara la V1 estable.
 
@@ -364,20 +365,20 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `4ee57aa79a1753c31cc31eb3e9a551360b1c8563` · #176 integrado; conserva #174/#172/#171/#170 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `f6c199453bc1d525022a90b5a9daeb3590730d23` · #178 integrado; conserva #176/#174 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `fix/semilla-012-resumen` · ajuste de composición tras uso real |
-| **PR On going** | Candidata de composición de Semilla 012; verificar PR al retomar |
+| **Rama On going** | Sin rama de desarrollo de producto activa para #178 |
+| **PR On going** | Ninguna de producto para este ajuste; #178 integrada |
 | **Trabajo inmediato** | Probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #786 · `success` · SHA `4ee57aa7…` |
-| **Verificación posterior al cierre** | #176 aprobada e integrada; Pages #786 correcto. Portal, tres Temas, definición/catálogo y ruta integrada anterior HTTP 200 e idénticos al producto en main. English/Grammar zone y frentes anteriores conservados. Pruebas reales pendientes. |
+| **GitHub Pages del baseline funcional** | #788 · `success` · SHA `f6c19945…` |
+| **Verificación posterior al cierre** | #178 aprobada e integrada; Pages #788 correcto. Página de Semillas, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Resumen y frase final separados para nueva revisión familiar. Frentes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
 | **Menú del Cole** | ✅ Septiembre + octubre 2026 · SPEC v1.1 · automatización desactivada |
 | **Gestión de Usuarios** | ✅ Avatar con catálogo ampliado + entrada libre |
 | **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
-| **Creciendo por Dentro** | ✅ 12 Semillas publicadas, incluida 012; prueba familiar de la nueva Semilla pendiente |
+| **Creciendo por Dentro** | ✅ 12 Semillas publicadas, incluida 012; nueva revisión familiar tras ajuste #178 pendiente |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones activa con Grammar zone |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
@@ -395,7 +396,7 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. probar English → Much/Many desde English y English Zones según SPEC 1.0; probar los tres Temas de Lengua según SPEC 1.1; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. probar English → Much/Many desde English y English Zones según SPEC 1.0; probar los tres Temas de Lengua según SPEC 1.1; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar de nuevo Semilla 012 conforme a su SPEC 1.2; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -413,10 +414,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.20 |
+| **Versión** | 3.21 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Candidata de composición de Semilla 012; verificar PR al retomar |
+| **PR On going** | Ninguna de producto para este ajuste; #178 integrada |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
@@ -457,4 +458,6 @@ Publicación de separación de Lengua: Pages #786 `success` sobre `4ee57aa7…`;
 
 ## Continuidad · Semilla 012 · observación de uso real · 14/10/2026
 
-Anaís/Gloria detectan que el compositor enseña solo la última respuesta; corresponde a la plantilla original, no a una pérdida confirmada de datos. Juan autoriza resumen de elecciones y frase final separados. Candidata en `fix/semilla-012-resumen`: reutiliza contrato actual y lector del histórico; no añade campos persistidos ni una condición por ID. Test de los ocho pasos, palabras propias/opciones múltiples, cambios al volver, audio solo frase, guardado con/sin grabación simulada y conservación de sesión anterior superado; once Semillas anteriores conservan presentación. SPEC 1.2-rc y estándar de Semillas 1.2-rc documentan ajuste. PR/integración y nueva revisión familiar pendientes. No se declara estable.
+Anaís/Gloria detectan que el compositor enseña solo la última respuesta; corresponde a la plantilla original, no a una pérdida confirmada de datos. Juan autoriza resumen de elecciones y frase final separados. PR #178 aprobada e integrada; reutiliza contrato actual y lector del histórico; no añade campos persistidos ni una condición por ID. Test de los ocho pasos, palabras propias/opciones múltiples, cambios al volver, audio solo frase, guardado con/sin grabación simulada y conservación de sesión anterior superado; once Semillas anteriores conservan presentación. SPEC 1.2 y estándar de Semillas 1.2 documentan el ajuste integrado. Sin desarrollo pendiente; nueva revisión familiar pendiente. No se declara estable.
+
+Publicación del ajuste de Semilla 012: Pages #788 `success` sobre `f6c19945…`; página, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Cierre de desarrollo completado; nueva revisión familiar pendiente, sin declarar estabilidad.
