@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.15 |
+| **Versión** | 3.16 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.16 | 14/10/2026 | Product Owner + AI Collaborator | Candidata de English Much/Many: integra apuntes y Grammar zone como único Tema y activa acceso de English Zones al destino propietario. Regla de enriquecimiento documentada; revisión/integración pendientes. |
 | 3.15 | 14/10/2026 | Product Owner + AI Collaborator | Lengua 6.º y Verbos incorporados mediante #172 aprobada; actualiza baseline, cierre y prueba familiar pendiente. Conserva Dictado/Semilla 012 y consulta profesional pendientes de uso real. |
 | 3.14 | 14/10/2026 | Product Owner + AI Collaborator | Incorporación curricular de Lengua · Verbos candidata desde #171: activa portal de Lengua en rama y reutiliza motor de Lengüizonas con datos propios. Prueba/aprobación familiar e integración pendientes; conserva pendientes anteriores. |
 | 3.13 | 13/10/2026 | Product Owner + AI Collaborator | Cierra #169/#170 integradas; acceso debajo de Nueva misión publicado por Pages #775 y validado por Juan. Actualiza baseline y retira cierre de desarrollo activo. Mantiene pruebas reales pendientes y resume seis fuentes propietarias. |
@@ -299,6 +300,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**English · Much / Many – A lot of / Lots of:** candidata en `feat/english-quantifiers`, desde `main` #173 (`61a44ede…`). Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md`. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Revisión/aprobación e integración pendientes; no afirmar publicado.
+
 **Lengua 6.º · Verbos:** PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.0. Portal de Lengua activo con Verbos (continuidad de 5.º e indicativo/subjuntivo/imperativo de 6.º) y acceso al repaso anterior de Lengüizonas. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
 
 **Consulta educativa por alumno:** PR #168 aprobada e integrada en `main` `5518d4d4…`, desde la SPEC #167. Prueba real pendiente; ver continuidad técnica al final.
@@ -355,8 +358,8 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `2bfea89ceb9892ffa4da8aae1f503d46388d395e` · #172 integrado; conserva #171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin rama de desarrollo pendiente de estos frentes; #172 integrada |
-| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
+| **Rama On going** | `feat/english-quantifiers` · candidata curricular de English |
+| **PR On going** | Candidata Much/Many en preparación; verificar GitHub al retomar |
 | **Trabajo inmediato** | Probar Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #777 · `success` · SHA `2bfea89c…` |
 | **Verificación posterior al cierre** | #172 aprobada e integrada; Pages #777 correcto y rutas de Lengua/Verbos/motor HTTP 200. Consulta educativa y acceso #170 conservados. Pruebas reales pendientes. |
@@ -402,10 +405,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.15 |
+| **Versión** | 3.16 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
+| **PR On going** | Candidata Much/Many en preparación; verificar GitHub al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
@@ -430,3 +433,8 @@ Cierre de Consulta educativa: #169 integra la sincronización documental de #168
 `SPEC-LENGUA_6TO_VERBOS.md` conserva fuentes y cobertura de los tres adjuntos, matices de fidelidad y archivos de la implementación. Nueva actividad `6-lengua-verbos-modos`; portal de Lengua, tema y registro compartido sin nuevas colecciones. Motor anterior trasladado y parametrizado para evitar duplicación; repaso de Lengüizonas conserva contrato y contenido. PR #172 aprobada e integrada; sin desarrollo pendiente de esa incorporación. La familia comprobará comprensión y uso con Gloria. Dictado/Semilla 012 y consulta real profesional continúan pendientes de sus pruebas ya documentadas.
 
 Publicación de Lengua/Verbos: Pages #777 `success` sobre `2bfea89c…`; `/cursos/6to/`, `/cursos/6to/lengua/`, `/cursos/6to/lengua/verbos/` y motor compartido verificados HTTP 200. No hay desarrollo pendiente de #172.
+
+
+## Continuidad curricular · English · 14/10/2026
+
+Much/Many conserva un único Tema y actividad de English, con material explicativo y práctica de Grammar zone. English Zones abre el mismo destino mediante referencia al catálogo de English; las sesiones no crean una materia o fuente paralela. Regla de enriquecer un Tema existente documentada en estándar curricular §6.4.1/CA-031 por instrucción de Juan. Candidata en rama pendiente de integración; conservar los pendientes de prueba real de Lengua/Verbos, Dictado, Semilla 012 y consulta profesional.

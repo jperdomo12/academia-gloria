@@ -7,11 +7,14 @@ import "./mision-libre.js";
 
 import { VERBOS_META, BLOQUES_RESULTADO } from "../../cursos/6to/lengua/verbos/verbos-data.js";
 
+import { ENGLISH_META as QUANTIFIERS_META, BLOQUES_RESULTADO as BLOQUES_QUANTIFIERS } from "../../cursos/6to/english/much-many-a-lot-of/quantifiers-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  {actividadId:QUANTIFIERS_META.actividadId,titulo:QUANTIFIERS_META.tituloActividad,icono:"🧺",curso:"6.º",materia:"English",destinoUrl:"../../cursos/6to/english/much-many-a-lot-of/",bloques:Object.freeze(Object.fromEntries(BLOQUES_QUANTIFIERS.map(b=>[b.id,{icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])) )},
   { actividadId: VERBOS_META.actividadId, titulo: VERBOS_META.tituloActividad, icono: "🔤", curso: "6.º", materia: "Lengua", destinoUrl: "../../cursos/6to/lengua/verbos/", bloques: Object.freeze(Object.fromEntries(BLOQUES_RESULTADO.map(b => [b.id, { icono: b.icono, titulo: b.titulo, descripcion: b.descripcion }]))) },
   {
     actividadId: "6-mates-puente-5to-6to",
