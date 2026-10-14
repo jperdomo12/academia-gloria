@@ -39,9 +39,77 @@ await p.route('**/compartido/firebase/firebase-config.js',r=>r.fulfill({body:"ex
 await p.route('**/compartido/firebase/firebase-auth.js',r=>r.fulfill({body:'export const observarSesion=()=>()=>{};',contentType:'text/javascript'}));await p.route('**/registro-acceso.js',r=>r.fulfill({body:'export async function registrarAccesoAcademia(){}',contentType:'text/javascript'}));await p.route('**/timeout-sesion.js',r=>r.fulfill({body:'export async function activarTimeoutSesion(){}',contentType:'text/javascript'}));
 return {c,p,errors};}
 
+
+// Separación por documento: banco, contenido, sesión e integraciones independientes.
+const documents = [
+  {id:'el-verbo',title:'El verbo · Repaso de 5.º',count:4,blocks:['base','indicativo'],models:11},
+  {id:'indicativo-subjuntivo',title:'Indicativo y subjuntivo',count:2,blocks:['modos'],models:1},
+  {id:'subjuntivo-imperativo',title:'Subjuntivo e imperativo',count:6,blocks:['subjuntivo','imperativo'],models:19}
+];
+async function completarDocumento(page,d,wrong=false) {
+  const families=await page.evaluate(async id=>(await import('/cursos/6to/lengua/'+id+'/verbos-data.js')).FAMILIAS_PRUEBA_VERBOS,d.id);
+  await page.click('[data-pestana="prueba"]');await page.click('#botonIniciarPrueba');
+  for (let i=0;i<d.count;i++) {
+    await page.waitForSelector('#pruebaOpciones .option');
+    const e=await page.locator('#pruebaContenido .challenge__enunciado').innerText();
+    const q=await page.locator('#pruebaContenido .challenge__pregunta').innerText();
+    const v=families.flatMap(f=>f.variantes).find(v=>v.enunciado===e&&v.pregunta===q);
+    assert.ok(v);assert.ok(d.blocks.includes(v.bloqueId));
+    const answer=wrong?v.opciones.find(o=>o.id!==v.respuestaCorrecta).id:v.respuestaCorrecta;
+    await page.click('#pruebaOpciones [data-opcion="'+answer+'"]');
+    await page.click('#botonResponderPrueba');await page.click('#botonResponderPrueba');
+  }
+  await page.waitForFunction(()=>!document.querySelector('#cierrePrueba').hidden&&!document.querySelector('#estadoGuardado').textContent.includes('Guardando'));
+}
+const docSessions=[];
+for (const d of documents) {
+  const l=await entorno('alumno'),page=l.p;
+  await page.goto(base+'/cursos/6to/lengua/');await page.waitForSelector('[data-tema-id="'+d.id+'"]');
+  await page.locator('[data-tema-id="'+d.id+'"]').click();
+  await page.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');
+  assert.match(page.url(),new RegExp('/'+d.id+'/.*volver='));
+  assert.equal(await page.locator('h1').innerText(),d.title);await page.waitForSelector('[data-nav-volver]');assert.ok((await page.locator('[data-nav-volver]').getAttribute('href')).includes('/cursos/6to/lengua/'));
+  for (const width of [1280,768,390,320]) {await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),d.id+' overflow '+width);}
+  await page.setViewportSize({width:390,height:1000});
+  if(process.env.QA_IMAGES)await page.screenshot({path:process.env.QA_IMAGES+'-'+d.id+'.png',fullPage:true});
+  await page.click('[data-pestana="material"]');assert.equal(await page.locator('[data-panel="material"] details').count(),d.models);
+  if(d.id==='el-verbo')assert.equal(await page.locator('[data-panel="material"]').getByText('🌱 Cantar en subjuntivo · 6.º').count(),0);
+  if(d.id==='subjuntivo-imperativo')assert.ok(!(await page.locator('[data-panel="material"]').innerText()).includes('parece evidente que'));
+  if(d.id==='indicativo-subjuntivo')assert.ok((await page.locator('[data-panel="material"]').innerText()).includes('parece evidente que'));
+  if(d.id==='indicativo-subjuntivo')assert.equal(await page.locator('[data-panel="material"]').getByText('Futuro perfecto · poco usado').count(),0);
+  const data=await page.evaluate(async id=>{const m=await import('/cursos/6to/lengua/'+id+'/verbos-data.js');return {meta:m.VERBOS_META,blocks:m.BLOQUES_RESULTADO,practice:m.PRACTICA_VERBOS,families:m.FAMILIAS_PRUEBA_VERBOS};},d.id);
+  assert.equal(data.meta.actividadId,'6-lengua-'+d.id);assert.equal(data.meta.materia,'Lengua');
+  assert.deepEqual(data.blocks.map(b=>b.id),d.blocks);assert.equal(data.practice.length,d.count);assert.equal(data.families.length,d.count);
+  assert.ok(data.practice.every(q=>d.blocks.includes(q.bloqueId)));
+  await page.click('[data-pestana="practica"]');await page.click('#botonPista');
+  for(let i=0;i<data.practice.length;i++){await page.click('#practicaOpciones [data-opcion="'+data.practice[i].respuestaCorrecta+'"]');await page.click('#botonComprobar');if(i<d.count-1)await page.click('#botonSiguiente');}
+  assert.equal(await page.evaluate(()=>window.qaWrites||0),0);
+  await completarDocumento(page,d,true);
+  let db=await page.evaluate(()=>JSON.parse(localStorage.qaDB));let rows=Object.entries(db).filter(([p,v])=>p.includes('/sesionesAcademicas/')&&v.actividadId===data.meta.actividadId);
+  assert.equal(rows.length,1);assert.equal(rows[0][1].respuestas.length,d.count);assert.deepEqual(rows[0][1].resumen.porBloque.map(b=>b.bloqueId),d.blocks);
+  await page.goto(base+'/cursos/6to/lengua/'+d.id+'/');await page.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');await completarDocumento(page,d,true);
+  db=await page.evaluate(()=>JSON.parse(localStorage.qaDB));rows=Object.entries(db).filter(([p,v])=>p.includes('/sesionesAcademicas/')&&v.actividadId===data.meta.actividadId);
+  assert.equal(rows.length,2);const variants=rows[0][1].variantes.map(v=>v.varianteId);assert.ok(rows[1][1].variantes.every(v=>!variants.includes(v.varianteId)));docSessions.push(...rows);
+  await page.goto(base+'/mi-universo/mis-tareas/resultado-academico.html?sesionId='+rows[0][0].split('/').at(-1));await page.waitForSelector('#tituloActividad');assert.match(await page.locator('body').innerText(),new RegExp(d.title.replace('·','\\u00b7')));assert.equal(await page.evaluate(()=>window.qaWrites||0),0);
+  await page.evaluate(id=>{const db=JSON.parse(localStorage.qaDB);db['usuarios/alumno/tareas/mision-documento']={titulo:'Repasar documento',tipo:'repaso_academico',modulo:'libre',estado:'pendiente',visibleParaAlumno:true,cursoReferencia:'6.º',materia:'Lengua',tema:id,recursoAcademicoUrl:'../../cursos/6to/lengua/'+id+'/',criterioCumplimiento:{tipo:'cantidad',modulo:'libre',evidenciaTipo:'sesion_academica',cantidadObjetivo:1},progreso:{cantidadActual:0,cantidadObjetivo:1}};localStorage.qaDB=JSON.stringify(db);},d.id);
+  await page.goto(base+'/cursos/6to/lengua/'+d.id+'/?misionId=mision-documento');await page.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');await completarDocumento(page,d);
+  db=await page.evaluate(()=>JSON.parse(localStorage.qaDB));assert.equal(db['usuarios/alumno/tareas/mision-documento'].estado,'pendiente_validacion');assert.ok(Object.entries(db).some(([p,v])=>p.includes('/evidencias/')&&v.misionId==='mision-documento'&&v.sesionId));
+  assert.deepEqual(l.errors,[]);await l.c.close();
+  const pro=await entorno('consulta');await pro.p.goto(base+'/cursos/6to/lengua/'+d.id+'/?modo=aprendizaje');await pro.p.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Vista previa');assert.ok(await pro.p.locator('#botonModo').isDisabled());await completarDocumento(pro.p,d);assert.equal(await pro.p.evaluate(()=>window.qaWrites||0),0);assert.deepEqual(pro.errors,[]);await pro.c.close();
+}
+const fd=await entorno('gestion');await fd.p.goto(base+'/cursos/6to/lengua/');await fd.p.waitForSelector('[data-tema-id="el-verbo"]');await fd.p.evaluate(rows=>{localStorage.qaDB=JSON.stringify({...JSON.parse(localStorage.qaDB),...Object.fromEntries(rows)});},docSessions);
+await fd.p.goto(base+'/mi-universo/mis-tareas/');await fd.p.waitForSelector('[data-tab="refuerzos"]');await fd.p.click('[data-tab="refuerzos"]');
+await fd.p.waitForFunction(()=>document.querySelector('#grupoRefuerzoAcademico')?.textContent.includes('Indicativo y subjuntivo'));
+for(const d of documents)assert.ok((await fd.p.locator('#grupoRefuerzoAcademico').textContent()).includes(d.title));
+await fd.p.click('[data-tab="crear"]');await fd.p.selectOption('#tipo','repaso_academico');await fd.p.selectOption('#cursoReferencia','6');await fd.p.waitForFunction(()=>Array.from(document.querySelector('#materiaCatalogoAcademico').options).some(o=>o.text==='Lengua'));await fd.p.selectOption('#materiaCatalogoAcademico',{label:'Lengua'});
+await fd.p.waitForFunction(()=>Array.from(document.querySelector('#temaCatalogoAcademico').options).some(o=>o.text==='El verbo · Repaso de 5.º'));
+for(const d of documents)assert.ok((await fd.p.locator('#temaCatalogoAcademico').innerText()).includes(d.title));assert.ok(!(await fd.p.locator('#temaCatalogoAcademico').innerText()).includes('Verbos · Indicativo, subjuntivo e imperativo'));
+await fd.p.goto(base+'/mi-universo/consulta-educativa/');await fd.p.waitForSelector('#analisisResultado .analisis-seccion');for(const d of documents)assert.ok((await fd.p.locator('#analisisResultado').innerText()).includes(d.title));assert.deepEqual(fd.errors,[]);await fd.c.close();
+console.log('OK: tres documentos separados, 4/2/6 retos, contenido acotado, sesiones/variantes independientes, Misiones, histórico, profesional sin escrituras, catálogo, refuerzos, Análisis y responsive.');
+
 const learner=await entorno('alumno');const p=learner.p;
-await p.goto(base+'/cursos/6to/');await p.locator('a[href="./lengua/"]').click();await p.waitForSelector('[data-tema-id="verbos"]');assert.equal(await p.locator('.portal-tema').count(),2);
-await p.locator('a[href*="%C3%A1reas/lengua"]').waitFor({state:'visible'});await p.locator('[data-tema-id="verbos"]').click();await p.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');assert.match(p.url(),/volver=/);
+await p.goto(base+'/cursos/6to/');await p.locator('a[href="./lengua/"]').click();await p.waitForSelector('[data-tema-id="el-verbo"]');assert.equal(await p.locator('.portal-tema').count(),4);assert.equal(await p.locator('[data-tema-id="verbos"]').count(),0);
+await p.locator('a[href*="%C3%A1reas/lengua"]').waitFor({state:'visible'});await p.locator('[data-tema-id="el-verbo"]').click();await p.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');assert.match(p.url(),/volver=/);await p.goto(base+'/cursos/6to/lengua/verbos/');await p.waitForFunction(()=>document.querySelector('#tituloModo').textContent==='Sesión de aprendizaje');
 for(const width of [1280,768,390,320]){await p.setViewportSize({width,height:1000});assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'overflow '+width);}
 await p.setViewportSize({width:1280,height:1000});if(process.env.QA_IMAGES)await p.screenshot({path:process.env.QA_IMAGES+'-mapa.png',fullPage:true});
 await p.click('[data-pestana="material"]');assert.equal(await p.locator('[data-panel="material"] details').count(),29);assert.match(await p.locator('[data-panel="material"]').textContent(),/hubiéremos partido/);if(process.env.QA_IMAGES)await p.screenshot({path:process.env.QA_IMAGES+'-material.png',fullPage:true});
