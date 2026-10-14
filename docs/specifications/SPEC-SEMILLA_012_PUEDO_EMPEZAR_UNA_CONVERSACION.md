@@ -4,9 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SEMILLA_012_PUEDO_EMPEZAR_UNA_CONVERSACION.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2-rc |
 | **Estado** | PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE |
 | **Fecha** | 13/10/2026 |
+| **Última actualización** | 14/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Origen** | Necesidad educativa real compartida por Lidia, tutora de comunicación y lenguaje, a partir del texto `¿Cómo puedo buscar una conversación?` |
@@ -23,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.2-rc | 14/10/2026 | Product Owner + AI Collaborator | Ajuste autorizado tras uso real de Anaís/Gloria: resumen de elecciones y frase final separados. Motor deriva el resumen del contrato existente; práctica oral y persistencia conservadas. Candidata pendiente de integración. |
 | 1.1 | 13/10/2026 | Product Owner + AI Collaborator | PR #164 aprobada e integrada en `2e12678e…`; Pages #769 `success`. Imagen real y contenido data-driven publicados; Motor conservado. Validación familiar pendiente. |
 | 1.1-rc | 13/10/2026 | Product Owner + AI Collaborator | Contenido candidato data-driven en catálogo 1.10 y guía familiar/web sincronizada; Motor sin cambios. Nombre/ruta de imagen fijados por Product Owner; imagen externa integrada y verificada en contexto; pendiente de aprobación/integración. Conserva diseño aprobado y validación real pendiente. |
 | 1.0 | 13/10/2026 | Product Owner + AI Collaborator | Diseño funcional aprobado para desarrollo e incorporado a main; todavía sin implementación. |
@@ -194,6 +196,23 @@ No convertir esta elección en una obligación de usar esa frase posteriormente.
 
 ---
 
+### Composición · Juntamos tus ideas · ajuste de validación familiar
+
+La revisión real de Anaís y Gloria mostró que la pantalla de composición enseñaba solo la última respuesta. No se confirmó pérdida de datos: el Motor seguía la plantilla `{fraseConversacion}` y las respuestas de los ocho pasos ya se conservaban por separado.
+
+Resultado aprobado por el Product Owner el 14/10/2026:
+
+- **Juntamos tus ideas / Estas son tus ideas:** resumen compacto de los siete pasos previos, en el orden de la experiencia y con el título de cada paso. Incluye elecciones únicas/múltiples y respuestas con palabras propias cuando existen; no interpreta ni valora respuestas.
+- **Mi frase para probar:** bloque independiente debajo del resumen, con la frase de `fraseConversacion`. No vuelve a incluirla como fila del resumen.
+- Escuchar la frase y la práctica oral/grabación opcional trabajan únicamente con esa frase final. Se conserva la prioridad de las palabras propias sobre la opción elegida al construir la frase.
+- Volver y cambiar una respuesta reconstruye el resumen desde las respuestas actuales; no crea copias guardadas ni altera sesiones anteriores.
+
+El resumen es presentación derivada. No se persiste otro resumen ni se modifica `respuestaConstruida`, que sigue siendo la frase de práctica. Se conservan `respuestas`, audio, análisis, histórico y evidencia de Misión con sus contratos actuales.
+
+La carencia real está en la presentación del compositor, no en el catálogo. El Motor reconoce una `plantillaRespuesta` que referencia únicamente un paso y, si existen varios pasos, resume los restantes y obtiene el título de la frase del paso referenciado. Reutiliza el lector de respuestas del histórico. Sin ID exclusivo de 012, sin propiedades nuevas del catálogo, sin cambios en las once Semillas anteriores. Las plantillas compuestas conservan su presentación anterior.
+
+---
+
 ## 🌈 4. Cierre aprobado
 
 **Título:** `Ya tienes varias formas de empezar`
@@ -350,6 +369,10 @@ Estado de Desarrollo:
 
 > **PUBLICADA PARA VALIDACIÓN FAMILIAR · NO DECLARADA ESTABLE**
 
-La implementación mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). Usa solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. No modifica JavaScript, CSS, identidad, historial ni contratos de Misiones.
+La implementación mapea los cuatro pasos funcionales a ocho pantallas del Motor: modelos (1), cinco situaciones (2–6), ideas múltiples (7) y frase para probar (8). La incorporación original usó solo propiedades existentes; `otraRespuesta` proporciona las palabras propias sin duplicar una opción vacía. La plantilla `{fraseConversacion}` mantiene una frase breve para la práctica oral opcional del Motor. La incorporación original no requirió cambios de JavaScript/CSS. El ajuste familiar 1.2-rc modifica únicamente la presentación compartida del compositor y su estilo de resumen; conserva identidad, histórico, oralidad y contratos de Misiones.
 
 El diseño funcional continúa aprobado. PR #164 integrada en `2e12678ed44a89402f603516677e15f53929a36d` y publicada mediante Pages #769 (`success`). Queda la validación familiar de comprensión, voz y uso real; no se declara estabilidad.
+
+**Ajuste de validación familiar · 14/10/2026:** autorizado por Juan, candidato en `fix/semilla-012-resumen` desde `main` #177 (`c705ef73…`). Revisión/integración de PR y nueva prueba familiar pendientes. No se declara la Semilla estable.
+
+**Validación de la corrección candidata:** `tests/semillas-composicion-browser.cjs` recorre los ocho pasos con Motor, ContextoUsuario y API reales y SDK/identidad/voz simulados. Comprueba siete filas de resumen, opciones múltiples y palabras propias, escape de HTML, frase final separada y sin repetirse en el resumen, lectura y objetivo de grabación solo de la frase, cambio de respuesta anterior al volver, guardado sin grabación y con grabación simulada, una sesión nueva por guardado sin campos de resumen adicionales, sesión anterior intacta y consulta histórica sin alterar datos. Recorre las once Semillas previas y comprueba su compositor original; aplica la misma presentación a otra Semilla y otro ID de paso mediante la plantilla vigente, sin condición exclusiva de 012. Anchuras 1280/768/390/320 sin desbordamiento; revisión visual escritorio/móvil. Construcción de frase, lector de respuestas del histórico, grabador y persistencia sin cambios; catálogo JSON intacto. No certifica audio físico ni cuentas/Rules de producción.

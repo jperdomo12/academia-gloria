@@ -484,13 +484,37 @@ function builtResponse() {
     .trim();
 }
 
+// Una plantilla que referencia solo un paso separa la frase de transferencia
+// del resto de elecciones. Se deriva del contrato vigente, sin IDs de Semilla.
+function pasoFraseFinal() {
+  const referencia = String(semilla?.plantillaRespuesta || "").trim().match(/^\{([^{}]+)\}$/);
+  if (!referencia || semilla?.pasos?.length < 2) return null;
+  return semilla.pasos.find(step => step.id === referencia[1]) || null;
+}
+
+function resumenEleccionesHtml(pasoFrase) {
+  const filas = semilla.pasos.filter(step => step.id !== pasoFrase.id).map(step => {
+    const { seleccion, propia } = textosRespuestaPaso(step, respuestas);
+    const contenido = [
+      seleccion ? `<p>${escapeHtml(seleccion)}</p>` : "",
+      propia ? `<p><strong>Con mis palabras:</strong> ${escapeHtml(propia)}</p>` : ""
+    ].filter(Boolean).join("");
+    if (!contenido) return "";
+    return `<li><h3>${escapeHtml(step.titulo || "Mi elección")}</h3>${contenido}</li>`;
+  }).filter(Boolean).join("");
+  return filas ? `<ol class="composer-summary" aria-label="Mis respuestas y elecciones">${filas}</ol>` : "";
+}
+
 function renderComposer() {
   const response = builtResponse();
+  const pasoFrase = pasoFraseFinal();
   respuestas.respuestaConstruida = response;
   $("experienceContent").innerHTML = `
     <section>
       <div class="eyebrow">Juntamos tus ideas</div>
-      <h2>Esta es tu frase</h2>
+      <h2>${pasoFrase ? "Estas son tus ideas" : "Esta es tu frase"}</h2>
+      ${pasoFrase ? resumenEleccionesHtml(pasoFrase) : ""}
+      ${pasoFrase ? `<h3 class="composer-phrase-title">${escapeHtml(pasoFrase.titulo || "Mi frase para probar")}</h3>` : ""}
       <div class="composer" id="composedResponse">${escapeHtml(response)}</div>
       <p class="question__help">Puedes escucharla, volver atrás o practicarla con tus propias palabras.</p>
       <div class="actions">

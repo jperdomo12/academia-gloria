@@ -232,3 +232,9 @@ audio{width:100%;margin-top:12px}
     padding-bottom:18px;
   }
 }
+/* Resumen previo a una frase de transferencia: respuestas derivadas, no otro registro. */
+.composer-summary{margin:16px 0 24px;padding-left:24px;display:grid;gap:10px}
+.composer-summary li{padding:10px 14px;border:1px solid var(--border,#e5e7eb);border-radius:14px;background:#f8fafc;overflow-wrap:anywhere}
+.composer-summary h3{margin:0 0 4px;font-size:16px;line-height:1.4}
+.composer-summary p{margin:4px 0;font-size:15px;line-height:1.5}
+.composer-phrase-title{margin:24px 0 10px}

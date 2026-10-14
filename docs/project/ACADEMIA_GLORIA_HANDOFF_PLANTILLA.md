@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.19 |
+| **Versión** | 3.20 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.20 | 14/10/2026 | Product Owner + AI Collaborator | Uso real de Semilla 012: ajuste candidato para resumir elecciones y separar la frase oral. Reutiliza contrato y lector del histórico; mantiene validación familiar y no declara estabilidad. |
 | 3.19 | 14/10/2026 | Product Owner + AI Collaborator | Cierra separación de Lengua por documento: #176 aprobada e integrada, SPEC 1.1 y compatibilidad anterior conservada. Retira rama/PR de desarrollo activa; prueba familiar pendiente. |
 | 3.18 | 14/10/2026 | Product Owner + AI Collaborator | Candidata para observación de Anaís: separa Lengua/Verbos en tres Temas por documento, según nombres y alcance confirmados por Juan; mantiene compatibilidad de Misiones/históricos anteriores. Revisión e integración pendientes. |
 | 3.17 | 14/10/2026 | Product Owner + AI Collaborator | Cierra English Much/Many mediante #174 aprobada e integrada; activa English Zones con referencia al mismo Tema, sincroniza SPEC y CA-031 y conserva pruebas reales pendientes. |
@@ -303,6 +304,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**Semilla 012 · ajuste de composición:** uso real de Anaís/Gloria confirma necesidad de resumir las elecciones además de la frase final. Juan autoriza corrección; candidata en `fix/semilla-012-resumen`, base #177 (`c705ef73…`), propietario SPEC 1.2-rc. Resumen derivado del contrato vigente y lector del histórico; grabación/guardado siguen usando solo la frase final. PR/integración y nueva prueba familiar pendientes; no declarar estable.
+
 **Lengua · separación por documento:** PR #176 aprobada por Juan e integrada en `4ee57aa79a1753c31cc31eb3e9a551360b1c8563`; propietario `SPEC-LENGUA_6TO_VERBOS.md` 1.1. Tres Temas: El verbo · Repaso de 5.º; Indicativo y subjuntivo; Subjuntivo e imperativo. Motor y banco reutilizados; ruta, Misiones y resultados anteriores conservados. Sin desarrollo pendiente; prueba de uso real con Anaís/Gloria pendiente.
 
 **English · Much / Many – A lot of / Lots of:** PR #174 aprobada e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`. Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md` 1.0. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Sin desarrollo pendiente de #174; prueba de uso real con Gloria pendiente.
@@ -363,8 +366,8 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `4ee57aa79a1753c31cc31eb3e9a551360b1c8563` · #176 integrado; conserva #174/#172/#171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin rama de desarrollo de producto activa para #176 |
-| **PR On going** | Ninguna de producto para este frente; #176 integrada |
+| **Rama On going** | `fix/semilla-012-resumen` · ajuste de composición tras uso real |
+| **PR On going** | Candidata de composición de Semilla 012; verificar PR al retomar |
 | **Trabajo inmediato** | Probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #786 · `success` · SHA `4ee57aa7…` |
 | **Verificación posterior al cierre** | #176 aprobada e integrada; Pages #786 correcto. Portal, tres Temas, definición/catálogo y ruta integrada anterior HTTP 200 e idénticos al producto en main. English/Grammar zone y frentes anteriores conservados. Pruebas reales pendientes. |
@@ -410,10 +413,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.19 |
+| **Versión** | 3.20 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Ninguna de producto para este frente; #176 integrada |
+| **PR On going** | Candidata de composición de Semilla 012; verificar PR al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
@@ -451,3 +454,7 @@ Publicación de English/Much-Many: Pages #779 `success` sobre `e2943d19…`; Tem
 Observación de Anaís: el material agrupado resulta demasiado amplio para trabajar por documento. Juan confirma tres Temas con los nombres y alcances documentados en SPEC 1.1; PR #176 aprobada e integrada. Implementación: contenido/práctica/prueba acotados; IDs independientes para resultados nuevos; legado integrado sin migración ni eliminación. Test de navegador completado para los tres Temas, catálogos, Misiones, sesiones, históricos, permisos, refuerzos y Análisis; regresión de ruta anterior y Lengüizonas superada. Pruebas con identidades/SDK simulados; no certifican producción. El repaso de Lengüizonas y English/Grammar zone se conservan. Sin desarrollo pendiente de #176. Continúan la prueba familiar de los tres Temas y las pruebas reales anteriores.
 
 Publicación de separación de Lengua: Pages #786 `success` sobre `4ee57aa7…`; portal, tres Temas, catálogo/definición y ruta anterior HTTP 200 e idénticos al producto en main. Cierre de desarrollo completado; uso familiar pendiente.
+
+## Continuidad · Semilla 012 · observación de uso real · 14/10/2026
+
+Anaís/Gloria detectan que el compositor enseña solo la última respuesta; corresponde a la plantilla original, no a una pérdida confirmada de datos. Juan autoriza resumen de elecciones y frase final separados. Candidata en `fix/semilla-012-resumen`: reutiliza contrato actual y lector del histórico; no añade campos persistidos ni una condición por ID. Test de los ocho pasos, palabras propias/opciones múltiples, cambios al volver, audio solo frase, guardado con/sin grabación simulada y conservación de sesión anterior superado; once Semillas anteriores conservan presentación. SPEC 1.2-rc y estándar de Semillas 1.2-rc documentan ajuste. PR/integración y nueva revisión familiar pendientes. No se declara estable.
