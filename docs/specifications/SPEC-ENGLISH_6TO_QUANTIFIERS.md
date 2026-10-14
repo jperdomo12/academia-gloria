@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-ENGLISH_6TO_QUANTIFIERS.md` |
-| **Versión** | 1.0-rc |
-| **Estado** | Candidata en rama · pendiente de revisión e integración |
+| **Versión** | 1.0 |
+| **Estado** | Aprobada e integrada en main · pendiente de prueba de uso real |
 | **Fecha** | 14/10/2026 |
 | **Propietario** | Contenido curricular de English · 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -23,6 +23,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 14/10/2026 | Product Owner + AI Collaborator | Cierra la incorporación aprobada por Juan mediante PR #174; conserva validación técnica y prueba real pendiente. |
 | 1.0-rc | 14/10/2026 | Product Owner + AI Collaborator | Integra dos fuentes del colegio en candidata de un único Tema de English; origen English Zones/Grammar zone visible, motor y persistencia reutilizados. |
 
 ## 🧭 Resumen de contenido
@@ -82,8 +83,8 @@ ContextoUsuario, lector, tiempo activo, celebración, `sesion-academica-v1`, evi
 
 Base `main`: `61a44ede841b2ce7f6789e78ee80ee682a353e1e` (#173). Rama `feat/english-quantifiers`.
 
-Validación realizada en `tests/quantifiers-browser.cjs`: cobertura de ambos PDF y banco revisado, acceso desde English y English Zones al mismo ID/destino, retorno a origen, lectura `en-GB`, práctica sin escritura, aprendizaje de ocho respuestas/cuatro bloques, variantes alternativas, vista previa profesional/familiar sin escritura, histórico, Misión en revisión con evidencia, catálogo asistido y Análisis/refuerzos. Banco auditado: veintidós prácticas, ocho familias/dieciséis variantes e IDs/opciones válidos; se comprueba la negativa válida del ejercicio 3. Anchuras 1280/768/390/320 y revisión visual escritorio/móvil sin desbordamiento. Regresión de Verbos mediante su test de navegador. Pruebas con SDK e identidades simulados; cuentas/Rules/audio físico y utilidad con Gloria requieren prueba real. No se declara publicado ni estable antes de integración.
+Validación realizada en `tests/quantifiers-browser.cjs`: cobertura de ambos PDF y banco revisado, acceso desde English y English Zones al mismo ID/destino, retorno a origen, lectura `en-GB`, práctica sin escritura, aprendizaje de ocho respuestas/cuatro bloques, variantes alternativas, vista previa profesional/familiar sin escritura, histórico, Misión en revisión con evidencia, catálogo asistido y Análisis/refuerzos. Banco auditado: veintidós prácticas, ocho familias/dieciséis variantes e IDs/opciones válidos; se comprueba la negativa válida del ejercicio 3. Anchuras 1280/768/390/320 y revisión visual escritorio/móvil sin desbordamiento. Regresión de Verbos mediante su test de navegador. Pruebas con SDK e identidades simulados; cuentas/Rules/audio físico y utilidad con Gloria requieren prueba real. PR #174 aprobada por Juan e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`. Pages #779 `success`; Tema y portal English Zones HTTP 200, catálogos publicados idénticos a main. La integración no declara estabilidad ni sustituye la prueba de uso real.
 
 ## DECISIÓN
 
-El Product Owner declara **LISTO PARA DESARROLLO** e instruye **Incorporar a la Academia** el 14/10/2026. Aprueba que explicación y actividad de Zona sobre el mismo contenido enriquecen un único Tema. La incorporación sigue el cierre curricular vigente, con candidata pendiente de aprobación/integración; no se amplían permisos ni alcance académico.
+El Product Owner declara **LISTO PARA DESARROLLO** e instruye **Incorporar a la Academia** el 14/10/2026. Aprueba que explicación y actividad de Zona sobre el mismo contenido enriquecen un único Tema. La incorporación sigue el cierre curricular vigente, con PR #174 aprobada e integrada; no se amplían permisos ni alcance académico.

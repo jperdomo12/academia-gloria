@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.16 |
+| **Versión** | 3.17 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.17 | 14/10/2026 | Product Owner + AI Collaborator | Cierra English Much/Many mediante #174 aprobada e integrada; activa English Zones con referencia al mismo Tema, sincroniza SPEC y CA-031 y conserva pruebas reales pendientes. |
 | 3.16 | 14/10/2026 | Product Owner + AI Collaborator | Candidata de English Much/Many: integra apuntes y Grammar zone como único Tema y activa acceso de English Zones al destino propietario. Regla de enriquecimiento documentada; revisión/integración pendientes. |
 | 3.15 | 14/10/2026 | Product Owner + AI Collaborator | Lengua 6.º y Verbos incorporados mediante #172 aprobada; actualiza baseline, cierre y prueba familiar pendiente. Conserva Dictado/Semilla 012 y consulta profesional pendientes de uso real. |
 | 3.14 | 14/10/2026 | Product Owner + AI Collaborator | Incorporación curricular de Lengua · Verbos candidata desde #171: activa portal de Lengua en rama y reutiliza motor de Lengüizonas con datos propios. Prueba/aprobación familiar e integración pendientes; conserva pendientes anteriores. |
@@ -220,7 +221,7 @@ Ruta de producto: `6.º → Zonas del cole`.
 Estado:
 - **Matezonas** · activa.
 - **Lengüizonas** · activa.
-- **English Zones** · preparada, sin Tema incorporado todavía.
+- **English Zones** · activa con Grammar zone → Much / Many – A lot of / Lots of, referencia al mismo Tema de English (#174).
 
 Criterios vigentes:
 - la Zona identifica el **origen escolar**;
@@ -300,7 +301,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**English · Much / Many – A lot of / Lots of:** candidata en `feat/english-quantifiers`, desde `main` #173 (`61a44ede…`). Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md`. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Revisión/aprobación e integración pendientes; no afirmar publicado.
+**English · Much / Many – A lot of / Lots of:** PR #174 aprobada e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`. Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md` 1.0. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Sin desarrollo pendiente de #174; prueba de uso real con Gloria pendiente.
 
 **Lengua 6.º · Verbos:** PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.0. Portal de Lengua activo con Verbos (continuidad de 5.º e indicativo/subjuntivo/imperativo de 6.º) y acceso al repaso anterior de Lengüizonas. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
 
@@ -356,13 +357,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `2bfea89ceb9892ffa4da8aae1f503d46388d395e` · #172 integrado; conserva #171/#170 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `e2943d19dfa5739270570ab0e1e616308f777332` · #174 integrado; conserva #172/#171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `feat/english-quantifiers` · candidata curricular de English |
-| **PR On going** | Candidata Much/Many en preparación; verificar GitHub al retomar |
-| **Trabajo inmediato** | Probar Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #777 · `success` · SHA `2bfea89c…` |
-| **Verificación posterior al cierre** | #172 aprobada e integrada; Pages #777 correcto y rutas de Lengua/Verbos/motor HTTP 200. Consulta educativa y acceso #170 conservados. Pruebas reales pendientes. |
+| **Rama On going** | Sin rama de desarrollo de producto activa para #174 |
+| **PR On going** | Ninguna de producto para esta incorporación; #174 integrada |
+| **Trabajo inmediato** | Probar English → Much/Many y Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **GitHub Pages del baseline funcional** | #779 · `success` · SHA `e2943d19…` |
+| **Verificación posterior al cierre** | #174 aprobada e integrada; Pages #779 correcto, Tema HTTP 200 y catálogos de English/English Zones idénticos a main. Consulta educativa, Lengua y frentes anteriores conservados. Pruebas reales pendientes. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -371,7 +372,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Guía rápida / Academia de un vistazo** | ✅ Publicadas y validadas |
 | **Creciendo por Dentro** | ✅ 12 Semillas publicadas, incluida 012; prueba familiar de la nueva Semilla pendiente |
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
-| **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones preparada |
+| **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones activa con Grammar zone |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
 | **Monitor Gaudem** | ✅ v1.6 · doble línea base · 18 espacios · fechas de líneas base |
 | **Rincón del Dictado V1** | Mi Rincón de Dictado V1 funcional publicada para validación real; ajustes #161, SPEC 1.2 |
@@ -387,7 +388,7 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. probar Lengua → Verbos según SPEC 1.0; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. probar English → Much/Many desde English y English Zones según SPEC 1.0; probar Lengua → Verbos según SPEC 1.0; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -398,22 +399,22 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **Lengua 6.º:** #172 aprobada e integrada; prueba de Verbos con Gloria pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #172 aprobada e integrada; prueba de Verbos con Gloria pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.16 |
+| **Versión** | 3.17 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Candidata Much/Many en preparación; verificar GitHub al retomar |
+| **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Ninguna de producto para esta incorporación; #174 integrada |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar Lengua → Verbos con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Probar English → Much/Many y Lengua → Verbos con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
@@ -437,4 +438,6 @@ Publicación de Lengua/Verbos: Pages #777 `success` sobre `2bfea89c…`; `/curso
 
 ## Continuidad curricular · English · 14/10/2026
 
-Much/Many conserva un único Tema y actividad de English, con material explicativo y práctica de Grammar zone. English Zones abre el mismo destino mediante referencia al catálogo de English; las sesiones no crean una materia o fuente paralela. Regla de enriquecer un Tema existente documentada en estándar curricular §6.4.1/CA-031 por instrucción de Juan. Candidata en rama pendiente de integración; conservar los pendientes de prueba real de Lengua/Verbos, Dictado, Semilla 012 y consulta profesional.
+Much/Many conserva un único Tema y actividad de English, con material explicativo y práctica de Grammar zone. English Zones abre el mismo destino mediante referencia al catálogo de English; las sesiones no crean una materia o fuente paralela. Regla de enriquecer un Tema existente documentada en estándar curricular §6.4.1/CA-031 por instrucción de Juan. PR #174 aprobada e integrada; sin desarrollo pendiente de esta incorporación. Prueba de uso real con Gloria pendiente; conservar los pendientes de prueba real de Lengua/Verbos, Dictado, Semilla 012 y consulta profesional.
+
+Publicación de English/Much-Many: Pages #779 `success` sobre `e2943d19…`; Tema y portal English Zones HTTP 200, catálogos publicados idénticos a main. No sustituye la prueba de uso real.
