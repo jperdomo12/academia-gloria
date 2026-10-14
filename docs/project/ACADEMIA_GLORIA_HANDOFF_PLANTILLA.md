@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.18 |
+| **Versión** | 3.19 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.19 | 14/10/2026 | Product Owner + AI Collaborator | Cierra separación de Lengua por documento: #176 aprobada e integrada, SPEC 1.1 y compatibilidad anterior conservada. Retira rama/PR de desarrollo activa; prueba familiar pendiente. |
 | 3.18 | 14/10/2026 | Product Owner + AI Collaborator | Candidata para observación de Anaís: separa Lengua/Verbos en tres Temas por documento, según nombres y alcance confirmados por Juan; mantiene compatibilidad de Misiones/históricos anteriores. Revisión e integración pendientes. |
 | 3.17 | 14/10/2026 | Product Owner + AI Collaborator | Cierra English Much/Many mediante #174 aprobada e integrada; activa English Zones con referencia al mismo Tema, sincroniza SPEC y CA-031 y conserva pruebas reales pendientes. |
 | 3.16 | 14/10/2026 | Product Owner + AI Collaborator | Candidata de English Much/Many: integra apuntes y Grammar zone como único Tema y activa acceso de English Zones al destino propietario. Regla de enriquecimiento documentada; revisión/integración pendientes. |
@@ -302,11 +303,11 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Lengua · separación por documento:** decisión de Juan tras revisión de Anaís. Candidata en `fix/lengua-temas-por-documento`, base #175 (`6b6a29ab…`), propietario `SPEC-LENGUA_6TO_VERBOS.md` 1.1-rc. Tres Temas: El verbo · Repaso de 5.º; Indicativo y subjuntivo; Subjuntivo e imperativo. Motor y banco reutilizados; ruta y registros anteriores conservados. Revisión/aprobación de PR e integración pendientes; no declarar publicado.
+**Lengua · separación por documento:** PR #176 aprobada por Juan e integrada en `4ee57aa79a1753c31cc31eb3e9a551360b1c8563`; propietario `SPEC-LENGUA_6TO_VERBOS.md` 1.1. Tres Temas: El verbo · Repaso de 5.º; Indicativo y subjuntivo; Subjuntivo e imperativo. Motor y banco reutilizados; ruta, Misiones y resultados anteriores conservados. Sin desarrollo pendiente; prueba de uso real con Anaís/Gloria pendiente.
 
 **English · Much / Many – A lot of / Lots of:** PR #174 aprobada e integrada en `e2943d19dfa5739270570ab0e1e616308f777332`. Propietario: `SPEC-ENGLISH_6TO_QUANTIFIERS.md` 1.0. Apuntes y English Zones · Grammar zone integrados en una sola actividad de English; reutiliza motor, sesiones y refuerzos. Sin desarrollo pendiente de #174; prueba de uso real con Gloria pendiente.
 
-**Lengua 6.º · Verbos:** PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.0. Portal de Lengua activo con Verbos (continuidad de 5.º e indicativo/subjuntivo/imperativo de 6.º) y acceso al repaso anterior de Lengüizonas. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
+**Lengua 6.º · Verbos:** incorporación original #172 y separación por documento #176 aprobadas e integradas. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.1. Portal de Lengua con tres Temas independientes y el repaso previo de Lengüizonas. Ruta integrada anterior conservada por compatibilidad. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
 
 **Consulta educativa por alumno:** PR #168 aprobada e integrada en `main` `5518d4d4…`, desde la SPEC #167. Prueba real pendiente; ver continuidad técnica al final.
 
@@ -360,13 +361,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `e2943d19dfa5739270570ab0e1e616308f777332` · #174 integrado; conserva #172/#171/#170 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `4ee57aa79a1753c31cc31eb3e9a551360b1c8563` · #176 integrado; conserva #174/#172/#171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `fix/lengua-temas-por-documento` · candidata de separación de Lengua |
-| **PR On going** | Separación de Lengua candidata; verificar PR al retomar |
-| **Trabajo inmediato** | Probar English → Much/Many y Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #779 · `success` · SHA `e2943d19…` |
-| **Verificación posterior al cierre** | #174 aprobada e integrada; Pages #779 correcto, Tema HTTP 200 y catálogos de English/English Zones idénticos a main. Consulta educativa, Lengua y frentes anteriores conservados. Pruebas reales pendientes. |
+| **Rama On going** | Sin rama de desarrollo de producto activa para #176 |
+| **PR On going** | Ninguna de producto para este frente; #176 integrada |
+| **Trabajo inmediato** | Probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **GitHub Pages del baseline funcional** | #786 · `success` · SHA `4ee57aa7…` |
+| **Verificación posterior al cierre** | #176 aprobada e integrada; Pages #786 correcto. Portal, tres Temas, definición/catálogo y ruta integrada anterior HTTP 200 e idénticos al producto en main. English/Grammar zone y frentes anteriores conservados. Pruebas reales pendientes. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -391,7 +392,7 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. probar English → Much/Many desde English y English Zones según SPEC 1.0; probar Lengua → Verbos según SPEC 1.0; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. probar English → Much/Many desde English y English Zones según SPEC 1.0; probar los tres Temas de Lengua según SPEC 1.1; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
@@ -402,22 +403,22 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-> **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #172 aprobada e integrada; prueba de Verbos con Gloria pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #176 aprobada e integrada; tres Temas por documento con prueba de uso real pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.18 |
+| **Versión** | 3.19 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Separación de Lengua candidata; verificar PR al retomar |
+| **Trabajo On going** | English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Ninguna de producto para este frente; #176 integrada |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar English → Much/Many y Lengua → Verbos con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
@@ -447,4 +448,6 @@ Publicación de English/Much-Many: Pages #779 `success` sobre `e2943d19…`; Tem
 
 ## Continuidad curricular · Separación de Lengua por documento · 14/10/2026
 
-Observación de Anaís: el material agrupado resulta demasiado amplio para trabajar por documento. Juan confirma tres Temas con los nombres y alcances documentados en SPEC 1.1-rc. Implementación candidata: contenido/práctica/prueba acotados; IDs independientes para resultados nuevos; legado integrado sin migración ni eliminación. Test de navegador completado para los tres Temas, catálogos, Misiones, sesiones, históricos, permisos, refuerzos y Análisis; regresión de ruta anterior y Lengüizonas superada. Pruebas con identidades/SDK simulados; no certifican producción. El repaso de Lengüizonas y English/Grammar zone se conservan. Pendiente integración de PR y pruebas familiares anteriores.
+Observación de Anaís: el material agrupado resulta demasiado amplio para trabajar por documento. Juan confirma tres Temas con los nombres y alcances documentados en SPEC 1.1; PR #176 aprobada e integrada. Implementación: contenido/práctica/prueba acotados; IDs independientes para resultados nuevos; legado integrado sin migración ni eliminación. Test de navegador completado para los tres Temas, catálogos, Misiones, sesiones, históricos, permisos, refuerzos y Análisis; regresión de ruta anterior y Lengüizonas superada. Pruebas con identidades/SDK simulados; no certifican producción. El repaso de Lengüizonas y English/Grammar zone se conservan. Sin desarrollo pendiente de #176. Continúan la prueba familiar de los tres Temas y las pruebas reales anteriores.
+
+Publicación de separación de Lengua: Pages #786 `success` sobre `4ee57aa7…`; portal, tres Temas, catálogo/definición y ruta anterior HTTP 200 e idénticos al producto en main. Cierre de desarrollo completado; uso familiar pendiente.
