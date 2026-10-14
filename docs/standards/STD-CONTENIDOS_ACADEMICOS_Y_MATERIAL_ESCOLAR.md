@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.7 |
+| **Versión** | 1.8 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 23/09/2026 |
+| **Última actualización** | 14/10/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8 | 14/10/2026 | Product Owner + AI Collaborator | Sincroniza Lengua 6.º activa y Verbos publicados mediante #172; incorpora Resumen de contenido. Conserva reglas curriculares, pruebas reales y aprobación familiar sin nuevas normas. |
 | 1.7 | 23/09/2026 | Product Owner + AI Collaborator | Aclara que `Zonas del cole` y sus accesos internos forman parte del contenido navegable de Academia y no deben heredar la restricción visual de los bloques de recursos oficiales externos de Gaudem. Los enlaces oficiales externos pueden conservar su propia regla de visibilidad; el acceso interno a Zonas permanece disponible para navegar y revisar el contenido incorporado. |
 | 1.6 | 23/09/2026 | Product Owner + AI Collaborator | Aclara la convivencia entre Zonas del cole y materias académicas en Gestión de Misiones: una Zona activa con Temas propios puede mostrarse como opción visible del campo `Materia` para conservar el origen escolar del trabajo, sin convertirse por ello en una nueva materia curricular. Las sesiones y evidencias mantienen la materia académica propietaria del Tema. |
 | 1.5 | 17/09/2026 | Product Owner + AI Collaborator | Formaliza que, al incorporar el **primer Tema real** de una materia de 6.º que todavía figure como `Preparando` en `/cursos/6to/`, la misma incorporación debe activar la materia, crear o completar su portal y enlazar el Tema sin pedir una intervención adicional al Product Owner. Distingue esta activación por contenido real de la mera existencia de enlaces externos. Registra Science y English como aplicaciones reales del patrón mediante PR #123 y PR #125. |
@@ -41,6 +42,38 @@
 | 1.1 | 29/08/2026 | Product Owner + AI Collaborator | Sincroniza el estándar con la implementación validada de Puente y Fracciones: `sesion-academica-v1`, persistencia de pruebas, evidencia de Misión `sesion_academica`, visor histórico de solo lectura, modo Vista previa sin escrituras y compatibilidad de Misiones/temas heredados de 5.º sin migración masiva. Mantiene como pendiente la generación de propuestas de refuerzo desde resultados académicos. |
 | 1.0 | 22/08/2026 | Product Owner + AI Collaborator | Aprobación de la Base Académica de 6.º. Consolida tiempo cognitivo, exigencia sin presión emocional alta, reto primero con apoyo progresivo, reto productivo, foco en el paso actual, comprensión lingüística de problemas, separación entre métricas internas y visibles, pausa estratégica y valoración del proceso. No declara implementación técnica. |
 | 1.0-rc1 | 21/08/2026 | Product Owner + AI Collaborator | Primera consolidación de las pautas para aprendizaje académico estructurado: material escolar como fuente prioritaria, diseño TEL-friendly, estructura modular, selección de recursos, práctica formativa, evidencias, retroalimentación y proceso de incorporación ágil. Primera aplicación prevista: 6.º de Primaria. |
+
+---
+
+## 🧭 Resumen de contenido
+
+| Punto | Contenido |
+|---|---|
+| 1. Propósito | Define cómo transformar material real en aprendizaje y evidencia útil. |
+| 2. Alcance | Delimita contenidos, recursos y capacidades fuera del estándar. |
+| 3. Primera aplicación: 6.º de Primaria | Sitúa 6.º como primera aplicación estructurada con referencias de 5.º. |
+| 4. Principio central: estándar no significa idéntico | Distingue principios comunes de una plantilla visual idéntica. |
+| 5. Material escolar como fuente prioritaria | Fija prioridad escolar y separación de procedencia y apoyos. |
+| 6. Contrato de incorporación de material escolar | Describe análisis, activación de materia y validación de incorporación. |
+| 7. Núcleo común de un Tema Académico | Define las piezas comunes que debe ofrecer cada Tema. |
+| 8. Diseño para comprensión y apoyo TEL | Fija lenguaje, carga cognitiva, autonomía y apoyo gradual. |
+| 9. Selección inteligente de recursos | Elige recursos por su utilidad para comprender y practicar. |
+| 10. Práctica progresiva | Define práctica progresiva y reto antes de ayuda. |
+| 11. Test y comprobación formativa | Describe comprobación formativa, variantes y feedback. |
+| 12. Evidencia académica | Fija sesión académica y datos reutilizables de aprendizaje. |
+| 13. Retroalimentación | Separa resultados observables de interpretaciones educativas. |
+| 14. Refuerzo | Conecta señales con propuestas revisadas por la familia. |
+| 15. Motivación | Reconoce el proceso con lenguaje respetuoso y verificable. |
+| 16. Estructura lógica del contenido | Organiza concepto, contenido, experiencia y registro. |
+| 17. Integración con Misiones | Distingue acceso libre de ejecución desde Mi Camino. |
+| 18. Experiencia familiar y Trabajo realizado | Define consulta familiar e histórico de solo lectura. |
+| 19. Calidad visual | Fija jerarquía, claridad y métricas visibles adecuadas. |
+| 20. Criterios de conformidad de un Tema Académico | Enumera verificaciones de contenido, experiencia y evidencia. |
+| 21. Modo de Incorporación Curricular de una sola instrucción | Define incorporación con una instrucción y cierre tras aprobación. |
+| 22. Evolución y compatibilidad | Conserva compatibilidad y crecimiento progresivo por material real. |
+| 23. Decisiones adoptadas | Registra las decisiones aprobadas del dominio. |
+| 24. Estado de implementación y trabajo pendiente | Distingue implementación verificada de evolución y pruebas pendientes. |
+| DECISIÓN | Consolida vigencia y contrato de incorporación curricular. |
 
 ---
 
@@ -1783,11 +1816,15 @@ A 17/09/2026 están construidos y probados:
 21. **English** activada en el portal general de 6.º al incorporar su primer Tema real, `Present Simple vs Present Continuous` · PR #125.
 22. Patrón validado de activación automática de una materia al llegar su primer Tema real, manteniendo sin activar las materias que solo disponen de un placeholder o enlaces externos.
 
+### Incorporación de Lengua · 14/10/2026
+
+PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`: portal de Lengua activado con Verbos · Indicativo, subjuntivo e imperativo. Fuente propietaria: `docs/specifications/SPEC-LENGUA_6TO_VERBOS.md` 1.0. Reutiliza motor de Lengüizonas parametrizado, sesión/evidencia, histórico y Análisis; integra bloques en el catálogo de refuerzos existente. Pruebas automáticas con identidades/SDK simulados; prueba real con Gloria pendiente. No declara estabilidad ni altera el proceso aprobado.
+
 ### Pendiente de evolución
 
 1. Aplicar sistemáticamente el modo de incorporación completo a cada nuevo material real de 6.º.
 2. Aplicar sistemáticamente el contrato de evidencia analizable a cada nuevo Tema de 6.º.
-3. Activar Lengua o Sociales únicamente cuando llegue su primer Tema real para Academia; no por anticipación.
+3. Activar Sociales únicamente cuando llegue su primer Tema real para Academia; no por anticipación. Lengua ya dispone de portal y material real incorporado mediante #172.
 4. Reutilizar el bloque de recursos oficiales cuando se creen nuevos portales propios y validar sus enlaces contra la fuente del curso 2026–2027.
 5. Extender los tipos de señales compartidas solo cuando nuevos contenidos reales lo requieran.
 6. Ajustar las reglas automáticas de refuerzo solo cuando exista evidencia real suficiente que justifique una evolución.

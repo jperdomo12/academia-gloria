@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.14 |
+| **Versión** | 3.15 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 14/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.15 | 14/10/2026 | Product Owner + AI Collaborator | Lengua 6.º y Verbos incorporados mediante #172 aprobada; actualiza baseline, cierre y prueba familiar pendiente. Conserva Dictado/Semilla 012 y consulta profesional pendientes de uso real. |
 | 3.14 | 14/10/2026 | Product Owner + AI Collaborator | Incorporación curricular de Lengua · Verbos candidata desde #171: activa portal de Lengua en rama y reutiliza motor de Lengüizonas con datos propios. Prueba/aprobación familiar e integración pendientes; conserva pendientes anteriores. |
 | 3.13 | 13/10/2026 | Product Owner + AI Collaborator | Cierra #169/#170 integradas; acceso debajo de Nueva misión publicado por Pages #775 y validado por Juan. Actualiza baseline y retira cierre de desarrollo activo. Mantiene pruebas reales pendientes y resume seis fuentes propietarias. |
 | 3.12 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
@@ -298,7 +299,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Lengua 6.º · Verbos:** candidata en `feat/lengua-verbos-modos`, desde `main` #171 (`f1d4d5c…`). Propietario: `SPEC-LENGUA_6TO_VERBOS.md`. Material de 5.º/6.º, indicativo/subjuntivo/imperativo; portal de Lengua activado en rama, motor y evidencia reutilizados. Pendientes revisión/aprobación familiar e integración; no afirmar publicado.
+**Lengua 6.º · Verbos:** PR #172 aprobada e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Propietario: `SPEC-LENGUA_6TO_VERBOS.md` 1.0. Portal de Lengua activo con Verbos (continuidad de 5.º e indicativo/subjuntivo/imperativo de 6.º) y acceso al repaso anterior de Lengüizonas. Motor y evidencia reutilizados; prueba de uso real con Gloria pendiente, sin declarar estabilidad.
 
 **Consulta educativa por alumno:** PR #168 aprobada e integrada en `main` `5518d4d4…`, desde la SPEC #167. Prueba real pendiente; ver continuidad técnica al final.
 
@@ -352,13 +353,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `69e635b4dd36a0250d7a2ac8d03cf58b67629b80` · #170 integrado; conserva #169/#168/#167/#166/#164 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `2bfea89ceb9892ffa4da8aae1f503d46388d395e` · #172 integrado; conserva #171/#170 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `feat/lengua-verbos-modos` · candidata curricular de Lengua |
-| **PR On going** | Candidata curricular de Lengua en preparación; verificar GitHub al retomar |
-| **Trabajo inmediato** | Probar Consulta educativa con Lidia/Gloria y familiar; continuar pruebas familiares de Semilla 012 y Dictado |
-| **GitHub Pages del baseline funcional** | #775 · `success` · SHA `69e635b4…` |
-| **Verificación posterior al cierre** | #168/#169/#170 integradas; Pages #775 correcto. Enlace bajo Nueva misión publicado y revisión de Juan positiva. Prueba real de cuentas/Rules pendiente. |
+| **Rama On going** | Sin rama de desarrollo pendiente de estos frentes; #172 integrada |
+| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
+| **Trabajo inmediato** | Probar Lengua → Verbos con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **GitHub Pages del baseline funcional** | #777 · `success` · SHA `2bfea89c…` |
+| **Verificación posterior al cierre** | #172 aprobada e integrada; Pages #777 correcto y rutas de Lengua/Verbos/motor HTTP 200. Consulta educativa y acceso #170 conservados. Pruebas reales pendientes. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -383,33 +384,33 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. probar Lengua → Verbos según SPEC 1.0; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar Semilla 012 publicada conforme a su SPEC 1.1; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
 
 ---
 
-# 🟣 Última actualización — 13/10/2026
+# 🟣 Última actualización — 14/10/2026
 
 ## Trabajo On going
 
-> **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **Lengua 6.º:** #172 aprobada e integrada; prueba de Verbos con Gloria pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.14 |
+| **Versión** | 3.15 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Consulta educativa #168/#170 publicada y validada por Juan en interfaz, pendiente de prueba real; validación familiar de Semilla 012 y Dictado pendiente |
-| **PR On going** | Candidata curricular de Lengua en preparación; verificar GitHub al retomar |
+| **Trabajo On going** | Lengua → Verbos incorporada mediante #172; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Sin PR de desarrollo pendiente de estos frentes; verificar GitHub al retomar |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar Consulta educativa con acceso profesional real; continuar pruebas familiares pendientes |
+| **Siguiente paso** | Probar Lengua → Verbos con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
@@ -426,4 +427,6 @@ Cierre de Consulta educativa: #169 integra la sincronización documental de #168
 
 ## Continuidad curricular · Lengua · 14/10/2026
 
-`SPEC-LENGUA_6TO_VERBOS.md` conserva fuentes y cobertura de los tres adjuntos, matices de fidelidad y archivos de la candidata. Nueva actividad `6-lengua-verbos-modos`; portal de Lengua, tema y registro compartido sin nuevas colecciones. Motor anterior trasladado y parametrizado para evitar duplicación; repaso de Lengüizonas conserva contrato y contenido. Pendiente aprobación de la candidata antes de integrar conforme al modo curricular. Dictado/Semilla 012 y consulta real profesional continúan pendientes de sus pruebas ya documentadas.
+`SPEC-LENGUA_6TO_VERBOS.md` conserva fuentes y cobertura de los tres adjuntos, matices de fidelidad y archivos de la implementación. Nueva actividad `6-lengua-verbos-modos`; portal de Lengua, tema y registro compartido sin nuevas colecciones. Motor anterior trasladado y parametrizado para evitar duplicación; repaso de Lengüizonas conserva contrato y contenido. PR #172 aprobada e integrada; sin desarrollo pendiente de esa incorporación. La familia comprobará comprensión y uso con Gloria. Dictado/Semilla 012 y consulta real profesional continúan pendientes de sus pruebas ya documentadas.
+
+Publicación de Lengua/Verbos: Pages #777 `success` sobre `2bfea89c…`; `/cursos/6to/`, `/cursos/6to/lengua/`, `/cursos/6to/lengua/verbos/` y motor compartido verificados HTTP 200. No hay desarrollo pendiente de #172.

@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-LENGUA_6TO_VERBOS.md` |
-| **Versión** | 1.0-rc |
-| **Estado** | Candidata en rama · pendiente de validación familiar e integración |
+| **Versión** | 1.0 |
+| **Estado** | Implementada en main · aprobada para incorporación · prueba de uso real pendiente |
 | **Fecha** | 14/10/2026 |
 | **Propietario** | Contenido curricular de Lengua · 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -23,6 +23,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.0 | 14/10/2026 | Product Owner + AI Collaborator | PR #172 aprobada por Juan e integrada en 2bfea89ceb9892ffa4da8aae1f503d46388d395e; incorporación disponible para prueba de uso real, sin declarar estabilidad. |
 | 1.0-rc | 14/10/2026 | Product Owner + AI Collaborator | Material de Verbos incorporado en candidata: portal de Lengua, contenido de 5.º/6.º y motor reutilizado del repaso de Lengüizonas. No declara publicación ni validación familiar. |
 
 ## 🧭 Resumen de contenido
@@ -92,7 +93,7 @@ El repaso previo **Gramática · Repasamos los verbos** sigue en Lengüizonas co
 
 ## 5. Validación y cierre
 
-Base: `main` `f1d4d5c8a8a68e307ce3292a7bac12ef66fbd5ea` (#171). Rama: `feat/lengua-verbos-modos`.
+Base de desarrollo: `main` `f1d4d5c8a8a68e307ce3292a7bac12ef66fbd5ea` (#171). PR #172 aprobada por Juan e integrada en `2bfea89ceb9892ffa4da8aae1f503d46388d395e`. Pages #777 `success`; curso, portal de Lengua, tema y motor responden HTTP 200 y contienen la incorporación.
 
 Validación técnica y de fidelidad: extracción y lectura visual de las tres fuentes, revisión de claves/modelos/banco, comprobación del motor trasladado contra su versión previa, sintaxis/imports/rutas y navegador en escritorio/tablet/móvil. El test `tests/verbos-browser.cjs` comprueba navegación, práctica, aprendizaje, vista previa, histórico, Misión/evidencia, variantes, catálogo asistido, refuerzo/Análisis y el repaso previo con identidades/SDK simulados.
 
@@ -104,4 +105,4 @@ Estas pruebas no certifican Firestore desplegado, cuentas reales ni audio físic
 
 ## DECISIÓN
 
-La instrucción del Product Owner **Incorporar a la Academia** autoriza esta incorporación curricular conforme al estándar de una sola instrucción. La candidata mantiene separado el tema nuevo y reutiliza antes de crear. Aprobación familiar del resultado e integración definitiva pendientes; no se abren cambios de permisos o arquitectura paralela.
+La instrucción del Product Owner **Incorporar a la Academia** autoriza esta incorporación curricular conforme al estándar de una sola instrucción. Juan aprueba la PR #172 el 14/10/2026; integrada para uso de la familia. El tema mantiene datos propios y reutiliza el motor existente. La aprobación de incorporación no equivale a estabilidad: continúa pendiente la prueba de comprensión y uso con Gloria. No se abren cambios de permisos o arquitectura paralela.
