@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
-| **Última actualización** | 14/10/2026 |
+| **Última actualización** | 15/10/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Diseño, imagen, incorporación, validación, documentación de acompañamiento y cierre de nuevas Semillas del módulo `Creciendo por Dentro` |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 15/10/2026 | Product Owner + AI Collaborator | Formaliza que marcos externos o aportes profesionales —por ejemplo DESC o Atlas of Emotions— se evalúan caso por caso al diseñar nuevas Semillas. Pueden aportar principios o recursos, pero no son plantillas obligatorias ni justifican modificar retroactivamente Semillas existentes. |
 | 1.2 | 14/10/2026 | Product Owner + AI Collaborator | Integra la composición aprobada mediante #178: resumen derivado y frase de un único paso con contrato vigente, sin persistencia paralela. Nueva prueba familiar de 012 pendiente. |
 | 1.2-rc | 14/10/2026 | Product Owner + AI Collaborator | Candidata de ajuste por validación familiar: documenta composición con resumen derivado y frase de un único paso, usando el contrato vigente y sin persistencia paralela. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora al cierre estándar de una nueva Semilla la actualización de la guía oficial para familias/profesionales y de sus presentaciones derivadas vigentes. Evita que catálogo, documentación de acompañamiento y guía web queden desincronizados. |
@@ -340,6 +341,40 @@ No debe:
 - afirmar intenciones de terceros sin evidencia;
 - ni resolver la reflexión por él.
 
+### 7.7 Marcos externos y aportes profesionales como referencia
+
+Al diseñar **una nueva Semilla**, la AI Collaborator debe revisar las referencias educativas, psicológicas o comunicativas que hayan sido aportadas por la familia o por profesionales que acompañan al alumno y valorar si alguna aporta un principio útil para la necesidad concreta.
+
+La regla es:
+
+```text
+necesidad real
+→ identificar habilidad principal
+→ revisar referencias pertinentes
+→ adaptar solo lo que aporte
+→ mantener la experiencia breve y comprensible
+```
+
+Una referencia externa **no se convierte automáticamente en plantilla del módulo** ni obliga a que todas las Semillas adopten su secuencia completa.
+
+Ejemplos ya conocidos:
+
+- **DESC** puede aportar especialmente cuando la habilidad consiste en expresar una molestia, necesidad, límite o petición con claridad y respeto: describir hechos, expresar, solicitar/sugerir y explicar una mejora esperada;
+- **Atlas of Emotions** puede aportar recursos para futuras Semillas centradas en conciencia emocional, por ejemplo observar sensaciones físicas, representar de manera personal una emoción o reconstruir progresivamente cómo se llegó a ella, siempre que el nivel de comprensión y la necesidad real lo justifiquen;
+- aportes de profesionales como psicología, logopedia o tutoría pueden orientar ejemplos, lenguaje, nivel de apoyo o una futura progresión de dificultad.
+
+Al utilizar estas referencias:
+
+- se conserva **una habilidad principal por Semilla**;
+- se adapta el contenido a la edad, comprensión y necesidades comunicativas del alumno;
+- no se añade complejidad únicamente porque el marco de origen sea más amplio;
+- no se convierten colores, texturas, sensaciones físicas u otras representaciones personales en equivalencias universales de una emoción;
+- no se utilizan como diagnóstico ni para inferir estados internos automáticamente;
+- las opciones propias, `No estoy segura` y la ayuda gradual continúan disponibles cuando correspondan;
+- y cualquier progresión hacia niveles más complejos se introduce solo cuando el uso real o el acompañamiento profesional indique que aporta valor.
+
+**No se modificarán retroactivamente Semillas existentes únicamente para alinearlas con DESC, Atlas of Emotions u otra referencia descubierta posteriormente.** Una Semilla ya activa solo se revisa cuando el uso real revela una necesidad concreta o existe una nueva decisión funcional independiente.
+
 ---
 
 ## 🧩 8. Estructura funcional
@@ -405,6 +440,7 @@ Una nueva Semilla se considera técnicamente lista cuando:
 - responde a una necesidad real;
 - la habilidad principal es clara;
 - no duplica innecesariamente una Semilla existente;
+- se evaluaron las referencias profesionales o marcos pertinentes disponibles y se incorporó solo lo que realmente aporta a esa necesidad;
 - no diagnostica ni etiqueta;
 - valida emociones sin confirmar interpretaciones no demostradas;
 - ofrece acciones pequeñas y utilizables;
@@ -455,6 +491,7 @@ No se debe modificar inmediatamente una Semilla por una reacción aislada sin en
 
 2. ANÁLISIS
    AI Collaborator identifica habilidad, solapamientos y enfoque
+   → evalúa referencias profesionales o marcos pertinentes disponibles
 
 3. DISEÑO
    AI Collaborator construye contenido completo
@@ -497,6 +534,8 @@ Evitar:
 - presentar evitación como única estrategia;
 - presentar exposición forzada como única estrategia;
 - eliminar la posibilidad de pedir ayuda;
+- forzar una nueva Semilla a seguir completa una metodología externa aunque no encaje con su habilidad principal;
+- modificar Semillas existentes solo para alinearlas retrospectivamente con un marco descubierto después;
 - modificar el Motor por comodidad cuando el catálogo basta;
 - añadir una Semilla al catálogo sin actualizar su explicación para familias/profesionales;
 - documentar cada Semilla en un archivo separado;
@@ -526,6 +565,7 @@ Queda aprobado como proceso oficial de nuevas Semillas el modelo de **mínima in
 ```text
 necesidad familiar / educativa
 → diseño completo por AI Collaborator
+→ evaluación de referencias profesionales o marcos pertinentes cuando existan
 → imagen generada por AI Collaborator
 → validación del Product Owner
 → subida manual del binario solo cuando sea técnicamente necesaria
@@ -535,3 +575,5 @@ necesidad familiar / educativa
 → prueba real con Gloria
 → ajuste si la evidencia de uso lo justifica
 ```
+
+Los marcos externos y aportes profesionales son **insumos de diseño**, no plantillas obligatorias ni motivo suficiente para modificar Semillas ya existentes.
