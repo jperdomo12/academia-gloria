@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.23 |
+| **Versión** | 3.24 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 17/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.24 | 17/10/2026 | Product Owner + AI Collaborator | Cierre final Monitor Gaudem: #181 integrada en 9c1597af…, aceptación explícita 1.7-rc1 a las 00:39:04 y revisión sin cambios a las 00:39:47; 19 espacios y señal documental activa. Retira pruebas/rama de desarrollo del monitor de los pendientes; conserva pendientes anteriores. |
 | 3.23 | 17/10/2026 | Product Owner + AI Collaborator | PR #181 aprobada. Revisar 1.7-rc1 validado repetidamente en navegador autenticado: 19 espacios, solo Música y nuevo Instrumentos Legendarios; docs sin cambios. Aceptación real y revisión posterior pendientes; conserva pendientes anteriores. |
 | 3.22 | 16/10/2026 | Product Owner + AI Collaborator | Incidencia real del Monitor Gaudem: candidata 1.7-rc1 separa navegación y contenido, conserva dos líneas base y prepara revisión sin escrituras. Prueba autenticada con base familiar pendiente; no aceptar cambios aún. Conserva pendientes anteriores. |
 | 3.21 | 14/10/2026 | Product Owner + AI Collaborator | Cierra #178 aprobada e integrada: Semilla 012 resume elecciones y separa frase oral; SPEC y estándar 1.2. Retira candidata de desarrollo; conserva nueva prueba familiar y pendientes previos. |
@@ -210,13 +211,13 @@ Criterio: se decide por **USER autenticado**, no por Persona Activa. Visible par
 
 #### Monitor Gaudem
 
-- Propietario: `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md`. Revisar **1.7-rc1** validado en navegador familiar el 17/10/2026; PR #181 aprobada por el Product Owner, desde `main` #180 (`7e3dcaa1…`). Aceptación real y revisión posterior pendientes.
-- Incidencia del 16/10/2026: 19 espacios, 18 con `texto +4 -3` por añadir Instrumentos Legendarios al menú global. Página nueva de Música vacía de material visible; STOMP retirado solo en Música; documentos sin ruido. La familia no aceptó ni movió líneas base.
+- Propietario: `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md`. **1.7-rc1 validada operativamente** en navegador familiar el 17/10/2026. PR #181 aprobada e integrada en `main` `9c1597af17415b7ccbd09e9dc7bd7ed1eea99810`, desde #180. Incidencia cerrada.
+- Incidencia del 16/10/2026: 19 espacios, 18 con `texto +4 -3` por añadir Instrumentos Legendarios al menú global. Página nueva de Música vacía de material visible; STOMP retirado solo en Música; documentos sin ruido. Durante el diagnóstico inicial la familia no había aceptado ni movido líneas base; la aceptación explícita posterior se registra a continuación.
 - Candidata separa navegación semántica y contenido propio, mantiene descubrimiento de espacios y señal documental. Adapta lectura de base antigua solo en memoria; `Revisar` no escribe. Solo `Aceptar` confirmado y lectura completa actualiza `gaudem6_detalle_v2` y `gaudem6_recursos_v3`; en v2 añade procedencia `c` sin otra clave ni migración automática.
 - Fuente única `herramientas/monitor-gaudem/monitor.mjs` genera los dos marcadores autónomos del manual; no se carga desde el Site. Merge de Git no actualiza los marcadores ya guardados en Chrome.
 - Pruebas con Chromium y capturas sintéticas: reproduce cuentas +4 -3 en 18 páginas, elimina ruido y conserva espacio nuevo; STOMP solo Música; documentos existentes sin cambios y nuevo documento detectado; repetición estable; retiradas, errores y disciplina de escritura. No equivale a probar la base real.
-- **Validación real:** revisión repetida de 19 espacios, solo Música y nuevo Instrumentos Legendarios. Tabla: 17 páginas sin diferencias; Música texto +1 -0, recursos +0 -1; docs +0 -0 en las 18 páginas comparadas. Sin advertencia de navegación. No se ha ejecutado Aceptar; cero escrituras probado automáticamente, sin inspección directa del almacenamiento familiar.
-- **Siguiente paso:** tras integración de #181, guiar actualización del marcador Aceptar desde el manual, aceptación explícita de novedades conocidas y Revisar posterior. Mantener 1.7-rc1 hasta completar el ciclo real.
+- **Validación real:** revisión repetida de 19 espacios, solo Música y nuevo Instrumentos Legendarios. Tabla: 17 páginas sin diferencias; Música texto +1 -0, recursos +0 -1; docs +0 -0 en las 18 páginas comparadas. Sin advertencia de navegación. En esa fase aún no se había ejecutado Aceptar 1.7-rc1; cero escrituras de Revisar probado automáticamente. La lectura posterior de diagnóstico sí inspeccionó campos y fechas locales, sin modificar datos.
+- **Cierre real:** Aceptar 1.7-rc1 completado a las 00:39:04: 19 espacios, 660 fragmentos, 6 recursos históricos y 135 documentos. Revisar a las 00:39:47: 19 espacios, documentos activos, sin cambios y ambas bases fechadas 00:39:04. No quedan acciones inmediatas de este frente; conservar solo Revisar y Aceptar. El código instalado conserva 1.7-rc1; no se requiere reinstalarlo. Detalle de mezcla de formatos e instrucciones corregidas en el manual.
 - Permanece pendiente observar una incorporación documental posterior a la base v3 en uso real. No se abre la evolución a un único marcador.
 
 #### Zonas del cole
@@ -306,7 +307,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Prioridad · Monitor Gaudem 1.7-rc1:** corrección autorizada de falsos positivos del menú, candidata desde #180 en `fix/monitor-gaudem-1-7`. Manual 1.7-rc1 y código compartido con marcadores autónomos. Validación técnica y revisión autenticada repetida superadas el 17/10/2026. PR #181 aprobada. Pendiente aceptación explícita real y Revisar posterior; no declarar estable el ciclo completo.
+**Cerrado · Monitor Gaudem 1.7-rc1:** #181 aprobada e integrada en `9c1597af…`; ciclo autenticado completo validado el 17/10/2026. Aceptación explícita 00:39:04 y revisión sin cambios 00:39:47. Sin pruebas ni desarrollo inmediato pendiente. Manual propietario sincronizado; conservar dos marcadores operativos.
 
 **Semilla 012 · ajuste de composición:** PR #178 aprobada por Juan e integrada en `f6c199453bc1d525022a90b5a9daeb3590730d23`, tras observación real de Anaís/Gloria. Propietario SPEC 1.2. Resumen de siete pasos derivado del contrato vigente y lector del histórico; frase final separada para escuchar/grabar. Sin campos nuevos ni cambios de sesiones anteriores. Sin desarrollo pendiente; nueva revisión familiar del ajuste pendiente; no declarar estable.
 
@@ -370,9 +371,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `f6c199453bc1d525022a90b5a9daeb3590730d23` · #178 integrado; conserva #176/#174 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `fix/monitor-gaudem-1-7` · #181 aprobada; comprobar integración al retomar |
-| **PR On going** | #181 aprobada; comprobar integración al retomar |
-| **Trabajo inmediato** | Completar aceptación explícita y Revisar posterior de Gaudem 1.7-rc1 tras #181; después probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **Rama On going** | Ninguna rama de desarrollo activa del monitor; #181 integrada |
+| **PR On going** | Ninguna PR de desarrollo del monitor pendiente; #181 integrada |
+| **Trabajo inmediato** | Monitor Gaudem cerrado; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #788 · `success` · SHA `f6c19945…` |
 | **Verificación posterior al cierre** | #178 aprobada e integrada; Pages #788 correcto. Página de Semillas, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Resumen y frase final separados para nueva revisión familiar. Frentes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -385,7 +386,7 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Carril curricular 6.º** | ✅ Activo · mínima intervención · Áreas + Zonas |
 | **Zonas del cole** | ✅ Matezonas + Lengüizonas activas · English Zones activa con Grammar zone |
 | **Misiones + Zonas** | ✅ Matezonas/Lengüizonas seleccionables como origen visible; evidencia académica preservada |
-| **Monitor Gaudem** | Revisar 1.7-rc1 validado en 19 espacios; #181 aprobada; aceptación real y revisión posterior pendientes |
+| **Monitor Gaudem** | ✅ 1.7-rc1 validada operativamente; #181 integrada; 19 espacios, aceptación y revisión sin cambios comprobadas |
 | **Rincón del Dictado V1** | Mi Rincón de Dictado V1 funcional publicada para validación real; ajustes #161, SPEC 1.2 |
 | **Navegación** | ✅ v1.12 · Dictado y prevención global de ciclos de `Volver` |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
@@ -399,33 +400,33 @@ Al iniciar o retomar trabajo:
 1. leer este HandOff + `docs/ai/AI_CHAT_BOOTSTRAP.md`;
 2. verificar HEAD real de `main` y PRs abiertos; #168/#169/#170 integradas; Consulta educativa accesible desde menú y desde Mi Universo, debajo de Nueva misión;
 3. confirmar #152/#153/#157 integrados y #156 cerrado sin merge; consultar SPEC de Dictado antes de ajustar;
-4. completar el ciclo real de Gaudem 1.7-rc1 (Revisar ya validado): aceptación explícita y revisión posterior siguiendo el manual; después probar English → Much/Many desde English y English Zones según SPEC 1.0; probar los tres Temas de Lengua según SPEC 1.1; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar de nuevo Semilla 012 conforme a su SPEC 1.2; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
+4. mantener cerrado el Monitor Gaudem (#181, ciclo real completo validado); probar English → Much/Many desde English y English Zones según SPEC 1.0; probar los tres Temas de Lengua según SPEC 1.1; probar Consulta educativa con Lidia sobre Gloria y familiar, incluyendo ausencia de capacidades administrativas; probar de nuevo Semilla 012 conforme a su SPEC 1.2; Dictado espera prueba completa familiar. Documentar resultados antes de declarar estabilidad; mantener la **Fase de uso prioritario**;
 5. priorizar material real de 6.º, uso real y resolución de issues observados;
 6. actualizar el menú según el estándar propietario cuando se solicite; la automatización está desactivada;
 7. retomar backlog únicamente ante una decisión o necesidad concreta.
 
 ---
 
-# 🟣 Última actualización — 14/10/2026
+# 🟣 Última actualización — 17/10/2026
 
 ## Trabajo On going
 
-> **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #176 aprobada e integrada; tres Temas por documento con prueba de uso real pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
+> **Monitor Gaudem:** #181 integrada; ciclo real completo validado el 17/10/2026, sin acciones inmediatas pendientes. **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #176 aprobada e integrada; tres Temas por documento con prueba de uso real pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
 
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.23 |
+| **Versión** | 3.24 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Monitor Gaudem 1.7-rc1 con Revisar autenticado validado y #181 aprobada; pendiente aceptación explícita y revisión posterior. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | #181 aprobada; comprobar integración al retomar |
+| **Trabajo On going** | Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Ninguna PR de desarrollo del monitor pendiente; #181 integrada |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Completar aceptación explícita y Revisar posterior de Gaudem 1.7-rc1; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
