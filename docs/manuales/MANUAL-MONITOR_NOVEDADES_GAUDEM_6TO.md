@@ -5,9 +5,9 @@
 |---|---|
 | **Ruta oficial** | `docs/manuales/MANUAL-MONITOR_NOVEDADES_GAUDEM_6TO.md` |
 | **Versión** | 1.7-rc1 |
-| **Estado** | Candidata 1.7-rc1 · pendiente de prueba autenticada · v1.6 es la última validada |
+| **Estado** | 1.7-rc1 · Revisar validado en navegador familiar · aceptación real pendiente |
 | **Fecha de origen** | 17/09/2026 |
-| **Última actualización** | 16/10/2026 |
+| **Última actualización** | 17/10/2026 |
 | **Propietario** | Operación escolar · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Procedimiento local para detectar cambios en las páginas de áreas y zonas académicas del Site privado de 6.º de Gaudem desde un navegador ya autenticado |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7-rc1 · validación | 17/10/2026 | Product Owner + AI Collaborator | Revisión autenticada repetida: 19 espacios, solo Música y nuevo Instrumentos Legendarios; 17 páginas sin diferencias, Música texto +1 -0/recursos +0 -1 y docs +0 -0 en las 18 comparaciones. PR #181 aprobada. Aceptación real y revisión posterior pendientes; no declara estabilidad completa. |
 | 1.7-rc1 | 16/10/2026 | Product Owner + AI Collaborator | Candidata autorizada tras ruido del menú global: distingue navegación/contenido, conserva descubrimiento y doble línea base, adapta la comparación v1.6 solo en memoria y prepara procedencia de contenido para aceptación explícita. Fuente compartida y marcadores autónomos generados; prueba con líneas base reales pendiente. |
 | 1.6 | 02/10/2026 | Product Owner + AI Collaborator | Añade al aviso de ausencia de cambios la fecha y hora local registradas en cada línea base disponible; si la línea base documental aún no existe, lo indica expresamente. |
 | 1.5 | 24/09/2026 | Product Owner + AI Collaborator | Promueve a estable la solución de doble línea base tras validación real en navegador autenticado: 18 espacios revisados, seguimiento documental activo y ausencia de falsos cambios. Conserva `gaudem6_detalle_v2` para compatibilidad histórica y `gaudem6_recursos_v3` para documentos Drive/Docs/PDF/ofimáticos. |
@@ -113,7 +114,7 @@ No requiere:
 
 ## 📌 2. Estado actual
 
-### HECHO · v1.6 validada / v1.7-rc1 candidata
+### HECHO · Revisar 1.7-rc1 validado; aceptación real pendiente
 
 La solución operativa actual utiliza dos marcadores:
 
@@ -130,7 +131,7 @@ El segundo sustituye la línea base únicamente cuando el usuario confirma que l
 
 La decisión aprobada mantiene los dos marcadores y las dos líneas base; corrige el ruido provocado por la navegación global. **No aceptar cambios ni reinicializar líneas base para probar esta candidata.** El merge del repositorio no actualiza los marcadores que ya existen en Chrome.
 
-Para la primera prueba se utiliza únicamente el marcador **Revisar 1.7-rc1** de §8.1, sobre el mismo perfil autenticado y las líneas base aún pendientes. Conservar el marcador Aceptar sin ejecutarlo. La candidata no se declara validada en ese navegador hasta observar el resultado real.
+Para la primera prueba se utiliza únicamente el marcador **Revisar 1.7-rc1** de §8.1, sobre el mismo perfil autenticado y las líneas base aún pendientes. Conservar el marcador Aceptar sin ejecutarlo. El resultado real de Revisar quedó validado el 17/10/2026 según §7.8; Aceptar aún no se ha ejecutado en ese navegador.
 
 ### IMPORTANTE · no es una función desplegada de Academia
 
@@ -386,7 +387,13 @@ Durante la validación se descartó una comprobación que buscaba cadenas de log
 | Base ya aceptada por v1.7 | Cambio solo de menú no modifica contenido; quitar un título propio coincidente con el menú sí se detecta. |
 | Falta línea base documental o histórica | Conserva avisos y no inicializa datos al revisar. |
 
-**Pendiente obligatorio:** prueba con las líneas base reales del navegador autenticado. Las pruebas locales no certifican la estructura real actual de Sites ni las cuentas de la base familiar. No se han aceptado ni modificado esas líneas base durante el desarrollo.
+**Validación real completada · 17/10/2026 (Europe/Madrid):** el Product Owner ejecutó Revisar 1.7-rc1 repetidamente en su navegador autenticado sobre las líneas base pendientes, sin ejecutar Aceptar. Las capturas muestran 19 espacios, seguimiento documental activo y únicamente Música e Instrumentos Legendarios (nuevo), sin advertencia de navegación. El aviso repetido conserva las mismas novedades (captura de revisión 00:15:07).
+
+La tabla compartida contiene 18 comparaciones heredadas: 17 páginas con texto/recursos/docs `+0 -0`; Música con texto `+1 -0`, recursos `+0 -1` y docs `+0 -0`. La retirada de recursos es compatible con el enlace antiguo de STOMP diagnosticado; no se aportó en esta prueba el detalle de URL para volver a identificarlo. Instrumentos Legendarios se detecta aparte como nuevo, aunque vacío. No se infiere que ese espacio tenga ya material académico.
+
+La ausencia de escrituras y la conservación byte a byte de las dos claves se verificaron en pruebas automatizadas; las capturas reales no son una inspección directa de localStorage. No se ha solicitado ni ejecutado aceptación de las líneas base familiares. PR #181 aprobada explícitamente por el Product Owner.
+
+**Pendiente:** instalar/actualizar Aceptar desde §8.2, revisar las novedades conocidas, aceptar explícitamente y comprobar con Revisar que la nueva referencia queda sin cambios. Hasta entonces se conserva la versión 1.7-rc1 y no se declara el ciclo completo estable.
 
 #### Protocolo de prueba real · sin aceptar cambios
 
@@ -540,6 +547,6 @@ El monitor ayuda a **descubrir cambios**; el estándar curricular gobierna qué 
 
 ## ✅ 12. Cierre
 
-La solución sigue siendo una utilidad operativa local recuperable desde GitHub. v1.6 es la última versión validada en el navegador familiar. v1.7-rc1 está preparada como candidata para corregir la incidencia del 16/10/2026, con pruebas técnicas superadas y validación autenticada pendiente. No se debe aceptar ni reinicializar la base para esa primera prueba.
+La solución sigue siendo una utilidad operativa local recuperable desde GitHub. Revisar 1.7-rc1 superó las pruebas técnicas y la revisión autenticada repetida del 17/10/2026. PR #181 aprobada; aceptación real y revisión posterior pendientes. No se han reinicializado líneas base ni se declara todavía estable el ciclo completo.
 
 La fuente de verdad de su procedimiento es este manual. Los marcadores del navegador son su instancia local de ejecución.
