@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.3 |
-| **Estado** | Ajuste de revisión familiar candidato · no declarada estable |
+| **Versión** | 1.4 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste #192 integrado en 20364da3… y publicado (Pages #802 success): accesos juntos y respuestas/validación/reintentos sin guardado. Seis archivos de producto públicos de #192 idénticos a los probados; referencias v=2 en el cierre protegen caché de estilos/datos/presentador. Revisión familiar del ajuste pendiente. |
 | 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Observación directa del Product Owner: Plan Semanal junto a Zonas y respuestas digitales con validación en los tres bloques, sin guardar resultados. Conserva instrucción de cuaderno; corrige la limitación inicial de solo revelar soluciones. Texto libre comparado con modelo, sin calificación automática. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Cierra publicación autorizada: #190 integrada en da8eb5fb…, Pages #800 success y nueve archivos públicos HTTP 200 idénticos al resultado probado. Mantiene revisión familiar de lectura/cuaderno/soluciones pendiente; sin declarar estabilidad. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | Primera implementación: portal selectivo por semanas y ficha paper-first dentro de Science/Nutrición. Catálogo único, lectura/voz compartida, tres bloques con comprobación tras intento y sin evidencia persistente. Validación técnica y responsive; revisión familiar pendiente. |
@@ -377,11 +378,11 @@ El contrato del documento declara el tipo de bloque (`verdadero-falso`, `opcion-
 - Editar una respuesta oculta su feedback y el recuento anterior; volver a comprobar recalcula el bloque. Reintentar borra las respuestas y el feedback de ese bloque. No modifica los otros bloques.
 - Estado solo en los controles de la página; sin localStorage/Firestore de resultados, sesiones, Misiones o evidencias nuevas. El almacenamiento contextual de navegación existente se conserva.
 
-Base del ajuste: `main` `0ed73bf8fd6e5a8f89de729cbdac623c07b3fd2c` (#191). Rama `fix/plan-semanal-respuestas`. Candidata validada técnicamente; PR/publicación y revisión familiar pendientes.
+Base del ajuste: `main` `0ed73bf8fd6e5a8f89de729cbdac623c07b3fd2c` (#191). Rama `fix/plan-semanal-respuestas`. PR #192 integrada en `20364da3df4ee5cf9ac5577c5df99b4265e1049c` dentro de la autorización de implementación/publicación del encargo. Pages #802 (run `39478081719`) `success`; seis archivos de producto modificados HTTP 200 e idénticos byte a byte al resultado probado: portal de 6.º, CSS del curso, presentador/CSS de la ficha y HTML/datos de la actividad. Árbol remoto de #192 idéntico al local validado. El cierre añade referencias `?v=2` al CSS del portal y al conjunto HTML → datos → presentador/CSS de la ficha, para evitar mezclar versiones en un navegador que vio la entrega anterior; no cambia comportamiento o claves. Sin desarrollo pendiente del ajuste; revisión familiar del resultado pendiente, sin declarar estabilidad.
 
 ## DECISIÓN
 
-**AJUSTE DIRECTO DEL PRODUCT OWNER IMPLEMENTADO COMO CANDIDATA · REVISIÓN FAMILIAR PENDIENTE.**
+**AJUSTE DIRECTO DEL PRODUCT OWNER PUBLICADO · REVISIÓN FAMILIAR PENDIENTE.**
 
 `Plan Semanal` será un espacio transversal y selectivo de 6.º. El Product Owner elegirá los documentos importantes mediante una instrucción mínima; Academia resolverá su clasificación e integración. La semana organiza el acceso, mientras que la materia y el Tema conservan la propiedad curricular cuando corresponda.
 
