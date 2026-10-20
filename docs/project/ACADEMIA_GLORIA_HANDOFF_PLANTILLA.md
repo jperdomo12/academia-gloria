@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.29 |
+| **Versión** | 3.30 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 20/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.30 | 20/10/2026 | Product Owner + AI Collaborator | PR #187 aprobada e integrada en 9f7b3a6a…: pirámide de cuatro niveles del colegio, PNG aprobado intacto, texto alternativo y caché v=2. Retira candidata de corrección; mantiene validación familiar de Nutrición y pendientes anteriores. |
 | 3.29 | 20/10/2026 | Product Owner + AI Collaborator | Corrección visual candidata de Nutrición: nuevo PNG aprobado respeta cuatro niveles del colegio; misma ruta y referencias v=2 para caché. SPEC 1.2, sin duplicar Tema ni cambiar motor/preguntas/evidencia. Revisión final/integración pendientes; conserva publicación #185 y pendientes previos. |
 | 3.28 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…: Nutrición incorporada a Science con pirámide aprobada intacta y evidencia compartida. Pages #795 success y seis archivos públicos verificados, incluida la imagen intacta. Retira candidata de desarrollo; conserva prueba de uso real con Gloria y pendientes anteriores. |
 | 3.27 | 20/10/2026 | Product Owner + AI Collaborator | Candidata Science/Nutrición desde material escolar de seis páginas: pirámide aprobada intacta, cuatro sistemas, práctica y evidencia compartida con cinco focos. SPEC 1.0, motor y contratos reutilizados. Revisión final/integración pendientes; conserva cierres anteriores. |
@@ -314,9 +315,9 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Science · corrección de pirámide (candidata):** desde `main` `192b9bf3…` (#186), rama `fix/science-piramide-escolar`. El Product Owner aporta nueva imagen aprobada con la estructura de la página 1 del colegio: Grasas / Lácteos | Proteínas / Verduras | Frutas / Carbohidratos. Se sustituye únicamente el PNG en la misma ruta, con dimensiones/alternativo correctos y referencias `?v=2` para evitar caché de la composición anterior. Propietario SPEC-SCIENCE_6TO_NUTRICION 1.2. No se duplica Nutrición ni cambian datos, prueba, motor o evidencias. Validación visual desktop/móvil; pendiente revisión final e integración.
+**Science · corrección de pirámide (incorporada):** PR #187 aprobada por el Product Owner e integrada en `main` `9f7b3a6ade17b36596c408f529e89ce095e55ad6`, desde `192b9bf3…` (#186). El Product Owner aporta nueva imagen aprobada con la estructura de la página 1 del colegio: Grasas / Lácteos | Proteínas / Verduras | Frutas / Carbohidratos. Se sustituye únicamente el PNG en la misma ruta, con dimensiones/alternativo correctos y referencias `?v=2` para evitar caché de la composición anterior. Propietario SPEC-SCIENCE_6TO_NUTRICION 1.3. No se duplica Nutrición ni cambian datos, prueba, motor o evidencias. Validación visual desktop/móvil completada. Pages #797 `success`; HTML y PNG publicados con HTTP 200 e idénticos a los aprobados. PNG publicado SHA-256 `42a35aea…`, igual al nuevo original. Sin desarrollo ni integración pendiente de esta corrección; se mantiene la prueba real de Nutrición con Gloria.
 
-**Science · Nutrición (incorporada):** PR #185 aprobada por el Product Owner e integrada en `main` `e093be77f09e5a8db22ccbae8522fd50448d89c3`, desde `f699b99f…` (#184). Propietario `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` 1.2 (corrección de imagen candidata sobre #185). Un único Tema en `/cursos/6to/science/nutricion/`, actividad `6-science-nutricion`. Pirámide aprobada en `assets/imagenes/science/science-nutricion-piramide-alimenticia.png`, binario aportado intacto. Cubre alimentación y sistemas digestivo, respiratorio, circulatorio y eliminación; diez prácticas, diez familias/veinte variantes y cinco focos. Reutiliza el motor académico parametrizado existente, identidad de Science, catálogo/Misiones, sesiones, histórico, Análisis y refuerzos. Sin motor paralelo ni cambios de permisos/Rules. Validación técnica con SDK/identidad simulados completada. Pages #795 `success` sobre `e093be77…`; página, módulo, datos, CSS, catálogo y PNG publicados con HTTP 200 e idénticos a la implementación aprobada. La imagen publicada conserva el SHA-256 del original. Sin desarrollo ni integración pendiente de #185. Prueba de uso real con Gloria pendiente; no declarar estabilidad.
+**Science · Nutrición (incorporada):** PR #185 aprobada por el Product Owner e integrada en `main` `e093be77f09e5a8db22ccbae8522fd50448d89c3`, desde `f699b99f…` (#184). Propietario `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` 1.3 (corrección de imagen #187 incorporada sobre #185). Un único Tema en `/cursos/6to/science/nutricion/`, actividad `6-science-nutricion`. Pirámide aprobada en `assets/imagenes/science/science-nutricion-piramide-alimenticia.png`, binario aportado intacto. Cubre alimentación y sistemas digestivo, respiratorio, circulatorio y eliminación; diez prácticas, diez familias/veinte variantes y cinco focos. Reutiliza el motor académico parametrizado existente, identidad de Science, catálogo/Misiones, sesiones, histórico, Análisis y refuerzos. Sin motor paralelo ni cambios de permisos/Rules. Validación técnica con SDK/identidad simulados completada. Pages #795 `success` sobre `e093be77…`; página, módulo, datos, CSS, catálogo y PNG publicados con HTTP 200 e idénticos a la implementación aprobada. La imagen publicada conserva el SHA-256 del original. Sin desarrollo ni integración pendiente de #185. Prueba de uso real con Gloria pendiente; no declarar estabilidad.
 
 **Cerrado · Descubre/Orientación:** PR #183 aprobada por el Product Owner e integrada en `main` `40f55b14aefa8a899a9dc06d35f7e92fd0d02ee9`, desde `7acd42b7…`. Decisión visual aprobada por el Product Owner: añadir solo el rol genérico 🧭 Orientación a la lista de `descubre-la-academia/contenido.json`, entre Pedagogía Terapéutica y Colegio; arquitectura propietaria `PRODUCT_EXPERIENCE_ARCHITECTURE.md` §4.3 ya contempla al orientador. Reutiliza `renderNetwork`, conserva las dos primeras filas de escritorio y completa la tercera; mantiene destacado El alumno y estilos existentes; conserva tres columnas de escritorio y dos de móvil, con una columna solo hasta 360 px para evitar partir etiquetas. `guia.css` limita las columnas al espacio disponible y permite ajustar etiquetas largas, sin cambiar tipografía, colores o dimensiones de las tarjetas. Comprobación visual Chromium de escritorio/tablet/móvil (320–1440 px), sin desbordamientos. Publicación Pages #793 `success` sobre `40f55b14…`; `contenido.json` y `guia.css` servidos por la web con HTTP 200 e idénticos a la implementación aprobada. Sin desarrollo ni integración pendiente en este frente. No modifica capacidades, relaciones ni permisos.
 
@@ -384,9 +385,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `f6c199453bc1d525022a90b5a9daeb3590730d23` · #178 integrado; conserva #176/#174 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `fix/science-piramide-escolar` · corrección visual candidata |
-| **PR On going** | Corrección de pirámide candidata; comprobar PR al retomar |
-| **Trabajo inmediato** | Revisar corrección de pirámide de Nutrición; después probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **Rama On going** | Ninguna rama de implementación activa de Nutrición; #185/#187 integradas |
+| **PR On going** | Ninguna PR de implementación pendiente de Nutrición; #185/#187 integradas |
+| **Trabajo inmediato** | Probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #788 · `success` · SHA `f6c19945…` |
 | **Verificación posterior al cierre** | #178 aprobada e integrada; Pages #788 correcto. Página de Semillas, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Resumen y frase final separados para nueva revisión familiar. Frentes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -431,10 +432,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.29 |
+| **Versión** | 3.30 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Corrección de pirámide candidata para revisión final. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Corrección de pirámide candidata; comprobar PR al retomar |
+| **Trabajo On going** | Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Ninguna PR de implementación pendiente de Nutrición; #185/#187 integradas |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
