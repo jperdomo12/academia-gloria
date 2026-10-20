@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` |
-| **Versión** | 1.2 |
-| **Estado** | Corrección visual candidata · Tema publicado para validación familiar |
+| **Versión** | 1.3 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Contenido curricular · Science 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Cierra #187 aprobada e integrada en 9f7b3a6a…: pirámide aprobada de cuatro niveles incorporada al Tema existente, con referencias v=2. Conserva prueba familiar de comprensión/uso y no declara estabilidad. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Corrección de fidelidad visual autorizada: nuevo PNG aprobado con cuatro niveles iguales al colegio, misma ruta, dimensiones/alternativo actualizados y referencia v=2 contra caché anterior. Sin cambios de motor, contenido académico ni prueba. Pendiente revisión final e integración. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…; cierra implementación de Nutrición y conserva pendiente de uso real con Gloria. No modifica el producto validado ni declara estabilidad. |
 | 1.0 | 20/10/2026 | Product Owner + AI Collaborator | Candidata autorizada por el Product Owner: un Tema de Nutrición con seis páginas escolares cubiertas, imagen aprobada intacta, práctica, prueba y evidencia compartida. Revisión familiar pendiente. |
@@ -101,8 +102,8 @@ No usa cuentas ni datos reales y no certifica audio físico o Rules desplegadas.
 
 ### Corrección de pirámide · 20/10/2026
 
-Base `main` `192b9bf32069570e8212dbffb10917362f76ca4f` (#186). Rama `fix/science-piramide-escolar`. Ajuste limitado al PNG aprobado, su marcado accesible/dimensiones/referencia de caché y documentación. Revisión visual contra los cuatro niveles del PDF y del requerimiento del Product Owner. Validado en Chromium local con Outfit: imagen decodificada a 1122 × 1402, proporción íntegra y sin desbordamientos a 1440/768/390/320 px; los dos enlaces y la imagen utilizan la misma referencia v=2. Vista previa sin escrituras. Archivo idéntico byte a byte al PNG aportado y diff sin errores de espacios. No cambia contenido, preguntas, actividad, registro ni contratos. Pendiente revisión final e integración; la incorporación publicada de #185 conserva su estado de validación familiar.
+Base `main` `192b9bf32069570e8212dbffb10917362f76ca4f` (#186). Rama `fix/science-piramide-escolar`. Ajuste limitado al PNG aprobado, su marcado accesible/dimensiones/referencia de caché y documentación. Revisión visual contra los cuatro niveles del PDF y del requerimiento del Product Owner. Validado en Chromium local con Outfit: imagen decodificada a 1122 × 1402, proporción íntegra y sin desbordamientos a 1440/768/390/320 px; los dos enlaces y la imagen utilizan la misma referencia v=2. Vista previa sin escrituras. Archivo idéntico byte a byte al PNG aportado y diff sin errores de espacios. No cambia contenido, preguntas, actividad, registro ni contratos. PR #187 aprobada por el Product Owner e integrada en `9f7b3a6ade17b36596c408f529e89ce095e55ad6`. Pages #797 `success`; HTML y PNG públicos HTTP 200 e idénticos byte a byte a los aprobados. Se confirma la referencia v=2 en el HTML y el SHA-256 del nuevo PNG original (`42a35aeabb7ba349eae08ea09bbbd6cbbf36b29b5730cb5cd3280df3caab1a65`). No queda implementación pendiente de esta corrección; Nutrición continúa para validación familiar.
 
 ## DECISIÓN
 
-Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. PR #185 aprobada e integrada: implementación cerrada en el mismo alcance, sin confirmaciones redundantes. La publicación no sustituye la validación familiar de comprensión y uso. La corrección visual 1.2 está autorizada y preparada para revisión final; aún no está integrada.
+Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. PR #185 aprobada e integrada: implementación cerrada en el mismo alcance, sin confirmaciones redundantes. La publicación no sustituye la validación familiar de comprensión y uso. La corrección visual #187 está aprobada e integrada; conserva los contratos y alcance anteriores.
