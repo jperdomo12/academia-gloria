@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 20/10/2026 | Product Owner + AI Collaborator | Retira los tres accesos plegables duplicados por observación visual del Product Owner. Las carpetas superiores muestran una sola sección (Lectura/V-F/A-B-C/Conectar), conservando respuestas y validación al cambiar. Sin cambios de contenido ni persistencia. |
 | 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste #192 integrado en 20364da3… y publicado (Pages #802 success): accesos juntos y respuestas/validación/reintentos sin guardado. Seis archivos de producto públicos de #192 idénticos a los probados; referencias v=2 en el cierre protegen caché de estilos/datos/presentador. Revisión familiar del ajuste pendiente. |
 | 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Observación directa del Product Owner: Plan Semanal junto a Zonas y respuestas digitales con validación en los tres bloques, sin guardar resultados. Conserva instrucción de cuaderno; corrige la limitación inicial de solo revelar soluciones. Texto libre comparado con modelo, sin calificación automática. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Cierra publicación autorizada: #190 integrada en da8eb5fb…, Pages #800 success y nueve archivos públicos HTTP 200 idénticos al resultado probado. Mantiene revisión familiar de lectura/cuaderno/soluciones pendiente; sin declarar estabilidad. |
@@ -324,7 +325,7 @@ Base real de desarrollo: `main` `288875b6a01fccebb5eec4102ff9f22afcd819db` (deci
 - `plan-semanal.js` agrupa el catálogo y presenta también los enlaces asociados de un Tema mediante `data-plan-tema`. La selección no se copia al catálogo de Science ni a Misiones.
 - `plan-semanal.css` contiene solo ajustes de semanas/documentos. Reutiliza `academia-base.css`, `portal-curso.css`, la rejilla de tarjetas y la cabecera/navegación/Panel compartidos. El cuerpo declara título, icono y retorno alternativo; no duplica la navegación.
 - Reutiliza `LectorTexto` con español y parada explícita. Escucha exclusivamente el relato, nunca las soluciones ocultas. Informa si no hay voz disponible o si falla; detiene la lectura al abandonar la página.
-- Los tres bloques empiezan plegados. Radios V/F y A/B/C, y selectores para conectar sistemas. **👀 Comprobar mis respuestas** valida las selecciones completas, muestra qué revisar, explicación por pregunta y recuento de elecciones correctas del bloque; **Volver a intentarlo** reinicia ese bloque. No se guarda ninguna respuesta o recuento. Las respuestas se reinician al recargar la página.
+- Las carpetas superiores muestran una sección cada vez: Lectura (inicial), V/F, A/B/C o Conectar. Se retiran los tres encabezados plegables repetidos debajo de la lectura. Radios V/F y A/B/C, y selectores para conectar sistemas. **👀 Comprobar mis respuestas** valida las selecciones completas, muestra qué revisar, explicación por pregunta y recuento de elecciones correctas del bloque; **Volver a intentarlo** reinicia ese bloque. No se guarda ninguna respuesta o recuento. Las respuestas se reinician al recargar la página.
 - No se añaden colecciones, Rules, sesiones, resultados, Misiones ni escrituras educativas; la navegación mantiene su almacenamiento contextual ya existente. Práctica/Prueba de Nutrición conservan íntegros su motor, banco, identidad y evidencia.
 
 ### 12.2 Calendario y futuras incorporaciones
@@ -379,6 +380,14 @@ El contrato del documento declara el tipo de bloque (`verdadero-falso`, `opcion-
 - Estado solo en los controles de la página; sin localStorage/Firestore de resultados, sesiones, Misiones o evidencias nuevas. El almacenamiento contextual de navegación existente se conserva.
 
 Base del ajuste: `main` `0ed73bf8fd6e5a8f89de729cbdac623c07b3fd2c` (#191). Rama `fix/plan-semanal-respuestas`. PR #192 integrada en `20364da3df4ee5cf9ac5577c5df99b4265e1049c` dentro de la autorización de implementación/publicación del encargo. Pages #802 (run `39478081719`) `success`; seis archivos de producto modificados HTTP 200 e idénticos byte a byte al resultado probado: portal de 6.º, CSS del curso, presentador/CSS de la ficha y HTML/datos de la actividad. Árbol remoto de #192 idéntico al local validado. El cierre añade referencias `?v=2` al CSS del portal y al conjunto HTML → datos → presentador/CSS de la ficha, para evitar mezclar versiones en un navegador que vio la entrega anterior; no cambia comportamiento o claves. Sin desarrollo pendiente del ajuste; revisión familiar del resultado pendiente, sin declarar estabilidad.
+
+### 13.1 Limpieza de accesos duplicados · revisión visual
+
+Observación directa del Product Owner sobre el adjunto del 20/10/2026: los tres acordeones inferiores repiten las carpetas superiores y no son necesarios. Se reutilizan esos cuatro controles superiores como selectores de sección; los tres bloques dejan de ser acordeones y cada actividad aparece directamente al elegir su carpeta. Inicialmente se muestra Lectura; un fragmento válido (`#bloque-vf`, `#bloque-abc`, `#bloque-conectar`) permite abrir directamente esa actividad. Solo hay una sección visible y el control activo se identifica visualmente y mediante `aria-pressed`/`aria-controls`.
+
+Cambiar de carpeta conserva selecciones, correcciones y feedback en memoria, sin guardar resultados. El cambio usa `replaceState` para no añadir pasos al recorrido de Volver. Ocultar la lectura detiene su audio. Contenido, claves, validación, reintentos y navegación curricular se conservan; referencias `?v=3` mantienen coherentes HTML, contenido, presentador y CSS frente a caché anterior.
+
+Base `main` `7cb4139c065bc6cfd4380d86017a14f2093406d9`; rama `fix/plan-semanal-atajos`. La prueba de navegador se adapta para recorrer las cuatro carpetas, verificar una sección visible, ausencia de acordeones duplicados y conservación de respuestas al volver a una actividad, además de las validaciones de formularios, retorno, responsive y cero escrituras anteriores. SDK/identidad/voz simulados; revisión familiar del ajuste pendiente. Este ajuste de presentación no declara estabilidad del material.
 
 ## DECISIÓN
 

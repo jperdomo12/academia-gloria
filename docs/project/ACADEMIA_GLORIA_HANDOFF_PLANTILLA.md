@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.34 |
+| **Versión** | 3.35 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 20/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.35 | 20/10/2026 | Product Owner + AI Collaborator | Simplifica ficha de Plan Semanal tras observación del Product Owner: carpetas superiores muestran una sección cada vez y retira acordeones repetidos. Respuestas y validación conservadas al cambiar; SPEC 1.5 y caché v=3. Sin persistencia nueva; pendientes anteriores conservados. |
 | 3.34 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de Plan Semanal #192 integrado/publicado: tarjetas juntas y respuestas digitales con validación/reintentos, sin guardado. Pages #802 success, seis archivos HTTP 200 e idénticos al producto probado; SPEC 1.4. Revisión familiar pendiente; conserva pendientes anteriores. |
 | 3.33 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de primera revisión de Plan Semanal: junto a Zonas y respuestas digitales con validación/reintentos sin guardado. SPEC 1.3 candidata; conserva instrucción escolar y pendientes anteriores. |
 | 3.32 | 20/10/2026 | Product Owner + AI Collaborator | Plan Semanal publicado dentro de la autorización expresa: #190 integrada en da8eb5fb…, Pages #800 success; nueve archivos públicos HTTP 200 e idénticos al producto probado. SPEC 1.2, revisión familiar pendiente; mantiene todos los pendientes anteriores. |
@@ -429,6 +430,9 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
+**Ajuste visual de Plan Semanal · 20/10/2026:** petición directa del Product Owner desde el adjunto de los tres acordeones repetidos. Base `main` `7cb4139c…`, rama `fix/plan-semanal-atajos`. SPEC propietaria 1.5: las cuatro carpetas superiores muestran solo su sección y se retiran los accesos plegables duplicados. Cambiar de carpeta conserva respuestas/correcciones/feedback sin guardarlos, detiene la lectura al ocultarla y no añade pasos a Volver. Referencias v=3 coherentes. Validación de navegador y responsive; revisión familiar del ajuste pendiente. No modifica preguntas, claves, motor académico o evidencia. Conserva todos los pendientes previos.
+
+
 **Ajuste publicado para revisión familiar · Plan Semanal:** petición directa del Product Owner tras #190/#191. Base `main` `0ed73bf8…`; #192 integrada en `20364da3df4ee5cf9ac5577c5df99b4265e1049c`, dentro de la autorización de implementación/publicación del encargo. SPEC propietaria 1.4. Accesos Zonas/Plan lado a lado en rejilla compartida. La misma ficha admite respuestas V/F, A/B/C y sistemas, comprobación/explicaciones/recuentos de elecciones y reintento sin guardar resultados. Correcciones libres comparadas con el modelo, sin calificación automática del texto libre. Instrucción de cuaderno, Tema, pirámide y motor académico intactos. Pruebas de navegador de respuestas/incompletos/reintentos/recarga, cero escrituras educativas en los tres roles, navegación y responsive. Pages #802 (run `39478081719`) success; seis archivos de producto HTTP 200 e idénticos al resultado probado. Sin desarrollo ni publicación pendiente; revisión familiar del ajuste pendiente. Conserva todos los pendientes anteriores.
 
 
@@ -442,7 +446,7 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.34 |
+| **Versión** | 3.35 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
 | **PR On going** | Sin PR de producto pendiente de Plan Semanal; #192 integrada; revisión familiar pendiente |

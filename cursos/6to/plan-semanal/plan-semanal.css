@@ -13,7 +13,7 @@ summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var
 .plan-comprobar{border-top:1px solid var(--c6-line);padding-top:18px;margin-top:20px}
 .plan-acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}.plan-acciones button,.plan-acciones a{font:inherit;white-space:normal;text-align:center}.plan-acciones button:disabled{opacity:.6;cursor:not-allowed}
 
-.plan-estado{min-height:1.5em;color:var(--c6-muted);line-height:1.5}.plan-atajos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.plan-atajos a{padding:9px 12px;border:1px solid var(--c6-line);border-radius:12px;background:white;font-weight:700;text-decoration:none;min-height:44px}
+.plan-estado{min-height:1.5em;color:var(--c6-muted);line-height:1.5}.plan-atajos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.plan-atajos button{padding:9px 12px;border:1px solid var(--c6-line);border-radius:12px;background:white;font-weight:700;text-decoration:none;min-height:44px}
 .plan-documento :focus-visible,.plan-semana :focus-visible{outline:3px solid var(--c6-sky);outline-offset:4px}
 @media(max-width:420px){.plan-documento .curso6-hero{padding:22px 18px}.plan-comprobar .boton-academia{width:100%}.plan-cuaderno{padding:18px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -35,3 +35,6 @@ summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var
 .plan-respuesta--revisar,.plan-resultado--revisar{background:var(--c6-coral-soft);color:#844b3e}
 
 .plan-documento [hidden]{display:none!important}
+
+.plan-atajos button{font:inherit;cursor:pointer;color:var(--c6-olive-dark)}
+.plan-atajos button.activa{background:var(--c6-olive-soft);border-color:var(--c6-olive)}
