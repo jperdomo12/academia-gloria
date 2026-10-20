@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.1 |
-| **Estado** | Implementación candidata · validación familiar pendiente |
+| **Versión** | 1.2 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Cierra publicación autorizada: #190 integrada en da8eb5fb…, Pages #800 success y nueve archivos públicos HTTP 200 idénticos al resultado probado. Mantiene revisión familiar de lectura/cuaderno/soluciones pendiente; sin declarar estabilidad. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | Primera implementación: portal selectivo por semanas y ficha paper-first dentro de Science/Nutrición. Catálogo único, lectura/voz compartida, tres bloques con comprobación tras intento y sin evidencia persistente. Validación técnica y responsive; revisión familiar pendiente. |
 | 1.0 | 20/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada: nuevo acceso transversal `Plan Semanal` en 6.º, incorporación selectiva mediante una sola instrucción, organización por semanas y conexión con el Tema propietario cuando corresponda. Registra `6_PS_ANS_Nutrición.pdf` como primera aplicación, semana escolar del 19 al 26 de octubre de 2026. |
 
@@ -311,7 +312,7 @@ La primera implementación deberá demostrar que:
 
 ## 12. Implementación y continuidad técnica · 20/10/2026
 
-Base real de desarrollo: `main` `288875b` (decisión de Plan Semanal ya integrada). Rama `feat/plan-semanal-6to`.
+Base real de desarrollo: `main` `288875b6a01fccebb5eec4102ff9f22afcd819db` (decisión de Plan Semanal ya integrada). Rama `feat/plan-semanal-6to`. PR #190 integrada en `da8eb5fb6b1a750e17f47575ad5466b69b262a5d`, dentro de la autorización expresa del Product Owner para implementación, PR y publicación/verificación. La revisión familiar del resultado sigue pendiente.
 
 ### 12.1 Ubicación, propiedad y reutilización
 
@@ -358,9 +359,13 @@ Se corrigen erratas de transcripción/ortografía del enunciado/opciones (`estó
 
 Responsive en Chromium a 1440/1024/768/390/320 px, sin desbordamientos en portal ni ficha con soluciones desplegadas. Revisión visual con Outfit y emoji cargados de escritorio/móvil y estado inicial plegado. Regresión `tests/nutricion-browser.cjs`: práctica, prueba, sesiones, variantes, Misión/evidencia, histórico, vista previa, catálogo, refuerzo y Análisis conservados. Sintaxis/imports/rutas/diff revisados. No utiliza cuentas/datos reales ni certifica audio físico o Firestore de producción. La validación familiar de comprensión y uso queda pendiente, sin declarar estabilidad.
 
+### 12.5 Publicación verificada
+
+Pages #800 (run `39473961170`) terminó `success` sobre `da8eb5fb6b1a750e17f47575ad5466b69b262a5d`. Portal de 6.º, portal semanal, catálogo, presentador de semanas, CSS, presentador de documentos, Tema Nutrición, ficha y contenido semanal servidos con HTTP 200 y coincidencia byte a byte con los nueve archivos de producto probados. El árbol remoto de #190 coincide exactamente con el árbol local validado; no incorpora cambios ajenos. Sin implementación ni publicación pendiente de este frente. Queda la revisión final familiar, especialmente claridad de lectura, trabajo en cuaderno y comprobación; no declarar estable.
+
 ## DECISIÓN
 
-**DECISIÓN FUNCIONAL APROBADA · IMPLEMENTACIÓN CANDIDATA PARA REVISIÓN FINAL.**
+**DECISIÓN FUNCIONAL APROBADA · IMPLEMENTACIÓN PUBLICADA PARA REVISIÓN FAMILIAR.**
 
 `Plan Semanal` será un espacio transversal y selectivo de 6.º. El Product Owner elegirá los documentos importantes mediante una instrucción mínima; Academia resolverá su clasificación e integración. La semana organiza el acceso, mientras que la materia y el Tema conservan la propiedad curricular cuando corresponda.
 
