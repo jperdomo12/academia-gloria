@@ -471,3 +471,17 @@ body.curso6-portal{
   .curso6-asignatura--activa:hover,
   .curso6-asignatura--activa:focus-visible{transform:none}
 }
+
+/* Accesos transversales del colegio: cada espacio conserva su identidad. */
+.curso6-accesos-colegio{margin-top:27px;--academia-grid-gap:14px}
+.curso6-accesos-colegio>.curso6-seccion{margin-top:0;min-width:0;display:grid;grid-template-rows:subgrid;grid-row:span 2}
+.curso6-accesos-colegio .curso6-seccion__cabecera{margin-bottom:0;align-items:flex-start}
+.curso6-accesos-colegio .curso6-seccion__principal{min-width:0;align-items:flex-start}
+.curso6-accesos-colegio h2{overflow-wrap:break-word}
+.curso6-acceso-colegio__tarjeta{display:flex}
+.curso6-acceso-colegio__tarjeta>.curso6-asignatura{width:100%}
+@media(max-width:700px){
+  .curso6-seccion__cabecera{flex-wrap:wrap}
+  .curso6-seccion__estado{max-width:100%;white-space:normal}
+  .curso6-accesos-colegio .curso6-seccion__principal{flex-direction:column}
+}

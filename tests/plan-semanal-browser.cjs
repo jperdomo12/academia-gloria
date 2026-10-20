@@ -54,6 +54,16 @@ for(const role of ['alumno','gestion','consulta']) {
  await p.goto(base+'/cursos/6to/');
  await p.waitForSelector('.nav-global');
  assert.deepEqual(await p.locator('#tituloAsignaturas, #tituloZonasCole, #tituloPlanSemanal, #tituloRecursosColegio').allTextContents(),['Mis asignaturas','Zonas del cole','Plan Semanal','Recursos del colegio']);
+ if(role==='alumno') {
+  for(const width of [1440,768,390,320]) {
+   await p.setViewportSize({width,height:1000});await p.clock.runFor(60);
+   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'curso overflow '+width);
+   const zonas=await p.locator('a[href="./zonas/"]').boundingBox();
+   const plan=await p.locator('a[href="./plan-semanal/"]').boundingBox();
+   if(width>350){assert.ok(Math.abs(zonas.y-plan.y)<2,'tarjetas alineadas '+width);assert.ok(plan.x>zonas.x,'Plan al lado de Zonas '+width);}
+   if(process.env.QA_IMAGES&&[1440,390].includes(width))await p.locator('.curso6-accesos-colegio').screenshot({path:process.env.QA_IMAGES+'-accesos-'+width+'.png'});
+  }
+ }
  await p.locator('a[href="./plan-semanal/"]').click();
  await p.waitForSelector('.plan-tarjeta');
  assert.equal(await p.locator('.plan-tarjeta').count(),1);
@@ -76,30 +86,54 @@ for(const role of ['alumno','gestion','consulta']) {
  assert.equal(await p.locator('.plan-lectura-parrafo').count(),5);
  if(process.env.QA_IMAGES&&role==='alumno'){await p.setViewportSize({width:390,height:1000});await p.clock.runFor(60);await p.screenshot({path:process.env.QA_IMAGES+'-inicio-390.png',fullPage:true});}
  assert.match(await p.locator('.plan-lectura-parrafo').last().innerText(),/riñones.*vejiga.*uretra/);
- assert.equal(await p.locator('#bloque-vf > ol > li').count(),10);
- assert.equal(await p.locator('#bloque-abc > ol > li').count(),8);
- assert.equal(await p.locator('#bloque-abc > ol > li > ul > li').count(),24);
- assert.equal(await p.locator('#bloque-conectar > ol > li').count(),8);
+ assert.equal(await p.locator('#bloque-vf fieldset').count(),10);
+ assert.equal(await p.locator('#bloque-abc fieldset').count(),8);
+ assert.equal(await p.locator('#bloque-abc input[type=radio]').count(),24);
+ assert.equal(await p.locator('#bloque-conectar select').count(),8);
  await p.getByRole('button',{name:'🔊 Escuchar',exact:true}).click();
  assert.equal(await p.evaluate(()=>qaAudio.at(-1).lang),'es-ES');
  assert.match(await p.evaluate(()=>qaAudio.at(-1).text),/El viaje de la nutrición/);
  assert.doesNotMatch(await p.evaluate(()=>qaAudio.at(-1).text),/Verdadero|Compara con tu cuaderno|aclaración de apoyo/);
+ const claves={vf:[1,0,1,1,0,0,1,0,0,0],abc:[1,1,0,2,1,0,1,0],conectar:[1,3,0,2,0,1,3,2]};
  for(const id of ['vf','abc','conectar']) {
   const bloque=p.locator('#bloque-'+id);
   assert.equal(await bloque.getAttribute('open'),null);
   await bloque.locator('summary').click();
-  const comprobar=bloque.getByRole('button',{name:'👀 Comprobar cuando termine'});
-  assert.ok(await comprobar.isDisabled());assert.ok(await bloque.locator('.plan-soluciones').isHidden());
-  await bloque.locator('input').check();assert.ok(await comprobar.isEnabled());
-  await comprobar.click();assert.ok(await bloque.locator('.plan-soluciones').isVisible());
-  assert.equal(await bloque.locator('.plan-soluciones ol > li').count(),id==='vf'?10:8);
-  await bloque.locator('input').uncheck();assert.ok(await bloque.locator('.plan-soluciones').isHidden());
-  await bloque.locator('input').check();await comprobar.click();
+  const comprobar=bloque.getByRole('button',{name:'👀 Comprobar mis respuestas'});
+  assert.equal(await bloque.locator('.plan-respuesta:visible').count(),0);
+  await comprobar.click();assert.match(await bloque.locator('.plan-resultado').innerText(),/respuestas por elegir/);
+  async function elegir(i,valor) {
+   const grupo=bloque.locator('fieldset').nth(i);
+   if(id==='conectar')await grupo.locator('select').selectOption(String(valor));
+   else await grupo.locator('input[value="'+valor+'"]').check();
+   if(id==='vf'&&valor===1)await grupo.locator('textarea').fill('Mi propuesta con mis propias palabras.');
+  }
+  for(let i=0;i<claves[id].length;i++)await elegir(i,i===0?(claves[id][i]+1)%(id==='conectar'?4:id==='abc'?3:2):claves[id][i]);
+  await comprobar.click();
+  assert.match(await bloque.locator('.plan-resultado').innerText(),new RegExp((claves[id].length-1)+' de '+claves[id].length));
+  assert.match(await bloque.locator('.plan-respuesta').first().innerText(),/Revisa esta elección/);
+  assert.equal(await bloque.locator('.plan-respuesta--bien:visible').count(),claves[id].length-1);
+  if(id==='vf') {
+   await bloque.locator('fieldset').first().locator('input[value="1"]').check();
+   await comprobar.click();assert.match(await bloque.locator('.plan-resultado').innerText(),/Escribe una propuesta/);
+  }
+  await elegir(0,claves[id][0]);await comprobar.click();
+  assert.match(await bloque.locator('.plan-resultado').innerText(),new RegExp(claves[id].length+' de '+claves[id].length));
+  assert.equal(await bloque.locator('.plan-respuesta--bien:visible').count(),claves[id].length);
+  if(id==='vf')assert.match(await bloque.innerText(),/no se califica automáticamente/);
+  await bloque.getByRole('button',{name:'Volver a intentarlo'}).click();
+  assert.equal(await bloque.locator('input:checked').count(),0);
+  assert.equal(await bloque.locator('.plan-respuesta:visible').count(),0);
+  assert.ok(await bloque.locator('.plan-resultado').isHidden());
+  if(id==='conectar')assert.ok((await bloque.locator('select').evaluateAll(es=>es.map(e=>e.value))).every(v=>v===''));
+  for(let i=0;i<claves[id].length;i++)await elegir(i,claves[id][i]);
+  await comprobar.click();
  }
  if(role==='alumno'){
-  assert.match(await p.locator('#soluciones-vf').innerText(),/Falso.*boca/s);
-  assert.match(await p.locator('#soluciones-abc').innerText(),/B\) En la boca/);
-  assert.match(await p.locator('#soluciones-conectar').innerText(),/Tráquea → Sistema respiratorio/);
+  assert.match(await p.locator('#bloque-vf').innerText(),/La digestión comienza en la boca/);
+  assert.match(await p.locator('#bloque-abc .plan-respuesta').first().innerText(),/En la boca/);
+  assert.match(await p.locator('#bloque-conectar .plan-respuesta').first().innerText(),/Sistema respiratorio/);
+  if(process.env.QA_IMAGES){await p.setViewportSize({width:390,height:1000});await p.locator('#bloque-vf').scrollIntoViewIfNeeded();await p.screenshot({path:process.env.QA_IMAGES+'-vf-390.png'});}
   for(const width of [1440,1024,768,390,320]) {
    await p.setViewportSize({width,height:1000});await p.clock.runFor(60);
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'ficha overflow '+width);
@@ -109,7 +143,9 @@ for(const role of ['alumno','gestion','consulta']) {
  const before=await p.evaluate(()=>JSON.parse(localStorage.qaDB));
  assert.equal(await p.evaluate(()=>window.qaWrites||0),0);
  await p.reload();await p.waitForSelector('#lecturaPlan');
- assert.equal(await p.locator('.plan-intento input:checked').count(),0);
+ assert.equal(await p.locator('.plan-pregunta input:checked').count(),0);
+ assert.equal(await p.locator('.plan-respuesta:visible').count(),0);
+ assert.ok((await p.locator('.plan-pregunta textarea').evaluateAll(es=>es.map(e=>e.value))).every(v=>v===''));
  // Contextual back: document -> weekly portal -> course, never a back loop.
  await p.locator('[data-nav-volver]').click();await p.waitForSelector('.plan-tarjeta');
  assert.equal(new URL(p.url()).pathname,portal);
@@ -149,5 +185,5 @@ assert.match(await directo.p.locator('.plan-estado').innerText(),/no dispone de 
 await directo.p.locator('[data-nav-volver]').click();await directo.p.waitForSelector('[data-plan-tema] a');
 assert.equal(new URL(directo.p.url()).pathname.replace(/index\.html$/,''),'/cursos/6to/science/nutricion/');
 assert.deepEqual(directo.errors,[]);await directo.c.close();
-await b.close();console.log('OK: Plan Semanal, semana Madrid/límites/cambio de fecha, 10 V/F + 8 A/B/C + 8 conexiones, cuaderno/revelado por bloque, voz solo lectura, retorno en ambos recorridos, Persona Activa, 0 escrituras educativas y responsive 320–1440; SDK/identidades/voz simulados.');
+await b.close();console.log('OK: Plan Semanal, semana Madrid/límites/cambio de fecha, 10 V/F + 8 A/B/C + 8 conexiones, respuestas objetivas correctas/incorrectas, correcciones libres, incompletos y reintentos sin guardado, voz solo lectura, retorno en ambos recorridos, Persona Activa, 0 escrituras educativas y responsive 320–1440; SDK/identidades/voz simulados.');
 })().catch(e=>{console.error(e);process.exit(1)});

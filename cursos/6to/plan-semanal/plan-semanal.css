@@ -10,9 +10,9 @@ summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var
 .plan-bloque{padding:clamp(18px,4vw,30px);margin-top:22px;min-width:0;overflow-wrap:break-word}.plan-bloque h2{margin:0 0 14px;color:var(--c6-olive-dark);line-height:1.3}.plan-bloque p,.plan-bloque li{font-size:1.08rem;line-height:1.8}.plan-bloque li{margin:16px 0}.plan-bloque ol{padding-left:25px}.plan-bloque ul{padding-left:24px}
 .plan-bloque .plan-lectura-parrafo{margin:0 0 23px}.plan-lectura-parrafo strong{color:var(--c6-olive-dark)}
 .plan-bloque details>summary{cursor:pointer;font-size:1.2rem;font-weight:800;color:var(--c6-olive-dark);line-height:1.5}
-.plan-comprobar{border-top:1px solid var(--c6-line);padding-top:18px;margin-top:20px}.plan-intento{display:flex;align-items:flex-start;gap:12px;line-height:1.6;cursor:pointer;padding:8px 0}.plan-intento input{width:22px;height:22px;flex:0 0 22px;accent-color:var(--c6-olive)}
+.plan-comprobar{border-top:1px solid var(--c6-line);padding-top:18px;margin-top:20px}
 .plan-acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}.plan-acciones button,.plan-acciones a{font:inherit;white-space:normal;text-align:center}.plan-acciones button:disabled{opacity:.6;cursor:not-allowed}
-.plan-soluciones{margin-top:18px;padding:16px;border-radius:18px;background:var(--c6-green-soft)}.plan-soluciones h3{margin:0 0 10px}.plan-soluciones ol{margin-bottom:0}.plan-soluciones li{margin:12px 0}
+
 .plan-estado{min-height:1.5em;color:var(--c6-muted);line-height:1.5}.plan-atajos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.plan-atajos a{padding:9px 12px;border:1px solid var(--c6-line);border-radius:12px;background:white;font-weight:700;text-decoration:none;min-height:44px}
 .plan-documento :focus-visible,.plan-semana :focus-visible{outline:3px solid var(--c6-sky);outline-offset:4px}
 @media(max-width:420px){.plan-documento .curso6-hero{padding:22px 18px}.plan-comprobar .boton-academia{width:100%}.plan-cuaderno{padding:18px}}
@@ -20,3 +20,18 @@ summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var
 
 .plan-acciones .boton-academia{background:var(--c6-olive-soft);color:var(--c6-olive-dark)}
 .plan-comprobar .boton-academia:not(:disabled){background:var(--c6-olive-dark);color:#fff}
+
+/* Respuesta y comprobación efímeras: controles nativos y campos compartidos. */
+.plan-pregunta{min-width:0;margin-top:18px;border-color:var(--c6-line)}
+.plan-pregunta legend{padding:0 6px;font-weight:700;line-height:1.6;max-width:100%}
+.plan-opciones{display:grid;gap:10px}
+.plan-pregunta .plan-opcion{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--c6-line);border-radius:12px;background:#fff;cursor:pointer;font-weight:600;margin:0}
+.plan-pregunta .plan-opcion input{width:22px;height:22px;flex:0 0 22px;margin:2px 0;accent-color:var(--c6-olive)}
+.plan-opcion:has(input:checked){background:var(--c6-olive-soft);border-color:var(--c6-olive)}
+.plan-pregunta select,.plan-pregunta textarea{font-size:1rem;min-height:48px}
+.plan-correccion{margin-top:16px}
+.plan-respuesta,.plan-resultado{padding:15px;border-radius:14px;background:var(--c6-green-soft);color:#305d43;line-height:1.65;margin-top:16px}
+.plan-respuesta p{margin:7px 0;font-size:1rem}
+.plan-respuesta--revisar,.plan-resultado--revisar{background:var(--c6-coral-soft);color:#844b3e}
+
+.plan-documento [hidden]{display:none!important}
