@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.2 |
-| **Estado** | Publicada para validación familiar · no declarada estable |
+| **Versión** | 1.3 |
+| **Estado** | Ajuste de revisión familiar candidato · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Observación directa del Product Owner: Plan Semanal junto a Zonas y respuestas digitales con validación en los tres bloques, sin guardar resultados. Conserva instrucción de cuaderno; corrige la limitación inicial de solo revelar soluciones. Texto libre comparado con modelo, sin calificación automática. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Cierra publicación autorizada: #190 integrada en da8eb5fb…, Pages #800 success y nueve archivos públicos HTTP 200 idénticos al resultado probado. Mantiene revisión familiar de lectura/cuaderno/soluciones pendiente; sin declarar estabilidad. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | Primera implementación: portal selectivo por semanas y ficha paper-first dentro de Science/Nutrición. Catálogo único, lectura/voz compartida, tres bloques con comprobación tras intento y sin evidencia persistente. Validación técnica y responsive; revisión familiar pendiente. |
 | 1.0 | 20/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada: nuevo acceso transversal `Plan Semanal` en 6.º, incorporación selectiva mediante una sola instrucción, organización por semanas y conexión con el Tema propietario cuando corresponda. Registra `6_PS_ANS_Nutrición.pdf` como primera aplicación, semana escolar del 19 al 26 de octubre de 2026. |
@@ -48,16 +49,15 @@ La Academia transforma esos materiales seleccionados en una experiencia clara y 
 
 En el portal de `6.º de Primaria`, `Plan Semanal` debe aparecer como un espacio transversal propio:
 
-```text
-Mis asignaturas
-Zonas del cole
-📅 Plan Semanal
-Recursos del colegio
-```
+- `Mis asignaturas`;
+- fila de accesos independientes: `Zonas del cole` y `📅 Plan Semanal`, uno junto al otro;
+- `Recursos del colegio`.
+
+En pantallas extremadamente estrechas, la rejilla compartida permite una columna para mantener la legibilidad.
 
 Por tanto:
 
-- se ubica **después de `Zonas del cole`**;
+- se ubica **junto a `Zonas del cole`, en la misma fila de accesos**;
 - se ubica **antes de `Recursos del colegio`**;
 - no es una asignatura;
 - no es una Zona del cole;
@@ -180,7 +180,7 @@ Patrón recomendado:
 En esos casos:
 
 - Academia no sustituye el trabajo en cuaderno;
-- la comprobación puede mostrarse después de que el alumno haya intentado la actividad;
+- después del trabajo en cuaderno, el alumno puede responder en Academia y comprobar sus elecciones;
 - no es obligatorio convertir el ejercicio en otra prueba digital persistente;
 - se evita duplicar evidencia si el Tema ya dispone de Práctica/Prueba académica propia.
 
@@ -235,7 +235,7 @@ El documento indica explícitamente que las actividades deben realizarse **en pa
 
 La adaptación en Academia debe conservar esa intención.
 
-Primera propuesta de experiencia aprobada:
+Experiencia aprobada, ajustada tras la primera revisión del Product Owner:
 
 ```text
 📖 El viaje de la nutrición
@@ -248,10 +248,10 @@ Primera propuesta de experiencia aprobada:
   3. Conectar parte ↔ sistema
 
 Primero en tu cuaderno.
-Después: 👀 Comprobar cuando termine
+Después, responde también en Academia: 👀 Comprobar mis respuestas
 ```
 
-La comprobación posterior puede ofrecer respuestas y explicaciones breves, sin convertir esta ficha en una segunda Prueba académica ni duplicar la persistencia del Tema.
+La comprobación posterior valida las elecciones introducidas en Academia y ofrece respuestas y explicaciones breves, sin convertir esta ficha en una segunda Prueba académica persistente ni duplicar la persistencia del Tema. En V/F se pide una propuesta escrita al marcar Falso; esa redacción se compara con el modelo, sin calificación automática del texto libre.
 
 ---
 
@@ -297,7 +297,7 @@ No se aprueba por esta decisión:
 
 La primera implementación deberá demostrar que:
 
-1. `Plan Semanal` aparece en 6.º después de `Zonas del cole` y antes de `Recursos del colegio`;
+1. `Plan Semanal` aparece junto a `Zonas del cole` en 6.º, antes de `Recursos del colegio`, con la misma rejilla responsive;
 2. solo contiene material seleccionado por el Product Owner;
 3. organiza el material por semana;
 4. el primer documento corresponde a la semana 19–26 octubre de 2026;
@@ -305,7 +305,7 @@ La primera implementación deberá demostrar que:
 6. desde Plan Semanal se accede a la experiencia correspondiente sin crear un Tema duplicado;
 7. Science → Nutrición conserva la propiedad del contenido y presenta el material semanal asociado;
 8. la actividad respeta la instrucción de realizar primero el trabajo en cuaderno;
-9. la comprobación posterior no duplica la Práctica/Prueba persistente de Nutrición;
+9. el alumno responde y comprueba los tres bloques en Academia sin duplicar la Práctica/Prueba persistente de Nutrición ni guardar las respuestas;
 10. responsive, navegación y `Volver` conservan los estándares vigentes.
 
 ---
@@ -316,14 +316,14 @@ Base real de desarrollo: `main` `288875b6a01fccebb5eec4102ff9f22afcd819db` (deci
 
 ### 12.1 Ubicación, propiedad y reutilización
 
-- `cursos/6to/index.html` incorpora una sección propia después de Zonas del cole y antes de Recursos del colegio. Reutiliza las tarjetas, rejilla e identidad del portal; no incorpora una asignatura o una Zona.
+- `cursos/6to/index.html` sitúa dos accesos independientes (Zonas del cole y Plan Semanal) en la misma rejilla compartida, antes de Recursos del colegio. Conserva títulos, tarjetas e identidad; no incorpora una asignatura o una Zona. Las filas de encabezados/tarjetas se alinean con subgrid; a 350 px o menos aplica la columna única ya prevista en la rejilla.
 - `cursos/6to/plan-semanal/index.html` es el acceso por semanas. `materiales.js` contiene únicamente la selección del Product Owner: identidad, rango escolar, materia/Tema, procedencia y rutas. No consulta Google Sites ni el Monitor.
 - La única experiencia del documento vive en `cursos/6to/science/nutricion/plan-semanal/`. El acceso semanal y la sección **Material del Plan Semanal** del Mapa de Nutrición se derivan del mismo catálogo y apuntan al mismo destino.
-- `viaje-nutricion.js` contiene lectura y actividades del documento; utiliza `plan-semanal/documento.js` para presentar lectura, voz y comprobación por bloque. Este presentador no es un segundo motor académico: no calcula resultados, no recoge respuestas digitales y no guarda progreso.
+- `viaje-nutricion.js` contiene lectura y actividades del documento; utiliza `plan-semanal/documento.js` para presentar lectura, voz y comprobación por bloque. El presentador existente incorpora comprobación de las selecciones de esta ficha, sin iniciar sesiones académicas ni guardar respuestas/resultados. No se duplica ni adapta el motor persistente del Tema.
 - `plan-semanal.js` agrupa el catálogo y presenta también los enlaces asociados de un Tema mediante `data-plan-tema`. La selección no se copia al catálogo de Science ni a Misiones.
 - `plan-semanal.css` contiene solo ajustes de semanas/documentos. Reutiliza `academia-base.css`, `portal-curso.css`, la rejilla de tarjetas y la cabecera/navegación/Panel compartidos. El cuerpo declara título, icono y retorno alternativo; no duplica la navegación.
 - Reutiliza `LectorTexto` con español y parada explícita. Escucha exclusivamente el relato, nunca las soluciones ocultas. Informa si no hay voz disponible o si falla; detiene la lectura al abandonar la página.
-- Los tres bloques empiezan plegados. Cada uno exige marcar **Ya he intentado este bloque en mi cuaderno** antes de habilitar **👀 Comprobar cuando termine**. La confirmación no evalúa ni acredita el trabajo; permite comparar con el cuaderno. Desmarcar vuelve a ocultar respuestas.
+- Los tres bloques empiezan plegados. Radios V/F y A/B/C, y selectores para conectar sistemas. **👀 Comprobar mis respuestas** valida las selecciones completas, muestra qué revisar, explicación por pregunta y recuento de elecciones correctas del bloque; **Volver a intentarlo** reinicia ese bloque. No se guarda ninguna respuesta o recuento. Las respuestas se reinician al recargar la página.
 - No se añaden colecciones, Rules, sesiones, resultados, Misiones ni escrituras educativas; la navegación mantiene su almacenamiento contextual ya existente. Práctica/Prueba de Nutrición conservan íntegros su motor, banco, identidad y evidencia.
 
 ### 12.2 Calendario y futuras incorporaciones
@@ -355,17 +355,33 @@ Se corrigen erratas de transcripción/ortografía del enunciado/opciones (`estó
 
 ### 12.4 Validación y límites
 
-`tests/plan-semanal-browser.cjs`: acceso desde 6.º en el orden aprobado; catálogo único; semana actual en Madrid y límites inclusivos; agrupación de semanas pasadas/futuras y cambio real de fecha a archivo plegado; cobertura 10 V/F + 8 A/B/C/24 opciones + 8 conexiones; tres bloques cerrados, confirmación de intento y ocultación/revelado independientes; voz solo del relato y estado sin voz; retorno Plan → ficha → Plan → 6.º, Science → Nutrición → ficha → Nutrición y entrada directa con retorno al Tema; Persona Activa conservada. Alumno, familiar con gestión y profesional de consulta: cero escrituras educativas y datos de prueba intactos tras la consulta. SDK/identidades/voz simulados; navegación, ContextoUsuario y lector compartidos reales.
+`tests/plan-semanal-browser.cjs` conserva la cobertura inicial de semana Madrid, rangos inclusivos, archivo plegado, navegación en ambos recorridos, acceso directo, Persona Activa, lectura/voz y cero escrituras educativas para alumno/familiar/profesional. Añade la alineación real de las dos tarjetas y ausencia de desbordamiento en 6.º, respuestas incompletas, selecciones correctas/incorrectas en cada bloque, recuentos, petición de corrección escrita al elegir Falso, explicación sin calificar el texto libre, edición sin resultados desactualizados, reintentos y reinicio al recargar. Verifica los mismos 10 V/F, 8 A/B/C y 8 conexiones. SDK, identidades y voz simulados; no certifica cuentas reales o audio físico.
 
-Responsive en Chromium a 1440/1024/768/390/320 px, sin desbordamientos en portal ni ficha con soluciones desplegadas. Revisión visual con Outfit y emoji cargados de escritorio/móvil y estado inicial plegado. Regresión `tests/nutricion-browser.cjs`: práctica, prueba, sesiones, variantes, Misión/evidencia, histórico, vista previa, catálogo, refuerzo y Análisis conservados. Sintaxis/imports/rutas/diff revisados. No utiliza cuentas/datos reales ni certifica audio físico o Firestore de producción. La validación familiar de comprensión y uso queda pendiente, sin declarar estabilidad.
+Responsive Chromium con Outfit/emoji cargados: 1440/768/390/320 px en el portal de curso y semanal; ficha también a 1024 px, sin desbordamientos con respuestas/correcciones/feedback visibles. Se revisan las tarjetas juntas en escritorio y móvil y el formulario. Se ajusta el salto de línea de las etiquetas existentes del encabezado en móvil para evitar desbordamiento en 6.º. No cambia contenido/banco/motor/evidencia de la Práctica/Prueba académica ni la pirámide aprobada. La regresión completa de Nutrición de #190 sigue como antecedente; este ajuste valida el recorrido actual hasta el Tema. Sintaxis/imports/rutas/diff revisados. La comprensión y utilidad con Gloria siguen pendientes de uso familiar.
 
-### 12.5 Publicación verificada
+### 12.5 Publicación inicial verificada · #190
 
 Pages #800 (run `39473961170`) terminó `success` sobre `da8eb5fb6b1a750e17f47575ad5466b69b262a5d`. Portal de 6.º, portal semanal, catálogo, presentador de semanas, CSS, presentador de documentos, Tema Nutrición, ficha y contenido semanal servidos con HTTP 200 y coincidencia byte a byte con los nueve archivos de producto probados. El árbol remoto de #190 coincide exactamente con el árbol local validado; no incorpora cambios ajenos. Sin implementación ni publicación pendiente de este frente. Queda la revisión final familiar, especialmente claridad de lectura, trabajo en cuaderno y comprobación; no declarar estable.
 
+## 13. Ajuste solicitado por el Product Owner · 20/10/2026
+
+Tras revisar el producto publicado, el Product Owner solicita Plan Semanal al lado de Zonas y responder/validar dentro de Academia, en esta oportunidad sin guardar resultados. Esta instrucción directa actualiza la decisión anterior de solo revelar soluciones después del cuaderno; no requiere crear otro Tema o Prueba persistente. La indicación escolar de hacer primero el trabajo en papel permanece visible.
+
+El contrato del documento declara el tipo de bloque (`verdadero-falso`, `opcion-multiple`, `relacionar`), las opciones y un índice `respuestaCorrecta` por pregunta. La respuesta mostrada se obtiene de esas mismas opciones: no se deduce la clave analizando textos de presentación ni se mantienen dos claves independientes.
+
+- Todas las selecciones de un bloque deben estar completadas antes de corregirlo. Si falta alguna se informa y enfoca la primera pendiente, sin mostrar las soluciones.
+- V/F: Verdadero o Falso seleccionables; al elegir Falso se solicita una corrección propia. Se valida la elección V/F; la corrección libre se compara con la explicación, sin fingir evaluación semántica ni exigir una redacción literal.
+- A/B/C: se elige una de las mismas tres opciones por pregunta y se valida contra la clave escolar.
+- Conectar: cada parte tiene un selector de los cuatro sistemas, con validación de la correspondencia.
+- Tras comprobar se muestran acierto/revisión, respuesta y explicación. El recuento se denomina **elecciones correctas**, para no atribuir una calificación automática a las correcciones escritas.
+- Editar una respuesta oculta su feedback y el recuento anterior; volver a comprobar recalcula el bloque. Reintentar borra las respuestas y el feedback de ese bloque. No modifica los otros bloques.
+- Estado solo en los controles de la página; sin localStorage/Firestore de resultados, sesiones, Misiones o evidencias nuevas. El almacenamiento contextual de navegación existente se conserva.
+
+Base del ajuste: `main` `0ed73bf8fd6e5a8f89de729cbdac623c07b3fd2c` (#191). Rama `fix/plan-semanal-respuestas`. Candidata validada técnicamente; PR/publicación y revisión familiar pendientes.
+
 ## DECISIÓN
 
-**DECISIÓN FUNCIONAL APROBADA · IMPLEMENTACIÓN PUBLICADA PARA REVISIÓN FAMILIAR.**
+**AJUSTE DIRECTO DEL PRODUCT OWNER IMPLEMENTADO COMO CANDIDATA · REVISIÓN FAMILIAR PENDIENTE.**
 
 `Plan Semanal` será un espacio transversal y selectivo de 6.º. El Product Owner elegirá los documentos importantes mediante una instrucción mínima; Academia resolverá su clasificación e integración. La semana organiza el acceso, mientras que la materia y el Tema conservan la propiedad curricular cuando corresponda.
 

@@ -1,6 +1,6 @@
 import { mostrarDocumento } from "../../../plan-semanal/documento.js";
 
-// Contenido escolar. Correcciones y aclaraciones se muestran solo tras el intento en cuaderno.
+// Selecciones objetivas; las correcciones libres se comparan con el modelo, sin calificación automática.
 const documento = {
   "lectura": [
     "La nutrición es el estudio de los alimentos y de cómo actúan en nuestro cuerpo. Para crecer, moverse y mantenerse sanos, los seres humanos necesitan una variedad de alimentos, como frutas, verduras, productos lácteos y cereales. Sin embargo, la nutrición no se limita a comer. Se trata de un proceso complejo en el que intervienen cuatro sistemas del cuerpo: el sistema digestivo, el sistema respiratorio, el sistema circulatorio y el sistema excretor.",
@@ -13,64 +13,69 @@ const documento = {
     {
       "id": "vf",
       "titulo": "1 · Verdadero o Falso",
-      "instruccion": "Escribe V si la frase es verdadera o F si es falsa. Corrige las falsas en tu cuaderno.",
+      "instruccion": "Marca Verdadero o Falso. Si eliges Falso, escribe cómo corregirías la frase. Después comprueba tus respuestas.",
       "items": [
         {
           "enunciado": "La nutrición se refiere únicamente a los alimentos que ingerimos y no incluye los líquidos ni el aire.",
-          "respuesta": "Falso",
-          "explicacion": "La nutrición no consiste solo en comer: también necesitamos agua y oxígeno; participan cuatro sistemas."
+          "explicacion": "La nutrición no consiste solo en comer: también necesitamos agua y oxígeno; participan cuatro sistemas.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "Los cuatro sistemas implicados en la nutrición son el digestivo, el respiratorio, el circulatorio y el excretor.",
-          "respuesta": "Verdadero",
-          "explicacion": "Los cuatro sistemas trabajan juntos para obtener, transportar y eliminar sustancias."
+          "explicacion": "Los cuatro sistemas trabajan juntos para obtener, transportar y eliminar sustancias.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "La digestión comienza en el estómago, cuando los alimentos se mezclan con los jugos gástricos.",
-          "respuesta": "Falso",
-          "explicacion": "La digestión comienza en la boca, al masticar y mezclar los alimentos con la saliva."
+          "explicacion": "La digestión comienza en la boca, al masticar y mezclar los alimentos con la saliva.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "El intestino delgado transforma los alimentos no digeridos en heces sólidas.",
-          "respuesta": "Falso",
-          "explicacion": "Los restos no digeridos forman heces en el intestino grueso; el delgado absorbe los nutrientes."
+          "explicacion": "Los restos no digeridos forman heces en el intestino grueso; el delgado absorbe los nutrientes.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "Los nutrientes pasan a la sangre a través de las paredes del intestino delgado.",
-          "respuesta": "Verdadero",
-          "explicacion": "En el intestino delgado se absorben los nutrientes."
+          "explicacion": "En el intestino delgado se absorben los nutrientes.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "La tráquea conecta la boca y la nariz con los dos bronquios.",
-          "respuesta": "Verdadero",
-          "explicacion": "El aire pasa por la tráquea y después por los bronquios hacia los pulmones."
+          "explicacion": "El aire pasa por la tráquea y después por los bronquios hacia los pulmones.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "Los pulmones absorben dióxido de carbono y liberan oxígeno al aire.",
-          "respuesta": "Falso",
-          "explicacion": "En los pulmones el oxígeno del aire pasa a la sangre y el dióxido de carbono se expulsa al aire."
+          "explicacion": "En los pulmones el oxígeno del aire pasa a la sangre y el dióxido de carbono se expulsa al aire.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "El corazón tiene cuatro cavidades: dos cavidades superiores (aurículas) y dos cavidades inferiores (ventrículos).",
-          "respuesta": "Verdadero",
-          "explicacion": "Dos aurículas y dos ventrículos: cuatro cavidades en total."
+          "explicacion": "Dos aurículas y dos ventrículos: cuatro cavidades en total.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "Los capilares conectan las arterias con las venas.",
-          "respuesta": "Verdadero",
-          "explicacion": "Los capilares son vasos muy finos entre las arterias y las venas. Es una aclaración de apoyo de Academia; no está explicada en esta lectura."
+          "explicacion": "Los capilares son vasos muy finos entre las arterias y las venas. Es una aclaración de apoyo de Academia; no está explicada en esta lectura.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "Los riñones filtran la sangre, eliminando el exceso de agua y los desechos para formar la orina.",
-          "respuesta": "Verdadero",
-          "explicacion": "La orina se forma al filtrar la sangre en los riñones."
+          "explicacion": "La orina se forma al filtrar la sangre en los riñones.",
+          "respuestaCorrecta": 0
         }
+      ],
+      "tipo": "verdadero-falso",
+      "opciones": [
+        "Verdadero",
+        "Falso"
       ]
     },
     {
       "id": "abc",
       "titulo": "2 · Elige A, B o C",
-      "instruccion": "Rodea la opción correcta (A, B o C) en tu cuaderno.",
+      "instruccion": "Elige una opción (A, B o C) en cada pregunta. Después comprueba tus respuestas.",
       "items": [
         {
           "enunciado": "¿Dónde comienza la digestión?",
@@ -79,8 +84,8 @@ const documento = {
             "En la boca",
             "En el intestino delgado"
           ],
-          "respuesta": "B) En la boca",
-          "explicacion": "Los dientes y la saliva empiezan el proceso en la boca."
+          "explicacion": "Los dientes y la saliva empiezan el proceso en la boca.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "¿Cuál es el órgano que produce bilis?",
@@ -89,8 +94,8 @@ const documento = {
             "El hígado",
             "El intestino grueso"
           ],
-          "respuesta": "B) El hígado",
-          "explicacion": "La bilis procede del hígado y ayuda a descomponer las grasas."
+          "explicacion": "La bilis procede del hígado y ayuda a descomponer las grasas.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "¿Cuál es la función principal del intestino delgado?",
@@ -99,8 +104,8 @@ const documento = {
             "Masticar la comida con los dientes.",
             "Almacenar la orina antes de expulsarla."
           ],
-          "respuesta": "A) Absorber los nutrientes y pasarlos a la sangre.",
-          "explicacion": "Los nutrientes se absorben en el intestino delgado."
+          "explicacion": "Los nutrientes se absorben en el intestino delgado.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "¿Dónde se hace el intercambio de oxígeno y dióxido de carbono?",
@@ -109,8 +114,8 @@ const documento = {
             "En el esófago",
             "En los alvéolos"
           ],
-          "respuesta": "C) En los alvéolos",
-          "explicacion": "Los alvéolos permiten el intercambio de gases entre el aire y la sangre."
+          "explicacion": "Los alvéolos permiten el intercambio de gases entre el aire y la sangre.",
+          "respuestaCorrecta": 2
         },
         {
           "enunciado": "¿Cuántas cámaras tiene el corazón humano?",
@@ -119,8 +124,8 @@ const documento = {
             "4 cámaras",
             "3 cámaras"
           ],
-          "respuesta": "B) 4 cámaras",
-          "explicacion": "Tiene dos aurículas y dos ventrículos."
+          "explicacion": "Tiene dos aurículas y dos ventrículos.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "¿Cuál es el vaso sanguíneo que lleva la sangre oxigenada del corazón al resto del cuerpo?",
@@ -129,8 +134,8 @@ const documento = {
             "Venas",
             "Capilares"
           ],
-          "respuesta": "A) Arterias",
-          "explicacion": "En este recorrido al resto del cuerpo, las arterias llevan la sangre desde el corazón. No todas las arterias llevan siempre sangre oxigenada."
+          "explicacion": "En este recorrido al resto del cuerpo, las arterias llevan la sangre desde el corazón. No todas las arterias llevan siempre sangre oxigenada.",
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "¿Cuál es la función de los riñones en el sistema urinario?",
@@ -139,8 +144,8 @@ const documento = {
             "Filtrar la sangre para formar la orina.",
             "Producir jugos gástricos para digerir la comida."
           ],
-          "respuesta": "B) Filtrar la sangre para formar la orina.",
-          "explicacion": "Los riñones filtran desechos y exceso de agua de la sangre."
+          "explicacion": "Los riñones filtran desechos y exceso de agua de la sangre.",
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "¿Qué pasa con la comida que no se digiere en el intestino grueso?",
@@ -149,48 +154,56 @@ const documento = {
             "Se absorbe el oxígeno para la sangre.",
             "Se convierte en bilis para ayudar al hígado."
           ],
-          "respuesta": "A) Se absorbe la mayoría del agua y se transforma en heces.",
-          "explicacion": "En el intestino grueso se absorbe agua de los restos no digeridos y se forman las heces."
+          "explicacion": "En el intestino grueso se absorbe agua de los restos no digeridos y se forman las heces.",
+          "respuestaCorrecta": 0
         }
-      ]
+      ],
+      "tipo": "opcion-multiple"
     },
     {
       "id": "conectar",
       "titulo": "3 · Conecta parte y sistema",
-      "instruccion": "Conecta cada parte con su sistema: digestivo, respiratorio, circulatorio o excretor. Haz las conexiones en tu cuaderno.",
+      "instruccion": "Elige el sistema que corresponde a cada parte del cuerpo. Después comprueba las conexiones.",
       "items": [
         {
           "enunciado": "Tráquea",
-          "respuesta": "Sistema respiratorio"
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "Riñones",
-          "respuesta": "Sistema excretor"
+          "respuestaCorrecta": 3
         },
         {
           "enunciado": "Esófago",
-          "respuesta": "Sistema digestivo"
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "Arterias",
-          "respuesta": "Sistema circulatorio"
+          "respuestaCorrecta": 2
         },
         {
           "enunciado": "Intestino delgado",
-          "respuesta": "Sistema digestivo"
+          "respuestaCorrecta": 0
         },
         {
           "enunciado": "Alvéolo",
-          "respuesta": "Sistema respiratorio"
+          "respuestaCorrecta": 1
         },
         {
           "enunciado": "Vejiga",
-          "respuesta": "Sistema excretor"
+          "respuestaCorrecta": 3
         },
         {
           "enunciado": "Venas",
-          "respuesta": "Sistema circulatorio"
+          "respuestaCorrecta": 2
         }
+      ],
+      "tipo": "relacionar",
+      "opciones": [
+        "Sistema digestivo",
+        "Sistema respiratorio",
+        "Sistema circulatorio",
+        "Sistema excretor"
       ]
     }
   ]

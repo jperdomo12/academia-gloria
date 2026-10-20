@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Contenido curricular · Science 6.º |
@@ -28,6 +28,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 20/10/2026 | Product Owner + AI Collaborator | Ajusta la ficha semanal por observación del Product Owner: respuestas y comprobación digitales sin guardar resultados. Selecciones V/F/A-B-C/sistemas validadas; corrección libre comparada con modelo. Tema, motor académico, Práctica/Prueba y evidencia conservados. |
 | 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Conecta el primer Material del Plan Semanal (19–26 octubre): El viaje de la nutrición, dentro del Tema existente. Catálogo semanal único, ficha en cuaderno y comprobación sin persistencia. Mantiene prueba académica y evidencia. |
 | 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Cierra #187 aprobada e integrada en 9f7b3a6a…: pirámide aprobada de cuatro niveles incorporada al Tema existente, con referencias v=2. Conserva prueba familiar de comprensión/uso y no declara estabilidad. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Corrección de fidelidad visual autorizada: nuevo PNG aprobado con cuatro niveles iguales al colegio, misma ruta, dimensiones/alternativo actualizados y referencia v=2 contra caché anterior. Sin cambios de motor, contenido académico ni prueba. Pendiente revisión final e integración. |
@@ -110,7 +111,7 @@ Base `main` `192b9bf32069570e8212dbffb10917362f76ca4f` (#186). Rama `fix/science
 
 Primera ficha: **El viaje de la nutrición**, semana escolar **19–26 de octubre de 2026**, desde `6_PS_ANS_Nutrición.pdf`. Fuente propietaria del patrón y trazabilidad: `SPEC-PLAN_SEMANAL_6TO.md` §12. La experiencia vive en `cursos/6to/science/nutricion/plan-semanal/`; se accede tanto desde el portal transversal como desde **Material del Plan Semanal**, en el Mapa de este Tema, con enlaces derivados de un único catálogo. No se crea otro Tema ni se altera `6-science-nutricion`.
 
-Lectura fiel, escucha compartida y tres bloques escolares: diez V/F con corrección de falsas, ocho A/B/C y ocho conexiones. Trabajo primero en cuaderno; soluciones tras confirmar el intento. No guarda respuestas, no genera sesiones o evidencias y no duplica Práctica/Prueba. El PNG aprobado, su ruta y versión de caché se conservan. La regresión académica existente permanece cubierta; revisión familiar de la ficha pendiente.
+Lectura fiel, escucha compartida y tres bloques escolares: diez V/F con corrección de falsas, ocho A/B/C y ocho conexiones. Trabajo primero en cuaderno; después puede responderse en Academia. Las selecciones se validan por bloque y se pueden reintentar; en V/F la corrección escrita se compara con la explicación, sin calificación automática del texto libre. No guarda respuestas/resultados, no genera sesiones o evidencias y no duplica Práctica/Prueba. El PNG aprobado, su ruta y versión de caché se conservan. La regresión académica existente permanece cubierta; revisión familiar de la ficha pendiente.
 
 ## DECISIÓN
 
