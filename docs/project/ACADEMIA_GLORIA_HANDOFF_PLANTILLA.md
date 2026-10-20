@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.24 |
+| **Versión** | 3.25 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 17/10/2026 |
+| **Última actualización** | 20/10/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.25 | 20/10/2026 | Product Owner + AI Collaborator | Candidata de alineación visual aprobada: añade 🧭 Orientación en Una red que acompaña, reutilizando roles/rejilla y conservando Colegio y El alumno destacado. Validación desktop/móvil; pendiente revisión final e integración. Sin capacidades ni permisos nuevos; conserva pendientes anteriores. |
 | 3.24 | 17/10/2026 | Product Owner + AI Collaborator | Cierre final Monitor Gaudem: #181 integrada en 9c1597af…, aceptación explícita 1.7-rc1 a las 00:39:04 y revisión sin cambios a las 00:39:47; 19 espacios y señal documental activa. Retira pruebas/rama de desarrollo del monitor de los pendientes; conserva pendientes anteriores. |
 | 3.23 | 17/10/2026 | Product Owner + AI Collaborator | PR #181 aprobada. Revisar 1.7-rc1 validado repetidamente en navegador autenticado: 19 espacios, solo Música y nuevo Instrumentos Legendarios; docs sin cambios. Aceptación real y revisión posterior pendientes; conserva pendientes anteriores. |
 | 3.22 | 16/10/2026 | Product Owner + AI Collaborator | Incidencia real del Monitor Gaudem: candidata 1.7-rc1 separa navegación y contenido, conserva dos líneas base y prepara revisión sin escrituras. Prueba autenticada con base familiar pendiente; no aceptar cambios aún. Conserva pendientes anteriores. |
@@ -307,6 +308,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**Descubre · Orientación (candidata):** desde `main` `7acd42b79344985d1f35cccfe0141dd57e9cd449`, rama `fix/descubre-red-orientacion`. Decisión visual aprobada por el Product Owner: añadir solo el rol genérico 🧭 Orientación a la lista de `descubre-la-academia/contenido.json`, entre Pedagogía Terapéutica y Colegio; arquitectura propietaria `PRODUCT_EXPERIENCE_ARCHITECTURE.md` §4.3 ya contempla al orientador. Reutiliza `renderNetwork`, conserva las dos primeras filas de escritorio y completa la tercera; mantiene destacado El alumno y estilos existentes; conserva tres columnas de escritorio y dos de móvil, con una columna solo hasta 360 px para evitar partir etiquetas. `guia.css` limita las columnas al espacio disponible y permite ajustar etiquetas largas, sin cambiar tipografía, colores o dimensiones de las tarjetas. Comprobación visual Chromium de escritorio/tablet/móvil (320–1440 px), sin desbordamientos. Pendiente revisión final/merge; no publicado. No modifica capacidades, relaciones ni permisos.
+
 **Cerrado · Monitor Gaudem 1.7-rc1:** #181 aprobada e integrada en `9c1597af…`; ciclo autenticado completo validado el 17/10/2026. Aceptación explícita 00:39:04 y revisión sin cambios 00:39:47. Sin pruebas ni desarrollo inmediato pendiente. Manual propietario sincronizado; conservar dos marcadores operativos.
 
 **Semilla 012 · ajuste de composición:** PR #178 aprobada por Juan e integrada en `f6c199453bc1d525022a90b5a9daeb3590730d23`, tras observación real de Anaís/Gloria. Propietario SPEC 1.2. Resumen de siete pasos derivado del contrato vigente y lector del histórico; frase final separada para escuchar/grabar. Sin campos nuevos ni cambios de sesiones anteriores. Sin desarrollo pendiente; nueva revisión familiar del ajuste pendiente; no declarar estable.
@@ -371,9 +374,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `f6c199453bc1d525022a90b5a9daeb3590730d23` · #178 integrado; conserva #176/#174 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Ninguna rama de desarrollo activa del monitor; #181 integrada |
-| **PR On going** | Ninguna PR de desarrollo del monitor pendiente; #181 integrada |
-| **Trabajo inmediato** | Monitor Gaudem cerrado; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **Rama On going** | `fix/descubre-red-orientacion` · ajuste visual candidato; monitor cerrado |
+| **PR On going** | Candidata Descubre/Orientación · comprobar PR al retomar; pendiente revisión final e integración |
+| **Trabajo inmediato** | Revisar candidata visual Descubre/Orientación; Monitor Gaudem cerrado; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #788 · `success` · SHA `f6c19945…` |
 | **Verificación posterior al cierre** | #178 aprobada e integrada; Pages #788 correcto. Página de Semillas, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Resumen y frase final separados para nueva revisión familiar. Frentes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -407,7 +410,7 @@ Al iniciar o retomar trabajo:
 
 ---
 
-# 🟣 Última actualización — 17/10/2026
+# 🟣 Última actualización — 20/10/2026
 
 ## Trabajo On going
 
@@ -418,10 +421,10 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.24 |
+| **Versión** | 3.25 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Ninguna PR de desarrollo del monitor pendiente; #181 integrada |
+| **Trabajo On going** | Descubre/Orientación candidato para revisión final, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Candidata Descubre/Orientación · comprobar PR al retomar; pendiente revisión final e integración |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
