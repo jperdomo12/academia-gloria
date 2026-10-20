@@ -34,7 +34,7 @@ const portal = document.querySelector("#semanasPlan");
 if (portal) {
   const { actuales, anteriores, proximas } = organizarSemanas(MATERIALES_PLAN);
   portal.replaceChildren();
-  actuales.forEach(s => portal.append(semana(s, "Esta semana · ")));
+  actuales.forEach(s => portal.append(semana(s, "Semana · ")));
   // Si no hay material actual, no etiquetar una semana pasada como «Esta semana».
   if (!actuales.length) {
     portal.append(elemento("p", "plan-aviso", "No hay material seleccionado para esta semana. Puedes consultar las semanas disponibles."));

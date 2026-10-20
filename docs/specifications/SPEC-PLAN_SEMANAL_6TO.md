@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de redacción solicitado: «Semana · rango» en lugar de «Esta semana · rango». Conserva prioridad y clasificación de semanas; referencia de módulo v=2 para caché. |
 | 1.5 | 20/10/2026 | Product Owner + AI Collaborator | Retira los tres accesos plegables duplicados por observación visual del Product Owner. Las carpetas superiores muestran una sola sección (Lectura/V-F/A-B-C/Conectar), conservando respuestas y validación al cambiar. Sin cambios de contenido ni persistencia. |
 | 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste #192 integrado en 20364da3… y publicado (Pages #802 success): accesos juntos y respuestas/validación/reintentos sin guardado. Seis archivos de producto públicos de #192 idénticos a los probados; referencias v=2 en el cierre protegen caché de estilos/datos/presentador. Revisión familiar del ajuste pendiente. |
 | 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Observación directa del Product Owner: Plan Semanal junto a Zonas y respuestas digitales con validación en los tres bloques, sin guardar resultados. Conserva instrucción de cuaderno; corrige la limitación inicial de solo revelar soluciones. Texto libre comparado con modelo, sin calificación automática. |
@@ -77,7 +78,7 @@ Ejemplo:
 ```text
 📅 Plan Semanal
 
-Esta semana · 19–26 octubre
+Semana · 19–26 octubre
   🔬 Science · Nutrición
      El viaje de la nutrición
 

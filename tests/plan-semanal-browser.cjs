@@ -67,7 +67,7 @@ for(const role of ['alumno','gestion','consulta']) {
  await p.locator('a[href="./plan-semanal/"]').click();
  await p.waitForSelector('.plan-tarjeta');
  assert.equal(await p.locator('.plan-tarjeta').count(),1);
- assert.match(await p.locator('.plan-fecha').innerText(),/Esta semana.*19.*26.*octubre.*2026/);
+ assert.match(await p.locator('.plan-fecha').innerText(),/Semana.*19.*26.*octubre.*2026/);
  assert.match(await p.locator('.plan-tarjeta').innerText(),/Science · Nutrición/);
  if(role==='alumno') {
   const fechas=await p.evaluate(async()=>{
@@ -168,7 +168,7 @@ for(const role of ['alumno','gestion','consulta']) {
   assert.match(await p.locator('#semanasPlan').innerText(),/Semanas anteriores/);
   assert.equal(await p.locator('details.plan-semana').count(),1);
   assert.equal(await p.locator('details.plan-semana').getAttribute('open'),null);
-  assert.doesNotMatch(await p.locator('.plan-fecha').innerText(),/Esta semana/);
+  assert.doesNotMatch(await p.locator('.plan-fecha').innerText(),/Semana ·/);
   await p.clock.setFixedTime(new Date('2026-10-20T12:00:00Z'));
  }
  await p.locator('[data-nav-volver]').click();assert.equal(new URL(p.url()).pathname,'/cursos/6to/');
