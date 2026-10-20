@@ -1,0 +1,22 @@
+/* Solo presentación propia de semanas/documentos; identidad y tarjetas de 6.º reutilizadas. */
+.plan-tarjeta{--asig-acento:var(--c6-sky);--asig-suave:var(--c6-sky-soft);gap:12px;overflow-wrap:anywhere}
+.plan-tarjeta .curso6-chip{align-self:flex-start;white-space:normal}.plan-tarjeta h3{margin:0}.plan-tarjeta .curso6-asignatura__accion{margin-top:auto}
+.plan-procedencia{font-size:.8rem;color:var(--c6-muted);line-height:1.5;margin:0}
+.plan-fecha{font-size:clamp(1.15rem,2.5vw,1.6rem);color:var(--c6-olive-dark);line-height:1.45;margin:0 0 16px}
+summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var(--c6-olive-soft);font-weight:800}
+.plan-anteriores{margin-top:30px}.plan-aviso{line-height:1.65;padding:18px;border-radius:18px;background:var(--c6-sky-soft)}
+.plan-documento{max-width:880px}.plan-documento .curso6-hero{grid-template-columns:1fr;min-height:0}.plan-documento .curso6-hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1}
+.plan-cuaderno{padding:22px;margin-top:22px;border-left:5px solid var(--c6-gold);line-height:1.7}.plan-cuaderno h2{margin:0 0 8px;font-size:1.3rem}.plan-cuaderno p{margin:6px 0}
+.plan-bloque{padding:clamp(18px,4vw,30px);margin-top:22px;min-width:0;overflow-wrap:break-word}.plan-bloque h2{margin:0 0 14px;color:var(--c6-olive-dark);line-height:1.3}.plan-bloque p,.plan-bloque li{font-size:1.08rem;line-height:1.8}.plan-bloque li{margin:16px 0}.plan-bloque ol{padding-left:25px}.plan-bloque ul{padding-left:24px}
+.plan-bloque .plan-lectura-parrafo{margin:0 0 23px}.plan-lectura-parrafo strong{color:var(--c6-olive-dark)}
+.plan-bloque details>summary{cursor:pointer;font-size:1.2rem;font-weight:800;color:var(--c6-olive-dark);line-height:1.5}
+.plan-comprobar{border-top:1px solid var(--c6-line);padding-top:18px;margin-top:20px}.plan-intento{display:flex;align-items:flex-start;gap:12px;line-height:1.6;cursor:pointer;padding:8px 0}.plan-intento input{width:22px;height:22px;flex:0 0 22px;accent-color:var(--c6-olive)}
+.plan-acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}.plan-acciones button,.plan-acciones a{font:inherit;white-space:normal;text-align:center}.plan-acciones button:disabled{opacity:.6;cursor:not-allowed}
+.plan-soluciones{margin-top:18px;padding:16px;border-radius:18px;background:var(--c6-green-soft)}.plan-soluciones h3{margin:0 0 10px}.plan-soluciones ol{margin-bottom:0}.plan-soluciones li{margin:12px 0}
+.plan-estado{min-height:1.5em;color:var(--c6-muted);line-height:1.5}.plan-atajos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.plan-atajos a{padding:9px 12px;border:1px solid var(--c6-line);border-radius:12px;background:white;font-weight:700;text-decoration:none;min-height:44px}
+.plan-documento :focus-visible,.plan-semana :focus-visible{outline:3px solid var(--c6-sky);outline-offset:4px}
+@media(max-width:420px){.plan-documento .curso6-hero{padding:22px 18px}.plan-comprobar .boton-academia{width:100%}.plan-cuaderno{padding:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.plan-acciones .boton-academia{background:var(--c6-olive-soft);color:var(--c6-olive-dark)}
+.plan-comprobar .boton-academia:not(:disabled){background:var(--c6-olive-dark);color:#fff}

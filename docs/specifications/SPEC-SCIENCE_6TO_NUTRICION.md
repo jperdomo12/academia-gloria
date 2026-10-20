@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Contenido curricular · Science 6.º |
@@ -17,6 +17,7 @@
 |---|---|
 | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` | Gobierna incorporación curricular de una instrucción, fidelidad, apoyo TEL y evidencia. |
 | `docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md` | Gobierna calidad, reutilización, navegación y responsive. |
+| `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` | Propietaria del acceso transversal y la ficha complementaria paper-first; conserva la propiedad curricular en Nutrición. |
 | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` | Gobierna Repaso académico, asignación y evidencia de Misión. |
 | `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md` | Consume sesiones, focos y señales de fortalecimiento. |
 | `compartido/js/motor-practica-verbal.js` | Implementa el motor académico parametrizado ya utilizado por Lengua y English. |
@@ -27,6 +28,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Conecta el primer Material del Plan Semanal (19–26 octubre): El viaje de la nutrición, dentro del Tema existente. Catálogo semanal único, ficha en cuaderno y comprobación sin persistencia. Mantiene prueba académica y evidencia. |
 | 1.3 | 20/10/2026 | Product Owner + AI Collaborator | Cierra #187 aprobada e integrada en 9f7b3a6a…: pirámide aprobada de cuatro niveles incorporada al Tema existente, con referencias v=2. Conserva prueba familiar de comprensión/uso y no declara estabilidad. |
 | 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Corrección de fidelidad visual autorizada: nuevo PNG aprobado con cuatro niveles iguales al colegio, misma ruta, dimensiones/alternativo actualizados y referencia v=2 contra caché anterior. Sin cambios de motor, contenido académico ni prueba. Pendiente revisión final e integración. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…; cierra implementación de Nutrición y conserva pendiente de uso real con Gloria. No modifica el producto validado ni declara estabilidad. |
@@ -103,6 +105,12 @@ No usa cuentas ni datos reales y no certifica audio físico o Rules desplegadas.
 ### Corrección de pirámide · 20/10/2026
 
 Base `main` `192b9bf32069570e8212dbffb10917362f76ca4f` (#186). Rama `fix/science-piramide-escolar`. Ajuste limitado al PNG aprobado, su marcado accesible/dimensiones/referencia de caché y documentación. Revisión visual contra los cuatro niveles del PDF y del requerimiento del Product Owner. Validado en Chromium local con Outfit: imagen decodificada a 1122 × 1402, proporción íntegra y sin desbordamientos a 1440/768/390/320 px; los dos enlaces y la imagen utilizan la misma referencia v=2. Vista previa sin escrituras. Archivo idéntico byte a byte al PNG aportado y diff sin errores de espacios. No cambia contenido, preguntas, actividad, registro ni contratos. PR #187 aprobada por el Product Owner e integrada en `9f7b3a6ade17b36596c408f529e89ce095e55ad6`. Pages #797 `success`; HTML y PNG públicos HTTP 200 e idénticos byte a byte a los aprobados. Se confirma la referencia v=2 en el HTML y el SHA-256 del nuevo PNG original (`42a35aeabb7ba349eae08ea09bbbd6cbbf36b29b5730cb5cd3280df3caab1a65`). No queda implementación pendiente de esta corrección; Nutrición continúa para validación familiar.
+
+## Material del Plan Semanal asociado · 20/10/2026
+
+Primera ficha: **El viaje de la nutrición**, semana escolar **19–26 de octubre de 2026**, desde `6_PS_ANS_Nutrición.pdf`. Fuente propietaria del patrón y trazabilidad: `SPEC-PLAN_SEMANAL_6TO.md` §12. La experiencia vive en `cursos/6to/science/nutricion/plan-semanal/`; se accede tanto desde el portal transversal como desde **Material del Plan Semanal**, en el Mapa de este Tema, con enlaces derivados de un único catálogo. No se crea otro Tema ni se altera `6-science-nutricion`.
+
+Lectura fiel, escucha compartida y tres bloques escolares: diez V/F con corrección de falsas, ocho A/B/C y ocho conexiones. Trabajo primero en cuaderno; soluciones tras confirmar el intento. No guarda respuestas, no genera sesiones o evidencias y no duplica Práctica/Prueba. El PNG aprobado, su ruta y versión de caché se conservan. La regresión académica existente permanece cubierta; revisión familiar de la ficha pendiente.
 
 ## DECISIÓN
 

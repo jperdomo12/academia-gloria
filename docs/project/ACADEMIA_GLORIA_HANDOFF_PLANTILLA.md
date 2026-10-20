@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.30 |
+| **Versión** | 3.31 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 20/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.31 | 20/10/2026 | Product Owner + AI Collaborator | Candidata Plan Semanal 6.º desde SPEC aprobada en main: acceso transversal por semanas y primera ficha paper-first de Nutrición (19–26 octubre), sin duplicar Tema/prueba/evidencia. Validación técnica y visual; revisión familiar y verificación de publicación pendientes. |
 | 3.30 | 20/10/2026 | Product Owner + AI Collaborator | PR #187 aprobada e integrada en 9f7b3a6a…: pirámide de cuatro niveles del colegio, PNG aprobado intacto, texto alternativo y caché v=2. Retira candidata de corrección; mantiene validación familiar de Nutrición y pendientes anteriores. |
 | 3.29 | 20/10/2026 | Product Owner + AI Collaborator | Corrección visual candidata de Nutrición: nuevo PNG aprobado respeta cuatro niveles del colegio; misma ruta y referencias v=2 para caché. SPEC 1.2, sin duplicar Tema ni cambiar motor/preguntas/evidencia. Revisión final/integración pendientes; conserva publicación #185 y pendientes previos. |
 | 3.28 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…: Nutrición incorporada a Science con pirámide aprobada intacta y evidencia compartida. Pages #795 success y seis archivos públicos verificados, incluida la imagen intacta. Retira candidata de desarrollo; conserva prueba de uso real con Gloria y pendientes anteriores. |
@@ -385,8 +386,8 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `f6c199453bc1d525022a90b5a9daeb3590730d23` · #178 integrado; conserva #176/#174 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Ninguna rama de implementación activa de Nutrición; #185/#187 integradas |
-| **PR On going** | Ninguna PR de implementación pendiente de Nutrición; #185/#187 integradas |
+| **Rama On going** | `feat/plan-semanal-6to`; conserva #185/#187 integradas |
+| **PR On going** | Plan Semanal 6.º candidata; #185/#187 integradas |
 | **Trabajo inmediato** | Probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #788 · `success` · SHA `f6c19945…` |
 | **Verificación posterior al cierre** | #178 aprobada e integrada; Pages #788 correcto. Página de Semillas, Motor, CSS y catálogo HTTP 200 e idénticos al producto en main. Resumen y frase final separados para nueva revisión familiar. Frentes anteriores conservados. |
@@ -425,6 +426,9 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
+**Nuevo frente autorizado · Plan Semanal 6.º:** SPEC propietaria `SPEC-PLAN_SEMANAL_6TO.md` 1.1; base real `main` `288875b`. Rama `feat/plan-semanal-6to`. Portal propio entre Zonas y Recursos; selección por semanas en catálogo único. Primera ficha `6_PS_ANS_Nutrición.pdf`, 19–26 octubre, dentro de Science/Nutrición; lectura/voz y tres bloques en cuaderno, con soluciones tras intento y cero evidencia nueva. Reutiliza identidad de 6.º, navegación, Panel y lector. Pruebas simuladas de alumno/familiar/profesional, límites de fecha Madrid, retorno en ambos recorridos, responsive 320–1440 y regresión académica de Nutrición. El Product Owner autoriza implementación, PR y publicación para revisión final; no declara validación familiar. Conservar todos los pendientes anteriores.
+
+
 > **Monitor Gaudem:** #181 integrada; ciclo real completo validado el 17/10/2026, sin acciones inmediatas pendientes. **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #176 aprobada e integrada; tres Temas por documento con prueba de uso real pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
 
 ## DECISIÓN
@@ -432,15 +436,15 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.30 |
+| **Versión** | 3.31 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Ninguna PR de implementación pendiente de Nutrición; #185/#187 integradas |
+| **PR On going** | Plan Semanal 6.º candidata; #185/#187 integradas |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Publicar/verificar Plan Semanal para revisión final familiar; probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
