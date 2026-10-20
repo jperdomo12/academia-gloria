@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.33 |
+| **Versión** | 3.34 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 20/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.34 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de Plan Semanal #192 integrado/publicado: tarjetas juntas y respuestas digitales con validación/reintentos, sin guardado. Pages #802 success, seis archivos HTTP 200 e idénticos al producto probado; SPEC 1.4. Revisión familiar pendiente; conserva pendientes anteriores. |
 | 3.33 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de primera revisión de Plan Semanal: junto a Zonas y respuestas digitales con validación/reintentos sin guardado. SPEC 1.3 candidata; conserva instrucción escolar y pendientes anteriores. |
 | 3.32 | 20/10/2026 | Product Owner + AI Collaborator | Plan Semanal publicado dentro de la autorización expresa: #190 integrada en da8eb5fb…, Pages #800 success; nueve archivos públicos HTTP 200 e idénticos al producto probado. SPEC 1.2, revisión familiar pendiente; mantiene todos los pendientes anteriores. |
 | 3.31 | 20/10/2026 | Product Owner + AI Collaborator | Candidata Plan Semanal 6.º desde SPEC aprobada en main: acceso transversal por semanas y primera ficha paper-first de Nutrición (19–26 octubre), sin duplicar Tema/prueba/evidencia. Validación técnica y visual; revisión familiar y verificación de publicación pendientes. |
@@ -386,13 +387,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `da8eb5fb6b1a750e17f47575ad5466b69b262a5d` · #190 integrado; conserva #185/#187 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `20364da3df4ee5cf9ac5577c5df99b4265e1049c` · #192 integrado; conserva #190/#185/#187 y frentes anteriores |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `fix/plan-semanal-respuestas`; ajuste directo del Product Owner; conserva #190/#185/#187 |
-| **PR On going** | Ajuste de Plan Semanal candidato; revisión familiar posterior pendiente |
+| **Rama On going** | Sin desarrollo pendiente de Plan Semanal; #192 integrada; conserva frentes anteriores |
+| **PR On going** | Sin PR de producto pendiente de Plan Semanal; #192 integrada; revisión familiar pendiente |
 | **Trabajo inmediato** | Revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #800 · `success` · SHA `da8eb5fb…` |
-| **Verificación posterior al cierre** | #190 integrada dentro de la autorización expresa de publicación; Pages #800 success. Nueve archivos de producto HTTP 200 e idénticos al resultado probado. Plan Semanal listo para revisión final familiar; frentes anteriores conservados. |
+| **GitHub Pages del baseline funcional** | #802 · `success` · SHA `20364da3…` |
+| **Verificación posterior al cierre** | #192 integrada dentro de la autorización de publicación; Pages #802 success. Seis archivos modificados HTTP 200 e idénticos al producto probado. Plan Semanal junto a Zonas y respuesta/validación digital sin guardado, listo para revisión familiar; frentes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -428,10 +429,10 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-**Ajuste de revisión de Plan Semanal:** petición directa del Product Owner tras #190/#191. Base `main` `0ed73bf8…`, rama `fix/plan-semanal-respuestas`; SPEC propietaria 1.3 candidata. Accesos Zonas/Plan lado a lado en rejilla compartida. La misma ficha admite respuestas V/F, A/B/C y sistemas, comprobación/explicaciones y reintento sin guardar resultados. Correcciones libres con comparación explícita, sin calificación automática. Instrucción de cuaderno, Tema y motor académico intactos. Validación de navegador y responsive; PR/publicación y revisión familiar pendientes. Conserva todos los pendientes anteriores.
+**Ajuste publicado para revisión familiar · Plan Semanal:** petición directa del Product Owner tras #190/#191. Base `main` `0ed73bf8…`; #192 integrada en `20364da3df4ee5cf9ac5577c5df99b4265e1049c`, dentro de la autorización de implementación/publicación del encargo. SPEC propietaria 1.4. Accesos Zonas/Plan lado a lado en rejilla compartida. La misma ficha admite respuestas V/F, A/B/C y sistemas, comprobación/explicaciones/recuentos de elecciones y reintento sin guardar resultados. Correcciones libres comparadas con el modelo, sin calificación automática del texto libre. Instrucción de cuaderno, Tema, pirámide y motor académico intactos. Pruebas de navegador de respuestas/incompletos/reintentos/recarga, cero escrituras educativas en los tres roles, navegación y responsive. Pages #802 (run `39478081719`) success; seis archivos de producto HTTP 200 e idénticos al resultado probado. Sin desarrollo ni publicación pendiente; revisión familiar del ajuste pendiente. Conserva todos los pendientes anteriores.
 
 
-**Publicado para revisión final · Plan Semanal 6.º:** SPEC propietaria `SPEC-PLAN_SEMANAL_6TO.md` 1.2; base real `main` `288875b`. PR #190 integrada en `da8eb5fb6b1a750e17f47575ad5466b69b262a5d` dentro de la autorización expresa de implementación/PR/publicación. Pages #800 `success` (run `39473961170`); nueve archivos públicos HTTP 200 e idénticos al producto probado. Sin desarrollo ni publicación pendiente; revisión familiar pendiente. Portal propio entre Zonas y Recursos; selección por semanas en catálogo único. Primera ficha `6_PS_ANS_Nutrición.pdf`, 19–26 octubre, dentro de Science/Nutrición; lectura/voz y tres bloques en cuaderno, con soluciones tras intento y cero evidencia nueva. Reutiliza identidad de 6.º, navegación, Panel y lector. Pruebas simuladas de alumno/familiar/profesional, límites de fecha Madrid, retorno en ambos recorridos, responsive 320–1440 y regresión académica de Nutrición. El Product Owner autoriza implementación, PR y publicación para revisión final; no declara validación familiar. Conservar todos los pendientes anteriores.
+**Antecedente · primera publicación de Plan Semanal 6.º (#190):** decisión original en `SPEC-PLAN_SEMANAL_6TO.md`; el ajuste vigente es 1.4, indicado arriba; base real `main` `288875b`. PR #190 integrada en `da8eb5fb6b1a750e17f47575ad5466b69b262a5d` dentro de la autorización expresa de implementación/PR/publicación. Pages #800 `success` (run `39473961170`); nueve archivos públicos HTTP 200 e idénticos al producto probado. Sin desarrollo ni publicación pendiente; revisión familiar pendiente. Portal propio entre Zonas y Recursos; selección por semanas en catálogo único. Primera ficha `6_PS_ANS_Nutrición.pdf`, 19–26 octubre, dentro de Science/Nutrición; lectura/voz y tres bloques en cuaderno, con soluciones tras intento y cero evidencia nueva. Reutiliza identidad de 6.º, navegación, Panel y lector. Pruebas simuladas de alumno/familiar/profesional, límites de fecha Madrid, retorno en ambos recorridos, responsive 320–1440 y regresión académica de Nutrición. El Product Owner autoriza implementación, PR y publicación para revisión final; no declara validación familiar. Conservar todos los pendientes anteriores.
 
 
 > **Monitor Gaudem:** #181 integrada; ciclo real completo validado el 17/10/2026, sin acciones inmediatas pendientes. **English 6.º:** #174 aprobada e integrada; Much/Many disponible desde English y English Zones, prueba de uso real pendiente. **Lengua 6.º:** #176 aprobada e integrada; tres Temas por documento con prueba de uso real pendiente. **Cierre operativo completado:** #152/#153, #157/#158 y #159/#160 integrados; #156 cerrado sin merge. **Ajustes aprobados y publicados:** #161 integrado en `c980fcc1…`; Pages #766 `success`. **Consulta educativa:** #168/#169/#170 integradas; acceso desde menú y debajo de Nueva misión publicado y validado por Juan; prueba real profesional/familiar pendiente. **Trabajo familiar:** Semilla 012 aprobada e integrada mediante #164, publicada por Pages #769; prueba familiar de comprensión y uso pendiente. Dictado espera prueba completa con Anaís y Gloria. No se declara estabilidad.
@@ -441,15 +442,15 @@ Al iniciar o retomar trabajo:
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.33 |
+| **Versión** | 3.34 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Plan Semanal publicado mediante #190 para revisión final familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Ajuste de Plan Semanal candidato; revisión familiar posterior pendiente |
+| **Trabajo On going** | Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Sin PR de producto pendiente de Plan Semanal; #192 integrada; revisión familiar pendiente |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Revisar Plan Semanal en familia (lectura/cuaderno/soluciones); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 

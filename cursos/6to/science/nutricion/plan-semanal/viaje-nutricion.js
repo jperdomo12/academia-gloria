@@ -1,4 +1,4 @@
-import { mostrarDocumento } from "../../../plan-semanal/documento.js";
+import { mostrarDocumento } from "../../../plan-semanal/documento.js?v=2";
 
 // Selecciones objetivas; las correcciones libres se comparan con el modelo, sin calificación automática.
 const documento = {
