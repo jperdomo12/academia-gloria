@@ -49,9 +49,10 @@ export function mostrarDocumento(materialId, documento) {
   window.addEventListener("pagehide", () => LectorTexto.detener());
 
   for (const bloque of documento.bloques) {
-    const seccion = nodo("details", "", "curso6-superficie plan-bloque");
+    const seccion = nodo("section", "", "curso6-superficie plan-bloque");
     seccion.id = `bloque-${bloque.id}`;
-    seccion.append(nodo("summary", bloque.titulo), nodo("p", bloque.instruccion));
+    seccion.hidden = true;
+    seccion.append(nodo("h2", bloque.titulo), nodo("p", bloque.instruccion));
     if (bloque.tipo === "verdadero-falso") seccion.append(nodo("p",
       "Academia comprueba tu elección de Verdadero/Falso. Tu corrección escrita la compararás con una propuesta; no se califica automáticamente.", "plan-procedencia"));
     const formulario = nodo("form");
@@ -180,16 +181,25 @@ export function mostrarDocumento(materialId, documento) {
     seccion.append(formulario);
     contenedor.append(seccion);
   }
-  // Los atajos abren el bloque de destino; no hay un estado guardado ni respuestas digitales.
-  function abrirDestino() {
-    const id = location.hash.slice(1);
-    const destino = document.getElementById(id);
-    if (destino?.tagName === "DETAILS") destino.open = true;
+  // Una sola sección visible; cambiar de carpeta conserva sus respuestas en memoria.
+  const paneles = [...contenedor.children];
+  const botones = [...document.querySelectorAll(".plan-atajos [data-panel-plan]")];
+  function mostrarPanel(id) {
+    const elegido = paneles.find(panel => panel.id === id) || lectura;
+    paneles.forEach(panel => { panel.hidden = panel !== elegido; });
+    botones.forEach(boton => {
+      const activo = boton.dataset.panelPlan === elegido.id;
+      boton.classList.toggle("activa", activo);
+      boton.setAttribute("aria-pressed", String(activo));
+    });
+    if (elegido !== lectura) { LectorTexto.detener(); reiniciarVoz(); estado.textContent = ""; }
   }
-  document.querySelectorAll(".plan-atajos a").forEach(a => a.addEventListener("click", () => {
-    const destino = document.querySelector(a.getAttribute("href"));
-    if (destino?.tagName === "DETAILS") destino.open = true;
+  botones.forEach(boton => boton.addEventListener("click", () => {
+    mostrarPanel(boton.dataset.panelPlan);
+    const destino = new URL(location.href);
+    destino.hash = boton.dataset.panelPlan;
+    history.replaceState(history.state, "", destino);
   }));
-  window.addEventListener("hashchange", abrirDestino);
-  abrirDestino();
+  window.addEventListener("hashchange", () => mostrarPanel(location.hash.slice(1)));
+  mostrarPanel(location.hash.slice(1));
 }

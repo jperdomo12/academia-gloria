@@ -97,8 +97,10 @@ for(const role of ['alumno','gestion','consulta']) {
  const claves={vf:[1,0,1,1,0,0,1,0,0,0],abc:[1,1,0,2,1,0,1,0],conectar:[1,3,0,2,0,1,3,2]};
  for(const id of ['vf','abc','conectar']) {
   const bloque=p.locator('#bloque-'+id);
-  assert.equal(await bloque.getAttribute('open'),null);
-  await bloque.locator('summary').click();
+  assert.ok(await bloque.isHidden());
+  await p.locator('[data-panel-plan="bloque-'+id+'"]').click();
+  assert.ok(await bloque.isVisible());
+  assert.equal(await p.locator('#documentoPlan > section:visible').count(),1);
   const comprobar=bloque.getByRole('button',{name:'👀 Comprobar mis respuestas'});
   assert.equal(await bloque.locator('.plan-respuesta:visible').count(),0);
   await comprobar.click();assert.match(await bloque.locator('.plan-resultado').innerText(),/respuestas por elegir/);
@@ -130,10 +132,15 @@ for(const role of ['alumno','gestion','consulta']) {
   await comprobar.click();
  }
  if(role==='alumno'){
+  await p.locator('[data-panel-plan="bloque-vf"]').click();
+  assert.equal(await p.locator('#bloque-vf input:checked').count(),10);
+  assert.equal(await p.locator('#documentoPlan details').count(),0);
   assert.match(await p.locator('#bloque-vf').innerText(),/La digestión comienza en la boca/);
+  await p.locator('[data-panel-plan="bloque-abc"]').click();
   assert.match(await p.locator('#bloque-abc .plan-respuesta').first().innerText(),/En la boca/);
+  await p.locator('[data-panel-plan="bloque-conectar"]').click();
   assert.match(await p.locator('#bloque-conectar .plan-respuesta').first().innerText(),/Sistema respiratorio/);
-  if(process.env.QA_IMAGES){await p.setViewportSize({width:390,height:1000});await p.locator('#bloque-vf').scrollIntoViewIfNeeded();await p.screenshot({path:process.env.QA_IMAGES+'-vf-390.png'});}
+  if(process.env.QA_IMAGES){await p.setViewportSize({width:390,height:1000});await p.locator('[data-panel-plan="bloque-vf"]').click();await p.locator('#bloque-vf').scrollIntoViewIfNeeded();await p.screenshot({path:process.env.QA_IMAGES+'-vf-390.png'});}
   for(const width of [1440,1024,768,390,320]) {
    await p.setViewportSize({width,height:1000});await p.clock.runFor(60);
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'ficha overflow '+width);
@@ -142,7 +149,8 @@ for(const role of ['alumno','gestion','consulta']) {
  }
  const before=await p.evaluate(()=>JSON.parse(localStorage.qaDB));
  assert.equal(await p.evaluate(()=>window.qaWrites||0),0);
- await p.reload();await p.waitForSelector('#lecturaPlan');
+ await p.reload();await p.waitForSelector('#lecturaPlan',{state:'attached'});
+ assert.equal(await p.locator('#documentoPlan > section:visible').count(),1);
  assert.equal(await p.locator('.plan-pregunta input:checked').count(),0);
  assert.equal(await p.locator('.plan-respuesta:visible').count(),0);
  assert.ok((await p.locator('.plan-pregunta textarea').evaluateAll(es=>es.map(e=>e.value))).every(v=>v===''));
@@ -185,5 +193,5 @@ assert.match(await directo.p.locator('.plan-estado').innerText(),/no dispone de 
 await directo.p.locator('[data-nav-volver]').click();await directo.p.waitForSelector('[data-plan-tema] a');
 assert.equal(new URL(directo.p.url()).pathname.replace(/index\.html$/,''),'/cursos/6to/science/nutricion/');
 assert.deepEqual(directo.errors,[]);await directo.c.close();
-await b.close();console.log('OK: Plan Semanal, semana Madrid/límites/cambio de fecha, 10 V/F + 8 A/B/C + 8 conexiones, respuestas objetivas correctas/incorrectas, correcciones libres, incompletos y reintentos sin guardado, voz solo lectura, retorno en ambos recorridos, Persona Activa, 0 escrituras educativas y responsive 320–1440; SDK/identidades/voz simulados.');
+await b.close();console.log('OK: Plan Semanal, semana Madrid/límites/cambio de fecha, 10 V/F + 8 A/B/C + 8 conexiones, respuestas objetivas correctas/incorrectas, correcciones libres, incompletos y reintentos sin guardado, carpetas sin acordeones duplicados, respuestas conservadas al cambiar, voz solo lectura, retorno en ambos recorridos, Persona Activa, 0 escrituras educativas y responsive 320–1440; SDK/identidades/voz simulados.');
 })().catch(e=>{console.error(e);process.exit(1)});
