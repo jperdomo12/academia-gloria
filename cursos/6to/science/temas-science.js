@@ -12,5 +12,12 @@ export const TEMAS_SCIENCE = Object.freeze([
     acentoSuave:"#edf8f2",
     acentoTexto:"#39705a",
     conservarRetorno:true
+  }),
+  Object.freeze({
+    id:"nutricion", ruta:"./nutricion/", icono:"🥗", titulo:"Nutrición",
+    descripcion:"Alimentos y cuatro sistemas que colaboran: digestivo, respiratorio, circulatorio y excretor.",
+    pistas:["Pirámide alimenticia","Cuatro sistemas","Recorridos del cuerpo"],
+    estado:"Tema de 6.º", accion:"Entrar al tema →", acento:"#4f8b72",
+    acentoSuave:"#edf8f2", acentoTexto:"#39705a", conservarRetorno:true
   })
 ]);
