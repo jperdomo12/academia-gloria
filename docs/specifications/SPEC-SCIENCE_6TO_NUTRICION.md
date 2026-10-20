@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` |
-| **Versión** | 1.1 |
-| **Estado** | Publicada para validación familiar · no declarada estable |
+| **Versión** | 1.2 |
+| **Estado** | Corrección visual candidata · Tema publicado para validación familiar |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Contenido curricular · Science 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 20/10/2026 | Product Owner + AI Collaborator | Corrección de fidelidad visual autorizada: nuevo PNG aprobado con cuatro niveles iguales al colegio, misma ruta, dimensiones/alternativo actualizados y referencia v=2 contra caché anterior. Sin cambios de motor, contenido académico ni prueba. Pendiente revisión final e integración. |
 | 1.1 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…; cierra implementación de Nutrición y conserva pendiente de uso real con Gloria. No modifica el producto validado ni declara estabilidad. |
 | 1.0 | 20/10/2026 | Product Owner + AI Collaborator | Candidata autorizada por el Product Owner: un Tema de Nutrición con seis páginas escolares cubiertas, imagen aprobada intacta, práctica, prueba y evidencia compartida. Revisión familiar pendiente. |
 
@@ -54,9 +55,18 @@ Fuente principal: PDF escolar `6_LI_Nutrición.pdf`; copia aportada `6_LI_Nutric
 | 5 | Circuito corazón-pulmones-cuerpo y eliminación de sustancias | Recorrido circulatorio, transporte y conexión con eliminación. |
 | 6 | Riñones, uréteres, vejiga, uretra; restos alimentarios, agua, recto y ano | Dos recorridos diferenciados: orina y heces; preguntas y explicaciones. |
 
-**Imagen aprobada:** `assets/imagenes/science/science-nutricion-piramide-alimenticia.png`. Se incorpora el PNG aportado por el Product Owner porque el nombre no existía en el `main` de partida. Binario intacto, sin rediseño, sustitución, recorte ni recomprensión. Dimensiones 1099 × 1431; SHA-256 `5f8932418521f015b75147cbfacaf03ff052a0861a86bef4d28209afca518f04`. La imagen está visible en el Mapa inicial, mantiene su proporción y permite abrirla en grande. El texto alternativo identifica sus seis grupos.
+**Imagen aprobada vigente:** `assets/imagenes/science/science-nutricion-piramide-alimenticia.png`. Se actualiza el asset existente con el nuevo PNG aportado por el Product Owner, sin rediseño, recorte ni recomprensión del archivo recibido. Dimensiones 1122 × 1402; SHA-256 `42a35aeabb7ba349eae08ea09bbbd6cbbf36b29b5730cb5cd3280df3caab1a65`. La imagen conserva su proporción, está visible en el Mapa inicial y se abre en grande. Imagen y enlaces utilizan `?v=2` para evitar mostrar la composición anterior desde la caché; el nombre y la ruta canónicos no cambian.
 
-La ilustración aprobada distribuye los grupos de forma diferente a los niveles del esquema original (por ejemplo, proteínas y verduras). Se conserva por decisión explícita; se trabaja **reconocimiento de grupos**, sin evaluar posiciones, proporciones, raciones, recomendaciones de frecuencia ni deducir cantidades del tamaño de los dibujos. No se inventa una equivalencia entre ambas composiciones.
+**Estructura obligatoria, igual al esquema de la página 1 del PDF:**
+
+| Nivel, de arriba abajo | Composición |
+|---|---|
+| Punta | Grasas |
+| Segundo, dividido en dos | Lácteos a la izquierda · Proteínas a la derecha |
+| Tercero, dividido en dos | Verduras a la izquierda · Frutas a la derecha |
+| Base | Carbohidratos |
+
+La corrección sustituye la composición anterior que repartía los grupos en seis franjas; no mantiene una segunda imagen ni crea otro Tema. El texto alternativo describe los cuatro niveles y su disposición. Se mantiene el reconocimiento de grupos existente: no se añaden raciones, recomendaciones de frecuencia ni cantidades deducidas del tamaño de los dibujos.
 
 Adaptación: explicaciones y retos son elaboración de Academia basada en el material escolar. Se separan pasos y se conservan términos académicos. Se precisa que arterias salen del corazón y venas regresan a él, sin generalizar que toda arteria lleva sangre oxigenada; la referencia del colegio simplifica el circuito general. La eliminación digestiva se incluye como en el PDF, distinguiendo restos no digeridos de la formación de orina al filtrar sangre. Se explicitan los uréteres y el dióxido de carbono para conectar etiquetas y recorridos ya presentes en la fuente. No se incorporan dietas, diagnósticos ni recomendaciones clínicas.
 
@@ -89,6 +99,10 @@ Base `main` `f699b99f19084d288337fb91cd8701e4006d678a` (#184). Rama `feat/scienc
 
 No usa cuentas ni datos reales y no certifica audio físico o Rules desplegadas. La utilidad/comprensión con Gloria requiere revisión familiar. Durante estas pruebas se observa una solicitud del componente compartido de celebración a una guacamaya roja ya ausente en el baseline; no pertenece a este Tema ni bloquea su registro/resultado. No se amplía el alcance para modificar ese recurso compartido.
 
+### Corrección de pirámide · 20/10/2026
+
+Base `main` `192b9bf32069570e8212dbffb10917362f76ca4f` (#186). Rama `fix/science-piramide-escolar`. Ajuste limitado al PNG aprobado, su marcado accesible/dimensiones/referencia de caché y documentación. Revisión visual contra los cuatro niveles del PDF y del requerimiento del Product Owner. Validado en Chromium local con Outfit: imagen decodificada a 1122 × 1402, proporción íntegra y sin desbordamientos a 1440/768/390/320 px; los dos enlaces y la imagen utilizan la misma referencia v=2. Vista previa sin escrituras. Archivo idéntico byte a byte al PNG aportado y diff sin errores de espacios. No cambia contenido, preguntas, actividad, registro ni contratos. Pendiente revisión final e integración; la incorporación publicada de #185 conserva su estado de validación familiar.
+
 ## DECISIÓN
 
-Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. PR #185 aprobada e integrada: implementación cerrada en el mismo alcance, sin confirmaciones redundantes. La publicación no sustituye la validación familiar de comprensión y uso.
+Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. PR #185 aprobada e integrada: implementación cerrada en el mismo alcance, sin confirmaciones redundantes. La publicación no sustituye la validación familiar de comprensión y uso. La corrección visual 1.2 está autorizada y preparada para revisión final; aún no está integrada.
