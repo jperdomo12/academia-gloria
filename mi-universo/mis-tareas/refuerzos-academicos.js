@@ -11,11 +11,18 @@ import { VERBOS_META, BLOQUES_RESULTADO } from "../../cursos/6to/lengua/verbos/v
 
 import { ENGLISH_META as QUANTIFIERS_META, BLOQUES_RESULTADO as BLOQUES_QUANTIFIERS } from "../../cursos/6to/english/much-many-a-lot-of/quantifiers-data.js";
 
+import { NUTRICION_META, BLOQUES_RESULTADO as BLOQUES_NUTRICION } from "../../cursos/6to/science/nutricion/nutricion-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  {
+    actividadId:NUTRICION_META.actividadId, titulo:NUTRICION_META.tituloActividad,
+    icono:"🥗", curso:"6.º", materia:"Science", destinoUrl:"../../cursos/6to/science/nutricion/",
+    bloques:Object.freeze(Object.fromEntries(BLOQUES_NUTRICION.map(b => [b.id, {icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])))
+  },
   ...TEMAS_VERBOS_DOCUMENTOS.map(tema => ({
     actividadId: tema.meta.actividadId, titulo: tema.titulo, icono: "🔤", curso: "6.º", materia: "Lengua",
     destinoUrl: `../../cursos/6to/lengua/${tema.id}/`,
