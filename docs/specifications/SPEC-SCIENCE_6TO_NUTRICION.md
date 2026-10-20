@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SCIENCE_6TO_NUTRICION.md` |
-| **Versión** | 1.0 |
-| **Estado** | Candidata para revisión final · no integrada ni declarada estable |
+| **Versión** | 1.1 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 20/10/2026 |
 | **Propietario** | Contenido curricular · Science 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 20/10/2026 | Product Owner + AI Collaborator | PR #185 aprobada e integrada en e093be77…; cierra implementación de Nutrición y conserva pendiente de uso real con Gloria. No modifica el producto validado ni declara estabilidad. |
 | 1.0 | 20/10/2026 | Product Owner + AI Collaborator | Candidata autorizada por el Product Owner: un Tema de Nutrición con seis páginas escolares cubiertas, imagen aprobada intacta, práctica, prueba y evidencia compartida. Revisión familiar pendiente. |
 
 ## Resumen de contenido
@@ -82,7 +83,7 @@ Ruta: `cursos/6to/science/nutricion/`. Identidad de actividad: `6-science-nutric
 
 ## 4. Validación y límites
 
-Base `main` `f699b99f19084d288337fb91cd8701e4006d678a` (#184). Rama `feat/science-nutricion`. Resultado candidato para revisión final; no publicado ni declarado estable.
+Base `main` `f699b99f19084d288337fb91cd8701e4006d678a` (#184). Rama `feat/science-nutricion`. PR #185 aprobada por el Product Owner e integrada en `main` `e093be77f09e5a8db22ccbae8522fd50448d89c3`. Pages #795 `success`; página, módulo, datos, CSS, catálogo de Science y PNG publicados con HTTP 200 y coincidencia byte a byte con la implementación aprobada. El PNG publicado conserva el SHA-256 del original. Implementación publicada; prueba real con Gloria pendiente, sin declarar estabilidad.
 
 `tests/nutricion-browser.cjs` reproduce el patrón de pruebas existente con ContextoUsuario, contrato de sesiones, API y Análisis reales, sustituyendo solo SDK/identidad externos. Comprueba acceso Science → Nutrición, imagen cargada, cuatro sistemas, práctica/escucha, aprendizaje de diez respuestas/cinco focos, variantes distintas, Misión y evidencia, histórico sin escritura, vista previa profesional/familiar sin escritura, catálogo de Science y refuerzo/Análisis. Banco auditado: diez prácticas, diez familias/veinte variantes, cinco focos, treinta IDs únicos y una opción correcta válida por reto. Los términos principales de las seis páginas están representados. Sintaxis, rutas y `git diff --check` correctos. Inspección visual de Mapa y Sistemas con Outfit y fuente emoji cargadas, en escritorio y móvil; 1440/1024/768/390/320 px sin desbordamiento. Sistemas desplegados, práctica y resultado también comprobados a 320 px. La regresión existente de English (`tests/quantifiers-browser.cjs`) pasa con la ampliación del registro de refuerzos.
 
@@ -90,4 +91,4 @@ No usa cuentas ni datos reales y no certifica audio físico o Rules desplegadas.
 
 ## DECISIÓN
 
-Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. Candidata para revisión final; una aprobación posterior autoriza el cierre normal del mismo alcance, sin confirmaciones redundantes.
+Incorporación curricular aprobada dentro de Science, con la imagen aprobada intacta y reutilización de los patrones existentes. PR #185 aprobada e integrada: implementación cerrada en el mismo alcance, sin confirmaciones redundantes. La publicación no sustituye la validación familiar de comprensión y uso.
