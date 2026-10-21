@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b47424">
+  <title>Sociales 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Portal de Temas y recursos de Sociales de 6.º de Primaria en Academia Gloria Valentina.">
+
+  <link rel="icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../compartido/css/grid-tarjetas-academia.css">
+  <link rel="stylesheet" href="../portal-asignatura.css">
+  <link rel="stylesheet" href="../recursos-oficiales-asignatura.css">
+  <link rel="stylesheet" href="./sociales-portal.css">
+</head>
+<body
+  class="portal-6to portal-sociales"
+  data-page-title="Sociales 6.º"
+  data-page-icon="🌍"
+  data-nav-back="../index.html"
+>
+  <main class="portal-asignatura">
+    <header class="portal-hero">
+      <div class="portal-hero__contenido">
+        <div class="portal-ruta" aria-label="Ruta académica">
+          <span>6.º de Primaria</span>
+          <span class="portal-ruta__separador" aria-hidden="true">→</span>
+          <span>Sociales</span>
+        </div>
+        <h1>Sociales</h1>
+        <p class="portal-hero__lema">Observar lo cotidiano. Conectar las ideas. Comprender nuestra sociedad.</p>
+        <p class="portal-hero__texto">
+          Tres Temas del colegio para comprender los anuncios, el uso del dinero y cómo colaboramos para sostener servicios públicos.
+        </p>
+        <div class="portal-hero__chips" aria-label="Cómo aprendemos Sociales">
+          <span class="portal-chip">📘 Material del cole</span>
+          <span class="portal-chip">🔎 Observo y analizo</span>
+          <span class="portal-chip">🧩 Conecto y compruebo</span>
+        </div>
+      </div>
+      <div class="portal-hero__visual" aria-hidden="true">
+        <div class="portal-hero__orbita">
+          <span class="portal-hero__mini portal-hero__mini--a">📣</span>
+          <span class="portal-hero__icono">🌍</span>
+          <span class="portal-hero__mini portal-hero__mini--b">✏️</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="portal-seccion" aria-labelledby="tituloTemas">
+      <div class="portal-seccion__cabecera">
+        <div class="portal-seccion__cabecera-principal">
+          <div class="portal-seccion__icono" aria-hidden="true">📚</div>
+          <div>
+            <p class="portal-sobrelinea">Lo que trabajamos en el colegio</p>
+            <h2 id="tituloTemas">Mis Temas de Sociales</h2>
+          </div>
+        </div>
+        <div class="portal-seccion__apoyo">Elige el Tema que necesitas hoy.</div>
+      </div>
+      <div class="portal-catalogo__barra">
+        <span id="contadorTemas" class="portal-catalogo__contador" aria-live="polite">Preparando Temas…</span>
+        <label class="portal-busqueda" data-busqueda-temas hidden>
+          <span class="sr-only">Buscar un Tema</span>
+          <input id="buscarTema" type="search" autocomplete="off" placeholder="Buscar un Tema…" aria-label="Buscar un Tema de Sociales">
+        </label>
+      </div>
+      <div id="temasAsignatura" class="academia-grid-tarjetas portal-temas-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="portal-seccion" aria-labelledby="tituloRecursosOficiales">
+      <div class="portal-seccion__cabecera">
+        <div class="portal-seccion__cabecera-principal">
+          <div class="portal-seccion__icono" aria-hidden="true">🏫</div>
+          <div>
+            <p class="portal-sobrelinea">Del Colegio Gaudem</p>
+            <h2 id="tituloRecursosOficiales">Recursos oficiales de Sociales</h2>
+          </div>
+        </div>
+        <div class="portal-seccion__apoyo">Accesos externos al espacio oficial del colegio.</div>
+      </div>
+
+      <div class="portal-recursos-oficiales">
+        <div class="portal-recursos-oficiales__intro">
+          <div class="portal-recursos-oficiales__icono" aria-hidden="true">📖</div>
+          <div>
+            <h3>Academia + recursos del cole</h3>
+            <p>Consulta el área oficial de Sociales de 6.º del colegio cuando lo necesites.</p>
+          </div>
+        </div>
+        <div class="portal-recursos-oficiales__acciones">
+          <a class="portal-recurso-oficial" href="https://sites.google.com/gaudem.es/sexto/%C3%A1reas/sociales" target="_blank" rel="noopener noreferrer">
+            <span class="portal-recurso-oficial__principal">
+              <span class="portal-recurso-oficial__emoji" aria-hidden="true">🌍</span>
+              <span class="portal-recurso-oficial__texto">
+                <span class="portal-recurso-oficial__tipo">Área oficial · Gaudem</span>
+                <span class="portal-recurso-oficial__nombre">Sociales</span>
+              </span>
+            </span>
+            <span class="portal-recurso-oficial__externo" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal-superficie portal-idea" aria-label="Idea importante de Sociales">
+      <div class="portal-idea__contenido">
+        <div class="portal-idea__icono" aria-hidden="true">💡</div>
+        <div>
+          <h2>Una idea importante</h2>
+          <p>Una misma situación puede mirarse desde distintas preguntas: ¿qué nos comunica?, ¿cómo usamos el dinero?, ¿qué compartimos?</p>
+        </div>
+      </div>
+      <strong class="portal-idea__frase">Comprender antes de decidir.</strong>
+    </section>
+  </main>
+
+  <script src="../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module">
+    import { montarCatalogoTemas } from "../portal-asignatura.js";
+    import { TEMAS_SOCIALES } from "./temas-sociales.js";
+
+    montarCatalogoTemas({
+      temas:TEMAS_SOCIALES,
+      crecimiento:{
+        icono:"🌱",
+        titulo:"Este mapa crecerá con el curso",
+        texto:"Los próximos Temas de Sociales aparecerán aquí cuando llegue nuevo material real del colegio."
+      }
+    });
+  </script>
+</body>
+</html>
