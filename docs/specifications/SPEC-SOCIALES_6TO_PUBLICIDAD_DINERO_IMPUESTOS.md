@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md` |
-| **Versión** | 1.1 |
-| **Estado** | Candidata implementada · pendiente de aprobación e integración · no declarada estable |
+| **Versión** | 1.2 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 21/10/2026 |
 | **Propietario** | Contenido curricular · Sociales 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 21/10/2026 | Product Owner + AI Collaborator | PR #198 aprobada e integrada en 72e99bab…; Pages #807 success y 18 archivos de producto públicos HTTP 200 e idénticos a la implementación probada. Cierra desarrollo/integración/publicación; conserva validación familiar pendiente. |
 | 1.1 | 21/10/2026 | Product Owner + AI Collaborator | Implementa candidata de tres Temas independientes y portal de Sociales con motor académico existente; registra fuentes, recursos visuales, comparación PDF → Academia, focos/evidencia y validación. Sin integración/publicación ni estabilidad declaradas; uso real pendiente. |
 | 1.0 | 21/10/2026 | Product Owner + AI Collaborator | Aprueba tres Temas propietarios de Sociales: `La publicidad`, `El dinero, el ahorro y la inversión` y `Los impuestos`; conserva cada fuente escolar; define el tratamiento del solapamiento de presupuesto; y eleva a principio transversal/ADN que un tema escolar de Academia no puede empobrecer el material fuente y debe igualar o superar su claridad, estructura, apoyo visual y valor pedagógico. |
 
@@ -368,9 +369,9 @@ No declarar estabilidad solo por pruebas automatizadas. Queda pendiente uso real
 
 ---
 
-## 13. Implementación candidata · 21/10/2026
+## 13. Implementación y publicación · 21/10/2026
 
-Base verificada: `main` `ae69a3704adc59632e8d71b9d2728b1cc045dc94`. Rama `feat/sociales-6to`. Las decisiones de §§1–12 se conservan. Pendientes aprobación final, integración, comprobación de publicación y uso real con Gloria.
+Base verificada: `main` `ae69a3704adc59632e8d71b9d2728b1cc045dc94`. Rama `feat/sociales-6to`, head aprobado `3d70066a94845f88812728911a300d46e48606f6`. PR #198 aprobada por el Product Owner e integrada en `main` `72e99bab9466ced5059f9c4e82cbc34661ef2632`; árbol idéntico al probado `982e46dae6fd9ecadf1dc0515cff8e87b212697b`. Las decisiones de §§1–12 se conservan. Pages #807 (run `39618427748`) `success`; 18 archivos públicos de producto HTTP 200 e idénticos byte a byte a los aprobados, incluido el JPEG escolar intacto. Sin desarrollo, integración ni publicación pendiente de #198; uso real con Gloria pendiente.
 
 ### 13.1 Rutas, reutilización y evidencia
 
@@ -423,7 +424,7 @@ No se ha identificado pérdida de relaciones visuales relevantes en esta revisi�
 - Estudio y práctica sin escrituras educativas; profesional de consulta y familiar en vista previa sin escrituras; aprendizaje del alumno guarda únicamente por el motor existente. No utiliza cuentas ni datos reales.
 - Revisión de layouts/recursos renderizados en escritorio y móvil; comprobación de anchos 1440, 1024, 768, 390 y 320 px, incluidos resultados. Sin overflow ni errores JavaScript. JPEG escolar y recursos locales nuevos cargados. El fixture identifica el 404 previo de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` al celebrar resultados; no se declara ausencia total de 404 del producto anterior.
 - Regresión del Tema existente Science/Nutrición: `tests/nutricion-browser.cjs` superado: pirámide, cuatro sistemas, práctica/prueba, sesiones/Misión, histórico, vista previa, catálogo/refuerzo/Análisis y responsive. No cambian su motor, contenido ni imagen.
-- No se certifican Rules desplegadas, sesión Firebase real ni voz física. Pendientes revisión del Product Owner, publicación tras aprobación y uso real con Gloria antes de declarar estabilidad.
+- No se certifican Rules desplegadas, sesión Firebase real ni voz física. Revisión/aprobación del Product Owner e integración/publicación completadas; pendiente uso real con Gloria antes de declarar estabilidad.
 
 ---
 
@@ -436,4 +437,4 @@ Sociales se incorpora con tres Temas propietarios: `La publicidad`, `El dinero, 
 Se aprueba además como principio transversal/ADN de Academia que **un Tema escolar transformado por Academia no puede empobrecer el material fuente: debe igualar o superar su claridad, estructura, apoyo visual y valor pedagógico, manteniendo como mínimo el nivel del colegio cuando no sea posible superarlo**.
 
 
-**Estado de ejecución:** candidata implementada y validada técnicamente en `feat/sociales-6to`; pendiente aprobación final, integración/publicación y uso familiar. La aprobación funcional anterior no equivale a estabilidad de producto.
+**Estado de ejecución:** #198 aprobada, integrada y publicada con verificación completada. Pendiente uso familiar; no equivale a estabilidad de producto.
