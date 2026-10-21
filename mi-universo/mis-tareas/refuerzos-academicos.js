@@ -13,11 +13,17 @@ import { ENGLISH_META as QUANTIFIERS_META, BLOQUES_RESULTADO as BLOQUES_QUANTIFI
 
 import { NUTRICION_META, BLOQUES_RESULTADO as BLOQUES_NUTRICION } from "../../cursos/6to/science/nutricion/nutricion-data.js";
 
+import { ACTIVIDADES_SOCIALES } from "../../cursos/6to/sociales/actividades-sociales.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  ...ACTIVIDADES_SOCIALES.map(({meta,bloques,ruta,icono}) => ({
+    actividadId:meta.actividadId, titulo:meta.tituloActividad, icono, curso:"6.º", materia:"Sociales", destinoUrl:ruta,
+    bloques:Object.freeze(Object.fromEntries(bloques.map(b => [b.id,{icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])))
+  })),
   {
     actividadId:NUTRICION_META.actividadId, titulo:NUTRICION_META.tituloActividad,
     icono:"🥗", curso:"6.º", materia:"Science", destinoUrl:"../../cursos/6to/science/nutricion/",

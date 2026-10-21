@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El dinero, el ahorro y la inversión | Sociales 6.º | Academia Gloria Valentina</title>
+<link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+<link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+<link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+<link rel="stylesheet" href="../../zonas/lenguizonas/gramatica-verbos/gramatica-verbos.css">
+<link rel="stylesheet" href="../../science/organizacion-seres-vivos/organizacion-seres-vivos.css">
+<link rel="stylesheet" href="../sociales.css">
+</head><body class="sociales tema-dinero-ahorro-inversion" data-page-title="El dinero, el ahorro y la inversión" data-page-icon="🪙" data-nav-back="../index.html" data-sociales-tema="dinero-ahorro-inversion"><main class="science-shell">
+<header class="science-hero"><div><div class="science-route"><span>6.º de Primaria</span><span>→</span><span>Sociales</span></div><h1>El dinero, el ahorro y la inversión</h1><p class="science-hero__lead">El dinero entra, sale y puede reservarse. Compara cantidades, prueba un presupuesto y descubre por qué ahorrar e invertir son acciones diferentes.</p><div class="science-chips"><span class="science-chip">📘 Material del colegio</span><span class="science-chip">🌱 A tu ritmo</span></div></div><div class="social-hero-visual" aria-hidden="true"><div class="hero-money"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Dinero"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="34" cy="27" rx="23" ry="9"/><path d="M11 27v12c0 12 46 12 46 0V27M11 39v12c0 12 46 12 46 0V39M25 25h18M60 42c17 0 17 16 0 16m0 0c17 0 17 16 0 16"/></g></svg><span>INGRESOS − GASTOS</span><strong>¿Mi plan encaja?</strong></div></div></header>
+<section class="science-mode" aria-live="polite"><div class="science-mode__main"><div id="iconoModo" class="science-mode__icon">🎓</div><div><h2 id="tituloModo">Sesión de aprendizaje</h2><p id="descripcionModo">Preparando el contexto…</p></div></div><button id="botonModo" type="button">Cambiar a Vista previa</button></section>
+<nav class="science-tabs" aria-label="Secciones del tema"><button class="science-tab activa" type="button" data-pestana="mapa">⚖️ Mi presupuesto</button><button class="science-tab" type="button" data-pestana="claves">💳 Dinero y pagos</button><button class="science-tab" type="button" data-pestana="material">🌱 Ahorro e inversión</button><button class="science-tab" type="button" data-pestana="practica">✏️ Práctica</button><button class="science-tab" type="button" data-pestana="prueba">✅ Prueba</button></nav><section class="science-panel" data-panel="mapa"><section class="study-section"><div class="study-heading"><h2>Tres situaciones, una misma comparación</h2><p>Las barras parten de la misma base y usan la misma escala. Verde: ingresos. Coral: gastos.</p></div><div class="budget-triptych"><article class="budget-case budget-case--equilibrado"><p class="budget-relation">Ingresos <b>=</b> Gastos</p><div class="budget-bars" role="img" aria-label="Ingresos 10 euros, gastos 10 euros"><div class="budget-bar budget-bar--ingreso" style="--cantidad:10"><strong>10 €</strong><span>Ingresos</span></div><div class="budget-bar budget-bar--gasto" style="--cantidad:10"><strong>10 €</strong><span>Gastos</span></div></div><h3>Todo encaja; no sobra</h3><p>10 − 10 = 0 €. Con este dinero no queda margen para un imprevisto.</p></article><article class="budget-case budget-case--margen"><p class="budget-relation">Ingresos <b>></b> Gastos</p><div class="budget-bars" role="img" aria-label="Ingresos 12 euros, gastos 8 euros"><div class="budget-bar budget-bar--ingreso" style="--cantidad:12"><strong>12 €</strong><span>Ingresos</span></div><div class="budget-bar budget-bar--gasto" style="--cantidad:8"><strong>8 €</strong><span>Gastos</span></div></div><h3>Queda un margen</h3><p>12 − 8 = 4 €. Parte de los ingresos puede reservarse para ahorrar.</p></article><article class="budget-case budget-case--falta"><p class="budget-relation">Ingresos <b><</b> Gastos</p><div class="budget-bars" role="img" aria-label="Ingresos 8 euros, gastos 12 euros"><div class="budget-bar budget-bar--ingreso" style="--cantidad:8"><strong>8 €</strong><span>Ingresos</span></div><div class="budget-bar budget-bar--gasto" style="--cantidad:12"><strong>12 €</strong><span>Gastos</span></div></div><h3>El plan no alcanza</h3><p>8 − 12 = −4 €. Los gastos superan lo disponible: hay que revisar el plan.</p></article></div></section><section class="study-section"><div class="study-heading"><h2>Mi presupuesto me ayuda a planear</h2><p>Resto los gastos a los ingresos para ver si el plan encaja.</p></div><div class="budget-lab" id="laboratorioPresupuesto"><div><p class="study-kicker">LO PRUEBO</p><h3>Un ingreso fijo. ¿Qué cambia si gasto más?</h3><p>En este ejemplo recibes <strong>10 €</strong>. Mueve los gastos y observa la relación.</p><label for="gastoPresupuesto">Gastos del plan: <output id="valorGasto" for="gastoPresupuesto">8 €</output></label><input type="range" id="gastoPresupuesto" min="0" max="14" value="8" step="1"><p class="source-small">Son cantidades de un ejemplo escolar; no es un plan sobre dinero real.</p></div><div><div class="budget-number-line"><span>Ingresos <b>10 €</b></span><span>−</span><span>Gastos <b id="restaGasto">8 €</b></span><span>=</span><strong id="saldoPresupuesto">2 €</strong></div><div class="budget-meter"><span id="porcionGasto" style="width:80%"></span></div><p id="lecturaPresupuesto" class="budget-live" role="status">Ingresos &gt; gastos. Quedan 2 € que puedes reservar.</p></div></div></section></section><section class="science-panel" data-panel="claves" hidden><section class="study-section"><div class="study-heading"><h2>Distintas formas de pagar</h2><p>El medio cambia; el dinero sigue teniendo una función.</p></div><div id="conceptosDinero"><p class="study-lead">El <strong>dinero</strong> es un medio de pago aceptado que facilita intercambiar productos y servicios.</p><div class="payment-gallery"><article class="payment"><div class="payment-object"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Efectivo"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="34" cy="27" rx="23" ry="9"/><path d="M11 27v12c0 12 46 12 46 0V27M11 39v12c0 12 46 12 46 0V39M25 25h18M60 42c17 0 17 16 0 16m0 0c17 0 17 16 0 16"/></g></svg></div><h3>Efectivo</h3><p>Billetes y monedas que entregamos al pagar.</p><div class="payment-flow">Mi dinero → tienda</div></article><article class="payment"><div class="payment-object"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Tarjeta bancaria"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="17" width="68" height="47" rx="7"/><path d="M7 30h66M16 48h13m8 0h12"/></g></svg></div><h3>Tarjeta bancaria</h3><p>El importe de la compra se carga a la cuenta del banco donde tenemos dinero.</p><div class="payment-flow">Cuenta del banco → pago</div></article><article class="payment"><div class="payment-object"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Pago electrónico"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="4" width="42" height="72" rx="8"/><path d="M20 16h40M20 64h40M31 38l7 7 14-16"/><circle cx="40" cy="70" r="1"/></g></svg></div><h3>Pago electrónico</h3><p>Las tecnologías permiten utilizar medios de pago en Internet.</p><div class="payment-flow">Medio electrónico → compra en Internet</div></article></div><div class="income-spread"><div><span class="study-kicker">ENTRA DINERO</span><h3>Ingresos</h3><p>Dinero que recibimos: por ejemplo, una paga o el ingreso por un trabajo.</p></div><span class="income-arrow" aria-hidden="true">→</span><div class="income-uses"><span>Consumir</span><span>Ahorrar</span><span>Invertir</span></div></div><p>Un <strong>gasto</strong> es dinero que entregamos para comprar o pagar algo. Al hacer un presupuesto anotamos con qué dinero contamos y qué gastos hay: alimentos, transporte, medicinas, vivienda o vestido.</p></div><button type="button" class="listen-btn" data-escuchar-contenedor="#conceptosDinero">🔊 Escuchar la explicación</button></section></section><section class="science-panel" data-panel="material" hidden><section class="study-section"><div class="study-heading"><h2>Ahorrar no es lo mismo que invertir</h2><p>Comparo la intención y lo que puede ocurrir.</p></div><div class="save-invest"><article class="saving-path"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Dinero reservado"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 48c-10-22 24-35 42-19l10-6v17l7 5v10l-9 3-5 12h-9l-2-8H29l-4 8h-9l-2-15M31 25V12h19v13M31 34h18"/><circle cx="58" cy="41" r="1"/></g></svg><p class="study-kicker">AHORRAR</p><h3>Guardar para una necesidad futura</h3><div class="amount-path"><span>Parte de mis ingresos</span><b>→</b><strong>Reserva</strong><b>→</b><span>Usarla más adelante</span></div><p>Por ejemplo, reservar para estudiar, para una vivienda o para un viaje. La idea principal es guardar una parte para después.</p></article><div class="not-equal" aria-label="no es igual a">≠</div><article class="investing-path"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Beneficio posible y riesgo"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 65h62M15 59V43h11v16m12 0V31h11v28m12 0V15h11v44M10 29l19-11 13 6L66 8m-10 0h10v10"/></g></svg><p class="study-kicker">INVERTIR</p><h3>Intentar conseguir un beneficio</h3><p>Una persona o empresa destina parte de sus ingresos a una actividad con esa intención: es un <strong>inversor</strong>.</p><div class="risk-origin">Invierto 2 € en un ejemplo</div><div class="risk-branches" aria-label="Tres posibilidades de una inversión"><div><strong>3 €</strong><span>Puede ganar</span></div><div><strong>2 €</strong><span>Puede no ganar nada</span></div><div><strong>0 €</strong><span>Puede perder todo</span></div></div><p class="risk-key"><strong>Hay riesgo: el beneficio no está asegurado.</strong> Son posibilidades ilustrativas; no predicen un resultado.</p></article></div><aside class="study-note"><strong>La diferencia importante</strong><p>Ahorrar reserva dinero para después. Invertir intenta obtener un beneficio con riesgo de pérdida. El colegio no los presenta como la misma acción.</p></aside><details class="study-details"><summary>Una curiosidad del material: los ahorros en el banco</summary><p>El colegio explica que el dinero depositado en un banco no permanece todo físicamente almacenado: el banco puede prestarlo a empresas o particulares. Es una explicación de la fuente, no una recomendación para elegir dónde poner dinero.</p></details></section><p class="source-small">Material de continuidad de 5.º trabajado en Sociales 6.º · 5_LI_La publicidad, páginas 4–6.</p></section>    <section class="science-panel" data-panel="practica" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✏️</div>
+        <div>
+          <p class="eyebrow">Con pistas y nuevos intentos</p>
+          <h2>Práctica guiada</h2>
+          <p>Retos breves con pistas y nuevos intentos. Puedes volver al contenido cuando lo necesites.</p>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="progress" aria-hidden="true">
+<span id="barraPractica">
+</span>
+</div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido">
+</div>
+        <div id="pistaPractica" class="hint" hidden>
+</div>
+        <div id="mensajePractica" class="message" role="status">
+</div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="science-panel" data-panel="prueba" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✅</div>
+        <div>
+          <p class="eyebrow">Comprobación formativa</p>
+          <h2>Compruebo las ideas del Tema</h2>
+          <p>Una comprobación formativa por bloques. Cada repetición puede traer otros ejemplos.</p>
+        </div>
+      </div>
+
+      <div id="inicioPrueba" class="test-start">
+        <div class="test-start__icon" aria-hidden="true">🎯</div>
+        <h3>Cuando estés preparada</h3>
+        <p>
+          No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve.
+          Al final tendrás un mapa de las ideas que salieron firmes y de las que conviene seguir practicando.
+        </p>
+        <button id="botonIniciarPrueba" class="btn btn--violet" type="button">Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="challenge" hidden>
+        <div class="progress" aria-hidden="true">
+<span id="barraPrueba">
+</span>
+</div>
+        <div class="test-meta">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="test-block">Bloque</span>
+        </div>
+        <div id="pruebaContenido">
+</div>
+        <div id="explicacionPrueba" class="explanation" hidden>
+</div>
+        <div class="actions">
+          <button id="botonResponderPrueba" class="btn btn--primary" type="button" disabled>Comprobar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="test-end" hidden>
+        <div class="test-end__icon" aria-hidden="true">🌱</div>
+        <h3>Tu mapa de hoy</h3>
+        <p id="textoCierre">
+</p>
+        <div id="resultadoPruebaResumen">
+</div>
+        <div id="mapaResultados" class="results">
+</div>
+        <div id="estadoGuardado" class="save-state" aria-live="polite">
+</div>
+        <div class="actions" style="justify-content:center">
+          <button id="botonVolverRepaso" class="btn btn--soft" type="button">← Volver a repasar</button>
+        </div>
+      </div>
+    </section>
+</main>
+<script src="../../../../compartido/js/navegacion.js"></script>
+<script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+<script type="module" src="./tema.js"></script>
+</body></html>

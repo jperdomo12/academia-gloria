@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.9 |
+| **Versión** | 1.10 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
-| **Última actualización** | 14/10/2026 |
+| **Última actualización** | 21/10/2026 |
 | **Propietario** | Estándares de Aprendizaje Académico |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Creación, adaptación, incorporación y validación de temas académicos a partir de material escolar, con primera aplicación estructurada en 6.º de Primaria |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.10 | 21/10/2026 | Product Owner + AI Collaborator | Incorpora la regla aprobada de no empobrecer material escolar: umbral de claridad/estructura/apoyo visual/valor pedagógico, comparación fuente → Academia por recurso y bloqueo de calidad. Primera aplicación: tres Temas de Sociales 6.º según SPEC propietaria. |
 | 1.9 | 14/10/2026 | Product Owner + AI Collaborator | Cierra primera aplicación de CA-031: PR #174 aprobada e integrada; un Tema de English con apuntes y Grammar zone, consulta desde ambos orígenes y prueba real pendiente. |
 | 1.9-rc | 14/10/2026 | Product Owner + AI Collaborator | Documenta regla aprobada por Juan: material explicativo y actividad posterior de Zonas sobre el mismo contenido enriquecen un único Tema; origen escolar conservado sin duplicar materia/actividad. Primera aplicación candidata Much/Many en English. |
 | 1.8 | 14/10/2026 | Product Owner + AI Collaborator | Sincroniza Lengua 6.º activa y Verbos publicados mediante #172; incorpora Resumen de contenido. Conserva reglas curriculares, pruebas reales y aprobación familiar sin nuevas normas. |
@@ -1384,6 +1385,24 @@ La interfaz del alumno puede priorizar avance, estrategia, comprensión, esfuerz
 
 ---
 
+### 19.4 Igualar o superar la fuente escolar · Quality Gate
+
+> **Cuando Academia transforma material real del colegio en un Tema escolar, el resultado debe igualar o superar el nivel de claridad, estructura, apoyo visual y valor pedagógico del material fuente. Si no es posible superarlo en algún aspecto, como mínimo debe mantenerse al mismo nivel. Academia no debe empobrecer el material original al transformarlo.**
+
+Regla aprobada por el Product Owner y recogida en el ADN §17.1 y en `SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md` §4. No exige copiar el diseño del PDF; exige preservar su función pedagógica.
+
+Antes de presentar una candidata se comparan los recursos útiles de la fuente con el producto renderizado:
+
+1. qué permite comprender el recurso original;
+2. dónde y cómo cumple esa función Academia;
+3. por qué la representación es igual o más clara;
+4. si se ha perdido alguna relación importante;
+5. si la comprensión se conserva en móvil.
+
+La comparación se registra proporcionalmente en la SPEC propietaria del Tema. Si se pierde claridad o una relación visual relevante, el Tema todavía no está listo. La comprobación incluye lectura y revisión visual reales; no se satisface solo con ausencia de errores/overflow. Diagramas, comparaciones, anotaciones sobre imagen y ejemplos mantienen su función; emojis o tarjetas repetidas no sustituyen esos recursos. Los Temas pueden compartir componentes y contratos sin compartir una misma composición de contenido.
+
+---
+
 ## 20. Criterios de conformidad de un Tema Académico
 
 Antes de considerar un tema preparado para uso debe comprobarse:
@@ -1392,6 +1411,7 @@ Antes de considerar un tema preparado para uso debe comprobarse:
 
 - [ ] El material escolar recibido fue revisado completo en el alcance necesario.
 - [ ] Se preservaron conceptos, procedimientos y recursos importantes.
+- [ ] Se comparó cada recurso visual útil con el producto renderizado, en escritorio y móvil; claridad, estructura, apoyo visual y valor pedagógico igualan o superan la fuente conforme al §19.4.
 - [ ] Los enriquecimientos no contradicen la fuente.
 - [ ] Si existe portal propio y recursos oficiales del colegio útiles para la materia, se revisó su incorporación con el patrón vigente sin confundirlos con contenido interno.
 

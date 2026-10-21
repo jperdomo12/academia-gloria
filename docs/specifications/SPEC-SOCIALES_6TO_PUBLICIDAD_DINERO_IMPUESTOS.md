@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md` |
-| **Versión** | 1.0 |
-| **Estado** | Aprobada para desarrollo · no implementada |
+| **Versión** | 1.1 |
+| **Estado** | Candidata implementada · pendiente de aprobación e integración · no declarada estable |
 | **Última actualización** | 21/10/2026 |
 | **Propietario** | Contenido curricular · Sociales 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 21/10/2026 | Product Owner + AI Collaborator | Implementa candidata de tres Temas independientes y portal de Sociales con motor académico existente; registra fuentes, recursos visuales, comparación PDF → Academia, focos/evidencia y validación. Sin integración/publicación ni estabilidad declaradas; uso real pendiente. |
 | 1.0 | 21/10/2026 | Product Owner + AI Collaborator | Aprueba tres Temas propietarios de Sociales: `La publicidad`, `El dinero, el ahorro y la inversión` y `Los impuestos`; conserva cada fuente escolar; define el tratamiento del solapamiento de presupuesto; y eleva a principio transversal/ADN que un tema escolar de Academia no puede empobrecer el material fuente y debe igualar o superar su claridad, estructura, apoyo visual y valor pedagógico. |
 
 ---
@@ -367,6 +368,65 @@ No declarar estabilidad solo por pruebas automatizadas. Queda pendiente uso real
 
 ---
 
+## 13. Implementación candidata · 21/10/2026
+
+Base verificada: `main` `ae69a3704adc59632e8d71b9d2728b1cc045dc94`. Rama `feat/sociales-6to`. Las decisiones de §§1–12 se conservan. Pendientes aprobación final, integración, comprobación de publicación y uso real con Gloria.
+
+### 13.1 Rutas, reutilización y evidencia
+
+Sociales se activa en `cursos/6to/index.html`; portal en `cursos/6to/sociales/index.html` y catálogo único `temas-sociales.js`. Reutiliza `portal-asignatura.js`, rejilla de tarjetas, recursos oficiales, Panel y navegación. Incluye exclusivamente el enlace de Sociales aportado en las fuentes del proyecto: `https://sites.google.com/gaudem.es/sexto/%C3%A1reas/sociales`. No abre ni duplica Plan Semanal.
+
+| Tema / ruta bajo `cursos/6to/sociales/` | Actividad estable | Focos | Práctica / familias de prueba / variantes |
+|---|---|---|---|
+| `publicidad/` | `6-sociales-publicidad` | funciones, estrategias, mensaje, analisis | 8 / 8 / 16 |
+| `dinero-ahorro-inversion/` | `6-sociales-dinero-ahorro-inversion` | pagos, presupuesto, ahorro, inversion | 8 / 8 / 16 |
+| `impuestos/` | `6-sociales-impuestos` | aportaciones, servicios, iva, irpf, otros-tributos | 10 / 10 / 20 |
+
+Cada Tema contiene `index.html`, `datos.js` y un adaptador `tema.js` al motor académico ya existente `compartido/js/motor-practica-verbal.js`. Se reutilizan práctica, prueba, variantes recientes, voz, modo aprendizaje/vista previa, sesiones `sesion-academica-v1`, histórico y vinculación de evidencias a Misiones. El motor compartido no cambia. `actividades-sociales.js` deriva metadatos/focos de los mismos bancos; `refuerzos-academicos.js` registra esas actividades en el motor existente. El catálogo de Misiones descubre Sociales desde los portales existentes. Análisis conserva sus filtros, prioridades y límites de resumen; no se duplica ni modifica.
+
+`sociales.css` adapta la identidad existente de Temas académicos. `experiencias.js` gestiona únicamente exploraciones de estudio en memoria: etiquetas del anuncio, presupuesto variable y explicación de servicios. No guarda esas respuestas ni las convierte en otra prueba. Solo la prueba académica final guarda evidencia conforme al contrato vigente; consulta/vista previa no escribe. Sin nuevas colecciones, API ni Rules.
+
+### 13.2 Fuentes y delimitación comprobadas
+
+| Fuente recibida | Alcance | SHA-256 del PDF |
+|---|---|---|
+| `5_LI_La publicidad.pdf` (adjunto recibido con sufijo `(1)`) | Páginas 1–3 Publicidad; 4–6 Dinero/ahorro/inversión | `72cd54231b22dc5f0a08258e8f48e6d4ed7031090275d740147943980d991854` |
+| `6_LI_Los impuestos.docx.pdf` (adjunto recibido con sufijo `(1)`) | Cuatro páginas de Impuestos; presupuesto de p.4 solo como conexión | `0230a348ce576950f8ef0bef7e5b8702dd3fe79a0a43095ad54dbd2528a2d1b1` |
+
+Se leyeron y renderizaron las diez páginas, incluidos recuadros visuales: creación de anuncios por agencias/departamentos y explicación escolar sobre depósitos bancarios. Cada Tema identifica procedencia y páginas. No se publican copias completas de los PDFs.
+
+El anuncio escolar de p.3 se extrae sin recomprimir, recortar ni rediseñar a `assets/imagenes/sociales/anuncio-despierta-desayuna.jpg` (579 × 842, 72.936 bytes; SHA-256 `24b80873a8953346520454979d0333ef5c35380aec467906ed7d0194d43e5081`). Conserva texto y logotipos originales. El emisor histórico se atribuye al análisis del colegio; no se sustituye por una institución actual. Los demás apoyos son HTML/CSS y SVG locales, sin generar imágenes ni incorporar recursos financieros/fiscales externos.
+
+IVA e IRPF mantienen el encuadre escolar; los importes inventados se identifican como ejemplos, sin tipos legales o consejo fiscal. Retenciones y Renta se explican como referencia del material, sin convertir su simplificación en obligaciones particulares. Otros tributos, sanciones y curiosidad histórica se presentan como contenido de la fuente. Ahorro/inversión no incluyen recomendaciones ni productos financieros.
+
+### 13.3 Comparación visual fuente → Academia · quality gate
+
+Revisión del producto renderizado frente a las páginas originales; no se limita a transcripción o ausencia de overflow. Juicio de revisión de Desarrollo, pendiente de validación familiar.
+
+| Recurso / función en la fuente | Representación concreta en Academia | Claridad conservada o mejorada y comprobación móvil |
+|---|---|---|
+| Publicidad p.3: localizar eslogan, mensaje, destinatario y emisor dentro del anuncio | `publicidad/index.html` → «Observo un anuncio»: composición original con cuatro puntos y etiquetas progresivas; selección, pista, comprobación y explicación propia comparada con modelo | Conserva las posiciones y el anuncio entero. Permite observar antes de revelar; no sustituye la imagen por cuatro tarjetas. En móvil se selecciona antes de la imagen y el feedback aparece después; zonas de al menos 44 px, teclado y leyenda legible. El texto libre se compara con modelo, sin fingir corrección automática. |
+| Publicidad pp.1–2: funciones, estrategias y elementos del mensaje | «El mensaje»: emisor → mensaje → destinatario y canales; «Estrategias»: cuatro mini anuncios con explicación tras observar | Las relaciones se ven en secuencia y las estrategias tienen ejemplos diferentes, no solo definiciones. Ejemplos inventados identificados; el anuncio real mantiene su atribución. Secuencia y ejemplos se apilan de forma legible en móvil. |
+| Dinero p.4: efectivo y medios bancarios/electrónicos | `dinero-ahorro-inversion/index.html` → «Dinero y pagos»: monedas, tarjeta y móvil con objeto SVG, significado y recorrido del pago | Mantiene distinción y procedencia del dinero; las ilustraciones cumplen función de reconocimiento. Objetos y explicación permanecen juntos en móvil. |
+| Dinero p.5: comparar ingresos =, > y < gastos | «Mi presupuesto»: tres pares de barras, escala/base comunes, importes, símbolo relacional y diferencia; presupuesto manipulable con ingreso fijo de 10 € | Hace visible la diferencia, el margen o la falta y su cálculo. Los tres escenarios siguen disponibles al apilarse en móvil; barra verde/coral acompañada de etiquetas y números. No depende solo del color. |
+| Dinero p.6: distinguir ahorro/inversión y riesgo | «Ahorro e inversión»: reservar para después frente a destinar a una actividad; bifurcación con tres resultados posibles, incluido perder todo | Intención y consecuencias separadas, símbolo ≠, beneficio no garantizado. La rama de riesgo continúa visible en móvil, sin sugerir probabilidad ni recomendar inversión. |
+| Impuestos pp.1–3: aportaciones al Estado y servicios comunes | `impuestos/index.html` → «Un fondo común»: personas/actividad → aportación obligatoria → Estado/fondo → cinco grupos de servicios ilustrados y seleccionables | Explicita el recorrido causal y la ramificación que la fuente describe. En móvil conserva orden/flechas y grupos completos: colegios/parques, hospitales/medicinas, policía/bomberos, carreteras/transporte y basuras. |
+| Impuestos p.2: IVA frente a IRPF y vocabulario | «IVA e IRPF»: recibo de compra (precio + IVA = total), nómina escolar (ingreso = recibido + retención), glosario y secuencia retención → Renta | Dos contextos visualmente diferentes y cálculos completos, sin tipos fiscales reales. En móvil cada ejemplo mantiene su operación y explicación juntos. |
+| Impuestos pp.3–4: curiosidad y presupuesto de 10 € | «Lo conecto»: hito histórico y barra proporcional 3 € helado / 5 € cromos-juguete / 2 € ahorro | Conserva reparto, suma y reserva. No duplica la explicación de presupuesto: enlaza al Tema del dinero con `data-conservar-retorno`; abrirlo y volver regresa a Impuestos. Barra legible también en móvil. |
+
+No se ha identificado pérdida de relaciones visuales relevantes en esta revisión. Los tres Temas comparten marco académico, no composición de contenido: anuncio para investigar, comparación/manipulación presupuestaria y recorrido de aportaciones/servicios.
+
+### 13.4 Validación y límites
+
+- `tests/sociales-browser.cjs`: Chromium con páginas/módulos, ContextoUsuario, guard, API y Análisis reales; SDK/identidad externos y voz simulados. Activa portal/3 Temas; prueba anuncio (error, pista, teclado, cuatro etiquetas, modelo y reinicio), tres presupuestos/deslizador, tres pagos, ramas de riesgo, cinco servicios y retorno entre Temas.
+- Comprueba las 26 prácticas, correspondencia de opciones/respuestas y 78 IDs únicos; 26 familias con dos variantes cada una. Ejecuta pruebas finales de los tres Temas, metadatos/focos, sesiones/histórico, cambio de variantes, Misión/evidencia y refuerzo repetido. Análisis consulta cada Tema con su filtro existente, sin alterar el límite global de fortalezas.
+- Estudio y práctica sin escrituras educativas; profesional de consulta y familiar en vista previa sin escrituras; aprendizaje del alumno guarda únicamente por el motor existente. No utiliza cuentas ni datos reales.
+- Revisión de layouts/recursos renderizados en escritorio y móvil; comprobación de anchos 1440, 1024, 768, 390 y 320 px, incluidos resultados. Sin overflow ni errores JavaScript. JPEG escolar y recursos locales nuevos cargados. El fixture identifica el 404 previo de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` al celebrar resultados; no se declara ausencia total de 404 del producto anterior.
+- Regresión del Tema existente Science/Nutrición: `tests/nutricion-browser.cjs` superado: pirámide, cuatro sistemas, práctica/prueba, sesiones/Misión, histórico, vista previa, catálogo/refuerzo/Análisis y responsive. No cambian su motor, contenido ni imagen.
+- No se certifican Rules desplegadas, sesión Firebase real ni voz física. Pendientes revisión del Product Owner, publicación tras aprobación y uso real con Gloria antes de declarar estabilidad.
+
+---
+
 ## DECISIÓN
 
 **APROBADO PARA DESARROLLO.**
@@ -374,3 +434,6 @@ No declarar estabilidad solo por pruebas automatizadas. Queda pendiente uso real
 Sociales se incorpora con tres Temas propietarios: `La publicidad`, `El dinero, el ahorro y la inversión` y `Los impuestos`, conservando trazabilidad de sus fuentes escolares y el tratamiento acordado del presupuesto.
 
 Se aprueba además como principio transversal/ADN de Academia que **un Tema escolar transformado por Academia no puede empobrecer el material fuente: debe igualar o superar su claridad, estructura, apoyo visual y valor pedagógico, manteniendo como mínimo el nivel del colegio cuando no sea posible superarlo**.
+
+
+**Estado de ejecución:** candidata implementada y validada técnicamente en `feat/sociales-6to`; pendiente aprobación final, integración/publicación y uso familiar. La aprobación funcional anterior no equivale a estabilidad de producto.

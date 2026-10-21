@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La publicidad | Sociales 6.º | Academia Gloria Valentina</title>
+<link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+<link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+<link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+<link rel="stylesheet" href="../../zonas/lenguizonas/gramatica-verbos/gramatica-verbos.css">
+<link rel="stylesheet" href="../../science/organizacion-seres-vivos/organizacion-seres-vivos.css">
+<link rel="stylesheet" href="../sociales.css">
+</head><body class="sociales tema-publicidad" data-page-title="La publicidad" data-page-icon="📣" data-nav-back="../index.html" data-sociales-tema="publicidad"><main class="science-shell">
+<header class="science-hero"><div><div class="science-route"><span>6.º de Primaria</span><span>→</span><span>Sociales</span></div><h1>La publicidad</h1><p class="science-hero__lead">Detrás de cada anuncio hay una intención. Mira con atención, busca sus pistas y descubre cómo se construye un mensaje.</p><div class="science-chips"><span class="science-chip">📘 Material del colegio</span><span class="science-chip">🌱 A tu ritmo</span></div></div><div class="social-hero-visual" aria-hidden="true"><div class="hero-cartel"><span>¡OBSERVA!</span><strong>Una imagen.<br>Una frase.<br>Una intención.</strong><small>¿Qué quiere comunicar?</small></div></div></header>
+<section class="science-mode" aria-live="polite"><div class="science-mode__main"><div id="iconoModo" class="science-mode__icon">🎓</div><div><h2 id="tituloModo">Sesión de aprendizaje</h2><p id="descripcionModo">Preparando el contexto…</p></div></div><button id="botonModo" type="button">Cambiar a Vista previa</button></section>
+<nav class="science-tabs" aria-label="Secciones del tema"><button class="science-tab activa" type="button" data-pestana="mapa">🖼️ Observo un anuncio</button><button class="science-tab" type="button" data-pestana="claves">💬 El mensaje</button><button class="science-tab" type="button" data-pestana="material">🔎 Estrategias</button><button class="science-tab" type="button" data-pestana="practica">✏️ Práctica</button><button class="science-tab" type="button" data-pestana="prueba">✅ Prueba</button></nav><section class="science-panel" data-panel="mapa"><section class="study-section"><div class="study-heading"><h2>Un anuncio, muchas pistas</h2><p>Antes de poner nombres, observo cómo se combinan palabras, imágenes y firma.</p></div><div class="ad-laboratorio"><div class="ad-investigacion ad-seleccion"><p class="study-kicker">01 · OBSERVO → 02 · IDENTIFICO</p><h3>¿Qué encuentras en este anuncio?</h3><p>Míralo primero. Después elige una parte y pulsa sobre una de las cuatro zonas numeradas.</p>
+<label for="parteAnuncio">Quiero localizar…</label><select id="parteAnuncio"><option value="slogan">El eslogan</option><option value="mensaje">El mensaje</option><option value="destinatario">El destinatario</option><option value="emisor">El emisor</option></select>
+<div class="study-tools"><button type="button" class="btn btn--soft" id="pistaAnuncio">💡 Una pista</button><button type="button" class="btn btn--soft" id="reiniciarAnuncio">Volver a observar</button></div>
+</div><div class="ad-stage"><figure class="ad-poster" id="anuncioEscolar">
+<img src="../../../../assets/imagenes/sociales/anuncio-despierta-desayuna.jpg" width="579" height="842" alt="Cartel del material escolar: un despertador con alimentos de desayuno, una frase grande arriba y textos y logotipos abajo.">
+<button class="ad-pin ad-pin--slogan" type="button" data-zona-anuncio="slogan" style="--pin-x:73%;--pin-y:17%" aria-label="Zona 1 del anuncio"><span>1</span><span class="ad-revelado" hidden></span></button><button class="ad-pin ad-pin--mensaje" type="button" data-zona-anuncio="mensaje" style="--pin-x:28%;--pin-y:53%" aria-label="Zona 2 del anuncio"><span>2</span><span class="ad-revelado" hidden></span></button><button class="ad-pin ad-pin--destinatario" type="button" data-zona-anuncio="destinatario" style="--pin-x:85%;--pin-y:79%" aria-label="Zona 3 del anuncio"><span>3</span><span class="ad-revelado" hidden></span></button><button class="ad-pin ad-pin--emisor" type="button" data-zona-anuncio="emisor" style="--pin-x:79%;--pin-y:91%" aria-label="Zona 4 del anuncio"><span>4</span><span class="ad-revelado" hidden></span></button></figure><p class="source-small">Anuncio original extraído de la página 3 del material escolar, sin modificar. <a href="../../../../assets/imagenes/sociales/anuncio-despierta-desayuna.jpg" target="_blank" rel="noopener">Abrir en grande ↗</a></p></div>
+<div class="ad-investigacion ad-explicacion"><p id="respuestaAnuncio" class="ad-feedback" role="status">Las etiquetas aparecerán cuando encuentres cada parte.</p><ul id="etiquetasAnuncio" class="ad-legend" aria-label="Partes encontradas"></ul>
+<div class="ad-medio"><strong>¿Dónde se transmite?</strong><p>Este es un <strong>cartel</strong>: ese soporte es su medio de difusión. El mismo mensaje podría circular por otros canales.</p></div>
+<label for="explicacionAnuncio">04 · Lo explico con mis palabras</label><textarea id="explicacionAnuncio" rows="3" placeholder="¿Qué intenta comunicar y a quién?"></textarea>
+<button type="button" class="btn btn--primary" id="compararAnuncio" disabled>Comparar mi explicación</button><div id="modeloAnuncio" class="study-note" hidden>Una posible explicación: el eslogan invita a desayunar; los alimentos refuerzan el mensaje de alimentación saludable. Se dirige a niños y niñas, y el emisor es el Ministerio identificado en el anuncio. Tu explicación puede usar otras palabras.</div>
+</div></div></section><aside class="study-note"><strong>Observar → identificar → comprobar → explicar</strong><p>No hay límite de tiempo. Puedes buscar una parte cada vez y volver a observar. Esta exploración no guarda resultados.</p></aside></section><section class="science-panel" data-panel="claves" hidden><section class="study-section"><div class="study-heading"><h2>¿Quién comunica qué, a quién y por dónde?</h2><p>Conecto los elementos con su función.</p></div><div id="conceptosPublicidad"><p class="study-lead">La <strong>publicidad</strong> informa al público sobre productos o servicios de empresas e instituciones.</p><div class="intenciones"><article><span class="study-kicker">COMERCIAL</span><h3>Quiere vender</h3><p>Busca aumentar las ventas de un producto o servicio.</p><div class="mini-anuncio">Una mochila nueva<br><strong>«¡Descubre sus bolsillos!»</strong></div></article><article><span class="study-kicker">EDUCATIVA / INFORMATIVA</span><h3>Quiere informar o educar</h3><p>Propone comportamientos beneficiosos: ahorrar energía o cuidar la alimentación.</p><div class="mini-anuncio mini-anuncio--verde">Una campaña de energía<br><strong>«Apaga lo que no necesitas»</strong></div></article></div>
+<h3>El recorrido del mensaje</h3><ol class="social-recorrido"><li><strong>Emisor</strong><span>Quién lo comunica: empresa o institución.</span></li><li><strong>Mensaje</strong><span>Qué cuenta sobre el producto o servicio.</span></li><li><strong>Destinatario</strong><span>A quién va dirigido.</span></li></ol>
+<p>El <strong>eslogan</strong> es una frase breve y fácil de recordar que resume una idea del anuncio. Forma parte del mensaje.</p><p>El <strong>medio de difusión</strong> es el canal: prensa, revistas, radio, cine, televisión, Internet, vallas o marquesinas.</p>
+<div class="media-ribbon"><span>Prensa</span><span>Radio</span><span>Televisión / cine</span><span>Internet</span><span>Vallas / marquesinas</span></div>
+<details class="study-details"><summary>¿Quién crea los anuncios?</summary><p>Muchas grandes empresas tienen un <strong>departamento de publicidad</strong> que elabora y difunde mensajes. Otras contratan <strong>agencias de publicidad</strong>, empresas especializadas en diseñarlos y realizarlos.</p></details></div><button type="button" class="listen-btn" data-escuchar-contenedor="#conceptosPublicidad">🔊 Escuchar la explicación</button></section></section><section class="science-panel" data-panel="material" hidden><section class="study-section"><div class="study-heading"><h2>Cuatro maneras de llamar la atención</h2><p>Observo el ejemplo y después descubro la estrategia.</p></div><div class="estrategias"><article class="estrategia"><div class="estrategia-muestra repeticion"><span>«¡Pruébalo!»</span><span>«¡Pruébalo!»</span><span>«¡Pruébalo!»</span></div><details><summary>¿Qué estrategia reconoces?</summary><h3>Repetición</h3><p>El mensaje se repite muchas veces y por distintos medios para que se recuerde.</p></details></article><article class="estrategia"><div class="estrategia-muestra exageracion"><strong>¡Lo mejora TODO!</strong><small>«Nunca más tendrás un problema»</small></div><details><summary>¿Qué estrategia reconoces?</summary><h3>Exageración de beneficios</h3><p>Se presentan ventajas desmedidas para despertar interés. Hay que observar qué promete realmente el anuncio.</p></details></article><article class="estrategia"><div class="estrategia-muestra asociacion"><svg class="social-icon" viewBox="0 0 80 80" role="img" aria-label="Una persona conocida"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="21" r="12"/><path d="M16 68V54c0-15 48-15 48 0v14M27 51v17m26-17v17"/></g></svg><span>Una persona famosa + una canción + un producto</span></div><details><summary>¿Qué estrategia reconoces?</summary><h3>Asociación</h3><p>Se vincula la marca con famosos, canciones o emociones para atraer la atención.</p></details></article><article class="estrategia"><div class="estrategia-muestra ofertas"><span class="offer-tag">DESCUENTO</span><span>+ regalo</span><small>«Paga en varias veces»</small></div><details><summary>¿Qué estrategia reconoces?</summary><h3>Ofertas y facilidades</h3><p>Se ofrecen descuentos, regalos o facilidades de pago para animar a comprar.</p></details></article></div><aside class="study-note"><strong>Ejemplos inventados para aprender</strong><p>Observa primero cada pequeño anuncio. Abre su explicación después de intentar reconocer la estrategia; no son ofertas reales.</p></aside></section><p class="source-small">Material de continuidad de 5.º trabajado en Sociales 6.º · 5_LI_La publicidad, páginas 1–3.</p></section>    <section class="science-panel" data-panel="practica" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✏️</div>
+        <div>
+          <p class="eyebrow">Con pistas y nuevos intentos</p>
+          <h2>Práctica guiada</h2>
+          <p>Retos breves con pistas y nuevos intentos. Puedes volver al contenido cuando lo necesites.</p>
+        </div>
+      </div>
+
+      <div class="challenge">
+        <div class="progress" aria-hidden="true">
+<span id="barraPractica">
+</span>
+</div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido">
+</div>
+        <div id="pistaPractica" class="hint" hidden>
+</div>
+        <div id="mensajePractica" class="message" role="status">
+</div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="science-panel" data-panel="prueba" hidden>
+      <div class="section-title">
+        <div class="section-title__icon" aria-hidden="true">✅</div>
+        <div>
+          <p class="eyebrow">Comprobación formativa</p>
+          <h2>Compruebo las ideas del Tema</h2>
+          <p>Una comprobación formativa por bloques. Cada repetición puede traer otros ejemplos.</p>
+        </div>
+      </div>
+
+      <div id="inicioPrueba" class="test-start">
+        <div class="test-start__icon" aria-hidden="true">🎯</div>
+        <h3>Cuando estés preparada</h3>
+        <p>
+          No hay pistas durante esta parte. Después de cada respuesta verás una explicación breve.
+          Al final tendrás un mapa de las ideas que salieron firmes y de las que conviene seguir practicando.
+        </p>
+        <button id="botonIniciarPrueba" class="btn btn--violet" type="button">Empezar mi prueba</button>
+      </div>
+
+      <div id="pruebaActiva" class="challenge" hidden>
+        <div class="progress" aria-hidden="true">
+<span id="barraPrueba">
+</span>
+</div>
+        <div class="test-meta">
+          <span id="estadoPrueba">Pregunta 1</span>
+          <span id="bloquePrueba" class="test-block">Bloque</span>
+        </div>
+        <div id="pruebaContenido">
+</div>
+        <div id="explicacionPrueba" class="explanation" hidden>
+</div>
+        <div class="actions">
+          <button id="botonResponderPrueba" class="btn btn--primary" type="button" disabled>Comprobar respuesta →</button>
+        </div>
+      </div>
+
+      <div id="cierrePrueba" class="test-end" hidden>
+        <div class="test-end__icon" aria-hidden="true">🌱</div>
+        <h3>Tu mapa de hoy</h3>
+        <p id="textoCierre">
+</p>
+        <div id="resultadoPruebaResumen">
+</div>
+        <div id="mapaResultados" class="results">
+</div>
+        <div id="estadoGuardado" class="save-state" aria-live="polite">
+</div>
+        <div class="actions" style="justify-content:center">
+          <button id="botonVolverRepaso" class="btn btn--soft" type="button">← Volver a repasar</button>
+        </div>
+      </div>
+    </section>
+</main>
+<script src="../../../../compartido/js/navegacion.js"></script>
+<script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+<script type="module" src="./tema.js"></script>
+</body></html>

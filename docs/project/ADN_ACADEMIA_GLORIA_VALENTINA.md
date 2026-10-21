@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` |
-| **Versión** | 2.1 |
+| **Versión** | 2.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | Julio 2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 21/10/2026 |
 | **Propietario** | Identidad y principios del Producto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Principios de identidad, filosofía pedagógica, experiencia, inclusión, acompañamiento y evolución responsable de la Academia |
@@ -29,11 +29,12 @@
 
 ## 🕘 Historial de versiones
 
-| Versión | Fecha | Estado | Cambios |
+| Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 2.1 | 04/09/2026 | Activo | P2. Sincroniza referencias y responsabilidades con la arquitectura documental vigente; separa Mi Camino de Gestión de Misiones; incorpora Persona Activa como principio multi-persona; remite navegación, Lía, Motivación y Misiones a sus propietarios y retira el “próximo paso” histórico ya superado. Conserva los principios centrales de v2.0. |
-| 2.0 | Agosto 2026 | Activo en su etapa | Evolución a ADN del producto: dos formas de crecer, enfoque multi-alumno, Mi Camino, Misiones/Aventuras, reconocimiento, principio del regreso, Personajes Oficiales, IA, experiencia táctil y evidencias reales. |
-| 1.0 | Julio 2026 | Vigente en su etapa | ADN original del proyecto, centrado en Gloria, aprendizaje accesible, comprensión, autonomía y calidad de las páginas. |
+| 2.2 | 21/10/2026 | Product Owner + AI Collaborator | Incorpora el umbral visual/pedagógico aprobado en SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md §4: igualar o superar la fuente escolar, sin empobrecer sus recursos de comprensión. |
+| 2.1 | 04/09/2026 | No consignados en el historial anterior | Estado histórico: Activo. P2. Sincroniza referencias y responsabilidades con la arquitectura documental vigente; separa Mi Camino de Gestión de Misiones; incorpora Persona Activa como principio multi-persona; remite navegación, Lía, Motivación y Misiones a sus propietarios y retira el “próximo paso” histórico ya superado. Conserva los principios centrales de v2.0. |
+| 2.0 | Agosto 2026 | No consignados en el historial anterior | Estado histórico: Activo en su etapa. Evolución a ADN del producto: dos formas de crecer, enfoque multi-alumno, Mi Camino, Misiones/Aventuras, reconocimiento, principio del regreso, Personajes Oficiales, IA, experiencia táctil y evidencias reales. |
+| 1.0 | Julio 2026 | No consignados en el historial anterior | Estado histórico: Vigente en su etapa. ADN original del proyecto, centrado en Gloria, aprendizaje accesible, comprensión, autonomía y calidad de las páginas. |
 
 ---
 
@@ -361,6 +362,14 @@ Se priorizan:
 - animaciones discretas.
 
 La belleza visual debe facilitar orientación, comprensión y confianza.
+
+### 17.1 Umbral de calidad del material escolar
+
+> **Cuando Academia transforma material real del colegio en un Tema escolar, el resultado debe igualar o superar el nivel de claridad, estructura, apoyo visual y valor pedagógico del material fuente. Si no es posible superarlo en algún aspecto, como mínimo debe mantenerse al mismo nivel. Academia no debe empobrecer el material original al transformarlo.**
+
+Preservar una visual útil significa conservar o mejorar lo que permite comprender: relaciones, comparaciones, secuencias o partes de una composición. Añadir decoración o convertir todo en texto no satisface este principio. La forma de cada Tema depende de su contenido; el criterio operativo y la comparación fuente → Academia se gobiernan en `STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` §19.4.
+
+Decisión aprobada: `SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md` §4, 21/10/2026.
 
 ---
 
