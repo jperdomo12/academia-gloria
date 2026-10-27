@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.3 |
-| **Estado** | Publicada para validación familiar · mejora RAP Team aprobada para desarrollo · no declarada estable |
+| **Versión** | 1.4 |
+| **Estado** | Ficha publicada · RAP Team implementado en rama, pendiente integración/verificación · no declarada estable |
 | **Última actualización** | 27/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 27/10/2026 | Product Owner + AI Collaborator | Implementa RAP Team A–F sobre la ficha vigente: tres voces equivalentes/roles rotatorios, pulso visual, respuesta oral con revelado, azar, retos y ensayo/celebración. Una fuente escolar y parser compartido; sin medios/persistencia. Registra trazabilidad, pruebas y revisión visual; publicación/uso real pendientes. |
 | 1.3 | 27/10/2026 | Product Owner + AI Collaborator | Aprueba mejora `RAP Team` para preparar la entrega real en un grupo de tres compañeras: práctica lúdica, roles rotatorios, ritmo, call & response, retos aleatorios y ensayo final; ninguna compañera tiene papel especial ni identidad privilegiada. Pendiente desarrollo. |
 | 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos al producto probado; cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
 | 1.1 | 27/10/2026 | Product Owner + AI Collaborator | Implementa ficha semanal independiente y primera práctica por fragmentos efímera; registra fuente/enlaces exactos, fidelidad, comparación visual y pruebas. Pendiente publicación/verificación y uso con Gloria. |
@@ -370,6 +371,53 @@ La mejora se considera candidata cuando:
 10. no hay regresión en Escucha, Practica, Aprende, Graba, Entrega, enlaces, fecha ni Plan Semanal;
 11. se realiza una revisión visual real en desktop y móvil antes de presentarla al Product Owner;
 12. queda lista para uso real de las tres compañeras, sin declarar estabilidad antes de esa prueba.
+
+## 11. Implementación de RAP Team · 27/10/2026
+
+Base real: `main` `62f73efc2d91e60da3d3030b0926fae2b5d722e9` (#203). Rama `feat/rap-team`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas. La ficha #201/#202 permanece publicada; esta mejora es aditiva y no declara estabilidad ni validación de las tres compañeras.
+
+### 11.1 Alcance real y fuente única
+
+- `index.html` añade `#rap-team` entre Aprende y Graba y su acceso en la secuencia de seis partes. Los cinco bloques escolares anteriores y `rap-data.js` se conservan **byte a byte** respecto a la base; 14 fragmentos, 94 líneas, 67 tríos, enlaces oficiales, patrón y fecha intactos.
+- `rap.js` pasa los mismos `FRAGMENTOS_RAP` a la práctica original y a `rap-team.js`. `plan-semanal/trios.js` interpreta `base (past, participle)` y devuelve segmentos/ocurrencias con línea y fragmento de origen. `fragmentos.js` reutiliza esa misma interpretación en lugar de mantener otro parser. No se crea una segunda lista manual ni se normaliza ninguna variante escolar.
+- `rap-team.js` mantiene solo índice de trío, rotación de papeles, modo, pulso/cuenta, revelado y reto en memoria. `rap-team.css` aísla el estudio y sus estados. Sin dependencias académicas, colecciones, APIs de medios o escrituras. No hay nombres ni campos personales; Voz A/B/C tienen exactamente los mismos controles, dimensiones y estilo.
+- La selección de fragmento/trío queda disponible en un desplegable nativo cerrado inicialmente. Las voces y la acción de ensayo se ven primero; elegir material no es un paso obligatorio. Los seis modos son botones con estado y panel identificado, sin diálogos ni rutas nuevas.
+- Referencias de caché `rap.js?v=2`, `rap.css?v=2` y `fragmentos.js?v=2` evitan mezclar el adaptador actualizado con la versión anterior. Navegación, Panel e identidad de la ficha se reutilizan. El enlace de ensayo al vídeo se deriva del enlace escolar ya existente en Escucha.
+
+### 11.2 Decisión aprobada → implementación comprobada
+
+| Experiencia aprobada | Implementación y comprobación |
+|---|---|
+| A · Modo trío | Tres tarjetas iguales Voz A/B/C muestran forma y papel; `Cambiar papeles` rota las tres posiciones en un ciclo de tres. `Otro trío` también rota para evitar una parte fija en rondas sucesivas. La línea escolar del trío aparece bajo «¡Las tres!» para continuar juntas. Verificadas las tres posiciones para cada voz y todas las formas en móvil estrecho. |
+| B · Reto de ritmo | Cuatro pulsos Base/Past/Participle/Palma con número, palabra y marcador «Ahora». Inicio explícito, parada y avance manual. Intervalo de entrenamiento de 900 ms; repite el trío elegido. Se elige **solo pulso visual**, sin audio original o externo, manteniendo utilidad sin sonido. Se recuerda que el vídeo escolar marca el ritmo del ensayo final. |
+| C · Call & Response | Cuenta visible 3–2–1 iniciada por botón; muestra la base, las tres responden oralmente y `Comprobar` revela las tres formas. Permite detener y pasar al siguiente. No escucha ni califica respuestas. Revelado voluntario, sin nota o bloqueo del resto de la ficha. |
+| D · Random RAP | `¡Sorpréndenos!` / `Otro` elige entre las 67 ocurrencias derivadas; oculta Past/Participle hasta `Revelar`. Excluye las mismas tres formas del turno anterior para evitar repetición inmediata. Tras revelar ofrece la línea de origen. Ilimitado, sin cronómetro, puntos o resultados. |
+| E · Retos | Cinco retos orales/de coordinación, sin estado de logro. `Otro reto` evita repetir el anterior; acceso directo a Modo trío. No mide si se cumplieron ni condiciona Graba. |
+| F · Ensayo final | Siete indicaciones breves, incluida rotación, enlace al vídeo escolar y recordatorio del ritmo oficial. `¡Listas para ensayar!` muestra «RAP TEAM READY!» con una animación única breve. Celebra preparación para ensayar, sin afirmar dominio, grabación terminada o entrega realizada. |
+
+Los temporizadores se cancelan al cambiar de modo/material, detener, ocultar la pestaña, salir del área de estudio o abandonar la página. No hay inicio automático. Animaciones/transiciones y desplazamiento del pulso se suprimen con `prefers-reduced-motion`; la indicación textual y el avance manual siguen funcionando.
+
+### 11.3 Revisión visual y accesibilidad
+
+Se revisaron capturas reales de entrada, tres voces y rotación, ritmo, cuenta atrás, respuesta revelada, azar oculto/revelado, retos, guía y celebración, en escritorio y móvil. El estudio utiliza la tipografía/estructura de la ficha con una superficie verde y acento dorado; los participantes comparten color/peso visual. Los micrófonos son SVG simbólicos, no controles de grabación.
+
+Refinamientos derivados de esa revisión: selección de material plegada para empezar enseguida con las voces; cabecera móvil más compacta; tres voces en la misma fila conectada también a 320 px; tamaños de formas ajustados y comprobados para todas las ocurrencias, incluidos `forgotten` y `snuck up`; cuatro pulsos numerados que se distribuyen en dos filas en móvil; guía final sin checklist obligatorio ni confeti continuo.
+
+La revisión de Desarrollo considera la entrada comprensible y el ensayo más directo que una ficha de ejercicios: ofrece reparto, acción y continuación del RAP en un mismo lugar; los modos cambian la dinámica sin añadir puntuación. La sorpresa procede del azar, la cuenta atrás y los revelados; la celebración es discreta y finita. La respuesta real de las tres compañeras queda pendiente.
+
+Controles semánticos, foco visible, objetivos de al menos 44 px, texto/estado además del color y tres participantes con idéntica jerarquía. Verificados 1440/1024/768/390/320 px y modo de movimiento reducido; sin scroll horizontal ni palabras cortadas en las voces. Sin sonido necesario para ninguna experiencia.
+
+### 11.4 Validación y límites
+
+- Ampliado `tests/plan-semanal-rap-browser.cjs`: secuencia Aprende/Team/Graba y cinco partes originales, fuente única de 67 tríos, tres voces equivalentes y ciclo completo, selección/continuación, pulso automático/manual/parada, cuenta/parada/revelado/siguiente, azar válido sin repetición inmediata, retos, guía, enlace y celebración.
+- Comprueba ocultar/revelar/recargar, cero escrituras educativas y cero escrituras de Storage durante las dinámicas; interceptores de medios no utilizados. Alumno, familiar y profesional con identidad/SDK simulados; ningún dato personal real. Cambiar de modo cancela timers; se comprueba también detener al ocultar la pestaña.
+- Responsive de todos los modos en cinco anchos; tarjetas de voz con misma fila, ancho y alto. Teclado/foco y reduced-motion comprobados. Revisión focal final de formas legibles a 390/320 y Random revelado. Sin errores JavaScript.
+- Se conservan las comprobaciones de la ficha original: 94 líneas reconstruidas, 67 tríos, 14 fragmentos, memorización efímera, vídeo/Drive, fecha/patrón, grupos permitidos, Volver y catálogo de English sin Tema nuevo. Los cinco bloques escolares y datos se comparan literalmente con la base.
+- `tests/plan-semanal-browser.cjs` de Nutrición superado sin cambios: lectura/voz, V/F, A/B/C, conexiones, respuestas/reintentos/cambio de panel/recarga, fechas Madrid, navegación y cero escrituras educativas en tres roles.
+- Sin cámara, micrófono, reconocimiento de voz, audio propio, grabación, persistencia de actividad, puntuación, ranking, Misión o evidencia. La navegación/identidad conserva únicamente su funcionamiento previo.
+- Las pruebas de identidad/SDK y aperturas externas son simuladas. Los destinos oficiales son los mismos ya verificados en §9.4; no se certifican permisos/subida con cuenta escolar ni reproducción audiovisual física. Uso real de las tres compañeras pendiente; no declarar estabilidad.
+
+Pendientes revisión final del diff, integración y publicación/verificación autorizadas.
 
 ## DECISIÓN
 
