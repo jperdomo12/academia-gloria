@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.2 |
-| **Estado** | Publicada para validación familiar · no declarada estable |
+| **Versión** | 1.3 |
+| **Estado** | Publicada para validación familiar · mejora RAP Team aprobada para desarrollo · no declarada estable |
 | **Última actualización** | 27/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 27/10/2026 | Product Owner + AI Collaborator | Aprueba mejora `RAP Team` para preparar la entrega real en un grupo de tres compañeras: práctica lúdica, roles rotatorios, ritmo, call & response, retos aleatorios y ensayo final; ninguna compañera tiene papel especial ni identidad privilegiada. Pendiente desarrollo. |
 | 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos al producto probado; cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
 | 1.1 | 27/10/2026 | Product Owner + AI Collaborator | Implementa ficha semanal independiente y primera práctica por fragmentos efímera; registra fuente/enlaces exactos, fidelidad, comparación visual y pruebas. Pendiente publicación/verificación y uso con Gloria. |
 | 1.0 | 27/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada en Análisis: actividad semanal independiente, semana 26/10–02/11, vídeo/RAP y entrega escolar sin Tema, prueba ni persistencia nuevos. |
@@ -234,8 +235,144 @@ Revisión visual de Desarrollo: la versión renderizada es más fácil de recorr
 
 Pages #810 (run `40560045423`) `success` sobre el merge de #201. Nueve archivos de producto publicados con HTTP 200 y coincidencia byte a byte con la implementación aprobada; portal y ruta final de ficha HTTP 200. Sin desarrollo, integración ni publicación pendiente. Quedan revisión con Gloria y permisos/subida real de Drive/reproducción física según límites anteriores. No declarar estabilidad.
 
+## 10. Mejora aprobada · RAP Team · tres compañeras
+
+Tras la primera revisión familiar del producto publicado, se aprueba una segunda capa de ayuda orientada a **preparar la entrega escolar en un grupo de tres compañeras**. No sustituye el RAP, el vídeo oficial, la grabación ni la entrega; convierte la práctica existente en una experiencia más lúdica, coordinada y memorable.
+
+### 10.1 Principio de igualdad del grupo
+
+La experiencia representa siempre a **tres compañeras en igualdad**.
+
+- ninguna participante es protagonista, líder o alumna especial;
+- no debe aparecer `Gloria` como participante privilegiada ni asumir que ocupa `Voz 1`;
+- usar etiquetas neutrales como `Compañera 1 / 2 / 3` o `Voz A / B / C`;
+- si se permite escribir nombres, los tres campos tienen la misma jerarquía y solo viven durante la sesión;
+- los roles rotan para que las tres practiquen verbo base, pasado y participio.
+
+### 10.2 Ubicación y concepto
+
+Incorporar dentro de la ficha actual, entre `3 · Aprende` y `4 · Graba`, una experiencia claramente diferenciada:
+
+**🎉 RAP TEAM · Ensayad juntas**
+
+La sensación buscada es la de un pequeño estudio de ensayo para tres amigas: energía, sorpresa y diversión al servicio del aprendizaje, sin infantilización ni ruido visual gratuito.
+
+No crear otro módulo, Tema o página si no aporta valor real. Reutilizar los 14 fragmentos y 67 tríos ya implementados.
+
+### 10.3 Experiencias aprobadas
+
+#### A. 👭 Modo trío
+
+Para un trío verbal:
+
+`take → took → taken`
+
+Academia reparte temporalmente:
+
+- Voz A → `take`;
+- Voz B → `took`;
+- Voz C → `taken`;
+- después, las tres continúan juntas la línea o fragmento del RAP.
+
+Acción `🔄 Cambiar papeles` rota las asignaciones. En rondas sucesivas, cada compañera debe poder ocupar las tres posiciones.
+
+No guardar nombres, asignaciones, puntuaciones o resultados.
+
+#### B. 👏 Reto de ritmo
+
+Práctica oral basada en cuatro pulsos sencillos:
+
+`base · past · participle · 👏`
+
+Ejemplo:
+
+`take · took · taken · 👏`
+
+`shake · shook · shaken · 👏`
+
+Puede marcarse con palmas, mesa o pies. La interfaz puede utilizar animación/pulso visual y sonido rítmico simple si Desarrollo lo considera robusto y accesible.
+
+No sustituye el ritmo escolar. Antes del ensayo final debe quedar claro que **el vídeo oficial del colegio es la referencia para la grabación**.
+
+#### C. 🎤 Call & Response
+
+Academia presenta una forma base y da una cuenta atrás breve:
+
+`3 · 2 · 1 · TAKE!`
+
+Las tres responden oralmente `TOOK · TAKEN` y después revelan para comprobar.
+
+Sin reconocimiento de voz, calificación ni simulación de corrección automática. La comprobación es visual y autogestionada.
+
+#### D. 🎲 Random RAP
+
+Acción `🎲 ¡Sorpréndenos!` selecciona aleatoriamente uno de los 67 tríos ya existentes.
+
+Ejemplo:
+
+`WRITE → ? → ?`
+
+Acción `👀 Revelar` muestra:
+
+`WRITE → WROTE → WRITTEN`
+
+Debe poder repetirse libremente. Sin puntos ni ranking.
+
+#### E. ⭐ Retos de equipo
+
+Retos breves no académicos, por ejemplo:
+
+- cinco tríos seguidos sin mirar;
+- cada compañera dice una forma diferente;
+- cambiar los papeles;
+- realizar un fragmento completo sin detenerse.
+
+No son una Prueba, no generan evidencia y no condicionan el acceso a `Graba`.
+
+#### F. 🎬 Ensayo final
+
+Cerrar RAP Team con una guía breve:
+
+1. elegir un fragmento de calentamiento;
+2. hacer una ronda Base–Past–Participle;
+3. abrir el vídeo oficial;
+4. ensayar el RAP juntas;
+5. hacer una toma de prueba;
+6. cuando estén conformes, preparar la toma final.
+
+Puede incluir una celebración visual breve tipo `🔥 RAP TEAM READY!`, respetando `prefers-reduced-motion` y sin afirmar que dominaron los verbos o que la entrega ya está completada.
+
+### 10.4 Reglas de producto
+
+- Mantener intacta la tarea oficial y sus cinco pasos de referencia.
+- La evolución visible puede expresarse como `Escucha → Practica → Aprende → RAP Team → Graba → Entrega`.
+- No añadir canciones comerciales ni letras externas.
+- No modificar la letra escolar ni las formas verbales existentes.
+- No usar micrófono/cámara ni reconocimiento de voz para esta mejora.
+- No grabar ni subir vídeo desde Academia.
+- No crear puntuación, ranking, nota, evidencia académica ni persistencia.
+- El vídeo del colegio sigue siendo la referencia de ritmo para el ensayo final y la entrega.
+- La experiencia debe poder comprenderse en pocos segundos y funcionar también en móvil.
+
+### 10.5 Criterios de aceptación de la mejora
+
+La mejora se considera candidata cuando:
+
+1. las tres compañeras se representan con la misma jerarquía visual y funcional;
+2. no existe ninguna referencia que haga a Gloria protagonista o participante especial;
+3. los roles Base / Past / Participle rotan correctamente;
+4. reutiliza los 67 tríos y no mantiene una segunda copia divergente del contenido;
+5. Modo trío, ritmo, Call & Response, Random RAP y ensayo final son comprensibles sin instrucciones largas;
+6. no crea guardado, notas, evidencia, micrófono, cámara o reconocimiento de voz;
+7. el vídeo oficial sigue identificado como referencia del ensayo final;
+8. la experiencia aporta diversión y sorpresa sin dificultar el objetivo escolar;
+9. teclado, foco, reduced-motion y responsive están validados;
+10. no hay regresión en Escucha, Practica, Aprende, Graba, Entrega, enlaces, fecha ni Plan Semanal;
+11. se realiza una revisión visual real en desktop y móvil antes de presentarla al Product Owner;
+12. queda lista para uso real de las tres compañeras, sin declarar estabilidad antes de esa prueba.
+
 ## DECISIÓN
 
 **APROBADO PARA DESARROLLO.**
 
-`6_WP_Irregular verbs RAP.pdf` se incorpora como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. Academia debe facilitar preparación, práctica y entrega, sin crear todavía un Tema académico de Irregular Verbs ni sustituir el flujo oficial de vídeo del colegio.
+`6_WP_Irregular verbs RAP.pdf` permanece como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. Sobre la ficha publicada se aprueba la mejora `RAP Team` para ayudar a **tres compañeras en igualdad** a practicar, coordinarse y preparar de forma divertida el vídeo escolar, sin crear un Tema académico de Irregular Verbs ni sustituir el flujo oficial del colegio.
