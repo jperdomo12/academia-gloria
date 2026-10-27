@@ -1,4 +1,4 @@
-import { MATERIALES_PLAN, urlMaterial, etiquetaSemana, organizarSemanas } from "./materiales.js";
+import { MATERIALES_PLAN, urlMaterial, etiquetaSemana, organizarSemanas } from "./materiales.js?v=2";
 
 function elemento(etiqueta, clase, texto) {
   const nodo = document.createElement(etiqueta);
@@ -17,6 +17,12 @@ function tarjeta(material) {
     elemento("p", "plan-procedencia", material.procedencia),
     elemento("span", "curso6-asignatura__accion", "Abrir actividad →")
   );
+  if (material.entrega) {
+    const fecha = new Intl.DateTimeFormat("es-ES", {day:"numeric",month:"long",timeZone:"UTC"}).format(new Date(`${material.entrega}T12:00:00Z`));
+    const entrega = elemento("time", "plan-entrega", `📅 Entrega: ${fecha}`);
+    entrega.dateTime = material.entrega;
+    enlace.insertBefore(entrega, enlace.lastElementChild);
+  }
   return enlace;
 }
 
