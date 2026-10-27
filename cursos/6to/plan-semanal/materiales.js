@@ -1,6 +1,19 @@
 /* Selección del Product Owner. Rutas relativas a este catálogo, no al navegador. */
 export const MATERIALES_PLAN = Object.freeze([
   {
+    id: "english-irregular-verbs-rap-2026-10-26",
+    inicio: "2026-10-26",
+    fin: "2026-11-02",
+    materia: "English",
+    icono: "🇬🇧",
+    titulo: "Irregular Verbs RAP",
+    descripcion: "RAP + vídeo + entrega",
+    entrega: "2026-11-10",
+    fuente: "6_WP_Irregular verbs RAP.pdf",
+    procedencia: "Material del colegio · Plan Semanal",
+    ruta: "./english-irregular-verbs-rap/"
+  },
+  {
     id: "science-nutricion-2026-10-19",
     inicio: "2026-10-19",
     fin: "2026-10-26",

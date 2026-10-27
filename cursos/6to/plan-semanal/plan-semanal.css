@@ -38,3 +38,5 @@ summary.plan-fecha{cursor:pointer;padding:16px;border-radius:16px;background:var
 
 .plan-atajos button{font:inherit;cursor:pointer;color:var(--c6-olive-dark)}
 .plan-atajos button.activa{background:var(--c6-olive-soft);border-color:var(--c6-olive)}
+
+.plan-entrega{display:block;color:var(--c6-olive-dark);font-weight:800;line-height:1.5}

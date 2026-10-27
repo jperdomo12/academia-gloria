@@ -66,20 +66,20 @@ for(const role of ['alumno','gestion','consulta']) {
  }
  await p.locator('a[href="./plan-semanal/"]').click();
  await p.waitForSelector('.plan-tarjeta');
- assert.equal(await p.locator('.plan-tarjeta').count(),1);
- assert.match(await p.locator('.plan-fecha').innerText(),/Semana.*19.*26.*octubre.*2026/);
- assert.match(await p.locator('.plan-tarjeta').innerText(),/Science · Nutrición/);
+ assert.equal(await p.locator('.plan-tarjeta').count(),2);
+ assert.match(await p.locator('.plan-fecha').first().innerText(),/Semana.*19.*26.*octubre.*2026/);
+ assert.match(await p.locator('.plan-tarjeta').filter({hasText:'Science'}).innerText(),/Science · Nutrición/);
  if(role==='alumno') {
   const fechas=await p.evaluate(async()=>{
    const {MATERIALES_PLAN,organizarSemanas,fechaMadrid}=await import('/cursos/6to/plan-semanal/materiales.js');
-   const a=MATERIALES_PLAN[0];
+   const a=MATERIALES_PLAN.find(m=>m.materia==='Science');
    const older={...a,id:'anterior',inicio:'2026-10-12',fin:'2026-10-18'};
    const future={...a,id:'futuro',inicio:'2026-10-27',fin:'2026-11-02'};
    return {start:organizarSemanas([a],'2026-10-19'),end:organizarSemanas([a],'2026-10-26'),after:organizarSemanas([a],'2026-10-27'),before:organizarSemanas([a],'2026-10-18'),all:organizarSemanas([future,older,a],'2026-10-20'),midnight:fechaMadrid(new Date('2026-10-19T22:30:00Z'))};
   });
   assert.equal(fechas.start.actuales.length,1);assert.equal(fechas.end.actuales.length,1);assert.equal(fechas.after.anteriores.length,1);assert.equal(fechas.before.proximas.length,1);assert.equal(fechas.midnight,'2026-10-20');assert.equal(fechas.all.actuales.length,1);assert.equal(fechas.all.anteriores.length,1);assert.equal(fechas.all.proximas.length,1);
  }
- await p.locator('.plan-tarjeta').click();
+ await p.locator('.plan-tarjeta').filter({hasText:'Science'}).click();
  await p.waitForSelector('#lecturaPlan');
  assert.equal(new URL(p.url()).pathname,ficha);
  assert.match(await p.locator('.plan-cuaderno').innerText(),/Haz primero esta actividad en tu cuaderno/);
@@ -168,7 +168,7 @@ for(const role of ['alumno','gestion','consulta']) {
   assert.match(await p.locator('#semanasPlan').innerText(),/Semanas anteriores/);
   assert.equal(await p.locator('details.plan-semana').count(),1);
   assert.equal(await p.locator('details.plan-semana').getAttribute('open'),null);
-  assert.doesNotMatch(await p.locator('.plan-fecha').innerText(),/Semana ·/);
+  assert.doesNotMatch(await p.locator('details.plan-semana .plan-fecha').innerText(),/Semana ·/);
   await p.clock.setFixedTime(new Date('2026-10-20T12:00:00Z'));
  }
  await p.locator('[data-nav-volver]').click();assert.equal(new URL(p.url()).pathname,'/cursos/6to/');

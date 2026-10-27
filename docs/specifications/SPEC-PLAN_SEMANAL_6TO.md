@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
-| **Última actualización** | 20/10/2026 |
+| **Última actualización** | 27/10/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Incorporación selectiva de documentos relevantes publicados por Gaudem en Plan Semanal, organizados por semana y conectados con sus materias/Temas propietarios |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 27/10/2026 | Product Owner + AI Collaborator | Primera actividad semanal independiente según §5.3: English/Irregular Verbs RAP (26/10–02/11), gobernada por su SPEC. Catálogo con entrega opcional y cabecera transversal, sin forzar paper-first fuera de las fichas que lo exigen. Nutrición y persistencia intactas. |
 | 1.6 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de redacción solicitado: «Semana · rango» en lugar de «Esta semana · rango». Conserva prioridad y clasificación de semanas; referencia de módulo v=2 para caché. |
 | 1.5 | 20/10/2026 | Product Owner + AI Collaborator | Retira los tres accesos plegables duplicados por observación visual del Product Owner. Las carpetas superiores muestran una sola sección (Lectura/V-F/A-B-C/Conectar), conservando respuestas y validación al cambiar. Sin cambios de contenido ni persistencia. |
 | 1.4 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste #192 integrado en 20364da3… y publicado (Pages #802 success): accesos juntos y respuestas/validación/reintentos sin guardado. Seis archivos de producto públicos de #192 idénticos a los probados; referencias v=2 en el cierre protegen caché de estilos/datos/presentador. Revisión familiar del ajuste pendiente. |
@@ -397,3 +398,10 @@ Base `main` `7cb4139c065bc6cfd4380d86017a14f2093406d9`; rama `fix/plan-semanal-a
 `Plan Semanal` será un espacio transversal y selectivo de 6.º. El Product Owner elegirá los documentos importantes mediante una instrucción mínima; Academia resolverá su clasificación e integración. La semana organiza el acceso, mientras que la materia y el Tema conservan la propiedad curricular cuando corresponda.
 
 Primera aplicación aprobada: `6_PS_ANS_Nutrición.pdf`, semana escolar **19–26 de octubre de 2026**, conectado con el Tema existente `Science → Nutrición` y con experiencia **paper-first + comprobación posterior**.
+
+
+## 14. Primera actividad semanal independiente · English RAP · 27/10/2026
+
+Fuente propietaria: `SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md`. Aplica §5.3: ficha únicamente en Plan Semanal, semana 26/10–02/11/2026, sin Tema académico de Irregular Verbs ni prueba/persistencia. El catálogo admite `entrega` opcional (`AAAA-MM-DD`); la tarjeta la presenta en fecha local legible. El rango de semana y la fecha de entrega conservan significados distintos.
+
+La cabecera transversal se adapta al tipo de tarea escolar; la instrucción de cuaderno permanece dentro de Nutrición. Se reutilizan portal, tarjetas, navegación e identidad. El pequeño presentador data-driven `fragmentos.js` atiende lectura/memorización efímera por partes, sin alterar el presentador de preguntas `documento.js` ni el motor académico. La letra, instrucciones, enlaces y validación se gobiernan en la SPEC del RAP. Regresión del Plan Semanal anterior superada; uso familiar pendiente.
