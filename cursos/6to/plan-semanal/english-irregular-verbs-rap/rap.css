@@ -7,7 +7,7 @@
 .rap-semana{font-weight:700;color:var(--c6-olive-dark);line-height:1.65}
 .rap-fecha{padding:24px 20px;border-radius:24px;background:#fff4dc;border:2px solid #e3c78b;display:flex;flex-direction:column;gap:16px;text-decoration:none;color:#705021;align-self:center;line-height:1.5}
 .rap-fecha>span:first-child{font-weight:800}.rap-fecha time{font-weight:900;font-size:1.7rem;line-height:1.2}.rap-fecha small{display:block;font-size:1rem;margin-top:6px}
-.rap-pasos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:22px}
+.rap-pasos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:22px}
 .rap-pasos a{min-height:54px;padding:12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:15px;border:1px solid var(--c6-line);background:white;text-decoration:none;color:var(--c6-olive-dark);font-weight:800}
 .rap-pasos b{display:grid;place-content:center;border-radius:50%;background:var(--c6-olive-soft);min-width:28px;height:28px}
 .rap-kicker{font-size:.82rem!important;font-weight:900;color:var(--c6-olive-dark);letter-spacing:.1em;margin:0 0 10px!important}
