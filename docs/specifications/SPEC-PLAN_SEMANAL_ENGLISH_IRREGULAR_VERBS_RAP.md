@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.4 |
-| **Estado** | Ficha publicada · RAP Team implementado en rama, pendiente integración/verificación · no declarada estable |
+| **Versión** | 1.5 |
+| **Estado** | Ficha y RAP Team publicados para validación de las tres compañeras · no declarada estable |
 | **Última actualización** | 27/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 27/10/2026 | Product Owner + AI Collaborator | #204 integrada en ffdbca4c… dentro de la publicación autónoma autorizada. Pages #813 success; siete archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación de RAP Team; conserva prueba real de las tres compañeras y límites previos. |
 | 1.4 | 27/10/2026 | Product Owner + AI Collaborator | Implementa RAP Team A–F sobre la ficha vigente: tres voces equivalentes/roles rotatorios, pulso visual, respuesta oral con revelado, azar, retos y ensayo/celebración. Una fuente escolar y parser compartido; sin medios/persistencia. Registra trazabilidad, pruebas y revisión visual; publicación/uso real pendientes. |
 | 1.3 | 27/10/2026 | Product Owner + AI Collaborator | Aprueba mejora `RAP Team` para preparar la entrega real en un grupo de tres compañeras: práctica lúdica, roles rotatorios, ritmo, call & response, retos aleatorios y ensayo final; ninguna compañera tiene papel especial ni identidad privilegiada. Pendiente desarrollo. |
 | 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos al producto probado; cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
@@ -374,7 +375,7 @@ La mejora se considera candidata cuando:
 
 ## 11. Implementación de RAP Team · 27/10/2026
 
-Base real: `main` `62f73efc2d91e60da3d3030b0926fae2b5d722e9` (#203). Rama `feat/rap-team`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas. La ficha #201/#202 permanece publicada; esta mejora es aditiva y no declara estabilidad ni validación de las tres compañeras.
+Base real: `main` `62f73efc2d91e60da3d3030b0926fae2b5d722e9` (#203). Rama `feat/rap-team`, head `32f5443a20549990cfe5f5451acc083b7aafcf4b`. PR #204 integrada en `main` `ffdbca4c1e47974e47d4b85ae7ee26c3a4dbf463`; árbol idéntico al probado `7bf99b1eda2bc534e7e031dbeef77ec9d0b89e85`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas. La ficha #201/#202 permanece publicada; RAP Team también está publicado/verificado. Esta mejora es aditiva y no declara estabilidad ni validación de las tres compañeras.
 
 ### 11.1 Alcance real y fuente única
 
@@ -417,7 +418,7 @@ Controles semánticos, foco visible, objetivos de al menos 44 px, texto/estado a
 - Sin cámara, micrófono, reconocimiento de voz, audio propio, grabación, persistencia de actividad, puntuación, ranking, Misión o evidencia. La navegación/identidad conserva únicamente su funcionamiento previo.
 - Las pruebas de identidad/SDK y aperturas externas son simuladas. Los destinos oficiales son los mismos ya verificados en §9.4; no se certifican permisos/subida con cuenta escolar ni reproducción audiovisual física. Uso real de las tres compañeras pendiente; no declarar estabilidad.
 
-Pendientes revisión final del diff, integración y publicación/verificación autorizadas.
+Revisión final y publicación autónoma completadas. Pages #813 (run `40570378938`) `success` sobre el merge de #204. Los siete archivos de producto modificados respondieron HTTP 200 y coincidieron byte a byte con la implementación probada, incluidas referencias `?v=2`; `rap-data.js` público se conserva intacto y la ruta final está disponible. Sin desarrollo/integración/publicación pendiente. La validación final será el uso de las tres compañeras; no declarar estabilidad.
 
 ## DECISIÓN
 
