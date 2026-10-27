@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.1 |
-| **Estado** | Implementada en rama · pendiente integración/publicación · no declarada estable |
+| **Versión** | 1.2 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 27/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos al producto probado; cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
 | 1.1 | 27/10/2026 | Product Owner + AI Collaborator | Implementa ficha semanal independiente y primera práctica por fragmentos efímera; registra fuente/enlaces exactos, fidelidad, comparación visual y pruebas. Pendiente publicación/verificación y uso con Gloria. |
 | 1.0 | 27/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada en Análisis: actividad semanal independiente, semana 26/10–02/11, vídeo/RAP y entrega escolar sin Tema, prueba ni persistencia nuevos. |
 
@@ -187,7 +188,7 @@ La implementación se considera candidata cuando:
 
 ## 9. Implementación · 27/10/2026
 
-Base real `main` `474eb81d0fa665e432fd8cd4d79393a23e10c621` (#200). Rama `feat/plan-semanal-english-rap`. Encargo del Product Owner autoriza implementación, PR, revisión y publicación/verificación autónomas; no declara estabilidad ni validación familiar.
+Base real `main` `474eb81d0fa665e432fd8cd4d79393a23e10c621` (#200). Rama `feat/plan-semanal-english-rap`, head `d366bd41f66055006eb8341eaa32531bdef48a35`. PR #201 integrada en `main` `49097f549693c1cd8874f6b528cae36bd09dcebd`, con árbol idéntico al probado `77cc650fedc74f528a144c80ef69942fb29f1827`. Encargo del Product Owner autoriza implementación, PR, revisión y publicación/verificación autónomas; no declara estabilidad ni validación familiar.
 
 ### 9.1 Fuente y fidelidad
 
@@ -231,7 +232,7 @@ Revisión visual de Desarrollo: la versión renderizada es más fácil de recorr
 - Regresión `tests/plan-semanal-browser.cjs` superada para Nutrición: lectura/voz, 10 V/F, 8 A/B/C, 8 conexiones, incompletos/reintentos, conservación al cambiar carpetas, recarga, fechas Madrid, Volver y cero escrituras en tres roles. Solo se actualizan supuestos de catálogo de una a dos fichas; contenido/motor de Nutrición intactos.
 - Comprobación externa real: YouTube HTTP 200 en la URL exacta, con título «Rap de Verbos Irregulares con subtitulos (The irregular verbs song - with pronunciation)». Drive redirige a inicio de sesión de Google conservando la carpeta exacta. **No se certifican permisos de la cuenta escolar, subida efectiva ni reproducción audiovisual física**; requieren cuenta autorizada/contexto real. No se ha cambiado ninguno de los destinos para eludir el acceso.
 
-Pendientes integración, publicación/verificación y revisión con Gloria. No declarar estabilidad.
+Pages #810 (run `40560045423`) `success` sobre el merge de #201. Nueve archivos de producto publicados con HTTP 200 y coincidencia byte a byte con la implementación aprobada; portal y ruta final de ficha HTTP 200. Sin desarrollo, integración ni publicación pendiente. Quedan revisión con Gloria y permisos/subida real de Drive/reproducción física según límites anteriores. No declarar estabilidad.
 
 ## DECISIÓN
 

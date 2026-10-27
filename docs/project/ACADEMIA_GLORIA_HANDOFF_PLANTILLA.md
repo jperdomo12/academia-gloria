@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.38 |
+| **Versión** | 3.39 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 27/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.39 | 27/10/2026 | Product Owner + AI Collaborator | Cierra publicación autónoma de English RAP: #201 integrada en 49097f54…; Pages #810 success y nueve archivos públicos idénticos al producto probado. SPEC 1.2; sin desarrollo pendiente, uso familiar y límites de cuenta escolar conservados junto a pendientes anteriores. |
 | 3.38 | 27/10/2026 | Product Owner + AI Collaborator | Implementación autónoma autorizada de English/Irregular Verbs RAP, semana 26/10–02/11: ficha independiente, letra fiel por fragmentos, memorización efímera y entrega escolar. SPEC 1.1 y marco semanal 1.7; pruebas y regresión superadas, publicación/verificación y uso real pendientes. Conserva pendientes anteriores. |
 | 3.37 | 21/10/2026 | Product Owner + AI Collaborator | Cierra Sociales 6.º: #198 aprobada/integrada en 72e99bab…; Pages #807 success y 18 archivos públicos idénticos al producto probado. SPEC 1.2; retira candidata pendiente y conserva uso familiar y todos los pendientes anteriores. |
 | 3.36 | 21/10/2026 | Product Owner + AI Collaborator | Candidata Sociales 6.º desde SPEC aprobada: portal y tres Temas independientes, visuales comparadas con diez páginas fuente y contratos académicos reutilizados. Sincroniza ADN/estándar y deja aprobación/integración/uso familiar pendientes; conserva pendientes anteriores. |
@@ -323,7 +324,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**Plan Semanal · English/Irregular Verbs RAP:** base `main` `474eb81…` (#200), rama `feat/plan-semanal-english-rap`; SPEC propietaria 1.1 y marco semanal 1.7. Semana 26/10–02/11/2026. Ficha en `/cursos/6to/plan-semanal/english-irregular-verbs-rap/`, sin nuevo Tema/Prueba o persistencia. Secuencia de cinco pasos, letra escolar íntegra (94 líneas/67 tríos) en 14 fragmentos con ocultar/mostrar, vídeo y Drive oficiales, nombre `6A/B/C_WP_NAMES_RAP` y entrega antes del 10/11/2026. Reutiliza portal/navegación/Panel/identidad y añade únicamente un pequeño presentador de fragmentos data-driven. RAP y regresión de Nutrición superados con identidad/SDK simulados, responsive 320–1440; sin errores JS ni escrituras educativas. Drive requiere cuenta autorizada; permisos/subida y reproducción física no certificados. Encargo autoriza desarrollo/PR/publicación autónomos. Pendientes revisión final del diff, integración/publicación/verificación y uso con Gloria; no estable. Conserva todos los pendientes anteriores.
+**Plan Semanal · English/Irregular Verbs RAP:** base `main` `474eb81…` (#200), PR #201 integrada en `49097f549693c1cd8874f6b528cae36bd09dcebd` dentro de la publicación autónoma autorizada; SPEC propietaria 1.2 y marco semanal 1.7. Semana 26/10–02/11/2026. Ficha en `/cursos/6to/plan-semanal/english-irregular-verbs-rap/`, sin nuevo Tema/Prueba o persistencia. Secuencia de cinco pasos, letra escolar íntegra (94 líneas/67 tríos) en 14 fragmentos con ocultar/mostrar, vídeo y Drive oficiales, nombre `6A/B/C_WP_NAMES_RAP` y entrega antes del 10/11/2026. Reutiliza portal/navegación/Panel/identidad y añade únicamente un pequeño presentador de fragmentos data-driven. RAP y regresión de Nutrición superados con identidad/SDK simulados, responsive 320–1440; sin errores JS ni escrituras educativas. Drive requiere cuenta autorizada; permisos/subida y reproducción física no certificados. Encargo autoriza desarrollo/PR/publicación autónomos. Revisión final del diff y publicación completadas; Pages #810 (run `40560045423`) `success`, nueve archivos públicos de producto HTTP 200 e idénticos a los probados y portal/ficha disponibles. Sin desarrollo/integración/publicación pendiente. Uso con Gloria pendiente; no estable. Conserva todos los pendientes anteriores.
 
 **Sociales 6.º · incorporada para validación familiar:** PR #198 aprobada por el Product Owner e integrada en `main` `72e99bab9466ced5059f9c4e82cbc34661ef2632`, desde head `3d70066a…` y base `ae69a370…`. Fuente propietaria `SPEC-SOCIALES_6TO_PUBLICIDAD_DINERO_IMPUESTOS.md` 1.2. Activa Sociales con tres Temas independientes: La publicidad (pp.1–3), El dinero, el ahorro y la inversión (pp.4–6) y Los impuestos (cuatro páginas); no Plan Semanal. Reutiliza portal, motor académico, voz, sesiones/histórico, catálogo de Misiones, Análisis y refuerzos; sin motor paralelo ni nuevas colecciones/API/Rules. Anuncio original con identificación progresiva, comparación de tres presupuestos y ahorro/inversión con riesgo, diagrama de aportaciones/Estado/servicios e IVA/IRPF diferenciados. Presupuesto propietario en dinero, ejemplo de 10 € en Impuestos con retorno contextual. 26 prácticas, 26 familias/52 variantes y 13 focos. ADN 2.2 y estándar curricular 1.10 sincronizan el quality gate aprobado. Comparación visual fuente → Academia y validación con identidad/SDK/voz simulados registradas en SPEC; no certifica Rules ni uso real. Pages #807 (run `39618427748`) `success`; 18 archivos públicos de producto HTTP 200 e idénticos al resultado aprobado, incluido el anuncio original intacto. Sin desarrollo/integración/publicación pendiente de #198. Prueba familiar pendiente; no estable. Conserva todos los pendientes anteriores.
 
@@ -395,13 +396,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `72e99bab9466ced5059f9c4e82cbc34661ef2632` · #198 integrado; conserva Plan Semanal #190/#192/#194/#195 y frentes anteriores |
+| **Baseline funcional de producto verificado** | `49097f549693c1cd8874f6b528cae36bd09dcebd` · #201 integrado; conserva Sociales #198, Plan Semanal anterior y demás frentes |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | `feat/plan-semanal-english-rap` · implementación/publicación autónomas autorizadas; conserva pendientes anteriores |
-| **PR On going** | English RAP en revisión final del diff para publicación autorizada; Sociales #198 y Plan Semanal anterior integrados; revisión familiar pendiente |
-| **Trabajo inmediato** | Probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #807 · `success` · SHA `72e99bab…` |
-| **Verificación posterior al cierre** | #198 aprobada e integrada; Pages #807 success sobre 72e99bab…; 18 archivos públicos HTTP 200 e idénticos al producto probado. Sociales y sus tres Temas disponibles para revisión familiar; frentes anteriores conservados. |
+| **Rama On going** | Sin desarrollo pendiente de English RAP; #201 integrada/publicada; conserva pendientes familiares anteriores |
+| **PR On going** | Sin PR de producto pendiente de English RAP; #201 integrada y publicada. Sociales #198 y Plan Semanal anterior integrados; revisión familiar pendiente |
+| **Trabajo inmediato** | Probar English RAP con Gloria; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **GitHub Pages del baseline funcional** | #810 · `success` · SHA `49097f54…` |
+| **Verificación posterior al cierre** | #201 integrada dentro de la publicación autónoma autorizada; Pages #810 success; nueve archivos públicos idénticos al producto probado. RAP independiente disponible; Nutrición/regresión conservados. Prueba con Gloria y acceso escolar a Drive pendientes. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -437,7 +438,7 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-English/Irregular Verbs RAP en fase de cierre técnico y publicación autorizada; ver §9 y SPEC propietaria. Mantener pendientes familiares anteriores.
+English/Irregular Verbs RAP publicado/verificado mediante #201 y Pages #810; SPEC 1.2 y detalle en §9. Probar con Gloria; mantener límites y pendientes familiares anteriores.
 
 Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y verificada; detalle en §9 y SPEC propietaria 1.2. Sin desarrollo pendiente; probar con Gloria y mantener pruebas familiares anteriores.
 
@@ -457,15 +458,15 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.38 |
+| **Versión** | 3.39 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | English RAP implementado en rama, publicación/verificación autorizadas pendientes y uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | English RAP en revisión final del diff para publicación autorizada; Sociales #198 y Plan Semanal anterior integrados; revisión familiar pendiente |
+| **Trabajo On going** | English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Sin PR de producto pendiente de English RAP; #201 integrada y publicada. Sociales #198 y Plan Semanal anterior integrados; revisión familiar pendiente |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar los tres Temas de Sociales con Gloria; desarrollo/integración/publicación verificados. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Probar English RAP con Gloria (preparación y entrega escolar); probar los tres Temas de Sociales con Gloria; desarrollo/integración/publicación verificados. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
