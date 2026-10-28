@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado** | Evolución RAP Team aprobada, integrada y publicada · escucha humana y uso real pendientes · no declarada estable |
 | **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 28/10/2026 | Product Owner + AI Collaborator | Observación de uso: muestra la frase escrita junto al audio en los cuatro modos con ayuda, reutilizando el bloque existente y respetando Comprobar/Revelar. #209 integrada/publicada, Pages #818 success y cuatro archivos públicos idénticos a los probados. Mantiene fuente, voz, no persistencia y pendientes auditivos/de uso. |
 | 1.8 | 28/10/2026 | Product Owner + AI Collaborator | Tras informar la escucha pendiente, el Product Owner aprueba continuar. #207 integrada en ab55e24a…; Pages #816 success y ocho archivos públicos idénticos a la versión probada. Cierra integración/publicación; mantiene pendiente la revisión auditiva y el uso real, sin declarar estabilidad. |
 | 1.7 | 28/10/2026 | Product Owner + AI Collaborator | Candidata aditiva desde 1.6: onboarding, voz inglesa mediante LectorTexto, 67 significados curados, revisión de 14 fragmentos y progresión. Pruebas funcionales/visuales y síntesis nativa capturada; la escucha humana no está disponible en Desarrollo. No declarar cumplido el gate auditivo ni publicar esta evolución hasta completarlo. |
 | 1.6 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba una evolución coherente de RAP Team tras revisión familiar: onboarding/autosuficiencia, ayuda auditiva de pronunciación, significado/traducción breve bajo demanda y aprovechamiento explícito de familias sonoras/rimas del RAP. Mantiene las tres compañeras en igualdad, el vídeo escolar como referencia rítmica y todos los límites de no persistencia/no evaluación. Pendiente desarrollo. |
@@ -712,3 +713,14 @@ En la entrega candidata 1.7 se dejó la PR en borrador por esa limitación. La a
 PR #207 aprobada por el Product Owner e integrada mediante revisión final del mismo head probado. Pages #816 (run `40717977094`) `success` sobre `ab55e24a16f4267002abb880bf6751e9398748b7`. Los ocho archivos de producto modificados respondieron HTTP 200 y coincidieron byte a byte con la versión probada, incluidas referencias de caché: lector compartido, HTML, adaptador, Team JS/CSS y los tres helpers de apoyo/metadatos/voz. La fuente escolar conserva sus 14 fragmentos/94 líneas/67 tríos y los cinco bloques originales.
 
 Sin integración ni publicación pendiente de #207. **Pendiente de validación real:** escuchar formas difíciles, trío y frase, normal/lento, parada/cambios y calidad de la voz inglesa del dispositivo; después comprobar comprensión/autonomía y utilidad con las tres compañeras. El vídeo escolar sigue siendo la referencia musical. No se certifican voces de todos los sistemas ni permisos/subida de Drive; no se declara estabilidad. La aprobación no añade cámara, micrófono, grabación, persistencia o evaluación.
+
+
+### 13.7 Ajuste de uso · frase escrita junto al audio
+
+El Product Owner señala que no aparece escrita la frase. Inspección del producto: Modo trío tenía un bloque propio y Random RAP otro párrafo tras Revelar; Ritmo y Call & Response ofrecían «Escuchar frase» sin presentar esa línea. Desde `main` `ad10897ccf6600f34755daf0b4859354c3da479f`, [PR #209](https://github.com/jperdomo12/academia-gloria/pull/209) reutiliza el bloque `.team-coro` dentro del panel compartido de ayudas, con título «La frase del RAP» y texto en inglés junto al audio. Retira los dos presentadores particulares: una sola instancia de `#teamLinea`, derivada de `t().linea`, sin otra letra ni estilos nuevos. El botón relaciona su descripción accesible con esa línea.
+
+Visible en Trío/Ritmo; en Call & Response y Random RAP permanece vacía y oculta hasta Comprobar/Revelar. Cambiar de trío actualiza el texto de la misma fuente. Sin voz inglesa sigue pudiendo leerse. No cambia palabras, paréntesis escolares, síntesis, significado, navegación ni persistencia. Caché vigente: `rap.js?v=4` → `rap-team.js?v=3` → `rap-apoyos.js?v=2`.
+
+Validación: suite existente `tests/plan-semanal-rap-browser.cjs` superada en tres roles simulados, ampliada con correspondencia de frase para las 67 ocurrencias, instancia única, visibilidad en Trío/Ritmo y ocultamiento/revelado en respuesta/azar. Conserva las comprobaciones de audio, cero medios/escrituras, fuente de 94 líneas/14 fragmentos, seis modos y navegación. Revisión renderizada de Trío desktop y Ritmo móvil; responsive 320/390/768/1024/1440 y sintaxis/diff comprobados. Cinco bloques escolares originales intactos; mecanismo de voz, datos y catálogo sin cambios. No se repite ni declara superada la escucha humana pendiente.
+
+#209 integrada en `21dc7f178cba42a6eb5e65d0a573e73296bb54ec`, head probado `611e026ac1e36be1fb72b18280abc0ff6395f898`, árbol `b63f09feaa1a965f389706cead3c673ea6b3a4a4`. Pages #818 (run `40721089058`) success; HTML y tres módulos modificados HTTP 200 e idénticos a la versión probada, incluidas las referencias de caché. `rap-data.js` público intacto. Ajuste publicado para revisión; mantiene todos los pendientes de §13.6 y no declara estabilidad.
