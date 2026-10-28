@@ -518,6 +518,7 @@ const seed = (role) => {
     );
   }
   await complete(p, true);
+  assert.doesNotMatch(await p.locator("#textoCierre").innerText(), /están firmes/);
   assert.match(
     await p.locator("#estadoGuardado").innerText(),
     /Sesión guardada/,

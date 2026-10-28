@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MATEMATICAS_6TO_NUMEROS_HASTA_100000.md` |
-| **Versión** | 1.1 |
-| **Estado** | Candidata implementada y validada en desarrollo · publicación y uso real pendientes |
+| **Versión** | 1.2 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Matemáticas 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 28/10/2026 | Product Owner + AI Collaborator | #212 integrada en 2920af05… dentro de la publicación autónoma autorizada. Pages #821 success; quince archivos públicos idénticos a los probados y rutas disponibles. Cierra integración/publicación; conserva validación familiar y límites de identidad/SDK/audio simulados, sin estabilidad. |
 | 1.1 | 28/10/2026 | Product Owner + AI Collaborator | Implementa el Tema canónico: cuatro experiencias, teoría manipulable/voz, seis fichas, 36 retos variados y Prueba de 12 familias/48 variantes con evidencia compartida. Registra revisión de las 17 páginas, reutilización mínima, comparación visual, validaciones y límites. Pendiente publicación/verificación y uso real; no estable. |
 | 1.0 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba el nuevo Tema `Números hasta 100 000` a partir de 17 páginas escaneadas de material de estudio, con cuatro núcleos: valor posicional/lectura-escritura, comparación-orden, series y redondeo. Fija el principio de experiencia `Disfrutar Aprendiendo`, cuatro experiencias interactivas propias, práctica progresiva y prueba con evidencia académica reutilizando el motor vigente. |
 
@@ -595,9 +596,9 @@ Si alguna respuesta es negativa, refinar antes de entregar.
 
 ## 20. Estado y siguiente paso
 
-**DECISIÓN FUNCIONAL APROBADA · CANDIDATA IMPLEMENTADA EN DESARROLLO.**
+**DECISIÓN FUNCIONAL APROBADA · PUBLICADA PARA VALIDACIÓN FAMILIAR.**
 
-Tema canónico en `cursos/6to/mates/numeros-hasta-100000/`, catálogo de Matemáticas ampliado sin cambiar Fracciones/Puente/piloto. Base `main` `c382e18a54f4c115af5e0b2857b3e51f5d5c3d01` (#211), rama `feat/mates-numeros-100000`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas para revisión final. Pendientes: revisión final del diff, integración/publicación/verificación y uso real. No declarar estabilidad.
+Tema canónico en `cursos/6to/mates/numeros-hasta-100000/`, catálogo de Matemáticas ampliado sin cambiar Fracciones/Puente/piloto. Base `main` `c382e18a54f4c115af5e0b2857b3e51f5d5c3d01` (#211), rama `feat/mates-numeros-100000`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas para revisión final. [PR #212](https://github.com/jperdomo12/academia-gloria/pull/212) integrada en `2920af056da63c371653716ff9bb733330c2b320`; revisión final y publicación/verificación completadas (§21.7). Pendiente uso real. No declarar estabilidad.
 
 ## 21. Implementación real y validación · 28/10/2026
 
@@ -690,3 +691,14 @@ Revisión renderizada real: Resumen, cuatro experiencias, Fichas, variantes de P
 - Sintaxis/imports/rutas/IDs y diff comprobados. Los tests usan Chromium y **SDK/identidad/audio simulados**; servicios, contratos y lógica del producto son reales. No certifican Rules desplegadas ni escrituras sobre cuentas reales. No se ha realizado audición física; la voz española reutiliza LectorTexto y es opcional.
 - Consola del Tema sin errores JavaScript. En la regresión del consumidor anterior Nutrición, su celebración predeterminada solicita `assets/identidad/guacamayas/guacamaya-roja-posada-01.png`, y recibe un 404: recurso ajeno ausente ya en el baseline, no introducido por este Tema. El nuevo Tema no solicita esas imágenes; no se modifica el frente de assets ni se declara consola de todos los consumidores sin avisos. Las comprobaciones de sesiones y permisos simulados se completan pese a ese aviso.
 - Pendiente validación de comprensión, disfrute y autonomía con Gloria/familia, y revisión autenticada de producción. No se declara estabilidad.
+
+
+### 21.7 Publicación verificada y continuidad
+
+El encargo autoriza implementación, PR, revisión del diff y publicación/verificación autónomas. #212 integrada en `main` `2920af056da63c371653716ff9bb733330c2b320`, desde head probado `d75e329c6743e625eee0d334d0e8697eeb8c5131`, árbol `c13ad85407a3f9a226794cecd97870c3b0d990ea`. Pages #821 (run `40764979843`) success. Los **quince archivos de producto** modificados respondieron HTTP 200 y coincidieron byte a byte con la implementación probada, incluidas referencias de caché. Portal, ruta del Tema y CSS de celebración disponible; no se publica el escaneo personal.
+
+Comprobación adicional de navegación/imports/Volver con hostname de GitHub Pages y subruta `/academia-gloria` simulados mediante assets del mismo repositorio, e identidad/SDK simulados. La solicitud HTTP del sitio público funciona; el intento de cargarlo directamente desde el Chromium de Desarrollo recibió `ERR_EMPTY_RESPONSE`, por lo que no se presenta como prueba de navegador público autenticado. La verificación de bytes publicados y la prueba renderizada local son comprobaciones distintas y explícitas.
+
+Sin desarrollo, integración ni publicación pendientes de #212. Conserva los límites de §21.6 y la prueba real de comprensión, disfrute, autonomía y voz opcional con Gloria/familia. No declara estabilidad ni sustituye la validación familiar por tests. Fracciones/Puente/piloto y los pendientes de otros frentes permanecen conservados.
+
+Revisión final del cierre: cuando hay bloques a reforzar, el texto describe las ideas que conviene practicar sin afirmar que existen otras firmes (podrían ser cero). Ajuste de presentación del motor compartido, sin cambiar respuestas, porcentajes, clasificación, evidencia ni permisos. La prueba con todas las respuestas incorrectas comprueba que el mensaje no inventa fortalezas.

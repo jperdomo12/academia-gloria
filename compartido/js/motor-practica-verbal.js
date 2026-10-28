@@ -438,7 +438,7 @@ async function finalizarPrueba() {
   const enCamino=mapa.filter(item=>item.estado==="camino");
 
   if (reforzar.length) {
-    $("textoCierre").textContent=`${nombreAlumno}, ya tenemos una fotografía útil: algunas ideas sobre ${campoSemantico} están firmes y otras conviene volver a practicar con calma.`;
+    $("textoCierre").textContent=`${nombreAlumno}, ya tenemos una fotografía útil de las ideas sobre ${campoSemantico} que conviene volver a practicar con calma.`;
   } else if (enCamino.length) {
     $("textoCierre").textContent=`${nombreAlumno}, las ideas principales están apareciendo. Unas variantes más ayudarán a hacerlas más firmes.`;
   } else {
