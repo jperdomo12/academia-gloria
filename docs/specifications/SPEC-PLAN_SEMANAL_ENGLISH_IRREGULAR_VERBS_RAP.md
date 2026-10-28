@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.7 |
-| **Estado** | Ficha y RAP Team anteriores publicados · evolución implementada en rama, pendiente de escucha humana · no declarada estable |
+| **Versión** | 1.8 |
+| **Estado** | Evolución RAP Team aprobada, integrada y publicada · escucha humana y uso real pendientes · no declarada estable |
 | **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8 | 28/10/2026 | Product Owner + AI Collaborator | Tras informar la escucha pendiente, el Product Owner aprueba continuar. #207 integrada en ab55e24a…; Pages #816 success y ocho archivos públicos idénticos a la versión probada. Cierra integración/publicación; mantiene pendiente la revisión auditiva y el uso real, sin declarar estabilidad. |
 | 1.7 | 28/10/2026 | Product Owner + AI Collaborator | Candidata aditiva desde 1.6: onboarding, voz inglesa mediante LectorTexto, 67 significados curados, revisión de 14 fragmentos y progresión. Pruebas funcionales/visuales y síntesis nativa capturada; la escucha humana no está disponible en Desarrollo. No declarar cumplido el gate auditivo ni publicar esta evolución hasta completarlo. |
 | 1.6 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba una evolución coherente de RAP Team tras revisión familiar: onboarding/autosuficiencia, ayuda auditiva de pronunciación, significado/traducción breve bajo demanda y aprovechamiento explícito de familias sonoras/rimas del RAP. Mantiene las tres compañeras en igualdad, el vídeo escolar como referencia rítmica y todos los límites de no persistencia/no evaluación. Pendiente desarrollo. |
 | 1.5 | 27/10/2026 | Product Owner + AI Collaborator | #204 integrada en ffdbca4c… dentro de la publicación autónoma autorizada. Pages #813 success; siete archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación de RAP Team; conserva prueba real de las tres compañeras y límites previos. |
@@ -41,7 +42,7 @@
 | 9 | Primera implementación, fuente, fidelidad, pruebas y publicación. |
 | 10–11 | RAP Team aprobado y baseline publicado de seis modos. |
 | 12 | Evolución aprobada: autonomía, pronunciación, significado y familias. |
-| 13 | Candidata real, revisión de 14 fragmentos, pruebas y gate auditivo pendiente. |
+| 13 | Implementación real, revisión de 14 fragmentos, pruebas, aprobación/publicación y escucha pendiente. |
 
 ## 1. Decisión funcional
 
@@ -640,9 +641,9 @@ La mejora se considera candidata cuando:
 
 `6_WP_Irregular verbs RAP.pdf` permanece como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. La ficha y RAP Team publicados se mantienen como base. Se aprueba una evolución aditiva para que RAP Team sea **autosuficiente**, incorpore **ayuda auditiva de pronunciación**, **significado breve bajo demanda** y aproveche de forma explícita las **familias sonoras/rimas** del propio RAP mediante una progresión `Verbos → Cadena → RAP`, conservando a las **tres compañeras en igualdad** y sin sustituir el flujo oficial del colegio.
 
-## 13. Implementación candidata de ayudas · 28/10/2026
+## 13. Implementación de ayudas · 28/10/2026
 
-Base canónica de partida: `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4` (SPEC 1.6 aprobada). Rama `feat/rap-team-ayudas`, [PR #207 en borrador](https://github.com/jperdomo12/academia-gloria/pull/207). La evolución está implementada en esa rama; **no está integrada ni publicada**. El producto anterior #204 sigue vigente. El encargo autoriza publicación autónoma, pero su requisito explícito de escucha real todavía no puede declararse satisfecho. No se solicita otra decisión funcional ni se declara estabilidad.
+Base canónica de partida: `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4` (SPEC 1.6 aprobada). Rama `feat/rap-team-ayudas`, [PR #207](https://github.com/jperdomo12/academia-gloria/pull/207), head probado `40e1cc67edafcb72b4f681fa1895def47a64befb`. Tras el informe explícito de la limitación auditiva, el Product Owner responde «Aprobado, adelante» el 28/10/2026. Se continúa integración/publicación con esa aprobación, conservando la escucha humana pendiente; la aprobación no se registra como una prueba auditiva superada. #207 integrada en `main` `ab55e24a16f4267002abb880bf6751e9398748b7`, árbol idéntico al probado `503aec5e2b4373e2f8f0b443f5e8a6093793720b`. No se declara estabilidad.
 
 ### 13.1 UX y reutilización
 
@@ -702,6 +703,12 @@ La regresión de `tests/plan-semanal-browser.cjs` comprueba Nutrición/voz, resp
 
 **Ejecución nativa de voz realizada, sin mock de síntesis:** Chromium/Linux → Web Speech API → Speech Dispatcher/eSpeak NG, voz `English (Great Britain) espeak-ng`, `en-GB`. Se emitieron y capturaron thought, sought, taught, written, brought, caught, sung, stung, driven, ridden, grown y lead; trío `take/took/taken` normal y lento; frase `The microphone I take, took, taken.`. Quince emisiones terminaron sin error; captura PCM no silenciosa de 16,76 s, pico 26276/32768. El trío duró 1,426 s normal y 1,620 s lento: el rate efectivamente modificó la síntesis. Una prueba nativa adicional comprobó `speaking/pending=false` y estado detenido al parar/cambiar material/cambiar modo/ocultar/salir. Estos proveedores se prepararon solo para QA, **no son dependencias de Academia**.
 
-**Gate auditivo pendiente y bloqueo material:** este entorno puede producir/capturar audio, pero su capacidad de entrada responde que no admite audio. No se ha podido escuchar esa captura ni certificar que cada palabra se oye correctamente. La ausencia de errores/eventos y la señal PCM **no equivalen a una revisión de pronunciación**. Falta escucha humana de formas difíciles, trío, frase, velocidad y parada; especial atención a homógrafos como `lead`. Tampoco se han certificado voces concretas de Windows/macOS/iOS/Android: calidad, acento y pausas dependen del navegador/SO. No se añaden escrituras ni grabaciones de las alumnas para resolverlo.
+**Escucha humana pendiente · limitación real de Desarrollo:** este entorno puede producir/capturar audio, pero su capacidad de entrada responde que no admite audio. No se ha podido escuchar esa captura ni certificar que cada palabra se oye correctamente. La ausencia de errores/eventos y la señal PCM **no equivalen a una revisión de pronunciación**. Falta escucha humana de formas difíciles, trío, frase, velocidad y parada; especial atención a homógrafos como `lead`. Tampoco se han certificado voces concretas de Windows/macOS/iOS/Android: calidad, acento y pausas dependen del navegador/SO. No se añaden escrituras ni grabaciones de las alumnas para resolverlo.
 
-Hasta completar ese requisito explícito de §12 y del encargo, mantener PR candidata sin integrar/publicar; no anunciar «YA PUEDES PROBAR» como cierre ni declarar estabilidad. La escucha pendiente no es una nueva decisión funcional. Tras superarla, continuar revisión final/merge/Pages/verificación de bytes dentro de la autorización ya dada, y finalmente uso real de las tres compañeras.
+En la entrega candidata 1.7 se dejó la PR en borrador por esa limitación. La aprobación posterior del Product Owner permite continuar la publicación para revisión real sin presentar como cumplido el requisito auditivo. El pendiente se conserva expresamente y no se reemplaza por comprobaciones técnicas ni por la aprobación.
+
+### 13.6 Aprobación, publicación y continuidad
+
+PR #207 aprobada por el Product Owner e integrada mediante revisión final del mismo head probado. Pages #816 (run `40717977094`) `success` sobre `ab55e24a16f4267002abb880bf6751e9398748b7`. Los ocho archivos de producto modificados respondieron HTTP 200 y coincidieron byte a byte con la versión probada, incluidas referencias de caché: lector compartido, HTML, adaptador, Team JS/CSS y los tres helpers de apoyo/metadatos/voz. La fuente escolar conserva sus 14 fragmentos/94 líneas/67 tríos y los cinco bloques originales.
+
+Sin integración ni publicación pendiente de #207. **Pendiente de validación real:** escuchar formas difíciles, trío y frase, normal/lento, parada/cambios y calidad de la voz inglesa del dispositivo; después comprobar comprensión/autonomía y utilidad con las tres compañeras. El vídeo escolar sigue siendo la referencia musical. No se certifican voces de todos los sistemas ni permisos/subida de Drive; no se declara estabilidad. La aprobación no añade cámara, micrófono, grabación, persistencia o evaluación.
