@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.6 |
-| **Estado** | Ficha y RAP Team publicados · mejora de apoyo al aprendizaje aprobada para desarrollo · no declarada estable |
+| **Versión** | 1.7 |
+| **Estado** | Ficha y RAP Team anteriores publicados · evolución implementada en rama, pendiente de escucha humana · no declarada estable |
 | **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 28/10/2026 | Product Owner + AI Collaborator | Candidata aditiva desde 1.6: onboarding, voz inglesa mediante LectorTexto, 67 significados curados, revisión de 14 fragmentos y progresión. Pruebas funcionales/visuales y síntesis nativa capturada; la escucha humana no está disponible en Desarrollo. No declarar cumplido el gate auditivo ni publicar esta evolución hasta completarlo. |
 | 1.6 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba una evolución coherente de RAP Team tras revisión familiar: onboarding/autosuficiencia, ayuda auditiva de pronunciación, significado/traducción breve bajo demanda y aprovechamiento explícito de familias sonoras/rimas del RAP. Mantiene las tres compañeras en igualdad, el vídeo escolar como referencia rítmica y todos los límites de no persistencia/no evaluación. Pendiente desarrollo. |
 | 1.5 | 27/10/2026 | Product Owner + AI Collaborator | #204 integrada en ffdbca4c… dentro de la publicación autónoma autorizada. Pages #813 success; siete archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación de RAP Team; conserva prueba real de las tres compañeras y límites previos. |
 | 1.4 | 27/10/2026 | Product Owner + AI Collaborator | Implementa RAP Team A–F sobre la ficha vigente: tres voces equivalentes/roles rotatorios, pulso visual, respuesta oral con revelado, azar, retos y ensayo/celebración. Una fuente escolar y parser compartido; sin medios/persistencia. Registra trazabilidad, pruebas y revisión visual; publicación/uso real pendientes. |
@@ -31,6 +32,16 @@
 | 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
 | 1.1 | 27/10/2026 | Product Owner + AI Collaborator | Implementa ficha semanal independiente y primera práctica por fragmentos efímera; registra fuente/enlaces exactos, fidelidad, comparación visual y pruebas. Pendiente publicación/verificación y uso con Gloria. |
 | 1.0 | 27/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada en Análisis: actividad semanal independiente, semana 26/10–02/11, vídeo/RAP y entrega escolar sin Tema, prueba ni persistencia nuevos. |
+
+## Resumen de contenido
+
+| Apartado | Contenido |
+|---|---|
+| 1–8 | Decisión, alcance y criterios de la ficha semanal escolar. |
+| 9 | Primera implementación, fuente, fidelidad, pruebas y publicación. |
+| 10–11 | RAP Team aprobado y baseline publicado de seis modos. |
+| 12 | Evolución aprobada: autonomía, pronunciación, significado y familias. |
+| 13 | Candidata real, revisión de 14 fragmentos, pruebas y gate auditivo pendiente. |
 
 ## 1. Decisión funcional
 
@@ -628,3 +639,69 @@ La mejora se considera candidata cuando:
 **APROBADO PARA DESARROLLO.**
 
 `6_WP_Irregular verbs RAP.pdf` permanece como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. La ficha y RAP Team publicados se mantienen como base. Se aprueba una evolución aditiva para que RAP Team sea **autosuficiente**, incorpore **ayuda auditiva de pronunciación**, **significado breve bajo demanda** y aproveche de forma explícita las **familias sonoras/rimas** del propio RAP mediante una progresión `Verbos → Cadena → RAP`, conservando a las **tres compañeras en igualdad** y sin sustituir el flujo oficial del colegio.
+
+## 13. Implementación candidata de ayudas · 28/10/2026
+
+Base canónica de partida: `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4` (SPEC 1.6 aprobada). Rama `feat/rap-team-ayudas`, [PR #207 en borrador](https://github.com/jperdomo12/academia-gloria/pull/207). La evolución está implementada en esa rama; **no está integrada ni publicada**. El producto anterior #204 sigue vigente. El encargo autoriza publicación autónoma, pero su requisito explícito de escucha real todavía no puede declararse satisfecho. No se solicita otra decisión funcional ni se declara estabilidad.
+
+### 13.1 UX y reutilización
+
+- Entrada con cuatro pasos breves en un `details` abierto inicialmente, recuperable mediante «¿Cómo usamos RAP Team?». «Empezar por Modo trío» lo comprime y lleva el foco a las tres voces. Se puede elegir cualquier modo sin completar un tutorial. Los seis botones explican su finalidad. El reparto muestra el orden Base → Past → Participle después de cada rotación; la ayuda aclara que se dicen las formas entre paréntesis, sin pronunciar los signos.
+- Las tarjetas A/B/C conservan idéntica jerarquía, dimensiones y función, cada una con «Oír» para su **forma actual**, incluida la rotación. Escuchar trío/frase, velocidad y parada se reúnen debajo. Las explicaciones de significado y familia están cerradas inicialmente; no se impone leerlas para jugar.
+- `rap-apoyos.js` mantiene un único panel de ayuda que se proyecta en el modo activo, sin duplicar controles/estado. Modo trío y Ritmo admiten las ayudas; Call & Response solo muestra la base tras la cuenta y las demás formas después de comprobar; Random RAP sigue el mismo límite hasta Revelar. No se filtra la solución mediante audio de trío, frase o familia antes del revelado. Retos/Ensayo final conservan su recorrido y vídeo.
+- `rap-ayudas-data.js` añade únicamente glosas y clasificación vinculadas a la base o a las ocurrencias locales del parser. **No contiene una segunda letra ni otro banco de tríos**. `FRAGMENTOS_RAP`, parser, 14 fragmentos/94 líneas/67 tríos siguen siendo la fuente escolar.
+- Verbos → Cadena → RAP es una progresión dentro del desplegable del fragmento, no tres modos nuevos. Cadena deriva los tríos de la agrupación seleccionada; RAP recupera todas las líneas originales del fragmento, incluidos los verbos excluidos de la rima. Los fragmentos heterogéneos ofrecen su secuencia completa sin atribuirle una familia ficticia.
+- Conserva identidad, navegación/Volver, ficha escolar, Plan Semanal y English. Referencias de caché: `rap.js?v=3` → `rap-team.js?v=2`, CSS de Team `?v=2`, lector compartido `?v=2`. Nuevos helpers sin versión previa publicada.
+
+### 13.2 Pronunciación y contrato compartido
+
+`rap-voz.js` **no sintetiza con otro motor**: selecciona una voz inglesa del navegador y delega cada emisión en `LectorTexto.escuchar`. Se amplía el contrato compartido con una opción `voz` no obligatoria: asigna la voz concreta y su locale; los consumidores anteriores conservan idioma/velocidad y selección predeterminados. El chequeo de disponibilidad exige funciones `speak`/`cancel`. No cambia el lector de Nutrición ni su texto.
+
+Selección: primera `en-GB`, después `en-US`, después otra `en-*`; **nunca se sustituye por una voz española**. Se atiende `voiceschanged` para carga tardía. Si falta motor/voz inglesa, los controles de audio quedan deshabilitados y el estado informa que se puede seguir practicando y usar el vídeo; las seis dinámicas, significado y progresión siguen disponibles.
+
+Emisiones explícitas: forma activa de cada voz; trío con pausas de puntuación; línea original del trío; sonidos seleccionados; cadena; fragmento completo. Para escuchar se eliminan solo los paréntesis/separadores visuales, conservando las palabras de la fuente. Sin fonética española, IPA principal, traducción dinámica, reconocimiento o calificación.
+
+Normal `rate=1`; Despacio `rate=0.8`, aplica a la siguiente escucha y cancela la anterior. Parada explícita y cancelación al cambiar modo/material/papeles, iniciar pulso/cuenta, ocultar pestaña, abandonar área/página; una emisión nueva sustituye la previa. Tokens invalidan eventos tardíos de una emisión cancelada. Estados accesibles de disponible, reproduciendo, terminada, detenida y error. La síntesis **lee palabras**, no imita la musicalidad del RAP: el vídeo del cole sigue siendo la referencia de interpretación.
+
+### 13.3 Significados revisados
+
+67 entradas deterministas, una por base realmente derivada del RAP, con 1–2 sentidos breves y contexto solo donde aporta comprensión. Predomina el inglés; la glosa española solo aparece al desplegar. No se conjuga una traducción automática de Past/Participle ni se traduce la canción completa.
+
+La revisión cotejó cada entrada con su línea/fragmento. Ejemplos: `take` coger el micrófono; `feed` alimentar la mente; `freeze` quedarse bloqueado; `get` lograr que sigan el ritmo; `spend` dedicar tiempo; `lend me your ear` prestar atención; `lay down` presentar un sonido; `stink` metáfora de un RAP malo; `sink` superar a la competencia; `spit` decir rimas con energía; `mean` hablar en serio/querer decir; `draw` representar ideas mediante la letra. Se conserva la rareza de algunas frases escolares sin «corregir» el inglés original.
+
+Referencias lingüísticas puntuales consultadas para matices, sin copiar definiciones extensas: [Cambridge, hang on every word](https://dictionary.cambridge.org/dictionary/english/hang-on-every-word), [spit](https://dictionary.cambridge.org/dictionary/english/spit), [rise](https://dictionary.cambridge.org/pronunciation/english/rise) y [drive](https://dictionary.cambridge.org/pronunciation/english/drive). Las glosas son explicaciones breves de Academia; no añaden contenido curricular externo.
+
+### 13.4 Revisión de los 14 fragmentos
+
+Los nombres de esta tabla se normalizan a minúsculas solo para lectura documental; la interfaz deriva y conserva las mayúsculas originales. Resultado: **8 grupos de rima y 1 de semejanza vocálica; 5 fragmentos sin una familia global**. Los subconjuntos no sustituyen la letra completa. No se presentan como reglas de conjugación.
+
+| Fragmento | Relación seleccionada | Exclusión / uso en la interfaz |
+|---|---|---|
+| 1 | take · shake · wake: rima de bases | Tres tríos → cadena → tres líneas originales; no implica idéntico cambio en las otras formas. |
+| 2 | thought · sought · taught: rima de pasados | Bases diferentes; se escucha el pasado como foco y se recuperan los tríos completos. |
+| 3 | sleep · creep · leap · keep: rima de bases | sneak queda fuera por otro final. RAP vuelve a incluirlo sin alterar `snuck up`. |
+| 4 | Sin familia única | beat/win/do/begin/shoot heterogéneos; hay cercanías parciales entre formas, no se fuerza una regla o familia de cinco. Secuencia original. |
+| 5 | brought · caught · fought: rima de pasados | lead/feed forman otra pareja; no se atribuye la rima seleccionada a todo el fragmento. |
+| 6 | Sin familia única | freeze/speak/steal/choose/write y rimas de la frase entrelazadas. Secuencia original. |
+| 7 | bet · forget · get: rima de bases | meet/come fuera del grupo; todos siguen en RAP. |
+| 8 | sing · sting · cling: rima de bases | hang tiene otra vocal en la base; participios permiten otras semejanzas, sin regla morfológica. |
+| 9 | Sin familia única | dream/spend/lend/lay/make; spend/lend son una pareja, no una familia de cinco. |
+| 10 | stink · drink · sink: rima de bases | hear/give/spit fuera del grupo; letra completa conservada. |
+| 11 | Sin familia única | quit/sit y kneel/feel son dos parejas de finales diferentes. |
+| 12 | rise · drive · ride · hide: semejanza vocálica | **No rima exacta**: termina en consonantes distintas. Título «Palabras que suenan parecidas». |
+| 13 | Sin familia única | find/flee/see/mean/send; flee/see son pareja, no se generaliza a todos. |
+| 14 | show · know · throw · grow · go: rima de bases | fly/shine/draw fuera de esa rima. RAP mantiene las trece líneas y sus ocho tríos. |
+
+### 13.5 Validación técnica, visual y límites reales
+
+Pruebas en Chromium de Desarrollo con identidad/SDK simulados, sin datos personales reales. `tests/plan-semanal-rap-browser.cjs` amplía el recorrido existente: onboarding recuperable/teclado/foco, 67 glosas y 14 clasificaciones vinculadas a la fuente, orden/rotación de audio, voz inglesa GB/US, velocidad, parada/eventos tardíos/error/carga tardía/sin voz, significado, grupos y progresión derivados, revelado sin adelantar respuestas, compatibilidad del lector español, ausencia de escrituras/medios y regresión de los seis modos y ficha original. **La Web Speech API controlada de este test valida contratos, no pronunciación.**
+
+Responsive comprobado en 1440/1024/768/390/320 px; revisión de capturas reales de entrada/onboarding, selector, tres voces, significado, familia, cadena/RAP, ausencia de voz y Ensayo final. Foco visible, controles/summary/select de al menos 44 px, reduced-motion y no desbordamiento; igualdad de tarjetas y todas las formas escolares conservadas. Se corrigió el contraste al pasar el cursor por la etapa seleccionada de la progresión y la acción de inicio. Las nuevas ayudas quedan plegadas salvo la entrada breve inicial.
+
+La regresión de `tests/plan-semanal-browser.cjs` comprueba Nutrición/voz, respuestas/comprobación/reintentos, carpetas, calendario, Volver y cero escrituras educativas en tres roles. No se altera el portal de English ni su catálogo de dos Temas. Los cinco bloques escolares originales y `rap-data.js` se comparan byte a byte con el baseline. Enlaces de vídeo/Drive, fecha/patrón, grupos y procedencia se conservan; permisos/subida escolar reales siguen fuera de la certificación de Desarrollo (§9.4).
+
+**Ejecución nativa de voz realizada, sin mock de síntesis:** Chromium/Linux → Web Speech API → Speech Dispatcher/eSpeak NG, voz `English (Great Britain) espeak-ng`, `en-GB`. Se emitieron y capturaron thought, sought, taught, written, brought, caught, sung, stung, driven, ridden, grown y lead; trío `take/took/taken` normal y lento; frase `The microphone I take, took, taken.`. Quince emisiones terminaron sin error; captura PCM no silenciosa de 16,76 s, pico 26276/32768. El trío duró 1,426 s normal y 1,620 s lento: el rate efectivamente modificó la síntesis. Una prueba nativa adicional comprobó `speaking/pending=false` y estado detenido al parar/cambiar material/cambiar modo/ocultar/salir. Estos proveedores se prepararon solo para QA, **no son dependencias de Academia**.
+
+**Gate auditivo pendiente y bloqueo material:** este entorno puede producir/capturar audio, pero su capacidad de entrada responde que no admite audio. No se ha podido escuchar esa captura ni certificar que cada palabra se oye correctamente. La ausencia de errores/eventos y la señal PCM **no equivalen a una revisión de pronunciación**. Falta escucha humana de formas difíciles, trío, frase, velocidad y parada; especial atención a homógrafos como `lead`. Tampoco se han certificado voces concretas de Windows/macOS/iOS/Android: calidad, acento y pausas dependen del navegador/SO. No se añaden escrituras ni grabaciones de las alumnas para resolverlo.
+
+Hasta completar ese requisito explícito de §12 y del encargo, mantener PR candidata sin integrar/publicar; no anunciar «YA PUEDES PROBAR» como cierre ni declarar estabilidad. La escucha pendiente no es una nueva decisión funcional. Tras superarla, continuar revisión final/merge/Pages/verificación de bytes dentro de la autorización ya dada, y finalmente uso real de las tres compañeras.

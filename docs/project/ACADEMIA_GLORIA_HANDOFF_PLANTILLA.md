@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.41 |
+| **Versión** | 3.42 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 27/10/2026 |
+| **Última actualización** | 28/10/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.42 | 28/10/2026 | Product Owner + AI Collaborator | Evolución RAP Team implementada en feat/rap-team-ayudas desde SPEC 1.6: onboarding, voz/67 glosas, familias y progresión; SPEC 1.7 candidata. Síntesis nativa capturada, pero escucha humana no disponible; gate auditivo pendiente impide cierre/publicación. Baseline #204 y pendientes anteriores conservados. |
 | 3.41 | 27/10/2026 | Product Owner + AI Collaborator | Cierra RAP Team #204 integrada en ffdbca4c…; Pages #813 success y siete archivos públicos idénticos al producto probado, con datos escolares intactos. SPEC 1.5, sin desarrollo/publicación pendiente; uso real de las tres compañeras y demás pendientes conservados. |
 | 3.40 | 27/10/2026 | Product Owner + AI Collaborator | RAP Team A–F implementado desde #203 en feat/rap-team: tres voces equivalentes/rotación, pulso, respuesta/azar, retos y ensayo final. Fuente única sin medios/persistencia; pruebas y revisión visual, regresión de Nutrición superadas. Publicación autorizada y uso del trío pendientes; conserva frentes anteriores. |
 | 3.39 | 27/10/2026 | Product Owner + AI Collaborator | Cierra publicación autónoma de English RAP: #201 integrada en 49097f54…; Pages #810 success y nueve archivos públicos idénticos al producto probado. SPEC 1.2; sin desarrollo pendiente, uso familiar y límites de cuenta escolar conservados junto a pendientes anteriores. |
@@ -326,7 +327,9 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**RAP Team · publicada para uso de las tres compañeras:** base `main` `62f73ef…` (#203), PR #204 integrada en `ffdbca4c1e47974e47d4b85ae7ee26c3a4dbf463` dentro de la publicación autónoma autorizada; SPEC propietaria `SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` 1.5. Mantiene los cinco bloques escolares y datos originales intactos; añade estudio entre Aprende y Graba. Voz A/B/C equivalentes, roles rotatorios, pulso visual de cuatro tiempos, Call & Response, Random RAP, cinco retos y ensayo final/celebración. Un parser compartido deriva los 67 tríos de los mismos 14 fragmentos; sin segunda copia, audio, cámara/micrófono, notas, evidencia o persistencia. Estados efímeros y timers cancelados al salir/cambiar; teclado y reduced-motion. RAP ampliado y regresión de Nutrición superados con identidad/SDK simulados; revisión visual real de todos los modos desktop/móvil y cinco anchos 320–1440. Encargo autoriza implementación/PR/publicación autónomas. Revisión final y publicación verificadas: Pages #813 (run `40570378938`) `success`; siete archivos públicos HTTP 200 e idénticos a los probados, incluidas referencias de caché, con datos escolares intactos y ruta final disponible. Sin desarrollo/integración/publicación pendiente de #204. Prueba real de las tres compañeras pendiente; no estable. Conserva la publicación #201 y todos los pendientes anteriores.
+**RAP Team · evolución de aprendizaje candidata (28/10/2026):** desde `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4`, SPEC 1.6 aprobada; rama `feat/rap-team-ayudas`, [PR #207 en borrador](https://github.com/jperdomo12/academia-gloria/pull/207), SPEC 1.7 candidata. Onboarding recuperable, explicación de modos, voz inglesa mediante LectorTexto (opción compatible `voz`), 67 glosas curadas, 8 grupos de rima + 1 de semejanza vocálica y 5 fragmentos sin familia global, progresión Verbos → Cadena → RAP. Misma fuente/igualdad/recorrido escolar y cero persistencia/medios de alumnas. Pruebas técnicas y revisión visual; audio nativo en-GB/eSpeak generado/capturado y cancelación comprobada. **No se ha escuchado la captura: el entorno no admite audio de entrada.** Falta el gate auditivo expresamente requerido; candidata sin integrar/publicar. No declarar lista ni estable. Completar escucha humana de palabras difíciles (incluido homógrafo lead), trío/frase/rates/parada y continuar cierre autorizado; no requiere otra decisión funcional. Conservar baseline publicado #204, ficha #201 y todos los pendientes anteriores.
+
+**RAP Team · baseline publicado para uso de las tres compañeras:** base `main` `62f73ef…` (#203), PR #204 integrada en `ffdbca4c1e47974e47d4b85ae7ee26c3a4dbf463` dentro de la publicación autónoma autorizada; SPEC propietaria `SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` 1.5. Mantiene los cinco bloques escolares y datos originales intactos; añade estudio entre Aprende y Graba. Voz A/B/C equivalentes, roles rotatorios, pulso visual de cuatro tiempos, Call & Response, Random RAP, cinco retos y ensayo final/celebración. Un parser compartido deriva los 67 tríos de los mismos 14 fragmentos; sin segunda copia, audio, cámara/micrófono, notas, evidencia o persistencia. Estados efímeros y timers cancelados al salir/cambiar; teclado y reduced-motion. RAP ampliado y regresión de Nutrición superados con identidad/SDK simulados; revisión visual real de todos los modos desktop/móvil y cinco anchos 320–1440. Encargo autoriza implementación/PR/publicación autónomas. Revisión final y publicación verificadas: Pages #813 (run `40570378938`) `success`; siete archivos públicos HTTP 200 e idénticos a los probados, incluidas referencias de caché, con datos escolares intactos y ruta final disponible. Sin desarrollo/integración/publicación pendiente de #204. Prueba real de las tres compañeras pendiente; no estable. Conserva la publicación #201 y todos los pendientes anteriores.
 
 **Plan Semanal · English/Irregular Verbs RAP:** base `main` `474eb81…` (#200), PR #201 integrada en `49097f549693c1cd8874f6b528cae36bd09dcebd` dentro de la publicación autónoma autorizada; SPEC propietaria 1.2 y marco semanal 1.7. Semana 26/10–02/11/2026. Ficha en `/cursos/6to/plan-semanal/english-irregular-verbs-rap/`, sin nuevo Tema/Prueba o persistencia. Secuencia de cinco pasos, letra escolar íntegra (94 líneas/67 tríos) en 14 fragmentos con ocultar/mostrar, vídeo y Drive oficiales, nombre `6A/B/C_WP_NAMES_RAP` y entrega antes del 10/11/2026. Reutiliza portal/navegación/Panel/identidad y añade únicamente un pequeño presentador de fragmentos data-driven. RAP y regresión de Nutrición superados con identidad/SDK simulados, responsive 320–1440; sin errores JS ni escrituras educativas. Drive requiere cuenta autorizada; permisos/subida y reproducción física no certificados. Encargo autoriza desarrollo/PR/publicación autónomos. Revisión final del diff y publicación completadas; Pages #810 (run `40560045423`) `success`, nueve archivos públicos de producto HTTP 200 e idénticos a los probados y portal/ficha disponibles. Sin desarrollo/integración/publicación pendiente. Uso con Gloria pendiente; no estable. Conserva todos los pendientes anteriores.
 
@@ -402,9 +405,9 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | **Base canónica** | `main` |
 | **Baseline funcional de producto verificado** | `ffdbca4c1e47974e47d4b85ae7ee26c3a4dbf463` · #204 integrado; conserva ficha #201, Sociales y demás frentes |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin desarrollo pendiente de RAP Team; #204 integrada/publicada, pendiente uso real del trío; conserva pendientes anteriores |
-| **PR On going** | Sin PR de producto pendiente de RAP Team; #204 integrada/publicada; ficha #201 y demás frentes conservados; uso real pendiente |
-| **Trabajo inmediato** | Probar RAP Team con las tres compañeras; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **Rama On going** | `feat/rap-team-ayudas`: evolución candidata SPEC 1.7; gate de escucha humana pendiente antes de integrar/publicar. Baseline #204 y pendientes anteriores conservados |
+| **PR On going** | PR #207 en borrador · feat/rap-team-ayudas; pendiente escucha humana antes de integración/publicación. Baseline #204/#201 y demás frentes conservados |
+| **Trabajo inmediato** | Completar escucha humana de la evolución RAP Team antes de integrar/publicar; después probar con las tres compañeras; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
 | **GitHub Pages del baseline funcional** | #813 · `success` · SHA `ffdbca4c…` |
 | **Verificación posterior al cierre** | #204 integrada dentro de la publicación autónoma autorizada; Pages #813 success; siete archivos públicos idénticos al producto probado, referencias de caché y fuente escolar intactas. RAP Team disponible, regresiones superadas; uso real de las tres compañeras pendiente. |
 | **Mi Camino** | ✅ Cerrado y validado |
@@ -442,7 +445,7 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-RAP Team publicado/verificado mediante #204 y Pages #813; SPEC 1.5 y detalle en §9. Probar con las tres compañeras; mantener todos los pendientes de uso real anteriores.
+RAP Team baseline #204/Pages #813 vigente. Evolución candidata desde SPEC 1.6: rama feat/rap-team-ayudas, SPEC 1.7, gate de escucha humana pendiente; detalle en §9. No confundir síntesis capturada con pronunciación escuchada ni declarar publicación de la candidata. Mantener todos los pendientes de uso real anteriores.
 
 English/Irregular Verbs RAP publicado/verificado mediante #201 y Pages #810; SPEC 1.2 y detalle en §9. Probar con Gloria; mantener límites y pendientes familiares anteriores.
 
@@ -464,15 +467,15 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.41 |
+| **Versión** | 3.42 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | RAP Team publicado/verificado (#204/Pages #813), sin desarrollo pendiente; uso real del trío pendiente. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Sin PR de producto pendiente de RAP Team; #204 integrada/publicada; ficha #201 y demás frentes conservados; uso real pendiente |
+| **Trabajo On going** | RAP Team baseline #204/Pages #813 publicado; evolución candidata feat/rap-team-ayudas/SPEC 1.7 pendiente de escucha humana, integración/publicación y uso del trío. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | PR #207 en borrador · feat/rap-team-ayudas; pendiente escucha humana antes de integración/publicación. Baseline #204/#201 y demás frentes conservados |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar RAP Team con las tres compañeras para preparar el vídeo escolar; probar los tres Temas de Sociales con Gloria; desarrollo/integración/publicación verificados. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Completar escucha humana y cierre de candidata RAP Team; luego probar con las tres compañeras para preparar el vídeo escolar; probar los tres Temas de Sociales ya publicados con Gloria. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
