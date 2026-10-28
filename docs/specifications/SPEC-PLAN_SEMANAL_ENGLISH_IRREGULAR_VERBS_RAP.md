@@ -642,7 +642,7 @@ La mejora se considera candidata cuando:
 
 ## 13. Implementación candidata de ayudas · 28/10/2026
 
-Base canónica de partida: `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4` (SPEC 1.6 aprobada). Rama `feat/rap-team-ayudas`. La evolución está implementada en esa rama; **no está integrada ni publicada**. El producto anterior #204 sigue vigente. El encargo autoriza publicación autónoma, pero su requisito explícito de escucha real todavía no puede declararse satisfecho. No se solicita otra decisión funcional ni se declara estabilidad.
+Base canónica de partida: `main` `aee5aaec64eaf33c65adba34fcf7e2928d7826c4` (SPEC 1.6 aprobada). Rama `feat/rap-team-ayudas`, [PR #207 en borrador](https://github.com/jperdomo12/academia-gloria/pull/207). La evolución está implementada en esa rama; **no está integrada ni publicada**. El producto anterior #204 sigue vigente. El encargo autoriza publicación autónoma, pero su requisito explícito de escucha real todavía no puede declararse satisfecho. No se solicita otra decisión funcional ni se declara estabilidad.
 
 ### 13.1 UX y reutilización
 
