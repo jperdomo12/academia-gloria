@@ -10,7 +10,7 @@ import {
 import { escuchar, detener, disponible } from "./lector-texto.js";
 
 // Motor de verbos existente, parametrizado para reutilizarlo con contenidos distintos.
-export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos" }) {
+export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos" }) {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -106,11 +106,12 @@ function activarPestana(nombre) {
   estado.pestana=nombre;
   document.querySelectorAll("[data-pestana]").forEach(boton=>{
     boton.classList.toggle("activa",boton.dataset.pestana===nombre);
+    boton.setAttribute("aria-pressed",String(boton.dataset.pestana===nombre));
   });
   document.querySelectorAll("[data-panel]").forEach(panel=>{
     panel.hidden=panel.dataset.panel!==nombre;
   });
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
 }
 
 document.querySelectorAll("[data-pestana]").forEach(boton=>{
@@ -198,7 +199,7 @@ function renderPractica() {
   });
 }
 
-$("botonPista").addEventListener("click",()=>{
+$("botonPista")?.addEventListener("click",()=>{
   const reto=PRACTICA_VERBOS[estado.practicaIndice];
   estado.practicaPistas.add(reto.id);
   $("pistaPractica").textContent=reto.pista;
@@ -206,7 +207,7 @@ $("botonPista").addEventListener("click",()=>{
   $("botonPista").textContent="💡 Pista mostrada";
 });
 
-$("botonComprobar").addEventListener("click",()=>{
+$("botonComprobar")?.addEventListener("click",()=>{
   const reto=PRACTICA_VERBOS[estado.practicaIndice];
   const intentos=(estado.practicaIntentos.get(reto.id)||0)+1;
   estado.practicaIntentos.set(reto.id,intentos);
@@ -231,7 +232,7 @@ $("botonComprobar").addEventListener("click",()=>{
   }
 });
 
-$("botonSiguiente").addEventListener("click",()=>{
+$("botonSiguiente")?.addEventListener("click",()=>{
   if (estado.practicaIndice<PRACTICA_VERBOS.length-1) {
     estado.practicaIndice+=1;
     renderPractica();
@@ -270,6 +271,7 @@ async function iniciarPrueba() {
   detenerLecturaActual();
   const boton=$("botonIniciarPrueba");
   boton.disabled=true;
+  const textoInicio=boton.textContent;
   boton.textContent="Preparando preguntas…";
   await prepararPreguntasPrueba();
 
@@ -281,13 +283,13 @@ async function iniciarPrueba() {
   estado.respuestas=[];
   estado.ordenOpciones.clear();
   estado.inicioIso=new Date().toISOString();
-  estado.tiempo.reiniciar("prueba-gramatica-verbos");
+  estado.tiempo.reiniciar(segmentoPrueba);
 
   $("inicioPrueba").hidden=true;
   $("cierrePrueba").hidden=true;
   $("pruebaActiva").hidden=false;
   boton.disabled=false;
-  boton.textContent="🔤 Empezar mi prueba";
+  boton.textContent=textoInicio;
   actualizarModo();
   actualizarBloqueoPestanas();
   renderPreguntaPrueba();
@@ -500,7 +502,8 @@ async function finalizarPrueba() {
   if (typeof mostrarCelebracion==="function") {
     mostrarCelebracion({
       titulo:"¡Repaso recorrido!",
-      mensaje:`Ya sabemos qué ideas sobre ${campoSemantico} seguir fortaleciendo.`
+      mensaje:`Ya sabemos qué ideas sobre ${campoSemantico} seguir fortaleciendo.`,
+      ...opcionesCelebracion
     });
   }
 }
@@ -569,7 +572,7 @@ document.addEventListener("click",evento=>{
 
 window.addEventListener("beforeunload",detenerLecturaActual,{once:true});
 
-renderPractica();
+if (PRACTICA_VERBOS.length) renderPractica();
 actualizarModo();
 actualizarBloqueoPestanas();
 

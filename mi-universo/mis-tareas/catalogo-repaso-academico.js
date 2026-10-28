@@ -366,7 +366,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
   function rutasCatalogoTemas(documento, baseMateria) {
     const rutas = [];
     const vistas = new Set();
-    const patronImport = /from\s+["']([^"']*temas-[^"']+\.js)["']/g;
+    const patronImport = /from\s+["']([^"']*temas-[^"']+\.js(?:\?[^"']*)?)["']/g;
 
     documento.querySelectorAll('script[type="module"]').forEach(script => {
       const codigo = String(script.textContent || "");

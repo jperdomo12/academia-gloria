@@ -27,5 +27,13 @@ export const TEMAS_MATEMATICAS = Object.freeze([
     acento: "#d87968",
     acentoSuave: "#fff0e9",
     acentoTexto: "#a85748"
+  }),
+  Object.freeze({
+    id: "numeros-hasta-100000", orden: 20, titulo: "Números hasta 100 000", icono: "🔢",
+    ruta: "./numeros-hasta-100000/", conservarRetorno: true, estado: "Tema real de 6.º",
+    descripcion: "Construye números, descubre qué cifra manda, avanza con saltos y redondea mirando las distancias.",
+    pistas: Object.freeze(["🧱 Construyo", "🔍 Comparo", "🚀 Salto", "🧲 Aproximo"]),
+    recursos: Object.freeze(["Resumen", "Teoría", "Fichas", "Práctica", "Prueba"]),
+    accion: "Descubrir →", acento: "#617333", acentoSuave: "#f0f4df", acentoTexto: "#415527"
   })
 ]);
