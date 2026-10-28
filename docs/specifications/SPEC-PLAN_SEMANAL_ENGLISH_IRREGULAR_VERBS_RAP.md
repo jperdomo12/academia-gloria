@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.5 |
-| **Estado** | Ficha y RAP Team publicados para validación de las tres compañeras · no declarada estable |
-| **Última actualización** | 27/10/2026 |
+| **Versión** | 1.6 |
+| **Estado** | Ficha y RAP Team publicados · mejora de apoyo al aprendizaje aprobada para desarrollo · no declarada estable |
+| **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Incorporación selectiva del material `6_WP_Irregular verbs RAP.pdf` como actividad semanal independiente de English |
@@ -24,10 +24,11 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba una evolución coherente de RAP Team tras revisión familiar: onboarding/autosuficiencia, ayuda auditiva de pronunciación, significado/traducción breve bajo demanda y aprovechamiento explícito de familias sonoras/rimas del RAP. Mantiene las tres compañeras en igualdad, el vídeo escolar como referencia rítmica y todos los límites de no persistencia/no evaluación. Pendiente desarrollo. |
 | 1.5 | 27/10/2026 | Product Owner + AI Collaborator | #204 integrada en ffdbca4c… dentro de la publicación autónoma autorizada. Pages #813 success; siete archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación de RAP Team; conserva prueba real de las tres compañeras y límites previos. |
 | 1.4 | 27/10/2026 | Product Owner + AI Collaborator | Implementa RAP Team A–F sobre la ficha vigente: tres voces equivalentes/roles rotatorios, pulso visual, respuesta oral con revelado, azar, retos y ensayo/celebración. Una fuente escolar y parser compartido; sin medios/persistencia. Registra trazabilidad, pruebas y revisión visual; publicación/uso real pendientes. |
 | 1.3 | 27/10/2026 | Product Owner + AI Collaborator | Aprueba mejora `RAP Team` para preparar la entrega real en un grupo de tres compañeras: práctica lúdica, roles rotatorios, ritmo, call & response, retos aleatorios y ensayo final; ninguna compañera tiene papel especial ni identidad privilegiada. Pendiente desarrollo. |
-| 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos al producto probado; cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
+| 1.2 | 27/10/2026 | Product Owner + AI Collaborator | #201 integrada en 49097f54… dentro de la publicación autónoma autorizada. Pages #810 success y nueve archivos públicos idénticos a los probados y fuente escolar intacta. Cierra desarrollo/publicación, conserva prueba real y límites de Drive/voz. |
 | 1.1 | 27/10/2026 | Product Owner + AI Collaborator | Implementa ficha semanal independiente y primera práctica por fragmentos efímera; registra fuente/enlaces exactos, fidelidad, comparación visual y pruebas. Pendiente publicación/verificación y uso con Gloria. |
 | 1.0 | 27/10/2026 | Product Owner + AI Collaborator | Decisión funcional aprobada en Análisis: actividad semanal independiente, semana 26/10–02/11, vídeo/RAP y entrega escolar sin Tema, prueba ni persistencia nuevos. |
 
@@ -420,8 +421,210 @@ Controles semánticos, foco visible, objetivos de al menos 44 px, texto/estado a
 
 Revisión final y publicación autónoma completadas. Pages #813 (run `40570378938`) `success` sobre el merge de #204. Los siete archivos de producto modificados respondieron HTTP 200 y coincidieron byte a byte con la implementación probada, incluidas referencias `?v=2`; `rap-data.js` público se conserva intacto y la ruta final está disponible. Sin desarrollo/integración/publicación pendiente. La validación final será el uso de las tres compañeras; no declarar estabilidad.
 
+## 12. Mejora aprobada · RAP Team autosuficiente y apoyo al aprendizaje · 28/10/2026
+
+Tras revisar el producto publicado, el Product Owner identifica cuatro oportunidades complementarias que deben resolverse como **una única evolución coherente**, no como una colección de parches o juegos adicionales:
+
+1. que RAP Team se explique por sí mismo a cualquier usuario que no haya participado en los chats de Análisis/Desarrollo;
+2. ayudar a pronunciar correctamente los verbos y frases que se van a decir en voz alta;
+3. ofrecer significado/traducción breve cuando sea necesaria para comprender lo que se está diciendo;
+4. aprovechar de forma explícita las rimas y semejanzas sonoras con las que el propio RAP facilita la memorización.
+
+La dirección pedagógica resultante es:
+
+**entender qué hacer → entender qué se dice → escuchar cómo suena → descubrir la rima/patrón → practicar juntas → ensayar con el vídeo oficial**.
+
+### 12.1 Autosuficiencia y onboarding de RAP Team
+
+La experiencia final debe poder comprenderse y utilizarse **sin acceso a los chats, prompts o documentación técnica**.
+
+Principio de producto aplicado a esta ficha:
+
+> El usuario final debe poder comprender qué puede hacer, para qué sirve y cómo empezar utilizando únicamente la propia Academia. Los chats de Análisis/Desarrollo no forman parte del manual de usuario.
+
+Al entrar en RAP Team debe existir una explicación breve, visual y no intrusiva equivalente a:
+
+- **1 · Repartid las formas** — una voz dice Base, otra Past y otra Participle;
+- **2 · Cambiad los papeles** — las tres practican las tres formas;
+- **3 · Jugad y ensayad** — Ritmo, Call & Response, Random RAP y Retos sirven para practicar;
+- **4 · Juntadlo todo** — Ensayo final lleva de la práctica al vídeo del colegio.
+
+Debe existir una acción clara equivalente a `▶ Empezar por Modo trío` y una ayuda discreta siempre recuperable, por ejemplo `❓ ¿Cómo usamos RAP Team?`.
+
+Los seis modos deben explicar su propósito desde el propio selector mediante microcopy breve, por ejemplo:
+
+- `👭 Modo trío` — una forma por voz;
+- `👏 Ritmo` — Base · Past · Participle · palma;
+- `🎤 Call & Response` — Academia pregunta, vosotras respondéis;
+- `🎲 Random RAP` — un verbo sorpresa;
+- `⭐ Retos` — jugad como equipo;
+- `🎬 Ensayo final` — preparad el vídeo.
+
+No crear un tutorial largo ni obligar a completar un recorrido. La comprensión inicial debe lograrse en segundos y permitir aprender explorando.
+
+### 12.2 Ayuda de pronunciación
+
+La tarea escolar es oral y termina en un vídeo; por tanto, la pronunciación forma parte directa de la preparación.
+
+La ayuda aprobada es **principalmente auditiva**.
+
+Para el trío activo debe ser posible, cuando el navegador disponga de una voz inglesa adecuada:
+
+- escuchar una forma concreta (`take`, `took`, `taken`);
+- escuchar el trío completo con pequeñas pausas;
+- disponer, si la tecnología reutilizada lo permite de forma robusta, de una escucha `Despacio` y otra `Normal`;
+- escuchar la línea/frase corta de origen cuando aporte valor para pasar del verbo aislado a su uso dentro del RAP.
+
+Prioridad pedagógica:
+
+**👂 escuchar → 🗣️ repetir → 🔄 cambiar papeles → 🥁 practicar con ritmo**.
+
+Reglas:
+
+- reutilizar `LectorTexto` / capacidades existentes si son adecuadas; no crear un motor de audio paralelo sin necesidad;
+- usar una voz/locale de inglés apropiado y validar su comportamiento real en los navegadores objetivo;
+- toda reproducción comienza por acción explícita; no autoplay;
+- debe existir detener/cancelar cuando corresponda;
+- la experiencia completa sigue funcionando si el navegador no ofrece voz adecuada;
+- no utilizar micrófono ni reconocimiento de voz;
+- no calificar pronunciación;
+- no utilizar como guía principal transliteraciones aproximadas al español tipo `teik/tuk/teiken`;
+- IPA no es interfaz principal para 6.º; solo tendría sentido en el futuro como ayuda avanzada si existiera una necesidad real;
+- la voz de Academia ayuda a **pronunciar palabras/frases**; el vídeo oficial del colegio sigue siendo la referencia para **ritmo, musicalidad e interpretación final**.
+
+### 12.3 Significado / traducción breve bajo demanda
+
+Se aprueba una ayuda pequeña y opcional para que las tres compañeras comprendan lo que están diciendo sin convertir el RAP en una actividad bilingüe.
+
+Acción equivalente:
+
+`🇪🇸 ¿Qué significa?`
+
+Para cada verbo/trío, la ayuda puede mostrar:
+
+- el significado principal del **verbo base** en español, con uno o dos sentidos relevantes como máximo;
+- cuando sea útil, una explicación breve del sentido que tiene dentro de la línea del RAP.
+
+Ejemplo de enfoque:
+
+`take → took → taken`
+
+`🇪🇸 tomar / coger`
+
+`💡 En esta línea: coger/tomar el micrófono.`
+
+Reglas:
+
+- inglés sigue siendo visualmente protagonista;
+- traducción oculta por defecto y solo bajo demanda;
+- no traducir mecánicamente cada forma (`took = tomó`, `taken = tomado`) si eso no aporta comprensión;
+- no realizar una traducción literal completa de toda la canción como interfaz principal;
+- para frases construidas por rima, preferir una explicación natural del **sentido** antes que una traducción palabra por palabra extraña;
+- el vocabulario/traducción debe revisarse y mantenerse como contenido curado, no generarse de forma dinámica sin control;
+- no crear prueba, puntuación ni evidencia a partir de la traducción.
+
+### 12.4 Familias sonoras y rimas del RAP
+
+El RAP no debe tratarse únicamente como 67 tríos independientes. Los 14 fragmentos escolares ya agrupan verbos y frases que explotan rima, semejanza sonora y repetición para facilitar la memoria.
+
+Se aprueba una experiencia equivalente a:
+
+**🎧 Descubre la rima** / **Familias sonoras del RAP**.
+
+Objetivo: hacer visible el mecanismo mnemotécnico que ya utiliza la canción.
+
+Ejemplos claros existentes en el material:
+
+- `take · shake · wake`;
+- `sing · sting · cling`;
+- `stink · drink · sink`;
+- `rise · drive · ride`;
+- cadenas como `show · know · throw · grow · go` dentro del último fragmento.
+
+Desarrollo debe revisar los **14 fragmentos uno por uno** y no forzar una clasificación donde la semejanza sonora no sea suficientemente clara.
+
+Reglas pedagógicas:
+
+- hablar de `familias sonoras`, `rimas` o `trucos del RAP`, no de reglas gramaticales universales;
+- no afirmar que verbos que aparecen juntos siguen necesariamente el mismo patrón morfológico;
+- aprovechar los grupos claros para escuchar, repetir y memorizar en cadena;
+- conservar el orden y la letra escolar;
+- reutilizar `FRAGMENTOS_RAP` y los tríos derivados; no crear una segunda transcripción divergente.
+
+### 12.5 Progresión Verbos → Cadena → RAP
+
+Cuando el fragmento lo permita, RAP Team debe ayudar a pasar de unidades pequeñas al producto real:
+
+**1 · Verbos** — practicar Base → Past → Participle de cada trío.
+
+**2 · Cadena** — decir seguidos varios verbos relacionados del fragmento conservando pulso/rima.
+
+**3 · RAP** — volver a la línea o fragmento original y decirlo como parte de la canción.
+
+La progresión busca unir memoria verbal, musicalidad y producción oral sin añadir otra prueba.
+
+No es necesario crear tres pantallas nuevas: integrar esta progresión de la forma más simple dentro de RAP Team, reutilizando los modos existentes cuando sea posible.
+
+### 12.6 Vídeo oficial y marcas temporales
+
+Se mantiene como **posibilidad futura**, no como requisito de esta implementación, enlazar fragmentos concretos al instante exacto del vídeo oficial.
+
+Solo podrá incorporarse si:
+
+- se obtienen y verifican de forma fiable los timestamps;
+- cada enlace abre exactamente el fragmento esperado;
+- aporta más valor que complejidad;
+- no sustituye ni altera el vídeo oficial.
+
+No inventar tiempos ni inferirlos sin validación.
+
+### 12.7 Integración con RAP Team existente
+
+Esta evolución debe **enriquecer** RAP Team, no rehacerlo.
+
+Mantener:
+
+- tres voces equivalentes;
+- roles rotatorios;
+- Ritmo;
+- Call & Response;
+- Random RAP;
+- Retos;
+- Ensayo final;
+- 14 fragmentos / 94 líneas / 67 tríos como fuente escolar única;
+- ausencia de puntuación, ranking, nota, evidencia y persistencia;
+- ausencia de cámara, micrófono y reconocimiento de voz;
+- vídeo oficial como referencia rítmica final.
+
+Evitar multiplicar pestañas, botones o paneles sin necesidad. Las nuevas ayudas deben aparecer **en el momento en que son útiles** y mantenerse plegadas/discretas cuando no lo son.
+
+### 12.8 Criterios de aceptación de esta evolución
+
+La mejora se considera candidata cuando:
+
+1. una persona que no haya leído los chats puede explicar qué es RAP Team y cómo empezar utilizando solo la interfaz;
+2. existe ayuda breve y recuperable de `Cómo usar RAP Team` sin tutorial obligatorio;
+3. los seis modos comunican su propósito antes o al entrar;
+4. la pronunciación inglesa puede escucharse por palabra/trío y, donde aporte valor, por frase, sin autoplay ni micrófono;
+5. la funcionalidad sigue siendo utilizable si la voz del navegador no está disponible;
+6. no se muestran transliteraciones aproximadas al español como autoridad de pronunciación;
+7. el significado en español es opcional, breve, contextual y secundario frente al inglés;
+8. las traducciones/significados están revisados y no se generan dinámicamente sin control;
+9. al menos los fragmentos con rima/patrón sonoro claro aprovechan esa relación sin presentar falsas reglas gramaticales;
+10. se revisan los 14 fragmentos y se documenta cuáles se benefician realmente de `Familias sonoras` y cuáles no;
+11. la progresión Verbos → Cadena → RAP puede realizarse sin crear otra prueba ni perder fluidez;
+12. las tres compañeras siguen representadas en igualdad y ninguna es protagonista;
+13. los 67 tríos y la letra escolar siguen teniendo una única fuente de verdad;
+14. el vídeo oficial continúa como referencia de ritmo para el ensayo/grabación final;
+15. no se crean persistencia, puntos, ranking, nota, evidencia, cámara, micrófono o reconocimiento de voz;
+16. teclado, foco, `prefers-reduced-motion`, controles de audio, responsive y ausencia de overflow están validados;
+17. Escucha, Practica, Aprende, RAP Team, Graba, Entrega, enlaces, fecha y patrón escolar no sufren regresiones;
+18. existe revisión visual y prueba auditiva real en los navegadores objetivo antes de presentar al Product Owner;
+19. la documentación registra cualquier limitación real de voces del navegador/acento/velocidad y no promete uniformidad que no pueda garantizarse;
+20. queda lista para uso real de las tres compañeras, sin declarar estabilidad antes de esa prueba.
+
 ## DECISIÓN
 
 **APROBADO PARA DESARROLLO.**
 
-`6_WP_Irregular verbs RAP.pdf` permanece como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. Sobre la ficha publicada se aprueba la mejora `RAP Team` para ayudar a **tres compañeras en igualdad** a practicar, coordinarse y preparar de forma divertida el vídeo escolar, sin crear un Tema académico de Irregular Verbs ni sustituir el flujo oficial del colegio.
+`6_WP_Irregular verbs RAP.pdf` permanece como actividad semanal independiente de English dentro de Plan Semanal, semana 26/10–02/11/2026. La ficha y RAP Team publicados se mantienen como base. Se aprueba una evolución aditiva para que RAP Team sea **autosuficiente**, incorpore **ayuda auditiva de pronunciación**, **significado breve bajo demanda** y aproveche de forma explícita las **familias sonoras/rimas** del propio RAP mediante una progresión `Verbos → Cadena → RAP`, conservando a las **tres compañeras en igualdad** y sin sustituir el flujo oficial del colegio.
