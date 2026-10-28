@@ -11,7 +11,8 @@ export function crearApoyosRap(host, fragmentos, trios, { antesDeEscuchar, forma
   zona.setAttribute('aria-label', 'Escuchar, comprender y conectar el RAP');
   zona.innerHTML = `
     <div class="team-audio-formas" aria-label="Escuchar formas concretas">${['Base','Past','Participle'].map((p,i)=>`<button type="button" data-team-audio="forma" data-forma-indice="${i}"><small>${p}</small><span lang="en"></span></button>`).join('')}</div>
-    <div class="team-audio-actions"><button type="button" data-team-audio="trio">🔊 Escuchar trío</button><button type="button" data-team-audio="linea">🔊 Escuchar frase</button><label>Velocidad<select id="teamVelocidad"><option value="normal">Normal</option><option value="despacio">Despacio</option></select></label><button type="button" id="teamVozParar" disabled>■ Detener voz</button></div>
+    <div id="teamFrase" class="team-coro"><h3>🎤 La frase del RAP</h3><p class="team-ayuda">Decid juntas la línea completa, incluidas las formas entre paréntesis; no pronunciéis los signos.</p><p id="teamLinea" lang="en"></p></div>
+    <div class="team-audio-actions"><button type="button" data-team-audio="trio">🔊 Escuchar trío</button><button type="button" data-team-audio="linea" aria-describedby="teamLinea">🔊 Escuchar frase</button><label>Velocidad<select id="teamVelocidad"><option value="normal">Normal</option><option value="despacio">Despacio</option></select></label><button type="button" id="teamVozParar" disabled>■ Detener voz</button></div>
     <p id="teamVozEstado" class="team-ayuda" role="status"></p><p class="team-audio-nota">Escuchad y repetid. Esta voz lee las palabras; el vídeo del cole da el ritmo y la interpretación.</p>
     <details id="teamSignificado" class="team-ayuda-detalle"><summary>🇪🇸 ¿Qué significa?</summary><p id="teamGlosa"></p><p id="teamContexto" class="team-ayuda" hidden></p></details>
     <details id="teamFamilia" class="team-ayuda-detalle"><summary id="teamFamiliaTitulo">🎧 Descubre la rima</summary><h4 id="teamFamiliaTipo"></h4><div id="teamPalabrasFamilia" class="team-familia-palabras" lang="en"></div><p id="teamFamiliaNota"></p><button type="button" data-team-audio="familia">🔊 Escuchar estos sonidos</button><p class="team-audio-nota">Es un truco del RAP para recordar, no una regla de cómo cambian los verbos.</p>
@@ -78,6 +79,8 @@ export function crearApoyosRap(host, fragmentos, trios, { antesDeEscuchar, forma
           b.hidden = i > 0 && !actual.revelado;
         });
         zona.querySelectorAll('[data-team-audio="trio"],[data-team-audio="linea"]').forEach(b => { b.hidden = !actual.revelado; });
+        $('#teamFrase').hidden = !actual.revelado;
+        $('#teamLinea').textContent = actual.revelado ? t().linea : '';
         const significado = SIGNIFICADOS_RAP[t().formas[0].toLowerCase()];
         $('#teamGlosa').textContent = significado.significado;
         $('#teamContexto').textContent = significado.contexto || '';

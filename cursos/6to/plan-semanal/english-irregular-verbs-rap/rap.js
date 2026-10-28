@@ -3,6 +3,6 @@ import { mostrarFragmentos } from "../fragmentos.js?v=2";
 
 mostrarFragmentos(document.querySelector("#fragmentosRap"), FRAGMENTOS_RAP);
 
-import { iniciarRapTeam } from "./rap-team.js?v=2";
+import { iniciarRapTeam } from "./rap-team.js?v=3";
 
 iniciarRapTeam(document.querySelector("#rap-team"), FRAGMENTOS_RAP);
