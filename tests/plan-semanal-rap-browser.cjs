@@ -122,6 +122,7 @@ for(const role of ['alumno','gestion','consulta']){
   await p.emulateMedia({reducedMotion:'reduce'});await mode('trio');await p.locator('#teamRotar').click();assert.equal(await p.locator('.team-voces').evaluate(e=>getComputedStyle(e).animationName),'none');await mode('ensayo');await p.locator('#teamReady').click();assert.equal(await p.locator('#teamCelebracion').evaluate(e=>getComputedStyle(e).animationName),'none');
   await mode('ritmo');await p.locator('#teamPulsoManual').focus();await p.keyboard.press('Enter');assert.equal(await p.locator('.team-pulso.is-active').count(),1);assert.equal(await p.locator('.team-pulso.is-active').evaluate(e=>getComputedStyle(e).transform),'none');await p.locator('#teamPulsoInicio').click();await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});await p.clock.runFor(2000);assert.equal(await p.locator('.team-pulso.is-active').count(),0);await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'));});
  }
+ if(role==='alumno')await validarAyudas(p);
  assert.equal(await p.evaluate(()=>qaTeamMedia),0);assert.deepEqual(await p.evaluate(()=>qaTeamStorage),[]);await p.reload();await p.waitForSelector('#teamRotar');assert.deepEqual(await p.locator('.team-papel').allTextContents(),['Base','Past','Participle']);assert.deepEqual(await p.locator('.team-forma').allTextContents(),sourceTrios[0].formas);assert.ok(await p.locator('#teamCelebracion').isHidden());assert.equal(await p.locator('.team-pulso.is-active').count(),0);
  assert.equal(await p.evaluate(()=>window.qaWrites||0),0);assert.deepEqual(await p.evaluate(()=>JSON.parse(localStorage.qaDB)),before);
  await p.locator('[data-nav-volver]').click();await p.waitForSelector('.plan-tarjeta');assert.equal(new URL(p.url()).pathname.replace(/index.html$/,''),portal);
@@ -131,3 +132,57 @@ for(const role of ['alumno','gestion','consulta']){
 }
 await b.close();console.log('OK: RAP Team A–F, igualdad/rotación, fuente única, azar/revelado, pulso/contador/cancelación, retos/ensayo/celebración, cero medios/persistencia, recarga, reduced-motion/teclado y responsive; RAP, 94 líneas/67 tríos/14 fragmentos fieles, enlaces/nuevas pestañas, nombre/fecha/grupo, teclado, ocultar/mostrar/recarga, calendario/portal, Volver, English sin nuevo Tema y 0 escrituras educativas en 3 roles; responsive 320–1440. Identidad/SDK y aperturas externas simulados.');
 })().catch(e=>{console.error(e);process.exit(1)});
+
+
+// Contract tests use a controlled Web Speech API. Actual native audio is audited separately.
+async function validarAyudas(p){
+ await p.addInitScript(()=>{
+  window.qaSpeech=[];window.qaCancels=0;window.qaVoices=[{name:'Español',lang:'es-ES'},{name:'English US',lang:'en-US'},{name:'English GB',lang:'en-GB'}];
+  window.SpeechSynthesisUtterance=class extends EventTarget{constructor(text){super();this.text=text;}};
+  const api=new EventTarget();api.getVoices=()=>qaVoices;api.speak=u=>{qaSpeech.push(u);};api.cancel=()=>qaCancels++;
+  Object.defineProperty(window,'speechSynthesis',{configurable:true,value:api});
+ });
+ await p.reload();await p.waitForSelector('#teamEmpezar');
+ await p.evaluate(()=>{window.qaTeamStorage=[];const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){qaTeamStorage.push(k);return set.call(this,k,v);};window.qaTeamMedia=0;for(const name of ['AudioContext','MediaRecorder','SpeechRecognition','webkitSpeechRecognition'])window[name]=class{constructor(){window.qaTeamMedia++;throw Error('RAP Team must not request media');}};if(navigator.mediaDevices)navigator.mediaDevices.getUserMedia=async()=>{window.qaTeamMedia++;throw Error('media forbidden');};});
+ assert.ok(await p.locator('#teamComo').getAttribute('open')!==null);assert.equal(await p.locator('.team-modo-texto small').count(),6);assert.equal(await p.evaluate(()=>qaSpeech.length),0);
+ await p.locator('#teamEmpezar').focus();await p.keyboard.press('Enter');assert.equal(await p.locator('#teamComo').getAttribute('open'),null);assert.equal(await p.evaluate(()=>document.activeElement.className),'team-voces');
+ const datos=await p.evaluate(async()=>{const{FRAGMENTOS_RAP:f}=await import('/cursos/6to/plan-semanal/english-irregular-verbs-rap/rap-data.js');const{extraerTrios}=await import('/cursos/6to/plan-semanal/trios.js');const{SIGNIFICADOS_RAP:s,FAMILIAS_RAP:g}=await import('/cursos/6to/plan-semanal/english-irregular-verbs-rap/rap-ayudas-data.js');return {f,t:extraerTrios(f),s,g};});
+ assert.equal(Object.keys(datos.s).length,67);assert.deepEqual(new Set(Object.keys(datos.s)),new Set(datos.t.map(t=>t.formas[0].toLowerCase())));assert.equal(datos.g.length,14);assert.equal(datos.g.filter(g=>g.indices).length,9);
+ for(let f=0;f<14;f++){const g=datos.g[f],ts=datos.t.filter(t=>t.fragmentoIndice===f);if(g.indices){assert.ok(g.indices.length>=3);assert.ok(g.indices.every(i=>ts[i]));}assert.ok(g.nota);}
+ const play=async selector=>{const n=await p.evaluate(()=>qaSpeech.length);await p.locator(selector).click();assert.equal(await p.evaluate(()=>qaSpeech.length),n+1);const u=await p.evaluate(()=>{const u=qaSpeech.at(-1);return{text:u.text,rate:u.rate,lang:u.lang,voice:u.voice.name};});assert.equal(u.lang,'en-GB');assert.equal(u.voice,'English GB');return u;};
+ const finish=()=>p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));
+ assert.equal((await play('.team-card-audio[data-voz-indice="0"]')).text,'take');await finish();assert.match(await p.locator('#teamVozEstado').innerText(),/terminada/);
+ await p.locator('#teamRotar').click();assert.equal((await play('.team-card-audio[data-voz-indice="0"]')).text,'took');await finish();
+ assert.equal((await play('[data-team-audio="trio"]')).text,'take. took. taken');await finish();
+ await p.locator('#teamVelocidad').selectOption('despacio');assert.equal((await play('[data-team-audio="trio"]')).rate,.8);await finish();await p.locator('#teamVelocidad').selectOption('normal');
+ const frase=await play('[data-team-audio="linea"]');assert.match(frase.text,/take, took, taken/);assert.doesNotMatch(frase.text,/[()]/);await finish();
+ assert.equal(await p.locator('#teamSignificado').getAttribute('open'),null);await p.locator('#teamSignificado summary').click();assert.match(await p.locator('#teamGlosa').innerText(),/tomar|coger/);
+ assert.equal(await p.locator('#teamFamilia').getAttribute('open'),null);await p.locator('#teamFamilia summary').click();assert.equal(await p.locator('#teamPalabrasFamilia').innerText(),'take · shake · Wake');
+ await p.locator('[data-team-paso="1"]').click();assert.deepEqual(await p.locator('#teamCadena p').allTextContents(),datos.t.slice(0,3).map(t=>t.formas.join(' → ')));assert.match((await play('[data-team-audio="cadena"]')).text,/take, took, taken.*shake, shook, shaken.*Wake, woke, woken/);await finish();
+ await p.locator('[data-team-paso="2"]').click();assert.deepEqual(await p.locator('#teamFragmentoLetra p').allTextContents(),datos.f[0].lineas);await play('[data-team-audio="fragmento"]');await finish();
+ const imagen=async nombre=>{if(process.env.QA_IMAGES)await p.locator('#rap-team').screenshot({path:process.env.QA_IMAGES+'-ayudas-'+nombre+'.png'});};
+ for(const width of [1440,1024,768,390,320]){
+  await p.setViewportSize({width,height:1000});await p.locator('[data-team-modo="trio"]').click();if(await p.locator('#teamSignificado').getAttribute('open')===null)await p.locator('#teamSignificado summary').click();if(await p.locator('#teamFamilia').getAttribute('open')===null)await p.locator('#teamFamilia summary').click();await p.locator('[data-team-paso="2"]').click();await p.clock.runFor(40);
+  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'ayudas overflow '+width);
+  assert.ok(await p.locator('#rap-team button:visible,#rap-team summary:visible,#rap-team select:visible').evaluateAll(es=>es.every(e=>e.getBoundingClientRect().height>=44)),'help targets '+width);
+  if([1440,390,320].includes(width))await imagen('rap-'+width);
+ }
+ // Stop and stale completion, actual context changes, and deferred voice availability.
+ await play('[data-team-audio="fragmento"]');await p.locator('#teamVozParar').click();assert.match(await p.locator('#teamVozEstado').innerText(),/detenida/);await finish();assert.match(await p.locator('#teamVozEstado').innerText(),/detenida/);
+ for(const action of ['material','modo','oculta','salir']){
+  await p.locator('[data-team-modo="trio"]').click();await play('[data-team-audio="trio"]');const n=await p.evaluate(()=>qaCancels);
+  if(action==='material')await p.locator('#teamOtroTrio').click();
+  if(action==='modo')await p.locator('[data-team-modo="ritmo"]').click();
+  if(action==='oculta')await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));Object.defineProperty(document,'hidden',{configurable:true,value:false});});
+  if(action==='salir')await p.evaluate(()=>window.dispatchEvent(new Event('pagehide')));
+  assert.ok(await p.evaluate(()=>qaCancels)>n,action+' cancels');assert.ok(await p.locator('#teamVozParar').isDisabled());
+ }
+ await p.locator('[data-team-modo="respuesta"]').click();assert.ok(await p.locator('.team-learning').isHidden());await p.locator('#teamCuenta').click();await p.clock.runFor(3000);assert.ok(await p.locator('.team-learning').isVisible());assert.ok(await p.locator('[data-team-audio="trio"]').isHidden());assert.equal(await p.locator('[data-forma-indice]:visible').count(),1);await p.locator('#teamComprobar').click();assert.ok(await p.locator('[data-team-audio="trio"]').isVisible());
+ await p.locator('[data-team-modo="random"]').click();await p.locator('#teamSorpresa').click();assert.ok(await p.locator('[data-team-audio="trio"]').isHidden());await p.locator('#teamRevelar').click();assert.ok(await p.locator('[data-team-audio="trio"]').isVisible());
+ await p.locator('[data-team-modo="trio"]').click();await p.evaluate(()=>{qaVoices=[{name:'Español',lang:'es-ES'}];speechSynthesis.dispatchEvent(new Event('voiceschanged'));});assert.ok(await p.locator('.team-card-audio').first().isDisabled());assert.match(await p.locator('#teamVozEstado').innerText(),/No hay una voz inglesa/);await p.locator('#teamOtroTrio').click();await p.locator('#teamSignificado summary').click();assert.ok((await p.locator('#teamGlosa').innerText()).length>0);await imagen('sin-voz');
+ await p.evaluate(()=>{qaVoices=[{name:'English US',lang:'en-US'}];speechSynthesis.dispatchEvent(new Event('voiceschanged'));});await p.locator('.team-card-audio').first().click();assert.equal(await p.evaluate(()=>qaSpeech.at(-1).lang),'en-US');await p.evaluate(()=>{const e=new Event('error');e.error='synthesis-failed';qaSpeech.at(-1).dispatchEvent(e);});assert.match(await p.locator('#teamVozEstado').innerText(),/No se pudo reproducir/);
+ // Optional voice argument does not change existing Spanish/default callers.
+ const compat=await p.evaluate(async()=>{const{LectorTexto}=await import('/compartido/js/lector-texto.js?v=2');LectorTexto.escuchar('El viaje de la nutrición');const u=qaSpeech.at(-1);return{lang:u.lang,rate:u.rate,voice:u.voice??null};});assert.deepEqual(compat,{lang:'es-ES',rate:.84,voice:null});
+ await p.locator('#teamComo summary').click();assert.ok(await p.locator('#teamEmpezar').isVisible());await imagen('entrada');
+ console.log('OK ayudas: onboarding, 67 glosas/14 clasificaciones, audio mock en-GB/en-US, velocidad/cancelación/error/no voz, significado, 9 grupos y progresión de fuente, revelado sin adelantar respuesta, 320–1440/teclado/targets, compatibilidad LectorTexto español.');
+}

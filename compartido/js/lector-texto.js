@@ -1,7 +1,7 @@
 /* ==========================================================
    Academia Gloria Valentina
    Lector de texto compartido
-   Versión 1.0
+   Versión 1.1
 
    Capacidad transversal basada en Web Speech API.
    El módulo consumidor decide QUÉ texto debe escucharse.
@@ -10,7 +10,8 @@
 function motorDisponible() {
   return (
     typeof window !== "undefined" &&
-    "speechSynthesis" in window &&
+    typeof window.speechSynthesis?.speak === "function" &&
+    typeof window.speechSynthesis?.cancel === "function" &&
     typeof SpeechSynthesisUtterance !== "undefined"
   );
 }
@@ -48,6 +49,7 @@ function escuchar(
     velocidad = 0.84,
     tono = 1,
     volumen = 1,
+    voz = null,
     alFinalizar = null,
     alError = null
   } = {}
@@ -61,7 +63,8 @@ function escuchar(
   detener();
 
   const lectura = new SpeechSynthesisUtterance(contenido);
-  lectura.lang = idiomaSeguro(idioma);
+  lectura.lang = voz?.lang || idiomaSeguro(idioma);
+  if (voz) lectura.voice = voz;
   lectura.rate = numeroSeguro(velocidad, 0.5, 2, 0.84);
   lectura.pitch = numeroSeguro(tono, 0, 2, 1);
   lectura.volume = numeroSeguro(volumen, 0, 1, 1);
