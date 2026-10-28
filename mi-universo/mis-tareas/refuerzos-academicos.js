@@ -2,7 +2,7 @@
 
 import { Academia } from "../../compartido/api/academia.js";
 import { leerSesionesAcademicas } from "../../compartido/js/sesiones-academicas.js";
-import "./catalogo-repaso-academico.js?v=3";
+import "./catalogo-repaso-academico.js?v=4";
 import "./mision-libre.js";
 
 import { TEMAS_VERBOS_DOCUMENTOS } from "../../cursos/6to/lengua/verbos/temas-por-documento.js";
@@ -15,11 +15,18 @@ import { NUTRICION_META, BLOQUES_RESULTADO as BLOQUES_NUTRICION } from "../../cu
 
 import { ACTIVIDADES_SOCIALES } from "../../cursos/6to/sociales/actividades-sociales.js";
 
+import { NUMEROS_META, BLOQUES_RESULTADO as BLOQUES_NUMEROS } from "../../cursos/6to/mates/numeros-hasta-100000/numeros-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  {
+    actividadId:NUMEROS_META.actividadId, titulo:NUMEROS_META.tituloActividad, icono:"🔢", curso:"6.º", materia:"Matemáticas",
+    destinoUrl:"../../cursos/6to/mates/numeros-hasta-100000/",
+    bloques:Object.freeze(Object.fromEntries(BLOQUES_NUMEROS.map(b=>[b.id,{icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])))
+  },
   ...ACTIVIDADES_SOCIALES.map(({meta,bloques,ruta,icono}) => ({
     actividadId:meta.actividadId, titulo:meta.tituloActividad, icono, curso:"6.º", materia:"Sociales", destinoUrl:ruta,
     bloques:Object.freeze(Object.fromEntries(bloques.map(b => [b.id,{icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])))

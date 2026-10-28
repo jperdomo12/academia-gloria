@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#31594a" />
+    <title>
+      Números hasta 100 000 | Matemáticas 6.º | Academia Gloria Valentina
+    </title>
+    <meta
+      name="description"
+      content="Construye números, encuentra pistas, salta y redondea. Matemáticas de 6.º con experiencias visuales, práctica y prueba."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../../../assets/iconos/icono-principal.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/academia-base.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/panel-usuario.css?v=2"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/navegacion-global.css?v=7"
+    />
+    <link rel="stylesheet" href="../../../../compartido/css/celebracion.css" />
+    <link rel="stylesheet" href="./numeros.css" />
+  </head>
+  <body
+    data-page-title="Números hasta 100 000"
+    data-page-icon="🔢"
+    data-nav-back="../index.html"
+  >
+    <main class="numeros-shell">
+      <header class="numeros-hero">
+        <div>
+          <p class="eyebrow">6.º · Matemáticas · Explorar para comprender</p>
+          <h1>Números hasta <span>100 000</span></h1>
+          <p class="hero-lead">
+            Cada cifra tiene un lugar.<br />Cada número, un camino por
+            descubrir.
+          </p>
+          <p>
+            Construye, busca pistas, prueba saltos y encuentra al vecino más
+            cercano. Sin prisas.
+          </p>
+        </div>
+        <div
+          class="hero-tablero"
+          aria-label="59 725: cinco decenas de millar, nueve millares, siete centenas, dos decenas y cinco unidades"
+        >
+          <div class="hero-digitos">
+            <span class="p-0"><small>DM</small><b>5</b></span
+            ><span class="p-1"><small>UM</small><b>9</b></span
+            ><span class="p-2"><small>C</small><b>7</b></span
+            ><span class="p-3"><small>D</small><b>2</b></span
+            ><span class="p-4"><small>U</small><b>5</b></span>
+          </div>
+          <p>
+            Una posición cambia<br /><strong>lo que vale una cifra.</strong>
+          </p>
+          <div class="hero-descomp">50 000 + 9 000 + 700 + 20 + 5</div>
+        </div>
+      </header>
+      <section class="modo-academico" aria-live="polite">
+        <div>
+          <span id="iconoModo" aria-hidden="true">🎓</span>
+          <div>
+            <h2 id="tituloModo">Preparando el contexto…</h2>
+            <p id="descripcionModo"></p>
+          </div>
+        </div>
+        <button id="botonModo" type="button">Cambiar a Vista previa</button>
+      </section>
+      <nav class="numeros-tabs" aria-label="Secciones del Tema">
+        <button type="button" data-pestana="mapa" class="activa">
+          🧭 Resumen</button
+        ><button type="button" data-pestana="claves">📖 Teoría</button
+        ><button type="button" data-pestana="material">🃏 Fichas</button
+        ><button type="button" data-pestana="practica">✏️ Práctica</button
+        ><button type="button" data-pestana="prueba">✅ Prueba</button>
+      </nav>
+      <section data-panel="mapa" class="superficie">
+        <p class="eyebrow">Tu mapa de descubrimientos</p>
+        <h2>Cuatro maneras de entender un número</h2>
+        <p class="hilo-mapa">Construyo → Comparo → Salto → Aproximo</p>
+        <p class="entradilla">
+          Elige por dónde empezar. Puedes volver a cada experiencia cuando
+          quieras.
+        </p>
+        <div class="ruta-conceptos">
+          <button type="button" data-experiencia-ir="construyo">
+            <span class="numero-ruta">01</span><span class="icono-ruta">🧱</span
+            ><b>Construyo</b><span>Muevo cifras. Leo y descompongo.</span
+            ><small>Explorar el tablero →</small></button
+          ><button type="button" data-experiencia-ir="comparo">
+            <span class="numero-ruta">02</span><span class="icono-ruta">🔍</span
+            ><b>Comparo</b><span>Busco la primera pista que decide.</span
+            ><small>Investigar dos números →</small></button
+          ><button type="button" data-experiencia-ir="salto">
+            <span class="numero-ruta">03</span><span class="icono-ruta">🚀</span
+            ><b>Salto</b><span>Avanzo, retrocedo y descubro qué cambia.</span
+            ><small>Probar un salto →</small></button
+          ><button type="button" data-experiencia-ir="aproximo">
+            <span class="numero-ruta">04</span><span class="icono-ruta">🧲</span
+            ><b>Aproximo</b><span>Miro las distancias y encuentro vecinos.</span
+            ><small>Probar el imán →</small>
+          </button>
+        </div>
+        <aside class="nota-aprender">
+          <strong>Primero prueba. Después, busca una pista.</strong>
+          <p>
+            En Teoría puedes tocar los números. En Práctica los retos se
+            mezclan, con ayudas y nuevos intentos. La Prueba recoge una
+            fotografía de lo que sabes hoy.
+          </p>
+          <button
+            type="button"
+            class="btn principal"
+            data-experiencia-ir="construyo"
+          >
+            🧱 Empezar construyendo
+          </button>
+        </aside>
+        <p class="procedencia">
+          Material de estudio aportado por la familia · Unidad 1 · Números hasta
+          100 000
+        </p>
+      </section>
+      <section data-panel="claves" class="superficie" hidden>
+        <p class="eyebrow">La teoría se puede tocar</p>
+        <h2>Prueba una idea cada vez</h2>
+        <nav class="experiencias-nav" aria-label="Experiencias de números">
+          <button
+            type="button"
+            data-experiencia="construyo"
+            aria-pressed="true"
+          >
+            🧱 Construyo</button
+          ><button
+            type="button"
+            data-experiencia="comparo"
+            aria-pressed="false"
+          >
+            🔍 Comparo</button
+          ><button type="button" data-experiencia="salto" aria-pressed="false">
+            🚀 Salto</button
+          ><button
+            type="button"
+            data-experiencia="aproximo"
+            aria-pressed="false"
+          >
+            🧲 Aproximo
+          </button>
+        </nav>
+        <div id="experienciaActiva"></div>
+        <div class="actions">
+          <button type="button" class="btn principal" data-ir="practica">
+            ✏️ Probarlo en Práctica →
+          </button>
+        </div>
+      </section>
+      <section data-panel="material" class="superficie" hidden>
+        <p class="eyebrow">Una idea, un recordatorio</p>
+        <h2>Fichas para volver a conectar</h2>
+        <p>
+          Toca una ficha para darle la vuelta. También puedes usar Tab y Enter.
+        </p>
+        <div id="fichasNumeros" class="fichas-grid"></div>
+      </section>
+      <section data-panel="practica" class="superficie" hidden>
+        <p class="eyebrow">Compruebo, aprendo y vuelvo a intentar</p>
+        <h2>Un reto pequeño. Una idea más clara.</h2>
+        <p>
+          Elige una ronda de doce retos. Construye, escribe, ordena y decide.
+          Las ayudas están cuando las necesites.
+        </p>
+        <nav class="niveles" aria-label="Rondas de práctica">
+          <button type="button" data-nivel="0" aria-pressed="true">
+            🌱 Calentamiento</button
+          ><button type="button" data-nivel="1" aria-pressed="false">
+            🚀 Entrenamiento</button
+          ><button type="button" data-nivel="2" aria-pressed="false">
+            ⭐ Reto
+          </button>
+        </nav>
+        <div id="practicaNumeros" class="practica-numeros"></div>
+      </section>
+      <section data-panel="prueba" class="superficie" hidden>
+        <p class="eyebrow">Una fotografía de tus ideas de hoy</p>
+        <h2>Conecto lo que descubrí</h2>
+        <p>
+          Doce preguntas: tres de Construyo, tres de Comparo, tres de Salto y
+          tres de Aproximo. Sin límite de tiempo.
+        </p>
+        <div id="inicioPrueba" class="test-start">
+          <div class="sello-prueba" aria-hidden="true">✓</div>
+          <h3>A tu ritmo</h3>
+          <p>
+            Esta parte no tiene pistas. Después de responder verás una
+            explicación. Al terminar sabrás qué ideas se vieron firmes y cuáles
+            puedes seguir practicando.
+          </p>
+          <button id="botonIniciarPrueba" class="btn principal" type="button">
+            🌿 Empezar mi prueba
+          </button>
+        </div>
+        <div id="pruebaActiva" class="challenge" hidden>
+          <div class="progress" aria-hidden="true">
+            <span id="barraPrueba"></span>
+          </div>
+          <div class="test-meta">
+            <span id="estadoPrueba"></span><span id="bloquePrueba"></span>
+          </div>
+          <div id="pruebaContenido"></div>
+          <div id="explicacionPrueba" class="explanation" hidden></div>
+          <div class="actions">
+            <button
+              id="botonResponderPrueba"
+              class="btn principal"
+              type="button"
+              disabled
+            >
+              Comprobar respuesta →
+            </button>
+          </div>
+        </div>
+        <div id="cierrePrueba" class="test-end" hidden>
+          <h3>Tu mapa de hoy</h3>
+          <p id="textoCierre"></p>
+          <div id="resultadoPruebaResumen"></div>
+          <div id="mapaResultados" class="results"></div>
+          <p id="estadoGuardado" role="status"></p>
+          <button id="botonVolverRepaso" class="btn" type="button">
+            ← Volver a repasar
+          </button>
+        </div>
+      </section>
+      <footer>
+        <p class="procedencia">
+          Matemáticas 6.º · Puedes explorar y practicar sin presión. Solo la
+          Prueba en Sesión de aprendizaje guarda resultados.
+        </p>
+      </footer>
+    </main>
+    <script src="../../../../compartido/js/navegacion.js"></script>
+    <script
+      type="module"
+      src="../../../../compartido/componentes/navegacion-global.js?v=7"
+    ></script>
+    <script type="module" src="./numeros.js"></script>
+  </body>
+</html>

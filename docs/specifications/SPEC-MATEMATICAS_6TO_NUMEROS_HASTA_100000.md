@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MATEMATICAS_6TO_NUMEROS_HASTA_100000.md` |
-| **Versión** | 1.0 |
-| **Estado** | Aprobada para desarrollo · no implementada |
+| **Versión** | 1.1 |
+| **Estado** | Candidata implementada y validada en desarrollo · publicación y uso real pendientes |
 | **Última actualización** | 28/10/2026 |
 | **Propietario** | Experiencia curricular · Matemáticas 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,9 +25,22 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 28/10/2026 | Product Owner + AI Collaborator | Implementa el Tema canónico: cuatro experiencias, teoría manipulable/voz, seis fichas, 36 retos variados y Prueba de 12 familias/48 variantes con evidencia compartida. Registra revisión de las 17 páginas, reutilización mínima, comparación visual, validaciones y límites. Pendiente publicación/verificación y uso real; no estable. |
 | 1.0 | 28/10/2026 | Product Owner + AI Collaborator | Aprueba el nuevo Tema `Números hasta 100 000` a partir de 17 páginas escaneadas de material de estudio, con cuatro núcleos: valor posicional/lectura-escritura, comparación-orden, series y redondeo. Fija el principio de experiencia `Disfrutar Aprendiendo`, cuatro experiencias interactivas propias, práctica progresiva y prueba con evidencia académica reutilizando el motor vigente. |
 
 ---
+
+## Resumen de contenido
+
+| Apartado | Contenido |
+|---|---|
+| 1–4 | Decisión, fuente, filosofía y arquitectura aprobadas. |
+| 5–8 | Cuatro experiencias: construcción, comparación, saltos y aproximación. |
+| 9–12 | Teoría, fichas, práctica y motivación. |
+| 13–17 | Prueba, accesibilidad, fidelidad e integración académica. |
+| 18–19 | Criterios de aceptación y revisión visual. |
+| 20 | Estado operativo vigente. |
+| 21 | Implementación, trazabilidad de 17 páginas, contratos, pruebas y límites. |
 
 ## 1. Decisión funcional
 
@@ -582,13 +595,98 @@ Si alguna respuesta es negativa, refinar antes de entregar.
 
 ## 20. Estado y siguiente paso
 
-**DECISIÓN: APROBADO PARA DESARROLLO.**
+**DECISIÓN FUNCIONAL APROBADA · CANDIDATA IMPLEMENTADA EN DESARROLLO.**
 
-Crear el nuevo Tema `Matemáticas 6.º · Números hasta 100 000` sobre el material escaneado, con la filosofía `Disfrutar Aprendiendo` y las cuatro experiencias propietarias:
+Tema canónico en `cursos/6to/mates/numeros-hasta-100000/`, catálogo de Matemáticas ampliado sin cambiar Fracciones/Puente/piloto. Base `main` `c382e18a54f4c115af5e0b2857b3e51f5d5c3d01` (#211), rama `feat/mates-numeros-100000`. El encargo autoriza implementación, PR, revisión y publicación/verificación autónomas para revisión final. Pendientes: revisión final del diff, integración/publicación/verificación y uso real. No declarar estabilidad.
 
-- 🧱 Construye el número;
-- 🔍 Detective de números;
-- 🚀 Saltos numéricos;
-- 🧲 El imán del redondeo.
+## 21. Implementación real y validación · 28/10/2026
 
-La implementación debe reutilizar la arquitectura académica vigente, conservar la fuente escolar y generar evidencia mediante el motor existente. No declarar estabilidad hasta validación real.
+### 21.1 Fuente examinada y privacidad
+
+Se revisaron visualmente las **17 páginas renderizadas**, sin depender de OCR. Página 14 en blanco, sin actividad derivada. El escaneo aportado contiene 17 páginas, SHA-256 `f2216814ea8dcd98448b8d89d8f156ee3196abf53a86f6868fae06db8c25029a`. No se publica el PDF ni sus imágenes: contiene anotaciones personales ajenas al contenido curricular. No se copian respuestas manuscritas, correcciones o valoraciones ni se infiere un diagnóstico.
+
+Los ejemplos y procedimientos provienen del texto/diagramas impresos, conforme a la decisión §2. No se atribuye al documento una editorial, autoría o procedencia oficial de libro de 6.º no demostrada. El Tema se incorpora al contexto académico de 6.º aprobado por Product Owner.
+
+| Página PDF | Contenido impreso revisado | Función conservada / implementación |
+|---|---|---|
+| 1 | Representación de 59 725 con fichas y cinco columnas | Tablero DM/UM/C/D/U con cantidades, valores y manipulación accesible. |
+| 2 | Descomposición, valor de cada cifra y lectura de 59 725 | Número, lectura escrita y sumandos actualizados; retos de valor/lectura/descomposición. |
+| 3 | Equivalencia de DM y millares; representación y 25 612 | Agrupación alternativa en millares y construcción; no se usan los resultados manuscritos. |
+| 4 | 68 001, cantidades representadas, valor de 5 y lectura/cifras | Ceros intermedios, representación/valor y conversión de palabras a cifras. No se reproduce el cheque como imagen personal. |
+| 5 | Comparación 25 000 / 32 000 mediante fichas/posiciones | Dos filas alineadas y búsqueda guiada desde la izquierda. |
+| 6 | Comparación en recta y ordenación | Recta con referencias, práctica de orden, mayor/menor y localización; no se transcriben cifras borrosas dudosas. |
+| 7 | 63 398 / 62 431 y decisión en UM; recta 62 000–64 000 | Detector detiene la investigación en la primera diferencia; dos marcadores en la misma escala. |
+| 8 | Orden ascendente/descendente y comparaciones | Elegir secuencias sin drag & drop; intruso y variantes de orden/primera diferencia. |
+| 9 | 97 000 + 1 000, fichas posicionales y saltos sobre recta | Anticipación opcional, controles de salto, camino de últimos pasos y posiciones actualizadas. |
+| 10 | 53 600 − 100; práctica de cambios de 10/100/1 000 | Cuatro controles principales ±100/±1 000; un reto breve de +10 conserva esa extensión impresa sin añadir otro motor. |
+| 11 | Redondeo de 2 078 al millar por cercanía | Recta con dos vecinos, decisión y distancias. |
+| 12 | 2 508 y caso de mitad 2 500 | Imán, punto medio y convención explícita del superior. |
+| 13 | Aplicaciones de aproximación a distancias | Mismo razonamiento con ejemplos numéricos legibles de la fuente; no se convierten anotaciones/mapa poco legible en hechos geográficos nuevos. |
+| 14 | Blanco | No genera contenido. |
+| 15 | 4 218 a la decena; signo de aproximación | Selector de unidad visible y número ≈ vecino elegido. |
+| 16 | 4 218/3 255 a centena/decena; 1 250 a centena y mitad | Tres unidades, comparación de distancias y casos de mitad explícitos. |
+| 17 | 2 139/2 017/9 985 a distintas unidades | Práctica/variantes de aproximación y llevadas hacia otro orden; sin reproducir soluciones manuscritas. |
+
+**Apoyos propios de Academia**, derivados de los procedimientos y separados de la fuente: detector progresivo, anticipación del salto, metáfora del imán, intruso, tres rondas, ejemplos distintos en pistas y feedback, etiquetas A/B en rectas, microcelebraciones y variantes numéricas. No se presentan como transcripción literal del colegio.
+
+### 21.2 Arquitectura mínima y reutilización
+
+- Portal/catalogo real de Matemáticas: añade un único registro a `temas-matematicas.js`, sin modificar el registro de Fracciones ni las rutas de Puente/piloto. Misma tarjeta/retorno del portal compartido. No es Plan Semanal.
+- Nueve archivos del Tema: `index.html`, `numeros.css`, `numeros.js`, `numeros-modelo.js`, `numeros-visuales.js`, `exploradores.js`, `practica.js`, `practica-data.js`, `numeros-data.js`. Matemática pura, representaciones y contenido separados; mismas representaciones para exploración y práctica. Sin dependencias de producción añadidas.
+- Navegación/Panel/Persona Activa/favicon reutilizados. Cinco secciones Resumen/Teoría/Fichas/Práctica/Prueba. El mapa conceptual usa cuatro pasos equivalentes por su semántica aprobada, excepción deliberada a tres columnas de un catálogo genérico; Fichas usa rejilla 3/2/1. La cabecera se compacta al estudiar para acercar los controles en móvil.
+- Prueba mediante **`iniciarTemaVerbal` existente**, ya compartido por otros contenidos. Extensión compatible: práctica opcional (vacía por defecto), para poder reutilizar la Prueba sin imponer su presentador de selección simple a la práctica manipulativa. Tres bindings toleran la ausencia de esos controles y el render inicial solo se ejecuta si hay práctica. Los consumidores anteriores mantienen su lista y comportamiento.
+- El mismo motor admite un segmento temporal opcional, conservando el valor anterior por defecto; el Tema usa `prueba-numeros-hasta-100000`. Restaura el texto original del botón de inicio; estados accesibles de pestaña y scroll respetan movimiento reducido. Una opción compatible reenvía configuración al celebrador existente: el Tema carga su CSS y usa cierre de 1,8 s sin guacamayas ni partículas; los consumidores anteriores conservan sus valores por defecto. No se duplica corrección, permisos, selección reciente, resultados, guardado o celebración final.
+- El cargador existente de Misiones reconoce imports de catálogos con `?v=` además de `.js`, conservando la validación de origen. Necesario para el catálogo de Matemáticas versionado; no es otro catálogo. Registro de cuatro bloques en `refuerzos-academicos.js` a partir de la misma metadata.
+- Caché: portal importa `temas-matematicas.js?v=2`; adaptador del Tema importa motor `?v=2`; Gestión importa refuerzos `?v=4` y estos catálogo `?v=4`. Nuevos archivos no sustituyen rutas publicadas anteriores.
+
+### 21.3 Experiencias y variedad
+
+| Experiencia | Comportamiento real y ayuda |
+|---|---|
+| Construyo | Botones +/− por posición, suma/resta de su valor con cambios de orden, entrada de otro número, lectura española y descomposición dinámicas. Agrupación opcional en millares muestra la equivalencia 1 DM = 10 UM. El límite 100 000 se presenta como cien mil = 10 DM, sin fingir que sus seis cifras caben en cinco columnas; se puede volver escribiendo otro número. Ceros y fronteras controlados. |
+| Comparo | Dos entradas; pista DM, luego UM, etc. Se detiene en la primera diferencia, muestra por qué y la resalta. Igualdad y 100 000 se explican sin índices inválidos. Recta con dos marcadores y leyenda en la misma escala. |
+| Salto | Seleccionar ±100/±1 000 no revela inmediatamente: permite anticipar y luego Ver el salto. Número, recorrido y posiciones cambian juntos. Explica qué posiciones cambian; bloquea salidas fuera de 0–100 000. No cronómetro. |
+| Aproximo | Decena/centena/millar siempre visibles. Recta con límites, mitad y número; elegir vecino, comprobar distancias, representar la aproximación. Botón para experimentar una mitad. Pistas: vecinos → punto medio → distancias → explicación explícita. Reintento libre y caso de múltiplo exacto, incluido 100 000. |
+
+Teoría breve conectada a cada experiencia; Escuchar idea mediante LectorTexto en español. Seis fichas de consulta con respuesta cerrada, abiertas por botón/teclado. **36 retos**, doce por ronda Calentamiento/Entrenamiento/Reto, tres por núcleo: construir, escribir valor/parte, comparar, ordenar tocando, localizar con slider, posición decisiva, intruso, saltos, series y aproximación. No se reduce toda la práctica a elegir entre respuestas.
+
+Una respuesta errónea orienta sin puntuar ni bloquear. Tres pistas bajo demanda: pregunta orientadora → foco/segmentación o representación → ejemplo distinto. En construcción se destaca la primera posición a revisar; en valor, la columna; en redondeo aparece la mitad cuando se necesita. Después de las tres pistas hay una acción distinta **Ver solución explicada**, que no responde ni marca el reto automáticamente. Debe comprobarse el propio intento. Repetición libre; las rondas y sus respuestas viven solo en memoria, sin progreso persistente, nota, vidas ni límite de tiempo.
+
+### 21.4 Prueba y evidencia académica
+
+Actividad estable `6-mates-numeros-hasta-100000`, Matemáticas, Tema `Números hasta 100 000`, versión 1.0. **12 familias × 4 variantes = 48 preguntas**; cada ejecución elige 12, tres por cada bloque:
+
+| Bloque | Familias |
+|---|---|
+| `valor-posicional` | valor de cifra; palabras → cifras; descomposición |
+| `comparacion-orden` | primera diferencia; orden; localización en recta |
+| `series` | ±100; ±1 000; continuar patrón |
+| `redondeo` | decena; centena; millar, con variantes de mitad y cambio de orden |
+
+Se barajan opciones y se evitan variantes de las últimas tres sesiones cuando hay alternativas. Feedback después de confirmar, sin pistas durante la Prueba. El resultado describe esta sesión, no una nota escolar ni dominio permanente.
+
+Contrato `sesion-academica-v1` mediante `guardarSesionAcademica`: identidad activa, actor, contexto, tiempos, conceptos, variantes, respuestas/opción correcta/explicación, resumen por cuatro bloques y retroalimentación. Acceso libre guarda sesión normal; desde Misión referencia esa sesión en la evidencia compartida, sin duplicarla. Trabajo realizado/histórico/Análisis/refuerzos consumen el contrato vigente.
+
+Alumno propio de 6.º: aprendizaje por defecto. Familia/profesional relacionados: Vista previa, sin escritura; forzar `modo=aprendizaje` no otorga permisos. Solo los permisos ya vigentes permiten cambiar el modo. Persona sin relación válida no obtiene acceso a los datos del alumno. Sin colecciones, APIs, Rules o persistencia privada nuevas.
+
+### 21.5 Comparación visual PDF → Academia
+
+| Recurso fuente y función | Solución Academia / juicio de Desarrollo |
+|---|---|
+| Fichas y colores hacen visible el valor posicional | Columnas que cambian con botones, valor real, suma y lectura simultáneos. Color acompañado por DM/UM/C/D/U, nombre y valor; en móvil hay leyenda legible. Mejora la relación causa/efecto y conserva las cinco posiciones. |
+| Tabla de descomposición y equivalencia en millares | La misma cantidad se transforma en sumandos o agrupación en millares, sin perder ceros/valor. Mejora la comprobación inmediata. |
+| Comparación cifra a cifra | Detector resalta la primera diferencia y detiene la búsqueda. La siguiente columna solo aparece como pista cuando las anteriores coinciden. Mayor claridad que la respuesta escrita estática. |
+| Rectas y flechas de salto | Escalas proporcionales, números de referencia y leyendas A/B; recorrido y posiciones cambian al comprobar la anticipación. Conserva localización/dirección y añade exploración repetible. |
+| Rectas de redondeo y puntos medios | Dos vecinos, punto medio, posición y distancias explícitas; varias unidades y mitad experimentable. No sustituye la distancia por la regla 0–4/5–9. |
+| Ejemplos y práctica impresos | Idea breve → visual → manipulación → reto; tres rondas variadas, pistas y reintentos. La Prueba no sustituye el estudio; ofrece una fotografía analizable. |
+
+Revisión renderizada real: Resumen, cuatro experiencias, Fichas, variantes de Práctica/ayudas/feedback y Prueba/resultados en escritorio y móvil. Refinamientos: cabecera compacta fuera del Resumen, leyenda completa de posiciones en móvil y controles de al menos 44 px. Números con espacios entre millares incluso en cuatro cifras; sin desbordamiento en cinco anchos. La revisión de Desarrollo considera preservada y mejorada la función pedagógica de tablas/rectas; la motivación y comprensión reales siguen pendientes del uso familiar. No basta con este juicio para declarar estabilidad.
+
+### 21.6 Pruebas, alcance y límites reales
+
+- `tests/numeros-modelo.test.mjs`: seis pruebas de representación, lectura/entrada, comparación, saltos/fronteras, distancias/redondeo/mitad, variedad y coherencia de datos. Incluye ceros, igualdad, exactos, llevadas y 100 000; 36 retos/48 variantes y reparto de bloques comprobados.
+- `tests/numeros-browser.cjs`: navegación portal/Tema y conservación de Fracciones; cuatro experiencias, anticipación, igualdad, cifras, suma/resta, fronteras, tres unidades/mitad/exactos, fichas por teclado; resuelve los 36 retos con comprobación/pistas/reintentos; Prueba, sesión, rotación de variantes, Misión/evidencia, histórico, catálogo, refuerzos y Análisis. Alumno/familia/profesional y relación inválida; preview/práctica sin escrituras educativas; voz es-ES controlada y funcionamiento sin síntesis. Reduced-motion, foco y targets, responsive 1440/1024/768/390/320. Regresión básica de Fracciones y carga de Puente/piloto, archivos originales sin alterar.
+- `tests/nutricion-browser.cjs` superado para el consumidor anterior del motor compartido: práctica, prueba, cinco bloques/variantes/sesión, Misión, histórico, permisos, catálogo/refuerzo/Análisis y responsive.
+- Sintaxis/imports/rutas/IDs y diff comprobados. Los tests usan Chromium y **SDK/identidad/audio simulados**; servicios, contratos y lógica del producto son reales. No certifican Rules desplegadas ni escrituras sobre cuentas reales. No se ha realizado audición física; la voz española reutiliza LectorTexto y es opcional.
+- Consola del Tema sin errores JavaScript. En la regresión del consumidor anterior Nutrición, su celebración predeterminada solicita `assets/identidad/guacamayas/guacamaya-roja-posada-01.png`, y recibe un 404: recurso ajeno ausente ya en el baseline, no introducido por este Tema. El nuevo Tema no solicita esas imágenes; no se modifica el frente de assets ni se declara consola de todos los consumidores sin avisos. Las comprobaciones de sesiones y permisos simulados se completan pese a ese aviso.
+- Pendiente validación de comprensión, disfrute y autonomía con Gloria/familia, y revisión autenticada de producción. No se declara estabilidad.
