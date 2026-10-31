@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 31/10/2026 | Product Owner + AI Collaborator | #219 integrada/publicada en 1844b08b…; Pages #828 success, seis archivos modificados públicos idénticos al árbol probado y cuatro recursos conservados. Cierra publicación de acompañamiento; escucha humana conjunta y uso real pendientes. |
 | 1.5 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud de uso: acompañar explícitamente la lectura completa con beat en ambos órdenes, con paradas independientes y cancelación conjunta por contexto. Conserva exclusión para pronunciación individual; candidata probada, pendiente publicación y escucha perceptiva conjunta. |
 | 1.4 | 31/10/2026 | Product Owner + AI Collaborator | Ajustes #217 integrados/publicados en 1472f09c…; Pages #826 success y siete archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra publicación; conserva escucha perceptiva del nuevo nivel y uso real, sin estabilidad. |
 | 1.3 | 31/10/2026 | Product Owner + AI Collaborator | Ajuste solicitado tras uso real: escuchar cada parte completa mediante secuencia cancelable del lector existente y mayor techo de volumen del beat. Pruebas de 94 líneas, cancelación/errores y captura nativa al máximo sin clipping; candidata para verificar publicación y balance perceptivo. |
@@ -481,3 +482,11 @@ El Product Owner solicita activar el beat mientras escucha el texto completo. Se
 Suite RAP/Studio superada en tres roles simulados; pruebas nuevas de ambos órdenes, continuidad entre líneas con beat, paradas independientes, beat que sigue tras finalizar la parte, y cancelación conjunta al cambiar/ocultar/salir, junto a regresión de pronunciación individual/Team y 320–1440/teclado/reduced-motion. Revisión renderizada de ayuda/controles desktop/móvil y etiqueta dinámica. Prueba adicional: beat Web Audio nativo activo durante nueve segundos con la cola de voz **controlada por QA**, sin suspensión accidental; parada del beat conserva la lectura. Esa voz controlada **no es una mezcla de voz real capturada ni una prueba auditiva**.
 
 **Pendiente de escucha humana conjunta** para valorar balance/claridad en dispositivo real. La lectura sintética no canta ni se adapta al tempo. No se declara lista para uso real ni estable por superar tests de estados; se conserva el gate auditivo y el uso real del grupo, sin timestamps inventados.
+
+### 15.9 Publicación del acompañamiento
+
+[PR #219](https://github.com/jperdomo12/academia-gloria/pull/219) integrada en `1844b08bfa9804443d95653c84da1a654d06a8b6`, head probado `a7ea6ae297974299b2022d267eac456b8e4b5739`, árbol `5fb328c21c49db597f619f5aae12349155df0760`. Pages **#828**, run `41219481679`, `success`. Seis archivos modificados de producto HTTP 200 e idénticos al árbol probado con la caché de §15.8; beat, Studio data/CSS y fuente escolar también comprobados intactos (diez recursos). Sin implementación/integración/publicación pendiente de esta solicitud.
+
+Archivos de producto de #219 bajo la carpeta RAP existente: `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-studio.js`. Además, test RAP y tres documentos (esta SPEC, principal y HandOff); diez archivos exactos en la PR. No se añaden rutas, transcripciones, audio escolar, persistencia o medios.
+
+La publicación verificada por HTTP/bytes no es una prueba de navegador público autenticado o escucha humana. La revisión renderizada y de estados es local con identidad/SDK/voz controlados, y la comprobación adicional de beat nativo mantiene esa distinción. **Escuchar la mezcla real en el dispositivo para valorar claridad/balance sigue pendiente**, antes de declarar lista para uso real; estabilidad pendiente del uso del grupo. No se promete sincronización musical ni se publican timestamps sin verificar.
