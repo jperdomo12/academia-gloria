@@ -3,6 +3,9 @@ import { mostrarFragmentos } from "../fragmentos.js?v=2";
 
 mostrarFragmentos(document.querySelector("#fragmentosRap"), FRAGMENTOS_RAP);
 
-import { iniciarRapTeam } from "./rap-team.js?v=3";
+import { iniciarRapTeam } from "./rap-team.js?v=4";
 
-iniciarRapTeam(document.querySelector("#rap-team"), FRAGMENTOS_RAP);
+const team = iniciarRapTeam(document.querySelector("#rap-team"), FRAGMENTOS_RAP);
+
+import { iniciarRapStudio } from "./rap-studio.js";
+iniciarRapStudio(document.querySelector("#rapStudio"), FRAGMENTOS_RAP, team);
