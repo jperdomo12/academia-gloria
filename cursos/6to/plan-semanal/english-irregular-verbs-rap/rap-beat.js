@@ -20,7 +20,7 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
   const ahora = () =>
     soloVisual ? performance.now() / 1000 : contexto.currentTime;
   const informar = (mensaje) => alEstado({ activo, soloVisual, mensaje });
-  const ganancia = () => volumen * 0.35;
+  const ganancia = () => volumen;
   function limpiar() {
     clearTimeout(reloj);
     reloj = null;

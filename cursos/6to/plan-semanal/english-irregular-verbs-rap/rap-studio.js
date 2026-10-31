@@ -1,8 +1,8 @@
 import { crearPartesRap, pistaLineaRap } from "./rap-studio-data.js";
 import { segmentarLinea, extraerTrios } from "../trios.js";
-import { textoParaEscuchar } from "./rap-apoyos.js?v=3";
-import { prepararVozRap } from "./rap-voz.js?v=2";
-import { crearBeatRap, TEMPO_ENSAYO } from "./rap-beat.js";
+import { textoParaEscuchar } from "./rap-apoyos.js?v=4";
+import { prepararVozRap } from "./rap-voz.js?v=3";
+import { crearBeatRap, TEMPO_ENSAYO } from "./rap-beat.js?v=2";
 
 /* Preparación efímera de una toma externa. La letra y los apoyos siguen perteneciendo
  * a sus fuentes existentes; no se solicitan medios ni se guarda estado. */
@@ -29,12 +29,13 @@ export function iniciarRapStudio(host, fragmentos, team) {
         )
         .join("")}</div>
       <p id="studioApoyoAyuda" class="studio-ayuda"></p>
+      <div class="studio-voz"><p>La voz lee la parte completa, línea a línea; no canta el RAP. Escuchar detiene el beat.</p><div class="studio-controles"><button type="button" id="studioParteAudio" data-studio-parte-audio aria-describedby="studioVozEstado">🔊 Escuchar parte completa</button><button type="button" id="studioVozParar" disabled>■ Detener voz</button></div><p id="studioVozEstado" role="status"></p></div>
       <aside class="studio-beat" aria-labelledby="studioBeatTitulo"><div class="studio-beat-cabecera"><div><h4 id="studioBeatTitulo">🎵 Un pulso para ensayar</h4><p>El beat es para ensayar. El vídeo del cole marca el ritmo final.</p></div><span class="studio-tempo">${TEMPO_ENSAYO} pulsos/min<br>Ensayo · no tempo oficial</span></div>
         <div class="studio-pulsos" aria-label="Cuatro pulsos, con cuenta de entrada">${[1, 2, 3, 4].map((n) => `<span data-studio-pulso="${n}">${n}</span>`).join("")}<b id="studioPulsoTexto" aria-live="off">Parado</b></div>
         <div class="studio-controles"><button type="button" id="studioBeatInicio">▶ Empezar beat</button><button type="button" id="studioBeatParar" disabled>■ Parar</button><label>Volumen del beat<input id="studioVolumen" type="range" min="0" max="100" value="35" step="5"></label></div><p id="studioBeatEstado" class="studio-ayuda" role="status"></p>
       </aside>
       <div id="studioLetra" class="studio-letra"></div>
-      <div class="studio-voz"><p>La voz ayuda a pronunciar; no canta ni marca el ritmo del RAP. Escuchar detiene el beat.</p><button type="button" id="studioVozParar" disabled>■ Detener voz</button><p id="studioVozEstado" role="status"></p><button type="button" id="studioTeam">Practicar formas, significado y rimas en RAP Team ↑</button></div>
+      <div class="studio-voz"><button type="button" id="studioTeam">Practicar formas, significado y rimas en RAP Team ↑</button></div>
       <details class="studio-detalle" id="studioRelevos"><summary>🔄 Coordinar los relevos</summary><p>Quien termina deja entrar a la siguiente parte. Practicad el cambio con o sin beat.</p><div class="studio-relevos"></div><p class="studio-ayuda">Con el beat activo, la cuenta sigue sus pulsos; sin beat, avanza cada segundo. No se evalúa la coordinación.</p><button type="button" id="studioCuentaParar" disabled>■ Parar cuenta</button></details>
       <details class="studio-detalle" id="studioToma"><summary>🎬 Preparar mi toma</summary><div class="studio-limites"><p><b>Empiezo:</b> <span id="studioInicioToma" lang="en"></span></p><p><b>Termino:</b> <span id="studioFinalToma" lang="en"></span></p></div><ul><li>Cámara estable y voz que se escuche bien.</li><li>El mismo formato y orientación que hayáis acordado.</li><li>Si vais a editar clips, dejad un pequeño margen antes y después.</li><li>Haced una toma de prueba antes de la definitiva.</li></ul><p>Prepara la cámara en otro dispositivo o aplicación. Academia solo da la cuenta; no graba ni accede a cámara o micrófono.</p><div class="studio-controles"><button type="button" id="studioCuentaToma">3 · 2 · 1 · 🎬</button><button type="button" id="studioTomaParar" disabled>■ Parar cuenta</button><strong id="studioTomaEstado" role="status"></strong></div><a class="studio-link" href="#entrega">Ver la entrega del colegio ↓</a></details>
     </div>`;
@@ -52,7 +53,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
   let vozEstado = { disponible: false, reproduciendo: false };
   function botonesVoz() {
     host
-      .querySelectorAll("[data-studio-audio]")
+      .querySelectorAll("[data-studio-audio], [data-studio-parte-audio]")
       .forEach((b) => (b.disabled = !vozEstado.disponible));
     $("#studioVozParar").disabled = !vozEstado.reproduciendo;
     $("#studioVozEstado").textContent = vozEstado.mensaje || "";
@@ -205,6 +206,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
     $("#studioParteTitulo").textContent =
       `Parte ${parte.id} · ${parte.trios[0].formas[0]} → ${parte.trios.at(-1).formas[0]}`;
     $("#studioVideo").href = video;
+    $("#studioParteAudio").textContent = `🔊 Escuchar Parte ${parte.id} completa`;
     $("#studioInicioToma").textContent = parte.inicio;
     $("#studioFinalToma").textContent = parte.final;
     host.querySelectorAll("[data-studio-parte]").forEach((b, n) => {
@@ -280,6 +282,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
   $("#studioVolumen").addEventListener("input", (e) =>
     beat.volumen(Number(e.target.value) / 100),
   );
+  $("#studioParteAudio").addEventListener("click", () => voz.escucharSecuencia(partes[seleccion].lineas.map(textoParaEscuchar)));
   $("#studioVozParar").addEventListener("click", () => voz.detener());
   $("#studioCuentaParar").addEventListener("click", pararCuenta);
   $("#studioTomaParar").addEventListener("click", pararCuenta);

@@ -18,25 +18,35 @@ export function prepararVozRap(alCambiar) {
     const estabaActiva = reproduciendo;
     secuencia++; LectorTexto.detener(); reproduciendo = false; emitir(voz ? (mensaje || (estabaActiva ? 'Escucha detenida.' : 'Voz inglesa lista. Escuchad y repetid.')) : 'No hay una voz inglesa disponible en este navegador. Podéis seguir practicando y escuchar el vídeo del cole.');
   }
-  function escuchar(texto) {
+  // Una emisión corta cada vez evita depender de una única locución muy larga.
+  // Todos los pasos usan el lector compartido y el mismo token de cancelación.
+  function escucharSecuencia(textos) {
     elegirVoz();
     if (!voz || !LectorTexto.disponible()) { revisar(); return false; }
+    const cola = textos.map(t => String(t || '').trim()).filter(Boolean);
+    if (!cola.length) return false;
     document.dispatchEvent(new Event("rap:antes-voz"));
     const token = ++secuencia;
+    let posicion = 0;
     reproduciendo = true; emitir('Escuchando en inglés…');
-    const terminar = mensaje => { if (token !== secuencia) return; reproduciendo = false; emitir(voz ? mensaje : 'No hay una voz inglesa disponible en este navegador. Podéis seguir practicando y escuchar el vídeo del cole.'); };
-    const iniciada = LectorTexto.escuchar(texto, {
-      idioma: voz.lang, voz, velocidad,
-      alFinalizar: () => terminar('Escucha terminada. Ahora repetid vosotras.'),
-      alError: () => terminar('No se pudo reproducir la voz. Podéis volver a probar o usar el vídeo del cole.')
-    });
-    if (!iniciada) terminar('No se pudo iniciar la voz. Podéis usar el vídeo del cole.');
-    return iniciada;
+    const terminar = mensaje => { if (token !== secuencia) return; secuencia++; reproduciendo = false; emitir(voz ? mensaje : 'No hay una voz inglesa disponible en este navegador. Podéis seguir practicando y escuchar el vídeo del cole.'); };
+    function siguiente() {
+      if (token !== secuencia) return false;
+      const iniciada = LectorTexto.escuchar(cola[posicion++], {
+        idioma: voz.lang, voz, velocidad,
+        alFinalizar: () => { if (token !== secuencia) return; if (posicion < cola.length) siguiente(); else terminar('Escucha terminada. Ahora repetid vosotras.'); },
+        alError: () => terminar('No se pudo reproducir la voz. Podéis volver a probar o usar el vídeo del cole.')
+      });
+      if (!iniciada) terminar('No se pudo iniciar la voz. Podéis usar el vídeo del cole.');
+      return iniciada;
+    }
+    return siguiente();
   }
+  const escuchar = texto => escucharSecuencia([texto]);
   sintesis?.addEventListener?.('voiceschanged', revisar);
   revisar();
   return {
-    escuchar, detener,
+    escuchar, escucharSecuencia, detener,
     cambiarVelocidad(valor) { detener('Velocidad preparada para la próxima escucha.'); velocidad = valor === 'despacio' ? 0.8 : 1; }
   };
 }

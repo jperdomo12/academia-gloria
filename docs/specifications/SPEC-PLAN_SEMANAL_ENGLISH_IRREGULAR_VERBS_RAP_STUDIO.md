@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 31/10/2026 | Product Owner + AI Collaborator | Ajuste solicitado tras uso real: escuchar cada parte completa mediante secuencia cancelable del lector existente y mayor techo de volumen del beat. Pruebas de 94 líneas, cancelación/errores y captura nativa al máximo sin clipping; candidata para verificar publicación y balance perceptivo. |
 | 1.2 | 31/10/2026 | Product Owner + AI Collaborator | #215 integrada en b6b67ee6…; Pages #824 success y nueve archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra integración/publicación técnica; conserva escucha humana/timestamps y uso real pendientes, sin declarar lista ni estable. |
 | 1.1 | 31/10/2026 | Product Owner + AI Collaborator | Implementa RAP Studio dentro de Graba, reparto derivado 15/31/21, tres apoyos, relevos, beat local opcional y toma externa. Registra pruebas/visual/nativo, fidelidad y límites: sin timestamps publicados ni escucha humana superada; no lista para uso real. |
 | 1.0 | 31/10/2026 | Product Owner + AI Collaborator | Decisión aprobada en Análisis: preparar reparto, memorización, relevos y toma externa con beat instrumental propio opcional, sin medios ni persistencia. |
@@ -447,3 +448,14 @@ Archivos exactos de producto, todos bajo `cursos/6to/plan-semanal/english-irregu
 Comprobación renderizada adicional del hostname/subruta de Pages con assets del mismo árbol e identidad/SDK simulados: imports, selección y apoyos funcionan bajo `/academia-gloria`. El intento de navegador público directo en Chromium de Desarrollo recibió `ERR_EMPTY_RESPONSE`; por eso no se presenta como navegación pública autenticada. La verificación HTTP/bytes publicada, el render local y la simulación de subruta son evidencias diferentes.
 
 **Sin implementación/integración/publicación técnica pendiente de #215.** Pendientes reales: escucha humana del beat/cuenta/volumen/parada y alternancia con voz; segundos del vídeo antes de añadir enlaces temporales; después, utilidad/autonomía del grupo. La publicación facilita revisión técnica/adulta y no satisface el criterio auditivo §12.21: **no lista para uso real ni estable**. Conservar todos los pendientes previos de la SPEC principal.
+
+### 15.6 Ajustes tras revisión del Product Owner · escucha completa y volumen
+
+El Product Owner valora positivamente Studio y solicita escuchar completos los tres tramos y aumentar el volumen máximo del beat. Se mantienen **Parte 1 / Parte 2 / Parte 3**, sin introducir otra clasificación A/B/C que pueda confundirse con las voces de Team.
+
+- `studioParteAudio` ofrece **Escuchar Parte N completa** junto a Detener voz/estado, antes del beat. Disponible también Con pistas/Sin letra. Deriva todas las líneas de la parte (16/47/31) y usa `textoParaEscuchar`, sin otra letra ni otra voz. La lectura no es una interpretación musical: el vídeo sigue marcando el RAP.
+- `prepararVozRap.escucharSecuencia` encadena locuciones cortas línea a línea mediante LectorTexto, evitando una única locución larga. Reutiliza selección de voz/velocidad, estado y token de cancelación. Un final cancelado, un error o un cambio de parte no puede reactivar la cola. Las emisiones simples anteriores llaman al mismo contrato con una sola entrada. Empezar beat cancela la parte; escuchar la parte detiene beat/cuentas.
+- Beat: se elimina la atenuación fija adicional `×0.35`; el rango 0–100 y el inicio en 35 permanecen. A igual posición, amplitud ×2.857 (aprox. +9.1 dB), también en el máximo. No cambia percusión/tempo/cuenta ni se añade música. Captura nativa Chromium de 9 segundos al 100 %: pico **−2.7 dBFS**, media **−24.3 dBFS**, sin recorte en esa captura. Esto no certifica calidad percibida o todos los dispositivos.
+- Suite RAP/Studio superada: lectura exacta/en orden de las 94 líneas en las tres partes, incluido apoyo Sin letra; parada/cambio/beat/error con final tardío; ganancia 1 al 100 y 0 al mínimo. Conserva regresión Team, medios/persistencia, cinco anchos y accesibilidad. Revisión renderizada de controles completos desktop/móvil. SDK/identidad/voz controlados; prueba de beat nativa separada.
+
+Fuente/parser/glosas/familias/vídeo/Drive/fecha/patrón intactos. Caché: `rap.js?v=6`, Team `?v=5`, apoyos `?v=4`, voz `?v=3`, Studio `?v=2`, beat `?v=2`. Continúan pendientes la escucha humana del **nuevo** volumen/balance y los segundos del vídeo; no se declara estabilidad ni se convierte la valoración positiva en una prueba auditiva completa.
