@@ -217,7 +217,17 @@ async function validarStudio(p) {
   await p.locator('[data-studio-apoyo="pistas"]').click();assert.deepEqual(await p.locator('#studioLetra .rap-linea').allTextContents(),datos.pistas[i]);
   await p.locator('[data-studio-apoyo="sin"]').click();assert.equal(await p.locator('#studioLetra .rap-linea').count(),0);assert.doesNotMatch(await p.locator('#studioLetra').innerText(),/puntos|dominio|porcentaje/);
   await p.getByRole('button',{name:'👀 Recuperar texto completo',exact:true}).click();assert.deepEqual(await texto(),datos.partes[i].lineas);assert.equal(await p.locator('[data-studio-apoyo="completo"]').getAttribute('aria-pressed'),'true');
+  const desde=await p.evaluate(()=>qaSpeech.length);await p.locator('#studioParteAudio').click();
+  for(let n=0;n<datos.partes[i].lineas.length;n++){
+   const esperado=datos.partes[i].lineas[n].replace(/([A-Za-z]+) \(([^,]+), ([^)]+)\)/g,'$1, $2, $3');
+   assert.equal(await p.evaluate(()=>qaSpeech.at(-1).text),esperado);
+   await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));
+  }
+  assert.equal(await p.evaluate(()=>qaSpeech.length),desde+datos.partes[i].lineas.length);assert.ok(await p.locator('#studioVozParar').isDisabled());
+  await p.locator('[data-studio-apoyo="sin"]').click();await p.locator('#studioParteAudio').click();const cancelN=await p.evaluate(()=>qaSpeech.length);await p.locator('#studioVozParar').click();await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),cancelN);await p.locator('[data-studio-apoyo="completo"]').click();
+
  }
+ await p.evaluate(()=>qaSpeech=[]);
  await p.locator('#studioRelevos summary').click();
  for(let i=0;i<2;i++){
   assert.match(await p.locator('.studio-relevo').nth(i).innerText(),i===0?/Begin.*Shoot/s:/spit.*Never\s+quit/s);
@@ -233,9 +243,18 @@ async function validarStudio(p) {
  await p.clock.runFor(750);assert.match(await p.locator('#studioPulsoTexto').innerText(),/Entrada 3/);
  await p.clock.runFor(750);assert.match(await p.locator('#studioPulsoTexto').innerText(),/Entrada 4/);
  await p.clock.runFor(750);assert.match(await p.locator('#studioPulsoTexto').innerText(),/Pulso 1/);assert.ok(await p.evaluate(()=>qaAudio.inicios.length)>4);
- await p.locator('#studioVolumen').fill('0');assert.equal(await p.evaluate(()=>qaAudio.ganancias.at(-1)),0);
+ await p.locator('#studioVolumen').fill('100');assert.equal(await p.evaluate(()=>qaAudio.ganancias.at(-1)),1);await p.locator('#studioVolumen').fill('0');assert.equal(await p.evaluate(()=>qaAudio.ganancias.at(-1)),0);
  await p.locator('#studioBeatParar').click();const n=await p.evaluate(()=>qaAudio.inicios.length);await p.clock.runFor(2000);assert.equal(await p.evaluate(()=>qaAudio.inicios.length),n);assert.equal(await p.locator('.studio-pulsos .is-active').count(),0);assert.ok(await p.evaluate(()=>qaAudio.paradas)>0);
  await start();assert.equal(await p.evaluate(()=>qaAudio.creados),1);await elegir(1);assert.ok(await p.locator('#studioBeatParar').isDisabled());
+ // Full-part queue is cancelled on error, part change and beat, including late end.
+ for(const accion of ['error','parte','beat']){
+  await p.locator('#studioParteAudio').click();const n=await p.evaluate(()=>qaSpeech.length);
+  if(accion==='error')await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('error')));
+  if(accion==='parte')await elegir(1);
+  if(accion==='beat')await start();
+  await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),n,accion+' cancels whole part');if(await p.locator('#studioBeatParar').isEnabled())await p.locator('#studioBeatParar').click();
+ }
+ await p.evaluate(()=>qaSpeech=[]);
  // Mutual exclusion with pronunciation, including the shared Team voice.
  await start();await p.locator('[data-studio-audio]').first().click();assert.ok(await p.locator('#studioBeatParar').isDisabled());assert.equal(await p.evaluate(()=>qaSpeech.length),1);assert.match(await p.evaluate(()=>qaSpeech.at(-1).text),/Shoot, shot, shot/);
  const cancels=await p.evaluate(()=>qaCancels);await start();assert.ok(await p.evaluate(()=>qaCancels)>cancels);assert.ok(await p.locator('#studioVozParar').isDisabled());
