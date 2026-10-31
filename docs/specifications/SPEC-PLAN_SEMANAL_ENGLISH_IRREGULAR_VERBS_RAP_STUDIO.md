@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.0 |
-| **Estado** | Aprobada para desarrollo · no implementada |
+| **Versión** | 1.1 |
+| **Estado** | Implementada como candidata técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -21,6 +21,22 @@
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | Gobierna implementación, validación, PR, publicación y cierre. |
 
 > Esta SPEC es **hija** de la SPEC principal del RAP. No duplica la letra escolar, los tríos verbales ni los enlaces oficiales. Toda representación de texto debe derivarse de `FRAGMENTOS_RAP` y de los parsers/ayudas ya existentes.
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 31/10/2026 | Product Owner + AI Collaborator | Implementa RAP Studio dentro de Graba, reparto derivado 15/31/21, tres apoyos, relevos, beat local opcional y toma externa. Registra pruebas/visual/nativo, fidelidad y límites: sin timestamps publicados ni escucha humana superada; no lista para uso real. |
+| 1.0 | 31/10/2026 | Product Owner + AI Collaborator | Decisión aprobada en Análisis: preparar reparto, memorización, relevos y toma externa con beat instrumental propio opcional, sin medios ni persistencia. |
+
+## Resumen de contenido
+
+| Apartado | Contenido |
+|---|---|
+| 1–4 | Necesidad, fuentes, reparto y decisión aprobada. |
+| 5–9 | Memorización, relevos, vídeo, beat, toma y continuidad de RAP Team. |
+| 10–14 | Privacidad, accesibilidad, aceptación y validación. |
+| 15 | Implementación real, archivos, trazabilidad, pruebas y límites de la candidata. |
 
 ## 1. Origen de la necesidad
 
@@ -376,3 +392,47 @@ Se aprueba **RAP Studio** como evolución aditiva de la actividad `Irregular Ver
 Se aprueba además un **beat RAP instrumental propio de Academia**, opcional, sin letra y generado/reproducido localmente para ensayo. El beat no sustituye el vídeo oficial ni se presenta como requisito de la tarea.
 
 La primera implementación **no graba, almacena, edita ni une vídeos**. Esa capacidad solo podrá evaluarse después del uso real si aparece como necesidad concreta.
+
+## 15. Implementación técnica · 31/10/2026
+
+Base canónica `main` `656644301f808afca8a172e55e76945cb00bc656`, SPEC 1.0 aprobada. Rama `feat/rap-studio`. El encargo autoriza PR, revisión, integración y publicación autónomas para revisión, sin una segunda aprobación de alcance. **Esa autorización no equivale a haber superado la escucha humana ni a declarar la evolución lista para uso real.**
+
+### 15.1 Reutilización y fidelidad
+
+- Una sola ruta: la ficha semanal existente. `#rapStudio` dentro de `#graba`, después de las opciones escolares Solo/pareja/trío/otras clases. Acceso desde Ensayo final. La entrega conserva vídeo/Drive, fecha 10/11/2026 y patrón exacto `6A/B/C_WP_NAMES_RAP`.
+- `rap-studio-data.js` usa posiciones sobre `FRAGMENTOS_RAP`: inicios en fragmento 1/línea 1, fragmento 4/línea 4 y fragmento 11/línea 1 (lectura humana, índices internos desde cero). Corta por líneas, no por tríos: conserva las líneas intermedias sin verbo. Devuelve 16/47/31 líneas (94 total), 4/7/4 bloques respirables y valida 15/31/21 tríos (67 total) con `extraerTrios`; el cambio de fuente que invalide el reparto falla explícitamente, sin ajustar límites silenciosamente.
+- `rap-data.js`, `trios.js`, glosas, familias y `fragmentos.js` intactos. No hay segunda letra ni banco de 67 verbos. `pistaLineaRap` conserva la base y conectores y oculta pasado/participio; líneas sin trío dejan primera palabra + puntos. Determinista, sin contenido lingüístico generado. Sin letra retira los bloques, deja solo inicio/final y recuperación explícita.
+- Escuchar bloque delega a `textoParaEscuchar` y `prepararVozRap` → `LectorTexto`. Una acción vuelve al primer trío de la parte en RAP Team para practicar formas/significado/rimas existentes, sin duplicar ese panel ni sus metadatos. El pequeño contrato de retorno de Team permite detenerlo y elegir un trío; conserva sus seis modos.
+- Selección/apoyo/cuentas/volumen solo en memoria. No nuevas llamadas a Firestore/Storage, evidencia, cámara, micrófono, grabación o reconocimiento. No nombres de compañeras. La navegación/identidad global conserva sus escrituras de contexto ya existentes; Studio no persiste parte, reparto o resultados.
+
+### 15.2 Beat y cancelación
+
+`rap-beat.js` genera bombo (oscilador sinusoidal con caída de frecuencia), caja y plato (ruido filtrado), y una cuenta previa de cuatro pulsos. Ruido generado localmente; ninguna muestra, canción, servicio musical o extracción del vídeo. Un tempo de ensayo: **84 pulsos/min**, rotulado sin atribuirlo al vídeo. Volumen inicial 35 %, ajustable hasta silencio.
+
+Contexto creado únicamente al pulsar Empezar, reutilizado tras parada, con resume/suspend serializados y token que invalida inicios tardíos. Scheduler de 25 ms con horizonte de 100 ms sobre reloj Web Audio, subdivisiones de corchea, visuales sincronizados a los pulsos programados; no se reproducen ráfagas de pulsos atrasados. Parar silencia salida, detiene fuentes programadas, borra scheduler/visuales y suspende el contexto. No autoplay.
+
+La falta de API o un fallo de inicio ofrece cuenta/pulso visual, sin bloquear texto, voz o vídeo. Una interrupción del contexto detiene el ensayo e informa cómo retomarlo. Se cancelan beat/cuentas al cambiar parte, seguir enlaces de sección/externos, usar Team, ocultar pestaña, salir del área (IntersectionObserver) o `pagehide`.
+
+`rap-voz.js` emite `rap:antes-voz` solo antes de una escucha válida. Studio detiene beat/cuentas antes de voz de Team o Studio. Empezar beat detiene pronunciación y relojes de Team. La cancelación por navegación se ejecuta en captura antes del nuevo control, para no cancelar por bubbling una pronunciación recién iniciada. Parada de Studio no cancela una voz ajena si no tiene una emisión propia activa.
+
+Los relevos ofrecen las dos últimas/primeras líneas originales, cambio de voz y cuenta 3/2/1: sigue pulsos del beat activo o segundos si está parado. La toma ofrece lista breve, inicio/final y cuenta visual 3/2/1/🎬; detiene el beat para la toma externa. No hay estado de completado ni valoración.
+
+Referencias técnicas: [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) y [AudioScheduledSourceNode.stop](https://developer.mozilla.org/en-US/docs/Web/API/AudioScheduledSourceNode/stop). La API no sustituye la validación auditiva.
+
+### 15.3 Vídeo y timestamps · límite explícito
+
+Se mantiene exclusivamente `https://www.youtube.com/watch?v=NTspOI05mJw`, leído del enlace escolar existente; abre en otra pestaña con noopener/noreferrer. **No se publica ningún `t=`**, ni siquiera 00:03: no se ha podido verificar humanamente el segundo de inicio de las tres partes en el vídeo. La consulta del vídeo mediante la herramienta web de Desarrollo no pudo recuperarlo. No se usó ni interpoló la transcripción automática.
+
+La acción abre el vídeo completo y pide buscar la frase inicial de la parte. Es útil como acceso al ritmo oficial; **no se presenta como enlace temporal ya verificado**. Queda pendiente esa mejora acotada cuando los segundos puedan comprobarse realmente. Drive, permisos y subida escolar reales no se certifican por el test que controla la apertura de pestañas.
+
+### 15.4 Pruebas y revisión visual
+
+Se amplía `tests/plan-semanal-rap-browser.cjs`, conservando la regresión de ficha/Team y los tres roles con SDK/identidad simulados. Comprueba reparto/fuente de 94 líneas, 15/31/21 y fronteras begin→shoot/spit→quit; correspondencia completa/pistas/ocultación/recuperación; puente desde Ensayo final y vuelta al trío correcto; relevos/cuentas; beat/scheduler/volumen/parada/cancelación por contexto y resume tardío; cuenta de cuatro pulsos; ausencia de autoplay; API ausente y resume fallido; exclusión con voz; cero escrituras educativas y cero acceso a medios. Las escrituras legítimas de navegación/Persona Activa global se distinguen de persistencia de Studio.
+
+Responsive 320/390/768/1024/1440, botones/enlaces/summary/range de al menos 44 px, teclado/foco visible, reduced-motion, sin overflow. Revisión renderizada real de selección, parte con letra, pistas/sin letra, beat, relevos y preparación de toma, en desktop y móvil. Rejilla 3→2→1: en móvil estrecho se usa una columna deliberadamente por las frases completas de inicio/final (no tarjetas de catálogo compactas). Se reutilizan colores/Outfit/estilos de tríos de la ficha; los detalles de coordinación/toma empiezan plegados.
+
+Prueba adicional con **Web Audio nativa en Chromium/Linux**, sin mock del motor: nueve segundos de cuenta + beat, salida capturada solo por QA mediante MediaStreamDestination, sin entrada de micrófono ni audio personal; resume/suspend reales y señal no silenciosa. La captura de QA no forma parte de Academia ni se guarda en el repositorio. No certifica balance perceptivo o calidad musical.
+
+**ESCUCHA HUMANA PENDIENTE.** Este entorno permite generar/capturar señal pero no escucharla humanamente. No se afirma que el beat suene bien, que el volumen resulte equilibrado con voces reales o que su convivencia perceptiva con pronunciación esté validada. Los mocks prueban exclusión de reproducción y eventos; la señal nativa prueba generación, no audición. Antes de declarar listo para uso real hay que escuchar beat/cuenta/volumen/parada y alternar con pronunciación en el navegador real. El vídeo sigue siendo autoridad para ritmo final. Conserva también la escucha pendiente de ayudas de RAP Team documentada en la SPEC principal.
+
+Implementación técnica candidata; **no lista para uso real y no estable** hasta esa escucha y posterior uso real del grupo. La disponibilidad de la revisión/merge/Pages se registra en la PR y en el HandOff, sin convertir publicación en aceptación auditiva.

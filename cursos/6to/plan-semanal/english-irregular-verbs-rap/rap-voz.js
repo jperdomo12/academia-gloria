@@ -21,6 +21,7 @@ export function prepararVozRap(alCambiar) {
   function escuchar(texto) {
     elegirVoz();
     if (!voz || !LectorTexto.disponible()) { revisar(); return false; }
+    document.dispatchEvent(new Event("rap:antes-voz"));
     const token = ++secuencia;
     reproduciendo = true; emitir('Escuchando en inglés…');
     const terminar = mensaje => { if (token !== secuencia) return; reproduciendo = false; emitir(voz ? mensaje : 'No hay una voz inglesa disponible en este navegador. Podéis seguir practicando y escuchar el vídeo del cole.'); };

@@ -1,6 +1,6 @@
 import { segmentarLinea } from "../trios.js";
 import { SIGNIFICADOS_RAP, FAMILIAS_RAP } from "./rap-ayudas-data.js";
-import { prepararVozRap } from "./rap-voz.js";
+import { prepararVozRap } from "./rap-voz.js?v=2";
 
 export const textoParaEscuchar = linea => segmentarLinea(linea).map(p => p.formas ? p.formas.join(', ') : p.texto).join('');
 
