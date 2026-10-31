@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.10 |
-| **Estado** | Evolución RAP Team aprobada, integrada y publicada · escucha humana y uso real pendientes · no declarada estable |
+| **Versión** | 1.11 |
+| **Estado** | RAP Team y RAP Studio integrados/publicados para revisión · escucha humana y uso real pendientes · no declarada estable |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.11 | 31/10/2026 | Product Owner + AI Collaborator | Cierra publicación técnica de RAP Studio #215: Pages #824 y nueve archivos modificados idénticos al árbol probado; fuente escolar intacta. SPEC hija 1.2 conserva gate auditivo/timestamps pendientes, no lista para uso real ni estable. |
 | 1.10 | 31/10/2026 | Product Owner + AI Collaborator | RAP Studio aditivo en Graba desde SPEC hija aprobada: reparto derivado, memorización, relevos, beat y toma externa. Conserva fuente y entrega; escucha humana/timestamps no verificados documentados en la hija, no lista para uso real. |
 | 1.9 | 28/10/2026 | Product Owner + AI Collaborator | Observación de uso: muestra la frase escrita junto al audio en los cuatro modos con ayuda, reutilizando el bloque existente y respetando Comprobar/Revelar. #209 integrada/publicada, Pages #818 success y cuatro archivos públicos idénticos a los probados. Mantiene fuente, voz, no persistencia y pendientes auditivos/de uso. |
 | 1.8 | 28/10/2026 | Product Owner + AI Collaborator | Tras informar la escucha pendiente, el Product Owner aprueba continuar. #207 integrada en ab55e24a…; Pages #816 success y ocho archivos públicos idénticos a la versión probada. Cierra integración/publicación; mantiene pendiente la revisión auditiva y el uso real, sin declarar estabilidad. |
@@ -729,6 +730,8 @@ Validación: suite existente `tests/plan-semanal-rap-browser.cjs` superada en tr
 
 ## 14. RAP Studio · evolución aditiva de Graba
 
-La implementación desde `main` `65664430…` añade preparación de partes reales y toma externa dentro de `Graba`, con puente desde Ensayo final. La fuente propietaria del nuevo recorrido, decisiones técnicas, archivos, pruebas y límites es [SPEC RAP Studio](SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md) 1.1 §15. Esta SPEC principal conserva letra, parser, ayudas, vídeo, Drive, fecha y patrón escolares como fuentes únicas.
+La implementación desde `main` `65664430…` añade preparación de partes reales y toma externa dentro de `Graba`, con puente desde Ensayo final. La fuente propietaria del nuevo recorrido, decisiones técnicas, archivos, pruebas y límites es [SPEC RAP Studio](SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md) 1.2 §15. Esta SPEC principal conserva letra, parser, ayudas, vídeo, Drive, fecha y patrón escolares como fuentes únicas.
 
 RAP Team conserva aprendizaje/roles/sonidos; Studio deriva los tramos de grabación 15/31/21, sin duplicar su letra ni ayudas. Sin nuevo Tema/ruta/evidencia/persistencia o acceso a medios. Pronunciación inglesa delegada al lector existente; beat instrumental local para ensayo, distinto de la autoridad musical del vídeo. **No hay timestamps verificados/publicados ni escucha humana del beat superada.** Implementación técnica para revisión, no lista para uso real; se conservan §13.6 y todos los pendientes auditivos/familiares, sin estabilidad.
+
+#215 integrada en `b6b67ee6d08f85072cd6e6ed2625dedb2c1b1c9d`; Pages #824 (run `41211251812`) success. Nueve archivos modificados públicos idénticos a los probados y fuente escolar pública intacta. Cierra integración/publicación técnica; mantiene escucha humana, timestamps y uso real pendientes según SPEC hija 1.2 §15.5.

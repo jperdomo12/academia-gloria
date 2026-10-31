@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.47 |
+| **Versión** | 3.48 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 31/10/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.48 | 31/10/2026 | Product Owner + AI Collaborator | Cierra publicación técnica RAP Studio #215, merge b6b67ee6… y Pages #824 success; nueve archivos modificados públicos idénticos al árbol probado y fuente intacta. SPEC hija 1.2/principal 1.11. Sin desarrollo pendiente; escucha humana obligatoria antes de uso real, sin estabilidad. Conserva todos los pendientes anteriores. |
 | 3.47 | 31/10/2026 | Product Owner + AI Collaborator | RAP Studio candidata técnica desde main 65664430…; SPEC hija 1.1 y RAP principal 1.10. Reparto 15/31/21, apoyos/relevos/beat local/toma externa; pruebas y revisión visual/nativa. Escucha humana y timestamps pendientes, no lista para uso real; conserva todos los frentes anteriores. |
 | 3.46 | 28/10/2026 | Product Owner + AI Collaborator | Números hasta 100 000 publicado para revisión familiar mediante #212, merge 2920af05…; Pages #821 success y quince archivos públicos idénticos a los probados. SPEC 1.2. Cierra integración/publicación; conserva uso familiar, límites de pruebas y todos los pendientes anteriores. |
 | 3.45 | 28/10/2026 | Product Owner + AI Collaborator | Candidata Matemáticas/Números hasta 100 000 desde SPEC aprobada: cuatro experiencias, 36 retos y Prueba de 12 preguntas/48 variantes con motor/evidencia compartidos. Revisión de 17 páginas, pruebas e integración en catálogo/refuerzo/Análisis; publicación/verificación y uso familiar pendientes. Conserva todos los frentes anteriores. |
@@ -332,7 +333,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**RAP Studio · candidata técnica (31/10/2026):** base `main` `656644301f808afca8a172e55e76945cb00bc656`, rama `feat/rap-studio`. Propietaria `SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` 1.1 §15; principal RAP 1.10. Evoluciona Graba en la misma ficha, accesible desde Ensayo final: partes 15/31/21 derivadas de FRAGMENTOS_RAP/parser, texto/pistas/sin letra, dos relevos/cuentas, beat local opcional con pulso/volumen/fallback y toma externa. Conserva Team, letra/entrega y no persistencia/medios. Pruebas ampliadas, responsive 320–1440/teclado/reduced-motion y revisión visual; generación Web Audio nativa sin audición humana. No publicar t= sin verificar el vídeo; acción abre vídeo completo. **Escucha humana del beat/balance con pronunciación pendiente: no lista para uso real ni estable.** Autorizada integración/publicación para revisión técnica sin reaprobar alcance; estado final de PR/Pages se actualizará tras verificación. Mantener todos los pendientes anteriores, incluida escucha de RAP Team y uso familiar de Números.
+**RAP Studio · publicada para revisión técnica (31/10/2026):** base `main` `656644301f808afca8a172e55e76945cb00bc656`. [PR #215](https://github.com/jperdomo12/academia-gloria/pull/215) integrada en `b6b67ee6d08f85072cd6e6ed2625dedb2c1b1c9d`, head probado `d48ccfb8…`, árbol `e3c7ed9b…`. Propietaria SPEC Studio 1.2 §15; principal RAP 1.11. Evoluciona Graba, puente desde Ensayo final; reparto 15/31/21 derivado de fuente/parser (94 líneas intactas), apoyos/relevos/beat local opcional/fallback y toma externa. Team/entrega intactos, sin medios ni persistencia nueva. Suite ampliada superada en tres roles simulados, cinco anchos/teclado/reduced-motion y revisión visual; Web Audio nativa con señal no silenciosa y resume/suspend, **sin audición humana**. Pages #824 (run `41211251812`) success; nueve archivos modificados públicos HTTP 200 e idénticos a los probados, fuente pública intacta. Subruta de Pages simulada; navegador público directo de Desarrollo devuelve ERR_EMPTY_RESPONSE, distinto de HTTP verificado. Sin desarrollo/integración/publicación técnica pendiente. **No lista para uso real: falta escucha humana de beat/cuenta/volumen/parada y alternancia con pronunciación, antes del ensayo del grupo.** No t= publicados: segundos pendientes de verificación real; enlace al vídeo completo. Después validar utilidad/autonomía del grupo, sin estabilidad. Mantener todos los pendientes anteriores, incluida escucha de RAP Team y uso familiar de Números.
 
 **Matemáticas · Números hasta 100 000 (publicada para validación familiar, 28/10/2026):** base `main` `c382e18a54f4c115af5e0b2857b3e51f5d5c3d01` (#211), [PR #212](https://github.com/jperdomo12/academia-gloria/pull/212) integrada en `2920af056da63c371653716ff9bb733330c2b320`, head probado `d75e329c…`; propietario SPEC 1.2. Un Tema canónico, cuatro experiencias propias, teoría/voz/fichas, 36 retos variados y Prueba de 12 preguntas desde 48 variantes, cuatro focos y sesión/evidencia compartidas. Sin motor de evaluación/guardado paralelo, nuevas colecciones/Rules o cambios a Fracciones/Puente/piloto. Fuente revisada visualmente en 17 páginas, sin incorporar manuscritos ni publicar el escaneo; matriz fuente→Academia y decisiones técnicas en SPEC. Pruebas puras/de navegador y regresión de Nutrición superadas con identidad/SDK/audio simulados; revisión visual responsive/teclado/reduced-motion. Revisión final/publicación autónomas verificadas: Pages #821 (run `40764979843`) success; quince archivos públicos HTTP 200 e idénticos a los probados y rutas disponibles. Hostname de Pages/subruta/Volver comprobados con assets e identidad simulados; navegador público de Desarrollo devuelve ERR_EMPTY_RESPONSE, distinto de HTTP/bytes verificados. Sin integración/publicación pendiente. Quedan revisión familiar de comprensión/disfrute y cuenta real; no estable. Recurso decorativo preexistente de Nutrición conserva aviso 404 en regresión, ajeno al Tema nuevo. Precisión final de presentación: el cierre con refuerzos no afirma fortalezas si no las hay; prueba de cero aciertos cubierta, sin cambios educativos o de persistencia. Todos los pendientes anteriores conservados.
 
@@ -414,13 +415,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `2920af056da63c371653716ff9bb733330c2b320` · #212 integrada; conserva #209 y demás frentes |
+| **Baseline funcional de producto verificado** | `b6b67ee6d08f85072cd6e6ed2625dedb2c1b1c9d` · #215 integrada/publicada para revisión técnica; conserva #212/#213/#209 y demás frentes. Escucha humana de Studio pendiente antes de uso real |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin desarrollo/integración/publicación pendiente de #212; revisión familiar de Números y pendientes anteriores conservados |
-| **PR On going** | Sin PR de producto pendiente de Números: #212 integrada/publicada; revisión familiar pendiente. RAP #209 y demás pendientes conservados |
-| **Trabajo inmediato** | Probar Números hasta 100 000 con Gloria/familia; escuchar las ayudas de RAP Team en dispositivo real y probar con las tres compañeras; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #821 · `success` · SHA `2920af05…` |
-| **Verificación posterior al cierre** | #212 integrada dentro de la publicación autónoma autorizada; Pages #821 success y quince archivos públicos idénticos a los probados. Números disponible para revisión familiar; límites y todos los pendientes anteriores conservados. |
+| **Rama On going** | Sin desarrollo/integración/publicación técnica pendiente de #215; escucha humana Studio/Team y revisión familiar de Números y pendientes anteriores conservados |
+| **PR On going** | Sin PR de producto pendiente: RAP Studio #215 integrada/publicada para revisión técnica; escucha humana/uso real pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
+| **Trabajo inmediato** | Escuchar beat/cuenta/volumen/parada y alternancia con pronunciación de RAP Studio en dispositivo real antes de declararlo listo para el grupo; luego validar uso real. Probar Números hasta 100 000 con Gloria/familia; escuchar las ayudas de RAP Team en dispositivo real y probar con las tres compañeras; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
+| **GitHub Pages del baseline funcional** | #824 · `success` · SHA `b6b67ee6…` |
+| **Verificación posterior al cierre** | RAP Studio #215 integrada dentro de la publicación autónoma autorizada para revisión técnica; Pages #824 success y nueve archivos modificados públicos idénticos a los probados; fuente escolar intacta. Gate auditivo pendiente, no lista para uso real ni estable. Números y todos los pendientes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -456,7 +457,7 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-RAP Studio: candidata técnica según SPEC hija 1.1; ver §9. Pendiente escucha humana antes de uso real, sin timestamps inventados. Conserva los demás pendientes.
+RAP Studio #215 publicada/verificada, Pages #824, SPEC hija 1.2; ver §9. Sin desarrollo pendiente; escucha humana obligatoria antes de uso real, sin timestamps inventados. Conserva los demás pendientes.
 
 Matemáticas/Números hasta 100 000: #212 publicada/verificada, Pages #821, SPEC 1.2; uso familiar pendiente. Detalle y límites en §9.
 
@@ -482,15 +483,15 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.47 |
+| **Versión** | 3.48 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Sin PR de producto pendiente de Números: #212 integrada/publicada; revisión familiar pendiente. RAP #209 y demás pendientes conservados |
+| **Trabajo On going** | RAP Studio #215 publicada/verificada (SPEC hija 1.2/principal 1.11): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Sin PR de producto pendiente: RAP Studio #215 integrada/publicada para revisión técnica; escucha humana/uso real pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
 | **Brochure** | ✅ `assets/identidad/ACADEMIA_GLORIA-VALENTINA_OVERVIEW.jpg` |
-| **Siguiente paso** | Probar Números hasta 100 000 con Gloria/familia; escuchar las ayudas publicadas de RAP Team y probar con las tres compañeras para preparar el vídeo escolar; probar los tres Temas de Sociales ya publicados con Gloria. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
+| **Siguiente paso** | Escuchar RAP Studio en dispositivo real antes de uso del grupo; después validar utilidad/autonomía. Probar Números hasta 100 000 con Gloria/familia; escuchar las ayudas publicadas de RAP Team y probar con las tres compañeras para preparar el vídeo escolar; probar los tres Temas de Sociales ya publicados con Gloria. Revisar Plan Semanal en familia (tarjetas juntas y respuestas/validación digital sin guardado); probar Nutrición con Gloria; Monitor Gaudem cerrado; continuar English → Much/Many y los tres Temas de Lengua con Gloria; continuar las pruebas reales previamente pendientes |
 | **Mecanismo de continuidad** | GitHub `main` + HandOff + Bootstrap + verificación dirigida |
 | **Autoridad sobre estado implementado** | Repositorio y fuentes propietarias verificadas |
 
