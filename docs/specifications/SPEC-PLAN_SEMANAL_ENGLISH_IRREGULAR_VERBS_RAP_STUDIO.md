@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 31/10/2026 | Product Owner + AI Collaborator | Ajustes #217 integrados/publicados en 1472f09c…; Pages #826 success y siete archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra publicación; conserva escucha perceptiva del nuevo nivel y uso real, sin estabilidad. |
 | 1.3 | 31/10/2026 | Product Owner + AI Collaborator | Ajuste solicitado tras uso real: escuchar cada parte completa mediante secuencia cancelable del lector existente y mayor techo de volumen del beat. Pruebas de 94 líneas, cancelación/errores y captura nativa al máximo sin clipping; candidata para verificar publicación y balance perceptivo. |
 | 1.2 | 31/10/2026 | Product Owner + AI Collaborator | #215 integrada en b6b67ee6…; Pages #824 success y nueve archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra integración/publicación técnica; conserva escucha humana/timestamps y uso real pendientes, sin declarar lista ni estable. |
 | 1.1 | 31/10/2026 | Product Owner + AI Collaborator | Implementa RAP Studio dentro de Graba, reparto derivado 15/31/21, tres apoyos, relevos, beat local opcional y toma externa. Registra pruebas/visual/nativo, fidelidad y límites: sin timestamps publicados ni escucha humana superada; no lista para uso real. |
@@ -459,3 +460,9 @@ El Product Owner valora positivamente Studio y solicita escuchar completos los t
 - Suite RAP/Studio superada: lectura exacta/en orden de las 94 líneas en las tres partes, incluido apoyo Sin letra; parada/cambio/beat/error con final tardío; ganancia 1 al 100 y 0 al mínimo. Conserva regresión Team, medios/persistencia, cinco anchos y accesibilidad. Revisión renderizada de controles completos desktop/móvil. SDK/identidad/voz controlados; prueba de beat nativa separada.
 
 Fuente/parser/glosas/familias/vídeo/Drive/fecha/patrón intactos. Caché: `rap.js?v=6`, Team `?v=5`, apoyos `?v=4`, voz `?v=3`, Studio `?v=2`, beat `?v=2`. Continúan pendientes la escucha humana del **nuevo** volumen/balance y los segundos del vídeo; no se declara estabilidad ni se convierte la valoración positiva en una prueba auditiva completa.
+
+### 15.7 Publicación de los ajustes
+
+[PR #217](https://github.com/jperdomo12/academia-gloria/pull/217) integrada en `1472f09c6f1fc16b585b844bfd06f0491cab1cbd`, head probado `84ffb3a413d85b454d0f7e63ec38b332c8fb7d3c`, árbol `0a240cb87bd2ce0131c2be66ab7742850a68cad8`. Pages **#826**, run `41216925677`, `success`. Siete archivos modificados de producto HTTP 200 e idénticos al árbol probado, con las referencias de caché de §15.6; tres comprobaciones adicionales de Studio data/CSS/fuente escolar intactos. Sin implementación/integración/publicación pendiente del ajuste. Se conserva escucha perceptiva del nuevo volumen/balance/voz y uso real antes de estabilidad.
+
+Archivos de producto de #217, bajo la misma carpeta RAP: `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-studio.js`, `rap-beat.js`. Además, test RAP y tres documentos (esta SPEC, principal, HandOff); once archivos exactos en la PR. No se publican audios de QA ni se modifica la fuente escolar o los timestamps.
