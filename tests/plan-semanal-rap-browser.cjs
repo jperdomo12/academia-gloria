@@ -246,15 +246,31 @@ async function validarStudio(p) {
  await p.locator('#studioVolumen').fill('100');assert.equal(await p.evaluate(()=>qaAudio.ganancias.at(-1)),1);await p.locator('#studioVolumen').fill('0');assert.equal(await p.evaluate(()=>qaAudio.ganancias.at(-1)),0);
  await p.locator('#studioBeatParar').click();const n=await p.evaluate(()=>qaAudio.inicios.length);await p.clock.runFor(2000);assert.equal(await p.evaluate(()=>qaAudio.inicios.length),n);assert.equal(await p.locator('.studio-pulsos .is-active').count(),0);assert.ok(await p.evaluate(()=>qaAudio.paradas)>0);
  await start();assert.equal(await p.evaluate(()=>qaAudio.creados),1);await elegir(1);assert.ok(await p.locator('#studioBeatParar').isDisabled());
- // Full-part queue is cancelled on error, part change and beat, including late end.
- for(const accion of ['error','parte','beat']){
+ // Full-part queue is cancelled on error, part/section change, including late end.
+ for(const accion of ['error','parte','seccion']){
   await p.locator('#studioParteAudio').click();const n=await p.evaluate(()=>qaSpeech.length);
   if(accion==='error')await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('error')));
   if(accion==='parte')await elegir(1);
-  if(accion==='beat')await start();
+  if(accion==='seccion')await p.locator('.rap-pasos a[href="#entrega"]').click();
   await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),n,accion+' cancels whole part');if(await p.locator('#studioBeatParar').isEnabled())await p.locator('#studioBeatParar').click();
  }
  await p.evaluate(()=>qaSpeech=[]);
+ // Explicit full-part accompaniment works in both orders with independent stops.
+ await elegir(0);await p.locator('#studioParteAudio').click();assert.match(await p.locator('#studioBeatInicio').innerText(),/Añadir beat a la lectura/);
+ const cantidad=await p.evaluate(()=>qaSpeech.length);await start();assert.ok(await p.locator('#studioVozParar').isEnabled());await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),cantidad+1);assert.ok(await p.locator('#studioBeatParar').isEnabled());
+ await p.locator('#studioBeatParar').click();assert.ok(await p.locator('#studioVozParar').isEnabled());await p.locator('#studioVozParar').click();
+ await start();await p.locator('#studioParteAudio').click();assert.ok(await p.locator('#studioBeatParar').isEnabled());assert.ok(await p.locator('#studioVozParar').isEnabled());
+ await p.locator('#studioVozParar').click();assert.ok(await p.locator('#studioBeatParar').isEnabled());const detenido=await p.evaluate(()=>qaSpeech.length);await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),detenido);
+ await p.locator('#studioParteAudio').click();for(let i=0;i<16;i++)await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.ok(await p.locator('#studioVozParar').isDisabled());assert.ok(await p.locator('#studioBeatParar').isEnabled());await p.locator('#studioBeatParar').click();
+ for(const accion of ['parte','seccion','oculta','salir']){
+  await elegir(0);await p.locator('#studioParteAudio').click();await start();const n=await p.evaluate(()=>qaSpeech.length);
+  if(accion==='parte')await elegir(1);
+  if(accion==='seccion')await p.locator('.rap-pasos a[href="#entrega"]').click();
+  if(accion==='oculta')await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));Object.defineProperty(document,'hidden',{configurable:true,value:false});});
+  if(accion==='salir')await p.evaluate(()=>window.dispatchEvent(new Event('pagehide')));
+  await p.evaluate(()=>qaSpeech.at(-1).dispatchEvent(new Event('end')));assert.equal(await p.evaluate(()=>qaSpeech.length),n);assert.ok(await p.locator('#studioVozParar').isDisabled());assert.ok(await p.locator('#studioBeatParar').isDisabled());
+ }
+ await elegir(1);await p.evaluate(()=>qaSpeech=[]);
  // Mutual exclusion with pronunciation, including the shared Team voice.
  await start();await p.locator('[data-studio-audio]').first().click();assert.ok(await p.locator('#studioBeatParar').isDisabled());assert.equal(await p.evaluate(()=>qaSpeech.length),1);assert.match(await p.evaluate(()=>qaSpeech.at(-1).text),/Shoot, shot, shot/);
  const cancels=await p.evaluate(()=>qaCancels);await start();assert.ok(await p.evaluate(()=>qaCancels)>cancels);assert.ok(await p.locator('#studioVozParar').isDisabled());
@@ -290,5 +306,5 @@ async function validarStudio(p) {
  // After identity setup, this session has no local/session/educational writes by Studio.
  const writes=await p.evaluate(()=>qaTeamStorage);assert.ok(writes.every(k=>['academia.personaActivaId','academia.personaActivaUserId','academia.navegacion.historial.v1'].includes(k)),JSON.stringify(writes));
  assert.doesNotMatch(await p.locator('#rapStudio').innerText(),/Gloria|Anaís|Lidia|ranking|puntuación|dominio|%/);
- console.log('OK Studio: 15/31/21=67, fuente íntegra y fronteras, tres apoyos, relevos/cuentas, beat mock/scheduler/parada/cancelación/resume tardío, exclusión de voz, fallback API/engine, no autoplay/medios/escrituras, vuelta a Team, teclado/reduced-motion y cinco anchos. No certifica escucha humana ni timestamps.');
+ console.log('OK Studio: 15/31/21=67, fuente íntegra y fronteras, tres apoyos, relevos/cuentas, beat mock/scheduler/parada/cancelación/resume tardío, acompañamiento explícito/paradas independientes y exclusión de pronunciación individual, fallback API/engine, no autoplay/medios/escrituras, vuelta a Team, teclado/reduced-motion y cinco anchos. No certifica escucha humana ni timestamps.');
 }

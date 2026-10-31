@@ -20,12 +20,12 @@ export function prepararVozRap(alCambiar) {
   }
   // Una emisión corta cada vez evita depender de una única locución muy larga.
   // Todos los pasos usan el lector compartido y el mismo token de cancelación.
-  function escucharSecuencia(textos) {
+  function escucharSecuencia(textos, { conBeat = false } = {}) {
     elegirVoz();
     if (!voz || !LectorTexto.disponible()) { revisar(); return false; }
     const cola = textos.map(t => String(t || '').trim()).filter(Boolean);
     if (!cola.length) return false;
-    document.dispatchEvent(new Event("rap:antes-voz"));
+    document.dispatchEvent(new CustomEvent("rap:antes-voz", { detail: { conBeat } }));
     const token = ++secuencia;
     let posicion = 0;
     reproduciendo = true; emitir('Escuchando en inglés…');

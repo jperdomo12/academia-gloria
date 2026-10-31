@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud de uso: acompañar explícitamente la lectura completa con beat en ambos órdenes, con paradas independientes y cancelación conjunta por contexto. Conserva exclusión para pronunciación individual; candidata probada, pendiente publicación y escucha perceptiva conjunta. |
 | 1.4 | 31/10/2026 | Product Owner + AI Collaborator | Ajustes #217 integrados/publicados en 1472f09c…; Pages #826 success y siete archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra publicación; conserva escucha perceptiva del nuevo nivel y uso real, sin estabilidad. |
 | 1.3 | 31/10/2026 | Product Owner + AI Collaborator | Ajuste solicitado tras uso real: escuchar cada parte completa mediante secuencia cancelable del lector existente y mayor techo de volumen del beat. Pruebas de 94 líneas, cancelación/errores y captura nativa al máximo sin clipping; candidata para verificar publicación y balance perceptivo. |
 | 1.2 | 31/10/2026 | Product Owner + AI Collaborator | #215 integrada en b6b67ee6…; Pages #824 success y nueve archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra integración/publicación técnica; conserva escucha humana/timestamps y uso real pendientes, sin declarar lista ni estable. |
@@ -416,7 +417,7 @@ Contexto creado únicamente al pulsar Empezar, reutilizado tras parada, con resu
 
 La falta de API o un fallo de inicio ofrece cuenta/pulso visual, sin bloquear texto, voz o vídeo. Una interrupción del contexto detiene el ensayo e informa cómo retomarlo. Se cancelan beat/cuentas al cambiar parte, seguir enlaces de sección/externos, usar Team, ocultar pestaña, salir del área (IntersectionObserver) o `pagehide`.
 
-`rap-voz.js` emite `rap:antes-voz` solo antes de una escucha válida. Studio detiene beat/cuentas antes de voz de Team o Studio. Empezar beat detiene pronunciación y relojes de Team. La cancelación por navegación se ejecuta en captura antes del nuevo control, para no cancelar por bubbling una pronunciación recién iniciada. Parada de Studio no cancela una voz ajena si no tiene una emisión propia activa.
+`rap-voz.js` emite `rap:antes-voz` solo antes de una escucha válida. Studio detiene beat/cuentas antes de pronunciación individual de Team o Studio. Empezar beat detiene esa pronunciación y relojes de Team; la lectura completa admite acompañamiento intencional según §15.8. La cancelación por navegación se ejecuta en captura antes del nuevo control, para no cancelar por bubbling una pronunciación recién iniciada. Parada de Studio no cancela una voz ajena si no tiene una emisión propia activa.
 
 Los relevos ofrecen las dos últimas/primeras líneas originales, cambio de voz y cuenta 3/2/1: sigue pulsos del beat activo o segundos si está parado. La toma ofrece lista breve, inicio/final y cuenta visual 3/2/1/🎬; detiene el beat para la toma externa. No hay estado de completado ni valoración.
 
@@ -455,7 +456,7 @@ Comprobación renderizada adicional del hostname/subruta de Pages con assets del
 El Product Owner valora positivamente Studio y solicita escuchar completos los tres tramos y aumentar el volumen máximo del beat. Se mantienen **Parte 1 / Parte 2 / Parte 3**, sin introducir otra clasificación A/B/C que pueda confundirse con las voces de Team.
 
 - `studioParteAudio` ofrece **Escuchar Parte N completa** junto a Detener voz/estado, antes del beat. Disponible también Con pistas/Sin letra. Deriva todas las líneas de la parte (16/47/31) y usa `textoParaEscuchar`, sin otra letra ni otra voz. La lectura no es una interpretación musical: el vídeo sigue marcando el RAP.
-- `prepararVozRap.escucharSecuencia` encadena locuciones cortas línea a línea mediante LectorTexto, evitando una única locución larga. Reutiliza selección de voz/velocidad, estado y token de cancelación. Un final cancelado, un error o un cambio de parte no puede reactivar la cola. Las emisiones simples anteriores llaman al mismo contrato con una sola entrada. Empezar beat cancela la parte; escuchar la parte detiene beat/cuentas.
+- `prepararVozRap.escucharSecuencia` encadena locuciones cortas línea a línea mediante LectorTexto, evitando una única locución larga. Reutiliza selección de voz/velocidad, estado y token de cancelación. Un final cancelado, un error o un cambio de parte no puede reactivar la cola. Las emisiones simples anteriores llaman al mismo contrato con una sola entrada. En #217, empezar beat cancelaba la parte y escuchar la parte detenía el beat; esa exclusión de la lectura completa evoluciona por solicitud del Product Owner en §15.8. La pronunciación individual mantiene su exclusión.
 - Beat: se elimina la atenuación fija adicional `×0.35`; el rango 0–100 y el inicio en 35 permanecen. A igual posición, amplitud ×2.857 (aprox. +9.1 dB), también en el máximo. No cambia percusión/tempo/cuenta ni se añade música. Captura nativa Chromium de 9 segundos al 100 %: pico **−2.7 dBFS**, media **−24.3 dBFS**, sin recorte en esa captura. Esto no certifica calidad percibida o todos los dispositivos.
 - Suite RAP/Studio superada: lectura exacta/en orden de las 94 líneas en las tres partes, incluido apoyo Sin letra; parada/cambio/beat/error con final tardío; ganancia 1 al 100 y 0 al mínimo. Conserva regresión Team, medios/persistencia, cinco anchos y accesibilidad. Revisión renderizada de controles completos desktop/móvil. SDK/identidad/voz controlados; prueba de beat nativa separada.
 
@@ -466,3 +467,17 @@ Fuente/parser/glosas/familias/vídeo/Drive/fecha/patrón intactos. Caché: `rap.
 [PR #217](https://github.com/jperdomo12/academia-gloria/pull/217) integrada en `1472f09c6f1fc16b585b844bfd06f0491cab1cbd`, head probado `84ffb3a413d85b454d0f7e63ec38b332c8fb7d3c`, árbol `0a240cb87bd2ce0131c2be66ab7742850a68cad8`. Pages **#826**, run `41216925677`, `success`. Siete archivos modificados de producto HTTP 200 e idénticos al árbol probado, con las referencias de caché de §15.6; tres comprobaciones adicionales de Studio data/CSS/fuente escolar intactos. Sin implementación/integración/publicación pendiente del ajuste. Se conserva escucha perceptiva del nuevo volumen/balance/voz y uso real antes de estabilidad.
 
 Archivos de producto de #217, bajo la misma carpeta RAP: `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-studio.js`, `rap-beat.js`. Además, test RAP y tres documentos (esta SPEC, principal, HandOff); once archivos exactos en la PR. No se publican audios de QA ni se modifica la fuente escolar o los timestamps.
+
+### 15.8 Acompañamiento intencional de lectura completa · 31/10/2026
+
+El Product Owner solicita activar el beat mientras escucha el texto completo. Se incorpora como decisión de uso: **lectura completa de una parte + beat opcional**, conservando la referencia musical del vídeo y sin prometer sincronización del habla con el pulso.
+
+- Mientras se reproduce una parte, el botón pasa a **Añadir beat a la lectura** (o añadir pulso visual si no hay Web Audio). Se puede arrancar voz→beat o beat→voz. No hay autoplay.
+- Detener voz no para el beat; Parar beat no cancela la cola de lectura. Al terminar la lectura el beat continúa para practicar, hasta pararlo o abandonar el contexto. La UI lo explica y mantiene ambos controles separados y el volumen del beat accesible.
+- `escucharSecuencia(textos, { conBeat: true })` expresa la intención de acompañamiento en el evento existente `rap:antes-voz`. Solo la acción de escuchar la parte completa usa esa opción. Locuciones individuales/bloques y RAP Team mantienen el valor predeterminado falso: detienen el beat para oír pronunciación. No se añade otro sintetizador ni cola.
+- Antes de iniciar lectura completa se cancelan voz/relojes de Team; añadir beat a esa lectura ya activa no vuelve a cancelar el lector global. Final/error/parada restablecen el estado de lectura; callbacks tardíos no reactivan la cola. Cambio de parte/sección, ocultación, salida del área y pagehide siguen cancelando ambos sonidos/cuentas.
+- Fuente, límites/67 tríos, vídeo/Drive/fecha/patrón, tempo/percusión/ganancia del beat y no persistencia/medios intactos. Caché: `rap.js?v=7`, Team `?v=6`, apoyos `?v=5`, voz `?v=4`, Studio `?v=3`; beat `?v=2` sin cambios.
+
+Suite RAP/Studio superada en tres roles simulados; pruebas nuevas de ambos órdenes, continuidad entre líneas con beat, paradas independientes, beat que sigue tras finalizar la parte, y cancelación conjunta al cambiar/ocultar/salir, junto a regresión de pronunciación individual/Team y 320–1440/teclado/reduced-motion. Revisión renderizada de ayuda/controles desktop/móvil y etiqueta dinámica. Prueba adicional: beat Web Audio nativo activo durante nueve segundos con la cola de voz **controlada por QA**, sin suspensión accidental; parada del beat conserva la lectura. Esa voz controlada **no es una mezcla de voz real capturada ni una prueba auditiva**.
+
+**Pendiente de escucha humana conjunta** para valorar balance/claridad en dispositivo real. La lectura sintética no canta ni se adapta al tempo. No se declara lista para uso real ni estable por superar tests de estados; se conserva el gate auditivo y el uso real del grupo, sin timestamps inventados.
