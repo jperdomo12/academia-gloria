@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.12 |
+| **Versión** | 1.13 |
 | **Estado** | RAP Team y RAP Studio integrados/publicados para revisión · escucha humana y uso real pendientes · no declarada estable |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.13 | 31/10/2026 | Product Owner + AI Collaborator | Cierra #217: escucha completa y volumen publicados/verificados por Pages #826; SPEC hija 1.4 §15.7. Conserva revisión perceptiva y uso real pendientes. |
 | 1.12 | 31/10/2026 | Product Owner + AI Collaborator | Ajustes de uso de Studio: parte completa con cola cancelable del lector compartido y mayor volumen máximo del beat. Conserva locuciones simples de Team, fuente/entrega y pendientes perceptivos; detalle en SPEC hija 1.3 §15.6. |
 | 1.11 | 31/10/2026 | Product Owner + AI Collaborator | Cierra publicación técnica de RAP Studio #215: Pages #824 y nueve archivos modificados idénticos al árbol probado; fuente escolar intacta. SPEC hija 1.2 conserva gate auditivo/timestamps pendientes, no lista para uso real ni estable. |
 | 1.10 | 31/10/2026 | Product Owner + AI Collaborator | RAP Studio aditivo en Graba desde SPEC hija aprobada: reparto derivado, memorización, relevos, beat y toma externa. Conserva fuente y entrega; escucha humana/timestamps no verificados documentados en la hija, no lista para uso real. |
@@ -738,3 +739,5 @@ RAP Team conserva aprendizaje/roles/sonidos; Studio deriva los tramos de grabaci
 #215 integrada en `b6b67ee6d08f85072cd6e6ed2625dedb2c1b1c9d`; Pages #824 (run `41211251812`) success. Nueve archivos modificados públicos idénticos a los probados y fuente escolar pública intacta. Cierra integración/publicación técnica; mantiene escucha humana, timestamps y uso real pendientes según SPEC hija 1.2 §15.5.
 
 Ajuste posterior solicitado por el Product Owner: escucha íntegra de cada parte y mayor volumen de beat, según SPEC hija 1.3 §15.6. La cola reutiliza LectorTexto y mantiene las emisiones simples de Team; errores/parada invalidan finales tardíos. No se duplica la fuente ni se cambia la interpretación escolar.
+
+#217 integrada/publicada mediante Pages #826 sobre `1472f09c…`, siete archivos modificados públicos idénticos al árbol probado. SPEC hija 1.4 §15.7 cierra implementación/publicación de los ajustes, conservando la revisión perceptiva y el uso real pendientes.
