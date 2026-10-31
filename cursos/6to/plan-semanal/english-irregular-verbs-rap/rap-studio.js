@@ -1,7 +1,7 @@
 import { crearPartesRap, pistaLineaRap } from "./rap-studio-data.js";
 import { segmentarLinea, extraerTrios } from "../trios.js";
-import { textoParaEscuchar } from "./rap-apoyos.js?v=4";
-import { prepararVozRap } from "./rap-voz.js?v=3";
+import { textoParaEscuchar } from "./rap-apoyos.js?v=5";
+import { prepararVozRap } from "./rap-voz.js?v=4";
 import { crearBeatRap, TEMPO_ENSAYO } from "./rap-beat.js?v=2";
 
 /* Preparación efímera de una toma externa. La letra y los apoyos siguen perteneciendo
@@ -29,7 +29,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
         )
         .join("")}</div>
       <p id="studioApoyoAyuda" class="studio-ayuda"></p>
-      <div class="studio-voz"><p>La voz lee la parte completa, línea a línea; no canta el RAP. Escuchar detiene el beat.</p><div class="studio-controles"><button type="button" id="studioParteAudio" data-studio-parte-audio aria-describedby="studioVozEstado">🔊 Escuchar parte completa</button><button type="button" id="studioVozParar" disabled>■ Detener voz</button></div><p id="studioVozEstado" role="status"></p></div>
+      <div class="studio-voz"><p>La voz lee la parte, no canta ni se sincroniza con el beat. Puedes combinarlos para ensayar y ajustar el volumen de fondo.</p><div class="studio-controles"><button type="button" id="studioParteAudio" data-studio-parte-audio aria-describedby="studioVozEstado">🔊 Escuchar parte completa</button><button type="button" id="studioVozParar" disabled>■ Detener voz</button></div><p id="studioVozEstado" role="status"></p><p>Cada sonido tiene su parada. El beat continúa al terminar la lectura para que puedas practicar.</p></div>
       <aside class="studio-beat" aria-labelledby="studioBeatTitulo"><div class="studio-beat-cabecera"><div><h4 id="studioBeatTitulo">🎵 Un pulso para ensayar</h4><p>El beat es para ensayar. El vídeo del cole marca el ritmo final.</p></div><span class="studio-tempo">${TEMPO_ENSAYO} pulsos/min<br>Ensayo · no tempo oficial</span></div>
         <div class="studio-pulsos" aria-label="Cuatro pulsos, con cuenta de entrada">${[1, 2, 3, 4].map((n) => `<span data-studio-pulso="${n}">${n}</span>`).join("")}<b id="studioPulsoTexto" aria-live="off">Parado</b></div>
         <div class="studio-controles"><button type="button" id="studioBeatInicio">▶ Empezar beat</button><button type="button" id="studioBeatParar" disabled>■ Parar</button><label>Volumen del beat<input id="studioVolumen" type="range" min="0" max="100" value="35" step="5"></label></div><p id="studioBeatEstado" class="studio-ayuda" role="status"></p>
@@ -51,15 +51,23 @@ export function iniciarRapStudio(host, fragmentos, team) {
     cuenta = null,
     temporizador = null;
   let vozEstado = { disponible: false, reproduciendo: false };
+  let parteEnVoz = false, beatSoloVisual = false;
+  function pintarInicioBeat() {
+    $("#studioBeatInicio").textContent = beatSoloVisual
+      ? (parteEnVoz && vozEstado.reproduciendo ? "▶ Añadir pulso visual a la lectura" : "▶ Empezar pulso visual")
+      : (parteEnVoz && vozEstado.reproduciendo ? "▶ Añadir beat a la lectura" : "▶ Empezar beat");
+  }
   function botonesVoz() {
     host
       .querySelectorAll("[data-studio-audio], [data-studio-parte-audio]")
       .forEach((b) => (b.disabled = !vozEstado.disponible));
     $("#studioVozParar").disabled = !vozEstado.reproduciendo;
     $("#studioVozEstado").textContent = vozEstado.mensaje || "";
+    pintarInicioBeat();
   }
   const voz = prepararVozRap((e) => {
     vozEstado = e;
+    if (!e.reproduciendo) parteEnVoz = false;
     botonesVoz();
   });
   function pararCuenta() {
@@ -88,8 +96,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
   }
   const beat = crearBeatRap({
     antesDeEmpezar() {
-      voz.detener();
-      team?.detener();
+      if (!parteEnVoz || !vozEstado.reproduciendo) { voz.detener(); team?.detener(); }
       pararCuenta();
     },
     alPulso(p) {
@@ -106,9 +113,8 @@ export function iniciarRapStudio(host, fragmentos, team) {
     alEstado(e) {
       $("#studioBeatInicio").disabled = e.activo;
       $("#studioBeatParar").disabled = !e.activo;
-      $("#studioBeatInicio").textContent = e.soloVisual
-        ? "▶ Empezar pulso visual"
-        : "▶ Empezar beat";
+      beatSoloVisual = e.soloVisual;
+      pintarInicioBeat();
       $("#studioVolumen").disabled = e.soloVisual;
       $("#studioBeatEstado").textContent = e.mensaje;
       if (!e.activo && cuenta?.conBeat) pararCuenta();
@@ -282,7 +288,11 @@ export function iniciarRapStudio(host, fragmentos, team) {
   $("#studioVolumen").addEventListener("input", (e) =>
     beat.volumen(Number(e.target.value) / 100),
   );
-  $("#studioParteAudio").addEventListener("click", () => voz.escucharSecuencia(partes[seleccion].lineas.map(textoParaEscuchar)));
+  $("#studioParteAudio").addEventListener("click", () => {
+    team?.detener();
+    parteEnVoz = true;
+    voz.escucharSecuencia(partes[seleccion].lineas.map(textoParaEscuchar), { conBeat: true });
+  });
   $("#studioVozParar").addEventListener("click", () => voz.detener());
   $("#studioCuentaParar").addEventListener("click", pararCuenta);
   $("#studioTomaParar").addEventListener("click", pararCuenta);
@@ -297,9 +307,11 @@ export function iniciarRapStudio(host, fragmentos, team) {
       trios.findIndex((t) => t.linea === partes[seleccion].inicio),
     );
   });
-  document.addEventListener("rap:antes-voz", () => {
-    if (beat.activo)
-      beat.detener("Beat parado para escuchar la pronunciación.");
+  document.addEventListener("rap:antes-voz", e => {
+    if (!e.detail?.conBeat) {
+      parteEnVoz = false;
+      if (beat.activo) beat.detener("Beat parado para escuchar la pronunciación.");
+    }
     pararCuenta();
   });
   host.querySelectorAll("details").forEach((d) =>
