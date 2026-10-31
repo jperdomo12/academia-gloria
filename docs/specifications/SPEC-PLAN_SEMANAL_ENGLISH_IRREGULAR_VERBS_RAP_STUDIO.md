@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.1 |
-| **Estado** | Implementada como candidata técnica · escucha humana pendiente · no lista para uso real |
+| **Versión** | 1.2 |
+| **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 31/10/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 31/10/2026 | Product Owner + AI Collaborator | #215 integrada en b6b67ee6…; Pages #824 success y nueve archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra integración/publicación técnica; conserva escucha humana/timestamps y uso real pendientes, sin declarar lista ni estable. |
 | 1.1 | 31/10/2026 | Product Owner + AI Collaborator | Implementa RAP Studio dentro de Graba, reparto derivado 15/31/21, tres apoyos, relevos, beat local opcional y toma externa. Registra pruebas/visual/nativo, fidelidad y límites: sin timestamps publicados ni escucha humana superada; no lista para uso real. |
 | 1.0 | 31/10/2026 | Product Owner + AI Collaborator | Decisión aprobada en Análisis: preparar reparto, memorización, relevos y toma externa con beat instrumental propio opcional, sin medios ni persistencia. |
 
@@ -435,4 +436,14 @@ Prueba adicional con **Web Audio nativa en Chromium/Linux**, sin mock del motor:
 
 **ESCUCHA HUMANA PENDIENTE.** Este entorno permite generar/capturar señal pero no escucharla humanamente. No se afirma que el beat suene bien, que el volumen resulte equilibrado con voces reales o que su convivencia perceptiva con pronunciación esté validada. Los mocks prueban exclusión de reproducción y eventos; la señal nativa prueba generación, no audición. Antes de declarar listo para uso real hay que escuchar beat/cuenta/volumen/parada y alternar con pronunciación en el navegador real. El vídeo sigue siendo autoridad para ritmo final. Conserva también la escucha pendiente de ayudas de RAP Team documentada en la SPEC principal.
 
-Implementación técnica candidata; **no lista para uso real y no estable** hasta esa escucha y posterior uso real del grupo. La disponibilidad de la revisión/merge/Pages se registra en la PR y en el HandOff, sin convertir publicación en aceptación auditiva.
+Implementación técnica candidata; **no lista para uso real hasta realizar esa escucha; no estable hasta validar el uso real del grupo.** La disponibilidad de la revisión/merge/Pages se registra en la PR y en el HandOff, sin convertir publicación en aceptación auditiva.
+
+### 15.5 Integración y publicación verificadas
+
+[PR #215](https://github.com/jperdomo12/academia-gloria/pull/215) revisada e integrada, dentro de la autorización expresa del encargo. Head probado `d48ccfb81c1293d428cda88bc42199cf24177cde`, árbol `e3c7ed9b2711ea25b2e32e1468d6b25add554634`, merge `b6b67ee6d08f85072cd6e6ed2625dedb2c1b1c9d`. Pages **#824**, run `41211251812`, `success`. Nueve archivos modificados de producto HTTP 200 e idénticos byte a byte al árbol probado; `rap-data.js` público también HTTP 200 e intacto (diez comprobaciones). Caché coherente: HTML → `rap.js?v=5` → `rap-team.js?v=4` → `rap-apoyos.js?v=3` → `rap-voz.js?v=2`; Studio reutiliza las mismas referencias.
+
+Archivos exactos de producto, todos bajo `cursos/6to/plan-semanal/english-irregular-verbs-rap/`: `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-beat.js`, `rap-studio-data.js`, `rap-studio.js`, `rap-studio.css`. Test ampliado: `tests/plan-semanal-rap-browser.cjs`. Documentación: esta SPEC, la SPEC principal y HandOff; trece archivos totales en #215.
+
+Comprobación renderizada adicional del hostname/subruta de Pages con assets del mismo árbol e identidad/SDK simulados: imports, selección y apoyos funcionan bajo `/academia-gloria`. El intento de navegador público directo en Chromium de Desarrollo recibió `ERR_EMPTY_RESPONSE`; por eso no se presenta como navegación pública autenticada. La verificación HTTP/bytes publicada, el render local y la simulación de subruta son evidencias diferentes.
+
+**Sin implementación/integración/publicación técnica pendiente de #215.** Pendientes reales: escucha humana del beat/cuenta/volumen/parada y alternancia con voz; segundos del vídeo antes de añadir enlaces temporales; después, utilidad/autonomía del grupo. La publicación facilita revisión técnica/adulta y no satisface el criterio auditivo §12.21: **no lista para uso real ni estable**. Conservar todos los pendientes previos de la SPEC principal.
