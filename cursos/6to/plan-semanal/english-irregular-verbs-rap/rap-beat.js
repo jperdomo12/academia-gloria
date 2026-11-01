@@ -50,11 +50,11 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
     alPulso(null);
     informar(mensaje);
   }
-  function sonido(tipo, tiempo) {
+  function sonido(tipo, tiempo, intensidad = 1) {
     const c = contexto,
       g = c.createGain();
     let fuente, filtro;
-    const duracion = tipo === "bombo" ? 0.2 : tipo === "caja" ? 0.12 : 0.045;
+    const duracion = tipo === "bombo" ? 0.2 : tipo === "caja" ? 0.12 : tipo === "abierto" ? 0.11 : 0.045;
     if (tipo === "bombo" || tipo === "cuenta") {
       fuente = c.createOscillator();
       fuente.type = "sine";
@@ -80,9 +80,9 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
           ? 0.34
           : tipo === "cuenta"
             ? 0.28
-            : 0.11;
+            : tipo === "clap" ? 0.10 : 0.11;
     g.gain.setValueAtTime(0.0001, tiempo);
-    g.gain.linearRampToValueAtTime(nivel, tiempo + 0.003);
+    g.gain.linearRampToValueAtTime(nivel * intensidad, tiempo + 0.003);
     g.gain.exponentialRampToValueAtTime(0.0001, tiempo + duracion);
     g.connect(salida);
     fuentes.add(fuente);
@@ -111,15 +111,17 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
       if (!soloVisual) {
         if (contando) sonido("cuenta", proximo);
         else {
-          sonido("plato", proximo);
-          if (paso === 0 || paso === 4) sonido("bombo", proximo);
-          if (paso === 2 || paso === 6) sonido("caja", proximo);
+          // Dos compases: bombo sincopado, caja/clap en 2 y 4, hats con acentos.
+          sonido(paso === 7 || paso === 15 ? "abierto" : "plato", proximo, paso % 2 ? .62 : .9);
+          if ([0, 3, 4, 8, 11, 12, 15].includes(paso)) sonido("bombo", proximo, paso === 3 || paso === 11 ? .8 : 1);
+          if ([2, 6, 10, 14].includes(paso)) { sonido("caja", proximo); sonido("clap", proximo + .014); }
+          if (paso === 5 || paso === 13) sonido("caja", proximo, .16);
         }
       }
       if (contando || paso % 2 === 0) {
         const pulso = {
           fase: contando ? "entrada" : "beat",
-          numero: contando ? entrada + 1 : paso / 2 + 1,
+          numero: contando ? entrada + 1 : Math.floor((paso % 8) / 2) + 1,
         };
         const id = setTimeout(
           () => {
@@ -130,9 +132,10 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
         );
         visuales.add(id);
       }
-      proximo += 60 / TEMPO_ENSAYO / (contando ? 1 : 2);
+      // Swing ligero: cada par de corcheas conserva exactamente un pulso.
+      proximo += (60 / TEMPO_ENSAYO) * (contando ? 1 : paso % 2 === 0 ? .56 : .44);
       if (contando) entrada++;
-      else paso = (paso + 1) % 8;
+      else paso = (paso + 1) % 16;
     }
     reloj = setTimeout(() => programar(token), 25);
   }
@@ -150,7 +153,11 @@ export function crearBeatRap({ alPulso, alEstado, antesDeEmpezar }) {
             if (!contexto) {
               contexto = new Audio();
               salida = contexto.createGain();
-              salida.connect(contexto.destination);
+              // Control de picos del conjunto de percusión, conservando el volumen propio.
+              const compresor = contexto.createDynamicsCompressor(), margen = contexto.createGain();
+              compresor.threshold.value = -3; compresor.knee.value = 0; compresor.ratio.value = 20;
+              compresor.attack.value = 0; compresor.release.value = .1; margen.gain.value = .8;
+              salida.connect(compresor); compresor.connect(margen); margen.connect(contexto.destination);
               ruido = contexto.createBuffer(
                 1,
                 Math.ceil(contexto.sampleRate * 0.25),

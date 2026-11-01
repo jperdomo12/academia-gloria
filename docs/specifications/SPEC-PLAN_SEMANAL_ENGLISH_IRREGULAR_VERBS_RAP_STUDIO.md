@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.6 |
+| **Versión** | 1.7 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
-| **Última actualización** | 31/10/2026 |
+| **Última actualización** | 01/11/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Preparación del reparto real, memorización, coordinación y toma de vídeo del RAP escolar, incluyendo beat instrumental opcional de ensayo |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 01/11/2026 | Product Owner + AI Collaborator | Solicitud de uso: preferencia femenina/selector, lectura ágil, seguimiento por línea y palabras por eventos reales y beat boom-bap propio de dos compases. Pruebas/visual/medición nativa; publicación y escucha humana pendientes, sin estabilidad. |
 | 1.6 | 31/10/2026 | Product Owner + AI Collaborator | #219 integrada/publicada en 1844b08b…; Pages #828 success, seis archivos modificados públicos idénticos al árbol probado y cuatro recursos conservados. Cierra publicación de acompañamiento; escucha humana conjunta y uso real pendientes. |
 | 1.5 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud de uso: acompañar explícitamente la lectura completa con beat en ambos órdenes, con paradas independientes y cancelación conjunta por contexto. Conserva exclusión para pronunciación individual; candidata probada, pendiente publicación y escucha perceptiva conjunta. |
 | 1.4 | 31/10/2026 | Product Owner + AI Collaborator | Ajustes #217 integrados/publicados en 1472f09c…; Pages #826 success y siete archivos modificados públicos idénticos al árbol probado, fuente intacta. Cierra publicación; conserva escucha perceptiva del nuevo nivel y uso real, sin estabilidad. |
@@ -490,3 +491,25 @@ Suite RAP/Studio superada en tres roles simulados; pruebas nuevas de ambos órde
 Archivos de producto de #219 bajo la carpeta RAP existente: `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-studio.js`. Además, test RAP y tres documentos (esta SPEC, principal y HandOff); diez archivos exactos en la PR. No se añaden rutas, transcripciones, audio escolar, persistencia o medios.
 
 La publicación verificada por HTTP/bytes no es una prueba de navegador público autenticado o escucha humana. La revisión renderizada y de estados es local con identidad/SDK/voz controlados, y la comprobación adicional de beat nativo mantiene esa distinción. **Escuchar la mezcla real en el dispositivo para valorar claridad/balance sigue pendiente**, antes de declarar lista para uso real; estabilidad pendiente del uso del grupo. No se promete sincronización musical ni se publican timestamps sin verificar.
+
+### 15.10 Voz, seguimiento y beat hip-hop · decisión de uso 01/11/2026
+
+El Product Owner comunica que gustó la experiencia y solicita voz femenina/más ritmo, texto de lo que suena con indicador tipo karaoke y un beat más cercano al RAP. Se implementa sobre el mismo recorrido y letra, desde `main` `9eedf81a984dbe6d45d75efddd2016572daaa706`, rama `feat/rap-studio-seguimiento-voz`.
+
+**Voz.** Se priorizan voces inglesas etiquetadas Female por el proveedor o identificadores Microsoft femeninos verificados en sus listas oficiales (Sonia/Libby/Hazel/Susan/Zira/Jenny/Aria/Catherine/Linda/Heera/Neerja). No se deduce género de cualquier nombre ni se sube pitch para fingirlo. Preferencia: femenina GB, después femenina US y otra femenina inglesa; si no hay ninguna identificable, voz inglesa disponible y aviso honesto. Selector de voces reales del dispositivo en Studio, sin persistencia; selección manual respetada y carga tardía atendida. Cambiar voz/velocidad o perder/cambiar el proveedor durante una cola cancela la lectura, sin finales tardíos. No se instala ni contrata un servicio de voz.
+
+Lectura Clara (1), Más ágil · ensayo (1.12, inicial en Studio) y Despacio (0.8). Team conserva velocidad inicial 1 y sus controles; también se beneficia de la preferencia femenina del adaptador. **Agilidad no equivale a voz rapeada:** la síntesis nativa sigue leyendo, no canta ni se sincroniza musicalmente. Las voces y eventos disponibles dependen del equipo/navegador; no se promete una voz femenina universal.
+
+**Seguimiento.** «Seguir la lectura» muestra un panel Ahora suena con la línea completa y posición dentro de la parte. El lector compartido añade callbacks opcionales `alIniciar` (`start`) y `alLimite` (`boundary`), compatibles con consumidores previos. El adaptador valida token y línea vigente: inicio real muestra línea; final la retira antes de esperar la siguiente; límites `word` válidos destacan la palabra mediante charIndex del texto realmente emitido. Sin eventos de palabra conserva seguimiento por línea; sin inicio no inventa un comienzo. No se usan duración estimada, barridos temporizados ni marcas de la transcripción del vídeo. Eventos tardíos, de otra línea, índices inválidos y cancelaciones no actualizan el panel. Texto derivado de la fuente, sin otra transcripción.
+
+Panel fijo dentro del área mediante sticky, sin scroll ni foco automáticos; marca con color/subrayado, sin animación y aria-live apagado para no competir con la voz. Sin letra desactiva ese apoyo; se puede recuperar expresamente con la casilla. Stop/final/error/cambio/salida lo limpian. Conserva paradas independientes de voz/beat y acompañamiento opcional.
+
+**Beat.** Patrón propio de dos compases (16 corcheas): bombo sincopado, caja/clap en 2/4, notas fantasma, hats con acentos/apertura y swing 56/44. Mantiene 84 pulsos/min, cuatro de entrada, volumen 0–100, sin autoplay/muestras externas. Compresión de salida (umbral −3 dB, ratio 20, ataque 0, release 0.1) y margen posterior 0.8 para controlar la suma de capas; no se copia la música escolar. La escucha humana de su carácter musical y balance sigue pendiente.
+
+**Validación.** Suite RAP/Studio superada: preferencia femenina y selección manual, voces desconocidas/no disponibles/tardías, velocidad, inicio/límite/final y línea posterior, palabra real, proveedor sin boundaries, cancelación/índices/eventos tardíos, Sin letra/recuperación; además regresión de partes/94 líneas/Team, acompañamiento y paradas, medios/escrituras, cinco anchos y teclado/reduced-motion. Compatibilidad española del lector compartido comprobada. Revisión renderizada real de controles/panel/marca en 320/390/768/1024/1440. Captura Web Audio nativa de nueve segundos al 100 % y medición de pico antes de codificar, sin saturación; SDK/identidad/voz/eventos de seguimiento son controlados por QA, **no voz femenina realmente oída**. Medidor/grabador son solo QA, no forman parte del producto y no usan micrófono.
+
+**Límites.** No se certifica audición humana, pronunciación/calidad femenina en todos los equipos ni musicalidad del conjunto. Falta escuchar las voces reales elegidas, el beat y su mezcla antes de declarar lista para uso real; después validar comprensión/utilidad con el grupo, sin estabilidad. Fuente, 67 tríos, límites, entrega, vídeo/Drive/fecha/patrón y ausencia de persistencia/cámara/micrófono intactos; no timestamps nuevos.
+
+Referencias primarias de la selección/eventos: [voces Windows](https://support.microsoft.com/en-us/accessibility/windows/narrator/appendix-a-supported-languages-and-voices), [voces Microsoft](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=tts), [boundary](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/boundary_event). Las listas orientan la preferencia de identificadores; no garantizan que Narrator/Azure estén expuestos como voces de Web Speech en un navegador concreto. La disponibilidad real se consulta siempre en el dispositivo.
+
+Caché: HTML → `rap.js?v=8`, Team `?v=7`, apoyos `?v=6`, voz `?v=5`, Studio `?v=4`, beat `?v=3`, CSS Studio `?v=2`, lector compartido `?v=3`. Otros consumidores no requieren adoptar los callbacks nuevos.

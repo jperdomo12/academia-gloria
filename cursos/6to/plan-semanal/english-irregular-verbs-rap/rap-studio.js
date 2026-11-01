@@ -1,8 +1,8 @@
 import { crearPartesRap, pistaLineaRap } from "./rap-studio-data.js";
 import { segmentarLinea, extraerTrios } from "../trios.js";
-import { textoParaEscuchar } from "./rap-apoyos.js?v=5";
-import { prepararVozRap } from "./rap-voz.js?v=4";
-import { crearBeatRap, TEMPO_ENSAYO } from "./rap-beat.js?v=2";
+import { textoParaEscuchar } from "./rap-apoyos.js?v=6";
+import { prepararVozRap } from "./rap-voz.js?v=5";
+import { crearBeatRap, TEMPO_ENSAYO } from "./rap-beat.js?v=3";
 
 /* Preparación efímera de una toma externa. La letra y los apoyos siguen perteneciendo
  * a sus fuentes existentes; no se solicitan medios ni se guarda estado. */
@@ -29,8 +29,9 @@ export function iniciarRapStudio(host, fragmentos, team) {
         )
         .join("")}</div>
       <p id="studioApoyoAyuda" class="studio-ayuda"></p>
-      <div class="studio-voz"><p>La voz lee la parte, no canta ni se sincroniza con el beat. Puedes combinarlos para ensayar y ajustar el volumen de fondo.</p><div class="studio-controles"><button type="button" id="studioParteAudio" data-studio-parte-audio aria-describedby="studioVozEstado">🔊 Escuchar parte completa</button><button type="button" id="studioVozParar" disabled>■ Detener voz</button></div><p id="studioVozEstado" role="status"></p><p>Cada sonido tiene su parada. El beat continúa al terminar la lectura para que puedas practicar.</p></div>
-      <aside class="studio-beat" aria-labelledby="studioBeatTitulo"><div class="studio-beat-cabecera"><div><h4 id="studioBeatTitulo">🎵 Un pulso para ensayar</h4><p>El beat es para ensayar. El vídeo del cole marca el ritmo final.</p></div><span class="studio-tempo">${TEMPO_ENSAYO} pulsos/min<br>Ensayo · no tempo oficial</span></div>
+      <div class="studio-voz"><div class="studio-opciones-voz"><label>Voz inglesa<select id="studioVozSeleccion"></select></label><label>Lectura<select id="studioLectura"><option value="normal">Clara</option><option value="agil" selected>Más ágil · ensayo</option><option value="despacio">Despacio</option></select></label></div><p id="studioVozPreferida" class="studio-ayuda"></p><p>La voz lee la parte, no canta ni se sincroniza con el beat. Puedes combinarlos para ensayar y ajustar el volumen de fondo.</p><div class="studio-controles"><button type="button" id="studioParteAudio" data-studio-parte-audio aria-describedby="studioVozEstado">🔊 Escuchar parte completa</button><button type="button" id="studioVozParar" disabled>■ Detener voz</button></div><p id="studioVozEstado" role="status"></p><label class="studio-seguir"><input id="studioSeguir" type="checkbox" checked> Seguir la lectura</label><p class="studio-ayuda">Se muestra la línea que suena. Algunas voces también permiten destacar palabras.</p><p>Cada sonido tiene su parada. El beat continúa al terminar la lectura para que puedas practicar.</p></div>
+      <aside id="studioSeguimiento" class="studio-seguimiento" aria-label="Texto que suena" hidden><p id="studioPosicion" class="rap-kicker"></p><p id="studioLineaActual" lang="en" aria-live="off"></p></aside>
+      <aside class="studio-beat" aria-labelledby="studioBeatTitulo"><div class="studio-beat-cabecera"><div><h4 id="studioBeatTitulo">🎵 Beat hip-hop para ensayar</h4><p>El beat es para ensayar. El vídeo del cole marca el ritmo final.</p></div><span class="studio-tempo">${TEMPO_ENSAYO} pulsos/min<br>Ensayo · no tempo oficial</span></div>
         <div class="studio-pulsos" aria-label="Cuatro pulsos, con cuenta de entrada">${[1, 2, 3, 4].map((n) => `<span data-studio-pulso="${n}">${n}</span>`).join("")}<b id="studioPulsoTexto" aria-live="off">Parado</b></div>
         <div class="studio-controles"><button type="button" id="studioBeatInicio">▶ Empezar beat</button><button type="button" id="studioBeatParar" disabled>■ Parar</button><label>Volumen del beat<input id="studioVolumen" type="range" min="0" max="100" value="35" step="5"></label></div><p id="studioBeatEstado" class="studio-ayuda" role="status"></p>
       </aside>
@@ -52,6 +53,19 @@ export function iniciarRapStudio(host, fragmentos, team) {
     temporizador = null;
   let vozEstado = { disponible: false, reproduciendo: false };
   let parteEnVoz = false, beatSoloVisual = false;
+  let actual = null;
+  function pintarSeguimiento() {
+    const visible = parteEnVoz && vozEstado.reproduciendo && $("#studioSeguir").checked;
+    $("#studioSeguimiento").hidden = !visible;
+    $("#studioLineaActual").replaceChildren();
+    $("#studioPosicion").textContent = actual ? `Ahora suena · Línea ${actual.indice + 1} de ${actual.total}` : 'Esperando a la voz…';
+    if (!visible || !actual) return;
+    const p = $("#studioLineaActual"), { texto, charIndex } = actual;
+    const palabra = Number.isInteger(charIndex) ? [...texto.matchAll(/[A-Za-z]+(?:['’][A-Za-z]+)*/g)].find(m => charIndex >= m.index && charIndex < m.index + m[0].length) : null;
+    if (!palabra) { p.textContent = texto; return; }
+    p.append(document.createTextNode(texto.slice(0, palabra.index)));
+    const marca = crear('mark', '', palabra[0]); marca.setAttribute('aria-current', 'true'); p.append(marca, document.createTextNode(texto.slice(palabra.index + palabra[0].length)));
+  }
   function pintarInicioBeat() {
     $("#studioBeatInicio").textContent = beatSoloVisual
       ? (parteEnVoz && vozEstado.reproduciendo ? "▶ Añadir pulso visual a la lectura" : "▶ Empezar pulso visual")
@@ -64,12 +78,23 @@ export function iniciarRapStudio(host, fragmentos, team) {
     $("#studioVozParar").disabled = !vozEstado.reproduciendo;
     $("#studioVozEstado").textContent = vozEstado.mensaje || "";
     pintarInicioBeat();
+    const selector = $("#studioVozSeleccion"), voces = vozEstado.voces || [];
+    const clave = JSON.stringify(voces);
+    if (selector.dataset.voces !== clave) {
+      selector.replaceChildren();
+      voces.forEach(v => { const op = crear('option', '', `${v.nombre} · ${v.idioma}${v.femenina ? ' · femenina' : ''}`); op.value = v.id; selector.append(op); });
+      selector.dataset.voces = clave;
+    }
+    selector.disabled = !vozEstado.disponible; selector.value = vozEstado.vozId || '';
+    $("#studioLectura").disabled = !vozEstado.disponible;
+    $("#studioVozPreferida").textContent = !vozEstado.disponible ? 'La letra y el vídeo siguen disponibles sin voz.' : vozEstado.femenina ? 'Voz femenina seleccionada. Puedes probar otras voces de este dispositivo.' : voces.some(v => v.femenina) ? 'Puedes elegir una de las opciones marcadas «femenina».' : 'Este navegador no identifica una voz femenina. Puedes elegir y escuchar sus voces inglesas disponibles.';
+    pintarSeguimiento();
   }
   const voz = prepararVozRap((e) => {
     vozEstado = e;
-    if (!e.reproduciendo) parteEnVoz = false;
+    if (!e.reproduciendo) { parteEnVoz = false; actual = null; }
     botonesVoz();
-  });
+  }, { velocidadInicial: 1.12 });
   function pararCuenta() {
     clearTimeout(temporizador);
     temporizador = null;
@@ -206,6 +231,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
     detenerTodo();
     seleccion = i;
     apoyo = "completo";
+    $("#studioSeguir").checked = true;
     $("#studioEnsayo").hidden = false;
     $("#studioMiParte").textContent = "MI PARTE · SOLO DURANTE ESTA SESIÓN";
     const parte = partes[i];
@@ -280,6 +306,7 @@ export function iniciarRapStudio(host, fragmentos, team) {
     b.addEventListener("click", () => {
       voz.detener();
       apoyo = b.dataset.studioApoyo;
+      if (apoyo === "sin") { $("#studioSeguir").checked = false; pintarSeguimiento(); }
       pintarLetra();
     }),
   );
@@ -291,8 +318,15 @@ export function iniciarRapStudio(host, fragmentos, team) {
   $("#studioParteAudio").addEventListener("click", () => {
     team?.detener();
     parteEnVoz = true;
-    voz.escucharSecuencia(partes[seleccion].lineas.map(textoParaEscuchar), { conBeat: true });
+    actual = null;
+    voz.escucharSecuencia(partes[seleccion].lineas.map(textoParaEscuchar), { conBeat: true,
+      alLinea: e => { actual = e.fase === "fin" ? null : { ...e, charIndex: null }; pintarSeguimiento(); },
+      alPalabra: e => { if (actual?.indice === e.indice) { actual = { ...actual, charIndex: e.charIndex }; pintarSeguimiento(); } }
+    });
   });
+  $("#studioVozSeleccion").addEventListener("change", e => voz.cambiarVoz(e.target.value));
+  $("#studioLectura").addEventListener("change", e => voz.cambiarVelocidad(e.target.value));
+  $("#studioSeguir").addEventListener("change", pintarSeguimiento);
   $("#studioVozParar").addEventListener("click", () => voz.detener());
   $("#studioCuentaParar").addEventListener("click", pararCuenta);
   $("#studioTomaParar").addEventListener("click", pararCuenta);

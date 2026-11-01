@@ -1,5 +1,5 @@
 import { extraerTrios } from "../trios.js";
-import { crearApoyosRap } from "./rap-apoyos.js?v=5";
+import { crearApoyosRap } from "./rap-apoyos.js?v=6";
 
 /* Estudio efímero. Una única fuente escolar; sin medios, evaluación o almacenamiento. */
 export function iniciarRapTeam(host, fragmentos) {
