@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP_STUDIO.md` |
-| **Versión** | 1.7 |
+| **Versión** | 1.8 |
 | **Estado** | Integrada y publicada para revisión técnica · escucha humana pendiente · no lista para uso real |
 | **Última actualización** | 01/11/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English / Irregular Verbs RAP |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8 | 01/11/2026 | Product Owner + AI Collaborator | #221 integrada/publicada en f4e79737…; Pages #830 success y nueve archivos de producto públicos idénticos al árbol probado, fuente/reparto intactos. Cierra publicación, conserva escucha humana/compatibilidad real y uso del grupo pendientes. |
 | 1.7 | 01/11/2026 | Product Owner + AI Collaborator | Solicitud de uso: preferencia femenina/selector, lectura ágil, seguimiento por línea y palabras por eventos reales y beat boom-bap propio de dos compases. Pruebas/visual/medición nativa; publicación y escucha humana pendientes, sin estabilidad. |
 | 1.6 | 31/10/2026 | Product Owner + AI Collaborator | #219 integrada/publicada en 1844b08b…; Pages #828 success, seis archivos modificados públicos idénticos al árbol probado y cuatro recursos conservados. Cierra publicación de acompañamiento; escucha humana conjunta y uso real pendientes. |
 | 1.5 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud de uso: acompañar explícitamente la lectura completa con beat en ambos órdenes, con paradas independientes y cancelación conjunta por contexto. Conserva exclusión para pronunciación individual; candidata probada, pendiente publicación y escucha perceptiva conjunta. |
@@ -513,3 +514,11 @@ Panel fijo dentro del área mediante sticky, sin scroll ni foco automáticos; ma
 Referencias primarias de la selección/eventos: [voces Windows](https://support.microsoft.com/en-us/accessibility/windows/narrator/appendix-a-supported-languages-and-voices), [voces Microsoft](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=tts), [boundary](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/boundary_event). Las listas orientan la preferencia de identificadores; no garantizan que Narrator/Azure estén expuestos como voces de Web Speech en un navegador concreto. La disponibilidad real se consulta siempre en el dispositivo.
 
 Caché: HTML → `rap.js?v=8`, Team `?v=7`, apoyos `?v=6`, voz `?v=5`, Studio `?v=4`, beat `?v=3`, CSS Studio `?v=2`, lector compartido `?v=3`. Otros consumidores no requieren adoptar los callbacks nuevos.
+
+### 15.11 Publicación de voz, seguimiento y beat
+
+[PR #221](https://github.com/jperdomo12/academia-gloria/pull/221) integrada en `f4e797370ea3ca7bf7705b34661a64fa641a5d39`, head probado `c33ae354c9096d361193f8b1d8e786b1351a9e3c`, árbol `a83217202721ae20c075fa5c8ac29168257ffd83`. Pages **#830**, run `41298365177`, `success`. Nueve archivos modificados de producto HTTP 200 e idénticos byte a byte al árbol probado, con versiones de §15.10; fuente y reparto públicos también intactos (once comprobaciones). Sin implementación/integración/publicación pendiente de esta solicitud.
+
+Archivos de producto: lector compartido `compartido/js/lector-texto.js`; dentro de la carpeta RAP existente, `index.html`, `rap.js`, `rap-team.js`, `rap-apoyos.js`, `rap-voz.js`, `rap-studio.js`, `rap-beat.js`, `rap-studio.css`. Además test RAP y tres documentos (esta SPEC, principal, HandOff); trece archivos exactos. Fuente, parser, glosas y reparto sin modificación.
+
+Medición final de QA antes de codificar: pico **0.8321** al 100 % en nueve segundos de beat nativo, sin saturación de esa señal. La captura de voz/eventos controlados y el render local no son audición humana ni certificación de voces/eventos de todos los dispositivos, ni navegador público autenticado. HTTP/bytes verifica disponibilidad del producto probado. **Pendientes reales:** elegir/escuchar las voces del dispositivo, valorar la agilidad, el nuevo beat y el balance, y probar el seguimiento con su proveedor real antes de declarar lista para uso real. Sigue pendiente uso del grupo antes de estabilidad y segundos verificados antes de enlaces temporales; sin nuevas decisiones funcionales abiertas.

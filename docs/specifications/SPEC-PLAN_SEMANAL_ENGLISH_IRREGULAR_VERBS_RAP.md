@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_ENGLISH_IRREGULAR_VERBS_RAP.md` |
-| **Versión** | 1.16 |
+| **Versión** | 1.17 |
 | **Estado** | RAP Team y RAP Studio integrados/publicados para revisión · escucha humana y uso real pendientes · no declarada estable |
 | **Última actualización** | 01/11/2026 |
 | **Propietario** | Experiencia curricular · Plan Semanal 6.º / English |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.17 | 01/11/2026 | Product Owner + AI Collaborator | Cierra #221 publicada/verificada por Pages #830. SPEC hija 1.8 §15.11 conserva disponibilidad real de voces/eventos, escucha humana y uso pendientes, sin estabilidad. |
 | 1.16 | 01/11/2026 | Product Owner + AI Collaborator | Preferencia femenina/selector, lectura ágil, seguimiento por eventos reales y beat hip-hop propios de Studio según SPEC hija 1.7 §15.10. Extiende callbacks opcionales del lector compartido; compatibilidad/voz española y Team conservados. |
 | 1.15 | 31/10/2026 | Product Owner + AI Collaborator | Cierra acompañamiento #219 publicado/verificado por Pages #828. SPEC hija 1.6 §15.9; conserva gate auditivo conjunto, fuente escolar y todos los pendientes de uso. |
 | 1.14 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud aprobada en uso: lectura completa de Studio con beat opcional, controles independientes; pronunciación individual/Team conserva exclusión. Detalle propietario en SPEC hija §15.8; no sincronización musical ni audición certificadas. |
@@ -750,3 +751,5 @@ Acompañamiento intencional de lectura completa con beat incorporado por solicit
 #219 integrada/publicada mediante Pages #828 sobre `1844b08b…`; seis archivos modificados públicos idénticos al árbol probado y fuente intacta. SPEC hija 1.6 §15.9 cierra implementación/publicación del acompañamiento, conserva escucha humana conjunta pendiente y no declara estabilidad.
 
 Evolución solicitada en uso del 01/11/2026: SPEC hija §15.10 gobierna preferencia femenina, selector/lectura ágil, seguimiento real de líneas/palabras y patrón boom-bap. LectorTexto acepta callbacks opcionales alIniciar/alLimite sin cambiar parámetros previos; el adaptador protege callbacks con token/línea vigente y no crea otro sintetizador. La voz nativa no se presenta como una interpretación rapeada ni se promete género/eventos universales; escucha humana pendiente.
+
+#221 integrada en `f4e79737…`; Pages #830 success, nueve archivos modificados de producto públicos idénticos al árbol probado y fuente/reparto intactos. SPEC hija 1.8 §15.11 cierra integración/publicación y conserva límites de voz/seguimiento y gate auditivo/uso real.
