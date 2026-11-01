@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.53 |
+| **Versión** | 3.54 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 01/11/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.54 | 01/11/2026 | Product Owner + AI Collaborator | Cierra #221 en f4e79737…; Pages #830 success, nueve archivos modificados públicos idénticos al árbol probado y fuente/reparto intactos. SPEC hija 1.8/principal 1.17. Sin desarrollo pendiente; escucha humana/proveedor real y uso del grupo conservados. |
 | 3.53 | 01/11/2026 | Product Owner + AI Collaborator | Solicitud de Studio: voz femenina preferida/selector, lectura ágil, línea/palabra por eventos reales y beat boom-bap. Candidata probada desde 9eedf81a…; SPEC hija 1.7/principal 1.16, lector extendido con callbacks opcionales. Publicación/escucha humana pendientes, demás frentes conservados. |
 | 3.52 | 31/10/2026 | Product Owner + AI Collaborator | Cierra acompañamiento #219 en 1844b08b…; Pages #828 success, seis archivos modificados públicos idénticos al árbol probado y fuente intacta. SPEC hija 1.6/principal 1.15; sin desarrollo pendiente. Conserva escucha humana conjunta, timestamps y uso real, sin estabilidad. |
 | 3.51 | 31/10/2026 | Product Owner + AI Collaborator | Solicitud de lectura completa con beat implementada en feat/rap-studio-voz-con-beat: ambos órdenes/paradas independientes, sin prometer sincronía. SPEC hija 1.5/principal 1.14, pruebas/visual/nativo con voz controlada; publicación y escucha conjunta pendientes, demás frentes conservados. |
@@ -338,7 +339,7 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
-**RAP Studio · voz/seguimiento/hip-hop (01/11/2026):** solicitud de uso implementada desde main `9eedf81a984dbe6d45d75efddd2016572daaa706`, rama `feat/rap-studio-seguimiento-voz`. SPEC hija 1.7 §15.10/principal 1.16. Prioridad femenina verificable/selector del dispositivo, lectura ágil opcional, línea y palabras mediante eventos reales (sin tiempos inventados), patrón propio de dos compases con swing y control de picos. Callbacks opcionales del lector compartido, compatibles con voz española y Team. Suite ampliada y revisión visual cinco anchos; pico nativo sin saturación, voz/eventos controlados de QA. No audición humana ni voz rapeada real certificadas. Publicación/verificación y escucha de voces/beat/mezcla reales pendientes, sin estabilidad; todos los pendientes anteriores conservados.
+**RAP Studio · voz/seguimiento/hip-hop publicados (01/11/2026):** [PR #221](https://github.com/jperdomo12/academia-gloria/pull/221) integrada en `f4e797370ea3ca7bf7705b34661a64fa641a5d39`, head probado `c33ae354…`, árbol `a8321720…`, base `9eedf81a…`. SPEC hija 1.8 §15.10–15.11/principal 1.17. Prioridad femenina verificable/selector de voces reales, lectura ágil opcional, línea/palabra por eventos reales con fallback por línea y apoyo recuperable en Sin letra; beat propio de dos compases con swing/compresión/margen. Lector compartido extendido con callbacks opcionales compatibles; voz española y Team conservados. Suite ampliada y revisión renderizada 320–1440/teclado/reduced-motion; pico nativo 0.8321 al 100 %, voz/eventos controlados de QA. Pages #830 (run `41298365177`) success: nueve archivos modificados públicos HTTP 200 e idénticos al árbol probado, fuente/reparto intactos (once comprobaciones). Sin desarrollo/integración/publicación pendiente. **Pendientes:** escuchar/elegir voces reales, agilidad/beat/balance y seguimiento en su proveedor antes de declarar lista para uso real; después uso del grupo antes de estabilidad. No se promete voz rapeada, género universal ni palabras sincronizadas sin eventos. Timestamps y demás frentes conservados.
 
 **RAP Studio · lectura con beat publicada (31/10/2026):** solicitud del Product Owner integrada mediante [PR #219](https://github.com/jperdomo12/academia-gloria/pull/219), merge `1844b08bfa9804443d95653c84da1a654d06a8b6`, head probado `a7ea6ae2…`, árbol `5fb328c2…`, base `3c9804d7…`. SPEC hija 1.6 §15.8–15.9/principal 1.15. Lectura completa y beat opcional en ambos órdenes, paradas independientes; beat continúa al acabar lectura para practicar. Cambiar parte/sección/ocultar/salir cancela ambos; pronunciación individual/Team mantiene exclusión. UI aclara que no canta ni sincroniza musicalmente; volumen/beat/fuente/entrega intactos. Suite ampliada superada, revisión renderizada desktop/móvil; beat nativo con cola de voz controlada de QA, sin audición real conjunta. Pages #828 (run `41219481679`) success: seis archivos modificados públicos HTTP 200 e idénticos al árbol probado, cuatro recursos conservados comprobados (diez total). Sin desarrollo/integración/publicación pendiente de esta solicitud. **Escucha humana de balance/claridad conjuntos en el dispositivo pendiente, antes de declarar lista para uso real; estabilidad pendiente del uso del grupo.** Timestamps y todos los pendientes anteriores conservados.
 
@@ -426,13 +427,13 @@ No reabrir por iniciativa propia frentes ya cerrados.
 | Campo | Valor actual |
 |---|---|
 | **Base canónica** | `main` |
-| **Baseline funcional de producto verificado** | `1844b08bfa9804443d95653c84da1a654d06a8b6` · #219 integrada/publicada sobre #217/#215; conserva #212/#213/#209 y demás frentes. Revisión perceptiva conjunta de Studio pendiente |
+| **Baseline funcional de producto verificado** | `f4e797370ea3ca7bf7705b34661a64fa641a5d39` · #221 integrada/publicada sobre #219/#217/#215; conserva #212/#213/#209 y demás frentes. Revisión perceptiva/proveedor real de Studio pendiente |
 | **Baseline del cierre antes de #153** | `8b1804a059706bb62563e46d2784d899661d3a53` · #152 integrado |
-| **Rama On going** | Sin desarrollo/integración/publicación pendiente de #219/#217/#215; escucha humana Studio/Team y revisión familiar de Números y pendientes anteriores conservados |
-| **PR On going** | Sin PR de producto pendiente: RAP Studio #219/#217/#215 integrada/publicada; revisión perceptiva conjunta/uso real pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
+| **Rama On going** | Sin desarrollo/integración/publicación pendiente de #221/#219/#217/#215; escucha humana Studio/Team y revisión familiar de Números y pendientes anteriores conservados |
+| **PR On going** | Sin PR de producto pendiente: RAP Studio #221/#219/#217/#215 integrada/publicada; voces/proveedor real y revisión perceptiva/uso pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
 | **Trabajo inmediato** | Escuchar beat/cuenta/volumen/parada y alternancia con pronunciación de RAP Studio en dispositivo real antes de declararlo listo para el grupo; luego validar uso real. Probar Números hasta 100 000 con Gloria/familia; escuchar las ayudas de RAP Team en dispositivo real y probar con las tres compañeras; probar los tres Temas de Sociales con Gloria; revisar Plan Semanal en familia; probar Nutrición con Gloria; Descubre/Orientación y Monitor Gaudem cerrados; probar English → Much/Many y los tres Temas de Lengua con Gloria; continuar consulta profesional/familiar y pruebas de Semilla 012/Dictado |
-| **GitHub Pages del baseline funcional** | #828 · `success` · SHA `1844b08b…` |
-| **Verificación posterior al cierre** | Acompañamiento RAP Studio #219 integrado dentro de la publicación autónoma autorizada; Pages #828 success y seis archivos modificados públicos idénticos a los probados; fuente escolar intacta. Gate auditivo pendiente, no lista para uso real ni estable. Números y todos los pendientes anteriores conservados. |
+| **GitHub Pages del baseline funcional** | #830 · `success` · SHA `f4e79737…` |
+| **Verificación posterior al cierre** | Voz/seguimiento/beat RAP Studio #221 integrados dentro de la publicación autónoma autorizada; Pages #830 success y nueve archivos modificados públicos idénticos a los probados; fuente/reparto intactos. Gate auditivo pendiente, no lista para uso real ni estable. Números y todos los pendientes anteriores conservados. |
 | **Mi Camino** | ✅ Cerrado y validado |
 | **Bitácora** | ✅ V1 cerrada y validada |
 | **Horario / Calendario** | ✅ Estables |
@@ -468,7 +469,7 @@ Al iniciar o retomar trabajo:
 
 ## Trabajo On going
 
-RAP Studio #219 publicada/verificada, Pages #828, SPEC hija 1.6; ver §9. Sin desarrollo pendiente; escucha humana obligatoria antes de uso real, sin timestamps inventados. Conserva los demás pendientes.
+RAP Studio #221 publicada/verificada, Pages #830, SPEC hija 1.8; ver §9. Sin desarrollo pendiente; escucha humana obligatoria antes de uso real, sin timestamps inventados. Conserva los demás pendientes.
 
 Matemáticas/Números hasta 100 000: #212 publicada/verificada, Pages #821, SPEC 1.2; uso familiar pendiente. Detalle y límites en §9.
 
@@ -494,10 +495,10 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.53 |
+| **Versión** | 3.54 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
-| **Trabajo On going** | RAP Studio #219 publicada/verificada (SPEC hija 1.6/principal 1.15): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
-| **PR On going** | Sin PR de producto pendiente: RAP Studio #219/#217/#215 integrada/publicada; revisión perceptiva conjunta/uso real pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
+| **Trabajo On going** | RAP Studio #221 publicada/verificada (SPEC hija 1.8/principal 1.17): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
+| **PR On going** | Sin PR de producto pendiente: RAP Studio #221/#219/#217/#215 integrada/publicada; voces/proveedor real y revisión perceptiva/uso pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
 | **Nuevas Semillas** | ✅ 010/011/012 incorporadas; 12 publicadas; 012 lista para prueba familiar |
 | **Issue #108** | ✅ Cerrado/completado |
 | **Academia de un vistazo** | ✅ Cerrada y validada |
