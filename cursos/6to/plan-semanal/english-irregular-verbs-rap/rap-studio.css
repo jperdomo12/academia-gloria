@@ -455,3 +455,14 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Seguimiento real de la voz: sin barridos temporizados ni scroll impuesto. */
+.studio-opciones-voz{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:14px;margin:16px 0}
+.studio-opciones-voz label{font-size:.85rem;font-weight:700;min-width:0;line-height:1.7}
+.studio-opciones-voz select{display:block;min-width:0;width:100%;min-height:48px;font:inherit;padding:10px;border:1px solid #9cb397;border-radius:12px;color:#22473d;background:#fff;text-overflow:ellipsis}
+.studio-seguir{display:flex;align-items:center;gap:10px;min-height:48px;font-size:.95rem;font-weight:700;cursor:pointer}
+#studioSeguir{min-width:22px;min-height:44px;accent-color:#28533e}
+.studio-seguimiento{position:sticky;top:96px;z-index:3;background:#fff8df;border:2px solid #c49a48;border-radius:18px;padding:18px 22px;box-shadow:0 6px 20px #203e3020;margin:20px 0;max-height:40vh;overflow:auto}
+#studioLineaActual{font-size:clamp(1.15rem,3vw,1.55rem);line-height:1.8;margin:8px 0;color:#23473a;font-weight:600;overflow-wrap:anywhere;min-height:45px}
+#studioLineaActual mark{background:#f0ce6d;color:#193e31;border-radius:4px;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px;padding:2px 1px}
+@media(max-width:600px){.studio-opciones-voz{grid-template-columns:1fr}.studio-seguimiento{padding:14px;top:90px}}
