@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_IMPACTO_TRANSVERSAL.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Análisis transversal aprobado · decisiones vigentes |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Gestión de Misiones |
@@ -15,6 +15,7 @@
 
 - `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`
 - `docs/product/DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md`
+- `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`
 - `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md`
 - `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
 - `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md`
@@ -24,12 +25,13 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Aprueba la expansión curada a 001/004/007/010/011 y activa el badge automático `🌱 N situaciones` al existir varias Semillas multi-escenario. Sustituye la decisión previa de no mostrar contador en catálogo. |
 | 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza el cierre transversal con la V1 de escenario opcional implementada en Misiones/Motor/evidencia. Mantiene diferidos catálogo, análisis, automatizaciones y solicitud de escenarios. |
 | 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Decisiones funcionales aprobadas anteriores a la implementación. |
 
 ## Resumen de contenido
 
-Matriz de decisiones aprobadas; comportamiento libre/fijado y límites V1; histórico ya absorbido; evoluciones diferidas; estado de implementación y fuentes propietarias.
+Matriz de decisiones aprobadas; comportamiento libre/fijado y límites V1; histórico ya absorbido; catálogo con badge informativo al ampliar el patrón; evoluciones diferidas; estado de implementación y fuentes propietarias.
 
 ---
 
@@ -53,7 +55,7 @@ Los demás dominios solo deben conocer el escenario cuando aporta valor funciona
 | Evidencia de Misión | **AJUSTE IMPLEMENTADO V1**: añadir `escenarioId` y `escenarioTitulo` cuando exista escenario efectivo. |
 | Trabajo Realizado | **YA ABSORBIDO** por Fase A; conservar presentación contextual. |
 | Jardín / Histórico | **YA ABSORBIDO** por Fase A; conservar compatibilidad histórica. |
-| Catálogo de Semillas | **SIN CAMBIO AHORA**; no mostrar contador de situaciones todavía. |
+| Catálogo de Semillas | **AJUSTE APROBADO PARA LA AMPLIACIÓN**: mostrar badge automático `🌱 N situaciones` solo cuando existan más de un escenario. No representa progreso ni obligación de completar todos. |
 | Guía de Semillas | **AJUSTE PROGRESIVO** al expandir el modelo a más Semillas. |
 | Observaciones / Refuerzos | **SIN AUTOMATIZACIÓN NUEVA**; una observación puede orientar una Misión con escenario concreto, siempre bajo decisión familiar. |
 | Análisis Educativo | **EVOLUCIÓN FUTURA**; escenario puede ser contexto descriptivo, nunca diagnóstico ni conclusión causal. |
@@ -109,12 +111,12 @@ No se introduce todavía una matriz `Semilla A → escenario X / Semilla B → e
 
 La sesión de Semillas ya conserva `escenarioId` y `escenarioTitulo` cuando corresponde.
 
-La evidencia `semilla_completada` debe incorporar también, cuando exista:
+La evidencia `semilla_completada` incorpora también, cuando existe:
 
 - `escenarioId`;
 - `escenarioTitulo`.
 
-Cuando la Misión fija escenario, el criterio de cumplimiento debe validar simultáneamente:
+Cuando la Misión fija escenario, el criterio de cumplimiento valida simultáneamente:
 
 ```text
 Semilla correcta
@@ -143,9 +145,28 @@ No se requiere evolución transversal adicional ahora.
 
 ## 6. Catálogo y UX general
 
-No mostrar por ahora indicadores como `3 situaciones` en la tarjeta de una Semilla.
+La decisión previa de no mostrar un indicador en tarjetas se revisa al aprobar la expansión a cinco Semillas adicionales.
 
-La existencia de varios escenarios se descubre al entrar en la Semilla. Esta decisión puede reevaluarse cuando varias Semillas del catálogo sean multi-escenario y exista evidencia real de que el indicador aporta claridad.
+Con seis Semillas multi-escenario, el indicador aporta descubrimiento y consistencia sin recargar el catálogo.
+
+Se aprueba:
+
+> `🌱 N situaciones`
+
+Reglas:
+
+- solo aparece cuando `escenarios.length > 1`;
+- `N` se deriva del catálogo real;
+- no se mantiene manualmente;
+- no se muestra en Semillas tradicionales;
+- no representa progreso;
+- no usar `1/3`, porcentajes ni checklists;
+- no insinuar que todos los escenarios deban practicarse;
+- debe mantener jerarquía visual secundaria respecto al título y la acción principal.
+
+La explicación conceptual sigue siendo:
+
+> Algunas Semillas pueden practicarse en distintas situaciones. La habilidad sigue siendo la misma; cambia el contexto en el que se practica.
 
 ---
 
@@ -201,18 +222,37 @@ Ejemplo no válido:
 
 ---
 
-## 10. Cierre del Paso 2
+## 10. Expansión curada aprobada
 
-**DECISIÓN:** la revisión transversal del modelo multi-escenario queda cerrada.
+Se aprueba ampliar el patrón a:
 
-No existe un impacto que bloquee su expansión a nuevas Semillas.
+- 001 · `Aprendo a decir lo que siento`;
+- 004 · `Nos escuchamos y buscamos un acuerdo`;
+- 007 · `Puedo elegir diferente`;
+- 010 · `Un momento para mí también está bien`;
+- 011 · `Puedo aceptar apoyo y seguir siendo capaz`.
 
-Próximos pasos:
+Cada una conserva su escenario actual y recibe dos escenarios nuevos, para tres en total.
 
-1. implementación V1 realizada de escenario opcional en Misiones conforme a `DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md` y este documento;
-2. conservar pruebas de ejecución, evidencia, histórico y compatibilidad y completar uso familiar;
-3. después retomar la expansión curada de escenarios a otras Semillas candidatas.
+Los contenidos, IDs, fronteras pedagógicas y criterios de validación están en:
 
-## 11. Estado implementado
+`docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`
 
-Misiones con situación opcional V1 realizadas según `SPEC-MIS_TAREAS_Y_MISIONES.md` y `SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. Mi Camino conserva su registro/contexto existente; el Motor interpreta el filtro. Sesión e histórico no se duplican; evidencia expone el escenario real. Las áreas marcadas como futuras o sin cambio en la matriz permanecen fuera del alcance. Estado técnico de publicación/pruebas y límites en la SPEC de Misiones y HandOff. No declarar estabilidad antes de la validación familiar correspondiente.
+La ampliación no implica que tres escenarios se conviertan en estándar obligatorio ni máximo permanente.
+
+---
+
+## 11. Estado y siguiente paso
+
+La revisión transversal original permanece cerrada y la V1 de Misiones por escenario está implementada.
+
+El siguiente paquete aprobado es:
+
+1. incorporar los diez escenarios nuevos definidos en el diseño de ampliación;
+2. activar el badge automático `🌱 N situaciones`;
+3. reutilizar Motor, Misiones, evidencia e histórico ya implementados;
+4. actualizar guía y documentación propietaria;
+5. publicar y validar técnicamente;
+6. realizar después prueba familiar ampliada con Anaís y Gloria antes de declarar estable el patrón multi-escenario.
+
+No introducir todavía Análisis Educativo de Semillas, automatización de refuerzos, generación dinámica ni obligación de completar todos los escenarios.
