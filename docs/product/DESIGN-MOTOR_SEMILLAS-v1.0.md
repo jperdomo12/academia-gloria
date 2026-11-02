@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` |
-| **Versión** | 1.1 |
+| **Versión** | 1.2 |
 | **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
-| **Última actualización** | 04/09/2026 |
+| **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Diseño de producto del Motor de Semillas implementado en `mi-universo/creciendo-por-dentro/` |
@@ -27,8 +27,13 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Evolución aditiva: habilidad estable, escenarios curados y proyección efectiva compartida entre Motor e históricos. Conserva sesión/evidencia y permisos existentes. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el diseño con el producto real: el piloto ya está implementado; conserva la arquitectura de Semillas, sesión y evidencia, reconoce la integración vigente con Mi Camino/Misiones y separa claramente diseño, especificación y evolución futura. |
 | 1.0 | Agosto 2026 | Product Owner + AI Collaborator | Diseño inicial del piloto implementable del Motor de Semillas. |
+
+## 🧭 Resumen de contenido
+
+Principios, componentes y límites del Motor. Incluye la proyección de escenarios y el contrato compatible de sesión, sin crear otro Motor ni una fuente educativa paralela.
 
 ---
 
@@ -211,3 +216,13 @@ Los cambios detallados de comportamiento se consolidan primero en la especificac
 ---
 
 **Fin de `DESIGN-MOTOR_SEMILLAS-v1.0.md` · v1.1 · Activo**
+
+## Fase A · habilidad estable y situación contextual
+
+La decisión funcional pertenece a `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. `semillas.json` sigue siendo la única fuente editorial. Una Semilla puede declarar `escenarios` y `escenarioPredeterminadoId`; las demás conservan su contrato.
+
+`escenarios-semilla.js` resuelve una proyección de la Semilla seleccionada: conserva id/título/familia/bienvenida/plantilla/cierre y aplica situación, pasos, tipoSituacion y recursos del escenario. No guarda estado ni clona un segundo catálogo. Lo reutilizan el Motor y Trabajo realizado. Un recurso de escenario es opcional; `recursos: null` permite omitir una imagen que contradiga su situación.
+
+La sesión guarda los dos identificadores y el título del escenario, además del contrato existente. El histórico sin escenario resuelve el predeterminado en memoria; un ID explícito desconocido no se reasigna silenciosamente: se conserva el título y la frase guardados, sin reconstruir opciones de otro escenario. No se migran documentos. El catálogo considera Practicada por Semilla; el selector puede mostrar prácticas por escenario, sin puntuación ni obligación de completar todos.
+
+Cambiar de situación detiene dictado/voz/grabación; elegir otra inicia respuestas nuevas. Volver desde el selector a la práctica actual conserva lo escrito. Los callbacks de medios de una experiencia anterior no contaminan la siguiente. Guardar bloquea el cambio mientras se registra la sesión/evidencia. No se modifican colección, Rules ni criterio de Misión.

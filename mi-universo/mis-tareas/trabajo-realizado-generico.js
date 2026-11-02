@@ -1,4 +1,5 @@
-import { Academia } from "../../compartido/api/academia.js";
+import { Academia } from "../../compartido/api/academia.js?v=2";
+import { resolverSemillaSesion } from "../creciendo-por-dentro/escenarios-semilla.js";
 import { auth, db } from "../../compartido/firebase/firebase-config.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
 import {
@@ -766,12 +767,14 @@ function respuestasSemillaHtml(sesion = {}, semilla = null) {
 }
 
 function tarjetaSemilla(evidencia, sesion, semilla) {
+  semilla = resolverSemillaSesion(semilla, sesion || {});
   const analisis = sesion?.analisisEducativo && typeof sesion.analisisEducativo === "object"
     ? sesion.analisisEducativo
     : {};
   const titulo = sesion?.titulo || semilla?.titulo || evidencia.resultado?.titulo || evidencia.actividadId || "Semilla";
   const respuestas = respuestasSemillaHtml(sesion || {}, semilla);
   const contenido = [
+    semilla?.escenarioTitulo ? bloque("🌱 Escenario", `<p>${escapar(sesion?.escenarioTitulo || semilla.escenarioTitulo)}</p>`) : "",
     respuestas ? bloque("💭 Cómo construyó su respuesta", respuestas) : "",
     texto(sesion?.respuestaConstruida) ? bloque("🗣️ Mi frase", `<p>${escapar(sesion.respuestaConstruida)}</p>`, "evidencia-bloque--resultado") : "",
     sesion?.audioData ? bloque("🎙️ Grabación", audioHtml(sesion.audioData, sesion.duracionAudio || sesion.duracion), "evidencia-bloque--audio") : "",

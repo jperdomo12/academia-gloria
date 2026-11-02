@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
-| **Última actualización** | 13/10/2026 |
+| **Última actualización** | 02/11/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Explicación comprensible de las Semillas activas para familias y profesionales que acompañan al alumno |
@@ -25,11 +25,16 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza Yo sí puedo con sus tres escenarios curados: una misma habilidad, elección inicial y repetición voluntaria; no cambia las otras once Semillas. Validación familiar pendiente. |
 | 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Publicación aprobada de Semilla 012 mediante #164, Pages #769 `success`. Guía propietaria y web sincronizadas con 12 Semillas; nueva Semilla pendiente de validación familiar, sin declarar estabilidad. |
 | 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Explica Semilla 012 conforme a su SPEC aprobada y sincroniza la presentación web. Contenido candidato en rama; imagen externa integrada y verificada; candidata pendiente de aprobación/integración. |
 | 1.2 | 21/09/2026 | Product Owner + AI Collaborator | Incorpora las Semillas 010 y 011 a partir de necesidades familiares reales y amplía la Semilla 007 para reforzar pensamiento propio, autonomía y aprendizaje al probar la propia manera. Sincroniza el catálogo explicado a 11 Semillas activas. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Reorganiza la guía para que el lector comprenda primero propósito, uso, acompañamiento familiar/profesional y filosofía común; concentra después el detalle de las 9 Semillas en un único capítulo final, justo antes de `DECISIÓN`. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Primera guía para familias y profesionales. Resume las 9 Semillas activas, de la más nueva a la más antigua, explicando situación, objetivo, práctica, aspectos observables y mensaje clave. |
+
+## 🧭 Resumen de contenido
+
+Propósito, acompañamiento y límites no clínicos; detalle de las doce Semillas activas. Yo sí puedo permite elegir una de tres situaciones para practicar la misma habilidad.
 
 ---
 
@@ -390,18 +395,26 @@ Las soluciones posibles incluyen turnarse, jugar juntas, elegir al azar quién c
 **Familia:** Autoestima · **Duración estimada:** 7 min
 
 #### Situación que aborda
-Terminar un trabajo propio —por ejemplo, un dibujo—, compararlo con el de otra persona y empezar a sentir que el propio vale menos.
+Una misma habilidad en tres situaciones, a elegir al empezar:
+
+- **Mi trabajo también vale:** terminar un dibujo y dudar del propio al compararlo.
+- **Algo del cole me está costando:** una actividad cuesta y otras personas avanzan más rápido.
+- **Estoy aprendiendo algo nuevo:** empezar una actividad y compararse con quien ya tiene práctica.
+
+Sigue siendo una sola Semilla. No es necesario practicar las tres situaciones ni completarlas en un orden.
 
 #### Objetivo principal
 Reducir el peso de la comparación y dirigir la atención hacia **el propio proceso, las fortalezas utilizadas y los pequeños avances**.
 
 #### Cómo se practica
-La experiencia invita a:
+Primero se elige la situación. La experiencia invita a:
 
 1. reconocer qué consiguió;
 2. identificar una fortaleza utilizada;
 3. practicar una frase amable hacia sí mismo;
 4. elegir un pequeño siguiente paso para seguir aprendiendo.
+
+Al terminar se puede repetir el mismo escenario o probar otra situación. El jardín muestra cuál se practicó; las sesiones anteriores siguen correspondiendo al dibujo, sin cambiar sus datos. El piloto necesita validación de uso con Gloria antes de declararse estable.
 
 #### Qué puede ser útil observar
 - cuánto influye la comparación con otras personas en la valoración propia;
@@ -474,7 +487,7 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Catálogo explicado** | 12 Semillas activas · 012 → 001; nueva Semilla pendiente de prueba familiar |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |

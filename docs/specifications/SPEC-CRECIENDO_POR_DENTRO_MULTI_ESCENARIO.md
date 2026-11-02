@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.0 |
-| **Estado** | Fase A aprobada para desarrollo · piloto `Yo sí puedo` · no implementada |
+| **Versión** | 1.1 |
+| **Estado** | Fase A implementada en rama · candidata a publicación · validación familiar pendiente |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -19,8 +19,19 @@
 | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` | **Gobierna:** diseño pedagógico, creación e incorporación de Semillas. |
 | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` | **Diseña:** separación catálogo → Motor → sesión → evidencia. |
 | `docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md` | **Gobierna:** implementación, pruebas, PR, publicación y cierre. |
-| `mi-universo/creciendo-por-dentro/semillas.json` | **Implementa hoy:** Semillas data-driven de escenario único. |
+| `mi-universo/creciendo-por-dentro/semillas.json` | **Implementa:** catálogo data-driven y piloto curado multi-escenario. |
 | `mi-universo/creciendo-por-dentro/creciendo-por-dentro.js` | **Implementa hoy:** selección, recorrido, composición, grabación, sesión e histórico. |
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Implementación aditiva del piloto; contrato efectivo compartido, sesión e histórico compatibles. Candidata técnica; pendiente de publicación y uso con Gloria. |
+| 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Fase A curada aprobada para desarrollo, con tres escenarios de Yo sí puedo. |
+
+## Resumen de contenido
+
+§1–7: necesidad, contrato, experiencia y contenido aprobado; §8–12: sesión, histórico, Practicada y Misiones; §13–17: evoluciones fuera de alcance, aceptación y aprobación; §18: implementación, validación y estado real.
 
 ---
 
@@ -579,3 +590,21 @@ El piloto se limita a `Yo sí puedo` con tres escenarios:
 La finalidad es validar que una misma habilidad puede practicarse en situaciones distintas sin duplicar Semillas.
 
 Como dirección posterior, se prevé un proceso curado para **solicitar un nuevo escenario de una Semilla existente**, equivalente conceptualmente al flujo actual de solicitar una nueva Semilla. La generación dinámica de escenarios a partir de una solicitud libre del usuario queda fuera del alcance y solo se reconsiderará después de madurar las fases previas.
+
+## 18. Implementación de Fase A · 02/11/2026
+
+### 18.1 Decisiones técnicas sin cambio funcional
+
+- Base inicial `main` `be6cfd4` (#223), actualizada a `f4bd3fb` (#224), que añade únicamente diseño futuro sin ampliar esta fase. Rama `feat/semillas-multi-escenario`. Catálogo 1.11: doce Semillas, una piloto; los otros once objetos intactos. Original trasladado íntegramente al escenario predeterminado.
+- `escenarios-semilla.js` proyecta contenido efectivo sin estado ni persistencia; se reutiliza en Motor/Jardín y `mis-tareas/trabajo-realizado-generico.js`. Identidad, bienvenida, plantilla y cierre comunes. Nuevos escenarios usan pasos/tipos/máximos/ayudas existentes y las opciones exactas aprobadas en §6.
+- `tipoSituacion`: dibujo y aprendizaje nuevo = `personal`; actividad del cole = `colegio`, valor ya usado por el catálogo. No se crean criterios de Misión.
+- `Academia.semillas.guardarSesion` conserva campos opcionales de escenario en la colección existente; las Semillas simples no añaden claves vacías. No hay cambios de Rules ni migración: consulta y escritura continúan mediante Persona Activa/nivel efectivo existentes.
+- Compatibilidad de lectura por escenario predeterminado; ID explícito desconocido conserva título/frase guardados y omite reconstrucción de opciones ajenas.
+- Selector permite regresar a la práctica actual conservando respuestas. Elegir otra reinicia la práctica, deteniendo medios y descartando callbacks anteriores. Cierre permite repetir o elegir situación. Guardado protegido frente a doble acción/cambio en curso.
+- Imagen original revisada: niña ante espejo con mensajes de autoestima/aprendizaje, sin dibujo específico. Reutilizada con texto alternativo pertinente, sin nuevos binarios. Guías propietaria y web sincronizadas.
+
+### 18.2 Validación y límites
+
+Pruebas reproducibles: `tests/semillas-composicion-browser.cjs` y `tests/semillas-escenarios-browser.cjs`, con infraestructura externa simulada compartida en `tests/helpers/semillas-browser.cjs`. Motor, API, ContextoUsuario y lectores reales. Revisión visual renderizada y comprobación de imágenes en contexto. Resultados superados: doce Semillas (once objetos intactos y escenario original exacto), tres recorridos con respuestas propias/composición, voz/grabación/transcripción controladas, cambio y retorno sin mezclar datos, permiso de micrófono tardío cancelado, guardado y reconstrucción de histórico nuevo/antiguo/ID desconocido, Practicada, acceso libre/Misión/evidencia/Trabajo realizado, Persona Activa, familiar gestor/profesional de consulta/sin relación, teclado/foco/reduced-motion y 320/390/768/1024/1440 sin desbordamiento. Imagen original revisada en selector y situaciones desktop/móvil. Cero errores JavaScript; aviso HTTP 404 preexistente de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` en la celebración compartida, ajeno a la imagen de Semilla. Ninguna colección nueva ni escritura fuera de sesiones/evidencias/tareas existentes en las pruebas. Publicación y verificación pública se registran al cerrar.
+
+La identidad, SDK Firestore, dictado, captura y transcripción de las pruebas son controlados: no equivalen a permisos desplegados, micrófono físico o uso autenticado real. Validar con Gloria comprensión/elección, práctica oral y consulta real antes de declarar estable. No hay generación dinámica, escenarios personales persistidos ni colecciones nuevas.

@@ -5,10 +5,10 @@
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO.md` |
 | **Código** | SPEC-CRECIENDO_POR_DENTRO |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
-| **Última actualización** | 15/09/2026 |
+| **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Comportamiento funcional del módulo Creciendo por Dentro y su Motor de Semillas |
@@ -19,6 +19,7 @@
 |---|---|
 | `docs/FOUNDATION.md` | **Fundamenta:** propósito humano, dignidad, acompañamiento y límites no clínicos. |
 | `docs/project/ADN_ACADEMIA_GLORIA_VALENTINA.md` | **Fundamenta/complementa:** principios estables de producto. |
+| `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` | **Gobierna:** Fase A curada del piloto Yo sí puedo, compatibilidad histórica y validación familiar. |
 | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` | **Diseña:** decisiones de producto del Motor de Semillas. |
 | `docs/models/MODEL_MOTORES_DE_APRENDIZAJE.md` | **Modela:** patrón Motor → sesión → evidencia. |
 | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` | **Gobierna:** creación, imagen, integración, documentación y cierre de nuevas Semillas. |
@@ -34,10 +35,15 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora Fase A multi-escenario como evolución aditiva del Motor: piloto único, selector, sesión e histórico compatibles y Misiones por semillaId. Prueba familiar pendiente. |
 | 1.3 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora la guía para familias y profesionales como capacidad real del módulo: acceso desde Creciendo por Dentro para USER adultos autorizados, separación respecto de la experiencia infantil, uso del Rol autenticado para decidir visibilidad y documentación de acompañamiento sincronizada con el catálogo. |
 | 1.2 | 04/09/2026 | Product Owner + AI Collaborator | P2. Activa la especificación contra el producto implementado. Corrige ruta/modelo relacionados, sustituye lenguaje de piloto futuro por estado real, alinea Semilla/Misión con STD-011, incorpora Persona Activa, catálogo `semillas.json`, sesión + evidencia, historial actual, límites de voz/privacidad y separa Jardín completo/backlog como evolución futura. |
 | 1.1 | Agosto 2026 | Product Owner + AI Collaborator | Incorporó expresión oral, grabación, integración con Misiones, contenido configurable, historial e insumos del piloto. |
 | 1.0 | Agosto 2026 | Product Owner + AI Collaborator | Primera definición integral de Creciendo por Dentro, Semillas y primera experiencia inspirada en DESC. |
+
+## 🧭 Resumen de contenido
+
+Propósito y capacidades actuales; catálogo, recorrido, sesiones e integración con Misiones. La SPEC multi-escenario gobierna exclusivamente el piloto curado y sus criterios de aceptación.
 
 ---
 
@@ -67,6 +73,7 @@ La capacidad actual dispone de:
 - acceso libre;
 - acceso desde una Misión compatible mediante `misionId`;
 - recorrido guiado por pasos;
+- selector previo solo cuando la Semilla declara `escenarios`; `Yo sí puedo` conserva una tarjeta y ofrece tres situaciones;
 - respuestas seleccionadas y respuestas propias;
 - dictado de respuestas propias cuando el navegador lo permite;
 - construcción de una frase/respuesta final;
@@ -691,3 +698,9 @@ No actualizarla por:
 | **Proceso de nuevas Semillas** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
 | **Guía de acompañamiento** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
 | **Implementación** | `mi-universo/creciendo-por-dentro/` + `compartido/api/academia.js` |
+
+## Fase A multi-escenario · contrato implementado
+
+La SPEC hija `SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` es propietaria del contenido aprobado y de su validación. El recorrido de las Semillas sin escenarios continúa sin selector. El escenario seleccionado contextualiza situación, pasos, opciones e imagen opcional dentro del mismo Motor y mantiene la identidad y plantilla común de la Semilla.
+
+La sesión añade `escenarioId` y `escenarioTitulo` únicamente para una Semilla multi-escenario; `tipoSituacion` es efectivo. Continúa en `usuarios/{uid}/sesionesSemillas`, resuelto por Persona Activa y los permisos existentes. No se duplican pasos/opciones en documentos. Jardín y Trabajo realizado reconstruyen las respuestas con el mismo resolver. Sesiones antiguas de Yo sí puedo sin escenario usan el predeterminado solo al leer, sin migración. Misiones y `semilla_completada` mantienen `semillaId`, sin requisitos por escenario. Estabilidad pendiente de uso real con Gloria.
