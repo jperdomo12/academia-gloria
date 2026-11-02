@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Fase A publicada para validación familiar · no declarada estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 02/11/2026 | Product Owner + AI Collaborator | V1 de Misiones publicada mediante #231, Pages #840 success; sin integración/publicación pendiente, manteniendo validación familiar del modelo. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora la V1 aprobada de Misiones: escenario opcional para una sola Semilla, ejecución contextual fijada y evidencia efectiva. Conserva Fase A e históricos sin migración. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Cierra microajuste visual #227/Pages #836 success: HTML y CSS públicos idénticos a los probados; sin trabajo técnico pendiente ni cambios funcionales. |
 | 1.3 | 02/11/2026 | Product Owner + AI Collaborator | Microajuste visual del escenario elegido: etiqueta, jerarquía, fondo suave y acción secundaria. Sin cambio funcional; validación visual responsive y regresión. |
@@ -632,3 +633,5 @@ Revisión renderizada de los tres escenarios en 320/390/768/1024/1440 y caso de 
 Implementación desde `main` `5d3b5b4e62ee682378a4f6da775792690064fb50` (#230), tras cierre de revisión transversal. Gestión reutiliza catálogo, formulario, bloqueo de objetivos y filtro existentes. Motor reutiliza contexto visual y recorrido; el nuevo `scenarioLabel` distingue situación elegida frente a situación de la Misión. Evidencia propaga los dos campos efectivos; API compara el filtro escalar y comprueba Semilla real permitida.
 
 Mi Camino y Trabajo realizado mantienen su código/contrato: contexto por `misionId`, navegación vigente y consulta del escenario real ya implementada. No se modifica `semillas.json`, sesiones previas, Rules ni imágenes. Cambian las versiones de entrada del JS del Motor/Gestión y API a fin de evitar código anterior en caché. Validación y cierre canónicos: SPEC de Misiones, sección V1. La experiencia multi-escenario sigue pendiente de uso con Gloria antes de declarar estabilidad.
+
+**Cierre de V1 de Misiones:** #231 integrada en `c905b3743384a04370045d4b27650c635e282502`, Pages #840 success y ocho comprobaciones públicas idénticas al árbol probado. SPEC de Misiones 2.8, sección V1, registra pruebas, límites y trazabilidad canónicos. Sin trabajo técnico pendiente; uso familiar de multi-escenario sigue pendiente antes de estabilidad.
