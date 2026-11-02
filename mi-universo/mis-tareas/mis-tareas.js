@@ -1577,7 +1577,8 @@ function normalizarCantidadSemillas(valor, valorPredeterminado = 1) {
 function semillasSeleccionadas() {
   return [
     $("semillaPrimera")?.value,
-    $("semillaSegunda")?.value
+    normalizarCantidadSemillas($("cantidadSemillas")?.value, 1) > 1
+      ? $("semillaSegunda")?.value : ""
   ].filter(Boolean).filter((value, index, values) =>
     values.indexOf(value) === index
   );
@@ -1664,6 +1665,7 @@ function actualizarResumenCriterioSemillas() {
     $("cantidadSemillas")?.value,
     1
   );
+  $("campoSegundaSemilla").classList.toggle("hidden", cantidad === 1);
   const ids = semillasSeleccionadas().slice(0, cantidad);
   const titulos = ids.map(tituloSemillaPorId).filter(Boolean);
 
