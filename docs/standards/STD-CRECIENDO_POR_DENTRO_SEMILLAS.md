@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 02/11/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 02/11/2026 | Product Owner + AI Collaborator | Amplía el piloto aprobado a seis Semillas y norma el badge informativo derivado de escenarios. Conserva compatibilidad, una habilidad y prueba familiar ampliada como gate; candidata pendiente de resolver composición 004. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Alinea la norma de Misiones con la excepción V1 aprobada: escenario opcional para una Semilla/cantidad 1; no altera contenido ni habilita requisitos de múltiples situaciones. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Formaliza el contrato curado opcional aprobado: una habilidad, varios escenarios, IDs estables, compatibilidad histórica y guía sincronizada. Piloto Yo sí puedo; uso familiar pendiente. |
 | 1.3 | 15/10/2026 | Product Owner + AI Collaborator | Formaliza que marcos externos o aportes profesionales —por ejemplo DESC o Atlas of Emotions— se evalúan caso por caso al diseñar nuevas Semillas. Pueden aportar principios o recursos, pero no son plantillas obligatorias ni justifican modificar retroactivamente Semillas existentes. |
@@ -586,7 +587,7 @@ Los marcos externos y aportes profesionales son **insumos de diseño**, no plant
 
 ## Semillas multi-escenario · Fase A
 
-Fuente propietaria: `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. Una Semilla es una habilidad estable; un escenario es una situación concreta. Si cambia la habilidad principal, no corresponde añadir un escenario automáticamente. Solo Yo sí puedo es piloto; no convertir las demás por uniformidad.
+Fuente propietaria: `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. Una Semilla es una habilidad estable; un escenario es una situación concreta. Si cambia la habilidad principal, no corresponde añadir un escenario automáticamente. El piloto ampliado aprobado comprende 001/003/004/007/010/011, según el diseño de ampliación; no convertir las demás por uniformidad.
 
 - Contenido curado en `semillas.json`, usando `escenarios` opcionales e IDs estables de escenario/pasos/opciones. Reutilizar propiedades comunes y el Motor vigente.
 - Conservar exactamente el escenario original al trasladarlo; mantener respuestas propias, composición y práctica oral del contrato actual.
@@ -594,4 +595,6 @@ Fuente propietaria: `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENAR
 - Sesiones nuevas multi-escenario: `semillaId`, `escenarioId`, `escenarioTitulo` y `tipoSituacion` efectivo. Las antiguas se interpretan mediante `escenarioPredeterminadoId`, sin migrar.
 - Histórico y Trabajo realizado usan el mismo resolver; un escenario desconocido no se interpreta como otro. Misiones conservan `semillaId`; la V1 aprobada permite fijar opcionalmente `escenarioId` para una sola Semilla/cantidad 1 según `SPEC-MIS_TAREAS_Y_MISIONES.md`. Sin filtro se mantiene la elección libre. No añadir porcentajes ni requisitos de varias situaciones.
 - Sincronizar guía propietaria/web y validar regresión de todas las Semillas, identidad, permisos, evidencia, medios, responsive y teclado. No declarar estable antes del uso con Gloria.
+- Badge de catálogo informativo `🌱 N situaciones` solo si `escenarios.length > 1`; número derivado, discreto, sin progreso ni obligación. Tres situaciones no es un mínimo ni un máximo permanente.
+- La guía propietaria y su web deben enumerar las situaciones disponibles conservando una explicación común de la habilidad. Certificar el patrón requiere la prueba familiar ampliada, no solo el pase técnico.
 - No implementar descripción libre de escenario, generación dinámica, IA ni solicitud de escenarios desde la UI. La incorporación futura sigue siendo editorial y necesita su decisión correspondiente.

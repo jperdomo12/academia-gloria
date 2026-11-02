@@ -262,6 +262,7 @@ function renderCatalog() {
         </div>
         <h3>${escapeHtml(item.titulo)}</h3>
         <p>${escapeHtml(item.subtitulo || "")}</p>
+        ${Array.isArray(item.escenarios) && item.escenarios.length > 1 ? `<span class="seed-scenarios">🌱 ${item.escenarios.length} situaciones</span>` : ""}
         <button type="button" class="btn btn--primary" data-start-seed="${escapeHtml(item.id)}">
           ${saved ? "🔁 Practicar otra vez" : "🌱 Empezar"}
         </button>
@@ -560,6 +561,7 @@ function builtResponse() {
     )
     .replace(/\s+/g," ")
     .replace(/\s+([.,;:!?])/g,"$1")
+    .replace(/([!?])\./g,"$1")
     .trim();
 }
 

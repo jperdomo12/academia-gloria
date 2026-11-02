@@ -243,7 +243,7 @@ async function save(p, withAudio = false) {
 (async () => {
   assert.equal(catalog.semillas.length, 12);
   assert.equal(catalog.semillas.filter((s) => s.id === seed.id).length, 1);
-  for (const s of original.semillas.filter((s) => s.id !== seed.id))
+  for (const s of original.semillas.filter((s) => s.id !== seed.id && !catalog.semillas.find(t => t.id === s.id)?.escenarios))
     assert.deepEqual(
       catalog.semillas.find((t) => t.id === s.id),
       s,
@@ -601,7 +601,7 @@ async function save(p, withAudio = false) {
   await learner.c.close();
   await b.close();
   console.log(
-    "OK: catálogo 12/una piloto, original exacto y once intactas; tres recorridos, respuestas propias, composición, audio/transcripción simulados, cambio/cancelación, histórico antiguo/nuevo/desconocido sin migración, Practicada, Misión/evidencia/Trabajo realizado, Persona Activa, gestión/consulta/sin relación, teclado/foco/reduced-motion, imagen y 320/390/768/1024/1440. Sin colecciones nuevas.",
+    "OK: catálogo 12/piloto 003, original exacto y seis tradicionales intactas (ampliadas verificadas en su suite); tres recorridos, respuestas propias, composición, audio/transcripción simulados, cambio/cancelación, histórico antiguo/nuevo/desconocido sin migración, Practicada, Misión/evidencia/Trabajo realizado, Persona Activa, gestión/consulta/sin relación, teclado/foco/reduced-motion, imagen y 320/390/768/1024/1440. Sin colecciones nuevas.",
   );
 })().catch((e) => {
   console.error(e);
