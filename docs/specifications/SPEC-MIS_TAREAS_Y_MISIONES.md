@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.8 |
+| **Versión** | 2.9 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.9 | 02/11/2026 | Product Owner + AI Collaborator | Ajuste de revisión familiar: situación antes de Segunda Semilla y título automático Semilla · Situación cuando se fija; sin alterar criterios ni evidencias. |
 | 2.8 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #231/Pages #840 success: situación opcional V1 publicada, ocho verificaciones públicas idénticas y cuatro suites superadas; uso familiar pendiente. |
 | 2.7 | 02/11/2026 | Product Owner + AI Collaborator | Implementa escenario opcional para una sola Semilla concreta: gestión/edición, ejecución fijada o libre y filtro de evidencia existente; compatibilidad sin migración. Validación familiar pendiente. |
 | 2.6 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
@@ -815,3 +816,11 @@ Motor/API/Contexto/visores reales y SDK/identidad/medios externos controlados. E
 [Pages #840](https://github.com/jperdomo12/academia-gloria/actions/runs/41483585413) success. Ocho comprobaciones públicas HTTP 200/bytes idénticos al árbol revisado: los cinco archivos de producto modificados (API, HTML/JS de Gestión y HTML/JS del Motor) con sus parámetros de caché reales; y las referencias conservadas de Mi Camino, Trabajo realizado y catálogo. Entrada: <https://jperdomo12.github.io/academia-gloria/mi-universo/mis-tareas/> → Preparar misión → Creciendo por Dentro → 1 Semilla → Yo sí puedo → Situación de esta Misión.
 
 Sin desarrollo, integración ni publicación técnica pendiente. **Pendiente:** uso familiar de elección libre/fijada y comprensión/consulta en cuenta y dispositivo reales; la experiencia multi-escenario no se declara estable. Verificación pública HTTP/bytes y pruebas funcionales/visuales locales con identidad/Firestore/medios controlados; no equivale a validar Rules desplegadas ni micrófono físico.
+
+### Ajuste de revisión familiar · orden y título
+
+Observación aprobada del Product Owner tras probar V1, desde `main` `14116889d73d722ad6bdf7babcb293e47de38e9f` (#232). En la configuración rápida, «Situación de esta Misión» precede a «Segunda Semilla» en el DOM, orden visual y teclado. Reutiliza la misma cuadrícula y control.
+
+El generador vigente compone el título como **Semilla · Situación**, por ejemplo `Yo sí puedo · Algo del cole me está costando`, cuando hay situación concreta. Con «Cualquier situación» conserva únicamente el nombre de la Semilla. Selección, cambios y título de presentación/guardado utilizan el mismo generador y catálogo; los criterios/IDs no cambian. Al editar una Misión pendiente con situación válida se actualiza la presentación del título en el formulario, sin escribir hasta guardar; Misiones iniciadas/históricas conservan su título registrado al abrir. Sin migraciones, cambios de evidencia, permisos o ejecución.
+
+Suite V1 ampliada: orden real de campos en cinco anchos, título creado/guardado, cambio de situación, regreso a cualquier situación y edición de una Misión pendiente anterior sin escritura automática; conserva los controles funcionales y de consulta existentes. Verificación visual 320/390/768/1024/1440 y servicios controlados; publicación del ajuste se registra al cerrar.

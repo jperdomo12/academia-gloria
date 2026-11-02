@@ -100,6 +100,9 @@ async function snapshot(p, label, selector) {
       ),
       label + " " + width,
     );
+    if (label === "gestion") {
+      assert.equal(await p.evaluate(() => Boolean(document.querySelector("#campoEscenarioSemilla").compareDocumentPosition(document.querySelector("#semillaSegunda").closest("label")) & Node.DOCUMENT_POSITION_FOLLOWING)), true);
+    }
     if (qa) {
       await p.evaluate(() => document.fonts.ready);
       await p
@@ -176,6 +179,7 @@ function evidence(
     d["usuarios/alumno/tareas/" + free].criterioCumplimiento.filtros,
     { semillasIds: [seed.id] },
   );
+  assert.equal(d["usuarios/alumno/tareas/" + free].titulo, seed.titulo);
   const fixed = await create(p, scenarios[1].id);
   d = await db(p);
   assert.equal(
@@ -187,13 +191,19 @@ function evidence(
     d["usuarios/alumno/tareas/" + fixed].presentacionAlumno.descripcionMision,
     /Algo del cole/,
   );
+  assert.equal(d["usuarios/alumno/tareas/" + fixed].titulo, `${seed.titulo} · ${scenarios[1].titulo}`);
+  assert.equal(d["usuarios/alumno/tareas/" + fixed].presentacionAlumno.tituloMision, `${seed.titulo} · ${scenarios[1].titulo}`);
+  // Edición de una Misión pendiente anterior al ajuste, sin migración automática.
+  await put(p, { ["usuarios/alumno/tareas/" + fixed]: { ...d["usuarios/alumno/tareas/" + fixed], titulo: seed.titulo } });
   await edit(p, free);
   assert.equal(await p.inputValue("#escenarioSemilla"), "");
   await p.selectOption("#escenarioSemilla", scenarios[2].id);
+  assert.equal(await p.inputValue("#titulo"), `${seed.titulo} · ${scenarios[2].titulo}`);
   await save(p);
   await edit(p, free);
   assert.equal(await p.inputValue("#escenarioSemilla"), scenarios[2].id);
   await p.selectOption("#escenarioSemilla", "");
+  assert.equal(await p.inputValue("#titulo"), seed.titulo);
   await save(p);
   assert.ok(
     !(
@@ -203,6 +213,8 @@ function evidence(
     ),
   );
   await edit(p, fixed);
+  assert.equal(await p.inputValue("#titulo"), `${seed.titulo} · ${scenarios[1].titulo}`);
+  assert.equal((await db(p))["usuarios/alumno/tareas/" + fixed].titulo, seed.titulo);
   assert.equal(await p.inputValue("#semillaPrimera"), seed.id);
   assert.equal(await p.inputValue("#escenarioSemilla"), scenarios[1].id);
   assert.equal(await p.locator("#escenarioSemilla option").count(), 4);

@@ -1595,7 +1595,7 @@ function crearTextosSemillas(cantidad, ids = [], escenarioId = "") {
     const escenario = catalogoSemillas.find(item => item.id === ids[0])?.escenarios?.find(item => item.id === escenarioId);
     const situacion = escenario ? ` en la situación “${escenario.titulo}”` : "";
     return {
-      titulo: titulos[0],
+      titulo: escenario ? `${titulos[0]} · ${escenario.titulo}` : titulos[0],
       descripcionMision:
         `Completa la Semilla “${titulos[0]}” de Creciendo por Dentro${situacion}. ` +
         `Lía te acompañará paso a paso.`,
@@ -1805,7 +1805,7 @@ function tituloAutomaticoPorModulo() {
 
   if (modulo === "creciendo-por-dentro") {
     const cantidad = normalizarCantidadSemillas($("cantidadSemillas")?.value, 1);
-    return crearTextosSemillas(cantidad, semillasSeleccionadas().slice(0, cantidad)).titulo;
+    return crearTextosSemillas(cantidad, semillasSeleccionadas().slice(0, cantidad), $("escenarioSemilla").value).titulo;
   }
 
   if (modulo === "detectives") {
@@ -2335,6 +2335,10 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
 
   actualizarResumenCriterioDetectives();
   actualizarResumenCriterioSemillas();
+  if (!soloLectura && !misionYaIniciada(tarea) && tarea.modulo === "creciendo-por-dentro" &&
+      $("escenarioSemilla").value && $("escenarioSemilla").validity.valid) {
+    actualizarTituloAutomatico();
+  }
   actualizarVistaPrevia();
   actualizarBloqueResultado(tarea.estado);
   establecerAcordeones("editar");

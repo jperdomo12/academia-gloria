@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.60 |
+| **Versión** | 3.61 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 02/11/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.61 | 02/11/2026 | Product Owner + AI Collaborator | Ajustes menores de Gestión de Semillas desde #232: orden de campos y título con situación concreta; validación/publicación en curso, pendientes previos conservados. |
 | 3.60 | 02/11/2026 | Product Owner + AI Collaborator | Cierra V1 de Misiones con situación opcional #231/Pages #840: código público idéntico al probado, regresión y visual completadas. Conserva prueba familiar y todos los pendientes anteriores. |
 | 3.59 | 02/11/2026 | Product Owner + AI Collaborator | V1 de Misiones con escenario opcional implementada desde #230; validación/regresión y publicación en curso. Sin migraciones ni nuevos permisos; conserva todos los pendientes previos. |
 | 3.58 | 02/11/2026 | Product Owner + AI Collaborator | Microajuste visual #227 integrado/publicado; Pages #836 success y dos archivos públicos idénticos a los probados. SPEC 1.4 §18.4; sin trabajo técnico pendiente; conserva uso con Gloria y demás pendientes. |
@@ -345,6 +346,8 @@ Criterio permanente: **Descubre la Academia** es la puerta natural para presenta
 
 ## ✅ 9. TRABAJO ON GOING
 
+**Gestión de Semillas · ajustes de revisión (02/11/2026):** base `1411688` (#232), rama `fix/misiones-orden-titulo-situacion`. SPEC Misiones 2.9, sección de orden/título. Situación antes de Segunda Semilla en la cuadrícula; título automático Semilla · Situación cuando se fija y solo Semilla cuando Gloria elige. Generador compartido, sin cambios de criterio/evidencia/Motor ni migraciones. Suite V1 ampliada superada y revisión visual 320–1440 completada; publicación en curso. Identidad/Firestore controlados; conservar pendientes de uso familiar y todos los anteriores.
+
 **Misiones · Semillas con situación opcional V1 publicada (02/11/2026):** [PR #231](https://github.com/jperdomo12/academia-gloria/pull/231) integrada en `c905b3743384a04370045d4b27650c635e282502`; head probado `81ff461f…`, árbol `73fe4e24…`, base `5d3b5b4` (#230). Fuente propietaria SPEC Misiones 2.8, sección V1; SPEC multi-escenario 1.6/general 1.5, diseños aprobados y norma de Semillas sincronizados. Familia elige cualquier situación o fija una para una Semilla/cantidad 1; edición/restauración, limpieza visible y escenario retirado controlados. Motor respeta la situación de Misión con contexto no editable; evidencia efectiva y filtros generales exigen Semilla/escenario correctos. Mi Camino, Trabajo realizado, catálogo y contratos históricos conservados. Nueva suite y tres regresiones superadas, revisión visual 320/390/768/1024/1440 y teclado/foco/reduced-motion. SDK/identidad/medios controlados; cero errores JS y aviso decorativo preexistente anotado. Pages #840 (run `41483585413`) success: cinco archivos modificados y tres referencias conservadas públicos HTTP 200 e idénticos al árbol revisado, ocho comprobaciones. Sin desarrollo/integración/publicación técnica pendiente. Uso con Gloria/cuenta/dispositivo reales y todos los pendientes anteriores conservados; modelo multi-escenario no declarado estable.
 
 **Semillas · microajuste visual publicado (02/11/2026):** [PR #227](https://github.com/jperdomo12/academia-gloria/pull/227) integrada en `91ce0b4e1ffea9b8a8d529c5d3dbf5f9c259db99`, head probado `e426d364…`, árbol `1394d4cf…`, base `9913637`. SPEC multi-escenario 1.4 §18.4. Solo HTML/CSS de producto: etiqueta «Situación elegida», título destacado, acción secundaria, fondo/sombra suaves y separación del progreso. Tres escenarios × 320/390/768/1024/1440, título largo, teclado/foco/reduced-motion y ambas suites del Motor superados; servicios controlados. Test aparta el puntero para evitar hover oscilante preexistente, sin cambiar aserciones. Motor/catálogo/API intactos. Pages #836 (run `41459267130`) success, HTML y CSS `?v=3` públicos HTTP 200 idénticos al árbol probado. Sin desarrollo/integración/publicación pendiente del ajuste. Uso real con Gloria y todos los demás pendientes conservados. Producto Fase A no declarado estable.
@@ -509,7 +512,7 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.60 |
+| **Versión** | 3.61 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | V1 Misiones/Semillas con situación opcional #231/Pages #840 publicada/verificada, SPEC 2.8; sin desarrollo pendiente, uso familiar pendiente. Fase A Semillas multi-escenario #225/Pages #834 publicada/verificada (SPEC 1.2); sin desarrollo pendiente, uso con Gloria y dispositivos/cuentas reales pendientes. RAP Studio #221 publicada/verificada (SPEC hija 1.8/principal 1.17): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
 | **PR On going** | Sin PR de producto pendiente: V1 Misiones/Semillas #231 integrada/publicada; Semillas multi-escenario #225 integrada/publicada; RAP Studio #221/#219/#217/#215 integrada/publicada; voces/proveedor real y revisión perceptiva/uso pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |
