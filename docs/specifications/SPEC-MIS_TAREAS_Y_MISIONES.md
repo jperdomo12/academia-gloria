@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.11 |
+| **Versión** | 2.12 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.12 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #235/Pages #844 success: Segunda Semilla condicional publicada, HTML/JS públicos idénticos a los probados y suite V1 ampliada superada. |
 | 2.11 | 02/11/2026 | Product Owner + AI Collaborator | Revisión familiar: Segunda Semilla visible solo cuando cantidad > 1; el valor oculto no participa en la selección efectiva, sin cambiar contratos. |
 | 2.10 | 02/11/2026 | Product Owner + AI Collaborator | Cierra ajustes #233/Pages #842 success: orden y título publicados, HTML/JS públicos idénticos a los probados, sin cambios en criterios o evidencias. |
 | 2.9 | 02/11/2026 | Product Owner + AI Collaborator | Ajuste de revisión familiar: situación antes de Segunda Semilla y título automático Semilla · Situación cuando se fija; sin alterar criterios ni evidencias. |
@@ -833,4 +834,6 @@ Suite V1 ampliada: orden real de campos en cinco anchos, título creado/guardado
 
 Desde `main` `86f02be8d6556945ce94eba254e8c9ddd53ccc22` (#234), «Segunda Semilla» solo se muestra cuando Cantidad de Semillas es mayor que 1, tanto al crear como al editar. Con cantidad 1 permanece oculta y no participa en la selección efectiva, título, resumen ni criterio, aunque exista una elección temporal previa. Al volver a varias Semillas puede recuperarse esa selección, sin migraciones ni nuevas estructuras de datos. Se reutilizan el resumen/controlador de configuración y la clase `hidden` vigentes; ocultar el campo también lo excluye del recorrido de teclado.
 
-La suite V1 añade visibilidad 1 ↔ varias, edición de ambos casos y guardado de una Misión de una Semilla sin filtro procedente de un segundo campo oculto. Regresión y revisión visual del formulario responsive; identidad/Firestore controlados y pendientes familiares previos conservados. Publicación se registra al cerrar.
+La suite V1 añade visibilidad 1 ↔ varias, edición de ambos casos y guardado de una Misión de una Semilla sin filtro procedente de un segundo campo oculto. Regresión y revisión visual del formulario responsive; identidad/Firestore controlados y pendientes familiares previos conservados. Publicación completada según el cierre siguiente.
+
+**Cierre de Segunda Semilla condicional:** [PR #235](https://github.com/jperdomo12/academia-gloria/pull/235), base `86f02be8d6556945ce94eba254e8c9ddd53ccc22`, head probado `6eb7ce32731963c5a4b9e19dbdcafbbf730df446`, árbol `e6ed1959e9a46d17a2541f0f4187421cc6bbef8b`, merge `85e6705f4e6eeed40b09f7bb51b423ef60b5b78a`. Cinco archivos previstos revisados, suite V1 ampliada superada y revisión 320/390/768/1024/1440. [Pages #844](https://github.com/jperdomo12/academia-gloria/actions/runs/41490160097) success; HTML/JS `20261102-segunda-semilla` públicos HTTP 200 e idénticos al árbol probado. Sin desarrollo/integración/publicación pendiente; servicios controlados y validación familiar del modelo pendiente, sin estabilidad.
