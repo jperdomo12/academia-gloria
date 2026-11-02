@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_IMPACTO_TRANSVERSAL.md` |
-| **Versión** | 1.0 |
+| **Versión** | 1.1 |
 | **Estado** | Análisis transversal aprobado · decisiones vigentes |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Gestión de Misiones |
@@ -19,6 +19,17 @@
 - `docs/standards/STD-MIS_TAREAS_Y_MISIONES.md`
 - `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md`
 - `docs/specifications/SPEC-ANALISIS_EDUCATIVO.md`
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza el cierre transversal con la V1 de escenario opcional implementada en Misiones/Motor/evidencia. Mantiene diferidos catálogo, análisis, automatizaciones y solicitud de escenarios. |
+| 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Decisiones funcionales aprobadas anteriores a la implementación. |
+
+## Resumen de contenido
+
+Matriz de decisiones aprobadas; comportamiento libre/fijado y límites V1; histórico ya absorbido; evoluciones diferidas; estado de implementación y fuentes propietarias.
 
 ---
 
@@ -37,9 +48,9 @@ Los demás dominios solo deben conocer el escenario cuando aporta valor funciona
 
 | Área | Decisión |
 |---|---|
-| Crear Misiones | **AJUSTE APROBADO**: escenario opcional cuando la Misión apunta a una sola Semilla multi-escenario concreta. |
-| Mi Camino | **AJUSTE APROBADO**: si la Misión fija escenario, abrir directamente ese escenario; si no, conservar elección libre. |
-| Evidencia de Misión | **AJUSTE APROBADO**: añadir `escenarioId` y `escenarioTitulo` cuando exista escenario efectivo. |
+| Crear Misiones | **AJUSTE IMPLEMENTADO V1**: escenario opcional cuando la Misión apunta a una sola Semilla multi-escenario concreta. |
+| Mi Camino | **AJUSTE IMPLEMENTADO V1**: si la Misión fija escenario, abrir directamente ese escenario; si no, conservar elección libre. |
+| Evidencia de Misión | **AJUSTE IMPLEMENTADO V1**: añadir `escenarioId` y `escenarioTitulo` cuando exista escenario efectivo. |
 | Trabajo Realizado | **YA ABSORBIDO** por Fase A; conservar presentación contextual. |
 | Jardín / Histórico | **YA ABSORBIDO** por Fase A; conservar compatibilidad histórica. |
 | Catálogo de Semillas | **SIN CAMBIO AHORA**; no mostrar contador de situaciones todavía. |
@@ -198,6 +209,10 @@ No existe un impacto que bloquee su expansión a nuevas Semillas.
 
 Próximos pasos:
 
-1. implementar escenario opcional en Misiones conforme a `DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md` y este documento;
-2. validar ejecución, evidencia, histórico y compatibilidad;
+1. implementación V1 realizada de escenario opcional en Misiones conforme a `DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md` y este documento;
+2. conservar pruebas de ejecución, evidencia, histórico y compatibilidad y completar uso familiar;
 3. después retomar la expansión curada de escenarios a otras Semillas candidatas.
+
+## 11. Estado implementado
+
+Misiones con situación opcional V1 realizadas según `SPEC-MIS_TAREAS_Y_MISIONES.md` y `SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. Mi Camino conserva su registro/contexto existente; el Motor interpreta el filtro. Sesión e histórico no se duplican; evidencia expone el escenario real. Las áreas marcadas como futuras o sin cambio en la matriz permanecen fuera del alcance. Estado técnico de publicación/pruebas y límites en la SPEC de Misiones y HandOff. No declarar estabilidad antes de la validación familiar correspondiente.

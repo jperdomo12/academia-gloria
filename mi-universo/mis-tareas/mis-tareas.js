@@ -2,7 +2,7 @@ import { protegerPagina } from "../../compartido/js/auth-guard.js";
 import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
 import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
-import { Academia } from "../../compartido/api/academia.js";
+import { Academia } from "../../compartido/api/academia.js?v=3";
 
 import { AVENTURAS } from "../rincon-dictados/aventuras.js";
 import { prepararMision, esMisionDictado } from "../rincon-dictados/seguimiento.js";
@@ -50,6 +50,7 @@ const evidenciasAbiertas = new Set();
 let filtroActual = "activas";
 let detenerObservacion = null;
 let catalogoSemillas = [];
+let semillaDelEscenario = "";
 let descripcionMisionPersonalizada = false;
 
 // El mismo formulario conserva la intención y configuración de un refuerzo.
@@ -1535,6 +1536,38 @@ function poblarSelectoresSemillas() {
   });
 }
 
+function actualizarSelectorEscenario({ restaurarId } = {}) {
+  const select = $("escenarioSemilla");
+  const anterior = restaurarId ?? select.value;
+  const cantidad = normalizarCantidadSemillas($("cantidadSemillas").value, 1);
+  const id = semillasSeleccionadas().slice(0, cantidad)[0];
+  const semilla = catalogoSemillas.find(item => item.id === id);
+  const compatible = $("modulo").value === "creciendo-por-dentro" && !esRepasoAcademicoFormulario() &&
+    cantidad === 1 && Boolean(semilla?.escenarios?.length);
+  const restaurando = restaurarId !== undefined;
+  // Un ID retirado se conserva al editar; cambiar el objetivo sí lo limpia.
+  const conservar = restaurando || (
+    semillaDelEscenario === id && cantidad === 1 &&
+    $("modulo").value === "creciendo-por-dentro" && !esRepasoAcademicoFormulario()
+  );
+  const elegido = conservar ? anterior : "";
+  const desconocido = Boolean(elegido && !semilla?.escenarios?.some(item => item.id === elegido));
+  $("campoEscenarioSemilla").classList.toggle("hidden", !compatible && !elegido);
+  select.innerHTML = '<option value="">🌈 Cualquier situación · Gloria elige</option>' +
+    (compatible ? semilla.escenarios.map(item => `<option value="${escapar(item.id)}">${escapar(item.titulo)}</option>`).join("") : "") +
+    (desconocido ? `<option value="${escapar(elegido)}" disabled>Situación guardada no disponible</option>` : "");
+  select.value = elegido;
+  select.setCustomValidity(desconocido ? "Elige una situación disponible o Cualquier situación antes de cambiar esta configuración." : "");
+  $("ayudaEscenarioSemilla").textContent = desconocido
+    ? "La situación guardada ya no está disponible. No se ha sustituido: elige una situación disponible o Cualquier situación para cambiar esta configuración."
+    : "Puedes dejar que Gloria elija o indicar una situación concreta.";
+  if (anterior && !elegido && !restaurando) {
+    $("mensajeFormulario").className = "mensaje-formulario";
+    $("mensajeFormulario").textContent = "Se ha quitado la situación concreta al cambiar la Semilla o la configuración.";
+  }
+  semillaDelEscenario = id || "";
+}
+
 function normalizarCantidadSemillas(valor, valorPredeterminado = 1) {
   const numero = Number(valor);
   if (!Number.isFinite(numero)) return valorPredeterminado;
@@ -1554,17 +1587,19 @@ function tituloSemillaPorId(id) {
   return catalogoSemillas.find(item => item.id === id)?.titulo || "";
 }
 
-function crearTextosSemillas(cantidad, ids = []) {
+function crearTextosSemillas(cantidad, ids = [], escenarioId = "") {
   const unidad = cantidad === 1 ? "Semilla" : "Semillas";
   const titulos = ids.map(tituloSemillaPorId).filter(Boolean);
 
   if (cantidad === 1 && titulos.length === 1) {
+    const escenario = catalogoSemillas.find(item => item.id === ids[0])?.escenarios?.find(item => item.id === escenarioId);
+    const situacion = escenario ? ` en la situación “${escenario.titulo}”` : "";
     return {
       titulo: titulos[0],
       descripcionMision:
-        `Completa la Semilla “${titulos[0]}” de Creciendo por Dentro. ` +
+        `Completa la Semilla “${titulos[0]}” de Creciendo por Dentro${situacion}. ` +
         `Lía te acompañará paso a paso.`,
-      criterio: `Completar la Semilla “${titulos[0]}”.`
+      criterio: `Completar la Semilla “${titulos[0]}”${situacion}.`
     };
   }
 
@@ -1589,7 +1624,7 @@ function aplicarTextosAutomaticosSemillas({ forzar = false } = {}) {
     $("cantidadSemillas")?.value,
     1
   );
-  const textos = crearTextosSemillas(cantidad, semillasSeleccionadas());
+  const textos = crearTextosSemillas(cantidad, semillasSeleccionadas().slice(0, cantidad), $("escenarioSemilla").value);
 
   $("titulo").value = textos.titulo;
   $("tituloMision").value = textos.titulo;
@@ -1621,6 +1656,7 @@ function reiniciarTextosAutomaticosSemillas() {
 }
 
 function actualizarResumenCriterioSemillas() {
+  actualizarSelectorEscenario();
   const resumen = $("resumenCriterioSemillas");
   if (!resumen) return;
 
@@ -1628,7 +1664,7 @@ function actualizarResumenCriterioSemillas() {
     $("cantidadSemillas")?.value,
     1
   );
-  const ids = semillasSeleccionadas();
+  const ids = semillasSeleccionadas().slice(0, cantidad);
   const titulos = ids.map(tituloSemillaPorId).filter(Boolean);
 
   resumen.textContent =
@@ -1638,6 +1674,8 @@ function actualizarResumenCriterioSemillas() {
         ? `seleccionada${titulos.length === 1 ? "" : "s"}: ${titulos.join(" y ")}`
         : "de libre elección"
     );
+  const escenario = catalogoSemillas.find(item => item.id === ids[0])?.escenarios?.find(item => item.id === $("escenarioSemilla").value);
+  if (cantidad === 1 && escenario) resumen.textContent += ` · Situación: ${escenario.titulo}`;
 }
 
 function esRepasoAcademicoFormulario() {
@@ -1766,10 +1804,8 @@ function tituloAutomaticoPorModulo() {
   if (modulo === "rincon-dictados") return datosDictadoFormulario().titulo;
 
   if (modulo === "creciendo-por-dentro") {
-    return crearTextosSemillas(
-      normalizarCantidadSemillas($("cantidadSemillas")?.value, 1),
-      semillasSeleccionadas()
-    ).titulo;
+    const cantidad = normalizarCantidadSemillas($("cantidadSemillas")?.value, 1);
+    return crearTextosSemillas(cantidad, semillasSeleccionadas().slice(0, cantidad)).titulo;
   }
 
   if (modulo === "detectives") {
@@ -1922,6 +1958,7 @@ function actualizarConfiguracionPorModulo({
   const esBiblioteca = modulo === "biblioteca";
   const esAcademica = esRepasoAcademicoFormulario() && !dictadoEnEdicion();
 
+  actualizarSelectorEscenario();
   actualizarConfiguracionDictado({ completarSugerencias });
   if (modulo === "rincon-dictados" || dictadoEnEdicion()?.tipo === "repaso_academico") {
     ["configuracionAcademica", "configuracionDetectives", "configuracionLectura", "configuracionSemillas"].forEach(id => $(id).classList.add("hidden"));
@@ -2013,7 +2050,8 @@ function aplicarBloqueoCriterio(tarea = null) {
     "nivelLectura",
     "cantidadSemillas",
     "semillaPrimera",
-    "semillaSegunda"
+    "semillaSegunda",
+    "escenarioSemilla"
   ];
 
   ids.forEach(id => {
@@ -2071,7 +2109,7 @@ function inicializarReferenciasTextosAutomaticos(tarea = {}) {
       : [];
     Object.assign(
       textosAutomaticosSemillas,
-      crearTextosSemillas(cantidad, ids)
+      crearTextosSemillas(cantidad, ids, criterio.filtros?.escenarioId || "")
     );
   }
 }
@@ -2131,6 +2169,9 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   $("cantidadSemillas").value = "1";
   $("semillaPrimera").value = "";
   $("semillaSegunda").value = "";
+  $("escenarioSemilla").value = "";
+  $("escenarioSemilla").setCustomValidity("");
+  semillaDelEscenario = "";
   $("cantidadLecturas").value = "2";
   $("nivelLectura").value = "todos";
   $("nivelDetectives").value = "1";
@@ -2175,6 +2216,9 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   const presentacion = tarea.presentacionAlumno || {};
 
   refuerzoDictado = null;
+  $("escenarioSemilla").value = "";
+  $("escenarioSemilla").setCustomValidity("");
+  semillaDelEscenario = "";
   $("dictadoAventura").value = tarea.evidencia?.configuracion?.aventuraId || AVENTURAS[0].id;
   $("tareaId").value = tarea.id;
   $("titulo").value = tarea.titulo || "";
@@ -2232,8 +2276,14 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   )
     ? criterioCumplimiento.filtros.semillasIds.map(String)
     : [];
-  $("semillaPrimera").value = semillasIds[0] || "";
-  $("semillaSegunda").value = semillasIds[1] || "";
+  ["semillaPrimera", "semillaSegunda"].forEach((id, index) => {
+    const guardado = semillasIds[index];
+    if (guardado && ![...$(id).options].some(option => option.value === guardado)) {
+      $(id).add(new Option("Semilla guardada no disponible", guardado));
+    }
+    $(id).value = guardado || "";
+  });
+  actualizarSelectorEscenario({ restaurarId: criterioCumplimiento.filtros?.escenarioId || "" });
   $("observacion").value = tarea.observacionActual || "";
 
   $("visibleParaAlumno").checked = esVisibleComoMision(tarea);
@@ -2389,9 +2439,11 @@ function recogerFormulario() {
                 modulo: "creciendo-por-dentro",
                 evidenciaTipo: "semilla_completada",
                 cantidadObjetivo: cantidadSemillas,
-                filtros: semillasIds.length
-                  ? { semillasIds }
-                  : {}
+                filtros: {
+                  ...(semillasIds.length ? { semillasIds } : {}),
+                  ...(cantidadSemillas === 1 && semillasIds.length === 1 && $("escenarioSemilla").value
+                    ? { escenarioId: $("escenarioSemilla").value } : {})
+                }
               }
             : esBiblioteca
               ? {
@@ -2601,7 +2653,7 @@ function configurarFormulario() {
     });
   });
 
-  ["cantidadSemillas", "semillaPrimera", "semillaSegunda"].forEach(id => {
+  ["cantidadSemillas", "semillaPrimera", "semillaSegunda", "escenarioSemilla"].forEach(id => {
     $(id)?.addEventListener("input", () => {
       actualizarResumenCriterioSemillas();
 

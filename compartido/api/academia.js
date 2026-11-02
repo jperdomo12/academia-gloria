@@ -1367,6 +1367,10 @@ function incumplimientosEvidenciaCriterio(evidencia, criterio) {
 
   Object.entries(criterio.filtros || {}).forEach(([clave, valorEsperado]) => {
     const valorRecibido = evidencia.atributos?.[clave];
+    if (clave === "semillasIds" && Array.isArray(valorEsperado) && valorEsperado.length &&
+        !valorEsperado.map(String).includes(String(evidencia.actividadId))) {
+      incumplimientos.push("La Semilla realizada no pertenece a esta misión.");
+    }
     if (String(valorRecibido ?? "") !== String(valorEsperado)) {
       incumplimientos.push(
         `${clave} requerido: ${valorEsperado}; recibido: ${valorRecibido ?? "sin dato"}`

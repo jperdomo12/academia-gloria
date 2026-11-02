@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Fase A publicada para validación familiar · no declarada estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora la V1 aprobada de Misiones: escenario opcional para una sola Semilla, ejecución contextual fijada y evidencia efectiva. Conserva Fase A e históricos sin migración. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Cierra microajuste visual #227/Pages #836 success: HTML y CSS públicos idénticos a los probados; sin trabajo técnico pendiente ni cambios funcionales. |
 | 1.3 | 02/11/2026 | Product Owner + AI Collaborator | Microajuste visual del escenario elegido: etiqueta, jerarquía, fondo suave y acción secundaria. Sin cambio funcional; validación visual responsive y regresión. |
 | 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #225: Pages #834 success, nueve archivos públicos modificados y la imagen original idénticos al árbol probado. Sin desarrollo/publicación técnica pendiente; uso con Gloria y dispositivos/identidad reales pendientes. |
@@ -410,19 +411,15 @@ No crear porcentaje de dominio ni obligación de completar todos los escenarios.
 
 ---
 
-## 10. Misiones
+## 10. Misiones · escenario opcional V1
 
-La Fase A mantiene las Misiones por `semillaId`.
+La Fase A original mantuvo Misiones exclusivamente por `semillaId`. La revisión transversal posterior aprobó refinar opcionalmente una Misión de una sola Semilla concreta multi-escenario con `criterioCumplimiento.filtros.escenarioId`, conservando `semillasIds`. Fuente propietaria del comportamiento de Misión: `SPEC-MIS_TAREAS_Y_MISIONES.md`, sección «Misiones de Semillas · situación opcional V1».
 
-Una Misión que permita `yo-si-puedo` permite elegir cualquiera de sus escenarios disponibles, salvo decisión funcional posterior.
-
-No introducir todavía:
-
-- `escenarioIds` dentro de criterios de Misión;
-- finalización por escenario específico;
-- cantidad obligatoria de escenarios distintos.
-
-Esas capacidades solo se añadirán si aparece una necesidad real.
+- Sin escenario fijado (incluidas Misiones antiguas): elegir cualquiera de los escenarios curados, sin filtro ficticio.
+- Con escenario: el Motor lo valida contra la única Semilla objetivo/cantidad 1, entra directamente, muestra «Situación de esta Misión» y oculta el cambio de situación. Repetir conserva el escenario; fuera de Misión permanece la libertad completa.
+- Situación fijada no disponible/incompatible: detener esa ejecución y pedir revisión familiar; no elegir otra silenciosamente.
+- Evidencia nueva: escenario efectivo como atributos `escenarioId` y `escenarioTitulo` cuando existe. Filtro general exige Semilla y escenario correctos; título no participa en identidad.
+- No migrar sesiones/evidencias/Misiones anteriores. Sin selección por escenario para varias Semillas, cantidades de situaciones distintas, porcentajes, análisis ni automatización.
 
 ---
 
@@ -548,7 +545,7 @@ La implementación será candidata cuando:
 11. el histórico muestra el escenario correcto y reconstruye sus respuestas correctamente;
 12. sesiones antiguas de `Yo sí puedo` sin `escenarioId` siguen siendo legibles mediante el escenario predeterminado;
 13. repetir el mismo escenario y elegir otro escenario son recorridos claros;
-14. Misiones continúan filtrando por `semillaId` sin cambios obligatorios;
+14. Misiones conservan selección por `semillaId` y permiten el filtro opcional V1 solo para una Semilla/cantidad 1;
 15. no se añade IA generativa, contenido dinámico ni texto libre de escenario;
 16. no se crean colecciones Firestore paralelas ni persistencia propia de escenarios;
 17. no se rompe Persona Activa, consulta relacionada, audio/transcripción ni evidencia `semilla_completada`;
@@ -629,3 +626,9 @@ No cambia Motor/selector, datos, contratos de sesión, histórico, Misiones, evi
 Revisión renderizada de los tres escenarios en 320/390/768/1024/1440 y caso de título largo: jerarquía, ausencia de desbordamiento, botón evidente/pulsable y teclado/retorno correctos, cero escrituras o errores JS en la revisión visual. Regresión con las dos suites vigentes del Motor; medios/identidad/Firestore controlados. El test de escenarios aparta el puntero antes de abrir Jardín para evitar oscilación del hover preexistente al sustituir controles; no cambia sus aserciones. Aviso decorativo preexistente de celebración conservado. Publicación del ajuste completada; Fase A sigue pendiente de uso con Gloria para estabilidad.
 
 **Cierre del microajuste:** [PR #227](https://github.com/jperdomo12/academia-gloria/pull/227), head probado `e426d3643b9e8a58524a67f273b711a12bbab8c8`, árbol `1394d4cf3aff5f05eecf08f99f190989b2323453`, merge `91ce0b4e1ffea9b8a8d529c5d3dbf5f9c259db99`. Cinco archivos previstos revisados: dos de producto, test y dos fuentes documentales. [Pages #836](https://github.com/jperdomo12/academia-gloria/actions/runs/41459267130) success; HTML y CSS `?v=3` públicos HTTP 200 y bytes idénticos al árbol revisado. Motor, catálogo y API idénticos al baseline. Sin desarrollo, integración o publicación pendiente del ajuste. Validación funcional/visual local con servicios controlados y verificación pública HTTP/bytes; uso real de Fase A con Gloria permanece pendiente.
+
+### 18.5 Misiones con situación fijada · V1
+
+Implementación desde `main` `5d3b5b4e62ee682378a4f6da775792690064fb50` (#230), tras cierre de revisión transversal. Gestión reutiliza catálogo, formulario, bloqueo de objetivos y filtro existentes. Motor reutiliza contexto visual y recorrido; el nuevo `scenarioLabel` distingue situación elegida frente a situación de la Misión. Evidencia propaga los dos campos efectivos; API compara el filtro escalar y comprueba Semilla real permitida.
+
+Mi Camino y Trabajo realizado mantienen su código/contrato: contexto por `misionId`, navegación vigente y consulta del escenario real ya implementada. No se modifica `semillas.json`, sesiones previas, Rules ni imágenes. Cambian las versiones de entrada del JS del Motor/Gestión y API a fin de evitar código anterior en caché. Validación y cierre canónicos: SPEC de Misiones, sección V1. La experiencia multi-escenario sigue pendiente de uso con Gloria antes de declarar estabilidad.

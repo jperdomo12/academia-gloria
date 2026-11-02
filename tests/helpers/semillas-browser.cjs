@@ -8,11 +8,11 @@ export const collection=(ref,...p)=>({path:[ref.path,...p].filter(Boolean).join(
 export const where=(field,op,value)=>({field,op,value});export const orderBy=(field,dir)=>({order:field,dir});export const query=(ref,...filters)=>({...ref,filters});
 export const getDoc=async r=>snap(r.path,read()[r.path]);
 export const getDocs=async r=>{const a=Object.entries(read()).filter(([p])=>p.startsWith(r.path+'/')&&!p.slice(r.path.length+1).includes('/')).filter(([p,v])=>(r.filters||[]).every(f=>!f.field||v[f.field]===f.value));return {docs:a.map(([p,v])=>snap(p,v)),empty:!a.length};};
-const write=(r,d,merge=false)=>{window.qaWritePaths=(window.qaWritePaths||[]);window.qaWritePaths.push(r.path);window.qaWrites=(window.qaWrites||0)+1;const a=read();if(merge){const next=structuredClone(a[r.path]||{});for(const [key,value] of Object.entries(d)){const parts=key.split('.');let at=next;for(const part of parts.slice(0,-1))at=at[part]??={};at[parts.at(-1)]=value;}a[r.path]=next;}else a[r.path]=d;localStorage.qaDB=JSON.stringify(a);for(const o of observers)queueMicrotask(async()=>o.cb(await getDocs(o.ref)));};
+const write=(r,d,merge=false)=>{window.qaWritePaths=(window.qaWritePaths||[]);window.qaWritePaths.push(r.path);window.qaWrites=(window.qaWrites||0)+1;const a=read();if(merge){const next=structuredClone(a[r.path]||{});for(const [key,value] of Object.entries(d)){const parts=key.split('.');let at=next;for(const part of parts.slice(0,-1))at=at[part]??={};at[parts.at(-1)]=value;}a[r.path]=next;}else a[r.path]=d;localStorage.qaDB=JSON.stringify(a);for(const o of observers)queueMicrotask(async()=>o.cb(await (o.ref.id ? getDoc(o.ref) : getDocs(o.ref))));};
 export const setDoc=async(r,d,o)=>write(r,d,o?.merge);export const updateDoc=async(r,d)=>write(r,d,true);export const addDoc=async(r,d)=>{const id='nueva-'+Date.now();write({path:r.path+'/'+id},d);return{id};};
 export const deleteDoc=async r=>{window.qaWrites=(window.qaWrites||0)+1;const a=read();delete a[r.path];localStorage.qaDB=JSON.stringify(a);};
 export const serverTimestamp=()=>new Date().toISOString();export const Timestamp={now:()=>new Date().toISOString(),fromDate:d=>d.toISOString()};
-export const onSnapshot=(ref,cb)=>{observers.push({ref,cb});queueMicrotask(async()=>cb(await getDocs(ref)));return()=>{};};
+export const onSnapshot=(ref,cb)=>{observers.push({ref,cb});queueMicrotask(async()=>cb(await (ref.id ? getDoc(ref) : getDocs(ref))));return()=>{};};
 export const runTransaction=async(db,fn)=>fn({get:getDoc,set:setDoc,update:updateDoc});
 export const increment=n=>n;export const writeBatch=()=>{const ops=[];return{delete:r=>ops.push(r),commit:async()=>{for(const r of ops)await deleteDoc(r);}};};
 `;

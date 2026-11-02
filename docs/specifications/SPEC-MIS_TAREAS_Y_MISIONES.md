@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.6 |
+| **Versión** | 2.7 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
-| **Última actualización** | 13/10/2026 |
+| **Última actualización** | 02/11/2026 |
 | **Propietario** | Gestión de Misiones |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Comportamiento funcional de creación, presentación, ejecución, seguimiento, revisión, evidencia, refuerzo y eliminación controlada de Misiones |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.7 | 02/11/2026 | Product Owner + AI Collaborator | Implementa escenario opcional para una sola Semilla concreta: gestión/edición, ejecución fijada o libre y filtro de evidencia existente; compatibilidad sin migración. Validación familiar pendiente. |
 | 2.6 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 2.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
 | 2.5-rc | 13/10/2026 | Product Owner + AI Collaborator | Documenta consulta educativa de Misiones y observaciones con APIs/visores existentes; gestión sigue separada. Candidata pendiente de integración. |
@@ -769,3 +770,39 @@ La edición general muestra la configuración de Dictado y respeta el bloqueo de
 Conforme a `SPEC-CONSULTA_EDUCATIVA_POR_ALUMNO.md`, una relación válida permite consultar Misiones, estado, observaciones, refuerzos preparados, objetivos, progreso y trabajo realizado desde Consulta educativa. Reutiliza `Academia.tareas.leer` y `abrirTrabajoRealizado`; no duplica motor ni datos.
 
 Crear/editar/eliminar Misiones y guardar observaciones requiere nivel efectivo `gestion` o superior. Gestión de Misiones mantiene ese mínimo. El alumno conserva sus escrituras educativas propias y evidencias de ejecución; el profesional en consulta no puede realizarlas sobre una persona relacionada. El reporte puede sugerir actuaciones; prepararlas como Misiones sigue siendo una decisión de gestión.
+
+## Misiones de Semillas · situación opcional V1
+
+Decisiones aprobadas: `docs/product/DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md` y `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_IMPACTO_TRANSVERSAL.md`. Se mantiene el único registro de Misión, Persona Activa y API existentes.
+
+### Gestión y contrato
+
+Para módulo Creciendo por Dentro, cantidad exactamente 1 y una Semilla concreta con escenarios curados, se ofrece «Situación de esta Misión». Opciones derivadas de `semillas.json`: «🌈 Cualquier situación · Gloria elige» (predeterminada) y los títulos reales. No hay lista de escenarios paralela ni selecciones para varias Semillas.
+
+El contrato sigue siendo `criterioCumplimiento.filtros.semillasIds`. Solo al fijar situación se añade `filtros.escenarioId`. Elegir cualquier situación no persiste un filtro ficticio. La descripción/criterio automáticos pueden incluir el título legible, respetando textos personalizados. La identidad de cumplimiento depende del ID, nunca del título.
+
+Al editar se restauran Semilla y escenario desde el catálogo. Cambiar Semilla, cantidad, tipo o módulo elimina una selección incompatible con aviso visible; volver a una Semilla no resucita un ID anterior. Un escenario guardado no disponible se conserva, se muestra como tal y requiere una elección explícita válida antes de cambiar la configuración. La protección vigente de objetivos de Misiones iniciadas y la consulta histórica se aplica también al nuevo control.
+
+### Ejecución, evidencia e histórico
+
+Mi Camino conserva `misionId`/Persona Activa/retorno y el destino existente; el Motor lee la Misión. Sin filtro, muestra selector; con filtro válido para una sola Semilla/cantidad 1, entra directamente al escenario, identifica «Situación de esta Misión» en el contexto vigente y no ofrece cambiar de situación ni «Probar otra situación». Repetir mantiene el escenario fijado. Fuera de Misión permanece la elección libre. Una referencia no disponible o incompatible no se convierte en práctica libre: pide revisión familiar.
+
+La sesión conserva su contrato. La evidencia `semilla_completada` añade `atributos.escenarioId`/`atributos.escenarioTitulo` cuando existe escenario efectivo. Reutiliza la comparación general de filtros; `escenarioId` incorrecto o ausente no cumple una Misión fijada. Además, la actividad real debe pertenecer a la lista `semillasIds` cuando esta limita Semillas, sin confiar solo en la copia de atributos. Continúan la transacción, identidad/idempotencia y revisión familiar existentes.
+
+Misiones/evidencias antiguas sin escenario conservan su interpretación sin migraciones ni campos fabricados. Varias Semillas mantienen el criterio anterior. Jardín y Trabajo realizado muestran el escenario real de la sesión mediante el resolver vigente, solo lectura; no hay visor nuevo, colecciones, Rules, análisis o automatizaciones adicionales.
+
+### Validación y límites
+
+Suite `tests/misiones-semillas-escenarios-browser.cjs`: formulario y edición reales, Mi Camino/Motor/API/ContextoUsuario/visores reales con SDK/identidad controlados. Regresión del Motor completo mediante sus suites existentes y de Misiones de Dictado. Revisión visual desktop/móvil y teclado/foco. Resultados superados:
+
+| Área | Evidencia de validación |
+|---|---|
+| Gestión | Crear libre/fijada; editar ambas; restaurar/cambiar escenario; cambiar Semilla, elegir cualquiera/sin escenarios y pasar de una a varias; aviso y limpieza; escenario retirado conservado hasta decisión explícita. |
+| Objetivos e histórico | Selector bloqueado en Misión iniciada; formulario de Misión completada solo lectura sin escrituras. |
+| Ejecución | Libre con selector; fijada iniciada desde Mi Camino con misionId/volver; recorrido completo; contexto no editable, repetición fijada y práctica libre fuera de Misión. Referencia retirada se detiene sin práctica/evidencia. |
+| Cumplimiento | Escenario y Semilla correctos; rechazo de escenario incorrecto/ausente y Semilla incorrecta sin escrituras; campos efectivos en evidencia; reintento sin duplicar evidencia/progreso; legacy sin campos fabricados; Misión múltiple 1/2 → 2/2. |
+| Consulta | Trabajo realizado y Jardín muestran escenario real/respuestas/frase sin escrituras; consulta relacionada conserva lectura y no obtiene Gestión. |
+| Regresión | Suites semillas-composicion-browser, semillas-escenarios-browser y dictados-misiones-browser superadas; histórico antiguo, Persona Activa, permisos, medios controlados y Misiones anteriores. |
+| Visual | Gestión/contexto fijado en 320/390/768/1024/1440 sin desbordamiento; control nativo/etiqueta/ayuda/resumen, teclado/foco/reduced-motion. |
+
+Motor/API/Contexto/visores reales y SDK/identidad/medios externos controlados. El fixture de onSnapshot distingue documentos de consultas para cubrir los observadores de Mi Camino, sin sustituir su código. Cero errores JavaScript; aviso HTTP 404 decorativo de celebración preexistente (`guacamaya-roja-posada-01.png`) fuera de este alcance. Publicación se registra al cerrar. No certifica Rules desplegadas, cuenta autenticada real ni micrófono físico; conservar uso familiar de multi-escenario pendiente.
