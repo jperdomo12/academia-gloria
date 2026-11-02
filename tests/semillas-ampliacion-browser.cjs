@@ -98,7 +98,11 @@ async function fonts(p) {
     const common = structuredClone(seed);
     delete common.escenarios;
     delete common.escenarioPredeterminadoId;
-    assert.deepEqual(common, (({ situacion, pasos, ...rest }) => rest)(old));
+    const expected = (({ situacion, pasos, ...rest }) => rest)(old);
+    if (seed.id === ids[1])
+      expected.plantillaRespuesta =
+        "Lo que ocurre: {comprender}. Puedo pensar en la otra persona: {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos buscar este acuerdo: {acuerdo}.";
+    assert.deepEqual(common, expected);
     const section = source.match(
       new RegExp(
         "## \\d+\\. Semilla " +
@@ -164,7 +168,7 @@ async function fonts(p) {
     }
   }
   console.log(
-    "OK contenido: diez escenarios idénticos a la fuente; originales/IDs/plantillas exactos, seis objetos restantes y 003 intactos.",
+    "OK contenido: diez escenarios idénticos a la fuente; originales/IDs exactos y única plantilla 004 ajustada con aprobación, seis objetos restantes y 003 intactos.",
   );
   const b = await chromium.launch({
     executablePath: process.env.CHROMIUM_EXECUTABLE,
@@ -284,11 +288,23 @@ async function fonts(p) {
       let phrase = await p.locator("#composedResponse").innerText();
       assert.ok(phrase.length > 30);
       assert.ok(!/[{}]/.test(phrase));
-      if (sid === ids[1] && sc.id === "tenemos-dos-ideas-distintas") {
-        assert.ok(
-          phrase.startsWith("Las dos queremos Tenemos dos ideas diferentes"),
+      if (sid === ids[1]) {
+        const [hecho, perspectiva, hablar, acuerdo] = sc.pasos.map((step) =>
+          step.opciones[0].texto.replace(/[.]+$/, ""),
         );
-        console.log("BLOQUEO EDITORIAL reproducido: " + phrase);
+        assert.equal(
+          phrase,
+          `Lo que ocurre: ${hecho}. Puedo pensar en la otra persona: ${perspectiva}. Puedo decir: ${hablar}. Para cuidarnos, podemos buscar este acuerdo: ${acuerdo}.`.replace(
+            /([!?])\./g,
+            "$1",
+          ),
+        );
+        assert.ok(!phrase.includes("Las dos queremos Las dos queremos"));
+        assert.ok(!phrase.includes("Las dos queremos Tenemos"));
+        assert.ok(!phrase.includes("mi amiga Puede pensar"));
+        assert.ok(!/[!?]\./.test(phrase));
+        await shot(p, "composicion-004-" + sc.id, "#experienceContent");
+        console.log("OK composición 004: " + sc.id + " / " + phrase);
       }
       await click(p, "#previousComposer");
       for (let i = 1; i < sc.pasos.length; i++)
@@ -470,7 +486,7 @@ async function fonts(p) {
   await e.c.close();
   await b.close();
   console.log(
-    "OK ampliación: 15 recorridos, propias/opciones/voz/guardado/Jardín, legacy intacto, seis badges y contador 4/1, teclado/foco/reduced-motion, cinco anchos y guía. BLOQUEO de plantilla 004 pendiente; no acredita calidad de esa frase ni publicación.",
+    "OK ampliación: 15 recorridos, propias/opciones/voz/guardado/Jardín, legacy intacto, seis badges y contador 4/1, teclado/foco/reduced-motion, cinco anchos y guía. Composición 004 exacta en las tres situaciones, sin duplicación; publicación y prueba familiar pendientes.",
   );
 })().catch((e) => {
   console.error(e);

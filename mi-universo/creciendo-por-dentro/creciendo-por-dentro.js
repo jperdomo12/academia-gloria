@@ -561,6 +561,7 @@ function builtResponse() {
     )
     .replace(/\s+/g," ")
     .replace(/\s+([.,;:!?])/g,"$1")
+    .replace(/([!?])\./g,"$1")
     .trim();
 }
 

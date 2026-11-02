@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.7 |
-| **Estado** | Fase A publicada · ampliación candidata bloqueada por composición 004 · no estable |
+| **Versión** | 1.8 |
+| **Estado** | Fase A publicada · ampliación aprobada en cierre técnico · no estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.8 | 02/11/2026 | Product Owner + AI Collaborator | Aprueba y aplica el encuadre de composición 004 sin cambiar escenarios, pasos/opciones, Motor ni histórico. Ampliación desbloqueada para validación final y publicación; prueba familiar pendiente. |
 | 1.7 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación candidata a seis Semillas con diez escenarios curados y badge informativo dinámico. Conserva plantillas e histórico; detectada incompatibilidad de composición en 004, pendiente de decisión antes de publicar. Prueba familiar ampliada pendiente. |
 | 1.6 | 02/11/2026 | Product Owner + AI Collaborator | V1 de Misiones publicada mediante #231, Pages #840 success; sin integración/publicación pendiente, manteniendo validación familiar del modelo. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora la V1 aprobada de Misiones: escenario opcional para una sola Semilla, ejecución contextual fijada y evidencia efectiva. Conserva Fase A e históricos sin migración. |
@@ -639,7 +640,7 @@ Mi Camino y Trabajo realizado mantienen su código/contrato: contexto por `misio
 
 ### 18.6 Ampliación curada · candidata desde main #237
 
-Fuente exacta de los diez escenarios: `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`. Catálogo 1.12; seis Semillas multi-escenario (001/003/004/007/010/011), tres situaciones cada una. Las otras seis Semillas y 003 permanecen idénticas al baseline `78fc64b`; no cambia el contrato interno de 012. Plantillas y propiedades comunes conservadas. Situación y pasos originales se trasladan íntegros, incluidos IDs de opciones, al escenario predeterminado:
+Fuente exacta de los diez escenarios: `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`. Catálogo 1.12; seis Semillas multi-escenario (001/003/004/007/010/011), tres situaciones cada una. Las otras seis Semillas y 003 permanecen idénticas al baseline `78fc64b`; no cambia el contrato interno de 012. Propiedades comunes conservadas, salvo la plantilla 004 cuyo ajuste mínimo aprueba expresamente el Product Owner para admitir las opciones completas. Situación y pasos originales se trasladan íntegros, incluidos IDs de opciones, al escenario predeterminado:
 
 | Semilla | escenarioPredeterminadoId |
 |---|---|
@@ -653,6 +654,6 @@ El badge `🌱 N situaciones` se deriva exclusivamente de `escenarios.length`, a
 
 Ilustraciones originales revisadas: 001 muestra explícitamente el lápiz, 007 actividades de recreo y 011 un puzle. Se conservan en catálogo/originales; los escenarios nuevos de esas tres Semillas usan `recursos: null`, contrato vigente de recurso opcional, y apoyo visual simple del Motor. Las imágenes generales de acuerdo (004) y calma (010) sirven también en los nuevos contextos. Sin nuevos binarios ni rediseños.
 
-**Bloqueo real antes de publicación:** la plantilla común vigente de 004 (`Las dos queremos {comprender}. También puedo pensar que mi amiga {perspectiva}…`) presupone fragmentos, mientras las nuevas opciones aprobadas son frases completas. Resultado reproducido: «Las dos queremos Tenemos dos ideas diferentes para hacer el mismo trabajo. También puedo pensar que mi amiga Puede pensar que su idea también puede funcionar…». La repetición también existe en el original. Se conservan literalmente tanto la plantilla como el contenido aprobado, conforme al encargo; no se corrigen silenciosamente. Debe decidirse un ajuste mínimo del encuadre de la composición antes de integrar, sin modificar respuestas, opciones, IDs, históricos o habilidad. Candidata no publicada; esto no es una segunda aprobación del alcance.
+**Composición 004 · ajuste aprobado:** se detectó que la plantilla antigua presuponía fragmentos y duplicaba parte de las opciones originales/nuevas. El Product Owner aprueba expresamente el encuadre `Lo que ocurre: {comprender}. Puedo pensar en la otra persona: {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos buscar este acuerdo: {acuerdo}.` Es la única plantilla modificada; no cambian opciones, pasos, habilidad, sesiones previas ni flujo del Motor. El normalizador existente de composición solo añade la eliminación de un punto redundante tras `?`/`!`, sin alterar contenido educativo. Se verifica su frase completa en las tres situaciones. Bloqueo resuelto, sin segunda aprobación del alcance; publicación en curso.
 
-Pruebas y límites: ver §12 del diseño de ampliación. La prueba familiar ampliada con Anaís y Gloria, usando varias de las seis Semillas, sigue siendo Quality Gate para certificar, ajustar o revisar situaciones. No declarar estable.
+Pruebas y límites: ver §12–13 del diseño de ampliación. La prueba familiar ampliada con Anaís y Gloria, usando varias de las seis Semillas, sigue siendo Quality Gate para certificar, ajustar o revisar situaciones. No declarar estable.
