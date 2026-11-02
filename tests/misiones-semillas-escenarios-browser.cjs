@@ -173,6 +173,19 @@ function evidence(
   await fonts(p);
   await p.emulateMedia({ reducedMotion: "reduce" });
   // Crear y editar libre/fijada mediante el formulario real.
+  await form(p);
+  assert.equal(await p.locator("#campoSegundaSemilla").isVisible(), false);
+  await p.fill("#cantidadSemillas", "2");
+  assert.equal(await p.locator("#campoSegundaSemilla").isVisible(), true);
+  await p.selectOption("#semillaSegunda", simple.id);
+  await p.fill("#cantidadSemillas", "1");
+  assert.equal(await p.locator("#campoSegundaSemilla").isVisible(), false);
+  assert.equal(await p.inputValue("#semillaSegunda"), simple.id);
+  assert.ok(!(await p.locator("#resumenCriterioSemillas").innerText()).includes(simple.titulo));
+  const beforeSingle = tasks(await db(p)).map(([key]) => key);
+  await save(p);
+  const singleWithoutHidden = tasks(await db(p)).find(([key]) => !beforeSingle.includes(key))[1];
+  assert.deepEqual(singleWithoutHidden.criterioCumplimiento.filtros, {});
   const free = await create(p);
   let d = await db(p);
   assert.deepEqual(
@@ -251,6 +264,9 @@ function evidence(
   await p.selectOption("#semillaSegunda", simple.id);
   await save(p);
   const multi = fixed;
+  await edit(p, multi);
+  assert.equal(await p.locator("#campoSegundaSemilla").isVisible(), true);
+  assert.equal(await p.inputValue("#semillaSegunda"), simple.id);
   assert.deepEqual(
     (await db(p))["usuarios/alumno/tareas/" + multi].criterioCumplimiento
       .filtros,

@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.10 |
+| **Versión** | 2.11 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.11 | 02/11/2026 | Product Owner + AI Collaborator | Revisión familiar: Segunda Semilla visible solo cuando cantidad > 1; el valor oculto no participa en la selección efectiva, sin cambiar contratos. |
 | 2.10 | 02/11/2026 | Product Owner + AI Collaborator | Cierra ajustes #233/Pages #842 success: orden y título publicados, HTML/JS públicos idénticos a los probados, sin cambios en criterios o evidencias. |
 | 2.9 | 02/11/2026 | Product Owner + AI Collaborator | Ajuste de revisión familiar: situación antes de Segunda Semilla y título automático Semilla · Situación cuando se fija; sin alterar criterios ni evidencias. |
 | 2.8 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #231/Pages #840 success: situación opcional V1 publicada, ocho verificaciones públicas idénticas y cuatro suites superadas; uso familiar pendiente. |
@@ -827,3 +828,9 @@ El generador vigente compone el título como **Semilla · Situación**, por ejem
 Suite V1 ampliada: orden real de campos en cinco anchos, título creado/guardado, cambio de situación, regreso a cualquier situación y edición de una Misión pendiente anterior sin escritura automática; conserva los controles funcionales y de consulta existentes. Verificación visual 320/390/768/1024/1440 y servicios controlados; publicación del ajuste completada según el cierre siguiente.
 
 **Cierre de orden/título:** [PR #233](https://github.com/jperdomo12/academia-gloria/pull/233), base `14116889d73d722ad6bdf7babcb293e47de38e9f`, head probado `18a37256170e8d4fb5c10375e44cda2fb24a99f2`, árbol `5faf84610332c2746bc5ea1e46130140903e08e7`, merge `c90ec0f64bdac32b89ebed4926e457a5659309d6`. Cinco archivos previstos revisados; suite V1 ampliada superada y revisión visual 320/390/768/1024/1440. [Pages #842](https://github.com/jperdomo12/academia-gloria/actions/runs/41488263429) success, HTML y JS con versión `20261102-titulo-situacion` públicos HTTP 200/bytes idénticos al árbol probado. Sin desarrollo, integración o publicación pendiente del ajuste. Identidad/Firestore controlados; uso familiar del modelo conserva su pendiente de validación antes de estabilidad.
+
+### Ajuste de revisión familiar · Segunda Semilla condicional
+
+Desde `main` `86f02be8d6556945ce94eba254e8c9ddd53ccc22` (#234), «Segunda Semilla» solo se muestra cuando Cantidad de Semillas es mayor que 1, tanto al crear como al editar. Con cantidad 1 permanece oculta y no participa en la selección efectiva, título, resumen ni criterio, aunque exista una elección temporal previa. Al volver a varias Semillas puede recuperarse esa selección, sin migraciones ni nuevas estructuras de datos. Se reutilizan el resumen/controlador de configuración y la clase `hidden` vigentes; ocultar el campo también lo excluye del recorrido de teclado.
+
+La suite V1 añade visibilidad 1 ↔ varias, edición de ambos casos y guardado de una Misión de una Semilla sin filtro procedente de un segundo campo oculto. Regresión y revisión visual del formulario responsive; identidad/Firestore controlados y pendientes familiares previos conservados. Publicación se registra al cerrar.
