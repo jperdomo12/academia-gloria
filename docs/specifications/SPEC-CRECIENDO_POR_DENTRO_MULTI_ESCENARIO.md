@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Fase A publicada para validación familiar · no declarada estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 02/11/2026 | Product Owner + AI Collaborator | Microajuste visual del escenario elegido: etiqueta, jerarquía, fondo suave y acción secundaria. Sin cambio funcional; validación visual responsive y regresión. |
 | 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #225: Pages #834 success, nueve archivos públicos modificados y la imagen original idénticos al árbol probado. Sin desarrollo/publicación técnica pendiente; uso con Gloria y dispositivos/identidad reales pendientes. |
 | 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Implementación aditiva del piloto; contrato efectivo compartido, sesión e histórico compatibles. Candidata técnica; pendiente de publicación y uso con Gloria. |
 | 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Fase A curada aprobada para desarrollo, con tres escenarios de Yo sí puedo. |
@@ -617,3 +618,11 @@ La identidad, SDK Firestore, dictado, captura y transcripción de las pruebas so
 [Pages #834](https://github.com/jperdomo12/academia-gloria/actions/runs/41453056775) `success`. Verificación pública HTTP 200 y bytes idénticos para nueve archivos de producto modificados (HTML, CSS, Motor, catálogo, resolver, API, guía y ambos archivos de Trabajo realizado), con los parámetros de caché reales, más la imagen original conservada: diez comprobaciones. URL de entrada: <https://jperdomo12.github.io/academia-gloria/mi-universo/creciendo-por-dentro/> → Yo sí puedo.
 
 Sin desarrollo, integración ni publicación técnica pendiente de la Fase A. **Pendiente:** uso real con Gloria, elección/comprensión de situaciones, práctica oral/micrófono y transcripción según dispositivo, y consulta relacionada con cuenta real. La verificación pública es HTTP/bytes; la validación funcional y visual es local con identidad/servicios controlados. No equivale a certificar Rules desplegadas ni estabilidad del modelo.
+
+### 18.4 Microajuste visual · situación elegida
+
+Solicitud aprobada del Product Owner, desde `main` `9913637790f6ae112ae8fcce642f20e48a69bfc8`. Cambios de producto limitados a `index.html` y `creciendo-por-dentro.css`: etiqueta discreta «Situación elegida», jerarquía del título, fondo violeta/verde y sombra tenue, botón secundario de 44 px como mínimo y separación de 22 px respecto del progreso. Conserva IDs, eventos y fuente del título; no añade iconos ni otra representación del escenario. CSS versionado `?v=3`.
+
+No cambia Motor/selector, datos, contratos de sesión, histórico, Misiones, evidencia o contenido pedagógico. Reutiliza `.btn--light`, paleta y composición flex existentes. Texto largo ajustable y foco/reduced-motion conservados.
+
+Revisión renderizada de los tres escenarios en 320/390/768/1024/1440 y caso de título largo: jerarquía, ausencia de desbordamiento, botón evidente/pulsable y teclado/retorno correctos, cero escrituras o errores JS en la revisión visual. Regresión con las dos suites vigentes del Motor; medios/identidad/Firestore controlados. El test de escenarios aparta el puntero antes de abrir Jardín para evitar oscilación del hover preexistente al sustituir controles; no cambia sus aserciones. Aviso decorativo preexistente de celebración conservado. Publicación del ajuste pendiente de cierre técnico; Fase A sigue pendiente de uso con Gloria para estabilidad.

@@ -434,6 +434,7 @@ async function save(p, withAudio = false) {
     },
   });
   const beforeHistory = await db(p);
+  await p.mouse.move(0, 0);
   await p.click("#showHistory");
   await p.waitForSelector(".history-card");
   assert.equal(await p.locator(".history-card").count(), 5);
