@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.9 |
+| **Versión** | 2.10 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.10 | 02/11/2026 | Product Owner + AI Collaborator | Cierra ajustes #233/Pages #842 success: orden y título publicados, HTML/JS públicos idénticos a los probados, sin cambios en criterios o evidencias. |
 | 2.9 | 02/11/2026 | Product Owner + AI Collaborator | Ajuste de revisión familiar: situación antes de Segunda Semilla y título automático Semilla · Situación cuando se fija; sin alterar criterios ni evidencias. |
 | 2.8 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #231/Pages #840 success: situación opcional V1 publicada, ocho verificaciones públicas idénticas y cuatro suites superadas; uso familiar pendiente. |
 | 2.7 | 02/11/2026 | Product Owner + AI Collaborator | Implementa escenario opcional para una sola Semilla concreta: gestión/edición, ejecución fijada o libre y filtro de evidencia existente; compatibilidad sin migración. Validación familiar pendiente. |
@@ -823,4 +824,6 @@ Observación aprobada del Product Owner tras probar V1, desde `main` `14116889d7
 
 El generador vigente compone el título como **Semilla · Situación**, por ejemplo `Yo sí puedo · Algo del cole me está costando`, cuando hay situación concreta. Con «Cualquier situación» conserva únicamente el nombre de la Semilla. Selección, cambios y título de presentación/guardado utilizan el mismo generador y catálogo; los criterios/IDs no cambian. Al editar una Misión pendiente con situación válida se actualiza la presentación del título en el formulario, sin escribir hasta guardar; Misiones iniciadas/históricas conservan su título registrado al abrir. Sin migraciones, cambios de evidencia, permisos o ejecución.
 
-Suite V1 ampliada: orden real de campos en cinco anchos, título creado/guardado, cambio de situación, regreso a cualquier situación y edición de una Misión pendiente anterior sin escritura automática; conserva los controles funcionales y de consulta existentes. Verificación visual 320/390/768/1024/1440 y servicios controlados; publicación del ajuste se registra al cerrar.
+Suite V1 ampliada: orden real de campos en cinco anchos, título creado/guardado, cambio de situación, regreso a cualquier situación y edición de una Misión pendiente anterior sin escritura automática; conserva los controles funcionales y de consulta existentes. Verificación visual 320/390/768/1024/1440 y servicios controlados; publicación del ajuste completada según el cierre siguiente.
+
+**Cierre de orden/título:** [PR #233](https://github.com/jperdomo12/academia-gloria/pull/233), base `14116889d73d722ad6bdf7babcb293e47de38e9f`, head probado `18a37256170e8d4fb5c10375e44cda2fb24a99f2`, árbol `5faf84610332c2746bc5ea1e46130140903e08e7`, merge `c90ec0f64bdac32b89ebed4926e457a5659309d6`. Cinco archivos previstos revisados; suite V1 ampliada superada y revisión visual 320/390/768/1024/1440. [Pages #842](https://github.com/jperdomo12/academia-gloria/actions/runs/41488263429) success, HTML y JS con versión `20261102-titulo-situacion` públicos HTTP 200/bytes idénticos al árbol probado. Sin desarrollo, integración o publicación pendiente del ajuste. Identidad/Firestore controlados; uso familiar del modelo conserva su pendiente de validación antes de estabilidad.
