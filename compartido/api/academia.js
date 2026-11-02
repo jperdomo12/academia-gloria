@@ -635,6 +635,9 @@ function normalizarSesionSemilla(sesion = {}) {
     throw new Error("La sesión de Semilla no contiene una experiencia válida.");
   }
 
+  const escenarioId = String(sesion.escenarioId ?? "").trim();
+  const escenarioTitulo = String(sesion.escenarioTitulo ?? "").trim();
+  if (escenarioId && !escenarioTitulo) throw new Error("La sesión no identifica el título del escenario.");
   const audioData = String(sesion.audioData ?? "").trim();
 
   if (audioData.length > 900000) {
@@ -646,6 +649,7 @@ function normalizarSesionSemilla(sesion = {}) {
   return {
     semillaId,
     titulo,
+    ...(escenarioId ? { escenarioId, escenarioTitulo } : {}),
     familia: String(sesion.familia ?? "").trim(),
     tipoSituacion: String(sesion.tipoSituacion ?? "").trim(),
     nivelApoyo: Number(sesion.nivelApoyo ?? 1),

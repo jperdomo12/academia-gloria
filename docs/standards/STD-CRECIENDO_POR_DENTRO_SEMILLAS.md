@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.3 |
+| **Versión** | 1.4 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
-| **Última actualización** | 15/10/2026 |
+| **Última actualización** | 02/11/2026 |
 | **Propietario** | Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Diseño, imagen, incorporación, validación, documentación de acompañamiento y cierre de nuevas Semillas del módulo `Creciendo por Dentro` |
@@ -32,11 +32,16 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Formaliza el contrato curado opcional aprobado: una habilidad, varios escenarios, IDs estables, compatibilidad histórica y guía sincronizada. Piloto Yo sí puedo; uso familiar pendiente. |
 | 1.3 | 15/10/2026 | Product Owner + AI Collaborator | Formaliza que marcos externos o aportes profesionales —por ejemplo DESC o Atlas of Emotions— se evalúan caso por caso al diseñar nuevas Semillas. Pueden aportar principios o recursos, pero no son plantillas obligatorias ni justifican modificar retroactivamente Semillas existentes. |
 | 1.2 | 14/10/2026 | Product Owner + AI Collaborator | Integra la composición aprobada mediante #178: resumen derivado y frase de un único paso con contrato vigente, sin persistencia paralela. Nueva prueba familiar de 012 pendiente. |
 | 1.2-rc | 14/10/2026 | Product Owner + AI Collaborator | Candidata de ajuste por validación familiar: documenta composición con resumen derivado y frase de un único paso, usando el contrato vigente y sin persistencia paralela. |
 | 1.1 | 15/09/2026 | Product Owner + AI Collaborator | Incorpora al cierre estándar de una nueva Semilla la actualización de la guía oficial para familias/profesionales y de sus presentaciones derivadas vigentes. Evita que catálogo, documentación de acompañamiento y guía web queden desincronizados. |
 | 1.0 | 15/09/2026 | Product Owner + AI Collaborator | Formaliza el flujo validado durante la creación de las Semillas 007–009: necesidad real → diseño pedagógico → imagen generada por IA manteniendo continuidad visual de Gloria → subida mínima del binario por el Product Owner cuando sea necesaria → integración técnica por la AI Collaborator → validación de Pages → prueba real con Gloria. Reduce al mínimo la intervención manual del Product Owner y establece Quality Gate funcional, emocional, visual y técnico. |
+
+## 🧭 Resumen de contenido
+
+Flujo de incorporación, seguridad, contenido, imagen y Quality Gate. La evolución multi-escenario se limita a situaciones curadas de una misma habilidad, gobernadas por su SPEC.
 
 ---
 
@@ -577,3 +582,15 @@ necesidad familiar / educativa
 ```
 
 Los marcos externos y aportes profesionales son **insumos de diseño**, no plantillas obligatorias ni motivo suficiente para modificar Semillas ya existentes.
+
+## Semillas multi-escenario · Fase A
+
+Fuente propietaria: `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md`. Una Semilla es una habilidad estable; un escenario es una situación concreta. Si cambia la habilidad principal, no corresponde añadir un escenario automáticamente. Solo Yo sí puedo es piloto; no convertir las demás por uniformidad.
+
+- Contenido curado en `semillas.json`, usando `escenarios` opcionales e IDs estables de escenario/pasos/opciones. Reutilizar propiedades comunes y el Motor vigente.
+- Conservar exactamente el escenario original al trasladarlo; mantener respuestas propias, composición y práctica oral del contrato actual.
+- Revisar la imagen en cada contexto. No crear imágenes por obligación técnica: reutilizar una imagen general adecuada o declarar recurso opcional.
+- Sesiones nuevas multi-escenario: `semillaId`, `escenarioId`, `escenarioTitulo` y `tipoSituacion` efectivo. Las antiguas se interpretan mediante `escenarioPredeterminadoId`, sin migrar.
+- Histórico y Trabajo realizado usan el mismo resolver; un escenario desconocido no se interpreta como otro. Misiones continúan por `semillaId`; no añadir filtros, porcentajes ni cumplimiento por escenario.
+- Sincronizar guía propietaria/web y validar regresión de todas las Semillas, identidad, permisos, evidencia, medios, responsive y teclado. No declarar estable antes del uso con Gloria.
+- No implementar descripción libre de escenario, generación dinámica, IA ni solicitud de escenarios desde la UI. La incorporación futura sigue siendo editorial y necesita su decisión correspondiente.

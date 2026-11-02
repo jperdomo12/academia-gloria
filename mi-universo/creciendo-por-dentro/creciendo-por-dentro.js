@@ -1,4 +1,5 @@
-import { Academia } from "../../compartido/api/academia.js";
+import { Academia } from "../../compartido/api/academia.js?v=2";
+import { tieneEscenarios, resolverEscenario, resolverSemillaSesion } from "./escenarios-semilla.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
 import { ContextoUsuario } from "../../compartido/js/contexto-usuario.js";
@@ -38,6 +39,7 @@ function imageMarkup(seed, className = "") {
       <img
         src="${escapeHtml(source)}"
         alt="${escapeHtml(
+          seed?.recursos?.textoAlternativo ||
           seed?.situacion?.texto ||
           seed?.titulo ||
           "Ilustración de la Semilla"
@@ -62,6 +64,10 @@ let perfil = null;
 let misionId = params.get("misionId");
 let misionActiva = null;
 let semilla = null;
+let semillaBase = null;
+let pasoAntesEscenarios = null;
+let generacionExperiencia = 0;
+let guardandoSesion = false;
 let stepIndex = -2;
 let respuestas = {};
 let inicioSesion = null;
@@ -93,10 +99,11 @@ function formatDuration(seconds = 0) {
 }
 
 function showPanel(id) {
+  if (id !== "experiencePanel") { generacionExperiencia++; detenerActividad(); }
   ["catalogPanel","experiencePanel","historyPanel"].forEach(panelId => {
     $(panelId).classList.toggle("hidden", panelId !== id);
   });
-  window.scrollTo({ top:0, behavior:"smooth" });
+  window.scrollTo({ top:0, behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
 }
 
 function speak(text) {
@@ -123,6 +130,7 @@ function startDictationInto(textarea, startButton, stopButton) {
   }
 
   const dictation = new Recognition();
+  const generacion = generacionExperiencia;
   const baseText = textarea.value.trim();
   let finalText = "";
 
@@ -136,6 +144,7 @@ function startDictationInto(textarea, startButton, stopButton) {
   startButton.textContent = "🎙️ Escuchando...";
 
   dictation.onresult = event => {
+    if (generacion !== generacionExperiencia) return;
     let interimText = "";
 
     for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -234,7 +243,7 @@ function renderCatalog() {
           ? `<div class="seed-card__image">
                <img
                  src="${escapeHtml(seedImageUrl(item))}"
-                 alt="${escapeHtml(item.situacion?.texto || item.titulo)}"
+                 alt="${escapeHtml(item.recursos?.textoAlternativo || item.situacion?.texto || item.titulo)}"
                  loading="lazy"
                >
              </div>`
@@ -260,6 +269,8 @@ function renderCatalog() {
 }
 
 function resetExperience() {
+  generacionExperiencia++;
+  detenerActividad();
   respuestas = {};
   stepIndex = -2;
   inicioSesion = new Date();
@@ -271,13 +282,60 @@ function resetExperience() {
   stopRecorderTracks();
 }
 
-function startSeed(seedId) {
+function detenerActividad() {
+  stopActiveDictation();
+  if (mediaRecorder?.state === "recording") mediaRecorder.stop();
+  stopRecorderTracks();
+  window.speechSynthesis?.cancel();
+}
+
+function startSeed(seedId, escenarioId = null) {
+  if (guardandoSesion) return;
   if (soloConsultaRelacionada) { showHistory(); return; }
-  semilla = catalogo.semillas.find(item => item.id === seedId);
-  if (!semilla) return;
+  const base = catalogo.semillas.find(item => item.id === seedId);
+  if (!base || (missionAllowedIds().length && !missionAllowedIds().includes(base.id))) return;
+  semillaBase = base;
+  semilla = tieneEscenarios(base) ? resolverEscenario(base, escenarioId) : base;
   resetExperience();
+  pasoAntesEscenarios = null;
+  if (tieneEscenarios(base) && !semilla) stepIndex = -3;
   showPanel("experiencePanel");
   renderExperience();
+}
+
+function cambiarEscenario() {
+  if (guardandoSesion) return;
+  generacionExperiencia++;
+  detenerActividad();
+  pasoAntesEscenarios = stepIndex;
+  stepIndex = -3;
+  renderExperience();
+}
+
+function renderEscenarios() {
+  const volver = semilla && pasoAntesEscenarios !== null;
+  $("experienceContent").innerHTML = `
+    <section class="scenario-picker">
+      <div class="eyebrow">${escapeHtml(semillaBase.titulo)} · Una habilidad, distintas situaciones</div>
+      <h2 tabindex="-1">¿Con qué situación quieres practicar hoy?</h2>
+      <p class="question__help">${escapeHtml(semillaBase.subtitulo)}</p>
+      <div class="scenario-grid">${semillaBase.escenarios.map(escenario => {
+        const practicado = sesiones.some(item => item.semillaId === semillaBase.id && resolverSemillaSesion(semillaBase, item)?.escenarioId === escenario.id);
+        return `<article class="scenario-card">
+          ${practicado ? '<span class="badge">✅ Practicada</span>' : ''}
+          <h3>${escapeHtml(escenario.titulo)}</h3><p>${escapeHtml(escenario.descripcion || escenario.situacion?.texto || '')}</p>
+          <button type="button" class="btn btn--primary" data-start-scenario="${escapeHtml(escenario.id)}" aria-label="Practicar: ${escapeHtml(escenario.titulo)}">🌱 Practicar</button>
+        </article>`;
+      }).join('')}</div>
+      <div class="actions">
+        ${volver ? '<button id="returnToScenario" class="btn btn--violet" type="button">← Volver a mi práctica</button>' : ''}
+        <button id="leaveScenarios" class="btn btn--light" type="button">← Volver a mis Semillas</button>
+      </div>
+      ${volver ? '<p class="scenario-notice">Al elegir otra situación empezarás una práctica nueva. Si prefieres, puedes volver a la que estabas haciendo.</p>' : ''}
+    </section>`;
+  $("experienceContent").querySelectorAll('[data-start-scenario]').forEach(b => b.onclick = () => startSeed(semillaBase.id, b.dataset.startScenario));
+  if ($('returnToScenario')) $('returnToScenario').onclick = () => { stepIndex = pasoAntesEscenarios; pasoAntesEscenarios = null; renderExperience(); };
+  $('leaveScenarios').onclick = () => { showPanel('catalogPanel'); renderCatalog(); };
 }
 
 function progressCount() {
@@ -293,7 +351,18 @@ function renderProgress() {
 }
 
 function renderExperience() {
-  renderProgress();
+  const selector = stepIndex === -3;
+  $("stepProgress").hidden = selector;
+  $("scenarioContext").hidden = selector || !semilla?.escenarioId;
+  $("scenarioTitle").textContent = semilla?.escenarioTitulo || '';
+  $("changeScenario").hidden = !semilla?.escenarioId;
+  if (selector) renderEscenarios();
+  else { renderProgress(); renderPasoActual(); }
+  const encabezado = $("experienceContent").querySelector('h2');
+  if (encabezado) { encabezado.tabIndex = -1; encabezado.focus({ preventScroll:true }); }
+}
+
+function renderPasoActual() {
   if (stepIndex === -2) return renderWelcome();
   if (stepIndex === -1) return renderSituation();
   if (stepIndex < semilla.pasos.length) return renderQuestion(semilla.pasos[stepIndex]);
@@ -362,14 +431,14 @@ function renderQuestion(step) {
       <p class="question__help">${escapeHtml(step.ayuda || "")}</p>
       <div class="options">
         ${(step.opciones || []).map(option => `
-          <button type="button" class="option ${selected.includes(option.id) ? "selected" : ""}" data-answer="${escapeHtml(option.id)}">
+          <button type="button" class="option ${selected.includes(option.id) ? "selected" : ""}" data-answer="${escapeHtml(option.id)}" aria-pressed="${selected.includes(option.id)}">
             ${option.icono ? `<span class="option__icon">${escapeHtml(option.icono)}</span>` : ""}
             ${escapeHtml(option.texto)}
           </button>`).join("")}
       </div>
       ${step.otraRespuesta ? `
         <div class="other">
-          <label><strong>También puedo decirlo con mis palabras:</strong></label>
+          <label for="otherAnswer"><strong>También puedo decirlo con mis palabras:</strong></label>
           <textarea id="otherAnswer" placeholder="Puedes escribirlo o decirlo con tu voz...">${escapeHtml(respuestas[`${step.id}__other`] || "")}</textarea>
           <div class="actions">
             <button id="dictateOtherAnswer" class="btn btn--light" type="button">🎤 Decirlo con mi voz</button>
@@ -395,6 +464,7 @@ function renderQuestion(step) {
         respuestas[step.id] = id;
       }
       renderQuestion(step);
+      $("experienceContent").querySelectorAll("[data-answer]").forEach(b => { if (b.dataset.answer === id) b.focus({ preventScroll:true }); });
     };
   });
 
@@ -528,7 +598,7 @@ function renderComposer() {
   $("practiceResponse").onclick = () => { stepIndex++; renderExperience(); };
 }
 
-function configureRecognition() {
+function configureRecognition(generacion = generacionExperiencia) {
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!Recognition) return;
   recognition = new Recognition();
@@ -536,6 +606,7 @@ function configureRecognition() {
   recognition.continuous = true;
   recognition.interimResults = true;
   recognition.onresult = event => {
+    if (generacion !== generacionExperiencia) return;
     let finalText = "";
     let interim = "";
     for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -569,16 +640,20 @@ function updateRecorderUI(message = "") {
   }
   if (status) status.textContent = message || (audioData ? "Tu grabación está lista. Puedes escucharla o repetir." : "Cuando estés preparada, puedes grabar o continuar sin grabación.");
   const next = $("finishRecording");
-  if (next) next.disabled = !audioData;
+  if (next) next.disabled = guardandoSesion || !audioData;
 }
 
 async function startRecording() {
+  if (guardandoSesion) return;
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     updateRecorderUI("Este navegador no permite grabar. Puedes continuar sin grabación.");
     $("continueWithoutRecording")?.classList.remove("hidden");
     return;
   }
+  const generacion = generacionExperiencia;
   const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+  if (generacion !== generacionExperiencia) { stream.getTracks().forEach(track => track.stop()); return; }
+  configureRecognition(generacion);
   const preferred = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
     ? "audio/webm;codecs=opus" : "audio/webm";
   audioChunks = [];
@@ -596,12 +671,14 @@ async function startRecording() {
   transcript = "";
   audioSaveWarning = "";
   if ($("transcript")) $("transcript").value = "";
-  mediaRecorder.ondataavailable = event => { if (event.data.size) audioChunks.push(event.data); };
+  mediaRecorder.ondataavailable = event => { if (generacion === generacionExperiencia && event.data.size) audioChunks.push(event.data); };
   mediaRecorder.onstop = () => {
+    if (generacion !== generacionExperiencia) { stream.getTracks().forEach(track => track.stop()); return; }
     audioDuration = Math.max(1, Math.round((Date.now() - recordingStartedAt) / 1000));
     const blob = new Blob(audioChunks, { type:audioMimeType });
     const reader = new FileReader();
     reader.onloadend = () => {
+      if (generacion !== generacionExperiencia) return;
       audioData = String(reader.result || "");
       if (audioData.length > MAX_AUDIO_DATA_LENGTH) {
         updateRecorderUI(
@@ -742,8 +819,11 @@ function errorEsTamanoAudio(error) {
 }
 
 async function saveSession({ withoutRecording = false } = {}) {
-  const button = $("finishRecording") || $("continueWithoutRecording");
-  if (button) button.disabled = true;
+  if (guardandoSesion) return;
+  guardandoSesion = true;
+  const controles = ['finishRecording','continueWithoutRecording','previousRecorder','changeScenario','startRecording','clearRecording'];
+  controles.forEach(id => { if ($(id)) $(id).disabled = true; });
+  detenerActividad();
   try {
     const allowedSeedIds = missionAllowedIds();
     if (
@@ -766,6 +846,7 @@ async function saveSession({ withoutRecording = false } = {}) {
 
     const payloadBase = {
       semillaId:semilla.id,
+      ...(semilla.escenarioId ? { escenarioId:semilla.escenarioId, escenarioTitulo:semilla.escenarioTitulo } : {}),
       titulo:semilla.titulo,
       familia:semilla.familia,
       tipoSituacion:semilla.tipoSituacion,
@@ -855,7 +936,10 @@ async function saveSession({ withoutRecording = false } = {}) {
     updateRecorderUI(
       `No pudimos terminar de guardar. Tus respuestas siguen en esta pantalla: no la cierres y pide ayuda a tu familia. Motivo: ${error.message}`
     );
-    if (button) button.disabled = false;
+  } finally {
+    guardandoSesion = false;
+    controles.forEach(id => { if ($(id)) $(id).disabled = false; });
+    if ($('finishRecording')) $('finishRecording').disabled = !audioData;
   }
 }
 
@@ -879,12 +963,14 @@ function renderClosing() {
           <button id="downloadUnsavedRecording" class="btn btn--light" type="button">💾 Guardar copia de mi grabación</button>
         </div>` : ""}
       <div class="actions" style="justify-content:center">
-        <button id="repeatSeed" class="btn btn--violet" type="button">🔁 Practicar otra vez</button>
+        <button id="repeatSeed" class="btn btn--violet" type="button">${semilla.escenarioId ? "🔁 Practicar este escenario otra vez" : "🔁 Practicar otra vez"}</button>
+        ${semilla.escenarioId ? '<button id="tryOtherScenario" class="btn btn--light" type="button">🌱 Probar otra situación</button>' : ""}
         <button id="finishSeed" class="btn btn--primary" type="button">🌿 Volver a mis Semillas</button>
         <button id="viewHistoryAfter" class="btn btn--light" type="button">📚 Ver mi jardín</button>
       </div>
     </section>`;
-  $("repeatSeed").onclick = () => startSeed(semilla.id);
+  $("repeatSeed").onclick = () => startSeed(semilla.id, semilla.escenarioId || null);
+  if ($("tryOtherScenario")) $("tryOtherScenario").onclick = () => startSeed(semilla.id);
   $("finishSeed").onclick = () => { showPanel("catalogPanel"); renderCatalog(); };
   $("viewHistoryAfter").onclick = showHistory;
   if ($("downloadUnsavedRecording")) {
@@ -969,7 +1055,8 @@ function formatDate(value) {
 
 function semillaDeSesion(item = {}) {
   const id = String(item.semillaId || "").trim();
-  return catalogo.semillas.find(seed => String(seed.id) === id) || null;
+  const base = catalogo.semillas.find(seed => String(seed.id) === id) || null;
+  return resolverSemillaSesion(base, item);
 }
 
 function textosRespuestaPaso(step = {}, respuestasSesion = {}) {
@@ -1083,6 +1170,8 @@ async function showHistory() {
     $("historyList").innerHTML = list.map(item => `
       <article class="history-card">
         <h3>🌱 ${escapeHtml(item.titulo || "Semilla")}</h3>
+        ${semillaDeSesion(item)?.escenarioTitulo ? `<p class="history-scenario"><strong>Escenario:</strong> ${escapeHtml(item.escenarioTitulo || semillaDeSesion(item).escenarioTitulo)}</p>` : ''}
+        ${semillaDeSesion(item)?.escenarioNoDisponible ? '<p>No está disponible el contenido de esta situación. Tu frase guardada se conserva.</p>' : ''}
         <div class="history-card__meta">${escapeHtml(formatDate(item.actualizadaEn || item.creadaEn))} · ${Number(item.intentos || 0)} intento(s)</div>
         ${item.audioData ? `<audio controls src="${item.audioData}"></audio>` : "<p>Práctica guardada sin audio.</p>"}
         <details>
@@ -1148,7 +1237,6 @@ async function initialize() {
   }
   await loadMission();
 
-  configureRecognition();
   renderFilters();
   renderCatalog();
 
@@ -1189,6 +1277,7 @@ async function initialize() {
     });
 }
 
+$("changeScenario").onclick = cambiarEscenario;
 $("startRecommended").onclick = () => {
   const recommended = filteredSeeds().find(item => item.recomendada) || filteredSeeds()[0];
   if (recommended) startSeed(recommended.id);
@@ -1202,3 +1291,5 @@ initialize().catch(error => {
   $("catalogEmpty").classList.remove("hidden");
   $("catalogEmpty").textContent = `No pudimos iniciar Creciendo por dentro: ${error.message}`;
 });
+
+window.addEventListener("pagehide", detenerActividad);
