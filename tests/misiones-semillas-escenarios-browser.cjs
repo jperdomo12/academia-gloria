@@ -7,7 +7,7 @@ const { crearEntorno } = require("./helpers/semillas-browser.cjs");
 const base = process.env.BASE_URL || "http://127.0.0.1:8806",
   dir = "/mi-universo/creciendo-por-dentro/";
 const catalog = require("../mi-universo/creciendo-por-dentro/semillas.json"),
-  seed = catalog.semillas.find((s) => s.id === "yo-si-puedo"),
+  seed = catalog.semillas.find((s) => s.id === (process.env.QA_SEMILLA_ID || "yo-si-puedo")),
   simple = catalog.semillas.find((s) => !s.escenarios);
 const scenarios = seed.escenarios,
   qa = process.env.QA_IMAGES;
@@ -69,6 +69,7 @@ async function edit(p, id, view = false) {
   await p.waitForFunction(
     () => document.querySelector("#semillaPrimera")?.options.length > 1,
   );
+  await click(p, '[data-tab="lista"]');
   if (view) await click(p, '[data-filter="completadas"]');
   const button = p.locator(
     `[data-action="${view ? "view" : "edit"}"][data-id="${id}"]`,
@@ -79,10 +80,8 @@ async function edit(p, id, view = false) {
     assert.equal(await next.isEnabled(), true);
     await click(p, '[data-pagina-delta="1"]');
   }
-  await card
-    .locator("summary")
-    .first()
-    .evaluate((e) => (e.parentElement.open = true));
+  if (!(await card.evaluate(e => e.open)))
+    await card.locator("summary").first().click();
   await click(p, `[data-action="${view ? "view" : "edit"}"][data-id="${id}"]`);
   await p.waitForFunction(
     (id) => document.querySelector("#tareaId").value === id,
@@ -202,7 +201,7 @@ function evidence(
   );
   assert.match(
     d["usuarios/alumno/tareas/" + fixed].presentacionAlumno.descripcionMision,
-    /Algo del cole/,
+    new RegExp(scenarios[1].titulo),
   );
   assert.equal(d["usuarios/alumno/tareas/" + fixed].titulo, `${seed.titulo} · ${scenarios[1].titulo}`);
   assert.equal(d["usuarios/alumno/tareas/" + fixed].presentacionAlumno.tituloMision, `${seed.titulo} · ${scenarios[1].titulo}`);
@@ -460,13 +459,14 @@ function evidence(
       "&volver=" +
       encodeURIComponent("/mi-universo/mi-camino/"),
   );
-  await l.waitForFunction(() =>
+  await l.waitForFunction((title) =>
     document
       .querySelector("#listaEvidencias")
-      ?.textContent.includes("Algo del cole"),
+      ?.textContent.includes(title),
+    scenarios[1].titulo,
   );
   const review = await l.locator("#listaEvidencias").textContent();
-  assert.ok(review.includes("Con mis palabras logro"));
+  assert.ok(review.includes("Con mis palabras " + scenarios[1].pasos[0].id));
   assert.ok(review.includes("Mi frase"));
   assert.deepEqual(await db(l), beforeReview);
   await l.goto(base + dir + "?vista=historial");
@@ -489,7 +489,7 @@ function evidence(
   assert.deepEqual(await db(l), beforeReview);
   // Fuera de Misión se mantienen las tres opciones y cambio de situación.
   await l.goto(base + dir);
-  await click(l, '[data-start-seed="yo-si-puedo"]');
+  await click(l, '[data-start-seed="' + seed.id + '"]');
   assert.equal(await l.locator("[data-start-scenario]").count(), 3);
   await click(l, '[data-start-scenario="' + scenarios[0].id + '"]');
   assert.equal(await l.locator("#changeScenario").isVisible(), true);
@@ -501,7 +501,7 @@ function evidence(
   await l.goto(base + dir + "?misionId=" + multi);
   await l.waitForSelector("[data-start-seed]");
   assert.equal(await l.locator("[data-start-seed]").count(), 2);
-  await click(l, '[data-start-seed="yo-si-puedo"]');
+  await click(l, '[data-start-seed="' + seed.id + '"]');
   await click(l, '[data-start-scenario="' + scenarios[0].id + '"]');
   await complete(l, scenarios[0]);
   assert.equal(

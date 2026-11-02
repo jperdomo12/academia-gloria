@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_IMPACTO_TRANSVERSAL.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Análisis transversal aprobado · decisiones vigentes |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Gestión de Misiones |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación y badge implementados en candidata; guía sincronizada y contratos transversales reutilizados. Bloqueo de plantilla 004 detectado sin corregir contenido aprobado; publicación y prueba familiar ampliada pendientes. |
 | 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Aprueba la expansión curada a 001/004/007/010/011 y activa el badge automático `🌱 N situaciones` al existir varias Semillas multi-escenario. Sustituye la decisión previa de no mostrar contador en catálogo. |
 | 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza el cierre transversal con la V1 de escenario opcional implementada en Misiones/Motor/evidencia. Mantiene diferidos catálogo, análisis, automatizaciones y solicitud de escenarios. |
 | 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Decisiones funcionales aprobadas anteriores a la implementación. |
@@ -256,3 +257,9 @@ El siguiente paquete aprobado es:
 6. realizar después prueba familiar ampliada con Anaís y Gloria antes de declarar estable el patrón multi-escenario.
 
 No introducir todavía Análisis Educativo de Semillas, automatización de refuerzos, generación dinámica ni obligación de completar todos los escenarios.
+
+## 11. Realización de la ampliación · candidata
+
+Catálogo 1.12 con los diez escenarios del diseño propietario y originales predeterminados intactos. Badge derivado de `escenarios.length` y guías sincronizadas. No cambia código ni contrato de Gestión/Mi Camino/API/evidencia/histórico; el catálogo los alimenta automáticamente. El detalle técnico, pruebas y limitaciones vive en §12 del diseño de ampliación y §18.6 de la SPEC multi-escenario.
+
+Antes de integrar/publicar falta resolver la incompatibilidad entre la plantilla de composición de 004 y sus nuevas opciones completas, sin cambiar silenciosamente ninguna de las dos decisiones aprobadas. Prueba familiar ampliada con Anaís y Gloria pendiente; no declarar estable el modelo.

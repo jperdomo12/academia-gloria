@@ -4,12 +4,23 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md` |
-| **Versión** | 0.1 |
-| **Estado** | Contenido y UX aprobados · pendiente de implementación |
+| **Versión** | 0.2 |
+| **Estado** | Contenido y UX aprobados · candidata bloqueada por composición 004 |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Ampliación curada del patrón multi-escenario a Semillas 001, 004, 007, 010 y 011; badge informativo `🌱 N situaciones` |
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 0.2 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación candidata exacta, badge y guías; validación y bloqueo de composición 004 documentados. No publicada ni estable. |
+| 0.1 | 02/11/2026 | Product Owner + AI Collaborator | Contenido y UX aprobados para desarrollo. |
+
+## Resumen de contenido
+
+§1–11 conservan las decisiones y los diez escenarios aprobados; §12 registra candidata, pruebas y bloqueo antes de publicación.
 
 ## 1. Objetivo
 
@@ -515,3 +526,17 @@ Aceptar apoyo concreto sin perder autonomía ni mérito, elegir qué ayuda sirve
 La implementación no declara automáticamente estable el patrón multi-escenario.
 
 Después de publicación corresponde realizar una prueba familiar ampliada con Anaís y Gloria usando varias de las seis Semillas multi-escenario y, de acuerdo con el resultado, ajustar o certificar el patrón.
+
+## 12. Candidata técnica, validación y bloqueo
+
+Base `main` `78fc64b` (#237), rama `feat/semillas-ampliacion-escenarios`. Catálogo 1.12: originales íntegros en escenarios predeterminados; diez escenarios nuevos con metadatos, situaciones y opciones extraídos literalmente de §4–8; seis Semillas restantes y 003 intactas. IDs técnicos de opciones nuevas siguen la convención vigente `paso-N`; cuando una opción aprobada coincide exactamente con otra del paso original, se conserva su ID. No se duplican definiciones editoriales en UI. Se conservan tipos, máximos, ayudas, respuestas propias y plantillas existentes.
+
+Motor: único cambio de lógica de presentación es el badge derivado del número real de escenarios. CSS discreto y caché de entrada renovada; no se modifica el recorrido ni persistencia, Misiones, permisos, lector histórico o evidencia. Guías sincronizadas y recursos visuales revisados según SPEC §18.6.
+
+**Bloqueo de composición de 004:** la plantilla anterior construye «Las dos queremos {comprender}» y «mi amiga {perspectiva}». Las opciones aprobadas son oraciones completas; se reproduce «Las dos queremos Tenemos dos ideas diferentes… También puedo pensar que mi amiga Puede pensar…». La misma plantilla ya duplica parte del original. La instrucción exige conservar tanto esa plantilla como las opciones; corregir una de ellas silenciosamente incumpliría el encargo. No se ha modificado ninguna. Pendiente decisión mínima sobre el encuadre de la frase antes de integrar/publicar, sin reabrir escenarios ni decisiones pedagógicas.
+
+**Propuesta mínima pendiente de decisión, NO aplicada:** sustituir solo la plantilla común de 004 por `Lo que ocurre: {comprender}. Puedo pensar en la otra persona: {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos buscar este acuerdo: {acuerdo}.` Los cuatro pasos, sus opciones originales/nuevas, habilidad, sesiones anteriores y Motor quedarían intactos. Este encuadre admite frases completas tanto del original como de los escenarios nuevos.
+
+Pruebas reproducibles: `tests/semillas-ampliacion-browser.cjs` contrasta diez escenarios contra este documento y cinco originales contra main; recorre las quince situaciones con opciones y palabras propias, voz controlada, guardado, repetición/cambio, Jardín, compatibilidad legacy, seis badges/contador dinámico 4 y oculto con 1, guía, teclado/foco/reduced-motion y 320/390/768/1024/1440. Reproduce explícitamente el bloqueo de 004; el pase técnico NO certifica la calidad de esa composición. `tests/misiones-semillas-escenarios-browser.cjs` admite `QA_SEMILLA_ID` para repetir los casos de Gestión/Mi Camino/evidencia/Trabajo realizado sobre cada Semilla ampliada; no añade lógica de producto por escenario. Regresiones del piloto 003 y composición completa/012 conservadas.
+
+Resultado final: nueve ejecuciones completas superadas (composición/012, piloto 003, ampliación y seis ejecuciones de Misiones: 003 + las cinco ampliadas). Quince situaciones recorridas con opciones y palabras propias; Trabajo realizado reconstruye veinte sesiones (quince nuevas y cinco legacy), sin escrituras. Guía revisada con rol adulto, conservando su guard de acceso. Contador probado con 3/4/1 situaciones, seis badges actuales y seis tarjetas sin badge. Revisión visual real de capturas con Outfit local: catálogo, selector, situación, contexto fijado, Gestión y guía, en 320/390/768/1024/1440; sin desbordamiento, foco/teclado y reduced-motion correctos. Chromium de QA carece de algunos glifos emoji; no se sustituyen los iconos de producto. Comprobación de sintaxis y `git diff --check` superadas. Resolver, Gestión, Mi Camino, Trabajo realizado, API y Rules idénticos a main. El bloqueo editorial de 004 permanece: el pase de las suites no equivale a aprobar esa frase. Identidad, SDK, voz y captura/transcripción son controlados: no certifican Rules desplegadas, cuentas reales, micrófono físico o escucha humana. Se conserva el aviso decorativo 404 preexistente de celebración, con fallback. Cero migraciones o colecciones nuevas. Publicación bloqueada únicamente por composición 004; prueba familiar ampliada pendiente después de publicación como Quality Gate de estabilidad.

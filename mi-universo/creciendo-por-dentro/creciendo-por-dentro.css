@@ -260,3 +260,6 @@ audio{width:100%;margin-top:12px}
 .history-scenario{color:#5b21b6;line-height:1.6;margin:8px 0}
 @media(max-width:850px){.scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.scenario-grid{grid-template-columns:1fr}.scenario-card{padding:20px}.scenario-context{padding:12px}.scenario-context .btn{width:100%}}
+
+/* Información de contextos disponibles; no indica avance ni obligación. */
+.seed-scenarios{align-self:flex-start;color:#475569;font-size:13px;font-weight:600;line-height:1.5}

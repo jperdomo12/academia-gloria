@@ -4,12 +4,12 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.6 |
-| **Estado** | Fase A publicada para validación familiar · no declarada estable |
+| **Versión** | 1.7 |
+| **Estado** | Fase A publicada · ampliación candidata bloqueada por composición 004 · no estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
 | **Responsables** | Product Owner + AI Collaborator |
-| **Ámbito** | Separar la habilidad estable de una Semilla de sus situaciones concretas de práctica y pilotar múltiples escenarios curados en `Yo sí puedo` |
+| **Ámbito** | Separar la habilidad estable de una Semilla de sus situaciones concretas de práctica y ampliar el piloto a seis Semillas con escenarios curados |
 
 ## Documentos relacionados
 
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.7 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación candidata a seis Semillas con diez escenarios curados y badge informativo dinámico. Conserva plantillas e histórico; detectada incompatibilidad de composición en 004, pendiente de decisión antes de publicar. Prueba familiar ampliada pendiente. |
 | 1.6 | 02/11/2026 | Product Owner + AI Collaborator | V1 de Misiones publicada mediante #231, Pages #840 success; sin integración/publicación pendiente, manteniendo validación familiar del modelo. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora la V1 aprobada de Misiones: escenario opcional para una sola Semilla, ejecución contextual fijada y evidencia efectiva. Conserva Fase A e históricos sin migración. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Cierra microajuste visual #227/Pages #836 success: HTML y CSS públicos idénticos a los probados; sin trabajo técnico pendiente ni cambios funcionales. |
@@ -63,7 +64,7 @@ Se aprueba una primera evolución controlada del Motor de Semillas:
 
 ### Fase A · escenarios curados
 
-- pilotar el modelo únicamente con la Semilla `Yo sí puedo`;
+- piloto inicial con `Yo sí puedo`; ampliación posterior aprobada a 001/004/007/010/011, definida en `DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`;
 - permitir que una Semilla pueda declarar varios `escenarios` curados;
 - cada escenario puede tener su propia situación, pasos y opciones contextualizadas;
 - la habilidad, identidad de Semilla y cierre pedagógico permanecen comunes cuando tenga sentido;
@@ -377,7 +378,7 @@ Los IDs de pasos y opciones también deben conservar estabilidad razonable para 
 
 ### 8.3 Compatibilidad con sesiones anteriores
 
-Las sesiones históricas de `Yo sí puedo` creadas antes de la Fase A no tienen `escenarioId`.
+Las sesiones históricas creadas antes de convertir una Semilla a multi-escenario no tienen `escenarioId`; esta compatibilidad se aplica tanto a `Yo sí puedo` como a las cinco Semillas ampliadas.
 
 Regla de compatibilidad:
 
@@ -635,3 +636,23 @@ Implementación desde `main` `5d3b5b4e62ee682378a4f6da775792690064fb50` (#230), 
 Mi Camino y Trabajo realizado mantienen su código/contrato: contexto por `misionId`, navegación vigente y consulta del escenario real ya implementada. No se modifica `semillas.json`, sesiones previas, Rules ni imágenes. Cambian las versiones de entrada del JS del Motor/Gestión y API a fin de evitar código anterior en caché. Validación y cierre canónicos: SPEC de Misiones, sección V1. La experiencia multi-escenario sigue pendiente de uso con Gloria antes de declarar estabilidad.
 
 **Cierre de V1 de Misiones:** #231 integrada en `c905b3743384a04370045d4b27650c635e282502`, Pages #840 success y ocho comprobaciones públicas idénticas al árbol probado. SPEC de Misiones 2.8, sección V1, registra pruebas, límites y trazabilidad canónicos. Sin trabajo técnico pendiente; uso familiar de multi-escenario sigue pendiente antes de estabilidad.
+
+### 18.6 Ampliación curada · candidata desde main #237
+
+Fuente exacta de los diez escenarios: `docs/product/DESIGN-SEMILLAS_MULTI_ESCENARIO_AMPLIACION_001_004_007_010_011.md`. Catálogo 1.12; seis Semillas multi-escenario (001/003/004/007/010/011), tres situaciones cada una. Las otras seis Semillas y 003 permanecen idénticas al baseline `78fc64b`; no cambia el contrato interno de 012. Plantillas y propiedades comunes conservadas. Situación y pasos originales se trasladan íntegros, incluidos IDs de opciones, al escenario predeterminado:
+
+| Semilla | escenarioPredeterminadoId |
+|---|---|
+| 001 | `el-lapiz` |
+| 004 | `las-dos-queremos-jugar-primero` |
+| 007 | `hoy-yo-prefiero-otra-cosa` |
+| 010 | `necesito-un-ratito-tranquilo` |
+| 011 | `me-ofrecen-una-pista` |
+
+El badge `🌱 N situaciones` se deriva exclusivamente de `escenarios.length`, aparece solo para N > 1 y es información discreta sin progreso/obligación. Se reutilizan selector, contexto, composición, práctica oral, sesión, Jardín, Trabajo realizado y Misiones; no hay lógica nueva por Semilla, colección, migración ni nuevo visor. Guía propietaria y presentación web sincronizadas. No se modifica lógica de permisos ni filtros/evidencia.
+
+Ilustraciones originales revisadas: 001 muestra explícitamente el lápiz, 007 actividades de recreo y 011 un puzle. Se conservan en catálogo/originales; los escenarios nuevos de esas tres Semillas usan `recursos: null`, contrato vigente de recurso opcional, y apoyo visual simple del Motor. Las imágenes generales de acuerdo (004) y calma (010) sirven también en los nuevos contextos. Sin nuevos binarios ni rediseños.
+
+**Bloqueo real antes de publicación:** la plantilla común vigente de 004 (`Las dos queremos {comprender}. También puedo pensar que mi amiga {perspectiva}…`) presupone fragmentos, mientras las nuevas opciones aprobadas son frases completas. Resultado reproducido: «Las dos queremos Tenemos dos ideas diferentes para hacer el mismo trabajo. También puedo pensar que mi amiga Puede pensar que su idea también puede funcionar…». La repetición también existe en el original. Se conservan literalmente tanto la plantilla como el contenido aprobado, conforme al encargo; no se corrigen silenciosamente. Debe decidirse un ajuste mínimo del encuadre de la composición antes de integrar, sin modificar respuestas, opciones, IDs, históricos o habilidad. Candidata no publicada; esto no es una segunda aprobación del alcance.
+
+Pruebas y límites: ver §12 del diseño de ampliación. La prueba familiar ampliada con Anaís y Gloria, usando varias de las seis Semillas, sigue siendo Quality Gate para certificar, ajustar o revisar situaciones. No declarar estable.

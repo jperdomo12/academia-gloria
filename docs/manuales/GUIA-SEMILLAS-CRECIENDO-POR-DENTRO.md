@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 02/11/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incluye las situaciones aprobadas de 001/004/007/010/011, manteniendo 003 y el resto del catálogo; explicación transversal sin obligación ni máximo. Ampliación candidata, pendiente de publicación y prueba familiar. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza Yo sí puedo con sus tres escenarios curados: una misma habilidad, elección inicial y repetición voluntaria; no cambia las otras once Semillas. Validación familiar pendiente. |
 | 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Publicación aprobada de Semilla 012 mediante #164, Pages #769 `success`. Guía propietaria y web sincronizadas con 12 Semillas; nueva Semilla pendiente de validación familiar, sin declarar estabilidad. |
 | 1.3-rc | 13/10/2026 | Product Owner + AI Collaborator | Explica Semilla 012 conforme a su SPEC aprobada y sincroniza la presentación web. Contenido candidato en rama; imagen externa integrada y verificada; candidata pendiente de aprobación/integración. |
@@ -34,7 +35,7 @@
 
 ## 🧭 Resumen de contenido
 
-Propósito, acompañamiento y límites no clínicos; detalle de las doce Semillas activas. Yo sí puedo permite elegir una de tres situaciones para practicar la misma habilidad.
+Propósito, acompañamiento y límites no clínicos; detalle de las doce Semillas activas. Algunas Semillas ofrecen distintas situaciones para practicar una misma habilidad.
 
 ---
 
@@ -57,6 +58,8 @@ Las observaciones sugeridas aquí no deben interpretarse como evaluación clíni
 ---
 
 ## 🧭 2. Cómo utilizar las Semillas
+
+Algunas Semillas pueden practicarse en distintas situaciones. La habilidad sigue siendo la misma; cambia el contexto en el que se practica. Al abrirlas se elige una situación; al terminar se puede repetir o probar otra. No es necesario practicarlas todas ni seguir un orden. El catálogo indica las situaciones disponibles, sin representar progreso. No todas las Semillas necesitan el mismo número de situaciones.
 
 No es necesario completar muchas Semillas seguidas ni utilizarlas como una lista de tareas. Tienen más valor cuando una Semilla guarda relación con una experiencia real, una conversación reciente o una habilidad que se desea practicar.
 
@@ -151,6 +154,15 @@ No se evalúa habilidad social ni se interpretan elecciones como diagnóstico. M
 #### Situación que aborda
 Estar ante una actividad que cuesta, recibir una oferta de ayuda de una persona adulta o compañera y sentir el impulso de rechazarla aunque todavía no se sepa cómo continuar.
 
+
+**Situaciones disponibles:**
+
+- **Me ofrecen una pista**.
+- **Me enseñan un ejemplo**.
+- **Necesito ayuda, pero no toda**.
+
+La habilidad es la misma; se elige una situación para practicar, sin obligación de completarlas todas.
+
 #### Objetivo principal
 Ayudar a comprender que **aceptar apoyo no elimina la autonomía ni el mérito propio**. Una pista, una explicación o un ejemplo pueden facilitar el aprendizaje sin sustituir el pensamiento, el esfuerzo ni los siguientes pasos del alumno.
 
@@ -182,6 +194,15 @@ La experiencia diferencia entre “hacerlo por mí” y “ayudarme a aprender c
 
 #### Situación que aborda
 Después de un tiempo de actividad, conversación o juego, notar cansancio, saturación o dificultad para concentrarse y necesitar unos minutos de tranquilidad antes de continuar.
+
+
+**Situaciones disponibles:**
+
+- **Necesito un ratito tranquilo**.
+- **Después de mucho ruido**.
+- **Necesito parar un momento**.
+
+La habilidad es la misma; se elige una situación para practicar, sin obligación de completarlas todas.
 
 #### Objetivo principal
 Normalizar que **un breve momento de calma o de estar consigo mismo puede ser una forma saludable de descansar la mente**, sin convertirlo en rechazo de los demás ni en evitación permanente.
@@ -277,6 +298,15 @@ Entre las alternativas aparecen seguir disfrutando un plan propio, buscar otra a
 #### Situación que aborda
 Estar con amigas que quieren hacer una actividad y sentir la tentación de elegir lo mismo aunque realmente prefiera otra cosa.
 
+
+**Situaciones disponibles:**
+
+- **Hoy yo prefiero otra cosa**.
+- **Quiero probar mi manera**.
+- **Yo elegiría otro taller**.
+
+La habilidad es la misma; se elige una situación para practicar, sin obligación de completarlas todas.
+
 #### Objetivo principal
 Fortalecer la capacidad de **escuchar la propia preferencia**, expresarla con amabilidad y comprender que pensar o elegir diferente no significa perder una amistad. La Semilla refuerza además que **pensar, elegir o probar algo por cuenta propia puede ayudar a aprender, comprender mejor una actividad y conocerse más**.
 
@@ -366,6 +396,15 @@ La Semilla normaliza logros pequeños: terminar algo difícil, atreverse a hacer
 
 #### Situación que aborda
 Dos amigas quieren usar el mismo juego primero, ambas insisten y empiezan a molestarse.
+
+
+**Situaciones disponibles:**
+
+- **Las dos queremos jugar primero**.
+- **Tenemos dos ideas distintas**.
+- **Queremos la misma parte**.
+
+La habilidad es la misma; se elige una situación para practicar, sin obligación de completarlas todas.
 
 #### Objetivo principal
 Practicar resolución de pequeños conflictos mediante **descripción sin culpa, toma de perspectiva, expresión clara y búsqueda de acuerdos**.
@@ -457,6 +496,15 @@ Primero se observan posibles señales corporales o impulsos —tensión, nudo en
 #### Situación que aborda
 Un compañero coge su lápiz sin pedir permiso mientras trabaja en clase.
 
+
+**Situaciones disponibles:**
+
+- **El lápiz**.
+- **Quiero terminar de hablar**.
+- **Ese apodo no me gusta**.
+
+La habilidad es la misma; se elige una situación para practicar, sin obligación de completarlas todas.
+
 #### Objetivo principal
 Practicar una comunicación clara y respetuosa cuando algo molesta, separando lo ocurrido de los juicios sobre la otra persona.
 
@@ -487,8 +535,8 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.4 |
-| **Catálogo explicado** | 12 Semillas activas · 012 → 001; nueva Semilla pendiente de prueba familiar |
+| **Versión** | 1.5 |
+| **Catálogo explicado** | 12 Semillas activas · 012 → 001; seis multi-escenario en la ampliación candidata, pendientes de publicación y prueba familiar ampliada |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |
 | **No es** | Evaluación psicológica, diagnóstico ni instrumento clínico |
