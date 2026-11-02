@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.1 |
-| **Estado** | Fase A implementada en rama · candidata a publicación · validación familiar pendiente |
+| **Versión** | 1.2 |
+| **Estado** | Fase A publicada para validación familiar · no declarada estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #225: Pages #834 success, nueve archivos públicos modificados y la imagen original idénticos al árbol probado. Sin desarrollo/publicación técnica pendiente; uso con Gloria y dispositivos/identidad reales pendientes. |
 | 1.1 | 02/11/2026 | Product Owner + AI Collaborator | Implementación aditiva del piloto; contrato efectivo compartido, sesión e histórico compatibles. Candidata técnica; pendiente de publicación y uso con Gloria. |
 | 1.0 | 02/11/2026 | Product Owner + AI Collaborator | Fase A curada aprobada para desarrollo, con tres escenarios de Yo sí puedo. |
 
@@ -605,6 +606,14 @@ Como dirección posterior, se prevé un proceso curado para **solicitar un nuevo
 
 ### 18.2 Validación y límites
 
-Pruebas reproducibles: `tests/semillas-composicion-browser.cjs` y `tests/semillas-escenarios-browser.cjs`, con infraestructura externa simulada compartida en `tests/helpers/semillas-browser.cjs`. Motor, API, ContextoUsuario y lectores reales. Revisión visual renderizada y comprobación de imágenes en contexto. Resultados superados: doce Semillas (once objetos intactos y escenario original exacto), tres recorridos con respuestas propias/composición, voz/grabación/transcripción controladas, cambio y retorno sin mezclar datos, permiso de micrófono tardío cancelado, guardado y reconstrucción de histórico nuevo/antiguo/ID desconocido, Practicada, acceso libre/Misión/evidencia/Trabajo realizado, Persona Activa, familiar gestor/profesional de consulta/sin relación, teclado/foco/reduced-motion y 320/390/768/1024/1440 sin desbordamiento. Imagen original revisada en selector y situaciones desktop/móvil. Cero errores JavaScript; aviso HTTP 404 preexistente de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` en la celebración compartida, ajeno a la imagen de Semilla. Ninguna colección nueva ni escritura fuera de sesiones/evidencias/tareas existentes en las pruebas. Publicación y verificación pública se registran al cerrar.
+Pruebas reproducibles: `tests/semillas-composicion-browser.cjs` y `tests/semillas-escenarios-browser.cjs`, con infraestructura externa simulada compartida en `tests/helpers/semillas-browser.cjs`. Motor, API, ContextoUsuario y lectores reales. Revisión visual renderizada y comprobación de imágenes en contexto. Resultados superados: doce Semillas (once objetos intactos y escenario original exacto), tres recorridos con respuestas propias/composición, voz/grabación/transcripción controladas, cambio y retorno sin mezclar datos, permiso de micrófono tardío cancelado, guardado y reconstrucción de histórico nuevo/antiguo/ID desconocido, Practicada, acceso libre/Misión/evidencia/Trabajo realizado, Persona Activa, familiar gestor/profesional de consulta/sin relación, teclado/foco/reduced-motion y 320/390/768/1024/1440 sin desbordamiento. Imagen original revisada en selector y situaciones desktop/móvil. Cero errores JavaScript; aviso HTTP 404 preexistente de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` en la celebración compartida, ajeno a la imagen de Semilla. Ninguna colección nueva ni escritura fuera de sesiones/evidencias/tareas existentes en las pruebas. Publicación y verificación pública completadas en §18.3.
 
 La identidad, SDK Firestore, dictado, captura y transcripción de las pruebas son controlados: no equivalen a permisos desplegados, micrófono físico o uso autenticado real. Validar con Gloria comprensión/elección, práctica oral y consulta real antes de declarar estable. No hay generación dinámica, escenarios personales persistidos ni colecciones nuevas.
+
+### 18.3 Cierre técnico y publicación
+
+[PR #225](https://github.com/jperdomo12/academia-gloria/pull/225) revisada e integrada autónomamente dentro de la autorización del Product Owner. Head probado `5c294da3872e1bec2b20a4ff3bec1e2e087f8fb9`, árbol `af8a855d6ae2908f13d7c4123b70a7f971a914b9`, base `f4bd3fb958788fe910632f27842a1d34bda2f53c`, merge `f0473291df3b7f65958102a43ec02f30e57d3ed3`. Revisión final: 18 archivos previstos, árbol remoto igual al probado y PR limpia, sin checks CI configurados; suites locales superadas. Diseño futuro de solicitud de escenarios conservado íntegro, fuera de esta implementación.
+
+[Pages #834](https://github.com/jperdomo12/academia-gloria/actions/runs/41453056775) `success`. Verificación pública HTTP 200 y bytes idénticos para nueve archivos de producto modificados (HTML, CSS, Motor, catálogo, resolver, API, guía y ambos archivos de Trabajo realizado), con los parámetros de caché reales, más la imagen original conservada: diez comprobaciones. URL de entrada: <https://jperdomo12.github.io/academia-gloria/mi-universo/creciendo-por-dentro/> → Yo sí puedo.
+
+Sin desarrollo, integración ni publicación técnica pendiente de la Fase A. **Pendiente:** uso real con Gloria, elección/comprensión de situaciones, práctica oral/micrófono y transcripción según dispositivo, y consulta relacionada con cuenta real. La verificación pública es HTTP/bytes; la validación funcional y visual es local con identidad/servicios controlados. No equivale a certificar Rules desplegadas ni estabilidad del modelo.
