@@ -1,4 +1,4 @@
-import { Academia } from "../../compartido/api/academia.js?v=2";
+import { Academia } from "../../compartido/api/academia.js?v=3";
 import { tieneEscenarios, resolverEscenario, resolverSemillaSesion } from "./escenarios-semilla.js";
 import { auth } from "../../compartido/firebase/firebase-config.js";
 import { mostrarCelebracion } from "../../compartido/js/celebracion.js";
@@ -63,6 +63,7 @@ let catalogo = { familias: [], semillas: [] };
 let perfil = null;
 let misionId = params.get("misionId");
 let misionActiva = null;
+let errorEscenarioMision = "";
 let semilla = null;
 let semillaBase = null;
 let pasoAntesEscenarios = null;
@@ -203,7 +204,12 @@ function missionAllowedIds() {
   return Array.isArray(filters.semillasIds) ? filters.semillasIds.map(String) : [];
 }
 
+function escenarioRequeridoMision() {
+  return String(misionActiva?.criterioCumplimiento?.filtros?.escenarioId || "").trim();
+}
+
 function filteredSeeds() {
+  if (errorEscenarioMision) return [];
   const allowed = missionAllowedIds();
   return catalogo.semillas.filter(item => {
     const familyMatches = activeFamily === "todas" || item.familia === activeFamily;
@@ -290,12 +296,14 @@ function detenerActividad() {
 }
 
 function startSeed(seedId, escenarioId = null) {
-  if (guardandoSesion) return;
+  if (guardandoSesion || errorEscenarioMision) return;
   if (soloConsultaRelacionada) { showHistory(); return; }
   const base = catalogo.semillas.find(item => item.id === seedId);
   if (!base || (missionAllowedIds().length && !missionAllowedIds().includes(base.id))) return;
+  const requerido = escenarioRequeridoMision();
+  if (requerido && escenarioId && escenarioId !== requerido) return;
   semillaBase = base;
-  semilla = tieneEscenarios(base) ? resolverEscenario(base, escenarioId) : base;
+  semilla = tieneEscenarios(base) ? resolverEscenario(base, requerido || escenarioId) : base;
   resetExperience();
   pasoAntesEscenarios = null;
   if (tieneEscenarios(base) && !semilla) stepIndex = -3;
@@ -304,7 +312,7 @@ function startSeed(seedId, escenarioId = null) {
 }
 
 function cambiarEscenario() {
-  if (guardandoSesion) return;
+  if (guardandoSesion || escenarioRequeridoMision()) return;
   generacionExperiencia++;
   detenerActividad();
   pasoAntesEscenarios = stepIndex;
@@ -355,7 +363,8 @@ function renderExperience() {
   $("stepProgress").hidden = selector;
   $("scenarioContext").hidden = selector || !semilla?.escenarioId;
   $("scenarioTitle").textContent = semilla?.escenarioTitulo || '';
-  $("changeScenario").hidden = !semilla?.escenarioId;
+  $("changeScenario").hidden = !semilla?.escenarioId || Boolean(escenarioRequeridoMision());
+  $("scenarioLabel").textContent = escenarioRequeridoMision() ? "Situación de esta Misión" : "Situación elegida";
   if (selector) renderEscenarios();
   else { renderProgress(); renderPasoActual(); }
   const encabezado = $("experienceContent").querySelector('h2');
@@ -826,6 +835,9 @@ async function saveSession({ withoutRecording = false } = {}) {
   detenerActividad();
   try {
     const allowedSeedIds = missionAllowedIds();
+    if (errorEscenarioMision || (escenarioRequeridoMision() && semilla?.escenarioId !== escenarioRequeridoMision())) {
+      throw new Error("La situación realizada no corresponde a esta Misión.");
+    }
     if (
       misionActiva &&
       allowedSeedIds.length &&
@@ -901,7 +913,8 @@ async function saveSession({ withoutRecording = false } = {}) {
           familia:semilla.familia,
           tipoSituacion:semilla.tipoSituacion,
           nivelApoyo:Number(semilla.nivelApoyo || 1),
-          semillasIds:allowedSeedIds
+          semillasIds:allowedSeedIds,
+          ...(semilla.escenarioId ? { escenarioId:semilla.escenarioId, escenarioTitulo:semilla.escenarioTitulo } : {})
         },
         resultado:{
           titulo:semilla.titulo,
@@ -964,7 +977,7 @@ function renderClosing() {
         </div>` : ""}
       <div class="actions" style="justify-content:center">
         <button id="repeatSeed" class="btn btn--violet" type="button">${semilla.escenarioId ? "🔁 Practicar este escenario otra vez" : "🔁 Practicar otra vez"}</button>
-        ${semilla.escenarioId ? '<button id="tryOtherScenario" class="btn btn--light" type="button">🌱 Probar otra situación</button>' : ""}
+        ${semilla.escenarioId && !escenarioRequeridoMision() ? '<button id="tryOtherScenario" class="btn btn--light" type="button">🌱 Probar otra situación</button>' : ""}
         <button id="finishSeed" class="btn btn--primary" type="button">🌿 Volver a mis Semillas</button>
         <button id="viewHistoryAfter" class="btn btn--light" type="button">📚 Ver mi jardín</button>
       </div>
@@ -987,6 +1000,14 @@ async function loadMission() {
       throw new Error("La misión no corresponde a Creciendo por dentro.");
     }
     misionActiva = task;
+    const requerido = escenarioRequeridoMision();
+    if (requerido) {
+      const ids = missionAllowedIds();
+      const base = catalogo.semillas.find(item => item.id === ids[0]);
+      if (Number(criterion.cantidadObjetivo) !== 1 || ids.length !== 1 || !tieneEscenarios(base) || !resolverEscenario(base, requerido)) {
+        errorEscenarioMision = "Esta situación de la Misión ya no está disponible. Pide a tu familia que revise la Misión.";
+      }
+    }
   } catch (error) {
     console.error(error);
     misionId = null;
@@ -1003,6 +1024,15 @@ function updateMissionBanner() {
     $("missionDescription").textContent = "Puedes elegir la Semilla que más te ayude hoy.";
     $("missionProgress").textContent = "Sin misión";
     $("missionHelp").classList.add("hidden");
+    return;
+  }
+  if (errorEscenarioMision) {
+    banner.className = "mission";
+    $("missionTitle").textContent = "🌱 Revisar esta Misión";
+    $("missionDescription").textContent = errorEscenarioMision;
+    $("missionProgress").textContent = "";
+    $("missionHelp").classList.add("hidden");
+    $("startRecommended").hidden = true;
     return;
   }
   const criterion = misionActiva.criterioCumplimiento || {};

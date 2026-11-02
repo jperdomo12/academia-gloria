@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-MOTOR_SEMILLAS-v1.0.md` |
-| **Versión** | 1.2 |
+| **Versión** | 1.3 |
 | **Estado** | Activo |
 | **Fecha de origen** | Agosto 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -27,6 +27,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.3 | 02/11/2026 | Product Owner + AI Collaborator | Distingue la Fase A original de la V1 posterior de Misiones con situación opcional, gobernada por su SPEC; conserva Motor, sesión e histórico. |
 | 1.2 | 02/11/2026 | Product Owner + AI Collaborator | Evolución aditiva: habilidad estable, escenarios curados y proyección efectiva compartida entre Motor e históricos. Conserva sesión/evidencia y permisos existentes. |
 | 1.1 | 04/09/2026 | Product Owner + AI Collaborator | P2. Sincroniza el diseño con el producto real: el piloto ya está implementado; conserva la arquitectura de Semillas, sesión y evidencia, reconoce la integración vigente con Mi Camino/Misiones y separa claramente diseño, especificación y evolución futura. |
 | 1.0 | Agosto 2026 | Product Owner + AI Collaborator | Diseño inicial del piloto implementable del Motor de Semillas. |
@@ -215,7 +216,7 @@ Los cambios detallados de comportamiento se consolidan primero en la especificac
 
 ---
 
-**Fin de `DESIGN-MOTOR_SEMILLAS-v1.0.md` · v1.1 · Activo**
+**Fin de `DESIGN-MOTOR_SEMILLAS-v1.0.md` · v1.3 · Activo**
 
 ## Fase A · habilidad estable y situación contextual
 
@@ -225,4 +226,4 @@ La decisión funcional pertenece a `docs/specifications/SPEC-CRECIENDO_POR_DENTR
 
 La sesión guarda los dos identificadores y el título del escenario, además del contrato existente. El histórico sin escenario resuelve el predeterminado en memoria; un ID explícito desconocido no se reasigna silenciosamente: se conserva el título y la frase guardados, sin reconstruir opciones de otro escenario. No se migran documentos. El catálogo considera Practicada por Semilla; el selector puede mostrar prácticas por escenario, sin puntuación ni obligación de completar todos.
 
-Cambiar de situación detiene dictado/voz/grabación; elegir otra inicia respuestas nuevas. Volver desde el selector a la práctica actual conserva lo escrito. Los callbacks de medios de una experiencia anterior no contaminan la siguiente. Guardar bloquea el cambio mientras se registra la sesión/evidencia. No se modifican colección, Rules ni criterio de Misión.
+Cambiar de situación detiene dictado/voz/grabación; elegir otra inicia respuestas nuevas. Volver desde el selector a la práctica actual conserva lo escrito. Los callbacks de medios de una experiencia anterior no contaminan la siguiente. Guardar bloquea el cambio mientras se registra la sesión/evidencia. La Fase A original no modificó colección, Rules ni criterio de Misión. La V1 posterior de Misiones permite situación opcional para una sola Semilla/cantidad 1, conforme a `SPEC-MIS_TAREAS_Y_MISIONES.md`: el Motor interpreta el filtro del registro existente y expone escenario efectivo en evidencia. No duplica catálogo, sesión ni navegación.

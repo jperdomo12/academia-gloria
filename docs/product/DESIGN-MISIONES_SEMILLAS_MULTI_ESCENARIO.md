@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/product/DESIGN-MISIONES_SEMILLAS_MULTI_ESCENARIO.md` |
-| **Versión** | 0.1 |
-| **Estado** | Decisión funcional aprobada · pendiente de integración en paquete transversal · no implementada |
+| **Versión** | 1.0 |
+| **Estado** | V1 implementada · validación familiar pendiente |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Gestión de Misiones + Creciendo por Dentro |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -21,6 +21,17 @@
 | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` | Consulta histórica de la ejecución real. |
 | `mi-universo/mis-tareas/` | Implementación actual de Gestión de Misiones. |
 | `mi-universo/creciendo-por-dentro/` | Implementación actual del Motor de Semillas. |
+
+## Historial de versiones
+
+| Versión | Fecha | Responsables | Cambios |
+|---|---:|---|---|
+| 1.0 | 02/11/2026 | Product Owner + AI Collaborator | V1 implementada conforme al cierre transversal: formulario derivado del catálogo, criterio opcional, ejecución fijada, evidencia y compatibilidad. Uso familiar pendiente. |
+| 0.1 | 02/11/2026 | Product Owner + AI Collaborator | Decisiones funcionales aprobadas anteriores a la implementación. |
+
+## Resumen de contenido
+
+§1–10: decisiones aprobadas y alcance; §11: aceptación; §12–13: estado y realización técnica, enlazada a la SPEC propietaria de Misiones.
 
 ---
 
@@ -294,4 +305,10 @@ La familia podrá elegir opcionalmente el escenario de una Misión de `Creciendo
 
 El valor predeterminado conservará la autonomía del alumno: **Cualquier situación · Gloria elige**.
 
-La implementación queda **pendiente** hasta cerrar la revisión transversal del impacto del modelo multi-escenario y preparar un paquete coherente para Desarrollo.
+La revisión transversal quedó cerrada y la V1 está implementada conforme a esta decisión. La aceptación de uso familiar sigue pendiente; no se declara estable el modelo multi-escenario.
+
+## 13. Realización técnica V1
+
+Fuente funcional canónica de la implementación y su cierre: `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md`, sección «Misiones de Semillas · situación opcional V1». Gestión deriva opciones del catálogo; criterio mínimo `semillasIds` + `escenarioId` solo cuando se fija, sin título como filtro. El Motor lee esa configuración existente al entrar desde Mi Camino, valida pertenencia y reutiliza el contexto no editable. Evidencia incluye escenario efectivo en atributos, comprobado por filtros generales. Sin cambios de colección, migración, visor, contenido o permisos.
+
+La edición recupera la selección; la pérdida de un escenario se muestra sin reasignación y una configuración incompatible limpia la selección con aviso. Misiones iniciadas conservan el bloqueo vigente. Las Misiones múltiples y legacy no reciben requisitos de escenario. Pruebas y límites reales quedan en la SPEC, sin duplicar una segunda fuente de resultados.

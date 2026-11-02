@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CRECIENDO_POR_DENTRO_SEMILLAS.md` |
-| **Versión** | 1.4 |
+| **Versión** | 1.5 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 02/11/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Alinea la norma de Misiones con la excepción V1 aprobada: escenario opcional para una Semilla/cantidad 1; no altera contenido ni habilita requisitos de múltiples situaciones. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Formaliza el contrato curado opcional aprobado: una habilidad, varios escenarios, IDs estables, compatibilidad histórica y guía sincronizada. Piloto Yo sí puedo; uso familiar pendiente. |
 | 1.3 | 15/10/2026 | Product Owner + AI Collaborator | Formaliza que marcos externos o aportes profesionales —por ejemplo DESC o Atlas of Emotions— se evalúan caso por caso al diseñar nuevas Semillas. Pueden aportar principios o recursos, pero no son plantillas obligatorias ni justifican modificar retroactivamente Semillas existentes. |
 | 1.2 | 14/10/2026 | Product Owner + AI Collaborator | Integra la composición aprobada mediante #178: resumen derivado y frase de un único paso con contrato vigente, sin persistencia paralela. Nueva prueba familiar de 012 pendiente. |
@@ -591,6 +592,6 @@ Fuente propietaria: `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENAR
 - Conservar exactamente el escenario original al trasladarlo; mantener respuestas propias, composición y práctica oral del contrato actual.
 - Revisar la imagen en cada contexto. No crear imágenes por obligación técnica: reutilizar una imagen general adecuada o declarar recurso opcional.
 - Sesiones nuevas multi-escenario: `semillaId`, `escenarioId`, `escenarioTitulo` y `tipoSituacion` efectivo. Las antiguas se interpretan mediante `escenarioPredeterminadoId`, sin migrar.
-- Histórico y Trabajo realizado usan el mismo resolver; un escenario desconocido no se interpreta como otro. Misiones continúan por `semillaId`; no añadir filtros, porcentajes ni cumplimiento por escenario.
+- Histórico y Trabajo realizado usan el mismo resolver; un escenario desconocido no se interpreta como otro. Misiones conservan `semillaId`; la V1 aprobada permite fijar opcionalmente `escenarioId` para una sola Semilla/cantidad 1 según `SPEC-MIS_TAREAS_Y_MISIONES.md`. Sin filtro se mantiene la elección libre. No añadir porcentajes ni requisitos de varias situaciones.
 - Sincronizar guía propietaria/web y validar regresión de todas las Semillas, identidad, permisos, evidencia, medios, responsive y teclado. No declarar estable antes del uso con Gloria.
 - No implementar descripción libre de escenario, generación dinámica, IA ni solicitud de escenarios desde la UI. La incorporación futura sigue siendo editorial y necesita su decisión correspondiente.

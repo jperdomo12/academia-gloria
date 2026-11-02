@@ -578,6 +578,13 @@
                     Es opcional. Se utiliza cuando la misión pide más de una Semilla.
                   </span>
                 </label>
+                <label id="campoEscenarioSemilla" class="hidden">
+                  Situación de esta Misión
+                  <select id="escenarioSemilla" aria-describedby="ayudaEscenarioSemilla">
+                    <option value="">🌈 Cualquier situación · Gloria elige</option>
+                  </select>
+                  <span id="ayudaEscenarioSemilla" class="ayuda-campo">Puedes dejar que Gloria elija o indicar una situación concreta.</span>
+                </label>
               </div>
 
               <div class="configuracion-rapida__resumen">
@@ -938,7 +945,7 @@
     lucide.createIcons();
   </script>
 
-  <script type="module" src="./mis-tareas.js?v=20261013-r2"></script>
+  <script type="module" src="./mis-tareas.js?v=20261102-escenarios"></script>
   <script type="module" src="./refuerzos-detectives.js"></script>
   <script type="module" src="./refuerzos-academicos.js?v=4"></script>
   <script type="module" src="./refuerzos-pronunciacion.js"></script>
