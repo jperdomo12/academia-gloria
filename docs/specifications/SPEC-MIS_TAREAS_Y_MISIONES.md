@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.7 |
+| **Versión** | 2.8 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 02/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.8 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #231/Pages #840 success: situación opcional V1 publicada, ocho verificaciones públicas idénticas y cuatro suites superadas; uso familiar pendiente. |
 | 2.7 | 02/11/2026 | Product Owner + AI Collaborator | Implementa escenario opcional para una sola Semilla concreta: gestión/edición, ejecución fijada o libre y filtro de evidencia existente; compatibilidad sin migración. Validación familiar pendiente. |
 | 2.6 | 13/10/2026 | Product Owner + AI Collaborator | Incorpora Resumen de contenido conforme al estándar documental; sin cambios funcionales. |
 | 2.5 | 13/10/2026 | Product Owner + AI Collaborator | PR #168 aprobada por Juan e integrada en main 5518d4d455e9f9420b3a2fc371b6efad0bd09aa1. Consulta educativa disponible para validación real; no declara estabilidad ni verifica Rules desplegadas. |
@@ -805,4 +806,12 @@ Suite `tests/misiones-semillas-escenarios-browser.cjs`: formulario y edición re
 | Regresión | Suites semillas-composicion-browser, semillas-escenarios-browser y dictados-misiones-browser superadas; histórico antiguo, Persona Activa, permisos, medios controlados y Misiones anteriores. |
 | Visual | Gestión/contexto fijado en 320/390/768/1024/1440 sin desbordamiento; control nativo/etiqueta/ayuda/resumen, teclado/foco/reduced-motion. |
 
-Motor/API/Contexto/visores reales y SDK/identidad/medios externos controlados. El fixture de onSnapshot distingue documentos de consultas para cubrir los observadores de Mi Camino, sin sustituir su código. Cero errores JavaScript; aviso HTTP 404 decorativo de celebración preexistente (`guacamaya-roja-posada-01.png`) fuera de este alcance. Publicación se registra al cerrar. No certifica Rules desplegadas, cuenta autenticada real ni micrófono físico; conservar uso familiar de multi-escenario pendiente.
+Motor/API/Contexto/visores reales y SDK/identidad/medios externos controlados. El fixture de onSnapshot distingue documentos de consultas para cubrir los observadores de Mi Camino, sin sustituir su código. Cero errores JavaScript; aviso HTTP 404 decorativo de celebración preexistente (`guacamaya-roja-posada-01.png`) fuera de este alcance. Publicación completada en el cierre siguiente. No certifica Rules desplegadas, cuenta autenticada real ni micrófono físico; conservar uso familiar de multi-escenario pendiente.
+
+### Cierre técnico · V1 de situación opcional
+
+[PR #231](https://github.com/jperdomo12/academia-gloria/pull/231) revisada e integrada dentro de la autorización funcional y de publicación del Product Owner. Base `5d3b5b4e62ee682378a4f6da775792690064fb50` (#230), head probado `81ff461f7bfa081015e128c22f735783f75a06c5`, árbol `73fe4e240ec16cd88de0cc2a8441ddf68e64ff30`, merge `c905b3743384a04370045d4b27650c635e282502`. Revisión final de los 15 archivos previstos y árbol remoto idéntico al revisado; sin checks CI configurados, cuatro suites locales superadas.
+
+[Pages #840](https://github.com/jperdomo12/academia-gloria/actions/runs/41483585413) success. Ocho comprobaciones públicas HTTP 200/bytes idénticos al árbol revisado: los cinco archivos de producto modificados (API, HTML/JS de Gestión y HTML/JS del Motor) con sus parámetros de caché reales; y las referencias conservadas de Mi Camino, Trabajo realizado y catálogo. Entrada: <https://jperdomo12.github.io/academia-gloria/mi-universo/mis-tareas/> → Preparar misión → Creciendo por Dentro → 1 Semilla → Yo sí puedo → Situación de esta Misión.
+
+Sin desarrollo, integración ni publicación técnica pendiente. **Pendiente:** uso familiar de elección libre/fijada y comprensión/consulta en cuenta y dispositivo reales; la experiencia multi-escenario no se declara estable. Verificación pública HTTP/bytes y pruebas funcionales/visuales locales con identidad/Firestore/medios controlados; no equivale a validar Rules desplegadas ni micrófono físico.
