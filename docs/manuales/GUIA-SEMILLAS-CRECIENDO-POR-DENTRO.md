@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/manuales/GUIA-SEMILLAS-CRECIENDO-POR-DENTRO.md` |
-| **Versión** | 1.5 |
+| **Versión** | 1.6 |
 | **Estado** | Activo |
 | **Fecha de origen** | 15/09/2026 |
 | **Última actualización** | 02/11/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.6 | 02/11/2026 | Product Owner + AI Collaborator | Guía y web publicadas con #238/Pages #847: cinco Semillas ampliadas más 003, doce Semillas totales. Uso familiar ampliado pendiente; ninguna obligación de completar todas ni estabilidad declarada. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incluye las situaciones aprobadas de 001/004/007/010/011, manteniendo 003 y el resto del catálogo; explicación transversal sin obligación ni máximo. Ampliación candidata, pendiente de publicación y prueba familiar. |
 | 1.4 | 02/11/2026 | Product Owner + AI Collaborator | Sincroniza Yo sí puedo con sus tres escenarios curados: una misma habilidad, elección inicial y repetición voluntaria; no cambia las otras once Semillas. Validación familiar pendiente. |
 | 1.3 | 13/10/2026 | Product Owner + AI Collaborator | Publicación aprobada de Semilla 012 mediante #164, Pages #769 `success`. Guía propietaria y web sincronizadas con 12 Semillas; nueva Semilla pendiente de validación familiar, sin declarar estabilidad. |
@@ -535,8 +536,8 @@ El alumno puede apoyarse en opciones o utilizar sus propias palabras.
 | Campo | Valor |
 |---|---|
 | **Estado** | Activo |
-| **Versión** | 1.5 |
-| **Catálogo explicado** | 12 Semillas activas · 012 → 001; seis multi-escenario en la ampliación candidata, pendientes de publicación y prueba familiar ampliada |
+| **Versión** | 1.6 |
+| **Catálogo explicado** | 12 Semillas activas · 012 → 001; seis multi-escenario publicadas mediante #238/Pages #847, pendientes de prueba familiar ampliada |
 | **Público principal** | Familias y profesionales que acompañan al alumno |
 | **Uso** | Comprender propósito, ejecución y aspectos observables de cada Semilla |
 | **No es** | Evaluación psicológica, diagnóstico ni instrumento clínico |

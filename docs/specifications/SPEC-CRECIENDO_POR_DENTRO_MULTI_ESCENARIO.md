@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-CRECIENDO_POR_DENTRO_MULTI_ESCENARIO.md` |
-| **Versión** | 1.8 |
-| **Estado** | Fase A publicada · ampliación aprobada en cierre técnico · no estable |
+| **Versión** | 1.9 |
+| **Estado** | Ampliación publicada para validación familiar ampliada · no declarada estable |
 | **Última actualización** | 02/11/2026 |
 | **Propietario** | Producto · Creciendo por Dentro / Motor de Semillas |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -26,7 +26,8 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
-| 1.8 | 02/11/2026 | Product Owner + AI Collaborator | Aprueba y aplica el encuadre de composición 004 sin cambiar escenarios, pasos/opciones, Motor ni histórico. Ampliación desbloqueada para validación final y publicación; prueba familiar pendiente. |
+| 1.9 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación #238 publicada/verificada mediante Pages #847: diez comprobaciones públicas idénticas al árbol probado. Plantilla 004 aprobada, sin trabajo técnico pendiente; prueba familiar ampliada pendiente antes de estabilidad. |
+| 1.8 | 02/11/2026 | Product Owner + AI Collaborator | Aprueba y aplica el encuadre de composición 004 sin cambiar escenarios, pasos/opciones, flujo del Motor ni histórico. Ampliación desbloqueada para validación final y publicación; prueba familiar pendiente. |
 | 1.7 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación candidata a seis Semillas con diez escenarios curados y badge informativo dinámico. Conserva plantillas e histórico; detectada incompatibilidad de composición en 004, pendiente de decisión antes de publicar. Prueba familiar ampliada pendiente. |
 | 1.6 | 02/11/2026 | Product Owner + AI Collaborator | V1 de Misiones publicada mediante #231, Pages #840 success; sin integración/publicación pendiente, manteniendo validación familiar del modelo. |
 | 1.5 | 02/11/2026 | Product Owner + AI Collaborator | Incorpora la V1 aprobada de Misiones: escenario opcional para una sola Semilla, ejecución contextual fijada y evidencia efectiva. Conserva Fase A e históricos sin migración. |
@@ -654,6 +655,12 @@ El badge `🌱 N situaciones` se deriva exclusivamente de `escenarios.length`, a
 
 Ilustraciones originales revisadas: 001 muestra explícitamente el lápiz, 007 actividades de recreo y 011 un puzle. Se conservan en catálogo/originales; los escenarios nuevos de esas tres Semillas usan `recursos: null`, contrato vigente de recurso opcional, y apoyo visual simple del Motor. Las imágenes generales de acuerdo (004) y calma (010) sirven también en los nuevos contextos. Sin nuevos binarios ni rediseños.
 
-**Composición 004 · ajuste aprobado:** se detectó que la plantilla antigua presuponía fragmentos y duplicaba parte de las opciones originales/nuevas. El Product Owner aprueba expresamente el encuadre `Lo que ocurre: {comprender}. Puedo pensar en la otra persona: {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos buscar este acuerdo: {acuerdo}.` Es la única plantilla modificada; no cambian opciones, pasos, habilidad, sesiones previas ni flujo del Motor. El normalizador existente de composición solo añade la eliminación de un punto redundante tras `?`/`!`, sin alterar contenido educativo. Se verifica su frase completa en las tres situaciones. Bloqueo resuelto, sin segunda aprobación del alcance; publicación en curso.
+**Composición 004 · ajuste aprobado:** se detectó que la plantilla antigua presuponía fragmentos y duplicaba parte de las opciones originales/nuevas. El Product Owner aprueba expresamente el encuadre `Lo que ocurre: {comprender}. Puedo pensar en la otra persona: {perspectiva}. Puedo decir: {hablar}. Para cuidarnos, podemos buscar este acuerdo: {acuerdo}.` Es la única plantilla modificada; no cambian opciones, pasos, habilidad, sesiones previas ni flujo del Motor. El normalizador existente de composición solo añade la eliminación de un punto redundante tras `?`/`!`, sin alterar contenido educativo. Se verifica su frase completa en las tres situaciones. Bloqueo resuelto, sin segunda aprobación del alcance; publicación verificada en §18.7.
 
 Pruebas y límites: ver §12–13 del diseño de ampliación. La prueba familiar ampliada con Anaís y Gloria, usando varias de las seis Semillas, sigue siendo Quality Gate para certificar, ajustar o revisar situaciones. No declarar estable.
+
+### 18.7 Cierre de ampliación a seis Semillas
+
+[PR #238](https://github.com/jperdomo12/academia-gloria/pull/238) revisada e integrada dentro de la autorización vigente: head final probado `2a30508bdffd86dc15e52251b7593b8264fcdb0a`, árbol `3f8491ee02c1b8e6321eb550982f3f0ba5c7dcc5`, merge `2a353d0c4f561f9aabd10bf8659ea3eb9e1bad16`. Catorce archivos previstos revisados, árbol remoto/local coincidente y base main comprobada antes de integrar. [Pages #847](https://github.com/jperdomo12/academia-gloria/actions/runs/41504820865) `success`. Diez comprobaciones públicas HTTP 200 y bytes idénticos al árbol probado: HTML, CSS/JS con sus parámetros reales de caché, catálogo 1.12, guía web y referencias conservadas (resolver, API, Mi Camino, Trabajo realizado y guard de la guía).
+
+Tras aprobar el encuadre de 004, superadas las suites de ampliación/quince situaciones, composición/012, piloto 003 y Misiones 004, manteniendo las validaciones anteriores de Misiones para las cinco ampliadas. Frase completa de 004 sin duplicación ni punto redundante tras preguntas; revisión visual real 320/390/768/1024/1440. Fuentes de realización y límites canónicas: diseño de ampliación 1.0 §12–13. No hay desarrollo/integración/publicación técnica pendiente; no se migran sesiones ni se modifican opciones/pasos originales, contratos o Rules. Identidad, SDK y medios controlados no equivalen a uso autenticado ni dispositivos reales. **Prueba familiar ampliada con Anaís y Gloria pendiente**, usando varias de las seis Semillas; es el Quality Gate para certificar/ajustar/revisar y no se declara estable el patrón.
