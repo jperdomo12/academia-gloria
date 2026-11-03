@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-PLAN_SEMANAL_6TO.md` |
-| **Versión** | 1.8 |
+| **Versión** | 1.9 |
 | **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 03/11/2026 |
 | **Propietario** | Experiencia curricular · 6.º de Primaria |
@@ -24,6 +24,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.9 | 03/11/2026 | Product Owner + AI Collaborator | Publica y verifica Matemáticas · Potencias ANS mediante #242 / Pages #851; conserva Nutrición, RAP y retorno. Validación familiar y contraste visual directo con PDF pendientes. |
 | 1.8 | 03/11/2026 | Product Owner + AI Collaborator | Incorpora Matemáticas · Potencias ANS, 02–09/11/2026, caso material que introduce Tema nuevo. Acceso a ficha del Tema propietario, sin copia ni requisito previo en papel. Publicación en curso. |
 | 1.7 | 27/10/2026 | Product Owner + AI Collaborator | Primera actividad semanal independiente según §5.3: English/Irregular Verbs RAP (26/10–02/11), gobernada por su SPEC. Catálogo con entrega opcional y cabecera transversal, sin forzar paper-first fuera de las fichas que lo exigen. Nutrición y persistencia intactas. |
 | 1.6 | 20/10/2026 | Product Owner + AI Collaborator | Ajuste de redacción solicitado: «Semana · rango» en lugar de «Esta semana · rango». Conserva prioridad y clasificación de semanas; referencia de módulo v=2 para caché. |
@@ -409,4 +410,4 @@ La cabecera transversal se adapta al tipo de tarea escolar; la instrucción de c
 
 ## Aplicación · Matemáticas · Potencias · 02–09/11/2026
 
-Fuente propietaria: `SPEC-MATEMATICAS_6TO_POTENCIAS.md`. Material `6_PS_ANS_Potencias.docx (1).pdf`, transcripción funcional aprobada; no se usan versiones general/AACC. Caso §5.2: el Tema permanente es `cursos/6to/mates/potencias/`; el catálogo semanal referencia su sección `#plan-semanal`, con procedencia «Material del colegio · Plan Semanal» y retorno compartido. Se conservan nueve ejercicios, sin exigir resolución previa en cuaderno ni añadir escrituras a la ficha. Prueba y evidencia permanecen en el Tema. Agrupación por fechas de Madrid, Nutrición, RAP y semanas previas conservadas. Publicación/verificación en curso; comparación visual directa con PDF no disponible y uso familiar pendientes.
+Fuente propietaria: `SPEC-MATEMATICAS_6TO_POTENCIAS.md`. Material `6_PS_ANS_Potencias.docx (1).pdf`, transcripción funcional aprobada; no se usan versiones general/AACC. Caso §5.2: el Tema permanente es `cursos/6to/mates/potencias/`; el catálogo semanal referencia su sección `#plan-semanal`, con procedencia «Material del colegio · Plan Semanal» y retorno compartido. Se conservan nueve ejercicios, sin exigir resolución previa en cuaderno ni añadir escrituras a la ficha. Prueba y evidencia permanecen en el Tema. Agrupación por fechas de Madrid, Nutrición, RAP y semanas previas conservadas. Publicación/verificación completadas (#242 / Pages #851, success). Ver comprobaciones y límites canónicos en SPEC de Potencias 1.2 §20. Comparación visual directa con PDF no disponible y uso familiar pendientes.

@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MATEMATICAS_6TO_POTENCIAS.md` |
-| **Versión** | 1.1 |
-| **Estado** | Implementada en rama · publicación en curso |
+| **Versión** | 1.2 |
+| **Estado** | Publicada para validación familiar · no declarada estable |
 | **Última actualización** | 03/11/2026 |
 | **Propietario** | Experiencia curricular · Matemáticas 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 03/11/2026 | Product Owner + AI Collaborator | Publicación #242 / Pages #851 success y 18 comprobaciones públicas idénticas. Cierre técnico; comparación visual directa con PDF ANS y uso familiar pendientes. |
 | 1.1 | 03/11/2026 | Product Owner + AI Collaborator | Implementa Tema permanente y acceso semanal ANS, nueve ejercicios y Prueba compartida. Registra pruebas, comparación con transcripción aprobada y límite de PDF no disponible. Publicación y revisión familiar pendientes. |
 | 1.0 | 03/11/2026 | Product Owner + AI Collaborator | Aprueba `6.º → Matemáticas → Potencias` como Tema permanente y acceso desde Plan Semanal. Fuente exclusiva: `6_PS_ANS_Potencias.docx (1).pdf`. Conserva los 9 ejercicios ANS completos y en orden, añade experiencia propia de Academia y apoyo explícito para exponente cero sin incorporar el material general ni AACC. |
 
@@ -590,7 +591,7 @@ La implementación se considera candidata para publicación cuando demuestre:
 
 Estado actual:
 
-`Implementada en rama · publicación en curso`
+`Publicada para validación familiar · no declarada estable`
 
 ### Realización y trazabilidad
 
@@ -610,4 +611,12 @@ Regresiones: `tests/numeros-browser.cjs` (Matemáticas, Fracciones, Números, ev
 
 ### Archivos y publicación
 
-Nuevos en `cursos/6to/mates/potencias/`: `index.html`, `potencias.css`, `potencias.js`, `potencias-data.js`, `ficha-ans.js`. Integración: `cursos/6to/mates/{index.html,temas-matematicas.js}`, `cursos/6to/plan-semanal/{index.html,materiales.js,plan-semanal.js}`, `mi-universo/mis-tareas/{index.html,refuerzos-academicos.js}`. Pruebas: `tests/{potencias-browser,numeros-browser,plan-semanal-browser,plan-semanal-rap-browser}.cjs`. Documentación: esta SPEC, SPEC de Plan Semanal y HandOff. Registro de PR/merge/Pages y comprobación pública después de integrar. No declarar estabilidad hasta uso real con Gloria/familia.
+Nuevos en `cursos/6to/mates/potencias/`: `index.html`, `potencias.css`, `potencias.js`, `potencias-data.js`, `ficha-ans.js`. Integración: `cursos/6to/mates/{index.html,temas-matematicas.js}`, `cursos/6to/plan-semanal/{index.html,materiales.js,plan-semanal.js}`, `mi-universo/mis-tareas/{index.html,refuerzos-academicos.js}`. Pruebas: `tests/{potencias-browser,numeros-browser,plan-semanal-browser,plan-semanal-rap-browser}.cjs`. Documentación: esta SPEC, SPEC de Plan Semanal y HandOff. Registro de PR/merge/Pages y comprobación pública a continuación. No declarar estabilidad hasta uso real con Gloria/familia.
+
+### Cierre de publicación
+
+[PR #242](https://github.com/jperdomo12/academia-gloria/pull/242) integrada en `2b72aceb04640bc8746e221a1766fcb77b31042e`; head probado `6353f7cfe84105d3d2f2e93c18bab595fdeb70bf`, árbol `37308935381c92a7222928f201ea1aadbf13d798`, 19 archivos revisados. [Pages #851](https://github.com/jperdomo12/academia-gloria/actions/runs/41667818511) success. 18 comprobaciones públicas HTTP 200, bytes idénticos: 12 archivos de producto modificados, dos contratos compartidos y cuatro rutas de regresión (Fracciones, Números, Nutrición semanal y RAP). La publicación pública comprueba archivos/rutas, no identidad autenticada ni Rules reales. Contraste de texto principal ≥7,67:1 en cuerpo, acción primaria y cabecera; borde de entradas sobre blanco 3,03:1. No hay desarrollo, integración o publicación pendiente.
+
+Entradas: [Matemáticas](https://jperdomo12.github.io/academia-gloria/cursos/6to/mates/), [Potencias](https://jperdomo12.github.io/academia-gloria/cursos/6to/mates/potencias/), [Plan Semanal](https://jperdomo12.github.io/academia-gloria/cursos/6to/plan-semanal/) y [ficha ANS del mismo Tema](https://jperdomo12.github.io/academia-gloria/cursos/6to/mates/potencias/#plan-semanal). La fecha semanal es 2–9 de noviembre; después queda accesible en semanas anteriores.
+
+Pendiente: Juan/Anaís/Gloria comprueban comprensión de base/exponente, respuesta abierta, 7⁰, equivalencias de 20, tabla y potencias de diez, en móvil y con la cuenta real; prueban Prueba, guardado y consulta de resultado. Comparar visualmente con las tres páginas ANS si se dispone del PDF. No declarar estabilidad de producto antes de la validación familiar.
