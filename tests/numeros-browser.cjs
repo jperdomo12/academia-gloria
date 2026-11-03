@@ -220,7 +220,7 @@ const seed = (role) => {
   await p.goto(base + "/cursos/6to/mates/");
   await p.waitForSelector('[data-tema-id="numeros-hasta-100000"]');
   assert.equal(await p.locator('[data-tema-id="fracciones"]').count(), 1);
-  assert.equal(await p.locator(".portal-tema").count(), 2);
+  assert.equal(await p.locator(".portal-tema").count(), 3);
   await p.locator('[data-tema-id="numeros-hasta-100000"]').click();
   await p.waitForFunction(
     () =>

@@ -1,4 +1,4 @@
-import { MATERIALES_PLAN, urlMaterial, etiquetaSemana, organizarSemanas } from "./materiales.js?v=2";
+import { MATERIALES_PLAN, urlMaterial, etiquetaSemana, organizarSemanas } from "./materiales.js?v=3";
 
 function elemento(etiqueta, clase, texto) {
   const nodo = document.createElement(etiqueta);
@@ -9,7 +9,7 @@ function elemento(etiqueta, clase, texto) {
 
 function tarjeta(material) {
   const enlace = elemento("a", "curso6-asignatura curso6-asignatura--activa plan-tarjeta");
-  enlace.href = urlMaterial(material.ruta);
+  enlace.href = window.Academia?.navegacion?.construirUrlConRetorno(urlMaterial(material.ruta)) || urlMaterial(material.ruta);
   enlace.append(
     elemento("span", "curso6-chip", `${material.icono || "📄"} ${[material.materia, material.tema].filter(Boolean).join(" · ") || "Material del colegio"}`),
     elemento("h3", "", material.titulo),

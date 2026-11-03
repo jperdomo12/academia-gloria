@@ -1,0 +1,42 @@
+.potencias-shell{--ink:#203342;--teal:#155d58;--line:#cbdedb;width:min(1080px,calc(100% - 24px));margin:24px auto 48px;font-family:Outfit,system-ui,sans-serif;color:var(--ink);line-height:1.55}
+.potencias-shell [hidden]{display:none!important}
+.potencias-shell h1,.potencias-shell h2,.potencias-shell h3,.potencias-shell p{margin:0 0 .6rem;overflow-wrap:anywhere}
+.potencias-hero{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:24px;padding:clamp(18px,4vw,40px);border-radius:24px;background:#173d49;color:white}
+.potencias-hero h1{font-size:clamp(2rem,6vw,3.9rem);line-height:1.08}
+.potencias-shell .eyebrow{font-size:.82rem;font-weight:800;letter-spacing:.055em;text-transform:uppercase}
+.hero-ejemplo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px}
+.hero-ejemplo>*{padding:10px 13px;border-radius:13px;background:#e5f8f2;color:#173d49;font-size:clamp(1rem,3vw,1.65rem)}
+.hero-ejemplo strong{font-size:2rem}.hero-ejemplo b{background:#ffdf96}
+.potencias-nav,.acciones-ans,.potencias-shell .actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.potencias-shell button,.potencias-shell input,.potencias-shell textarea,.potencias-shell select{font:inherit;max-width:100%}
+.potencias-shell button{min-height:44px;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.potencias-shell button:disabled{opacity:.6;cursor:default}
+.potencias-shell .btn,.potencias-nav button,.potencias-modo button,.potencias-shell .option{padding:9px 14px;border:1px solid #a9c7c2;border-radius:12px;background:#f2faf7;color:#23443f;font-weight:700}
+.potencias-shell .principal,.potencias-shell .btn--primary,.potencias-nav .activa{background:var(--teal);color:white;border-color:var(--teal)}
+.potencias-shell .option.seleccionada,.potencias-shell .option[aria-pressed=true]{background:#d7ece6;border-color:#155d58;box-shadow:inset 0 0 0 1px #155d58}
+.potencias-shell :focus-visible{outline:3px solid #875313;outline-offset:3px}
+.potencias-panel,.potencias-modo{border:1px solid var(--line);border-radius:18px;background:white;padding:clamp(14px,3vw,27px);margin-top:14px}
+.potencias-modo{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#edf8f5}
+.potencias-modo h2{font-size:1rem;margin:0}.potencias-modo p{margin:0}
+.representaciones,.potencias-grid,.fila-ans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px;margin:14px 0}
+.representaciones>span,.leccion,.dato-ans,.potencias-grid dl,.potencias-grid>div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#f5faf8;min-width:0}
+.representaciones small,.dato-ans small{display:block;font-weight:800;color:#36605d}
+.leccion{margin:10px 0}.leccion dd{margin:0}.leccion dt{font-weight:800}
+.anatomia{display:flex;align-items:start;gap:.18em;font-size:3rem;font-weight:800;color:#155d58}.anatomia sup{font-size:.55em;color:#865013}
+.factores{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:10px 0}.factores span{padding:4px 11px;background:#ddf3ec;border-radius:8px;font-weight:800}
+.potencias-shell summary{cursor:pointer;min-height:44px;padding:9px 0;font-weight:800}
+.ejercicio-ans{border:1px solid var(--line);border-radius:14px;margin:10px 0;padding:4px 12px;background:#f6fbf9}
+.numero-ans{display:inline-grid;place-items:center;border-radius:50%;background:#d9f1e9;width:2rem;height:2rem;margin-right:4px}
+.casos-ans form,.challenge,.test-start,.test-end{background:white;border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;min-width:0}
+.entradas-ans label{display:grid;gap:4px;margin:8px 0;font-weight:650;min-width:0}
+.entradas-ans input:not([type=checkbox]),.entradas-ans textarea,.entradas-ans select{box-sizing:border-box;width:100%;border:1px solid #799b96;border-radius:8px;padding:8px;min-height:44px;background:white;color:var(--ink)}
+.entradas-ans .opcion-equivalente{display:flex;align-items:center;gap:8px;min-height:44px}.entradas-ans fieldset{min-width:0;border:1px solid var(--line);margin:0 0 10px}
+.mensaje-ans,.hint,.explanation,.message,.ejemplo-ans,.ayuda-ans{padding:8px 12px;border-radius:8px;background:#fff3dc;color:#634318;margin:10px 0}
+.mensaje-ans:empty,.message:empty{display:none}.mensaje-ans[data-correcta=true],.potencias-shell .option.correcta{background:#e0f5e9;color:#23553c}
+.potencias-shell .option.incorrecta{background:#fff0ec;color:#812e24}
+.options{display:grid;gap:8px}.options .option{text-align:left}
+.progress{height:8px;border-radius:8px;background:#d8ebe7;overflow:hidden}.progress span{height:100%;display:block;background:#155d58}.test-meta{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0;font-weight:750}
+.challenge__enunciado{font-weight:800;font-size:1.2rem;overflow-wrap:anywhere}
+@media(max-width:560px){.potencias-hero{grid-template-columns:1fr;gap:12px}.potencias-nav button{flex:1 1 120px}.potencias-modo{gap:6px}}
+
+#panel-plan-semanal{scroll-margin-top:5.5rem}

@@ -17,11 +17,18 @@ import { ACTIVIDADES_SOCIALES } from "../../cursos/6to/sociales/actividades-soci
 
 import { NUMEROS_META, BLOQUES_RESULTADO as BLOQUES_NUMEROS } from "../../cursos/6to/mates/numeros-hasta-100000/numeros-data.js";
 
+import { POTENCIAS_META, BLOQUES_POTENCIAS } from "../../cursos/6to/mates/potencias/potencias-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  {
+    actividadId:POTENCIAS_META.actividadId, titulo:POTENCIAS_META.tituloActividad, icono:"🔢", curso:"6.º", materia:"Matemáticas",
+    destinoUrl:"../../cursos/6to/mates/potencias/",
+    bloques:Object.freeze(Object.fromEntries(BLOQUES_POTENCIAS.map(({id,icono,titulo,descripcion})=>[id,{icono,titulo,descripcion}])))
+  },
   {
     actividadId:NUMEROS_META.actividadId, titulo:NUMEROS_META.tituloActividad, icono:"🔢", curso:"6.º", materia:"Matemáticas",
     destinoUrl:"../../cursos/6to/mates/numeros-hasta-100000/",

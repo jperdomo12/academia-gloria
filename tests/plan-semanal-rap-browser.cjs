@@ -54,7 +54,7 @@ for(const role of ['alumno','gestion','consulta']){
  await p.clock.install({time:new Date('2026-10-27T12:00:00Z')});
  await p.goto(base+portal);await p.waitForSelector('.plan-tarjeta');
  const before=await p.evaluate(()=>JSON.parse(localStorage.qaDB));
- assert.equal(await p.locator('.plan-tarjeta').count(),2);
+ assert.equal(await p.locator('.plan-tarjeta').count(),3);
  assert.match(await p.locator('.plan-fecha').first().innerText(),/26.*octubre.*2.*noviembre.*2026/);
  assert.match(await p.locator('.plan-tarjeta').filter({hasText:'RAP'}).innerText(),/English.*Irregular Verbs RAP.*RAP \+ vídeo \+ entrega.*10 de noviembre/s);
  assert.equal(await p.locator('details.plan-semana[open]').count(),0);

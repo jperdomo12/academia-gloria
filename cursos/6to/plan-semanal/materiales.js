@@ -1,6 +1,13 @@
 /* Selección del Product Owner. Rutas relativas a este catálogo, no al navegador. */
 export const MATERIALES_PLAN = Object.freeze([
   {
+    id: "mates-potencias-2026-11-02", inicio: "2026-11-02", fin: "2026-11-09",
+    materia: "Matemáticas", tema: "Potencias", temaId: "6-mates-potencias", icono: "🔢",
+    titulo: "Potencias · ANS", descripcion: "Nueve ejercicios: conecta potencia, multiplicación, lectura y valor.",
+    fuente: "6_PS_ANS_Potencias.docx (1).pdf", procedencia: "Material del colegio · Plan Semanal",
+    ruta: "../mates/potencias/#plan-semanal", rutaTema: "../mates/potencias/"
+  },
+  {
     id: "english-irregular-verbs-rap-2026-10-26",
     inicio: "2026-10-26",
     fin: "2026-11-02",
