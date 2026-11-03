@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MATEMATICAS_6TO_POTENCIAS.md` |
-| **Versión** | 1.0 |
-| **Estado** | Aprobada para desarrollo · no implementada |
+| **Versión** | 1.1 |
+| **Estado** | Implementada en rama · publicación en curso |
 | **Última actualización** | 03/11/2026 |
 | **Propietario** | Experiencia curricular · Matemáticas 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.1 | 03/11/2026 | Product Owner + AI Collaborator | Implementa Tema permanente y acceso semanal ANS, nueve ejercicios y Prueba compartida. Registra pruebas, comparación con transcripción aprobada y límite de PDF no disponible. Publicación y revisión familiar pendientes. |
 | 1.0 | 03/11/2026 | Product Owner + AI Collaborator | Aprueba `6.º → Matemáticas → Potencias` como Tema permanente y acceso desde Plan Semanal. Fuente exclusiva: `6_PS_ANS_Potencias.docx (1).pdf`. Conserva los 9 ejercicios ANS completos y en orden, añade experiencia propia de Academia y apoyo explícito para exponente cero sin incorporar el material general ni AACC. |
 
 ---
@@ -589,15 +590,24 @@ La implementación se considera candidata para publicación cuando demuestre:
 
 Estado actual:
 
-`Aprobada para desarrollo · no implementada`
+`Implementada en rama · publicación en curso`
 
-Siguiente paso:
+### Realización y trazabilidad
 
-1. implementar el Tema siguiendo esta SPEC;
-2. integrar el acceso de Plan Semanal;
-3. ejecutar pruebas funcionales, académicas, responsive y regresión;
-4. comparar las 3 páginas ANS con la experiencia resultante;
-5. abrir/integrar PR según workflow;
-6. publicar y verificar Pages;
-7. sincronizar `SPEC-PLAN_SEMANAL_6TO.md`, esta SPEC y el HandOff con el estado real alcanzado;
-8. entregar para revisión familiar con Gloria antes de declarar estabilidad.
+Base `main` `c57f18038b9a3fc82e08fb2e8fb9605dd7d4cd57` (PR documental #241 integrada). Rama `feat/mates-potencias`. Tema propietario `cursos/6to/mates/potencias/`, actividad `6-mates-potencias`. Resumen con cuatro representaciones, teoría con base/exponente y factores visibles, seis fichas, nueve retos con pistas y Prueba de nueve familias/cuatro variantes por familia. Contrato `sesion-academica-v1` y motor `motor-practica-verbal.js` reutilizados sin cambios. Solo la Prueba en Sesión de aprendizaje guarda; ficha y Práctica formativas sin persistencia adicional. No se tocan Rules ni colecciones.
+
+La ficha ANS vive en el Tema, con nueve ejercicios completos, apartados por paso, foco al avanzar, comprobación y reintento. No exige cuaderno. Definición abierta con guía de autorrevisión, no corrección literal; nombres de partes comprobables y explicaciones abiertas. Lecturas en cifras o palabras, con variantes «al cuadrado», «al cubo» y «elevado a…». El ejercicio 7 marca todas las equivalencias reales (ambas sumas de valor 20); el 8 mantiene cinco filas y tres columnas, apiladas en móvil; el 9 separa potencia de diez y resultado. Ayuda 7⁰ bajo demanda, identificada como Academia. Sin material general/AACC.
+
+Plan Semanal referencia `../mates/potencias/#plan-semanal`, semana 02–09/11/2026, con retorno mediante navegación compartida. La entrada semanal enfoca la ficha sin duplicar el Tema. Matemáticas y el catálogo genérico de Repaso académico descubren el Tema desde `temas-matematicas.js`; refuerzos usa sus metadatos y cuatro bloques mediante el registro ya existente. Resultado académico, Análisis Educativo y Trabajo realizado consumen sesiones/evidencias vigentes.
+
+### Validación y límites
+
+Fuente usada: transcripción ANS aprobada en §8; el PDF `6_PS_ANS_Potencias.docx (1).pdf` no estaba disponible en los archivos del encargo. Contraste funcional: nueve ejercicios en orden, mismos valores, seis potencias del ejercicio 3 incluido 7⁰, cuatro productos, cuatro lecturas, seis clasificaciones, las dos equivalencias de 20, cinco filas y seis productos por potencias de 10. La Academia presenta la misma tarea con agrupación, ayudas y respuesta interactiva. **Pendiente únicamente la comparación visual directa con las tres páginas del PDF**, además de la validación familiar posterior. No se usaron las versiones general/AACC.
+
+Pruebas en Chromium local con identidad/SDK simulados: `tests/potencias-browser.cjs` recorre los nueve ejercicios y apartados, autorrevisión abierta, ayudas, reintento, las seis secciones, ambos accesos/retornos, 320/390/768/1024/1440, teclado/foco y reduced motion, sin errores JS. Prueba con sesión de nueve respuestas, evidencia, Misión, Trabajo realizado/resultado académico, selector de temas, refuerzo y Análisis Educativo. Comprobación sin escrituras educativas para la ficha/práctica. Capturas reales de Resumen y ficha, inspección de jerarquía, contraste y ausencia de desbordamientos. El navegador de QA carece de algunos glifos emoji; no se modifican iconos del producto. Las pruebas no certifican cuentas/Rules reales ni voz física.
+
+Regresiones: `tests/numeros-browser.cjs` (Matemáticas, Fracciones, Números, evidencias y catálogo), `tests/numeros-modelo.test.mjs`, `tests/plan-semanal-browser.cjs` (Nutrición/retorno/fechas) y `tests/plan-semanal-rap-browser.cjs` (RAP y semanas). Las aserciones de cantidad de tarjetas se actualizan por la incorporación de Potencias; no se cambia el contenido de los Temas anteriores. Sintaxis JS y diff revisados.
+
+### Archivos y publicación
+
+Nuevos en `cursos/6to/mates/potencias/`: `index.html`, `potencias.css`, `potencias.js`, `potencias-data.js`, `ficha-ans.js`. Integración: `cursos/6to/mates/{index.html,temas-matematicas.js}`, `cursos/6to/plan-semanal/{index.html,materiales.js,plan-semanal.js}`, `mi-universo/mis-tareas/{index.html,refuerzos-academicos.js}`. Pruebas: `tests/{potencias-browser,numeros-browser,plan-semanal-browser,plan-semanal-rap-browser}.cjs`. Documentación: esta SPEC, SPEC de Plan Semanal y HandOff. Registro de PR/merge/Pages y comprobación pública después de integrar. No declarar estabilidad hasta uso real con Gloria/familia.

@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.67 |
+| **Versión** | 3.68 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
-| **Última actualización** | 02/11/2026 |
+| **Última actualización** | 03/11/2026 |
 | **Propietario** | Gobierno y Continuidad del Proyecto |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Continuidad operativa entre chats, personas o IA sin reconstruir conversaciones anteriores |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.68 | 03/11/2026 | Product Owner + AI Collaborator | Matemáticas 6.º · Potencias implementada desde #241, con ficha ANS de nueve ejercicios y acceso semanal al mismo Tema. Publicación en curso; PDF ANS no disponible para contraste visual directo y validación familiar pendiente. Conserva frentes anteriores. |
 | 3.67 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #238/Pages #847 success: seis Semillas multi-escenario, badge/guías y plantilla 004 aprobada publicados; diez comprobaciones públicas idénticas. Sin trabajo técnico pendiente; conserva prueba familiar ampliada y demás pendientes. |
 | 3.66 | 02/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba la plantilla 004 propuesta: se aplica y desbloquea #238 para validación final, integración y Pages. Prueba familiar ampliada y todos los pendientes anteriores conservados. |
 | 3.65 | 02/11/2026 | Product Owner + AI Collaborator | Ampliación candidata a seis Semillas, catálogo/badge/guías, validación técnica completa y PR #238 en borrador. Bloqueo real de plantilla 004 frente a opciones aprobadas; no publicar sin resolverlo. Conserva prueba familiar ampliada y todos los pendientes anteriores. |
@@ -431,6 +432,11 @@ Desde `main` `78fc64b` (#237), rama `feat/semillas-ampliacion-escenarios`. Fuent
 
 Sin desarrollo/integración/publicación técnica pendiente de #238. La validación pública es HTTP/bytes; las pruebas funcionales, con identidad/SDK/medios controlados, no certifican Rules desplegadas ni uso autenticado real. Próximo paso: prueba familiar ampliada con Anaís y Gloria, usando varias de las seis Semillas, antes de certificar el patrón. Los demás pendientes se conservan.
 
+### Matemáticas 6.º · Potencias · 03/11/2026
+
+Desde `main` `c57f180` (#241), rama `feat/mates-potencias`. Tema permanente `cursos/6to/mates/potencias/` (`6-mates-potencias`); acceso semanal 02–09/11 desde Plan Semanal al mismo Tema, ficha ANS con nueve ejercicios y sin persistencia duplicada. Práctica/Prueba y evidencia reutilizan contratos; catálogo, análisis/refuerzo y Trabajo realizado conservados. Propietaria: `SPEC-MATEMATICAS_6TO_POTENCIAS.md` 1.1, §20; Plan Semanal 1.8. Implementación desde transcripción aprobada, sin general/AACC. Comparación visual directa con PDF ANS no disponible; pruebas controladas no equivalen a uso familiar. Integración, Pages y verificación pública en curso. No declarar estable; mantener prueba familiar ampliada de Semillas y demás pendientes previos.
+
+
 ## ⏳ 10. Backlog posterior
 
 1. Explicar la configuración de peso/niveles de Misiones cuando el Product Owner lo retome.
@@ -533,7 +539,7 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.67 |
+| **Versión** | 3.68 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Ampliación Semillas #238/Pages #847 publicada/verificada con plantilla 004 aprobada; sin trabajo técnico pendiente y prueba familiar ampliada pendiente.  V1 Misiones/Semillas con situación opcional #231/Pages #840 publicada/verificada, SPEC 2.8; sin desarrollo pendiente, uso familiar pendiente. Fase A Semillas multi-escenario #225/Pages #834 publicada/verificada (SPEC 1.2); sin desarrollo pendiente, uso con Gloria y dispositivos/cuentas reales pendientes. RAP Studio #221 publicada/verificada (SPEC hija 1.8/principal 1.17): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
 | **PR On going** | Sin PR de producto pendiente: [PR #238](https://github.com/jperdomo12/academia-gloria/pull/238) integrada/publicada y verificada, Pages #847; prueba familiar ampliada pendiente. Anteriores cierres: V1 Misiones/Semillas #231 integrada/publicada; Semillas multi-escenario #225 integrada/publicada; RAP Studio #221/#219/#217/#215 integrada/publicada; voces/proveedor real y revisión perceptiva/uso pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |

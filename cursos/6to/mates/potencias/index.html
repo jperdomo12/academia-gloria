@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#31594a" />
+    <title>
+      Potencias | Matemáticas 6.º | Academia Gloria Valentina
+    </title>
+    <meta
+      name="description"
+      content="Aprende a leer, representar y calcular potencias. Matemáticas de 6.º y ficha semanal ANS."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../../../assets/iconos/icono-principal.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/academia-base.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/panel-usuario.css?v=2"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../compartido/css/navegacion-global.css?v=7"
+    />
+    <link rel="stylesheet" href="../../../../compartido/css/celebracion.css" />
+    <link rel="stylesheet" href="./potencias.css" />
+  </head>
+<body data-page-title="Potencias" data-page-icon="🔢" data-nav-back="../index.html">
+<main class="potencias-shell">
+  <header class="potencias-hero">
+    <div><p class="eyebrow">6.º · Matemáticas</p><h1>Potencias</h1>
+    <p>Un mismo factor, repetido varias veces. Descubre cómo una escritura corta cuenta toda la multiplicación.</p></div>
+    <div class="hero-ejemplo" aria-label="Tres elevado a cuatro equivale a tres por tres por tres por tres, igual a ochenta y uno">
+      <strong>3<sup>4</sup></strong><span>3 × 3 × 3 × 3</span><b>81</b>
+    </div>
+  </header>
+  <nav class="potencias-nav" aria-label="Secciones de Potencias"><button type="button" data-pestana="mapa" class="activa" aria-pressed="true" aria-controls="panel-mapa">🧭 Resumen</button>
+<button type="button" data-pestana="claves" class="" aria-pressed="false" aria-controls="panel-claves">📖 Teoría</button>
+<button type="button" data-pestana="material" class="" aria-pressed="false" aria-controls="panel-material">🃏 Fichas</button>
+<button type="button" data-pestana="practica" class="" aria-pressed="false" aria-controls="panel-practica">✏️ Práctica</button>
+<button type="button" data-pestana="prueba" class="" aria-pressed="false" aria-controls="panel-prueba">✅ Prueba</button>
+<button type="button" data-pestana="plan-semanal" class="" aria-pressed="false" aria-controls="panel-plan-semanal">📅 Material del Plan Semanal</button></nav>
+  <section class="potencias-modo" aria-live="polite">
+    <span id="iconoModo" aria-hidden="true">🎓</span><div><h2 id="tituloModo">Preparando el contexto…</h2><p id="descripcionModo"></p></div>
+    <button id="botonModo" type="button" disabled>Cargando…</button>
+  </section>
+  <section class="potencias-panel" id="panel-mapa" data-panel="mapa">
+    <h2>Una idea, cuatro formas</h2><p>Una potencia es una forma corta de escribir una multiplicación en la que el mismo factor se repite.</p>
+    <div class="representaciones"><span><small>Potencia</small><b>3<sup>4</sup></b></span><span><small>Multiplicación</small><b>3 × 3 × 3 × 3</b></span><span><small>Lectura</small><b>Tres elevado a cuatro</b></span><span><small>Valor</small><b>81</b></span></div>
+    <div id="mapaPotencias" class="potencias-grid"></div>
+    <button type="button" data-ir="claves" class="btn principal">Descubrir cómo funciona →</button>
+  </section>
+  <section class="potencias-panel" id="panel-claves" data-panel="claves" hidden>
+    <h2>Las claves de las potencias</h2>
+    <article class="leccion"><h3>1 · Descubro una potencia</h3>
+      <div class="anatomia" aria-label="Dos elevado a siete"><span>2</span><sup>7</sup></div>
+      <dl class="potencias-grid"><div><dt>2 · Base</dt><dd>El factor que se repite.</dd></div><div><dt>7 · Exponente</dt><dd>Cuántas veces aparece la base como factor.</dd></div></dl>
+    </article>
+    <article class="leccion"><h3>2 · Cambio de forma</h3>
+      <div class="factores" aria-label="Cuatro factores iguales a tres"><span>3</span> × <span>3</span> × <span>3</span> × <span>3</span></div>
+      <p><b>3⁴ = 3 × 3 × 3 × 3 = 81</b></p><p>Hay cuatro factores y tres signos ×. El exponente cuenta los factores. Para volver a escribir la potencia, busca el factor que se repite y cuéntalo.</p>
+    </article>
+    <article class="leccion"><h3>3 · Conecto representaciones</h3>
+      <p><b>8²</b> se lee «ocho al cuadrado»; <b>4³</b>, «cuatro al cubo». También puedes decir «ocho elevado a dos» y «cuatro elevado a tres».</p>
+      <p><b>8² y 4³ valen 64.</b> Son expresiones distintas que indican el mismo valor. En cambio, 8 + 8 no escribe una multiplicación de factores iguales.</p>
+    </article>
+    <article class="leccion"><h3>4 · Potencias de 10</h3>
+      <p><b>10³ = 10 × 10 × 10 = 1 000</b></p><p>Primero calcula la potencia; luego multiplica. <b>4 × 10³ = 4 × 1 000 = 4 000.</b></p>
+    </article>
+    <details class="leccion"><summary>💡 Ayuda de Academia · Una potencia especial</summary><p>Cuando una base distinta de cero está elevada a 0, su valor es 1. Por eso 7⁰ = 1.</p></details>
+    <button type="button" data-ir="material" class="btn principal">Repasar con fichas →</button>
+  </section>
+  <section class="potencias-panel" id="panel-material" data-panel="material" hidden>
+    <h2>Recuerda una idea cada vez</h2><p>Piensa primero y abre la ficha para comprobar.</p><div id="fichasPotencias" class="potencias-grid"></div>
+  </section>
+  <section class="potencias-panel" id="panel-practica" data-panel="practica" hidden>
+    <h2>Práctica · Cambia de representación</h2><p>Prueba una idea. Si te atascas, usa una pista y vuelve a intentarlo.</p>
+<div class="challenge">
+        <div class="progress" aria-hidden="true">
+<span id="barraPractica">
+</span>
+</div>
+        <div id="estadoPractica" class="progress-label">Reto 1</div>
+        <div id="practicaContenido">
+</div>
+        <div id="pistaPractica" class="hint" hidden>
+</div>
+        <div id="mensajePractica" class="message" role="status">
+</div>
+        <div class="actions">
+          <button id="botonPista" class="btn btn--soft" type="button">💡 Ver una pista</button>
+          <button id="botonComprobar" class="btn btn--primary" type="button" disabled>Comprobar</button>
+          <button id="botonSiguiente" class="btn btn--violet" type="button" hidden>Siguiente reto →</button>
+        </div>
+      </div>
+    </section>
+  <section class="potencias-panel" id="panel-prueba" data-panel="prueba" hidden>
+    <h2>Prueba · Conecto lo que aprendí</h2><p>Nueve preguntas con variantes. Sin límite de tiempo.</p>
+<div id="inicioPrueba" class="test-start">
+          <div class="sello-prueba" aria-hidden="true">✓</div>
+          <h3>A tu ritmo</h3>
+          <p>
+            Esta parte no tiene pistas. Después de responder verás una
+            explicación. Al terminar sabrás qué ideas se vieron firmes y cuáles
+            puedes seguir practicando.
+          </p>
+          <button id="botonIniciarPrueba" class="btn principal" type="button">
+            🌿 Empezar mi prueba
+          </button>
+        </div>
+        <div id="pruebaActiva" class="challenge" hidden>
+          <div class="progress" aria-hidden="true">
+            <span id="barraPrueba"></span>
+          </div>
+          <div class="test-meta">
+            <span id="estadoPrueba"></span><span id="bloquePrueba"></span>
+          </div>
+          <div id="pruebaContenido"></div>
+          <div id="explicacionPrueba" class="explanation" hidden></div>
+          <div class="actions">
+            <button
+              id="botonResponderPrueba"
+              class="btn principal"
+              type="button"
+              disabled
+            >
+              Comprobar respuesta →
+            </button>
+          </div>
+        </div>
+        <div id="cierrePrueba" class="test-end" hidden>
+          <h3>Tu mapa de hoy</h3>
+          <p id="textoCierre"></p>
+          <div id="resultadoPruebaResumen"></div>
+          <div id="mapaResultados" class="results"></div>
+          <p id="estadoGuardado" role="status"></p>
+          <button id="botonVolverRepaso" class="btn" type="button">
+            ← Volver a repasar
+          </button>
+        </div>
+      </section>
+  <section class="potencias-panel" id="panel-plan-semanal" data-panel="plan-semanal" hidden>
+    <p class="eyebrow">Material del colegio · Plan Semanal</p><h2>Potencias · ANS</h2>
+    <p>2–9 de noviembre de 2026 · Nueve ejercicios en el orden de la ficha escolar.</p>
+    <p>Abre un ejercicio y trabaja a tu ritmo. Estas respuestas son para practicar y no se guardan.</p>
+    <div id="ejerciciosANS"></div>
+  </section>
+</main>
+<script src="../../../../compartido/js/navegacion.js"></script>
+<script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+<script type="module" src="./potencias.js"></script>
+</body></html>

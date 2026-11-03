@@ -35,5 +35,13 @@ export const TEMAS_MATEMATICAS = Object.freeze([
     pistas: Object.freeze(["🧱 Construyo", "🔍 Comparo", "🚀 Salto", "🧲 Aproximo"]),
     recursos: Object.freeze(["Resumen", "Teoría", "Fichas", "Práctica", "Prueba"]),
     accion: "Descubrir →", acento: "#617333", acentoSuave: "#f0f4df", acentoTexto: "#415527"
+  }),
+  Object.freeze({
+    id: "potencias", orden: 30, titulo: "Potencias", icono: "🔢",
+    ruta: "./potencias/", conservarRetorno: true, estado: "Tema real de 6.º",
+    descripcion: "Descubre qué significan la base y el exponente. Conecta potencia, multiplicación, lectura y valor.",
+    pistas: Object.freeze(["🔍 Base y exponente", "🔁 Cambios de forma", "🚀 Potencias de 10"]),
+    recursos: Object.freeze(["Resumen", "Teoría", "Fichas", "Práctica", "Prueba", "Material del Plan Semanal"]),
+    accion: "Descubrir →", acento: "#218176", acentoSuave: "#e4f7f1", acentoTexto: "#155d58"
   })
 ]);

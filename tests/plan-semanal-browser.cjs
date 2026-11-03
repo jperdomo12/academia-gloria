@@ -66,7 +66,7 @@ for(const role of ['alumno','gestion','consulta']) {
  }
  await p.locator('a[href="./plan-semanal/"]').click();
  await p.waitForSelector('.plan-tarjeta');
- assert.equal(await p.locator('.plan-tarjeta').count(),2);
+ assert.equal(await p.locator('.plan-tarjeta').count(),3);
  assert.match(await p.locator('.plan-fecha').first().innerText(),/Semana.*19.*26.*octubre.*2026/);
  assert.match(await p.locator('.plan-tarjeta').filter({hasText:'Science'}).innerText(),/Science · Nutrición/);
  if(role==='alumno') {
@@ -166,9 +166,10 @@ for(const role of ['alumno','gestion','consulta']) {
   // Date rollover: old material remains accessible, collapsed; never mislabeled as current.
   await p.clock.setFixedTime(new Date('2026-10-28T12:00:00Z'));await p.reload();await p.waitForSelector('.plan-tarjeta',{state:'attached'});
   assert.match(await p.locator('#semanasPlan').innerText(),/Semanas anteriores/);
-  assert.equal(await p.locator('details.plan-semana').count(),1);
-  assert.equal(await p.locator('details.plan-semana').getAttribute('open'),null);
-  assert.doesNotMatch(await p.locator('details.plan-semana .plan-fecha').innerText(),/Semana ·/);
+  assert.equal(await p.locator('details.plan-semana').count(),2);
+  const nutricionAnterior=p.locator('details.plan-semana',{hasText:'Science'});
+  assert.equal(await nutricionAnterior.getAttribute('open'),null);
+  assert.doesNotMatch(await nutricionAnterior.locator('.plan-fecha').innerText(),/Semana ·/);
   await p.clock.setFixedTime(new Date('2026-10-20T12:00:00Z'));
  }
  await p.locator('[data-nav-volver]').click();assert.equal(new URL(p.url()).pathname,'/cursos/6to/');
