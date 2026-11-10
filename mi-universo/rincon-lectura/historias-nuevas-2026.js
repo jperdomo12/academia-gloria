@@ -139,8 +139,8 @@ export const HISTORIAS_NUEVAS_2026 = [
         },
         {
           "icono": "🤝",
-          "etiqueta": "Si",
-          "texto": "no se puede, buscamos otra opción",
+          "etiqueta": "Alternativa",
+          "texto": "Si no se puede, buscamos otra opción",
           "tono": "amber"
         }
       ]
