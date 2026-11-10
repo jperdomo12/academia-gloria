@@ -132,15 +132,15 @@ export const HISTORIAS_NUEVAS_2026 = [
           "tono": "violet"
         },
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "🗓️ Acordamos día, lugar y actividad",
+          "icono": "🗓️",
+          "etiqueta": "Acordamos",
+          "texto": "día, lugar y actividad",
           "tono": "amber"
         },
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "🤝 Si no se puede, buscamos otra opción",
+          "icono": "🤝",
+          "etiqueta": "Si",
+          "texto": "no se puede, buscamos otra opción",
           "tono": "amber"
         }
       ]
@@ -406,27 +406,27 @@ export const HISTORIAS_NUEVAS_2026 = [
       "subtitulo": "Pistas visuales para recordar las ideas de la historia.",
       "items": [
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "📝 Elijo tres preguntas",
+          "icono": "📝",
+          "etiqueta": "Elijo",
+          "texto": "tres preguntas",
           "tono": "amber"
         },
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "🗣️ Pregunto con calma",
+          "icono": "🗣️",
+          "etiqueta": "Pregunto",
+          "texto": "con calma",
           "tono": "amber"
         },
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "👂 Escucho y anoto una idea",
+          "icono": "👂",
+          "etiqueta": "Escucho",
+          "texto": "y anoto una idea",
           "tono": "amber"
         },
         {
-          "icono": "⚠️",
-          "etiqueta": "Atención",
-          "texto": "🎤 Comparto lo que he descubierto",
+          "icono": "🎤",
+          "etiqueta": "Comparto",
+          "texto": "lo que he descubierto",
           "tono": "amber"
         }
       ]
