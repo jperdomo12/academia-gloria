@@ -5,7 +5,7 @@
 |---|---|
 | Ruta | docs/specifications/SPEC-MATEMATICAS_6TO_PREPARACION_PROBLEMAS_NOV2026.md |
 | Versión | 1.0 |
-| Estado | Aprobada para desarrollo · implementación en rama · pendiente de publicar/validar |
+| Estado | Integrada técnicamente · pendientes despliegue visual final y validación familiar |
 | Fecha | 11/11/2026 |
 | Origen | Decisión aprobada por el Product Owner para prueba del 19/11/2026 |
 
@@ -72,6 +72,10 @@ Diez problemas originales de Academia: dos variantes de cada familia (doble, sum
 - Teclado, foco, regiones de estado accesibles, responsive y preferencia de movimiento reducido.
 - El resultado no equivale a calificación escolar ni diagnóstico.
 
+### Apoyos visuales
+
+Los dos focos de mayor dificultad identificados por la familia cuentan con representaciones visibles: en **comparación aditiva**, el precio inicial, la parte desconocida y la diferencia; para **doble**, un grupo y dos grupos iguales. No se muestra por adelantado el precio desconocido. Las barras de comparación son proporcionales a las cantidades conocidas; el modelo no representa sumas ni repartos mediante barras engañosas. Se mantiene voz y opción de lectura sin los diagramas.
+
 ## 6. Fuera de alcance
 
 No incorporar el libro íntegro, la ficha como PDF público, contenidos de numeración hasta 999.999, redondeo, otros apartados del examen, analítica, notas, pruebas oficiales ni contenido avanzado no indicado.
@@ -92,4 +96,4 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 ## 8. Estado
 
-La funcionalidad se prepara en la rama feat/mates-preparacion-problemas-gaudem-nov2026. La revisión en vivo con Gloria es posterior a la publicación y será condición para declararla estable.
+Implementación inicial integrada mediante PR #245 (merge 1d0406186aeaa957261d001b05f8e273d20af7f2), con Pages #43028910917 finalizado correctamente. Los apoyos visuales posteriores se preparan en la rama feat/mates-preparacion-problemas-apoyos-visuales. Falta verificar el despliegue de este último ajuste. La revisión en vivo con Gloria es posterior a la publicación y será condición para declararla estable.
