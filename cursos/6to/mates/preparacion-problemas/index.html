@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#596637">
+  <meta name="description" content="Comprende, relaciona, calcula y comprueba los cinco tipos de problemas del material escolar de Matemáticas 6.º.">
+  <title>Me preparo para los problemas · Matemáticas 6.º | Academia Gloria Valentina</title>
+  <link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./preparacion.css">
+</head>
+<body data-page-title="Me preparo para los problemas" data-page-icon="🎯" data-nav-back="../index.html">
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+  <main id="contenido" class="contenedor">
+    <header class="portada">
+      <p class="ruta"><a href="../index.html">Matemáticas de 6.º</a> <span aria-hidden="true">›</span> Estrategias para problemas</p>
+      <div class="portada-inferior">
+        <div>
+          <p class="sobrelinea">🎯 Prepárate a tu ritmo · 19 de noviembre</p>
+          <h1>Me preparo para los problemas</h1>
+          <p class="introduccion">Primero comprendo la historia. Después descubro las relaciones, calculo y compruebo. Aquí <strong>no necesitamos ir rápido</strong>.</p>
+        </div>
+        <div class="sello" aria-hidden="true"><span>🧠</span><strong>Pienso<br>y luego<br>calculo</strong></div>
+      </div>
+      <div class="pasos" aria-label="Nuestra estrategia">
+        <span>1. Comprendo</span><span>2. Relaciono</span><span>3. Calculo</span><span>4. Compruebo</span>
+      </div>
+    </header>
+
+    <section id="inicio" class="panel" aria-labelledby="tituloInicio">
+      <p class="sobrelinea">Mi ruta de hoy</p>
+      <h2 id="tituloInicio">Elige cómo quieres practicar</h2>
+      <p class="texto-suave">Puedes repetir cualquier recorrido. Las preguntas cambian en el ensayo para comprobar que comprendes, no que memorizas.</p>
+      <div class="tarjetas">
+        <article class="tarjeta">
+          <div class="emoji" aria-hidden="true">🔍</div>
+          <p class="tarjeta-paso">Paso 1 · sin hacer cuentas</p>
+          <h3>Comprendo la historia</h3>
+          <p>¿Qué significa «más que», «menos que» o «el doble»? Empieza por las ideas.</p>
+          <button class="btn btn-principal" type="button" data-iniciar="comprendo">Descubrir las relaciones</button>
+        </article>
+        <article class="tarjeta">
+          <div class="emoji" aria-hidden="true">📘</div>
+          <p class="tarjeta-paso">Paso 2 · cinco problemas</p>
+          <h3>Mi ficha de Gaudem</h3>
+          <p>Los cinco problemas del material que está utilizando Gloria, guiados paso a paso.</p>
+          <button class="btn btn-principal" type="button" data-iniciar="gaudem">Practicar los cinco</button>
+        </article>
+        <article class="tarjeta">
+          <div class="emoji" aria-hidden="true">🌟</div>
+          <p class="tarjeta-paso">Paso 3 · nuevas situaciones</p>
+          <h3>Compruebo que puedo</h3>
+          <p>Cinco problemas originales de los mismos tipos, con otras cantidades.</p>
+          <button class="btn btn-principal" type="button" data-iniciar="ensayo">Hacer mi ensayo</button>
+        </article>
+      </div>
+      <div class="nota">
+        <strong>¿Quieres recordar antes la estrategia?</strong>
+        <a href="../piloto-problemas.html">Visitar «Entender antes de calcular»</a>.
+        Los ejercicios de esta página son formativos: no guardan una nota ni sustituyen el examen del colegio.
+      </div>
+    </section>
+
+    <section id="actividad" class="panel panel-actividad" aria-labelledby="tituloActividad" hidden>
+      <div class="encabezado-actividad">
+        <div>
+          <p class="sobrelinea" id="modoEtiqueta"></p>
+          <h2 id="tituloActividad" tabindex="-1"></h2>
+          <p class="texto-suave" id="pasoActual"></p>
+        </div>
+        <button type="button" class="btn btn-quieto" id="volverInicio">Elegir otro recorrido</button>
+      </div>
+      <div class="progreso" role="progressbar" aria-label="Problemas completados" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progreso">
+        <div id="barraProgreso"></div>
+      </div>
+      <article class="enunciado" aria-label="Historia del problema">
+        <div class="enunciado-encabezado">
+          <span>📖 Primero, la historia</span>
+          <button type="button" class="btn btn-escuchar" id="escuchar" aria-label="Escuchar el enunciado y la pregunta">🔊 Escuchar</button>
+        </div>
+        <p id="textoEnunciado"></p>
+      </article>
+
+      <div class="pregunta" id="pregunta"></div>
+      <form id="formRespuesta" novalidate>
+        <div id="opciones" class="opciones"></div>
+        <div id="entradaNumero" class="entrada-numero" hidden>
+          <label for="numero">Escribe tu resultado</label>
+          <input id="numero" name="numero" type="text" inputmode="numeric" autocomplete="off" maxlength="15" placeholder="Por ejemplo: 125" pattern="[0-9 .]+" aria-describedby="notaNumero">
+          <p class="texto-suave" id="notaNumero">Solo el número, sin escribir el símbolo del euro.</p>
+        </div>
+        <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
+        <div class="acciones">
+          <button type="button" id="pista" class="btn btn-secundario">💡 Necesito una pista</button>
+          <button type="submit" id="comprobar" class="btn btn-principal">Comprobar mi idea</button>
+          <button type="button" id="continuar" class="btn btn-principal" hidden>Continuar →</button>
+        </div>
+      </form>
+      <div id="notaPista" class="nota-pista" role="note" hidden></div>
+    </section>
+
+    <section id="cierre" class="panel cierre" aria-labelledby="tituloCierre" hidden>
+      <div class="confeti" aria-hidden="true">🌟</div>
+      <p class="sobrelinea">Mi esfuerzo de hoy</p>
+      <h2 id="tituloCierre" tabindex="-1">¡Terminaste tu recorrido!</h2>
+      <p id="resumenCierre"></p>
+      <p class="texto-suave">Lo importante no es hacerlo a la primera: es comprender qué ocurre, probar y aprender a comprobarlo.</p>
+      <div class="acciones acciones-cierre">
+        <button id="repetir" type="button" class="btn btn-secundario">🔄 Repetir este recorrido</button>
+        <button id="otraRuta" type="button" class="btn btn-principal">Elegir otro recorrido</button>
+      </div>
+    </section>
+    <footer class="pie">
+      <p><strong>Material escolar:</strong> cinco problemas de Gaudem, aportados por la familia. <strong>Apoyo metodológico:</strong> libro facilitado por Pilar. Los nuevos ejemplos son originales de Academia. No se publica el PDF del libro.</p>
+    </footer>
+  </main>
+  <script src="../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./preparacion.js"></script>
+</body>
+</html>
