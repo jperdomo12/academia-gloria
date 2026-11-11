@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "titulo": "Me preparo para los problemas",
+    "fecha": "2026-11-19",
+    "fuente": "Matemáticas.pdf · cinco problemas de Gaudem",
+    "guia": "Problemas .pdf · libro facilitado por Pilar",
+    "estado": "Refuerzo formativo, no simulacro oficial"
+  },
+  "calentamiento": [
+    {
+      "id": "c1",
+      "titulo": "La diferencia",
+      "enunciado": "Una mochila cuesta 20 € y un patinete cuesta 10 € más que la mochila.",
+      "pregunta": "¿Qué representan los 10 €?",
+      "opciones": [
+        "El precio completo del patinete",
+        "La diferencia entre los precios",
+        "El total de las dos compras"
+      ],
+      "correcta": 1,
+      "pista": "El patinete cuesta todo lo que cuesta la mochila y diez euros adicionales.",
+      "explicacion": "«10 € más» es una diferencia, no el precio completo."
+    },
+    {
+      "id": "c2",
+      "titulo": "Menos que",
+      "enunciado": "Una mesa cuesta 50 € y una lámpara cuesta 15 € menos.",
+      "pregunta": "¿Qué objeto cuesta más?",
+      "opciones": [
+        "La lámpara",
+        "Cuestan lo mismo",
+        "La mesa"
+      ],
+      "correcta": 2,
+      "pista": "La lámpara cuesta menos que la mesa.",
+      "explicacion": "La mesa es más cara; los 15 € son la diferencia."
+    },
+    {
+      "id": "c3",
+      "titulo": "El doble",
+      "enunciado": "Clara tiene 7 cromos. Paula tiene el doble que Clara.",
+      "pregunta": "¿Qué significa el doble?",
+      "opciones": [
+        "Dos grupos de siete",
+        "Dos cromos más",
+        "La mitad de siete"
+      ],
+      "correcta": 0,
+      "pista": "Imagina dos grupos iguales a los cromos de Clara.",
+      "explicacion": "El doble son dos veces la cantidad de referencia."
+    },
+    {
+      "id": "c4",
+      "titulo": "¿Ya terminé?",
+      "enunciado": "Una mesa tiene un precio conocido. Calculas cuánto vale una nevera más barata. La pregunta pide el gasto total de ambas.",
+      "pregunta": "Después de conocer el precio de la nevera, ¿qué falta?",
+      "opciones": [
+        "Nada, ya terminamos",
+        "Sumar los dos precios",
+        "Restar la diferencia otra vez"
+      ],
+      "correcta": 1,
+      "pista": "La pregunta no pide solo el precio de la nevera.",
+      "explicacion": "Primero descubrimos el precio que faltaba; después calculamos el total."
+    }
+  ],
+  "gaudem": [
+    {
+      "id": "g1",
+      "tipo": "doble",
+      "titulo": "La cena de Isa",
+      "enunciado": "A Isa le ha costado la cena el doble que a Diana. Si a Diana le ha costado 159 €, ¿cuánto le ha costado a Isa?",
+      "a": 159,
+      "b": 2,
+      "unidad": "€"
+    },
+    {
+      "id": "g2",
+      "tipo": "suma",
+      "titulo": "La cena de Mónica",
+      "enunciado": "Mónica quiere hacer una cena en su casa y ha comprado una tarta, un kilo de carne y un queso. La tarta le ha costado 15 €, la carne 12 € y el queso 28 €. ¿Cuánto dinero se ha gastado?",
+      "valores": [
+        15,
+        12,
+        28
+      ],
+      "unidad": "€"
+    },
+    {
+      "id": "g3",
+      "tipo": "reparto",
+      "titulo": "Las sillas para cuatro bodas",
+      "enunciado": "En un restaurante hay 1445 sillas. Mañana tienen 4 bodas y tienen que repartir todas las sillas a partes iguales. ¿Cuántas sillas tienen para cada boda? ¿Sobra alguna silla?",
+      "a": 1445,
+      "b": 4,
+      "unidad": "sillas"
+    },
+    {
+      "id": "g4",
+      "tipo": "grupos",
+      "titulo": "Las cajas de ciruelas",
+      "enunciado": "Una furgoneta transporta 15 cajas de ciruelas de 18 kilos cada una. ¿Cuántos kilos transporta la furgoneta?",
+      "a": 15,
+      "b": 18,
+      "unidad": "kg"
+    },
+    {
+      "id": "g5",
+      "tipo": "comparacion",
+      "titulo": "La mesa y la nevera",
+      "enunciado": "Marco compró para su cocina una mesa que le costó 246 € y una nevera que le costó 100 € menos que la mesa. ¿Cuánto dinero se gastó Marco?",
+      "a": 246,
+      "b": 100,
+      "unidad": "€"
+    }
+  ],
+  "ensayos": [
+    {
+      "id": "e1a",
+      "tipo": "doble",
+      "titulo": "La entrada especial",
+      "enunciado": "Una entrada cuesta 84 €. Otra entrada especial cuesta el doble. ¿Cuánto cuesta la segunda?",
+      "a": 84,
+      "b": 2,
+      "unidad": "€"
+    },
+    {
+      "id": "e1b",
+      "tipo": "doble",
+      "titulo": "Dos bicicletas",
+      "enunciado": "Una bicicleta cuesta 125 €. Otra cuesta el doble. ¿Cuánto cuesta la segunda?",
+      "a": 125,
+      "b": 2,
+      "unidad": "€"
+    },
+    {
+      "id": "e2a",
+      "tipo": "suma",
+      "titulo": "La merienda",
+      "enunciado": "Lucía compra zumo por 8 €, bocadillos por 12 € y fruta por 25 €. ¿Cuánto gasta en total?",
+      "valores": [
+        8,
+        12,
+        25
+      ],
+      "unidad": "€"
+    },
+    {
+      "id": "e2b",
+      "tipo": "suma",
+      "titulo": "Para pintar",
+      "enunciado": "Inés compra pinceles por 16 €, témperas por 24 € y una libreta por 9 €. ¿Cuánto gasta?",
+      "valores": [
+        16,
+        24,
+        9
+      ],
+      "unidad": "€"
+    },
+    {
+      "id": "e3a",
+      "tipo": "reparto",
+      "titulo": "Los folletos",
+      "enunciado": "Hay 1177 folletos para repartir por igual entre 5 clases. ¿Cuántos recibe cada clase? ¿Cuántos sobran?",
+      "a": 1177,
+      "b": 5,
+      "unidad": "folletos"
+    },
+    {
+      "id": "e3b",
+      "tipo": "reparto",
+      "titulo": "Repartir entradas",
+      "enunciado": "Hay 1002 entradas para repartir entre 4 grupos iguales. ¿Cuántas recibe cada grupo? ¿Cuántas sobran?",
+      "a": 1002,
+      "b": 4,
+      "unidad": "entradas"
+    },
+    {
+      "id": "e4a",
+      "tipo": "grupos",
+      "titulo": "Cajas de cuadernos",
+      "enunciado": "Una librería recibe 14 cajas con 16 cuadernos cada una. ¿Cuántos cuadernos recibe?",
+      "a": 14,
+      "b": 16,
+      "unidad": "cuadernos"
+    },
+    {
+      "id": "e4b",
+      "tipo": "grupos",
+      "titulo": "Cajas de botellas",
+      "enunciado": "Hay 12 cajas de 24 botellas cada una. ¿Cuántas botellas hay?",
+      "a": 12,
+      "b": 24,
+      "unidad": "botellas"
+    },
+    {
+      "id": "e5a",
+      "tipo": "comparacion",
+      "titulo": "La mesa y la lámpara",
+      "enunciado": "Una mesa cuesta 325 € y una lámpara cuesta 75 € menos que la mesa. ¿Cuánto cuestan las dos juntas?",
+      "a": 325,
+      "b": 75,
+      "unidad": "€"
+    },
+    {
+      "id": "e5b",
+      "tipo": "comparacion",
+      "titulo": "Patinete y bicicleta",
+      "enunciado": "Un patinete cuesta 380 €. Una bicicleta cuesta 90 € menos que el patinete. ¿Cuánto cuestan los dos artículos juntos?",
+      "a": 380,
+      "b": 90,
+      "unidad": "€"
+    }
+  ]
+}
