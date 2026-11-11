@@ -152,8 +152,8 @@ function crearOpcion(texto,i){
 function representarRelacion(p){
   const destino=el.visual;
   destino.replaceChildren();
-  destino.hidden=!p.tipo;
-  if(!p.tipo)return;
+  destino.hidden=!(p.tipo==="doble"||p.tipo==="comparacion");
+  if(destino.hidden)return;
   const encabezado=document.createElement("strong");
   encabezado.className="visual-titulo";encabezado.textContent="👀 Mira cómo se relacionan las cantidades";
   destino.append(encabezado);
@@ -163,7 +163,7 @@ function representarRelacion(p){
     const barra=document.createElement("div");barra.className="visual-barra";
     for(const segmento of segmentos){
       const tramo=document.createElement("span");
-      tramo.className="visual-tramo "+(segmento.diferencia?"visual-diferencia":"");
+      tramo.className="visual-tramo "+(segmento.vacio?"visual-vacio":segmento.diferencia?"visual-diferencia":"");
       tramo.style.flexGrow=String(segmento.peso||1);
       tramo.textContent=segmento.texto;
       barra.append(tramo);
@@ -177,28 +177,14 @@ function representarRelacion(p){
       {texto:"− "+p.b+" €",peso:p.b,diferencia:true}
     ]);
   }else if(p.tipo==="doble"){
-    agregarFila("Precio conocido",[{texto:p.a+" €",peso:1}]);
-    agregarFila("Precio doble",[{texto:p.a+" €",peso:1},{texto:p.a+" €",peso:1}]);
-  }else if(p.tipo==="suma"){
-    agregarFila("Tres compras",p.valores.map(v=>({texto:v+" €",peso:1})));
-  }else if(p.tipo==="reparto"){
-    agregarFila("Reparto",[
-      {texto:p.a+" "+p.unidad,peso:2},
-      {texto:p.b+" grupos",peso:1},
-      {texto:"¿y el resto?",peso:1,diferencia:true}
-    ]);
-  }else if(p.tipo==="grupos"){
-    agregarFila("Grupos iguales",[
-      {texto:p.a+" grupos",peso:1},
-      {texto:p.b+" "+p.unidad+" cada uno",peso:2},
-      {texto:"¿total?",peso:1,diferencia:true}
-    ]);
+    agregarFila("Un grupo",[{texto:p.a+" €",peso:1},{texto:"",peso:1,vacio:true}]);
+    agregarFila("Dos grupos",[{texto:p.a+" €",peso:1},{texto:p.a+" €",peso:1}]);
   }
   const nota=document.createElement("p");
   nota.className="visual-nota";
   nota.textContent=p.tipo==="comparacion"?
     "La diferencia no es el precio del segundo artículo. Primero hay que descubrirlo.":
-    "El dibujo sirve para comprender. Después elegimos la operación.";
+    "El doble son dos grupos iguales. Después elegimos la operación.";
   destino.append(nota);
 }
 
