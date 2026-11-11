@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta | docs/specifications/SPEC-MATEMATICAS_6TO_PREPARACION_PROBLEMAS_NOV2026.md |
-| Versión | 1.0 |
-| Estado | Integrada técnicamente · pendientes despliegue visual final y validación familiar |
+| Versión | 1.1 |
+| Estado | Publicada para validación familiar · no declarada estable |
 | Fecha | 11/11/2026 |
 | Origen | Decisión aprobada por el Product Owner para prueba del 19/11/2026 |
 
@@ -17,6 +17,13 @@
 - docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md
 - docs/standards/STD-GUIA_DESARROLLO_ULTRA_PRO.md
 - docs/project/PRODUCT_DEVELOPMENT_WORKFLOW.md
+
+## Historial
+
+| Versión | Fecha | Cambios |
+|---|---|---|
+| 1.1 | 11/11/2026 | PR #245: experiencia y banco de problemas; PR #246: visualización de doble y comparaciones. Pages #43028910917 y #43029670985 completados con éxito. Validación familiar pendiente. |
+| 1.0 | 11/11/2026 | Especificación aprobada y desarrollo inicial en rama. |
 
 ## 1. Decisión y ubicación
 
@@ -96,4 +103,4 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 ## 8. Estado
 
-Implementación inicial integrada mediante PR #245 (merge 1d0406186aeaa957261d001b05f8e273d20af7f2), con Pages #43028910917 finalizado correctamente. Los apoyos visuales posteriores se preparan en la rama feat/mates-preparacion-problemas-apoyos-visuales. Falta verificar el despliegue de este último ajuste. La revisión en vivo con Gloria es posterior a la publicación y será condición para declararla estable.
+Implementación integrada: PR #245 (merge 1d0406186aeaa957261d001b05f8e273d20af7f2) y PR #246 (merge 5001d7197005f4b710a9ac3f4bb3ebf682b4baa1). Publicación de Pages confirmada con éxito en ejecuciones #43028910917 y #43029670985. Se verificaron cálculos, diversidad del banco, sintaxis JS, rutas de DOM y equilibrio del CSS. Se incorporó una prueba Node estática, pero no se ejecutó en un navegador real desde este entorno. Pendiente: probar en vivo con Gloria, revisar respuesta ante pista/error, voz en dispositivo real, responsive y facilidad de comprensión; solo después declarar estable.
