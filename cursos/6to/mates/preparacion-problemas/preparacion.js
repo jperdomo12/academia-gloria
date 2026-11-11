@@ -121,7 +121,7 @@ function mostrarPanel(nombre){
   detener();
   const destino=nombre==="actividad"?el.titulo:nombre==="cierre"?$("tituloCierre"):null;
   if(destino)destino.focus({preventScroll:true});
-  window.scrollTo({top:0,behavior:"instant"});
+  window.scrollTo({top:0,behavior:"auto"});
 }
 function grupoEnsayo(){
   return tipos.map(tipo=>{
@@ -167,7 +167,7 @@ function presentar(){
   el.opciones.hidden=(f.tipo==="numero");
   limpiar(el.opciones);
   if(f.tipo==="opcion")f.opciones.forEach((opcion,i)=>el.opciones.append(crearOpcion(opcion,i)));
-  else el.numero.value="";
+  else {el.numero.value="";el.numero.disabled=false;}
   el.escuchar.disabled=!disponible();
   el.titulo.focus({preventScroll:true});
 }
@@ -229,8 +229,6 @@ el.escuchar.addEventListener("click",()=>{
   const p=estado.problemas[estado.indice],f=preguntaActual();
   escuchar(p.enunciado+" "+f.pregunta,{idioma:"es-ES",velocidad:0.82});
 });
-el.numero.addEventListener("input",()=>{el.numero.disabled=false;});
-el.continuar.addEventListener("keydown",event=>{if(event.key==="Enter")event.preventDefault();});
 document.querySelectorAll("[data-iniciar]").forEach(btn=>btn.addEventListener("click",()=>iniciar(btn.dataset.iniciar)));
 $("volverInicio").addEventListener("click",()=>mostrarPanel("inicio"));
 $("otraRuta").addEventListener("click",()=>mostrarPanel("inicio"));
