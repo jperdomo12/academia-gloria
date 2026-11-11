@@ -4,10 +4,17 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | docs/specifications/SPEC-ENGLISH_6TO_PREPARACION_PRUEBAS_NOV2026.md |
-| Versión | 1.0 |
-| Estado | Aprobada y en desarrollo; publicación y validación familiar pendientes |
+| Versión | 1.1 |
+| Estado | Publicada para validación familiar · no declarada estable |
 | Fecha | 11/11/2026 |
 | Decisión | Product Owner aprueba incorporación de la fuente escolar, priorizando el 17 de noviembre y reservando Listening/Writing del 23 como segunda etapa. |
+
+## Historial de versiones
+
+| Versión | Fecha | Cambios |
+|---|---|---|
+| 1.1 | 11/11/2026 | PR #248 integrada en main (merge 1bd319124facb1b862903ee88f790f724b844700); Pages #43034008253 completado con éxito; prueba familiar y navegador real pendientes. |
+| 1.0 | 11/11/2026 | Aprobación del alcance y primera implementación. |
 
 ## 1. Fuentes y fidelidad
 
@@ -66,15 +73,15 @@ Reutilizar vocabulario, lectura y gramática como base para Listening y Writing.
 
 ## 6. Criterios de aceptación
 
-- [ ] Seis grupos completos y cobertura trazable a páginas 1–9.
-- [ ] *To be*: pronombres, afirmación, negación, preguntas y respuestas cortas.
-- [ ] Tres textos originales, con preguntas que exijan leer el contexto.
-- [ ] Vínculos a los Temas existentes de Present Simple y cuantificadores.
-- [ ] Voz inglesa, pistas, reintentos y foco de teclado; responsive.
-- [ ] No publicar escaneos ni notas de evaluación.
-- [ ] Pruebas del banco, preguntas y rutas de navegación.
-- [ ] Publicación GitHub Pages verificada y uso familiar posterior con Gloria.
+- [x] Seis grupos completos y cobertura trazable a páginas 1–9.
+- [x] *To be*: pronombres, afirmación, negación, preguntas y respuestas cortas.
+- [x] Tres textos originales, con preguntas que exijan leer el contexto.
+- [x] Vínculos a los Temas existentes de Present Simple y cuantificadores.
+- [x] Voz inglesa, pistas, reintentos, foco de teclado y responsive **incorporados en código**; prueba con navegador/dispositivo real pendiente.
+- [x] No publicar escaneos ni notas de evaluación.
+- [x] Revisión estática del banco y rutas: 148 términos sin IDs repetidos, 18 preguntas de *to be* con clave correcta, 3 lecturas × 4 preguntas, selectores y DOM consistentes, sintaxis JS y tests verificados en V8. El test Node está incorporado al repositorio, sin ejecución externa confirmada.
+- [x] GitHub Pages completado con éxito; [ ] uso familiar posterior con Gloria y navegación real, aún pendientes.
 
 ## 7. Estado de implementación
 
-Trabajo iniciado en rama feat/english-preparacion-pruebas-noviembre-2026. Completar PR, despliegue y límites de validación al finalizar.
+Implementación integrada en main mediante [PR #248](https://github.com/jperdomo12/academia-gloria/pull/248), merge 1bd319124facb1b862903ee88f790f724b844700. Despliegue GitHub Pages [#43034008253](https://github.com/jperdomo12/academia-gloria/actions/runs/43034008253) finalizado con éxito. URL: https://jperdomo12.github.io/academia-gloria/cursos/6to/english/preparacion-noviembre/. No se ha ejecutado una prueba real completa de uso con navegador/cuenta de Gloria; tampoco se ha comprobado la lectura en voz alta en su dispositivo. La validación familiar es necesaria antes de declarar estabilidad. Listening/Writing de 23/11 y una ficha específica de *have* siguen pendientes de material/alcance.
