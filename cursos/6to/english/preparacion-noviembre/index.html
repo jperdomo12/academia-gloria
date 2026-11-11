@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#4e93a0">
+  <meta name="description" content="Vocabulario del colegio, To be y Reading para preparar la prueba de English de 6.º del 17 de noviembre.">
+  <title>Me preparo para English · Academia Gloria Valentina</title>
+  <link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./preparacion.css">
+</head>
+<body data-page-title="Me preparo para English" data-page-icon="🇬🇧" data-nav-back="../index.html">
+<a href="#contenido" class="saltar">Ir al contenido</a>
+<main id="contenido" class="contenedor">
+  <header class="hero">
+    <p class="ruta"><a href="../index.html">English · 6.º</a> <span aria-hidden="true">›</span> Preparación de pruebas</p>
+    <div class="hero-grid">
+      <div>
+        <p class="etiqueta">🇬🇧 Reading & Grammar · 17 November</p>
+        <h1>Me preparo para <em>English</em></h1>
+        <p class="lead">Primero comprendo la palabra o la frase. Después elijo la respuesta. <strong>Sin prisas, con pistas y con una voz que me ayuda.</strong></p>
+        <div class="pildoras"><span>🧍 Body Parts</span><span>🎃 Halloween</span><span>🏫 School</span><span>💬 To be</span><span>📖 Reading</span></div>
+      </div>
+      <div class="hero-medalla" aria-hidden="true"><span>🌈</span><strong>Look.<br>Listen.<br>Understand.</strong></div>
+    </div>
+  </header>
+  <nav class="tabs" aria-label="Recorridos de preparación">
+    <button class="tab" type="button" data-tab="mapa" aria-current="page">🧭 Mi mapa</button>
+    <button class="tab" type="button" data-tab="vocab" aria-current="false">🃏 Vocabulary</button>
+    <button class="tab" type="button" data-tab="grammar" aria-current="false">💬 To be</button>
+    <button class="tab" type="button" data-tab="reading" aria-current="false">📖 Reading</button>
+    <button class="tab" type="button" data-tab="practica" aria-current="false">🌟 Practico</button>
+  </nav>
+
+  <section data-panel="mapa" class="panel">
+    <p class="etiqueta">Mi plan de aprendizaje</p>
+    <h2>Un pequeño paso cada vez</h2>
+    <p class="intro">Las fichas del colegio son nuestra base. Puedes estudiar en partes cortas, repetir y utilizar las pistas cuando las necesites.</p>
+    <div class="roadmap">
+      <article><span class="paso-numero">1</span><span class="bigicon">🃏</span><h3>Veo y escucho</h3><p>Palabras del cuerpo, Halloween, colores, números y colegio.</p><button type="button" class="btn primary" data-ir="vocab">Estudiar Vocabulary</button></article>
+      <article><span class="paso-numero">2</span><span class="bigicon">💬</span><h3>Construyo frases</h3><p>Pronouns y el verbo <em>to be</em>: afirmo, niego, pregunto y contesto.</p><button type="button" class="btn primary" data-ir="grammar">Aprender To be</button></article>
+      <article><span class="paso-numero">3</span><span class="bigicon">📖</span><h3>Leo para comprender</h3><p>Historias nuevas que usan palabras de las fichas y preguntas para pensar.</p><button type="button" class="btn primary" data-ir="reading">Practicar Reading</button></article>
+      <article><span class="paso-numero">4</span><span class="bigicon">🎯</span><h3>Compruebo sin correr</h3><p>Retos cortos de vocabulario, <em>to be</em> y un ensayo combinado.</p><button type="button" class="btn primary" data-ir="practica">Hacer un reto</button></article>
+    </div>
+    <section class="conexiones" aria-labelledby="tituloConexiones">
+      <h3 id="tituloConexiones">Otros Temas de Academia para este examen</h3>
+      <p>Ya los tenemos: no es necesario volver a crearlos.</p>
+      <div class="recursos">
+        <a href="../present-simple-vs-present-continuous/" data-conservar-retorno><strong>🔁 Present Simple</strong><span>Routines, affirmative, negative and questions</span></a>
+        <a href="../much-many-a-lot-of/" data-conservar-retorno><strong>🧺 Much · Many · A lot of</strong><span>Countable and uncountable words</span></a>
+      </div>
+      <p class="observacion"><strong>Contenido aún por confirmar:</strong> las fichas recibidas no enseñan el verbo <em>have</em> de manera específica. Esta experiencia no pretende cubrirlo ni simular el examen oficial. Para Listening y Writing del 23/11 prepararemos un refuerzo posterior con las indicaciones correspondientes.</p>
+    </section>
+  </section>
+
+  <section data-panel="vocab" class="panel" hidden>
+    <div class="seccion-cabecera">
+      <div><p class="etiqueta">Vocabulary · Look and listen</p><h2>Mis palabras de English</h2><p class="intro">Mira la palabra y su significado. Si quieres, escúchala. Después practica con un pequeño reto.</p></div>
+      <label class="selector">Elige un grupo
+        <select id="grupoVocab"></select>
+      </label>
+    </div>
+    <div class="fuente-vocab"><span id="grupoMeta"></span><span id="grupoCuenta"></span></div>
+    <div class="estudio-ayudas">
+      <button id="escucharGrupo" class="btn subtle" type="button">🔊 Escuchar algunas palabras</button>
+      <button id="retoGrupo" class="btn primary" type="button">🌱 Practicar este grupo</button>
+    </div>
+    <div id="tarjetasVocab" class="vocab-grid" aria-live="polite"></div>
+    <div class="paginador">
+      <button id="anteriorVocab" type="button" class="btn subtle">← Anterior</button>
+      <span id="paginaVocab" aria-live="polite"></span>
+      <button id="siguienteVocab" type="button" class="btn subtle">Más palabras →</button>
+    </div>
+    <p class="pie-pequeno">Las ilustraciones son apoyos semánticos de Academia, no copias del libro. Consulta las fichas físicas para estudiar también sus dibujos originales.</p>
+  </section>
+
+  <section data-panel="grammar" class="panel" hidden>
+    <p class="etiqueta">Grammar · Personal pronouns & To be</p>
+    <h2>La frase tiene una estructura</h2>
+    <p class="intro">Empieza por el pronombre. Después mira si afirmamos, negamos o hacemos una pregunta.</p>
+    <div class="regla-destacada"><span aria-hidden="true">💡</span><div><strong>I am · He/She/It is · You/We/They are</strong><p>En una pregunta cambiamos el orden: <em>Are you…?</em> / <em>Is she…?</em></p></div></div>
+    <div id="reglasGrammar" class="reglas"></div>
+    <div class="recurso-acciones">
+      <button type="button" id="retoGrammar" class="btn primary">🎯 Practicar 8 frases de To be</button>
+    </div>
+  </section>
+
+  <section data-panel="reading" class="panel" hidden>
+    <div class="seccion-cabecera">
+      <div><p class="etiqueta">Reading · Read and understand</p><h2>Leo y comprendo</h2><p class="intro">No adivines por una palabra suelta. Lee toda la frase y vuelve al texto cuando haga falta.</p></div>
+      <label class="selector">Elige una lectura
+        <select id="lecturaSelect"></select>
+      </label>
+    </div>
+    <article class="texto-lectura">
+      <div class="texto-lectura-cabecera"><div><span id="lecturaIcono" class="lectura-icono"></span><h3 id="lecturaTitulo"></h3></div><button id="escucharLectura" type="button" class="btn subtle">🔊 Escuchar lectura</button></div>
+      <div id="lecturaParrafos" lang="en-GB"></div>
+      <p id="lecturaFuente" class="pie-pequeno"></p>
+    </article>
+    <div class="recurso-acciones">
+      <button type="button" id="preguntasLectura" class="btn primary">📖 Comprobar que entendí</button>
+    </div>
+  </section>
+
+  <section data-panel="practica" class="panel" hidden>
+    <p class="etiqueta">My little challenges</p><h2>Practico a mi ritmo</h2>
+    <p class="intro">Elige un reto corto. Puedes equivocarte, releer, escuchar y pedir pistas. Aquí no hay cronómetro ni nota.</p>
+    <div class="roadmap retos">
+      <article><span class="bigicon">🃏</span><h3>Vocabulary</h3><p>8 palabras variadas de las fichas del colegio.</p><button type="button" class="btn primary" data-reto="vocab">Practicar palabras</button></article>
+      <article><span class="bigicon">💬</span><h3>Grammar</h3><p>8 frases de <em>to be</em> para elegir con sentido.</p><button type="button" class="btn primary" data-reto="grammar">Practicar frases</button></article>
+      <article><span class="bigicon">🌟</span><h3>Reading + Grammar</h3><p>Un texto, preguntas de comprensión y gramática.</p><button type="button" class="btn primary" data-reto="mixto">Hacer el ensayo</button></article>
+    </div>
+  </section>
+
+  <section id="retoPanel" class="panel reto-panel" hidden aria-labelledby="retoTitulo">
+    <div class="reto-top">
+      <div><p class="etiqueta" id="retoEtiqueta"></p><h2 id="retoTitulo" tabindex="-1"></h2><p id="retoPaso" class="texto-suave"></p></div>
+      <button type="button" class="btn subtle" id="salirReto">Volver al contenido</button>
+    </div>
+    <div id="retoProgreso" class="progreso" role="progressbar" aria-label="Preguntas completadas" aria-valuemin="0" aria-valuenow="0" aria-valuemax="8"><div id="barraReto"></div></div>
+    <article id="contextoReto" class="contexto-reto" hidden>
+      <strong>📖 Lee el texto antes de responder</strong>
+      <div id="contextoTexto" lang="en-GB"></div>
+      <button type="button" id="escucharContexto" class="btn subtle">🔊 Escuchar texto</button>
+    </article>
+    <div id="retoEnunciado" class="reto-enunciado" aria-live="polite"></div>
+    <div id="retoIcono" class="reto-icono" aria-hidden="true"></div>
+    <form id="retoForm" novalidate>
+      <fieldset class="opciones" id="retoOpciones"><legend class="sr-only">Selecciona tu respuesta</legend></fieldset>
+      <div id="retoFeedback" role="status" aria-live="polite" class="feedback"></div>
+      <div class="acciones">
+        <button id="retoPista" type="button" class="btn subtle">💡 Una pista</button>
+        <button id="retoComprobar" type="submit" class="btn primary">Comprobar mi idea</button>
+        <button id="retoContinuar" type="button" class="btn primary" hidden>Continuar →</button>
+      </div>
+      <div id="pistaTexto" class="pista-texto" role="note" hidden></div>
+    </form>
+  </section>
+
+  <section id="cierrePanel" class="panel cierre" hidden aria-labelledby="cierreTitulo">
+    <div class="grande" aria-hidden="true">🌟</div>
+    <h2 id="cierreTitulo" tabindex="-1">¡Lo has trabajado!</h2>
+    <p id="cierreTexto"></p>
+    <p class="texto-suave">Lo importante es comprender. Si algo fue difícil, las pistas y la relectura forman parte del aprendizaje.</p>
+    <div class="acciones acciones-centro">
+      <button id="repetirReto" class="btn subtle" type="button">🔄 Otra vez, con otras preguntas</button>
+      <button id="irMapa" class="btn primary" type="button">Volver al mapa</button>
+    </div>
+  </section>
+  <footer class="pie">
+    <strong>Procedencia:</strong> fichas físicas de Gaudem, once páginas, aportadas por la familia. Lecturas y retos redactados por Academia. El alcance del examen se basa en la comunicación del colegio; no se publican los escaneos.
+  </footer>
+</main>
+<script src="../../../../compartido/js/navegacion.js"></script>
+<script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+<script type="module" src="./preparacion.js"></script>
+</body>
+</html>
