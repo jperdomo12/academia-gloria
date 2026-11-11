@@ -76,5 +76,6 @@ h3{font-size:1.2rem;margin:.45rem 0}
 .visual-barra{display:flex;align-items:stretch;gap:3px;min-width:0}
 .visual-tramo{flex-basis:0;min-width:0;min-height:41px;display:flex;align-items:center;justify-content:center;background:#dbeacf;color:#284d2b;border-radius:7px;padding:7px 4px;text-align:center;font-weight:800;overflow-wrap:anywhere}
 .visual-diferencia{background:#fff0d8;color:#6d4b1b;border:1px dashed #cfa669}
+.visual-vacio{background:transparent;border:1px dashed #c9d4c6;color:transparent}
 .visual-nota{margin:13px 0 0;color:#514673;font-size:.89rem;line-height:1.5}
 @media(max-width:540px){.visual-fila{grid-template-columns:1fr;gap:5px}.visual-etiqueta{font-size:.82rem}.relacion-visual{padding:13px}.visual-tramo{font-size:.84rem;min-height:44px}}
