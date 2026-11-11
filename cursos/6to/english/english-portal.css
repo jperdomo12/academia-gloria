@@ -40,3 +40,18 @@
 @media(prefers-reduced-motion:reduce){
   .portal-english .portal-tema__entrar{transition:none}
 }
+
+/* English · refuerzo puntual de exámenes, separado del catálogo de Temas. */
+.english-prep-card{display:flex;align-items:center;gap:23px;padding:24px 26px;border:1px solid #cfe4e7;border-radius:24px;text-decoration:none;color:#273e42;background:linear-gradient(120deg,#f8ffff,#eaf8f8 64%,#eff3e6);box-shadow:0 12px 29px rgba(53,101,110,.08);transition:transform .18s ease,box-shadow .18s ease}
+.english-prep-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(53,101,110,.15)}
+.english-prep-card:focus-visible{outline:3px solid #bd8119;outline-offset:4px}
+.english-prep-card__icono{font-size:2.7rem;display:flex;align-items:center;justify-content:center;min-width:83px;height:83px;background:#fff;border-radius:24px;border:1px solid #d2e8e9}
+.english-prep-card__contenido{display:flex;flex-direction:column;gap:7px;line-height:1.5;flex:1;min-width:0}
+.english-prep-card__meta{font-size:.79rem;letter-spacing:.05em;text-transform:uppercase;color:#356c76;font-weight:900}
+.english-prep-card__contenido strong{font-size:clamp(1.14rem,2.3vw,1.42rem);color:#2f6070}
+.english-prep-card__contenido>span:not(.english-prep-card__meta):not(.english-prep-card__chips){font-size:.93rem;color:#536b70}
+.english-prep-card__chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:5px}
+.english-prep-card__chips span{font-size:.79rem;border:1px solid #d2e5e7;border-radius:30px;padding:4px 9px;background:#fff;color:#456973;font-weight:700}
+.english-prep-card__accion{display:flex;align-items:center;justify-content:center;text-align:center;border-radius:100px;padding:12px 18px;background:#2e6a75;color:#fff;font-size:.91rem;font-weight:900;min-width:178px}
+@media(max-width:700px){.english-prep-card{flex-direction:column;align-items:stretch;padding:20px}.english-prep-card__icono{width:73px;min-width:0;height:73px}.english-prep-card__accion{width:100%}}
+@media(prefers-reduced-motion:reduce){.english-prep-card{transition:none}}
