@@ -7,7 +7,7 @@ const el = {
   inicio:$("inicio"),actividad:$("actividad"),cierre:$("cierre"),
   titulo:$("tituloActividad"),etiqueta:$("modoEtiqueta"),paso:$("pasoActual"),
   barra:$("barraProgreso"),progreso:$("progreso"),enunciado:$("textoEnunciado"),
-  pregunta:$("pregunta"),opciones:$("opciones"),entrada:$("entradaNumero"),numero:$("numero"),
+  pregunta:$("pregunta"),visual:$("relacionVisual"),opciones:$("opciones"),entrada:$("entradaNumero"),numero:$("numero"),
   formulario:$("formRespuesta"),mensaje:$("mensaje"),pista:$("pista"),notaPista:$("notaPista"),
   comprobar:$("comprobar"),continuar:$("continuar"),escuchar:$("escuchar"),
   resumen:$("resumenCierre")
@@ -149,6 +149,59 @@ function crearOpcion(texto,i){
   label.append(radio,span);
   return label;
 }
+function representarRelacion(p){
+  const destino=el.visual;
+  destino.replaceChildren();
+  destino.hidden=!p.tipo;
+  if(!p.tipo)return;
+  const encabezado=document.createElement("strong");
+  encabezado.className="visual-titulo";encabezado.textContent="👀 Mira cómo se relacionan las cantidades";
+  destino.append(encabezado);
+  function agregarFila(nombre,segmentos){
+    const fila=document.createElement("div");fila.className="visual-fila";
+    const etiqueta=document.createElement("span");etiqueta.className="visual-etiqueta";etiqueta.textContent=nombre;
+    const barra=document.createElement("div");barra.className="visual-barra";
+    for(const segmento of segmentos){
+      const tramo=document.createElement("span");
+      tramo.className="visual-tramo "+(segmento.diferencia?"visual-diferencia":"");
+      tramo.style.flexGrow=String(segmento.peso||1);
+      tramo.textContent=segmento.texto;
+      barra.append(tramo);
+    }
+    fila.append(etiqueta,barra);destino.append(fila);
+  }
+  if(p.tipo==="comparacion"){
+    agregarFila("Primer precio",[{texto:p.a+" €",peso:p.a}]);
+    agregarFila("Segundo precio",[
+      {texto:"¿? €",peso:p.a-p.b},
+      {texto:"− "+p.b+" €",peso:p.b,diferencia:true}
+    ]);
+  }else if(p.tipo==="doble"){
+    agregarFila("Precio conocido",[{texto:p.a+" €",peso:1}]);
+    agregarFila("Precio doble",[{texto:p.a+" €",peso:1},{texto:p.a+" €",peso:1}]);
+  }else if(p.tipo==="suma"){
+    agregarFila("Tres compras",p.valores.map(v=>({texto:v+" €",peso:1})));
+  }else if(p.tipo==="reparto"){
+    agregarFila("Reparto",[
+      {texto:p.a+" "+p.unidad,peso:2},
+      {texto:p.b+" grupos",peso:1},
+      {texto:"¿y el resto?",peso:1,diferencia:true}
+    ]);
+  }else if(p.tipo==="grupos"){
+    agregarFila("Grupos iguales",[
+      {texto:p.a+" grupos",peso:1},
+      {texto:p.b+" "+p.unidad+" cada uno",peso:2},
+      {texto:"¿total?",peso:1,diferencia:true}
+    ]);
+  }
+  const nota=document.createElement("p");
+  nota.className="visual-nota";
+  nota.textContent=p.tipo==="comparacion"?
+    "La diferencia no es el precio del segundo artículo. Primero hay que descubrirlo.":
+    "El dibujo sirve para comprender. Después elegimos la operación.";
+  destino.append(nota);
+}
+
 function presentar(){
   const p=estado.problemas[estado.indice],fs=fases(p),f=fs[estado.fase];
   estado.resuelto=false;estado.intentos=0;estado.pasoConPista=false;
@@ -156,6 +209,7 @@ function presentar(){
   el.titulo.textContent=p.titulo;
   el.paso.textContent="Problema "+(estado.indice+1)+" de "+estado.problemas.length+" · Paso "+(estado.fase+1)+" de "+fs.length;
   el.enunciado.textContent=p.enunciado;
+  representarRelacion(p);
   el.pregunta.textContent=f.pregunta;
   el.barra.style.width=(100*estado.indice/estado.problemas.length)+"%";
   el.progreso.setAttribute("aria-valuemax",String(estado.problemas.length));
