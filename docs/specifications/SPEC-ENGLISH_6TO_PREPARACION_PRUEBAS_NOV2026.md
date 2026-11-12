@@ -4,15 +4,16 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | docs/specifications/SPEC-ENGLISH_6TO_PREPARACION_PRUEBAS_NOV2026.md |
-| Versión | 1.1 |
+| Versión | 1.2 |
 | Estado | Publicada para validación familiar · no declarada estable |
-| Fecha | 11/11/2026 |
-| Decisión | Product Owner aprueba incorporación de la fuente escolar, priorizando el 17 de noviembre y reservando Listening/Writing del 23 como segunda etapa. |
+| Fecha | 12/11/2026 |
+| Decisión | Product Owner aprueba preparación del 17 de noviembre y refuerzo puntual del presente de *have/has* por pronombre; Listening/Writing del 23 permanece como etapa posterior. |
 
 ## Historial de versiones
 
 | Versión | Fecha | Cambios |
 |---|---|---|
+| 1.2 | 12/11/2026 | Refuerzo solicitado de *have/has* en presente como verbo principal («tener»), con ocho ejemplos y ocho ejercicios, añadido a Grammar sin nuevo Tema ni cambios en la persistencia. Siete tests de contrato comprobados en V8 con el código de la rama; validación de navegador/cuenta familiar pendiente. |
 | 1.1 | 11/11/2026 | PR #248 integrada en main (merge 1bd319124facb1b862903ee88f790f724b844700); Pages #43034008253 completado con éxito; prueba familiar y navegador real pendientes. |
 | 1.0 | 11/11/2026 | Aprobación del alcance y primera implementación. |
 
@@ -21,7 +22,7 @@
 Fuente escolar principal: **Inglés .pdf**, 11 páginas de fichas escaneadas de Gaudem aportadas por la familia (Taller de inglés / English Important Book / Inglés ACS según sección). El distintivo **ACS** aparece en las páginas 10 y 11; no implica por sí solo que cada apartado haya sido individualizado específicamente para Gloria. No se publica el PDF ni sus anotaciones.
 
 Temario comunicado por Pilar:
-- **17/11/2026:** Reading (Halloween, partes del cuerpo, contenidos de cursos anteriores) y Grammar (Present Simple, *to be*, *have*, *much*, *many*, *a lot of*).
+- **17/11/2026:** Reading (Halloween, partes del cuerpo, contenidos de cursos anteriores) y Grammar (Present Simple, *to be*, *have*, *much*, *many*, *a lot of*; **Present Continuous** aclarado por Pilar el 12/11).
 - **23/11/2026:** Listening y Writing.
 
 Este PDF es una **referencia parcial** del temario, no el modelo de examen.
@@ -39,7 +40,7 @@ Este PDF es una **referencia parcial** del temario, no el modelo de examen.
 
 Algunas formas se escriben con el inglés escolar habitual (por ejemplo, *coloured pencils*). No inferir que cada palabra de las páginas 8–9 será evaluada.
 
-**Faltante en la fuente:** no aparece una ficha específica de *have* ni el formato exacto de Reading, Listening o Writing. La preparación de Present Simple y cuantificadores reutiliza los dos Temas de English ya publicados. No duplicarlos.
+**Faltante en la fuente:** no aparece una ficha específica de *have* ni el formato exacto de Reading, Listening o Writing. Por decisión familiar se añade un **apoyo original de Academia** para el presente de *have/has* en oraciones afirmativas («tener»); esta elección pedagógica no confirma el alcance exacto del examen escolar. No se enseñan aquí *have got*, negativas, interrogativas ni *has* como auxiliar de Present Perfect. La preparación de Present Simple/Continuous y cuantificadores reutiliza los dos Temas de English ya publicados. No duplicarlos.
 
 ## 2. Ubicación
 
@@ -53,9 +54,9 @@ Se mantiene **fuera del catálogo de Temas permanentes** porque es un recurso te
 
 1. **Mi mapa:** recorrido recomendado y enlaces a Present Simple vs Present Continuous y Much / Many – A lot of.
 2. **Vocabulary:** seis grupos (Body Parts, Halloween, Colours, Numbers, School Objects, School People & Places). Tarjetas paginadas y escucha con el lector existente.
-3. **To be:** pronombres, affirmative, negative y questions/short answers; ejemplos y audio.
+3. **Grammar:** bloque ya existente de *to be* (pronombres, afirmativo, negativo y preguntas/respuestas cortas), más bloque diferenciado de *have/has* en presente. En *have/has* se agrupan I/you/we/they → have y he/she/it → has, con ocho frases traducidas y audio. *Have/has* es verbo principal de posesión, no adjetivo ni auxiliar.
 4. **Reading:** tres relatos originales de Academia (Halloween at school, A healthy school day, The new classroom), cada uno con cuatro preguntas de comprensión.
-5. **Practico:** mini reto Vocabulary (8), Grammar (8) y Reading + Grammar (12: cuatro preguntas de lectura, cinco de gramática, tres de vocabulario). Reto de lectura desde el texto seleccionado.
+5. **Practico:** retos Vocabulary (8), *To be* (8), **Have/Has (8)** y Reading + Grammar (12: cuatro preguntas de lectura, cinco de *to be*, tres de vocabulario); Reading desde el texto seleccionado. No se modifica el ensayo mixto preexistente ni se presenta como simulacro oficial.
 
 **Regla pedagógica:** Miro o escucho → Comprendo → Elijo → Compruebo. Una pregunta principal por paso, sin cronómetro ni premios por rapidez, pistas voluntarias y feedback conceptual tras acertar. Reintentos sin penalización y lectura de textos en voz alta.
 
@@ -75,13 +76,14 @@ Reutilizar vocabulario, lectura y gramática como base para Listening y Writing.
 
 - [x] Seis grupos completos y cobertura trazable a páginas 1–9.
 - [x] *To be*: pronombres, afirmación, negación, preguntas y respuestas cortas.
+- [x] *Have/has* en presente afirmativo: ocho ejemplos, ocho ejercicios por pronombres, pistas específicas y escucha en inglés, diferenciados de la fuente escolar.
 - [x] Tres textos originales, con preguntas que exijan leer el contexto.
 - [x] Vínculos a los Temas existentes de Present Simple y cuantificadores.
 - [x] Voz inglesa, pistas, reintentos, foco de teclado y responsive **incorporados en código**; prueba con navegador/dispositivo real pendiente.
 - [x] No publicar escaneos ni notas de evaluación.
-- [x] Revisión estática del banco y rutas: 148 términos sin IDs repetidos, 18 preguntas de *to be* con clave correcta, 3 lecturas × 4 preguntas, selectores y DOM consistentes, sintaxis JS y tests verificados en V8. El test Node está incorporado al repositorio, sin ejecución externa confirmada.
+- [x] Revisión estática del banco y rutas: 148 términos, 18 preguntas de *to be*, 8 de *have/has* con clave correcta, 3 lecturas × 4 preguntas, 47 IDs DOM sin duplicados y 0 selectores referenciados inexistentes. Siete pruebas de aserción del archivo `.test.mjs` ejecutadas en V8 con los archivos reales de la rama (no equivale a ejecución Node). Los recorridos de 8/8/12 preguntas se verificaron con el motor real en V8; uso en navegador autenticado pendiente.
 - [x] GitHub Pages completado con éxito; [ ] uso familiar posterior con Gloria y navegación real, aún pendientes.
 
 ## 7. Estado de implementación
 
-Implementación integrada en main mediante [PR #248](https://github.com/jperdomo12/academia-gloria/pull/248), merge 1bd319124facb1b862903ee88f790f724b844700. Despliegue GitHub Pages [#43034008253](https://github.com/jperdomo12/academia-gloria/actions/runs/43034008253) finalizado con éxito. URL: https://jperdomo12.github.io/academia-gloria/cursos/6to/english/preparacion-noviembre/. No se ha ejecutado una prueba real completa de uso con navegador/cuenta de Gloria; tampoco se ha comprobado la lectura en voz alta en su dispositivo. La validación familiar es necesaria antes de declarar estabilidad. Listening/Writing de 23/11 y una ficha específica de *have* siguen pendientes de material/alcance.
+Implementación integrada en main mediante [PR #248](https://github.com/jperdomo12/academia-gloria/pull/248), merge 1bd319124facb1b862903ee88f790f724b844700. Despliegue GitHub Pages [#43034008253](https://github.com/jperdomo12/academia-gloria/actions/runs/43034008253) finalizado con éxito. URL: https://jperdomo12.github.io/academia-gloria/cursos/6to/english/preparacion-noviembre/. No se ha ejecutado una prueba real completa de uso con navegador/cuenta de Gloria; tampoco se ha comprobado la lectura en voz alta en su dispositivo. La validación familiar es necesaria antes de declarar estabilidad. Listening/Writing de 23/11 sigue pendiente de material/formato; *have/has* básico ya tiene un refuerzo de Academia, sin asumir que el colegio requiere otras formas verbales.

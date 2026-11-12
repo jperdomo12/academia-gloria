@@ -86,10 +86,9 @@ function showVocab(){
   $("anteriorVocab").disabled=state.page===0;
   $("siguienteVocab").disabled=state.page===pageMax-1;
 }
-function showGrammar(){
-  const wrapper=$("reglasGrammar");
+function renderRules(wrapper,rules){
   wrapper.replaceChildren();
-  for(const rule of DATA.toBe){
+  for(const rule of rules){
     const article=node("article",null,"regla");
     article.append(node("h3",rule.title),node("p",rule.explain));
     const ul=node("ul");
@@ -104,6 +103,10 @@ function showGrammar(){
     });
     article.append(ul);wrapper.append(article);
   }
+}
+function showGrammar(){
+  renderRules($("reglasGrammar"),DATA.toBe);
+  renderRules($("reglasHave"),DATA.have);
 }
 function showReading(){
   const reading=getReading(state.readingId);
@@ -126,12 +129,14 @@ function wordQuestion(word,group){
     explain:"“"+word.en+"” significa “"+word.es+"”."
   };
 }
-function grammarQuestion(q){
+function grammarQuestion(q,mode="grammar"){
   const [stem,options,correct,explain]=q;
   return {
-    kind:"grammar",stem,icon:"💬",
+    kind:"grammar",stem,icon:mode==="have"?"🖐️":"💬",
     options:[...options],correct,
-    clue:"Comprueba el pronombre. I → am; he/she/it → is; you/we/they → are. Para preguntar cambia el orden.",
+    clue:mode==="have"
+      ?"Mira el pronombre: I/you/we/they → have; he/she/it → has. Aquí significa tener."
+      :"Comprueba el pronombre. I → am; he/she/it → is; you/we/they → are. Para preguntar cambia el orden.",
     explain
   };
 }
@@ -163,6 +168,7 @@ function buildQuestions(mode,groupId=null,readingId=null){
     return mixedVocab(8);
   }
   if(mode==="grammar")return shuffle(DATA.grammarQuestions).slice(0,8).map(grammarQuestion);
+  if(mode==="have")return shuffle(DATA.haveQuestions).slice(0,8).map(q=>grammarQuestion(q,"have"));
   if(mode==="reading")return readingQuestions(getReading(readingId||state.readingId));
   if(mode==="mixto"){
     const reading=getReading(readingId||shuffle(DATA.readings)[0].id);
@@ -178,8 +184,14 @@ function startChallenge(mode,groupId=null,readingId=null){
   state.current=0;state.done=0;state.solved=false;state.mistakes=0;state.hints=0;state.hintUsed=false;
   document.querySelectorAll("[data-panel]").forEach(panel=>{panel.hidden=true;});
   $("retoPanel").hidden=false;$("cierrePanel").hidden=true;
-  $("retoEtiqueta").textContent=mode==="vocab"?"🃏 Vocabulary · short challenge":mode==="grammar"?"💬 Grammar · To be":mode==="reading"?"📖 Reading comprehension":"🌟 Reading + Grammar · mini ensayo";
-  $("retoTitulo").textContent=mode==="vocab"?"Reconozco palabras":mode==="grammar"?"Construyo frases":mode==="reading"?"Comprendo mi lectura":"Me preparo para el 17 de noviembre";
+  const labels={
+    vocab:["🃏 Vocabulary · short challenge","Reconozco palabras"],
+    grammar:["💬 Grammar · To be","Construyo frases con To be"],
+    have:["🖐️ Grammar · Have / Has","¿Have o has?"],
+    reading:["📖 Reading comprehension","Comprendo mi lectura"],
+    mixto:["🌟 Reading + Grammar · mini ensayo","Me preparo para el 17 de noviembre"]
+  };
+  [$("retoEtiqueta").textContent,$("retoTitulo").textContent]=labels[mode];
   $("retoProgreso").setAttribute("aria-valuemax",String(state.challenge.length));
   presentQuestion();
   focusTitle("#retoTitulo");
@@ -250,6 +262,7 @@ function nextQuestion(){
 function validation(){
   const all=DATA.groups.flatMap(g=>g.words.map(w=>({word:w,group:g.id})));
   if(DATA.groups.length!==6 || DATA.readings.length!==3 || DATA.grammarQuestions.length<12 ||
+    DATA.have.length!==2 || DATA.haveQuestions.length!==8 ||
     DATA.groups.some(g=>g.words.length<10) || DATA.readings.some(r=>r.questions.length!==4))throw new Error("El banco escolar está incompleto.");
   for(const r of DATA.readings){
     if(r.paras.length<2||new Set(r.questions.map(q=>q[0])).size!==r.questions.length)throw new Error("Lectura incompleta "+r.id);
@@ -259,6 +272,9 @@ function validation(){
   }
   if(new Set(all.map(e=>e.group+" "+e.word.en)).size!==all.length)throw new Error("Vocabulario duplicado");
   if(DATA.grammarQuestions.some(([stem,options,correct])=>!stem||correct<0||correct>=options.length))throw new Error("Grammar incompleta.");
+  if(DATA.have.some(rule=>!rule.title||!rule.explain||!rule.examples.length))throw new Error("Have/Has sin ejemplos.");
+  if(DATA.haveQuestions.some(([stem,options,correct,explain])=>!stem||!explain||correct<0||correct>=options.length))
+    throw new Error("Have/Has sin práctica.");
 }
 document.querySelectorAll("[data-tab]").forEach(button=>button.addEventListener("click",()=>showTab(button.dataset.tab)));
 document.querySelectorAll("[data-ir]").forEach(button=>button.addEventListener("click",()=>showTab(button.dataset.ir)));
@@ -269,16 +285,17 @@ $("tarjetasVocab").addEventListener("click",event=>{
   const btn=event.target.closest("[data-audio]");
   if(btn)speak(btn.dataset.audio);
 });
-$("reglasGrammar").addEventListener("click",event=>{
+["reglasGrammar","reglasHave"].forEach(id=>$(id).addEventListener("click",event=>{
   const btn=event.target.closest("[data-audio]");
   if(btn)speak(btn.dataset.audio);
-});
+}));
 $("escucharGrupo").addEventListener("click",()=>{
   const group=getGroup(state.groupId);
   speak(group.words.slice(state.page*PER_PAGE,state.page*PER_PAGE+5).map(w=>w.en).join(". "));
 });
 $("retoGrupo").addEventListener("click",()=>startChallenge("vocab",state.groupId));
 $("retoGrammar").addEventListener("click",()=>startChallenge("grammar"));
+$("retoHave").addEventListener("click",()=>startChallenge("have"));
 $("lecturaSelect").addEventListener("change",event=>{state.readingId=event.target.value;showReading();});
 $("escucharLectura").addEventListener("click",()=>speak(getReading(state.readingId).paras.join(" ")));
 $("preguntasLectura").addEventListener("click",()=>startChallenge("reading",null,state.readingId));
