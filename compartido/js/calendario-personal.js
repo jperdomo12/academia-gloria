@@ -65,9 +65,12 @@ import { obtenerPerfil } from "./perfil-usuario.js";
   }
 
   function formatearFecha(fecha){
-    return fechaDesdeISO(fecha).toLocaleDateString("es-ES",{
+    const fechaLocal = fechaDesdeISO(fecha);
+    const diaSemana = fechaLocal.toLocaleDateString("es-ES",{weekday:"long"});
+    const fechaCompleta = fechaLocal.toLocaleDateString("es-ES",{
       day:"numeric",month:"long",year:"numeric"
     });
+    return `${diaSemana.charAt(0).toLocaleUpperCase("es-ES")}${diaSemana.slice(1)} ${fechaCompleta}`;
   }
 
   function fechaDentroRango(fechaISOValor){
