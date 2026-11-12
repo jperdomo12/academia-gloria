@@ -48,6 +48,39 @@ test("To be incluye pronombres, afirmación, negación y pregunta con respuesta"
     assert.equal(new Set(choices).size,choices.length);
   }
 });
+test("Have/Has en presente distingue los siete pronombres y conserva To be",()=>{
+  assert.equal(DATA.toBe.length,4);
+  assert.equal(DATA.grammarQuestions.length,18);
+  assert.equal(DATA.have.length,2);
+  assert.deepEqual(DATA.have.map(x=>x.id),["have-plural","have-singular"]);
+  const groups=DATA.have.flatMap(rule=>rule.examples.map(([en,es])=>({en,es})));
+  assert.equal(groups.length,8);
+  assert.ok(groups.every(({en,es})=>en&&es));
+  const rules=new Map([
+    ["I","have"],["You","have"],["We","have"],["They","have"],
+    ["He","has"],["She","has"],["It","has"]
+  ]);
+  for(const {en} of groups){
+    const [pronoun,form]=en.split(" ");
+    assert.equal(form,rules.get(pronoun),en);
+  }
+  assert.equal(DATA.haveQuestions.length,8);
+  for(const [stem,choices,index,explain] of DATA.haveQuestions){
+    const pronoun=stem.split(" ")[0];
+    assert.ok(rules.has(pronoun),stem);
+    assert.equal(choices[index],rules.get(pronoun),stem);
+    assert.equal(new Set(choices).size,choices.length);
+    assert.ok(explain);
+  }
+  assert.ok(html.includes('id="reglasHave"'));
+  assert.ok(html.includes('id="retoHave"'));
+  assert.ok(html.includes('data-reto="have"'));
+  assert.ok(html.includes("no incluyen una explicación específica"));
+  assert.ok(code.includes('renderRules($("reglasHave"),DATA.have)'));
+  assert.ok(code.includes('if(mode==="have")'));
+  assert.ok(code.includes('startChallenge("have")'));
+});
+
 test("tres historias originales con cuatro preguntas válidas por historia",()=>{
   assert.deepEqual(DATA.readings.map(r=>r.id),["read-halloween","read-body","read-school"]);
   for(const reading of DATA.readings){
@@ -62,7 +95,7 @@ test("tres historias originales con cuatro preguntas válidas por historia",()=>
     }
   }
 });
-test("tres tipos de retos, voz y ayudas sin escritura de notas",()=>{
+test("cuatro tipos de retos, voz y ayudas sin escritura de notas",()=>{
   for(const data of ['data-reto="vocab"','data-reto="grammar"','data-reto="mixto"','data-tab="reading"','id="grupoVocab"','id="lecturaSelect"','id="retoPista"'])
     assert.ok(html.includes(data),data);
   assert.ok(code.includes('compartido/js/lector-texto.js'));
