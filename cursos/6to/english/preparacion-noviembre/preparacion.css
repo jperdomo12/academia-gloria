@@ -59,6 +59,9 @@ h3{margin:.25rem 0 .65rem;font-size:1.18rem}
 .pie-pequeno{font-size:.86rem;color:#5a7275;line-height:1.55;margin:16px 0 0}
 .regla-destacada{display:flex;align-items:center;gap:17px;padding:18px;border:1px solid #cde3e8;background:#eefaFC;border-radius:17px;margin:18px 0 25px}
 .regla-destacada>span{font-size:2rem}.regla-destacada strong{font-size:1.1rem}.regla-destacada p{margin:7px 0 0;color:#4a6b73}
+.have-section{margin-top:34px;padding-top:26px;border-top:2px solid #d8e5eb}
+.have-section h3{font-size:clamp(1.2rem,2vw,1.5rem);color:#2d5664;margin:8px 0 10px}
+.have-section .regla-destacada{background:#f0f8f0;border-color:#cfe8d5}
 .reglas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .regla{border:1px solid #d8e5eb;border-radius:18px;padding:20px;background:#fff}
 .regla:nth-child(2n){background:#faf9ff}
