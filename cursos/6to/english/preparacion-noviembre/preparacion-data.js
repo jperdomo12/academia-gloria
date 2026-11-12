@@ -896,6 +896,136 @@ export const ENGLISH_PREP_DATA = Object.freeze({
       ]
     }
   ],
+  "have": [
+    {
+      "id": "have-plural",
+      "title": "I · You · We · They → HAVE",
+      "explain": "Con I, you, we y they usamos have. Aquí significa «tener». You sirve para «tú» y «vosotros/ustedes».",
+      "examples": [
+        [
+          "I have a pencil.",
+          "Yo tengo un lápiz."
+        ],
+        [
+          "You have a book.",
+          "Tú tienes un libro."
+        ],
+        [
+          "We have two backpacks.",
+          "Nosotros tenemos dos mochilas."
+        ],
+        [
+          "You have new notebooks.",
+          "Vosotros tenéis cuadernos nuevos."
+        ],
+        [
+          "They have a dog.",
+          "Ellos tienen un perro."
+        ]
+      ]
+    },
+    {
+      "id": "have-singular",
+      "title": "He · She · It → HAS",
+      "explain": "Con he, she e it usamos has. Aquí también significa «tener». Has es un verbo, no un adjetivo.",
+      "examples": [
+        [
+          "He has a blue bag.",
+          "Él tiene una mochila azul."
+        ],
+        [
+          "She has brown eyes.",
+          "Ella tiene ojos marrones."
+        ],
+        [
+          "It has four legs.",
+          "Tiene cuatro patas (un animal)."
+        ]
+      ]
+    }
+  ],
+  "haveQuestions": [
+    [
+      "I ___ a red pencil.",
+      [
+        "has",
+        "have",
+        "am"
+      ],
+      1,
+      "Con I se usa have: I have a red pencil."
+    ],
+    [
+      "You ___ a new notebook.",
+      [
+        "have",
+        "has",
+        "is"
+      ],
+      0,
+      "Con you se usa have: You have a new notebook."
+    ],
+    [
+      "He ___ a blue backpack.",
+      [
+        "have",
+        "is",
+        "has"
+      ],
+      2,
+      "Con he se usa has: He has a blue backpack."
+    ],
+    [
+      "She ___ brown eyes.",
+      [
+        "has",
+        "have",
+        "are"
+      ],
+      0,
+      "Con she se usa has: She has brown eyes."
+    ],
+    [
+      "It ___ four legs.",
+      [
+        "have",
+        "has",
+        "am"
+      ],
+      1,
+      "Con it se usa has: It has four legs."
+    ],
+    [
+      "We ___ English books.",
+      [
+        "has",
+        "are",
+        "have"
+      ],
+      2,
+      "Con we se usa have: We have English books."
+    ],
+    [
+      "You ___ two teachers.",
+      [
+        "has",
+        "have",
+        "is"
+      ],
+      1,
+      "Con you (vosotros/ustedes) se usa have: You have two teachers."
+    ],
+    [
+      "They ___ orange pumpkins.",
+      [
+        "have",
+        "has",
+        "are"
+      ],
+      0,
+      "Con they se usa have: They have orange pumpkins."
+    ]
+  ],
   "grammarQuestions": [
     [
       "I ___ eleven years old.",
