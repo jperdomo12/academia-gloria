@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial propuesta** | `docs/specifications/SPEC-LENGUA_6TO_PREPARACION_EXAMENES_NOV2026.md` |
-| **Versión** | 1.1 |
-| **Estado** | Implementado en rama · pendiente de aprobación del diff y publicación |
+| **Versión** | 1.2 |
+| **Estado** | Publicado para validación familiar · no declarado estable |
 | **Fecha** | 13/11/2026 |
 | **Propietario** | Contenido curricular de Lengua · 6.º |
 | **Responsables** | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.2 | 13/11/2026 | Product Owner + AI Collaborator | #253 aprobada, integrada y publicada; Pages #862 verificada. Validación familiar pendiente. |
 | 1.1 | 13/11/2026 | Product Owner + AI Collaborator | Implementación candidata de ambos recorridos con actividad formativa de formas no personales y reutilización de nueve destinos. No integrada ni publicada. |
 | 1.0 | 13/11/2026 | Product Owner + AI Collaborator | El Product Owner aprueba continuar con la preparación de los exámenes de 16/11 y 18/11 y la incorporación funcional de la ficha escolar «Plan semanal Lengua · Adaptación significativa · Formas no personales». Se documenta cobertura trazable de cuatro actividades, reutilización del Tema de Verbos, fidelidad escolar y límites de publicación. Aprobado como especificación; el recurso aún no está implementado. |
 | 1.0-rc1 | 13/11/2026 | Product Owner + AI Collaborator | Primera especificación funcional candidata. El Product Owner acepta la dirección «Me preparo para Lengua», con dos evaluaciones próximas y reutilización de contenidos existentes. Se concreta un alcance mínimo para revisión antes de desarrollo. No está implementado. |
@@ -58,7 +59,7 @@ Estas fechas y descripciones proceden de la planificación familiar abordada en 
 
 **Decisión de dirección funcional:** ofrecer «Me preparo para Lengua» como recurso específico de estos exámenes, enlazando lo que ya existe.
 
-**Implementado en rama:** acceso, recorridos y práctica complementaria; ver §11.
+**Publicado:** acceso, recorridos y práctica complementaria; ver §11.
 
 ## 2. Fuentes y cobertura verificadas en `main`
 
@@ -203,14 +204,14 @@ Evitar navegación obligatoria por todos los recursos: permitir repasar el foco 
 |---|---|
 | Necesidad y dirección | **Aprobada por el Product Owner:** preparación centralizada «Me preparo para Lengua» para dos exámenes y ficha escolar de formas no personales; el PDF original no se publica. |
 | Especificación detallada | **Aprobada para documentar oficialmente:** versión 1.0; criterios verificables y fidelidad a la nueva fuente; cualquier cambio sustantivo posterior requerirá nueva revisión. |
-| Implementación | Candidata técnica en `feat/lengua-preparacion-noviembre`, pendiente de aprobación. No integrada ni publicada. |
+| Implementación | Publicado mediante #253; pendiente validación familiar. |
 | Arquitectura | Reutilización de portales, actividades y enlaces existentes; sin nuevas persistencias ni Temas permanentes. |
 | Fuente pendiente | Tipos exactos de expresión escrita y formato de examen escolar; nueva ficha de formas no personales recibida y analizada, sin formato de examen confirmado. |
 | Flujo | Aprobación funcional recibida → integración documental en `main` → desarrollo separado → validación técnica y familiar → publicación/cierre. |
 
 **Mantenimiento:** actualizar solo al recibirse nueva información académica que cambie materialmente el alcance o cuando DESA implemente y valide, sin duplicar el conocimiento de Verbos o de los estándares existentes.
 
-## 11. Implementación candidata y trazabilidad
+## 11. Implementación y trazabilidad
 
 Base `bc88a1c` (PR documental #252), rama `feat/lengua-preparacion-noviembre`. Acceso prioritario desde Lengua 6.º, separado del catálogo y de Gaudem. Dos tarjetas fechadas, con retorno al examen elegido mediante navegación estándar y Persona Activa. Nueve destinos existentes; sin cambios en Temas, registros, Firebase ni páginas de 5.º.
 
@@ -218,6 +219,10 @@ Se revisaron las dos páginas del PDF privado (texto y representación visual). 
 
 El 16/11, guía para elegir, planificar, escribir y revisar en papel. El 18/11, seis preguntas formativas de comprensión y gramática, una a la vez, con relectura, ayuda opcional y reintento. Estado en memoria y sin nuevas escrituras en modo normal o Vista previa. No hay nota ni simulacro oficial. No se ha confirmado el tipo exacto de redacción ni el formato del examen.
 
-Archivos: portal `cursos/6to/lengua/index.html`; HTML, CSS y controlador local en `cursos/6to/lengua/preparacion-noviembre/`; regresión de navegador `tests/lengua-preparacion-noviembre-browser.cjs`; esta SPEC y HandOff. Validación técnica con identidad, SDK y voz controlados; no acredita cuentas reales ni escucha en el dispositivo familiar. Pendientes aprobación del diff, integración/publicación y uso real con Gloria.
+Archivos: portal `cursos/6to/lengua/index.html`; HTML, CSS y controlador local en `cursos/6to/lengua/preparacion-noviembre/`; regresión de navegador `tests/lengua-preparacion-noviembre-browser.cjs`; esta SPEC y HandOff. Validación técnica con identidad, SDK y voz controlados; no acredita cuentas reales ni escucha en el dispositivo familiar. Pendiente uso real con Gloria.
 
 **Resultado técnico:** `tests/lengua-preparacion-noviembre-browser.cjs` superada: fechas, cuatro tareas, relectura, pistas, reintento, lector/error/no disponible, foco, teclado, nueve destinos con retorno al examen y Persona Activa, cero escrituras educativas en práctica y Vista previa, 320/390/1280/1440 px y sin excepciones JS. Tabla revisada visualmente con Outfit. En rutas heredadas hubo avisos de recursos externos no cargados en QA. La suite amplia `tests/verbos-browser.cjs` falla en la aserción de Refuerzos de la línea 103 tanto en la candidata como en `main` (`bc88a1c`), sin cambios en Refuerzos ni en los motores académicos.
+
+### Cierre técnico
+
+[PR #253](https://github.com/jperdomo12/academia-gloria/pull/253) aprobada por el Product Owner e integrada en `933cfbef4c24fc8503f8c5c1e379bb11ee90b70b`. [Pages #862](https://github.com/jperdomo12/academia-gloria/actions/runs/43500901649) success; portal y tres archivos de preparación HTTP 200, idénticos al árbol probado. Pendiente validar comprensión, navegación, voz y autonomía con Gloria en cuenta/dispositivo reales.
