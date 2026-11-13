@@ -1,0 +1,44 @@
+.preparacion-lengua{--tinta:#352b35;--principal:#773d36;--borde:#e4d3d0;--fondo:#fff6f0;max-width:1080px;width:calc(100% - 24px);margin:22px auto 48px;color:var(--tinta);font:1rem/1.55 Outfit,system-ui,sans-serif}
+.preparacion-lengua *{box-sizing:border-box}
+.preparacion-lengua [hidden]{display:none!important}
+.preparacion-lengua .cabecera,.preparacion-lengua .panel{background:white;border:1px solid var(--borde);border-radius:22px;padding:clamp(16px,3.4vw,34px);margin-bottom:16px}
+.preparacion-lengua .cabecera{background:linear-gradient(125deg,#fff,#fbe8de)}
+.preparacion-lengua h1{font-size:clamp(2rem,6vw,3.5rem);line-height:1.08}
+.preparacion-lengua h1,.preparacion-lengua h2,.preparacion-lengua h3,.preparacion-lengua h4,.preparacion-lengua h5,.preparacion-lengua p{margin:0 0 .65rem;overflow-wrap:anywhere}
+.preparacion-lengua h4,.preparacion-lengua h5{font-size:1.1rem}
+.preparacion-lengua .ceja,.examenes time{font-size:.85rem;font-weight:800;letter-spacing:.045em;color:var(--principal)}
+.examenes,.preparacion-lengua .enlaces{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;margin:0 0 18px}
+.examenes a,.preparacion-lengua .enlaces a{display:grid;gap:4px;padding:14px 16px;border:1px solid var(--borde);border-radius:14px;background:white;color:var(--principal);text-decoration:none;font-weight:650}
+.examenes a{padding:20px;background:var(--fondo)}.examenes strong{font-size:1.3rem}
+.examenes [aria-current]{border-color:var(--principal);box-shadow:inset 0 0 0 1px var(--principal)}
+.preparacion-lengua a{color:var(--principal);text-underline-offset:3px}
+.preparacion-lengua :focus-visible{outline:3px solid #774c12;outline-offset:3px}
+.preparacion-lengua [data-recorrido],.preparacion-lengua #lectura{scroll-margin-top:6rem}
+.preparacion-lengua .pasos{padding-inline-start:1.35rem;margin:14px 0}
+.preparacion-lengua .pasos>li{padding:10px 0 15px;border-bottom:1px solid var(--borde)}
+.preparacion-lengua .pasos>li::marker{color:var(--principal);font-weight:800}
+.preparacion-lengua .ficha,.preparacion-lengua .repaso{border:1px solid var(--borde);border-radius:16px;background:#fffaf7;padding:clamp(10px,2vw,20px);margin:16px 0}
+.preparacion-lengua .lectura{background:white;border-left:4px solid #a86051;padding:12px 14px;margin:12px 0;max-width:70ch}
+.preparacion-lengua .pregunta{background:white;border:1px solid var(--borde);border-radius:12px;padding:12px;margin:10px 0}
+.preparacion-lengua fieldset{margin:0;padding:0;border:0;min-width:0}
+.preparacion-lengua legend{font-weight:800;max-width:100%}
+.preparacion-lengua .pregunta label,.preparacion-lengua .lista label{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 0}
+.preparacion-lengua input[type=radio],.preparacion-lengua input[type=checkbox]{accent-color:var(--principal);flex:none;width:18px;height:18px}
+.preparacion-lengua button{font:inherit;font-weight:750;color:white;background:var(--principal);border:0;border-radius:10px;min-height:44px;padding:8px 14px;cursor:pointer;max-width:100%}
+.preparacion-lengua button:disabled{cursor:default;background:#e7dbd8;color:#564946}
+.preparacion-lengua summary{min-height:44px;padding:10px 0;font-weight:700;cursor:pointer}
+.preparacion-lengua .acciones{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.preparacion-lengua table{width:100%;table-layout:fixed;border-collapse:collapse;background:white;margin:8px 0 12px;color:#171717}
+.preparacion-lengua caption{text-align:left;font-weight:750;margin-bottom:4px}
+.preparacion-lengua th,.preparacion-lengua td{padding:6px;border:1px solid #a99c99;text-align:left;overflow-wrap:anywhere;vertical-align:top}
+.preparacion-lengua th{background:#f8efeb}
+.preparacion-lengua .encontrada{color:#164996;background:#eaf2ff}
+.preparacion-lengua td small{display:block}
+.preparacion-lengua .tabla-practica label{display:block;font-size:.82rem}
+.preparacion-lengua input[type=text]{display:block;width:100%;min-width:0;min-height:44px;color:#171717;background:#fff;border:1px solid #746460;border-radius:6px;font:inherit;padding:4px}
+.preparacion-lengua input[aria-invalid=true]{border:2px solid #9d3429}
+.preparacion-lengua [role=status]:empty{display:none}
+.preparacion-lengua footer{margin:15px 0;color:#5e4850}
+@media(max-width:420px){.preparacion-lengua .pasos{padding-inline-start:1.1rem}.preparacion-lengua th,.preparacion-lengua td{padding:4px;font-size:.83rem}.preparacion-lengua .ficha{padding:8px}.preparacion-lengua .panel{padding:12px}}
+.preparacion-lengua .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:420px){.preparacion-lengua .tabla-practica input{font-size:.8rem;padding:3px}}

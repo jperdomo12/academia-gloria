@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#924e44">
+  <title>Me preparo para Lengua · Academia Gloria Valentina</title>
+  <link rel="icon" href="../../../../assets/iconos/icono-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="./preparacion.css">
+</head>
+<body data-page-title="Me preparo para Lengua" data-page-icon="✍️" data-nav-back="../index.html">
+<main class="preparacion-lengua">
+  <header class="cabecera">
+    <p class="ceja">6.º · Lengua · Noviembre de 2026</p>
+    <h1>Me preparo para Lengua</h1>
+    <p>Elige el examen que quieres preparar. Puedes cambiar de recorrido cuando quieras.</p>
+  </header>
+  <p id="estadoPreparacion" role="status">Preparando el contenido…</p>
+  <div id="recorridos" hidden>
+    <nav aria-label="Elige un examen" class="examenes">
+      <a href="#expresion"><time datetime="2026-11-16">Lunes · 16/11</time><strong>Expresión escrita</strong><span>Preparo mis ideas, escribo y reviso →</span></a>
+      <a href="#comprension"><time datetime="2026-11-18">Miércoles · 18/11</time><strong>Comprensión y gramática</strong><span>Leo, comprendo y reconozco las palabras →</span></a>
+    </nav>
+    <section id="expresion" class="panel" data-recorrido hidden>
+      <h2 tabindex="-1">16/11 · Expresión escrita</h2>
+      <p>Practica con un tipo de texto trabajado en clase. El tipo exacto del examen no está confirmado.</p>
+      <ol class="pasos">
+        <li><h3>Elijo el tipo de texto</h3>
+          <div class="enlaces">
+            <a data-recurso href="../../../5to/lengua/texto_comparativo.html">Texto comparativo · repaso de 5.º →</a>
+            <a data-recurso href="../../../5to/lengua/dialogo.html">El diálogo · repaso de 5.º →</a>
+            <a data-recurso href="../../../5to/lengua/tipos_oraciones.html">Apoyo opcional · Tipos de oraciones →</a>
+          </div>
+        </li>
+        <li><h3>Planifico</h3><p>¿Qué quiero contar? ¿A quién? ¿Qué idea va primero y cuál al final?</p>
+          <details><summary>Si escribo un texto comparativo</summary><p>Elige qué vas a comparar. Ordena semejanzas y diferencias siguiendo el mismo criterio.</p></details>
+          <details><summary>Si escribo un diálogo</summary><p>Decide quién habla, dónde y para qué. Ordena las intervenciones para que se entienda quién dice cada cosa.</p></details>
+          <details><summary>Si elijo otro tipo trabajado en clase</summary><p>Recuerda qué función cumple. Usa la estructura que practicaste para ese tipo de texto.</p></details>
+        </li>
+        <li><h3>Escribo en mi cuaderno</h3><p>Redacta tu texto con las ideas que acabas de ordenar. Puedes cambiar una frase mientras escribes.</p></li>
+        <li><h3>Reviso antes de entregar</h3><p>Marca lo que ya has comprobado en tu texto.</p>
+          <div class="lista">
+            <label><input type="checkbox"> Seguí la consigna y mi idea principal se entiende.</label>
+            <label><input type="checkbox"> Usé la estructura del tipo de texto y ordené las ideas.</label>
+            <label><input type="checkbox"> Las frases están completas y se conectan entre sí.</label>
+            <label><input type="checkbox"> Revisé ortografía, puntuación y letra legible.</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="comprension" class="panel" data-recorrido hidden>
+      <h2 tabindex="-1">18/11 · Comprensión lectora y gramática</h2>
+      <p>Empieza por la ficha escolar. Después puedes hacer el repaso breve o elegir un recurso concreto.</p>
+      <section class="ficha" aria-labelledby="tituloFicha">
+        <p class="ceja">Plan Semanal de Gaudem · Formas no personales</p>
+        <h3 id="tituloFicha">Practico con mi ficha escolar</h3>
+        <p>Ten a mano la ficha del bosque que recibiste del colegio. Aquí puedes practicar las mismas cuatro tareas con una <strong>lectura original de Academia</strong>.</p>
+        <ol class="pasos">
+          <li><h4>Leo</h4><p>Lee primero el texto de tu ficha escolar. Para practicar aquí, lee o escucha el texto siguiente.</p>
+            <div class="lectura" id="lectura">
+              <h5>El banco del patio</h5>
+              <p>Antes de abrir la biblioteca, Leo quiso mover el banco del patio a un lugar con sombra. Al levantar un extremo, encontró debajo un sobre mojado. Dentro había una nota: alguien había dibujado un pequeño plano del patio.</p>
+              <p>Leo fue siguiendo las flechas hasta una jardinera. Allí vio a su compañera regando una planta. Ella había preparado el plano para enseñar a los lectores dónde podían sentarse al aire libre.</p>
+              <p>En lugar de mover el banco, los dos decidieron colocar una silla cerca de la jardinera. Así podían aprovechar la sombra sin tapar el camino de entrada.</p>
+            </div>
+            <button type="button" id="escuchar">Escuchar lectura</button><p id="estadoVoz" role="status"></p>
+          </li>
+          <li><h4>Encuentro</h4><p>Localiza una forma de cada tipo en la lectura. Luego elige la forma que aparece en cada fragmento.</p>
+            <a href="#lectura" data-releer>Volver a leer el pasaje</a>
+            <div id="encuentro"></div>
+          </li>
+          <li><h4>Completo la tabla</h4>
+            <p>En el cuaderno, escribe en <strong class="encontrada">azul</strong> la forma encontrada en el texto y en <strong>negro</strong> sus otras dos formas. Practica aquí con tres filas de la lectura de Academia.</p>
+            <div class="tabla-marco">
+              <table>
+                <caption>Ejemplo de la ficha escolar</caption>
+                <thead><tr><th scope="col">Infinitivo</th><th scope="col">Gerundio</th><th scope="col">Participio</th></tr></thead>
+                <tbody><tr><td class="encontrada">caminar <small>Encontrada</small></td><td>caminando <small>Completada</small></td><td>caminado <small>Completada</small></td></tr></tbody>
+              </table>
+            </div>
+            <form id="tablaPractica" class="tabla-practica">
+              <div class="tabla-marco">
+                <table>
+                  <caption>Tres filas de práctica</caption>
+                  <thead><tr><th scope="col">Infinitivo</th><th scope="col">Gerundio</th><th scope="col">Participio</th></tr></thead>
+                  <tbody id="filasPractica"></tbody>
+                </table>
+              </div>
+              <button type="submit">Comprobar tabla</button>
+              <p id="estadoTabla" role="status"></p>
+            </form>
+          </li>
+          <li><h4>Escribo</h4>
+            <p>En el cuaderno, escribe <strong>3 infinitivos</strong> terminados en -ar, -er o -ir, <strong>3 gerundios</strong> terminados en -ando o -iendo y <strong>3 tiempos compuestos</strong> con haber conjugado y un participio en -ado o -ido.</p>
+            <p>«Preparado» es un participio; «había preparado» es una forma compuesta.</p>
+            <button type="button" id="mostrarEjemplos" aria-controls="ejemplos" aria-expanded="false">Ya lo intenté · Ver ejemplos</button>
+            <div id="ejemplos" hidden>
+              <p><strong>Infinitivos:</strong> mirar, aprender, compartir.</p>
+              <p><strong>Gerundios:</strong> mirando, aprendiendo, compartiendo.</p>
+              <p><strong>Tiempos compuestos:</strong> he mirado, hemos aprendido, habían compartido.</p>
+              <p>Compara tus ejemplos. Pueden ser distintos y estar bien.</p>
+            </div>
+          </li>
+        </ol>
+        <a data-recurso href="../el-verbo/">Recuperar la teoría · El verbo · Repaso de 5.º →</a>
+      </section>
+      <section class="repaso" aria-labelledby="tituloRepaso">
+        <h3 id="tituloRepaso">Repaso breve · Comprensión y gramática</h3>
+        <p>Usa «El banco del patio» para responder. Puedes releer y pedir una pista en cada pregunta.</p>
+        <a href="#lectura" data-releer>Volver a leer el pasaje</a>
+        <div id="repasoPreguntas"></div>
+      </section>
+      <section class="repaso" aria-labelledby="tituloRecursos">
+        <h3 id="tituloRecursos">Elijo qué repasar en Academia</h3>
+        <div class="enlaces">
+          <a data-recurso href="../../../5to/lengua/youtube_comprension.html">Comprensión lectora · apoyo de 5.º →</a>
+          <a data-recurso href="../../../5to/lengua/gramatica.html">Sustantivos y adjetivos · repaso básico de 5.º →</a>
+          <a data-recurso href="../el-verbo/">El verbo · Repaso de 5.º →</a>
+          <a data-recurso href="../indicativo-subjuntivo/">Indicativo y subjuntivo →</a>
+          <a data-recurso href="../subjuntivo-imperativo/">Subjuntivo e imperativo →</a>
+          <a data-recurso href="../../zonas/lenguizonas/gramatica-verbos/">Lengüizonas · Repaso opcional de verbos →</a>
+        </div>
+      </section>
+    </section>
+    <footer>Preparación formativa de Academia. No es un simulacro oficial y esta página no guarda tus respuestas.</footer>
+  </div>
+</main>
+<script src="../../../../compartido/js/navegacion.js"></script>
+<script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+<script type="module" src="./preparacion.js"></script>
+</body>
+</html>
