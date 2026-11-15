@@ -6,8 +6,9 @@ import { ENGLISH_PREP_DATA as DATA } from "./preparacion-data.js";
 const $ = id => document.getElementById(id);
 const TABS=["mapa","vocab","grammar","reading","practica"];
 const PER_PAGE=12;
+const PICTURE_VIEW="body-picture";
 const state={
-  tab:"mapa", groupId:"body", page:0, readingId:"read-halloween",
+  tab:"mapa", groupId:"body", picture:false, page:0, readingId:"read-halloween",
   challenge:null, done:0, current:0, solved:false, mistakes:0, hints:0, hintUsed:false,
   sourceTab:"practica", lastMode:"mixto", lastGroup:null, lastReading:null
 };
@@ -52,23 +53,67 @@ function initialise(){
     const option=node("option",group.icon+" "+group.title);
     option.value=group.id;
     groups.append(option);
+    if(group.id==="body"){
+      const picture=node("option","Body Parts · Picture");
+      picture.value=PICTURE_VIEW;groups.append(picture);
+    }
   }
   groups.value=state.groupId;
   for(const reading of DATA.readings){
     const option=node("option",reading.icon+" "+reading.title);option.value=reading.id;readings.append(option);
   }
   readings.value=state.readingId;
+  montarBodyPicture();
   showVocab();showGrammar();showReading();
   if(!disponible()){
     $("escucharGrupo").disabled=true;$("escucharLectura").disabled=true;$("escucharContexto").disabled=true;
   }
 }
+// Geometry only: each key resolves against the existing Body Parts bank.
+const pictureLabels=[
+  // [bank key, side, label baseline, target x, target y]
+  ["hair",0,56,272,70],["eye / eyes",0,113,278,137],["nose",0,168,298,154],
+  ["shoulder",0,235,247,244],["arm",0,312,225,315],["hand",0,414,205,446],
+  ["leg",0,545,267,547],["foot / feet",0,639,250,663],
+  ["head",1,74,344,92],["ear",1,132,356,150],["mouth",1,186,306,176],
+  ["chest",1,246,319,274],["elbow",1,355,382,348],["finger",1,462,388,480],
+  ["knee / knees",1,529,329,509],["toe",1,679,374,674]
+];
+
+function montarBodyPicture(){
+  const svg=(tag,attrs)=>{
+    const item=document.createElementNS("http://www.w3.org/2000/svg",tag);
+    for(const [key,value] of Object.entries(attrs))item.setAttribute(key,value);
+    return item;
+  };
+  const words=getGroup("body").words;
+  $("pictureCount").textContent=words.length;
+  for(const [key,side,y,x,tip] of pictureLabels){
+    const word=words.find(item=>item.en===key);
+    const label=word.en.split(" / ")[0];
+    const start=side?474:126;
+    const bend=side?443:157;
+    const line=svg("path",{d:`M ${start} ${y-8} H ${bend} L ${x} ${tip}`,"marker-end":"url(#pictureArrow)"});
+    const text=svg("text",{x:side?480:120,y,"text-anchor":side?"start":"end",lang:"en-GB"});
+    text.textContent=label;
+    $("pictureLabels").append(line,text);
+    const li=node("li");
+    const en=node("strong",label);en.lang="en-GB";
+    li.append(en,` · ${word.es}`);
+    $("pictureWords").append(li);
+  }
+}
+
 function showVocab(){
   const group=getGroup(state.groupId);
   const pageMax=Math.max(1,Math.ceil(group.words.length/PER_PAGE));
   state.page=Math.min(Math.max(0,state.page),pageMax-1);
   $("grupoMeta").textContent=group.icon+" "+group.title+" · páginas del PDF: "+group.pages+(group.priority==="alta"?" · prioridad para Reading":" · repaso");
   $("grupoCuenta").textContent=group.words.length+" palabras";
+  $("bodyPicture").hidden=!state.picture;
+  $("vocabTarjetas").hidden=state.picture;
+  $("escucharGrupo").hidden=state.picture;
+  if(state.picture)return;
   const wrapper=$("tarjetasVocab");
   wrapper.replaceChildren();
   group.words.slice(state.page*PER_PAGE,state.page*PER_PAGE+PER_PAGE).forEach(word=>{
@@ -278,7 +323,31 @@ function validation(){
 }
 document.querySelectorAll("[data-tab]").forEach(button=>button.addEventListener("click",()=>showTab(button.dataset.tab)));
 document.querySelectorAll("[data-ir]").forEach(button=>button.addEventListener("click",()=>showTab(button.dataset.ir)));
-$("grupoVocab").addEventListener("change",event=>{state.groupId=event.target.value;state.page=0;showVocab();});
+$("grupoVocab").addEventListener("change",event=>{
+  const value=event.target.value;
+  const picture=value===PICTURE_VIEW;
+  const groupId=picture?"body":value;
+  if(state.groupId!==groupId || (!picture && !state.picture))state.page=0;
+  detener();
+  state.groupId=groupId;
+  state.picture=picture;
+  showVocab();
+});
+$("volverTarjetas").addEventListener("click",()=>{
+  $("grupoVocab").value="body";
+  $("grupoVocab").dispatchEvent(new Event("change"));
+  $("grupoVocab").focus();
+});
+$("ampliarPicture").addEventListener("click",event=>{
+  const btn=event.currentTarget;
+  const ampliar=btn.getAttribute("aria-pressed")!=="true";
+  btn.setAttribute("aria-pressed",String(ampliar));
+  btn.textContent=ampliar?"Ajustar a pantalla":"Ampliar lámina";
+  $("pictureViewport").classList.toggle("ampliada",ampliar);
+  $("pictureViewport").tabIndex=ampliar?0:-1;
+  $("moverPicture").hidden=!ampliar;
+  if(!ampliar)$("pictureViewport").scrollLeft=0;
+});
 $("anteriorVocab").addEventListener("click",()=>{state.page--;showVocab();});
 $("siguienteVocab").addEventListener("click",()=>{state.page++;showVocab();});
 $("tarjetasVocab").addEventListener("click",event=>{

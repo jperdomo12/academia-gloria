@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ACADEMIA_GLORIA_HANDOFF_PLANTILLA.md` |
-| **Versión** | 3.76 |
+| **Versión** | 3.77 |
 | **Estado** | Activo · Fase de uso prioritario 2026–2027 |
 | **Fecha de origen** | 03/09/2026 |
 | **Última actualización** | 15/11/2026 |
@@ -31,6 +31,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 3.77 | 15/11/2026 | Product Owner + AI Collaborator | Body Parts · Picture implementada y validada en rama. Pendiente de aprobar la PR de desarrollo; no integrada ni publicada. |
 | 3.76 | 15/11/2026 | Product Owner + AI Collaborator | English 6.º: aprobada mejora visual «Body Parts · Picture» en el selector «Elige un grupo» de `Me preparo para English → Vocabulary`. SPEC English preparación v1.3: lámina original estática con etiquetas inglesas legibles de partes del cuerpo; conserva grupo Body Parts (31 entradas), audio y reto actual de 8 preguntas; no crea séptimo grupo, motor, Tema ni persistencia. **Documentada y pendiente de desarrollo en ACADEMIA-DESA**, antes del Reading del 17/11 si es viable; prueba con Gloria/dispositivo familiar pendiente. |
 | 3.75 | 13/11/2026 | Product Owner + AI Collaborator | #253 publicada y verificada en Pages #862; preparación de Lengua para 16/11 y 18/11 lista para prueba familiar. |
 | 3.74 | 13/11/2026 | Product Owner + AI Collaborator | Candidata de preparación de Lengua 16 y 18/11: dos recorridos, ficha formativa de formas no personales y enlaces de 5.º/6.º. Pendiente aprobación del diff; no integrada ni publicada. |
@@ -501,7 +502,7 @@ Desde `main` `c57f180` (#241), rama `feat/mates-potencias`. Tema permanente `cur
 
 ## ▶️ 13. Siguiente paso exacto
 
-**English · Body Parts (17/11):** SPEC `docs/specifications/SPEC-ENGLISH_6TO_PREPARACION_PRUEBAS_NOV2026.md` v1.3 aprueba lámina original «Body Parts · Picture» dentro de `Elige un grupo` en Vocabulary. Tras integrar la PR documental, derivar a **ACADEMIA-DESA** para implementar visualización estática del cuerpo con etiquetas; conservar las 31 palabras, audio, el reto de ocho preguntas y los seis grupos. Validar accesibilidad/navegación en móvil y ordenador y uso familiar; **la mejora todavía no está implementada**.
+**English · Body Parts (17/11):** candidata en `feat/body-parts-picture` desde #255; SPEC English preparación 1.4. Lámina original de 16 etiquetas con ampliación, alternativa textual y regreso a las 31 tarjetas. Se conservan seis grupos, audio y reto de ocho preguntas. Pruebas técnicas superadas. Pendiente aprobación, integración, Pages y uso familiar; prioridad antes del 17/11.
 
 **Prioridad inmediata · Lengua 16 y 18/11:** [PR #253](https://github.com/jperdomo12/academia-gloria/pull/253) aprobada por el Product Owner e integrada en `933cfbef4c24fc8503f8c5c1e379bb11ee90b70b`. [Pages #862](https://github.com/jperdomo12/academia-gloria/actions/runs/43500901649) success; portal y tres archivos de preparación HTTP 200, idénticos al árbol probado. SPEC 1.2 §11. Incluye los dos recorridos y las cuatro tareas de formas no personales con texto original de Academia. No se publica el PDF ni el pasaje escolar. Siguiente paso: probar con Gloria en su cuenta y dispositivo reales. Se conservan los demás pendientes.
 
@@ -553,7 +554,7 @@ Sociales 6.º aprobada e integrada mediante #198, publicada por Pages #807 y ver
 | Campo | Valor |
 |---|---|
 | **Estado** | ✅ Activo |
-| **Versión** | 3.76 |
+| **Versión** | 3.77 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Trabajo On going** | Lengua 16 y 18/11: preparación «Me preparo para Lengua» aprobada en SPEC 1.0, pendiente desarrollo; fuente real Plan Semanal Formas no personales recibida y analizada. No publicar escaneo ni confundir prueba escolar con la ficha. **English 17/11:** preparación Reading & Grammar publicada (#248, Pages #43034008253 success), prioridad Body Parts/Halloween/To be/Reading + Temas existentes de Present Simple y cuantificadores. Refuerzo have/has afirmativo incorporado por PR #251 sin ficha específica del colegio; pendiente comprobar en cuenta/dispositivo real; Listening/Writing del 23/11 pendiente de formato. Preparación de problemas 26/11 (fecha corregida por Pilar; recurso aún rotulado 19/11): integrada y publicada (#245/#246), fichas Gaudem y variantes; validación con Gloria pendiente. Numeración del examen confirmada hasta 99.999, cubierta por Números hasta 100 000; contrastar el resto del contenido con papel individualizado. Ampliación Semillas #238/Pages #847 publicada/verificada con plantilla 004 aprobada; sin trabajo técnico pendiente y prueba familiar ampliada pendiente.  V1 Misiones/Semillas con situación opcional #231/Pages #840 publicada/verificada, SPEC 2.8; sin desarrollo pendiente, uso familiar pendiente. Fase A Semillas multi-escenario #225/Pages #834 publicada/verificada (SPEC 1.2); sin desarrollo pendiente, uso con Gloria y dispositivos/cuentas reales pendientes. RAP Studio #221 publicada/verificada (SPEC hija 1.8/principal 1.17): sin desarrollo pendiente, escucha humana obligatoria antes de uso real y timestamps pendientes. Matemáticas/Números hasta 100 000 publicada/verificada (#212/Pages #821, SPEC 1.2), sin desarrollo pendiente; uso familiar pendiente. RAP Team #209/Pages #818 publicado/verificado (SPEC 1.9): frase junto al audio, sin desarrollo/integración/publicación pendiente; escucha humana y uso del trío pendientes. English RAP publicado y verificado (#201/Pages #810), sin desarrollo pendiente; uso real pendiente. Sociales 6.º publicada (SPEC 1.2, #198, Pages #807), sin desarrollo pendiente; uso real pendiente. Plan Semanal y ajuste de respuestas publicados mediante #190/#192 para revisión familiar; sin desarrollo pendiente. Corrección de pirámide incorporada mediante #187. Science/Nutrición incorporada mediante #185; prueba de uso real con Gloria pendiente. Descubre/Orientación cerrado mediante #183, sin cambios funcionales. Monitor Gaudem 1.7-rc1 cerrado: #181 integrada y ciclo real completo validado; sin desarrollo ni pruebas inmediatas pendientes. English → Much/Many incorporado mediante #174, pendiente de uso real. Lengua → tres Temas por documento incorporados mediante #176; prueba de uso real con Gloria pendiente. Consulta profesional, Semilla 012 y Dictado conservan pruebas pendientes |
 | **PR On going** | Sin PR de producto pendiente: #242 Potencias integrada/publicada y verificada, Pages #851; uso familiar pendiente.  [PR #238](https://github.com/jperdomo12/academia-gloria/pull/238) integrada/publicada y verificada, Pages #847; prueba familiar ampliada pendiente. Anteriores cierres: V1 Misiones/Semillas #231 integrada/publicada; Semillas multi-escenario #225 integrada/publicada; RAP Studio #221/#219/#217/#215 integrada/publicada; voces/proveedor real y revisión perceptiva/uso pendientes. Números #212/#213, RAP #209 y demás pendientes conservados |

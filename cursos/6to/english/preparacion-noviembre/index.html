@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
   <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
   <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
-  <link rel="stylesheet" href="./preparacion.css">
+  <link rel="stylesheet" href="./preparacion.css?v=picture">
 </head>
 <body data-page-title="Me preparo para English" data-page-icon="🇬🇧" data-nav-back="../index.html">
 <a href="#contenido" class="saltar">Ir al contenido</a>
@@ -69,12 +69,50 @@
       <button id="escucharGrupo" class="btn subtle" type="button">🔊 Escuchar algunas palabras</button>
       <button id="retoGrupo" class="btn primary" type="button">🌱 Practicar este grupo</button>
     </div>
+    <div id="vocabTarjetas">
     <div id="tarjetasVocab" class="vocab-grid" aria-live="polite"></div>
     <div class="paginador">
       <button id="anteriorVocab" type="button" class="btn subtle">← Anterior</button>
       <span id="paginaVocab" aria-live="polite"></span>
       <button id="siguienteVocab" type="button" class="btn subtle">Más palabras →</button>
     </div>
+    </div>
+    <section id="bodyPicture" class="body-picture" aria-labelledby="pictureTitle" hidden>
+      <h3 id="pictureTitle" lang="en-GB">Body Parts · Picture</h3>
+      <p>Las <strong id="pictureCount"></strong> palabras están en Body Parts.</p>
+      <div class="estudio-ayudas">
+        <button id="volverTarjetas" class="btn primary" type="button">Ver tarjetas de Body Parts</button>
+        <button id="ampliarPicture" class="btn subtle" type="button" aria-pressed="false" aria-controls="pictureViewport">Ampliar lámina</button>
+      </div>
+      <p id="moverPicture" hidden>Desliza a los lados o usa las flechas del teclado dentro de la lámina.</p>
+      <figure class="picture-figure">
+        <div id="pictureViewport" class="picture-viewport" role="region" aria-label="Lámina del cuerpo humano">
+          <svg viewBox="0 0 600 715" role="img" aria-labelledby="pictureTitle" aria-describedby="pictureDescription" xmlns="http://www.w3.org/2000/svg">
+            <desc id="pictureDescription">Figura de frente. Las flechas unen las etiquetas con las partes ilustradas. La lista debajo da las palabras y su traducción.</desc>
+            <defs><marker id="pictureArrow" viewBox="0 0 10 10" markerWidth="6" markerHeight="6" refX="9" refY="5" orient="auto"><path d="M 0 1 L 9 5 L 0 9 Z" fill="#315c6a"/></marker></defs>
+            <rect x="0" y="0" width="600" height="715" rx="24" fill="#f1f8f9"/>
+            <ellipse cx="300" cy="688" rx="99" ry="13" fill="#d8e8ea"/>
+            <g stroke="#634f48" stroke-width="2.5" stroke-linejoin="round">
+              <path d="M272 394 L258 504 L247 632 Q227 650 223 670 Q221 686 248 686 L276 685 L289 508 L301 431 L311 508 L324 685 L352 686 Q379 686 377 670 Q373 650 353 632 L342 504 L328 394Z" fill="#ddb597"/>
+              <path d="M244 639 Q258 651 279 644 L277 679 Q272 690 243 687 Q213 687 220 672 Q228 655 244 639 Z M356 639 Q342 651 321 644 L323 679 Q328 690 357 687 Q387 687 380 672 Q372 655 356 639 Z" fill="#ddb597"/>
+              <path d="M226 668 Q238 661 250 668 M224 674 Q236 668 247 674 M374 668 Q362 661 350 668 M376 674 Q364 668 353 674" fill="none" stroke-linecap="round"/>
+              <path d="M248 240 Q225 244 220 269 L208 347 L196 421 Q188 433 190 455 L195 480 Q199 486 204 480 L204 461 L210 487 Q214 492 218 486 L214 455 Q226 466 229 461 Q230 456 220 439 L223 423 L239 351 L254 275 Z M352 240 Q375 244 380 269 L392 347 L404 421 Q412 433 410 455 L405 480 Q401 486 396 480 L396 461 L390 487 Q386 492 382 486 L386 455 Q374 466 371 461 Q370 456 380 439 L377 423 L361 351 L346 275 Z" fill="#ddb597"/>
+              <path d="M281 192 H319 V236 H281Z" fill="#ddb597"/>
+              <path d="M281 221 Q260 222 235 240 L220 274 L247 286 L256 273 L263 383 Q299 398 337 383 L344 273 L353 286 L380 274 L365 240 Q340 222 319 221 Q300 242 281 221Z" fill="#367d83" stroke="#265b67"/>
+              <path d="M263 383 Q300 391 337 383 L351 475 Q335 486 314 479 L301 433 L286 479 Q265 486 249 475Z" fill="#374e67" stroke="#314457"/>
+              <ellipse cx="249" cy="150" rx="12" ry="17" fill="#ddb597"/><ellipse cx="351" cy="150" rx="12" ry="17" fill="#ddb597"/>
+              <path d="M248 121 Q248 72 300 68 Q352 71 352 121 L349 158 Q342 201 300 209 Q258 201 251 158Z" fill="#eac3a5"/>
+              <path d="M247 135 Q232 98 249 71 Q261 50 298 49 Q344 46 356 77 Q363 96 352 131 L340 109 Q304 113 279 87 Q271 108 248 120 Z" fill="#443839"/>
+              <path d="M268 128 Q276 122 286 127 M314 127 Q324 122 332 128 M300 139 L295 155 L302 156 M288 175 Q300 182 312 175" fill="none" stroke-linecap="round"/>
+              <ellipse cx="278" cy="137" rx="3.5" ry="5" fill="#443839"/><ellipse cx="322" cy="137" rx="3.5" ry="5" fill="#443839"/>
+            </g>
+            <g id="pictureLabels"></g>
+          </svg>
+        </div>
+        <figcaption>Ilustración original de Academia. Vocabulario del grupo Body Parts, basado en las fichas de Gaudem.</figcaption>
+      </figure>
+      <details class="picture-equivalent"><summary>Lista de partes ilustradas y traducción</summary><ul id="pictureWords"></ul></details>
+    </section>
     <p class="pie-pequeno">Las ilustraciones son apoyos semánticos de Academia, no copias del libro. Consulta las fichas físicas para estudiar también sus dibujos originales.</p>
   </section>
 
@@ -166,6 +204,6 @@
 </main>
 <script src="../../../../compartido/js/navegacion.js"></script>
 <script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
-<script type="module" src="./preparacion.js"></script>
+<script type="module" src="./preparacion.js?v=picture"></script>
 </body>
 </html>
