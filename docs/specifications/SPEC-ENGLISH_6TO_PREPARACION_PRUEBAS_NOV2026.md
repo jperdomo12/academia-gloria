@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | docs/specifications/SPEC-ENGLISH_6TO_PREPARACION_PRUEBAS_NOV2026.md |
-| Versión | 1.3 |
-| Estado | Publicada para validación familiar · mejora visual Body Parts aprobada para DESA, aún no implementada |
+| Versión | 1.4 |
+| Estado | Publicada para validación familiar · lámina Body Parts implementada en rama, pendiente de aprobación e integración |
 | Fecha | 15/11/2026 |
 | Decisión | Product Owner aprueba preparación del 17/11, refuerzo *have/has* y, el 15/11, una lámina visual original «Body Parts · Picture» como opción de presentación en el selector «Elige un grupo»; Listening/Writing del 23/11 permanece posterior. |
 
@@ -13,6 +13,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---|---|
+| 1.4 | 15/11/2026 | Candidata técnica: lámina SVG original de 16 partes, ampliación y alternativa textual. Conserva el banco y el reto. Pendiente de aprobación y publicación. |
 | 1.3 | 15/11/2026 | Aprobada mejora funcional «Body Parts · Picture» dentro de Vocabulary: lámina original del cuerpo, etiquetas inglesas tomadas del banco existente, acceso desde «Elige un grupo» sin crear nuevo grupo de datos, reutilizando reto/audio. Únicamente documentada; implementación y validación quedan pendientes en ACADEMIA-DESA. |
 | 1.2 | 12/11/2026 | Refuerzo solicitado de *have/has* en presente como verbo principal («tener»), con ocho ejemplos y ocho ejercicios, añadido a Grammar sin nuevo Tema ni cambios en la persistencia. Siete tests de contrato comprobados en V8 con el código de la rama; validación de navegador/cuenta familiar pendiente. |
 | 1.1 | 11/11/2026 | PR #248 integrada en main (merge 1bd319124facb1b862903ee88f790f724b844700); Pages #43034008253 completado con éxito; prueba familiar y navegador real pendientes. |
@@ -73,7 +74,7 @@ Se mantiene **fuera del catálogo de Temas permanentes** porque es un recurso te
 
 **Regla pedagógica:** Miro o escucho → Comprendo → Elijo → Compruebo. Una pregunta principal por paso, sin cronómetro ni premios por rapidez, pistas voluntarias y feedback conceptual tras acertar. Reintentos sin penalización y lectura de textos en voz alta.
 
-### 3.1. Mejora aprobada · Body Parts · Picture (pendiente de desarrollo)
+### 3.1. Mejora aprobada · Body Parts · Picture (candidata de implementación)
 
 **Necesidad real:** reforzar visualmente la localización y asociación de partes del cuerpo de cara al Reading del 17/11. El vocabulario de **Body Parts** (31 entradas con traducción, emojis y audio) ya existe; **no** existe en el recurso actual una lámina anatómica completa con etiquetas.
 
@@ -91,7 +92,7 @@ Se mantiene **fuera del catálogo de Temas permanentes** porque es un recurso te
 
 **Fuera de alcance:** añadir ejercicios nuevos, representar las 31 palabras en una sola ilustración, interactividad por regiones del cuerpo, identificación de imágenes mediante IA, rediseñar todo Vocabulary o sustituir las tarjetas actuales.
 
-**Validación familiar pendiente:** verificación visual en escritorio y móvil, legibilidad de etiquetas, entrada/retorno por «Elige un grupo», acceso a 31 tarjetas y reto de 8 preguntas sin regresiones de los otros grupos. No declarar esta mejora implementada ni estable hasta su PR de DESA y prueba real.
+**Validación familiar pendiente:** verificación visual en escritorio y móvil, legibilidad de etiquetas, entrada/retorno por «Elige un grupo», acceso a 31 tarjetas y reto de 8 preguntas sin regresiones de los otros grupos. No declarar esta mejora publicada ni estable hasta su integración, verificación en Pages y prueba real.
 
 ## 4. Arquitectura y contratos
 
@@ -123,3 +124,9 @@ Reutilizar vocabulario, lectura y gramática como base para Listening y Writing.
 ## 7. Estado de implementación
 
 Implementación integrada en main mediante [PR #248](https://github.com/jperdomo12/academia-gloria/pull/248), merge 1bd319124facb1b862903ee88f790f724b844700. Despliegue GitHub Pages [#43034008253](https://github.com/jperdomo12/academia-gloria/actions/runs/43034008253) finalizado con éxito. URL: https://jperdomo12.github.io/academia-gloria/cursos/6to/english/preparacion-noviembre/. No se ha ejecutado una prueba real completa de uso con navegador/cuenta de Gloria; tampoco se ha comprobado la lectura en voz alta en su dispositivo. La validación familiar es necesaria antes de declarar estabilidad. Listening/Writing de 23/11 sigue pendiente de material/formato; *have/has* básico ya tiene un refuerzo de Academia, sin asumir que el colegio requiere otras formas verbales. **Mejora aprobada del 15/11 · Body Parts · Picture:** solo diseño funcional, sin ilustración ni código integrado todavía; corresponde a ACADEMIA-DESA y requiere validación de legibilidad y funcionamiento real.
+
+### Validación de Body Parts · Picture
+
+Candidata `feat/body-parts-picture` desde #255. SVG original de Academia, con 16 etiquetas resueltas desde el banco de Body Parts y lista bilingüe como alternativa textual. Ampliación con desplazamiento accesible al teclado. La opción del selector mantiene `body` como grupo y conserva la página de tarjetas al alternar. Sin cambios al banco de 31 entradas, al lector, al reto de ocho preguntas ni a la persistencia.
+
+Siete pruebas de contrato y prueba Chromium de la vista, etiquetas, tarjetas/audio, ampliación/teclado, reto y otros cinco grupos, sin escrituras, 320/390/768/1280/1440 px. Revisión de la lámina renderizada con Outfit. Identidad, Firebase y voz controlados; pendientes aprobación de PR, publicación y prueba familiar real.
