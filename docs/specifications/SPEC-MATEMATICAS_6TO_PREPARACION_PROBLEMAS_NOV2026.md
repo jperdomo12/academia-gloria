@@ -7,8 +7,8 @@
 | Propietario | Contenido curricular Matemáticas · 6.º |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Refuerzo temporal de interpretación y resolución de problemas de Matemáticas de 6.º |
-| Versión | 1.3 |
-| Estado | Publicada para validación familiar · ampliación Paso 3 aprobada, pendiente de DESA |
+| Versión | 1.4 |
+| Estado | Ampliación Paso 3 implementada y validada en rama · pendiente aprobación de PR · no integrada ni publicada |
 | Fecha | 17/11/2026 |
 | Origen | Ficha escolar de cinco problemas y ampliación formativa aprobada por el Product Owner; examen confirmado el 26/11/2026 |
 
@@ -23,12 +23,13 @@
 
 ## Historial
 
-| Versión | Fecha | Cambios |
-|---|---|---|
-| 1.3 | 17/11/2026 | Prioridad pedagógica familiar: **comprensión y razonamiento matemático transversal** mediante práctica variada y ayudas voluntarias. En 20 problemas de 4 bloques se mantienen 2 comparaciones «menos que» cuyo final es suma, y se incorporan 2 «más que»: una pide el total y otra pide el dinero restante (**operación final resta**). Motor, preguntas, diagramas y pruebas deben distinguir relación y pregunta final; se preservan cinco Gaudem, contenido anterior y calidad. Solo documentación; pendiente DESA. |
-| 1.2 | 17/11/2026 | Product Owner aprueba subir de 10 a 20 los problemas originales del Paso 3, en cuatro bloques de cinco equilibrados (una familia por bloque), con contador global, selección sin repetición y calidad actual como mínimo. Se añaden contratos verificables, diez propuestas de enunciados originales y corrección de fecha del examen a 26/11. **Solo documentación; aún no implementado.** |
-| 1.1 | 11/11/2026 | PR #245: experiencia y banco de problemas; PR #246: visualización de doble y comparaciones. Pages #43028910917 y #43029670985 completados con éxito. Validación familiar pendiente. |
-| 1.0 | 11/11/2026 | Especificación aprobada y desarrollo inicial en rama. |
+| Versión | Fecha | Responsables | Cambios |
+|---|---|---|---|
+| 1.4 | 17/11/2026 | Product Owner + AI Collaborator | Implementación candidata del contrato v1.3: 20 originales, cuatro bloques sin repetición, progreso por problema completo y pausa/reanudación en memoria; relación más/menos y total/restante, unidad de libros y fecha 26/11. Nueve pruebas Node y navegador real superados; Gaudem y calentamiento conservados. Pendiente aprobación de PR; sin merge/Pages ni estabilidad familiar. |
+| 1.3 | 17/11/2026 | Product Owner + AI Collaborator | Prioridad pedagógica familiar: **comprensión y razonamiento matemático transversal** mediante práctica variada y ayudas voluntarias. En 20 problemas de 4 bloques se mantienen 2 comparaciones «menos que» cuyo final es suma, y se incorporan 2 «más que»: una pide el total y otra pide el dinero restante (**operación final resta**). Motor, preguntas, diagramas y pruebas deben distinguir relación y pregunta final; se preservan cinco Gaudem, contenido anterior y calidad. Solo documentación; pendiente DESA. |
+| 1.2 | 17/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba subir de 10 a 20 los problemas originales del Paso 3, en cuatro bloques de cinco equilibrados (una familia por bloque), con contador global, selección sin repetición y calidad actual como mínimo. Se añaden contratos verificables, diez propuestas de enunciados originales y corrección de fecha del examen a 26/11. **Solo documentación; aún no implementado.** |
+| 1.1 | 11/11/2026 | Product Owner + AI Collaborator | PR #245: experiencia y banco de problemas; PR #246: visualización de doble y comparaciones. Pages #43028910917 y #43029670985 completados con éxito. Validación familiar pendiente. |
+| 1.0 | 11/11/2026 | Product Owner + AI Collaborator | Especificación aprobada y desarrollo inicial en rama. |
 
 ## 🧭 Resumen de contenido
 
@@ -57,7 +58,7 @@ No se modifica el motor original de «Entender antes de calcular» ni el de «Pr
 
 **Comprendo → Relaciono → Calculo → Compruebo.**
 
-Se comienza con una interpretación explícita del enunciado, sin efectuar cálculos. Después se identifica la operación, se resuelve y se verifica la respuesta. En comparaciones de precio hay dos pasos: precio desconocido y total. En repartos se comprueban cociente y resto.
+Se comienza con una interpretación explícita del enunciado, sin efectuar cálculos. Después se identifica la operación, se resuelve y se verifica la respuesta. En comparaciones de precio hay dos cálculos: precio desconocido y respuesta final, que puede ser el total de ambos artículos o el dinero restante tras comprar únicamente el segundo. En repartos se comprueban cociente y resto.
 
 No se premia la rapidez, no se utiliza cronómetro, existen pistas voluntarias y reintentos sin penalización. El material responde a observaciones familiares de respuestas precipitadas y dificultades posibles con relaciones «más/menos que». No permite establecer diagnósticos.
 
@@ -95,9 +96,9 @@ Cinco problemas con enunciados, orden y cantidades de la hoja:
 El PDF completo no se publica y este contenido no se identifica como modelo oficial del examen.
 
 ### 3.3 Compruebo que puedo
-**Estado publicado antes de esta ampliación:** diez problemas originales de Academia, dos variantes de cada familia (doble, suma, reparto con resto, multiplicación de grupos y comparación aditiva con suma final). Cada ensayo elige al azar una por familia, sin memoria de qué variantes han salido antes.
+**Estado todavía publicado (antes de integrar esta candidata):** diez problemas originales de Academia, dos variantes de cada familia (doble, suma, reparto con resto, multiplicación de grupos y comparación aditiva con suma final). Cada ensayo elige al azar una por familia, sin memoria de qué variantes han salido antes.
 
-**Decisión funcional aprobada el 17/11:** ampliar a **20 problemas originales, cuatro por cada una de las cinco familias**, distribuidos en **cuatro bloques de cinco**, uno por familia y sin repetición hasta completar una vuelta. Esta decisión **todavía no está implementada**.
+**Decisión funcional aprobada el 17/11:** ampliar a **20 problemas originales, cuatro por cada una de las cinco familias**, distribuidos en **cuatro bloques de cinco**, uno por familia y sin repetición hasta completar una vuelta. Esta decisión está **implementada en la rama candidata**, pendiente de revisión y aprobación de su PR antes de integrar o publicar.
 
 ### 3.3.1. Selección por bloques y progreso
 
@@ -198,4 +199,26 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 ## 8. Estado
 
-**Estado actual de producto:** siguen publicados 5 problemas de Gaudem, **10** variantes originales y sesiones aleatorias de **5**; el recurso **todavía muestra 19/11**. La ampliación a 20 y la corrección visual al 26/11 **no están implementadas** y quedan a cargo de ACADEMIA-DESA. Implementación anterior integrada: PR #245 (merge 1d0406186aeaa957261d001b05f8e273d20af7f2) y PR #246 (merge 5001d7197005f4b710a9ac3f4bb3ebf682b4baa1). Publicación de Pages confirmada con éxito en ejecuciones #43028910917 y #43029670985. Se verificaron cálculos, diversidad del banco, sintaxis JS, rutas de DOM y equilibrio del CSS. Se incorporó una prueba Node estática, pero no se ejecutó en un navegador real desde este entorno. Pendiente: probar en vivo con Gloria, revisar respuesta ante pista/error, voz en dispositivo real, responsive y facilidad de comprensión; solo después declarar estable.
+**Estado publicado:** permanece la versión previa (#245/#246): cinco Gaudem, diez originales, selección aleatoria de cinco y rótulo 19/11. No se ha desplegado esta candidata.
+
+**Estado de la ampliación:** implementada desde `main` `345f080` (PR documentales #258/#259), rama `feat/problemas-bloques`, [PR #260](https://github.com/jperdomo12/academia-gloria/pull/260). Respeta el contrato funcional aprobado v1.3. Pendiente revisión/aprobación del Product Owner, integración mediante PR y posterior publicación/verificación de Pages. **No integrar ni publicar sin aprobación.** La prueba familiar con Gloria sigue pendiente; no se declara estable.
+
+### 8.1. Implementación y trazabilidad
+
+- Diez entradas nuevas exactamente según §3.3.2; `e5c.relacion="mas"`; `e5d` además `preguntaFinal="restante"`, `presupuesto=200`. Ausencia de campos conserva menos/total.
+- `fases(p)` adapta las dos operaciones, preguntas, pistas y explicaciones; no confunde los 123 € de maleta con los 77 € restantes. `representarRelacion(p)` añade incremento proporcional y presupuesto sin resultados anticipados; conserva el esquema menos y el doble, ahora con unidad real.
+- `crearPlanEnsayo` mezcla una vez cuatro variantes por familia y reparte cuatro bloques; estado `vuelta`/`puntoEnsayo` exclusivamente en memoria. `Set` cuenta IDs solo al acertar la última fase, evita duplicados y conserva el punto al descansar/visitar otro recorrido. Solo el cierre de la vuelta ofrece regenerarla.
+- Progreso textual y dos barras accesibles: bloque/problema y total de vuelta. Pausa voluntaria explica el límite de página abierta. Cierres de bloque permiten continuar o descansar.
+- Fecha 26/11 corregida en cabecera, JSON y accesos de Matemáticas/Entender antes de calcular. Numeración confirmada hasta 99.999; su recurso no se modifica.
+- Se reutilizan Motor, lector, auth, Persona Activa y navegación. Sin nuevas persistencias, colecciones, Temas, evidencias ni dependencias del producto.
+
+### 8.2. Validación técnica y visual ejecutada · 17/11/2026
+
+- `node --test tests/mates-preparacion-problemas.test.mjs`: **9/9**. Contrato 4+5+20; huella del contenido histórico íntegro; huella de todas las preguntas/pistas/explicaciones/fases de los cinco Gaudem idéntica a `main`; 25 claves numéricas independientes; casos 10±2, total/restante; libros sin euros; contratos inválidos; 200 vueltas equilibradas sin repetición y con orden variable.
+- `tests/mates-preparacion-problemas-browser.cjs`, Chromium real con SDK/identidades y salida de voz controlados: cuatro microactividades, cinco Gaudem, **dos vueltas completas de veinte**; equilibrio/unicidad por bloque, progreso antes/después de cada fase, error/pista sin incremento, reanudación incluso tras otro recorrido y fase ya acertada, descanso entre bloques, fin/reinicio/recarga.
+- Las cuatro comparaciones verificadas en UI: e5a/e5b menos, e5c más/total, e5d más/restante. En e5d se rechazan 123 (precio intermedio), 37 (diferencia) y −9 (descontar ambas compras, entrada inválida); solo 77 resuelve la pregunta final. No se muestran los resultados desconocidos en los diagramas iniciales.
+- Revisión visual real de diagramas/composición y ausencia de overflow en **320/390/768/1024/1280/1440 px**, con Outfit. Conserva jerarquía, relato, preguntas, radios y controles; comparación más amplía la barra de referencia mediante un tramo de incremento, menos conserva su representación y doble de libros usa dos grupos iguales con unidad correcta. Frente al recurso previo se añaden progreso y descanso sin sustituir los apoyos pedagógicos.
+- Teclado, foco tras acierto/retorno, labels del formulario, `role=status`, barras etiquetadas y `prefers-reduced-motion`; audio recibe enunciado/pregunta reales. Consulta relacionada abre el mismo recurso; cero escrituras educativas y Storage sin cambios durante los recorridos.
+- Sintaxis JS y `git diff --check` correctos. Pruebas reproducibles con servidor local y `BASE_URL`, Chromium mediante `CHROMIUM_EXECUTABLE`; `QA_FONT_CSS`/`QA_IMAGES` son opciones de QA, no dependencias del producto.
+
+**Límites reales:** autenticación/Firestore controlados, no cuentas de producción ni emulador de Rules; salida de voz controlada, no escucha humana ni proveedor del dispositivo familiar; no auditoría con lector de pantalla humano. Navegador probado es Chromium, no dispositivo físico ni Safari. Antes de estabilidad se requiere uso real con Gloria, incluida comprensión, ritmo de trabajo, ayudas y audio. Publicación y verificación pública pendientes de la aprobación de la PR.
