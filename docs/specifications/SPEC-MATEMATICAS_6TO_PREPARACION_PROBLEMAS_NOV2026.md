@@ -201,7 +201,7 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 **Estado publicado:** permanece la versión previa (#245/#246): cinco Gaudem, diez originales, selección aleatoria de cinco y rótulo 19/11. No se ha desplegado esta candidata.
 
-**Estado de la ampliación:** implementada desde `main` `345f080` (PR documentales #258/#259), rama `feat/problemas-bloques`. Respeta el contrato funcional aprobado v1.3. Pendiente revisión/aprobación del Product Owner, integración mediante PR y posterior publicación/verificación de Pages. **No integrar ni publicar sin aprobación.** La prueba familiar con Gloria sigue pendiente; no se declara estable.
+**Estado de la ampliación:** implementada desde `main` `345f080` (PR documentales #258/#259), rama `feat/problemas-bloques`, [PR #260](https://github.com/jperdomo12/academia-gloria/pull/260). Respeta el contrato funcional aprobado v1.3. Pendiente revisión/aprobación del Product Owner, integración mediante PR y posterior publicación/verificación de Pages. **No integrar ni publicar sin aprobación.** La prueba familiar con Gloria sigue pendiente; no se declara estable.
 
 ### 8.1. Implementación y trazabilidad
 
