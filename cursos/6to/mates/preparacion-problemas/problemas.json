@@ -1,7 +1,7 @@
 {
   "meta": {
     "titulo": "Me preparo para los problemas",
-    "fecha": "2026-11-19",
+    "fecha": "2026-11-26",
     "fuente": "Matemáticas.pdf · cinco problemas de Gaudem",
     "guia": "Problemas .pdf · libro facilitado por Pilar",
     "estado": "Refuerzo formativo, no simulacro oficial"
@@ -210,6 +210,106 @@
       "a": 380,
       "b": 90,
       "unidad": "€"
+    },
+    {
+      "id": "e1c",
+      "tipo": "doble",
+      "titulo": "Los libros de ciencia",
+      "enunciado": "En una biblioteca hay 146 libros de aventuras y el doble de libros de ciencia. ¿Cuántos libros de ciencia hay?",
+      "a": 146,
+      "b": 2,
+      "unidad": "libros"
+    },
+    {
+      "id": "e1d",
+      "tipo": "doble",
+      "titulo": "El libro y el atlas",
+      "enunciado": "Un libro cuesta 38 €. Un atlas cuesta el doble que el libro. ¿Cuánto cuesta el atlas?",
+      "a": 38,
+      "b": 2,
+      "unidad": "€"
+    },
+    {
+      "id": "e2c",
+      "tipo": "suma",
+      "titulo": "Compras para el huerto",
+      "enunciado": "Para el huerto escolar compran semillas por 17 €, tierra por 29 € y una regadera por 26 €. ¿Cuánto gastan en total?",
+      "valores": [
+        17,
+        29,
+        26
+      ],
+      "unidad": "€"
+    },
+    {
+      "id": "e2d",
+      "tipo": "suma",
+      "titulo": "La visita al museo",
+      "enunciado": "Una clase paga 42 € por las entradas a un museo, 36 € por el transporte y 18 € por la merienda. ¿Cuánto paga en total?",
+      "valores": [
+        42,
+        36,
+        18
+      ],
+      "unidad": "€"
+    },
+    {
+      "id": "e3c",
+      "tipo": "reparto",
+      "titulo": "Lápices para las aulas",
+      "enunciado": "El colegio tiene 1349 lápices y quiere repartirlos por igual entre 6 aulas. ¿Cuántos lápices recibe cada aula? ¿Cuántos sobran?",
+      "a": 1349,
+      "b": 6,
+      "unidad": "lápices"
+    },
+    {
+      "id": "e3d",
+      "tipo": "reparto",
+      "titulo": "Pegatinas para los grupos",
+      "enunciado": "Hay 865 pegatinas que se reparten por igual entre 7 grupos. ¿Cuántas pegatinas recibe cada grupo? ¿Cuántas sobran?",
+      "a": 865,
+      "b": 7,
+      "unidad": "pegatinas"
+    },
+    {
+      "id": "e4c",
+      "tipo": "grupos",
+      "titulo": "Los asientos del teatro",
+      "enunciado": "En un teatro hay 18 filas con 23 asientos en cada una. ¿Cuántos asientos hay en total?",
+      "a": 18,
+      "b": 23,
+      "unidad": "asientos"
+    },
+    {
+      "id": "e4d",
+      "tipo": "grupos",
+      "titulo": "Las plantas del huerto",
+      "enunciado": "En el huerto han plantado 16 filas con 14 plantas en cada fila. ¿Cuántas plantas hay en total?",
+      "a": 16,
+      "b": 14,
+      "unidad": "plantas"
+    },
+    {
+      "id": "e5c",
+      "tipo": "comparacion",
+      "titulo": "Los instrumentos del aula",
+      "enunciado": "Para equipar el aula de música compran un teclado de 350 € y una guitarra que cuesta 80 € más que el teclado. ¿Cuánto cuestan los dos instrumentos juntos?",
+      "a": 350,
+      "b": 80,
+      "unidad": "€",
+      "relacion": "mas"
+    },
+    {
+      "id": "e5d",
+      "tipo": "comparacion",
+      "titulo": "Sara compra una maleta",
+      "enunciado": "Una mochila cuesta 86 €. Una maleta cuesta 37 € más que la mochila. Sara tiene 200 € y compra solamente la maleta. ¿Cuánto dinero le queda?",
+      "a": 86,
+      "b": 37,
+      "unidad": "€",
+      "relacion": "mas",
+      "preguntaFinal": "restante",
+      "presupuesto": 200
     }
   ]
 }

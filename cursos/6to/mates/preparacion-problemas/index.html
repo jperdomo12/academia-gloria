@@ -20,7 +20,7 @@
       <p class="ruta"><a href="../index.html">Matemáticas de 6.º</a> <span aria-hidden="true">›</span> Estrategias para problemas</p>
       <div class="portada-inferior">
         <div>
-          <p class="sobrelinea">🎯 Prepárate a tu ritmo · 19 de noviembre</p>
+          <p class="sobrelinea">🎯 Prepárate a tu ritmo · 26 de noviembre</p>
           <h1>Me preparo para los problemas</h1>
           <p class="introduccion">Primero comprendo la historia. Después descubro las relaciones, calculo y compruebo. Aquí <strong>no necesitamos ir rápido</strong>.</p>
         </div>
@@ -33,8 +33,8 @@
 
     <section id="inicio" class="panel" aria-labelledby="tituloInicio">
       <p class="sobrelinea">Mi ruta de hoy</p>
-      <h2 id="tituloInicio">Elige cómo quieres practicar</h2>
-      <p class="texto-suave">Puedes repetir cualquier recorrido. Las preguntas cambian en el ensayo para comprobar que comprendes, no que memorizas.</p>
+      <h2 id="tituloInicio" tabindex="-1">Elige cómo quieres practicar</h2>
+      <p class="texto-suave">Puedes repetir cualquier recorrido. En las nuevas situaciones puedes avanzar por bloques y descansar entre ellos.</p>
       <div class="tarjetas">
         <article class="tarjeta">
           <div class="emoji" aria-hidden="true">🔍</div>
@@ -54,8 +54,8 @@
           <div class="emoji" aria-hidden="true">🌟</div>
           <p class="tarjeta-paso">Paso 3 · nuevas situaciones</p>
           <h3>Compruebo que puedo</h3>
-          <p>Cinco problemas originales de los mismos tipos, con otras cantidades.</p>
-          <button class="btn btn-principal" type="button" data-iniciar="ensayo">Hacer mi ensayo</button>
+          <p><strong>20 problemas · 4 bloques de 5.</strong> Una situación de cada familia en cada bloque, sin repetir. No tienes que hacerlos todos de una vez.</p>
+          <button class="btn btn-principal" type="button" data-iniciar="ensayo">Empezar el primer bloque</button>
         </article>
       </div>
       <div class="nota">
@@ -74,6 +74,11 @@
         </div>
         <button type="button" class="btn btn-quieto" id="volverInicio">Elegir otro recorrido</button>
       </div>
+      <div id="progresoVuelta" class="progreso-vuelta" hidden>
+        <div class="progreso-vuelta__texto"><strong id="bloqueActual"></strong><span id="contadorVuelta" role="status" aria-live="polite"></span></div>
+        <div id="totalVuelta" class="progreso progreso-total" role="progressbar" aria-label="Problemas completados en la vuelta" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><div id="barraVuelta"></div></div>
+        <p class="texto-suave">A tu ritmo: comprendemos, relacionamos, calculamos y comprobamos.</p>
+      </div>
       <div class="progreso" role="progressbar" aria-label="Problemas completados" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progreso">
         <div id="barraProgreso"></div>
       </div>
@@ -87,12 +92,12 @@
 
       <div id="relacionVisual" class="relacion-visual" role="group" aria-label="Esquema de las cantidades" hidden></div>
       <div class="pregunta" id="pregunta"></div>
-      <form id="formRespuesta" novalidate>
+      <form id="formRespuesta" novalidate aria-labelledby="pregunta">
         <div id="opciones" class="opciones"></div>
         <div id="entradaNumero" class="entrada-numero" hidden>
           <label for="numero">Escribe tu resultado</label>
           <input id="numero" name="numero" type="text" inputmode="numeric" autocomplete="off" maxlength="15" placeholder="Por ejemplo: 125" pattern="[0-9 .]+" aria-describedby="notaNumero">
-          <p class="texto-suave" id="notaNumero">Solo el número, sin escribir el símbolo del euro.</p>
+          <p class="texto-suave" id="notaNumero">Solo el número, sin escribir la unidad.</p>
         </div>
         <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
         <div class="acciones">
@@ -110,6 +115,7 @@
       <h2 id="tituloCierre" tabindex="-1">¡Terminaste tu recorrido!</h2>
       <p id="resumenCierre"></p>
       <p class="texto-suave">Lo importante no es hacerlo a la primera: es comprender qué ocurre, probar y aprender a comprobarlo.</p>
+      <p id="notaDescanso" class="nota" hidden>Tu recorrido se conserva mientras esta página siga abierta. Si recargas o sales de ella, empezarás una vuelta nueva. Puedes descansar aquí y continuar después.</p>
       <div class="acciones acciones-cierre">
         <button id="repetir" type="button" class="btn btn-secundario">🔄 Repetir este recorrido</button>
         <button id="otraRuta" type="button" class="btn btn-principal">Elegir otro recorrido</button>

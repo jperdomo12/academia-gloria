@@ -79,3 +79,9 @@ h3{font-size:1.2rem;margin:.45rem 0}
 .visual-vacio{background:transparent;border:1px dashed #c9d4c6;color:transparent}
 .visual-nota{margin:13px 0 0;color:#514673;font-size:.89rem;line-height:1.5}
 @media(max-width:540px){.visual-fila{grid-template-columns:1fr;gap:5px}.visual-etiqueta{font-size:.82rem}.relacion-visual{padding:13px}.visual-tramo{font-size:.84rem;min-height:44px}}
+
+.progreso-vuelta{background:var(--violeta-suave);border:1px solid #ddd7eb;border-radius:14px;padding:14px 17px;margin:12px 0 0}
+.progreso-vuelta__texto{display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;color:#514673;line-height:1.5}
+.progreso-total{height:7px;margin:10px 0;background:#e0d9ed}
+.progreso-total>div{background:var(--violeta)}
+.progreso-vuelta .texto-suave{font-size:.88rem;margin:0}
