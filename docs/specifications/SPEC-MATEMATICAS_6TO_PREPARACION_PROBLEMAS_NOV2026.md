@@ -7,7 +7,7 @@
 | Propietario | Contenido curricular Matemáticas · 6.º |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Refuerzo temporal de interpretación y resolución de problemas de Matemáticas de 6.º |
-| Versión | 1.2 |
+| Versión | 1.3 |
 | Estado | Publicada para validación familiar · ampliación Paso 3 aprobada, pendiente de DESA |
 | Fecha | 17/11/2026 |
 | Origen | Ficha escolar de cinco problemas y ampliación formativa aprobada por el Product Owner; examen confirmado el 26/11/2026 |
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Cambios |
 |---|---|---|
+| 1.3 | 17/11/2026 | Prioridad pedagógica aclarada por la familia: **comprensión y razonamiento matemático transversales**. Se refuerzan comparaciones de dos pasos con «menos que» **y** «más que», dos variantes de cada relación dentro de los 20 problemas aprobados; selección sin repeticiones en cuatro bloques, conservando íntegramente Gaudem. Requisitos adicionales de motor, pistas y diagramas para relación positiva, pruebas de ambos sentidos y no responder con el resultado intermedio. Solo diseño/documentación; pendiente DESA. |
 | 1.2 | 17/11/2026 | Product Owner aprueba subir de 10 a 20 los problemas originales del Paso 3, en cuatro bloques de cinco equilibrados (una familia por bloque), con contador global, selección sin repetición y calidad actual como mínimo. Se añaden contratos verificables, diez propuestas de enunciados originales y corrección de fecha del examen a 26/11. **Solo documentación; aún no implementado.** |
 | 1.1 | 11/11/2026 | PR #245: experiencia y banco de problemas; PR #246: visualización de doble y comparaciones. Pages #43028910917 y #43029670985 completados con éxito. Validación familiar pendiente. |
 | 1.0 | 11/11/2026 | Especificación aprobada y desarrollo inicial en rama. |
@@ -59,6 +60,24 @@ No se modifica el motor original de «Entender antes de calcular» ni el de «Pr
 Se comienza con una interpretación explícita del enunciado, sin efectuar cálculos. Después se identifica la operación, se resuelve y se verifica la respuesta. En comparaciones de precio hay dos pasos: precio desconocido y total. En repartos se comprueban cociente y resto.
 
 No se premia la rapidez, no se utiliza cronómetro, existen pistas voluntarias y reintentos sin penalización. El material responde a observaciones familiares de respuestas precipitadas y dificultades posibles con relaciones «más/menos que». No permite establecer diagnósticos.
+
+### 2.1. Prioridad familiar · comprensión y razonamiento matemático transversal
+
+**Observación familiar del 17/11:** Gloria ha tenido dificultades para distinguir la **relación entre datos** de la **respuesta final solicitada**. En problemas como «B cuesta 2 € menos que A», ha tendido a elegir la resta por la palabra «menos», sin resolver siempre el gasto total. La familia confirma que **también necesita practicar el sentido contrario, «más que»**, y que la prioridad verdadera es el **razonamiento en todas las familias de problemas**; ha avanzado, pero necesita entrenamiento. Esta es una observación educativa familiar, no diagnóstico ni confirmación del contenido exacto del examen.
+
+**Ejemplo didáctico, fuera del banco de 20:** Si A cuesta 10 € y B cuesta **2 € menos**, entonces B = 8 € y total = **18 €**. Si B cuesta **2 € más**, entonces B = 12 € y total = **22 €**. En ambos casos la pregunta final exige **sumar A + B**; la resta o suma inicial solo obtiene el **precio intermedio**. No enseñar la regla automática «si veo más, sumo» o «si veo menos, resto»: primero comprender qué se busca.
+
+**Aplicación transversal a los cinco tipos:** Antes de operar, Gloria debe distinguir los datos relevantes, la relación entre cantidades, la pregunta completa, las operaciones intermedias y el resultado final con su unidad. Conservar las fases existentes **Comprendo → Relaciono → Calculo → Compruebo** y los apoyos no punitivos. Cada familia verifica una relación distinta:
+
+- **Doble:** identificar la cantidad de referencia y distinguir el doble de añadir dos.
+- **Suma:** reconocer todas las cantidades que componen el total solicitado.
+- **Reparto con resto:** reconocer total, número de grupos, cociente por grupo y sobrante.
+- **Grupos iguales:** distinguir cantidad de grupos de elementos por grupo.
+- **Comparación «menos/más que»:** descubrir primero el valor desconocido y después el total de ambos, sin confundir diferencia o incremento con precio del segundo objeto ni resultado intermedio con final.
+
+**Distribución en Paso 3 sin aumentar volumen:** cuatro problemas de comparación a lo largo de los cuatro bloques, **dos «menos que»** (`e5a` y `e5b`, ya existentes) y **dos «más que»** (`e5c` y `e5d`, nuevas variantes originales), exactamente **uno por bloque**. Cada comparación requiere la misma secuencia de dos operaciones (primero identificar precio B; después sumar A+B). El problema escolar `g5` del Paso 2 conserva su enunciado original «menos que» intacto. El orden dentro de la vuelta puede variar, sin perder equilibrio ni introducir repetición.
+
+**Calidad pedagógica:** mantener formulaciones naturales y suficientemente diversas para evitar aprendizaje mecánico de plantillas; no mostrar la operación final anticipadamente en el enunciado ni en el diagrama, no añadir pasos innecesarios a todas las familias y garantizar que pistas/feedback explican **qué representa cada resultado**.
 
 ## 3. Recorridos
 
@@ -105,12 +124,18 @@ Las diez variantes vigentes (`e1a/e1b`, `e2a/e2b`, `e3a/e3b`, `e4a/e4b`, `e5a/e5
 | `e3d` | reparto | Hay 865 pegatinas que se reparten por igual entre 7 grupos. ¿Cuántas pegatinas recibe cada grupo? ¿Cuántas sobran? | 865 ÷ 7 → **123 por grupo; sobran 4** |
 | `e4c` | grupos | En un teatro hay 18 filas con 23 asientos en cada una. ¿Cuántos asientos hay en total? | 18 × 23 → **414 asientos** |
 | `e4d` | grupos | En el huerto han plantado 16 filas con 14 plantas en cada fila. ¿Cuántas plantas hay en total? | 16 × 14 → **224 plantas** |
-| `e5c` | comparacion | Un teclado cuesta 350 € y una guitarra cuesta 80 € menos que el teclado. ¿Cuánto cuestan los dos instrumentos juntos? | 350 € y 80 € menos → **guitarra 270 €; total 620 €** |
-| `e5d` | comparacion | Un escritorio cuesta 289 € y una silla cuesta 120 € menos que el escritorio. ¿Cuánto cuestan ambos muebles? | 289 € y 120 € menos → **silla 169 €; total 458 €** |
+| `e5c` | comparacion | Para equipar el aula de música compran un teclado de 350 € y una guitarra que cuesta 80 € más que el teclado. ¿Cuánto cuestan los dos instrumentos juntos? | 350 € y 80 € más → **guitarra 430 €; total 780 €** |
+| `e5d` | comparacion | Una familia compra un escritorio de 289 € y una silla que cuesta 120 € más que el escritorio. ¿Cuánto dinero gastan entre ambos? | 289 € y 120 € más → **silla 409 €; total 698 €** |
 
-**Precisión de calidad obligatoria:** los nuevos problemas introducen contextos y unidades variados (por ejemplo, libros), sin cambiar las **cinco relaciones matemáticas**. En la familia `doble`, las fases actuales preguntan literalmente por **«precio doble, en euros»**. DESA deberá hacer que la pregunta, la unidad y la explicación se adapten al `p.unidad` de forma **retrocompatible** con las variantes en euros, en vez de mostrar una pregunta incorrecta para libros. En `reparto`, validar que el resto es no nulo y menor que el divisor; en `comparacion`, comprobar precio segundo positivo, **respuesta intermedia** y **total final**; en grupos y sumas, confirmar que las magnitudes y la respuesta corresponden al enunciado.
+**Precisión de calidad obligatoria:** los nuevos problemas introducen contextos y unidades variados (por ejemplo, libros), sin cambiar las **cinco familias matemáticas** ni incorporar más de veinte problemas. En la familia `doble`, las fases actuales preguntan literalmente por **«precio doble, en euros»**. DESA deberá hacer que la pregunta, la unidad y la explicación se adapten al `p.unidad` de forma **retrocompatible** con las variantes en euros, en vez de mostrar una pregunta incorrecta para libros. En `reparto`, validar que el resto es no nulo y menor que el divisor; en `comparacion`, comprobar precio segundo positivo y tanto la **respuesta intermedia** como el **total final**, para ambos sentidos de comparación. En grupos y sumas, confirmar que las magnitudes y la respuesta corresponden al enunciado.
 
-**Contrato de datos:** reutilizar exactamente los campos vigentes de `problemas.json` (`id,tipo,titulo,enunciado,a,b,valores,unidad` según tipo); no crear formatos, datos personales ni motores paralelos. La tabla define las diez nuevas situaciones y sus claves de cálculo, pero la adaptación del texto, pistas y ayudas al motor corresponde a la validación técnica y pedagógica de DESA.
+**Contrato de datos:** conservar los campos vigentes de `problemas.json` (`id,tipo,titulo,enunciado,a,b,valores,unidad` según tipo), sin datos personales ni motores paralelos. **Única ampliación mínima aprobada del contrato:** para el tipo `comparacion`, admitir opcionalmente `relacion: "mas"` en las dos nuevas entradas `e5c` y `e5d`; las entradas anteriores, incluyendo las cinco escolares y `e5a/e5b`, no requieren cambio y por **retrocompatibilidad**, la ausencia de `relacion` significa `"menos"`. DESA puede optar por una representación interna equivalente si evita la duplicación y mantiene las invariantes; debe documentarla y cubrirla en pruebas.
+
+**Cambio técnico imprescindible para «más que» (DESA):** el motor actual `fases(p)` calcula `otro=p.a-p.b` y redacta todas las preguntas y pistas literalmente en términos de «menos que». Adaptarlo con una rama coherente según sentido: `otro=p.a+p.b` cuando `relacion === "mas"`, o `p.a-p.b` cuando sea «menos». El total siempre es `p.a+otro`. Adaptar la **primera pregunta de interpretación**, el plan de dos operaciones, la fase numérica intermedia, pistas y explicaciones. Evitar distractores o pistas incompatibles con el enunciado.
+
+**Diagrama:** `representarRelacion(p)` hoy también modela únicamente `p.a-p.b` y etiqueta «− diferencia»; debe visualizar la relación `más` como precio inicial **más incremento** hasta el segundo precio, sin anticipar el valor desconocido antes de calcular. No perder la representación vigente de «menos que», proporciones significativas, etiquetas accesibles ni lectura con/sin diagrama. La lámina es apoyo, no revela la respuesta.
+
+**No alterar los problemas escolares** (`g1…g5`), los 10 originales anteriores ni los cuatro de comprensión. La tabla define las diez situaciones añadidas y sus claves aritméticas; DESA debe contrastar sentido, redacción, pistas y compatibilidad con cada fase antes de publicarlas.
 
 ## 4. Arquitectura y contratos
 
@@ -121,7 +146,7 @@ Las diez variantes vigentes (`e1a/e1b`, `e2a/e2b`, `e3a/e3b`, `e4a/e4b`, `e5a/e5
 - Navegación: componentes globales existentes.
 - Sin nuevas colecciones ni escrituras Firestore, sin notas ni registros de resultados. El objetivo es formativo; la evidencia académica sigue en los Temas que ya la registran.
 - `problemas.json`: pasar `ensayos.length` de **10 a 20**, con **cuatro por familia**; mantener `gaudem.length===5` y `calentamiento.length===4`.
-- `preparacion.js`: reemplazar selección aleatoria independiente por **plan de cuatro bloques sin repetición**; actualizar las verificaciones del banco, la unidad de `doble` cuando corresponda, el progreso y los cierres, sin tocar reglas de las cinco operaciones.
+- `preparacion.js`: reemplazar selección aleatoria independiente por **plan de cuatro bloques sin repetición**; actualizar las verificaciones del banco, la unidad de `doble` cuando corresponda, el progreso y los cierres, y añadir soporte retrocompatible para **«más que» y «menos que»** en comprensión, cálculo intermedio, suma final y diagrama. No alterar los demás tipos ni los cinco Gaudem.
 - `index.html` y CSS actual: adaptar entrada del Paso 3, indicador de bloque y progreso global, y acciones continuar/descansar/resumir. Las barras de los Pasos 1 y 2 mantienen sentido y sus contratos.
 - Corregir en producto y documentación visible el **19/11 → 26/11**, incluida la fecha de `problemas.json.meta.fecha`, cabecera y cualquier etiqueta afectada. No alterar de modo oportunista el contenido específico de numeración; se confirmó que el examen general incluye números **hasta 99.999**, no 999.999.
 - Reutilizar `auth`, `ContextoUsuario`, `lector-texto.js`, estilos, accesibilidad, navegación contextual y pruebas del recurso actual.
@@ -154,8 +179,11 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 - Comprensión y planificación preceden al cálculo.
 - Un resultado intermedio no sustituye la respuesta final.
 - **Veinte variantes originales, cuatro por familia, cinco por bloque y cuatro bloques**. Los 10 ejercicios anteriores se conservan y las 10 nuevas variantes cumplen claridad, variedad y calidad iguales o superiores al nivel publicado.
+- **Comprensión transversal comprobable:** en los cinco tipos debe estar clara la pregunta final antes de calcular, evitando resolver por palabras clave aisladas; identificar datos, relaciones, magnitudes, operaciones intermedias y respuesta definitiva.
+- **Comparaciones equilibradas:** una por cada uno de los cuatro bloques; `e5a/e5b` con «menos que» y `e5c/e5d` con «más que». Verificar explícitamente los dos sentidos mediante pruebas de cálculo y fases: `A=10, diferencia=2` → **total 18** para «menos» y **total 22** para «más», con precios segundos **8** y **12**. No admitir los resultados intermedios como respuestas finales.
+- **Regresión escolar:** `g5` sin campo `relacion` sigue interpretándose como «menos», mantiene `246−100=146` y `246+146=392` y conserva su representación visual. `e5a/e5b` conservan enunciados y resultados. En «más», validar textos, pistas, distractores, ayudas visuales, foco y ausencia de solución prematura.
 - Prueba automatizada del contrato `4 calentamiento + 5 Gaudem + 20 originales`; unicidad de 20 IDs, exactamente cuatro por familia, cinco tipos representados en cada bloque, **cero repeticiones dentro de una vuelta** y dos vueltas consecutivas con renovación correcta.
-- Validación aritmética de los 20 enunciados originales: dobles correctos; sumas de tres cantidades; división con cociente y **resto entre 1 y divisor−1**; multiplicación por grupos; comparación con precio desconocido positivo y suma final. Verificar claves de respuesta con un cálculo independiente.
+- Validación aritmética de los 20 enunciados originales: dobles correctos; sumas de tres cantidades; división con cociente y **resto entre 1 y divisor−1**; multiplicación por grupos; comparación **«más» y «menos»** con segundo precio positivo y suma final. Verificar claves de respuesta con un cálculo independiente.
 - Comprobar que ninguna pregunta, explicación, unidad, apoyo visual o pista contradiga la situación original; caso explícito de **doble de libros** frente a las variantes monetarias.
 - Progreso **«Bloque X de 4 · Problema Y de 5 · Z de 20 completados»** coherente en todas las transiciones, errores, pistas, pausa/reanudación, fin de bloque, fin de vuelta y reinicio. No contabilizar fases intermedias como problemas resueltos.
 - No cambiar enunciados, valores, orden escolar ni resultados de los cinco Gaudem; los cuatro microejercicios del Paso 1 siguen intactos.
