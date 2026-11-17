@@ -7,8 +7,8 @@
 | Propietario | Contenido curricular Matemáticas · 6.º |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Refuerzo temporal de interpretación y resolución de problemas de Matemáticas de 6.º |
-| Versión | 1.4 |
-| Estado | Ampliación Paso 3 implementada y validada en rama · pendiente aprobación de PR · no integrada ni publicada |
+| Versión | 1.5 |
+| Estado | Ampliación Paso 3 aprobada, integrada, publicada y verificada · validación familiar pendiente |
 | Fecha | 17/11/2026 |
 | Origen | Ficha escolar de cinco problemas y ampliación formativa aprobada por el Product Owner; examen confirmado el 26/11/2026 |
 
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.5 | 17/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba #260; integrada en c1e31af39f4ba7dd4408132ecdfc38202fb97494. Pages #869 / ejecución 44143618928 completada con éxito. Seis archivos de producto públicos HTTP 200 e idénticos a la versión validada; cierre técnico. Uso real con Gloria y voz del dispositivo pendientes; no se declara estable. |
 | 1.4 | 17/11/2026 | Product Owner + AI Collaborator | Implementación candidata del contrato v1.3: 20 originales, cuatro bloques sin repetición, progreso por problema completo y pausa/reanudación en memoria; relación más/menos y total/restante, unidad de libros y fecha 26/11. Nueve pruebas Node y navegador real superados; Gaudem y calentamiento conservados. Pendiente aprobación de PR; sin merge/Pages ni estabilidad familiar. |
 | 1.3 | 17/11/2026 | Product Owner + AI Collaborator | Prioridad pedagógica familiar: **comprensión y razonamiento matemático transversal** mediante práctica variada y ayudas voluntarias. En 20 problemas de 4 bloques se mantienen 2 comparaciones «menos que» cuyo final es suma, y se incorporan 2 «más que»: una pide el total y otra pide el dinero restante (**operación final resta**). Motor, preguntas, diagramas y pruebas deben distinguir relación y pregunta final; se preservan cinco Gaudem, contenido anterior y calidad. Solo documentación; pendiente DESA. |
 | 1.2 | 17/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba subir de 10 a 20 los problemas originales del Paso 3, en cuatro bloques de cinco equilibrados (una familia por bloque), con contador global, selección sin repetición y calidad actual como mínimo. Se añaden contratos verificables, diez propuestas de enunciados originales y corrección de fecha del examen a 26/11. **Solo documentación; aún no implementado.** |
@@ -98,7 +99,7 @@ El PDF completo no se publica y este contenido no se identifica como modelo ofic
 ### 3.3 Compruebo que puedo
 **Estado todavía publicado (antes de integrar esta candidata):** diez problemas originales de Academia, dos variantes de cada familia (doble, suma, reparto con resto, multiplicación de grupos y comparación aditiva con suma final). Cada ensayo elige al azar una por familia, sin memoria de qué variantes han salido antes.
 
-**Decisión funcional aprobada el 17/11:** ampliar a **20 problemas originales, cuatro por cada una de las cinco familias**, distribuidos en **cuatro bloques de cinco**, uno por familia y sin repetición hasta completar una vuelta. Esta decisión está **implementada en la rama candidata**, pendiente de revisión y aprobación de su PR antes de integrar o publicar.
+**Decisión funcional aprobada el 17/11:** ampliar a **20 problemas originales, cuatro por cada una de las cinco familias**, distribuidos en **cuatro bloques de cinco**, uno por familia y sin repetición hasta completar una vuelta. Esta decisión está **aprobada, integrada y publicada mediante PR #260**, con verificación pública completada. La prueba familiar permanece pendiente.
 
 ### 3.3.1. Selección por bloques y progreso
 
@@ -199,9 +200,9 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 ## 8. Estado
 
-**Estado publicado:** permanece la versión previa (#245/#246): cinco Gaudem, diez originales, selección aleatoria de cinco y rótulo 19/11. No se ha desplegado esta candidata.
+**Estado publicado:** Product Owner aprobó [PR #260](https://github.com/jperdomo12/academia-gloria/pull/260), integrada en `c1e31af39f4ba7dd4408132ecdfc38202fb97494`. [Pages #869](https://github.com/jperdomo12/academia-gloria/actions/runs/44143618928) completado con éxito. Veinte problemas originales en cuatro bloques de cinco, comparación más/menos con total/restante y fecha 26/11 disponibles públicamente; los cinco Gaudem y cuatro microactividades se conservan.
 
-**Estado de la ampliación:** implementada desde `main` `345f080` (PR documentales #258/#259), rama `feat/problemas-bloques`, [PR #260](https://github.com/jperdomo12/academia-gloria/pull/260). Respeta el contrato funcional aprobado v1.3. Pendiente revisión/aprobación del Product Owner, integración mediante PR y posterior publicación/verificación de Pages. **No integrar ni publicar sin aprobación.** La prueba familiar con Gloria sigue pendiente; no se declara estable.
+**Cierre técnico:** seis archivos de producto públicos HTTP 200 e idénticos al árbol validado `b3271f38f6569fb9d80c882476669f600116dc64`. Sin desarrollo, integración o publicación técnica pendiente. Se mantiene el contrato funcional aprobado v1.3; **uso real con Gloria y voz en su dispositivo pendientes** antes de declarar estabilidad.
 
 ### 8.1. Implementación y trazabilidad
 
@@ -221,4 +222,13 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 - Teclado, foco tras acierto/retorno, labels del formulario, `role=status`, barras etiquetadas y `prefers-reduced-motion`; audio recibe enunciado/pregunta reales. Consulta relacionada abre el mismo recurso; cero escrituras educativas y Storage sin cambios durante los recorridos.
 - Sintaxis JS y `git diff --check` correctos. Pruebas reproducibles con servidor local y `BASE_URL`, Chromium mediante `CHROMIUM_EXECUTABLE`; `QA_FONT_CSS`/`QA_IMAGES` son opciones de QA, no dependencias del producto.
 
-**Límites reales:** autenticación/Firestore controlados, no cuentas de producción ni emulador de Rules; salida de voz controlada, no escucha humana ni proveedor del dispositivo familiar; no auditoría con lector de pantalla humano. Navegador probado es Chromium, no dispositivo físico ni Safari. Antes de estabilidad se requiere uso real con Gloria, incluida comprensión, ritmo de trabajo, ayudas y audio. Publicación y verificación pública pendientes de la aprobación de la PR.
+**Límites reales:** autenticación/Firestore controlados, no cuentas de producción ni emulador de Rules; salida de voz controlada, no escucha humana ni proveedor del dispositivo familiar; no auditoría con lector de pantalla humano. Navegador probado es Chromium, no dispositivo físico ni Safari. Antes de estabilidad se requiere uso real con Gloria, incluida comprensión, ritmo de trabajo, ayudas y audio. Publicación y verificación pública completadas tras aprobación de PR #260; la prueba familiar y auditiva del dispositivo permanece pendiente.
+
+### 8.3. Verificación pública posterior a la aprobación
+
+El 17/11/2026, tras Pages #869, se compararon byte a byte contra el árbol probado:
+
+- `cursos/6to/mates/index.html` y `cursos/6to/mates/piloto-problemas.html`.
+- `cursos/6to/mates/preparacion-problemas/index.html`, `preparacion.css`, `preparacion.js` y `problemas.json`.
+
+Los seis devuelven HTTP 200 y contenido idéntico. La revisión final confirmó que el head aprobado `eee8727ac9a4bfcc83a44b74cfdfb7205c98fc18` y el merge de #260 tienen el mismo árbol. Se conservan las pruebas de §8.2 sin atribuirles autenticación o escucha de producción.
