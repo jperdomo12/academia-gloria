@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-ENGLISH_6TO_PAST_SIMPLE_VS_PAST_CONTINUOUS.md` |
-| Versión | 1.0 |
-| Estado | **Diseño aprobado por el Product Owner · pendiente de implementación en ACADEMIA-DESA** |
+| Versión | 1.1 |
+| Estado | **Implementado y validado en rama · PR técnica pendiente de aprobación · no integrado ni publicado** |
 | Última actualización | 22/11/2026 |
 | Propietario | Experiencia curricular · English 6.º |
 | Responsables | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.1 | 22/11/2026 | Product Owner + AI Collaborator | Candidata del contrato funcional v1.0: Tema único, cuatro escenas temporales, doce fichas, 44 prácticas en siete formatos y dos relatos originales, Prueba de 12 preguntas/48 variantes. Reutiliza Motor verbal con respuesta escrita opcional, sesión/evidencia, catálogo y refuerzos. Cotejo visual de los cinco PDF (18 páginas), navegador/gramática/integraciones y regresiones registrados en §9. Pendiente aprobación técnica antes de integrar/publicar y prueba familiar antes de estabilidad. |
 | 1.0 | 22/11/2026 | Product Owner + AI Collaborator | Se aprueba un Tema único permanente de Past Simple vs Past Continuous con fuente de cinco PDF, 18 páginas, 112 ejercicios numerados, matriz de cobertura, corrección razonada de errores, experiencia visual, gramática, práctica diversa, Reading, Prueba y evidencia compartida. **Condición:** mantener o mejorar la calidad actual. **Solo documentación; código no implementado.** |
 
 ## 🧭 Resumen de contenido
@@ -40,6 +41,7 @@
 | 6 | Integración técnica y restricciones |
 | 7 | Quality Gate y aceptación |
 | 8 | Estado y siguiente paso |
+| 9 | Implementación, cotejo visual de fuentes, pruebas y límites reales |
 
 ## 1. Decisión, ubicación y propósito
 
@@ -47,7 +49,7 @@
 
 **Finalidad:** comprender *qué ocurrió* y *qué estaba ocurriendo* antes de elegir *Past Simple* o *Past Continuous*, y después construir estructuras, revisar errores y comprender relatos. Estrategia: **Leo/escucho → comprendo la situación → relaciono acciones y tiempo → formo la frase → compruebo**.
 
-Las nuevas fichas se recibieron el **22/11/2026**. **No hay evidencia de que correspondan al examen de Listening/Writing del 23/11**, ni deben presentarse como modelo oficial de examen. Tampoco existe todavía este Tema implementado en `main`.
+Las nuevas fichas se recibieron el **22/11/2026**. **No hay evidencia de que correspondan al examen de Listening/Writing del 23/11**, ni deben presentarse como modelo oficial de examen. El Tema está implementado en la rama candidata; todavía no integrado en `main` ni publicado.
 
 ## 2. Matriz fuente → Academia · cinco archivos
 
@@ -155,8 +157,56 @@ Diseño orientativo: **12 preguntas por ejecución, en cuatro dominios con tres 
 
 ## 8. Estado y siguiente paso
 
-**HECHO:** cinco PDF recibidos y analizados; 18 páginas, 112 ejercicios numerados + extra. En `main` existe `Present Simple vs Present Continuous` y un catálogo English funcional, **no** este Tema.
+**HECHO:** cinco originales adjuntos disponibles y contrastados por Desarrollo, 18 páginas y 112 ejercicios numerados + extra. Candidata completa en [PR #263](https://github.com/jperdomo12/academia-gloria/pull/263), rama `feat/english-past-tenses`, desde `main` `f32243ec1caaef4f3e96c247d3aea57ede53c311` (PR documental #262 integrada).
 
-**DECISIÓN (22/11/2026):** se aprueba un único Tema permanente de `Past Simple vs Past Continuous` con experiencia completa y **calidad al menos igual a la existente**.
+**DECISIÓN (22/11/2026):** contrato funcional aprobado v1.0 conservado. No se amplía a otro Tema, preparación temporal ni examen fechado.
 
-**PENDIENTE:** implementación, validación técnica, PR de desarrollo, integración/publicación según workflow y prueba real con Gloria. Esta v1.0 es **documental y funcional**; ningún código de producto ha sido alterado en esta fase.
+**IMPLEMENTADO EN RAMA:** Resumen → Compara → Fichas → Práctica → Prueba; catálogo canónico y registro para refuerzos. Sesión/evidencia y consumidores existentes reutilizados. Véase §9.
+
+**SIGUIENTE PASO:** revisión/aprobación del Product Owner de la PR técnica; solo después revisión final, integración, Pages y verificación pública. **No integrar ni publicar sin esa aprobación.** Uso familiar con Gloria, audio en dispositivo y estabilidad de producto pendientes.
+
+## 9. Evidencia de implementación y validación · candidata 22/11/2026
+
+### 9.1. Cobertura y reutilización
+
+| Habilidad de la matriz §2 | Implementación verificable |
+|---|---|
+| Regulares/irregulares y formación ortográfica | Fichas `ed/y/cvc/irregular/ing`; ocho `p-form-*` y familia `simple-word-forms`. Ejemplos no se anuncian como lista oficial de examen. |
+| Was/were, had, did/didn’t, afirmativa/negativa/pregunta/respuestas cortas | Tabla semántica por sujeto; fichas `be/have/simple/continuous`; `p-simple-*`, `p-cont-*`; seis familias de prueba de forma/estructura. `Did … have? → Yes, … did`, sin negativa `didn't went`. |
+| Construir desde pistas y transformar frases completas | `p-simple-3/4/6/8`, `p-cont-3/4/5/6`; respuestas escritas reales y equivalencias de contracción. No se sustituyen por selección. |
+| Dos huecos, selección por significado, simultaneidad y sucesión | `p-mix-*`; cuatro escenas con tramo/marca y orden de cláusulas reversible; familias `contrast-event/sequence/meaning`. Contextos aclaran qué ya estaba ocurriendo para no imponer una clave discutible. |
+| Relato/diálogo, V/F y evidencia textual | `The garden notebook` y `A radio story`, originales, conservados una sola vez en `LECTURAS`. Ocho preguntas `p-read-*` y dos familias de prueba reconstruyen su contexto desde `lecturaId`. El diálogo distingue pasado de presente actual legítimo. |
+| Localizar/corregir errores y reconocer formas en el texto | Cuatro `p-fix-*`, familia `error-repair`, extra opcional con cuatro selectores y subrayados/patrones sobre el mismo relato, con etiquetas además del color. |
+
+Banco: **44 prácticas** (8 formas, 8 Simple, 8 Continuous, 8 contraste, 12 Reading/revisión). **12 familias × 4 variantes = 48**; cada prueba elige una por familia: **12 preguntas, tres por dominio**. El historial compartido evita variantes de las últimas tres sesiones cuando hay alternativas. La práctica puede filtrarse por foco, releerse, escuchar, volver atrás y usar dos pistas; no exige recorrer 44 ejercicios antes de la Prueba.
+
+`past.js` configura `motor-practica-verbal.js` y presenta escenas/fichas/identificación; no implementa otro motor de examen. La extensión compartida es aditiva: `formato:"texto"`, `respuestasValidas`, `contextoLectura`, `situacion`, `pistas` y filtro opcional. Sin esos campos se mantiene selección y configuración anterior. Normaliza mayúsculas, espacios, apóstrofos, puntuación final y contracciones `didn't/wasn't/weren't`; no borra palabras, auxiliares ni acepta un tiempo distinto. Respuesta, clave legible, corrección y concepto se guardan mediante `sesion-academica-v1`.
+
+Catálogo `temas-english.js` y `refuerzos-academicos.js` consumen la identidad/bloques del Tema. No se cambian API, Rules, rutas históricas, colecciones, permisos ni motores temporales. Práctica y Vista previa no guardan evidencia. El parámetro `modo` no otorga acceso sobre otro alumno. La celebración usa su opción existente sin imágenes de guacamayas para evitar depender del asset rojo ausente ya observado en otras actividades.
+
+### 9.2. Comparación visual real · PDF → Academia → referencia publicada
+
+Se extrajo el texto y **se renderizaron e inspeccionaron las 18 páginas de los cinco adjuntos** (22/11). No se añadieron PDF ni imágenes escolares al repositorio.
+
+| Función visual escolar | Academia y juicio del cotejo |
+|---|---|
+| Principal pp.1–2/4–5: tablas por sujeto, formas y auxiliares | Tabla HTML con caption/headers y fichas desplegables de altura natural, ejemplos y audio. En móvil la tabla se reorganiza por sujeto con etiquetas; conserva todas las formas y evita columnas comprimidas. Igual función con lectura progresiva. |
+| Principal p.3: reglas ed/y/CVC y ejemplos | Fichas contrastadas, con regla de acento y excepciones explícitas de w/x/y; regulares e irregulares separados. Equivalente en cobertura, mejora por consulta segmentada y práctica escrita. |
+| Principal p.6: tramo y hecho en línea temporal | Cuatro escenas originales, símbolos distintos de proceso/hecho, descripción textual, inversión de cláusulas y audio. Conserva relación espacial; amplía a simultaneidad, sucesión y when con proceso, sin regla automática. |
+| Cuatro ACT: huecos, construcción y doble transformación | Entrada escrita en lugar de una conversión general a tarjetas/opciones; foco elegido, modelo de ayuda, corrección conceptual y reintentos. Se mantiene la producción activa. |
+| ACT mixta pp.1–4: diálogo, lectura, V/F, reparación y colores | Dos textos propios de cronología inequívoca, visibles al responder; V/F con evidencia, corrección escrita y clasificación sobre el relato con patrones/etiquetas. Mejora legibilidad y accesibilidad sin copiar relatos ni escaneos. |
+
+Se inspeccionó también la referencia **Present Simple vs Present Continuous** real en navegador (Resumen, Compara, Fichas). Se reutilizan su tipografía Outfit, paleta, cabecera, secciones y apoyos; las representaciones nuevas responden al contenido pasado. Revisión visual final de las cinco secciones en **320/390/768/1280/1440 px**, tabla móvil, escenas, fichas abiertas y relato con identificación: sin cortes ni desbordamiento. Zoom de texto **200 % a 320 px** comprobado en las cinco secciones tras corregir el mínimo de ancho de cabecera. No se equipara esto a una certificación de lector de pantalla humano.
+
+### 9.3. Pruebas ejecutadas
+
+- `node --test tests/english-past-tenses.test.mjs`: **6/6**. IDs/banco/focos, 12×4, siete formatos, claves/hints/contextos, claves escritas independientes, contracciones válidas y rechazo de formas erróneas, cuatro relaciones temporales y contrato compartido. Revisión individual de respuestas, pistas y explicaciones; no generador gramatical por palabra clave.
+- `tests/english-past-tenses-browser.cjs`: **superado** con Chromium real, SDK/identidades y salida de voz controlados. Las **44 prácticas**, respuesta escrita y selección, mayúsculas/espacios/contracciones, error/reintento/ayudas graduadas, entrada por Enter, cuatro escenas/inversión, doce fichas y audio en-GB; **cuatro pruebas completas cubren las 48 variantes sin repetir**. Puntuación verificada (11/12 → 92 %, 12/12 → 100 %) y mapa de cuatro dominios.
+- Sesiones/variantes guardadas, respuesta escrita legible en Trabajo realizado, Misión y evidencia única, estado pendiente de validación, catálogo de Gestión, refuerzos y Análisis Educativo. Consulta/familiar siguen en Vista previa aunque URL solicite aprendizaje y terminan sin escrituras; identidad sin relación válida no conserva a Gloria como Persona Activa. Práctica sin escrituras; cinco anchos, foco, teclado, reduced motion y zoom. Consola del Tema sin errores en la ejecución satisfactoria.
+- Regresión `tests/quantifiers-browser.cjs`: **superada**, incluyendo 22 prácticas, Prueba, sesiones, variantes, evidencia/Misión, histórico, Vista previa, catálogo y Análisis. Se actualiza solo el número esperado de Temas del portal English (dos → tres).
+- Regresión `tests/verbos-browser.cjs`: **superada**, tres Temas separados y motor legacy. Se corrigió la espera de QA de refuerzos para comprobar los tres títulos en una instantánea lista: el refresco de la lista podía vaciarla entre aserciones. El baseline `f32243e` también fue ejecutado. No se modifica contenido ni lógica de Verbos.
+- Regresión `tests/potencias-browser.cjs`: **superada** (actividad escolar, equivalencias, práctica, sesión, Misión, evidencia, resultado y responsive). Sintaxis JS y `git diff --check` correctos.
+
+**Observación previa al cambio:** las regresiones de actividades existentes registran un 404 de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` usado por celebración; también observado en `main`. Conserva su fallback y no se altera esa imagen ni se amplía el alcance a otros Temas. El nuevo Tema utiliza la opción oficial `mostrarGuacamayas:false`.
+
+**Límites reales:** no cuentas, Firestore/Rules desplegadas ni datos de producción; SDK controlado. Audio validado como integración/texto/idioma/parada mediante voz controlada, **sin escucha humana ni dispositivo de Gloria**. Navegador Chromium, sin Safari ni pantalla física; lector de pantalla no certificado. Prueba familiar pendiente para utilidad, comprensión y autonomía. No se declara estable. **PR pendiente de aprobación; sin integración, Pages ni verificación pública de esta candidata.**

@@ -9,8 +9,20 @@ import {
 } from "./sesiones-academicas.js";
 import { escuchar, detener, disponible } from "./lector-texto.js";
 
+// Normalización acotada: no elimina auxiliares ni palabras, ni admite tiempos incorrectos.
+export function normalizarRespuestaVerbal(valor="") {
+  return String(valor).trim().toLowerCase().replace(/[’‘´`]/g,"'")
+    .replace(/\bdidn't\b/g,"did not").replace(/\bwasn't\b/g,"was not").replace(/\bweren't\b/g,"were not")
+    .replace(/[.!?]+$/g,"").replace(/\s*\/\s*/g," / ").replace(/\s+/g," ").trim();
+}
+export function esRespuestaVerbalCorrecta(item,respuesta) {
+  return item.formato==="texto"
+    ? (item.respuestasValidas || [item.respuestaCorrecta]).some(v=>normalizarRespuestaVerbal(v)===normalizarRespuestaVerbal(respuesta))
+    : respuesta===item.respuestaCorrecta;
+}
+
 // Motor de verbos existente, parametrizado para reutilizarlo con contenidos distintos.
-export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos" }) {
+export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos", pestanaInicial = "mapa", pestanaRepaso = "claves" }) {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -44,7 +56,8 @@ if (parametros.get("modo") === "aprendizaje" && puedeRegistrar) {
 }
 
 const estado = {
-  pestana:"mapa",
+  pestana:pestanaInicial,
+  practicaNivelPista:0,
   practicaIndice:0,
   practicaSeleccion:null,
   practicaResuelta:false,
@@ -87,7 +100,7 @@ function bloqueResultado(id) {
 }
 
 function textoOpcion(pregunta,opcionId) {
-  return pregunta?.opciones?.find(opcion=>opcion.id===opcionId)?.texto || "";
+  return pregunta?.formato==="texto" ? String(opcionId || "") : pregunta?.opciones?.find(opcion=>opcion.id===opcionId)?.texto || "";
 }
 
 function pruebaEnCurso() {
@@ -151,25 +164,50 @@ $("botonModo").addEventListener("click",()=>{
 
 function htmlReto(item,opciones,prefijo) {
   return `
-    <h3>${escaparHTML(item.titulo)}</h3>
-    <div class="challenge__enunciado">${escaparHTML(item.enunciado)}</div>
+    <h3 tabindex="-1">${escaparHTML(item.titulo)}</h3>
+    ${item.contextoLectura ? `<div class="reading-context" lang="en">${escaparHTML(item.contextoLectura)}</div>` : ""}
+    ${item.situacion ? `<p class="contexto-situacion">${escaparHTML(item.situacion)}</p>` : ""}
+    <div class="challenge__enunciado"${item.idiomaLectura==="en-GB"?' lang="en"':""}>${escaparHTML(item.enunciado)}</div>
     <p class="challenge__pregunta">${escaparHTML(item.pregunta)}</p>
     <div class="actions" style="margin-top:0;margin-bottom:10px">
       <button id="${prefijo}Escuchar" class="btn btn--soft" type="button">🔊 Escuchar reto</button>
     </div>
-    <div class="options" id="${prefijo}Opciones">
-      ${opciones.map(opcion=>`<button class="option" type="button" data-opcion="${escaparHTML(opcion.id)}">${escaparHTML(opcion.texto)}</button>`).join("")}
-    </div>
+    ${item.formato==="texto" ? `
+      <div class="respuesta-escrita">
+        <label for="${prefijo}Respuesta">${escaparHTML(item.etiquetaRespuesta || "Escribe tu respuesta en inglés")}</label>
+        <input id="${prefijo}Respuesta" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" maxlength="300" aria-describedby="${prefijo}NotaRespuesta">
+        <p id="${prefijo}NotaRespuesta">Puedes usar formas completas o contracciones correctas.</p>
+      </div>` : `<div class="options" id="${prefijo}Opciones">
+      ${opciones.map(opcion=>`<button class="option" type="button" data-opcion="${escaparHTML(opcion.id)}" aria-pressed="false">${escaparHTML(opcion.texto)}</button>`).join("")}
+    </div>`}
+
   `;
+}
+
+function practicasDisponibles() {
+  const filtro=$("filtroPractica")?.value;
+  return !filtro || filtro==="todas" ? PRACTICA_VERBOS : PRACTICA_VERBOS.filter(p=>(p.focoId || p.bloqueId)===filtro);
+}
+$("filtroPractica")?.addEventListener("change",()=>{estado.practicaIndice=0;renderPractica();});
+$("botonAnteriorPractica")?.addEventListener("click",()=>{if(estado.practicaIndice>0){estado.practicaIndice--;renderPractica();}});
+function conectarTexto(prefijo,botonId,actualizar,bloqueada) {
+  const input=$(prefijo+"Respuesta");
+  if(!input)return;
+  input.addEventListener("input",()=>{
+    if(bloqueada())return;
+    actualizar(input.value.trim());
+    $(botonId).disabled=!input.value.trim();
+  });
+  input.addEventListener("keydown",evento=>{if(evento.key==="Enter"){evento.preventDefault();if(!$(botonId).disabled && !bloqueada())$(botonId).click();}});
 }
 
 function renderPractica() {
   detenerLecturaActual();
-  const reto=PRACTICA_VERBOS[estado.practicaIndice];
-  const porcentaje=((estado.practicaIndice+1)/PRACTICA_VERBOS.length)*100;
+  const reto=practicasDisponibles()[estado.practicaIndice];
+  const porcentaje=((estado.practicaIndice+1)/practicasDisponibles().length)*100;
   $("barraPractica").style.width=`${porcentaje}%`;
-  $("estadoPractica").textContent=`Reto ${estado.practicaIndice+1} de ${PRACTICA_VERBOS.length}`;
-  $("practicaContenido").innerHTML=htmlReto(reto,barajar(reto.opciones),"practica");
+  $("estadoPractica").textContent=`Reto ${estado.practicaIndice+1} de ${practicasDisponibles().length}`;
+  $("practicaContenido").innerHTML=htmlReto(reto,barajar(reto.opciones || []),"practica");
   $("pistaPractica").hidden=true;
   $("pistaPractica").textContent="";
   $("mensajePractica").textContent="";
@@ -181,6 +219,10 @@ function renderPractica() {
   $("botonSiguiente").hidden=true;
   estado.practicaSeleccion=null;
   estado.practicaResuelta=false;
+  estado.practicaNivelPista=0;
+  if($("botonAnteriorPractica"))$("botonAnteriorPractica").disabled=estado.practicaIndice===0;
+  conectarTexto("practica","botonComprobar",v=>{estado.practicaSeleccion=v;},()=>estado.practicaResuelta);
+  $("practicaContenido").querySelector("h3")?.focus({preventScroll:true});
 
   document.querySelectorAll("#practicaOpciones .option").forEach(boton=>{
     boton.addEventListener("click",()=>{
@@ -188,8 +230,10 @@ function renderPractica() {
       estado.practicaSeleccion=boton.dataset.opcion;
       document.querySelectorAll("#practicaOpciones .option").forEach(item=>{
         item.classList.remove("seleccionada","incorrecta");
+        item.setAttribute("aria-pressed","false");
       });
       boton.classList.add("seleccionada");
+      boton.setAttribute("aria-pressed","true");
       $("botonComprobar").disabled=false;
     });
   });
@@ -200,19 +244,21 @@ function renderPractica() {
 }
 
 $("botonPista")?.addEventListener("click",()=>{
-  const reto=PRACTICA_VERBOS[estado.practicaIndice];
+  const reto=practicasDisponibles()[estado.practicaIndice];
   estado.practicaPistas.add(reto.id);
-  $("pistaPractica").textContent=reto.pista;
+  const pistas=reto.pistas || [reto.pista];
+  $("pistaPractica").textContent=pistas[Math.min(estado.practicaNivelPista,pistas.length-1)];
+  estado.practicaNivelPista++;
   $("pistaPractica").hidden=false;
-  $("botonPista").textContent="💡 Pista mostrada";
+  $("botonPista").textContent=estado.practicaNivelPista<pistas.length?"💡 Otra pista":"💡 Pista mostrada";
 });
 
 $("botonComprobar")?.addEventListener("click",()=>{
-  const reto=PRACTICA_VERBOS[estado.practicaIndice];
+  const reto=practicasDisponibles()[estado.practicaIndice];
   const intentos=(estado.practicaIntentos.get(reto.id)||0)+1;
   estado.practicaIntentos.set(reto.id,intentos);
-  const correcta=estado.practicaSeleccion===reto.respuestaCorrecta;
-  const botonElegido=document.querySelector(`#practicaOpciones [data-opcion="${estado.practicaSeleccion}"]`);
+  const correcta=esRespuestaVerbalCorrecta(reto,estado.practicaSeleccion);
+  const botonElegido=Array.from(document.querySelectorAll("#practicaOpciones .option")).find(b=>b.dataset.opcion===estado.practicaSeleccion);
 
   if (correcta) {
     estado.practicaResuelta=true;
@@ -222,18 +268,20 @@ $("botonComprobar")?.addEventListener("click",()=>{
     $("botonComprobar").hidden=true;
     $("botonPista").hidden=true;
     $("botonSiguiente").hidden=false;
-    $("botonSiguiente").textContent=estado.practicaIndice===PRACTICA_VERBOS.length-1
+    if($("practicaRespuesta"))$("practicaRespuesta").disabled=true;
+    $("botonSiguiente").focus();
+    $("botonSiguiente").textContent=estado.practicaIndice===practicasDisponibles().length-1
       ? "Ir a la prueba →"
       : "Siguiente reto →";
   } else {
     botonElegido?.classList.add("incorrecta");
-    $("mensajePractica").textContent="Todavía no. Vuelve a mirar qué te está preguntando el ejercicio y prueba otra vez.";
+    $("mensajePractica").textContent=reto.ayudaError || "Todavía no. Vuelve a mirar qué te está preguntando el ejercicio y prueba otra vez.";
     $("mensajePractica").className="message revisar";
   }
 });
 
 $("botonSiguiente")?.addEventListener("click",()=>{
-  if (estado.practicaIndice<PRACTICA_VERBOS.length-1) {
+  if (estado.practicaIndice<practicasDisponibles().length-1) {
     estado.practicaIndice+=1;
     renderPractica();
   } else {
@@ -243,7 +291,7 @@ $("botonSiguiente")?.addEventListener("click",()=>{
 
 function opcionesPrueba(pregunta) {
   if (!estado.ordenOpciones.has(pregunta.id)) {
-    estado.ordenOpciones.set(pregunta.id,barajar(pregunta.opciones));
+    estado.ordenOpciones.set(pregunta.id,barajar(pregunta.opciones || []));
   }
   return estado.ordenOpciones.get(pregunta.id);
 }
@@ -309,13 +357,16 @@ function renderPreguntaPrueba() {
   $("botonResponderPrueba").textContent="Comprobar respuesta →";
   estado.pruebaSeleccion=null;
   estado.pruebaRespuestaConfirmada=false;
+  conectarTexto("prueba","botonResponderPrueba",v=>{estado.pruebaSeleccion=v;},()=>estado.pruebaRespuestaConfirmada);
+  $("pruebaContenido").querySelector("h3")?.focus({preventScroll:true});
 
   document.querySelectorAll("#pruebaOpciones .option").forEach(boton=>{
     boton.addEventListener("click",()=>{
       if (estado.pruebaRespuestaConfirmada) return;
       estado.pruebaSeleccion=boton.dataset.opcion;
-      document.querySelectorAll("#pruebaOpciones .option").forEach(item=>item.classList.remove("seleccionada"));
+      document.querySelectorAll("#pruebaOpciones .option").forEach(item=>{item.classList.remove("seleccionada");item.setAttribute("aria-pressed","false");});
       boton.classList.add("seleccionada");
+      boton.setAttribute("aria-pressed","true");
       $("botonResponderPrueba").disabled=false;
     });
   });
@@ -326,6 +377,7 @@ function renderPreguntaPrueba() {
 }
 
 function mostrarExplicacionPrueba(pregunta,correcta) {
+  if($("pruebaRespuesta"))$("pruebaRespuesta").disabled=true;
   document.querySelectorAll("#pruebaOpciones .option").forEach(boton=>{
     boton.disabled=true;
     boton.classList.remove("seleccionada");
@@ -351,7 +403,7 @@ $("botonResponderPrueba").addEventListener("click",async()=>{
 
   if (!estado.pruebaRespuestaConfirmada) {
     if (!estado.pruebaSeleccion) return;
-    const correcta=estado.pruebaSeleccion===pregunta.respuestaCorrecta;
+    const correcta=esRespuestaVerbalCorrecta(pregunta,estado.pruebaSeleccion);
     estado.respuestas.push({
       preguntaId:pregunta.id,
       bloqueId:pregunta.bloqueId,
@@ -517,7 +569,7 @@ $("botonVolverRepaso").addEventListener("click",()=>{
   $("inicioPrueba").hidden=false;
   $("pruebaActiva").hidden=true;
   $("cierrePrueba").hidden=true;
-  activarPestana("claves");
+  activarPestana(pestanaRepaso);
 });
 
 let botonLeyendo=null;
@@ -571,9 +623,13 @@ document.addEventListener("click",evento=>{
 });
 
 window.addEventListener("beforeunload",detenerLecturaActual,{once:true});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)detenerLecturaActual();});
+window.addEventListener("pagehide",detenerLecturaActual);
 
-if (PRACTICA_VERBOS.length) renderPractica();
+if (practicasDisponibles().length) renderPractica();
 actualizarModo();
 actualizarBloqueoPestanas();
+if(pestanaInicial!=="mapa")activarPestana(pestanaInicial);
+return {activarPestana,detenerLectura:detenerLecturaActual};
 
 }

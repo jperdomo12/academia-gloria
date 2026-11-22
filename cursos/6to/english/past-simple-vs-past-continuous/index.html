@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4e93a0">
+  <title>Past Simple vs Past Continuous | English 6.º | Academia Gloria Valentina</title>
+  <meta name="description" content="Tema de English de 6.º: Past Simple vs Past Continuous, acciones terminadas, acciones en curso, relatos, estructuras y práctica variada.">
+
+  <link rel="icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="shortcut icon" type="image/png" href="../../../../assets/iconos/icono-principal.png">
+  <link rel="apple-touch-icon" href="../../../../assets/iconos/icono-principal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../../../compartido/css/academia-base.css">
+  <link rel="stylesheet" href="../../../../compartido/css/panel-usuario.css?v=2">
+  <link rel="stylesheet" href="../../../../compartido/css/navegacion-global.css?v=7">
+  <link rel="stylesheet" href="../../../../compartido/css/celebracion.css">
+  <link rel="stylesheet" href="./past.css">
+</head>
+<body
+  data-page-title="Past Simple vs Past Continuous"
+  data-page-icon="🔀"
+  data-nav-back="../index.html"
+>
+
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <main class="english-shell" id="contenido">
+    <header class="english-hero">
+      <div>
+        <div class="english-route">6.º de Primaria → English → Un viaje al pasado</div>
+        <h1 lang="en">Past Simple <span>vs</span> Past Continuous</h1>
+        <p class="english-hero__lead">What happened? What was happening?</p>
+        <p>Comprendo la escena. Relaciono las acciones. Después construyo la frase.</p>
+        <div class="english-chips"><span class="english-chip">📍 Hechos terminados</span><span class="english-chip">〰️ Acciones en curso</span><span class="english-chip">🔎 Historias con sentido</span></div>
+      </div>
+      <div class="english-hero__visual" aria-hidden="true"><div class="english-compare-badge"><span>what happened</span><strong>PAST</strong><span>what was happening</span></div></div>
+    </header>
+    <section class="english-mode" aria-live="polite">
+      <div class="english-mode__main"><div id="iconoModo" class="english-mode__icon" aria-hidden="true">👀</div><div><h2 id="tituloModo">Preparando el contexto</h2><p id="descripcionModo">Un momento…</p></div></div>
+      <button id="botonModo" type="button" disabled>Vista previa</button>
+    </section>
+    <nav class="english-tabs" aria-label="Secciones del tema">
+      <button class="english-tab activa" type="button" data-pestana="resumen" aria-pressed="true">🧭 Resumen</button>
+      <button class="english-tab" type="button" data-pestana="compara" aria-pressed="false">🔀 Compara</button>
+      <button class="english-tab" type="button" data-pestana="fichas" aria-pressed="false">🧠 Fichas</button>
+      <button class="english-tab" type="button" data-pestana="practica" aria-pressed="false">✏️ Práctica</button>
+      <button class="english-tab" type="button" data-pestana="prueba" aria-pressed="false">✅ Prueba</button>
+    </nav>
+    <section class="english-panel" data-panel="resumen" aria-labelledby="tituloResumen">
+      <div class="english-section-title"><div><p class="english-eyebrow">Understand before choosing</p><h2 id="tituloResumen">Dos maneras de mirar el pasado</h2><p>No es solo elegir una palabra: es comprender qué sucede.</p></div></div>
+      <div class="tense-grid">
+        <article class="tense-card tense-card--simple"><div class="tense-card__tag">PAST SIMPLE · HECHO TERMINADO</div><h3>¿Qué ocurrió?</h3><div class="mini-timeline simple" aria-hidden="true"><span>●</span></div><p lang="en" id="ejemploSimple"><strong>I painted a picture yesterday.</strong></p><p>Lo cuento como una acción terminada ayer.</p><button class="listen-btn" type="button" data-escuchar-contenedor="#ejemploSimple" data-idioma="en-GB">🔊 Escuchar</button></article>
+        <article class="tense-card tense-card--continuous"><div class="tense-card__tag">PAST CONTINUOUS · ACCIÓN EN CURSO</div><h3>¿Qué estaba ocurriendo?</h3><div class="mini-timeline ongoing" aria-hidden="true"><span>━━━━━━━━</span></div><p lang="en" id="ejemploContinuous"><strong>At five yesterday, I was painting a picture.</strong></p><p>Me sitúo a las cinco: pintar ya estaba en curso.</p><button class="listen-btn" type="button" data-escuchar-contenedor="#ejemploContinuous" data-idioma="en-GB">🔊 Escuchar</button></article>
+      </div>
+      <div class="decision-strip"><strong>Antes de responder</strong><span>¿Qué sé del momento? ¿Qué estaba en curso? ¿Qué hecho ocurrió? ¿Qué me piden decir?</span></div>
+      <p class="english-source">Material del colegio · Gaudem · 6.º. Ejemplos, relatos y actividades originales de Academia basados en las habilidades de las cinco fuentes escolares. Este Tema no es un modelo oficial de examen.</p>
+      <button class="btn-primary" type="button" id="explorarEscenas">Explorar las escenas →</button>
+    </section>
+    <section class="english-panel" data-panel="compara" aria-labelledby="tituloCompara" hidden>
+      <div class="english-section-title"><div><p class="english-eyebrow">Miro la relación, no una palabra aislada</p><h2 id="tituloCompara">La historia sobre una línea de tiempo</h2><p>Un tramo representa un proceso. Una marca representa un hecho.</p></div></div>
+      <div id="escenasOpciones" class="scene-choices" role="group" aria-label="Elegir una relación temporal"></div>
+      <article class="scene-board" aria-labelledby="escenaTitulo"><div class="scene-heading"><h3 id="escenaTitulo"></h3><button id="invertirClausulas" type="button" class="btn-soft">⇄ Cambiar el orden de las cláusulas</button></div>
+        <p id="escenaFrase" class="scene-sentence" lang="en"></p>
+        <div class="timeline" id="lineaTiempo" role="img" aria-describedby="escenaDescripcion"></div>
+        <p id="escenaDescripcion"></p><div class="english-actions"><button class="listen-btn" type="button" data-escuchar-contenedor="#escenaFrase" data-idioma="en-GB">🔊 Escuchar la frase</button></div>
+      </article>
+      <div class="notice-card"><strong>When y while orientan; no deciden solos.</strong><span>Podemos contar procesos a la vez, un hecho durante un proceso o dos hechos sucesivos. Comprueba el significado de cada acción.</span></div>
+    </section>
+    <section class="english-panel" data-panel="fichas" aria-labelledby="tituloFichas" hidden>
+      <div class="english-section-title"><div><p class="english-eyebrow">Un apoyo cuando lo necesites</p><h2 id="tituloFichas">Formas que ayudan a contar la historia</h2><p>Abre una ficha. Comprueba la estructura y escucha el ejemplo.</p></div></div>
+      <div class="subject-table-wrap"><table class="subject-table"><caption>Was / were · el sujeto importa</caption><thead><tr><th scope="col">Sujeto</th><th scope="col">Afirmativa</th><th scope="col">Negativa</th><th scope="col">Pregunta</th></tr></thead><tbody><tr><th scope="row">I / he / she / it</th><td data-label="Afirmativa">was</td><td data-label="Negativa">was not / wasn’t</td><td data-label="Pregunta">Was she…?</td></tr><tr><th scope="row">you / we / they</th><td data-label="Afirmativa">were</td><td data-label="Negativa">were not / weren’t</td><td data-label="Pregunta">Were they…?</td></tr></tbody></table></div>
+      <p class="table-note">Para decir dónde estaba alguien: <span lang="en">She was at home.</span> Para decir qué estaba haciendo: <span lang="en">She was reading at home.</span></p>
+      <div id="fichasContenido" class="past-fichas"></div>
+      <p class="english-source">Apoyo opcional: <a id="enlaceRap" href="../../plan-semanal/english-irregular-verbs-rap/">Irregular Verbs RAP</a>. No es una lista oficial de evaluación ni necesitas usar RAP Studio para completar este Tema.</p>
+    </section>
+    <section class="english-panel" data-panel="practica" aria-labelledby="tituloPractica" hidden>
+      <div class="english-section-title"><div><p class="english-eyebrow">Sin prisa, con todas las ayudas disponibles</p><h2 id="tituloPractica">Comprendo, construyo y reviso</h2><p>Elige qué quieres trabajar hoy. Puedes volver a las fichas y reintentar sin penalización.</p></div></div>
+      <label class="filter-label" for="filtroPractica">Hoy quiero practicar</label>
+      <select id="filtroPractica"><option value="todas">Todas las situaciones · a mi ritmo</option><option value="formas">Formas verbales · 8</option><option value="simple">Past Simple · 8</option><option value="continuous">Past Continuous · 8</option><option value="contraste">Relaciono las acciones · 8</option><option value="reading">Reading y revisión · 12</option></select>
+      <div class="practice-head"><span id="estadoPractica"></span><span>Las pistas siempre están disponibles</span></div>
+      <div class="progress" aria-hidden="true"><div class="progress__bar" id="barraPractica"></div></div>
+      <div id="practicaContenido" class="challenge-card"></div>
+      <div id="pistaPractica" class="hint" role="status" hidden></div><div id="mensajePractica" class="message" role="status" aria-live="polite"></div>
+      <div class="english-actions actions"><button type="button" class="btn-soft" id="botonAnteriorPractica">← Anterior</button><button type="button" class="btn-soft" id="botonPista">💡 Ver una pista</button><button type="button" class="btn-primary" id="botonComprobar">Comprobar mi idea</button><button type="button" class="btn-primary" id="botonSiguiente" hidden>Siguiente reto →</button></div>
+      <details class="extra-identificar"><summary>🔎 Extra opcional · Reconozco los verbos</summary><p>Clasifica cada forma de la historia. Las etiquetas también explican el significado: el color es solo una ayuda.</p><div id="identificarContenido"></div><p id="identificarMensaje" role="status"></p></details>
+    </section>
+    <section class="english-panel" data-panel="prueba" aria-labelledby="tituloPrueba" hidden>
+      <div class="english-section-title"><div><p class="english-eyebrow">Una fotografía de esta sesión</p><h2 id="tituloPrueba">Compruebo lo que voy entendiendo</h2><p>12 preguntas, tres por cada foco. No hay cronómetro.</p></div></div>
+      <div id="inicioPrueba" class="test-start"><h3>Pienso en el significado y después respondo</h3><p>En la prueba se registra tu primera respuesta y después se explica. La práctica permite reintentar. Puedes volver a estudiar antes de empezar.</p><button type="button" id="botonIniciarPrueba" class="btn-primary">Empezar mi prueba</button></div>
+      <div id="pruebaActiva" hidden><div class="test-meta"><span id="estadoPrueba"></span><span id="bloquePrueba" class="test-block"></span></div><div class="progress" aria-hidden="true"><div class="progress__bar" id="barraPrueba"></div></div><div id="pruebaContenido" class="challenge-card"></div><div id="explicacionPrueba" class="test-explanation" role="status" hidden></div><div class="english-actions"><button type="button" id="botonResponderPrueba" class="btn-primary">Comprobar respuesta →</button></div></div>
+      <div id="cierrePrueba" hidden><div class="result-summary"><div><h3>Tu recorrido de hoy</h3><p id="textoCierre"></p><p id="estadoGuardado" class="save-state" role="status"></p></div></div><div id="resultadoPruebaResumen"></div><div id="mapaResultados" class="results-grid"></div><div class="english-actions"><button type="button" id="botonVolverRepaso" class="btn-soft">Volver a comparar y practicar</button></div></div>
+    </section>
+  </main>
+  <script src="../../../../compartido/js/navegacion.js"></script>
+  <script type="module" src="../../../../compartido/componentes/navegacion-global.js?v=7"></script>
+  <script type="module" src="./past.js"></script>
+</body>
+</html>

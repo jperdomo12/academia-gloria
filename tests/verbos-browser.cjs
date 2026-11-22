@@ -99,8 +99,10 @@ for (const d of documents) {
 }
 const fd=await entorno('gestion');await fd.p.goto(base+'/cursos/6to/lengua/');await fd.p.waitForSelector('[data-tema-id="el-verbo"]');await fd.p.evaluate(rows=>{localStorage.qaDB=JSON.stringify({...JSON.parse(localStorage.qaDB),...Object.fromEntries(rows)});},docSessions);
 await fd.p.goto(base+'/mi-universo/mis-tareas/');await fd.p.waitForSelector('[data-tab="refuerzos"]');await fd.p.click('[data-tab="refuerzos"]');
-await fd.p.waitForFunction(()=>document.querySelector('#grupoRefuerzoAcademico')?.textContent.includes('Indicativo y subjuntivo'));
-for(const d of documents)assert.ok((await fd.p.locator('#grupoRefuerzoAcademico').textContent()).includes(d.title));
+// La lista puede refrescarse entre lecturas: validar los tres títulos en una misma instantánea lista.
+const contenidoRefuerzos=await fd.p.waitForFunction(titulos=>{const texto=document.querySelector('#grupoRefuerzoAcademico')?.textContent;return texto&&titulos.every(t=>texto.includes(t))?texto:false;},documents.map(d=>d.title));
+const textoRefuerzos=await contenidoRefuerzos.jsonValue();
+for(const d of documents)assert.ok(textoRefuerzos.includes(d.title));
 await fd.p.click('[data-tab="crear"]');await fd.p.selectOption('#tipo','repaso_academico');await fd.p.selectOption('#cursoReferencia','6');await fd.p.waitForFunction(()=>Array.from(document.querySelector('#materiaCatalogoAcademico').options).some(o=>o.text==='Lengua'));await fd.p.selectOption('#materiaCatalogoAcademico',{label:'Lengua'});
 await fd.p.waitForFunction(()=>Array.from(document.querySelector('#temaCatalogoAcademico').options).some(o=>o.text==='El verbo · Repaso de 5.º'));
 for(const d of documents)assert.ok((await fd.p.locator('#temaCatalogoAcademico').innerText()).includes(d.title));assert.ok(!(await fd.p.locator('#temaCatalogoAcademico').innerText()).includes('Verbos · Indicativo, subjuntivo e imperativo'));
