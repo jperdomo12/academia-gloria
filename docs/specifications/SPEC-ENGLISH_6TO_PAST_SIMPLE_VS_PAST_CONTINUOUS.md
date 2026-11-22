@@ -4,8 +4,8 @@
 | Campo | Valor |
 |---|---|
 | Ruta oficial | `docs/specifications/SPEC-ENGLISH_6TO_PAST_SIMPLE_VS_PAST_CONTINUOUS.md` |
-| Versión | 1.1 |
-| Estado | **Implementado y validado en rama · PR técnica pendiente de aprobación · no integrado ni publicado** |
+| Versión | 1.2 |
+| Estado | **Aprobado, integrado, publicado y verificado · validación familiar pendiente** |
 | Última actualización | 22/11/2026 |
 | Propietario | Experiencia curricular · English 6.º |
 | Responsables | Product Owner + AI Collaborator |
@@ -26,6 +26,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.2 | 22/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba PR #263; merge d98da362432d1411adbbb9d444750bdc62650287. Pages #872 / 45061913470 success; nueve archivos públicos HTTP 200 e idénticos al árbol validado. Cierre técnico documentado en §9.4; uso familiar y escucha del dispositivo pendientes antes de estabilidad. |
 | 1.1 | 22/11/2026 | Product Owner + AI Collaborator | Candidata del contrato funcional v1.0: Tema único, cuatro escenas temporales, doce fichas, 44 prácticas en siete formatos y dos relatos originales, Prueba de 12 preguntas/48 variantes. Reutiliza Motor verbal con respuesta escrita opcional, sesión/evidencia, catálogo y refuerzos. Cotejo visual de los cinco PDF (18 páginas), navegador/gramática/integraciones y regresiones registrados en §9. Pendiente aprobación técnica antes de integrar/publicar y prueba familiar antes de estabilidad. |
 | 1.0 | 22/11/2026 | Product Owner + AI Collaborator | Se aprueba un Tema único permanente de Past Simple vs Past Continuous con fuente de cinco PDF, 18 páginas, 112 ejercicios numerados, matriz de cobertura, corrección razonada de errores, experiencia visual, gramática, práctica diversa, Reading, Prueba y evidencia compartida. **Condición:** mantener o mejorar la calidad actual. **Solo documentación; código no implementado.** |
 
@@ -49,7 +50,7 @@
 
 **Finalidad:** comprender *qué ocurrió* y *qué estaba ocurriendo* antes de elegir *Past Simple* o *Past Continuous*, y después construir estructuras, revisar errores y comprender relatos. Estrategia: **Leo/escucho → comprendo la situación → relaciono acciones y tiempo → formo la frase → compruebo**.
 
-Las nuevas fichas se recibieron el **22/11/2026**. **No hay evidencia de que correspondan al examen de Listening/Writing del 23/11**, ni deben presentarse como modelo oficial de examen. El Tema está implementado en la rama candidata; todavía no integrado en `main` ni publicado.
+Las nuevas fichas se recibieron el **22/11/2026**. **No hay evidencia de que correspondan al examen de Listening/Writing del 23/11**, ni deben presentarse como modelo oficial de examen. El Tema está integrado en `main`, publicado y verificado tras aprobar PR #263.
 
 ## 2. Matriz fuente → Academia · cinco archivos
 
@@ -157,15 +158,15 @@ Diseño orientativo: **12 preguntas por ejecución, en cuatro dominios con tres 
 
 ## 8. Estado y siguiente paso
 
-**HECHO:** cinco originales adjuntos disponibles y contrastados por Desarrollo, 18 páginas y 112 ejercicios numerados + extra. Candidata completa en [PR #263](https://github.com/jperdomo12/academia-gloria/pull/263), rama `feat/english-past-tenses`, desde `main` `f32243ec1caaef4f3e96c247d3aea57ede53c311` (PR documental #262 integrada).
+**HECHO:** cinco originales adjuntos disponibles y contrastados por Desarrollo, 18 páginas y 112 ejercicios numerados + extra. [PR #263](https://github.com/jperdomo12/academia-gloria/pull/263) aprobada e integrada en `d98da362432d1411adbbb9d444750bdc62650287`, desde `main` `f32243ec1caaef4f3e96c247d3aea57ede53c311` (PR documental #262). [Pages #872](https://github.com/jperdomo12/academia-gloria/actions/runs/45061913470) completado con éxito; verificación pública en §9.4.
 
 **DECISIÓN (22/11/2026):** contrato funcional aprobado v1.0 conservado. No se amplía a otro Tema, preparación temporal ni examen fechado.
 
-**IMPLEMENTADO EN RAMA:** Resumen → Compara → Fichas → Práctica → Prueba; catálogo canónico y registro para refuerzos. Sesión/evidencia y consumidores existentes reutilizados. Véase §9.
+**IMPLEMENTADO Y PUBLICADO:** Resumen → Compara → Fichas → Práctica → Prueba; catálogo canónico y registro para refuerzos. Sesión/evidencia y consumidores existentes reutilizados. Véase §9.
 
-**SIGUIENTE PASO:** revisión/aprobación del Product Owner de la PR técnica; solo después revisión final, integración, Pages y verificación pública. **No integrar ni publicar sin esa aprobación.** Uso familiar con Gloria, audio en dispositivo y estabilidad de producto pendientes.
+**SIGUIENTE PASO:** uso familiar con Gloria para valorar comprensión, autonomía, utilidad de los apoyos y audio en su dispositivo. Sin desarrollo, integración ni publicación técnica pendiente. No declarar estabilidad antes de esa validación.
 
-## 9. Evidencia de implementación y validación · candidata 22/11/2026
+## 9. Evidencia de implementación, validación y publicación · 22/11/2026
 
 ### 9.1. Cobertura y reutilización
 
@@ -209,4 +210,16 @@ Se inspeccionó también la referencia **Present Simple vs Present Continuous** 
 
 **Observación previa al cambio:** las regresiones de actividades existentes registran un 404 de `assets/identidad/guacamayas/guacamaya-roja-posada-01.png` usado por celebración; también observado en `main`. Conserva su fallback y no se altera esa imagen ni se amplía el alcance a otros Temas. El nuevo Tema utiliza la opción oficial `mostrarGuacamayas:false`.
 
-**Límites reales:** no cuentas, Firestore/Rules desplegadas ni datos de producción; SDK controlado. Audio validado como integración/texto/idioma/parada mediante voz controlada, **sin escucha humana ni dispositivo de Gloria**. Navegador Chromium, sin Safari ni pantalla física; lector de pantalla no certificado. Prueba familiar pendiente para utilidad, comprensión y autonomía. No se declara estable. **PR pendiente de aprobación; sin integración, Pages ni verificación pública de esta candidata.**
+**Límites reales:** no cuentas, Firestore/Rules desplegadas ni datos de producción; SDK controlado. Audio validado como integración/texto/idioma/parada mediante voz controlada, **sin escucha humana ni dispositivo de Gloria**. Navegador Chromium, sin Safari ni pantalla física; lector de pantalla no certificado. Prueba familiar pendiente para utilidad, comprensión y autonomía. No se declara estable. **PR #263 aprobada, integrada, publicada y verificada; el uso familiar y la escucha real siguen pendientes.**
+
+### 9.4. Cierre y verificación pública tras aprobación
+
+El Product Owner aprobó PR #263 el 22/11/2026. La revisión final confirmó head `28d37a908fc06b61db68f70d0fb2c7dca1b80c25`, árbol probado `8730b40a01d85d81351a04de0955ebbdc7b79a3f`, main sin cambios ajenos y diff de 13 archivos coincidente con el revisado. Merge `d98da362432d1411adbbb9d444750bdc62650287` conserva ese árbol.
+
+[Pages #872](https://github.com/jperdomo12/academia-gloria/actions/runs/45061913470) finalizó con éxito. Se comprobaron **nueve archivos públicos HTTP 200, byte a byte idénticos al árbol validado**:
+
+- Los cuatro archivos del Tema: `index.html`, `past.js`, `past.css`, `past-data.js`.
+- `compartido/js/motor-practica-verbal.js`, `cursos/6to/english/temas-english.js` y `mi-universo/mis-tareas/refuerzos-academicos.js`.
+- Referencias conservadas: `cursos/6to/english/index.html` y `cursos/6to/english/present-simple-vs-present-continuous/present-simple-vs-present-continuous.css`.
+
+Recurso publicado: `cursos/6to/english/past-simple-vs-past-continuous/`. No se repiten pruebas funcionales sin cambios de código; se conservan §9.2–9.3 y sus límites. Cierre técnico completado, sin certificar cuentas/Rules de producción, voz física ni estabilidad de producto.
