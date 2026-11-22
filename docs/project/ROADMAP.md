@@ -4,9 +4,9 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/project/ROADMAP.md` |
-| **Versión del documento** | 1.10 |
+| **Versión del documento** | 1.11 |
 | **Estado** | Activo · fase de uso prioritario |
-| **Última actualización** | 09/09/2026 |
+| **Última actualización** | 22/11/2026 |
 | **Responsables** | Juan Perdomo + AI Collaborator |
 | **Ámbito** | Evolución funcional y prioridades de producto |
 
@@ -16,6 +16,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.11 | 22/11/2026 | Product Owner + AI Collaborator | Registra como **propuesta futura en backlog** el recurso transversal «English · Mapa de los tiempos verbales»: exploración, comparación, línea temporal y práctica/evaluación filtrables; crecimiento por contenido escolar real y arquitectura reutilizable. **Sin SPEC ni desarrollo aprobados**, solo después de cerrar, publicar y probar con Gloria el Tema Past Simple vs Past Continuous; no alterar su alcance. |
 | 1.10 | 09/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza el inicio real del curso 2026–2027 tras PR #87–#113: calendario escolar actual, Menú del Cole V1, Mi horario de clases V1 ya aprobado, acceso rápido/solo horario, correcciones de navegación y recursos oficiales Gaudem de 6.º/Matemáticas con visibilidad para alumnado Gaudem. Actualiza baseline funcional a `27b9e0a2...` y registra el mini manual + email de invitación como P1 real antes de incorporar 2–3 nuevas alumnas. |
 | 1.9 | 06/09/2026 | Juan Perdomo + AI Collaborator | Sincroniza la fase de uso prioritario con el estado real posterior a PR #78/#80/#83/#85: Gestión de Usuarios conserva observación administrativa minimizada de accesos; Bitácora de Acompañamiento V1 se registra como excepción funcional ya cerrada porque respondió a una necesidad inmediata de colaboración con profesionales; actualiza baseline funcional a `58cab370...` y mantiene el resto del crecimiento general en espera por foco. |
 | 1.8 | 05/09/2026 | Juan Perdomo + AI Collaborator | Sustituye “congelación funcional” por **fase de uso prioritario**. Durante varias semanas prioriza uso real, motivación y ayuda efectiva; mantiene activo el crecimiento curricular de 6.º mediante material real + una sola instrucción; formaliza reporte y resolución rápida de issues reales; deja el crecimiento funcional general en espera por foco, no prohibido. |
@@ -484,6 +485,25 @@ No crear una pantalla por actividad. Estudiar integración con capacidades ya ex
 
 ---
 
+## ⏳ English · Mapa de los tiempos verbales (recurso transversal)
+
+**Estado:** propuesta futura acordada; **en espera, sin desarrollo ni SPEC aprobados**. Prioridad posterior al cierre, publicación y **prueba familiar real** del Tema canónico `6.º → English → Past Simple vs Past Continuous` (SPEC `docs/specifications/SPEC-ENGLISH_6TO_PAST_SIMPLE_VS_PAST_CONTINUOUS.md`).
+
+**Propósito:** facilitar comprensión visual del **significado temporal** antes de memorizar reglas: cuándo ocurre una acción, si es habitual, terminada o en desarrollo, y cómo se relacionan dos acciones. La herramienta será **adicional** a los Temas académicos particulares, no una sustitución ni modificación del desarrollo en curso.
+
+**Idea funcional para analizar después:**
+
+- Filtro para **explorar un tiempo** de forma individual o **comparar dos tiempos**, con selección progresiva sin mostrar todo de golpe.
+- Línea temporal interactiva y accesible, con significado, ejemplos, estructura y preguntas formativas/evaluación del tiempo o par seleccionado.
+- Catálogo inicial posible: **Present Simple, Present Continuous, Past Simple y Past Continuous**, reutilizando conocimiento y recursos existentes, cuando los Temas correspondan a contenido realmente trabajado.
+- **Crecimiento modular** para Future Simple, Future Continuous u otros **solo si el colegio los introduce** o surgen necesidades educativas concretas; no anticipar ni aprobar hoy ese temario.
+- Diseñar un **recurso reutilizable y configurable**, no pantallas o motores paralelos por tiempo verbal. Reutilizar audio, ayudas, prueba, sesiones y evidencias académicas existentes cuando se justifique.
+- Asegurar precisión: Past Simple no equivale siempre a un instante, las rutinas son repetitivas y `when`/`while` no determinan por sí solos el tiempo gramatical.
+
+**Condición para reabrir análisis:** Tema Past Simple vs Past Continuous terminado, publicado y probado por Gloria/familia; evaluar primero la utilidad real de su representación temporal. Luego definir diseño funcional, Quality Gate, fuentes y posible SPEC según estándares. **No enviar nuevos requisitos a DESA mientras desarrolla ese Tema.**
+
+---
+
 ## 🟡 Proceso de incorporación de nuevas Semillas
 
 **Estado:** deuda de proceso conocida.
@@ -656,6 +676,7 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Velocidad de voz por Persona | ⏳ En espera por foco de uso |
 | Mi Universo · comprender preguntas | ⏳ En espera por foco de uso |
 | Actividades sugeridas | ⏳ En espera por foco de uso |
+| English · Mapa de los tiempos verbales | ⏳ Propuesta futura; analizar tras validar Tema Past Simple vs Past Continuous |
 | Proceso de nuevas Semillas | 🟡 Mejorar antes de ampliar catálogo |
 | Nuevas funciones generales | ⏸️ En espera durante primeras semanas |
 
@@ -689,7 +710,7 @@ Después de varias semanas de uso, revisar backlog general a partir de evidencia
 | Campo | Valor |
 |---|---|
 | **Estado del Roadmap** | ✅ Activo |
-| **Versión** | 1.10 |
+| **Versión** | 1.11 |
 | **Estado operativo** | 🌿 Fase de uso prioritario |
 | **Inicio de la fase** | 05/09/2026 |
 | **Baseline funcional de referencia** | `27b9e0a29ee92a2f081504cf5f52fbb9f4332221` |
