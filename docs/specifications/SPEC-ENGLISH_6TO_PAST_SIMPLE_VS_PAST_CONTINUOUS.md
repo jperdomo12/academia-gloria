@@ -157,7 +157,7 @@ Diseño orientativo: **12 preguntas por ejecución, en cuatro dominios con tres 
 
 ## 8. Estado y siguiente paso
 
-**HECHO:** cinco originales adjuntos disponibles y contrastados por Desarrollo, 18 páginas y 112 ejercicios numerados + extra. Candidata completa en `feat/english-past-tenses`, desde `main` `f32243ec1caaef4f3e96c247d3aea57ede53c311` (PR documental #262 integrada).
+**HECHO:** cinco originales adjuntos disponibles y contrastados por Desarrollo, 18 páginas y 112 ejercicios numerados + extra. Candidata completa en [PR #263](https://github.com/jperdomo12/academia-gloria/pull/263), rama `feat/english-past-tenses`, desde `main` `f32243ec1caaef4f3e96c247d3aea57ede53c311` (PR documental #262 integrada).
 
 **DECISIÓN (22/11/2026):** contrato funcional aprobado v1.0 conservado. No se amplía a otro Tema, preparación temporal ni examen fechado.
 
