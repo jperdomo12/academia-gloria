@@ -19,11 +19,14 @@ import { NUMEROS_META, BLOQUES_RESULTADO as BLOQUES_NUMEROS } from "../../cursos
 
 import { POTENCIAS_META, BLOQUES_POTENCIAS } from "../../cursos/6to/mates/potencias/potencias-data.js";
 
+import { PAST_META, BLOQUES_RESULTADO as BLOQUES_PAST } from "../../cursos/6to/english/past-simple-vs-past-continuous/past-data.js";
+
 const $ = id => document.getElementById(id);
 const MAXIMO_SESIONES_ANALISIS = 5;
 const MINIMO_SENALES_CONFIRMACION = 2;
 
 const ACTIVIDADES = Object.freeze([
+  {actividadId:PAST_META.actividadId,titulo:PAST_META.tituloActividad,icono:"🔀",curso:"6.º",materia:"English",destinoUrl:"../../cursos/6to/english/past-simple-vs-past-continuous/",bloques:Object.freeze(Object.fromEntries(BLOQUES_PAST.map(b=>[b.id,{icono:b.icono,titulo:b.titulo,descripcion:b.descripcion}])) )},
   {
     actividadId:POTENCIAS_META.actividadId, titulo:POTENCIAS_META.tituloActividad, icono:"🔢", curso:"6.º", materia:"Matemáticas",
     destinoUrl:"../../cursos/6to/mates/potencias/",

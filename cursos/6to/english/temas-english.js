@@ -1,4 +1,5 @@
 export const TEMAS_ENGLISH = Object.freeze([
+  Object.freeze({id:"past-simple-vs-past-continuous",ruta:"./past-simple-vs-past-continuous/",icono:"🔀",titulo:"Past Simple vs Past Continuous",descripcion:"Comprende qué ocurrió y qué estaba ocurriendo: escenas, estructuras, relatos y práctica variada.",pistas:Object.freeze(["Was / were · had · did","Acciones y tiempo","Reading y revisión"]),estado:"Tema de 6.º",acento:"#4e93a0",acentoSuave:"#edf8f9",acentoTexto:"#356f79",accion:"Entrar al tema →",conservarRetorno:true}),
   Object.freeze({
     id:"present-simple-vs-present-continuous",
     ruta:"./present-simple-vs-present-continuous/",
