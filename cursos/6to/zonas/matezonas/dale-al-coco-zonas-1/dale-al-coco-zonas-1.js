@@ -12,7 +12,8 @@ import {
   COCO_META,
   BLOQUES_RESULTADO,
   PRACTICA_COCO,
-  FAMILIAS_PRUEBA_COCO
+  FAMILIAS_PRUEBA_COCO,
+  OPERACIONES_MATEZONA, leerEnteroOperacion, formatearNumeroOperacion, textoOperacion
 } from "./dale-al-coco-zonas-1-data.js";
 
 const $ = id => document.getElementById(id);
@@ -572,3 +573,75 @@ window.addEventListener("beforeunload", detenerLecturaActual, {once:true});
 renderPractica();
 actualizarModo();
 actualizarBloqueoPestanas();
+
+// Enriquecimiento de Material (#266). Reutiliza la vista y el lector; no participa en sesiones/evidencia.
+let familiaOperacion=0,varianteOperacion=0,operacionResuelta=false;
+const familiaActual=()=>OPERACIONES_MATEZONA[familiaOperacion];
+const operacionActual=()=>familiaActual().variantes[varianteOperacion];
+function tokenOperacion(valor){
+  const span=document.createElement("span");
+  if(typeof valor==="number")span.textContent=formatearNumeroOperacion(valor);
+  else if(typeof valor==="string"){span.className="op-signo";span.textContent=valor;}
+  else if(valor.potencia){
+    span.className="op-potencia";span.append(document.createTextNode(String(valor.potencia[0])));
+    const sup=document.createElement("sup");sup.textContent=String(valor.potencia[1]);span.append(sup);
+  }else{
+    span.className=valor.producto?"op-producto":"op-parentesis";
+    const piezas=valor.producto||valor.grupo;
+    if(valor.grupo)span.append(document.createTextNode("("));
+    piezas.forEach((p,i)=>{if(valor.producto&&i)span.append(document.createTextNode(" × "));span.append(tokenOperacion(p));});
+    if(valor.grupo)span.append(document.createTextNode(")"));
+  }
+  return span;
+}
+function renderOperacion(enfocar=false){
+  detenerLecturaActual();operacionResuelta=false;
+  const familia=familiaActual(),item=operacionActual();
+  $("opOrigen").textContent=item.origen==="Gaudem"?"Operación de la ficha del colegio":"Variante original de Academia · "+varianteOperacion+" de "+(familia.variantes.length-1);
+  $("opFicha").disabled=varianteOperacion===0;
+  $("opTitulo").textContent=familia.titulo;
+  $("opExpresion").replaceChildren(...item.expresion.map(tokenOperacion));
+  $("opExpresion").setAttribute("aria-label",textoOperacion(item.expresion));
+  $("opExpresion").querySelectorAll(":scope > span").forEach(span=>span.setAttribute("aria-hidden","true"));
+  $("opPlan").replaceChildren(...familia.plan.map(texto=>{const li=document.createElement("li");li.textContent=texto;return li;}));
+  $("opNotaDivision").hidden=familia.id!=="division";
+  $("opCampos").replaceChildren(...Object.keys(item.respuestas).map(nombre=>{
+    const contenedor=document.createElement("div"),label=document.createElement("label"),input=document.createElement("input");
+    label.htmlFor="op-"+nombre;label.textContent={resultado:"Resultado",cociente:"Cociente entero",resto:"Resto"}[nombre];
+    input.id=label.htmlFor;input.name=nombre;input.type="text";input.inputMode="numeric";input.autocomplete="off";input.maxLength=22;input.setAttribute("aria-describedby","opFormato");
+    contenedor.append(label,input);return contenedor;
+  }));
+  $("opMensaje").textContent="";$("opMensaje").className="message";
+  $("opTextoPista").hidden=true;$("opTextoPista").textContent="";
+  $("opExplicacion").hidden=true;$("opExplicacion").replaceChildren();
+  $("opComprobar").hidden=false;$("opRepetir").hidden=true;$("opVerPasos").hidden=true;
+  if(enfocar)$("opTitulo").focus({preventScroll:true});
+}
+OPERACIONES_MATEZONA.forEach((f,i)=>$("opFamilia").add(new Option((i+1)+" · "+f.titulo,String(i))));
+$("opFamilia").addEventListener("change",()=>{familiaOperacion=Number($("opFamilia").value);varianteOperacion=0;renderOperacion();});
+$("opFicha").addEventListener("click",()=>{varianteOperacion=0;renderOperacion(true);});
+$("opVariante").addEventListener("click",()=>{varianteOperacion=varianteOperacion%(familiaActual().variantes.length-1)+1;renderOperacion(true);});
+$("opRepetir").addEventListener("click",()=>{renderOperacion();$("opCampos").querySelector("input").focus();});
+$("opPista").addEventListener("click",()=>{$("opTextoPista").textContent=familiaActual().pista;$("opTextoPista").hidden=false;});
+$("opEscuchar").addEventListener("click",()=>iniciarLectura($("opEscuchar"),textoOperacion(operacionActual().expresion)+(familiaActual().id==="division"?". Busca el cociente entero y el resto.":". Calcula el resultado.")));
+$("practicarOperaciones").addEventListener("toggle",()=>{if(!$("practicarOperaciones").open)detenerLecturaActual();});
+function mostrarResolucionOperacion(acierto){
+  operacionResuelta=true;
+  $("opMensaje").textContent=acierto?"✓ Bien comprobado. Recorremos los pasos para revisar el resultado.":"Vamos a revisar la resolución con calma. Después puedes volver a intentarlo.";
+  $("opMensaje").className=acierto?"message bien":"message";
+  $("opExplicacion").replaceChildren(...operacionActual().pasos.map(texto=>{const li=document.createElement("li");li.textContent=texto;return li;}));$("opExplicacion").hidden=false;
+  $("opCampos").querySelectorAll("input").forEach(input=>input.disabled=true);
+  $("opComprobar").hidden=true;$("opVerPasos").hidden=true;$("opRepetir").hidden=false;$("opRepetir").focus();
+}
+$("opVerPasos").addEventListener("click",()=>mostrarResolucionOperacion(false));
+$("opFormulario").addEventListener("submit",evento=>{
+  evento.preventDefault();if(operacionResuelta)return;
+  const entradas=Array.from($("opCampos").querySelectorAll("input")),item=operacionActual();
+  const invalida=entradas.find(input=>leerEnteroOperacion(input.value)===null);
+  if(invalida){$("opMensaje").textContent="Escribe cada número entero. Si usas separadores de miles, agrupa las cifras de tres en tres; no escribas decimales.";$("opMensaje").className="message revisar";invalida.focus();return;}
+  if(entradas.some(input=>leerEnteroOperacion(input.value)!==item.respuestas[input.name])){
+    $("opMensaje").textContent="Todavía no coincide. "+familiaActual().error;$("opMensaje").className="message revisar";$("opVerPasos").hidden=false;return;
+  }
+  mostrarResolucionOperacion(true);
+});
+renderOperacion();

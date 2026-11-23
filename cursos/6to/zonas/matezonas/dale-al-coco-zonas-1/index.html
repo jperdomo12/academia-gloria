@@ -214,6 +214,35 @@
           </details>
         </article>
       </div>
+
+      <section class="operaciones-matezona" aria-labelledby="tituloMatezonaOperaciones">
+        <p class="coco-eyebrow">Material adicional · siete familias</p>
+        <h3 id="tituloMatezonaOperaciones">Matezona de operaciones · Gaudem</h3>
+        <p>Una ficha distinta del material anterior: suma, división con resto, producto, resta, prioridad con y sin paréntesis y potencia de diez.</p>
+        <details id="practicarOperaciones">
+          <summary>✏️ Practicar las operaciones · opcional</summary>
+          <p>Resuelve con calma, en papel si te ayuda, y escribe tu resultado. Puedes pedir una pista y volver a intentarlo. Esta práctica no guarda resultados ni añade otra Prueba.</p>
+          <label class="op-label" for="opFamilia">¿Qué operación quieres practicar?</label>
+          <select id="opFamilia"></select>
+          <div class="actions"><button class="btn btn--soft" type="button" id="opFicha">Volver a la operación de la ficha</button><button class="btn btn--violet" type="button" id="opVariante">Probar una variante de Academia</button></div>
+          <article class="example op-reto">
+            <p id="opOrigen" class="coco-eyebrow" role="status"></p>
+            <h4 id="opTitulo" tabindex="-1"></h4>
+            <div id="opExpresion" class="op-expresion" role="math"></div>
+            <ol id="opPlan" class="op-plan" aria-label="Orden para resolver"></ol>
+            <p id="opNotaDivision" class="source-note" hidden>Esta división no es exacta. En Academia la comprobamos con <strong>cociente entero y resto</strong>. La ficha del colegio no especifica el formato de respuesta.</p>
+            <button class="btn btn--soft" type="button" id="opEscuchar">🔊 Escuchar operación</button>
+            <form id="opFormulario" novalidate>
+              <div id="opCampos" class="op-campos"></div>
+              <p id="opFormato">Puedes escribir sin separadores, con puntos de miles o con espacios: 1234567, 1.234.567 o 1 234 567. Aquí usamos números enteros, sin decimales.</p>
+              <div class="actions"><button class="btn btn--soft" type="button" id="opPista">💡 Necesito una pista</button><button class="btn btn--primary" type="submit" id="opComprobar">Comprobar mi resultado</button><button class="btn btn--soft" type="button" id="opVerPasos" hidden>Ver la resolución paso a paso</button><button class="btn btn--soft" type="button" id="opRepetir" hidden>Intentar de nuevo esta operación</button></div>
+            </form>
+            <p id="opTextoPista" class="hint" role="note" hidden></p>
+            <div id="opMensaje" class="message" role="status" aria-live="polite"></div>
+            <ol id="opExplicacion" class="explanation" aria-label="Comprobación paso a paso" hidden></ol>
+          </article>
+        </details>
+      </section>
     </section>
 
     <section class="coco-panel" data-panel="practica" hidden>

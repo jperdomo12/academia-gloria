@@ -278,3 +278,597 @@ export const SOLUCIONES_MATERIAL = Object.freeze({
     columnas:["24","32","36","36"]
   })
 });
+
+// Issue #266 · práctica opcional, sin cambiar el banco ni la identidad académica previos.
+export const OPERACIONES_MATEZONA = Object.freeze([
+  {
+    "id": "suma",
+    "titulo": "Suma de tres cantidades",
+    "plan": [
+      "Alineo las unidades",
+      "Sumo y compruebo las llevadas"
+    ],
+    "pista": "Los puntos separan miles: no son decimales. Puedes sumar primero las cantidades mayores.",
+    "error": "Comprueba que has sumado los tres sumandos y conservado las llevadas.",
+    "variantes": [
+      {
+        "id": "suma-0",
+        "origen": "Gaudem",
+        "expresion": [
+          755672,
+          "+",
+          45,
+          "+",
+          23206
+        ],
+        "respuestas": {
+          "resultado": 778923
+        },
+        "pasos": [
+          "755.672 + 23.206 = 778.878.",
+          "778.878 + 45 = 778.923."
+        ]
+      },
+      {
+        "id": "suma-1",
+        "origen": "Academia",
+        "expresion": [
+          634125,
+          "+",
+          72,
+          "+",
+          18406
+        ],
+        "respuestas": {
+          "resultado": 652603
+        },
+        "pasos": [
+          "634.125 + 18.406 = 652.531.",
+          "652.531 + 72 = 652.603."
+        ]
+      },
+      {
+        "id": "suma-2",
+        "origen": "Academia",
+        "expresion": [
+          518764,
+          "+",
+          86,
+          "+",
+          35721
+        ],
+        "respuestas": {
+          "resultado": 554571
+        },
+        "pasos": [
+          "518.764 + 35.721 = 554.485.",
+          "554.485 + 86 = 554.571."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "division",
+    "titulo": "División con resto",
+    "plan": [
+      "Busco el cociente entero",
+      "Compruebo divisor × cociente + resto"
+    ],
+    "pista": "Prueba un cociente que no sobrepase el dividendo. El resto debe ser menor que el divisor.",
+    "error": "Comprueba ambas cantidades: divisor × cociente + resto debe dar el dividendo. No basta con acertar el cociente.",
+    "variantes": [
+      {
+        "id": "division-0",
+        "origen": "Gaudem",
+        "expresion": [
+          26850,
+          ":",
+          39
+        ],
+        "respuestas": {
+          "cociente": 688,
+          "resto": 18
+        },
+        "pasos": [
+          "39 × 688 = 26.832.",
+          "26.850 − 26.832 = 18; 18 es menor que 39.",
+          "26.850 = 39 × 688 + 18. El cociente es 688 y el resto 18; la división no es exacta."
+        ]
+      },
+      {
+        "id": "division-1",
+        "origen": "Academia",
+        "expresion": [
+          28763,
+          ":",
+          42
+        ],
+        "respuestas": {
+          "cociente": 684,
+          "resto": 35
+        },
+        "pasos": [
+          "42 × 684 = 28.728.",
+          "28.763 − 28.728 = 35; 35 es menor que 42.",
+          "28.763 = 42 × 684 + 35."
+        ]
+      },
+      {
+        "id": "division-2",
+        "origen": "Academia",
+        "expresion": [
+          31847,
+          ":",
+          46
+        ],
+        "respuestas": {
+          "cociente": 692,
+          "resto": 15
+        },
+        "pasos": [
+          "46 × 692 = 31.832.",
+          "31.847 − 31.832 = 15; 15 es menor que 46.",
+          "31.847 = 46 × 692 + 15."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "producto",
+    "titulo": "Producto por dos cifras",
+    "plan": [
+      "Descompongo el segundo factor",
+      "Multiplico y reúno los productos"
+    ],
+    "pista": "Descompón el segundo factor en decenas y unidades. Al multiplicar por las decenas, recuerda su valor.",
+    "error": "Revisa los productos parciales y el valor de las decenas antes de sumarlos.",
+    "variantes": [
+      {
+        "id": "producto-0",
+        "origen": "Gaudem",
+        "expresion": [
+          406988,
+          "×",
+          67
+        ],
+        "respuestas": {
+          "resultado": 27268196
+        },
+        "pasos": [
+          "406.988 × 60 = 24.419.280.",
+          "406.988 × 7 = 2.848.916.",
+          "24.419.280 + 2.848.916 = 27.268.196."
+        ]
+      },
+      {
+        "id": "producto-1",
+        "origen": "Academia",
+        "expresion": [
+          305764,
+          "×",
+          48
+        ],
+        "respuestas": {
+          "resultado": 14676672
+        },
+        "pasos": [
+          "305.764 × 40 = 12.230.560.",
+          "305.764 × 8 = 2.446.112.",
+          "12.230.560 + 2.446.112 = 14.676.672."
+        ]
+      },
+      {
+        "id": "producto-2",
+        "origen": "Academia",
+        "expresion": [
+          514207,
+          "×",
+          36
+        ],
+        "respuestas": {
+          "resultado": 18511452
+        },
+        "pasos": [
+          "514.207 × 30 = 15.426.210.",
+          "514.207 × 6 = 3.085.242.",
+          "15.426.210 + 3.085.242 = 18.511.452."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "resta",
+    "titulo": "Resta de cantidades grandes",
+    "plan": [
+      "Alineo cada posición",
+      "Resto y compruebo sumando"
+    ],
+    "pista": "Coloca unidades bajo unidades, decenas bajo decenas… Comprueba la resta con una suma.",
+    "error": "Revisa los cambios de una posición a otra. Resultado + cantidad restada debe dar la cantidad inicial.",
+    "variantes": [
+      {
+        "id": "resta-0",
+        "origen": "Gaudem",
+        "expresion": [
+          678658,
+          "−",
+          42766
+        ],
+        "respuestas": {
+          "resultado": 635892
+        },
+        "pasos": [
+          "678.658 − 42.766 = 635.892.",
+          "Comprobación: 635.892 + 42.766 = 678.658."
+        ]
+      },
+      {
+        "id": "resta-1",
+        "origen": "Academia",
+        "expresion": [
+          743205,
+          "−",
+          58647
+        ],
+        "respuestas": {
+          "resultado": 684558
+        },
+        "pasos": [
+          "743.205 − 58.647 = 684.558.",
+          "Comprobación: 684.558 + 58.647 = 743.205."
+        ]
+      },
+      {
+        "id": "resta-2",
+        "origen": "Academia",
+        "expresion": [
+          826431,
+          "−",
+          69578
+        ],
+        "respuestas": {
+          "resultado": 756853
+        },
+        "pasos": [
+          "826.431 − 69.578 = 756.853.",
+          "Comprobación: 756.853 + 69.578 = 826.431."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prioridad",
+    "titulo": "Prioridad sin paréntesis",
+    "plan": [
+      "Primero los productos",
+      "Después sumo y resto de izquierda a derecha"
+    ],
+    "pista": "Las multiplicaciones se resuelven antes que sumas y restas. Observa los tres grupos destacados.",
+    "error": "No calcules todo de izquierda a derecha desde el principio: termina primero los productos.",
+    "variantes": [
+      {
+        "id": "prioridad-0",
+        "origen": "Gaudem",
+        "expresion": [
+          {
+            "producto": [
+              2,
+              5
+            ]
+          },
+          "+",
+          {
+            "producto": [
+              3,
+              7
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              6,
+              4
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 7
+        },
+        "pasos": [
+          "2 × 5 = 10; 3 × 7 = 21; 6 × 4 = 24.",
+          "La expresión queda 10 + 21 − 24.",
+          "10 + 21 = 31; 31 − 24 = 7."
+        ]
+      },
+      {
+        "id": "prioridad-1",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "producto": [
+              4,
+              6
+            ]
+          },
+          "+",
+          {
+            "producto": [
+              5,
+              8
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              7,
+              3
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 43
+        },
+        "pasos": [
+          "4 × 6 = 24; 5 × 8 = 40; 7 × 3 = 21.",
+          "La expresión queda 24 + 40 − 21.",
+          "24 + 40 = 64; 64 − 21 = 43."
+        ]
+      },
+      {
+        "id": "prioridad-2",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "producto": [
+              3,
+              9
+            ]
+          },
+          "+",
+          {
+            "producto": [
+              4,
+              8
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              5,
+              6
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 29
+        },
+        "pasos": [
+          "3 × 9 = 27; 4 × 8 = 32; 5 × 6 = 30.",
+          "La expresión queda 27 + 32 − 30.",
+          "27 + 32 = 59; 59 − 30 = 29."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "parentesis",
+    "titulo": "Prioridad con paréntesis",
+    "plan": [
+      "Primero cada paréntesis",
+      "Después los productos",
+      "Al final la resta"
+    ],
+    "pista": "Calcula por separado lo que hay dentro de cada paréntesis antes de multiplicar.",
+    "error": "Comprueba que cada paréntesis quede resuelto antes de su producto; después resta los dos resultados.",
+    "variantes": [
+      {
+        "id": "parentesis-0",
+        "origen": "Gaudem",
+        "expresion": [
+          {
+            "producto": [
+              2,
+              {
+                "grupo": [
+                  5,
+                  "+",
+                  45
+                ]
+              }
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              4,
+              {
+                "grupo": [
+                  9,
+                  "+",
+                  6
+                ]
+              }
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 40
+        },
+        "pasos": [
+          "5 + 45 = 50; 9 + 6 = 15.",
+          "2 × 50 = 100; 4 × 15 = 60.",
+          "100 − 60 = 40."
+        ]
+      },
+      {
+        "id": "parentesis-1",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "producto": [
+              3,
+              {
+                "grupo": [
+                  8,
+                  "+",
+                  24
+                ]
+              }
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              2,
+              {
+                "grupo": [
+                  7,
+                  "+",
+                  9
+                ]
+              }
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 64
+        },
+        "pasos": [
+          "8 + 24 = 32; 7 + 9 = 16.",
+          "3 × 32 = 96; 2 × 16 = 32.",
+          "96 − 32 = 64."
+        ]
+      },
+      {
+        "id": "parentesis-2",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "producto": [
+              4,
+              {
+                "grupo": [
+                  6,
+                  "+",
+                  18
+                ]
+              }
+            ]
+          },
+          "−",
+          {
+            "producto": [
+              3,
+              {
+                "grupo": [
+                  8,
+                  "+",
+                  5
+                ]
+              }
+            ]
+          }
+        ],
+        "respuestas": {
+          "resultado": 57
+        },
+        "pasos": [
+          "6 + 18 = 24; 8 + 5 = 13.",
+          "4 × 24 = 96; 3 × 13 = 39.",
+          "96 − 39 = 57."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "potencia",
+    "titulo": "Una potencia de diez",
+    "plan": [
+      "Interpreto el exponente",
+      "Calculo la potencia",
+      "Después sumo"
+    ],
+    "pista": "El número pequeño es el exponente: dice cuántas veces aparece 10 como factor. No es una cifra pegada al 10.",
+    "error": "Una potencia no se calcula multiplicando base por exponente ni juntando sus cifras. Resuelve la potencia antes de sumar.",
+    "variantes": [
+      {
+        "id": "potencia-0",
+        "origen": "Gaudem",
+        "expresion": [
+          {
+            "potencia": [
+              10,
+              4
+            ]
+          },
+          "+",
+          202
+        ],
+        "respuestas": {
+          "resultado": 10202
+        },
+        "pasos": [
+          "10⁴ = 10 × 10 × 10 × 10 = 10.000.",
+          "10.000 + 202 = 10.202."
+        ]
+      },
+      {
+        "id": "potencia-1",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "potencia": [
+              10,
+              5
+            ]
+          },
+          "+",
+          304
+        ],
+        "respuestas": {
+          "resultado": 100304
+        },
+        "pasos": [
+          "10⁵ = 100.000.",
+          "100.000 + 304 = 100.304."
+        ]
+      },
+      {
+        "id": "potencia-2",
+        "origen": "Academia",
+        "expresion": [
+          {
+            "potencia": [
+              10,
+              4
+            ]
+          },
+          "+",
+          507
+        ],
+        "respuestas": {
+          "resultado": 10507
+        },
+        "pasos": [
+          "10⁴ = 10.000.",
+          "10.000 + 507 = 10.507."
+        ]
+      }
+    ]
+  }
+]);
+
+export function leerEnteroOperacion(valor) {
+  const texto=String(valor).trim().replace(/[\u00a0\u202f]/g," ").replace(/ +/g," ");
+  if(!/^(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+|[0-9]{1,3}(?: [0-9]{3})+)$/.test(texto))return null;
+  const numero=Number(texto.replace(/[. ]/g,""));
+  return Number.isSafeInteger(numero)?numero:null;
+}
+export function formatearNumeroOperacion(numero){return numero.toLocaleString("es-ES");}
+// Texto semántico para lector y aria-label: un superíndice nunca se aplana como «104».
+export function textoOperacion(partes) {
+  const palabras={"+":"más","−":"menos","×":"por",":":"dividido entre"};
+  return partes.map(p=>typeof p==="number"?String(p):typeof p==="string"?(palabras[p] || p):p.potencia?
+    p.potencia[0]+" elevado a "+p.potencia[1]:p.producto?p.producto.map(x=>textoOperacion([x])).join(" por "):
+    "abre paréntesis "+textoOperacion(p.grupo)+" cierra paréntesis").join(" ");
+}
