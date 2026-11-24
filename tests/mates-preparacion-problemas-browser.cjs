@@ -26,6 +26,13 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
     assert.match(await p.locator(".portada").innerText(),/26 de noviembre/i);
     const storage=()=>p.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}}));
     const before=await storage();
+    const accesoOperaciones=p.getByRole("link",{name:"Ir a Matezona de operaciones"});
+    assert.equal(await accesoOperaciones.getAttribute("target"),"academia-matezona-operaciones");
+    assert.equal(await accesoOperaciones.getAttribute("rel"),"opener");
+    assert.match(await accesoOperaciones.getAttribute("href"),/zonas\/matezonas\/dale-al-coco-zonas-1\//);
+    // Solo se simula el destino de la ventana auxiliar; la navegación de origen es real.
+    await c.route("**/zonas/matezonas/dale-al-coco-zonas-1/**",r=>r.fulfill({contentType:"text/html",body:'<!doctype html><html lang="es"><title>Destino de navegación controlado</title><p>Matezonas · destino simulado para comprobar apertura y Persona Activa.</p></html>'}));
+
     async function shot(name){if(process.env.QA_IMAGES)await p.locator("#actividad").screenshot({path:process.env.QA_IMAGES+"/"+name+".png"});}
     async function progreso(total,bloque,indice){
       assert.equal(await p.locator("#contadorVuelta").innerText(),total+" de 20 problemas completados");
@@ -72,6 +79,13 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
           const texto=await p.locator("#textoEnunciado").innerText();
           await p.locator("#volverInicio").click();
           assert.equal(await p.locator("#tituloInicio").evaluate(e=>e===document.activeElement),true);
+          // Abrir operaciones deja intacta la visita y su punto de pausa.
+          const urlOrigen=p.url();const sesionOrigen=await storage();
+          await accesoOperaciones.focus();
+          const [auxiliar]=await Promise.all([p.waitForEvent("popup"),p.keyboard.press("Enter")]);
+          await auxiliar.waitForLoadState();assert.match(auxiliar.url(),/zonas\/matezonas\/dale-al-coco-zonas-1\//);
+          assert.equal(await auxiliar.evaluate(()=>sessionStorage.getItem("academia.personaActivaId")),await p.evaluate(()=>sessionStorage.getItem("academia.personaActivaId")));
+          assert.equal(p.url(),urlOrigen);assert.equal(await storage(),sesionOrigen);await auxiliar.close();await p.bringToFront();
           // Visitar otra ruta y reanudar la fase resuelta, sin generar otro plan.
           await p.locator('[data-iniciar="comprendo"]').click();await p.locator("#volverInicio").click();
           await p.locator('[data-iniciar="ensayo"]').click();

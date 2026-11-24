@@ -38,6 +38,13 @@ h3{font-size:1.2rem;margin:.45rem 0}
 .btn-escuchar{min-height:40px;background:var(--violeta-suave);color:#433a64;border-color:#ded3ee}
 .nota{background:#f7f8f3;border-left:4px solid #92aa77;border-radius:10px;padding:16px;line-height:1.5}
 .nota a{font-weight:700}
+.complementarios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.complementarios .nota{min-width:0}
+.complementarios h3{margin:0;font-size:1.1rem}
+.complementarios .btn{max-width:100%;text-align:center}
+.complementarios .texto-suave{font-size:.88rem}
+.complementarios p:last-child{margin-bottom:0}
+@media(max-width:780px){.complementarios{grid-template-columns:1fr}}
 .encabezado-actividad{display:flex;justify-content:space-between;gap:16px;align-items:start}
 .encabezado-actividad .texto-suave{margin-bottom:10px}
 .progreso{height:11px;background:#e5eadf;border-radius:99px;overflow:hidden;margin:14px 0 24px}
