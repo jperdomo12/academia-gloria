@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.16 |
+| **Versión** | 2.17 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.17 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #284: respeta hidden en formulario, notifica ruta final, sincroniza catálogo/recorridos/resumen/textos/vista previa sin estados anteriores ni sobrescribir textos personalizados; descarta cargas obsoletas y renueva caché. 65 Node y siete suites DOM superados; navegador bloqueado. Pendiente aprobación/integración. |
 | 2.16 | 24/11/2026 | Product Owner + AI Collaborator | Cierra Misiones matemáticas #277/#281 publicadas: Product Owner aprueba #282; integrada en `13d5dd11953028a2996d20df5c9a08c967332d7d`. Pages #886/run `45489952502` success y doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 63/63 Node y las dos suites DOM de Matemáticas repetidas antes del merge; las seis suites DOM del head aprobado superadas. Sin integración/publicación pendiente; navegador/voz/permisos reales y prueba familiar pendientes, no estable. |
 | 2.15 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #277/#281: dos objetivos de preparación matemática, evidencia agregada de bloques distintos de la misma vuelta y progreso 1/2→2/2. Sin cambios del recurso de Sociales. Pendiente aprobación/integración; navegador real bloqueado. |
 | 2.14 | 24/11/2026 | Product Owner + AI Collaborator | Cierra #278 publicado: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
@@ -319,6 +320,28 @@ Reglas:
 5. Si el recurso heredado no está catalogado, puede mantenerse una salida manual controlada.
 6. El administrador no debe copiar rutas técnicas cuando el Tema ya es conocido por la Academia.
 7. Nuevos Temas de 6.º deben incorporarse de forma compatible con este flujo.
+
+### 6.1 Sincronización de recorridos específicos · candidata #284
+
+Contrato aprobado: [Issue #284](https://github.com/jperdomo12/academia-gloria/issues/284). Corrección de interfaz posterior a #282/#283; no cambia actividades, contratos de sesión/evidencia, permisos ni histórico.
+
+| Recurso seleccionado | Campo aplicable |
+|---|---|
+| 6.º · Matemáticas · Me preparo para los problemas, URL específica | Solo recorrido Matemáticas: Gaudem / Compruebo |
+| 6.º · Sociales · Me preparo para Sociales · Primera evaluación, URL específica | Solo recorrido Sociales: completo / impuestos / dinero / publicidad |
+| Puente de 5.º a 6.º u otro Tema ordinario | Ninguno |
+| Tema vacío, materia/curso cambiados o modo manual sin URL específica | Ninguno |
+
+Causas confirmadas en código: `label {display:grid}` no tenía una regla de autor que respetara `hidden`; `establecerRecurso` cambiaba la URL sin notificar al formulario. La reproducción contra main `dd96be1…` conserva Gaudem en el resumen al seleccionar Puente. La captura del Product Owner aporta la evidencia visual; la reproducción local fue DOM, no navegador renderizado.
+
+La candidata aplica `#formTarea [hidden]{display:none!important}` sin cambiar el display general de etiquetas ni otros formularios. El catálogo notifica los cambios de ruta y el formulario agrupa los eventos en una microtarea que lee el estado final para actualizar los dos selectores, resumen, título, criterio y vista previa de forma coherente. La ruta temporal vacía durante restauración no se notifica como una nueva selección: se conserva el recorrido guardado hasta terminar la carga. Las respuestas de catálogos anteriores se invalidan por tokens al cambiar curso/materia o volver a editar, sin descartar la petición de edición más reciente.
+
+Los objetivos/criterios automáticos siguen el patrón ya usado en los demás módulos: solo se sustituyen si están vacíos o coinciden con el último texto automático. La descripción automática se reconoce también al editar; las personalizaciones adultas se conservan. Consulta conserva textos históricos y controles no editables. El criterio serializado depende únicamente del curso/materia/recurso/recorrido actuales, nunca de que el campo anterior siguiera visible. Renueva las referencias de caché del HTML, CSS, controlador y cadena de importación del catálogo.
+
+Validación disponible: 65/65 Node y siete suites DOM simulado. Transiciones Preparación→Puente→Preparación, Sociales→Impuestos→Sociales, cambios de curso/materia, cargas tardías y ediciones consecutivas, manual, restauración Gaudem/ensayo/Sociales, consulta y textos personalizados. Se ejecutan el catálogo, los handlers, la vista previa y `recogerFormulario` reales; se comprueban filtros y cantidad correspondientes. Regresiones de Matemáticas, Sociales, Dictado y English; sin cambios en sus bancos, motores ni sesiones.
+
+**Pendiente:** Chromium no inicia (`socket() failed: Operation not permitted`). La suite de navegador contiene comprobación real de `getComputedStyle`/visibilidad y cinco anchos (320/390/768/1024/1440), pero no se declara superada. DOM y análisis CSS no sustituyen esa validación ni certifican cuentas/Rules de producción. Rama `fix/misiones-recorridos-sincronizados-284`; **no integrar ni publicar sin aprobación expresa del Product Owner**.
+
 
 ---
 
