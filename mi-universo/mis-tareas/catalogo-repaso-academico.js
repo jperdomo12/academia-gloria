@@ -639,9 +639,9 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       const documento = await leerHtml(new URL("index.html", baseCurso), "no se pudo leer el curso");
       if (token !== tokenCargaMaterias) return;
 
-      materias = extraerMaterias(documento, baseCurso);
-      materias = await incorporarZonasComoMaterias(documento, baseCurso, materias);
+      const materiasCurso = await incorporarZonasComoMaterias(documento, baseCurso, extraerMaterias(documento, baseCurso));
       if (token !== tokenCargaMaterias) return;
+      materias = materiasCurso;
 
       habilitarSelect(materiaSelect, true);
 
