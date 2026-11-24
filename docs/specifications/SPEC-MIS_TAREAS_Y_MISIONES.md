@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.14 |
+| **Versión** | 2.15 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.15 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #277/#281: dos objetivos de preparación matemática, evidencia agregada de bloques distintos de la misma vuelta y progreso 1/2→2/2. Sin cambios del recurso de Sociales. Pendiente aprobación/integración; navegador real bloqueado. |
 | 2.14 | 24/11/2026 | Product Owner + AI Collaborator | Cierra #278 publicado: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 2.13 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: recorrido formativo exacto de Sociales en filtros existentes, sesión completa idempotente, evidencia y revisión familiar. Sin nueva Prueba, nota ni colecciones. Pendiente de aprobación/integración y prueba real; #277 fuera de alcance. |
 | 2.12 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #235/Pages #844 success: Segunda Semilla condicional publicada, HTML/JS públicos idénticos a los probados y suite V1 ampliada superada. |
@@ -275,6 +276,20 @@ Compatibilidad: no hay migraciones ni evidencias retrospectivas. Las Misiones an
 `motor-practica-verbal.js` activa `registroFormativo: true` únicamente para este recurso junto a `soloPractica: true`; la opción queda desactivada por defecto. El guardado reutiliza `sesiones-academicas.js`: un `intentoId` estable, identidad esperada, sesión completa inmutable y enlace de evidencia idempotente. El repaso posterior de dudas no modifica la sesión original ni genera otra evidencia. Un fallo al enlazar se informa separadamente del guardado correcto y permite reintentar el mismo intento cuando falla la red. Vista previa y consulta no registran trabajo.
 
 Validación: pruebas Node y DOM simulado de cuatro recorridos, filtros exactos, cierre, edición, apoyos, parciales, identidades, reenvíos y visores. La revisión renderizada, permisos desplegados y recorrido autenticado real siguen pendientes por bloqueo de Chromium del entorno; no se declara estabilidad. Matemáticas #277 no se ha implementado en esta entrega.
+
+---
+
+### 5.6 Preparación de problemas de Matemáticas · candidata #277/#281
+
+Propietario del contenido/contrato de ejecución: `SPEC-MATEMATICAS_6TO_PREPARACION_PROBLEMAS_NOV2026.md` 1.6 §3–4. Reutiliza Repaso académico y el catálogo real, sin un nuevo tipo ni Tema permanente.
+
+Gestión ofrece dos objetivos independientes para el mismo destino: `gaudem` (5 problemas, una evidencia completa) y `ensayo` (10 problemas en dos bloques, dos evidencias). Criterio/filtros y `actividadId` están definidos en la SPEC propietaria; el formulario los deriva de los metadatos reales del recurso. Mi Camino abre el objetivo asignado y muestra 1/2 o 2/2 bloques; no admite cierre manual sin el objetivo respaldado.
+
+Extensión optativa del mecanismo general: cuando el criterio declara `bloquesPorVuelta`, la transacción exige bloque completo/distinto, misma vuelta y versión y conserva `progreso.avancePorVuelta` en la Misión existente. No basta con contar dos sesiones. Los consumidores sin ese criterio, incluidos Sociales #278 y Misiones de Semillas, conservan su comportamiento. El cierre exige toda `cantidadObjetivo`, no solo una evidencia.
+
+Enlace de sesión y progreso idempotentes; reintentar no duplica crédito. Trabajo de otros recorridos o posterior al cierre se guarda autónomamente. No se migran Misiones/sesiones antiguas ni se acredita retrospectivamente trabajo. Comprendo conserva su práctica autónoma; no se ofrece como tercera Misión.
+
+Estado: candidata en rama, sin integración/publicación; 63 Node y seis suites DOM simulado. Se mantienen límites de navegador/Rules y prueba real documentados en la SPEC propietaria.
 
 ---
 

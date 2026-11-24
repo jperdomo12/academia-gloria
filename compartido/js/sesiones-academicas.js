@@ -134,11 +134,13 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
 
     if(datos.resumen?.tipoEvaluacion === "practica_formativa") {
       const filtros=criterio.filtros||{};
-      if(!filtros.recorridoId || filtros.actividadId!==datos.actividadId || filtros.recorridoCompleto!==true)
+      if(!filtros.recorridoId || filtros.actividadId!==datos.actividadId || (filtros.recorridoCompleto!==true&&filtros.bloqueCompleto!==true))
         return {registrada:false,motivo:"La Misión no tiene un recorrido formativo configurado. La familia debe editarla."};
       if(filtros.recorridoId!==datos.resumen.recorridoId)
         return {registrada:false,motivo:"El recorrido realizado no es el asignado en esta Misión."};
     }
+
+    if(criterio.filtros?.bloquesPorVuelta && (!datos.resumen?.bloqueCompleto || !datos.resumen?.vueltaId))return {registrada:false,motivo:"Falta un bloque completo de la vuelta asignada."};
 
     const moduloEvidencia = texto(
       criterio.modulo,
@@ -157,7 +159,9 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
       sesionId,
       atributos: {
         actividadId: datos.actividadId,
-        ...(datos.resumen?.tipoEvaluacion === "practica_formativa" ? {recorridoId:datos.resumen.recorridoId,recorridoCompleto:datos.resumen.completa===true} : {}),
+        ...(datos.resumen?.tipoEvaluacion === "practica_formativa" ? {recorridoId:datos.resumen.recorridoId,recorridoCompleto:datos.resumen.alcance!=="bloque"&&datos.resumen.completa===true} : {}),
+        ...Object.fromEntries(["versionPlan","bloqueId","vueltaId","bloqueCompleto","bloquesPorVuelta","totalProblemasVuelta"].filter(k=>datos.resumen?.[k]!==undefined).map(k=>[k,datos.resumen[k]])),
+        ...(datos.resumen?.unidadRecorrido==="problemas"?{problemasCompletados:datos.resumen.unidadesCompletadas}:{}),
         cursoReferencia: datos.cursoReferencia,
         materia: datos.materia,
         tema: datos.tema,

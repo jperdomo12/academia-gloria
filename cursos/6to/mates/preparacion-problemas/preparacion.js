@@ -2,6 +2,13 @@ import { auth } from "../../../../compartido/firebase/firebase-config.js";
 import { ContextoUsuario } from "../../../../compartido/js/contexto-usuario.js";
 import { escuchar, detener, disponible } from "../../../../compartido/js/lector-texto.js";
 
+import { guardarSesionAcademica } from "../../../../compartido/js/sesiones-academicas.js";
+import { Academia } from "../../../../compartido/api/academia.js";
+import { META_PREPARACION, crearRegistroPreparacion } from "./recorridos.js";
+
+const parametros=new URLSearchParams(window.location.search);
+const uuid=()=>globalThis.crypto?.randomUUID?.()||`intento-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+let contexto=null,modoSesion="vista_previa",puedeRegistrar=false,mision=null;
 const $ = id => document.getElementById(id);
 const el = {
   inicio:$("inicio"),actividad:$("actividad"),cierre:$("cierre"),
@@ -13,12 +20,12 @@ const el = {
   resumen:$("resumenCierre")
 };
 let banco = null;
-const estado = { modo:null, problemas:[], indice:0, fase:0, resuelto:false, intentos:0, pistas:0, pasoConPista:false, vuelta:null, puntoEnsayo:null };
+const estado = { modo:null, problemas:[], indice:0, fase:0, resuelto:false, intentos:0, pistas:0, pasoConPista:false, vuelta:null, puntoEnsayo:null, intento:null };
 const leyenda={comprendo:"Paso 1 · Comprendo sin calcular",gaudem:"Paso 2 · Los cinco problemas de Gaudem",ensayo:"Paso 3 · Problemas nuevos"};
 const tipos=["doble","suma","reparto","grupos","comparacion"];
 
 function validarBanco(b){
-  if(!b || b.gaudem?.length!==5 || b.calentamiento?.length!==4 || b.ensayos?.length!==20)
+  if(!b || b.gaudem?.length!==5 || b.calentamiento?.length!==4 || b.ensayos?.length!==10)
     throw new Error("El banco de problemas está incompleto.");
   const todos=[...b.gaudem,...b.ensayos];
   if(new Set(todos.map(p=>p.id)).size!==todos.length)throw new Error("Hay identificadores repetidos.");
@@ -42,7 +49,11 @@ function validarBanco(b){
     if(!f.enunciado||!f.pregunta||!Number.isInteger(f.correcta)||f.correcta<0||f.correcta>=f.opciones.length)
       throw new Error("Actividad de comprensión incompleta.");
   }
-  if(tipos.some(tipo=>b.ensayos.filter(p=>p.tipo===tipo).length!==4))throw new Error("Cada familia necesita cuatro variantes.");
+  if(b.meta.versionPlan!=="10x2-v1"||[1,2].some(i=>b.ensayos.filter(p=>p.bloque===i).length!==5))throw new Error("El plan necesita dos bloques de cinco.");
+  for(const p of b.ensayos.filter(p=>p.tipo==="doble"&&p.preguntaFinal)){
+    if(!["total","restante"].includes(p.preguntaFinal)||!p.grupoDoble)throw new Error("Doble encadenado incompleto.");
+    if(p.preguntaFinal==="restante"&&(!Number.isInteger(p.retiradas)||p.retiradas<0||p.retiradas>p.a*2))throw new Error("Retirada no válida.");
+  }
 }
 
 function eleccion(pregunta,opciones,correcta,pista,explicacion){
@@ -54,6 +65,26 @@ function numero(pregunta,valor,pista,explicacion){
 function fases(p){
   if(p.pregunta){
     return [eleccion(p.pregunta,p.opciones,p.correcta,p.pista,p.explicacion)];
+  }
+  if(p.tipo==="doble"&&p.preguntaFinal){
+    const resta=p.preguntaFinal==="restante",doble=p.a*2,final=resta?doble-p.retiradas:p.a+doble;
+    return [
+      eleccion("¿Qué pide la pregunta final?",[
+        "Solo la cantidad de referencia.",
+        resta?"Las plantas de pimiento que quedan después de vender.":"El total de libros de las dos secciones.",
+        "Solo el doble, sin hacer nada más."
+      ],1,"Vuelve a leer la última pregunta de la historia.",resta?"Buscamos lo que queda del grupo doble, no las plantas de tomate.":"Buscamos el total de ambas secciones, no solo los libros de ciencia."),
+      eleccion("¿Qué pasos necesitamos para responder?",[
+        "Sumar dos unidades a la referencia y terminar.",
+        resta?"Calcular el doble y restarle las plantas de pimiento vendidas.":"Calcular el doble y sumarlo a los libros de aventuras.",
+        resta?"Restar las plantas vendidas de las plantas de tomate.":"Calcular el doble y darlo como total de las dos secciones."
+      ],1,"El doble son dos grupos iguales a la referencia. Después falta responder la pregunta final.",resta?"Primero calculamos las plantas de pimiento. Después descontamos las vendidas de ese grupo.":"Primero calculamos los libros de ciencia. Después reunimos ciencia y aventuras."),
+      numero((p.unidad==="plantas"?"¿Cuántas ":"¿Cuántos ")+p.grupoDoble+" hay antes de "+(resta?"vender?":"reunir ambas secciones?"),doble,
+        "Calcula "+p.a+" × 2.",p.a+" × 2 = "+doble+" "+p.grupoDoble+". Aún falta "+(resta?"descontar las plantas vendidas.":"sumar los libros de aventuras.")),
+      numero(resta?"¿Cuántas plantas de pimiento quedan?":"¿Cuántos libros hay en total entre ambas secciones?",final,
+        resta?"Resta "+p.retiradas+" del grupo doble que acabas de calcular.":"Suma la cantidad de aventuras a la cantidad de ciencia que acabas de calcular.",
+        (resta?doble+" − "+p.retiradas:p.a+" + "+doble)+" = "+final+" "+p.unidad+". Ahora sí respondemos la pregunta final.")
+    ];
   }
   if(p.tipo==="doble")return [
     eleccion("¿Qué significa «el doble» en esta historia?",[
@@ -141,8 +172,7 @@ function mezclar(lista,azar=Math.random){
   return copia;
 }
 function crearPlanEnsayo(ensayos,azar=Math.random){
-  const familias=tipos.map(tipo=>mezclar(ensayos.filter(p=>p.tipo===tipo),azar));
-  return Array.from({length:4},(_,i)=>mezclar(familias.map(f=>f[i]),azar));
+  return [1,2].map(bloque=>mezclar(ensayos.filter(p=>p.bloque===bloque),azar));
 }
 function guardarPuntoEnsayo(){
   if(estado.modo==="ensayo")estado.puntoEnsayo={indice:estado.indice,fase:estado.fase,resuelto:estado.resuelto,pistas:estado.pistas};
@@ -150,6 +180,7 @@ function guardarPuntoEnsayo(){
 function irInicio(){
   guardarPuntoEnsayo();
   mostrarPanel("inicio");
+  actualizarModoSesion();
   $("tituloInicio").focus({preventScroll:true});
 }
 function iniciar(modo){
@@ -158,13 +189,18 @@ function iniciar(modo){
   estado.modo=modo;
   estado.indice=0;estado.fase=0;estado.resuelto=false;estado.intentos=0;estado.pistas=0;estado.pasoConPista=false;
   if(modo==="ensayo"){
-    if(!estado.vuelta)estado.vuelta={bloques:crearPlanEnsayo(banco.ensayos),bloque:0,completados:new Set(),bloqueTerminado:false};
+    if(!estado.vuelta)estado.vuelta={id:uuid(),bloques:crearPlanEnsayo(banco.ensayos),bloque:0,completados:new Set(),bloqueTerminado:false,intentos:new Map()};
     estado.problemas=estado.vuelta.bloques[estado.vuelta.bloque];
     if(estado.puntoEnsayo)Object.assign(estado,estado.puntoEnsayo);
-    if(estado.vuelta.bloqueTerminado){cerrarRecorrido();return;}
+    if(estado.vuelta.bloqueTerminado){estado.intento=estado.vuelta.intentos.get(estado.vuelta.bloque);cerrarRecorrido();return;}
   }else estado.problemas=modo==="comprendo"?banco.calentamiento:banco.gaudem;
+  if(modo==="ensayo"){
+    if(!estado.vuelta.intentos.has(estado.vuelta.bloque))estado.vuelta.intentos.set(estado.vuelta.bloque,nuevoIntento(modo));
+    estado.intento=estado.vuelta.intentos.get(estado.vuelta.bloque);
+  }else estado.intento=nuevoIntento(modo);
   const resuelto=estado.resuelto;
   mostrarPanel("actividad");
+  actualizarModoSesion();
   presentar(resuelto);
 }
 function actualizarProgreso(){
@@ -176,11 +212,11 @@ function actualizarProgreso(){
   el.progreso.setAttribute("aria-label",ensayo?"Problemas completados en este bloque":"Problemas completados");
   $("progresoVuelta").hidden=!ensayo;
   if(ensayo){
-    $("bloqueActual").textContent="Bloque "+(v.bloque+1)+" de 4";
-    $("contadorVuelta").textContent=v.completados.size+" de 20 problemas completados";
-    $("barraVuelta").style.width=(100*v.completados.size/20)+"%";
+    $("bloqueActual").textContent="Bloque "+(v.bloque+1)+" de 2";
+    $("contadorVuelta").textContent=v.completados.size+" de 10 problemas completados";
+    $("barraVuelta").style.width=(100*v.completados.size/10)+"%";
     $("totalVuelta").setAttribute("aria-valuenow",String(v.completados.size));
-    document.querySelector('[data-iniciar="ensayo"]').textContent=v.completados.size===20?"Ver mi vuelta completada":"Continuar mi práctica";
+    document.querySelector('[data-iniciar="ensayo"]').textContent=v.completados.size===10?"Ver mi vuelta completada":"Continuar mi práctica";
   }
 }
 
@@ -233,6 +269,7 @@ function representarRelacion(p){
   }else if(p.tipo==="doble"){
     agregarFila("Un grupo",[{texto:p.a+" "+p.unidad,peso:1},{texto:"",peso:1,vacio:true}]);
     agregarFila("Dos grupos",[{texto:p.a+" "+p.unidad,peso:1},{texto:p.a+" "+p.unidad,peso:1}]);
+    if(p.preguntaFinal){const final=document.createElement("p");final.className="visual-nota";final.textContent=p.preguntaFinal==="restante"?"Del grupo doble se venden "+p.retiradas+" plantas → quedan ¿? plantas de pimiento. No se descuentan del grupo de tomate.":"Aventuras + ciencia → ¿? libros en total. El doble es solo una parte del total.";destino.append(final);}
   }
   const nota=document.createElement("p");
   nota.className="visual-nota";
@@ -288,7 +325,10 @@ function evaluar(event){
     return;
   }
   estado.intentos++;
+  const registro=registroFaseActual();
+  const respuestaTexto=f.tipo==="opcion"?f.opciones[dada]:String(dada);
   const acierto=dada===(f.tipo==="opcion"?f.correcta:f.valor);
+  registro.intentos.push({respuesta:dada,respuestaTexto,correcta:acierto,ocurridaEn:new Date().toISOString()});
   if(!acierto){
     mensaje("Todavía no encaja con la pregunta. Vuelve a la historia y comprueba qué cantidad representa cada número. Puedes pedir una pista.","revisar");
     return;
@@ -321,31 +361,87 @@ function siguiente(){
 }
 function cerrarRecorrido(){
   const ensayo=estado.modo==="ensayo",v=estado.vuelta;
-  const fin=ensayo&&v.completados.size===20;
-  $("tituloCierre").textContent=ensayo?(fin?"¡Completaste los cuatro bloques!":"¡Completaste el bloque "+(v.bloque+1)+" de 4!"):"¡Terminaste tu recorrido!";
-  el.resumen.textContent=ensayo?(fin?"20 de 20 problemas completados. Practicaste las cinco familias en cuatro bloques, sin repetir problemas.":v.completados.size+" de 20 problemas completados. Puedes seguir con el bloque siguiente o descansar."):
+  const fin=ensayo&&v.completados.size===10;
+  $("tituloCierre").textContent=ensayo?(fin?"¡Completaste los dos bloques!":"¡Completaste el bloque "+(v.bloque+1)+" de 2!"):"¡Terminaste tu recorrido!";
+  el.resumen.textContent=ensayo?(fin?"10 de 10 problemas completados. Razonaste con dobles encadenados, comparaciones, repartos y grupos, sin repetir problemas.":v.completados.size+" de 10 problemas completados. Puedes seguir con el bloque siguiente o descansar."):
     estado.modo==="comprendo"?"Exploraste cuatro ideas matemáticas sin correr a hacer cuentas.":"Recorriste los cinco problemas de la ficha del colegio.";
   if(!ensayo)el.resumen.textContent+=estado.pistas?" Pediste "+estado.pistas+" pista"+(estado.pistas===1?"":"s")+" para seguir aprendiendo.":" Avanzaste sin pedir pistas, pero siempre puedes utilizarlas cuando las necesites.";
   $("notaDescanso").hidden=!ensayo;
   $("repetir").textContent=ensayo?(fin?"Empezar otra vuelta":"Continuar con el bloque siguiente"):"🔄 Repetir este recorrido";
   $("otraRuta").textContent=ensayo?"Descansar / volver al inicio":"Elegir otro recorrido";
   mostrarPanel("cierre");
+  if(estado.intento){estado.intento.completa=true;guardarRecorrido(estado.intento);}
+  actualizarModoSesion();
 }
 function continuarRecorrido(){
   if(estado.modo!=="ensayo"){iniciar(estado.modo);return;}
   if(!estado.vuelta.bloqueTerminado)return;
-  if(estado.vuelta.completados.size===20)estado.vuelta=null;
+  if(estado.vuelta.completados.size===10)estado.vuelta=null;
   else {estado.vuelta.bloque++;estado.vuelta.bloqueTerminado=false;}
   estado.puntoEnsayo=null;
   estado.modo=null;
   iniciar("ensayo");
 }
 
+function nuevoIntento(recorridoId){
+  return {id:uuid(),recorridoId,bloqueId:recorridoId==="ensayo"?estado.vuelta.bloque+1:null,vueltaId:recorridoId==="ensayo"?estado.vuelta.id:null,
+    identidad:{personaId:contexto.personaActiva.personaId,actorUserId:contexto.usuario.userId},modo:modoSesion,
+    inicioCliente:new Date().toISOString(),fases:new Map(),problemas:estado.problemas,completa:false,payload:null,promesa:null,resultado:null};
+}
+function registroFaseActual(){
+  const key=`${estado.problemas[estado.indice].id}:${estado.fase}`,intento=estado.intento;
+  if(!intento.fases.has(key))intento.fases.set(key,{intentos:[],pistas:[]});
+  return intento.fases.get(key);
+}
+function actualizarModoSesion(){
+  $("tituloModo").textContent=modoSesion==="aprendizaje"?"Sesión de aprendizaje · sin nota":"Vista previa · no se guarda";
+  $("descripcionModo").textContent=modoSesion==="aprendizaje"?"Al completar un recorrido o bloque se guardarán tus respuestas, intentos y ayudas.":"Puedes explorar todas las actividades sin registrar sesiones ni completar Misiones.";
+  $("botonModo").disabled=!puedeRegistrar||!el.actividad.hidden;
+  $("botonModo").textContent=modoSesion==="aprendizaje"?"Cambiar a Vista previa":"Usar como sesión de aprendizaje";
+}
+async function guardarRecorrido(intento){
+  if(!intento.completa||intento.promesa)return;
+  if(intento.modo!=="aprendizaje"||modoSesion!=="aprendizaje"){$("estadoGuardado").textContent="Vista previa: este recorrido no guarda datos ni completa Misiones.";$("reintentarGuardado").hidden=true;$("verTrabajo").hidden=true;$("repetir").disabled=false;return;}
+  if(intento.resultado?.guardado&&(!intento.resultado.misionId||intento.resultado.evidenciaMision?.registrada)){mostrarRegistroGuardado(intento,intento.resultado);return;}
+  $("repetir").disabled=true;
+  $("estadoGuardado").textContent="Guardando el trabajo realizado…";$("reintentarGuardado").hidden=true;$("verTrabajo").hidden=true;
+  intento.promesa=(async()=>{
+    if(!intento.payload){
+      let vinculo="";
+      if(parametros.get("misionId")){
+        const actual=await Academia.tareas.obtener(parametros.get("misionId"));
+        if(actual&&["pendiente","asignada","en_curso","necesita_ayuda"].includes(actual.estado)&&actual.criterioCumplimiento?.filtros?.actividadId===META_PREPARACION.actividadId&&actual.criterioCumplimiento.filtros.recorridoId===intento.recorridoId)vinculo=actual.id||parametros.get("misionId");
+      }
+      intento.payload=crearRegistroPreparacion({intento,problemas:intento.problemas,fasesDe:fases,finCliente:new Date().toISOString(),misionId:vinculo});
+    }
+    return guardarSesionAcademica(intento.payload);
+  })();
+  try{
+    const r=await intento.promesa;intento.resultado=r;
+    if(estado.intento!==intento)return;
+    mostrarRegistroGuardado(intento,r);
+  }catch(error){if(estado.intento===intento){$("estadoGuardado").textContent="No se ha confirmado el guardado: "+error.message;$("reintentarGuardado").hidden=false;}}
+  finally{intento.promesa=null;}
+}
+function mostrarRegistroGuardado(intento,r){
+  if(estado.intento!==intento)return;
+  const errorEnlace=r.misionId&&!r.evidenciaMision?.registrada;
+    $("estadoGuardado").textContent=errorEnlace?"Sesión guardada, pero no se aplicó a la Misión: "+(r.evidenciaMision?.error||r.evidenciaMision?.motivo||"no se pudo enlazar."):
+      r.misionId?(r.evidenciaMision.objetivoAlcanzado?"Trabajo guardado. La Misión pasa a revisión familiar.":"Bloque guardado: 1 de 2. La Misión sigue en curso hasta completar el otro bloque de esta vuelta."):
+      "Recorrido completo guardado como trabajo autónomo, sin nota.";
+    $("reintentarGuardado").hidden=!errorEnlace;
+    if(r.guardado){const url=new URL("../../../../mi-universo/mis-tareas/resultado-academico.html",import.meta.url);url.searchParams.set("sesionId",r.sesionId);if(r.misionId)url.searchParams.set("misionId",r.misionId);url.searchParams.set("volver",window.location.pathname+window.location.search);$("verTrabajo").href=url.href;$("verTrabajo").hidden=false;}
+  $("repetir").disabled=!r.guardado||Boolean(errorEnlace);
+}
+$("reintentarGuardado").addEventListener("click",()=>{if(estado.intento)guardarRecorrido(estado.intento);});
+$("botonModo").addEventListener("click",()=>{if(!puedeRegistrar||!el.actividad.hidden)return;modoSesion=modoSesion==="aprendizaje"?"vista_previa":"aprendizaje";estado.vuelta=null;estado.puntoEnsayo=null;estado.intento=null;$("reintentarGuardado").hidden=true;$("repetir").disabled=false;actualizarModoSesion();});
+
 el.formulario.addEventListener("submit",evaluar);
 el.continuar.addEventListener("click",siguiente);
 el.pista.addEventListener("click",()=>{
   if(estado.resuelto)return;
   const f=preguntaActual();
+  const registro=registroFaseActual();registro.pistas.push({texto:f.pista,antesDeIntento:registro.intentos.length,ocurridaEn:new Date().toISOString()});
   el.notaPista.textContent="💡 "+f.pista;el.notaPista.hidden=false;
   if(!estado.pasoConPista){estado.pistas++;estado.pasoConPista=true;}
 });
@@ -365,11 +461,32 @@ try{
   if(!auth.currentUser){
     window.location.replace(new URL("../../../../login.html",import.meta.url).href);
   }else{
-    await ContextoUsuario.inicializar();
+    contexto=await ContextoUsuario.inicializar();
+    puedeRegistrar=Boolean(contexto.esPersonaPropia||await ContextoUsuario.esAdministrador());
+    modoSesion=contexto.esPersonaPropia&&/(^|\D)6(?:\D|$)|sexto/i.test(contexto.personaActiva.curso||"")?"aprendizaje":"vista_previa";
+    if(["vista_previa","preview","consulta"].includes(parametros.get("modo")))modoSesion="vista_previa";
+    if(parametros.get("modo")==="aprendizaje"&&puedeRegistrar)modoSesion="aprendizaje";
     const respuesta=await fetch(new URL("./problemas.json",import.meta.url),{cache:"no-store"});
     if(!respuesta.ok)throw new Error("No se pudieron recuperar los ejercicios.");
     banco=await respuesta.json();
     validarBanco(banco);
+    if(parametros.get("misionId")){
+      mision=await Academia.tareas.obtener(parametros.get("misionId"));
+      const filtros=mision?.criterioCumplimiento?.filtros||{};
+      if(filtros.actividadId===META_PREPARACION.actividadId&&["gaudem","ensayo"].includes(filtros.recorridoId)){
+        $("contextoMision").hidden=false;$("contextoMision").textContent="Misión: "+(filtros.recorridoId==="gaudem"?"Mi ficha de Gaudem · 5 problemas":"Compruebo que puedo · 10 problemas en 2 bloques")+". Los otros recorridos no cumplen esta Misión.";
+        const avance=mision.progreso?.avancePorVuelta;
+        if(filtros.recorridoId==="ensayo"&&avance?.versionPlan===META_PREPARACION.versionPlan&&avance.bloquesCompletados?.length===1&&[1,2].includes(avance.bloquesCompletados[0])){
+          const hecho=avance.bloquesCompletados[0];
+          estado.vuelta={id:avance.vueltaId,bloques:crearPlanEnsayo(banco.ensayos),bloque:hecho===1?1:0,completados:new Set(banco.ensayos.filter(p=>p.bloque===hecho).map(p=>p.id)),bloqueTerminado:false,intentos:new Map()};
+          $("contextoMision").textContent+=" Ya consta un bloque completo guardado: continuaremos con el que falta. Los problemas incompletos se reinician.";
+        }
+      }
+    }
+    actualizarModoSesion();
+    document.querySelectorAll("[data-iniciar]").forEach(btn=>btn.disabled=false);
+    const asignado=mision?.criterioCumplimiento?.filtros?.actividadId===META_PREPARACION.actividadId?mision.criterioCumplimiento.filtros.recorridoId:null;
+    if(["gaudem","ensayo"].includes(asignado))iniciar(asignado);
   }
 }catch(error){
   console.error("Preparación de problemas:",error);

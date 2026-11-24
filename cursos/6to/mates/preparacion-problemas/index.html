@@ -31,6 +31,7 @@
       </div>
     </header>
 
+    <aside class="nota modo-sesion"><strong id="tituloModo">Preparando la actividad…</strong><p id="descripcionModo"></p><button id="botonModo" type="button" class="btn btn-quieto" disabled>Cambiar modo</button><p id="contextoMision" role="status" hidden></p></aside>
     <section id="inicio" class="panel" aria-labelledby="tituloInicio">
       <p class="sobrelinea">Mi ruta de hoy</p>
       <h2 id="tituloInicio" tabindex="-1">Elige cómo quieres practicar</h2>
@@ -41,21 +42,21 @@
           <p class="tarjeta-paso">Paso 1 · sin hacer cuentas</p>
           <h3>Comprendo la historia</h3>
           <p>¿Qué significa «más que», «menos que» o «el doble»? Empieza por las ideas.</p>
-          <button class="btn btn-principal" type="button" data-iniciar="comprendo">Descubrir las relaciones</button>
+          <button class="btn btn-principal" type="button" data-iniciar="comprendo" disabled>Descubrir las relaciones</button>
         </article>
         <article class="tarjeta">
           <div class="emoji" aria-hidden="true">📘</div>
           <p class="tarjeta-paso">Paso 2 · cinco problemas</p>
           <h3>Mi ficha de Gaudem</h3>
           <p>Los cinco problemas del material que está utilizando Gloria, guiados paso a paso.</p>
-          <button class="btn btn-principal" type="button" data-iniciar="gaudem">Practicar los cinco</button>
+          <button class="btn btn-principal" type="button" data-iniciar="gaudem" disabled>Practicar los cinco</button>
         </article>
         <article class="tarjeta">
           <div class="emoji" aria-hidden="true">🌟</div>
           <p class="tarjeta-paso">Paso 3 · nuevas situaciones</p>
           <h3>Compruebo que puedo</h3>
-          <p><strong>20 problemas · 4 bloques de 5.</strong> Una situación de cada familia en cada bloque, sin repetir. No tienes que hacerlos todos de una vez.</p>
-          <button class="btn btn-principal" type="button" data-iniciar="ensayo">Empezar el primer bloque</button>
+          <p><strong>10 problemas · 2 bloques de 5.</strong> Dobles encadenados, comparaciones, repartos y grupos, sin repetir. No tienes que hacerlos todos de una vez.</p>
+          <button class="btn btn-principal" type="button" data-iniciar="ensayo" disabled>Empezar el primer bloque</button>
         </article>
       </div>
       <div class="complementarios">
@@ -86,7 +87,7 @@
       </div>
       <div id="progresoVuelta" class="progreso-vuelta" hidden>
         <div class="progreso-vuelta__texto"><strong id="bloqueActual"></strong><span id="contadorVuelta" role="status" aria-live="polite"></span></div>
-        <div id="totalVuelta" class="progreso progreso-total" role="progressbar" aria-label="Problemas completados en la vuelta" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><div id="barraVuelta"></div></div>
+        <div id="totalVuelta" class="progreso progreso-total" role="progressbar" aria-label="Problemas completados en la vuelta" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="barraVuelta"></div></div>
         <p class="texto-suave">A tu ritmo: comprendemos, relacionamos, calculamos y comprobamos.</p>
       </div>
       <div class="progreso" role="progressbar" aria-label="Problemas completados" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progreso">
@@ -124,8 +125,9 @@
       <p class="sobrelinea">Mi esfuerzo de hoy</p>
       <h2 id="tituloCierre" tabindex="-1">¡Terminaste tu recorrido!</h2>
       <p id="resumenCierre"></p>
+      <p id="estadoGuardado" role="status" aria-live="polite"></p><div class="acciones acciones-cierre"><button id="reintentarGuardado" type="button" class="btn btn-secundario" hidden>Reintentar guardado/enlace</button><a id="verTrabajo" class="btn btn-secundario" hidden>Ver mi trabajo →</a></div>
       <p class="texto-suave">Lo importante no es hacerlo a la primera: es comprender qué ocurre, probar y aprender a comprobarlo.</p>
-      <p id="notaDescanso" class="nota" hidden>Tu recorrido se conserva mientras esta página siga abierta. Si recargas o sales de ella, empezarás una vuelta nueva. Puedes descansar aquí y continuar después.</p>
+      <p id="notaDescanso" class="nota" hidden>Los bloques completos se guardan en sesión de aprendizaje. Si recargas, los problemas incompletos se reinician. En una Misión retomamos el bloque completo registrado; en práctica libre empieza otra vuelta. Puedes descansar aquí.</p>
       <div class="acciones acciones-cierre">
         <button id="repetir" type="button" class="btn btn-secundario">🔄 Repetir este recorrido</button>
         <button id="otraRuta" type="button" class="btn btn-principal">Elegir otro recorrido</button>
