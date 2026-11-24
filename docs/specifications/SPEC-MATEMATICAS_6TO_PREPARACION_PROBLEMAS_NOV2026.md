@@ -7,8 +7,8 @@
 | Propietario | Contenido curricular Matemáticas · 6.º |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Refuerzo temporal de interpretación y resolución de problemas de Matemáticas de 6.º |
-| Versión | 1.6 |
-| Estado | Candidata #277 + #281 implementada en rama · pendiente de revisión/aprobación · no integrada ni publicada |
+| Versión | 1.7 |
+| Estado | #277 + #281 aprobados, integrados, publicados y verificados · prueba real/familiar pendiente |
 | Fecha | 24/11/2026 |
 | Origen | Ficha escolar de cinco problemas y ampliación formativa aprobada por el Product Owner; examen confirmado el 26/11/2026 |
 
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.7 | 24/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba #282; integrada en `13d5dd11953028a2996d20df5c9a08c967332d7d`. Pages #886/run `45489952502` success y doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 63/63 Node y las dos suites DOM de Matemáticas repetidas antes del merge; las seis suites DOM del head aprobado superadas. Sin integración/publicación pendiente; navegador/voz/permisos reales y prueba familiar pendientes, no estable. |
 | 1.6 | 24/11/2026 | Product Owner + AI Collaborator | Implementa candidata coordinada #281/#277: 10 problemas curados en 2 bloques, dos dobles encadenados, dos Misiones independientes, sesiones formativas y evidencia de dos bloques distintos de misma vuelta. Recuperación de bloque completo desde evidencia, sin guardar parciales; histórico preservado. 63/63 Node y seis suites DOM simulado; navegador bloqueado. Pendiente aprobación, no merge/Pages ni estabilidad. |
 | 1.5 | 17/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba #260; integrada en c1e31af39f4ba7dd4408132ecdfc38202fb97494. Pages #869 / ejecución 44143618928 completada con éxito. Seis archivos de producto públicos HTTP 200 e idénticos a la versión validada; cierre técnico. Uso real con Gloria y voz del dispositivo pendientes; no se declara estable. |
 | 1.4 | 17/11/2026 | Product Owner + AI Collaborator | Implementación candidata del contrato v1.3: 20 originales, cuatro bloques sin repetición, progreso por problema completo y pausa/reanudación en memoria; relación más/menos y total/restante, unidad de libros y fecha 26/11. Nueve pruebas Node y navegador real superados; Gaudem y calentamiento conservados. Pendiente aprobación de PR; sin merge/Pages ni estabilidad familiar. |
@@ -78,7 +79,7 @@ No se premia la rapidez, no se utiliza cronómetro, existen pistas voluntarias y
 - **Grupos iguales:** distinguir cantidad de grupos de elementos por grupo.
 - **Comparación «menos/más que»:** descubrir primero el valor desconocido y **después responder la pregunta real**: sumar ambos precios cuando piden el total, o restar al presupuesto el precio del artículo comprado cuando preguntan cuánto queda. No confundir diferencia/incremento con precio final ni resultado intermedio con respuesta solicitada.
 
-**Antecedente histórico 20/4 (PR #260), sustituido por #281 en la candidata 1.6:** cuatro problemas de comparación a lo largo de los cuatro bloques, **dos «menos que»** (`e5a` y `e5b`, ya existentes, segundo precio mediante resta y **suma final** del total) y **dos «más que»** (`e5c`: segundo precio mediante suma y **suma final** del total; `e5d`: segundo precio mediante suma y **resta final** del presupuesto restante). Exactamente **una comparación por bloque**, con ambas preguntas finales representadas. El problema escolar `g5` del Paso 2 conserva su enunciado original «menos que» intacto. No es un quinto tipo de problema ni incrementa las 20 variantes.
+**Antecedente histórico 20/4 (PR #260), sustituido por #281 mediante #282:** cuatro problemas de comparación a lo largo de los cuatro bloques, **dos «menos que»** (`e5a` y `e5b`, ya existentes, segundo precio mediante resta y **suma final** del total) y **dos «más que»** (`e5c`: segundo precio mediante suma y **suma final** del total; `e5d`: segundo precio mediante suma y **resta final** del presupuesto restante). Exactamente **una comparación por bloque**, con ambas preguntas finales representadas. El problema escolar `g5` del Paso 2 conserva su enunciado original «menos que» intacto. No es un quinto tipo de problema ni incrementa las 20 variantes.
 
 **Calidad pedagógica:** mantener formulaciones naturales y suficientemente diversas para evitar aprendizaje mecánico de plantillas. Adaptar la formulación a la comprensión lingüística: instrucciones breves y sin ambigüedad, una idea importante por pregunta, lectura y relectura disponibles, apoyo visual que represente relaciones sin revelar resultados, y pistas opcionales que ayuden a identificar «qué sé / qué me preguntan / qué necesito calcular primero». Animar a verbalizar su estrategia, sin obligarla a respuestas orales ni penalizar errores o apoyos. Reducir dependencia de pistas mediante elección voluntaria, **sin ocultarlas ni retirarlas forzosamente**. Priorizar comprensión y transferencia sobre volumen o velocidad.
 
@@ -99,7 +100,7 @@ El PDF completo no se publica y este contenido no se identifica como modelo ofic
 
 ### 3.3 Compruebo que puedo · contrato aprobado #281
 
-La candidata cambia el Paso 3 publicado de 20/4 a **10 problemas en 2 bloques de 5**, según [Issue #281](https://github.com/jperdomo12/academia-gloria/issues/281). El orden puede variar dentro de cada bloque, sin repetir IDs hasta terminar los diez. No se fuerzan cinco familias por bloque ni cuatro variantes por familia.
+La PR #282 cambia el Paso 3 de 20/4 a **10 problemas en 2 bloques de 5**, según [Issue #281](https://github.com/jperdomo12/academia-gloria/issues/281). El orden puede variar dentro de cada bloque, sin repetir IDs hasta terminar los diez. No se fuerzan cinco familias por bloque ni cuatro variantes por familia.
 
 | Bloque | IDs y situaciones | Cálculos verificados |
 |---|---|---|
@@ -197,13 +198,13 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 
 **Cierre técnico:** seis archivos de producto públicos HTTP 200 e idénticos al árbol validado `b3271f38f6569fb9d80c882476669f600116dc64`. Sin desarrollo, integración o publicación técnica pendiente. Se mantiene el contrato funcional aprobado v1.3; **uso real con Gloria y voz en su dispositivo pendientes** antes de declarar estabilidad.
 
-### 8.0 Candidata actual · 24/11/2026 · #277 + #281
+### 8.0 Publicación actual · 24/11/2026 · #277 + #281
 
-Implementada en rama `feat/mates-recorridos-277-281`, base `92eb11f42f0c6e7c6d32536d1606d0d69ada2454`. **No integrada ni publicada; exige aprobación expresa del Product Owner.**
+Aprobada por el Product Owner con los límites reales informados e integrada mediante [PR #282](https://github.com/jperdomo12/academia-gloria/pull/282) en `main` `13d5dd11953028a2996d20df5c9a08c967332d7d`, desde head `9c1eae2e4ab2b1387312eefecd41d763d72b7b99` y base `92eb11f42f0c6e7c6d32536d1606d0d69ada2454`. [Pages #886](https://github.com/jperdomo12/academia-gloria/actions/runs/45489952502) success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado `07bb2ec6a84554509d50696d2e52a5fb41e65bb6`. **Sin integración/publicación pendiente de #277/#281; prueba real/familiar pendiente.**
 
 Validaciones ejecutadas: **63/63 Node** (11 de banco/fases, 8 de sesiones/API reales con SDK controlado y 44 de regresión de Sociales/Dictado/English); seis suites DOM simulado (dos nuevas de Matemáticas y las cuatro de Sociales). Comprueban independencia A/B, progreso 1/2→2/2, bloque duplicado/otra vuelta/20x4, reenvío concurrente/respuesta perdida, Vista previa, parciales e identidad; ejecución completa, pausa, recarga con bloque guardado, sesión autónoma posterior y visor de ambas evidencias. Catálogo local/Pages, objetivos/edición/consulta, retornos e histórico; hash de los veinte contenidos originales y hash de todas las fases Gaudem preservados. Sintaxis/imports/diff revisados.
 
-**Límite real:** Chromium falla antes de abrir la página (`socket() failed: Operation not permitted`). La suite de navegador fue adaptada a 10/2, pero no está superada. Visual 320/390/768/1024/1440, foco/teclado nativos, escucha del dispositivo, autenticación/Rules desplegadas y validación familiar siguen pendientes. DOM/SDK/voz controlados no equivalen a esas pruebas. No se declara estabilidad ni se publica sin aprobación. Las secciones siguientes registran exclusivamente la entrega histórica del 17/11.
+**Límite real:** Chromium falla antes de abrir la página (`socket() failed: Operation not permitted`). La suite de navegador fue adaptada a 10/2, pero no está superada. Visual 320/390/768/1024/1440, foco/teclado nativos, escucha del dispositivo, autenticación/Rules desplegadas y validación familiar siguen pendientes. DOM/SDK/voz controlados no equivalen a esas pruebas. La aprobación de #282 se recibió con estos límites informados; no se declara estabilidad. Las secciones siguientes registran exclusivamente la entrega histórica del 17/11.
 
 
 ### 8.1. Implementación y trazabilidad

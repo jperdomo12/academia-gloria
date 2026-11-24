@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.15 |
+| **Versión** | 2.16 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.16 | 24/11/2026 | Product Owner + AI Collaborator | Cierra Misiones matemáticas #277/#281 publicadas: Product Owner aprueba #282; integrada en `13d5dd11953028a2996d20df5c9a08c967332d7d`. Pages #886/run `45489952502` success y doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 63/63 Node y las dos suites DOM de Matemáticas repetidas antes del merge; las seis suites DOM del head aprobado superadas. Sin integración/publicación pendiente; navegador/voz/permisos reales y prueba familiar pendientes, no estable. |
 | 2.15 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #277/#281: dos objetivos de preparación matemática, evidencia agregada de bloques distintos de la misma vuelta y progreso 1/2→2/2. Sin cambios del recurso de Sociales. Pendiente aprobación/integración; navegador real bloqueado. |
 | 2.14 | 24/11/2026 | Product Owner + AI Collaborator | Cierra #278 publicado: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 2.13 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: recorrido formativo exacto de Sociales en filtros existentes, sesión completa idempotente, evidencia y revisión familiar. Sin nueva Prueba, nota ni colecciones. Pendiente de aprobación/integración y prueba real; #277 fuera de alcance. |
@@ -279,9 +280,9 @@ Validación: pruebas Node y DOM simulado de cuatro recorridos, filtros exactos, 
 
 ---
 
-### 5.6 Preparación de problemas de Matemáticas · candidata #277/#281
+### 5.6 Preparación de problemas de Matemáticas · #277/#281
 
-Propietario del contenido/contrato de ejecución: `SPEC-MATEMATICAS_6TO_PREPARACION_PROBLEMAS_NOV2026.md` 1.6 §3–4. Reutiliza Repaso académico y el catálogo real, sin un nuevo tipo ni Tema permanente.
+Propietario del contenido/contrato de ejecución: `SPEC-MATEMATICAS_6TO_PREPARACION_PROBLEMAS_NOV2026.md` 1.7 §3–4. Reutiliza Repaso académico y el catálogo real, sin un nuevo tipo ni Tema permanente.
 
 Gestión ofrece dos objetivos independientes para el mismo destino: `gaudem` (5 problemas, una evidencia completa) y `ensayo` (10 problemas en dos bloques, dos evidencias). Criterio/filtros y `actividadId` están definidos en la SPEC propietaria; el formulario los deriva de los metadatos reales del recurso. Mi Camino abre el objetivo asignado y muestra 1/2 o 2/2 bloques; no admite cierre manual sin el objetivo respaldado.
 
@@ -289,7 +290,7 @@ Extensión optativa del mecanismo general: cuando el criterio declara `bloquesPo
 
 Enlace de sesión y progreso idempotentes; reintentar no duplica crédito. Trabajo de otros recorridos o posterior al cierre se guarda autónomamente. No se migran Misiones/sesiones antiguas ni se acredita retrospectivamente trabajo. Comprendo conserva su práctica autónoma; no se ofrece como tercera Misión.
 
-Estado: candidata en rama, sin integración/publicación; 63 Node y seis suites DOM simulado. Se mantienen límites de navegador/Rules y prueba real documentados en la SPEC propietaria.
+Estado: PR #282 aprobada e integrada en `13d5dd11953028a2996d20df5c9a08c967332d7d`, publicada por Pages #886 success; doce archivos de producto públicos HTTP 200 e idénticos. Sin integración/publicación pendiente; 63 Node y seis suites DOM simulado superados. Se mantienen límites de navegador/Rules y prueba real documentados en la SPEC propietaria.
 
 ---
 
