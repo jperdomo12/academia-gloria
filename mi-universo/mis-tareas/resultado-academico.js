@@ -15,6 +15,7 @@ const misionId = String(parametros.get("misionId") || "").trim();
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
 const BLOQUES_CONOCIDOS = Object.freeze({
+  doble:"El doble",suma:"Reunir cantidades",reparto:"Reparto con resto",grupos:"Grupos iguales",comparacion:"Comparar cantidades",comprension:"Comprensión de la historia",
   "numeros-operaciones": "Números y operaciones",
   "fracciones-decimales": "Fracciones y decimales",
   "problemas-medidas": "Problemas y medidas",
@@ -196,7 +197,7 @@ function renderContexto(sesion) {
 
 function renderMapa(sesion, respuestas) {
   if(sesion.resumen?.tipoEvaluacion==="practica_formativa") {
-    $("mapaBloques").innerHTML=mapaSesion(sesion,respuestas).map(b=>`<article class="resultado-bloque"><h3>${escaparHTML(tituloBloque(b))}</h3><p>${numero(b.completadas)} de ${numero(b.total)} preguntas realizadas</p><p>${numero(b.correctas)} resueltas al primer intento sin pistas · ${numero(b.conPistas)} con pistas · ${numero(b.conReintentos)} con reintentos · ${numero(b.dudas)} dudas marcadas</p><p>${b.estado==="reforzar"?"Conviene volver a las ideas que necesitaron apoyo.":"Puedes seguir practicando cuando quieras."}</p></article>`).join("");
+    $("mapaBloques").innerHTML=mapaSesion(sesion,respuestas).map(b=>`<article class="resultado-bloque"><h3>${escaparHTML(tituloBloque(b))}</h3><p>${numero(b.completadas)} de ${numero(b.total)} ${sesion.resumen.unidadRecorrido?"fases":"preguntas"} realizadas</p><p>${numero(b.correctas)} resueltas al primer intento sin pistas · ${numero(b.conPistas)} con pistas · ${numero(b.conReintentos)} con reintentos · ${numero(b.dudas)} dudas marcadas</p><p>${b.estado==="reforzar"?"Conviene volver a las ideas que necesitaron apoyo.":"Puedes seguir practicando cuando quieras."}</p></article>`).join("");
     return;
   }
   const mapa = mapaSesion(sesion, respuestas);
@@ -273,7 +274,7 @@ function renderRevision(respuestas) {
       .join(" · ");
 
     if(respuesta.tipoEvidencia==="practica_formativa")return `
-      <article class="resultado-respuesta"><h3>${indice+1}. ${escaparHTML(respuesta.titulo||"Pregunta")}</h3><p>${escaparHTML(enunciado)}</p>
+      <article class="resultado-respuesta" id="respuesta-${indice}"><h3>${indice+1}. ${escaparHTML(respuesta.titulo||"Pregunta")}</h3><p>${escaparHTML(enunciado)}</p>
         <p><b>Primera respuesta:</b> ${escaparHTML(respuesta.primeraRespuesta?.respuestaTexto||"")} · ${respuesta.correctaPrimerIntento?"Correcta":"Necesitó otro intento"}</p>
         <p><b>Respuesta final:</b> ${escaparHTML(respuesta.respuestaTexto)} · Resuelta</p>
         <p>${respuesta.correcta?"Resuelta al primer intento sin pistas.":"Resuelta después de apoyos o reintentos."} ${respuesta.duda?"Duda marcada para volver a esta idea.":""}</p>
@@ -365,7 +366,14 @@ function renderResultado(sesion, contexto) {
   if(formativa){
     $("metricaCorrectas").textContent=`${sesion.resumen.preguntasCompletadas} / ${total}`;
     $("etiquetaMetricaCorrectas").textContent="preguntas realizadas";
-    $("etiquetaMetricaPorcentaje").textContent="al primer intento sin pistas";
+    $("etiquetaMetricaPorcentaje").textContent=sesion.resumen.unidadRecorrido?"fases al primer intento sin pistas":"al primer intento sin pistas";
+    if(sesion.resumen.unidadRecorrido){
+      $("metricaCorrectas").textContent=`${sesion.resumen.unidadesCompletadas} / ${sesion.resumen.totalUnidades}`;
+      $("etiquetaMetricaCorrectas").textContent=sesion.resumen.unidadRecorrido==="problemas"?"problemas realizados":"microactividades realizadas";
+      if(sesion.resumen.bloqueId)$("descripcionSesion").textContent+=` Bloque ${sesion.resumen.bloqueId} de ${sesion.resumen.bloquesPorVuelta}.`;
+      $("problemasGuardados").hidden=false;
+      $("problemasGuardados").innerHTML=`<h2>Lo que trabajaste en esta sesión</h2><ol>${(sesion.resumen.problemas||[]).map(p=>`<li><a href="#respuesta-${respuestas.findIndex(r=>r.problemaId===p.id)}">${escaparHTML(p.titulo)}</a><p>${escaparHTML(p.enunciado)}</p></li>`).join("")}</ol><p>Debajo puedes consultar cada fase: comprensión, relación, operaciones y comprobación, con sus primeras respuestas y ayudas.</p>`;
+    }
   }
   $("metricaTiempo").textContent = formatearTiempo(sesion.tiempoActivoSegundos);
 
@@ -385,6 +393,7 @@ function renderResultado(sesion, contexto) {
     $("escucharResumen").hidden = true;
   } else {
     $("escucharResumen").addEventListener("click", () => {
+      if(formativa&&sesion.resumen.unidadRecorrido){escuchar(textoParaVoz(`${sesion.tituloActividad}. ${sesion.resumen.recorridoTitulo}. ${sesion.resumen.unidadesCompletadas} ${sesion.resumen.unidadRecorrido} realizados. ${total} fases completadas; ${correctas} al primer intento sin pistas. ${sesion.resumen.conPistas} con pistas y ${sesion.resumen.conReintentos} con reintentos. Sin nota.`));return;}
       if(formativa){escuchar(textoParaVoz(`${sesion.tituloActividad}. ${sesion.resumen.recorridoTitulo}. ${sesion.resumen.preguntasCompletadas} de ${total} preguntas realizadas. ${correctas} al primer intento sin pistas; ${sesion.resumen.conPistas} con pistas, ${sesion.resumen.conReintentos} con reintentos y ${sesion.resumen.dudasMarcadas} dudas marcadas. Sin nota.`));return;}
       const mapa = mapaSesion(sesion, respuestas);
       const textoMapa = mapa.map(item => {
@@ -431,6 +440,16 @@ async function resolverSesionId() {
   );
 
   return String(evidencia?.sesionId || "").trim();
+}
+
+async function mostrarBloquesRelacionados(sesion){
+  if(!misionId||!sesion.resumen?.vueltaId||Number(sesion.resumen.bloquesPorVuelta)<2)return;
+  const nav=$("sesionesRecorrido");
+  try{
+    const evidencias=await Academia.tareas.leerEvidencias(misionId);
+    const bloques=evidencias.filter(e=>e.actividadId===sesion.actividadId&&e.atributos?.vueltaId===sesion.resumen.vueltaId&&e.sesionId).sort((a,b)=>Number(a.atributos.bloqueId)-Number(b.atributos.bloqueId));
+    nav.replaceChildren(...bloques.map(e=>{const a=document.createElement("a"),url=new URL(window.location.href);url.searchParams.set("sesionId",e.sesionId);a.href=url.href;a.className="resultado-chip";a.textContent=`Bloque ${e.atributos.bloqueId} de ${sesion.resumen.bloquesPorVuelta} · ${e.atributos.problemasCompletados||""} problemas`;if(e.sesionId===sesion.id||e.sesionId===sesionIdParametro)a.setAttribute("aria-current","page");return a;}));nav.hidden=!bloques.length;
+  }catch(error){console.warn("No se pudo recuperar la lista de bloques de la Misión.",error);}
 }
 
 async function iniciar() {
@@ -488,6 +507,7 @@ async function iniciar() {
     }
 
     renderResultado(sesion, contexto);
+    await mostrarBloquesRelacionados(sesion);
   } catch (error) {
     console.error("No se pudo cargar el resultado académico.", error);
     mostrarError(

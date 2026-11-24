@@ -2867,6 +2867,7 @@
         return url.href;
       }
 
+      if(tarea.criterioCumplimiento?.filtros?.versionPlan && tarea.criterioCumplimiento.filtros.recorridoId)url.searchParams.set("recorrido",tarea.criterioCumplimiento.filtros.recorridoId);
       url.searchParams.set("misionId",tarea.id);
       url.searchParams.set(
         "volver",
@@ -3078,6 +3079,7 @@
             tiempo ? `${tiempo} min` : ""
           ].filter(Boolean);
 
+      const avanceBloques=tarea.criterioCumplimiento?.filtros?.bloquesPorVuelta?`<span>${Number(tarea.progreso?.cantidadActual||0)} de ${Number(tarea.criterioCumplimiento.cantidadObjetivo)} bloques guardados</span>`:"";
       const contenido = `
         <div class="mision__icono">${escapar(icono)}</div>
         <div class="mision__contenido">
@@ -3085,7 +3087,7 @@
           <p>${escapar(descripcionTarea(tarea))}</p>
           ${mensajeLiaMarkup(tarea)}
           <div class="mision__meta">
-            ${meta.map(item=>`<span class="${esAcademica ? "meta-academica" : ""}">${escapar(item)}</span>`).join("")}
+            ${meta.map(item=>`<span class="${esAcademica ? "meta-academica" : ""}">${escapar(item)}</span>`).join("")}${avanceBloques}
           </div>
         </div>
       `;

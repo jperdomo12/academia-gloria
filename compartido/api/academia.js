@@ -830,6 +830,10 @@ function normalizarProgresoTarea(progreso = {}, criterio = {}) {
     ),
     cantidadObjetivo,
     evidenciaIds,
+    ...(progreso.avancePorVuelta ? {avancePorVuelta:{
+      vueltaId:textoSeguro(progreso.avancePorVuelta.vueltaId),versionPlan:textoSeguro(progreso.avancePorVuelta.versionPlan),
+      bloquesCompletados:[...new Set((Array.isArray(progreso.avancePorVuelta.bloquesCompletados)?progreso.avancePorVuelta.bloquesCompletados:[]).map(Number))]
+    }} : {}),
     tiempoRealMinutos: Math.max(
       0,
       numeroSeguro(progreso.tiempoRealMinutos)
@@ -1195,7 +1199,7 @@ async function actualizarTarea(id, cambios = {}) {
 
   if(requiereEvidenciaFormativa(datosExistentes||{}) && !["pendiente","asignada"].includes(normalizarEstadoTarea(datosExistentes.estado)) && datos.criterioCumplimiento) {
     const anterior=datosExistentes.criterioCumplimiento.filtros, nuevo=datos.criterioCumplimiento.filtros;
-    if(["actividadId","recorridoId","recorridoCompleto"].some(k=>anterior[k]!==nuevo[k]))throw new Error("El recorrido de una Misión iniciada no puede cambiarse. Crea otra Misión para otro recorrido.");
+    if(["actividadId","recorridoId","recorridoCompleto","bloqueCompleto","versionPlan","bloquesPorVuelta","totalProblemasVuelta"].some(k=>anterior[k]!==nuevo[k]))throw new Error("El recorrido de una Misión iniciada no puede cambiarse. Crea otra Misión para otro recorrido.");
   }
 
   if ("progreso" in datos) {
@@ -1257,10 +1261,10 @@ async function actualizarTarea(id, cambios = {}) {
 
 function requiereEvidenciaFormativa(tarea={}) {
   const c=tarea.criterioCumplimiento||{},f=c.filtros||{};
-  return tarea.tipo==="repaso_academico"&&c.evidenciaTipo==="sesion_academica"&&Boolean(f.actividadId&&f.recorridoId)&&f.recorridoCompleto===true;
+  return tarea.tipo==="repaso_academico"&&c.evidenciaTipo==="sesion_academica"&&Boolean(f.actividadId&&f.recorridoId)&&(f.recorridoCompleto===true||f.bloqueCompleto===true);
 }
 function exigirCierreFormativoConEvidencia(tarea,estado) {
-  if(requiereEvidenciaFormativa(tarea)&&["completada","pendiente_validacion"].includes(estado)&&!(tarea.progreso?.evidenciaIds?.length&&Number(tarea.progreso?.cantidadActual)>=1))
+  if(requiereEvidenciaFormativa(tarea)&&["completada","pendiente_validacion"].includes(estado)&&!(tarea.progreso?.evidenciaIds?.length&&Number(tarea.progreso?.cantidadActual)>=Number(tarea.criterioCumplimiento?.cantidadObjetivo||1)))
     throw new Error("Completa y guarda el recorrido asignado para enviar esta Misión a revisión.");
 }
 
@@ -1479,10 +1483,20 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       tarea.progreso,
       criterio
     );
+    // Agregación optativa sobre el progreso estándar: bloques distintos de una misma vuelta.
+    let avancePorVuelta=null;
+    if(criterio.filtros?.bloquesPorVuelta){
+      const a=evidencia.atributos,n=Number(criterio.filtros.bloquesPorVuelta),id=Number(a.bloqueId),previo=progresoActual.avancePorVuelta;
+      if(!Number.isInteger(n)||n<1||criterio.cantidadObjetivo!==n||!a.vueltaId||!Number.isInteger(id)||id<1||id>n||a.bloqueCompleto!==true||Number(a.problemasCompletados)!==Number(a.totalProblemasVuelta)/n)
+        throw new Error("La evidencia no contiene un bloque completo válido.");
+      if(previo&&(previo.vueltaId!==a.vueltaId||previo.versionPlan!==a.versionPlan))throw new Error("Los bloques deben pertenecer a la misma vuelta y versión del plan.");
+      if(previo?.bloquesCompletados.includes(id))throw new Error("Este bloque ya se contabilizó en la Misión.");
+      avancePorVuelta={vueltaId:a.vueltaId,versionPlan:a.versionPlan,bloquesCompletados:[...(previo?.bloquesCompletados||[]),id].sort()};
+    }
     const evidenciaIds = [...progresoActual.evidenciaIds, evidenciaId];
     const cantidadActual = Math.min(
       criterio.cantidadObjetivo,
-      progresoActual.cantidadActual + 1
+      avancePorVuelta ? avancePorVuelta.bloquesCompletados.length : progresoActual.cantidadActual + 1
     );
     const objetivoAlcanzado = cantidadActual >= criterio.cantidadObjetivo;
     const requiereRevision = tarea.requiereRevision !== false;
@@ -1509,6 +1523,8 @@ async function registrarEvidenciaMision(evidenciaEntrada) {
       updatedAt: serverTimestamp(),
       updatedBy: actorUserId
     };
+
+    if(avancePorVuelta)cambiosTarea["progreso.avancePorVuelta"]=avancePorVuelta;
 
     if (nuevoEstado !== estadoActual) {
       cambiosTarea.statusChangedAt = serverTimestamp();

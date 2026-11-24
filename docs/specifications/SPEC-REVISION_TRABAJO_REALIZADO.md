@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` |
-| **Versión** | 2.2 |
+| **Versión** | 2.3 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.3 | 24/11/2026 | Product Owner + AI Collaborator | Candidata Matemáticas #277/#281: visor académico existente distingue problemas y fases y permite consultar las dos sesiones de una misma vuelta. Conserva presentación y contrato de Sociales/Pruebas anteriores. Validación real pendiente. |
 | 2.2 | 24/11/2026 | Product Owner + AI Collaborator | Cierra la consulta formativa de Sociales #278: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 2.1 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: el visor académico existente representa sesiones de práctica formativa con recorrido, primera respuesta, resolución, intentos, pistas y dudas; sin nota ni porcentaje de dominio. Preserva lectura histórica y visores anteriores. Validación real pendiente. |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza la especificación con la implementación transversal validada y fusionada en PR #45. Define un único contrato `👁️ Ver trabajo`, `modo=consulta`, Persona Activa y retorno al caller; reutiliza visores especializados de Detectives/Resultado Académico y visor general para Lectura, Creciendo por Dentro, Biblioteca, Misiones libres y repasos sin resultado digital. Formaliza carga por `sesionId`, fallback legacy y protección estricta de solo lectura. |
@@ -535,3 +536,11 @@ Para este tipo de sesión el visor muestra:
 `correcta`/`totalCorrectas` tienen en esta práctica el criterio conservador declarado `primer_intento_sin_pistas`; `correctaPrimerIntento`, `resuelta` y las respuestas inicial/final separan los hechos. Acertar finalmente después de reintentos no se convierte en un 100 % artificial. Los conceptos y apoyos permanecen disponibles para la consulta sin inventar inferencias. Lectura en voz alta coherente con esta presentación; las Pruebas académicas anteriores mantienen su visualización y contrato.
 
 Estado: PR #279 aprobada por el Product Owner, integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6` y publicada (Pages #884 success). Los archivos públicos de producto son idénticos al árbol aprobado. Sin integración/publicación pendiente. DOM simulado con datos guardados, lectura controlada y escape HTML comprobados; navegador real, audición y permisos desplegados pendientes. No se escriben datos familiares de prueba.
+
+## Preparación matemática por bloques · candidata #277/#281
+
+Reutiliza `resultado-academico.html` y `sesion-academica-v1`. Las sesiones con `unidadRecorrido` separan problemas/microactividades de fases: métrica de unidades completas, conteo de fases al primer intento sin pistas y detalle real de cada respuesta. El índice de los cinco problemas usa snapshots históricos guardados, con enlaces a sus fases; nunca recalcula el resultado desde el banco vigente.
+
+Cuando la sesión tiene `vueltaId`/`bloquesPorVuelta` y existe Misión, el visor consulta las evidencias ya aplicadas y ofrece enlaces a las sesiones de esa misma vuelta. B permite consultar bloque 1 y bloque 2; cada enlace conserva Misión, sesión y retorno. No inicia actividad ni escribe datos. No se convierte 20/4 histórico en 10/2; faltantes no se inventan. Las sesiones sin estos metadatos conservan la presentación anterior.
+
+Validación: API/servicio reales con SDK controlado y DOM simulado, ambos bloques, retorno, detalle y cero escrituras de consulta. Navegador/voz/permisos reales pendientes; candidata no integrada ni estable.

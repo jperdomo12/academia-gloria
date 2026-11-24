@@ -6,7 +6,7 @@ const {crearEntorno}=require("./helpers/semillas-browser.cjs");
 const bank=JSON.parse(fs.readFileSync("cursos/6to/mates/preparacion-problemas/problemas.json","utf8"));
 const path="/cursos/6to/mates/preparacion-problemas/";
 const opciones={doble:[0,1],suma:[1,0],reparto:[0,1],grupos:[1,2],comparacion:[1,1]};
-const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="doble"?[p.a*2]:p.tipo==="grupos"?[p.a*p.b]:p.tipo==="reparto"?[Math.floor(p.a/p.b),p.a%p.b]:
+const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="doble"?(p.preguntaFinal?[p.a*2,p.preguntaFinal==="total"?p.a*3:p.a*2-p.retiradas]:[p.a*2]):p.tipo==="grupos"?[p.a*p.b]:p.tipo==="reparto"?[Math.floor(p.a/p.b),p.a%p.b]:
   [p.relacion==="mas"?p.a+p.b:p.a-p.b,p.preguntaFinal==="restante"?p.presupuesto-(p.a+p.b):p.a+(p.relacion==="mas"?p.a+p.b:p.a-p.b)];
 (async()=>{
   const b=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE,args:["--no-sandbox","--disable-dev-shm-usage"]});
@@ -19,7 +19,7 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
       window.SpeechSynthesisUtterance=class extends EventTarget{constructor(text){super();this.text=text;}};
       Object.defineProperty(window,"speechSynthesis",{value:{speak(u){qaSpoken.push(u.text);},cancel(){},getVoices(){return [];}}});
     });
-    await Promise.all([p.waitForResponse(r=>r.url().endsWith("problemas.json")),p.goto(process.env.BASE_URL+path)]);
+    await Promise.all([p.waitForResponse(r=>r.url().endsWith("problemas.json")),p.goto(process.env.BASE_URL+path+"?modo=vista_previa")]);
     await p.waitForFunction(()=>document.querySelector('[data-iniciar="ensayo"]')&&!document.querySelector('[data-iniciar="ensayo"]').disabled);
     // Esperar a que el banco haya terminado de cargar, no solo al HTML.
 
@@ -35,13 +35,13 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
 
     async function shot(name){if(process.env.QA_IMAGES)await p.locator("#actividad").screenshot({path:process.env.QA_IMAGES+"/"+name+".png"});}
     async function progreso(total,bloque,indice){
-      assert.equal(await p.locator("#contadorVuelta").innerText(),total+" de 20 problemas completados");
+      assert.equal(await p.locator("#contadorVuelta").innerText(),total+" de 10 problemas completados");
       assert.equal(await p.locator("#totalVuelta").getAttribute("aria-valuenow"),String(total));
-      assert.equal(await p.locator("#bloqueActual").innerText(),"Bloque "+bloque+" de 4");
+      assert.equal(await p.locator("#bloqueActual").innerText(),"Bloque "+bloque+" de 2");
       assert.match(await p.locator("#pasoActual").innerText(),new RegExp("Problema "+indice+" de 5"));
     }
     async function resolver(problem,{total=null,bloque=1,indice=1,visual=false,pausa=false}={}){
-      const respuestas=problem.pregunta?[problem.correcta]:[...opciones[problem.tipo],...valores(problem)];
+      const respuestas=problem.pregunta?[problem.correcta]:[...(problem.tipo==="doble"&&problem.preguntaFinal?[1,1]:opciones[problem.tipo]),...valores(problem)];
       if(total!==null)await progreso(total,bloque,indice);
       for(let fase=0;fase<respuestas.length;fase++){
         const numeric=!problem.pregunta&&fase>=2;
@@ -108,24 +108,24 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
     for(let vuelta=0;vuelta<2;vuelta++){
       const vistos=[];
       if(vuelta===0)await p.locator('[data-iniciar="ensayo"]').click();
-      for(let bloque=1;bloque<=4;bloque++){
+      for(let bloque=1;bloque<=2;bloque++){
         const familias=new Set();
         for(let indice=1;indice<=5;indice++){
           const texto=await p.locator("#textoEnunciado").innerText();
           const problem=bank.ensayos.find(x=>x.enunciado===texto);assert.ok(problem,texto);
           assert.ok(!vistos.includes(problem.id));vistos.push(problem.id);familias.add(problem.tipo);
-          await resolver(problem,{total:(bloque-1)*5+indice-1,bloque,indice,visual:vuelta===0&&(problem.tipo==="comparacion"||problem.id==="e1c"),pausa:vuelta===0&&bloque===1&&indice===1});
+          await resolver(problem,{total:(bloque-1)*5+indice-1,bloque,indice,visual:vuelta===0&&(problem.tipo==="comparacion"||problem.tipo==="doble"),pausa:vuelta===0&&bloque===1&&indice===1});
         }
-        assert.equal(familias.size,5);assert.ok(await p.locator("#cierre").isVisible());
-        assert.match(await p.locator("#resumenCierre").innerText(),new RegExp(bloque*5+" de 20"));
-        if(bloque<4){
+        assert.equal(familias.size,4);assert.ok(await p.locator("#cierre").isVisible());
+        assert.match(await p.locator("#resumenCierre").innerText(),new RegExp(bloque*5+" de 10"));
+        if(bloque<2){
           assert.equal(await p.locator("#repetir").innerText(),"Continuar con el bloque siguiente");
           await p.locator("#otraRuta").click();await p.locator('[data-iniciar="ensayo"]').click();
           assert.ok(await p.locator("#cierre").isVisible());
           await p.locator("#repetir").focus();await p.keyboard.press("Enter");
         }
       }
-      assert.equal(new Set(vistos).size,20);vueltas.push(vistos);
+      assert.equal(new Set(vistos).size,10);vueltas.push(vistos);
       assert.equal(await p.locator("#repetir").innerText(),"Empezar otra vuelta");
       if(vuelta===0)await p.locator("#repetir").click();
     }
@@ -140,7 +140,7 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
       await p.locator('[data-iniciar="ensayo"]').click();assert.ok(await p.locator("#cierre").isVisible());
     }
     assert.equal(await storage(),before);assert.equal(await p.evaluate(()=>window.qaWrites||0),0);
-    // Nueva vuelta solo al finalizar las cuatro; recarga reinicia la visita.
+    // Nueva vuelta solo al finalizar las dos; recarga reinicia la visita.
     await Promise.all([p.waitForResponse(r=>r.url().endsWith("problemas.json")),p.reload()]);
     await p.locator('[data-iniciar="ensayo"]').click();await progreso(0,1,1);
     await p.emulateMedia({reducedMotion:"reduce"});
@@ -149,7 +149,7 @@ const valores=p=>p.tipo==="suma"?[p.valores.reduce((s,n)=>s+n,0)]:p.tipo==="dobl
     await c.close();
     // Consulta relacionada reutiliza Persona Activa sin escrituras educativas.
     const relacionado=await crearEntorno(b,"consulta");
-    await Promise.all([relacionado.p.waitForResponse(r=>r.url().endsWith("problemas.json")),relacionado.p.goto(process.env.BASE_URL+path)]);
+    await Promise.all([relacionado.p.waitForResponse(r=>r.url().endsWith("problemas.json")),relacionado.p.goto(process.env.BASE_URL+path+"?modo=vista_previa")]);
     await relacionado.p.locator('[data-iniciar="ensayo"]').click();
     assert.ok(await relacionado.p.locator("#actividad").isVisible());
     assert.equal(await relacionado.p.evaluate(()=>window.qaWrites||0),0);

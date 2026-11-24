@@ -7,9 +7,9 @@
 | Propietario | Contenido curricular Matemáticas · 6.º |
 | Responsables | Product Owner + AI Collaborator |
 | Ámbito | Refuerzo temporal de interpretación y resolución de problemas de Matemáticas de 6.º |
-| Versión | 1.5 |
-| Estado | Ampliación Paso 3 aprobada, integrada, publicada y verificada · validación familiar pendiente |
-| Fecha | 17/11/2026 |
+| Versión | 1.6 |
+| Estado | Candidata #277 + #281 implementada en rama · pendiente de revisión/aprobación · no integrada ni publicada |
+| Fecha | 24/11/2026 |
 | Origen | Ficha escolar de cinco problemas y ampliación formativa aprobada por el Product Owner; examen confirmado el 26/11/2026 |
 
 ## Documentos relacionados
@@ -25,6 +25,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---|---|---|
+| 1.6 | 24/11/2026 | Product Owner + AI Collaborator | Implementa candidata coordinada #281/#277: 10 problemas curados en 2 bloques, dos dobles encadenados, dos Misiones independientes, sesiones formativas y evidencia de dos bloques distintos de misma vuelta. Recuperación de bloque completo desde evidencia, sin guardar parciales; histórico preservado. 63/63 Node y seis suites DOM simulado; navegador bloqueado. Pendiente aprobación, no merge/Pages ni estabilidad. |
 | 1.5 | 17/11/2026 | Product Owner + AI Collaborator | Product Owner aprueba #260; integrada en c1e31af39f4ba7dd4408132ecdfc38202fb97494. Pages #869 / ejecución 44143618928 completada con éxito. Seis archivos de producto públicos HTTP 200 e idénticos a la versión validada; cierre técnico. Uso real con Gloria y voz del dispositivo pendientes; no se declara estable. |
 | 1.4 | 17/11/2026 | Product Owner + AI Collaborator | Implementación candidata del contrato v1.3: 20 originales, cuatro bloques sin repetición, progreso por problema completo y pausa/reanudación en memoria; relación más/menos y total/restante, unidad de libros y fecha 26/11. Nueve pruebas Node y navegador real superados; Gaudem y calentamiento conservados. Pendiente aprobación de PR; sin merge/Pages ni estabilidad familiar. |
 | 1.3 | 17/11/2026 | Product Owner + AI Collaborator | Prioridad pedagógica familiar: **comprensión y razonamiento matemático transversal** mediante práctica variada y ayudas voluntarias. En 20 problemas de 4 bloques se mantienen 2 comparaciones «menos que» cuyo final es suma, y se incorporan 2 «más que»: una pide el total y otra pide el dinero restante (**operación final resta**). Motor, preguntas, diagramas y pruebas deben distinguir relación y pregunta final; se preservan cinco Gaudem, contenido anterior y calidad. Solo documentación; pendiente DESA. |
@@ -38,7 +39,7 @@
 |---|---|
 | 1. Decisión y ubicación | Ruta y alcance del recurso temporal. |
 | 2. Metodología | Comprender antes de operar, ayudas, audio y reintentos. |
-| 3. Recorridos | Comprensión, cinco problemas de Gaudem y veinte originales en cuatro bloques. |
+| 3. Recorridos | Comprensión, cinco problemas de Gaudem y diez originales en dos bloques; dos Misiones independientes. |
 | 4. Arquitectura y contratos | Banco, motor, selección sin repetición y estado temporal del progreso. |
 | 5. Experiencia y accesibilidad | Contadores, pausas, apoyos visuales y uso en móvil/escritorio. |
 | 6. Fuera de alcance | Límites de la ampliación y temario independiente. |
@@ -67,7 +68,7 @@ No se premia la rapidez, no se utiliza cronómetro, existen pistas voluntarias y
 
 **Observación familiar del 17/11:** Gloria ha tenido dificultades para distinguir la **relación entre datos** de la **respuesta final solicitada**. En problemas como «B cuesta 2 € menos que A», ha tendido a elegir la resta por la palabra «menos», sin resolver siempre el gasto total. La familia confirma que **también necesita practicar el sentido contrario, «más que»**, incluso cuando la **operación final es una resta**, y que la prioridad verdadera es el **razonamiento en todas las familias de problemas**. Ha avanzado y necesita práctica variada y gradual. Es una observación educativa familiar, no diagnóstico ni confirmación del contenido exacto del examen.
 
-**Ejemplos didácticos, fuera del banco de 20:** Si A cuesta 10 € y B cuesta **2 € menos**, B = 8 € y, si preguntan cuánto cuestan **juntos**, total = **18 €**. Si B cuesta **2 € más**, B = 12 € y, si preguntan cuánto cuestan **juntos**, total = **22 €**. Pero si se dispone de 20 € y se compra **solo B** (12 €), el dinero que **queda** es **8 €**: la palabra «más» describe la relación inicial, y la **operación final es restar**. No enseñar la regla automática «si veo más, sumo» o «si veo menos, resto»: primero comprender qué se busca.
+**Ejemplos didácticos, fuera del banco activo:** Si A cuesta 10 € y B cuesta **2 € menos**, B = 8 € y, si preguntan cuánto cuestan **juntos**, total = **18 €**. Si B cuesta **2 € más**, B = 12 € y, si preguntan cuánto cuestan **juntos**, total = **22 €**. Pero si se dispone de 20 € y se compra **solo B** (12 €), el dinero que **queda** es **8 €**: la palabra «más» describe la relación inicial, y la **operación final es restar**. No enseñar la regla automática «si veo más, sumo» o «si veo menos, resto»: primero comprender qué se busca.
 
 **Aplicación transversal a los cinco tipos:** Antes de operar, Gloria debe distinguir los datos relevantes, la relación entre cantidades, la pregunta completa, las operaciones intermedias y el resultado final con su unidad. Conservar las fases existentes **Comprendo → Relaciono → Calculo → Compruebo** y los apoyos no punitivos. Cada familia verifica una relación distinta:
 
@@ -77,7 +78,7 @@ No se premia la rapidez, no se utiliza cronómetro, existen pistas voluntarias y
 - **Grupos iguales:** distinguir cantidad de grupos de elementos por grupo.
 - **Comparación «menos/más que»:** descubrir primero el valor desconocido y **después responder la pregunta real**: sumar ambos precios cuando piden el total, o restar al presupuesto el precio del artículo comprado cuando preguntan cuánto queda. No confundir diferencia/incremento con precio final ni resultado intermedio con respuesta solicitada.
 
-**Distribución en Paso 3 sin aumentar volumen:** cuatro problemas de comparación a lo largo de los cuatro bloques, **dos «menos que»** (`e5a` y `e5b`, ya existentes, segundo precio mediante resta y **suma final** del total) y **dos «más que»** (`e5c`: segundo precio mediante suma y **suma final** del total; `e5d`: segundo precio mediante suma y **resta final** del presupuesto restante). Exactamente **una comparación por bloque**, con ambas preguntas finales representadas. El problema escolar `g5` del Paso 2 conserva su enunciado original «menos que» intacto. No es un quinto tipo de problema ni incrementa las 20 variantes.
+**Antecedente histórico 20/4 (PR #260), sustituido por #281 en la candidata 1.6:** cuatro problemas de comparación a lo largo de los cuatro bloques, **dos «menos que»** (`e5a` y `e5b`, ya existentes, segundo precio mediante resta y **suma final** del total) y **dos «más que»** (`e5c`: segundo precio mediante suma y **suma final** del total; `e5d`: segundo precio mediante suma y **resta final** del presupuesto restante). Exactamente **una comparación por bloque**, con ambas preguntas finales representadas. El problema escolar `g5` del Paso 2 conserva su enunciado original «menos que» intacto. No es un quinto tipo de problema ni incrementa las 20 variantes.
 
 **Calidad pedagógica:** mantener formulaciones naturales y suficientemente diversas para evitar aprendizaje mecánico de plantillas. Adaptar la formulación a la comprensión lingüística: instrucciones breves y sin ambigüedad, una idea importante por pregunta, lectura y relectura disponibles, apoyo visual que represente relaciones sin revelar resultados, y pistas opcionales que ayuden a identificar «qué sé / qué me preguntan / qué necesito calcular primero». Animar a verbalizar su estrategia, sin obligarla a respuestas orales ni penalizar errores o apoyos. Reducir dependencia de pistas mediante elección voluntaria, **sin ocultarlas ni retirarlas forzosamente**. Priorizar comprensión y transferencia sobre volumen o velocidad.
 
@@ -96,67 +97,68 @@ Cinco problemas con enunciados, orden y cantidades de la hoja:
 
 El PDF completo no se publica y este contenido no se identifica como modelo oficial del examen.
 
-### 3.3 Compruebo que puedo
-**Estado todavía publicado (antes de integrar esta candidata):** diez problemas originales de Academia, dos variantes de cada familia (doble, suma, reparto con resto, multiplicación de grupos y comparación aditiva con suma final). Cada ensayo elige al azar una por familia, sin memoria de qué variantes han salido antes.
+### 3.3 Compruebo que puedo · contrato aprobado #281
 
-**Decisión funcional aprobada el 17/11:** ampliar a **20 problemas originales, cuatro por cada una de las cinco familias**, distribuidos en **cuatro bloques de cinco**, uno por familia y sin repetición hasta completar una vuelta. Esta decisión está **aprobada, integrada y publicada mediante PR #260**, con verificación pública completada. La prueba familiar permanece pendiente.
+La candidata cambia el Paso 3 publicado de 20/4 a **10 problemas en 2 bloques de 5**, según [Issue #281](https://github.com/jperdomo12/academia-gloria/issues/281). El orden puede variar dentro de cada bloque, sin repetir IDs hasta terminar los diez. No se fuerzan cinco familias por bloque ni cuatro variantes por familia.
 
-### 3.3.1. Selección por bloques y progreso
+| Bloque | IDs y situaciones | Cálculos verificados |
+|---|---|---|
+| 1 | `e1e` · Los libros de la biblioteca | 146 × 2 = 292; 146 + 292 = **438 libros** |
+| 1 | `e5a` · La mesa y la lámpara | 325 − 75 = 250; total **575 €** |
+| 1 | `e5c` · Los instrumentos del aula | 350 + 80 = 430; total **780 €** |
+| 1 | `e3a` · Los folletos | 1177 ÷ 5 = **235; resto 2** |
+| 1 | `e4c` · Los asientos del teatro | 18 × 23 = **414 asientos** |
+| 2 | `e1f` · Las plantas que quedan | 128 × 2 = 256; 256 − 73 = **183 plantas** |
+| 2 | `e5d` · Sara compra una maleta | 86 + 37 = 123; 200 − 123 = **77 €**; solo compra la maleta |
+| 2 | `e3c` · Lápices para las aulas | 1349 ÷ 6 = **224; resto 5** |
+| 2 | `e3d` · Pegatinas para los grupos | 865 ÷ 7 = **123; resto 4** |
+| 2 | `e4b` · Cajas de botellas | 12 × 24 = **288 botellas** |
 
-- La entrada del Paso 3 presenta con claridad **«20 problemas · 4 bloques de 5»**, sin sugerir que deban realizarse todos de una vez.
-- Una **vuelta** consiste en cuatro bloques. Al iniciarla, se crea un plan en memoria: se mezclan las cuatro variantes de cada familia y se distribuye una variante por familia en cada bloque. Se puede variar el orden de las cinco familias dentro de cada bloque, manteniendo equilibrio, variedad y ausencia de duplicados.
-- **Un problema está completado solo al terminar todas sus fases**. La barra de progreso de cada bloque y el contador global no aumentan por iniciar un problema, acertar una pregunta intermedia ni pulsar una pista.
-- Durante la ejecución mostrar **«Bloque 2 de 4»**, **«Problema 3 de 5»**, **«7 de 20 problemas completados»** (los números son ejemplo, no estado inicial) y mantener visible la fase pedagógica del problema que ya muestra el motor.
-- Al cerrar un bloque, ofrecer **«Continuar con el bloque siguiente»** o **«Descansar / volver al inicio»**. En la **misma página abierta** debe poder reanudarse el siguiente bloque sin generar otro plan ni repetir variantes. No abrir cinco páginas ni añadir pantallas obligatorias de motivación.
-- **Límite de estado:** el recorrido y el conteo se conservan únicamente durante la visita/página abierta; una recarga, cierre o nuevo acceso reinicia la vuelta. Indicarlo de forma clara cuando la familia elija detenerse. **No crear por defecto persistencia entre días**, nuevos historiales, notas o colecciones.
-- Al completar 20, mostrar resumen claro de los cuatro bloques y opción **«Empezar otra vuelta»**. Solo entonces se autoriza un nuevo orden; no insinuar que se completaron problemas de Gaudem en el contador de 20.
-- El Paso 2 «Mi ficha de Gaudem» mantiene sus **cinco problemas originales y su flujo**. El Paso 1 conserva las cuatro microactividades.
+Los dos enunciados nuevos son exactamente los aprobados en #281. No se reutilizan los IDs `e1c/e1d`: permanecen con su contenido original entre los doce `ensayosRetirados`, fuera de la planificación activa. Los ocho ensayos conservados mantienen sus datos/textos; solo se añade `bloque`. Los veinte IDs/contenidos anteriores siguen disponibles (ocho activos, doce retirados); las sesiones se consultan desde su snapshot guardado, nunca reconstruidas con el banco actual.
 
-### 3.3.2. Diez variantes adicionales originales · diseño de contenidos
+**Dobles encadenados:** `preguntaFinal: total` calcula primero el doble y después reúne ambos grupos; `preguntaFinal: restante`, con `retiradas`, descuenta del grupo doble, no de la referencia. `grupoDoble` identifica la magnitud intermedia. La ausencia de esos campos conserva el doble simple original de Gaudem. Comprendo/Relaciono preceden a los cálculos; el resultado intermedio se identifica como tal y no revela la respuesta final. Diagrama de dos grupos, total o retirada sin resolver por anticipado.
 
-Las diez variantes vigentes (`e1a/e1b`, `e2a/e2b`, `e3a/e3b`, `e4a/e4b`, `e5a/e5b`) **se conservan**. La tabla siguiente constituye el **banco candidato de ampliación de Academia**, listo para DESA, que debe validar el contenido, los cálculos, la claridad de cada contexto y la compatibilidad de cada fase antes de publicarlo. No procede del documento escolar ni sustituye los cinco problemas de Gaudem.
+**Progreso:** «Bloque 1 de 2», «Problema 3 de 5», «7 de 10 problemas completados» y barras accesibles. Solo todas las fases completan un problema. Cierre por bloque: continuar o descansar. Solo al terminar los diez se ofrece otra vuelta. La práctica libre conserva el plan durante la página abierta; recargar inicia otra vuelta. En una Misión se puede recuperar el bloque completo respaldado por evidencia (§4), sin reanudar problemas parciales ni inventar resultados.
 
-| ID propuesto | Familia | Situación original | Datos y resultado correcto |
-|---|---|---|---|
-| `e1c` | doble | En una biblioteca hay 146 libros de aventuras y el doble de libros de ciencia. ¿Cuántos libros de ciencia hay? | 146 × 2 → **292 libros** |
-| `e1d` | doble | Un libro cuesta 38 €. Un atlas cuesta el doble que el libro. ¿Cuánto cuesta el atlas? | 38 × 2 → **76 €** |
-| `e2c` | suma | Para el huerto escolar compran semillas por 17 €, tierra por 29 € y una regadera por 26 €. ¿Cuánto gastan en total? | 17 + 29 + 26 → **72 €** |
-| `e2d` | suma | Una clase paga 42 € por las entradas a un museo, 36 € por el transporte y 18 € por la merienda. ¿Cuánto paga en total? | 42 + 36 + 18 → **96 €** |
-| `e3c` | reparto | El colegio tiene 1349 lápices y quiere repartirlos por igual entre 6 aulas. ¿Cuántos lápices recibe cada aula? ¿Cuántos sobran? | 1349 ÷ 6 → **224 por aula; sobran 5** |
-| `e3d` | reparto | Hay 865 pegatinas que se reparten por igual entre 7 grupos. ¿Cuántas pegatinas recibe cada grupo? ¿Cuántas sobran? | 865 ÷ 7 → **123 por grupo; sobran 4** |
-| `e4c` | grupos | En un teatro hay 18 filas con 23 asientos en cada una. ¿Cuántos asientos hay en total? | 18 × 23 → **414 asientos** |
-| `e4d` | grupos | En el huerto han plantado 16 filas con 14 plantas en cada fila. ¿Cuántas plantas hay en total? | 16 × 14 → **224 plantas** |
-| `e5c` | comparacion | Para equipar el aula de música compran un teclado de 350 € y una guitarra que cuesta 80 € más que el teclado. ¿Cuánto cuestan los dos instrumentos juntos? | 350 € y 80 € más → **guitarra 430 €; total 780 €** |
-| `e5d` | comparacion | Una mochila cuesta 86 €. Una maleta cuesta 37 € más que la mochila. Sara tiene 200 € y compra solamente la maleta. ¿Cuánto dinero le queda? | 86 + 37 = **123 €** (maleta); 200 − 123 = **77 €** (restante) |
+## 4. Arquitectura y contratos · #277
 
-**Precisión de calidad obligatoria:** los nuevos problemas introducen contextos y unidades variados (por ejemplo, libros), sin cambiar las **cinco familias matemáticas** ni incorporar más de veinte problemas. En la familia `doble`, las fases actuales preguntan literalmente por **«precio doble, en euros»**. DESA deberá hacer que la pregunta, la unidad y la explicación se adapten al `p.unidad` de forma **retrocompatible** con las variantes en euros, en vez de mostrar una pregunta incorrecta para libros. En `reparto`, validar que el resto es no nulo y menor que el divisor; en `comparacion`, comprobar precio segundo positivo, identificar la **respuesta intermedia** y validar si la pregunta final pide **suma del total o resta del restante**. En `e5d`, Sara compra **solo la maleta**, no ambos artículos; nunca descontar la mochila también. En grupos y sumas, confirmar que las magnitudes y la respuesta corresponden al enunciado.
+Reutiliza `preparacion.js`, su banco y fases; `recorridos.js` aporta metadatos/transformación de respuestas reales, no otro motor. `ContextoUsuario`, lector, sesiones, API de Misiones y visor académico existentes; no hay nuevas colecciones ni persistencia local. El recurso sigue temporal, fuera del catálogo permanente de Temas. El catálogo de Misiones ya descubre su enlace real, sin duplicación.
 
-**Contrato de datos:** conservar los campos vigentes de `problemas.json` (`id,tipo,titulo,enunciado,a,b,valores,unidad` según tipo), sin datos personales ni motores paralelos. **Ampliación mínima aprobada del contrato:** para el tipo `comparacion`, admitir opcionalmente `relacion: "mas"` en las dos nuevas entradas `e5c` y `e5d`; las entradas anteriores, incluyendo las cinco escolares y `e5a/e5b`, no requieren cambios y por **retrocompatibilidad** la ausencia de `relacion` significa `"menos"`. Permitir además `preguntaFinal: "restante"` y `presupuesto: 200` **solo** en `e5d`; por defecto `preguntaFinal` ausente significa `"total"`. Verificar que `presupuesto` sea entero positivo y suficiente para la compra correspondiente, y que el enunciado identifique inequívocamente qué se compra. DESA puede adoptar estructura interna equivalente, documentada y probada, si evita duplicación.
+### 4.1 Dos Misiones al mismo recurso
 
-**Cambio técnico imprescindible para «más que» y pregunta final variable (DESA):** el motor actual `fases(p)` calcula `otro=p.a-p.b`, asume siempre `total=p.a+otro` y redacta preguntas/pistas literalmente para «menos que» y dos artículos juntos. Adaptarlo de manera retrocompatible: calcular `otro=p.a+p.b` para `relacion === "mas"`, o `otro=p.a-p.b` para «menos». **Después elegir la respuesta final por el enunciado y contrato:** para `preguntaFinal === "restante"`, `p.presupuesto - otro` (se compra solo el segundo artículo); para `"total"`, `p.a + otro` (ambos). Reformular la **primera pregunta de interpretación**, plan de las dos operaciones, fase numérica intermedia y fase final para que sean coherentes con cada caso. Diferenciar «¿cuánto cuesta B?» de «¿cuánto cuestan juntos?» y «¿cuánto dinero queda?». No mostrar una suma final cuando la situación solicita un restante ni permitir que el valor intermedio se interprete como respuesta final.
+[Issue #277](https://github.com/jperdomo12/academia-gloria/issues/277), decisión adicional de dos Misiones, prevalece sobre su contrato genérico anterior. Referencia reutilizada: Sociales #278, sin modificar el recurso ni su adaptación propietaria.
 
-**Diagrama:** `representarRelacion(p)` hoy modela únicamente `p.a-p.b` y etiqueta «− diferencia»; debe visualizar la relación `más` como precio inicial **más incremento** hasta el segundo precio, sin anticipar el valor desconocido antes de calcular. Para la pregunta final de presupuesto, representar opcionalmente el dinero disponible y lo gastado/restante **sin revelar anticipadamente el cálculo del restante** ni insinuar que se compraron ambos productos. Conservar la visualización «menos que» del Gaudem y las anteriores, proporciones significativas, etiquetas accesibles y lectura con/sin diagrama.
+| Objetivo | `recorridoId` | Sesiones y evidencia necesarias |
+|---|---|---|
+| Mi ficha de Gaudem | `gaudem` | Una sesión con los cinco problemas y todas sus fases |
+| Compruebo que puedo | `ensayo` | Dos sesiones de cinco problemas: bloques 1 y 2 distintos de la misma vuelta `10x2-v1` |
 
-**No alterar los problemas escolares** (`g1…g5`), los 10 originales anteriores ni los cuatro de comprensión. La tabla define las diez situaciones añadidas y sus claves aritméticas; DESA debe contrastar sentido, redacción, pistas y compatibilidad con cada fase antes de publicarlas.
+Gestión ofrece estos dos objetivos únicamente al seleccionar Repaso académico → 6.º → Matemáticas → Me preparo para los problemas. Restaura edición y título legible; controla IDs incompatibles/retirados y conserva bloqueado el criterio iniciado. No ofrece una tercera Misión de Comprendo. El Paso 1 conserva sus cuatro actividades y puede registrar autónomamente el recorrido completo, como aprobó el contrato original #277.
 
-## 4. Arquitectura y contratos
+`actividadId: 6-mates-preparacion-problemas`, `versionActividad: 2.0`, `versionPlan: 10x2-v1`. Criterio estándar cantidad: `modulo: libre`, `evidenciaTipo: sesion_academica`, filtros de actividad/recorrido/versión. Gaudem usa `cantidadObjetivo: 1` y `recorridoCompleto: true`. Ensayo usa `cantidadObjetivo: 2`, `bloqueCompleto: true`, `bloquesPorVuelta: 2`, `totalProblemasVuelta: 10`. Cada evidencia referencia una sesión y añade `vueltaId`, `bloqueId` y cinco problemas completados.
 
-- Banco de datos: cursos/6to/mates/preparacion-problemas/problemas.json.
-- Vista y control: index.html, preparacion.js y preparacion.css en la misma carpeta.
-- Autenticación y contexto: mecanismos actuales de auth y ContextoUsuario.
-- Voz: lector compartido de Academia, sin nueva dependencia.
-- Navegación: componentes globales existentes.
-- Sin nuevas colecciones ni escrituras Firestore, sin notas ni registros de resultados. El objetivo es formativo; la evidencia académica sigue en los Temas que ya la registran.
-- `problemas.json`: pasar `ensayos.length` de **10 a 20**, con **cuatro por familia**; mantener `gaudem.length===5` y `calentamiento.length===4`.
-- `preparacion.js`: reemplazar selección aleatoria independiente por **plan de cuatro bloques sin repetición**; actualizar las verificaciones del banco, la unidad de `doble` cuando corresponda, el progreso y los cierres, y añadir soporte retrocompatible para **«más que» y «menos que»** y para preguntas finales de **total o restante** en comprensión, cálculo y diagramas. No alterar los demás tipos ni los cinco Gaudem.
-- `index.html` y CSS actual: adaptar entrada del Paso 3, indicador de bloque y progreso global, y acciones continuar/descansar/resumir. Las barras de los Pasos 1 y 2 mantienen sentido y sus contratos.
-- Corregir en producto y documentación visible el **19/11 → 26/11**, incluida la fecha de `problemas.json.meta.fecha`, cabecera y cualquier etiqueta afectada. No alterar de modo oportunista el contenido específico de numeración; se confirmó que el examen general incluye números **hasta 99.999**, no 999.999.
-- Reutilizar `auth`, `ContextoUsuario`, `lector-texto.js`, estilos, accesibilidad, navegación contextual y pruebas del recurso actual.
+La API existente aplica una agregación optativa por bloques: valida identidad/criterio, mismo `vueltaId`/versión y bloque todavía no contabilizado; conserva `progreso.avancePorVuelta` en la Misión, junto a IDs de evidencia y cantidad. Primer bloque deja en curso 1/2; segundo distinto envía a revisión familiar 2/2. Repetir bloque, mezclar vueltas, usar 20/4 o completar Gaudem no satisface B. Mi Camino muestra el avance y abre el recorrido asignado con `misionId` y retorno; no ofrece cierre manual para estas Misiones y la API exige su objetivo completo.
+
+### 4.2 Sesión real, reenvíos y recuperación
+
+`sesion-academica-v1`, mediante `guardarSesionAcademica`. Una sesión por recorrido completo (4 microactividades, 5 Gaudem o bloque de 5 ensayos); no una escritura por clic. `respuestas` conserva una entrada por fase comprobada: enunciado/pregunta, problema/concepto, primera/final, historial de intentos, errores y pistas reales con su posición. `resumen` distingue unidades/problemas de fases, guarda snapshots de problemas y recorrido/bloque/versión/vuelta. No hay nota ni porcentaje de dominio; corregir tras apoyos no se confunde con primer intento sin pistas.
+
+Identidad y modo se fijan al iniciar; Vista previa/consulta no escriben, una URL no concede permiso. `intentoId` estable y transacción compartida evitan duplicados por doble clic/reintento o respuesta perdida tras commit. Si la sesión se guarda pero falla la evidencia, se informan ambos estados y se reenvía el mismo intento. Para proteger la continuidad, el siguiente bloque espera la confirmación de guardado/enlace; siguen disponibles descanso y reintento.
+
+Al abrir de nuevo una Misión B con un bloque aplicado de `10x2-v1`, se retoman su `vueltaId` y el bloque pendiente desde `avancePorVuelta`, respaldado por la evidencia existente. No se fabrica una sesión, no se registra el bloque ya realizado otra vez y los problemas incompletos se reinician. En práctica libre no se promete reanudación entre visitas. Las sesiones posteriores a una Misión cerrada o de otro recorrido se guardan como trabajo autónomo, sin atribución retrospectiva.
+
+### 4.3 Trabajo realizado e histórico
+
+El acceso estándar resuelve la sesión de la Misión. El mismo visor muestra cinco problemas/microactividades, sus fases, respuestas/operaciones e intentos/pistas. En B ofrece enlaces a las dos sesiones de la misma vuelta, con `misionId`, `sesionId` y retorno, sin ejecutar la actividad ni escribir. Registros anteriores permanecen con sus datos/identificadores y resultados: nunca se reinterpretan 20/4 como 10/2. Los IDs retirados no se reasignan y las versiones se filtran al cumplir Misiones nuevas.
+
+### 4.4 Estado recuperado antes de desarrollar
+
+Se revisaron `main` `92eb11f42f0c6e7c6d32536d1606d0d69ada2454`, tres páginas de ramas remotas, PR/commits relacionados y worktrees/diffs locales. **No se localizó código de #277 ni una PR técnica recuperable**; #277 seguía abierto y el recurso en main no guardaba sesiones. Se partió de esa base, reutilizando #278 y preservando los trabajos locales ajenos. Esta constatación no atribuye una implementación inexistente ni sobrescribe supuestos cambios.
 
 ## 5. Experiencia y accesibilidad
 
 - Una pregunta principal por paso; selección o entrada numérica con etiquetas.
-- Los bloques de cinco limitan la carga cognitiva; no convertir el Paso 3 en una sesión única de veinte. Mostrar dos niveles de progreso (bloque y vuelta), **etiquetados con texto** y semántica accesible, no solo con colores. En el resumen, distinguir problemas completados de intentos/pistas y no inferir dominio.
+- Los bloques de cinco limitan la carga cognitiva; no convertir el Paso 3 en un único bloque de diez. Mostrar dos niveles de progreso (bloque y vuelta), **etiquetados con texto** y semántica accesible, no solo con colores. En el resumen, distinguir problemas completados de intentos/pistas y no inferir dominio.
 - Reposo voluntario entre bloques y retorno/reanudación mientras la página siga abierta; no penalizar descanso, errores ni pistas.
 - Pistas solicitadas por Gloria, reintento, feedback conceptual y progreso visible.
 - La solución numérica aparece solo después de superar comprensión y plan.
@@ -170,7 +172,7 @@ Los dos focos de mayor dificultad identificados por la familia cuentan con repre
 
 ## 6. Fuera de alcance
 
-No incorporar el libro íntegro, la ficha como PDF público, nuevas unidades de numeración ni otros apartados del examen (numeración, redondeo y cálculo requieren sus recursos propios), analítica, notas, pruebas oficiales ni contenido avanzado no indicado. No hay persistencia entre visitas, nuevos motores, selector de tamaño 8/10 ni mezcla de problemas Gaudem en los bloques originales.
+No incorporar el libro íntegro, la ficha como PDF público, nuevas unidades de numeración ni otros apartados del examen (numeración, redondeo y cálculo requieren sus recursos propios), analítica, notas, pruebas oficiales ni contenido avanzado no indicado. No hay persistencia de problemas parciales entre visitas, nuevos motores, selector de tamaño 8/10 ni mezcla de problemas Gaudem en los bloques originales.
 
 El resto de la prueba necesita los recursos de Matemáticas apropiados y contraste con material individualizado de Gloria.
 
@@ -180,29 +182,29 @@ El resto de la prueba necesita los recursos de Matemáticas apropiados y contras
 - Respuestas verificadas: 318, 55, 361 y resto 1, 270, 146 y total 392.
 - Comprensión y planificación preceden al cálculo.
 - Un resultado intermedio no sustituye la respuesta final.
-- **Veinte variantes originales, cuatro por familia, cinco por bloque y cuatro bloques**. Los 10 ejercicios anteriores se conservan y las 10 nuevas variantes cumplen claridad, variedad y calidad iguales o superiores al nivel publicado.
-- **Comprensión transversal comprobable:** en los cinco tipos debe estar clara la pregunta final antes de calcular, evitando resolver por palabras clave aisladas; identificar datos, relaciones, magnitudes, operaciones intermedias y respuesta definitiva.
-- **Comparaciones variadas:** una por bloque; `e5a/e5b` con «menos que» y **suma final**, `e5c` con «más que» y **suma final**, `e5d` con «más que» y **resta final del presupuesto**. Casos mínimos: `A=10, diferencia=2` → **total 18** para «menos», **total 22** para «más», con segundos precios **8** y **12**; con **presupuesto 20 y compra solo B** (12), **restante 8**. Para `e5d`, 86+37=123 € y 200−123=**77 €**. No admitir diferencias/precios intermedios como respuesta final, ni sumar la mochila a la compra de maleta.
-- **Regresión escolar:** `g5` sin `relacion` ni `preguntaFinal` sigue interpretándose como «menos» con total, mantiene `246−100=146` y `246+146=392` y conserva su representación visual. `e5a/e5b` conservan enunciados y resultados. En «más», validar textos, pistas, distractores, ayudas visuales, foco y ausencia de solución prematura; en `e5d`, no contabilizar la compra de un artículo que el enunciado no indica comprar.
-- Prueba automatizada del contrato `4 calentamiento + 5 Gaudem + 20 originales`; unicidad de 20 IDs, exactamente cuatro por familia, cinco tipos representados en cada bloque, **cero repeticiones dentro de una vuelta** y dos vueltas consecutivas con renovación correcta.
-- Validación aritmética de los 20 enunciados originales: dobles correctos; sumas de tres cantidades; división con cociente y **resto entre 1 y divisor−1**; multiplicación por grupos; comparación **«más» y «menos»** con segundo precio positivo y suma final. Verificar claves de respuesta con un cálculo independiente.
-- Comprobar que ninguna pregunta, explicación, unidad, apoyo visual o pista contradiga la situación original; caso explícito de **doble de libros** frente a las variantes monetarias.
-- Progreso **«Bloque X de 4 · Problema Y de 5 · Z de 20 completados»** coherente en todas las transiciones, errores, pistas, pausa/reanudación, fin de bloque, fin de vuelta y reinicio. No contabilizar fases intermedias como problemas resueltos.
-- No cambiar enunciados, valores, orden escolar ni resultados de los cinco Gaudem; los cuatro microejercicios del Paso 1 siguen intactos.
-- No modificar ni degradar el método `Comprendo → Relaciono → Calculo → Compruebo`, diagramas actuales de doble/comparación, retroalimentación, ayuda voluntaria, audio, reintentos, navegación o diseño adaptable.
-- Comprobar móvil (320/390 px), escritorio (1280/1440 px), teclado, foco, lectura/escritor de pantalla, barra de progreso y estados de pausa/reanudación. No basta la verificación estática: prueba de navegador y posterior uso familiar reales.
-- Fecha de examen **26/11/2026** visible y coherente en HTML, metadatos del banco y SPEC. Conservar explícitamente la corrección de temario numérico **hasta 99.999**.
-- **Condición de calidad:** si alguna de las pruebas anteriores falla, la mejora **no se declara lista ni estable**, aunque el conteo alcance veinte; corregir primero. La aceptación técnica y la familiar son hitos separados.
-- Pistas, reintentos y voz; sin cronómetro ni puntuación punitiva.
-- Accesos correctos desde Matemáticas y Entender antes de calcular.
-- Sin regresiones en recursos existentes.
-- Documentar pruebas, publicación y validación familiar con Gloria.
+- Diez originales exactos de #281 en dos bloques de cinco; cálculos 438/183 y ausencia de solución final anticipada; planificación sin repetición.
+- Dos Misiones independientes; evidencia de Gaudem no cuenta para B; un bloque deja 1/2 y solo dos distintos de la misma vuelta cierran B.
+- Repetición de bloque, otra vuelta o versión 20/4 no acumulan crédito incorrecto.
+- Sesión completa verificable, parciales sin guardar, Vista previa sin escritura, identidad/Persona Activa y permisos conservados.
+- Idempotencia y recuperación de evidencia fallida; sesión guardada y fallo de enlace se comunican separadamente.
+- Ver trabajo permite consultar los cinco problemas de A o ambos bloques de B, con respuestas, intentos y ayudas reales.
+- Histórico 20/4 conservado sin migración ni reinterpretación; navegación y acceso a Matezona de operaciones intactos.
+- Regresión técnica, navegador/responsive/accesibilidad cuando estén disponibles; no declarar una comprobación que no pudo ejecutarse.
 
-## 8. Estado
+## 8. Estado y evidencias
 
 **Estado publicado:** Product Owner aprobó [PR #260](https://github.com/jperdomo12/academia-gloria/pull/260), integrada en `c1e31af39f4ba7dd4408132ecdfc38202fb97494`. [Pages #869](https://github.com/jperdomo12/academia-gloria/actions/runs/44143618928) completado con éxito. Veinte problemas originales en cuatro bloques de cinco, comparación más/menos con total/restante y fecha 26/11 disponibles públicamente; los cinco Gaudem y cuatro microactividades se conservan.
 
 **Cierre técnico:** seis archivos de producto públicos HTTP 200 e idénticos al árbol validado `b3271f38f6569fb9d80c882476669f600116dc64`. Sin desarrollo, integración o publicación técnica pendiente. Se mantiene el contrato funcional aprobado v1.3; **uso real con Gloria y voz en su dispositivo pendientes** antes de declarar estabilidad.
+
+### 8.0 Candidata actual · 24/11/2026 · #277 + #281
+
+Implementada en rama `feat/mates-recorridos-277-281`, base `92eb11f42f0c6e7c6d32536d1606d0d69ada2454`. **No integrada ni publicada; exige aprobación expresa del Product Owner.**
+
+Validaciones ejecutadas: **63/63 Node** (11 de banco/fases, 8 de sesiones/API reales con SDK controlado y 44 de regresión de Sociales/Dictado/English); seis suites DOM simulado (dos nuevas de Matemáticas y las cuatro de Sociales). Comprueban independencia A/B, progreso 1/2→2/2, bloque duplicado/otra vuelta/20x4, reenvío concurrente/respuesta perdida, Vista previa, parciales e identidad; ejecución completa, pausa, recarga con bloque guardado, sesión autónoma posterior y visor de ambas evidencias. Catálogo local/Pages, objetivos/edición/consulta, retornos e histórico; hash de los veinte contenidos originales y hash de todas las fases Gaudem preservados. Sintaxis/imports/diff revisados.
+
+**Límite real:** Chromium falla antes de abrir la página (`socket() failed: Operation not permitted`). La suite de navegador fue adaptada a 10/2, pero no está superada. Visual 320/390/768/1024/1440, foco/teclado nativos, escucha del dispositivo, autenticación/Rules desplegadas y validación familiar siguen pendientes. DOM/SDK/voz controlados no equivalen a esas pruebas. No se declara estabilidad ni se publica sin aprobación. Las secciones siguientes registran exclusivamente la entrega histórica del 17/11.
+
 
 ### 8.1. Implementación y trazabilidad
 
