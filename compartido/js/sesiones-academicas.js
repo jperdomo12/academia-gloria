@@ -132,6 +132,14 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
         ? tarea.criterioCumplimiento
         : {};
 
+    if(datos.resumen?.tipoEvaluacion === "practica_formativa") {
+      const filtros=criterio.filtros||{};
+      if(!filtros.recorridoId || filtros.actividadId!==datos.actividadId || filtros.recorridoCompleto!==true)
+        return {registrada:false,motivo:"La Misión no tiene un recorrido formativo configurado. La familia debe editarla."};
+      if(filtros.recorridoId!==datos.resumen.recorridoId)
+        return {registrada:false,motivo:"El recorrido realizado no es el asignado en esta Misión."};
+    }
+
     const moduloEvidencia = texto(
       criterio.modulo,
       texto(tarea.modulo, "libre")
@@ -148,6 +156,8 @@ async function registrarEvidenciaMisionAcademica(datos, sesionId) {
       actividadId: datos.actividadId,
       sesionId,
       atributos: {
+        actividadId: datos.actividadId,
+        ...(datos.resumen?.tipoEvaluacion === "practica_formativa" ? {recorridoId:datos.resumen.recorridoId,recorridoCompleto:datos.resumen.completa===true} : {}),
         cursoReferencia: datos.cursoReferencia,
         materia: datos.materia,
         tema: datos.tema,
@@ -213,6 +223,12 @@ export async function guardarSesionAcademica(registro = {}) {
     throw new Error("La sesión requiere actividad, curso, materia y tema.");
   }
 
+  if(registro.resumen?.tipoEvaluacion === "practica_formativa") {
+    const r=registro.resumen, respuestas=registro.respuestas||[];
+    if(!intentoId || !Number.isInteger(r.totalPreguntas) || r.totalPreguntas<1 || r.completa!==true || !r.recorridoId || respuestas.length!==r.totalPreguntas || r.preguntasCompletadas!==r.totalPreguntas || new Set(respuestas.map(x=>x.preguntaId)).size!==r.totalPreguntas || respuestas.some(x=>x.resuelta!==true || x.respuestaFinal?.correcta!==true))
+      throw new Error("Solo puede guardarse un recorrido formativo completo y resuelto.");
+  }
+
   const referencia = intentoId
     ? doc(coleccionSesiones(contexto.userIdPersonaActiva), intentoId)
     : doc(coleccionSesiones(contexto.userIdPersonaActiva));
@@ -267,6 +283,7 @@ export async function guardarSesionAcademica(registro = {}) {
         if (JSON.stringify(contenidoComparable(previo.resumen)) !== JSON.stringify(contenidoComparable(datos.resumen))) {
           throw new Error("Este intento ya tiene un resultado guardado. Consúltalo en el historial o inicia otro intento.");
         }
+        if(datos.resumen.tipoEvaluacion==="practica_formativa" && JSON.stringify(contenidoComparable(previo.respuestas))!==JSON.stringify(contenidoComparable(datos.respuestas)))throw new Error("Este intento ya tiene respuestas guardadas distintas.");
         return; // Reintento de envío: el primer resultado es inmutable.
       }
       transaction.set(referencia, documento);

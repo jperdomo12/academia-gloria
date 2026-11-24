@@ -3162,7 +3162,7 @@
                 </a>
               ` : ""}
 
-              ${enCurso ? `
+              ${enCurso && !Academia.tareas.requiereEvidenciaFormativa(tarea) ? `
                 <div class="mision__finalizacion">
                   <span class="mision__finalizacion-pregunta">
                     ¿Terminaste la actividad?
@@ -3278,7 +3278,7 @@
           const id = button.dataset.terminarRepaso;
           const tarea = tareasActuales.find(item=>item.id === id);
 
-          if (!tarea || tarea.tipo !== "repaso_academico" || tarea.estado !== "en_curso") {
+          if (!tarea || tarea.tipo !== "repaso_academico" || tarea.estado !== "en_curso" || Academia.tareas.requiereEvidenciaFormativa(tarea)) {
             return;
           }
 

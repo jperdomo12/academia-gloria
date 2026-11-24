@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` |
-| **Versión** | 2.0 |
+| **Versión** | 2.1 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
-| **Última actualización** | 03/09/2026 |
+| **Última actualización** | 24/11/2026 |
 | **Propietario** | Consulta de Trabajo Realizado |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Acceso unificado, contextual y de solo lectura a actividades/evidencias relacionadas con una Misión |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.1 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: el visor académico existente representa sesiones de práctica formativa con recorrido, primera respuesta, resolución, intentos, pistas y dudas; sin nota ni porcentaje de dominio. Preserva lectura histórica y visores anteriores. Validación real pendiente. |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza la especificación con la implementación transversal validada y fusionada en PR #45. Define un único contrato `👁️ Ver trabajo`, `modo=consulta`, Persona Activa y retorno al caller; reutiliza visores especializados de Detectives/Resultado Académico y visor general para Lectura, Creciendo por Dentro, Biblioteca, Misiones libres y repasos sin resultado digital. Formaliza carga por `sesionId`, fallback legacy y protección estricta de solo lectura. |
 | 1.1 | 2026 | Product Owner + AI Collaborator | Ajustó la propuesta inicial con retorno al origen, revisión más rica y posible uso posterior de fortalezas/aspectos a reforzar. |
 | 1.0 | 2026 | Product Owner + AI Collaborator | Primera definición funcional de Ver trabajo realizado con Detectives como implementación inicial propuesta. |
@@ -517,3 +518,19 @@ La implementación fue aprobada mediante prueba funcional del usuario y fusionad
 | **Histórico legacy** | Compatible sin fabricar datos. |
 | **Análisis** | Se muestra lo existente; nuevas tendencias pertenecen a `SPEC-ANALISIS_EDUCATIVO.md`. |
 | **Estado** | Activo · V2 validada y fusionada al 02/09/2026. |
+## Sesiones formativas de Sociales · candidata #278
+
+La sesión `sesion-academica-v1` conserva `resumen.tipoEvaluacion: practica_formativa`, `recorridoId`, `recorridoTitulo`, cobertura completa y respuestas reales. «Ver trabajo» sigue resolviendo las evidencias de la Misión hacia `resultado-academico.html?sesionId=…&misionId=…`; no hay otro visor ni escrituras al consultar.
+
+Para este tipo de sesión el visor muestra:
+
+- preguntas realizadas frente al total y recorrido;
+- respuestas resueltas al primer intento sin pistas, **como conteo observado**, no calificación ni dominio;
+- primera respuesta y su corrección, respuesta final resuelta y todos los intentos;
+- pistas realmente consultadas, con su texto y posición respecto a los intentos;
+- dudas marcadas y explicación original;
+- resumen por bloque sin porcentajes ni barras de dominio.
+
+`correcta`/`totalCorrectas` tienen en esta práctica el criterio conservador declarado `primer_intento_sin_pistas`; `correctaPrimerIntento`, `resuelta` y las respuestas inicial/final separan los hechos. Acertar finalmente después de reintentos no se convierte en un 100 % artificial. Los conceptos y apoyos permanecen disponibles para la consulta sin inventar inferencias. Lectura en voz alta coherente con esta presentación; las Pruebas académicas anteriores mantienen su visualización y contrato.
+
+Estado: implementación en rama, no publicada. DOM simulado con datos guardados, lectura controlada y escape HTML comprobados; navegador real, audición y permisos desplegados pendientes. No se escriben datos familiares de prueba.

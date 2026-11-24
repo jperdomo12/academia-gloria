@@ -618,3 +618,14 @@ export const PREGUNTAS_REPASO = Object.freeze([
     ]
   }
 ]);
+
+// #278: identidad de la actividad y recorridos derivados del banco original, no otro Tema.
+export const RECORRIDOS_REPASO = Object.freeze([
+  {id:"todas",titulo:"Todo el repaso",cantidad:PREGUNTAS_REPASO.length,ids:PREGUNTAS_REPASO.map(p=>p.id)},
+  ...BLOQUES_REPASO.map(b=>({id:b.id,titulo:b.titulo,cantidad:b.cantidad,ids:PREGUNTAS_REPASO.filter(p=>p.bloqueId===b.id).map(p=>p.id)}))
+]);
+export const META_REPASO = Object.freeze({
+  actividadId:"6-sociales-preparacion-primera-evaluacion",tituloActividad:"Me preparo para Sociales · Primera evaluación",
+  version:"1.0",cursoReferencia:"6.º",materia:"Sociales",tema:"Me preparo para Sociales · Primera evaluación",
+  rutaActividad:"cursos/6to/sociales/preparacion-primera-evaluacion/",recorridos:RECORRIDOS_REPASO
+});

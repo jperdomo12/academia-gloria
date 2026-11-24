@@ -35,9 +35,9 @@ const base=process.env.BASE_URL,route='/cursos/6to/sociales/preparacion-primera-
    assert.match(await p.locator('#resumenRepaso').innerText(),new RegExp(bloque.cantidad+' preguntas'));
   }
   await p.emulateMedia({reducedMotion:'reduce'});assert.equal(await p.locator('#barraPractica').evaluate(e=>getComputedStyle(e).transitionDuration),'0s');
-  assert.equal(await p.evaluate(()=>window.qaWrites||0),0);assert.equal(await storage(),antes);assert.deepEqual(errors,[]);
+  if(role==='alumno'){assert.equal(await p.evaluate(()=>window.qaWritePaths.filter(p=>p.includes('/sesionesAcademicas/')).length),4);await p.locator('#verSesionRepaso').click();await p.locator('#contenidoResultado:not([hidden])').waitFor();assert.equal(await p.locator('#etiquetaMetricaPorcentaje').innerText(),'al primer intento sin pistas');await p.goBack();}else{assert.equal(await p.evaluate(()=>window.qaWrites||0),0);assert.equal(await storage(),antes);}assert.deepEqual(errors,[]);
   const popupPromise=p.waitForEvent('popup');await p.getByRole('link',{name:'Los impuestos'}).click();const popup=await popupPromise;assert.ok(popup.url().includes('/impuestos/'));await popup.close();
   await p.locator('[data-nav-volver]').first().click();await p.waitForURL(/\/sociales\/(?:index\.html)?(?:\?|$)/);await c.close();
  }
- console.log('PASS navegador: 18 preguntas, tres bloques, errores/pistas/duda manual y repaso final, audio controlado, tres accesos, cero escrituras, navegación/retorno/refuerzo, cinco anchos, teclado/foco/reduced motion.');
+ console.log('PASS navegador: 18 preguntas, tres bloques, errores/pistas/duda manual y repaso final, audio controlado, tres accesos, 4 sesiones del alumno y cero escrituras en consulta/vista previa, navegación/retorno/refuerzo, cinco anchos, teclado/foco/reduced motion.');
 }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

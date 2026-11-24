@@ -195,6 +195,10 @@ function renderContexto(sesion) {
 }
 
 function renderMapa(sesion, respuestas) {
+  if(sesion.resumen?.tipoEvaluacion==="practica_formativa") {
+    $("mapaBloques").innerHTML=mapaSesion(sesion,respuestas).map(b=>`<article class="resultado-bloque"><h3>${escaparHTML(tituloBloque(b))}</h3><p>${numero(b.completadas)} de ${numero(b.total)} preguntas realizadas</p><p>${numero(b.correctas)} resueltas al primer intento sin pistas · ${numero(b.conPistas)} con pistas · ${numero(b.conReintentos)} con reintentos · ${numero(b.dudas)} dudas marcadas</p><p>${b.estado==="reforzar"?"Conviene volver a las ideas que necesitaron apoyo.":"Puedes seguir practicando cuando quieras."}</p></article>`).join("");
+    return;
+  }
   const mapa = mapaSesion(sesion, respuestas);
 
   if (!mapa.length) {
@@ -237,6 +241,7 @@ function renderMapa(sesion, respuestas) {
 }
 
 function textoEscuchaRespuesta(respuesta, indice) {
+  if(respuesta.tipoEvidencia==="practica_formativa")return textoParaVoz(`Pregunta ${indice+1}. ${respuesta.enunciado} ${respuesta.pregunta}. Primera respuesta: ${respuesta.primeraRespuesta?.respuestaTexto||""}, ${respuesta.correctaPrimerIntento?"correcta":"necesitó otro intento"}. Respuesta final: ${respuesta.respuestaTexto}, resuelta. ${respuesta.intentos} intentos. ${respuesta.pistasUtilizadas?.length||0} pistas. ${respuesta.duda?"Duda marcada.":""} ${respuesta.explicacion||""}`);
   const partes = [
     `Pregunta ${indice + 1}.`,
     respuesta.titulo,
@@ -267,6 +272,17 @@ function renderRevision(respuestas) {
       .filter(Boolean)
       .join(" · ");
 
+    if(respuesta.tipoEvidencia==="practica_formativa")return `
+      <article class="resultado-respuesta"><h3>${indice+1}. ${escaparHTML(respuesta.titulo||"Pregunta")}</h3><p>${escaparHTML(enunciado)}</p>
+        <p><b>Primera respuesta:</b> ${escaparHTML(respuesta.primeraRespuesta?.respuestaTexto||"")} · ${respuesta.correctaPrimerIntento?"Correcta":"Necesitó otro intento"}</p>
+        <p><b>Respuesta final:</b> ${escaparHTML(respuesta.respuestaTexto)} · Resuelta</p>
+        <p>${respuesta.correcta?"Resuelta al primer intento sin pistas.":"Resuelta después de apoyos o reintentos."} ${respuesta.duda?"Duda marcada para volver a esta idea.":""}</p>
+        <details><summary>Ver ${numero(respuesta.intentos)} intentos y ${respuesta.pistasUtilizadas?.length||0} pistas</summary>
+          <ol>${(respuesta.historialIntentos||[]).map(i=>`<li>${escaparHTML(i.respuestaTexto)} · ${i.correcta?"Correcta":"Volver a pensar"}</li>`).join("")}</ol>
+          <ul>${(respuesta.pistasUtilizadas||[]).map(i=>`<li>${escaparHTML(i.texto)} (tras ${numero(i.antesDeIntento)} intentos)</li>`).join("")}</ul>
+        </details><p><b>Explicación:</b> ${escaparHTML(respuesta.explicacion||"")}</p>
+        ${lectorDisponible()?`<button class="resultado-escuchar" type="button" data-escuchar-respuesta="${indice}">🔊 Escuchar explicación</button>`:""}
+      </article>`;
     return `
       <article class="resultado-respuesta ${
         correcta ? "resultado-respuesta--correcta" : "resultado-respuesta--incorrecta"
@@ -325,6 +341,7 @@ function renderRevision(respuestas) {
 
 function renderResultado(sesion, contexto) {
   const { respuestas, total, correctas, porcentaje } = resumenSesion(sesion);
+  const formativa=sesion.resumen?.tipoEvaluacion==="practica_formativa";
   const nombre = String(
     contexto.personaActiva?.nombreVisible ||
     contexto.personaActiva?.nombre ||
@@ -335,7 +352,7 @@ function renderResultado(sesion, contexto) {
     sesion.tituloActividad || sesion.tema || "Resultado académico";
   $("descripcionSesion").textContent =
     `Resultado histórico de una sesión de ${sesion.materia || "aprendizaje"}. ` +
-    "La información se reconstruye exclusivamente a partir del registro guardado al finalizar la prueba.";
+    (formativa?`Recorrido: ${sesion.resumen.recorridoTitulo}. Registro del recorrido completo, con respuestas iniciales, resolución y apoyos; sin nota.`:"La información se reconstruye exclusivamente a partir del registro guardado al finalizar la prueba.");
   $("nombreAlumno").textContent = nombre;
   $("fechaSesion").textContent = formatearFechaHora(
     sesion.completadaEn || sesion.updatedAt || sesion.finCliente
@@ -344,7 +361,12 @@ function renderResultado(sesion, contexto) {
   renderContexto(sesion);
 
   $("metricaCorrectas").textContent = `${correctas} / ${total}`;
-  $("metricaPorcentaje").textContent = `${porcentaje} %`;
+  $("metricaPorcentaje").textContent = formativa?String(correctas):`${porcentaje} %`;
+  if(formativa){
+    $("metricaCorrectas").textContent=`${sesion.resumen.preguntasCompletadas} / ${total}`;
+    $("etiquetaMetricaCorrectas").textContent="preguntas realizadas";
+    $("etiquetaMetricaPorcentaje").textContent="al primer intento sin pistas";
+  }
   $("metricaTiempo").textContent = formatearTiempo(sesion.tiempoActivoSegundos);
 
   renderMapa(sesion, respuestas);
@@ -363,6 +385,7 @@ function renderResultado(sesion, contexto) {
     $("escucharResumen").hidden = true;
   } else {
     $("escucharResumen").addEventListener("click", () => {
+      if(formativa){escuchar(textoParaVoz(`${sesion.tituloActividad}. ${sesion.resumen.recorridoTitulo}. ${sesion.resumen.preguntasCompletadas} de ${total} preguntas realizadas. ${correctas} al primer intento sin pistas; ${sesion.resumen.conPistas} con pistas, ${sesion.resumen.conReintentos} con reintentos y ${sesion.resumen.dudasMarcadas} dudas marcadas. Sin nota.`));return;}
       const mapa = mapaSesion(sesion, respuestas);
       const textoMapa = mapa.map(item => {
         const estado = estadoBloque(item);

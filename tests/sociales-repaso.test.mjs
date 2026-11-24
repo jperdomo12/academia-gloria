@@ -42,7 +42,7 @@ test('Repaso final reúne error corregido, pista y duda manual una sola vez; una
  assert.deepEqual(Array.from(dudas(preguntas,new Map(preguntas.map(p=>[p.id,1])),new Set(),new Set())),[]);
  assert.deepEqual(Array.from(dudas(preguntas.slice(6,15),intentos,pistas,marcadas)),[]);
 });
-test('Reutiliza el motor, sin Prueba, catálogo permanente ni escrituras nuevas',()=>{
+test('Reutiliza el motor con registro formativo explícito, sin Prueba ni Tema nuevo',()=>{
  const js=readFileSync(new URL('../cursos/6to/sociales/preparacion-primera-evaluacion/repaso.js',import.meta.url),'utf8');
  const html=readFileSync(new URL('../cursos/6to/sociales/preparacion-primera-evaluacion/index.html',import.meta.url),'utf8');
  assert.match(js,/iniciarTemaVerbal/);assert.match(js,/soloPractica:true/);assert.doesNotMatch(js,/setDoc|addDoc|localStorage|sessionStorage|guardarSesion/);
@@ -50,6 +50,7 @@ test('Reutiliza el motor, sin Prueba, catálogo permanente ni escrituras nuevas'
  assert.match(html,/no es el examen oficial/);assert.match(html,/25 de noviembre de 2026/);
  assert.deepEqual(TEMAS_SOCIALES.map(t=>t.id),['publicidad','dinero-ahorro-inversion','impuestos']);
  assert.match(motor,/async function iniciarPrueba\(\) \{\s*if\(soloPractica\)return;/);
- assert.match(motor,/if\(soloPractica\)modo=MODOS_SESION_ACADEMICA.VISTA_PREVIA/);
- assert.match(motor,/tiempo:soloPractica\?null:crearTiempoActivo/);
+ assert.match(js,/registroFormativo:true/);
+ assert.match(motor,/if\(soloPractica && !registroFormativo\)modo=MODOS_SESION_ACADEMICA.VISTA_PREVIA/);
+ assert.match(motor,/tiempo:soloPractica&&!registroFormativo\?null:crearTiempoActivo/);
 });

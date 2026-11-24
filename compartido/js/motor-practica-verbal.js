@@ -30,8 +30,34 @@ export function dudasPracticaVerbal(practica,intentos,pistas,marcadas) {
   return practica.filter(p=>(intentos.get(p.id)||0)>1||pistas.has(p.id)||marcadas.has(p.id)).map(p=>p.id);
 }
 
+// Sesión formativa del mismo motor: solo se construye con cobertura completa y respuestas reales.
+export function construirRegistroFormativo({meta,recorridoId,preguntas,historial,pistas,dudas,intentoId,inicioCliente,finCliente,identidad,misionId="",tiempo={}}) {
+  const recorrido=meta.recorridos?.find(r=>r.id===recorridoId);
+  if(!recorrido||preguntas.length!==recorrido.cantidad||new Set(preguntas.map(p=>p.id)).size!==recorrido.cantidad||recorrido.ids.some(id=>!preguntas.some(p=>p.id===id)))throw new Error("El recorrido no está completo.");
+  if(!identidad.personaId||!identidad.actorUserId)throw new Error("No se pudo fijar la identidad del intento. Vuelve a abrir la actividad.");
+  const respuestas=preguntas.map(p=>{
+    const elecciones=historial.get(p.id)||[],ayudas=pistas.get(p.id)||[];
+    const primera=elecciones[0],final=elecciones.at(-1);
+    if(!primera||!final||!esRespuestaVerbalCorrecta(p,final.respuesta))throw new Error("Faltan preguntas resueltas en este recorrido.");
+    const sinApoyos=primera.correcta===true&&ayudas.length===0;
+    return {preguntaId:p.id,bloqueId:p.bloqueId,conceptoId:p.conceptoId||p.id,tipoEvidencia:"practica_formativa",titulo:p.titulo,enunciado:p.enunciado,pregunta:p.pregunta,
+      respuesta:final.respuesta,respuestaTexto:final.respuestaTexto,respuestaCorrecta:p.respuestaCorrecta,respuestaCorrectaTexto:p.opciones?.find(o=>o.id===p.respuestaCorrecta)?.texto||p.respuestaCorrecta,
+      correcta:sinApoyos,correctaPrimerIntento:primera.correcta===true,resuelta:true,errorInicial:primera.correcta!==true,
+      primeraRespuesta:{...primera},respuestaFinal:{...final},intentos:elecciones.length,historialIntentos:elecciones.map(e=>({...e})),pistasUtilizadas:ayudas.map(a=>({...a})),duda:dudas.has(p.id),
+      requiereRefuerzo:!sinApoyos||dudas.has(p.id),explicacion:p.explicacion||""};
+  });
+  const contar=(xs,fn)=>xs.filter(fn).length;
+  const porBloque=[...new Set(respuestas.map(r=>r.bloqueId))].map(bloqueId=>{const xs=respuestas.filter(r=>r.bloqueId===bloqueId);return {bloqueId,total:xs.length,completadas:xs.length,correctas:contar(xs,r=>r.correcta),correctasPrimerIntento:contar(xs,r=>r.correctaPrimerIntento),conPistas:contar(xs,r=>r.pistasUtilizadas.length),conReintentos:contar(xs,r=>r.intentos>1),dudas:contar(xs,r=>r.duda),estado:xs.some(r=>r.requiereRefuerzo)?"reforzar":"solido"};});
+  return {modo:"aprendizaje",actividadId:meta.actividadId,tituloActividad:meta.tituloActividad,versionActividad:meta.version,cursoReferencia:meta.cursoReferencia,materia:meta.materia,tema:meta.tema,
+    intentoId,personaIdEsperada:identidad.personaId,actorUserIdEsperado:identidad.actorUserId,misionId,vincularMision:Boolean(misionId),inicioCliente,finCliente,...tiempo,
+    conceptosTrabajados:respuestas.map(r=>r.conceptoId),variantes:respuestas.map(r=>({varianteId:r.preguntaId,bloqueId:r.bloqueId,conceptoId:r.conceptoId})),respuestas,
+    resumen:{tipoEvaluacion:"practica_formativa",completa:true,recorridoId:recorrido.id,recorridoTitulo:recorrido.titulo,rutaActividad:meta.rutaActividad,totalPreguntas:recorrido.cantidad,preguntasCompletadas:respuestas.length,
+      totalCorrectas:contar(respuestas,r=>r.correcta),correctasPrimerIntento:contar(respuestas,r=>r.correctaPrimerIntento),conPistas:contar(respuestas,r=>r.pistasUtilizadas.length),conReintentos:contar(respuestas,r=>r.intentos>1),erroresIniciales:contar(respuestas,r=>r.errorInicial),dudasMarcadas:contar(respuestas,r=>r.duda),criterioCorrecta:"primer_intento_sin_pistas",porBloque},
+    retroalimentacion:{bloquesAReforzar:porBloque.filter(b=>b.estado==="reforzar").map(b=>b.bloqueId),mensajeVisible:"Práctica formativa: recorrido realizado y apoyos utilizados. No es una nota ni un porcentaje de dominio."}};
+}
+
 // Motor de verbos existente, parametrizado para reutilizarlo con contenidos distintos.
-export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos", pestanaInicial = "mapa", pestanaRepaso = "claves", soloPractica = false }) {
+export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos", pestanaInicial = "mapa", pestanaRepaso = "claves", soloPractica = false, registroFormativo = false }) {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -64,12 +90,14 @@ if (parametros.get("modo") === "aprendizaje" && puedeRegistrar) {
   modo = MODOS_SESION_ACADEMICA.APRENDIZAJE;
 }
 
-if(soloPractica)modo=MODOS_SESION_ACADEMICA.VISTA_PREVIA;
+if(soloPractica && !registroFormativo)modo=MODOS_SESION_ACADEMICA.VISTA_PREVIA;
 
 const estado = {
   pestana:pestanaInicial,
   practicaNivelPista:0,
   repasoIds:null,
+  formativa:null,
+  rondaDudas:false,
   practicaDudas:new Set(),
   practicaIndice:0,
   practicaSeleccion:null,
@@ -86,7 +114,7 @@ const estado = {
   ordenOpciones:new Map(),
   inicioIso:null,
   guardado:null,
-  tiempo:soloPractica?null:crearTiempoActivo({inactividadMs:180000})
+  tiempo:soloPractica&&!registroFormativo?null:crearTiempoActivo({inactividadMs:180000})
 };
 
 function escaparHTML(valor="") {
@@ -130,6 +158,7 @@ function activarPestana(nombre) {
   if (soloPractica && nombre==="prueba") return;
   if (pruebaEnCurso() && nombre!=="prueba") return;
   detenerLecturaActual();
+  if(registroFormativo&&nombre==="mapa"&&estado.formativa?.enCurso){estado.formativa.enCurso=false;estado.tiempo.detener();actualizarModo();}
   estado.pestana=nombre;
   document.querySelectorAll("[data-pestana]").forEach(boton=>{
     boton.classList.toggle("activa",boton.dataset.pestana===nombre);
@@ -148,17 +177,19 @@ document.querySelectorAll("[data-pestana]").forEach(boton=>{
 });
 
 function actualizarModo() {
-  if(soloPractica)return;
+  if(soloPractica&&!registroFormativo)return;
   const aprendizaje=modo===MODOS_SESION_ACADEMICA.APRENDIZAJE;
   $("iconoModo").textContent=aprendizaje ? "🎓":"👀";
   $("tituloModo").textContent=aprendizaje ? "Sesión de aprendizaje":"Vista previa";
-  $("descripcionModo").textContent=aprendizaje
+  $("descripcionModo").textContent=registroFormativo
+    ? (aprendizaje?"Al completar un recorrido se guardará su trabajo y los apoyos utilizados, sin nota ni Prueba adicional.":"Vista previa: puedes practicar, sin registrar sesiones ni evidencias.")
+    : aprendizaje
     ? `Trabajamos sobre ${nombreAlumno}. Solo la prueba final guardará evidencia académica.`
     : "Puedes explorar y practicar. Nada se guardará como evidencia de aprendizaje.";
 
-  if (estado.pruebaIniciada) {
+  if (estado.pruebaIniciada || (registroFormativo&&estado.formativa?.enCurso)) {
     $("botonModo").disabled=true;
-    $("botonModo").textContent="Modo fijado al comenzar la prueba";
+    $("botonModo").textContent=registroFormativo?"Modo fijado durante este recorrido":"Modo fijado al comenzar la prueba";
   } else if (aprendizaje) {
     $("botonModo").disabled=false;
     $("botonModo").textContent="Cambiar a Vista previa";
@@ -172,7 +203,7 @@ function actualizarModo() {
 }
 
 $("botonModo")?.addEventListener("click",()=>{
-  if (estado.pruebaIniciada) return;
+  if (estado.pruebaIniciada || estado.formativa?.enCurso) return;
   modo=modo===MODOS_SESION_ACADEMICA.APRENDIZAJE
     ? MODOS_SESION_ACADEMICA.VISTA_PREVIA
     : MODOS_SESION_ACADEMICA.APRENDIZAJE;
@@ -214,6 +245,14 @@ function progresoRepaso(resuelta=false) {
 }
 function empezarRepaso(filtro="todas",ids=null) {
   if(!soloPractica)return;
+  estado.rondaDudas=ids!==null;
+  if(registroFormativo&&!estado.rondaDudas){
+    const recorrido=VERBOS_META.recorridos?.find(r=>r.id===filtro);
+    if(!recorrido)throw new Error("Recorrido no disponible.");
+    estado.formativa={intentoId:globalThis.crypto?.randomUUID?.()||`repaso-${Date.now()}-${Math.random().toString(36).slice(2)}`,identidad:{personaId:contexto.personaActiva?.personaId,actorUserId:contexto.usuario?.userId},misionId:parametros.get("misionId")||"",recorridoId:filtro,inicioCliente:new Date().toISOString(),enCurso:true,completa:false,historial:new Map(),pistas:new Map(),payload:null,promesa:null,resultado:null};
+    estado.tiempo.reiniciar(`repaso-${filtro}`);actualizarModo();
+    $("estadoGuardadoRepaso").textContent="";$("reintentarGuardadoRepaso").hidden=true;$("verSesionRepaso").hidden=true;
+  }
   $("filtroPractica").value=filtro;estado.repasoIds=ids;
   estado.practicaIndice=0;estado.practicaIntentos.clear();estado.practicaPistas.clear();estado.practicaDudas.clear();
   activarPestana("practica");renderPractica();
@@ -221,12 +260,39 @@ function empezarRepaso(filtro="todas",ids=null) {
 function terminarRepaso() {
   const preguntas=practicasDisponibles();
   const dudas=dudasPracticaVerbal(preguntas,estado.practicaIntentos,estado.practicaPistas,estado.practicaDudas);
-  $("resumenRepaso").textContent=`Has recorrido ${preguntas.length} preguntas. ${dudas.length?`${dudas.length} ideas quedan para repasar con calma.`:"Puedes volver a estas ideas cuando quieras."} No es una nota ni se guarda.`;
+  $("resumenRepaso").textContent=`Has recorrido ${preguntas.length} preguntas. ${dudas.length?`${dudas.length} ideas quedan para repasar con calma.`:"Puedes volver a estas ideas cuando quieras."} ${registroFormativo?"Es una práctica formativa, sin nota.":"No es una nota ni se guarda."}`;
+  if(registroFormativo&&estado.rondaDudas)$("resumenRepaso").textContent=`Has vuelto a ${preguntas.length} ideas con dudas. Este repaso no genera otra sesión ni modifica el recorrido ya guardado.`;
   $("listaDudasRepaso").replaceChildren(...preguntas.filter(p=>dudas.includes(p.id)).map(p=>{const li=document.createElement("li");li.textContent=p.titulo;return li;}));
   $("botonRepasarDudas").hidden=!dudas.length;
   $("botonRepasarDudas").onclick=()=>empezarRepaso("todas",dudas);
+  if(registroFormativo&&!estado.rondaDudas){
+    const intento=estado.formativa;intento.enCurso=false;estado.tiempo.detener();actualizarModo();
+    if(modo===MODOS_SESION_ACADEMICA.APRENDIZAJE&&!intento.payload){
+      try{intento.payload=construirRegistroFormativo({meta:VERBOS_META,recorridoId:intento.recorridoId,preguntas,historial:intento.historial,pistas:intento.pistas,dudas:estado.practicaDudas,
+        intentoId:intento.intentoId,inicioCliente:intento.inicioCliente,finCliente:new Date().toISOString(),identidad:intento.identidad,misionId:intento.misionId,tiempo:estado.tiempo.obtenerResultado()});intento.completa=true;}
+      catch(error){$("estadoGuardadoRepaso").textContent=error.message;}
+    }
+    if(modo===MODOS_SESION_ACADEMICA.VISTA_PREVIA)$("estadoGuardadoRepaso").textContent="Vista previa: este recorrido no se guarda ni completa Misiones.";
+    else if(intento.payload)guardarRepaso(intento);
+  }
   activarPestana("cierre");$("tituloCierreRepaso").focus({preventScroll:true});
 }
+async function guardarRepaso(intento) {
+  if(!registroFormativo||modo!==MODOS_SESION_ACADEMICA.APRENDIZAJE||!intento.payload||!intento.completa||intento.promesa)return;
+  if(intento.resultado?.guardado&&(!intento.resultado.misionId||intento.resultado.evidenciaMision?.registrada))return;
+  $("estadoGuardadoRepaso").textContent="Guardando el recorrido completo…";$("reintentarGuardadoRepaso").hidden=true;
+  intento.promesa=guardarSesionAcademica(intento.payload);
+  try{
+    const r=await intento.promesa;intento.resultado=r;
+    if(estado.formativa!==intento)return;
+    const enlaceFallido=r.misionId&&!r.evidenciaMision?.registrada;
+    $("estadoGuardadoRepaso").textContent=r.guardado?(enlaceFallido?"Sesión guardada. No se ha completado la Misión: "+(r.evidenciaMision.error||r.evidenciaMision.motivo||"no se pudo enlazar la evidencia."):r.misionId?"Recorrido y evidencia guardados. La Misión queda para revisión familiar.":"Recorrido completo guardado en tu historial de aprendizaje."):"Vista previa: no se guardó ninguna sesión.";
+    $("reintentarGuardadoRepaso").hidden=!(enlaceFallido&&r.evidenciaMision?.motivo==="error_registro_evidencia");
+    if(r.guardado){const url=new URL("../../mi-universo/mis-tareas/resultado-academico.html",import.meta.url);url.searchParams.set("sesionId",r.sesionId);if(r.misionId)url.searchParams.set("misionId",r.misionId);$("verSesionRepaso").href=url.href;$("verSesionRepaso").hidden=false;}
+  }catch(error){if(estado.formativa===intento){$("estadoGuardadoRepaso").textContent="No se ha confirmado el guardado. "+error.message;$("reintentarGuardadoRepaso").hidden=false;}}
+  finally{intento.promesa=null;}
+}
+$("reintentarGuardadoRepaso")?.addEventListener("click",()=>{if(estado.formativa)guardarRepaso(estado.formativa);});
 if(soloPractica){
   document.querySelectorAll("[data-iniciar-repaso]").forEach(b=>b.addEventListener("click",()=>empezarRepaso(b.dataset.iniciarRepaso)));
   $("marcarDuda").addEventListener("change",()=>{const id=practicasDisponibles()[estado.practicaIndice].id;if($("marcarDuda").checked)estado.practicaDudas.add(id);else estado.practicaDudas.delete(id);});
@@ -299,16 +365,19 @@ $("botonPista")?.addEventListener("click",()=>{
   estado.practicaPistas.add(reto.id);
   const pistas=reto.pistas || [reto.pista];
   $("pistaPractica").textContent=pistas[Math.min(estado.practicaNivelPista,pistas.length-1)];
+  if(registroFormativo&&!estado.rondaDudas&&estado.formativa?.enCurso){const registro=estado.formativa.pistas.get(reto.id)||[];registro.push({texto:$("pistaPractica").textContent,nivel:Math.min(estado.practicaNivelPista,pistas.length-1)+1,antesDeIntento:(estado.formativa.historial.get(reto.id)||[]).length,ocurridaEn:new Date().toISOString()});estado.formativa.pistas.set(reto.id,registro);}
   estado.practicaNivelPista++;
   $("pistaPractica").hidden=false;
   $("botonPista").textContent=estado.practicaNivelPista<pistas.length?"💡 Otra pista":"💡 Pista mostrada";
 });
 
 $("botonComprobar")?.addEventListener("click",()=>{
+  if(estado.practicaResuelta)return;
   const reto=practicasDisponibles()[estado.practicaIndice];
   const intentos=(estado.practicaIntentos.get(reto.id)||0)+1;
   estado.practicaIntentos.set(reto.id,intentos);
   const correcta=esRespuestaVerbalCorrecta(reto,estado.practicaSeleccion);
+  if(registroFormativo&&!estado.rondaDudas&&estado.formativa?.enCurso){const elecciones=estado.formativa.historial.get(reto.id)||[];elecciones.push({respuesta:estado.practicaSeleccion,respuestaTexto:textoOpcion(reto,estado.practicaSeleccion),correcta,ocurridaEn:new Date().toISOString()});estado.formativa.historial.set(reto.id,elecciones);}
   const botonElegido=Array.from(document.querySelectorAll("#practicaOpciones .option")).find(b=>b.dataset.opcion===estado.practicaSeleccion);
 
   if (correcta) {

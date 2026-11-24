@@ -33,6 +33,7 @@
       </div>
     </header>
     <p class="source-small">Basado en el <strong>repaso proporcionado por el colegio</strong>. Las preguntas y opciones están redactadas por Academia: esta página <strong>no es el examen oficial</strong>.</p>
+    <aside class="study-note" aria-label="Modo de la actividad"><span id="iconoModo" aria-hidden="true"></span> <strong id="tituloModo"></strong><p id="descripcionModo"></p><button id="botonModo" class="btn btn--soft" type="button"></button></aside>
     <section class="science-panel" data-panel="mapa" aria-labelledby="tituloInicioRepaso">
       <div class="study-heading"><h2 id="tituloInicioRepaso" tabindex="-1">¿Qué quieres repasar hoy?</h2><p>Puedes hacer todo el recorrido en el orden del repaso del cole o elegir un bloque.</p></div>
       <div class="repaso-opciones">
@@ -41,7 +42,7 @@
         <button class="repaso-eleccion" type="button" data-iniciar-repaso="dinero" disabled><span aria-hidden="true">🪙</span><strong>Dinero, ahorro e inversión</strong><small>9 preguntas</small></button>
         <button class="repaso-eleccion" type="button" data-iniciar-repaso="publicidad" disabled><span aria-hidden="true">📣</span><strong>Publicidad</strong><small>3 preguntas</small></button>
       </div>
-      <aside class="study-note"><strong>Primero tu idea, después la explicación</strong><p>Lee la pregunta y elige una de las cuatro opciones. Puedes escucharla, pedir una pista y volver a intentarlo sin penalización.</p><p>Si necesitas otro intento, pides una pista o marcas una duda, podrás volver a esa idea al terminar. Todo se conserva solo mientras esta página esté abierta; no se guarda ninguna nota.</p></aside>
+      <aside class="study-note"><strong>Primero tu idea, después la explicación</strong><p>Lee la pregunta y elige una de las cuatro opciones. Puedes escucharla, pedir una pista y volver a intentarlo sin penalización.</p><p>Si necesitas otro intento, pides una pista o marcas una duda, podrás volver a esa idea al terminar. En sesión de aprendizaje se guarda el recorrido completo con tus respuestas y ayudas. No hay nota. Si sales antes de terminar, no se registra como completado.</p></aside>
     </section>
     <section class="science-panel" data-panel="practica" aria-label="Repaso guiado" hidden>
       <div class="repaso-cabecera"><h2>Una idea cada vez</h2><button class="btn btn--soft" type="button" data-pestana="mapa">Elegir otro bloque</button></div>
@@ -59,6 +60,7 @@
     </section>
     <section class="science-panel" data-panel="cierre" aria-labelledby="tituloCierreRepaso" hidden>
       <div class="study-heading"><p class="eyebrow">Cada idea cuenta</p><h2 id="tituloCierreRepaso" tabindex="-1">¡Repaso recorrido!</h2><p id="resumenRepaso" role="status"></p></div>
+      <p id="estadoGuardadoRepaso" role="status" aria-live="polite"></p><div class="actions"><button id="reintentarGuardadoRepaso" class="btn btn--soft" type="button" hidden>Reintentar guardado/enlace</button><a id="verSesionRepaso" class="btn btn--soft" hidden>Ver mi trabajo →</a></div>
       <ul id="listaDudasRepaso" class="repaso-lista"></ul>
       <div class="actions"><button class="btn btn--soft" type="button" data-pestana="mapa">Elegir otro recorrido</button><button id="botonRepasarDudas" class="btn btn--primary" type="button" hidden>Volver a las ideas con dudas</button></div>
     </section>

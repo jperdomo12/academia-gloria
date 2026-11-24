@@ -4,10 +4,10 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.12 |
+| **Versión** | 2.13 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
-| **Última actualización** | 02/11/2026 |
+| **Última actualización** | 24/11/2026 |
 | **Propietario** | Gestión de Misiones |
 | **Responsables** | Product Owner + AI Collaborator |
 | **Ámbito** | Comportamiento funcional de creación, presentación, ejecución, seguimiento, revisión, evidencia, refuerzo y eliminación controlada de Misiones |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.13 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: recorrido formativo exacto de Sociales en filtros existentes, sesión completa idempotente, evidencia y revisión familiar. Sin nueva Prueba, nota ni colecciones. Pendiente de aprobación/integración y prueba real; #277 fuera de alcance. |
 | 2.12 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #235/Pages #844 success: Segunda Semilla condicional publicada, HTML/JS públicos idénticos a los probados y suite V1 ampliada superada. |
 | 2.11 | 02/11/2026 | Product Owner + AI Collaborator | Revisión familiar: Segunda Semilla visible solo cuando cantidad > 1; el valor oculto no participa en la selección efectiva, sin cambiar contratos. |
 | 2.10 | 02/11/2026 | Product Owner + AI Collaborator | Cierra ajustes #233/Pages #842 success: orden y título publicados, HTML/JS públicos idénticos a los probados, sin cambios en criterios o evidencias. |
@@ -248,6 +249,31 @@ cursoReferencia
 ```
 
 Cuando existe catálogo real, la preparación es asistida y la familia no necesita conocer rutas técnicas.
+
+---
+
+### 5.5 Repaso formativo de Sociales · candidata Issue #278
+
+Estado: implementado en rama `feat/sociales-sesiones-misiones-278`, pendiente de aprobación e integración. El contrato aprobado es [Issue #278](https://github.com/jperdomo12/academia-gloria/issues/278). Evoluciona el recurso temporal de #271 y su acceso desde Misiones #275; no convierte el repaso en otro Tema ni en Prueba académica.
+
+Gestión ofrece **Recorrido de esta Misión**, derivado de `RECORRIDOS_REPASO` del propio recurso:
+
+| `recorridoId` | Recorrido completo requerido |
+|---|---|
+| `todas` | Todo el repaso · 18 preguntas |
+| `impuestos` | Impuestos · 6 preguntas |
+| `dinero` | Dinero, ahorro e inversión · 9 preguntas |
+| `publicidad` | Publicidad · 3 preguntas |
+
+El criterio mantiene `tipo: cantidad`, `cantidadObjetivo: 1`, `modulo: libre`, `evidenciaTipo: sesion_academica` y `filtros: {actividadId: "6-sociales-preparacion-primera-evaluacion", recorridoId, recorridoCompleto: true}`. La evidencia reutiliza esos atributos y referencia la sesión real mediante `sesionId`/`destinoRevision`.
+
+Solo terminar y guardar **el recorrido exacto asignado** envía la Misión a revisión familiar. Completar otro bloque guarda ese trabajo sin crédito para esta Misión; no cuentan abrir el recurso, empezar, completar una parte o pulsar una finalización manual. Mi Camino omite «Ya terminé» para este criterio y la API rechaza el cierre sin progreso respaldado por evidencia. La validación adulta posterior conserva el flujo estándar. El recorrido se restaura en edición y queda protegido una vez iniciada la Misión; un ID retirado exige elección adulta y nunca se sustituye silenciosamente.
+
+Compatibilidad: no hay migraciones ni evidencias retrospectivas. Las Misiones antiguas sin recorrido conservan su contrato manual; no se les atribuye automáticamente un bloque. Al editarlas para usar el registro nuevo se exige elegir el recorrido explícitamente. Las sesiones/evidencias anteriores permanecen intactas. Las restantes Misiones académicas conservan su contrato.
+
+`motor-practica-verbal.js` activa `registroFormativo: true` únicamente para este recurso junto a `soloPractica: true`; la opción queda desactivada por defecto. El guardado reutiliza `sesiones-academicas.js`: un `intentoId` estable, identidad esperada, sesión completa inmutable y enlace de evidencia idempotente. El repaso posterior de dudas no modifica la sesión original ni genera otra evidencia. Un fallo al enlazar se informa separadamente del guardado correcto y permite reintentar el mismo intento cuando falla la red. Vista previa y consulta no registran trabajo.
+
+Validación: pruebas Node y DOM simulado de cuatro recorridos, filtros exactos, cierre, edición, apoyos, parciales, identidades, reenvíos y visores. La revisión renderizada, permisos desplegados y recorrido autenticado real siguen pendientes por bloqueo de Chromium del entorno; no se declara estabilidad. Matemáticas #277 no se implementa en esta candidata.
 
 ---
 
