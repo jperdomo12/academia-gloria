@@ -1,3 +1,4 @@
+import {esRepasoSocialesFormativo, criterioRepasoSociales, RECORRIDOS_REPASO} from "./repaso-sociales-formativo.js";
 import { protegerPagina } from "../../compartido/js/auth-guard.js";
 import { iniciarPanelUsuario } from "../../compartido/js/panel-usuario.js";
 import { obtenerPerfil } from "../../compartido/js/perfil-usuario.js";
@@ -1698,9 +1699,25 @@ function datosAcademicosFormulario() {
   };
 }
 
+function esSocialesFormativoFormulario(){return esRepasoAcademicoFormulario()&&esRepasoSocialesFormativo(datosAcademicosFormulario());}
+function actualizarRecorridoSociales({restaurarId}={}) {
+  const select=$("recorridoSociales"),visible=esSocialesFormativoFormulario();
+  $("campoRecorridoSociales").hidden=!visible;
+  if(!visible){select.value="todas";select.setCustomValidity("");return;}
+  const elegido=restaurarId===undefined?select.value:restaurarId;
+  select.replaceChildren(...RECORRIDOS_REPASO.map(r=>new Option(`${r.titulo} · ${r.cantidad} preguntas`,r.id)));
+  if(!RECORRIDOS_REPASO.some(r=>r.id===elegido)){
+    select.prepend(new Option("Recorrido guardado no disponible: elige uno",elegido));
+    select.setCustomValidity("El recorrido guardado no existe. Elige uno antes de guardar.");
+  }else select.setCustomValidity("");
+  select.value=elegido;
+  select.disabled=formularioSoloLectura||select.dataset.criterioBloqueado==="true";
+}
+
 function tituloRepasoAcademico() {
   const { materia, tema } = datosAcademicosFormulario();
 
+  if(esSocialesFormativoFormulario()){const r=RECORRIDOS_REPASO.find(r=>r.id===$("recorridoSociales").value);return `Me preparo para Sociales · ${r?.titulo||"Elige recorrido"}`;}
   if (tema && materia) return `Repasar ${tema} · ${materia}`;
   if (tema) return `Repasar ${tema}`;
   if (materia) return `Repaso de ${materia}`;
@@ -1715,11 +1732,13 @@ function actualizarResumenAcademico() {
   resumen.textContent = [
     cursoAcademicoTexto(cursoReferencia),
     materia || "Materia por indicar",
-    tema || "Tema por indicar"
-  ].join(" · ");
+    tema || "Tema por indicar",
+    esSocialesFormativoFormulario() ? (RECORRIDOS_REPASO.find(r=>r.id===$("recorridoSociales").value)?.titulo||"Elige recorrido") : ""
+  ].filter(Boolean).join(" · ");
 }
 
 function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
+  actualizarRecorridoSociales();
   if (!esRepasoAcademicoFormulario()) return;
 
   const { materia, tema } = datosAcademicosFormulario();
@@ -1740,7 +1759,10 @@ function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
       : "Reforzar un contenido académico antes de avanzar al siguiente curso.";
   }
 
-  if (forzar || !String($("criterio").value || "").trim()) {
+  if (esSocialesFormativoFormulario()) {
+    const r=RECORRIDOS_REPASO.find(r=>r.id===$("recorridoSociales").value);
+    $("criterio").value=`Completar ${r?.titulo||"el recorrido asignado"} (${r?.cantidad||""} preguntas). La sesión formativa y su evidencia pasarán a revisión familiar, sin nota ni Prueba adicional.`;
+  } else if (forzar || !String($("criterio").value || "").trim()) {
     $("criterio").value =
       "Completar la prueba final del repaso. La sesión guardada quedará como trabajo realizado y pasará a revisión familiar.";
   }
@@ -1755,6 +1777,7 @@ function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
 }
 
 function actualizarTipoMision({ completarSugerencias = false } = {}) {
+  actualizarRecorridoSociales();
   const academica = esRepasoAcademicoFormulario() && !dictadoEnEdicion();
   const modulo = $("modulo");
   const bloque = $("configuracionAcademica");
@@ -2053,16 +2076,18 @@ function aplicarBloqueoCriterio(tarea = null) {
     "cantidadSemillas",
     "semillaPrimera",
     "semillaSegunda",
-    "escenarioSemilla"
+    "escenarioSemilla",
+    "recorridoSociales"
   ];
 
   ids.forEach(id => {
     const control = $(id);
     if (!control) return;
-    control.disabled = bloqueada;
-    control.dataset.criterioBloqueado = String(bloqueada);
-    control.setAttribute("aria-disabled", bloqueada ? "true" : "false");
-    control.title = bloqueada
+    const bloquear = id === "recorridoSociales" ? bloqueada && Boolean(tarea?.criterioCumplimiento?.filtros?.recorridoId) : bloqueada;
+    control.disabled = bloquear;
+    control.dataset.criterioBloqueado = String(bloquear);
+    control.setAttribute("aria-disabled", bloquear ? "true" : "false");
+    control.title = bloquear
       ? "Este dato define qué actividad cumple la misión y no puede cambiarse después de iniciarla."
       : "";
   });
@@ -2241,6 +2266,7 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   $("criterio").value = tarea.criterioFinalizacion || "";
 
   const criterioCumplimiento = criterioCumplimientoTarea(tarea);
+  actualizarRecorridoSociales({restaurarId:criterioCumplimiento.filtros?.recorridoId||""});
   $("cantidadHistorias").value = String(
     normalizarCantidadHistorias(
       criterioCumplimiento.cantidadObjetivo ??
@@ -2411,7 +2437,7 @@ function recogerFormulario() {
       : (DESTINOS[modulo] || ""),
     objetivo: $("objetivo").value,
     criterioFinalizacion: $("criterio").value,
-    criterioCumplimiento: dictado ? dictado.criterioCumplimiento : esAcademica
+    criterioCumplimiento: dictado ? dictado.criterioCumplimiento : esSocialesFormativoFormulario() ? criterioRepasoSociales($("recorridoSociales").value) : esAcademica
       ? {
           tipo: "cantidad",
           modulo: "libre",
@@ -2608,6 +2634,8 @@ function configurarFormulario() {
     actualizarTituloAutomatico();
   });
 
+  $("recorridoSociales").addEventListener("change",()=>{actualizarRecorridoSociales();aplicarTextosAutomaticosAcademicos();});
+  ["tipo","cursoReferencia","materia","tema","recursoAcademicoUrl"].forEach(id=>$(id)?.addEventListener("change",()=>queueMicrotask(()=>{actualizarRecorridoSociales();if(esSocialesFormativoFormulario())aplicarTextosAutomaticosAcademicos();})));
   ["cursoReferencia", "materia", "tema"].forEach(id => {
     $(id)?.addEventListener("input", () => {
       actualizarResumenAcademico();
@@ -2708,6 +2736,7 @@ function configurarFormulario() {
 
   $("formTarea").addEventListener("submit", async event => {
     event.preventDefault();
+    if(esSocialesFormativoFormulario()&&!$("recorridoSociales").reportValidity())return;
     if (formularioSoloLectura) return;
 
     const mensaje = $("mensajeFormulario");

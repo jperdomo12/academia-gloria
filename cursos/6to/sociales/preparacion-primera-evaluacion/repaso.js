@@ -1,9 +1,9 @@
 import { iniciarTemaVerbal } from "../../../../compartido/js/motor-practica-verbal.js";
-import { BLOQUES_REPASO, PREGUNTAS_REPASO } from "./repaso-data.js";
+import { BLOQUES_REPASO, PREGUNTAS_REPASO, META_REPASO } from "./repaso-data.js";
 
-// Mismo recorrido de práctica de los Temas. Sin Prueba, actividad académica ni guardado.
+// Mismo motor: registro formativo optativo por configuración, sin Prueba adicional.
 await iniciarTemaVerbal({
-  meta:{}, bloques:BLOQUES_REPASO, practica:PREGUNTAS_REPASO, familias:[],
-  campoSemantico:"Sociales", soloPractica:true
+  meta:META_REPASO, bloques:BLOQUES_REPASO, practica:PREGUNTAS_REPASO, familias:[],
+  campoSemantico:"Sociales", soloPractica:true, registroFormativo:true
 });
 document.querySelectorAll("[data-iniciar-repaso]").forEach(boton=>boton.disabled=false);

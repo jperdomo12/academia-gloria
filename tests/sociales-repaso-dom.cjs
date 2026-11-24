@@ -5,24 +5,25 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const path=require('node:path'),{pathToFileURL}=require('node:url');
 const settle=()=>new Promise(r=>setImmediate(r));
 const root='cursos/6to/sociales/';
-async function fixture(html,{propia=true,logueado=true,voz=true,preview=false}={}){
+async function fixture(html,{propia=true,logueado=true,voz=true,preview=false,misionId="",guardar=null}={}){
  const {document,window}=parseHTML(html);const saves=[],spoken=[],redirects=[];let recent=0,timers=0,focused=null,cancels=0;
  // Interfaces de selección y foco no implementadas por LinkeDOM: se simulan, sin afirmar validación nativa.
  Object.defineProperty(document,'activeElement',{get:()=>focused});window.HTMLElement.prototype.focus=function(){focused=this;};window.HTMLElement.prototype.scrollIntoView=function(){};
  document.querySelectorAll('select').forEach(select=>Object.defineProperty(select,'value',{get(){return this.querySelector('option[selected]')?.value||this.querySelector('option')?.value||'';},set(v){this.querySelectorAll('option').forEach(o=>o.toggleAttribute('selected',o.value===String(v)));}}));
- const win={location:{search:preview?'?modo=vista_previa':'?modo=aprendizaje',replace:v=>redirects.push(v)},matchMedia:()=>({matches:true}),scrollTo(){},addEventListener(){}};
+ const win={location:{search:(preview?'?modo=vista_previa':'?modo=aprendizaje')+(misionId?'&misionId='+misionId:''),replace:v=>redirects.push(v)},matchMedia:()=>({matches:true}),scrollTo(){},addEventListener(){}};
  const env={document,window:win,URL,URLSearchParams,console,auth:{currentUser:logueado?{uid:'qa'}:null,authStateReady:async()=>{}},
-  ContextoUsuario:{inicializar:async()=>({esPersonaPropia:propia,personaActiva:{curso:'6.º',nombre:'Alumno de prueba'}}),esAdministrador:async()=>false},
+  ContextoUsuario:{inicializar:async()=>({esPersonaPropia:propia,usuario:{userId:'actor'},personaActiva:{personaId:'persona',curso:'6.º',nombre:'Alumno de prueba'}}),esAdministrador:async()=>false},
   crearTiempoActivo:()=>{timers++;return{reiniciar(){},detener(){},obtenerResultado:()=>({duracionActivaSegundos:2})};},
   mostrarCelebracion(){},obtenerVariantesRecientes:async()=>{recent++;return new Set();},
-  guardarSesionAcademica:async s=>{saves.push(s);return{guardado:s.modo==='aprendizaje'};},MODOS_SESION_ACADEMICA:{APRENDIZAJE:'aprendizaje',VISTA_PREVIA:'vista_previa'},
+  guardarSesionAcademica:async s=>{saves.push(s);if(guardar)return guardar(s);return{guardado:s.modo==='aprendizaje',sesionId:'qa-sesion',misionId:s.misionId,evidenciaMision:{registrada:true}};},MODOS_SESION_ACADEMICA:{APRENDIZAJE:'aprendizaje',VISTA_PREVIA:'vista_previa'},
   disponible:()=>voz,detener:()=>{cancels++;},escuchar:(text,options)=>{spoken.push({text,...options});return true;}};
  const source=fs.readFileSync('compartido/js/motor-practica-verbal.js','utf8').replace(/^import[\s\S]*?;\n/gm,'').replaceAll('export ','').replaceAll('import.meta.url',JSON.stringify('https://academia.invalid/compartido/js/motor-practica-verbal.js'));
  const init=vm.runInNewContext(source+';iniciarTemaVerbal',env);
  const $=id=>document.getElementById(id),click=id=>$(id).click(),option=id=>document.querySelector('#practicaOpciones [data-opcion="'+id+'"]').click();
  return{document,init,$,click,option,saves,spoken,redirects,window,get recent(){return recent;},get timers(){return timers;},get cancels(){return cancels;}};
 }
-(async()=>{
+module.exports={fixture,settle};
+if(require.main===module)(async()=>{
  const {BLOQUES_REPASO:bloques,PREGUNTAS_REPASO:bank}=await import(pathToFileURL(path.resolve(root+'preparacion-primera-evaluacion/repaso-data.js')));
  const html=fs.readFileSync(root+'preparacion-primera-evaluacion/index.html','utf8');
  const config={meta:{},bloques,practica:bank,familias:[],soloPractica:true};

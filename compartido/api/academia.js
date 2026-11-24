@@ -1168,13 +1168,15 @@ async function actualizarTarea(id, cambios = {}) {
   const referencia = documentoTarea(id, userId);
   let datosExistentes = null;
 
-  if ("estado" in datos || "progreso" in datos) {
+  if ("estado" in datos || "progreso" in datos || "criterioCumplimiento" in datos) {
     const existente = await getDoc(referencia);
     if (!existente.exists()) {
       throw new Error("No se encontró la tarea.");
     }
     datosExistentes = existente.data();
   }
+
+  if(datosExistentes)exigirCierreFormativoConEvidencia(datosExistentes,datos.estado);
 
   if ("criterioCumplimiento" in datos) {
     /*
@@ -1189,6 +1191,11 @@ async function actualizarTarea(id, cambios = {}) {
         datos.criterioCumplimiento
       );
     }
+  }
+
+  if(requiereEvidenciaFormativa(datosExistentes||{}) && !["pendiente","asignada"].includes(normalizarEstadoTarea(datosExistentes.estado)) && datos.criterioCumplimiento) {
+    const anterior=datosExistentes.criterioCumplimiento.filtros, nuevo=datos.criterioCumplimiento.filtros;
+    if(["actividadId","recorridoId","recorridoCompleto"].some(k=>anterior[k]!==nuevo[k]))throw new Error("El recorrido de una Misión iniciada no puede cambiarse. Crea otra Misión para otro recorrido.");
   }
 
   if ("progreso" in datos) {
@@ -1248,6 +1255,15 @@ async function actualizarTarea(id, cambios = {}) {
   });
 }
 
+function requiereEvidenciaFormativa(tarea={}) {
+  const c=tarea.criterioCumplimiento||{},f=c.filtros||{};
+  return tarea.tipo==="repaso_academico"&&c.evidenciaTipo==="sesion_academica"&&Boolean(f.actividadId&&f.recorridoId)&&f.recorridoCompleto===true;
+}
+function exigirCierreFormativoConEvidencia(tarea,estado) {
+  if(requiereEvidenciaFormativa(tarea)&&["completada","pendiente_validacion"].includes(estado)&&!(tarea.progreso?.evidenciaIds?.length&&Number(tarea.progreso?.cantidadActual)>=1))
+    throw new Error("Completa y guarda el recorrido asignado para enviar esta Misión a revisión.");
+}
+
 async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
   await exigirEscrituraEducativa();
   const estadoNormalizado = normalizarEstadoTarea(estado, "");
@@ -1266,6 +1282,7 @@ async function cambiarEstadoTarea(id, estado, datosExtra = {}) {
   }
 
   const tareaActual = existente.data();
+  exigirCierreFormativoConEvidencia(tareaActual, estadoNormalizado);
   const estadoAnterior = normalizarEstadoTarea(tareaActual.estado);
   const progresoActual = normalizarProgresoTarea(
     tareaActual.progreso,
@@ -2044,6 +2061,7 @@ export const Academia = Object.freeze({
     observar: observarTareas,
     actualizar: actualizarTarea,
     cambiarEstado: cambiarEstadoTarea,
+    requiereEvidenciaFormativa,
     registrarEvidencia: registrarEvidenciaMision,
     leerEvidencias: leerEvidenciasMision,
     guardarObservacion: guardarObservacionTarea,
