@@ -7,7 +7,7 @@ const base=process.env.BASE_URL,route='/cursos/6to/sociales/preparacion-primera-
   const {p,c,errors}=await crearEntorno(b,role);
   await p.addInitScript(()=>{window.qaAudio=[];window.SpeechSynthesisUtterance=class extends EventTarget{constructor(text){super();this.text=text;}};Object.defineProperty(window,'speechSynthesis',{value:{speak(u){qaAudio.push({text:u.text,lang:u.lang});},cancel(){}}});});
   await p.goto(base+'/cursos/6to/sociales/');assert.equal(await p.locator('[data-tema-id]').count(),3);
-  await p.locator('a[href="./preparacion-primera-evaluacion/"]').click();await p.locator('[data-iniciar-repaso="todas"]:enabled').waitFor();
+  await p.locator('a.portal-recurso-oficial[href="./preparacion-primera-evaluacion/"]').click();await p.locator('[data-iniciar-repaso="todas"]:enabled').waitFor();
   const banco=await p.evaluate(async()=>{const d=await import('./repaso-data.js');return{preguntas:d.PREGUNTAS_REPASO,bloques:d.BLOQUES_REPASO};});
   const storage=()=>p.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}})),antes=await storage();
   for(const width of [320,390,768,1024,1440]){
