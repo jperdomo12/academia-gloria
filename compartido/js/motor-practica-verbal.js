@@ -21,8 +21,17 @@ export function esRespuestaVerbalCorrecta(item,respuesta) {
     : respuesta===item.respuestaCorrecta;
 }
 
+// Filtro y dudas del mismo recorrido de práctica; sin sesiones ni estado persistente.
+export function filtrarPracticaVerbal(practica,filtro="todas",ids=null) {
+  const permitidas=ids===null?null:new Set(ids);
+  return practica.filter(p=>(!filtro||filtro==="todas"||(p.focoId||p.bloqueId)===filtro)&&(!permitidas||permitidas.has(p.id)));
+}
+export function dudasPracticaVerbal(practica,intentos,pistas,marcadas) {
+  return practica.filter(p=>(intentos.get(p.id)||0)>1||pistas.has(p.id)||marcadas.has(p.id)).map(p=>p.id);
+}
+
 // Motor de verbos existente, parametrizado para reutilizarlo con contenidos distintos.
-export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos", pestanaInicial = "mapa", pestanaRepaso = "claves" }) {
+export async function iniciarTemaVerbal({ meta: VERBOS_META, bloques: BLOQUES_RESULTADO, practica: PRACTICA_VERBOS = [], segmentoPrueba = "prueba-gramatica-verbos", opcionesCelebracion = {}, familias: FAMILIAS_PRUEBA_VERBOS, campoSemantico = "los verbos", pestanaInicial = "mapa", pestanaRepaso = "claves", soloPractica = false }) {
 const $ = id => document.getElementById(id);
 const rutaLogin = new URL("../../login.html", import.meta.url).href;
 
@@ -55,9 +64,13 @@ if (parametros.get("modo") === "aprendizaje" && puedeRegistrar) {
   modo = MODOS_SESION_ACADEMICA.APRENDIZAJE;
 }
 
+if(soloPractica)modo=MODOS_SESION_ACADEMICA.VISTA_PREVIA;
+
 const estado = {
   pestana:pestanaInicial,
   practicaNivelPista:0,
+  repasoIds:null,
+  practicaDudas:new Set(),
   practicaIndice:0,
   practicaSeleccion:null,
   practicaResuelta:false,
@@ -73,7 +86,7 @@ const estado = {
   ordenOpciones:new Map(),
   inicioIso:null,
   guardado:null,
-  tiempo:crearTiempoActivo({inactividadMs:180000})
+  tiempo:soloPractica?null:crearTiempoActivo({inactividadMs:180000})
 };
 
 function escaparHTML(valor="") {
@@ -114,6 +127,7 @@ function actualizarBloqueoPestanas() {
 }
 
 function activarPestana(nombre) {
+  if (soloPractica && nombre==="prueba") return;
   if (pruebaEnCurso() && nombre!=="prueba") return;
   detenerLecturaActual();
   estado.pestana=nombre;
@@ -124,7 +138,9 @@ function activarPestana(nombre) {
   document.querySelectorAll("[data-panel]").forEach(panel=>{
     panel.hidden=panel.dataset.panel!==nombre;
   });
+  if(soloPractica)document.querySelector(`[data-panel="${nombre}"] h2`)?.focus({preventScroll:true});
   window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  if(soloPractica)document.querySelector(`[data-panel="${nombre}"]`)?.scrollIntoView({block:"start"});
 }
 
 document.querySelectorAll("[data-pestana]").forEach(boton=>{
@@ -132,6 +148,7 @@ document.querySelectorAll("[data-pestana]").forEach(boton=>{
 });
 
 function actualizarModo() {
+  if(soloPractica)return;
   const aprendizaje=modo===MODOS_SESION_ACADEMICA.APRENDIZAJE;
   $("iconoModo").textContent=aprendizaje ? "🎓":"👀";
   $("tituloModo").textContent=aprendizaje ? "Sesión de aprendizaje":"Vista previa";
@@ -154,7 +171,7 @@ function actualizarModo() {
   }
 }
 
-$("botonModo").addEventListener("click",()=>{
+$("botonModo")?.addEventListener("click",()=>{
   if (estado.pruebaIniciada) return;
   modo=modo===MODOS_SESION_ACADEMICA.APRENDIZAJE
     ? MODOS_SESION_ACADEMICA.VISTA_PREVIA
@@ -185,8 +202,34 @@ function htmlReto(item,opciones,prefijo) {
 }
 
 function practicasDisponibles() {
-  const filtro=$("filtroPractica")?.value;
-  return !filtro || filtro==="todas" ? PRACTICA_VERBOS : PRACTICA_VERBOS.filter(p=>(p.focoId || p.bloqueId)===filtro);
+  return filtrarPracticaVerbal(PRACTICA_VERBOS,$("filtroPractica")?.value,estado.repasoIds);
+}
+function progresoRepaso(resuelta=false) {
+  if(!soloPractica)return;
+  const total=practicasDisponibles().length,completadas=estado.practicaIndice+(resuelta?1:0);
+  $("barraPractica").style.width=`${total?completadas/total*100:0}%`;
+  const barra=$("barraPractica").parentElement;
+  barra.setAttribute("aria-valuemax",String(total));barra.setAttribute("aria-valuenow",String(completadas));
+  $("estadoPractica").textContent=`Pregunta ${estado.practicaIndice+1} de ${total} · ${completadas} completadas`;
+}
+function empezarRepaso(filtro="todas",ids=null) {
+  if(!soloPractica)return;
+  $("filtroPractica").value=filtro;estado.repasoIds=ids;
+  estado.practicaIndice=0;estado.practicaIntentos.clear();estado.practicaPistas.clear();estado.practicaDudas.clear();
+  activarPestana("practica");renderPractica();
+}
+function terminarRepaso() {
+  const preguntas=practicasDisponibles();
+  const dudas=dudasPracticaVerbal(preguntas,estado.practicaIntentos,estado.practicaPistas,estado.practicaDudas);
+  $("resumenRepaso").textContent=`Has recorrido ${preguntas.length} preguntas. ${dudas.length?`${dudas.length} ideas quedan para repasar con calma.`:"Puedes volver a estas ideas cuando quieras."} No es una nota ni se guarda.`;
+  $("listaDudasRepaso").replaceChildren(...preguntas.filter(p=>dudas.includes(p.id)).map(p=>{const li=document.createElement("li");li.textContent=p.titulo;return li;}));
+  $("botonRepasarDudas").hidden=!dudas.length;
+  $("botonRepasarDudas").onclick=()=>empezarRepaso("todas",dudas);
+  activarPestana("cierre");$("tituloCierreRepaso").focus({preventScroll:true});
+}
+if(soloPractica){
+  document.querySelectorAll("[data-iniciar-repaso]").forEach(b=>b.addEventListener("click",()=>empezarRepaso(b.dataset.iniciarRepaso)));
+  $("marcarDuda").addEventListener("change",()=>{const id=practicasDisponibles()[estado.practicaIndice].id;if($("marcarDuda").checked)estado.practicaDudas.add(id);else estado.practicaDudas.delete(id);});
 }
 $("filtroPractica")?.addEventListener("change",()=>{estado.practicaIndice=0;renderPractica();});
 $("botonAnteriorPractica")?.addEventListener("click",()=>{if(estado.practicaIndice>0){estado.practicaIndice--;renderPractica();}});
@@ -220,9 +263,15 @@ function renderPractica() {
   estado.practicaSeleccion=null;
   estado.practicaResuelta=false;
   estado.practicaNivelPista=0;
+  if(soloPractica){
+    $("marcarDuda").checked=estado.practicaDudas.has(reto.id);
+    const bloque=bloqueResultado(reto.bloqueId);$("bloqueRepaso").textContent=`${bloque?.icono||""} ${bloque?.titulo||"Repaso"}`;
+    progresoRepaso();
+  }
   if($("botonAnteriorPractica"))$("botonAnteriorPractica").disabled=estado.practicaIndice===0;
   conectarTexto("practica","botonComprobar",v=>{estado.practicaSeleccion=v;},()=>estado.practicaResuelta);
   $("practicaContenido").querySelector("h3")?.focus({preventScroll:true});
+  if(soloPractica)document.querySelector('[data-panel="practica"]')?.scrollIntoView({block:"start"});
 
   document.querySelectorAll("#practicaOpciones .option").forEach(boton=>{
     boton.addEventListener("click",()=>{
@@ -239,7 +288,9 @@ function renderPractica() {
   });
 
   $("practicaEscuchar")?.addEventListener("click",()=>{
-    iniciarLectura($("practicaEscuchar"),reto.textoLectura || `${reto.enunciado}. ${reto.pregunta}`,reto.idiomaLectura || "es-ES");
+    const texto=reto.textoLectura || `${reto.enunciado}. ${reto.pregunta}`;
+    const opciones=soloPractica?Array.from(document.querySelectorAll("#practicaOpciones .option"),(b,i)=>`Opción ${i+1}: ${b.textContent}`).join(". "):"";
+    iniciarLectura($("practicaEscuchar"),soloPractica?`${texto}. ${opciones}`:texto,reto.idiomaLectura || "es-ES");
   });
 }
 
@@ -270,8 +321,9 @@ $("botonComprobar")?.addEventListener("click",()=>{
     $("botonSiguiente").hidden=false;
     if($("practicaRespuesta"))$("practicaRespuesta").disabled=true;
     $("botonSiguiente").focus();
+    progresoRepaso(true);
     $("botonSiguiente").textContent=estado.practicaIndice===practicasDisponibles().length-1
-      ? "Ir a la prueba →"
+      ? (soloPractica?"Terminar este repaso →":"Ir a la prueba →")
       : "Siguiente reto →";
   } else {
     botonElegido?.classList.add("incorrecta");
@@ -285,7 +337,7 @@ $("botonSiguiente")?.addEventListener("click",()=>{
     estado.practicaIndice+=1;
     renderPractica();
   } else {
-    activarPestana("prueba");
+    if(soloPractica)terminarRepaso();else activarPestana("prueba");
   }
 });
 
@@ -316,6 +368,7 @@ async function prepararPreguntasPrueba() {
 }
 
 async function iniciarPrueba() {
+  if(soloPractica)return;
   detenerLecturaActual();
   const boton=$("botonIniciarPrueba");
   boton.disabled=true;
@@ -396,9 +449,9 @@ function mostrarExplicacionPrueba(pregunta,correcta) {
   `;
 }
 
-$("botonIniciarPrueba").addEventListener("click",iniciarPrueba);
+$("botonIniciarPrueba")?.addEventListener("click",iniciarPrueba);
 
-$("botonResponderPrueba").addEventListener("click",async()=>{
+$("botonResponderPrueba")?.addEventListener("click",async()=>{
   const pregunta=estado.preguntasPrueba[estado.pruebaIndice];
 
   if (!estado.pruebaRespuestaConfirmada) {
@@ -560,7 +613,7 @@ async function finalizarPrueba() {
   }
 }
 
-$("botonVolverRepaso").addEventListener("click",()=>{
+$("botonVolverRepaso")?.addEventListener("click",()=>{
   estado.pruebaIniciada=false;
   estado.pruebaFinalizada=false;
   estado.pruebaRespuestaConfirmada=false;
@@ -626,7 +679,7 @@ window.addEventListener("beforeunload",detenerLecturaActual,{once:true});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)detenerLecturaActual();});
 window.addEventListener("pagehide",detenerLecturaActual);
 
-if (practicasDisponibles().length) renderPractica();
+if (!soloPractica && practicasDisponibles().length) renderPractica();
 actualizarModo();
 actualizarBloqueoPestanas();
 if(pestanaInicial!=="mapa")activarPestana(pestanaInicial);
