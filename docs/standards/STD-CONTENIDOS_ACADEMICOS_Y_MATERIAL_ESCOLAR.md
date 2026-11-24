@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/standards/STD-CONTENIDOS_ACADEMICOS_Y_MATERIAL_ESCOLAR.md` |
-| **Versión** | 1.11 |
+| **Versión** | 1.12 |
 | **Estado** | Activo |
 | **Fecha** | 22/08/2026 |
 | **Última actualización** | 24/11/2026 |
@@ -32,6 +32,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 1.12 | 24/11/2026 | Product Owner + AI Collaborator | Cierra primera aplicación de registro formativo #278 en Sociales: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 1.11 | 24/11/2026 | Product Owner + AI Collaborator | Formaliza la aplicación aprobada #278 de registro formativo optativo sobre el contrato existente: cobertura completa, primera respuesta/apoyos, idempotencia y ausencia de nota artificial. Implementación candidata de Sociales; no extiende Matemáticas #277. |
 | 1.10 | 21/10/2026 | Product Owner + AI Collaborator | Incorpora la regla aprobada de no empobrecer material escolar: umbral de claridad/estructura/apoyo visual/valor pedagógico, comparación fuente → Academia por recurso y bloqueo de calidad. Primera aplicación: tres Temas de Sociales 6.º según SPEC propietaria. |
 | 1.9 | 14/10/2026 | Product Owner + AI Collaborator | Cierra primera aplicación de CA-031: PR #174 aprobada e integrada; un Tema de English con apuntes y Grammar zone, consulta desde ambos orígenes y prueba real pendiente. |
@@ -1014,9 +1015,9 @@ La revisión histórica de un resultado es también una operación de **solo lec
 
 Una práctica puede registrar trabajo real sin añadir una Prueba ni una calificación si existe decisión funcional expresa. Reutiliza `sesion-academica-v1` y el mismo servicio de sesiones/evidencias; no introduce una colección o motor paralelo.
 
-En la candidata de Sociales, `registroFormativo` es optativo y desactivado por defecto en el motor compartido. Solo se guarda el recorrido elegido completo; se conservan primera respuesta, resolución final, intentos, pistas, dudas y conceptos. La presentación distingue resolución con apoyos de respuesta al primer intento y no transforma el acierto final en un porcentaje de dominio. Reenvíos del mismo intento son idempotentes; el repaso de dudas no duplica la evidencia. Vista previa e histórico siguen siendo de solo lectura. El cumplimiento de una Misión exige el recorrido exacto acordado en sus filtros.
+En la implementación publicada de Sociales, `registroFormativo` es optativo y desactivado por defecto en el motor compartido. Solo se guarda el recorrido elegido completo; se conservan primera respuesta, resolución final, intentos, pistas, dudas y conceptos. La presentación distingue resolución con apoyos de respuesta al primer intento y no transforma el acierto final en un porcentaje de dominio. Reenvíos del mismo intento son idempotentes; el repaso de dudas no duplica la evidencia. Vista previa e histórico siguen siendo de solo lectura. El cumplimiento de una Misión exige el recorrido exacto acordado en sus filtros.
 
-Contrato funcional y alcance: [Issue #278](https://github.com/jperdomo12/academia-gloria/issues/278), SPEC de Misiones §5.5 y SPEC de Revisión de Trabajo Realizado. Esta aplicación está pendiente de aprobación técnica/integración y validación real. No cambia automáticamente el registro de otros recursos ni desarrolla #277.
+Contrato funcional y alcance: [Issue #278](https://github.com/jperdomo12/academia-gloria/issues/278), SPEC de Misiones §5.5 y SPEC de Revisión de Trabajo Realizado. Esta aplicación fue aprobada por el Product Owner e integrada mediante PR #279 (merge `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`, Pages #884 success); doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. Sin integración/publicación pendiente; validación real pendiente. No cambia automáticamente el registro de otros recursos ni desarrolla #277.
 
 
 ### 12.9 Capacidad de análisis y fortalecimiento

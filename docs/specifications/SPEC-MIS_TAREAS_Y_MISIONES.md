@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-MIS_TAREAS_Y_MISIONES.md` |
-| **Versión** | 2.13 |
+| **Versión** | 2.14 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.14 | 24/11/2026 | Product Owner + AI Collaborator | Cierra #278 publicado: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 2.13 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: recorrido formativo exacto de Sociales en filtros existentes, sesión completa idempotente, evidencia y revisión familiar. Sin nueva Prueba, nota ni colecciones. Pendiente de aprobación/integración y prueba real; #277 fuera de alcance. |
 | 2.12 | 02/11/2026 | Product Owner + AI Collaborator | Cierra #235/Pages #844 success: Segunda Semilla condicional publicada, HTML/JS públicos idénticos a los probados y suite V1 ampliada superada. |
 | 2.11 | 02/11/2026 | Product Owner + AI Collaborator | Revisión familiar: Segunda Semilla visible solo cuando cantidad > 1; el valor oculto no participa en la selección efectiva, sin cambiar contratos. |
@@ -252,9 +253,9 @@ Cuando existe catálogo real, la preparación es asistida y la familia no necesi
 
 ---
 
-### 5.5 Repaso formativo de Sociales · candidata Issue #278
+### 5.5 Repaso formativo de Sociales · Issue #278
 
-Estado: implementado en rama `feat/sociales-sesiones-misiones-278`, pendiente de aprobación e integración. El contrato aprobado es [Issue #278](https://github.com/jperdomo12/academia-gloria/issues/278). Evoluciona el recurso temporal de #271 y su acceso desde Misiones #275; no convierte el repaso en otro Tema ni en Prueba académica.
+Estado: aprobado por el Product Owner, integrado y publicado mediante [PR #279](https://github.com/jperdomo12/academia-gloria/pull/279), merge `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`. Pages #884 success; doce archivos públicos HTTP 200 e idénticos. Sin integración/publicación pendiente; validación real pendiente. El contrato aprobado es [Issue #278](https://github.com/jperdomo12/academia-gloria/issues/278). Evoluciona el recurso temporal de #271 y su acceso desde Misiones #275; no convierte el repaso en otro Tema ni en Prueba académica.
 
 Gestión ofrece **Recorrido de esta Misión**, derivado de `RECORRIDOS_REPASO` del propio recurso:
 
@@ -273,7 +274,7 @@ Compatibilidad: no hay migraciones ni evidencias retrospectivas. Las Misiones an
 
 `motor-practica-verbal.js` activa `registroFormativo: true` únicamente para este recurso junto a `soloPractica: true`; la opción queda desactivada por defecto. El guardado reutiliza `sesiones-academicas.js`: un `intentoId` estable, identidad esperada, sesión completa inmutable y enlace de evidencia idempotente. El repaso posterior de dudas no modifica la sesión original ni genera otra evidencia. Un fallo al enlazar se informa separadamente del guardado correcto y permite reintentar el mismo intento cuando falla la red. Vista previa y consulta no registran trabajo.
 
-Validación: pruebas Node y DOM simulado de cuatro recorridos, filtros exactos, cierre, edición, apoyos, parciales, identidades, reenvíos y visores. La revisión renderizada, permisos desplegados y recorrido autenticado real siguen pendientes por bloqueo de Chromium del entorno; no se declara estabilidad. Matemáticas #277 no se implementa en esta candidata.
+Validación: pruebas Node y DOM simulado de cuatro recorridos, filtros exactos, cierre, edición, apoyos, parciales, identidades, reenvíos y visores. La revisión renderizada, permisos desplegados y recorrido autenticado real siguen pendientes por bloqueo de Chromium del entorno; no se declara estabilidad. Matemáticas #277 no se ha implementado en esta entrega.
 
 ---
 

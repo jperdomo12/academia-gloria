@@ -4,7 +4,7 @@
 | Campo | Valor |
 |---|---|
 | **Ruta oficial** | `docs/specifications/SPEC-REVISION_TRABAJO_REALIZADO.md` |
-| **Versión** | 2.1 |
+| **Versión** | 2.2 |
 | **Estado** | Activo |
 | **Fecha** | 2026 |
 | **Última actualización** | 24/11/2026 |
@@ -30,6 +30,7 @@
 
 | Versión | Fecha | Responsables | Cambios |
 |---|---:|---|---|
+| 2.2 | 24/11/2026 | Product Owner + AI Collaborator | Cierra la consulta formativa de Sociales #278: PR #279 aprobada por el Product Owner e integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6`; Pages #884/run `45467994826` success. Doce archivos públicos de producto HTTP 200 e idénticos al árbol aprobado. 44/44 Node y cuatro suites DOM simulado repetidas antes del merge. Sin integración/publicación pendiente; navegador/permisos/voz reales y uso familiar pendientes, sin declarar estabilidad. #277 no desarrollado. |
 | 2.1 | 24/11/2026 | Product Owner + AI Collaborator | Candidata #278: el visor académico existente representa sesiones de práctica formativa con recorrido, primera respuesta, resolución, intentos, pistas y dudas; sin nota ni porcentaje de dominio. Preserva lectura histórica y visores anteriores. Validación real pendiente. |
 | 2.0 | 03/09/2026 | Product Owner + AI Collaborator | Sincroniza la especificación con la implementación transversal validada y fusionada en PR #45. Define un único contrato `👁️ Ver trabajo`, `modo=consulta`, Persona Activa y retorno al caller; reutiliza visores especializados de Detectives/Resultado Académico y visor general para Lectura, Creciendo por Dentro, Biblioteca, Misiones libres y repasos sin resultado digital. Formaliza carga por `sesionId`, fallback legacy y protección estricta de solo lectura. |
 | 1.1 | 2026 | Product Owner + AI Collaborator | Ajustó la propuesta inicial con retorno al origen, revisión más rica y posible uso posterior de fortalezas/aspectos a reforzar. |
@@ -518,7 +519,7 @@ La implementación fue aprobada mediante prueba funcional del usuario y fusionad
 | **Histórico legacy** | Compatible sin fabricar datos. |
 | **Análisis** | Se muestra lo existente; nuevas tendencias pertenecen a `SPEC-ANALISIS_EDUCATIVO.md`. |
 | **Estado** | Activo · V2 validada y fusionada al 02/09/2026. |
-## Sesiones formativas de Sociales · candidata #278
+## Sesiones formativas de Sociales · #278
 
 La sesión `sesion-academica-v1` conserva `resumen.tipoEvaluacion: practica_formativa`, `recorridoId`, `recorridoTitulo`, cobertura completa y respuestas reales. «Ver trabajo» sigue resolviendo las evidencias de la Misión hacia `resultado-academico.html?sesionId=…&misionId=…`; no hay otro visor ni escrituras al consultar.
 
@@ -533,4 +534,4 @@ Para este tipo de sesión el visor muestra:
 
 `correcta`/`totalCorrectas` tienen en esta práctica el criterio conservador declarado `primer_intento_sin_pistas`; `correctaPrimerIntento`, `resuelta` y las respuestas inicial/final separan los hechos. Acertar finalmente después de reintentos no se convierte en un 100 % artificial. Los conceptos y apoyos permanecen disponibles para la consulta sin inventar inferencias. Lectura en voz alta coherente con esta presentación; las Pruebas académicas anteriores mantienen su visualización y contrato.
 
-Estado: implementación en rama, no publicada. DOM simulado con datos guardados, lectura controlada y escape HTML comprobados; navegador real, audición y permisos desplegados pendientes. No se escriben datos familiares de prueba.
+Estado: PR #279 aprobada por el Product Owner, integrada en `2b2ff4b6d89b59576f9d7ba59a85817715ce9fa6` y publicada (Pages #884 success). Los archivos públicos de producto son idénticos al árbol aprobado. Sin integración/publicación pendiente. DOM simulado con datos guardados, lectura controlada y escape HTML comprobados; navegador real, audición y permisos desplegados pendientes. No se escriben datos familiares de prueba.
