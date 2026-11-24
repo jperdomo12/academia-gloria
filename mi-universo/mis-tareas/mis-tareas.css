@@ -343,6 +343,9 @@ button,input,textarea,select{font:inherit}
   font-size:1.45rem;
 }
 
+/* hidden debe prevalecer sobre el display de etiquetas y controles del formulario. */
+#formTarea [hidden]{display:none!important}
+
 label{
   display:grid;
   gap:7px;

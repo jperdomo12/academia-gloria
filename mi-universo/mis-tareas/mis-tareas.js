@@ -1700,6 +1700,27 @@ function datosAcademicosFormulario() {
   };
 }
 
+const textosAutomaticosAcademicos = { objetivo:"", criterio:"" };
+
+function descripcionAcademicaAutomatica() {
+  const {materia,tema}=datosAcademicosFormulario();
+  return tema?`Vamos a repasar ${tema}${materia?` de ${materia}`:""} con calma.`:"Vamos a repasar este tema con calma y paso a paso.";
+}
+
+function crearTextosAcademicos() {
+  const {materia,tema}=datosAcademicosFormulario();
+  let criterio="Completar la prueba final del repaso. La sesión guardada quedará como trabajo realizado y pasará a revisión familiar.";
+  if(esMatesFormativoFormulario()){
+    criterio=$("recorridoMates").value==="ensayo"
+      ? "Completar los 10 problemas en dos bloques distintos de 5 de la misma vuelta. Cada bloque guarda trabajo real; la Misión pasa a revisión familiar solo con ambos. Sin nota ni Prueba adicional."
+      : "Completar los cinco problemas de Mi ficha de Gaudem, con todas sus fases, y guardar la sesión formativa para revisión familiar. Sin nota ni Prueba adicional.";
+  }else if(esSocialesFormativoFormulario()){
+    const r=RECORRIDOS_REPASO.find(r=>r.id===$("recorridoSociales").value);
+    criterio=`Completar ${r?.titulo||"el recorrido asignado"} (${r?.cantidad||""} preguntas). La sesión formativa y su evidencia pasarán a revisión familiar, sin nota ni Prueba adicional.`;
+  }
+  return {objetivo:tema?`Reforzar los conocimientos de ${tema}${materia?` en ${materia}`:""}.`:"Reforzar un contenido académico antes de avanzar al siguiente curso.",criterio};
+}
+
 function esSocialesFormativoFormulario(){return esRepasoAcademicoFormulario()&&esRepasoSocialesFormativo(datosAcademicosFormulario());}
 function actualizarRecorridoSociales({restaurarId}={}) {
   const select=$("recorridoSociales"),visible=esSocialesFormativoFormulario();
@@ -1754,36 +1775,23 @@ function actualizarResumenAcademico() {
 function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
   actualizarRecorridoMates();
   actualizarRecorridoSociales();
-  if (!esRepasoAcademicoFormulario()) return;
+  if (!esRepasoAcademicoFormulario() || formularioSoloLectura) {actualizarResumenAcademico();actualizarVistaPrevia();return;}
 
-  const { materia, tema } = datosAcademicosFormulario();
   const titulo = tituloRepasoAcademico();
 
   $("titulo").value = titulo;
   $("tituloMision").value = titulo;
 
   if (forzar || !String($("descripcionMision").value || "").trim() || !descripcionMisionPersonalizada) {
-    $("descripcionMision").value = tema
-      ? `Vamos a repasar ${tema}${materia ? ` de ${materia}` : ""} con calma.`
-      : "Vamos a repasar este tema con calma y paso a paso.";
+    $("descripcionMision").value = descripcionAcademicaAutomatica();
   }
 
-  if (forzar || !String($("objetivo").value || "").trim()) {
-    $("objetivo").value = tema
-      ? `Reforzar los conocimientos de ${tema}${materia ? ` en ${materia}` : ""}.`
-      : "Reforzar un contenido académico antes de avanzar al siguiente curso.";
-  }
-
-  if(esMatesFormativoFormulario()){
-    const r=RECORRIDOS_MISION.find(r=>r.id===$("recorridoMates").value);
-    $("criterio").value=r?.id==="ensayo"?"Completar los 10 problemas en dos bloques distintos de 5 de la misma vuelta. Cada bloque guarda trabajo real; la Misión pasa a revisión familiar solo con ambos. Sin nota ni Prueba adicional.":"Completar los cinco problemas de Mi ficha de Gaudem, con todas sus fases, y guardar la sesión formativa para revisión familiar. Sin nota ni Prueba adicional.";
-  }else if (esSocialesFormativoFormulario()) {
-    const r=RECORRIDOS_REPASO.find(r=>r.id===$("recorridoSociales").value);
-    $("criterio").value=`Completar ${r?.titulo||"el recorrido asignado"} (${r?.cantidad||""} preguntas). La sesión formativa y su evidencia pasarán a revisión familiar, sin nota ni Prueba adicional.`;
-  } else if (forzar || !String($("criterio").value || "").trim()) {
-    $("criterio").value =
-      "Completar la prueba final del repaso. La sesión guardada quedará como trabajo realizado y pasará a revisión familiar.";
-  }
+  const siguientes=crearTextosAcademicos();
+  Object.entries(siguientes).forEach(([id,valor])=>{
+    const actual=String($(id).value||"").trim();
+    if(forzar||!actual||actual===textosAutomaticosAcademicos[id])$(id).value=valor;
+  });
+  Object.assign(textosAutomaticosAcademicos,siguientes);
 
   if (forzar || !String($("mensajeMision").value || "").trim()) {
     $("mensajeMision").value =
@@ -1792,6 +1800,19 @@ function aplicarTextosAutomaticosAcademicos({ forzar = false } = {}) {
 
   actualizarResumenAcademico();
   actualizarVistaPrevia();
+}
+
+function conectarSincronizacionAcademica() {
+  let pendiente=false;
+  function sincronizar(){
+    if(pendiente)return;
+    pendiente=true;
+    queueMicrotask(()=>{pendiente=false;aplicarTextosAutomaticosAcademicos();});
+  }
+  ["tipo","cursoReferencia","materia","tema","recursoAcademicoUrl","recorridoMates","recorridoSociales"].forEach(id=>{
+    $(id)?.addEventListener("input",sincronizar);
+    $(id)?.addEventListener("change",sincronizar);
+  });
 }
 
 function actualizarTipoMision({ completarSugerencias = false } = {}) {
@@ -2203,6 +2224,7 @@ function limpiarFormulario({ conservarMensaje = false } = {}) {
   descripcionMisionPersonalizada = false;
   refuerzoDictado = null;
   textosAutomaticosDictado = {};
+  Object.keys(textosAutomaticosAcademicos).forEach(id=>textosAutomaticosAcademicos[id]="");
   aplicarBloqueoCriterio(null);
   reiniciandoFormulario = true;
   try { $("formTarea").reset(); } finally { reiniciandoFormulario = false; }
@@ -2289,6 +2311,7 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
   const criterioCumplimiento = criterioCumplimientoTarea(tarea);
   actualizarRecorridoMates({restaurarId:criterioCumplimiento.filtros?.recorridoId||""});
   actualizarRecorridoSociales({restaurarId:criterioCumplimiento.filtros?.recorridoId||""});
+  Object.assign(textosAutomaticosAcademicos,crearTextosAcademicos());
   $("cantidadHistorias").value = String(
     normalizarCantidadHistorias(
       criterioCumplimiento.cantidadObjetivo ??
@@ -2369,7 +2392,9 @@ function cargarTareaEnFormulario(tarea, { soloLectura = false } = {}) {
 
   const descripcionGuardada = String(presentacion.descripcionMision || "").trim();
   const descripcionAutomatica = String(
-    tarea.modulo === "rincon-lectura"
+    tarea.tipo === "repaso_academico" && !esMisionDictado(tarea)
+      ? descripcionAcademicaAutomatica()
+      : tarea.modulo === "rincon-lectura"
       ? textosAutomaticosLectura.descripcionMision
       : tarea.modulo === "detectives"
         ? textosAutomaticosDetectives.descripcionMision
@@ -2656,25 +2681,7 @@ function configurarFormulario() {
     actualizarTituloAutomatico();
   });
 
-  $("recorridoMates").addEventListener("change",()=>{actualizarRecorridoMates();aplicarTextosAutomaticosAcademicos();});
-  ["tipo","cursoReferencia","materia","tema","recursoAcademicoUrl"].forEach(id=>$(id)?.addEventListener("change",()=>queueMicrotask(()=>{actualizarRecorridoMates();if(esMatesFormativoFormulario())aplicarTextosAutomaticosAcademicos();})));
-  $("recorridoSociales").addEventListener("change",()=>{actualizarRecorridoSociales();aplicarTextosAutomaticosAcademicos();});
-  ["tipo","cursoReferencia","materia","tema","recursoAcademicoUrl"].forEach(id=>$(id)?.addEventListener("change",()=>queueMicrotask(()=>{actualizarRecorridoSociales();if(esSocialesFormativoFormulario())aplicarTextosAutomaticosAcademicos();})));
-  ["cursoReferencia", "materia", "tema"].forEach(id => {
-    $(id)?.addEventListener("input", () => {
-      actualizarResumenAcademico();
-      if (esRepasoAcademicoFormulario()) {
-        aplicarTextosAutomaticosAcademicos();
-      }
-    });
-
-    $(id)?.addEventListener("change", () => {
-      actualizarResumenAcademico();
-      if (esRepasoAcademicoFormulario()) {
-        aplicarTextosAutomaticosAcademicos();
-      }
-    });
-  });
+  conectarSincronizacionAcademica();
 
   $("modulo").addEventListener("change", () => {
     refuerzoDictado = null;

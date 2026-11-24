@@ -45,7 +45,6 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
   let temas = [];
   let tokenCargaMaterias = 0;
   let tokenCargaTemas = 0;
-  let sincronizando = false;
 
   function formularioSoloLectura() {
     return $("formTarea")?.classList.contains("modo-consulta") === true;
@@ -92,9 +91,11 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     if (notificar) dispararCampo(campo);
   }
 
-  function establecerRecurso(valor, { manual = false } = {}) {
+  function establecerRecurso(valor, { manual = false, notificar = true } = {}) {
     recursoInput.readOnly = !manual;
     recursoInput.value = String(valor || "");
+    // La ruta es la última parte de la selección; el formulario lee el estado final.
+    if (notificar) dispararCampo(recursoInput);
   }
 
   function rutaEstableAcademia(url) {
@@ -557,7 +558,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     prepararSelect(temaSelect, "Cargando temas…", { manual: false });
     habilitarSelect(temaSelect, false);
     temaInput.hidden = true;
-    establecerRecurso("", { manual: false });
+    establecerRecurso("", { manual: false, notificar: false });
     estadoCatalogo.textContent = "Buscando los temas disponibles en la Academia…";
 
     try {
@@ -597,6 +598,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
         }
       }
 
+      if (token !== tokenCargaTemas) return;
       habilitarSelect(temaSelect, true);
       poblarTemas(temaPreferido, recursoPreferido);
     } catch (error) {
@@ -616,6 +618,7 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
     recursoPreferido = recursoInput.value
   } = {}) {
     const token = ++tokenCargaMaterias;
+    ++tokenCargaTemas; // Invalida respuestas del curso/materia anterior, también si el nuevo queda vacío.
     materias = [];
     temas = [];
 
@@ -636,9 +639,9 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
       const documento = await leerHtml(new URL("index.html", baseCurso), "no se pudo leer el curso");
       if (token !== tokenCargaMaterias) return;
 
-      materias = extraerMaterias(documento, baseCurso);
-      materias = await incorporarZonasComoMaterias(documento, baseCurso, materias);
+      const materiasCurso = await incorporarZonasComoMaterias(documento, baseCurso, extraerMaterias(documento, baseCurso));
       if (token !== tokenCargaMaterias) return;
+      materias = materiasCurso;
 
       habilitarSelect(materiaSelect, true);
 
@@ -690,21 +693,16 @@ if (cursoSelect && tipoSelect && materiaInput && temaInput && recursoInput) {
   }
 
   async function sincronizarDesdeFormulario() {
-    if (sincronizando) return;
-    sincronizando = true;
-
-    try {
-      await cargarMaterias({
-        materiaPreferida: materiaInput.value,
-        temaPreferido: temaInput.value,
-        recursoPreferido: recursoInput.value
-      });
-    } finally {
-      sincronizando = false;
-    }
+    // Cada petición toma la selección vigente; los tokens descartan cargas anteriores.
+    await cargarMaterias({
+      materiaPreferida: materiaInput.value,
+      temaPreferido: temaInput.value,
+      recursoPreferido: recursoInput.value
+    });
   }
 
   materiaSelect.addEventListener("change", async () => {
+    ++tokenCargaTemas;
     if (materiaSelect.value === VALOR_MANUAL) {
       establecerCampo(materiaInput, "");
       establecerCampo(temaInput, "");

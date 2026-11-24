@@ -2,7 +2,7 @@
 
 import { Academia } from "../../compartido/api/academia.js";
 import { leerSesionesAcademicas } from "../../compartido/js/sesiones-academicas.js";
-import "./catalogo-repaso-academico.js?v=4";
+import "./catalogo-repaso-academico.js?v=20261124-284";
 import "./mision-libre.js";
 
 import { TEMAS_VERBOS_DOCUMENTOS } from "../../cursos/6to/lengua/verbos/temas-por-documento.js";
